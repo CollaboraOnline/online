@@ -2,17 +2,105 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-17 13:27+0200\n"
-"PO-Revision-Date: 2016-07-25 04:52+0000\n"
-"Last-Translator: Андрій Бандура <andriykopanytsia@gmail.com>\n"
+"POT-Creation-Date: 2016-11-01 11:35+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Pootle 2.7\n"
-"X-POOTLE-MTIME: 1469422340.000000\n"
+"X-Generator: Translate Toolkit 1.14.0-rc1\n"
+"X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
+"X-Pootle-Revision: 657562\n"
+
+#: admin.strings.js:5
+msgid "Admin console"
+msgstr "Консоль адміністратора"
+
+#: admin.strings.js:6
+msgid "Toggle navigation"
+msgstr "Перемкнути навігацію"
+
+#: admin.strings.js:7
+msgid "Settings"
+msgstr "Налаштування"
+
+#: admin.strings.js:8
+msgid "Overview"
+msgstr "Огляд"
+
+#: admin.strings.js:9
+msgid "(current)"
+msgstr "(поточний)"
+
+#: admin.strings.js:10
+msgid "Analytics"
+msgstr "Аналіз"
+
+#: admin.strings.js:11
+msgid "Dashboard"
+msgstr "Панель керування"
+
+#: admin.strings.js:12
+msgid "Users online"
+msgstr "Користувачі в мережі"
+
+#: admin.strings.js:13
+msgid "Documents opened"
+msgstr "Відкриті документи"
+
+#: admin.strings.js:14
+msgid "Memory consumed"
+msgstr "Спожита пам'ять"
+
+#: admin.strings.js:15
+msgid "PID"
+msgstr "Ідентифікатор процесу"
+
+#: admin.strings.js:16
+msgid "Document"
+msgstr "Документ"
+
+#: admin.strings.js:17
+msgid "Number of views"
+msgstr "Число переглядів"
+
+#: admin.strings.js:18
+msgid "Elapsed time"
+msgstr "Витрачений час"
+
+#: admin.strings.js:19
+msgid "Kill"
+msgstr "Вбити"
+
+#: admin.strings.js:20
+msgid "Graphs"
+msgstr "Графіки"
+
+#: admin.strings.js:21
+#: dist/toolbar/toolbar.js:337
+#: src/control/Control.Menubar.js:10
+#: src/control/Control.Menubar.js:63
+#: src/control/Control.Menubar.js:109
+msgid "Save"
+msgstr "Зберегти"
+
+#: admin.strings.js:22
+msgid "Cache size of memory statistics"
+msgstr "Статистика розміру кешу пам'яті"
+
+#: admin.strings.js:23
+msgid "Time interval of memory statistics (in ms)"
+msgstr "Часовий інтервал статистики пам'яті (у мс)"
+
+#: admin.strings.js:24
+msgid "Cache size of CPU statistics"
+msgstr "Статистика розмір кешу ЦП"
+
+#: admin.strings.js:25
+msgid "Time interval of CPU statistics (in ms)"
+msgstr "Часовий інтервал статистики ЦП (у мс)"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -82,444 +170,477 @@ msgstr "Вставити як"
 msgid "Unformatted Text"
 msgstr "Тест без форматування"
 
+#: unocommands.js:12
+msgid "No Wrap"
+msgstr "Без обтікання"
+
+#: unocommands.js:13
+msgid "Wrap Before"
+msgstr "Обтікання перед"
+
+#: unocommands.js:14
+msgid "Wrap After"
+msgstr "Обтікання після"
+
+#: unocommands.js:15
+msgid "Enable Contour"
+msgstr "Увімкнути контур"
+
+#: unocommands.js:16
+msgid "Update Index or Table of Contents"
+msgstr "Оновити покажчик або зміст"
+
+#: unocommands.js:17
+msgid "Delete Index or Table of Contents"
+msgstr "Вилучити покажчик або зміст"
+
 #: dist/errormessages.js:1
-msgid "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: file_path=/path/to/doc/"
-msgstr "Неправильний WOPISrc, використання: WOPISrc=кодований URI або file_path у форматі: file_path=/шлях/до/документа/"
+msgid ""
+"No disk space left on server, please contact the server administrator to "
+"continue."
+msgstr ""
+"Не лишилося вільного простору на сервері. Будь ласка, зв'яжіться з "
+"адміністратором сервера для продовження."
 
 #: dist/errormessages.js:2
-msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
-msgstr "URL вузла порожній. Ймовірно, помилка налаштування сервера loolwsd, зв'яжіться з адміністратором."
+msgid ""
+"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"contact the administrator."
+msgstr ""
+"URL вузла порожній. Ймовірно, помилка налаштування сервера loolwsd, "
+"зв'яжіться з адміністратором."
 
-#: dist/toolbar/toolbar.js:154
+#: dist/errormessages.js:3
+msgid ""
+"This development build is limited to %0 documents, and %1 connections - to "
+"avoid the impression that it is suitable for deployment in large "
+"enterprises. To find out more about deploying and scaling %2 checkout: <br/><"
+"a href=\"%3\">%3</a>."
+msgstr ""
+"Ця розробницька збірка обмежена %0 документом(ами) та %1 з'єднання(ми) - "
+"заради уникнення враження, що вона придатна для розгортання на великих "
+"підприємствах. Більше дізнатися про розгортання %2 можна тут: <br/><a href=\""
+"%3\">%3</a>."
+
+#: dist/errormessages.js:4
+msgid ""
+"Service is unavailable. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"Сервіс - недоступний. Будь ласка, спробуйте пізніше та повідомте вашому "
+"адміністраторові, якщо проблема не зникає."
+
+#: dist/errormessages.js:5
+msgid ""
+"Unauthorized WOPI host. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"Недозволений вузол WOPI. Будь ласка, спробуйте пізніше та повідомте вашому "
+"адміністраторові, якщо проблема не зникає."
+
+#: dist/errormessages.js:6
+msgid ""
+"Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
+"file_path=/path/to/doc/"
+msgstr ""
+"Неправильний WOPISrc, використання: WOPISrc=кодований URI або file_path у "
+"форматі: file_path=/шлях/до/документа/"
+
+#: dist/toolbar/toolbar.js:150
 msgid "Are you sure you want to delete this page?"
 msgstr "Ви дійсно бажаєте видалити цю сторінку?"
 
-#: dist/toolbar/toolbar.js:329 src/admin/AdminStrings.js:20
-#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:56
-#: src/control/Control.Menubar.js:102
-msgid "Save"
-msgstr "Зберегти"
+#: dist/toolbar/toolbar.js:328
+msgid "Textwrap"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:331 src/control/Control.Menubar.js:18
-#: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:110
+#: dist/toolbar/toolbar.js:329
+msgid "No wrap"
+msgstr "Без обтікання"
+
+#: dist/toolbar/toolbar.js:330
+msgid "Page wrap"
+msgstr "Обтікання сторінки"
+
+#: dist/toolbar/toolbar.js:331
+msgid "Wrap anchor only"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:332
+msgid "Ideal wrap"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:333
+msgid "Left wrap"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:334
+msgid "Right wrap"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:335
+msgid "Wrap through"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:339
+#: src/control/Control.Menubar.js:19
+#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:117
 msgid "Undo"
 msgstr "Вернути"
 
-#: dist/toolbar/toolbar.js:332 src/control/Control.Menubar.js:19
-#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:111
+#: dist/toolbar/toolbar.js:340
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:72
+#: src/control/Control.Menubar.js:118
 msgid "Redo"
 msgstr "Повторити"
 
-#: dist/toolbar/toolbar.js:338
+#: dist/toolbar/toolbar.js:341
+msgid "Document repair"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:347
 msgid "Bold"
 msgstr "Жирний"
 
-#: dist/toolbar/toolbar.js:339
+#: dist/toolbar/toolbar.js:348
 msgid "Italic"
 msgstr "Курсив"
 
-#: dist/toolbar/toolbar.js:340
+#: dist/toolbar/toolbar.js:349
 msgid "Underline"
 msgstr "Підкреслений"
 
-#: dist/toolbar/toolbar.js:341
+#: dist/toolbar/toolbar.js:350
 msgid "Strikeout"
 msgstr "Перекреслений"
 
-#: dist/toolbar/toolbar.js:344
+#: dist/toolbar/toolbar.js:352
+msgid "Insert Footnote"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:355
 msgid "Font color"
 msgstr "Колір тексту"
 
-#: dist/toolbar/toolbar.js:346
+#: dist/toolbar/toolbar.js:357
 msgid "Highlighting"
 msgstr "Підсвічування"
 
-#: dist/toolbar/toolbar.js:348
+#: dist/toolbar/toolbar.js:359
 msgid "Align left"
 msgstr "Вирівняти ліворуч"
 
-#: dist/toolbar/toolbar.js:349
+#: dist/toolbar/toolbar.js:360
 msgid "Center horizontally"
 msgstr "По центру горизонтально"
 
-#: dist/toolbar/toolbar.js:350
+#: dist/toolbar/toolbar.js:361
 msgid "Align right"
 msgstr "Вирівняти праворуч"
 
-#: dist/toolbar/toolbar.js:351
+#: dist/toolbar/toolbar.js:362
 msgid "Justified"
 msgstr "По ширині"
 
-#: dist/toolbar/toolbar.js:353
+#: dist/toolbar/toolbar.js:364
 msgid "Bullets on/off"
 msgstr "Маркований список"
 
-#: dist/toolbar/toolbar.js:354
+#: dist/toolbar/toolbar.js:365
 msgid "Numbering on/off"
 msgstr "Нумерація увім./вим."
 
-#: dist/toolbar/toolbar.js:356
+#: dist/toolbar/toolbar.js:367
 msgid "Increase indent"
 msgstr "Збільшити відступ"
 
-#: dist/toolbar/toolbar.js:357
+#: dist/toolbar/toolbar.js:368
 msgid "Decrease indent"
 msgstr "Зменшити відступ"
 
-#: dist/toolbar/toolbar.js:360
+#: dist/toolbar/toolbar.js:371
 msgid "Insert table"
 msgstr "Вставити таблицю"
 
-#: dist/toolbar/toolbar.js:361
+#: dist/toolbar/toolbar.js:372
 msgid "Insert comment"
 msgstr "Вставити коментар"
 
-#: dist/toolbar/toolbar.js:362
+#: dist/toolbar/toolbar.js:373
 msgid "Insert graphic"
 msgstr "Вставити графіку"
 
-#: dist/toolbar/toolbar.js:364
+#: dist/toolbar/toolbar.js:375
 msgid "More"
 msgstr "Більше"
 
-#: dist/toolbar/toolbar.js:365
+#: dist/toolbar/toolbar.js:376
 msgid "Close document"
 msgstr "Закрити документ"
 
-#: dist/toolbar/toolbar.js:395 dist/toolbar/toolbar.js:758
+#: dist/toolbar/toolbar.js:406
+#: dist/toolbar/toolbar.js:776
 msgid "Sum"
 msgstr "Сума"
 
-#: dist/toolbar/toolbar.js:396
+#: dist/toolbar/toolbar.js:407
 msgid "Function"
 msgstr "Функція"
 
-#: dist/toolbar/toolbar.js:397
+#: dist/toolbar/toolbar.js:408
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: dist/toolbar/toolbar.js:398
+#: dist/toolbar/toolbar.js:409
 msgid "Accept"
 msgstr "Прийняти"
 
-#: dist/toolbar/toolbar.js:409
+#: dist/toolbar/toolbar.js:420
 msgid "First sheet"
 msgstr "Перший аркуш"
 
-#: dist/toolbar/toolbar.js:410
+#: dist/toolbar/toolbar.js:421
 msgid "Previous sheet"
 msgstr "Попередній аркуш"
 
-#: dist/toolbar/toolbar.js:411
+#: dist/toolbar/toolbar.js:422
 msgid "Next sheet"
 msgstr "Наступний аркуш"
 
-#: dist/toolbar/toolbar.js:412
+#: dist/toolbar/toolbar.js:423
 msgid "Last sheet"
 msgstr "Останній аркуш"
 
-#: dist/toolbar/toolbar.js:422 src/control/Control.Menubar.js:94
+#: dist/toolbar/toolbar.js:433
+#: src/control/Control.Menubar.js:101
 msgid "Fullscreen presentation"
 msgstr "Повноекранна презентація"
 
-#: dist/toolbar/toolbar.js:424
+#: dist/toolbar/toolbar.js:435
 msgid "Insert slide"
 msgstr "Вставити слайд"
 
-#: dist/toolbar/toolbar.js:425 src/control/Control.Menubar.js:91
+#: dist/toolbar/toolbar.js:436
+#: src/control/Control.Menubar.js:98
 msgid "Duplicate slide"
 msgstr "Дублювати слайд"
 
-#: dist/toolbar/toolbar.js:426 src/control/Control.Menubar.js:92
+#: dist/toolbar/toolbar.js:437
+#: src/control/Control.Menubar.js:99
 msgid "Delete slide"
 msgstr "Вилучити слайд"
 
-#: dist/toolbar/toolbar.js:438
+#: dist/toolbar/toolbar.js:450
 msgid "Search:"
 msgstr "Пошук:"
 
-#: dist/toolbar/toolbar.js:443
+#: dist/toolbar/toolbar.js:455
 msgid "Search backwards"
 msgstr "Пошук назад"
 
-#: dist/toolbar/toolbar.js:444
+#: dist/toolbar/toolbar.js:456
 msgid "Search forward"
 msgstr "Пошук вперед"
 
-#: dist/toolbar/toolbar.js:445
+#: dist/toolbar/toolbar.js:457
 msgid "Cancel the search"
 msgstr "Скасувати пошук"
 
-#: dist/toolbar/toolbar.js:450 dist/toolbar/toolbar.js:1196
-msgid "Take edit lock (others can only view)"
-msgstr "Блокувати зміни (інші можуть лише переглядати)"
+#: dist/toolbar/toolbar.js:462
+#: dist/toolbar/toolbar.js:1326
+msgid "No users"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:450 dist/toolbar/toolbar.js:1196
-msgid "VIEWING"
-msgstr "ПЕРЕГЛЯД"
-
-#: dist/toolbar/toolbar.js:452
+#: dist/toolbar/toolbar.js:464
 msgid "Previous page"
 msgstr "Попередня сторінка"
 
-#: dist/toolbar/toolbar.js:453
+#: dist/toolbar/toolbar.js:465
 msgid "Next page"
 msgstr "Наступна сторінка"
 
-#: dist/toolbar/toolbar.js:455 src/control/Control.Menubar.js:34
-#: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:128
+#: dist/toolbar/toolbar.js:467
+#: src/control/Control.Menubar.js:41
+#: src/control/Control.Menubar.js:86
+#: src/control/Control.Menubar.js:136
 msgid "Reset zoom"
 msgstr "Відновити масштаб"
 
-#: dist/toolbar/toolbar.js:456 src/control/Control.Menubar.js:33
-#: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:127
+#: dist/toolbar/toolbar.js:468
+#: src/control/Control.Menubar.js:40
+#: src/control/Control.Menubar.js:85
+#: src/control/Control.Menubar.js:135
 msgid "Zoom out"
 msgstr "Зменшити"
 
-#: dist/toolbar/toolbar.js:458 src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:126
+#: dist/toolbar/toolbar.js:470
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:84
+#: src/control/Control.Menubar.js:134
 msgid "Zoom in"
 msgstr "Збільшити"
 
-#: dist/toolbar/toolbar.js:476
-msgid "You are viewing now."
-msgstr "Режим перегляду."
+#: dist/toolbar/toolbar.js:494
+msgid "%user has joined"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:476
-msgid "Click here to take edit."
-msgstr "Клацніть тут для перегляду."
+#: dist/toolbar/toolbar.js:495
+msgid "%user has left"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:607 dist/toolbar/toolbar.js:1094
+#: dist/toolbar/toolbar.js:625
+#: dist/toolbar/toolbar.js:1115
 msgid "Size"
 msgstr "Розмір"
 
-#: dist/toolbar/toolbar.js:739
+#: dist/toolbar/toolbar.js:757
 msgid "Number of Sheets"
 msgstr "Число аркушів"
 
-#: dist/toolbar/toolbar.js:742
+#: dist/toolbar/toolbar.js:760
 msgid "Selected range of cells"
 msgstr "Обраний діапазон комірок"
 
-#: dist/toolbar/toolbar.js:745 dist/toolbar/toolbar.js:791
+#: dist/toolbar/toolbar.js:763
+#: dist/toolbar/toolbar.js:809
 msgid "Entering text mode"
 msgstr "Режим введення тексту"
 
-#: dist/toolbar/toolbar.js:748 dist/toolbar/toolbar.js:794
+#: dist/toolbar/toolbar.js:766
+#: dist/toolbar/toolbar.js:812
 msgid "Selection Mode"
 msgstr "Режим вибору"
 
-#: dist/toolbar/toolbar.js:751
+#: dist/toolbar/toolbar.js:769
 msgid "Choice of functions"
 msgstr "Вибір функцій"
 
-#: dist/toolbar/toolbar.js:753
+#: dist/toolbar/toolbar.js:771
 msgid "Average"
 msgstr "Середнє"
 
-#: dist/toolbar/toolbar.js:754
+#: dist/toolbar/toolbar.js:772
 msgid "CountA"
 msgstr "CountA"
 
-#: dist/toolbar/toolbar.js:755
+#: dist/toolbar/toolbar.js:773
 msgid "Count"
 msgstr "Кількість"
 
-#: dist/toolbar/toolbar.js:756
+#: dist/toolbar/toolbar.js:774
 msgid "Maximum"
 msgstr "Максимум"
 
-#: dist/toolbar/toolbar.js:757
+#: dist/toolbar/toolbar.js:775
 msgid "Minimum"
 msgstr "Мінімум"
 
-#: dist/toolbar/toolbar.js:759
+#: dist/toolbar/toolbar.js:777
 msgid "Selection count"
 msgstr "Кількість виділень"
 
-#: dist/toolbar/toolbar.js:760
+#: dist/toolbar/toolbar.js:778
 msgid "None"
 msgstr "Нічого"
 
-#: dist/toolbar/toolbar.js:765
+#: dist/toolbar/toolbar.js:783
 msgid "Wrap Text"
 msgstr "Перенос тексту"
 
-#: dist/toolbar/toolbar.js:766
+#: dist/toolbar/toolbar.js:784
 msgid "Merge and Center Cells"
 msgstr "Об’єднати і центрувати комірки"
 
-#: dist/toolbar/toolbar.js:768
+#: dist/toolbar/toolbar.js:786
 msgid "Format as Currency"
 msgstr "Форматувати як валюту"
 
-#: dist/toolbar/toolbar.js:769
+#: dist/toolbar/toolbar.js:787
 msgid "Format as Percent"
 msgstr "Форматувати як відсотки"
 
-#: dist/toolbar/toolbar.js:770
+#: dist/toolbar/toolbar.js:788
 msgid "Format as Number"
 msgstr "Форматувати як число"
 
-#: dist/toolbar/toolbar.js:771
+#: dist/toolbar/toolbar.js:789
 msgid "Format as Date"
 msgstr "Форматувати як дату"
 
-#: dist/toolbar/toolbar.js:772
+#: dist/toolbar/toolbar.js:790
 msgid "Add Decimal Place"
 msgstr "Додати десяткове місце"
 
-#: dist/toolbar/toolbar.js:773
+#: dist/toolbar/toolbar.js:791
 msgid "Delete Decimal Place"
 msgstr "Вилучити десяткове місце"
 
-#: dist/toolbar/toolbar.js:775
+#: dist/toolbar/toolbar.js:793
 msgid "Sort Ascending"
 msgstr "Сортувати за зростанням"
 
-#: dist/toolbar/toolbar.js:776
+#: dist/toolbar/toolbar.js:794
 msgid "Sort Descending"
 msgstr "Сортувати за спаданням"
 
-#: dist/toolbar/toolbar.js:785
+#: dist/toolbar/toolbar.js:803
 msgid "Number of Pages"
 msgstr "Число сторінок"
 
-#: dist/toolbar/toolbar.js:788
+#: dist/toolbar/toolbar.js:806
 msgid "Word Counter"
 msgstr "Лічильник слів"
 
-#: dist/toolbar/toolbar.js:802
+#: dist/toolbar/toolbar.js:820
 msgid "Number of Slides"
 msgstr "Число слайдів"
 
-#: dist/toolbar/toolbar.js:919
+#: dist/toolbar/toolbar.js:939
 msgid "Document saved"
 msgstr "Документ збережено"
 
-#: dist/toolbar/toolbar.js:1077
+#: dist/toolbar/toolbar.js:1098
 msgid "Style"
 msgstr "Стиль"
 
-#: dist/toolbar/toolbar.js:1089
+#: dist/toolbar/toolbar.js:1110
 msgid "Font"
 msgstr "Шрифт"
 
-#: dist/toolbar/toolbar.js:1113
+#: dist/toolbar/toolbar.js:1134
 msgid "Previous slide"
 msgstr "Попередній слайд"
 
-#: dist/toolbar/toolbar.js:1114
+#: dist/toolbar/toolbar.js:1135
 msgid "Next slide"
 msgstr "Наступний слайд"
 
-#: dist/toolbar/toolbar.js:1192
-msgid "You are editing (others can only view)"
-msgstr "Редагування (інші можуть лише переглядати)"
-
-#: dist/toolbar/toolbar.js:1192
-msgid "EDITING"
-msgstr "ЗМІНИ"
-
-#: dist/toolbar/toolbar.js:1212
-msgid "You are locked in readonly mode"
-msgstr "Ви заблоковані у режимі лише читання"
-
-#: dist/toolbar/toolbar.js:1212
-msgid "READONLY"
-msgstr "ЛИШЕ ЧИТАННЯ"
-
-#: dist/toolbar/toolbar.js:1324
+#: dist/toolbar/toolbar.js:1303
 msgid "Layout"
 msgstr "Компонування"
 
-#: src/admin/AdminSocketBase.js:44
+#: dist/toolbar/toolbar.js:1317
+msgid "%n users"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1324
+msgid "1 user"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1349
+#: src/control/Control.DocumentRepair.js:87
+msgid "You"
+msgstr ""
+
+#: src/admin/AdminSocketBase.js:45
 msgid "Connection error"
 msgstr "Помилка з'єднання"
 
-#: src/admin/AdminSocketOverview.js:58
+#: src/admin/AdminSocketOverview.js:61
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ви справді бажаєте закінчити цей сеанс?"
-
-#: src/admin/AdminStrings.js:4
-msgid "Admin console"
-msgstr "Консоль адміністратора"
-
-#: src/admin/AdminStrings.js:5
-msgid "Toggle navigation"
-msgstr "Перемкнути навігацію"
-
-#: src/admin/AdminStrings.js:6
-msgid "Settings"
-msgstr "Налаштування"
-
-#: src/admin/AdminStrings.js:7
-msgid "Overview"
-msgstr "Огляд"
-
-#: src/admin/AdminStrings.js:8
-msgid "(current)"
-msgstr "(поточний)"
-
-#: src/admin/AdminStrings.js:9
-msgid "Analytics"
-msgstr "Аналіз"
-
-#: src/admin/AdminStrings.js:10
-msgid "Dashboard"
-msgstr "Панель керування"
-
-#: src/admin/AdminStrings.js:11
-msgid "Users online"
-msgstr "Користувачі в мережі"
-
-#: src/admin/AdminStrings.js:12
-msgid "Documents opened"
-msgstr "Відкриті документи"
-
-#: src/admin/AdminStrings.js:13
-msgid "Memory consumed"
-msgstr "Спожита пам'ять"
-
-#: src/admin/AdminStrings.js:14
-msgid "PID"
-msgstr "Ідентифікатор процесу"
-
-#: src/admin/AdminStrings.js:15
-msgid "Document"
-msgstr "Документ"
-
-#: src/admin/AdminStrings.js:16
-msgid "Number of views"
-msgstr "Число переглядів"
-
-#: src/admin/AdminStrings.js:17
-msgid "Elapsed time"
-msgstr "Витрачений час"
-
-#: src/admin/AdminStrings.js:18
-msgid "Kill"
-msgstr "Вбити"
-
-#: src/admin/AdminStrings.js:19
-msgid "Graphs"
-msgstr "Графіки"
-
-#: src/admin/AdminStrings.js:21
-msgid "Cache size of memory statistics"
-msgstr "Статистика розміру кешу пам'яті"
-
-#: src/admin/AdminStrings.js:22
-msgid "Time interval of memory statistics (in ms)"
-msgstr "Часовий інтервал статистики пам'яті (у мс)"
-
-#: src/admin/AdminStrings.js:23
-msgid "Cache size of CPU statistics"
-msgstr "Статистика розмір кешу ЦП"
-
-#: src/admin/AdminStrings.js:24
-msgid "Time interval of CPU statistics (in ms)"
-msgstr "Часовий інтервал статистики ЦП (у мс)"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -549,36 +670,80 @@ msgstr " хв"
 msgid " s"
 msgstr " с"
 
-#: src/control/Control.ColumnHeader.js:34
+#: src/control/Control.ColumnHeader.js:38
 msgid "Insert column before"
 msgstr "Вставити стовпчик перед"
 
-#: src/control/Control.ColumnHeader.js:41 src/control/Control.Menubar.js:134
+#: src/control/Control.ColumnHeader.js:45
+#: src/control/Control.Menubar.js:142
 msgid "Delete column"
 msgstr "Видалити стовпчик"
 
-#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:56
-#: src/control/Control.Menubar.js:102
+#: src/control/Control.ColumnHeader.js:52
+msgid "Optimal Width"
+msgstr "Оптимальна ширина"
+
+#: src/control/Control.ColumnHeader.js:67
+msgid "Optimal Column Width"
+msgstr "Оптимальна ширина стовпчика"
+
+#: src/control/Control.DocumentRepair.js:32
+msgid "Repair Document"
+msgstr "Відновити документ"
+
+#: src/control/Control.DocumentRepair.js:40
+msgid "Type"
+msgstr "Тип"
+
+#: src/control/Control.DocumentRepair.js:42
+msgid "Index"
+msgstr "Індекс"
+
+#: src/control/Control.DocumentRepair.js:44
+#: src/control/Control.Menubar.js:29
+#: src/control/Control.Menubar.js:127
+msgid "Comment"
+msgstr "Коментар"
+
+#: src/control/Control.DocumentRepair.js:46
+msgid "User name"
+msgstr "Ім'я користувача"
+
+#: src/control/Control.DocumentRepair.js:48
+msgid "Timestamp"
+msgstr "Позначка часу"
+
+#: src/control/Control.DocumentRepair.js:52
+msgid "Jump to state"
+msgstr ""
+
+#: src/control/Control.Menubar.js:10
+#: src/control/Control.Menubar.js:63
+#: src/control/Control.Menubar.js:109
 msgid "File"
 msgstr "Файл"
 
-#: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:57
-#: src/control/Control.Menubar.js:103
+#: src/control/Control.Menubar.js:11
+#: src/control/Control.Menubar.js:64
+#: src/control/Control.Menubar.js:110
 msgid "Print"
 msgstr "Друк"
 
-#: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:58
-#: src/control/Control.Menubar.js:104
+#: src/control/Control.Menubar.js:12
+#: src/control/Control.Menubar.js:65
+#: src/control/Control.Menubar.js:111
 msgid "See revision history"
 msgstr "Див. історію змін"
 
-#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:59
-#: src/control/Control.Menubar.js:105
+#: src/control/Control.Menubar.js:13
+#: src/control/Control.Menubar.js:66
+#: src/control/Control.Menubar.js:112
 msgid "Download as"
 msgstr "Звантажити як"
 
-#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:59
-#: src/control/Control.Menubar.js:105
+#: src/control/Control.Menubar.js:13
+#: src/control/Control.Menubar.js:66
+#: src/control/Control.Menubar.js:112
 msgid "PDF Document (.pdf)"
 msgstr "Документ PDF (.pdf)"
 
@@ -594,182 +759,232 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:18 src/control/Control.Menubar.js:64
-#: src/control/Control.Menubar.js:110
+#: src/control/Control.Menubar.js:18
+#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:117
 msgid "Edit"
 msgstr "Зміни"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:67
-#: src/control/Control.Menubar.js:113
+#: src/control/Control.Menubar.js:18
+msgid "Repair"
+msgstr "Відновити"
+
+#: src/control/Control.Menubar.js:22
+#: src/control/Control.Menubar.js:74
+#: src/control/Control.Menubar.js:120
 msgid "Cut"
 msgstr "Вирізати"
 
-#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:68
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:23
+#: src/control/Control.Menubar.js:75
+#: src/control/Control.Menubar.js:121
 msgid "Copy"
 msgstr "Копіювати"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:69
-#: src/control/Control.Menubar.js:115
+#: src/control/Control.Menubar.js:24
+#: src/control/Control.Menubar.js:76
+#: src/control/Control.Menubar.js:122
 msgid "Paste"
 msgstr "Вставити"
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:71
-#: src/control/Control.Menubar.js:117
+#: src/control/Control.Menubar.js:26
+#: src/control/Control.Menubar.js:78
+#: src/control/Control.Menubar.js:124
 msgid "Select all"
 msgstr "Вибрати все"
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:36
-#: src/control/Control.Menubar.js:73 src/control/Control.Menubar.js:81
-#: src/control/Control.Menubar.js:119
+#: src/control/Control.Menubar.js:28
+#: src/control/Control.Menubar.js:43
+#: src/control/Control.Menubar.js:80
+#: src/control/Control.Menubar.js:88
+#: src/control/Control.Menubar.js:126
 msgid "Insert"
 msgstr "Вставити"
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:73
-#: src/control/Control.Menubar.js:119
+#: src/control/Control.Menubar.js:28
+#: src/control/Control.Menubar.js:80
+#: src/control/Control.Menubar.js:126
 msgid "Image"
 msgstr "Зображення"
 
-#: src/control/Control.Menubar.js:28
-msgid "Comment"
-msgstr "Коментар"
+#: src/control/Control.Menubar.js:31
+msgid "Footnote"
+msgstr ""
 
-#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:75
-#: src/control/Control.Menubar.js:124
+#: src/control/Control.Menubar.js:32
+msgid "Endnote"
+msgstr ""
+
+#: src/control/Control.Menubar.js:34
+msgid "Page break"
+msgstr "Розрив сторінки"
+
+#: src/control/Control.Menubar.js:35
+msgid "Column break"
+msgstr "Розрив колонки"
+
+#: src/control/Control.Menubar.js:37
+#: src/control/Control.Menubar.js:82
+#: src/control/Control.Menubar.js:132
 msgid "View"
 msgstr "Перегляд"
 
-#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:75
-#: src/control/Control.Menubar.js:124
+#: src/control/Control.Menubar.js:37
+#: src/control/Control.Menubar.js:82
+#: src/control/Control.Menubar.js:132
 msgid "Full screen"
 msgstr "Повноекранний"
 
-#: src/control/Control.Menubar.js:36 src/control/Control.Menubar.js:81
+#: src/control/Control.Menubar.js:43
+#: src/control/Control.Menubar.js:88
 msgid "Tables"
 msgstr "Таблиці"
 
-#: src/control/Control.Menubar.js:36 src/control/Control.Menubar.js:81
+#: src/control/Control.Menubar.js:43
+#: src/control/Control.Menubar.js:88
 msgid "Rows before"
 msgstr "Рядки перед"
 
-#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:82
+#: src/control/Control.Menubar.js:44
+#: src/control/Control.Menubar.js:89
 msgid "Rows after"
 msgstr "Рядки після"
 
-#: src/control/Control.Menubar.js:39 src/control/Control.Menubar.js:84
+#: src/control/Control.Menubar.js:46
+#: src/control/Control.Menubar.js:91
 msgid "Columns left"
 msgstr "Стовпці зліва"
 
-#: src/control/Control.Menubar.js:40 src/control/Control.Menubar.js:85
+#: src/control/Control.Menubar.js:47
+#: src/control/Control.Menubar.js:92
 msgid "Columns right"
 msgstr "Стовпці справа"
 
-#: src/control/Control.Menubar.js:41 src/control/Control.Menubar.js:86
+#: src/control/Control.Menubar.js:48
+#: src/control/Control.Menubar.js:93
 msgid "Delete"
 msgstr "Вилучити"
 
-#: src/control/Control.Menubar.js:41 src/control/Control.Menubar.js:86
+#: src/control/Control.Menubar.js:48
+#: src/control/Control.Menubar.js:93
 msgid "Rows"
 msgstr "Рядки"
 
-#: src/control/Control.Menubar.js:42 src/control/Control.Menubar.js:87
+#: src/control/Control.Menubar.js:49
+#: src/control/Control.Menubar.js:94
 msgid "Columns"
 msgstr "Стовпчики"
 
-#: src/control/Control.Menubar.js:43 src/control/Control.Menubar.js:44
+#: src/control/Control.Menubar.js:50
+#: src/control/Control.Menubar.js:51
 msgid "Table"
 msgstr "Таблиця"
 
-#: src/control/Control.Menubar.js:44
+#: src/control/Control.Menubar.js:51
 msgid "Select"
 msgstr "Вибрати"
 
-#: src/control/Control.Menubar.js:45 src/control/Control.Menubar.js:121
+#: src/control/Control.Menubar.js:52
+#: src/control/Control.Menubar.js:129
 msgid "Row"
 msgstr "Рядок"
 
-#: src/control/Control.Menubar.js:46 src/control/Control.Menubar.js:122
+#: src/control/Control.Menubar.js:53
+#: src/control/Control.Menubar.js:130
 msgid "Column"
 msgstr "Стовпчик"
 
-#: src/control/Control.Menubar.js:47
+#: src/control/Control.Menubar.js:54
 msgid "Cell"
 msgstr "Комірка"
 
-#: src/control/Control.Menubar.js:48 src/control/Control.Menubar.js:88
+#: src/control/Control.Menubar.js:55
+#: src/control/Control.Menubar.js:95
 msgid "Merge cells"
 msgstr "Об'єднати комірки"
 
-#: src/control/Control.Menubar.js:50 src/control/Control.Menubar.js:96
-#: src/control/Control.Menubar.js:136
+#: src/control/Control.Menubar.js:57
+#: src/control/Control.Menubar.js:103
+#: src/control/Control.Menubar.js:144
 msgid "Help"
 msgstr "Довідка"
 
-#: src/control/Control.Menubar.js:50 src/control/Control.Menubar.js:96
-#: src/control/Control.Menubar.js:136
+#: src/control/Control.Menubar.js:57
+#: src/control/Control.Menubar.js:103
+#: src/control/Control.Menubar.js:144
 msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: src/control/Control.Menubar.js:51 src/control/Control.Menubar.js:97
-#: src/control/Control.Menubar.js:137
+#: src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:104
+#: src/control/Control.Menubar.js:145
 msgid "About"
 msgstr "Про програму"
 
-#: src/control/Control.Menubar.js:60
+#: src/control/Control.Menubar.js:67
 msgid "ODF presentation (.odp)"
 msgstr "ODF презентація (.odp)"
 
-#: src/control/Control.Menubar.js:61
+#: src/control/Control.Menubar.js:68
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:62
+#: src/control/Control.Menubar.js:69
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:90
+#: src/control/Control.Menubar.js:97
 msgid "Slide"
 msgstr "Слайд"
 
-#: src/control/Control.Menubar.js:90
+#: src/control/Control.Menubar.js:97
 msgid "New slide"
 msgstr "Новий слайд"
 
-#: src/control/Control.Menubar.js:106
+#: src/control/Control.Menubar.js:113
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF ел.таблиця (.ods)"
 
-#: src/control/Control.Menubar.js:107
+#: src/control/Control.Menubar.js:114
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:108
+#: src/control/Control.Menubar.js:115
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:130
+#: src/control/Control.Menubar.js:138
 msgid "Cells"
 msgstr "Комірки"
 
-#: src/control/Control.Menubar.js:130
+#: src/control/Control.Menubar.js:138
 msgid "Insert row"
 msgstr "Вставити рядок"
 
-#: src/control/Control.Menubar.js:131
+#: src/control/Control.Menubar.js:139
 msgid "Insert column"
 msgstr "Вставити стовпчик"
 
-#: src/control/Control.Menubar.js:133 src/control/Control.RowHeader.js:39
+#: src/control/Control.Menubar.js:141
+#: src/control/Control.RowHeader.js:43
 msgid "Delete row"
 msgstr "Видалити рядок"
 
-#: src/control/Control.Menubar.js:306
+#: src/control/Control.Menubar.js:314
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ви дійсно бажаєте видалити цей слайд?"
 
-#: src/control/Control.RowHeader.js:32
+#: src/control/Control.RowHeader.js:36
 msgid "Insert row above"
 msgstr "Вставити рядок вище"
+
+#: src/control/Control.RowHeader.js:50
+msgid "Optimal Height"
+msgstr "Оптимальна висота"
+
+#: src/control/Control.RowHeader.js:63
+msgid "Optimal Row Height"
+msgstr "Оптимальна висота рядка"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -795,54 +1010,64 @@ msgstr "Перейменувати аркуш"
 msgid "Enter new sheet name"
 msgstr "Введіть нову назву аркуша"
 
-#: src/control/Toolbar.js:59 src/control/Toolbar.js:68
+#: src/control/Toolbar.js:63
+#: src/control/Toolbar.js:72
 msgid "Downloading..."
 msgstr "Звантажується..."
 
-#: src/control/Toolbar.js:80 src/map/Map.js:802
+#: src/control/Toolbar.js:84
+#: src/map/Map.js:856
 msgid "Saving..."
 msgstr "Збереження..."
 
-#: src/control/Toolbar.js:212
+#: src/control/Toolbar.js:216
 msgid "This version of %productName is powered by"
 msgstr "Ця версія %productName працює на"
 
-#: src/core/Socket.js:17
+#: src/core/Socket.js:22
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Халепа при під'єднання до LibreOffice Online : "
 
-#: src/core/Socket.js:139
+#: src/core/Socket.js:138
 msgid "Unsupported server version."
 msgstr "Непідтримувана версія сервера."
 
-#: src/core/Socket.js:158
+#: src/core/Socket.js:173
 msgid "Document requires password to view."
 msgstr "Документ вимагає пароль для перегляду."
 
-#: src/core/Socket.js:161
+#: src/core/Socket.js:176
 msgid "Document requires password to modify."
 msgstr "Документ вимагає пароль для редагування."
 
-#: src/core/Socket.js:163
+#: src/core/Socket.js:178
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Натисніть Скасувати для відкриття у режимі перегляду."
 
-#: src/core/Socket.js:167
+#: src/core/Socket.js:182
 msgid "Wrong password provided. Please try again."
 msgstr "Надано неправильний пароль. Спробуйте знову."
 
-#: src/core/Socket.js:304
-msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
-msgstr "Нам ганьба, бо ми не можемо під'єднатися до вашого документа. Будь ласка, спробуйте знову."
+#: src/core/Socket.js:231
+msgid "Connecting..."
+msgstr "З'єднання..."
 
-#: src/core/Socket.js:307
-msgid "We are sorry, this is an unexpected connection error. Please try again."
-msgstr "Шкода, але трапилася неочікувана помилка з'єднання. Спробуйте знову."
+#: src/core/Socket.js:349
+msgid ""
+"Well, this is embarrassing, we cannot connect to your document. Please try "
+"again."
+msgstr ""
+"Нам ганьба, бо ми не можемо під'єднатися до вашого документа. Будь ласка, "
+"спробуйте знову."
 
-#: src/map/Map.js:116
+#: src/map/Map.js:118
 msgid "Initializing..."
 msgstr "Започаткування…"
 
-#: src/map/Map.js:805
+#: src/map/Map.js:859
 msgid "Loading..."
 msgstr "Завантаження…"
+
+#: src/map/handler/Map.FileInserter.js:54
+msgid "Uploading..."
+msgstr "Вивантаження…"
