@@ -127,7 +127,8 @@ private:
 
     std::shared_ptr<lok::Document> _loKitDocument;
     std::string _docType;
-    std::map<int, std::string> _lastDocStates;
+    std::map<std::string, std::string> _lastDocStates;
+    std::map<int, std::string> _lastDocEvents;
 
     /// Synchronize _loKitDocument access.
     /// This should be owned by Document.
