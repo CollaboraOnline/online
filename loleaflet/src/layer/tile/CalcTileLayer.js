@@ -233,5 +233,14 @@ L.CalcTileLayer = L.TileLayer.extend({
 	_onTextSelectionMsg: function (textMsg) {
 		L.TileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
 		this._onUpdateSelectionHeader();
+	},
+
+	_onCellCursorMsg: function (textMsg) {
+		var pos = new L.Point(-1, -1);
+		L.TileLayer.prototype._onCellCursorMsg.call(this, textMsg);
+		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
+			pos = this._cellCursorTwips.min.add([1, 1]);
+		}
+		this._map.fire('updatecurrentheader', pos);
 	}
 });

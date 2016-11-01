@@ -9,6 +9,7 @@ L.Control.Header = L.Control.extend({
 
 	initialize: function () {
 		this._clicks = 0;
+		this._current = -1;
 		this._selection = {start: -1, end: -1};
 	},
 
@@ -69,6 +70,27 @@ L.Control.Header = L.Control.extend({
 		}
 		this._selection.start = itStart;
 		this._selection.end = itEnd;
+	},
+
+	updateCurrent: function (element, start) {
+		var childs = element.children;
+		if (start < 0) {
+			this.unselect(childs[this._current]);
+			this._current = -1;
+			return;
+		}
+
+		var x0 = 0, x1 = 0;
+		for (var iterator = 0, len = childs.length; iterator < len; iterator++) {
+			x0 = (iterator > 0 ? childs[iterator - 1].size : 0);
+			x1 = childs[iterator].size;
+			if (x0 <= start && start <= x1) {
+				this.unselect(childs[this._current]);
+				this.select(childs[iterator]);
+				this._current = iterator;
+				break;
+			}
+		}
 	},
 
 	_onMouseDown: function (e) {
