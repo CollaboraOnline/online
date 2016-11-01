@@ -65,6 +65,7 @@
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
+#include <Poco/Net/IPAddress.h>
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/MessageHeader.h>
 #include <Poco/Net/NameValueCollection.h>
@@ -1317,8 +1318,11 @@ static inline ServerSocket* getServerSocket(int nClientPortNumber)
     try
     {
         ServerSocket* socket = LOOLWSD::isSSLEnabled() ? new SecureServerSocket() : new ServerSocket();
-        socket->bind(nClientPortNumber, false);
-
+        Poco::Net::IPAddress wildcardAddr;
+        SocketAddress address(wildcardAddr, nClientPortNumber);
+        socket->init(address.af());
+        socket->setReuseAddress(true);
+        socket->bind(address, false);
         // 64 is the default value for the backlog parameter in Poco
         // when creating a ServerSocket, so use it here, too.
         socket->listen(64);
