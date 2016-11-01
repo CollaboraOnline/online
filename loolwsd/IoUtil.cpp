@@ -148,6 +148,8 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
                 if (tokens.count() == 2 &&
                     tokens[0] == "nextmessage:" && LOOLProtocol::getTokenInteger(tokens[1], "size", size) && size > 0)
                 {
+                    LOG_TRC("Getting large message of " << tokens[1] << " bytes.");
+
                     // Check if it is a "nextmessage:" and in that case read the large
                     // follow-up message separately, and handle that only.
                     payload.resize(size);
