@@ -120,7 +120,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         for (const auto& pair : _lastDocStates)
         {
-            LOG_TRC("Replaying missed state-change: STATE_CHANED: " << pair.second);
+            LOG_TRC("Replaying missed state-change: STATE_CHANGED: " << pair.second);
             loKitCallback(LOK_CALLBACK_STATE_CHANGED, pair.second);
         }
 
