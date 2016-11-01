@@ -887,6 +887,8 @@ bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vecto
 
 void DocumentBroker::childSocketTerminated()
 {
+    std::lock_guard<std::mutex> lock(_mutex);
+
     if (!_childProcess->isAlive())
     {
         Log::error("Child for doc [" + _docKey + "] terminated prematurely.");
