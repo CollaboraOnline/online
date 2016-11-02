@@ -55,7 +55,9 @@ Obsoletes:      loleaflet <= 1.5.8
 
 %description
 
+%if 0%{?suse_version}
 %debug_package
+%endif
 %prep
 %setup -n loolwsd-@PACKAGE_VERSION@
 %setup -n loolwsd-@PACKAGE_VERSION@ -T -D -a 1
