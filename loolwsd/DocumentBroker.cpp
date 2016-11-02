@@ -171,7 +171,7 @@ DocumentBroker::~DocumentBroker()
                 << "] destroyed with " << _sessions.size()
                 << " sessions left." << Log::end;
 
-    assert(_sessions.empty());
+//    assert(_sessions.empty());
 }
 
 bool DocumentBroker::load(const std::string& sessionId, const std::string& jailId)
