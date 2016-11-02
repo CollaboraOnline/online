@@ -1313,14 +1313,14 @@ public:
 namespace
 {
 
-static inline ServerSocket* getServerSocket(int nClientPortNumber)
+static inline ServerSocket* getServerSocket(int nPortNumber, bool reuseDetails)
 {
     try
     {
         ServerSocket* socket = LOOLWSD::isSSLEnabled() ? new SecureServerSocket() : new ServerSocket();
         Poco::Net::IPAddress wildcardAddr;
-        SocketAddress address(wildcardAddr, nClientPortNumber);
-        socket->bind(address, true);
+        SocketAddress address(wildcardAddr, nPortNumber);
+        socket->bind(address, reuseDetails);
         // 64 is the default value for the backlog parameter in Poco
         // when creating a ServerSocket, so use it here, too.
         socket->listen(64);
@@ -1338,7 +1338,7 @@ static inline ServerSocket* findFreeServerPort(int& nClientPortNumber)
     ServerSocket* socket = nullptr;
     while (!socket)
     {
-        socket = getServerSocket(nClientPortNumber);
+        socket = getServerSocket(nClientPortNumber, false);
         if (!socket)
         {
             nClientPortNumber++;
@@ -1368,7 +1368,7 @@ ServerSocket* findFreeMasterPort(int &nMasterPortNumber)
     ServerSocket* socket = nullptr;
     while (!socket)
     {
-        socket = getServerSocket(nMasterPortNumber);
+        socket = getServerSocket(nMasterPortNumber, false);
         if (!socket)
         {
             nMasterPortNumber++;
@@ -1911,7 +1911,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     std::unique_ptr<ServerSocket> psvs(
         UnitWSD::isUnitTesting() ?
             findFreeServerPort(ClientPortNumber) :
-            getServerSocket(ClientPortNumber));
+            getServerSocket(ClientPortNumber, true));
     if (!psvs)
         return Application::EXIT_SOFTWARE;
 
