@@ -2088,6 +2088,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         Poco::Crypto::uninitializeCrypto();
     }
 
+    // atexit handlers tend to free Admin before Documents
+    Log::info("Cleaning up lingering documents.");
+    DocBrokers.clear();
 
     Log::info("Process [loolwsd] finished.");
 
