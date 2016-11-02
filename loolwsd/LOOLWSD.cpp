@@ -1320,9 +1320,7 @@ static inline ServerSocket* getServerSocket(int nClientPortNumber)
         ServerSocket* socket = LOOLWSD::isSSLEnabled() ? new SecureServerSocket() : new ServerSocket();
         Poco::Net::IPAddress wildcardAddr;
         SocketAddress address(wildcardAddr, nClientPortNumber);
-        socket->init(address.af());
-        socket->setReuseAddress(true);
-        socket->bind(address, false);
+        socket->bind(address, true);
         // 64 is the default value for the backlog parameter in Poco
         // when creating a ServerSocket, so use it here, too.
         socket->listen(64);
