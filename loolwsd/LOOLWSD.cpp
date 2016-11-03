@@ -221,7 +221,7 @@ void shutdownLimitReached(WebSocket& ws)
     }
     catch (const std::exception& ex)
     {
-        Log::error("Error while shuting down socket on reaching limit: " + std::string(ex.what()));
+        LOG_ERR("Error while shuting down socket on reaching limit: " << ex.what());
     }
 }
 
@@ -239,7 +239,7 @@ bool cleanupDocBrokers()
         // Cleanup used and dead entries.
         if (it->second->isLoaded() && !it->second->isAlive())
         {
-            Log::debug("Removing dead DocBroker [" + it->first + "].");
+            LOG_DBG("Removing dead DocBroker [" << it->first << "].");
             it = DocBrokers.erase(it);
         }
         else
@@ -259,7 +259,7 @@ static void forkChildren(const int number)
     {
         Util::checkDiskSpaceOnRegisteredFileSystems();
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
-        Log::debug("MasterToForKit: " + aMessage.substr(0, aMessage.length() - 1));
+        LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
 
         ++OutstandingForks;
         IoUtil::writeToPipe(LOOLWSD::ForKitWritePipe, aMessage);
@@ -276,8 +276,7 @@ static bool cleanupChildren()
     {
         if (!NewChildren[i]->isAlive())
         {
-            Log::warn() << "Removing unused dead child [" << NewChildren[i]->getPid()
-                        << "]." << Log::end;
+            LOG_WRN("Removing unused dead child [" << NewChildren[i]->getPid() << "].");
             NewChildren.erase(NewChildren.begin() + i);
             removed = true;
         }
@@ -345,9 +344,8 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     --OutstandingForks;
     NewChildren.emplace_back(child);
     const auto count = NewChildren.size();
-    Log::info() << "Have " << count << " "
-                << (count == 1 ? "child." : "children.")
-                << Log::end;
+    LOG_INF("Have " << count << " " <<
+            (count == 1 ? "child." : "children."));
 
     NewChildrenCV.notify_one();
     return count;
@@ -368,7 +366,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
         int balance = LOOLWSD::NumPreSpawnedChildren;
         if (available == 0)
         {
-            Log::error("getNewChild: No available child. Sending spawn request to forkit and failing.");
+            LOG_WRN("getNewChild: No available child. Sending spawn request to forkit and failing.");
         }
         else
         {
@@ -376,7 +374,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
             balance = std::max(balance, 0);
         }
 
-        Log::debug("getNewChild: Have " + std::to_string(available) + " children, forking " + std::to_string(balance));
+        LOG_DBG("getNewChild: Have " << available << " children, forking " << balance);
         forkChildren(balance);
 
         const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_MS);
@@ -388,17 +386,17 @@ static std::shared_ptr<ChildProcess> getNewChild()
             // Validate before returning.
             if (child && child->isAlive())
             {
-                Log::debug("getNewChild: Returning new child [" + std::to_string(child->getPid()) + "].");
+                LOG_DBG("getNewChild: Returning new child [" << child->getPid() << "].");
                 return child;
             }
         }
 
-        Log::debug("getNewChild: No live child, forking more.");
+        LOG_DBG("getNewChild: No live child, forking more.");
     }
     while (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() <
            CHILD_TIMEOUT_MS * 4);
 
-    Log::debug("getNewChild: Timed out while waiting for new child.");
+    LOG_DBG("getNewChild: Timed out while waiting for new child.");
     return nullptr;
 }
 
@@ -473,7 +471,7 @@ private:
     /// Returns true if a response has been sent.
     static bool handlePostRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
-        Log::info("Post request: [" + request.getURI() + "]");
+        LOG_INF("Post request: [" << request.getURI() << "]");
         StringTokenizer tokens(request.getURI(), "/?");
         if (tokens.count() >= 3 && tokens[2] == "convert-to")
         {
@@ -487,7 +485,7 @@ private:
             {
                 if (!format.empty())
                 {
-                    Log::info("Conversion request for URI [" + fromPath + "].");
+                    LOG_INF("Conversion request for URI [" << fromPath << "].");
 
                     // Request a kit process for this doc.
                     auto child = getNewChild();
@@ -499,7 +497,7 @@ private:
 
                     auto uriPublic = DocumentBroker::sanitizeURI(fromPath);
                     const auto docKey = DocumentBroker::getDocKey(uriPublic);
-                    Log::debug("New DocumentBroker for docKey [" + docKey + "].");
+                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
                     auto docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
                     child->setDocumentBroker(docBroker);
 
@@ -510,7 +508,7 @@ private:
                     cleanupDocBrokers();
 
                     // FIXME: What if the same document is already open? Need a fake dockey here?
-                    Log::debug("New DocumentBroker for docKey [" + docKey + "].");
+                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
                     DocBrokers.emplace(docKey, docBroker);
 
                     // Load the document.
@@ -518,7 +516,7 @@ private:
                     auto session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic);
 
                     auto sessionsCount = docBroker->addSession(session);
-                    Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
+                    LOG_TRC(docKey << ", ws_sessions++: " << sessionsCount);
 
                     lock.unlock();
 
@@ -542,21 +540,21 @@ private:
                     try
                     {
                         Poco::URI resultURL(session->getSaveAsUrl(COMMAND_TIMEOUT_MS));
-                        Log::trace("Save-as URL: " + resultURL.toString());
+                        LOG_TRC("Save-as URL: " << resultURL.toString());
 
                         if (!resultURL.getPath().empty())
                         {
                             const std::string mimeType = "application/octet-stream";
                             std::string encodedFilePath;
                             URI::encode(resultURL.getPath(), "", encodedFilePath);
-                            Log::trace("Sending file: " + encodedFilePath);
+                            LOG_TRC("Sending file: " << encodedFilePath);
                             response.sendFile(encodedFilePath, mimeType);
                             sent = true;
                         }
                     }
                     catch (const std::exception& ex)
                     {
-                        Log::error("Failed to get save-as url: " + std::string(ex.what()));
+                        LOG_ERR("Failed to get save-as url: " << ex.what());
                     }
 
                     lock.lock();
@@ -572,7 +570,7 @@ private:
                     }
                     else
                     {
-                        Log::error("Multiple sessions during conversion. " + std::to_string(sessionsCount) + " sessions remain.");
+                        LOG_ERR("Multiple sessions during conversion. " << sessionsCount << " sessions remain.");
                     }
 
                     session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE);
@@ -594,7 +592,7 @@ private:
         }
         else if (tokens.count() >= 4 && tokens[3] == "insertfile")
         {
-            Log::info("Insert file request.");
+            LOG_INF("Insert file request.");
             response.set("Access-Control-Allow-Origin", "*");
             response.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
             response.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -625,7 +623,7 @@ private:
                 // protect against attempts to inject something funny here
                 if (formChildid.find('/') == std::string::npos && formName.find('/') == std::string::npos)
                 {
-                    Log::info() << "Perform insertfile: " << formChildid << ", " << formName << Log::end;
+                    LOG_INF("Perform insertfile: " << formChildid << ", " << formName);
                     const std::string dirPath = LOOLWSD::ChildRoot + formChildid
                                               + JAILED_DOCUMENT_ROOT + "insertfile";
                     File(dirPath).createDirectories();
@@ -637,7 +635,7 @@ private:
         }
         else if (tokens.count() >= 6)
         {
-            Log::info("File download request.");
+            LOG_INF("File download request.");
             // TODO: Check that the user in question has access to this file!
 
             // 1. Validate the dockey
@@ -671,7 +669,7 @@ private:
             URI::decode(tokens[5], fileName);
             const Path filePath(LOOLWSD::ChildRoot + tokens[3]
                                 + JAILED_DOCUMENT_ROOT + tokens[4] + "/" + fileName);
-            Log::info("HTTP request for: " + filePath.toString());
+            LOG_INF("HTTP request for: " << filePath.toString());
             if (filePath.isAbsolute() && File(filePath).exists())
             {
                 response.set("Access-Control-Allow-Origin", "*");
