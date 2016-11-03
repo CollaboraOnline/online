@@ -120,10 +120,14 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('Continue previous numbering'), type: 'unocommand', uno: '.uno:ContinueNumbering'}]},
 				{name: _('Clear direct formatting'), type: 'unocommand', uno: '.uno:ResetAttributes'},
 				{name: _('Page'), type: 'menu', menu: [
-						{name: 'A4', type: 'unocommand', uno: '.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21000"},"AttributePageSize.Height":{"type":"long", "value": "29700"}}'},
-						{name: 'A5', type: 'unocommand', uno: '.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "14800"},"AttributePageSize.Height":{"type":"long", "value": "21000"}}'},
-						{name: 'Letter', type: 'unocommand', uno: '.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21590"},"AttributePageSize.Height":{"type":"long", "value": "27940"}}'},
-						{name: 'Legal', type: 'unocommand', uno: '.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21590"},"AttributePageSize.Height":{"type":"long", "value": "35560"}}'}]}
+						{name: 'A4, ' + _('Portrait'), type: 'action', id: 'a4portrait'},
+						{name: 'A4, ' + _('Landscape'), type: 'action', id: 'a4landscape'},
+						{name: 'A5, ' + _('Portrait'), type: 'action', id: 'a5portrait'},
+						{name: 'A5, ' + _('Landscape'), type: 'action', id: 'a5landscape'},
+						{name: 'Letter, ' + _('Portrait'), type: 'action', id: 'letterportrait'},
+						{name: 'Letter, ' + _('Landscape'), type: 'action', id: 'letterlandscape'},
+						{name: 'Legal, ' + _('Portrait'), type: 'action', id: 'legalportrait'},
+						{name: 'Legal, ' + _('Landscape'), type: 'action', id: 'legallandscape'}]}
 			]},
 			{name: _('Tables'), type: 'menu', menu: [{name: _('Insert'), type: 'menu', menu: [{name: _('Rows before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
 																						{name: _('Rows after'), type: 'unocommand', uno: '.uno:InsertRowsAfter'},
@@ -404,6 +408,30 @@ L.Control.Menubar = L.Control.extend({
 			map.WOPIPostMessage('rev-history');
 		} else if (id === 'repair') {
 			map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
+		} else if (id === 'a4portrait') {
+			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21000"},"AttributePageSize.Height":{"type":"long", "value": "29700"}}');
+			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "false"}}');
+		} else if (id === 'a4landscape') {
+			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Height":{"type":"long", "value": "21000"},"AttributePageSize.Width":{"type":"long", "value": "29700"}}');
+			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "true"}}');
+		} else if (id === 'a5portrait') {
+			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "14800"},"AttributePageSize.Height":{"type":"long", "value": "21000"}}');
+			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "false"}}');
+		} else if (id === 'a5landscape') {
+			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Height":{"type":"long", "value": "14800"},"AttributePageSize.Width":{"type":"long", "value": "21000"}}');
+			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "true"}}');
+		} else if (id === 'letterportrait') {
+			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21950"},"AttributePageSize.Height":{"type":"long", "value": "27940"}}');
+			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "false"}}');
+		} else if (id === 'letterlandscape') {
+			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Height":{"type":"long", "value": "21950"},"AttributePageSize.Width":{"type":"long", "value": "27940"}}');
+			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "true"}}');
+		} else if (id === 'legalportrait') {
+			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21590"},"AttributePageSize.Height":{"type":"long", "value": "35560"}}');
+			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "false"}}');
+		} else if (id === 'legallandscape') {
+			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Height":{"type":"long", "value": "21590"},"AttributePageSize.Width":{"type":"long", "value": "35560"}}');
+			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "true"}}');
 		}
 	},
 
