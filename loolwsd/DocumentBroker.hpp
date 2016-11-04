@@ -108,6 +108,7 @@ public:
     {
         try
         {
+            LOG_TRC("DocBroker to Child: " << data);
             _ws->sendFrame(data.data(), data.size());
             return true;
         }
