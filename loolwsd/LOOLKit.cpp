@@ -290,8 +290,7 @@ public:
         _docPasswordType(PasswordType::ToView),
         _stop(false),
         _mutex(),
-        _isLoading(0),
-        _clientViews(0)
+        _isLoading(0)
     {
         Log::info("Document ctor for url [" + _url + "] on child [" + _jailId + "].");
         assert(_loKit && _loKit->get());
@@ -301,8 +300,8 @@ public:
 
     ~Document()
     {
-        Log::info("~Document dtor for url [" + _url + "] on child [" + _jailId +
-                  "]. There are " + std::to_string(_clientViews) + " views.");
+        LOG_INF("~Document dtor for url [" << _url << "] on child [" << _jailId <<
+                  "]. There are " << _sessions.size() << " views.");
 
         // Wait for the callback worker to finish.
         _stop = true;
@@ -325,7 +324,7 @@ public:
                 return true;
             }
 
-            LOG_INF("Creating " << (_clientViews ? "new" : "first") <<
+            LOG_INF("Creating " << (_sessions.empty() ? "first" : "new") <<
                     " session for url: " << _url << " for sessionId: " <<
                     sessionId << " on jailId: " << _jailId);
 
@@ -767,9 +766,11 @@ private:
                                           const std::string& renderOpts,
                                           const bool haveDocPassword) override
     {
-        Log::info("Session " + sessionId + " is loading. " + std::to_string(_clientViews) + " views loaded.");
-
         std::unique_lock<std::mutex> lock(_mutex);
+
+        LOG_INF("Loading session [" << sessionId << "] on url [" << uri <<
+                "] is loading. " << _sessions.size() << " views loaded.");
+
         while (_isLoading)
         {
             _cvLoading.wait(lock);
@@ -796,7 +797,6 @@ private:
         // Done loading, let the next one in (if any).
         assert(_loKitDocument && _loKitDocument->get() && "Uninitialized lok::Document instance");
         lock.lock();
-        ++_clientViews;
         --_isLoading;
         _cvLoading.notify_one();
 
@@ -808,7 +808,8 @@ private:
         const auto& sessionId = session.getId();
         LOG_INF("Unloading session [" << sessionId << "] on url [" << _url << "].");
 
-        _tileQueue->removeCursorPosition(session.getViewId());
+        const auto viewId = session.getViewId();
+        _tileQueue->removeCursorPosition(viewId);
 
         if (_loKitDocument == nullptr)
         {
@@ -816,15 +817,8 @@ private:
             return;
         }
 
-        --_clientViews;
-        Log::info() << "Document [" << _url << "] session ["
-                    << sessionId << "] unloaded, " << _clientViews
-                    << " view" << (_clientViews != 1 ? "s" : "")
-                    << Log::end;
-
         std::unique_lock<std::mutex> lockLokDoc(_loKitDocument->getLock());
 
-        const auto viewId = session.getViewId();
         _loKitDocument->setView(viewId);
         _loKitDocument->registerCallback(nullptr, nullptr);
         _loKitDocument->destroyView(viewId);
@@ -836,6 +830,10 @@ private:
         const int viewCount = _loKitDocument->getViewsCount();
         std::vector<int> viewIds(viewCount);
         _loKitDocument->getViewIds(viewIds.data(), viewCount);
+
+        LOG_INF("Document [" << _url << "] session [" <<
+                sessionId << "] unloaded. Have " << viewCount <<
+                " view" << (viewCount != 1 ? "s" : ""));
 
         lockLokDoc.unlock();
 
@@ -1109,9 +1107,10 @@ private:
                                        std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
         _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
 
-        Log::info() << "Document [" << _url << "] view ["
-                    << viewId << "] loaded, leaving "
-                    << (_clientViews + 1) << " views." << Log::end;
+        const int viewCount = _loKitDocument->getViewsCount();
+        LOG_INF("Document [" << _url << "] view [" <<
+                  viewId << "] loaded. Have " << viewCount <<
+                  " view" << (viewCount != 1 ? "s." : "."));
 
         return _loKitDocument;
     }
@@ -1273,7 +1272,6 @@ private:
     std::map<std::string, std::shared_ptr<ChildSession>> _sessions;
     std::map<int, UserInfo> _oldSessionIds;
     Poco::Thread _callbackThread;
-    std::atomic_size_t _clientViews;
 };
 
 void documentViewCallback(const int nType, const char* pPayload, void* pData)
