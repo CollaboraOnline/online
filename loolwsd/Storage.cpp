@@ -76,12 +76,12 @@ void StorageBase::initialize()
             {
                 if (app.config().getBool(path + "[@allow]", false))
                 {
-                    Log::info("Adding trusted WOPI host: [" + host + "].");
+                    LOG_INF("Adding trusted WOPI host: [" << host << "].");
                     WopiHosts.allow(host);
                 }
                 else
                 {
-                    Log::info("Adding blocked WOPI host: [" + host + "].");
+                    LOG_INF("Adding blocked WOPI host: [" << host << "].");
                     WopiHosts.deny(host);
                 }
             }
@@ -120,11 +120,14 @@ bool isLocalhost(const std::string& targetHost)
         address = address.substr(0, address.find('%', 0));
         if (address == targetAddress)
         {
-            Log::info("WOPI host is on the same host as the WOPI client: \"" + targetAddress + "\". Connection is allowed.");
+            LOG_INF("WOPI host is on the same host as the WOPI client: \"" <<
+                    targetAddress << "\". Connection is allowed.");
             return true;
         }
     }
-    Log::info("WOPI host is not on the same host as the WOPI client: \"" + targetAddress + "\". Connection is not allowed.");
+
+    LOG_INF("WOPI host is not on the same host as the WOPI client: \"" <<
+            targetAddress << "\". Connection is not allowed.");
     return false;
 }
 
@@ -139,17 +142,20 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
 
     if (UnitWSD::get().createStorage(uri, jailRoot, jailPath, storage))
     {
-        Log::info("Storage load hooked.");
+        LOG_INF("Storage load hooked.");
         if (storage)
+        {
             return storage;
+        }
     }
     else if (uri.isRelative() || uri.getScheme() == "file")
     {
-        Log::info("Public URI [" + uri.toString() + "] is a file.");
+        LOG_INF("Public URI [" << uri.toString() << "] is a file.");
+
 #if ENABLE_DEBUG
         if (std::getenv("FAKE_UNAUTHORIZED"))
         {
-            Log::fatal("Faking an UnauthorizedRequestException");
+            LOG_FTL("Faking an UnauthorizedRequestException");
             throw UnauthorizedRequestException("No acceptable WOPI hosts found matching the target host in config.");
         }
 #endif
@@ -158,11 +164,11 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             return std::unique_ptr<StorageBase>(new LocalStorage(uri, jailRoot, jailPath));
         }
 
-        Log::error("Local Storage is disabled by default. Enable in the config file or on the command-line to enable.");
+        LOG_ERR("Local Storage is disabled by default. Enable in the config file or on the command-line to enable.");
     }
     else if (WopiEnabled)
     {
-        Log::info("Public URI [" + uri.toString() + "] considered WOPI.");
+        LOG_INF("Public URI [" << uri.toString() << "] considered WOPI.");
         const auto& targetHost = uri.getHost();
         if (WopiHosts.match(targetHost) || isLocalhost(targetHost))
         {
@@ -203,18 +209,18 @@ std::string LocalStorage::loadStorageFileToLocal()
     // /chroot/jailId/user/doc/childId/file.ext
     const auto filename = Poco::Path(_uri.getPath()).getFileName();
     _jailedFilePath = Poco::Path(rootPath, filename).toString();
-
-    Log::info("Public URI [" + _uri.getPath() +
-              "] jailed to [" + _jailedFilePath + "].");
+    LOG_INF("Public URI [" << _uri.getPath() <<
+            "] jailed to [" + _jailedFilePath + "].");
 
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
-
     const auto publicFilePath = _uri.getPath();
 
     if (!Util::checkDiskSpace(publicFilePath))
+    {
         throw StorageSpaceLowException("Low disk space for " + publicFilePath);
+    }
 
-    Log::info("Linking " + publicFilePath + " to " + _jailedFilePath);
+    LOG_INF("Linking " << publicFilePath << " to " << _jailedFilePath);
     if (!Poco::File(_jailedFilePath).exists() && link(publicFilePath.c_str(), _jailedFilePath.c_str()) == -1)
     {
         // Failed
@@ -226,7 +232,7 @@ std::string LocalStorage::loadStorageFileToLocal()
         // Fallback to copying.
         if (!Poco::File(_jailedFilePath).exists())
         {
-            Log::info("Copying " + publicFilePath + " to " + _jailedFilePath);
+            LOG_INF("Copying " << publicFilePath << " to " << _jailedFilePath);
             Poco::File(publicFilePath).copyTo(_jailedFilePath);
             _isCopy = true;
         }
@@ -249,13 +255,14 @@ bool LocalStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
         // Copy the file back.
         if (_isCopy && Poco::File(_jailedFilePath).exists())
         {
-            Log::info("Copying " + _jailedFilePath + " to " + uriPublic.getPath());
+            LOG_INF("Copying " << _jailedFilePath << " to " << uriPublic.getPath());
             Poco::File(_jailedFilePath).copyTo(uriPublic.getPath());
         }
     }
     catch (const Poco::Exception& exc)
     {
-        Log::error("copyTo(\"" + _jailedFilePath + "\", \"" + uriPublic.getPath() + "\") failed: " + exc.displayText());
+        LOG_ERR("copyTo(\"" << _jailedFilePath << "\", \"" << uriPublic.getPath() <<
+                "\") failed: " << exc.displayText());
         throw;
     }
 
@@ -351,7 +358,7 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
 /// uri format: http://server/<...>/wopi*/files/<id>/content
 std::string WopiStorage::loadStorageFileToLocal()
 {
-    Log::info("Downloading URI [" + _uri.toString() + "].");
+    LOG_INF("Downloading URI [" << _uri.toString() << "].");
 
     // WOPI URI to download files ends in '/contents'.
     // Add it here to get the payload instead of file info.
@@ -387,9 +394,9 @@ std::string WopiStorage::loadStorageFileToLocal()
     const std::chrono::duration<double> diff = (endTime - startTime);
     _wopiLoadDuration += diff;
     const auto size = getFileSize(_jailedFilePath);
-    Log::info() << "WOPI::GetFile downloaded " << size << " bytes from [" << uriObject.toString()
-                << "] -> " << _jailedFilePath << " in " + std::to_string(diff.count()) + "s : "
-                << response.getStatus() << " " << response.getReason() << Log::end;
+    LOG_INF("WOPI::GetFile downloaded " << size << " bytes from [" << uriObject.toString() <<
+            "] -> " << _jailedFilePath << " in " << diff.count() << "s : " <<
+            response.getStatus() << " " << response.getReason());
 
     _isLoaded = true;
     // Now return the jailed path.
@@ -398,7 +405,7 @@ std::string WopiStorage::loadStorageFileToLocal()
 
 bool WopiStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
 {
-    Log::info("Uploading URI [" + uriPublic.toString() + "] from [" + _jailedFilePath + "].");
+    LOG_INF("Uploading URI [" << uriPublic.toString() << "] from [" << _jailedFilePath + "].");
     // TODO: Check if this URI has write permission (canWrite = true)
     const auto size = getFileSize(_jailedFilePath);
 
@@ -422,11 +429,11 @@ bool WopiStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
     std::ostringstream oss;
     Poco::StreamCopier::copyStream(rs, oss);
 
-    Log::info("WOPI::PutFile response: " + oss.str());
+    LOG_INF("WOPI::PutFile response: " << oss.str());
     const auto success = (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK);
-    Log::info() << "WOPI::PutFile uploaded " << size << " bytes from [" << _jailedFilePath  << "]:"
-                << "] -> [" << uriObject.toString() << "]: "
-                <<  response.getStatus() << " " << response.getReason() << Log::end;
+    LOG_INF("WOPI::PutFile uploaded " << size << " bytes from [" << _jailedFilePath <<
+            "] -> [" << uriObject.toString() << "]: " <<
+            response.getStatus() << " " << response.getReason());
 
     return success;
 }
