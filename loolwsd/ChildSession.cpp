@@ -25,7 +25,6 @@
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
-using Poco::Net::WebSocket;
 using Poco::StringTokenizer;
 using Poco::Timestamp;
 using Poco::URI;
