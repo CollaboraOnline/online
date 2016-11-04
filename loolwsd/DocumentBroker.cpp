@@ -160,16 +160,17 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
 
-    Log::info("DocumentBroker [" + _uriPublic.toString() + "] created. DocKey: [" + _docKey + "]");
+    LOG_INF("DocumentBroker [" << _uriPublic.toString() <<
+            "] created. DocKey: [" << _docKey << "]");
 }
 
 DocumentBroker::~DocumentBroker()
 {
     Admin::instance().rmDoc(_docKey);
 
-    Log::info() << "~DocumentBroker [" << _uriPublic.toString()
-                << "] destroyed with " << _sessions.size()
-                << " sessions left." << Log::end;
+    LOG_INF("~DocumentBroker [" << _uriPublic.toString() <<
+            "] destroyed with " << _sessions.size() <<
+            " sessions left.");
 
     if (!_sessions.empty())
     {

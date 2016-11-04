@@ -789,7 +789,7 @@ private:
         }
         catch (const std::exception& exc)
         {
-            Log::error("Exception while loading [" + uri + "] : " + exc.what());
+            LOG_ERR("Exception while loading [" << uri << "] : " << exc.what());
             return nullptr;
         }
 
@@ -806,13 +806,13 @@ private:
     void onUnload(const ChildSession& session) override
     {
         const auto& sessionId = session.getId();
-        Log::info("Unloading [" + sessionId + "].");
+        LOG_INF("Unloading session [" << sessionId << "] on url [" << _url << "].");
 
         _tileQueue->removeCursorPosition(session.getViewId());
 
         if (_loKitDocument == nullptr)
         {
-            Log::error("Unloading session [" + sessionId + "] without loKitDocument.");
+            LOG_ERR("Unloading session [" << sessionId << "] without loKitDocument.");
             return;
         }
 
@@ -829,7 +829,8 @@ private:
         _loKitDocument->registerCallback(nullptr, nullptr);
         _loKitDocument->destroyView(viewId);
         _viewIdToCallbackDescr.erase(viewId);
-        Log::debug("Destroyed view " + std::to_string(viewId));
+        LOG_DBG("Destroyed view [" << viewId << "] with session [" <<
+                sessionId << "] on url [" << _url << "].");
 
         // Get the list of view ids from the core
         const int viewCount = _loKitDocument->getViewsCount();
