@@ -319,29 +319,26 @@ public:
 
         try
         {
-            const auto& it = _sessions.find(sessionId);
-            if (it != _sessions.end())
+            if (_sessions.find(sessionId) != _sessions.end())
             {
-                Log::warn("Session [" + sessionId + "] is already running.");
+                LOG_WRN("Session [" << sessionId << "] on url [" << _url << "] already exists.");
                 return true;
             }
 
-            Log::info() << "Creating " << (_clientViews ? "new" : "first")
-                        << " view for url: " << _url << " for sessionId: " << sessionId
-                        << " on jailId: " << _jailId << Log::end;
+            LOG_INF("Creating " << (_clientViews ? "new" : "first") <<
+                    " session for url: " << _url << " for sessionId: " <<
+                    sessionId << " on jailId: " << _jailId);
 
             auto session = std::make_shared<ChildSession>(sessionId, _jailId, *this);
-            if (!_sessions.emplace(sessionId, session).second)
-            {
-                Log::error("Session already exists for child: " + _jailId + ", session: " + sessionId);
-            }
+            _sessions.emplace(sessionId, session);
 
-            Log::debug("Sessions: " + std::to_string(_sessions.size()));
+            LOG_DBG("Sessions: " << _sessions.size());
             return true;
         }
         catch (const std::exception& ex)
         {
-            Log::error("Exception while creating session [" + sessionId + "] on url [" + _url + "] - '" + ex.what() + "'.");
+            LOG_ERR("Exception while creating session [" << sessionId <<
+                    "] on url [" << _url << "] - '" << ex.what() << "'.");
             return false;
         }
     }
