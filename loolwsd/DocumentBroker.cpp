@@ -469,14 +469,13 @@ std::string DocumentBroker::getJailRoot() const
 size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
 {
     const auto id = session->getId();
-    const std::string aMessage = "session " + id + " " + _docKey + "\n";
+    const std::string aMessage = "session " + id + " " + _docKey;
 
     try
     {
         std::lock_guard<std::mutex> lock(_mutex);
 
         // Request a new session from the child kit.
-        Log::debug("DocBroker to Child: " + aMessage.substr(0, aMessage.length() - 1));
         _childProcess->sendTextFrame(aMessage);
 
         auto ret = _sessions.emplace(id, session);
@@ -840,7 +839,6 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
     if (it != _sessions.end())
     {
         const auto msg = "child-" + viewId + ' ' + message;
-        Log::debug("DocBroker to Child: " + msg);
         _childProcess->sendTextFrame(msg);
         return true;
     }
