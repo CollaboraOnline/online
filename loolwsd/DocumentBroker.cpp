@@ -171,7 +171,10 @@ DocumentBroker::~DocumentBroker()
                 << "] destroyed with " << _sessions.size()
                 << " sessions left." << Log::end;
 
-//    assert(_sessions.empty());
+    if (!_sessions.empty())
+    {
+        LOG_WRN("DocumentBroker still has unremoved sessions.");
+    }
 }
 
 bool DocumentBroker::load(const std::string& sessionId, const std::string& jailId)
