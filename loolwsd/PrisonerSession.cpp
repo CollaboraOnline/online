@@ -39,17 +39,17 @@ PrisonerSession::PrisonerSession(const std::string& id,
     _docBroker(std::move(docBroker)),
     _curPart(0)
 {
-    Log::info("PrisonerSession ctor [" + getName() + "].");
+    LOG_INF("PrisonerSession ctor [" << getName() << "].");
 }
 
 PrisonerSession::~PrisonerSession()
 {
-    Log::info("~PrisonerSession dtor [" + getName() + "].");
+    LOG_INF("~PrisonerSession dtor [" << getName() << "].");
 }
 
 bool PrisonerSession::_handleInput(const char *buffer, int length)
 {
-    Log::trace(getName() + ": handling [" + getAbbreviatedMessage(buffer, length)+ "].");
+    LOG_TRC(getName() + ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
@@ -65,7 +65,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
     if (tokens[0] == "unocommandresult:")
     {
         const std::string stringMsg(buffer, length);
-        Log::info(getName() + ": Command: " + stringMsg);
+        LOG_INF(getName() << ": Command: " << stringMsg);
         const auto index = stringMsg.find_first_of('{');
         if (index != std::string::npos)
         {
@@ -90,6 +90,10 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                 return true;
             }
         }
+        else
+        {
+            LOG_WRN("Expected json unocommandresult. Ignoring: " << stringMsg);
+        }
     }
     else if (tokens[0] == "error:")
     {
@@ -105,7 +109,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                     errorKind == "wrongpassword")
                 {
                     forwardToPeer(_peer, buffer, length, isBinary);
-                    Log::warn("Document load failed: " + errorKind);
+                    LOG_WRN("Document load failed: " << errorKind);
                     return false;
                 }
             }
@@ -122,7 +126,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         std::string url;
         if (!getTokenString(tokens[1], "url", url))
         {
-            Log::error("Bad syntax for: " + firstLine);
+            LOG_ERR("Bad syntax for: " << firstLine);
             return false;
         }
 
@@ -139,7 +143,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             else
             {
                 // Blank for failure.
-                Log::debug("SaveAs produced no output, producing blank url.");
+                LOG_DBG("SaveAs produced no output, producing blank url.");
                 url.clear();
             }
         }
@@ -221,7 +225,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             }
             else
             {
-                Log::error("Unable to parse " + firstLine);
+                LOG_ERR("Unable to parse " << firstLine);
             }
         }
         else if (tokens[0] == "renderfont:")
@@ -230,7 +234,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             if (tokens.count() < 2 ||
                 !getTokenString(tokens[1], "font", font))
             {
-                Log::error("Bad syntax for: " + firstLine);
+                LOG_ERR("Bad syntax for: " << firstLine);
                 return false;
             }
 
@@ -240,7 +244,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
     }
     else
     {
-        Log::info("Ignoring notification on password protected document: " + firstLine);
+        LOG_INF("Ignoring notification on password protected document: " << firstLine);
     }
 
     // Detect json messages, since we must send those as text even though they are multiline.
