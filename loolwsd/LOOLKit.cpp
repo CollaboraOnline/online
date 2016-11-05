@@ -1117,9 +1117,22 @@ private:
 
     bool forwardToChild(const std::string& prefix, const std::vector<char>& payload)
     {
-        std::string message(payload.data() + prefix.size(), payload.size() - prefix.size());
-        Util::ltrim(message);
-        Log::trace("Forwarding payload to " + prefix + ' ' + message);
+        assert(payload.size() > prefix.size());
+
+        // Remove the prefix and trim.
+        size_t index = prefix.size();
+        for ( ; index < payload.size(); ++index)
+        {
+            if (payload[index] != ' ')
+            {
+                break;
+            }
+        }
+
+        auto data = payload.data() + index;
+        auto size = payload.size() - index;
+        const auto abbrMessage = getAbbreviatedMessage(data, size);
+        LOG_TRC("Forwarding payload to " << prefix << ' ' << abbrMessage);
 
         std::string name;
         std::string sessionId;
@@ -1128,9 +1141,11 @@ private:
             const auto it = _sessions.find(sessionId);
             if (it != _sessions.end())
             {
-                if (message == "disconnect")
+                static const std::string disconnect("disconnect");
+                if (size == disconnect.size() &&
+                    strncmp(data, disconnect.data(), disconnect.size()) == 0)
                 {
-                    Log::debug("Removing ChildSession " + sessionId);
+                    LOG_DBG("Removing ChildSession " << sessionId);
                     _oldSessionIds[it->second->getViewId()] = UserInfo({it->second->getViewUserId(), it->second->getViewUserName()});
                     _sessions.erase(it);
                     return true;
@@ -1139,15 +1154,15 @@ private:
                 auto session = it->second;
                 if (session)
                 {
-                    return session->handleInput(message.data(), message.size());
+                    return session->handleInput(data, size);
                 }
             }
 
-            Log::warn() << "Child session [" << sessionId << "] not found to forward message: " << message << Log::end;
+            LOG_WRN("Child session [" << sessionId << "] not found to forward message: " << abbrMessage);
         }
         else
         {
-            Log::error("Failed to parse prefix of forward-to-child message: " + message);
+            LOG_ERR("Failed to parse prefix of forward-to-child message: " << prefix);
         }
 
         return false;

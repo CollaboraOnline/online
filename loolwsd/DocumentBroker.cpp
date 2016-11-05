@@ -868,7 +868,7 @@ bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vecto
     auto data = payload.data() + index;
     auto size = payload.size() - index;
     const auto message = getAbbreviatedMessage(data, size);
-    Log::trace("Forwarding payload to " + prefix + ' ' + message);
+    LOG_TRC("Forwarding payload to " << prefix << ' ' << message);
 
     std::string name;
     std::string sid;
@@ -884,17 +884,17 @@ bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vecto
             }
             else
             {
-                Log::warn() << "Client session [" << sid << "] has no peer to forward message: " << message << Log::end;
+                LOG_WRN("Client session [" << sid << "] has no peer to forward message: " << message);
             }
         }
         else
         {
-            Log::warn() << "Client session [" << sid << "] not found to forward message: " << message << Log::end;
+            LOG_WRN("Client session [" << sid << "] not found to forward message: " << message);
         }
     }
     else
     {
-        Log::error("Failed to parse prefix of forward-to-client message: " + message);
+        LOG_ERR("Failed to parse prefix of forward-to-client message: " << prefix);
     }
 
     return false;
