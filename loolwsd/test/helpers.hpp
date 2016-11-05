@@ -69,6 +69,19 @@ std::vector<char> genRandomData(const size_t size)
 }
 
 inline
+std::string genRandomString(const size_t size)
+{
+    std::string text;
+    text.reserve(size);
+    for (size_t i = 0; i < size; ++i)
+    {
+        text += static_cast<char>('!' + Util::rng::getNext() % 95);
+    }
+
+    return text;
+}
+
+inline
 std::vector<char> readDataFromFile(const std::string& filename)
 {
     std::ifstream ifs(Poco::Path(TDOC, filename).toString(), std::ios::binary);
