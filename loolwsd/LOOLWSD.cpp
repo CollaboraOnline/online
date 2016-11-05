@@ -503,7 +503,7 @@ private:
 
                     // This lock could become a bottleneck.
                     // In that case, we can use a pool and index by publicPath.
-                    std::unique_lock<std::mutex> lock(DocBrokersMutex);
+                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                     cleanupDocBrokers();
 
@@ -518,7 +518,7 @@ private:
                     auto sessionsCount = docBroker->addSession(session);
                     LOG_TRC(docKey << ", ws_sessions++: " << sessionsCount);
 
-                    lock.unlock();
+                    docBrokersLock.unlock();
 
                     std::string encodedFrom;
                     URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
@@ -557,7 +557,7 @@ private:
                         LOG_ERR("Failed to get save-as url: " << ex.what());
                     }
 
-                    lock.lock();
+                    docBrokersLock.lock();
                     sessionsCount = docBroker->removeSession(id);
                     if (sessionsCount == 0)
                     {
