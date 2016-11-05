@@ -37,6 +37,10 @@ void ChildProcess::socketProcessor()
     IoUtil::SocketProcessor(_ws,
         [this](const std::vector<char>& payload)
         {
+            const auto message = LOOLProtocol::getAbbreviatedMessage(payload);
+            LOG_WRN("Recv from child " << this->_pid <<
+                    ": [" << message << "].");
+
             if (UnitWSD::get().filterChildMessage(payload))
             {
                 return true;
@@ -48,14 +52,14 @@ void ChildProcess::socketProcessor()
                 return docBroker->handleInput(payload);
             }
 
-            Log::warn() << "Child " << this->_pid << " has no DocumentBroker to handle message: ["
-                        << LOOLProtocol::getAbbreviatedMessage(payload) << "]." << Log::end;
+            LOG_WRN("Child " << this->_pid <<
+                    " has no DocumentBroker to handle message: [" << message << "].");
             return true;
         },
         []() { },
         [this]() { return TerminationFlag || this->_stop; });
 
-    Log::debug() << "Child [" << getPid() << "] WS terminated. Notifying DocBroker." << Log::end;
+    LOG_DBG("Child [" << getPid() << "] WS terminated. Notifying DocBroker.");
 
 
     // Notify the broker that we're done.
