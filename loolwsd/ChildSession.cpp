@@ -42,12 +42,12 @@ ChildSession::ChildSession(const std::string& id,
     _viewId(-1),
     _isDocLoaded(false)
 {
-    Log::info("ChildSession ctor [" + getName() + "].");
+    LOG_INF("ChildSession ctor [" << getName() << "].");
 }
 
 ChildSession::~ChildSession()
 {
-    Log::info("~ChildSession dtor [" + getName() + "].");
+    LOG_INF("~ChildSession dtor [" << getName() << "].");
 
     disconnect();
 }
@@ -64,7 +64,7 @@ void ChildSession::disconnect()
         }
         else
         {
-            Log::warn("Skipping unload on incomplete view.");
+            LOG_WRN("Skipping unload on incomplete view.");
         }
 
         LOOLSession::disconnect();
@@ -84,7 +84,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
     if (tokens.count() > 0 && tokens[0] == "useractive" && _loKitDocument != nullptr)
     {
-        Log::debug("Handling message after inactivity of " + std::to_string(getInactivityMS()) + "ms.");
+        LOG_DBG("Handling message after inactivity of " << getInactivityMS() << "ms.");
         setIsActive(true);
 
         // Client is getting active again.
@@ -123,7 +123,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             loKitCallback(LOK_CALLBACK_STATE_CHANGED, pair.second);
         }
 
-        Log::debug("Finished replaying messages.");
+        LOG_TRC("Finished replaying messages.");
     }
 
     if (tokens[0] == "dummymsg")
@@ -313,12 +313,12 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     _loKitDocument = _docManager.onLoad(getId(), _jailedFilePath, _userName, _docPassword, renderOpts, _haveDocPassword);
     if (!_loKitDocument || _viewId < 0)
     {
-        Log::error("Failed to get LoKitDocument instance.");
+        LOG_ERR("Failed to get LoKitDocument instance.");
         return false;
     }
 
-    Log::info() << "Created new view with viewid: [" << _viewId << + "] for username: [" << _userName
-                << "] in session: [" << getId() << "]." << Log::end;
+    LOG_INF("Created new view with viewid: [" << _viewId << + "] for username: [" <<
+            _userName << "] in session: [" << getId() << "].");
 
     auto lockLokDoc(_loKitDocument->getLock());
 
@@ -331,11 +331,11 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     }
 
     // Respond by the document status
-    Log::debug("Sending status after loading view " + std::to_string(_viewId) + ".");
+    LOG_DBG("Sending status after loading view " << _viewId << ".");
     const auto status = LOKitHelper::documentStatus(_loKitDocument->get());
     if (status.empty() || !sendTextFrame("status: " + status))
     {
-        Log::error("Failed to get/forward document status [" + status + "].");
+        LOG_ERR("Failed to get/forward document status [" << status << "].");
         return false;
     }
 
@@ -349,7 +349,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     // Inform everyone (including this one) about updated view info
     _docManager.notifyViewInfo(viewIds);
 
-    Log::info("Loaded session " + getId());
+    LOG_INF("Loaded session " << getId());
     return true;
 }
 
@@ -383,7 +383,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
         ptrFont = _loKitDocument->renderFont(decodedFont.c_str(), &width, &height);
     }
 
-    Log::trace("renderFont [" + font + "] rendered in " + std::to_string(timestamp.elapsed()/1000.) + "ms");
+    LOG_TRC("renderFont [" << font << "] rendered in " << (timestamp.elapsed()/1000.) << "ms");
 
     if (!ptrFont ||
         !png::encodeBufferToPNG(ptrFont, width, height, output, LOK_TILEMODE_RGBA))
@@ -409,7 +409,7 @@ bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
 
     if (status.empty())
     {
-        Log::error("Failed to get document status.");
+        LOG_ERR("Failed to get document status.");
         return false;
     }
 
@@ -945,17 +945,17 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokeniz
 void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
 {
     const auto typeName = LOKitHelper::kitCallbackTypeToString(nType);
-    Log::trace() << "CallbackWorker::callback [" << getName() << "]: "
-                 << typeName << " [" << rPayload << "]." << Log::end;
+    LOG_TRC("CallbackWorker::callback [" << getName() << "]: " <<
+            typeName << " [" << rPayload << "].");
 
     if (isCloseFrame())
     {
-        Log::trace("Skipping callback [" + typeName + "] on closing session " + getName());
+        LOG_TRC("Skipping callback [" << typeName << "] on closing session " << getName());
         return;
     }
     else if (isDisconnected())
     {
-        Log::trace("Skipping callback [" + typeName + "] on disconnected session " + getName());
+        LOG_TRC("Skipping callback [" << typeName << "] on disconnected session " << getName());
         return;
     }
     else if (!isActive())
@@ -998,7 +998,7 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
         // Pass save notifications through.
         if (nType != LOK_CALLBACK_UNO_COMMAND_RESULT || rPayload.find(".uno:Save") == std::string::npos)
         {
-            Log::trace("Skipping callback [" + typeName + "] on inactive session " + getName());
+            LOG_TRC("Skipping callback [" << typeName << "] on inactive session " << getName());
             return;
         }
     }
@@ -1094,7 +1094,7 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
         break;
     case LOK_CALLBACK_ERROR:
         {
-            Log::error("CALLBACK_ERROR: " + rPayload);
+            LOG_ERR("CALLBACK_ERROR: " << rPayload);
             Parser parser;
             Poco::Dynamic::Var var = parser.parse(rPayload);
             Object::Ptr object = var.extract<Object::Ptr>();
@@ -1140,7 +1140,7 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
         sendTextFrame("redlinetablemodified: " + rPayload);
         break;
     default:
-        Log::error("Unknown callback event (" + std::to_string(nType) + "): " + rPayload);
+        LOG_ERR("Unknown callback event (" << nType << "): " << rPayload);
     }
 }
 
