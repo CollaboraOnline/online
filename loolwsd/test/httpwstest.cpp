@@ -437,6 +437,9 @@ void HTTPWSTest::testSaveOnDisconnect()
 {
     const auto testname = "saveOnDisconnect ";
 
+    const auto text = helpers::genRandomString(40);
+    std::cerr << "Test string: [" << text << "]." << std::endl;
+
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
@@ -450,13 +453,13 @@ void HTTPWSTest::testSaveOnDisconnect()
 
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "uno .uno:Delete", testname);
-        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc", testname);
+        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
 
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
         const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
-        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
+        CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + text, selection);
 
         // Closing connection too fast might not flush buffers.
         // Often nothing more than the SelectAll reaches the server before
@@ -490,7 +493,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
         const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
-        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
+        CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + text, selection);
     }
     catch (const Poco::Exception& exc)
     {
