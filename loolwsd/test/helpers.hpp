@@ -55,6 +55,20 @@
 namespace helpers
 {
 inline
+std::vector<char> genRandomData(const size_t size)
+{
+    std::vector<char> v(size);
+    v.resize(size);
+    auto data = v.data();
+    for (size_t i = 0; i < size; ++i)
+    {
+        data[i] = static_cast<char>(Util::rng::getNext());
+    }
+
+    return v;
+}
+
+inline
 std::vector<char> readDataFromFile(const std::string& filename)
 {
     std::ifstream ifs(Poco::Path(TDOC, filename).toString(), std::ios::binary);

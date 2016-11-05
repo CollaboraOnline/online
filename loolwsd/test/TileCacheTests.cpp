@@ -112,20 +112,6 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     void checkBlackTile(std::stringstream& tile);
 
-    static
-    std::vector<char> genRandomData(const size_t size)
-    {
-        std::vector<char> v(size);
-        v.resize(size);
-        auto data = v.data();
-        for (size_t i = 0; i < size; ++i)
-        {
-            data[i] = static_cast<char>(Util::rng::getNext());
-        }
-
-        return v;
-    }
-
 public:
     TileCacheTests()
         : _uri(helpers::getTestServerURI())
