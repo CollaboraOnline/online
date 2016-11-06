@@ -31,7 +31,7 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
     void *dlHandle = dlopen(unitLibPath.c_str(), RTLD_GLOBAL|RTLD_NOW);
     if (!dlHandle)
     {
-        Log::error("Failed to load " + unitLibPath + ": " + std::string(dlerror()));
+        LOG_ERR("Failed to load " << unitLibPath << ": " << dlerror());
         return NULL;
     }
 
@@ -49,7 +49,7 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
     createHooks = reinterpret_cast<CreateUnitHooksFunction *>(dlsym(dlHandle, symbol));
     if (!createHooks)
     {
-        Log::error("No " + std::string(symbol) + " symbol in " + unitLibPath);
+        LOG_ERR("No " << symbol << " symbol in " << unitLibPath);
         return NULL;
     }
     UnitBase *pHooks = createHooks();
@@ -72,7 +72,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
                     TimeoutThread.trySleep(Global->_timeoutMilliSeconds);
                     if (!Global->_timeoutShutdown)
                     {
-                        Log::error("Unit test timeout");
+                        LOG_ERR("Unit test timeout");
                         Global->timeout();
                     }
                 });
