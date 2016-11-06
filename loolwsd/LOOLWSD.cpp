@@ -346,8 +346,7 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     --OutstandingForks;
     NewChildren.emplace_back(child);
     const auto count = NewChildren.size();
-    LOG_INF("Have " << count << " " <<
-            (count == 1 ? "child." : "children."));
+    LOG_INF("Have " << count << " " << (count == 1 ? "child." : "children."));
 
     NewChildrenCV.notify_one();
     return count;
@@ -681,16 +680,15 @@ private:
                 }
                 catch (const Exception& exc)
                 {
-                    Log::error() << "Error sending file to client: " << exc.displayText()
-                                 << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                                 << Log::end;
+                    LOG_ERR("Error sending file to client: " << exc.displayText() <<
+                            (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
                 }
 
                 Util::removeFile(File(filePath.parent()).path(), true);
             }
             else
             {
-                Log::error("Download file [" + filePath.toString() + "] not found.");
+                LOG_ERR("Download file [" << filePath.toString() << "] not found.");
             }
 
             return responded;
@@ -717,7 +715,7 @@ private:
 
         if (TerminationFlag)
         {
-            Log::error("Termination flag set. No loading new session [" + id + "]");
+            LOG_ERR("Termination flag set. No loading new session [" << id << "]");
             return;
         }
 
@@ -728,7 +726,7 @@ private:
         if (it != DocBrokers.end() && it->first == docKey)
         {
             // Get the DocumentBroker from the Cache.
-            Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
+            LOG_DBG("Found DocumentBroker for docKey [" << docKey << "].");
             docBroker = it->second;
             assert(docBroker);
 
@@ -738,7 +736,7 @@ private:
                 docBrokersLock.unlock();
 
                 // If this document is going out, wait.
-                Log::debug("Document [" + docKey + "] is marked to destroy, waiting to reload.");
+                LOG_DBG("Document [" << docKey << "] is marked to destroy, waiting to reload.");
 
                 bool timedOut = true;
                 for (size_t i = 0; i < COMMAND_TIMEOUT_MS / POLL_TIMEOUT_MS; ++i)
@@ -767,7 +765,7 @@ private:
                     docBrokersLock.unlock();
                     if (TerminationFlag)
                     {
-                        Log::error("Termination flag set. Not loading new session [" + id + "]");
+                        LOG_ERR("Termination flag set. Not loading new session [" << id << "]");
                         return;
                     }
                 }
@@ -775,7 +773,7 @@ private:
                 if (timedOut)
                 {
                     // Still here, but marked to destroy. Proceed and hope to recover.
-                    Log::error("Timed out while waiting for document to unload before loading.");
+                    LOG_ERR("Timed out while waiting for document to unload before loading.");
                 }
 
                 // Retake the lock and recheck if another thread created the DocBroker.
@@ -784,7 +782,7 @@ private:
                 if (it != DocBrokers.end() && it->first == docKey)
                 {
                     // Get the DocumentBroker from the Cache.
-                    Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
+                    LOG_DBG("Found DocumentBroker for docKey [" << docKey << "].");
                     docBroker = it->second;
                     assert(docBroker);
                 }
@@ -795,7 +793,7 @@ private:
 
         if (TerminationFlag)
         {
-            Log::error("Termination flag set. No loading new session [" + id + "]");
+            LOG_ERR("Termination flag set. No loading new session [" << id << "]");
             return;
         }
 
@@ -804,7 +802,7 @@ private:
 #if MAX_DOCUMENTS > 0
             if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
             {
-                Log::error("Maximum number of open documents reached.");
+                LOG_ERR("Maximum number of open documents reached.");
                 shutdownLimitReached(*ws);
                 return;
             }
@@ -815,12 +813,12 @@ private:
             if (!child)
             {
                 // Let the client know we can't serve now.
-                Log::error("Failed to get new child. Service Unavailable.");
+                LOG_ERR("Failed to get new child. Service Unavailable.");
                 throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
             }
 
             // Set one we just created.
-            Log::debug("New DocumentBroker for docKey [" + docKey + "].");
+            LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
             docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
             child->setDocumentBroker(docBroker);
             DocBrokers.insert(it, std::make_pair(docKey, docBroker));
@@ -832,7 +830,7 @@ private:
         if (!docBroker || !docBroker->isAlive())
         {
             // Cleanup later.
-            Log::error("DocBroker is invalid or premature termination of child "
+            LOG_ERR("DocBroker is invalid or premature termination of child "
                        "process. Service Unavailable.");
             DocBrokers.erase(docKey);
 
@@ -843,7 +841,7 @@ private:
         bool isReadOnly = false;
         for (const auto& param : uriPublic.getQueryParameters())
         {
-            Log::debug("Query param: " + param.first + ", value: " + param.second);
+            LOG_DBG("Query param: " << param.first << ", value: " << param.second);
             if (param.first == "permission")
                 isReadOnly = param.second == "readonly";
         }
@@ -864,14 +862,14 @@ private:
 
             // Now the bridge beetween the client and kit process is connected
             status = "statusindicator: ready";
-            LOG_TRC("Sending to Client [" + status + "].");
+            LOG_TRC("Sending to Client [" << status << "].");
             ws->sendFrame(status.data(), status.size());
 
             Util::checkDiskSpaceOnRegisteredFileSystems();
 
             // Request the child to connect to us and add this session.
             auto sessionsCount = docBroker->addSession(session);
-            Log::trace(docKey + ", ws_sessions++: " + std::to_string(sessionsCount));
+            LOG_TRC(docKey << ", ws_sessions++: " << sessionsCount);
 
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
 
@@ -885,7 +883,7 @@ private:
                 []() { return !!TerminationFlag; });
 
             // Connection terminated. Destroy session.
-            Log::debug("Client session [" + id + "] terminated. Cleaning up.");
+            LOG_DBG("Client session [" << id << "] terminated. Cleaning up.");
             {
                 auto docLock = docBroker->getLock();
 
@@ -901,26 +899,26 @@ private:
                 {
                     sessionsCount = docBroker->removeSession(id);
                     removedSession = true;
-                    Log::trace(docKey + ", ws_sessions--: " + std::to_string(sessionsCount));
+                    LOG_TRC(docKey << ", ws_sessions--: " << sessionsCount);
                 }
 
                 // If we are the last, we must wait for the save to complete.
                 if (forceSave)
                 {
-                    Log::info("Shutdown of the last editable (non-readonly) session, saving the document before tearing down.");
+                    LOG_INF("Shutdown of the last editable (non-readonly) session, saving the document before tearing down.");
                 }
 
                 // We need to wait until the save notification reaches us
                 // and Storage persists the document.
                 if (!docBroker->autoSave(forceSave, COMMAND_TIMEOUT_MS, docLock))
                 {
-                    Log::error("Auto-save before closing failed.");
+                    LOG_ERR("Auto-save before closing failed.");
                 }
 
                 if (!removedSession)
                 {
                     sessionsCount = docBroker->removeSession(id);
-                    Log::trace(docKey + ", ws_sessions--: " + std::to_string(sessionsCount));
+                    LOG_TRC(docKey << ", ws_sessions--: " << sessionsCount);
                 }
             }
 
@@ -937,7 +935,7 @@ private:
                     auto lock = it->second->getLock();
                     if (it->second->getSessionsCount() == 0)
                     {
-                        Log::info("Removing DocumentBroker for docKey [" + docKey + "].");
+                        LOG_INF("Removing DocumentBroker for docKey [" << docKey << "].");
                         DocBrokers.erase(docKey);
                         docBroker->terminateChild(lock);
                     }
@@ -945,7 +943,7 @@ private:
             }
 
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession: " + uri);
-            Log::info("Finishing GET request handler for session [" + id + "].");
+            LOG_INF("Finishing GET request handler for session [" << id << "].");
         }
         catch (const WebSocketErrorMessageException&)
         {
@@ -953,19 +951,19 @@ private:
         }
         catch (const UnauthorizedRequestException& exc)
         {
-            Log::error("Error in client request handler: " + exc.toString());
+            LOG_ERR("Error in client request handler: " << exc.toString());
             status = "error: cmd=internal kind=unauthorized";
-            Log::trace("Sending to Client [" + status + "].");
+            LOG_TRC("Sending to Client [" << status << "].");
             ws->sendFrame(status.data(), status.size());
         }
         catch (const std::exception& exc)
         {
-            Log::error("Error in client request handler: " + std::string(exc.what()));
+            LOG_ERR("Error in client request handler: " << exc.what());
         }
 
         if (session->isCloseFrame())
         {
-            Log::trace("Normal close handshake.");
+            LOG_TRC("Normal close handshake.");
             if (session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE))
             {
                 // Client initiated close handshake
@@ -976,14 +974,14 @@ private:
         else
         {
             // something wrong, with internal exceptions
-            Log::trace("Abnormal close handshake.");
+            LOG_TRC("Abnormal close handshake.");
             session->closeFrame();
             // FIXME: handle exception thrown from here ? ...
             ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
             session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY);
         }
 
-        Log::info("Finished GET request handler for session [" + id + "].");
+        LOG_INF("Finished GET request handler for session [" << id << "].");
     }
 
     /// Sends back the WOPI Discovery XML.
@@ -1002,9 +1000,9 @@ private:
         const std::string urlsrc = "urlsrc";
         const auto& config = Application::instance().config();
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-        const std::string uriValue = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://") +
-            (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName) +
-            "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + "?";
+        const std::string uriValue = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://")
+                                   + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName)
+                                   + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
 
         InputSource inputSrc(discoveryPath);
         DOMParser parser;
@@ -1027,7 +1025,7 @@ private:
 
         std::ostream& ostr = response.send();
         ostr << ostrXML.str();
-        Log::debug("Sent discovery.xml successfully.");
+        LOG_INF("Sent discovery.xml successfully.");
         return true;
     }
 
@@ -1044,8 +1042,7 @@ public:
         if (++LOOLWSD::NumConnections > MAX_CONNECTIONS)
         {
             --LOOLWSD::NumConnections;
-            LOG_ERR("Limit on maximum number of connections of "
-                    << MAX_CONNECTIONS << " reached.");
+            LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
             // accept hand shake
             WebSocket ws(request, response);
             shutdownLimitReached(ws);
@@ -1065,13 +1062,13 @@ public:
         const auto id = LOOLWSD::GenSessionId();
 
         Poco::URI requestUri(request.getURI());
-        Log::debug("Handling: " + request.getURI());
+        LOG_DBG("Handling: " << request.getURI());
 
         StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
         Util::setThreadName("client_ws_" + id);
 
-        Log::debug("Thread started.");
+        LOG_DBG("Thread started.");
 
         bool responded = false;
         try
@@ -1131,7 +1128,7 @@ public:
                 catch (const WebSocketErrorMessageException& exc)
                 {
                     // Internal error that should be passed on to the client.
-                    Log::error("ClientRequestHandler::handleClientRequest: WebSocketErrorMessageException: " + exc.toString());
+                    LOG_ERR("ClientRequestHandler::handleClientRequest: WebSocketErrorMessageException: " << exc.toString());
                     try
                     {
                         ws->sendFrame(exc.what(), std::strlen(exc.what()));
@@ -1140,20 +1137,20 @@ public:
                     }
                     catch (const std::exception& exc2)
                     {
-                        Log::error("ClientRequestHandler::handleClientRequest: exception while sending WS error message: " + std::string(exc2.what()));
+                        LOG_ERR("ClientRequestHandler::handleClientRequest: exception while sending WS error message: " << exc2.what());
                     }
                 }
             }
             else
             {
-                Log::error("Unknown resource: " + request.getURI());
+                LOG_ERR("Unknown resource: " << request.getURI());
                 response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
             }
         }
         catch (const Exception& exc)
         {
-            LOG_ERR("ClientRequestHandler::handleClientRequest: " << exc.displayText()
-                    << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+            LOG_ERR("ClientRequestHandler::handleClientRequest: " << exc.displayText() <<
+                    (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
             response.setStatusAndReason(HTTPResponse::HTTP_SERVICE_UNAVAILABLE);
         }
         catch (const UnauthorizedRequestException& exc)
@@ -1173,20 +1170,19 @@ public:
         }
 
         if (responded)
-            Log::debug("Already sent response!?");
-        if (!responded)
+        {
+                LOG_DBG("Already sent response!?");
+        }
+        else
         {
             // I wonder if this code path has ever been exercised
-            Log::debug("Attempting to send response");
+            LOG_DBG("Attempting to send response");
             response.setContentLength(0);
             std::ostream& os = response.send();
-            if (!os.good())
-                Log::debug("Response stream is not good after send");
-            else
-                Log::debug("Response stream *is* good after send");
+            LOG_DBG("Response stream " << (os.good() ? "*is*" : "is not") << " good after send.");
         }
 
-        Log::debug("Thread finished.");
+        LOG_DBG("Thread finished.");
     }
 };
 
@@ -1207,7 +1203,7 @@ public:
 
     static void handlePrisonerRequest(HTTPServerRequest& request, HTTPServerResponse& response)
     {
-        Log::trace("Child connection with URI [" + request.getURI() + "].");
+        LOG_TRC("Child connection with URI [" << request.getURI() << "].");
         assert(request.serverAddress().port() == MasterPortNumber);
         assert(request.getURI().find(NEW_CHILD_URI) == 0);
 
@@ -1228,11 +1224,11 @@ public:
 
         if (pid <= 0)
         {
-            Log::error("Invalid PID in child URI [" + request.getURI() + "].");
+            LOG_ERR("Invalid PID in child URI [" << request.getURI() << "].");
             return;
         }
 
-        Log::info("New child [" + std::to_string(pid) + "].");
+        LOG_INF("New child [" << pid << "].");
         auto ws = std::make_shared<WebSocket>(request, response);
         UnitWSD::get().newChild(ws);
 
@@ -1333,7 +1329,7 @@ static inline ServerSocket* getServerSocket(int nPortNumber, bool reuseDetails)
     }
     catch (const Exception& exc)
     {
-        Log::fatal() << "Could not create server socket: " << exc.displayText() << Log::end;
+        LOG_FTL("Could not create server socket: " << exc.displayText());
         return nullptr;
     }
 }
@@ -1347,7 +1343,7 @@ static inline ServerSocket* findFreeServerPort(int& nClientPortNumber)
         if (!socket)
         {
             nClientPortNumber++;
-            Log::info("client port busy - trying " + std::to_string(nClientPortNumber));
+            LOG_INF("client port busy - trying " << nClientPortNumber);
         }
     }
     return socket;
@@ -1362,7 +1358,7 @@ static inline ServerSocket* getMasterSocket(int nMasterPortNumber)
     }
     catch (const Exception& exc)
     {
-        Log::fatal() << "Could not create master socket: " << exc.displayText() << Log::end;
+        LOG_FTL("Could not create master socket: " << exc.displayText());
         return nullptr;
     }
 }
@@ -1377,7 +1373,7 @@ ServerSocket* findFreeMasterPort(int &nMasterPortNumber)
         if (!socket)
         {
             nMasterPortNumber++;
-            Log::info("master port busy - trying " + std::to_string(nMasterPortNumber));
+            LOG_INF("master port busy - trying " << nMasterPortNumber);
         }
     }
     return socket;
@@ -1560,11 +1556,11 @@ void LOOLWSD::initialize(Application& self)
 
     if (LOOLWSD::isSSLEnabled())
     {
-        Log::info("SSL support: SSL is enabled.");
+        LOG_INF("SSL support: SSL is enabled.");
     }
     else
     {
-        Log::warn("SSL support: SSL is disabled.");
+        LOG_WRN("SSL support: SSL is disabled.");
     }
 
 #if ENABLE_SSL
@@ -1592,13 +1588,11 @@ void LOOLWSD::initialize(Application& self)
 
     // In Trial Versions we might want to set some limits.
     LOOLWSD::NumConnections = 0;
-    Log::info() << "Open Documents Limit: "
-                << (MAX_DOCUMENTS ? std::to_string(MAX_DOCUMENTS) : std::string("unlimited"))
-                << Log::end;
+    LOG_INF("Open Documents Limit: " <<
+            (MAX_DOCUMENTS ? std::to_string(MAX_DOCUMENTS) : std::string("unlimited")));
 
-    Log::info() << "Client Connections Limit: "
-                << (MAX_CONNECTIONS ? std::to_string(MAX_CONNECTIONS) : std::string("unlimited"))
-                << Log::end;
+    LOG_INF("Client Connections Limit: " <<
+            (MAX_CONNECTIONS ? std::to_string(MAX_CONNECTIONS) : std::string("unlimited")));
 
     // Command Tracing.
     if (getConfigValue<bool>(conf, "trace[@enable]", false))
@@ -1622,7 +1616,7 @@ void LOOLWSD::initialize(Application& self)
 
         const auto compress = getConfigValue<bool>(conf, "trace.path[@compress]", false);
         TraceDumper.reset(new TraceFileWriter(path, recordOutgoing, compress, filters));
-        Log::info("Command trace dumping enabled to file: " + path);
+        LOG_INF("Command trace dumping enabled to file: " << path);
     }
 
     StorageBase::initialize();
@@ -1643,13 +1637,13 @@ void LOOLWSD::initializeSSL()
     }
 
     const auto ssl_cert_file_path = getPathFromConfig("ssl.cert_file_path");
-    Log::info("SSL Cert file: " + ssl_cert_file_path);
+    LOG_INF("SSL Cert file: " << ssl_cert_file_path);
 
     const auto ssl_key_file_path = getPathFromConfig("ssl.key_file_path");
-    Log::info("SSL Key file: " + ssl_key_file_path);
+    LOG_INF("SSL Key file: " << ssl_key_file_path);
 
     const auto ssl_ca_file_path = getPathFromConfig("ssl.ca_file_path");
-    Log::info("SSL CA file: " + ssl_ca_file_path);
+    LOG_INF("SSL CA file: " << ssl_ca_file_path);
 
     Poco::Crypto::initializeCrypto();
 
@@ -1826,8 +1820,8 @@ Process::PID LOOLWSD::createForKit()
         args.push_back("--nocaps");
     }
 
-    Log::info("Launching forkit process: " + forKitPath + ' ' +
-              Poco::cat(std::string(" "), args.begin(), args.end()));
+    LOG_INF("Launching forkit process: " << forKitPath << ' ' <<
+            Poco::cat(std::string(" "), args.begin(), args.end()));
 
     LastForkRequestTime = std::chrono::steady_clock::now();
     Pipe inPipe;
@@ -1873,17 +1867,17 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // meaningless for the parent.
     if (SysTemplate.empty())
     {
-        Log::fatal("Missing --systemplate option");
+        LOG_FTL("Missing --systemplate option");
         throw MissingOptionException("systemplate");
     }
     if (LoTemplate.empty())
     {
-        Log::fatal("Missing --lotemplate option");
+        LOG_FTL("Missing --lotemplate option");
         throw MissingOptionException("lotemplate");
     }
     if (ChildRoot.empty())
     {
-        Log::fatal("Missing --childroot option");
+        LOG_FTL("Missing --childroot option");
         throw MissingOptionException("childroot");
     }
     else if (ChildRoot[ChildRoot.size() - 1] != '/')
@@ -1895,7 +1889,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (FileServerRoot.empty())
         FileServerRoot = Poco::Path(Application::instance().commandPath()).parent().parent().toString();
     FileServerRoot = Poco::Path(FileServerRoot).absolute().toString();
-    Log::debug("FileServerRoot: " + FileServerRoot);
+    LOG_DBG("FileServerRoot: " << FileServerRoot);
 
     if (ClientPortNumber == MasterPortNumber)
         throw IncompatibleOptionsException("port");
@@ -1922,7 +1916,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     ThreadPool threadPool(NumPreSpawnedChildren * 6, MAX_SESSIONS * 2);
     HTTPServer srv(new ClientRequestHandlerFactory(), threadPool, *psvs, params1);
-    Log::info("Starting master server listening on " + std::to_string(ClientPortNumber));
+    LOG_INF("Starting master server listening on " << ClientPortNumber);
     srv.start();
 
     // And one on the port for child processes
@@ -1934,14 +1928,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (!psvs2)
         return Application::EXIT_SOFTWARE;
     HTTPServer srv2(new PrisonerRequestHandlerFactory(), threadPool, *psvs2, params2);
-    Log::info("Starting prisoner server listening on " + std::to_string(MasterPortNumber));
+    LOG_INF("Starting prisoner server listening on " << MasterPortNumber);
     srv2.start();
 
     // Fire the ForKit process; we are ready.
     const Process::PID forKitPid = createForKit();
     if (forKitPid < 0)
     {
-        Log::fatal("Failed to spawn loolforkit.");
+        LOG_FTL("Failed to spawn loolforkit.");
         return Application::EXIT_SOFTWARE;
     }
 
@@ -1971,41 +1965,33 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             {
                 if (WIFEXITED(status) == true)
                 {
-                    Log::info() << "Child process [" << pid << "] exited with code: "
-                                << WEXITSTATUS(status) << "." << Log::end;
-
+                    LOG_INF("Child process [" << pid << "] exited with code: " << WEXITSTATUS(status) << ".");
                     break;
                 }
                 else if (WIFSIGNALED(status) == true)
                 {
-                    std::string fate = "died";
-                    if (WCOREDUMP(status))
-                        fate = "core-dumped";
-                    Log::error() << "Child process [" << pid << "] " << fate
-                                 << " with " << Util::signalName(WTERMSIG(status))
-                                 << Log::end;
-
+                    const auto fate = (WCOREDUMP(status) ? "core-dumped" : "died");
+                    LOG_ERR("Child process [" << pid << "] " << fate <<
+                            " with " << Util::signalName(WTERMSIG(status)));
                     break;
                 }
                 else if (WIFSTOPPED(status) == true)
                 {
-                    Log::info() << "Child process [" << pid << "] stopped with "
-                                << Util::signalName(WSTOPSIG(status)) << Log::end;
+                    LOG_INF("Child process [" << pid << "] stopped with " <<
+                            Util::signalName(WSTOPSIG(status)));
                 }
                 else if (WIFCONTINUED(status) == true)
                 {
-                    Log::info() << "Child process [" << pid << "] resumed with SIGCONT."
-                                << Log::end;
+                    LOG_INF("Child process [" << pid << "] resumed with SIGCONT.");
                 }
                 else
                 {
-                    Log::warn() << "Unknown status returned by waitpid: "
-                                << std::hex << status << "." << Log::end;
+                    LOG_WRN("Unknown status returned by waitpid: " << std::hex << status << ".");
                 }
             }
             else
             {
-                Log::error("An unknown child process died, pid: " + std::to_string(pid));
+                LOG_ERR("An unknown child process died, pid: " << pid);
             }
         }
         else if (pid < 0)
@@ -2014,7 +2000,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             if (errno == ECHILD)
             {
                 // No child processes.
-                Log::fatal("No Forkit instance. Terminating.");
+                LOG_FTL("No Forkit instance. Terminating.");
                 TerminationFlag = true;
                 continue;
             }
@@ -2036,7 +2022,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 }
                 catch (const std::exception& exc)
                 {
-                    Log::error("Exception: " + std::string(exc.what()));
+                    LOG_ERR("Exception: " << exc.what());
                 }
 
                 last30SecCheck = time(nullptr);
@@ -2053,7 +2039,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #if ENABLE_DEBUG
         if (careerSpanSeconds > 0 && time(nullptr) > startTimeSpan + careerSpanSeconds)
         {
-            Log::info(std::to_string(time(nullptr) - startTimeSpan) + " seconds gone, finishing as requested.");
+            LOG_INF((time(nullptr) - startTimeSpan) << " seconds gone, finishing as requested.");
             TerminationFlag = true;
         }
 #endif
@@ -2067,7 +2053,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool.joinAll();
 
     // Terminate child processes
-    Log::info("Requesting child process " + std::to_string(forKitPid) + " to terminate");
+    LOG_INF("Requesting child process " << forKitPid << " to terminate");
     Util::requestTermination(forKitPid);
     for (auto& child : NewChildren)
     {
@@ -2078,13 +2064,13 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     waitpid(forKitPid, &status, WUNTRACED);
     close(ForKitWritePipe);
 
-    Log::info("Cleaning up childroot directory [" + ChildRoot + "].");
+    LOG_INF("Cleaning up childroot directory [" << ChildRoot << "].");
     std::vector<std::string> jails;
     File(ChildRoot).list(jails);
     for (auto& jail : jails)
     {
         const auto path = ChildRoot + jail;
-        Log::info("Removing jail [" + path + "].");
+        LOG_INF("Removing jail [" << path << "].");
         Util::removeFile(path, true);
     }
 
@@ -2095,10 +2081,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     }
 
     // atexit handlers tend to free Admin before Documents
-    Log::info("Cleaning up lingering documents.");
+    LOG_INF("Cleaning up lingering documents.");
     DocBrokers.clear();
 
-    Log::info("Process [loolwsd] finished.");
+    LOG_INF("Process [loolwsd] finished.");
 
     int returnValue = Application::EXIT_OK;
     UnitWSD::get().returnValue(returnValue);
