@@ -271,6 +271,8 @@ static void forkChildren(const int number)
 /// Returns true if removed at least one.
 static bool cleanupChildren()
 {
+    Util::assertIsLocked(NewChildrenMutex);
+
     bool removed = false;
     for (int i = NewChildren.size() - 1; i >= 0; --i)
     {
@@ -558,6 +560,7 @@ private:
                     }
 
                     docBrokersLock.lock();
+                    auto docLock = docBroker->getLock();
                     sessionsCount = docBroker->removeSession(id);
                     if (sessionsCount == 0)
                     {
@@ -723,82 +726,74 @@ private:
         cleanupDocBrokers();
 
         // Lookup this document.
-        auto it = DocBrokers.find(docKey);
-        if (it != DocBrokers.end())
+        auto it = DocBrokers.lower_bound(docKey);
+        if (it != DocBrokers.end() && it->first == docKey)
         {
             // Get the DocumentBroker from the Cache.
             Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
             docBroker = it->second;
             assert(docBroker);
-        }
-        else
-        {
-            // New Document.
-#if MAX_DOCUMENTS > 0
-            if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
+
+            if (docBroker->isMarkedToDestroy())
             {
-                Log::error() << "Limit on maximum number of open documents of "
-                             << MAX_DOCUMENTS << " reached." << Log::end;
-                shutdownLimitReached(*ws);
-                return;
-            }
-#endif
+                // Let the waiting happen in parallel to new requests.
+                docBrokersLock.unlock();
 
-            // Store a dummy (marked to destroy) document broker until we
-            // have the real one, so that the other requests block
-            Log::debug("Inserting a dummy DocumentBroker for docKey [" + docKey + "] temporarily.");
+                // If this document is going out, wait.
+                Log::debug("Document [" + docKey + "] is marked to destroy, waiting to reload.");
 
-            std::shared_ptr<DocumentBroker> tempBroker = std::make_shared<DocumentBroker>();
-            DocBrokers.emplace(docKey, tempBroker);
-        }
-
-        docBrokersLock.unlock();
-
-        if (docBroker && docBroker->isMarkedToDestroy())
-        {
-            // If this document is going out, wait.
-            Log::debug("Document [" + docKey + "] is marked to destroy, waiting to reload.");
-
-            bool timedOut = true;
-            for (size_t i = 0; i < COMMAND_TIMEOUT_MS / POLL_TIMEOUT_MS; ++i)
-            {
-                std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
-
-                std::unique_lock<std::mutex> lock(DocBrokersMutex);
-                it = DocBrokers.find(docKey);
-                if (it == DocBrokers.end())
+                bool timedOut = true;
+                for (size_t i = 0; i < COMMAND_TIMEOUT_MS / POLL_TIMEOUT_MS; ++i)
                 {
-                    // went away successfully
-                    docBroker.reset();
-                    Log::debug("Inserting a dummy DocumentBroker for docKey [" + docKey + "] temporarily after the other instance is gone.");
+                    std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
 
-                    std::shared_ptr<DocumentBroker> tempBroker = std::make_shared<DocumentBroker>();
-                    DocBrokers.emplace(docKey, tempBroker);
+                    docBrokersLock.lock();
+                    it = DocBrokers.find(docKey);
+                    if (it == DocBrokers.end())
+                    {
+                        // went away successfully
+                        docBroker.reset();
+                        docBrokersLock.unlock();
+                        timedOut = false;
+                        break;
+                    }
+                    else if (it->second && !it->second->isMarkedToDestroy())
+                    {
+                        // was actually replaced by a real document
+                        docBroker = it->second;
+                        docBrokersLock.unlock();
+                        timedOut = false;
+                        break;
+                    }
 
-                    timedOut = false;
-                    break;
+                    docBrokersLock.unlock();
+                    if (TerminationFlag)
+                    {
+                        Log::error("Termination flag set. Not loading new session [" + id + "]");
+                        return;
+                    }
                 }
-                else if (it->second && !it->second->isMarkedToDestroy())
+
+                if (timedOut)
                 {
-                    // was actually replaced by a real document
+                    // Still here, but marked to destroy. Proceed and hope to recover.
+                    Log::error("Timed out while waiting for document to unload before loading.");
+                }
+
+                // Retake the lock and recheck if another thread created the DocBroker.
+                docBrokersLock.lock();
+                it = DocBrokers.lower_bound(docKey);
+                if (it != DocBrokers.end() && it->first == docKey)
+                {
+                    // Get the DocumentBroker from the Cache.
+                    Log::debug("Found DocumentBroker for docKey [" + docKey + "].");
                     docBroker = it->second;
-                    timedOut = false;
-                    break;
+                    assert(docBroker);
                 }
-
-                if (TerminationFlag)
-                {
-                    Log::error("Termination flag set. Not loading new session [" + id + "]");
-                    return;
-                }
-            }
-
-            if (timedOut)
-            {
-                // Still here, but marked to destroy. Proceed and hope to recover.
-                Log::error("Timed out while waiting for document to unload before loading.");
             }
         }
+
+        Util::assertIsLocked(docBrokersLock);
 
         if (TerminationFlag)
         {
@@ -806,10 +801,17 @@ private:
             return;
         }
 
-        bool newDoc = false;
         if (!docBroker)
         {
-            newDoc = true;
+#if MAX_DOCUMENTS > 0
+            if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
+            {
+                Log::error("Maximum number of open documents reached.");
+                shutdownLimitReached(*ws);
+                return;
+            }
+#endif
+
             // Request a kit process for this doc.
             auto child = getNewChild();
             if (!child)
@@ -823,26 +825,20 @@ private:
             Log::debug("New DocumentBroker for docKey [" + docKey + "].");
             docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
             child->setDocumentBroker(docBroker);
+            DocBrokers.insert(it, std::make_pair(docKey, docBroker));
         }
+
+        docBrokersLock.unlock();
 
         // Validate the broker.
         if (!docBroker || !docBroker->isAlive())
         {
-            Log::error("DocBroker is invalid or premature termination of child process. Service Unavailable.");
-            if (!newDoc)
-            {
-                // Remove.
-                std::unique_lock<std::mutex> lock(DocBrokersMutex);
-                DocBrokers.erase(docKey);
-            }
+            // Cleanup later.
+            Log::error("DocBroker is invalid or premature termination of child "
+                       "process. Service Unavailable.");
+            DocBrokers.erase(docKey);
 
             throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
-        }
-
-        if (newDoc)
-        {
-            std::unique_lock<std::mutex> lock(DocBrokersMutex);
-            DocBrokers[docKey] = docBroker;
         }
 
         // Check if readonly session is required
@@ -893,7 +889,7 @@ private:
             // Connection terminated. Destroy session.
             Log::debug("Client session [" + id + "] terminated. Cleaning up.");
             {
-                std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
+                auto docLock = docBroker->getLock();
 
                 // We cannot destroy it, before save, if this is the last session.
                 // Otherwise, we may end up removing the one and only session.
@@ -918,7 +914,7 @@ private:
 
                 // We need to wait until the save notification reaches us
                 // and Storage persists the document.
-                if (!docBroker->autoSave(forceSave, COMMAND_TIMEOUT_MS))
+                if (!docBroker->autoSave(forceSave, COMMAND_TIMEOUT_MS, docLock))
                 {
                     Log::error("Auto-save before closing failed.");
                 }
@@ -2023,7 +2019,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                     cleanupDocBrokers();
                     for (auto& pair : DocBrokers)
                     {
-                        pair.second->autoSave(false, 0);
+                        auto docLock = pair.second->getLock();
+                        pair.second->autoSave(false, 0, docLock);
                     }
                 }
                 catch (const std::exception& exc)

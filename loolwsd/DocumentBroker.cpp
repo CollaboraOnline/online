@@ -358,9 +358,10 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     return false;
 }
 
-bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs)
+bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs, std::unique_lock<std::mutex>& lock)
 {
-    std::unique_lock<std::mutex> lock(_mutex);
+    Util::assertIsLocked(lock);
+
     if (_sessions.empty() || _storage == nullptr || !_isLoaded ||
         !_childProcess->isAlive() || (!_isModified && !force))
     {
@@ -549,7 +550,7 @@ bool DocumentBroker::connectPeers(std::shared_ptr<PrisonerSession>& session)
 
 size_t DocumentBroker::removeSession(const std::string& id)
 {
-    std::lock_guard<std::mutex> lock(_mutex);
+    Util::assertIsLocked(_mutex);
 
     auto it = _sessions.find(id);
     if (it != _sessions.end())
@@ -804,7 +805,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
 
 bool DocumentBroker::startDestroy(const std::string& id)
 {
-    std::unique_lock<std::mutex> lock(_mutex);
+    Util::assertIsLocked(_mutex);
 
     const auto currentSession = _sessions.find(id);
     assert(currentSession != _sessions.end());
