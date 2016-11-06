@@ -404,6 +404,7 @@ namespace Util
         if (std::getenv("LOOL_DEBUG"))
         {
             Log::signalLog(FatalGdbString);
+            LOG_ERR("Sleeping 30s to allow debugging.");
             sleep(30);
         }
 
@@ -442,6 +443,12 @@ namespace Util
                     Log::syserror("Failed to dump backtrace to stderr.");
                 }
             }
+        }
+
+        if (std::getenv("LOOL_DEBUG"))
+        {
+            LOG_ERR("Sleeping 30s to allow debugging.");
+            sleep(30);
         }
 
         // let default handler process the signal
