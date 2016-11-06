@@ -69,7 +69,7 @@ public:
         }
         else
         {
-            Log::info("Got memory stats [" + memory + "].");
+            LOG_INF("Got memory stats [" << memory << "].");
             assert(tokens.count() == 2);
             _childPSS = atoi(tokens[0].c_str());
             _childDirty = atoi(tokens[1].c_str());
@@ -86,20 +86,21 @@ public:
         std::unique_lock<std::mutex> lock(_mutex);
 
         _childSockets.push_back(socket);
+        LOG_INF("Unit-prefork: got new child, have " << _childSockets.size() << " of " << NumToPrefork);
+
         if (_childSockets.size() >= NumToPrefork)
         {
             Poco::Timestamp::TimeDiff elapsed = _startTime.elapsed();
 
             const auto totalTime = (1000. * elapsed)/Poco::Timestamp::resolution();
-            Log::info() << "Launched " << _childSockets.size() << " in "
-                        << totalTime << Log::end;
+            LOG_INF("Launched " << _childSockets.size() << " in " << totalTime);
             size_t totalPSSKb = 0;
             size_t totalDirtyKb = 0;
 
             // Skip the last one as it's not completely initialized yet.
             for (size_t i = 0; i < _childSockets.size() - 1; ++i)
             {
-                Log::info() << "Getting memory of child #" << i + 1 << " of " << _childSockets.size() << Log::end;
+                LOG_INF("Getting memory of child #" << i + 1 << " of " << _childSockets.size());
 
                 _childSockets[i]->sendFrame("unit-memdump: \n", sizeof("unit-memdump: \n"));
                 if (_cv.wait_for(lock, std::chrono::milliseconds(5 * 1000)) == std::cv_status::timeout)
@@ -181,10 +182,10 @@ namespace
         std::ostringstream oss;
         oss << numPSSKb << " " << numDirtyKb;
         const auto res = oss.str();
-        Log::info("readMemorySize: [" + res + "].");
+        LOG_INF("readMemorySize: [" << res << "].");
         if (res.empty())
         {
-            Log::error("Failed to read memory stats.");
+            LOG_ERR("Failed to read memory stats.");
             throw std::runtime_error("Failed to read memory stats.");
         }
 
@@ -239,7 +240,7 @@ public:
                 assert(len<sizeof(buffer));
                 numSockets++;
                 char *extDot = strrchr(buffer, '.');
-                Log::info() << "fd:" << ent->d_name << " -> " << buffer << Log::end;
+                LOG_INF("fd:" << ent->d_name << " -> " << buffer);
                 if (!strncmp(buffer, "/dev/", sizeof ("/dev/") -1))
                     deviceCount++;
                 else if (extDot && !strcmp(extDot, ".res"))
@@ -305,7 +306,7 @@ public:
                 memory = _failure;
             else
                 memory = readMemorySizes(_procSMaps);
-            Log::info("filterKitMessage sending back: [" + memory + "].");
+            LOG_INF("filterKitMessage sending back: [" << memory << "].");
             ws->sendFrame(memory.c_str(), memory.length());
             return true;
         }
