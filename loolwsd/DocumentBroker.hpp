@@ -46,7 +46,7 @@ public:
         _stop(false)
     {
         _thread = std::thread([this]() { this->socketProcessor(); });
-        Log::info("ChildProcess ctor [" + std::to_string(_pid) + "].");
+        LOG_INF("ChildProcess ctor [" << _pid << "].");
     }
 
     ChildProcess(ChildProcess&& other) = delete;
@@ -55,7 +55,7 @@ public:
 
     ~ChildProcess()
     {
-        Log::debug("~ChildProcess dtor [" + std::to_string(_pid) + "].");
+        LOG_DBG("~ChildProcess dtor [" << _pid << "].");
         close(true);
     }
 
@@ -67,7 +67,7 @@ public:
 
     void stop()
     {
-        Log::debug("Stopping ChildProcess [" + std::to_string(_pid) + "]");
+        LOG_DBG("Stopping ChildProcess [" << _pid << "]");
         _stop = true;
     }
 
@@ -75,7 +75,7 @@ public:
     {
         try
         {
-            Log::debug("Closing ChildProcess [" + std::to_string(_pid) + "].");
+            LOG_DBG("Closing ChildProcess [" << _pid << "].");
             stop();
             IoUtil::shutdownWebSocket(_ws);
             if (_thread.joinable())
@@ -86,7 +86,7 @@ public:
             _ws.reset();
             if (_pid != -1)
             {
-                Log::info("Closing child [" + std::to_string(_pid) + "].");
+                LOG_INF("Closing child [" << _pid << "].");
                 if (rude && kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0)
                 {
                     Log::syserror("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
@@ -97,7 +97,7 @@ public:
         }
         catch (const std::exception& ex)
         {
-            Log::error("Error while closing child process: " + std::string(ex.what()));
+            LOG_ERR("Error while closing child process: " << ex.what());
         }
     }
 
@@ -114,8 +114,8 @@ public:
         }
         catch (const std::exception& exc)
         {
-            Log::error() << "Failed to send child [" << _pid << "] data ["
-                         << data << "] due to: " << exc.what() << Log::end;
+            LOG_ERR("Failed to send child [" << _pid << "] data [" <<
+                    data << "] due to: " << exc.what());
             throw;
         }
 
