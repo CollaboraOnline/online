@@ -10,6 +10,7 @@
 #include <iostream>
 
 #include "Exceptions.hpp"
+#include "Log.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
 #include "helpers.hpp"
@@ -36,8 +37,8 @@ public:
     {
         if (_phase == PHASE_FILTER)
         {
-            std::cerr << "throw low disk space exception" << std::endl;
             _phase = PHASE_RE_LOAD;
+            LOG_INF("Throwing low disk space exception.");
             throw StorageSpaceLowException("test: low disk space");
         }
         return false;
