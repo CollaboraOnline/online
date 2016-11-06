@@ -195,7 +195,7 @@ public:
     /// complete before returning, or timeout.
     /// @return true if attempts to save or it also waits
     /// and receives save notification. Otherwise, false.
-    bool autoSave(const bool force, const size_t waitTimeoutMs);
+    bool autoSave(const bool force, const size_t waitTimeoutMs, std::unique_lock<std::mutex>& lock);
 
     Poco::URI getPublicUri() const { return _uriPublic; }
     Poco::URI getJailedUri() const { return _uriJailed; }
@@ -206,7 +206,7 @@ public:
     bool isAlive() const { return _childProcess && _childProcess->isAlive(); }
     size_t getSessionsCount() const
     {
-        std::lock_guard<std::mutex> lock(_mutex);
+        Util::assertIsLocked(_mutex);
         return _sessions.size();
     }
 
@@ -272,6 +272,8 @@ public:
 
     /// Get the PID of the associated child process
     Poco::Process::PID getPid() const { return _childProcess->getPid(); }
+
+    std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
 
 private:
     /// Sends the .uno:Save command to LoKit.
