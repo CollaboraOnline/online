@@ -158,7 +158,7 @@ namespace
                 }
                 if (!shouldCopyDir(relativeOldPath))
                 {
-                    Log::trace("skip redundant paths " + std::string(relativeOldPath));
+                    LOG_TRC("skip redundant paths " << relativeOldPath);
                     return FTW_SKIP_SUBTREE;
                 }
                 File(newPath).createDirectories();
@@ -173,13 +173,13 @@ namespace
             }
             break;
         case FTW_DNR:
-            Log::error("Cannot read directory '" + std::string(fpath) + "'");
+            LOG_ERR("Cannot read directory '" << fpath << "'");
             return 1;
         case FTW_NS:
-            Log::error("nftw: stat failed for '" + std::string(fpath) + "'");
+            LOG_ERR("nftw: stat failed for '" << fpath << "'");
             return 1;
         default:
-            Log::fatal("nftw: unexpected type: '" + std::to_string(typeflag));
+            LOG_FTL("nftw: unexpected type: '" << typeflag);
             assert(false);
             break;
         }
@@ -196,7 +196,7 @@ namespace
             sourceForLinkOrCopy.pop_back();
         destinationForLinkOrCopy = destination;
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL) == -1)
-            Log::error("linkOrCopy: nftw() failed for '" + source + "'");
+            LOG_ERR("linkOrCopy: nftw() failed for '" << source << "'");
     }
 
     void dropCapability(cap_value_t capability)
@@ -212,7 +212,7 @@ namespace
         }
 
         char *capText = cap_to_text(caps, nullptr);
-        Log::trace("Capabilities first: " + std::string(capText));
+        LOG_TRC("Capabilities first: " << capText);
         cap_free(capText);
 
         if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
@@ -229,7 +229,7 @@ namespace
         }
 
         capText = cap_to_text(caps, nullptr);
-        Log::trace("Capabilities now: " + std::string(capText));
+        LOG_TRC("Capabilities now: " << capText);
         cap_free(capText);
 
         cap_free(caps);
@@ -246,7 +246,7 @@ namespace
             symlinkTarget += "../";
         symlinkTarget += loSubPath;
 
-        Log::debug("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\")");
+        LOG_DBG("symlink(\"" << symlinkTarget << "\",\"" << symlinkSource.toString() << "\")");
         if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
         {
             Log::syserror("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
@@ -292,7 +292,7 @@ public:
         _mutex(),
         _isLoading(0)
     {
-        Log::info("Document ctor for url [" + _url + "] on child [" + _jailId + "].");
+        LOG_INF("Document ctor for url [" << _url << "] on child [" << _jailId << "].");
         assert(_loKit && _loKit->get());
 
         _callbackThread.start(*this);
@@ -301,7 +301,7 @@ public:
     ~Document()
     {
         LOG_INF("~Document dtor for url [" << _url << "] on child [" << _jailId <<
-                  "]. There are " << _sessions.size() << " views.");
+                "]. There are " << _sessions.size() << " views.");
 
         // Wait for the callback worker to finish.
         _stop = true;
@@ -389,7 +389,7 @@ public:
 
         if (numRunning == 0)
         {
-            Log::info("No more sessions, exiting bluntly");
+            LOG_INF("No more sessions, exiting bluntly");
             std::_Exit(Application::EXIT_OK);
         }
 
@@ -421,9 +421,9 @@ public:
     /// Set Document password for given URL
     void setDocumentPassword(int nPasswordType)
     {
-        Log::info() << "setDocumentPassword: passwordProtected=" << _isDocPasswordProtected
-                    << " passwordProvided=" << _haveDocPassword
-                    << " password='" << _docPassword <<  "'" << Log::end;
+        LOG_INF("setDocumentPassword: passwordProtected=" << _isDocPasswordProtected <<
+                " passwordProvided=" << _haveDocPassword <<
+                " password='" << _docPassword <<  "'");
 
         if (_isDocPasswordProtected && _haveDocPassword)
         {
@@ -439,12 +439,12 @@ public:
         else if (nPasswordType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY)
             _docPasswordType = PasswordType::ToModify;
 
-        Log::info("Calling _loKit->setDocumentPassword");
+        LOG_INF("Calling _loKit->setDocumentPassword");
         if (_haveDocPassword)
             _loKit->setDocumentPassword(_jailedUrl.c_str(), _docPassword.c_str());
         else
             _loKit->setDocumentPassword(_jailedUrl.c_str(), nullptr);
-        Log::info("setDocumentPassword returned");
+        LOG_INF("setDocumentPassword returned");
     }
 
     void renderTile(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
@@ -470,14 +470,14 @@ public:
 
         if (!_loKitDocument)
         {
-            Log::error("Tile rendering requested before loading document.");
+            LOG_ERR("Tile rendering requested before loading document.");
             return;
         }
 
         std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
         if (_loKitDocument->getViewsCount() <= 0)
         {
-            Log::error("Tile rendering requested without views.");
+            LOG_ERR("Tile rendering requested without views.");
             return;
         }
 
@@ -488,16 +488,16 @@ public:
                                       tile.getTilePosX(), tile.getTilePosY(),
                                       tile.getTileWidth(), tile.getTileHeight());
         const auto elapsed = timestamp.elapsed();
-        Log::trace() << "paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY()
-                     << ") " << "ver: " << tile.getVersion() << " rendered in " << (elapsed/1000.)
-                     << " ms (" << area / elapsed << " MP/s)." << Log::end;
+        LOG_TRC("paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() <<
+                ") " << "ver: " << tile.getVersion() << " rendered in " << (elapsed/1000.) <<
+                " ms (" << area / elapsed << " MP/s).");
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
         if (!png::encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");
-            Log::error("Failed to encode tile into PNG.");
+            LOG_ERR("Failed to encode tile into PNG.");
             return;
         }
 
@@ -508,7 +508,7 @@ public:
             ws->sendFrame(nextmessage.data(), nextmessage.size());
         }
 
-        Log::trace("Sending render-tile response (" + std::to_string(length) + " bytes) for: " + response);
+        LOG_TRC("Sending render-tile response (" << length << " bytes) for: " << response);
         ws->sendFrame(output.data(), length, WebSocket::FRAME_BINARY);
     }
 
@@ -548,14 +548,14 @@ public:
 
         if (!_loKitDocument)
         {
-            Log::error("Tile rendering requested before loading document.");
+            LOG_ERR("Tile rendering requested before loading document.");
             return;
         }
 
         std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
         if (_loKitDocument->getViewsCount() <= 0)
         {
-            Log::error("Tile rendering requested without views.");
+            LOG_ERR("Tile rendering requested without views.");
             return;
         }
 
@@ -566,9 +566,9 @@ public:
                                       renderArea.getLeft(), renderArea.getTop(),
                                       renderArea.getWidth(), renderArea.getHeight());
         const auto elapsed = timestamp.elapsed();
-        Log::debug() << "paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), ("
-                     << renderArea.getWidth() << ", " << renderArea.getHeight() << ") ver: " << tileCombined.getVersion()
-                     << " rendered in " << (elapsed/1000.) << " ms (" << area / elapsed << " MP/s)." << Log::end;
+        LOG_DBG("paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
+                renderArea.getWidth() << ", " << renderArea.getHeight() << ") ver: " << tileCombined.getVersion() <<
+                " rendered in " << (elapsed/1000.) << " ms (" << area / elapsed << " MP/s).");
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
         std::vector<char> output;
@@ -588,12 +588,12 @@ public:
             {
                 //FIXME: Return error.
                 //sendTextFrame("error: cmd=tile kind=failure");
-                Log::error("Failed to encode tile into PNG.");
+                LOG_ERR("Failed to encode tile into PNG.");
                 return;
             }
 
             const auto imgSize = output.size() - oldSize;
-            Log::trace() << "Encoded tile #" << tileIndex << " in " << imgSize << " bytes." << Log::end;
+            LOG_TRC("Encoded tile #" << tileIndex << " in " << imgSize << " bytes.");
             tiles[tileIndex++].setImgSize(imgSize);
         }
 
@@ -602,7 +602,7 @@ public:
 #else
         const auto tileMsg = tileCombined.serialize("tilecombine:") + "\n";
 #endif
-        Log::trace("Sending back painted tiles for " + tileMsg);
+        LOG_TRC("Sending back painted tiles for " << tileMsg);
 
         std::vector<char> response;
         response.resize(tileMsg.size() + output.size());
@@ -625,7 +625,7 @@ public:
         {
             if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
             {
-                Log::error("Child Doc: Bad socket while sending [" + getAbbreviatedMessage(message) + "].");
+                LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(message) << "].");
                 return false;
             }
 
@@ -642,9 +642,8 @@ public:
         }
         catch (const Exception& exc)
         {
-            Log::error() << "Document::sendTextFrame: "
-                         << "Exception: " << exc.displayText()
-                         << (exc.nested() ? "( " + exc.nested()->displayText() + ")" : "");
+            LOG_ERR("Document::sendTextFrame: Exception: " << exc.displayText() <<
+                    (exc.nested() ? "( " + exc.nested()->displayText() + ")" : ""));
         }
 
         return false;
@@ -658,9 +657,8 @@ public:
         }
 
         const std::string payload = pPayload ? pPayload : "(nil)";
-        Log::trace() << "Document::GlobalCallback "
-                     << LOKitHelper::kitCallbackTypeToString(nType)
-                     << " [" << payload << "]." << Log::end;
+        LOG_TRC("Document::GlobalCallback " << LOKitHelper::kitCallbackTypeToString(nType) <<
+                " [" << payload << "].");
         Document* self = reinterpret_cast<Document*>(pData);
         if (nType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY ||
             nType == LOK_CALLBACK_DOCUMENT_PASSWORD)
@@ -686,9 +684,9 @@ public:
         assert(pDescr->Doc && "Null Document instance.");
 
         const std::string payload = pPayload ? pPayload : "(nil)";
-        Log::trace() << "Document::ViewCallback [" << pDescr->ViewId
-                     << "] [" << LOKitHelper::kitCallbackTypeToString(nType)
-                     << "] [" << payload << "]." << Log::end;
+        LOG_TRC("Document::ViewCallback [" << pDescr->ViewId <<
+                "] [" << LOKitHelper::kitCallbackTypeToString(nType) <<
+                "] [" << payload << "].");
 
         std::unique_lock<std::mutex> lock(pDescr->Doc->getMutex());
 
@@ -742,9 +740,8 @@ private:
         }
 
         const std::string payload = pPayload ? pPayload : "(nil)";
-        Log::trace() << "Document::DocumentCallback "
-                     << LOKitHelper::kitCallbackTypeToString(nType)
-                     << " [" << payload << "]." << Log::end;
+        LOG_TRC("Document::DocumentCallback " << LOKitHelper::kitCallbackTypeToString(nType) <<
+                " [" << payload << "].");
         Document* self = reinterpret_cast<Document*>(pData);
         self->broadcastCallbackToClients(nType, pPayload);
     }
@@ -887,7 +884,7 @@ private:
             int color = 0;
             if (viewInfoMap.find(viewId) == viewInfoMap.end())
             {
-                Log::error("No username found for viewId [" + std::to_string(viewId) + "].");
+                LOG_ERR("No username found for viewId [" << viewId << "].");
                 viewInfoObj->set("username", "Unknown");
             }
             else
@@ -955,9 +952,8 @@ private:
         }
         catch(const Exception& exc)
         {
-            Log::error() << "Poco Exception: " << exc.displayText()
-                         << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                         << Log::end;
+            LOG_ERR("Poco Exception: " << exc.displayText() <<
+                    (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
         }
 
         return viewColors;
@@ -973,7 +969,7 @@ private:
         const auto it = _sessions.find(sessionId);
         if (it == _sessions.end() || !it->second)
         {
-            Log::error("Cannot find session [" + sessionId + "].");
+            LOG_ERR("Cannot find session [" << sessionId << "].");
             return nullptr;
         }
 
@@ -984,7 +980,7 @@ private:
         if (!_loKitDocument)
         {
             // This is the first time we are loading the document
-            Log::info("Loading new document from URI: [" + uri + "] for session [" + sessionId + "].");
+            LOG_INF("Loading new document from URI: [" << uri << "] for session [" << sessionId << "].");
 
             auto lock(_loKit->getLock());
 
@@ -1003,23 +999,23 @@ private:
             _jailedUrl = uri;
             _isDocPasswordProtected = false;
 
-            Log::debug("Calling lokit::documentLoad.");
+            LOG_DBG("Calling lokit::documentLoad.");
             _loKitDocument = _loKit->documentLoad(uri.c_str());
-            Log::debug("Returned lokit::documentLoad.");
+            LOG_DBG("Returned lokit::documentLoad.");
             auto l(_loKitDocument->getLock());
             lockLokDoc.swap(l);
 
             if (!_loKitDocument || !_loKitDocument->get())
             {
-                Log::error("Failed to load: " + uri + ", error: " + _loKit->getError());
+                LOG_ERR("Failed to load: " << uri << ", error: " << _loKit->getError());
 
                 // Checking if wrong password or no password was reason for failure.
                 if (_isDocPasswordProtected)
                 {
-                    Log::info("Document [" + uri + "] is password protected.");
+                    LOG_INF("Document [" << uri << "] is password protected.");
                     if (!_haveDocPassword)
                     {
-                        Log::info("No password provided for password-protected document [" + uri + "].");
+                        LOG_INF("No password provided for password-protected document [" << uri << "].");
                         std::string passwordFrame = "passwordrequired:";
                         if (_docPasswordType == PasswordType::ToView)
                             passwordFrame += "to-view";
@@ -1029,7 +1025,7 @@ private:
                     }
                     else
                     {
-                        Log::info("Wrong password for password-protected document [" + uri + "].");
+                        LOG_INF("Wrong password for password-protected document [" << uri << "].");
                         session->sendTextFrame("error: cmd=load kind=wrongpassword");
                     }
                 }
@@ -1066,9 +1062,9 @@ private:
                 }
             }
 
-            Log::info("Loading view to document from URI: [" + uri + "] for session [" + sessionId + "].");
+            LOG_INF("Loading view to document from URI: [" << uri << "] for session [" << sessionId << "].");
             _loKitDocument->createView();
-            Log::trace("View created.");
+            LOG_TRC("View created.");
         }
 
         Util::assertIsLocked(lockLokDoc);
@@ -1108,9 +1104,8 @@ private:
         _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
 
         const int viewCount = _loKitDocument->getViewsCount();
-        LOG_INF("Document [" << _url << "] view [" <<
-                  viewId << "] loaded. Have " << viewCount <<
-                  " view" << (viewCount != 1 ? "s." : "."));
+        LOG_INF("Document [" << _url << "] view [" << viewId << "] loaded. Have " <<
+                viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
         return _loKitDocument;
     }
@@ -1172,7 +1167,7 @@ private:
     {
         Util::setThreadName("lok_handler");
 
-        Log::debug("Thread started.");
+        LOG_DBG("Thread started.");
 
         try
         {
@@ -1189,7 +1184,7 @@ private:
 
                 if (tokens[0] == "eof")
                 {
-                    Log::info("Received EOF. Finishing.");
+                    LOG_INF("Received EOF. Finishing.");
                     break;
                 }
 
@@ -1228,9 +1223,9 @@ private:
                             }
                             else
                             {
-                                Log::error() << "Session thread for session " << session->getId() << " for view "
-                                             << viewId << " is not running. Dropping [" << LOKitHelper::kitCallbackTypeToString(type)
-                                             << "] payload [" << payload << "]." << Log::end;
+                                LOG_ERR("Session thread for session " << session->getId() << " for view " <<
+                                        viewId << " is not running. Dropping [" << LOKitHelper::kitCallbackTypeToString(type) <<
+                                        "] payload [" << payload << "].");
                             }
 
                             break;
@@ -1239,23 +1234,23 @@ private:
 
                     if (!isFound)
                     {
-                        Log::warn() << "Document::ViewCallback. The message [" << viewId
-                                    << "] [" << LOKitHelper::kitCallbackTypeToString(type)
-                                    << "] [" << payload << "] is not sent to Master Session." << Log::end;
+                        LOG_WRN("Document::ViewCallback. The message [" << viewId <<
+                                "] [" << LOKitHelper::kitCallbackTypeToString(type) <<
+                                "] [" << payload << "] is not sent to Master Session.");
                     }
                 }
                 else
                 {
-                    Log::error("Unexpected tile request: [" + message + "].");
+                    LOG_ERR("Unexpected tile request: [" << message << "].");
                 }
             }
         }
         catch (const std::exception& exc)
         {
-            Log::error(std::string("QueueHandler::run: Exception: ") + exc.what());
+            LOG_ERR("QueueHandler::run: Exception: " << exc.what());
         }
 
-        Log::debug("Thread finished.");
+        LOG_DBG("Thread finished.");
     }
 
 private:
@@ -1330,7 +1325,7 @@ void lokit_main(const std::string& childRoot,
 
     Util::setThreadName("loolkit");
 
-    Log::debug("Process started.");
+    LOG_DBG("Process started.");
 
     Util::setTerminationSignals();
     Util::setFatalSignals();
@@ -1343,7 +1338,7 @@ void lokit_main(const std::string& childRoot,
     try
     {
         jailPath = Path::forDirectory(childRoot + "/" + jailId);
-        Log::info("Jail path: " + jailPath.toString());
+        LOG_INF("Jail path: " << jailPath.toString());
         File(jailPath).createDirectories();
 
         if (bRunInsideJail)
@@ -1380,9 +1375,9 @@ void lokit_main(const std::string& childRoot,
                     usrSrcPath.toString() +
                     std::string(" ") +
                     usrDestPath.toString();
-                Log::debug("Initializing jail bind mount.");
+                LOG_DBG("Initializing jail bind mount.");
                 bLoopMounted = !system(mountCommand.c_str());
-                Log::debug("Initialized jail bind mount.");
+                LOG_DBG("Initialized jail bind mount.");
             }
             linkOrCopy(sysTemplate, jailPath,
                        bLoopMounted ? COPY_NO_USR : COPY_ALL);
@@ -1400,7 +1395,7 @@ void lokit_main(const std::string& childRoot,
                 }
             }
 
-            Log::debug("Initialized jail files.");
+            LOG_DBG("Initialized jail files.");
 
             // Create the urandom and random devices
             File(Path(jailPath, "/dev")).createDirectory();
@@ -1417,7 +1412,7 @@ void lokit_main(const std::string& childRoot,
                 Log::syserror("mknod(" + jailPath.toString() + "/dev/urandom) failed.");
             }
 
-            Log::info("chroot(\"" + jailPath.toString() + "\")");
+            LOG_INF("chroot(\"" << jailPath.toString() << "\")");
             if (chroot(jailPath.toString().c_str()) == -1)
             {
                 Log::syserror("chroot(\"" + jailPath.toString() + "\") failed.");
@@ -1434,11 +1429,11 @@ void lokit_main(const std::string& childRoot,
             dropCapability(CAP_MKNOD);
             dropCapability(CAP_FOWNER);
 
-            Log::debug("Initialized jail nodes, dropped caps.");
+            LOG_DBG("Initialized jail nodes, dropped caps.");
         }
         else // noCapabilities set
         {
-            Log::info("Using template " + loTemplate + " as install subpath - skipping jail setup");
+            LOG_INF("Using template " << loTemplate << " as install subpath - skipping jail setup");
             userdir_url = "file:///" + jailPath.toString() + "/user";
             instdir_path = "/" + loTemplate + "/program";
         }
@@ -1456,13 +1451,13 @@ void lokit_main(const std::string& childRoot,
             loKit = std::make_shared<lok::Office>(kit);
             if (!loKit || !loKit->get())
             {
-                Log::fatal("LibreOfficeKit initialization failed. Exiting.");
+                LOG_FTL("LibreOfficeKit initialization failed. Exiting.");
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
         }
 
         assert(loKit && loKit->get());
-        Log::info("Process is ready.");
+        LOG_INF("Process is ready.");
 
         // Open websocket connection between the child process and WSD.
         HTTPClientSession cs("127.0.0.1", MasterPortNumber);
@@ -1497,13 +1492,13 @@ void lokit_main(const std::string& childRoot,
                     if (UnitKit::get().filterKitMessage(ws, message))
                         return true;
 
-                    Log::debug(socketName + ": recv [" + LOOLProtocol::getAbbreviatedMessage(message) + "].");
+                    LOG_DBG(socketName << ": recv [" << LOOLProtocol::getAbbreviatedMessage(message) << "].");
                     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
                     // Note: Syntax or parsing errors here are unexpected and fatal.
                     if (TerminationFlag)
                     {
-                        Log::debug("Too late, we're going down");
+                        LOG_DBG("Too late, we're going down");
                     }
                     else if (tokens[0] == "session")
                     {
@@ -1512,7 +1507,7 @@ void lokit_main(const std::string& childRoot,
 
                         std::string url;
                         URI::decode(docKey, url);
-                        Log::info("New session [" + sessionId + "] request on url [" + url + "].");
+                        LOG_INF("New session [" << sessionId << "] request on url [" << url << "].");
 
                         if (!document)
                         {
@@ -1523,7 +1518,7 @@ void lokit_main(const std::string& childRoot,
                         if (!(url == document->getUrl() &&
                               document->createSession(sessionId)))
                         {
-                            Log::debug("CreateSession failed.");
+                            LOG_DBG("CreateSession failed.");
                         }
                     }
                     else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
@@ -1535,17 +1530,17 @@ void lokit_main(const std::string& childRoot,
                         }
                         else
                         {
-                            Log::warn("No document while processing " + tokens[0] + " request.");
+                            LOG_WRN("No document while processing " << tokens[0] << " request.");
                         }
                     }
                     else if (document && document->canDiscard())
                     {
-                        Log::info("Last session discarded. Terminating.");
+                        LOG_INF("Last session discarded. Terminating.");
                         TerminationFlag = true;
                     }
                     else
                     {
-                        Log::error("Bad or unknown token [" + tokens[0] + "]");
+                        LOG_ERR("Bad or unknown token [" << tokens[0] << "]");
                     }
 
                     return true;
@@ -1555,7 +1550,7 @@ void lokit_main(const std::string& childRoot,
                 {
                     if (document && document->canDiscard())
                     {
-                        Log::info("Last session discarded. Terminating.");
+                        LOG_INF("Last session discarded. Terminating.");
                         TerminationFlag = true;
                     }
 
@@ -1566,18 +1561,17 @@ void lokit_main(const std::string& childRoot,
     }
     catch (const Exception& exc)
     {
-        Log::error() << "Poco Exception: " << exc.displayText()
-                     << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "")
-                     << Log::end;
+        LOG_ERR("Poco Exception: " << exc.displayText() <<
+                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
     }
     catch (const std::exception& exc)
     {
-        Log::error(std::string("Exception: ") + exc.what());
+        LOG_ERR("Exception: " << exc.what());
     }
 
     // Trap the signal handler, if invoked,
     // to prevent exiting.
-    Log::info("Process finished.");
+    LOG_INF("Process finished.");
     std::unique_lock<std::mutex> lock(SigHandlerTrap);
     std::_Exit(Application::EXIT_OK);
 }
@@ -1593,11 +1587,11 @@ bool globalPreinit(const std::string &loTemplate)
     void *handle;
     if (File(libMerged).exists())
     {
-        Log::trace("dlopen(" + libMerged + ", RTLD_GLOBAL|RTLD_NOW)");
+        LOG_TRC("dlopen(" << libMerged << ", RTLD_GLOBAL|RTLD_NOW)");
         handle = dlopen(libMerged.c_str(), RTLD_GLOBAL|RTLD_NOW);
         if (!handle)
         {
-            Log::fatal("Failed to load " + libMerged + ": " + std::string(dlerror()));
+            LOG_FTL("Failed to load " << libMerged << ": " << dlerror());
             return false;
         }
         loadedLibrary = libMerged;
@@ -1606,18 +1600,18 @@ bool globalPreinit(const std::string &loTemplate)
     {
         if (File(libSofficeapp).exists())
         {
-            Log::trace("dlopen(" + libSofficeapp + ", RTLD_GLOBAL|RTLD_NOW)");
+            LOG_TRC("dlopen(" << libSofficeapp << ", RTLD_GLOBAL|RTLD_NOW)");
             handle = dlopen(libSofficeapp.c_str(), RTLD_GLOBAL|RTLD_NOW);
             if (!handle)
             {
-                Log::fatal("Failed to load " + libSofficeapp + ": " + std::string(dlerror()));
+                LOG_FTL("Failed to load " << libSofficeapp << ": " << dlerror());
                 return false;
             }
             loadedLibrary = libSofficeapp;
         }
         else
         {
-            Log::fatal("Neither " + libSofficeapp + " or " + libMerged + " exist.");
+            LOG_FTL("Neither " << libSofficeapp << " or " << libMerged << " exist.");
             return false;
         }
     }
@@ -1625,14 +1619,14 @@ bool globalPreinit(const std::string &loTemplate)
     LokHookPreInit* preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
     if (!preInit)
     {
-        Log::fatal("No lok_preinit symbol in " + loadedLibrary + ": " + std::string(dlerror()));
+        LOG_FTL("No lok_preinit symbol in " << loadedLibrary << ": " << dlerror());
         return false;
     }
 
-    Log::trace("lok_preinit(" + loTemplate + "/program\", \"file:///user\")");
+    LOG_TRC("lok_preinit(" << loTemplate << "/program\", \"file:///user\")");
     if (preInit((loTemplate + "/program").c_str(), "file:///user") != 0)
     {
-        Log::fatal("lok_preinit() in " + loadedLibrary + " failed");
+        LOG_FTL("lok_preinit() in " << loadedLibrary << " failed");
         return false;
     }
 
