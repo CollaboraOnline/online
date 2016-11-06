@@ -565,11 +565,9 @@ private:
                     if (sessionsCount == 0)
                     {
                         // At this point we're done.
-                        // We can't save if we hadn't, just kill.
-                        Log::debug("Closing child for docKey [" + docKey + "].");
-                        child->close(true);
-                        Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
+                        LOG_DBG("Removing DocumentBroker for docKey [" << docKey << "].");
                         DocBrokers.erase(docKey);
+                        docBroker->terminateChild(docLock);
                     }
                     else
                     {
@@ -928,9 +926,22 @@ private:
 
             if (sessionsCount == 0)
             {
-                std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
-                Log::debug("Removing DocumentBroker for docKey [" + docKey + "].");
-                DocBrokers.erase(docKey);
+                // We've supposedly destroyed the last session and can do away with
+                // DocBroker. But first we need to take both locks in the correct
+                // order and check again. We can't take the DocBrokersMutex while
+                // holding the docBroker lock as that can deadlock with autoSave below.
+                std::unique_lock<std::mutex> docBrokersLock2(DocBrokersMutex);
+                it = DocBrokers.find(docKey);
+                if (it != DocBrokers.end() && it->second)
+                {
+                    auto lock = it->second->getLock();
+                    if (it->second->getSessionsCount() == 0)
+                    {
+                        Log::info("Removing DocumentBroker for docKey [" + docKey + "].");
+                        DocBrokers.erase(docKey);
+                        docBroker->terminateChild(lock);
+                    }
+                }
             }
 
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession: " + uri);

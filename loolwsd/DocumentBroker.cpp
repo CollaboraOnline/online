@@ -180,6 +180,10 @@ DocumentBroker::~DocumentBroker()
     {
         LOG_WRN("DocumentBroker still has unremoved sessions.");
     }
+
+    // Need to first make sure the child exited, socket closed,
+    // and thread finished before we are destroyed.
+    _childProcess.reset();
 }
 
 bool DocumentBroker::load(const std::string& sessionId, const std::string& jailId)
@@ -920,6 +924,25 @@ void DocumentBroker::childSocketTerminated()
     {
         pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY);
     }
+}
+
+void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock)
+{
+    Util::assertIsLocked(_mutex);
+    Util::assertIsLocked(lock);
+
+    Log::info() << "Terminating child [" << getPid() << "] of doc [" << _docKey << "]." << Log::end;
+
+    assert(_sessions.empty() && "DocumentBroker still has unremoved sessions!");
+
+    // First flag to stop as it might be waiting on our lock
+    // to process some incoming message.
+    _childProcess->stop();
+
+    // Release the lock and wait for the thread to finish.
+    lock.unlock();
+
+    _childProcess->close(false);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
