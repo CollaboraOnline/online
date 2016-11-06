@@ -115,29 +115,6 @@ std::string DocumentBroker::getDocKey(const Poco::URI& uri)
     return docKey;
 }
 
-DocumentBroker::DocumentBroker() :
-    _uriPublic(),
-    _docKey(),
-    _childRoot(),
-    _cacheRoot(),
-    _childProcess(),
-    _lastSaveTime(std::chrono::steady_clock::now()),
-    _markToDestroy(true),
-    _lastEditableSession(true),
-    _isLoaded(false),
-    _isModified(false),
-    _cursorPosX(0),
-    _cursorPosY(0),
-    _cursorWidth(0),
-    _cursorHeight(0),
-    _mutex(),
-    _saveMutex(),
-    _tileVersion(0),
-    _debugRenderedTileCount(0)
-{
-    Log::info("Empty DocumentBroker (marked to destroy) created.");
-}
-
 DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
                                const std::string& docKey,
                                const std::string& childRoot,
@@ -164,8 +141,7 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
 
-    LOG_INF("DocumentBroker [" << _uriPublic.toString() <<
-            "] created. DocKey: [" << _docKey << "]");
+    LOG_INF("DocumentBroker [" << _uriPublic.toString() << "] created. DocKey: [" << _docKey << "]");
 }
 
 DocumentBroker::~DocumentBroker()
@@ -173,8 +149,7 @@ DocumentBroker::~DocumentBroker()
     Admin::instance().rmDoc(_docKey);
 
     LOG_INF("~DocumentBroker [" << _uriPublic.toString() <<
-            "] destroyed with " << _sessions.size() <<
-            " sessions left.");
+            "] destroyed with " << _sessions.size() << " sessions left.");
 
     if (!_sessions.empty())
     {
@@ -203,12 +178,12 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
     auto it = _sessions.find(sessionId);
     if (it == _sessions.end())
     {
-        Log::error("Session with sessionId [" + sessionId + "] not found while loading");
+        LOG_ERR("Session with sessionId [" << sessionId << "] not found while loading");
         return false;
     }
 
     const Poco::URI& uriPublic = it->second->getPublicUri();
-    Log::debug("Loading from URI: " + uriPublic.toString());
+    LOG_DBG("Loading from URI: " << uriPublic.toString());
 
     _jailId = jailId;
 
@@ -219,7 +194,7 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
     const auto jailPath = Poco::Path(JAILED_DOCUMENT_ROOT, jailId);
     std::string jailRoot = getJailRoot();
 
-    Log::info("jailPath: " + jailPath.toString() + ", jailRoot: " + jailRoot);
+    LOG_INF("jailPath: " << jailPath.toString() << ", jailRoot: " << jailRoot);
 
     if (LOOLWSD::NoCapsForKit)
         jailRoot = jailPath.toString() + "/" + getJailRoot();
@@ -229,7 +204,7 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
         // TODO: Maybe better to pass docKey to storage here instead of uriPublic here because
         // uriPublic would be different for each view of the document (due to
         // different query params like access token etc.)
-        Log::debug("Creating new storage instance for URI [" + uriPublic.toString() + "].");
+        LOG_DBG("Creating new storage instance for URI [" << uriPublic.toString() << "].");
         _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString());
     }
 
@@ -246,7 +221,7 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
 
             if (!wopifileinfo._userCanWrite)
             {
-                Log::debug("Setting the session as readonly");
+                LOG_DBG("Setting the session as readonly");
                 it->second->setReadOnly();
             }
 
@@ -264,7 +239,7 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
             username = localfileinfo._username;
         }
 
-        Log::debug("Setting username [" + username + "] and userId [" + userid + "] for session [" + sessionId + "]");
+        LOG_DBG("Setting username [" << username << "] and userId [" << userid << "] for session [" << sessionId << "]");
         it->second->setUserId(userid);
         it->second->setUserName(username);
 
@@ -272,7 +247,7 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
         const auto fileInfo = _storage->getFileInfo();
         if (!fileInfo.isValid())
         {
-            Log::error("Invalid fileinfo for URI [" + uriPublic.toString() + "].");
+            LOG_ERR("Invalid fileinfo for URI [" << uriPublic.toString() << "].");
             return false;
         }
 
@@ -297,7 +272,7 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
             // Add the time taken to check file info
             callDuration += getInfoCallDuration;
             const std::string msg = "stats: wopiloadduration " + std::to_string(callDuration.count());
-            Log::trace("Sending to Client [" + msg + "].");
+            LOG_TRC("Sending to Client [" << msg << "].");
             it->second->sendTextFrame(msg);
         }
 
@@ -314,7 +289,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     const auto it = _sessions.find(sessionId);
     if (it == _sessions.end())
     {
-        Log::error("Session with sessionId [" + sessionId + "] not found while saving");
+        LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving");
         return false;
     }
 
@@ -325,7 +300,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     // notify the waiting thread, if any.
     if (!success && result == "unmodified")
     {
-        Log::debug("Save skipped as document was not modified");
+        LOG_DBG("Save skipped as document was not modified");
         _saveCV.notify_all();
         return true;
     }
@@ -336,14 +311,12 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     if (!_lastEditableSession && newFileModifiedTime == _lastFileModifiedTime)
     {
         // Nothing to do.
-        Log::debug() << "Skipping unnecessary saving to URI [" << uri
-                     << "]. File last modified "
-                     << _lastFileModifiedTime.elapsed() / 1000000
-                     << " seconds ago." << Log::end;
+        LOG_DBG("Skipping unnecessary saving to URI [" << uri << "]. File last modified " <<
+                _lastFileModifiedTime.elapsed() / 1000000 << " seconds ago.");
         return true;
     }
 
-    Log::debug("Saving to URI [" + uri + "].");
+    LOG_DBG("Saving to URI [" << uri << "].");
 
     assert(_storage && _tileCache);
     if (_storage->saveLocalFileToStorage(uriPublic))
@@ -353,12 +326,12 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         _lastFileModifiedTime = newFileModifiedTime;
         _tileCache->saveLastModified(_lastFileModifiedTime);
         _lastSaveTime = std::chrono::steady_clock::now();
-        Log::debug("Saved to URI [" + uri + "] and updated tile cache.");
+        LOG_DBG("Saved to URI [" << uri << "] and updated tile cache.");
         _saveCV.notify_all();
         return true;
     }
 
-    Log::error("Failed to save to URI [" + uri + "].");
+    LOG_ERR("Failed to save to URI [" << uri << "].");
     return false;
 }
 
@@ -370,18 +343,18 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs, std:
         !_childProcess->isAlive() || (!_isModified && !force))
     {
         // Nothing to do.
-        Log::trace("Nothing to autosave [" + _docKey + "].");
+        LOG_TRC("Nothing to autosave [" << _docKey << "].");
         return true;
     }
 
     // Remeber the last save time, since this is the predicate.
     const auto lastSaveTime = _lastSaveTime;
-    Log::trace("Checking to autosave [" + _docKey + "].");
+    LOG_TRC("Checking to autosave [" << _docKey << "].");
 
     bool sent = false;
     if (force)
     {
-        Log::trace("Sending forced save command for [" + _docKey + "].");
+        LOG_TRC("Sending forced save command for [" << _docKey << "].");
         sent = sendUnoSave(true);
     }
     else if (_isModified)
@@ -393,25 +366,25 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs, std:
             inactivityTimeMs = std::min(sessionIt.second->getInactivityMS(), inactivityTimeMs);
         }
 
-        Log::trace("Most recent activity was " + std::to_string((int)inactivityTimeMs) + " ms ago.");
+        LOG_TRC("Most recent activity was " << inactivityTimeMs << " ms ago.");
         const auto timeSinceLastSaveMs = getTimeSinceLastSaveMs();
-        Log::trace("Time since last save is " + std::to_string((int)timeSinceLastSaveMs) + " ms.");
+        LOG_TRC("Time since last save is " << timeSinceLastSaveMs << " ms.");
 
         // Either we've been idle long enough, or it's auto-save time.
         if (inactivityTimeMs >= IdleSaveDurationMs ||
             timeSinceLastSaveMs >= AutoSaveDurationMs)
         {
-            Log::trace("Sending timed save command for [" + _docKey + "].");
+            LOG_TRC("Sending timed save command for [" << _docKey << "].");
             sent = sendUnoSave(true);
         }
     }
 
     if (sent && waitTimeoutMs > 0)
     {
-        Log::trace("Waiting for save event for [" + _docKey + "].");
+        LOG_TRC("Waiting for save event for [" << _docKey << "].");
         if (_saveCV.wait_for(lock, std::chrono::milliseconds(waitTimeoutMs)) == std::cv_status::no_timeout)
         {
-            Log::debug("Successfully persisted document [" + _docKey + "] or document was not modified");
+            LOG_DBG("Successfully persisted document [" << _docKey << "] or document was not modified");
             return true;
         }
 
@@ -423,7 +396,7 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs, std:
 
 bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
 {
-    Log::info("Autosave triggered for doc [" + _docKey + "].");
+    LOG_INF("Autosave triggered for doc [" << _docKey << "].");
     Util::assertIsLocked(_mutex);
 
     // Save using session holding the edit-lock (or first if multview).
@@ -460,13 +433,13 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
         oss << "}";
 
         const auto saveArgs = oss.str();
-        Log::trace(".uno:Save arguments: " + saveArgs);
+        LOG_TRC(".uno:Save arguments: " << saveArgs);
         const auto command = "uno .uno:Save " + saveArgs;
         forwardToChild(sessionIt.second->getId(), command);
         return true;
     }
 
-    Log::error("Failed to auto-save doc [" + _docKey + "]: No valid sessions.");
+    LOG_ERR("Failed to auto-save doc [" << _docKey << "]: No valid sessions.");
     return false;
 }
 
@@ -491,12 +464,12 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
         auto ret = _sessions.emplace(id, session);
         if (!ret.second)
         {
-            Log::warn("DocumentBroker: Trying to add already existing session.");
+            LOG_WRN("DocumentBroker: Trying to add already existing session.");
         }
 
         if (session->isReadOnly())
         {
-            Log::debug("Adding a readonly session [" + id + "]");
+            LOG_DBG("Adding a readonly session [" << id << "]");
         }
 
         // Below values are recalculated when startDestroy() is called (before destroying the
@@ -509,7 +482,7 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
         if (!loaded)
         {
             const auto msg = "Failed to load document with URI [" + session->getPublicUri().toString() + "].";
-            Log::error(msg);
+            LOG_ERR(msg);
             throw std::runtime_error(msg);
         }
     }
@@ -531,7 +504,7 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     // Connect the prison session to the client.
     if (!connectPeers(prisonerSession))
     {
-        Log::warn("Failed to connect " + session->getName() + " to its peer.");
+        LOG_WRN("Failed to connect " << session->getName() << " to its peer.");
     }
 
     return _sessions.size();
@@ -587,7 +560,7 @@ void DocumentBroker::alertAllUsersOfDocument(const std::string& cmd, const std::
 bool DocumentBroker::handleInput(const std::vector<char>& payload)
 {
     const auto msg = LOOLProtocol::getAbbreviatedMessage(payload);
-    Log::trace("DocumentBroker got child message: [" + msg + "].");
+    LOG_TRC("DocumentBroker got child message: [" << msg << "].");
 
     LOOLWSD::dumpOutgoingTrace(getJailId(), "0", msg);
 
@@ -617,7 +590,7 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     }
     else
     {
-        Log::error("Unexpected message: [" + msg + "].");
+        LOG_ERR("Unexpected message: [" << msg << "].");
         return false;
     }
 
@@ -639,7 +612,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
 
     tile.setVersion(++_tileVersion);
     const auto tileMsg = tile.serialize();
-    Log::trace() << "Tile request for " << tile.serialize() << Log::end;
+    LOG_TRC("Tile request for " << tile.serialize());
 
     std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
     if (cachedTile)
@@ -671,8 +644,8 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
     tileCache().subscribeToTileRendering(tile, session);
 
     // Forward to child to render.
-    Log::debug() << "Sending render request for tile (" << tile.getPart() << ','
-                 << tile.getTilePosX() << ',' << tile.getTilePosY() << ")." << Log::end;
+    LOG_DBG("Sending render request for tile (" << tile.getPart() << ',' <<
+            tile.getTilePosX() << ',' << tile.getTilePosY() << ").");
     const std::string request = "tile " + tile.serialize();
     _childProcess->sendTextFrame(request);
     _debugRenderedTileCount++;
@@ -683,7 +656,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    Log::trace() << "TileCombined request for " << tileCombined.serialize() << Log::end;
+    LOG_TRC("TileCombined request for " << tileCombined.serialize());
 
     // Satisfy as many tiles from the cache.
     std::vector<TileDesc> tiles;
@@ -732,7 +705,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 
         // Forward to child to render.
         const auto req = newTileCombined.serialize("tilecombine");
-        Log::debug() << "Sending residual tilecombine: " << req << Log::end;
+        LOG_DBG("Sending residual tilecombine: " << req);
         _childProcess->sendTextFrame(req);
     }
 }
@@ -744,7 +717,7 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
     const auto canceltiles = tileCache().cancelTiles(session);
     if (!canceltiles.empty())
     {
-        Log::debug() << "Forwarding canceltiles request: " << canceltiles << Log::end;
+        LOG_DBG("Forwarding canceltiles request: " << canceltiles);
         _childProcess->sendTextFrame(canceltiles);
     }
 }
@@ -752,7 +725,7 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
 void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 {
     const std::string firstLine = getFirstLine(payload);
-    Log::debug("Handling tile combined: " + firstLine);
+    LOG_DBG("Handling tile combined: " << firstLine);
 
     try
     {
@@ -766,20 +739,20 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
         }
         else
         {
-            Log::debug() << "Render request declined for " << firstLine << Log::end;
+            LOG_DBG("Render request declined for " << firstLine);
             // They will get re-issued if we don't forget them.
         }
     }
     catch (const std::exception& exc)
     {
-        Log::error("Failed to process tile response [" + firstLine + "]: " + exc.what() + ".");
+        LOG_ERR("Failed to process tile response [" << firstLine << "]: " << exc.what() << ".");
     }
 }
 
 void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload)
 {
     const std::string firstLine = getFirstLine(payload);
-    Log::debug("Handling tile combined: " + firstLine);
+    LOG_DBG("Handling tile combined: " << firstLine);
 
     try
     {
@@ -797,13 +770,13 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
         }
         else
         {
-            Log::error() << "Render request declined for " << firstLine << Log::end;
+            LOG_ERR("Render request declined for " << firstLine);
             // They will get re-issued if we don't forget them.
         }
     }
     catch (const std::exception& exc)
     {
-        Log::error("Failed to process tile response [" + firstLine + "]: " + exc.what() + ".");
+        LOG_ERR("Failed to process tile response [" << firstLine << "]: " << exc.what() << ".");
     }
 }
 
@@ -843,7 +816,7 @@ void DocumentBroker::setModified(const bool value)
 
 bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string& message)
 {
-    Log::trace() << "Forwarding payload to child [" << viewId << "]: " << message << Log::end;
+    LOG_TRC("Forwarding payload to child [" << viewId << "]: " << message);
 
     const auto it = _sessions.find(viewId);
     if (it != _sessions.end())
@@ -854,7 +827,7 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
     }
     else
     {
-        Log::warn() << "Client session [" << viewId << "] not found to forward message: " << message << Log::end;
+        LOG_WRN("Client session [" << viewId << "] not found to forward message: " << message);
     }
 
     return false;
@@ -915,7 +888,7 @@ void DocumentBroker::childSocketTerminated()
 
     if (!_childProcess->isAlive())
     {
-        Log::error("Child for doc [" + _docKey + "] terminated prematurely.");
+        LOG_ERR("Child for doc [" << _docKey << "] terminated prematurely.");
     }
 
     // We could restore the kit if this was unexpected.
@@ -931,7 +904,7 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock)
     Util::assertIsLocked(_mutex);
     Util::assertIsLocked(lock);
 
-    Log::info() << "Terminating child [" << getPid() << "] of doc [" << _docKey << "]." << Log::end;
+    LOG_INF("Terminating child [" << getPid() << "] of doc [" << _docKey << "].");
 
     assert(_sessions.empty() && "DocumentBroker still has unremoved sessions!");
 
