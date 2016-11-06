@@ -270,6 +270,13 @@ public:
     /// or upon failing to process an incoming message.
     void childSocketTerminated();
 
+    /// This gracefully terminates the connection
+    /// with the child and cleans up ChildProcess etc.
+    /// We must be called under lock and it must be
+    /// passed to us so we unlock before waiting on
+    /// the ChildProcess thread, which can take our lock.
+    void terminateChild(std::unique_lock<std::mutex>& lock);
+
     /// Get the PID of the associated child process
     Poco::Process::PID getPid() const { return _childProcess->getPid(); }
 
