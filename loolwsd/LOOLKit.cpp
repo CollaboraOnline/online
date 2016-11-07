@@ -1333,6 +1333,10 @@ void lokit_main(const std::string& childRoot,
     std::string userdir_url;
     std::string instdir_path;
 
+    // lokit's destroy typically throws from
+    // framework/source/services/modulemanager.cxx:198
+    // So we insure it lives until std::_Exit is called.
+    std::shared_ptr<lok::Office> loKit;
     Path jailPath;
     bool bRunInsideJail = !noCapabilities;
     try
@@ -1438,7 +1442,6 @@ void lokit_main(const std::string& childRoot,
             instdir_path = "/" + loTemplate + "/program";
         }
 
-        std::shared_ptr<lok::Office> loKit;
         {
             const char *instdir = instdir_path.c_str();
             const char *userdir = userdir_url.c_str();
@@ -1490,7 +1493,9 @@ void lokit_main(const std::string& childRoot,
                     std::string message(data.data(), data.size());
 
                     if (UnitKit::get().filterKitMessage(ws, message))
+                    {
                         return true;
+                    }
 
                     LOG_DBG(socketName << ": recv [" << LOOLProtocol::getAbbreviatedMessage(message) << "].");
                     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
