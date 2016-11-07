@@ -221,8 +221,6 @@ public:
 
     /// Add a new session. Returns the new number of sessions.
     size_t addSession(std::shared_ptr<ClientSession>& session);
-    /// Connect a prison session to its client peer.
-    bool connectPeers(std::shared_ptr<PrisonerSession>& session);
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id);
 
