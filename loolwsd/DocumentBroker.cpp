@@ -50,6 +50,9 @@ void ChildProcess::socketProcessor()
             auto docBroker = this->_docBroker.lock();
             if (docBroker)
             {
+                // We should never destroy the broker, since
+                // it owns us and will wait on this thread.
+                assert(docBroker.use_count() > 1);
                 return docBroker->handleInput(payload);
             }
 
