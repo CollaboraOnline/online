@@ -198,7 +198,7 @@ public:
     ~DocumentBroker();
 
     /// Loads a document from the public URI into the jail.
-    bool load(const std::string& sessionId, const std::string& jailId);
+    bool load(std::shared_ptr<ClientSession>& session, const std::string& jailId);
     bool isLoaded() const { return _isLoaded; }
     void setLoaded() { _isLoaded = true; }
 
