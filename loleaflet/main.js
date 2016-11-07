@@ -30,8 +30,6 @@ global.vex = vex;
 
 global.devtools = require('devtools-detect');
 var errorMessages = require('./dist/errormessages');
-var L = require('loleaflet');
-require('./dist/plugins/draw-0.2.4/dist/leaflet.draw.js');
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -43,6 +41,9 @@ var lang = getParameterByName('lang');
 if (lang) {
     String.locale = lang;
 }
+
+var L = require('loleaflet');
+require('./dist/plugins/draw-0.2.4/dist/leaflet.draw.js');
 
 var wopiSrc = getParameterByName('WOPISrc');
 
