@@ -25,8 +25,6 @@
 #include "Unit.hpp"
 #include "Util.hpp"
 
-using Poco::StringTokenizer;
-
 void Document::addView(const std::string& sessionId)
 {
     const auto ret = _views.emplace(sessionId, View(sessionId));
