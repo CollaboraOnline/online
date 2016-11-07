@@ -15,3 +15,4 @@ var WrapAfter = _('Wrap After');
 var EnableContour = _('Enable Contour');
 var UpdateTOC = _('Update Index or Table of Contents');
 var DeleteTOC = _('Delete Index or Table of Contents');
+var ReplyToComment = ('Reply');
