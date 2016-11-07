@@ -69,6 +69,18 @@ public:
     {
         LOG_DBG("Stopping ChildProcess [" << _pid << "]");
         _stop = true;
+
+        try
+        {
+            if (_pid != -1 && _ws)
+            {
+                sendTextFrame("exit");
+            }
+        }
+        catch (const std::exception&)
+        {
+            LOG_ERR("Failed to send 'exit' command to child [" << _pid << "].");
+        }
     }
 
     void close(const bool rude)
@@ -84,16 +96,19 @@ public:
             }
 
             _ws.reset();
-            if (_pid != -1)
+            if (_pid != -1 && kill(_pid, 0) != 0)
             {
-                LOG_INF("Closing child [" << _pid << "].");
-                if (rude && kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0)
+                if (rude)
                 {
-                    Log::syserror("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
+                    LOG_INF("Killing child [" << _pid << "].");
+                    if (kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0)
+                    {
+                        Log::syserror("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
+                    }
                 }
-
-                _pid = -1;
             }
+
+            _pid = -1;
         }
         catch (const std::exception& ex)
         {
@@ -108,9 +123,12 @@ public:
     {
         try
         {
-            LOG_TRC("DocBroker to Child: " << data);
-            _ws->sendFrame(data.data(), data.size());
-            return true;
+            if (_ws)
+            {
+                LOG_TRC("DocBroker to Child: " << data);
+                _ws->sendFrame(data.data(), data.size());
+                return true;
+            }
         }
         catch (const std::exception& exc)
         {
@@ -119,6 +137,7 @@ public:
             throw;
         }
 
+        LOG_WRN("No socket between DocBroker and child to send [" << data << "]");
         return false;
     }
 

@@ -1521,6 +1521,11 @@ void lokit_main(const std::string& childRoot,
                             LOG_DBG("CreateSession failed.");
                         }
                     }
+                    else if (tokens[0] == "exit")
+                    {
+                        LOG_TRC("Setting TerminationFlag due to 'exit' command from parent.");
+                        TerminationFlag = true;
+                    }
                     else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
                              LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
                     {

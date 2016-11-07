@@ -395,6 +395,10 @@ disconnect
     Signals to the child that the client for the respective connection
     has disconnected.
 
+exit
+
+    Signals to the child that the process must end and exit.
+
 Admin console
 ===============
 
