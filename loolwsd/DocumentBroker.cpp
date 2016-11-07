@@ -165,8 +165,12 @@ DocumentBroker::~DocumentBroker()
     _childProcess.reset();
 }
 
-bool DocumentBroker::load(const std::string& sessionId, const std::string& jailId)
+bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::string& jailId)
 {
+    Util::assertIsLocked(_mutex);
+
+    const std::string sessionId = session->getId();
+
     LOG_INF("Loading [" << _docKey << "] for session [" << sessionId << "] and jail [" << jailId << "].");
 
     {
@@ -182,14 +186,6 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
         return false;
     }
 
-    auto it = _sessions.find(sessionId);
-    if (it == _sessions.end() || !it->second)
-    {
-        LOG_ERR("Session with sessionId [" << sessionId << "] not found while loading");
-        return false;
-    }
-
-    auto session = it->second;
     const Poco::URI& uriPublic = session->getPublicUri();
     LOG_DBG("Loading from URI: " << uriPublic.toString());
 
@@ -466,21 +462,13 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     const auto id = session->getId();
     const std::string aMessage = "session " + id + " " + _docKey;
 
-    std::lock_guard<std::mutex> lock(_mutex);
-
-    auto ret = _sessions.emplace(id, session);
-    if (!ret.second)
-    {
-        LOG_WRN("DocumentBroker: Trying to add already existing session.");
-    }
+    std::unique_lock<std::mutex> lock(_mutex);
 
     try
     {
         // First load the document, since this can fail.
-        if (!load(id, std::to_string(_childProcess->getPid())))
+        if (!load(session, std::to_string(_childProcess->getPid())))
         {
-            _sessions.erase(id);
-
             const auto msg = "Failed to load document with URI [" + session->getPublicUri().toString() + "].";
             LOG_ERR(msg);
             throw std::runtime_error(msg);
@@ -489,7 +477,6 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     catch (const StorageSpaceLowException&)
     {
         LOG_ERR("Out of storage while loading document with URI [" << session->getPublicUri().toString() << "].");
-        _sessions.erase(id);
 
         // We use the same message as is sent when some of lool's own locations are full,
         // even if in this case it might be a totally different location (file system, or
@@ -504,13 +491,22 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     _lastEditableSession = false;
     _markToDestroy = false;
 
-    // Request a new session from the child kit.
-    _childProcess->sendTextFrame(aMessage);
-
     if (session->isReadOnly())
     {
         LOG_DBG("Adding a readonly session [" << id << "]");
     }
+
+    if (!_sessions.emplace(id, session).second)
+    {
+        LOG_WRN("DocumentBroker: Trying to add already existing session.");
+    }
+
+    const auto count = _sessions.size();
+
+    lock.unlock();
+
+    // Request a new session from the child kit.
+    _childProcess->sendTextFrame(aMessage);
 
     // Tell the admin console about this new doc
     Admin::instance().addDoc(_docKey, getPid(), getFilename(), id);
@@ -521,7 +517,7 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     session->setPeer(prisonerSession);
     prisonerSession->setPeer(session);
 
-    return _sessions.size();
+    return count;
 }
 
 size_t DocumentBroker::removeSession(const std::string& id)
@@ -550,9 +546,10 @@ void DocumentBroker::alertAllUsersOfDocument(const std::string& cmd, const std::
 
     std::stringstream ss;
     ss << "error: cmd=" << cmd << " kind=" << kind;
+    const auto msg = ss.str();
     for (auto& it : _sessions)
     {
-        it.second->sendTextFrame(ss.str());
+        it.second->sendTextFrame(msg);
     }
 }
 
