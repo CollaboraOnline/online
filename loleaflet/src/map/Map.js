@@ -123,20 +123,13 @@ L.Map = L.Evented.extend({
 
 		// View color map
 		this._viewColors = {};
-
-		// WOPI specific properties container
-		this._wopi = {};
-
-		// WOPI PostMessage Listener
-		L.DomEvent.on(window, 'message', this._WOPIPostMessageListener, this);
 	},
-
 
 	// public methods that modify map state
 
 	addView: function(viewid, userid, username, color) {
 		this._viewInfo[viewid] = {'userid': userid, 'username': username, 'color': color};
-		this.WOPIPostMessage('View_Added', {ViewId: viewid, UserId: userid, UserName: username, Color: color});
+		this.fire('postMessage', {msgId: 'View_Added', args: {ViewId: viewid, UserId: userid, UserName: username, Color: color}});
 
 		// Fire last, otherwise not all events are handled correctly.
 		this.fire('addview', {viewId: viewid, username: username});
@@ -145,7 +138,7 @@ L.Map = L.Evented.extend({
 	removeView: function(viewid) {
 		var username = this._viewInfo[viewid].username;
 		delete this._viewInfo[viewid];
-		this.WOPIPostMessage('View_Removed', {ViewId: viewid});
+		this.fire('postMessage', {msgId: 'View_Removed', args: {ViewId: viewid}});
 
 		// Fire last, otherwise not all events are handled correctly.
 		this.fire('removeview', {viewId: viewid, username: username});
@@ -161,41 +154,6 @@ L.Map = L.Evented.extend({
 		}
 
 		return this._viewInfo[viewid].color;
-	},
-
-	_WOPIPostMessageListener: function(e) {
-		if (!window.WOPIPostmessageReady) {
-			return;
-		}
-
-		var msg = JSON.parse(e.data);
-		if (msg.MessageId === 'Get_Views') {
-			var getMembersRespVal = [];
-			for (var viewInfoIdx in this._viewInfo) {
-				getMembersRespVal.push({
-					ViewId: viewInfoIdx,
-					UserName: this._viewInfo[viewInfoIdx].username,
-					UserId: this._viewInfo[viewInfoIdx].userid,
-					Color: this._viewInfo[viewInfoIdx].color
-				});
-			}
-
-			this.WOPIPostMessage('Get_Views_Resp', getMembersRespVal);
-		}
-	},
-
-	WOPIPostMessage: function(msgId, values) {
-		if (this.options.storageType === 'wopi' && !!this._wopi['PostMessageOrigin']) {
-			if (window.top !== window.self) {
-				var msg = {
-					'MessageId': msgId,
-					'SendTime': Date.now(),
-					'Values': values
-				};
-
-				window.parent.postMessage(JSON.stringify(msg), this._wopi['PostMessageOrigin']);
-			}
-		}
 	},
 
 	// replaced by animation-powered implementation in Map.PanAnimation.js

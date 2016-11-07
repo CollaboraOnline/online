@@ -220,7 +220,7 @@ function onClick(id, item, subItem) {
 		resizeToolbar();
 	}
 	else if (id === 'close') {
-		map.WOPIPostMessage('UI_Close');
+		map.fire('postMessage', {msgId: 'UI_Close'});
 		map.remove();
 	}
 }

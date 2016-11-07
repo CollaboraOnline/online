@@ -79,15 +79,14 @@ global.revHistoryEnabled = revHistoryEnabled;
 global.title = title;
 global.errorMessages = errorMessages;
 var docURL, docParams;
-var storageType;
+var isWopi = false;
 if (wopiSrc != '') {
     docURL = wopiSrc;
 	docParams = wopiParams;
-	storageType = 'wopi';
+	isWopi = true;
 } else {
     docURL = filePath;
 	docParams = {};
-	storageType = 'local';
 }
 
 document.title = title;
@@ -99,7 +98,7 @@ var map = L.map('map', {
     timestamp: timestamp,
     documentContainer: 'document-container',
     debug: debugMode,
-    storageType: storageType
+	wopi: isWopi
 });
 // toolbar.js (loaded in <script> tag accesses map as global variable,
 // so expose it

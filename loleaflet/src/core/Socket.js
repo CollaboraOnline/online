@@ -180,11 +180,12 @@ L.Socket = L.Class.extend({
 		else if (textMsg.startsWith('wopi: ')) {
 			// Handle WOPI related messages
 			textMsg = textMsg.substring('wopi: '.length);
-			if (textMsg.startsWith('postmessageorigin ')) {
-				this._map._wopi['PostMessageOrigin'] = textMsg.substring('postmessageorigin '.length);
-				this._map._wopi['DocumentLoadedTime'] = Date.now();
+			// Store postmessageorigin property in our WOPI handler, if it exists
+			if (this._map['wopi'] && textMsg.startsWith('postmessageorigin ')) {
+				this._map['wopi'].PostMessageOrigin = textMsg.substring('postmessageorigin '.length);
+				this._map['wopi'].DocumentLoadedTime = Date.now();
 				// Tell the host that we are ready now
-				this._map.WOPIPostMessage('App_LoadingStatus', {'DocumentLoadedTime': this._map._wopi['DocumentLoadedTime']});
+				this._map.fire('postMessage', {msgId: 'App_LoadingStatus', args: {'DocumentLoadedTime': this._map['wopi'].DocumentLoadedTime}});
 			}
 
 			return;
