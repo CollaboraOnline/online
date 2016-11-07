@@ -34,12 +34,13 @@ using Poco::StringTokenizer;
 
 void ChildProcess::socketProcessor()
 {
+    Util::setThreadName("child_ws_" + std::to_string(_pid));
+
     IoUtil::SocketProcessor(_ws,
         [this](const std::vector<char>& payload)
         {
             const auto message = LOOLProtocol::getAbbreviatedMessage(payload);
-            LOG_TRC("Recv from child " << this->_pid <<
-                    ": [" << message << "].");
+            LOG_TRC("Recv from child [" << message << "].");
 
             if (UnitWSD::get().filterChildMessage(payload))
             {
