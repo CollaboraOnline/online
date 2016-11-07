@@ -509,27 +509,10 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     auto prisonerSession = std::make_shared<PrisonerSession>(id, shared_from_this());
 
     // Connect the prison session to the client.
-    if (!connectPeers(prisonerSession))
-    {
-        LOG_WRN("Failed to connect " << session->getName() << " to its peer.");
-    }
+    session->setPeer(prisonerSession);
+    prisonerSession->setPeer(session);
 
     return _sessions.size();
-}
-
-bool DocumentBroker::connectPeers(std::shared_ptr<PrisonerSession>& session)
-{
-    const auto id = session->getId();
-
-    auto it = _sessions.find(id);
-    if (it != _sessions.end())
-    {
-        it->second->setPeer(session);
-        session->setPeer(it->second);
-        return true;
-    }
-
-    return false;
 }
 
 size_t DocumentBroker::removeSession(const std::string& id)
