@@ -38,7 +38,7 @@ void ChildProcess::socketProcessor()
         [this](const std::vector<char>& payload)
         {
             const auto message = LOOLProtocol::getAbbreviatedMessage(payload);
-            LOG_WRN("Recv from child " << this->_pid <<
+            LOG_TRC("Recv from child " << this->_pid <<
                     ": [" << message << "].");
 
             if (UnitWSD::get().filterChildMessage(payload))
@@ -179,13 +179,14 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
     }
 
     auto it = _sessions.find(sessionId);
-    if (it == _sessions.end())
+    if (it == _sessions.end() || !it->second)
     {
         LOG_ERR("Session with sessionId [" << sessionId << "] not found while loading");
         return false;
     }
 
-    const Poco::URI& uriPublic = it->second->getPublicUri();
+    auto session = it->second;
+    const Poco::URI& uriPublic = session->getPublicUri();
     LOG_DBG("Loading from URI: " << uriPublic.toString());
 
     _jailId = jailId;
@@ -232,12 +233,12 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
         if (!wopifileinfo._userCanWrite)
         {
             LOG_DBG("Setting the session as readonly");
-            it->second->setReadOnly();
+            session->setReadOnly();
         }
 
         if (!wopifileinfo._postMessageOrigin.empty())
         {
-            it->second->sendTextFrame("wopi: postmessageorigin " + wopifileinfo._postMessageOrigin);
+            session->sendTextFrame("wopi: postmessageorigin " + wopifileinfo._postMessageOrigin);
         }
 
         getInfoCallDuration = wopifileinfo._callDuration;
@@ -250,8 +251,8 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
     }
 
     LOG_DBG("Setting username [" << username << "] and userId [" << userid << "] for session [" << sessionId << "]");
-    it->second->setUserId(userid);
-    it->second->setUserName(username);
+    session->setUserId(userid);
+    session->setUserName(username);
 
     // Get basic file information from the storage
     const auto fileInfo = _storage->getFileInfo();
@@ -283,7 +284,7 @@ bool DocumentBroker::load(const std::string& sessionId, const std::string& jailI
         callDuration += getInfoCallDuration;
         const std::string msg = "stats: wopiloadduration " + std::to_string(callDuration.count());
         LOG_TRC("Sending to Client [" << msg << "].");
-        it->second->sendTextFrame(msg);
+        session->sendTextFrame(msg);
     }
 
     return true;
