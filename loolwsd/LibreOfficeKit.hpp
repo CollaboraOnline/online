@@ -512,7 +512,14 @@ public:
     {
         std::unique_lock<std::mutex> lock(_mutex);
         Log::trace("lok::~Office dtor.");
-        _pOffice->pClass->destroy(_pOffice);
+        try
+        {
+            _pOffice->pClass->destroy(_pOffice);
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Exception while destroying LibreOfficeKit instance: " << ex.what());
+        }
     }
 
     /// This lock must be held while calling
