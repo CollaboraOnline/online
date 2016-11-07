@@ -462,33 +462,21 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     const auto id = session->getId();
     const std::string aMessage = "session " + id + " " + _docKey;
 
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    auto ret = _sessions.emplace(id, session);
+    if (!ret.second)
+    {
+        LOG_WRN("DocumentBroker: Trying to add already existing session.");
+    }
+
     try
     {
-        std::lock_guard<std::mutex> lock(_mutex);
-
-        // Request a new session from the child kit.
-        _childProcess->sendTextFrame(aMessage);
-
-        auto ret = _sessions.emplace(id, session);
-        if (!ret.second)
+        // First load the document, since this can fail.
+        if (!load(id, std::to_string(_childProcess->getPid())))
         {
-            LOG_WRN("DocumentBroker: Trying to add already existing session.");
-        }
+            _sessions.erase(id);
 
-        if (session->isReadOnly())
-        {
-            LOG_DBG("Adding a readonly session [" << id << "]");
-        }
-
-        // Below values are recalculated when startDestroy() is called (before destroying the
-        // document). It is safe to reset their values to their defaults whenever a new session is added.
-        _lastEditableSession = false;
-        _markToDestroy = false;
-
-        bool loaded;
-        loaded = load(id, std::to_string(_childProcess->getPid()));
-        if (!loaded)
-        {
             const auto msg = "Failed to load document with URI [" + session->getPublicUri().toString() + "].";
             LOG_ERR(msg);
             throw std::runtime_error(msg);
@@ -496,12 +484,28 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     }
     catch (const StorageSpaceLowException&)
     {
+        LOG_ERR("Out of storage while loading document with URI [" << session->getPublicUri().toString() << "].");
+        _sessions.erase(id);
+
         // We use the same message as is sent when some of lool's own locations are full,
         // even if in this case it might be a totally different location (file system, or
         // some other type of storage somewhere). This message is not sent to all clients,
         // though, just to all sessions of this document.
         alertAllUsersOfDocument("internal", "diskfull");
         throw;
+    }
+
+    // Below values are recalculated when startDestroy() is called (before destroying the
+    // document). It is safe to reset their values to their defaults whenever a new session is added.
+    _lastEditableSession = false;
+    _markToDestroy = false;
+
+    // Request a new session from the child kit.
+    _childProcess->sendTextFrame(aMessage);
+
+    if (session->isReadOnly())
+    {
+        LOG_DBG("Adding a readonly session [" << id << "]");
     }
 
     // Tell the admin console about this new doc
@@ -538,7 +542,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
 
 void DocumentBroker::alertAllUsersOfDocument(const std::string& cmd, const std::string& kind)
 {
-    std::lock_guard<std::mutex> lock(_mutex);
+    Util::assertIsLocked(_mutex);
 
     std::stringstream ss;
     ss << "error: cmd=" << cmd << " kind=" << kind;
