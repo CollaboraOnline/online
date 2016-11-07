@@ -6,7 +6,6 @@
 echo
 echo "Running unit-test:"
 echo $0 $@
-echo
 
 # substituted variables in one place:
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -57,7 +56,7 @@ if test "z$enable_debug" != "ztrue"; then
 fi
 
 # result logging
-echo "test output is '$test_output'"
+echo "Test output is '$test_output'"
 echo > $test_output
 
 if test "z$tst" == "z"; then
@@ -65,7 +64,7 @@ if test "z$tst" == "z"; then
      export LOOL_TEST_CLIENT_PORT=9984
      export LOOL_TEST_MASTER_PORT=9985
 
-     echo "executing external tests"
+     echo "Executing external tests"
      ${valgrind} \
      ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
                                  --o:lo_template_path="$lo_path" \
