@@ -294,9 +294,13 @@ static void preForkChildren()
 
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
     UnitWSD::get().preSpawnCount(numPreSpawn);
-    --numPreSpawn; // ForKit always spawns one child at startup.
 
+    --numPreSpawn; // ForKit always spawns one child at startup.
     forkChildren(numPreSpawn);
+
+    // Wait until we have at least one child.
+    const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_MS);
+    NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); });
 }
 
 /// Proatively spawn children processes
@@ -829,9 +833,8 @@ private:
         // Validate the broker.
         if (!docBroker || !docBroker->isAlive())
         {
-            // Cleanup later.
             LOG_ERR("DocBroker is invalid or premature termination of child "
-                       "process. Service Unavailable.");
+                    "process. Service Unavailable.");
             DocBrokers.erase(docKey);
 
             throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
@@ -1905,21 +1908,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     auto params2 = new HTTPServerParams();
     params2->setMaxThreads(MAX_SESSIONS);
 
-    // Start a server listening on the port for clients
-
-    std::unique_ptr<ServerSocket> psvs(
-        UnitWSD::isUnitTesting() ?
-            findFreeServerPort(ClientPortNumber) :
-            getServerSocket(ClientPortNumber, true));
-    if (!psvs)
-        return Application::EXIT_SOFTWARE;
-
     ThreadPool threadPool(NumPreSpawnedChildren * 6, MAX_SESSIONS * 2);
-    HTTPServer srv(new ClientRequestHandlerFactory(), threadPool, *psvs, params1);
-    LOG_INF("Starting master server listening on " << ClientPortNumber);
-    srv.start();
 
-    // And one on the port for child processes
+    // Start internal server for child processes.
     SocketAddress addr2("127.0.0.1", MasterPortNumber);
     std::unique_ptr<ServerSocket> psvs2(
         UnitWSD::isUnitTesting() ?
@@ -1927,11 +1918,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             getMasterSocket(MasterPortNumber));
     if (!psvs2)
         return Application::EXIT_SOFTWARE;
+
     HTTPServer srv2(new PrisonerRequestHandlerFactory(), threadPool, *psvs2, params2);
     LOG_INF("Starting prisoner server listening on " << MasterPortNumber);
     srv2.start();
 
-    // Fire the ForKit process; we are ready.
+    // Fire the ForKit process; we are ready to get child connections.
     const Process::PID forKitPid = createForKit();
     if (forKitPid < 0)
     {
@@ -1945,12 +1937,23 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // Spawn some children, if necessary.
     preForkChildren();
 
-    time_t last30SecCheck = time(NULL);
+    // Now we can serve clients; Start listening on the public port.
+    std::unique_ptr<ServerSocket> psvs(
+        UnitWSD::isUnitTesting() ?
+            findFreeServerPort(ClientPortNumber) :
+            getServerSocket(ClientPortNumber, true));
+    if (!psvs)
+        return Application::EXIT_SOFTWARE;
+
+    HTTPServer srv(new ClientRequestHandlerFactory(), threadPool, *psvs, params1);
+    LOG_INF("Starting master server listening on " << ClientPortNumber);
+    srv.start();
 
 #if ENABLE_DEBUG
-    time_t startTimeSpan = last30SecCheck;
+    time_t startTimeSpan = time(nullptr);
 #endif
 
+    time_t last30SecCheck = time(nullptr);
     int status = 0;
     while (!TerminationFlag)
     {
@@ -2036,6 +2039,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             // Make sure we have sufficient reserves.
             prespawnChildren();
         }
+
 #if ENABLE_DEBUG
         if (careerSpanSeconds > 0 && time(nullptr) > startTimeSpan + careerSpanSeconds)
         {
@@ -2053,7 +2057,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool.joinAll();
 
     // Terminate child processes
-    LOG_INF("Requesting child process " << forKitPid << " to terminate");
+    LOG_INF("Requesting child process " << forKitPid << " to terminate.");
     Util::requestTermination(forKitPid);
     for (auto& child : NewChildren)
     {
