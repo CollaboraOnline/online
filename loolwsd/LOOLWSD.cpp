@@ -347,11 +347,13 @@ static void prespawnChildren()
 static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
 {
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
+
     --OutstandingForks;
     NewChildren.emplace_back(child);
     const auto count = NewChildren.size();
-    LOG_INF("Have " << count << " " << (count == 1 ? "child." : "children."));
+    lock.unlock();
 
+    LOG_INF("Have " << count << " " << (count == 1 ? "child." : "children."));
     NewChildrenCV.notify_one();
     return count;
 }
