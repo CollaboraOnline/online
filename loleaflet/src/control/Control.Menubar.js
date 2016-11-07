@@ -405,7 +405,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'rev-history') {
 			// if we are being loaded inside an iframe, ask
 			// our host to show revision history mode
-			map.WOPIPostMessage('rev-history');
+			map.fire('postMessage', {msgId: 'rev-history'});
 		} else if (id === 'repair') {
 			map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		} else if (id === 'a4portrait') {

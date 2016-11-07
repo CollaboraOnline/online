@@ -248,6 +248,11 @@ var deps = {
 		desc: 'Handles inserting a file (image) in the document.'
 	},
 
+	WOPI: {
+		src: ['map/handler/Map.WOPI.js'],
+		desc: 'Handles WOPI related logic.'
+	},
+
 	MarkerDrag: {
 		src: ['layer/marker/Marker.Drag.js'],
 		deps: ['Marker'],
