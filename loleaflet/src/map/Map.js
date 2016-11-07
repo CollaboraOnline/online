@@ -157,7 +157,7 @@ L.Map = L.Evented.extend({
 
 	getViewColor: function(viewid) {
 		if (this._docLayer._docType !== 'text') {
-			return L.LOUtil.getViewIdHexColor(viewid);
+			return L.LOUtil.getViewIdColor(viewid);
 		}
 
 		return this._viewInfo[viewid].color;

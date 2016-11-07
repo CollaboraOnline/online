@@ -43,7 +43,7 @@ L.LOUtil = {
 		return spinnerInterval;
 	},
 
-	getViewIdHexColor: function(viewId) {
+	getViewIdColor: function(viewId) {
 		var color = this.darkColors[(viewId + 1) % this.darkColors.length];
 		return (color[2] | (color[1] << 8) | (color[0] << 16));
 	},
