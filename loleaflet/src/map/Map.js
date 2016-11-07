@@ -144,17 +144,6 @@ L.Map = L.Evented.extend({
 		this.fire('removeview', {viewId: viewid, username: username});
 	},
 
-	getViewName: function(viewid) {
-		return this._viewInfo[viewid].username;
-	},
-
-	getViewColor: function(viewid) {
-		if (this._docLayer._docType !== 'text') {
-			return L.LOUtil.getViewIdColor(viewid);
-		}
-
-		return this._viewInfo[viewid].color;
-	},
 
 	// replaced by animation-powered implementation in Map.PanAnimation.js
 	setView: function (center, zoom) {
@@ -395,6 +384,18 @@ L.Map = L.Evented.extend({
 
 
 	// public methods for getting map state
+
+	getViewName: function(viewid) {
+		return this._viewInfo[viewid].username;
+	},
+
+	getViewColor: function(viewid) {
+		if (this._docLayer._docType !== 'text') {
+			return L.LOUtil.getViewIdColor(viewid);
+		}
+
+		return this._viewInfo[viewid].color;
+	},
 
 	getCenter: function () { // (Boolean) -> LatLng
 		this._checkIfLoaded();
