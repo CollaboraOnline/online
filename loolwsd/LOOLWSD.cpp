@@ -2123,6 +2123,7 @@ void alertAllUsers(const std::string& cmd, const std::string& kind)
 
     for (auto& brokerIt : DocBrokers)
     {
+        auto lock = brokerIt.second->getLock();
         brokerIt.second->alertAllUsersOfDocument(cmd, kind);
     }
 }
