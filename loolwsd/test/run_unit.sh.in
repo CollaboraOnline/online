@@ -3,6 +3,11 @@
 # DO NOT EDIT - this file is generated from run_unit.sh.in.
 #
 
+echo
+echo "Running unit-test:"
+echo $0 $@
+echo
+
 # substituted variables in one place:
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 abs_top_builddir="${DIR}/.."
