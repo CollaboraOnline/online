@@ -67,6 +67,11 @@
 			<li><a href="#loleaflet-object-values">Object values</a></li>
 			<li><a href="#loleaflet-uno-commands">Uno commands</a></li>
 		</ul>
+		<h4 style="color:red;">PostMessage API</h4>
+		<ul>
+		        <li><a href="#loleaflet-postmessage-initialization">Initialization</a></li>
+			<li><a href="#loleaflet-postmessage-sessions">Session Management</a></li>
+		</ul>
 		<h4>UI Layers</h4>
 		<ul>
 			<li><a href="#marker">Marker</a></li>
@@ -2722,6 +2727,92 @@ The <code>id</code> property of ErrorEvent can have the following values:
 		<th class="width100">command</th>
 		<th class="width100">parameter</th>
 		<th>description</th>
+	</tr>
+</table>
+
+<h2 id="loleaflet-postmessage">PostMessage API</h2>
+
+<p>PostMessage API is used to post messages to outer frame when loleaflet is
+  enclosed in a parent frame. This is useful for hosts wanting to
+  integrate LibreOffice Online in it.</p>
+
+<p>This API is mostly based
+  on <a href="https://wopi.readthedocs.io/en/latest/scenarios/postmessage.html">WOPI
+    specification</a> with few additions/modifications. All messages sent are
+  in this form</p>
+
+<pre><code class="javascript">
+{
+    "MessageId": "&lt;MessageId&gt;",
+    "SendTime": "&lt;Timestamp when message is sent&gt;",
+    "Values": {
+         "&lt;key&gt;": "&lt;value&gt;"
+    }
+}
+</code></pre>
+
+SendTime is the timestamp returned by browsers' Date.now()
+
+<h3 id="loleaflet-postmessage-initialization">Initialization</h3>
+
+<table data-id='postmessage-initialization'>
+	<tr>
+		<th>MessageId</th>
+		<th>Values</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>App_LoadingStatus</b></code></td>
+		<td><code>
+		    <nobr>DocumentLoadedTime: &lt;Number&gt;</nobr>
+		</code></td>
+		<td>When loleaflet frame is completely ready. Host can start
+		sending other messages using post message API.
+		DocumentLoadedTime is timestamp when frame is
+		ready/loaded.</td>
+	</tr>
+</table>
+
+<h3 id="loleaflet-postmessage-sessions">Session Management</h3>
+
+<table data-id='postmessage-sessions'>
+	<tr>
+		<th>MessageId</th>
+		<th>Values</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>View_Added</b></code></td>
+		<td><code>
+		    <nobr>ViewId: &lt;Number&gt;</nobr>
+		    <nobr>UserId: &lt;String&gt;</nobr>
+		    <nobr>UserName: &lt;String&gt;</nobr>
+		    <nobr>Color: &lt;Number&gt;</nobr>
+		</code></td>
+		<td>A new member is added. ViewId is unique integer
+		identifying a session/view. UserId is user identity. UserName is
+		display name of the user. Color is RGB color integer
+		value.
+		</td>
+	</tr>
+	<tr>
+		<td><code><b>View_Removed</b></code></td>
+		<td><code>
+		    <nobr>ViewId: &lt;Number&gt;</nobr>
+		</code></td>
+		<td>View with <code>ViewId</code> has closed the document.
+		</td>
+	</tr>
+	<tr>
+		<td><code><b>Get_Views_Resp</b></code></td>
+		<td><code>
+		    <nobr>ViewId: &lt;Number&gt;</nobr>
+		    <nobr>UserId: &lt;String&gt;</nobr>
+		    <nobr>UserName: &lt;String&gt;</nobr>
+		    <nobr>Color: &lt;Number&gt;</nobr>
+		</code></td>
+		<td>Give details of all current views when queried using <code>Get_Views</code>
+		</td>
 	</tr>
 </table>
 
