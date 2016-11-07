@@ -170,7 +170,7 @@ namespace Log
     }
 }
 
-#define LOG_BODY(LVL, X) std::ostringstream oss_; oss_ << Log::prefix("TRC") << X << "| " << __FILE__ << ':' << __LINE__
+#define LOG_BODY(LVL, X) std::ostringstream oss_; oss_ << Log::prefix(LVL) << X << "| " << __FILE__ << ':' << __LINE__
 #define LOG_TRC(X) if (Log::traceEnabled()) { LOG_BODY("TRC", X); Log::logger().trace(oss_.str()); }
 #define LOG_DBG(X) if (Log::debugEnabled()) { LOG_BODY("DBG", X); Log::logger().debug(oss_.str()); }
 #define LOG_INF(X) if (Log::infoEnabled()) { LOG_BODY("INF", X); Log::logger().information(oss_.str()); }
