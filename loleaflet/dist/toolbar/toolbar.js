@@ -526,7 +526,7 @@ function disableButton(toolbar, state, command)
 function toLocalePattern (pattern, regex, text, sub1, sub2) {
 	var matches = new RegExp(regex, 'g').exec(text);
 	if (matches) {
-		text = pattern.toLocaleString().replace(sub1, matches[1]).replace(sub2, matches[2]);
+		text = pattern.toLocaleString().replace(sub1, parseInt(matches[1].replace(',','')).toLocaleString(String.locale)).replace(sub2, parseInt(matches[2].replace(',','')).toLocaleString(String.locale));
 	}
 	return text;
 }
@@ -958,7 +958,7 @@ map.on('commandstatechanged', function (e) {
 		$('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:StateWordCount') {
-		state = toLocalePattern('%1 words, %2 characters', '(\\d+) words, (\\d+) characters', state, '%1', '%2');
+		state = toLocalePattern('%1 words, %2 characters', '([\\d,]+) words, ([\\d,]+) characters', state, '%1', '%2');
 		$('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 	else if (commandName === '.uno:PageStatus') {
