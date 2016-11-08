@@ -45,8 +45,8 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('Non-breaking space'), type: 'unocommand', uno: '.uno:InsertNonBreakingSpace'},
 						{name: _('Non-breaking hyphen'), type: 'unocommand', uno: '.uno:InsertHardHyphen'},
 						{name: _('Soft hyphen'), type: 'unocommand', uno: '.uno:InsertSoftHyphen'},
-						{name: _('No-with optional break'), type: 'unocommand', uno: '.uno:InsertZWSP'},
-						{name: _('No-with no break'), type: 'unocommand', uno: '.uno:InsertZWNBSP'},
+						{name: _('No-width optional break'), type: 'unocommand', uno: '.uno:InsertZWSP'},
+						{name: _('No-width no break'), type: 'unocommand', uno: '.uno:InsertZWNBSP'},
 						{name: _('Left-to-right mark'), type: 'unocommand', uno: '.uno:InsertLRM'},
 						{name: _('Right-to-left mark'), type: 'unocommand', uno: '.uno:InsertRLM'}]}]
 			},

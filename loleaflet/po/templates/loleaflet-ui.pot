@@ -811,11 +811,11 @@ msgid "Soft hyphen"
 msgstr ""
 
 #: src/control/Control.Menubar.js:48
-msgid "No-with optional break"
+msgid "No-width optional break"
 msgstr ""
 
 #: src/control/Control.Menubar.js:49
-msgid "No-with no break"
+msgid "No-width no break"
 msgstr ""
 
 #: src/control/Control.Menubar.js:50
