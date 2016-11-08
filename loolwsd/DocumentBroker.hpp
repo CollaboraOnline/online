@@ -275,10 +275,6 @@ public:
 
     int getRenderedTileCount() { return _debugRenderedTileCount; }
 
-    /// Returns time taken in making calls to storage during load
-    /// Currently, only makes sense in case storage is WOPI
-    const std::chrono::duration<double> getStorageLoadDuration() const;
-
     /// Called by the ChildProcess object to notify
     /// that it has terminated on its own.
     /// This happens either when the child exists
