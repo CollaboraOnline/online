@@ -195,7 +195,7 @@ LocalStorage::LocalFileInfo LocalStorage::getLocalFileInfo(const Poco::URI& uriP
         const auto lastModified = file.getLastModified();
         const auto size = file.getSize();
 
-        _fileInfo = FileInfo({filename, "lool", lastModified, size});
+        _fileInfo = FileInfo({filename, "localhost", lastModified, size});
     }
 
     // Set automatic userid and username
@@ -318,6 +318,7 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
     std::string userId;
     std::string userName;
     bool canWrite = false;
+    bool enableOwnerTermination = false;
     std::string postMessageOrigin;
     std::string resMsg;
     Poco::StreamCopier::copyToString(rs, resMsg);
@@ -345,6 +346,8 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
         canWrite = canWriteVar.isString() ? (canWriteVar.toString() == "true") : false;
         const auto postMessageOriginVar = getOrWarn(object, "PostMessageOrigin");
         postMessageOrigin = postMessageOriginVar.isString() ? postMessageOriginVar.toString() : "";
+        const auto enableOwnerTerminationVar = getOrWarn(object, "EnableOwnerTermination");
+        enableOwnerTermination = enableOwnerTerminationVar.isString() ? (enableOwnerTerminationVar.toString() == "true") : false;
     }
     else
         Log::error("WOPI::CheckFileInfo is missing JSON payload");
@@ -355,7 +358,7 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
         _fileInfo = FileInfo({filename, ownerId, Poco::Timestamp(), size});
     }
 
-    return WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, callDuration});
+    return WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, enableOwnerTermination, callDuration});
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content

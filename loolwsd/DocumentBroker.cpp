@@ -241,6 +241,13 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
             session->sendTextFrame("wopi: postmessageorigin " + wopifileinfo._postMessageOrigin);
         }
 
+        // Mark the session as 'Document owner' if WOPI hosts supports it
+        if (wopifileinfo._enableOwnerTermination && userid == _storage->getFileInfo()._ownerId)
+        {
+            LOG_DBG("Session [" + sessionId + "] is the document owner");
+            session->setDocumentOwner(true);
+        }
+
         getInfoCallDuration = wopifileinfo._callDuration;
     }
     else if (dynamic_cast<LocalStorage*>(_storage.get()) != nullptr)
@@ -895,14 +902,22 @@ void DocumentBroker::childSocketTerminated()
     }
 }
 
-void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock)
+void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const std::string& closeReason)
 {
     Util::assertIsLocked(_mutex);
     Util::assertIsLocked(lock);
 
     LOG_INF("Terminating child [" << getPid() << "] of doc [" << _docKey << "].");
 
-    assert(_sessions.empty() && "DocumentBroker still has unremoved sessions!");
+    // Close all running sessions
+    for (auto& pair : _sessions)
+    {
+        // See protocol.txt for this application-level close frame
+        pair.second->sendTextFrame("close: " + closeReason);
+        pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY, closeReason);
+    }
+
+    std::this_thread::sleep_for (std::chrono::seconds(5));
 
     // First flag to stop as it might be waiting on our lock
     // to process some incoming message.
@@ -912,6 +927,13 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock)
     lock.unlock();
 
     _childProcess->close(false);
+}
+
+void DocumentBroker::closeDocument(const std::string& reason)
+{
+    auto lock = getLock();
+
+    terminateChild(lock, reason);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

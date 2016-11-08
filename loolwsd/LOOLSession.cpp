@@ -202,14 +202,14 @@ bool LOOLSession::handleDisconnect()
     return false;
 }
 
-void LOOLSession::shutdown(Poco::UInt16 statusCode)
+void LOOLSession::shutdown(Poco::UInt16 statusCode, const std::string& statusMessage)
 {
     if (_ws)
     {
         try
         {
-            LOG_TRC("Shutting down WS [" << getName() << "].");
-            _ws->shutdown(statusCode);
+            LOG_TRC("Shutting down WS [" << getName() << "] with statusCode [" << statusCode << "] and reason [" << statusMessage << "].");
+            _ws->shutdown(statusCode, statusMessage);
         }
         catch (const Poco::Exception &exc)
         {

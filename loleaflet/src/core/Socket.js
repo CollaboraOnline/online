@@ -190,6 +190,21 @@ L.Socket = L.Class.extend({
 
 			return;
 		}
+		else if (textMsg.startsWith('close: ')) {
+			textMsg = textMsg.substring('close: '.length);
+
+			// This is due to document owner terminating the session
+			if (textMsg === 'ownertermination') {
+				// Disconnect the websocket manually
+				this.close();
+				// Tell WOPI host about it which should handle this situation
+				this._map.fire('postMessage', {msgId: 'Session_Closed'});
+			}
+
+			this._map.remove();
+
+			return;
+		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'internal') {
 			this._map._fatal = true;
 			if (command.errorKind === 'diskfull') {

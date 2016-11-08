@@ -164,6 +164,12 @@ userinactive
 
     See 'useractive'.
 
+closedocument
+
+    This gives document owners the ability to terminate all sessions currently
+    having that document opened. This functionality is enabled only in case WOPI
+    host mentions 'EnableOwnerTermination' flag in its CheckFileInfo response
+
 server -> client
 ================
 
@@ -219,6 +225,21 @@ error: cmd=<command> kind=<kind> [code=<error_code>] [params=1,2,3,...,N]
 
     <code> (when provided) further specifies the error as forwarded from
     LibreOffice
+
+close: <reason>
+
+    Ask a client to close the websocket connection with <reason>.
+    Exactly similar fields are also available in WebSocket protocol's
+    CLOSE frame, but some browser implementation (google-chrome) doesn't seem to
+    handle that well. This is a temporary application-level close websocket
+    to circumvent the same.
+
+    <reason> can have following values:
+    * ownertermination - If the session close is due to 'Document owner'
+    terminating the session.
+    (Document owner is the one who has the file ownership and hence have the
+    ability to kill all other sessions if EnableOwnerTermination flag in WOPI
+    CheckFileInfo is 'true' (assumed to be 'false' by default).
 
 getchildid: id=<id>
 

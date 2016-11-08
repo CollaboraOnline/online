@@ -40,6 +40,9 @@ L.Map.WOPI = L.Handler.extend({
 
 			this._postMessage('Get_Views_Resp', getMembersRespVal);
 		}
+		else if (msg.MessageId === 'Close_Session') {
+			this._map._socket.sendMessage('closedocument');
+		}
 	},
 
 	_postMessage: function(e) {
