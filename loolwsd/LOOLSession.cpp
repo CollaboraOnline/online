@@ -84,14 +84,7 @@ bool LOOLSession::sendTextFrame(const char* buffer, const int length)
             return false;
         }
 
-        if (length > SMALL_MESSAGE_SIZE)
-        {
-            const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-            LOG_TRC("Sending large message [" << nextmessage << "].");
-            _ws->sendFrame(nextmessage.data(), nextmessage.size());
-        }
-
-        _ws->sendFrame(buffer, length);
+        Util::sendLargeFrame(_ws, buffer, length);
         return true;
     }
     catch (const Exception& exc)
@@ -116,13 +109,7 @@ bool LOOLSession::sendBinaryFrame(const char *buffer, int length)
             return false;
         }
 
-        if (length > SMALL_MESSAGE_SIZE)
-        {
-            const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-            _ws->sendFrame(nextmessage.data(), nextmessage.size());
-        }
-
-        _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
+        Util::sendLargeFrame(_ws, buffer, length, WebSocket::FRAME_BINARY);
         return true;
     }
     catch (const Exception& exc)

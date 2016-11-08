@@ -150,6 +150,8 @@ public:
             {
                 // We don't care about the response (and shouldn't read here).
                 _ws->sendFrame("PING", 4, Poco::Net::WebSocket::FRAME_OP_PING);
+                LOG_DBG("Sent a PING.");
+
                 return true;
             }
         }
