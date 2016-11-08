@@ -275,6 +275,8 @@ public:
 
     int getRenderedTileCount() { return _debugRenderedTileCount; }
 
+    void closeDocument(const std::string& reason);
+
     /// Called by the ChildProcess object to notify
     /// that it has terminated on its own.
     /// This happens either when the child exists
@@ -286,7 +288,7 @@ public:
     /// We must be called under lock and it must be
     /// passed to us so we unlock before waiting on
     /// the ChildProcess thread, which can take our lock.
-    void terminateChild(std::unique_lock<std::mutex>& lock);
+    void terminateChild(std::unique_lock<std::mutex>& lock, const std::string& closeReason = "");
 
     /// Get the PID of the associated child process
     Poco::Process::PID getPid() const { return _childProcess->getPid(); }

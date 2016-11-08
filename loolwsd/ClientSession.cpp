@@ -43,6 +43,7 @@ ClientSession::ClientSession(const std::string& id,
     _docBroker(docBroker),
     _uriPublic(uriPublic),
     _isReadOnly(readOnly),
+    _isDocumentOwner(false),
     _loadPart(-1)
 {
     Log::info("ClientSession ctor [" + getName() + "].");
@@ -115,6 +116,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "clientzoom" &&
              tokens[0] != "clientvisiblearea" &&
              tokens[0] != "commandvalues" &&
+             tokens[0] != "closedocument" &&
              tokens[0] != "downloadas" &&
              tokens[0] != "getchildid" &&
              tokens[0] != "gettextselection" &&
@@ -155,6 +157,17 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "commandvalues")
     {
         return getCommandValues(buffer, length, tokens, docBroker);
+    }
+    else if (tokens[0] == "closedocument")
+    {
+        // If this session is the owner of the file, let it close all sessions
+        if (_isDocumentOwner)
+        {
+            LOG_DBG("Session [" + getId() + "] requested owner termination");
+            docBroker->closeDocument("ownertermination");
+        }
+
+        return true;
     }
     else if (tokens[0] == "partpagerectangles")
     {

@@ -37,8 +37,11 @@ public:
     std::shared_ptr<PrisonerSession> getPeer() const { return _peer; }
     bool shutdownPeer(Poco::UInt16 statusCode);
 
+    const std::string getUserId() const { return _userId; }
+
     void setUserId(const std::string& userId) { _userId = userId; }
     void setUserName(const std::string& userName) { _userName = userName; }
+    void setDocumentOwner(const bool isDocumentOwner) { _isDocumentOwner = isDocumentOwner; }
 
     /**
      * Return the URL of the saved-as document when it's ready. If called
@@ -66,7 +69,6 @@ private:
 
     bool loadDocument(const char* buffer, int length, Poco::StringTokenizer& tokens,
                       const std::shared_ptr<DocumentBroker>& docBroker);
-
     bool getStatus(const char* buffer, int length,
                    const std::shared_ptr<DocumentBroker>& docBroker);
     bool getCommandValues(const char* buffer, int length, Poco::StringTokenizer& tokens,
@@ -93,6 +95,9 @@ private:
 
     /// Whether the session is opened as readonly
     bool _isReadOnly;
+
+    /// Whether this session is the owner of currently opened document
+    bool _isDocumentOwner;
 
     /// Our peer that connects us to the child.
     std::shared_ptr<PrisonerSession> _peer;

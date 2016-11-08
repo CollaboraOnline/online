@@ -60,7 +60,7 @@ public:
         _uri(uri),
         _localStorePath(localStorePath),
         _jailPath(jailPath),
-        _fileInfo("", Poco::Timestamp(), 0),
+        _fileInfo("", "lool", Poco::Timestamp(), 0),
         _isLoaded(false)
     {
         Log::debug("Storage ctor: " + uri.toString());
@@ -169,11 +169,13 @@ public:
                      const std::string& username,
                      const bool userCanWrite,
                      const std::string& postMessageOrigin,
+                     const bool enableOwnerTermination,
                      const std::chrono::duration<double> callDuration)
             : _userid(userid),
               _username(username),
               _userCanWrite(userCanWrite),
               _postMessageOrigin(postMessageOrigin),
+              _enableOwnerTermination(enableOwnerTermination),
               _callDuration(callDuration)
             {
             }
@@ -186,6 +188,8 @@ public:
         bool _userCanWrite;
         /// WOPI Post message property
         std::string _postMessageOrigin;
+        /// If WOPI host has enabled owner termination feature on
+        bool _enableOwnerTermination;
         /// Time it took to call WOPI's CheckFileInfo
         std::chrono::duration<double> _callDuration;
     };
