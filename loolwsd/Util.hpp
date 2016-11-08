@@ -178,16 +178,6 @@ namespace Util
         return s;
     }
 
-    /// Send frame.  If it is too long, send a 'nextmessage:' before the real
-    /// frame.
-    void sendLargeFrame(const std::shared_ptr<Poco::Net::WebSocket>& ws, const char *message, int length, int flags = Poco::Net::WebSocket::FRAME_TEXT);
-
-    /// Send frame as above, the std::string variant.
-    inline void sendLargeFrame(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::vector<char> &message, int flags = Poco::Net::WebSocket::FRAME_TEXT)
-    {
-        sendLargeFrame(ws, message.data(), message.size(), flags);
-    }
-
     /// Given one or more patterns to allow, and one or more to deny,
     /// the match member will return true if, and only if, the subject
     /// matches the allowed list, but not the deny.

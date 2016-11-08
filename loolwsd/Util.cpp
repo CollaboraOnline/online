@@ -46,7 +46,6 @@
 #include <Poco/Util/Application.h>
 
 #include "Common.hpp"
-#include "LOOLProtocol.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
 
@@ -563,25 +562,6 @@ namespace Util
     {
         static std::atomic_int counter(0);
         return std::to_string(Poco::Process::id()) + "/" + std::to_string(counter++);
-    }
-
-    void sendLargeFrame(const std::shared_ptr<Poco::Net::WebSocket>& ws, const char *message, int length, int flags)
-    {
-        // Size after which messages will be sent preceded with
-        // 'nextmessage' frame to let the receiver know in advance
-        // the size of larger coming message. All messages up to this
-        // size are considered small messages.
-        constexpr int SMALL_MESSAGE_SIZE = READ_BUFFER_SIZE / 2;
-
-        if (length > SMALL_MESSAGE_SIZE)
-        {
-            const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-            ws->sendFrame(nextmessage.data(), nextmessage.size());
-            Log::debug("Message is long, sent " + nextmessage);
-        }
-
-        ws->sendFrame(message, length, flags);
-        Log::debug("Sent frame: " + LOOLProtocol::getAbbreviatedMessage(std::string(message, length)));
     }
 }
 

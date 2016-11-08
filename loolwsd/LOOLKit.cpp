@@ -505,7 +505,7 @@ public:
         }
 
         LOG_TRC("Sending render-tile response (" + std::to_string(output.size()) + " bytes) for: " + response);
-        Util::sendLargeFrame(ws, output, WebSocket::FRAME_BINARY);
+        IoUtil::sendLargeFrame(ws, output, WebSocket::FRAME_BINARY);
     }
 
     void renderCombinedTiles(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
@@ -605,7 +605,7 @@ public:
         std::copy(tileMsg.begin(), tileMsg.end(), response.begin());
         std::copy(output.begin(), output.end(), response.begin() + tileMsg.size());
 
-        Util::sendLargeFrame(ws, response, WebSocket::FRAME_BINARY);
+        IoUtil::sendLargeFrame(ws, response, WebSocket::FRAME_BINARY);
     }
 
     bool sendTextFrame(const std::string& message) override
@@ -618,7 +618,7 @@ public:
                 return false;
             }
 
-            Util::sendLargeFrame(_ws, message.data(), message.size());
+            IoUtil::sendLargeFrame(_ws, message.data(), message.size());
             return true;
         }
         catch (const Exception& exc)
