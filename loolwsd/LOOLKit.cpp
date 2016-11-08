@@ -504,15 +504,8 @@ public:
             return;
         }
 
-        const auto length = output.size();
-        if (length > SMALL_MESSAGE_SIZE)
-        {
-            const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-            ws->sendFrame(nextmessage.data(), nextmessage.size());
-        }
-
-        LOG_TRC("Sending render-tile response (" << length << " bytes) for: " << response);
-        ws->sendFrame(output.data(), length, WebSocket::FRAME_BINARY);
+        LOG_TRC("Sending render-tile response (" + std::to_string(output.size()) + " bytes) for: " + response);
+        Util::sendLargeFrame(ws, output, WebSocket::FRAME_BINARY);
     }
 
     void renderCombinedTiles(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
@@ -612,14 +605,7 @@ public:
         std::copy(tileMsg.begin(), tileMsg.end(), response.begin());
         std::copy(output.begin(), output.end(), response.begin() + tileMsg.size());
 
-        const auto length = response.size();
-        if (length > SMALL_MESSAGE_SIZE)
-        {
-            const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-            ws->sendFrame(nextmessage.data(), nextmessage.size());
-        }
-
-        ws->sendFrame(response.data(), length, WebSocket::FRAME_BINARY);
+        Util::sendLargeFrame(ws, response, WebSocket::FRAME_BINARY);
     }
 
     bool sendTextFrame(const std::string& message) override
@@ -632,15 +618,7 @@ public:
                 return false;
             }
 
-            const auto length = message.size();
-            if (length > SMALL_MESSAGE_SIZE)
-            {
-                const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-                LOG_TRC("Sending large message [" << nextmessage << "].");
-                _ws->sendFrame(nextmessage.data(), nextmessage.size());
-            }
-
-            _ws->sendFrame(message.data(), length);
+            Util::sendLargeFrame(_ws, message.data(), message.size());
             return true;
         }
         catch (const Exception& exc)
