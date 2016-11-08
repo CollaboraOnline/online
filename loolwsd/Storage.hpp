@@ -31,9 +31,11 @@ public:
     {
     public:
         FileInfo(const std::string& filename,
+                 const std::string& ownerId,
                  const Poco::Timestamp& modifiedTime,
                  size_t size)
             : _filename(filename),
+              _ownerId(ownerId),
               _modifiedTime(modifiedTime),
               _size(size)
         {
@@ -45,6 +47,7 @@ public:
         }
 
         std::string _filename;
+        std::string _ownerId;
         Poco::Timestamp _modifiedTime;
         size_t _size;
     };

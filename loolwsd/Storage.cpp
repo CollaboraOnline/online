@@ -195,7 +195,7 @@ LocalStorage::LocalFileInfo LocalStorage::getLocalFileInfo(const Poco::URI& uriP
         const auto lastModified = file.getLastModified();
         const auto size = file.getSize();
 
-        _fileInfo = FileInfo({filename, lastModified, size});
+        _fileInfo = FileInfo({filename, "lool", lastModified, size});
     }
 
     // Set automatic userid and username
@@ -314,6 +314,7 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
     // Parse the response.
     std::string filename;
     size_t size = 0;
+    std::string ownerId;
     std::string userId;
     std::string userName;
     bool canWrite = false;
@@ -334,6 +335,8 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
         filename = getOrWarn(object, "BaseFileName").toString();
         const auto sizeVar = getOrWarn(object, "Size");
         size = std::stoul(sizeVar.toString(), nullptr, 0);
+        const auto ownerIdVar = getOrWarn(object, "OwnerId");
+        ownerId = (ownerIdVar.isString() ? ownerIdVar.toString() : "");
         const auto userIdVar = getOrWarn(object, "UserId");
         userId = (userIdVar.isString() ? userIdVar.toString() : "");
         const auto userNameVar = getOrWarn(object,"UserFriendlyName");
@@ -349,7 +352,7 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
     if (!_fileInfo.isValid())
     {
         // WOPI doesn't support file last modified time.
-        _fileInfo = FileInfo({filename, Poco::Timestamp(), size});
+        _fileInfo = FileInfo({filename, ownerId, Poco::Timestamp(), size});
     }
 
     return WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, callDuration});
