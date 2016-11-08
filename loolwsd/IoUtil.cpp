@@ -155,6 +155,7 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
                     payload.resize(size);
 
                     n = ws->receiveFrame(payload.data(), size, flags);
+                    payload.resize(n > 0 ? n : 0);
                 }
             }
 
