@@ -258,6 +258,25 @@ ssize_t readFromPipe(int pipe, char* buffer, ssize_t size)
     return bytes;
 }
 
+void sendLargeFrame(const std::shared_ptr<Poco::Net::WebSocket>& ws, const char *message, int length, int flags)
+{
+    // Size after which messages will be sent preceded with
+    // 'nextmessage' frame to let the receiver know in advance
+    // the size of larger coming message. All messages up to this
+    // size are considered small messages.
+    constexpr int SMALL_MESSAGE_SIZE = READ_BUFFER_SIZE / 2;
+
+    if (length > SMALL_MESSAGE_SIZE)
+    {
+        const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
+        ws->sendFrame(nextmessage.data(), nextmessage.size());
+        Log::debug("Message is long, sent " + nextmessage);
+    }
+
+    ws->sendFrame(message, length, flags);
+    Log::debug("Sent frame: " + LOOLProtocol::getAbbreviatedMessage(std::string(message, length)));
+}
+
 /// Reads a single line from a pipe.
 /// Returns 0 for timeout, <0 for error, and >0 on success.
 /// On success, line will contain the read message.

@@ -84,7 +84,7 @@ bool LOOLSession::sendTextFrame(const char* buffer, const int length)
             return false;
         }
 
-        Util::sendLargeFrame(_ws, buffer, length);
+        IoUtil::sendLargeFrame(_ws, buffer, length);
         return true;
     }
     catch (const Exception& exc)
@@ -109,7 +109,7 @@ bool LOOLSession::sendBinaryFrame(const char *buffer, int length)
             return false;
         }
 
-        Util::sendLargeFrame(_ws, buffer, length, WebSocket::FRAME_BINARY);
+        IoUtil::sendLargeFrame(_ws, buffer, length, WebSocket::FRAME_BINARY);
         return true;
     }
     catch (const Exception& exc)
