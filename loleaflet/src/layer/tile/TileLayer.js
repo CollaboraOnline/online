@@ -396,10 +396,12 @@ L.TileLayer = L.GridLayer.extend({
 		if (!this._debug) {
 			map.removeLayer(this._debugInfo);
 			map.removeLayer(this._debugInfo2);
+			$('.leaflet-control-layers-expanded').css('display', 'none');
 		} else {
 			if (this._debugInfo) {
 				map.addLayer(this._debugInfo);
 				map.addLayer(this._debugInfo2);
+				$('.leaflet-control-layers-expanded').css('display', 'block');
 			}
 			this._debugInit();
 		}
