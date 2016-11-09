@@ -146,14 +146,10 @@ public:
     {
         try
         {
-            if (_pid > 1 && _ws && kill(_pid, 0) == 0)
-            {
-                // We don't care about the response (and shouldn't read here).
-                _ws->sendFrame("PING", 4, Poco::Net::WebSocket::FRAME_OP_PING);
-                LOG_DBG("Sent a PING.");
-
-                return true;
-            }
+            using namespace Poco::Net;
+            return (_pid > 1 && _ws && kill(_pid, 0) == 0 &&
+                    _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_WRITE) &&
+                    !_ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR));
         }
         catch (const std::exception& exc)
         {
