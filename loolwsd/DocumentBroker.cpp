@@ -239,16 +239,20 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
             session->setReadOnly();
         }
 
+        // Construct a JSON containing relevant WOPI host properties
+        Object::Ptr wopiInfo = new Object();
         if (!wopifileinfo._postMessageOrigin.empty())
         {
-            // Construct a JSON containing relevant WOPI host properties
-            Object::Ptr wopiInfo = new Object();
             wopiInfo->set("PostMessageOrigin", wopifileinfo._postMessageOrigin);
-            std::ostringstream ossWopiInfo;
-            wopiInfo->stringify(ossWopiInfo);
-
-            session->sendTextFrame("wopi: " + ossWopiInfo.str());
         }
+
+        wopiInfo->set("HidePrintOption", wopifileinfo._hidePrintOption);
+        wopiInfo->set("HideSaveOption", wopifileinfo._hideSaveOption);
+        wopiInfo->set("HideExportOption", wopifileinfo._hideExportOption);
+
+        std::ostringstream ossWopiInfo;
+        wopiInfo->stringify(ossWopiInfo);
+        session->sendTextFrame("wopi: " + ossWopiInfo.str());
 
         // Mark the session as 'Document owner' if WOPI hosts supports it
         if (wopifileinfo._enableOwnerTermination && userid == _storage->getFileInfo()._ownerId)

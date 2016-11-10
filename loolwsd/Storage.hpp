@@ -169,12 +169,18 @@ public:
                      const std::string& username,
                      const bool userCanWrite,
                      const std::string& postMessageOrigin,
+                     const bool hidePrintOption,
+                     const bool hideSaveOption,
+                     const bool hideExportOption,
                      const bool enableOwnerTermination,
                      const std::chrono::duration<double> callDuration)
             : _userid(userid),
               _username(username),
               _userCanWrite(userCanWrite),
               _postMessageOrigin(postMessageOrigin),
+              _hidePrintOption(hidePrintOption),
+              _hideSaveOption(hideSaveOption),
+              _hideExportOption(hideExportOption),
               _enableOwnerTermination(enableOwnerTermination),
               _callDuration(callDuration)
             {
@@ -188,6 +194,12 @@ public:
         bool _userCanWrite;
         /// WOPI Post message property
         std::string _postMessageOrigin;
+        /// Hide print button from UI
+        bool _hidePrintOption;
+        /// Hide save button from UI
+        bool _hideSaveOption;
+        /// Hide 'Download as' button/menubar item from UI
+        bool _hideExportOption;
         /// If WOPI host has enabled owner termination feature on
         bool _enableOwnerTermination;
         /// Time it took to call WOPI's CheckFileInfo

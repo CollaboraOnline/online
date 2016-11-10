@@ -735,6 +735,10 @@ map.on('doclayerinit', function () {
 		}
 	}
 
+	if (map['wopi'].HideSaveOption) {
+		toolbar.hide('save');
+	}
+
 	var statusbar = w2ui['toolbar-down'];
 	switch (docType) {
 	case 'spreadsheet':
