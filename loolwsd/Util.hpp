@@ -20,7 +20,6 @@
 #include <string>
 
 #include <Poco/File.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/RegularExpression.h>

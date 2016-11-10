@@ -26,7 +26,7 @@ UnitWebSocket::UnitWebSocket(const std::string &docURL)
         _session = UnitHTTP::createSession();
 
         // FIXME: leaking the session - hey ho ... do we need a UnitSocket ?
-        _socket = new Poco::Net::WebSocket(*_session, request, response);
+        _socket = new LOOLWebSocket(*_session, request, response);
     } catch (const Poco::Exception &ex) {
         std::cerr << "Exception creating websocket " << ex.displayText() << std::endl;
         throw;

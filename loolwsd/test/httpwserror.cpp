@@ -17,13 +17,13 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/NetException.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/URI.h>
 
 #include <cppunit/extensions/HelperMacros.h>
 
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "helpers.hpp"
 #include "countloolkits.hpp"
 
@@ -101,7 +101,7 @@ void HTTPWSError::testMaxDocuments()
     try
     {
         // Load a document.
-        std::vector<std::shared_ptr<Poco::Net::WebSocket>> docs;
+        std::vector<std::shared_ptr<LOOLWebSocket>> docs;
 
         std::cerr << "Loading max number of documents: " << MAX_DOCUMENTS << std::endl;
         for (int it = 1; it <= MAX_DOCUMENTS; ++it)
@@ -118,7 +118,7 @@ void HTTPWSError::testMaxDocuments()
         getDocumentPathAndURL("empty.odt", docPath, docURL);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-        Poco::Net::WebSocket socket(*session, request, _response);
+        LOOLWebSocket socket(*session, request, _response);
 
         // send loolclient, load and partpagerectangles
         sendTextFrame(socket, "loolclient ", testname);
@@ -157,11 +157,11 @@ void HTTPWSError::testMaxConnections()
         auto socket = loadDocAndGetSocket(_uri, docURL, testname);
         std::cerr << "Opened connect #1 of " << MAX_CONNECTIONS << std::endl;
 
-        std::vector<std::shared_ptr<Poco::Net::WebSocket>> views;
+        std::vector<std::shared_ptr<LOOLWebSocket>> views;
         for(int it = 1; it < MAX_CONNECTIONS; it++)
         {
             std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
-            auto ws = std::make_shared<Poco::Net::WebSocket>(*session, request, _response);
+            auto ws = std::make_shared<LOOLWebSocket>(*session, request, _response);
             views.emplace_back(ws);
             std::cerr << "Opened connect #" << (it+1) << " of " << MAX_CONNECTIONS << std::endl;
         }
@@ -170,7 +170,7 @@ void HTTPWSError::testMaxConnections()
 
         // try to connect MAX_CONNECTIONS + 1
         std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
-        Poco::Net::WebSocket socketN(*session, request, _response);
+        LOOLWebSocket socketN(*session, request, _response);
 
         // send loolclient, load and partpagerectangles
         sendTextFrame(socketN, "loolclient ", testname);

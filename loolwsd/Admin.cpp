@@ -21,7 +21,6 @@
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/SecureServerSocket.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/Util/Timer.h>
@@ -33,6 +32,7 @@
 #include "FileServer.hpp"
 #include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "Storage.hpp"
@@ -47,7 +47,6 @@ using Poco::Net::HTTPRequestHandler;
 using Poco::Net::HTTPResponse;
 using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
-using Poco::Net::WebSocket;
 using Poco::Util::Application;
 
 bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
@@ -207,7 +206,7 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
 /// Handle admin requests.
 void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServerResponse& response, int sessionId)
 {
-    _adminWs = std::make_shared<WebSocket>(request, response);
+    _adminWs = std::make_shared<LOOLWebSocket>(request, response);
 
     {
         std::unique_lock<std::mutex> modelLock(_admin->getLock());

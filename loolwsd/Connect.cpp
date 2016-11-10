@@ -31,7 +31,6 @@
 #include <Poco/Net/TCPServer.h>
 #include <Poco/Net/TCPServerConnection.h>
 #include <Poco/Net/TCPServerConnectionFactory.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
 #include <Poco/SharedPtr.h>
 #include <Poco/StringTokenizer.h>
@@ -43,6 +42,7 @@
 
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "Util.hpp"
 
@@ -72,11 +72,11 @@ using Poco::Util::Application;
 static bool closeExpected = false;
 static std::mutex coutMutex;
 
-/// Prints incoming data from a WebSocket.
+/// Prints incoming data from a LOOLWebSocket.
 class Output : public Runnable
 {
 public:
-    Output(WebSocket& ws) :
+    Output(LOOLWebSocket& ws) :
         _ws(ws)
     {
     }
@@ -131,7 +131,7 @@ public:
         }
     }
 
-    WebSocket& _ws;
+    LOOLWebSocket& _ws;
 };
 
 /// Program for interactive or scripted testing of a lool server.
@@ -179,7 +179,7 @@ protected:
         URI::encode(args[0], ":/?", encodedUri);
         HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/" + encodedUri + "/ws");
         HTTPResponse response;
-        WebSocket ws(cs, request, response);
+        LOOLWebSocket ws(cs, request, response);
 
         ws.setReceiveTimeout(0);
 

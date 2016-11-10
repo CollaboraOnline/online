@@ -35,7 +35,7 @@ using namespace LOOLProtocol;
 using Poco::StringTokenizer;
 
 ClientSession::ClientSession(const std::string& id,
-                             const std::shared_ptr<Poco::Net::WebSocket>& ws,
+                             const std::shared_ptr<LOOLWebSocket>& ws,
                              const std::shared_ptr<DocumentBroker>& docBroker,
                              const Poco::URI& uriPublic,
                              const bool readOnly) :

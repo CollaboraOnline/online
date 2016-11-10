@@ -77,7 +77,6 @@
 #include <Poco/Net/SecureServerSocket.h>
 #include <Poco/Net/ServerSocket.h>
 #include <Poco/Net/SocketAddress.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Pipe.h>
 #include <Poco/Process.h>
@@ -103,6 +102,7 @@
 #include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
+#include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "PrisonerSession.hpp"
 #include "QueueHandler.hpp"
@@ -180,7 +180,7 @@ namespace
 {
 
 static inline
-void shutdownLimitReached(WebSocket& ws)
+void shutdownLimitReached(LOOLWebSocket& ws)
 {
     const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
 
@@ -519,7 +519,7 @@ private:
                     DocBrokers.emplace(docKey, docBroker);
 
                     // Load the document.
-                    std::shared_ptr<WebSocket> ws;
+                    std::shared_ptr<LOOLWebSocket> ws;
                     auto session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic);
 
                     auto sessionsCount = docBroker->addSession(session);
@@ -704,7 +704,7 @@ private:
     }
 
     /// Handle GET requests.
-    static void handleGetRequest(const std::string& uri, std::shared_ptr<WebSocket>& ws, const std::string& id)
+    static void handleGetRequest(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id)
     {
         LOG_INF("Starting GET request handler for session [" << id << "].");
 
@@ -1049,7 +1049,7 @@ public:
             --LOOLWSD::NumConnections;
             LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
             // accept hand shake
-            WebSocket ws(request, response);
+            LOOLWebSocket ws(request, response);
             shutdownLimitReached(ws);
             return;
         }
@@ -1118,7 +1118,7 @@ public:
             }
             else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws")
             {
-                auto ws = std::make_shared<WebSocket>(request, response);
+                auto ws = std::make_shared<LOOLWebSocket>(request, response);
                 responded = true; // After upgrading to WS we should not set HTTP response.
                 try
                 {
@@ -1233,7 +1233,7 @@ public:
         }
 
         LOG_INF("New child [" << pid << "].");
-        auto ws = std::make_shared<WebSocket>(request, response);
+        auto ws = std::make_shared<LOOLWebSocket>(request, response);
         UnitWSD::get().newChild(ws);
 
         addNewChild(std::make_shared<ChildProcess>(pid, ws));
@@ -1276,7 +1276,7 @@ public:
         {
             requestHandler = FileServer::createRequestHandler();
         }
-        // Admin WebSocket Connections
+        // Admin LOOLWebSocket Connections
         else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
         {
             requestHandler = Admin::createRequestHandler();

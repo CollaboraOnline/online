@@ -41,7 +41,7 @@ namespace {
             return std::string("can't find unit_online_get_fonts hook");
     }
 
-    std::string readFontList(const std::shared_ptr< Poco::Net::WebSocket > &socket)
+    std::string readFontList(const std::shared_ptr<LOOLWebSocket> &socket)
     {
         int flags;
         char buffer[100 * 1000];
@@ -89,7 +89,7 @@ public:
         }
     }
 
-    virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> &socket) override
+    virtual void newChild(const std::shared_ptr<LOOLWebSocket> &socket) override
     {
         Log::info("Fetching font list from kit");
         socket->sendFrame("unit-getfontlist: \n",
@@ -106,7 +106,7 @@ public:
         if (type == UnitWSD::TestRequest::TEST_REQ_PRISONER &&
             request.getURI().find(UNIT_URI) == 0)
         {
-            auto ws = std::make_shared<Poco::Net::WebSocket>(request, response);
+            auto ws = std::make_shared<LOOLWebSocket>(request, response);
             _fontsBroker = readFontList(ws);
             check();
             return true;
@@ -133,7 +133,7 @@ public:
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET,
                                        std::string(UNIT_URI));
         Poco::Net::HTTPResponse response;
-        auto ws = std::make_shared<Poco::Net::WebSocket>(cs, request, response);
+        auto ws = std::make_shared<LOOLWebSocket>(cs, request, response);
         ws->setReceiveTimeout(0);
         Log::info("Fetching font list from forkit");
         std::string fontListMsg = getFontList() + "\n";
@@ -141,7 +141,7 @@ public:
     }
 
     // Called from WSD and handled inside the kit.
-    virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket> &ws,
+    virtual bool filterKitMessage(const std::shared_ptr<LOOLWebSocket> &ws,
                                   std::string &message) override
     {
         const std::string token = LOOLProtocol::getFirstToken(message);

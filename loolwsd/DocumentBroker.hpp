@@ -21,11 +21,11 @@
 #include <string>
 #include <thread>
 
-#include <Poco/Net/WebSocket.h>
 #include <Poco/URI.h>
 
 #include "IoUtil.hpp"
 #include "Log.hpp"
+#include <LOOLWebSocket.hpp>
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "Util.hpp"
@@ -39,8 +39,8 @@ class ChildProcess
 {
 public:
     /// @param pid is the process ID of the child.
-    /// @param ws is the control WebSocket to the child.
-    ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<Poco::Net::WebSocket>& ws) :
+    /// @param ws is the control LOOLWebSocket to the child.
+    ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<LOOLWebSocket>& ws) :
         _pid(pid),
         _ws(ws),
         _stop(false)
@@ -163,7 +163,7 @@ private:
 
 private:
     Poco::Process::PID _pid;
-    std::shared_ptr<Poco::Net::WebSocket> _ws;
+    std::shared_ptr<LOOLWebSocket> _ws;
     std::weak_ptr<DocumentBroker> _docBroker;
     std::thread _thread;
     std::atomic<bool> _stop;

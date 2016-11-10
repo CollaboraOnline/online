@@ -14,24 +14,26 @@
 #include <memory>
 #include <string>
 
-#include <Poco/Net/WebSocket.h>
+#include <LOOLWebSocket.hpp>
 
 namespace IoUtil
 {
-    // Wrapper for WebSocket::receiveFrame() that handles PING frames (by replying with a
+    // Wrapper for LOOLWebSocket::receiveFrame() that handles PING frames (by replying with a
     // PONG frame) and PONG frames. PONG frames are ignored.
     // Should we also factor out the handling of non-final and continuation frames into this?
-    int receiveFrame(Poco::Net::WebSocket& socket, void* buffer, int length, int& flags);
+    // TODO: move this to LOOLWebSocket directly
+    int receiveFrame(LOOLWebSocket& socket, void* buffer, int length, int& flags);
 
-    /// Synchronously process WebSocket requests and dispatch to handler.
+    /// Synchronously process LOOLWebSocket requests and dispatch to handler.
     /// Handler returns false to end.
-    void SocketProcessor(const std::shared_ptr<Poco::Net::WebSocket>& ws,
+    void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
                          const std::function<bool(const std::vector<char>&)>& handler,
                          const std::function<void()>& closeFrame,
                          const std::function<bool()>& stopPredicate);
 
-    /// Call WebSocket::shutdown() ignoring Poco::IOException.
-    void shutdownWebSocket(const std::shared_ptr<Poco::Net::WebSocket>& ws);
+    /// Call LOOLWebSocket::shutdown() ignoring Poco::IOException.
+    /// TODO: consider moving this directly to LOOLWebSocket
+    void shutdownWebSocket(const std::shared_ptr<LOOLWebSocket>& ws);
 
     ssize_t writeToPipe(int pipe, const char* buffer, ssize_t size);
     inline ssize_t writeToPipe(int pipe, const std::string& message)
@@ -40,16 +42,6 @@ namespace IoUtil
     }
 
     ssize_t readFromPipe(int pipe, char* buffer, ssize_t size);
-
-    /// Send frame.  If it is too long, send a 'nextmessage:' before the real
-    /// frame.
-    void sendLargeFrame(const std::shared_ptr<Poco::Net::WebSocket>& ws, const char *message, int length, int flags = Poco::Net::WebSocket::FRAME_TEXT);
-
-    /// Send frame as above, the std::string variant.
-    inline void sendLargeFrame(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::vector<char> &message, int flags = Poco::Net::WebSocket::FRAME_TEXT)
-    {
-        sendLargeFrame(ws, message.data(), message.size(), flags);
-    }
 
     /// Helper class to handle reading from a pipe.
     class PipeReader

@@ -9,11 +9,11 @@
 
 #include "config.h"
 
-#include <Poco/Net/WebSocket.h>
 #include <cppunit/extensions/HelperMacros.h>
 
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "MessageQueue.hpp"
 #include "Png.hpp"
 #include "TileCache.hpp"
@@ -94,17 +94,17 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     void tileInvalidatePart(const std::string& filename, const std::string& testname);
 
-    void checkTiles(Poco::Net::WebSocket& socket,
+    void checkTiles(std::shared_ptr<LOOLWebSocket>& socket,
                     const std::string& type,
                     const std::string& name = "checkTiles ");
 
-    void requestTiles(Poco::Net::WebSocket& socket,
+    void requestTiles(std::shared_ptr<LOOLWebSocket>& socket,
                       const int part,
                       const int docWidth,
                       const int docHeight,
                       const std::string& name = "requestTiles ");
 
-    void checkBlackTiles(Poco::Net::WebSocket& socket,
+    void checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket,
                          const int part,
                          const int docWidth,
                          const int docHeight,
@@ -212,7 +212,7 @@ void TileCacheTests::testSimpleCombine()
 
 void TileCacheTests::testPerformance()
 {
-    auto socket = *loadDocAndGetSocket("hello.odt", _uri, "performance ");
+    auto socket = loadDocAndGetSocket("hello.odt", _uri, "performance ");
 
     Poco::Timestamp timestamp;
     for (auto x = 0; x < 5; ++x)
@@ -230,13 +230,13 @@ void TileCacheTests::testPerformance()
               << " ms. Per-tile: " << timestamp.elapsed() / (1000. * 5 * 8) << "ms."
               << std::endl;
 
-    socket.shutdown();
+    socket->shutdown();
 }
 
 void TileCacheTests::testCancelTiles()
 {
     const auto testName = "cancelTiles ";
-    auto socket = *loadDocAndGetSocket("setclientpart.ods", _uri, testName);
+    auto socket = loadDocAndGetSocket("setclientpart.ods", _uri, testName);
 
     // Request a huge tile, and cancel immediately.
     sendTextFrame(socket, "tilecombine part=0 width=2560 height=2560 tileposx=0 tileposy=0 tilewidth=38400 tileheight=38400");
@@ -322,10 +322,10 @@ void TileCacheTests::testImpressTiles()
     try
     {
         const std::string testName = "impressTiles ";
-        auto socket = *loadDocAndGetSocket("setclientpart.odp", _uri, testName);
+        auto socket = loadDocAndGetSocket("setclientpart.odp", _uri, testName);
 
         sendTextFrame(socket, "tile part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0", testName);
-        getTileMessage(socket, testName);
+        getTileMessage(*socket, testName);
     }
     catch (const Poco::Exception& exc)
     {
@@ -338,11 +338,11 @@ void TileCacheTests::testClientPartImpress()
     try
     {
         const std::string testName = "clientPartImpress ";
-        auto socket = *loadDocAndGetSocket("setclientpart.odp", _uri, testName);
+        auto socket = loadDocAndGetSocket("setclientpart.odp", _uri, testName);
 
         checkTiles(socket, "presentation", testName);
 
-        socket.shutdown();
+        socket->shutdown();
     }
     catch (const Poco::Exception& exc)
     {
@@ -355,11 +355,11 @@ void TileCacheTests::testClientPartCalc()
     try
     {
         const std::string testName = "clientPartCalc ";
-        auto socket = *loadDocAndGetSocket("setclientpart.ods", _uri, testName);
+        auto socket = loadDocAndGetSocket("setclientpart.ods", _uri, testName);
 
         checkTiles(socket, "spreadsheet", testName);
 
-        socket.shutdown();
+        socket->shutdown();
     }
     catch (const Poco::Exception& exc)
     {
@@ -371,7 +371,7 @@ void TileCacheTests::testTilesRenderedJustOnce()
 {
     const auto testname = "tilesRenderdJustOnce ";
 
-    auto socket = *loadDocAndGetSocket("with_comment.odt", _uri, testname);
+    auto socket = loadDocAndGetSocket("with_comment.odt", _uri, testname);
 
     assertResponseString(socket, "statechanged: .uno:AcceptTrackedChange=", testname);
 
@@ -439,13 +439,13 @@ void TileCacheTests::testTilesRenderedJustOnceMultiClient()
     getDocumentPathAndURL("with_comment.odt", documentPath, documentURL);
 
     std::cerr << "Connecting first client." << std::endl;
-    auto socket = *loadDocAndGetSocket(_uri, documentURL, testname1);
+    auto socket = loadDocAndGetSocket(_uri, documentURL, testname1);
     std::cerr << "Connecting second client." << std::endl;
-    auto socket2 = *loadDocAndGetSocket(_uri, documentURL, testname2);
+    auto socket2 = loadDocAndGetSocket(_uri, documentURL, testname2);
     std::cerr << "Connecting third client." << std::endl;
-    auto socket3 = *loadDocAndGetSocket(_uri, documentURL, testname3);
+    auto socket3 = loadDocAndGetSocket(_uri, documentURL, testname3);
     std::cerr << "Connecting fourth client." << std::endl;
-    auto socket4 = *loadDocAndGetSocket(_uri, documentURL, "tilesRenderdJustOnce-4 ");
+    auto socket4 = loadDocAndGetSocket(_uri, documentURL, "tilesRenderdJustOnce-4 ");
 
     for (int i = 0; i < 10; ++i)
     {
@@ -562,7 +562,7 @@ void TileCacheTests::testLoad12ods()
     try
     {
         const auto testName = "load12ods ";
-        auto socket = *loadDocAndGetSocket("load12.ods", _uri, testName);
+        auto socket = loadDocAndGetSocket("load12.ods", _uri, testName);
 
         int docSheet = -1;
         int docSheets = 0;
@@ -616,7 +616,7 @@ void TileCacheTests::checkBlackTile(std::stringstream& tile)
     CPPUNIT_ASSERT_MESSAGE("The tile is 90% black", (black * 100) / (height * width) < 90);
 }
 
-void TileCacheTests::checkBlackTiles(Poco::Net::WebSocket& socket, const int /*part*/, const int /*docWidth*/, const int /*docHeight*/, const std::string& name)
+void TileCacheTests::checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, const int /*part*/, const int /*docWidth*/, const int /*docHeight*/, const std::string& name)
 {
     // Check the last row of tiles to verify that the tiles
     // render correctly and there are no black tiles.
@@ -645,7 +645,7 @@ void TileCacheTests::testTileInvalidateWriter()
     getDocumentPathAndURL("empty.odt", documentPath, documentURL);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-    auto socket = *loadDocAndGetSocket(_uri, documentURL);
+    auto socket = loadDocAndGetSocket(_uri, documentURL);
 
     std::string text = "Test. Now go 3 \"Enters\":\n\n\nNow after the enters, goes this text";
     for (char ch : text)
@@ -682,7 +682,7 @@ void TileCacheTests::testTileInvalidateWriterPage()
     getDocumentPathAndURL("empty.odt", documentPath, documentURL);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-    auto socket = *loadDocAndGetSocket(_uri, documentURL, testname);
+    auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
     sendChar(socket, '\n', skCtrl, testname); // Send Ctrl+Enter (page break).
     assertResponseString(socket, "invalidatetiles:", testname);
@@ -703,7 +703,7 @@ void TileCacheTests::testWriterAnyKey()
     getDocumentPathAndURL("empty.odt", documentPath, documentURL);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-    auto socket = *loadDocAndGetSocket(_uri, documentURL);
+    auto socket = loadDocAndGetSocket(_uri, documentURL);
 
     // Now test "usual" keycodes (TODO: whole 32-bit range)
     for (int i=0; i<0x1000; ++i)
@@ -783,7 +783,7 @@ void TileCacheTests::testWriterAnyKey()
 void TileCacheTests::testTileInvalidateCalc()
 {
     const std::string testname = "tileInvalidateCalc ";
-    auto socket = *loadDocAndGetSocket("empty.ods", _uri, testname);
+    auto socket = loadDocAndGetSocket("empty.ods", _uri, testname);
 
     std::string text = "Test. Now go 3 \"Enters\": Now after the enters, goes this text";
     for (char ch : text)
@@ -815,13 +815,13 @@ void TileCacheTests::tileInvalidatePart(const std::string& filename, const std::
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL(filename, documentPath, documentURL);
-    auto socket1 = *loadDocAndGetSocket(_uri, documentURL);
+    auto socket1 = loadDocAndGetSocket(_uri, documentURL);
 
     sendTextFrame(socket1, "setclientpart part=2", testname1);
     assertResponseString(socket1, "setpart:", testname1);
     sendTextFrame(socket1, "mouse type=buttondown x=7886 y=8929 count=1 buttons=1 modifier=0", testname1);
 
-    auto socket2 = *loadDocAndGetSocket(_uri, documentURL);
+    auto socket2 = loadDocAndGetSocket(_uri, documentURL);
     sendTextFrame(socket2, "setclientpart part=5", testname2);
     assertResponseString(socket2, "setpart:", testname2);
     sendTextFrame(socket2, "mouse type=buttondown x=7886 y=8929 count=1 buttons=1 modifier=0", testname2);
@@ -855,7 +855,7 @@ void TileCacheTests::testTileInvalidatePartImpress()
     tileInvalidatePart("setclientpart.odp", "tileInvalidatePartImpress");
 }
 
-void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string& docType, const std::string& name)
+void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const std::string& docType, const std::string& name)
 {
     const std::string current = "current=";
     const std::string height = "height=";
@@ -922,7 +922,7 @@ void TileCacheTests::checkTiles(Poco::Net::WebSocket& socket, const std::string&
     }
 }
 
-void TileCacheTests::requestTiles(Poco::Net::WebSocket& socket, const int part, const int docWidth, const int docHeight, const std::string& name)
+void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket, const int part, const int docWidth, const int docHeight, const std::string& name)
 {
     // twips
     const int tileSize = 3840;

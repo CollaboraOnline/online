@@ -22,13 +22,13 @@
 
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/Socket.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
 
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "Util.hpp"
 
@@ -38,7 +38,7 @@ using Poco::Net::WebSocket;
 namespace IoUtil
 {
 
-int receiveFrame(WebSocket& socket, void* buffer, int length, int& flags)
+int receiveFrame(LOOLWebSocket& socket, void* buffer, int length, int& flags)
 {
     while (!TerminationFlag)
     {
@@ -60,9 +60,9 @@ int receiveFrame(WebSocket& socket, void* buffer, int length, int& flags)
     return -1;
 }
 
-// Synchronously process WebSocket requests and dispatch to handler.
+// Synchronously process LOOLWebSocket requests and dispatch to handler.
 // Handler returns false to end.
-void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
+void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
                      const std::function<bool(const std::vector<char>&)>& handler,
                      const std::function<void()>& closeFrame,
                      const std::function<bool()>& stopPredicate)
@@ -197,11 +197,11 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
     LOG_INF("SocketProcessor finished.");
 }
 
-void shutdownWebSocket(const std::shared_ptr<Poco::Net::WebSocket>& ws)
+void shutdownWebSocket(const std::shared_ptr<LOOLWebSocket>& ws)
 {
     try
     {
-        // Calling WebSocket::shutdown, in case of error, would try to send a 'close' frame
+        // Calling LOOLWebSocket::shutdown, in case of error, would try to send a 'close' frame
         // which won't work in case of broken pipe or timeout from peer. Just close the
         // socket in that case preventing 'close' frame from being sent.
         if (ws && ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
@@ -256,25 +256,6 @@ ssize_t readFromPipe(int pipe, char* buffer, ssize_t size)
     while (bytes < 0 && errno == EINTR);
 
     return bytes;
-}
-
-void sendLargeFrame(const std::shared_ptr<Poco::Net::WebSocket>& ws, const char *message, int length, int flags)
-{
-    // Size after which messages will be sent preceded with
-    // 'nextmessage' frame to let the receiver know in advance
-    // the size of larger coming message. All messages up to this
-    // size are considered small messages.
-    constexpr int SMALL_MESSAGE_SIZE = READ_BUFFER_SIZE / 2;
-
-    if (length > SMALL_MESSAGE_SIZE)
-    {
-        const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-        ws->sendFrame(nextmessage.data(), nextmessage.size());
-        LOG_DBG("Message is long, sent " << nextmessage);
-    }
-
-    ws->sendFrame(message, length, flags);
-    LOG_DBG("Sent frame: " << LOOLProtocol::getAbbreviatedMessage(std::string(message, length)));
 }
 
 /// Reads a single line from a pipe.

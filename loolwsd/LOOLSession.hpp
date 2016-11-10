@@ -17,18 +17,18 @@
 #include <ostream>
 
 #include <Poco/Buffer.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Types.h>
 
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "MessageQueue.hpp"
 #include "TileCache.hpp"
 
-/// Base class of a WebSocket session.
+/// Base class of a LOOLWebSocket session.
 class LOOLSession
 {
 public:
@@ -83,7 +83,7 @@ public:
 
 protected:
     LOOLSession(const std::string& id, const Kind kind,
-                std::shared_ptr<Poco::Net::WebSocket> ws);
+                std::shared_ptr<LOOLWebSocket> ws);
     virtual ~LOOLSession();
 
     /// Parses the options of the "load" command, shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
@@ -146,7 +146,7 @@ private:
 
     // In the master process, the websocket to the LOOL client or the jailed child process. In a
     // jailed process, the websocket to the parent.
-    std::shared_ptr<Poco::Net::WebSocket> _ws;
+    std::shared_ptr<LOOLWebSocket> _ws;
 
     /// True if we have been disconnected.
     std::atomic<bool> _disconnected;
