@@ -335,27 +335,21 @@ unsigned AdminModel::getTotalActiveViews()
     return nTotalViews;
 }
 
-std::string AdminModel::getDocuments()
+std::string AdminModel::getDocuments() const
 {
     std::ostringstream oss;
-    for (auto& it: _documents)
+    for (const auto& it: _documents)
     {
-        if (it.second.isExpired())
-            continue;
-
-        const auto sPid = std::to_string(it.second.getPid());
-        const auto sFilename = it.second.getFilename();
-        const auto sViews = std::to_string(it.second.getActiveViews());
-        const auto sMem = std::to_string(Util::getMemoryUsage(it.second.getPid()));
-        const auto sElapsed = std::to_string(it.second.getElapsedTime());
-
-        std::string encodedFilename;
-        Poco::URI::encode(sFilename, " ", encodedFilename);
-        oss << sPid << ' '
-            << encodedFilename << ' '
-            << sViews << ' '
-            << sMem << ' '
-            << sElapsed << " \n ";
+        if (!it.second.isExpired())
+        {
+            std::string encodedFilename;
+            Poco::URI::encode(it.second.getFilename(), " ", encodedFilename);
+            oss << it.second.getPid() << ' '
+                << encodedFilename << ' '
+                << it.second.getActiveViews() << ' '
+                << Util::getMemoryUsage(it.second.getPid()) << ' '
+                << it.second.getElapsedTime() << " \n ";
+        }
     }
 
     return oss.str();

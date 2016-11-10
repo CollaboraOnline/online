@@ -494,33 +494,32 @@ namespace Util
 
     int getMemoryUsage(const Poco::Process::PID nPid)
     {
-        //TODO: Instead of RSS, return PSS
-        const auto cmd = "ps o rss= -p " + std::to_string(nPid);
-        FILE* fp = popen(cmd.c_str(), "r");
-        if (fp == nullptr)
-        {
-            return 0;
-        }
-
-        std::string sResponse;
-        char cmdBuffer[1024];
-        while (fgets(cmdBuffer, sizeof(cmdBuffer) - 1, fp) != nullptr)
-        {
-            sResponse += cmdBuffer;
-        }
-        pclose(fp);
-
-        int nMem = -1;
         try
         {
-            nMem = std::stoi(sResponse);
+            //TODO: Instead of RSS, return PSS
+            const auto cmd = "ps o rss= -p " + std::to_string(nPid);
+            FILE* fp = popen(cmd.c_str(), "r");
+            if (fp == nullptr)
+            {
+                return 0;
+            }
+
+            std::string sResponse;
+            char cmdBuffer[1024];
+            while (fgets(cmdBuffer, sizeof(cmdBuffer) - 1, fp) != nullptr)
+            {
+                sResponse += cmdBuffer;
+            }
+            pclose(fp);
+
+            return std::stoi(sResponse);
         }
         catch(const std::exception&)
         {
             Log::warn() << "Trying to find memory of invalid/dead PID " << nPid << Log::end;
         }
 
-        return nMem;
+        return -1;
     }
 
     std::string replace(const std::string& s, const std::string& a, const std::string& b)
