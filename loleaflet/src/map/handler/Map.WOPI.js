@@ -2,6 +2,7 @@
  * L.WOPI contains WOPI related logic
  */
 
+/* global title */
 L.Map.WOPI = L.Handler.extend({
 
 	PostMessageOrigin: false,
@@ -45,6 +46,23 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId === 'Close_Session') {
 			this._map._socket.sendMessage('closedocument');
+		}
+		else if (msg.MessageId === 'Action_Save') {
+			var dontTerminateEdit = e.Values && e.Values['DontTerminateEdit'];
+			var dontSaveIfUnmodified = e.Values && e.Values['DontSaveIfUnmodified'];
+
+			this._map.save(dontTerminateEdit, dontSaveIfUnmodified);
+		}
+		else if (msg.MessageId === 'Action_Print') {
+			this._map.print();
+		}
+		else if (msg.MessageId === 'Action_Export') {
+			if (msg.Values) {
+				var format = msg.Values.Format;
+				var filename = title.substr(0, title.lastIndexOf('.')) || title;
+				filename = filename === '' ? 'document' : filename;
+				this._map.downloadAs(filename + '.' + format, format);
+			}
 		}
 	},
 

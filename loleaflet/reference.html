@@ -71,6 +71,7 @@
 		<ul>
 		        <li><a href="#loleaflet-postmessage-initialization">Initialization</a></li>
 			<li><a href="#loleaflet-postmessage-sessions">Session Management</a></li>
+			<li><a href="#loleaflet-postmessage-actions">Actions</a></li>
 		</ul>
 		<h4>UI Layers</h4>
 		<ul>
@@ -2754,7 +2755,7 @@ The <code>id</code> property of ErrorEvent can have the following values:
 SendTime is the timestamp returned by browsers' Date.now()
 
 <h3 id="loleaflet-postmessage-initialization">Initialization</h3>
-
+Editor to WOPI host
 <table data-id='postmessage-initialization'>
 	<tr>
 		<th>MessageId</th>
@@ -2774,7 +2775,24 @@ SendTime is the timestamp returned by browsers' Date.now()
 </table>
 
 <h3 id="loleaflet-postmessage-sessions">Session Management</h3>
+WOPI Host to Editor
+<table data-id='postmessage-sessions'>
+	<tr>
+		<th>MessageId</th>
+		<th>Values</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>Get_Views</b></code></td>
+		<td><code>
+		</code></td>
+		<td>
+		Queries the editor for currently active views of the document. Response is returned in form of <code>Get_Views_Resp</code>
+		</td>
+	</tr>
+</table>
 
+Editor to WOPI Host
 <table data-id='postmessage-sessions'>
 	<tr>
 		<th>MessageId</th>
@@ -2815,6 +2833,49 @@ SendTime is the timestamp returned by browsers' Date.now()
 		</td>
 	</tr>
 </table>
+
+<h3 id="loleaflet-postmessage-actions">Actions</h3>
+WOPI host to editor
+<table data-id='postmessage-actions'>
+	<tr>
+		<th>MessageId</th>
+		<th>Values</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>Action_Save</b></code></td>
+		<td><code>
+		    <nobr>DontTerminateEdit: &lt;boolean&gt;</nobr>
+		    <nobr>DontSaveIfUnmodified: &lt;boolean&gt;</nobr>
+		</code></td>
+		<td>Saves the document. DontTerminateEdit is relevant for spreadsheets where saving
+		a document can terminate the edit mode (text cursor dissappearing). Setting this to
+		true won't terminate the edit mode and can be used to save document without disrupting
+		user's editing session in spreadsheets.
+		DontSaveIfUnmodified prevents loolwsd to save the file back to storage if document is
+		unmodified (only cursor position changed etc.) but still saved. This can be helpful
+		to prevent creating unnecessary file revisions.
+		</td>
+	</tr>
+	<tr>
+		<td><code><b>Action_Print</b></code></td>
+		<td><code>
+		</code></td>
+		<td>
+		Prints the document.
+		</td>
+	</tr>
+	<tr>
+		<td><code><b>Action_Export</b></code></td>
+		<td><code>
+		    <nobr>Format: &lt;String&gt;</nobr>
+		</code></td>
+		<td>
+		Downloads the document in format specified by <code>Format</code>.
+		</td>
+	</tr>
+</table>
+
 
 <h2 id="marker">Marker</h2>
 
