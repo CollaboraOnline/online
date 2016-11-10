@@ -98,10 +98,10 @@ public:
             _ws.reset();
             if (_pid != -1 && kill(_pid, 0) != 0)
             {
-                if (rude)
+                if (errno != ESRCH && rude)
                 {
                     LOG_INF("Killing child [" << _pid << "].");
-                    if (kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0)
+                    if (kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0 && errno != ESRCH)
                     {
                         Log::syserror("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
                     }
