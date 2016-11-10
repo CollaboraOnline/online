@@ -14,9 +14,6 @@
 #include <memory>
 #include <string>
 
-#include <sys/poll.h>
-
-#include <Poco/Logger.h>
 #include <Poco/Net/WebSocket.h>
 
 namespace IoUtil
