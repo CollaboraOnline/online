@@ -917,8 +917,6 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
         pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY, closeReason);
     }
 
-    std::this_thread::sleep_for (std::chrono::seconds(5));
-
     // First flag to stop as it might be waiting on our lock
     // to process some incoming message.
     _childProcess->stop();
