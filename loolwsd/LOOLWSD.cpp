@@ -1834,7 +1834,15 @@ Process::PID LOOLWSD::createForKit()
     // The Pipe dtor closes the fd, so dup it.
     ForKitWritePipe = dup(inPipe.writeHandle());
 
-    return child.id();
+    const auto forkitPid = child.id();
+
+    // Init the Admin manager
+    Admin::instance().setForKitPid(forkitPid);
+
+    // Spawn some children, if necessary.
+    preForkChildren();
+
+    return forkitPid;
 }
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
@@ -1925,18 +1933,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     srv2.start();
 
     // Fire the ForKit process; we are ready to get child connections.
-    const Process::PID forKitPid = createForKit();
+    Process::PID forKitPid = createForKit();
     if (forKitPid < 0)
     {
         LOG_FTL("Failed to spawn loolforkit.");
         return Application::EXIT_SOFTWARE;
     }
-
-    // Init the Admin manager
-    Admin::instance().setForKitPid(forKitPid);
-
-    // Spawn some children, if necessary.
-    preForkChildren();
 
     // Now we can serve clients; Start listening on the public port.
     std::unique_ptr<ServerSocket> psvs(
@@ -1967,17 +1969,27 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         {
             if (forKitPid == pid)
             {
-                if (WIFEXITED(status) == true)
+                if (WIFEXITED(status) || WIFSIGNALED(status))
                 {
-                    LOG_INF("Child process [" << pid << "] exited with code: " << WEXITSTATUS(status) << ".");
-                    break;
-                }
-                else if (WIFSIGNALED(status) == true)
-                {
-                    const auto fate = (WCOREDUMP(status) ? "core-dumped" : "died");
-                    LOG_ERR("Child process [" << pid << "] " << fate <<
-                            " with " << Util::signalName(WTERMSIG(status)));
-                    break;
+                    if (WIFEXITED(status))
+                    {
+                        LOG_INF("Child process [" << pid << "] exited with code: " <<
+                                WEXITSTATUS(status) << ".");
+                    }
+                    else
+                    {
+                        LOG_ERR("Child process [" << pid << "] " <<
+                                (WCOREDUMP(status) ? "core-dumped" : "died") <<
+                                " with " << Util::signalName(WTERMSIG(status)));
+                    }
+
+                    // Spawn a new forkit and try to dust it off and resume.
+                    forKitPid = createForKit();
+                    if (forKitPid < 0)
+                    {
+                        LOG_FTL("Failed to spawn forkit instance. Shutting down.");
+                        break;
+                    }
                 }
                 else if (WIFSTOPPED(status) == true)
                 {
