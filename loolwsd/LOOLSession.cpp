@@ -27,7 +27,6 @@
 
 #include <Poco/Exception.h>
 #include <Poco/Net/Socket.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
@@ -36,6 +35,7 @@
 #include "Common.hpp"
 #include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "TileCache.hpp"
 #include "Util.hpp"
@@ -49,7 +49,7 @@ using Poco::Net::WebSocket;
 using Poco::StringTokenizer;
 
 LOOLSession::LOOLSession(const std::string& id, const Kind kind,
-                         std::shared_ptr<WebSocket> ws) :
+                         std::shared_ptr<LOOLWebSocket> ws) :
     _id(id),
     _kind(kind),
     _kindString(kind == Kind::ToClient ? "ToClient" :
@@ -84,7 +84,7 @@ bool LOOLSession::sendTextFrame(const char* buffer, const int length)
             return false;
         }
 
-        IoUtil::sendLargeFrame(_ws, buffer, length);
+        _ws->sendFrame(buffer, length);
         return true;
     }
     catch (const Exception& exc)
@@ -109,7 +109,7 @@ bool LOOLSession::sendBinaryFrame(const char *buffer, int length)
             return false;
         }
 
-        IoUtil::sendLargeFrame(_ws, buffer, length, WebSocket::FRAME_BINARY);
+        _ws->sendFrame(buffer, length, WebSocket::FRAME_BINARY);
         return true;
     }
     catch (const Exception& exc)
@@ -213,7 +213,7 @@ void LOOLSession::shutdown(Poco::UInt16 statusCode, const std::string& statusMes
         }
         catch (const Poco::Exception &exc)
         {
-            LOG_WRN("LOOLSession::shutdown WebSocket: Exception: " <<
+            LOG_WRN("LOOLSession::shutdown LOOLWebSocket: Exception: " <<
                     exc.displayText() << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
         }
     }

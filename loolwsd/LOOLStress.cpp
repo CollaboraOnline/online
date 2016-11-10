@@ -121,7 +121,7 @@ public:
     }
 
     const std::string& getName() const { return _name; }
-    std::shared_ptr<Poco::Net::WebSocket> getWS() const { return _ws; };
+    std::shared_ptr<LOOLWebSocket> getWS() const { return _ws; };
 
     /// Send a command to the server.
     void send(const std::string& data) const
@@ -143,7 +143,7 @@ public:
     }
 
 private:
-    Connection(const std::string& documentURL, const std::string& sessionId, std::shared_ptr<Poco::Net::WebSocket>& ws) :
+    Connection(const std::string& documentURL, const std::string& sessionId, std::shared_ptr<LOOLWebSocket>& ws) :
         _documentURL(documentURL),
         _sessionId(sessionId),
         _name(sessionId + ' '),
@@ -155,7 +155,7 @@ private:
     const std::string _documentURL;
     const std::string _sessionId;
     const std::string _name;
-    std::shared_ptr<Poco::Net::WebSocket> _ws;
+    std::shared_ptr<LOOLWebSocket> _ws;
     static std::mutex Mutex;
 };
 

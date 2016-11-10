@@ -45,14 +45,14 @@ private:
     std::string _jwtCookie;
     bool _isTestRunning = false;
     const Poco::URI _uri;
-    std::shared_ptr<Poco::Net::WebSocket> _adminWs;
+    std::shared_ptr<LOOLWebSocket> _adminWs;
 
     typedef TestResult (UnitAdmin::*AdminTest)(void);
     std::vector<AdminTest> _tests;
 
-    std::shared_ptr<Poco::Net::WebSocket> _docWs1;
-    std::shared_ptr<Poco::Net::WebSocket> _docWs2;
-    std::shared_ptr<Poco::Net::WebSocket> _docWs3;
+    std::shared_ptr<LOOLWebSocket> _docWs1;
+    std::shared_ptr<LOOLWebSocket> _docWs2;
+    std::shared_ptr<LOOLWebSocket> _docWs3;
     int _docPid1;
     int _docPid2;
     int _docPid3;
@@ -131,7 +131,7 @@ private:
         HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
         std::unique_ptr<HTTPClientSession> session(UnitHTTP::createSession());
 
-        _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
+        _adminWs = std::make_shared<LOOLWebSocket>(*session, request, response);
         const std::string testMessage = "documents";
         std::unique_lock<std::mutex> lock(_messageReceivedMutex);
         _messageReceived.clear();
@@ -162,7 +162,7 @@ private:
         HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
         std::unique_ptr<HTTPClientSession> session(UnitHTTP::createSession());
 
-        _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
+        _adminWs = std::make_shared<LOOLWebSocket>(*session, request, response);
         const std::string testMessage = "auth jwt=incorrectJWT";
         std::unique_lock<std::mutex> lock(_messageReceivedMutex);
         _messageReceived.clear();
@@ -193,7 +193,7 @@ private:
         HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
         std::unique_ptr<HTTPClientSession> session(UnitHTTP::createSession());
 
-        _adminWs = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
+        _adminWs = std::make_shared<LOOLWebSocket>(*session, request, response);
         const std::string authMessage = "auth jwt=" + _jwtCookie;
         _adminWs->sendFrame(authMessage.data(), authMessage.size());
 
@@ -216,7 +216,7 @@ private:
 
         std::unique_lock<std::mutex> lock(_messageReceivedMutex);
         _messageReceived.clear();
-        _docWs1 = std::make_shared<Poco::Net::WebSocket>(*session1, request1, response1);
+        _docWs1 = std::make_shared<LOOLWebSocket>(*session1, request1, response1);
         _docWs1->sendFrame(loadMessage1.data(), loadMessage1.size());
         if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
@@ -244,7 +244,7 @@ private:
         // Open another view of same document
         lock.lock(); // lock _messageReceivedMutex
         _messageReceived.clear();
-        _docWs2 = std::make_shared<Poco::Net::WebSocket>(*session2, request1, response1);
+        _docWs2 = std::make_shared<LOOLWebSocket>(*session2, request1, response1);
         _docWs2->sendFrame(loadMessage1.data(), loadMessage1.size());
         if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
@@ -279,7 +279,7 @@ private:
 
         lock.lock(); // lock _messageReceivedMutex
         _messageReceived.clear();
-        _docWs3 = std::make_shared<Poco::Net::WebSocket>(*session3, request2, response2);
+        _docWs3 = std::make_shared<LOOLWebSocket>(*session3, request2, response2);
         _docWs3->sendFrame(loadMessage2.data(), loadMessage2.size());
         if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {

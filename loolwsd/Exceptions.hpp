@@ -59,7 +59,7 @@ public:
 };
 
 /// An generic error-message exception meant to
-/// propagate via a valid WebSocket to the client.
+/// propagate via a valid LOOLWebSocket to the client.
 /// The contents of what() will be displayed on screen.
 class WebSocketErrorMessageException : public LoolException
 {

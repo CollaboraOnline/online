@@ -30,7 +30,6 @@
 #include <Poco/Net/PrivateKeyPassphraseHandler.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/Net/Socket.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
@@ -42,6 +41,7 @@
 #include <UserMessages.hpp>
 #include <Util.hpp>
 #include <LOOLProtocol.hpp>
+#include <LOOLWebSocket.hpp>
 #include "helpers.hpp"
 #include "countloolkits.hpp"
 
@@ -144,7 +144,7 @@ void HTTPCrashTest::testCrashKit()
     const auto testname = "crashKit ";
     try
     {
-        auto socket = *loadDocAndGetSocket("empty.odt", _uri, testname);
+        auto socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
         killLoKitProcesses();
 
@@ -156,7 +156,7 @@ void HTTPCrashTest::testCrashKit()
         getResponseMessage(socket, "", testname, 1000);
 
         // 5 seconds timeout
-        socket.setReceiveTimeout(5000000);
+        socket->setReceiveTimeout(5000000);
 
         // receive close frame handshake
         int bytes;
@@ -164,16 +164,16 @@ void HTTPCrashTest::testCrashKit()
         char buffer[READ_BUFFER_SIZE];
         do
         {
-            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
             std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
         }
         while ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
         // respond close frame
-        socket.shutdown();
+        socket->shutdown();
 
         // no more messages is received.
-        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
         CPPUNIT_ASSERT_MESSAGE("Expected no more data", bytes <= 2); // The 2-byte marker is ok.
         CPPUNIT_ASSERT_EQUAL(0x88, flags);
     }

@@ -30,7 +30,6 @@
 #include <Poco/Net/PrivateKeyPassphraseHandler.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/Net/Socket.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/StreamCopier.h>
@@ -42,6 +41,7 @@
 
 #include "Common.hpp"
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "Png.hpp"
 #include "UserMessages.hpp"
 #include "Util.hpp"
@@ -154,7 +154,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                    int& cursorWidth,
                    int& cursorHeight);
 
-    void limitCursor(std::function<void(const std::shared_ptr<Poco::Net::WebSocket>& socket,
+    void limitCursor(std::function<void(const std::shared_ptr<LOOLWebSocket>& socket,
                                         int cursorX, int cursorY,
                                         int cursorWidth, int cursorHeight,
                                         int docWidth, int docHeight)> keyhandler,
@@ -165,7 +165,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     std::string getFontList(const std::string& message);
     void testStateChanged(const std::string& filename, std::vector<std::string>& vecComands);
     double getColRowSize(const std::string& property, const std::string& message, int index);
-    double getColRowSize(const std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& item, int index);
+    double getColRowSize(const std::shared_ptr<LOOLWebSocket>& socket, const std::string& item, int index);
     void testEachView(const std::string& doc, const std::string& type, const std::string& protocol, const std::string& view, const std::string& testname);
 
 public:
@@ -249,7 +249,7 @@ void HTTPWSTest::testHandShake()
         Poco::Net::HTTPResponse response;
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-        Poco::Net::WebSocket socket(*session, request, response);
+        LOOLWebSocket socket(*session, request, response);
         socket.setReceiveTimeout(0);
 
         int flags = 0;
@@ -298,13 +298,13 @@ void HTTPWSTest::testCloseAfterClose()
     const auto testname = "closeAfterClose ";
     try
     {
-        auto socket = *loadDocAndGetSocket("hello.odt", _uri, testname);
+        auto socket = loadDocAndGetSocket("hello.odt", _uri, testname);
 
         // send normal socket shutdown
-        socket.shutdown();
+        socket->shutdown();
 
         // 5 seconds timeout
-        socket.setReceiveTimeout(5000000);
+        socket->setReceiveTimeout(5000000);
 
         // receive close frame handshake
         int bytes;
@@ -312,12 +312,12 @@ void HTTPWSTest::testCloseAfterClose()
         char buffer[READ_BUFFER_SIZE];
         do
         {
-            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
         }
         while (bytes && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
         // no more messages is received.
-        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
         std::cout << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
         CPPUNIT_ASSERT_EQUAL(0, bytes);
         CPPUNIT_ASSERT_EQUAL(0, flags);
@@ -387,7 +387,7 @@ void HTTPWSTest::testBadLoad()
         getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+        auto socket = connectLOKit(_uri, request, _response);
 
         // Before loading request status.
         sendTextFrame(socket, "status");
@@ -419,8 +419,8 @@ void HTTPWSTest::testGetTextSelection()
         std::string documentPath, documentURL;
         getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
-        auto socket = *loadDocAndGetSocket(_uri, documentURL, testname);
-        auto socket2 = *loadDocAndGetSocket(_uri, documentURL, testname);
+        auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
+        auto socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
 
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
@@ -446,9 +446,9 @@ void HTTPWSTest::testSaveOnDisconnect()
     int kitcount = -1;
     try
     {
-        auto socket = *loadDocAndGetSocket(_uri, documentURL, testname);
+        auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
-        auto socket2 = *loadDocAndGetSocket(_uri, documentURL, testname);
+        auto socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
         sendTextFrame(socket2, "userinactive");
 
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
@@ -470,8 +470,8 @@ void HTTPWSTest::testSaveOnDisconnect()
 
         // Shutdown abruptly.
         std::cerr << "Closing connection after pasting." << std::endl;
-        socket.shutdown();
-        socket2.shutdown();
+        socket->shutdown();
+        socket2->shutdown();
     }
     catch (const Poco::Exception& exc)
     {
@@ -484,7 +484,7 @@ void HTTPWSTest::testSaveOnDisconnect()
     try
     {
         // Load the same document and check that the last changes (pasted text) is saved.
-        auto socket = *loadDocAndGetSocket(_uri, documentURL, testname);
+        auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
         // Should have no new instances.
         CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
@@ -509,7 +509,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         std::string documentPath, documentURL;
         getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
-        auto socket = *loadDocAndGetSocket(_uri, documentURL, testname);
+        auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "uno .uno:Delete", testname);
@@ -524,11 +524,11 @@ void HTTPWSTest::testReloadWhileDisconnecting()
 
         // Shutdown abruptly.
         std::cerr << "Closing connection after pasting." << std::endl;
-        socket.shutdown();
+        socket->shutdown();
 
         // Load the same document and check that the last changes (pasted text) is saved.
         std::cout << "Loading again." << std::endl;
-        socket = *loadDocAndGetSocket(_uri, documentURL, testname);
+        socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
         // Should have no new instances.
         CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
@@ -639,7 +639,7 @@ void HTTPWSTest::testRenderingOptions()
         const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+        auto socket = connectLOKit(_uri, request, _response);
 
         sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
         sendTextFrame(socket, "status");
@@ -671,7 +671,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
         getDocumentPathAndURL("password-protected.ods", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+        auto socket = connectLOKit(_uri, request, _response);
 
         // Send a load request without password first
         sendTextFrame(socket, "load url=" + documentURL);
@@ -702,7 +702,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
         getDocumentPathAndURL("password-protected.ods", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+        auto socket = connectLOKit(_uri, request, _response);
 
         // Send a load request with incorrect password
         sendTextFrame(socket, "load url=" + documentURL + " password=2");
@@ -732,7 +732,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
         getDocumentPathAndURL("password-protected.ods", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+        auto socket = connectLOKit(_uri, request, _response);
 
         // Send a load request with correct password
         sendTextFrame(socket, "load url=" + documentURL + " password=1");
@@ -762,7 +762,7 @@ void HTTPWSTest::testInsertDelete()
         getDocumentPathAndURL("insert-delete.odp", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+        auto socket = connectLOKit(_uri, request, _response);
 
         sendTextFrame(socket, "load url=" + documentURL);
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
@@ -857,7 +857,7 @@ void HTTPWSTest::testSlideShow()
         getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::WebSocket socket = *connectLOKit(_uri, request, _response);
+        auto socket = connectLOKit(_uri, request, _response);
 
         sendTextFrame(socket, "load url=" + documentURL, testname);
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
@@ -957,7 +957,7 @@ void HTTPWSTest::testMaxColumn()
     {
         limitCursor(
             // move cursor to last column
-            [](const std::shared_ptr<Poco::Net::WebSocket>& socket,
+            [](const std::shared_ptr<LOOLWebSocket>& socket,
                int cursorX, int cursorY, int cursorWidth, int cursorHeight,
                int docWidth, int docHeight)
             {
@@ -996,7 +996,7 @@ void HTTPWSTest::testMaxRow()
     {
         limitCursor(
             // move cursor to last row
-            [](const std::shared_ptr<Poco::Net::WebSocket>& socket,
+            [](const std::shared_ptr<LOOLWebSocket>& socket,
                int cursorX, int cursorY, int cursorWidth, int cursorHeight,
                int docWidth, int docHeight)
             {
@@ -1100,7 +1100,7 @@ void HTTPWSTest::getCursor(const std::string& message,
     CPPUNIT_ASSERT(cursorHeight >= 0);
 }
 
-void HTTPWSTest::limitCursor(std::function<void(const std::shared_ptr<Poco::Net::WebSocket>& socket,
+void HTTPWSTest::limitCursor(std::function<void(const std::shared_ptr<LOOLWebSocket>& socket,
                                                 int cursorX, int cursorY,
                                                 int cursorWidth, int cursorHeight,
                                                 int docWidth, int docHeight)> keyhandler,
@@ -1421,7 +1421,7 @@ void HTTPWSTest::testFontList()
     try
     {
         // Load a document
-        auto socket = *loadDocAndGetSocket("setclientpart.odp", _uri, testname);
+        auto socket = loadDocAndGetSocket("setclientpart.odp", _uri, testname);
 
         sendTextFrame(socket, "commandvalues command=.uno:CharFontName", testname);
         const auto response = getResponseMessage(socket, "commandvalues:", testname);
@@ -1664,7 +1664,7 @@ double HTTPWSTest::getColRowSize(const std::string& property, const std::string&
     return item->getValue<double>("size");
 }
 
-double HTTPWSTest::getColRowSize(const std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& item, int index)
+double HTTPWSTest::getColRowSize(const std::shared_ptr<LOOLWebSocket>& socket, const std::string& item, int index)
 {
     std::vector<char> response;
     response = getResponseMessage(socket, "commandvalues:", "testColumnRowResize ");
@@ -1879,7 +1879,7 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type,
         getDocumentPathAndURL(doc, documentPath, documentURL);
 
         int itView = 0;
-        auto socket = *loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView));
+        auto socket = loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView));
 
         // Check document size
         sendTextFrame(socket, "status", Poco::format(view, itView));
@@ -1904,7 +1904,7 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type,
         CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 
         // Connect and load 0..N Views, where N<=limit
-        std::vector<std::shared_ptr<Poco::Net::WebSocket>> views;
+        std::vector<std::shared_ptr<LOOLWebSocket>> views;
 #if MAX_DOCUMENTS > 0
         const auto limit = std::min(5, MAX_DOCUMENTS - 1); // +1 connection above
 #else
@@ -1960,7 +1960,7 @@ void HTTPWSTest::testGraphicInvalidate()
     try
     {
         // Load a document.
-        auto socket = *loadDocAndGetSocket("shape.ods", _uri, testname);
+        auto socket = loadDocAndGetSocket("shape.ods", _uri, testname);
 
         // Send click message
         sendTextFrame(socket, "mouse type=buttondown x=1035 y=400 count=1 buttons=1 modifier=0", testname);
@@ -1993,7 +1993,7 @@ void HTTPWSTest::testCursorPosition()
         std::string response;
 
         getDocumentPathAndURL("Example.odt", docPath, docURL);
-        auto socket0 = *loadDocAndGetSocket(_uri, docURL, testname);
+        auto socket0 = loadDocAndGetSocket(_uri, docURL, testname);
 
         // receive cursor position
         response = getResponseString(socket0, "invalidatecursor:", testname);
@@ -2001,7 +2001,7 @@ void HTTPWSTest::testCursorPosition()
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.count());
 
         // Create second view
-        auto socket1 = *loadDocAndGetSocket(_uri, docURL, testname);
+        auto socket1 = loadDocAndGetSocket(_uri, docURL, testname);
 
         //receive view cursor position
         response = getResponseString(socket1, "invalidateviewcursor:", testname);
@@ -2044,7 +2044,7 @@ void HTTPWSTest::testAlertAllUsers()
         for (int i = 0; i < 2; i++)
             request[i] = new Poco::Net::HTTPRequest(Poco::Net::HTTPRequest::HTTP_GET, docURL[i]);
 
-        std::shared_ptr<Poco::Net::WebSocket> socket[4];
+        std::shared_ptr<LOOLWebSocket> socket[4];
         for (int i = 0; i < 4; i++)
         {
             socket[i] = connectLOKit(_uri, *(request[i/2]), _response);
@@ -2082,8 +2082,8 @@ void HTTPWSTest::testViewInfoMsg()
     getDocumentPathAndURL("hello.odt", docPath, docURL);
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-    Poco::Net::WebSocket socket0 = *connectLOKit(_uri, request, _response);
-    Poco::Net::WebSocket socket1 = *connectLOKit(_uri, request, _response);
+    auto socket0 = connectLOKit(_uri, request, _response);
+    auto socket1 = connectLOKit(_uri, request, _response);
 
     std::string response;
     int part, parts, width, height;

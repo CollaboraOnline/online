@@ -17,12 +17,12 @@
 #include "Common.hpp"
 #include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "Unit.hpp"
 #include "Util.hpp"
 
 #include <Poco/Timestamp.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/Net/WebSocket.h>
 
 // Inside the WSD process
 class UnitFuzz : public UnitWSD
@@ -55,7 +55,7 @@ public:
     {
     }
 
-    virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket> & /* ws */,
+    virtual bool filterKitMessage(const std::shared_ptr<LOOLWebSocket> & /* ws */,
                                   std::string & /* message */) override
     {
         return false;

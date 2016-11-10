@@ -15,12 +15,12 @@
 #include <sstream>
 #include <string>
 
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
@@ -147,7 +147,7 @@ unsigned AdminModel::getTotalMemoryUsage()
     return totalMem;
 }
 
-void AdminModel::subscribe(int nSessionId, std::shared_ptr<Poco::Net::WebSocket>& ws)
+void AdminModel::subscribe(int nSessionId, std::shared_ptr<LOOLWebSocket>& ws)
 {
     const auto ret = _subscribers.emplace(nSessionId, Subscriber(nSessionId, ws));
     if (!ret.second)

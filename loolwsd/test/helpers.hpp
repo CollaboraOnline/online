@@ -32,7 +32,6 @@
 #include <Poco/Net/PrivateKeyPassphraseHandler.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/Net/Socket.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Path.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
@@ -42,6 +41,7 @@
 
 #include <Common.hpp>
 #include <LOOLProtocol.hpp>
+#include <LOOLWebSocket.hpp>
 #include <UserMessages.hpp>
 #include <Util.hpp>
 
@@ -121,14 +121,14 @@ void getDocumentPathAndURL(const std::string& docFilename, std::string& document
 }
 
 inline
-void sendTextFrame(Poco::Net::WebSocket& socket, const std::string& string, const std::string& name = "")
+void sendTextFrame(LOOLWebSocket& socket, const std::string& string, const std::string& name = "")
 {
     std::cerr << name << "Sending " << string.size() << " bytes: " << LOOLProtocol::getAbbreviatedMessage(string) << std::endl;
     socket.sendFrame(string.data(), string.size());
 }
 
 inline
-void sendTextFrame(const std::shared_ptr<Poco::Net::WebSocket>& socket, const std::string& string, const std::string& name = "")
+void sendTextFrame(const std::shared_ptr<LOOLWebSocket>& socket, const std::string& string, const std::string& name = "")
 {
     sendTextFrame(*socket, string, name);
 }
@@ -160,7 +160,7 @@ std::string getTestServerURI()
 }
 
 inline
-int getErrorCode(Poco::Net::WebSocket& ws, std::string& message)
+int getErrorCode(LOOLWebSocket& ws, std::string& message)
 {
     int flags = 0;
     int bytes = 0;
@@ -187,7 +187,7 @@ int getErrorCode(Poco::Net::WebSocket& ws, std::string& message)
 }
 
 inline
-std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string& prefix, std::string name = "", const size_t timeoutMs = 10000)
+std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefix, std::string name = "", const size_t timeoutMs = 10000)
 {
     name = name + '[' + prefix + "] ";
     try
@@ -289,7 +289,7 @@ std::vector<char> getResponseMessage(Poco::Net::WebSocket& ws, const std::string
 }
 
 inline
-std::vector<char> getResponseMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& prefix, const std::string& name = "", const size_t timeoutMs = 10000)
+std::vector<char> getResponseMessage(const std::shared_ptr<LOOLWebSocket>& ws, const std::string& prefix, const std::string& name = "", const size_t timeoutMs = 10000)
 {
     return getResponseMessage(*ws, prefix, name, timeoutMs);
 }
@@ -319,7 +319,7 @@ std::string assertNotInResponse(T& ws, const std::string& prefix, const std::str
 }
 
 inline
-bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bool isView = true)
+bool isDocumentLoaded(LOOLWebSocket& ws, const std::string& name = "", bool isView = true)
 {
     const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
     const auto message = getResponseString(ws, prefix, name);
@@ -327,7 +327,7 @@ bool isDocumentLoaded(Poco::Net::WebSocket& ws, const std::string& name = "", bo
 }
 
 inline
-bool isDocumentLoaded(std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& name = "", bool isView = true)
+bool isDocumentLoaded(std::shared_ptr<LOOLWebSocket>& ws, const std::string& name = "", bool isView = true)
 {
     return isDocumentLoaded(*ws, name, isView);
 }
@@ -337,7 +337,7 @@ bool isDocumentLoaded(std::shared_ptr<Poco::Net::WebSocket>& ws, const std::stri
 // The result, it is mostly time outs to get messages in the unit test and it could fail.
 // connectLOKit ensures the websocket is connected to a kit process.
 inline
-std::shared_ptr<Poco::Net::WebSocket>
+std::shared_ptr<LOOLWebSocket>
 connectLOKit(const Poco::URI& uri,
              Poco::Net::HTTPRequest& request,
              Poco::Net::HTTPResponse& response,
@@ -349,7 +349,7 @@ connectLOKit(const Poco::URI& uri,
         std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
 
         std::cerr << name << "Connecting... " << std::endl;
-        auto ws = std::make_shared<Poco::Net::WebSocket>(*session, request, response);
+        auto ws = std::make_shared<LOOLWebSocket>(*session, request, response);
         getResponseMessage(ws, "statusindicator: ready", name);
 
         return ws;
@@ -360,7 +360,7 @@ connectLOKit(const Poco::URI& uri,
 }
 
 inline
-std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, const std::string& name = "", bool isView = true)
+std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, const std::string& name = "", bool isView = true)
 {
     try
     {
@@ -385,7 +385,7 @@ std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const Poco::URI& uri, 
 }
 
 inline
-std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const std::string& docFilename, const Poco::URI& uri, const std::string& name = "", bool isView = true)
+std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const std::string& docFilename, const Poco::URI& uri, const std::string& name = "", bool isView = true)
 {
     try
     {
@@ -404,7 +404,7 @@ std::shared_ptr<Poco::Net::WebSocket> loadDocAndGetSocket(const std::string& doc
 
 inline
 void SocketProcessor(const std::string& name,
-                     const std::shared_ptr<Poco::Net::WebSocket>& socket,
+                     const std::shared_ptr<LOOLWebSocket>& socket,
                      const std::function<bool(const std::string& msg)>& handler,
                      const size_t timeoutMs = 10000)
 {
@@ -457,13 +457,13 @@ void parseDocSize(const std::string& message, const std::string& type,
 }
 
 inline
-std::vector<char> getTileMessage(Poco::Net::WebSocket& ws, const std::string& name = "")
+std::vector<char> getTileMessage(LOOLWebSocket& ws, const std::string& name = "")
 {
     return getResponseMessage(ws, "tile", name);
 }
 
 inline
-std::vector<char> assertTileMessage(Poco::Net::WebSocket& ws, const std::string& name = "")
+std::vector<char> assertTileMessage(LOOLWebSocket& ws, const std::string& name = "")
 {
     const auto response = getTileMessage(ws, name);
 
@@ -482,7 +482,7 @@ std::vector<char> assertTileMessage(Poco::Net::WebSocket& ws, const std::string&
 }
 
 inline
-std::vector<char> assertTileMessage(const std::shared_ptr<Poco::Net::WebSocket>& ws, const std::string& name = "")
+std::vector<char> assertTileMessage(const std::shared_ptr<LOOLWebSocket>& ws, const std::string& name = "")
 {
     return assertTileMessage(*ws, name);
 }
@@ -521,25 +521,25 @@ inline int getCharKey(char ch, SpecialKey specialKeys)
     return result | specialKeys;
 }
 
-inline void sendKeyEvent(Poco::Net::WebSocket& socket, const char* type, int chr, int key, const std::string& testname = "")
+inline void sendKeyEvent(std::shared_ptr<LOOLWebSocket>& socket, const char* type, int chr, int key, const std::string& testname = "")
 {
     std::ostringstream ssIn;
     ssIn << "key type=" << type << " char=" << chr << " key=" << key;
     sendTextFrame(socket, ssIn.str(), testname);
 }
 
-inline void sendKeyPress(Poco::Net::WebSocket& socket, int chr, int key, const std::string& testname)
+inline void sendKeyPress(std::shared_ptr<LOOLWebSocket>& socket, int chr, int key, const std::string& testname)
 {
     sendKeyEvent(socket, "input", chr, key, testname);
     sendKeyEvent(socket, "up", chr, key, testname);
 }
 
-inline void sendChar(Poco::Net::WebSocket& socket, char ch, SpecialKey specialKeys=skNone, const std::string& testname = "")
+inline void sendChar(std::shared_ptr<LOOLWebSocket>& socket, char ch, SpecialKey specialKeys=skNone, const std::string& testname = "")
 {
     sendKeyPress(socket, getCharChar(ch, specialKeys), getCharKey(ch, specialKeys), testname);
 }
 
-inline void sendText(Poco::Net::WebSocket& socket, const std::string& text, const std::string& testname = "")
+inline void sendText(std::shared_ptr<LOOLWebSocket>& socket, const std::string& text, const std::string& testname = "")
 {
     for (char ch : text)
     {

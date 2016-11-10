@@ -21,11 +21,11 @@
 
 #include <Poco/Timestamp.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/Net/WebSocket.h>
 
 #include "Common.hpp"
 #include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
@@ -41,7 +41,7 @@ class UnitPrefork : public UnitWSD
     size_t _childDirty;
     std::mutex _mutex;
     std::condition_variable _cv;
-    std::vector< std::shared_ptr<Poco::Net::WebSocket> > _childSockets;
+    std::vector< std::shared_ptr<LOOLWebSocket> > _childSockets;
 
 public:
     UnitPrefork()
@@ -81,7 +81,7 @@ public:
         return true;
     }
 
-    virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket> &socket) override
+    virtual void newChild(const std::shared_ptr<LOOLWebSocket> &socket) override
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
@@ -286,7 +286,7 @@ public:
         }
     }
 
-    virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket> &ws,
+    virtual bool filterKitMessage(const std::shared_ptr<LOOLWebSocket> &ws,
                                   std::string &message) override
     {
         const auto token = LOOLProtocol::getFirstToken(message);

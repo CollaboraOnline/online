@@ -14,7 +14,7 @@
 #include <memory>
 #include <string>
 
-#include <Poco/Net/WebSocket.h>
+#include <LOOLWebSocket.hpp>
 
 class UnitBase;
 class UnitWSD;
@@ -139,7 +139,7 @@ public:
     /// Tweak the count of pre-spawned kits.
     virtual void preSpawnCount(int& /* numPrefork */) {}
     /// When a new child kit process reports
-    virtual void newChild(const std::shared_ptr<Poco::Net::WebSocket>& /* socket */) {}
+    virtual void newChild(const std::shared_ptr<LOOLWebSocket>& /* socket */) {}
     /// Intercept createStorage
     virtual bool createStorage(const Poco::URI& /* uri */,
                                const std::string& /* jailRoot */,
@@ -221,7 +221,7 @@ public:
     virtual void postFork() {}
 
     /// Kit got a message
-    virtual bool filterKitMessage(const std::shared_ptr<Poco::Net::WebSocket>& /* ws */,
+    virtual bool filterKitMessage(const std::shared_ptr<LOOLWebSocket>& /* ws */,
                                   std::string& /* message */)
     {
         return false;

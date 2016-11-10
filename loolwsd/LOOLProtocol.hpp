@@ -16,8 +16,9 @@
 #include <string>
 
 #include <Poco/Format.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
+
+#include <LOOLWebSocket.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -189,7 +190,7 @@ namespace LOOLProtocol
         return getAbbreviatedMessage(message.data(), message.size());
     }
 
-    // Return a string dump of a WebSocket frame: Its opcode, length, first line (if present),
+    // Return a string dump of a LOOLWebSocket frame: Its opcode, length, first line (if present),
     // flags.  For human-readable logging purposes. Format not guaranteed to be stable. Not to be
     // inspected programmatically.
     inline

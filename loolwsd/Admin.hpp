@@ -15,7 +15,6 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Net/HTTPServer.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Runnable.h>
 #include <Poco/Types.h>
 #include <Poco/Util/Timer.h>
@@ -23,6 +22,7 @@
 
 #include "AdminModel.hpp"
 #include "Log.hpp"
+#include <LOOLWebSocket.hpp>
 
 class Admin;
 
@@ -43,7 +43,7 @@ private:
 
 private:
     Admin* _admin;
-    std::shared_ptr<Poco::Net::WebSocket> _adminWs;
+    std::shared_ptr<LOOLWebSocket> _adminWs;
     int _sessionId;
     bool _isAuthenticated;
 };

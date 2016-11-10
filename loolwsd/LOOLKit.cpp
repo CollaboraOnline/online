@@ -40,7 +40,6 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/Socket.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/NotificationQueue.h>
 #include <Poco/Process.h>
 #include <Poco/Runnable.h>
@@ -55,6 +54,7 @@
 #include "LOKitHelper.hpp"
 #include "LOOLKit.hpp"
 #include "LOOLProtocol.hpp"
+#include <LOOLWebSocket.hpp>
 #include "LibreOfficeKit.hpp"
 #include "Log.hpp"
 #include "Png.hpp"
@@ -280,7 +280,7 @@ public:
              const std::string& docKey,
              const std::string& url,
              std::shared_ptr<TileQueue> tileQueue,
-             const std::shared_ptr<WebSocket>& ws)
+             const std::shared_ptr<LOOLWebSocket>& ws)
       : _loKit(loKit),
         _jailId(jailId),
         _docKey(docKey),
@@ -450,7 +450,7 @@ public:
         LOG_INF("setDocumentPassword returned");
     }
 
-    void renderTile(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
+    void renderTile(StringTokenizer& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
     {
         assert(ws && "Expected a non-null websocket.");
         auto tile = TileDesc::parse(tokens);
@@ -505,10 +505,10 @@ public:
         }
 
         LOG_TRC("Sending render-tile response (" + std::to_string(output.size()) + " bytes) for: " + response);
-        IoUtil::sendLargeFrame(ws, output, WebSocket::FRAME_BINARY);
+        ws->sendFrame(output.data(), output.size(), WebSocket::FRAME_BINARY);
     }
 
-    void renderCombinedTiles(StringTokenizer& tokens, const std::shared_ptr<Poco::Net::WebSocket>& ws)
+    void renderCombinedTiles(StringTokenizer& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
     {
         assert(ws && "Expected a non-null websocket.");
         auto tileCombined = TileCombined::parse(tokens);
@@ -605,7 +605,7 @@ public:
         std::copy(tileMsg.begin(), tileMsg.end(), response.begin());
         std::copy(output.begin(), output.end(), response.begin() + tileMsg.size());
 
-        IoUtil::sendLargeFrame(ws, response, WebSocket::FRAME_BINARY);
+        ws->sendFrame(response.data(), response.size(), WebSocket::FRAME_BINARY);
     }
 
     bool sendTextFrame(const std::string& message) override
@@ -618,7 +618,7 @@ public:
                 return false;
             }
 
-            IoUtil::sendLargeFrame(_ws, message.data(), message.size());
+            _ws->sendFrame(message.data(), message.size());
             return true;
         }
         catch (const Exception& exc)
@@ -1244,7 +1244,7 @@ private:
 
     std::shared_ptr<lok::Document> _loKitDocument;
     std::shared_ptr<TileQueue> _tileQueue;
-    std::shared_ptr<WebSocket> _ws;
+    std::shared_ptr<LOOLWebSocket> _ws;
 
     // Document password provided
     std::string _docPassword;
@@ -1462,7 +1462,7 @@ void lokit_main(const std::string& childRoot,
 
         HTTPRequest request(HTTPRequest::HTTP_GET, requestUrl);
         HTTPResponse response;
-        auto ws = std::make_shared<WebSocket>(cs, request, response);
+        auto ws = std::make_shared<LOOLWebSocket>(cs, request, response);
         ws->setReceiveTimeout(0);
 
         auto queue = std::make_shared<TileQueue>();

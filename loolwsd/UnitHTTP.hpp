@@ -18,10 +18,10 @@
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/SocketAddress.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Version.h>
 
 #include "Common.hpp"
+#include <LOOLWebSocket.hpp>
 
 using Poco::Net::SocketAddress;
 using Poco::Net::HTTPServerParams;
@@ -121,7 +121,7 @@ namespace UnitHTTP
 class UnitWebSocket
 {
     Poco::Net::HTTPClientSession* _session;
-    Poco::Net::WebSocket* _socket;
+    LOOLWebSocket* _socket;
 
 public:
     /// Get a websocket connected for a given URL
