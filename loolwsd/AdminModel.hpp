@@ -176,7 +176,7 @@ private:
 
     unsigned getTotalActiveViews();
 
-    std::string getDocuments();
+    std::string getDocuments() const;
 
 private:
     std::map<int, Subscriber> _subscribers;
