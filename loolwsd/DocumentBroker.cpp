@@ -12,7 +12,9 @@
 
 #include <cassert>
 #include <fstream>
+#include <sstream>
 
+#include <Poco/JSON/Object.h>
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
 #include <Poco/StringTokenizer.h>
@@ -30,6 +32,7 @@
 
 using namespace LOOLProtocol;
 
+using Poco::JSON::Object;
 using Poco::StringTokenizer;
 
 void ChildProcess::socketProcessor()
@@ -238,7 +241,13 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
 
         if (!wopifileinfo._postMessageOrigin.empty())
         {
-            session->sendTextFrame("wopi: postmessageorigin " + wopifileinfo._postMessageOrigin);
+            // Construct a JSON containing relevant WOPI host properties
+            Object::Ptr wopiInfo = new Object();
+            wopiInfo->set("PostMessageOrigin", wopifileinfo._postMessageOrigin);
+            std::ostringstream ossWopiInfo;
+            wopiInfo->stringify(ossWopiInfo);
+
+            session->sendTextFrame("wopi: " + ossWopiInfo.str());
         }
 
         // Mark the session as 'Document owner' if WOPI hosts supports it

@@ -363,6 +363,13 @@ perm: <permission>
     <permission> can be one of 'edit', 'view', 'readonly'. Client must
     change the UI accordingly (disabling buttons etc.)
 
+wopi: <JSON>
+
+     Sent only in case storage is WOPI. Contains WOPI related
+     capabilities/information for loleaflet to act accordingly.
+
+     Properties mentioned:
+     PostMessageOrigin: See WOPI specs for more information
 
 child -> parent
 ===============
