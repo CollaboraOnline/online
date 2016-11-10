@@ -1065,15 +1065,14 @@ public:
     static void handleClientRequest(HTTPServerRequest& request, HTTPServerResponse& response)
     {
         const auto id = LOOLWSD::GenSessionId();
+        Util::setThreadName("client_ws_" + id);
+
+        LOG_DBG("Thread started.");
 
         Poco::URI requestUri(request.getURI());
         LOG_DBG("Handling: " << request.getURI());
 
         StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-
-        Util::setThreadName("client_ws_" + id);
-
-        LOG_DBG("Thread started.");
 
         bool responded = false;
         try
@@ -1386,19 +1385,19 @@ ServerSocket* findFreeMasterPort(int &nMasterPortNumber)
 
 static inline std::string getLaunchURI()
 {
-    std::string aAbsTopSrcDir = Poco::Path(Application::instance().commandPath()).parent().toString();
-    aAbsTopSrcDir = Poco::Path(aAbsTopSrcDir).absolute().toString();
+    const std::string aAbsTopSrcDir = Poco::Path(Application::instance().commandPath()).parent().toString();
 
-    std::string aLaunchURI("    ");
-    aLaunchURI += ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://");
-    aLaunchURI += LOOLWSD_TEST_HOST ":";
-    aLaunchURI += std::to_string(ClientPortNumber);
-    aLaunchURI += LOOLWSD_TEST_LOLEAFLET_UI;
-    aLaunchURI += "?file_path=file://";
-    aLaunchURI += aAbsTopSrcDir;
-    aLaunchURI += LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH;
+    std::ostringstream oss;
+    oss << "    ";
+    oss << ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://");
+    oss << LOOLWSD_TEST_HOST ":";
+    oss << ClientPortNumber;
+    oss << LOOLWSD_TEST_LOLEAFLET_UI;
+    oss << "?file_path=file://";
+    oss << Poco::Path(aAbsTopSrcDir).absolute().toString();
+    oss << LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH;
 
-    return aLaunchURI;
+    return oss.str();
 }
 
 } // anonymous namespace
