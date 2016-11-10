@@ -67,7 +67,7 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
                      const std::function<void()>& closeFrame,
                      const std::function<bool()>& stopPredicate)
 {
-    Log::info("SocketProcessor starting.");
+    LOG_INF("SocketProcessor starting.");
 
     // Timeout given is in microseconds.
     static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
@@ -86,7 +86,7 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
             stop = stopPredicate();
             if (stop)
             {
-                Log::info("Termination flagged. Finishing.");
+                LOG_INF("Termination flagged. Finishing.");
                 break;
             }
 
@@ -104,7 +104,7 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
             }
             catch (const Poco::TimeoutException&)
             {
-                Log::debug("SocketProcessor: Spurious TimeoutException, ignored");
+                LOG_DBG("SocketProcessor: Spurious TimeoutException, ignored");
                 continue;
             }
             payload.resize(n > 0 ? n : 0);
@@ -112,7 +112,7 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
             if (n <= 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
             {
                 closeFrame();
-                Log::warn("Connection closed.");
+                LOG_WRN("Connection closed.");
                 break;
             }
 
@@ -129,7 +129,7 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
                     if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
                     {
                         closeFrame();
-                        Log::warn("Connection closed while reading multiframe message.");
+                        LOG_WRN("Connection closed while reading multiframe message.");
                         break;
                     }
 
@@ -162,7 +162,7 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
             if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
             {
                 closeFrame();
-                Log::warn("Connection closed.");
+                LOG_WRN("Connection closed.");
                 break;
             }
 
@@ -172,30 +172,29 @@ void SocketProcessor(const std::shared_ptr<WebSocket>& ws,
 
             if (!success)
             {
-                Log::info("Socket handler flagged to finish.");
+                LOG_INF("Socket handler flagged to finish.");
                 break;
             }
         }
 
-        Log::info() << "SocketProcessor finishing. stop: " << (stop ? "true" : "false")
-                     << ", n: " << n
-                     << ", payload size: " << payload.size()
-                     << ", flags: " << std::hex << flags << Log::end;
+        LOG_INF("SocketProcessor finishing. stop: " << (stop ? "true" : "false") <<
+                ", n: " << n << ", payload size: " << payload.size() <<
+                ", flags: " << std::hex << flags);
 
         if ((flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE && payload.size() > 1)
         {
             std::string msg;
             Poco::URI::encode(std::string(payload.data(), payload.size()), "", msg);
-            Log::warn("Last message (" + std::to_string(payload.size()) +
-                      " bytes) will not be processed: [" + msg + "].");
+            LOG_WRN("Last message (" << payload.size() <<
+                    " bytes) will not be processed: [" << msg << "].");
         }
     }
     catch (const std::exception& exc)
     {
-        Log::error("SocketProcessor: exception: " + std::string(exc.what()));
+        LOG_ERR("SocketProcessor: exception: " << exc.what());
     }
 
-    Log::info("SocketProcessor finished.");
+    LOG_INF("SocketProcessor finished.");
 }
 
 void shutdownWebSocket(const std::shared_ptr<Poco::Net::WebSocket>& ws)
@@ -212,7 +211,8 @@ void shutdownWebSocket(const std::shared_ptr<Poco::Net::WebSocket>& ws)
     }
     catch (const Poco::Exception& exc)
     {
-        Log::warn("Util::shutdownWebSocket: Exception: " + exc.displayText() + (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+        LOG_WRN("Util::shutdownWebSocket: Exception: " << exc.displayText() <<
+                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
     }
 }
 
@@ -221,7 +221,7 @@ ssize_t writeToPipe(int pipe, const char* buffer, ssize_t size)
     ssize_t count = 0;
     while(true)
     {
-        Log::trace("Writing to pipe. Data: [" + Util::formatLinesForLog(std::string(buffer, size)) + "].");
+        LOG_TRC("Writing to pipe. Data: [" << Util::formatLinesForLog(std::string(buffer, size)) << "].");
         const auto bytes = write(pipe, buffer + count, size - count);
         if (bytes < 0)
         {
@@ -270,11 +270,11 @@ void sendLargeFrame(const std::shared_ptr<Poco::Net::WebSocket>& ws, const char 
     {
         const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
         ws->sendFrame(nextmessage.data(), nextmessage.size());
-        Log::debug("Message is long, sent " + nextmessage);
+        LOG_DBG("Message is long, sent " << nextmessage);
     }
 
     ws->sendFrame(message, length, flags);
-    Log::debug("Sent frame: " + LOOLProtocol::getAbbreviatedMessage(std::string(message, length)));
+    LOG_DBG("Sent frame: " << LOOLProtocol::getAbbreviatedMessage(std::string(message, length)));
 }
 
 /// Reads a single line from a pipe.
@@ -289,8 +289,8 @@ int PipeReader::readLine(std::string& line,
         // We have a line cached, return it.
         line += std::string(_data.data(), endOfLine);
         _data.erase(0, endOfLine - _data.data() + 1); // Including the '\n'.
-        Log::trace() << "Read existing line from pipe: " << _name << ", line: ["
-                     << line << "], data: [" << Util::formatLinesForLog(_data) << "]." << Log::end;
+        LOG_TRC("Read existing line from pipe: " << _name << ", line: [" <<
+                line << "], data: [" << Util::formatLinesForLog(_data) << "].");
         return 1;
     }
 
@@ -301,7 +301,7 @@ int PipeReader::readLine(std::string& line,
     {
         if (stopPredicate())
         {
-            Log::info() << "Stop requested for pipe: " << _name << '.' << Log::end;
+            LOG_INF("Stop requested for pipe: " << _name << '.');
             return -1;
         }
 
@@ -324,7 +324,7 @@ int PipeReader::readLine(std::string& line,
         {
             char buffer[READ_BUFFER_SIZE];
             const auto bytes = readFromPipe(_pipe, buffer, sizeof(buffer));
-            Log::trace() << "readFromPipe for pipe: " << _name << " returned: " << bytes << Log::end;
+            LOG_TRC("readFromPipe for pipe: " << _name << " returned: " << bytes);
             if (bytes < 0)
             {
                 return -1;
@@ -338,15 +338,15 @@ int PipeReader::readLine(std::string& line,
                 const auto tail = std::string(static_cast<const char*>(buffer), endOfLine);
                 line += tail;
                 _data = std::string(endOfLine + 1, bytes - tail.size() - 1); // Exclude the '\n'.
-                Log::trace() << "Read line from pipe: " << _name << ", line: [" << line
-                             << "], data: [" << Util::formatLinesForLog(_data) << "]." << Log::end;
+                LOG_TRC("Read line from pipe: " << _name << ", line: [" << line <<
+                        "], data: [" << Util::formatLinesForLog(_data) << "].");
                 return 1;
             }
             else
             {
                 // More data, keep going.
                 _data += std::string(buffer, bytes);
-                Log::trace() << "data appended to pipe: " << _name << ", data: " << _data << Log::end;
+                LOG_TRC("data appended to pipe: " << _name << ", data: " << _data);
             }
         }
         else if (pipe.revents & (POLLERR | POLLHUP | POLLNVAL))
