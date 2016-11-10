@@ -346,17 +346,17 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
         const auto userNameVar = getOrWarn(object,"UserFriendlyName");
         userName = (userNameVar.isString() ? userNameVar.toString() : "anonymous");
         const auto canWriteVar = getOrWarn(object, "UserCanWrite");
-        canWrite = canWriteVar.isString() ? (canWriteVar.toString() == "true") : false;
+        canWrite = canWriteVar.isBoolean() ? canWriteVar.convert<bool>() : false;
         const auto postMessageOriginVar = getOrWarn(object, "PostMessageOrigin");
         postMessageOrigin = postMessageOriginVar.isString() ? postMessageOriginVar.toString() : "";
         const auto hidePrintOptionVar = getOrWarn(object, "HidePrintOption");
-        hidePrintOption = hidePrintOptionVar.isString() ? (hidePrintOptionVar.toString() == "true") : false;
+        hidePrintOption = hidePrintOptionVar.isBoolean() ? hidePrintOptionVar.convert<bool>() : false;
         const auto hideSaveOptionVar = getOrWarn(object, "HideSaveOption");
-        hideSaveOption = hideSaveOptionVar.isString() ? (hideSaveOptionVar.toString() == "true") : false;
+        hideSaveOption = hideSaveOptionVar.isBoolean() ? hideSaveOptionVar.convert<bool>() : false;
         const auto hideExportOptionVar = getOrWarn(object, "HideExportOption");
-        hideExportOption = hideExportOptionVar.isString() ? (hideExportOptionVar.toString() == "true") : false;
+        hideExportOption = hideExportOptionVar.isBoolean() ? hideExportOptionVar.convert<bool>() : false;
         const auto enableOwnerTerminationVar = getOrWarn(object, "EnableOwnerTermination");
-        enableOwnerTermination = enableOwnerTerminationVar.isString() ? (enableOwnerTerminationVar.toString() == "true") : false;
+        enableOwnerTermination = enableOwnerTerminationVar.isBoolean() ? enableOwnerTerminationVar.convert<bool>() : false;
     }
     else
         Log::error("WOPI::CheckFileInfo is missing JSON payload");
