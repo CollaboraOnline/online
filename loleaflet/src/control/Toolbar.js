@@ -119,6 +119,20 @@ L.Map.include({
 		}
 	},
 
+	save: function(dontTerminateEdit, dontSaveIfUnmodified) {
+		var args = {
+			DontTerminateEdit: {
+				type: 'boolean',
+				value: !!dontTerminateEdit
+			},
+			DontSaveIfUnmodified: {
+				type: 'boolean',
+				value: !!dontSaveIfUnmodified
+			}
+		};
+		this.sendUnoCommand('.uno:Save', args);
+	},
+
 	sendUnoCommand: function (command, json) {
 		if (this._permission === 'edit') {
 			this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));

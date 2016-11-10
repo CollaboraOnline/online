@@ -430,7 +430,7 @@ L.Map.Keyboard = L.Handler.extend({
 			this._map.print();
 			return true;
 		case 83: // s
-			this._map._socket.sendMessage('uno .uno:Save {\"DontTerminateEdit\":{\"type\":\"boolean\",\"value\":true}, \"DontSaveIfUnmodified\":{\"type\":\"boolean\",\"value\":true}}');
+			this._map.save(true, true);
 			return true;
 		case 86: // v
 		case 118: // v (Safari)
