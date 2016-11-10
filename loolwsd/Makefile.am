@@ -100,6 +100,7 @@ noinst_HEADERS = Admin.hpp \
                  LOOLKit.hpp \
                  LOOLProtocol.hpp \
                  LOOLSession.hpp \
+                 LOOLWebSocket.hpp \
                  LOOLWSD.hpp \
                  ClientSession.hpp \
                  PrisonerSession.hpp \
