@@ -64,6 +64,17 @@ L.Map.WOPI = L.Handler.extend({
 				this._map.downloadAs(filename + '.' + format, format);
 			}
 		}
+		else if (msg.MessageId === 'Get_Export_Formats') {
+			var exportFormatsResp = [];
+			for (var idx in this._map._docLayer._exportFormats) {
+				exportFormatsResp.push({
+					Label: this._map._docLayer._exportFormats[idx].label,
+					Format: this._map._docLayer._exportFormats[idx].format
+				});
+			}
+
+			this._postMessage({msgId: 'Get_Export_Formats_Resp', args: exportFormatsResp});
+		}
 	},
 
 	_postMessage: function(e) {

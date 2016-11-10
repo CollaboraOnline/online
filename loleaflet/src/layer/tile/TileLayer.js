@@ -240,6 +240,14 @@ L.TileLayer = L.GridLayer.extend({
 		return events;
 	},
 
+	registerExportFormat: function(label, format) {
+		if (!this._exportFormats) {
+			this._exportFormats = [];
+		}
+
+		this._exportFormats.push({label: label, format: format});
+	},
+
 	setUrl: function (url, noRedraw) {
 		this._url = url;
 
