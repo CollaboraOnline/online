@@ -29,7 +29,7 @@ L.Map.WOPI = L.Handler.extend({
 		var msg = JSON.parse(e.data);
 		if (msg.MessageId === 'Get_Views') {
 			var getMembersRespVal = [];
-			for (var viewInfoIdx in this._map.viewInfo) {
+			for (var viewInfoIdx in this._map._viewInfo) {
 				getMembersRespVal.push({
 					ViewId: viewInfoIdx,
 					UserName: this._map._viewInfo[viewInfoIdx].username,
@@ -38,7 +38,7 @@ L.Map.WOPI = L.Handler.extend({
 				});
 			}
 
-			this._postMessage('Get_Views_Resp', getMembersRespVal);
+			this._postMessage({msgId: 'Get_Views_Resp', args: getMembersRespVal});
 		}
 		else if (msg.MessageId === 'Close_Session') {
 			this._map._socket.sendMessage('closedocument');
