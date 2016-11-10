@@ -320,6 +320,9 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
     bool canWrite = false;
     bool enableOwnerTermination = false;
     std::string postMessageOrigin;
+    bool hidePrintOption = false;
+    bool hideSaveOption = false;
+    bool hideExportOption = false;
     std::string resMsg;
     Poco::StreamCopier::copyToString(rs, resMsg);
 
@@ -346,6 +349,12 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
         canWrite = canWriteVar.isString() ? (canWriteVar.toString() == "true") : false;
         const auto postMessageOriginVar = getOrWarn(object, "PostMessageOrigin");
         postMessageOrigin = postMessageOriginVar.isString() ? postMessageOriginVar.toString() : "";
+        const auto hidePrintOptionVar = getOrWarn(object, "HidePrintOption");
+        hidePrintOption = hidePrintOptionVar.isString() ? (hidePrintOptionVar.toString() == "true") : false;
+        const auto hideSaveOptionVar = getOrWarn(object, "HideSaveOption");
+        hideSaveOption = hideSaveOptionVar.isString() ? (hideSaveOptionVar.toString() == "true") : false;
+        const auto hideExportOptionVar = getOrWarn(object, "HideExportOption");
+        hideExportOption = hideExportOptionVar.isString() ? (hideExportOptionVar.toString() == "true") : false;
         const auto enableOwnerTerminationVar = getOrWarn(object, "EnableOwnerTermination");
         enableOwnerTermination = enableOwnerTerminationVar.isString() ? (enableOwnerTerminationVar.toString() == "true") : false;
     }
@@ -358,7 +367,7 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
         _fileInfo = FileInfo({filename, ownerId, Poco::Timestamp(), size});
     }
 
-    return WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, enableOwnerTermination, callDuration});
+    return WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, callDuration});
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content

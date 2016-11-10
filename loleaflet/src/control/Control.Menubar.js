@@ -463,6 +463,15 @@ L.Control.Menubar = L.Control.extend({
 				continue;
 			}
 
+			if (menu[i].id === 'print' && this._map['wopi'].HidePrintOption)
+				continue;
+
+			if (menu[i].id === 'save' && this._map['wopi'].HideSaveOption)
+				continue;
+
+			if (menu[i].id === 'downloadas' && this._map['wopi'].HideExportOption)
+				continue;
+
 			var liItem = L.DomUtil.create('li', '');
 			var aItem = L.DomUtil.create('a', '', liItem);
 			aItem.innerHTML = menu[i].name;
@@ -470,6 +479,9 @@ L.Control.Menubar = L.Control.extend({
 			if (menu[i].type === 'menu') {
 				var ulItem = L.DomUtil.create('ul', '', liItem);
 				var subitemList = this._createMenu(menu[i].menu);
+				if (!subitemList.length) {
+					continue;
+				}
 				for (var j in subitemList) {
 					ulItem.appendChild(subitemList[j]);
 				}

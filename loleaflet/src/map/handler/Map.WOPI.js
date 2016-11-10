@@ -6,6 +6,9 @@ L.Map.WOPI = L.Handler.extend({
 
 	PostMessageOrigin: false,
 	DocumentLoadedTime: false,
+	HidePrintOption: false,
+	HideSaveOption: false,
+	HideExportOption: false,
 
 	initialize: function(map) {
 		this._map = map;

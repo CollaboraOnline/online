@@ -188,6 +188,10 @@ L.Socket = L.Class.extend({
 				this._map.fire('postMessage', {msgId: 'App_LoadingStatus', args: {'DocumentLoadedTime': this._map['wopi'].DocumentLoadedTime}});
 			}
 
+			this._map['wopi'].HidePrintOption = !!wopiInfo['HidePrintOption'];
+			this._map['wopi'].HideSaveOption = !!wopiInfo['HideSaveOption'];
+			this._map['wopi'].HideExportOption = !!wopiInfo['HideExportOption'];
+
 			return;
 		}
 		else if (textMsg.startsWith('close: ')) {
