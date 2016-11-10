@@ -469,8 +469,17 @@ L.Control.Menubar = L.Control.extend({
 			if (menu[i].id === 'save' && this._map['wopi'].HideSaveOption)
 				continue;
 
-			if (menu[i].id === 'downloadas' && this._map['wopi'].HideExportOption)
-				continue;
+			// Keep track of all 'downloadas-' options and register them as
+			// export formats with docLayer which can then be publicly accessed unlike
+			// this Menubar control for which there doesn't seem to be any easy way
+			// to get access to.
+			if (menu[i].id && menu[i].id.startsWith('downloadas-')) {
+				var format = menu[i].id.substring('downloadas-'.length);
+				this._map._docLayer.registerExportFormat(menu[i].name, format);
+
+				if (this._map['wopi'].HideExportOption)
+					continue;
+			}
 
 			var liItem = L.DomUtil.create('li', '');
 			var aItem = L.DomUtil.create('a', '', liItem);
