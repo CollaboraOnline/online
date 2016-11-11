@@ -1123,11 +1123,11 @@ public:
                 try
                 {
                     // First, setup WS options.
-                    // FIXME HACK: This needs a bit deeper research; for the
-                    // moment we block with HTTP because non-blocking causes
-                    // problems; maybe we need that for HTTPS too - to be
-                    // tested
-                    ws->setBlocking(!LOOLWSD::isSSLEnabled());
+                    // We need blocking here, because the POCO's
+                    // implementation of handling of non-blocking in
+                    // websockes in broken; essentially it leads to
+                    // sending incomplete frames.
+                    ws->setBlocking(true);
                     ws->setSendTimeout(WS_SEND_TIMEOUT_MS * 1000);
                     std::string decodedUri;
                     URI::decode(reqPathTokens[1], decodedUri);
