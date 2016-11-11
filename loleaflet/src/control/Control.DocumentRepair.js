@@ -100,13 +100,6 @@ L.Control.DocumentRepair = L.Control.extend({
 		this._container.style.visibility = '';
 	},
 
-	isVisible: function () {
-		if (!this._map) {
-			return false;
-		}
-		var corner = this._map._controlCorners[this.options.position];
-		return corner.hasChildNodes();
-	},
 
 	_selectRow: function (row) {
 		if (this._selected) {
