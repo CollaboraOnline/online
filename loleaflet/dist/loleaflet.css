@@ -38,3 +38,17 @@ body {
     font-size: 12px !important;
     font-weight: normal !important;
 }
+
+.loleaflet-character {
+	table-layout: fixed;
+	font: 17px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+
+.loleaflet-character td {
+	width: 20px;
+}
+
+.loleaflet-controls {
+	margin-right: 10px;
+}

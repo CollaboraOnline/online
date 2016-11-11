@@ -223,6 +223,11 @@ function onClick(id, item, subItem) {
 		map.fire('postMessage', {msgId: 'UI_Close'});
 		map.remove();
 	}
+	else if (id === 'specialcharacter') {
+		var fontList = $('.fonts-select option');
+		var selectedIndex = $('.fonts-select').prop('selectedIndex');
+		map._docLayer._onSpecialChar(fontList, selectedIndex);
+	}
 }
 
 function insertTable() {
@@ -373,6 +378,7 @@ $(function () {
 			{type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table')},
 			{type: 'button',  id: 'annotation', img: 'annotation', hint: _('Insert comment'), uno: 'InsertAnnotation'},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _('Insert graphic')},
+			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _('Special Character')},
 			{type: 'html', id: 'right'},
 			{type: 'button',  id: 'more', img: 'more', hint: _('More')},
 			{type: 'button',  id: 'close',  img: 'closedoc', hint: _('Close document'), hidden: true}

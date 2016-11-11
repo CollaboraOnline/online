@@ -604,6 +604,18 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_onSpecialChar: function(fontList, selectedIndex) {
+		if (!this._specialChar) {
+			this._specialChar = L.control.characterMap();
+		}
+		if (!this._specialChar.isVisible()) {
+			this._specialChar.addTo(this._map);
+			this._specialChar.fillFontNames(fontList, selectedIndex);
+			this._map.enable(false);
+			this._specialChar.show();
+		}
+	},
+
 	_onMousePointerMsg: function (textMsg) {
 		textMsg = textMsg.substring(14); // "mousepointer: "
 		textMsg = L.Cursor.getCustomCursor(textMsg) || textMsg;
