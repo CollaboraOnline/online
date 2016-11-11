@@ -769,6 +769,10 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_addView: function(viewId, userid, username, color) {
+		if (color === 0 && this._map.getDocType() !== 'text') {
+			color = L.LOUtil.getViewIdColor(viewId);
+		}
+
 		this._map.addView(viewId, userid, username, color);
 
 		//TODO: We can initialize color and other properties here.
