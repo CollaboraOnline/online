@@ -1,0 +1,195 @@
+From ece4326de0ba7f960cf28a0db458efd68db469b3 Mon Sep 17 00:00:00 2001
+From: Michael Meeks <michael.meeks@collabora.com>
+Date: Fri, 11 Nov 2016 16:44:00 +0000
+Subject: [PATCH] More proto renaming.
+
+---
+ loolwsd/Makefile.am  | 142 ++++++++++++++++++++++++++-------------------------
+ loolwsd/configure.ac |   2 +-
+ 3 files changed, 132 insertions(+), 70 deletions(-)
+ create mode 100755 rename.sh
+
+diff --git a/loolwsd/Makefile.am b/loolwsd/Makefile.am
+index 9ab1f10..7e2600c 100644
+--- a/loolwsd/Makefile.am
++++ b/loolwsd/Makefile.am
+@@ -30,92 +30,96 @@ AM_LDFLAGS = -pthread -Wl,-E
+ AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
+ AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
+ 
+-shared_sources = ChildSession.cpp \
+-                 IoUtil.cpp \
+-                 Log.cpp \
+-                 LOOLProtocol.cpp \
+-                 LOOLSession.cpp \
+-                 MessageQueue.cpp \
+-                 Unit.cpp \
+-                 UnitHTTP.cpp \
+-                 Util.cpp
+-
+-loolwsd_SOURCES = Admin.cpp \
+-                  AdminModel.cpp \
+-                  Auth.cpp \
+-                  DocumentBroker.cpp \
+-                  LOOLWSD.cpp \
+-                  ClientSession.cpp \
+-                  FileServer.cpp \
+-                  PrisonerSession.cpp \
+-                  Storage.cpp \
+-                  TileCache.cpp \
++shared_sources = common/IoUtil.cpp \
++                 common/Log.cpp \
++                 common/LOOLProtocol.cpp \
++                 common/LOOLSession.cpp \
++                 common/MessageQueue.cpp \
++                 common/Unit.cpp \
++                 common/UnitHTTP.cpp \
++                 common/Util.cpp
++
++loolwsd_SOURCES = wsd/Admin.cpp \
++                  wsd/AdminModel.cpp \
++                  wsd/Auth.cpp \
++                  wsd/DocumentBroker.cpp \
++                  wsd/LOOLWSD.cpp \
++                  wsd/ClientSession.cpp \
++                  wsd/FileServer.cpp \
++                  wsd/PrisonerSession.cpp \
++                  wsd/Storage.cpp \
++                  wsd/TileCache.cpp \
+                   $(shared_sources)
+ 
+ noinst_PROGRAMS = connect \
+                   lokitclient \
+                   loolforkit-nocaps
+ 
+-connect_SOURCES = Connect.cpp \
+-                  Log.cpp \
+-                  LOOLProtocol.cpp \
+-                  Util.cpp
++connect_SOURCES = tools/Connect.cpp \
++                  common/Log.cpp \
++                  common/LOOLProbtocol.cpp \
++                  common/Util.cpp
+ 
+-lokitclient_SOURCES = IoUtil.cpp \
+-                      Log.cpp \
+-                      LOKitClient.cpp \
+-                      LOOLProtocol.cpp \
+-                      Util.cpp
++lokitclient_SOURCES = common/IoUtil.cpp \
++                      common/Log.cpp \
++                      tools/KitClient.cpp \
++                      common/Protocol.cpp \
++                      common/Util.cpp
+ 
+-loolforkit_SOURCES = LOOLForKit.cpp \
+-                     LOOLKit.cpp \
++loolforkit_SOURCES = kit/ChildSession.cpp \
++                     kit/ForKit.cpp \
++                     kit/Kit.cpp \
+                      $(shared_sources)
+ 
+ # build a binary with no caps to help debugging
+ loolforkit_nocaps_SOURCES = $(loolforkit_SOURCES)
+ 
+-loolmount_SOURCES = loolmount.c
++loolmount_SOURCES = tools/mount.c
+ 
+-loolmap_SOURCES = loolmap.c
++loolmap_SOURCES = tools/map.c
+ 
+-looltool_SOURCES = LOOLTool.cpp
++looltool_SOURCES = tools/Tool.cpp
+ 
+ loolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\"
+-loolstress_SOURCES = LOOLStress.cpp \
+-                     LOOLProtocol.cpp \
+-		     Log.cpp
+-
+-noinst_HEADERS = Admin.hpp \
+-                 AdminModel.hpp \
+-                 Auth.hpp \
+-                 ChildSession.hpp \
+-                 Common.hpp \
+-                 DocumentBroker.hpp \
+-                 Exceptions.hpp \
+-                 FileServer.hpp \
+-                 IoUtil.hpp \
+-                 LibreOfficeKit.hpp \
+-                 Log.hpp \
+-                 LOKitHelper.hpp \
+-                 LOOLKit.hpp \
+-                 LOOLProtocol.hpp \
+-                 LOOLSession.hpp \
+-                 LOOLWebSocket.hpp \
+-                 LOOLWSD.hpp \
+-                 ClientSession.hpp \
+-                 PrisonerSession.hpp \
+-                 MessageQueue.hpp \
+-                 Png.hpp \
+-                 QueueHandler.hpp \
+-                 Rectangle.hpp \
+-                 Storage.hpp \
+-                 TileCache.hpp \
+-                 TileDesc.hpp \
+-                 TraceFile.hpp \
+-                 Unit.hpp \
+-                 UnitHTTP.hpp \
+-                 UserMessages.hpp \
+-                 Util.hpp \
++loolstress_SOURCES = tools/Stress.cpp \
++                     common/Protocol.cpp \
++                     common/Log.cpp
++
++wsd_headers = wsd/Admin.hpp \
++              wsd/AdminModel.hpp \
++              wsd/Auth.hpp \
++              wsd/ClientSession.hpp \
++              wsd/DocumentBroker.hpp \
++              wsd/Exceptions.hpp \
++              wsd/FileServer.hpp \
++              wsd/LOOLWebSocket.hpp \
++              wsd/LOOLWSD.hpp \
++              wsd/PrisonerSession.hpp \
++              wsd/QueueHandler.hpp \
++              wsd/Storage.hpp \
++              wsd/TileCache.hpp \
++              wsd/TileDesc.hpp \
++              wsd/TraceFile.hpp \
++              wsd/UserMessages.hpp
++
++shared_headers = common/Common.hpp \
++                 common/IoUtil.hpp \
++                 common/Log.hpp \
++                 common/Protocol.hpp \
++                 common/Session.hpp \
++                 common/Unit.hpp \
++                 common/UnitHTTP.hpp \
++                 common/Util.hpp \
++                 common/MessageQueue.hpp \
++                 common/Png.hpp \
++                 common/Rectangle.hpp
++
++kit_headers = kit/ChildSession.hpp \
++              kit/Kit.hpp \
++              kit/LibreOfficeKit.hpp \
++	      kit/KitHelper.hpp
++
++noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
+                  bundled/include/LibreOfficeKit/LibreOfficeKit.h \
+                  bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
+                  bundled/include/LibreOfficeKit/LibreOfficeKitInit.h \
+diff --git a/loolwsd/configure.ac b/loolwsd/configure.ac
+index 9b6fc3d..7aa8775 100644
+--- a/loolwsd/configure.ac
++++ b/loolwsd/configure.ac
+@@ -32,7 +32,7 @@ AC_SUBST([LOOLWSD_VERSION_HASH])
+ 
+ AC_DEFINE_UNQUOTED([LOOLWSD_VERSION_HASH],[["$LOOLWSD_VERSION_HASH"]],[LibreOffice On-Line git hash if present])
+ 
+-AC_CONFIG_SRCDIR([LOOLWSD.cpp])
++AC_CONFIG_SRCDIR([wsd/LOOLWSD.cpp])
+ 
+ AC_CONFIG_HEADERS([config.h])
+ 
+
