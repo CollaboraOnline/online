@@ -330,7 +330,8 @@ void getWOPIValue(const Poco::JSON::Object::Ptr &object, const std::string& key,
             continue;
         else if (levDist > 0 || key != userInput)
         {
-            LOG_WRN("Incorrect JSON property [" << userInput << "]. Automatically corrected to " << key);
+            LOG_WRN("Incorrect JSON property [" << userInput << "]. Did you mean " << key << " ?");
+            return;
         }
 
         try
