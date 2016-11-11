@@ -118,12 +118,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._map.sendUnoCommand('.uno:ShowRow');
 	},
 
-	clearRows: function () {
-		while (this._rows.firstChild) {
-			this._rows.removeChild(this._rows.firstChild);
-		}
-	},
-
 	setViewPort: function(e) {
 		this._viewPort = e.rows.viewPort;
 		this._totalHeight = e.rows.totalHeight;
@@ -162,7 +156,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 	fillRows: function (rows, converter, context) {
 		var iterator, twip, height, row, text, resize;
 
-		this.clearRows();
+		L.DomUtil.empty(this._rows);
 		for (iterator = 0; iterator < rows.length; iterator++) {
 			height = rows[iterator].size - (iterator > 0 ? rows[iterator - 1].size : 0);
 			twip = new L.Point(height, height);

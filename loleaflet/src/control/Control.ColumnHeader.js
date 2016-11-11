@@ -122,12 +122,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.sendUnoCommand('.uno:ShowColumn');
 	},
 
-	clearColumns : function () {
-		while (this._columns.firstChild) {
-			this._columns.removeChild(this._columns.firstChild);
-		}
-	},
-
 	setViewPort: function(e) {
 		this._viewPort = e.columns.viewPort;
 		this._totalWidth = e.columns.totalWidth;
@@ -166,7 +160,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	fillColumns: function (columns, converter, context) {
 		var iterator, twip, width, column, text, resize;
 
-		this.clearColumns();
+		L.DomUtil.empty(this._columns);
 		for (iterator = 0; iterator < columns.length; iterator++) {
 			width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
 			twip = new L.Point(width, width);
