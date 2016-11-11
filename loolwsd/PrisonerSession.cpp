@@ -231,16 +231,18 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens[0] == "renderfont:")
         {
-            std::string font;
-            if (tokens.count() < 2 ||
+            std::string font, text, encodedChar;
+            if (tokens.count() < 3 ||
                 !getTokenString(tokens[1], "font", font))
             {
                 LOG_ERR("Bad syntax for: " << firstLine);
                 return false;
             }
 
+            getTokenString(tokens[2], "char", text);
+            Poco::URI::encode(text, "", encodedChar);
             assert(firstLine.size() < static_cast<std::string::size_type>(length));
-            _docBroker->tileCache().saveRendering(font, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+            _docBroker->tileCache().saveRendering(font+encodedChar, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
         }
     }
     else

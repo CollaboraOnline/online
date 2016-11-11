@@ -356,14 +356,16 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
 
 bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
-    std::string font, decodedFont;
+    std::string font, text, decodedFont;
 
-    if (tokens.count() < 2 ||
+    if (tokens.count() < 3 ||
         !getTokenString(tokens[1], "font", font))
     {
         sendTextFrame("error: cmd=renderfont kind=syntax");
         return false;
     }
+
+    getTokenString(tokens[2], "char", text);
 
     URI::decode(font, decodedFont);
     std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
@@ -381,7 +383,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
 
         _loKitDocument->setView(_viewId);
 
-        ptrFont = _loKitDocument->renderFont(decodedFont.c_str(), &width, &height);
+        ptrFont = _loKitDocument->renderFont(decodedFont.c_str(), text.c_str(), &width, &height);
     }
 
     LOG_TRC("renderFont [" << font << "] rendered in " << (timestamp.elapsed()/1000.) << "ms");
@@ -394,7 +396,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
     }
 
     std::free(ptrFont);
-    return sendBinaryFrame(output.data(), output.size());
+    return sendTextFrame(output.data(), output.size());
 }
 
 bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)

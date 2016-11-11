@@ -461,10 +461,11 @@ public:
      * @param pFontName the font to be painted
      */
     inline unsigned char* renderFont(const char *pFontName,
+                          const char *pChar,
                           int *pFontWidth,
                           int *pFontHeight)
     {
-        return _pDoc->pClass->renderFont(_pDoc, pFontName, pFontWidth, pFontHeight);
+        return _pDoc->pClass->renderFont(_pDoc, pFontName, pChar, pFontWidth, pFontHeight);
     }
 
     /**
