@@ -10,6 +10,7 @@
 #include "Storage.hpp"
 #include "config.h"
 
+#include <algorithm>
 #include <cassert>
 #include <fstream>
 #include <string>
@@ -17,6 +18,7 @@
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/DNS.h>
+#include <Poco/Exception.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -278,12 +280,74 @@ Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
                        : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
 }
 
-Poco::Dynamic::Var getOrWarn(const Poco::JSON::Object::Ptr &object, const char *key)
+int getLevenshteinDist(const std::string& string1, const std::string& string2) {
+    int matrix[string1.size() + 1][string2.size() + 1];
+
+    for (size_t i = 0; i < string1.size() + 1; i++)
+    {
+        for (size_t j = 0; j < string2.size() + 1; j++)
+        {
+            if (i == 0)
+            {
+                matrix[i][j] = j;
+            }
+            else if (j == 0)
+            {
+                matrix[i][j] = i;
+            }
+            else if (string1[i - 1] == string2[j - 1])
+            {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            }
+            else
+            {
+                matrix[i][j] = 1 + std::min(std::min(matrix[i][j - 1], matrix[i - 1][j]),
+                                            matrix[i - 1][j - 1]);
+            }
+        }
+    }
+
+    return matrix[string1.size()][string2.size()];
+}
+
+template <typename T>
+void getWOPIValue(const Poco::JSON::Object::Ptr &object, const std::string& key, T& value)
 {
-    const auto value = object->get(key);
-    if (value.isEmpty())
-        Log::error("Missing JSON property: '" + std::string(key) + "'");
-    return value;
+    std::vector<std::string> propertyNames;
+    object->getNames(propertyNames);
+
+    // Check each property name against given key
+    // and accept with a mis-spell tolerance of 2
+    // TODO: propertyNames can be pruned after getting its value
+    for (const auto& userInput: propertyNames)
+    {
+        std::string string1(key), string2(userInput);
+        std::transform(key.begin(), key.end(), string1.begin(), tolower);
+        std::transform(userInput.begin(), userInput.end(), string2.begin(), tolower);
+        int levDist = getLevenshteinDist(string1, string2);
+
+        if (levDist > 2) /* Mis-spelling tolerance */
+            continue;
+        else if (levDist > 0 || key != userInput)
+        {
+            LOG_WRN("Incorrect JSON property [" << userInput << "]. Automatically corrected to " << key);
+        }
+
+        try
+        {
+            const Poco::Dynamic::Var valueVar = object->get(userInput);
+            value = valueVar.convert<T>();
+        }
+        catch (const Poco::Exception& exc)
+        {
+            LOG_ERR("getWOPIValue: " << exc.displayText() <<
+                    (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+        }
+
+        return;
+    }
+
+    LOG_WRN("Missing JSON property [" << key << "]");
 }
 
 } // anonymous namespace
@@ -336,27 +400,17 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
         Poco::JSON::Parser parser;
         const auto result = parser.parse(stringJSON);
         const auto& object = result.extract<Poco::JSON::Object::Ptr>();
-        filename = getOrWarn(object, "BaseFileName").toString();
-        const auto sizeVar = getOrWarn(object, "Size");
-        size = std::stoul(sizeVar.toString(), nullptr, 0);
-        const auto ownerIdVar = getOrWarn(object, "OwnerId");
-        ownerId = (ownerIdVar.isString() ? ownerIdVar.toString() : "");
-        const auto userIdVar = getOrWarn(object, "UserId");
-        userId = (userIdVar.isString() ? userIdVar.toString() : "");
-        const auto userNameVar = getOrWarn(object,"UserFriendlyName");
-        userName = (userNameVar.isString() ? userNameVar.toString() : "anonymous");
-        const auto canWriteVar = getOrWarn(object, "UserCanWrite");
-        canWrite = canWriteVar.isBoolean() ? canWriteVar.convert<bool>() : false;
-        const auto postMessageOriginVar = getOrWarn(object, "PostMessageOrigin");
-        postMessageOrigin = postMessageOriginVar.isString() ? postMessageOriginVar.toString() : "";
-        const auto hidePrintOptionVar = getOrWarn(object, "HidePrintOption");
-        hidePrintOption = hidePrintOptionVar.isBoolean() ? hidePrintOptionVar.convert<bool>() : false;
-        const auto hideSaveOptionVar = getOrWarn(object, "HideSaveOption");
-        hideSaveOption = hideSaveOptionVar.isBoolean() ? hideSaveOptionVar.convert<bool>() : false;
-        const auto hideExportOptionVar = getOrWarn(object, "HideExportOption");
-        hideExportOption = hideExportOptionVar.isBoolean() ? hideExportOptionVar.convert<bool>() : false;
-        const auto enableOwnerTerminationVar = getOrWarn(object, "EnableOwnerTermination");
-        enableOwnerTermination = enableOwnerTerminationVar.isBoolean() ? enableOwnerTerminationVar.convert<bool>() : false;
+        getWOPIValue(object, "BaseFileName", filename);
+        getWOPIValue(object, "Size", size);
+        getWOPIValue(object, "OwnerId", ownerId);
+        getWOPIValue(object, "UserId", userId);
+        getWOPIValue(object, "UserFriendlyName", userName);
+        getWOPIValue(object, "UserCanWrite", canWrite);
+        getWOPIValue(object, "PostMessageOrigin", postMessageOrigin);
+        getWOPIValue(object, "HidePrintOption", hidePrintOption);
+        getWOPIValue(object, "HideSaveOption", hideSaveOption);
+        getWOPIValue(object, "HideExportOption", hideExportOption);
+        getWOPIValue(object, "EnableOwnerTermination", enableOwnerTermination);
     }
     else
         Log::error("WOPI::CheckFileInfo is missing JSON payload");
