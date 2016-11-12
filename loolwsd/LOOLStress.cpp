@@ -39,10 +39,7 @@
 #include <Poco/Util/Application.h>
 #include <Poco/Util/OptionSet.h>
 
-#include "Common.hpp"
-#include "LOOLProtocol.hpp"
 #include "TraceFile.hpp"
-#include "Util.hpp"
 #include "test/helpers.hpp"
 
 /// Stress testing and performance/scalability benchmarking tool.
@@ -63,9 +60,6 @@ protected:
     void handleOption(const std::string& name, const std::string& value) override;
     int  main(const std::vector<std::string>& args) override;
 };
-
-
-using namespace LOOLProtocol;
 
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
