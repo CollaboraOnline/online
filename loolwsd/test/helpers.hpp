@@ -343,20 +343,24 @@ connectLOKit(const Poco::URI& uri,
              Poco::Net::HTTPResponse& response,
              const std::string& name = "")
 {
+    std::cerr << name << "Connecting... ";
     int retries = 10;
     do
     {
         std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
-
-        std::cerr << name << "Connecting... " << std::endl;
         auto ws = std::make_shared<LOOLWebSocket>(*session, request, response);
-        getResponseMessage(ws, "statusindicator: ready", name);
+        const auto expected_response = "statusindicator: ready";
+        if (getResponseString(ws, expected_response, name) == expected_response)
+        {
+            return ws;
+        }
 
-        return ws;
+        std::cerr << (11 - retries);
     }
     while (retries--);
 
-    CPPUNIT_FAIL("Cannot connect to [" + uri.toString() + "].");
+    std::cerr << std::endl;
+    throw std::runtime_error("Cannot connect to [" + uri.toString() + "].");
 }
 
 inline
