@@ -48,6 +48,31 @@ public:
     {
     }
 
+    // Wrapper for LOOLWebSocket::receiveFrame() that handles PING frames (by replying with a
+    // PONG frame) and PONG frames. PONG frames are ignored.
+    // Should we also factor out the handling of non-final and continuation frames into this?
+    int receiveFrame(char* buffer, int length, int& flags)
+    {
+        for (;;)
+        {
+            const int n = Poco::Net::WebSocket::receiveFrame(buffer, length, flags);
+            if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
+            {
+                sendFrame(buffer, n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG);
+            }
+            else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
+            {
+                // In case we do send pongs in the future.
+            }
+            else
+            {
+                return n;
+            }
+        }
+
+        return -1;
+    }
+
     /// Careful - sendFrame is _not_ virtual, we need to make sure that we use
     /// LOOLWebSocket all over the place
     /// It would be a kind of more natural to encapsulate Poco::Net::WebSocket
