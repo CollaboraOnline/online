@@ -43,20 +43,22 @@ static int getLoolKitProcessCount()
                 {
                     switch (tokens[2].c_str()[0])
                     {
+                        // Dead marker for old and new kernels.
                     case 'x':
-                    case 'X': // Kinds of dead-ness.
-                    case 'Z': // zombies
-                        break; // ignore
+                    case 'X':
+                        // Don't ignore zombies.
+                        break;
                     default:
-                        result++;
+                        ++result;
                         break;
                     }
                     // std::cout << "Process:" << pid << ", '" << tokens[1] << "'" << " state: " << tokens[2] << std::endl;
                 }
             }
         }
-        catch (const Poco::Exception&)
+        catch (const std::exception& ex)
         {
+            std::cerr << "Error while iterating processes: " << ex.what() << std::endl;
         }
     }
 
@@ -72,9 +74,9 @@ static int countLoolKitProcesses(const int expected)
     // information about a successful auto-save. In the HTTPWSTest::testConnectNoLoad() there is
     // nothing to auto-save, so it waits in vain.
 
-    // This does not need to depend on any constant from Common.hpp. The shorter the better (the
-    // quicker the test runs).
-    const auto sleepMs = 200;
+    // This does not need to depend on any constant from Common.hpp.
+    // The shorter the better (the quicker the test runs).
+    const auto sleepMs = 100;
 
     // This has to cause waiting for at least COMMAND_TIMEOUT_MS. Add one second for safety.
     const size_t repeat = ((COMMAND_TIMEOUT_MS + 1000) / sleepMs);
