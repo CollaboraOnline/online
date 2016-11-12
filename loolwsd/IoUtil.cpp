@@ -38,28 +38,6 @@ using Poco::Net::WebSocket;
 namespace IoUtil
 {
 
-int receiveFrame(LOOLWebSocket& socket, void* buffer, int length, int& flags)
-{
-    while (!TerminationFlag)
-    {
-        int n = socket.receiveFrame(buffer, length, flags);
-        if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
-        {
-            socket.sendFrame(buffer, n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG);
-        }
-        else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
-        {
-            // In case we do send pongs in the future.
-        }
-        else
-        {
-            return n;
-        }
-    }
-
-    return -1;
-}
-
 // Synchronously process LOOLWebSocket requests and dispatch to handler.
 // Handler returns false to end.
 void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
@@ -100,7 +78,7 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             payload.resize(payload.capacity());
             try
             {
-                n = receiveFrame(*ws, payload.data(), payload.capacity(), flags);
+                n = ws->receiveFrame(payload.data(), payload.capacity(), flags);
             }
             catch (const Poco::TimeoutException&)
             {

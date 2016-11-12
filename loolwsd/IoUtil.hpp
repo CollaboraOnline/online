@@ -18,11 +18,6 @@
 
 namespace IoUtil
 {
-    // Wrapper for LOOLWebSocket::receiveFrame() that handles PING frames (by replying with a
-    // PONG frame) and PONG frames. PONG frames are ignored.
-    // Should we also factor out the handling of non-final and continuation frames into this?
-    // TODO: move this to LOOLWebSocket directly
-    int receiveFrame(LOOLWebSocket& socket, void* buffer, int length, int& flags);
 
     /// Synchronously process LOOLWebSocket requests and dispatch to handler.
     /// Handler returns false to end.

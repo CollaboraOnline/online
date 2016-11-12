@@ -83,7 +83,7 @@ looltool_SOURCES = LOOLTool.cpp
 loolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\"
 loolstress_SOURCES = LOOLStress.cpp \
                      LOOLProtocol.cpp \
-		     Log.cpp
+                     Log.cpp
 
 noinst_HEADERS = Admin.hpp \
                  AdminModel.hpp \
