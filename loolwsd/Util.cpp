@@ -98,8 +98,6 @@ namespace rng
         return ss.str().substr(0, length);
     }
 
-    /// Generates a random string suitable for
-    /// file/directory names.
     std::string getFilename(const size_t length)
     {
         std::string s = getB64String(length);
@@ -107,15 +105,6 @@ namespace rng
         return s.substr(0, length);
     }
 }
-}
-
-namespace
-{
-    void alertAllUsersAndLog(const std::string& message, const std::string& cmd, const std::string& kind)
-    {
-        Log::error(message);
-        Util::alertAllUsers(cmd, kind);
-    }
 }
 
 namespace Util
@@ -136,171 +125,15 @@ namespace Util
         return id;
     }
 
-    /// Create a secure, random directory path.
-    std::string createRandomDir(const std::string& path)
-    {
-        const auto name = rng::getFilename(64);
-        Poco::File(Poco::Path(path, name)).createDirectories();
-        return name;
-    }
-
-    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename)
-    {
-        const std::string srcPath = srcDir + '/' + srcFilename;
-        const std::string dstPath = Poco::Path::temp() + encodeId(rng::getNext()) + '_' + srcFilename;
-        Poco::File(srcPath).copyTo(dstPath);
-        Poco::TemporaryFile::registerForDeletion(dstPath);
-        return dstPath;
-    }
-
     bool windowingAvailable()
     {
         return std::getenv("DISPLAY") != nullptr;
     }
 
-    bool saveDataToFileSafely(const std::string& fileName, const char *data, size_t size)
-    {
-        const auto tempFileName = fileName + ".temp";
-        std::fstream outStream(tempFileName, std::ios::out);
-
-        // If we can't create the file properly, just remove it
-        if (!outStream.good())
-        {
-            alertAllUsersAndLog("Creating " + tempFileName + " failed, disk full?", "internal", "diskfull");
-            // Try removing both just in case
-            std::remove(tempFileName.c_str());
-            std::remove(fileName.c_str());
-            return false;
-        }
-        else
-        {
-            outStream.write(data, size);
-            if (!outStream.good())
-            {
-                alertAllUsersAndLog("Writing to " + tempFileName + " failed, disk full?", "internal", "diskfull");
-                outStream.close();
-                std::remove(tempFileName.c_str());
-                std::remove(fileName.c_str());
-                return false;
-            }
-            else
-            {
-                outStream.close();
-                if (!outStream.good())
-                {
-                    alertAllUsersAndLog("Closing " + tempFileName + " failed, disk full?", "internal", "diskfull");
-                    std::remove(tempFileName.c_str());
-                    std::remove(fileName.c_str());
-                    return false;
-                }
-                else
-                {
-                    // Everything OK, rename the file to its proper name
-                    if (std::rename(tempFileName.c_str(), fileName.c_str()) == 0)
-                    {
-                        Log::debug() << "Renaming " << tempFileName << " to " << fileName << " OK." << Log::end;
-                        return true;
-                    }
-                    else
-                    {
-                        alertAllUsersAndLog("Renaming " + tempFileName + " to " + fileName + " failed, disk full?", "internal", "diskfull");
-                        std::remove(tempFileName.c_str());
-                        std::remove(fileName.c_str());
-                        return false;
-                    }
-                }
-            }
-        }
-    }
-
 } // namespace Util
-
-namespace
-{
-
-    struct fs
-    {
-        fs(const std::string& p, dev_t d)
-            : path(p), dev(d)
-        {
-        }
-
-        fs(dev_t d)
-            : fs("", d)
-        {
-        }
-
-        std::string path;
-        dev_t dev;
-    };
-
-    struct fsComparator
-    {
-        bool operator() (const fs& lhs, const fs& rhs) const
-        {
-            return (lhs.dev < rhs.dev);
-        }
-    };
-
-    static std::mutex fsmutex;
-    static std::set<fs, fsComparator> filesystems;
-} // unnamed namespace
 
 namespace Util
 {
-    void registerFileSystemForDiskSpaceChecks(const std::string& path)
-    {
-        std::lock_guard<std::mutex> lock(fsmutex);
-
-        if (path != "")
-        {
-            std::string dirPath = path;
-            std::string::size_type lastSlash = dirPath.rfind('/');
-            assert(lastSlash != std::string::npos);
-            dirPath = dirPath.substr(0, lastSlash + 1) + ".";
-
-            struct stat s;
-            if (stat(dirPath.c_str(), &s) == -1)
-                return;
-            filesystems.insert(fs(dirPath, s.st_dev));
-        }
-    }
-
-    void checkDiskSpaceOnRegisteredFileSystems()
-    {
-        std::lock_guard<std::mutex> lock(fsmutex);
-
-        static std::chrono::steady_clock::time_point lastCheck;
-        std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
-
-        // Don't check more often that once a minute
-        if (std::chrono::duration_cast<std::chrono::seconds>(now - lastCheck).count() < 60)
-            return;
-
-        lastCheck = now;
-
-        for (auto& i: filesystems)
-        {
-            if (!checkDiskSpace(i.path))
-            {
-                alertAllUsersAndLog("File system of " + i.path + " dangerously low on disk space", "internal", "diskfull");
-                break;
-            }
-        }
-    }
-
-    bool checkDiskSpace(const std::string& path)
-    {
-        assert(path != "");
-        struct statfs sfs;
-        if (statfs(path.c_str(), &sfs) == -1)
-            return true;
-
-        if (static_cast<double>(sfs.f_bavail) / sfs.f_blocks <= 0.05)
-            return false;
-        return true;
-    }
-
     const char *signalName(const int signo)
     {
         switch (signo)

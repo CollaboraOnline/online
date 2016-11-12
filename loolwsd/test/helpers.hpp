@@ -40,6 +40,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <Common.hpp>
+#include "common/FileUtil.hpp"
 #include <LOOLProtocol.hpp>
 #include <LOOLWebSocket.hpp>
 #include <UserMessages.hpp>
@@ -113,7 +114,7 @@ std::vector<char> readDataFromFile(std::unique_ptr<std::fstream>& file)
 inline
 void getDocumentPathAndURL(const std::string& docFilename, std::string& documentPath, std::string& documentURL)
 {
-    documentPath = Util::getTempFilePath(TDOC, docFilename);
+    documentPath = FileUtil::getTempFilePath(TDOC, docFilename);
     std::string encodedUri;
     Poco::URI::encode("file://" + Poco::Path(documentPath).makeAbsolute().toString(), ":/?", encodedUri);
     documentURL = "lool/" + encodedUri + "/ws";
