@@ -71,11 +71,7 @@ public:
         }
 
         int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
-        // FIXME we want an abbreviated message here, but we'd have a circular
-        // dependency with LOOLProtocol, so use the full message here before
-        // we move getAbbreviatedMessage() to Log (where it belongs anyway).
-        //Log::debug("Sent frame: " + LOOLProtocol::getAbbreviatedMessage(static_cast<const char*>(buffer), length));
-        Log::debug("Sent frame: " + std::string(static_cast<const char*>(buffer), length));
+        Log::debug("Sent frame: " + LOOLProtocol::getAbbreviatedMessage(static_cast<const char*>(buffer), length));
 
         return result;
     }
