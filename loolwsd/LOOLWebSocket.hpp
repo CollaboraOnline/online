@@ -19,38 +19,46 @@
 #include <Log.hpp>
 
 /// WebSocket that is thread safe, and handles large frames transparently.
+/// Careful - sendFrame and receiveFrame are _not_ virtual,
+/// we need to make sure that we use LOOLWebSocket all over the place.
+/// It would be a kind of more natural to encapsulate Poco::Net::WebSocket
+/// instead of inheriting (from that reason,) but that would requite much
+/// larger code changes.
 class LOOLWebSocket : public Poco::Net::WebSocket
 {
+private:
     std::mutex _mutex;
 
 public:
-    LOOLWebSocket(const Socket & socket) :
-        Poco::Net::WebSocket(socket),
-        _mutex()
+    LOOLWebSocket(const Socket& socket) :
+        Poco::Net::WebSocket(socket)
     {
     }
 
-    LOOLWebSocket(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response) :
-        Poco::Net::WebSocket(request, response),
-        _mutex()
+    LOOLWebSocket(Poco::Net::HTTPServerRequest& request,
+                  Poco::Net::HTTPServerResponse& response) :
+        Poco::Net::WebSocket(request, response)
     {
     }
 
-    LOOLWebSocket(Poco::Net::HTTPClientSession & cs, Poco::Net::HTTPRequest & request, Poco::Net::HTTPResponse & response) :
-        Poco::Net::WebSocket(cs, request, response),
-        _mutex()
+    LOOLWebSocket(Poco::Net::HTTPClientSession& cs,
+                  Poco::Net::HTTPRequest& request,
+                  Poco::Net::HTTPResponse& response) :
+        Poco::Net::WebSocket(cs, request, response)
     {
     }
 
-    LOOLWebSocket(Poco::Net::HTTPClientSession & cs, Poco::Net::HTTPRequest & request, Poco::Net::HTTPResponse & response, Poco::Net::HTTPCredentials & credentials) :
-        Poco::Net::WebSocket(cs, request, response, credentials),
-        _mutex()
+    LOOLWebSocket(Poco::Net::HTTPClientSession& cs,
+                  Poco::Net::HTTPRequest& request,
+                  Poco::Net::HTTPResponse& response,
+                  Poco::Net::HTTPCredentials& credentials) :
+        Poco::Net::WebSocket(cs, request, response, credentials)
     {
     }
 
-    // Wrapper for LOOLWebSocket::receiveFrame() that handles PING frames (by replying with a
-    // PONG frame) and PONG frames. PONG frames are ignored.
-    // Should we also factor out the handling of non-final and continuation frames into this?
+    /// Wrapper for Poco::Net::WebSocket::receiveFrame() that handles PING frames
+    /// (by replying with a PONG frame) and PONG frames. PONG frames are ignored.
+    /// Should we also factor out the handling of non-final and continuation frames into this?
     int receiveFrame(char* buffer, const int length, int& flags)
     {
         // Timeout given is in microseconds.
@@ -76,11 +84,7 @@ public:
         return -1;
     }
 
-    /// Careful - sendFrame is _not_ virtual, we need to make sure that we use
-    /// LOOLWebSocket all over the place
-    /// It would be a kind of more natural to encapsulate Poco::Net::WebSocket
-    /// instead of inheriting (from that reason), but that would requite much
-    /// larger code changes.
+    /// Wrapper for Poco::Net::WebSocket::sendFrame() that handles large frames.
     int sendFrame(const char* buffer, const int length, const int flags = FRAME_TEXT)
     {
         std::unique_lock<std::mutex> lock(_mutex);
