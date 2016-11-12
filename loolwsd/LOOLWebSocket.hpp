@@ -51,9 +51,12 @@ public:
     // Wrapper for LOOLWebSocket::receiveFrame() that handles PING frames (by replying with a
     // PONG frame) and PONG frames. PONG frames are ignored.
     // Should we also factor out the handling of non-final and continuation frames into this?
-    int receiveFrame(char* buffer, int length, int& flags)
+    int receiveFrame(char* buffer, const int length, int& flags)
     {
-        for (;;)
+        // Timeout given is in microseconds.
+        static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+
+        while (poll(waitTime, Poco::Net::Socket::SELECT_READ))
         {
             const int n = Poco::Net::WebSocket::receiveFrame(buffer, length, flags);
             if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
@@ -78,9 +81,9 @@ public:
     /// It would be a kind of more natural to encapsulate Poco::Net::WebSocket
     /// instead of inheriting (from that reason), but that would requite much
     /// larger code changes.
-    int sendFrame(const void * buffer, int length, int flags = FRAME_TEXT)
+    int sendFrame(const char* buffer, const int length, const int flags = FRAME_TEXT)
     {
-        std::lock_guard<std::mutex> lock(_mutex);
+        std::unique_lock<std::mutex> lock(_mutex);
 
         // Size after which messages will be sent preceded with
         // 'nextmessage' frame to let the receiver know in advance
@@ -95,8 +98,19 @@ public:
             Log::debug("Message is long, sent " + nextmessage);
         }
 
-        int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
-        Log::debug("Sent frame: " + LOOLProtocol::getAbbreviatedMessage(static_cast<const char*>(buffer), length));
+        const int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
+
+        lock.unlock();
+
+        if (result != length)
+        {
+            LOG_ERR("Sent incomplete message, expected " << length << " bytes but sent " << result <<
+                    " while sending: " << LOOLProtocol::getAbbreviatedMessage(buffer, length));
+        }
+        else
+        {
+            LOG_DBG("Sent frame: " << LOOLProtocol::getAbbreviatedMessage(buffer, length));
+        }
 
         return result;
     }
