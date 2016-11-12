@@ -18,6 +18,7 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
+#include "common/FileUtil.hpp"
 #include "LOKitHelper.hpp"
 #include "Log.hpp"
 #include "Png.hpp"
@@ -574,7 +575,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, StringToke
     }
 
     // The file is removed upon downloading.
-    const auto tmpDir = Util::createRandomDir(JAILED_DOCUMENT_ROOT);
+    const auto tmpDir = FileUtil::createRandomDir(JAILED_DOCUMENT_ROOT);
     // Prevent user inputting anything funny here.
     // A "name" should always be a name, not a path
     const Poco::Path filenameParam(name);

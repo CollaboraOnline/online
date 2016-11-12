@@ -26,6 +26,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <Common.hpp>
+#include "common/FileUtil.hpp"
 #include <Util.hpp>
 
 #include "countloolkits.hpp"
@@ -241,7 +242,7 @@ void HTTPServerTest::testScriptsAndLinksPost()
 
 void HTTPServerTest::testConvertTo()
 {
-    const auto srcPath = Util::getTempFilePath(TDOC, "hello.odt");
+    const auto srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt");
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
     session->setTimeout(Poco::Timespan(2, 0)); // 2 seconds.
 
@@ -265,7 +266,7 @@ void HTTPServerTest::testConvertTo()
     expectedStream << fileStream.rdbuf();
 
     // Remove the temp files.
-    Util::removeFile(srcPath);
+    FileUtil::removeFile(srcPath);
 
     // In some cases the result is prefixed with (the UTF-8 encoding of) the Unicode BOM
     // (U+FEFF). Skip that.

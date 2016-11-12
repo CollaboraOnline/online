@@ -32,6 +32,7 @@
 
 #include "ClientSession.hpp"
 #include "Common.hpp"
+#include "common/FileUtil.hpp"
 #include "LOOLProtocol.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
@@ -60,7 +61,7 @@ TileCache::TileCache(const std::string& docURL,
          getTextFile("unsaved.txt") != ""))
     {
         // Document changed externally or modifications were not saved after all. Cache not useful.
-        Util::removeFile(_cacheDir, true);
+        FileUtil::removeFile(_cacheDir, true);
         Log::info("Completely cleared tile cache: " + _cacheDir);
     }
 
@@ -157,8 +158,10 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     // Ignore if we can't save the tile, things will work anyway, but slower. An error indication
     // has been supposed to be sent to all users in that case.
     const auto fileName = _cacheDir + "/" + cachedName;
-    if (Util::saveDataToFileSafely(fileName, data, size))
+    if (FileUtil::saveDataToFileSafely(fileName, data, size))
+    {
         Log::trace() << "Saved cache tile: " << fileName << Log::end;
+    }
 
     // Notify subscribers, if any.
     if (tileBeingRendered)
@@ -294,7 +297,7 @@ void TileCache::saveRendering(const std::string& name, const std::string& dir, c
 
     const std::string fileName = dirName + "/" + name;
 
-    Util::saveDataToFileSafely(fileName, data, size);
+    FileUtil::saveDataToFileSafely(fileName, data, size);
 }
 
 std::unique_ptr<std::fstream> TileCache::lookupCachedFile(const std::string& name, const std::string& dir)
@@ -332,7 +335,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
             if (intersectsTile(fileName, part, x, y, width, height))
             {
                 Log::debug("Removing tile: " + tileIterator.path().toString());
-                Util::removeFile(tileIterator.path());
+                FileUtil::removeFile(tileIterator.path());
             }
         }
     }

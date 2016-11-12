@@ -27,6 +27,7 @@ AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
 AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS
 
 wsd_sources = \
+            ../common/FileUtil.cpp \
             ../IoUtil.cpp \
             ../Log.cpp \
             ../LOOLKit.cpp \

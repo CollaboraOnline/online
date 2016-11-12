@@ -30,6 +30,7 @@
 #include "Auth.hpp"
 #include "Common.hpp"
 #include "Exceptions.hpp"
+#include "common/FileUtil.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
@@ -217,7 +218,7 @@ std::string LocalStorage::loadStorageFileToLocal()
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
     const auto publicFilePath = _uri.getPath();
 
-    if (!Util::checkDiskSpace(publicFilePath))
+    if (!FileUtil::checkDiskSpace(publicFilePath))
     {
         throw StorageSpaceLowException("Low disk space for " + publicFilePath);
     }

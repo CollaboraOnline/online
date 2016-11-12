@@ -99,6 +99,7 @@
 #include "Common.hpp"
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
+#include "common/FileUtil.hpp"
 #include "IoUtil.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLSession.hpp"
@@ -257,7 +258,7 @@ static void forkChildren(const int number)
 
     if (number > 0)
     {
-        Util::checkDiskSpaceOnRegisteredFileSystems();
+        FileUtil::checkDiskSpaceOnRegisteredFileSystems();
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
 
@@ -585,7 +586,7 @@ private:
                 // Clean up the temporary directory the HTMLForm ctor created.
                 Path tempDirectory(fromPath);
                 tempDirectory.setFileName("");
-                Util::removeFile(tempDirectory, /*recursive=*/true);
+                FileUtil::removeFile(tempDirectory, /*recursive=*/true);
             }
 
             if (!sent)
@@ -690,7 +691,7 @@ private:
                             (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
                 }
 
-                Util::removeFile(File(filePath.parent()).path(), true);
+                FileUtil::removeFile(File(filePath.parent()).path(), true);
             }
             else
             {
@@ -870,7 +871,7 @@ private:
             LOG_TRC("Sending to Client [" << status << "].");
             ws->sendFrame(status.data(), status.size());
 
-            Util::checkDiskSpaceOnRegisteredFileSystems();
+            FileUtil::checkDiskSpaceOnRegisteredFileSystems();
 
             // Request the child to connect to us and add this session.
             auto sessionsCount = docBroker->addSession(session);
@@ -1899,8 +1900,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     else if (ChildRoot[ChildRoot.size() - 1] != '/')
         ChildRoot += '/';
 
-    Util::registerFileSystemForDiskSpaceChecks(ChildRoot);
-    Util::registerFileSystemForDiskSpaceChecks(Cache + "/.");
+    FileUtil::registerFileSystemForDiskSpaceChecks(ChildRoot);
+    FileUtil::registerFileSystemForDiskSpaceChecks(Cache + "/.");
 
     if (FileServerRoot.empty())
         FileServerRoot = Poco::Path(Application::instance().commandPath()).parent().parent().toString();
@@ -2092,7 +2093,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     {
         const auto path = ChildRoot + jail;
         LOG_INF("Removing jail [" << path << "].");
-        Util::removeFile(path, true);
+        FileUtil::removeFile(path, true);
     }
 
     if (LOOLWSD::isSSLEnabled())

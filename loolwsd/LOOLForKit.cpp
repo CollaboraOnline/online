@@ -32,6 +32,7 @@
 #include <Poco/Util/Application.h>
 
 #include "Common.hpp"
+#include "common/FileUtil.hpp"
 #include "IoUtil.hpp"
 #include "LOOLKit.hpp"
 #include "Log.hpp"
@@ -185,7 +186,7 @@ static void cleanupChildren()
         if (childJails.find(exitedChildPid) != childJails.end())
         {
             Log::info("Child " + std::to_string(exitedChildPid) + " has exited, removing its jail '" + childJails[exitedChildPid] + "'");
-            Util::removeFile(childJails[exitedChildPid], true);
+            FileUtil::removeFile(childJails[exitedChildPid], true);
             childJails.erase(exitedChildPid);
         }
         else
