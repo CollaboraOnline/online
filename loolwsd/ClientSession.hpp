@@ -33,7 +33,8 @@ public:
     void setReadOnly();
     bool isReadOnly() const { return _isReadOnly; }
 
-    void setPeer(const std::shared_ptr<PrisonerSession>& peer) { _peer = peer; }
+    /// Create and connect Prisoner Session between DocumentBroker and us.
+    void bridgePrisonerSession();
     std::shared_ptr<PrisonerSession> getPeer() const { return _peer; }
     bool shutdownPeer(Poco::UInt16 statusCode);
 
