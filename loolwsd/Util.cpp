@@ -218,9 +218,20 @@ namespace Util
         action.sa_handler = handleTerminationSignal;
 
         sigaction(SIGTERM, &action, nullptr);
-        sigaction(SIGINT, &action, nullptr);
         sigaction(SIGQUIT, &action, nullptr);
         sigaction(SIGHUP, &action, nullptr);
+    }
+
+    /// Handle SIGINT, should be set by WSD only.
+    void setInterruptionSignal()
+    {
+        struct sigaction action;
+
+        sigemptyset(&action.sa_mask);
+        action.sa_flags = 0;
+        action.sa_handler = handleTerminationSignal;
+
+        sigaction(SIGINT, &action, nullptr);
     }
 
     static char FatalGdbString[256] = { '\0' };
