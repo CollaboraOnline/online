@@ -33,10 +33,11 @@ using namespace LOOLProtocol;
 using Poco::Path;
 using Poco::StringTokenizer;
 
-PrisonerSession::PrisonerSession(const std::string& id,
+PrisonerSession::PrisonerSession(std::shared_ptr<ClientSession> clientSession,
                                  std::shared_ptr<DocumentBroker> docBroker) :
-    LOOLSession(id, Kind::ToPrisoner, nullptr),
+    LOOLSession(clientSession->getId(), Kind::ToPrisoner, nullptr),
     _docBroker(std::move(docBroker)),
+    _peer(clientSession),
     _curPart(0)
 {
     LOG_INF("PrisonerSession ctor [" << getName() << "].");

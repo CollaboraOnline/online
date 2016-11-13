@@ -57,6 +57,21 @@ ClientSession::~ClientSession()
     _saveAsQueue.put("");
 }
 
+void ClientSession::bridgePrisonerSession()
+{
+    auto docBroker = getDocumentBroker();
+    if (docBroker)
+    {
+        _peer = std::make_shared<PrisonerSession>(shared_from_this(), docBroker);
+    }
+    else
+    {
+        const std::string msg = "No valid DocBroker while bridging Prisoner Session for " + getName();
+        LOG_ERR(msg);
+        throw std::runtime_error(msg);
+    }
+}
+
 bool ClientSession::_handleInput(const char *buffer, int length)
 {
     const std::string firstLine = getFirstLine(buffer, length);

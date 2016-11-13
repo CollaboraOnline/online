@@ -531,11 +531,8 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     // Tell the admin console about this new doc
     Admin::instance().addDoc(_docKey, getPid(), getFilename(), id);
 
-    auto prisonerSession = std::make_shared<PrisonerSession>(id, shared_from_this());
-
-    // Connect the prison session to the client.
-    session->setPeer(prisonerSession);
-    prisonerSession->setPeer(session);
+    // Now we are ready to bridge between the kit and client.
+    session->bridgePrisonerSession();
 
     return count;
 }
