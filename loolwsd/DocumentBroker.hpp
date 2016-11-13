@@ -103,7 +103,7 @@ public:
                     LOG_INF("Killing child [" << _pid << "].");
                     if (kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0 && errno != ESRCH)
                     {
-                        Log::syserror("Cannot terminate lokit [" + std::to_string(_pid) + "]. Abandoning.");
+                        LOG_SYS("Cannot terminate lokit [" << _pid << "]. Abandoning.");
                     }
                 }
             }

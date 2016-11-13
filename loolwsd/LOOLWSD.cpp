@@ -1862,7 +1862,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     {
         std::string version, hash;
         Util::getVersionInfo(version, hash);
-        std::cout << "loolwsd version details: " << version << " - " << hash << std::endl;
+        LOG_INF("Loolwsd version details: " << version << " - " << hash);
     }
 
     initializeSSL();
@@ -1873,8 +1873,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (access(Cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
-        Log::sysfatal("Unable to access cache [" + Cache +
-                      "] please make sure it exists, and has write permission for this user.");
+        LOG_SFL("Unable to access cache [" << Cache <<
+                "] please make sure it exists, and has write permission for this user.");
         return Application::EXIT_SOFTWARE;
     }
 
@@ -2017,7 +2017,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         }
         else if (pid < 0)
         {
-            Log::syserror("waitpid failed.");
+            LOG_SYS("waitpid failed.");
             if (errno == ECHILD)
             {
                 // No child processes.

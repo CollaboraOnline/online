@@ -206,7 +206,7 @@ ssize_t writeToPipe(int pipe, const char* buffer, ssize_t size)
             if (errno == EINTR || errno == EAGAIN)
                 continue;
 
-            Log::syserror("Failed to write to pipe. Data: [" + std::string(buffer, size) + "].");
+            LOG_SYS("Failed to write to pipe. Data: [" << std::string(buffer, size) << "].");
             count = -1;
             break;
         }

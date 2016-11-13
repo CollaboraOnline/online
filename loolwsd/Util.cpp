@@ -273,7 +273,7 @@ namespace Util
 
                 if (writev(STDERR_FILENO, ioVector, numSlots*2+1) == -1)
                 {
-                    Log::syserror("Failed to dump backtrace to stderr.");
+                    LOG_SYS("Failed to dump backtrace to stderr.");
                 }
             }
         }
@@ -380,7 +380,9 @@ namespace Util
     void setThreadName(const std::string& s)
     {
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(s.c_str()), 0, 0, 0) != 0)
-            Log::syserror("Cannot set thread name to " + s + ".");
+        {
+            LOG_SYS("Cannot set thread name to " << s << ".");
+        }
     }
 
     void getVersionInfo(std::string& version, std::string& hash)
