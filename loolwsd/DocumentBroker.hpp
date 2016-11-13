@@ -96,24 +96,21 @@ public:
             }
 
             _ws.reset();
-            if (_pid != -1 && kill(_pid, 0) != 0)
+            if (_pid != -1 && rude && kill(_pid, 0) != 0 && errno != ESRCH)
             {
-                if (errno != ESRCH && rude)
+                LOG_INF("Killing child [" << _pid << "].");
+                if (Util::killChild(_pid))
                 {
-                    LOG_INF("Killing child [" << _pid << "].");
-                    if (kill(_pid, SIGINT) != 0 && kill(_pid, 0) != 0 && errno != ESRCH)
-                    {
-                        LOG_SYS("Cannot terminate lokit [" << _pid << "]. Abandoning.");
-                    }
+                    LOG_ERR("Cannot terminate lokit [" << _pid << "]. Abandoning.");
                 }
             }
-
-            _pid = -1;
         }
         catch (const std::exception& ex)
         {
             LOG_ERR("Error while closing child process: " << ex.what());
         }
+
+        _pid = -1;
     }
 
     Poco::Process::PID getPid() const { return _pid; }
@@ -142,6 +139,8 @@ public:
     }
 
     /// Check whether this child is alive and able to respond.
+    /// Note: zombies will show as alive, and sockets have waiting
+    /// time after the other end-point closes. So this isn't accurate.
     bool isAlive() const
     {
         try

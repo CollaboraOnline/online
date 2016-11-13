@@ -123,15 +123,12 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
         try
         {
             const auto pid = std::stoi(tokens[1]);
-            if (kill(pid, SIGINT) != 0 && kill(pid, 0) !=0)
-            {
-                LOG_SYS("Cannot terminate PID: " << tokens[0]);
-            }
+            LOG_INF("Admin request to kill PID: " << pid);
+            Util::killChild(pid);
         }
-        catch(std::invalid_argument& exc)
+        catch (std::invalid_argument& exc)
         {
-            Log::warn() << "Invalid PID to kill: " << tokens[0] << Log::end;
-            return false;
+            LOG_WRN("Invalid PID to kill: " << tokens[1]);
         }
     }
     else if (tokens[0] == "settings")

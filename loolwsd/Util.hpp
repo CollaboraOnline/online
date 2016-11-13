@@ -88,6 +88,11 @@ namespace Util
 
     void requestTermination(const Poco::Process::PID& pid);
 
+    /// Kills a child process and returns true when
+    /// child pid is removed from the process table
+    /// after a certain (short) timeout.
+    bool killChild(const int pid);
+
     int getMemoryUsage(const Poco::Process::PID nPid);
 
     std::string replace(const std::string& s, const std::string& a, const std::string& b);

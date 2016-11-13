@@ -77,7 +77,7 @@ public:
         }
         else if (ready < 0)
         {
-            // Termination is done via SIGINT, which breaks the wait.
+            // Termination is done via SIGTERM, which breaks the wait.
             if (!TerminationFlag)
             {
                 Log::error("Error reading from pipe [" + getName() + "].");
