@@ -68,7 +68,6 @@ void ChildProcess::socketProcessor()
 
     LOG_DBG("Child [" << getPid() << "] WS terminated. Notifying DocBroker.");
 
-
     // Notify the broker that we're done.
     auto docBroker = _docBroker.lock();
     if (docBroker && !_stop)

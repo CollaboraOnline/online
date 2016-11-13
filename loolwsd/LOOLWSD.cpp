@@ -1926,7 +1926,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             findFreeMasterPort(MasterPortNumber) :
             getMasterSocket(MasterPortNumber));
     if (!psvs2)
+    {
+        LOG_FTL("Failed to listen on master port (" <<
+                MasterPortNumber << ") or find a free port. Exiting.");
         return Application::EXIT_SOFTWARE;
+    }
 
     HTTPServer srv2(new PrisonerRequestHandlerFactory(), threadPool, *psvs2, params2);
     LOG_INF("Starting prisoner server listening on " << MasterPortNumber);
@@ -1946,7 +1950,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             findFreeServerPort(ClientPortNumber) :
             getServerSocket(ClientPortNumber, true));
     if (!psvs)
+    {
+        LOG_FTL("Failed to listen on client port (" <<
+                ClientPortNumber << ") or find a free port. Exiting.");
         return Application::EXIT_SOFTWARE;
+    }
 
     HTTPServer srv(new ClientRequestHandlerFactory(), threadPool, *psvs, params1);
     LOG_INF("Starting master server listening on " << ClientPortNumber);
@@ -1962,7 +1970,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     {
         UnitWSD::get().invokeTest();
         if (TerminationFlag)
+        {
             break;
+        }
 
         const pid_t pid = waitpid(forKitPid, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
@@ -2018,7 +2028,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 // No child processes.
                 LOG_FTL("No Forkit instance. Terminating.");
                 TerminationFlag = true;
-                continue;
+                break;
             }
         }
         else // pid == 0, no children have died
@@ -2058,6 +2068,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         {
             LOG_INF((time(nullptr) - startTimeSpan) << " seconds gone, finishing as requested.");
             TerminationFlag = true;
+            break;
         }
 #endif
     }
@@ -2070,7 +2081,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     threadPool.joinAll();
 
     // Terminate child processes
-    LOG_INF("Requesting child process " << forKitPid << " to terminate.");
+    LOG_INF("Requesting forkit process " << forKitPid << " to terminate.");
     Util::requestTermination(forKitPid);
     for (auto& child : NewChildren)
     {
