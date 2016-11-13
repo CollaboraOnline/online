@@ -258,15 +258,4 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
     return true;
 }
 
-bool PrisonerSession::shutdownPeer(Poco::UInt16 statusCode)
-{
-    auto peer = _peer.lock();
-    if (peer && !peer->isCloseFrame())
-    {
-        peer->shutdown(statusCode);
-    }
-
-    return peer != nullptr;
-}
-
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

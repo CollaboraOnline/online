@@ -36,10 +36,8 @@ public:
     /// Create and connect Prisoner Session between DocumentBroker and us.
     void bridgePrisonerSession();
     std::shared_ptr<PrisonerSession> getPeer() const { return _peer; }
-    bool shutdownPeer(Poco::UInt16 statusCode);
 
     const std::string getUserId() const { return _userId; }
-
     void setUserId(const std::string& userId) { _userId = userId; }
     void setUserName(const std::string& userName) { _userName = userName; }
     void setDocumentOwner(const bool isDocumentOwner) { _isDocumentOwner = isDocumentOwner; }

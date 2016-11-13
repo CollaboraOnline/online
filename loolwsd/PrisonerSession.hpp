@@ -26,8 +26,6 @@ public:
 
     virtual ~PrisonerSession();
 
-    bool shutdownPeer(Poco::UInt16 statusCode);
-
 private:
     /// Handle messages from the Kit to the client.
     virtual bool _handleInput(const char* buffer, int length) override;
