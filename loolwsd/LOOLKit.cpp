@@ -146,8 +146,8 @@ namespace
             File(newPath.parent()).createDirectories();
             if (link(fpath, newPath.toString().c_str()) == -1)
             {
-                Log::syserror("link(\"" + std::string(fpath) + "\",\"" + newPath.toString() +
-                           "\") failed. Exiting.");
+                LOG_SYS("link(\"" << std::string(fpath) << "\",\"" <<
+                        newPath.toString() << "\") failed. Exiting.");
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
             break;
@@ -156,7 +156,7 @@ namespace
                 struct stat st;
                 if (stat(fpath, &st) == -1)
                 {
-                    Log::syserror("stat(\"" + std::string(fpath) + "\") failed.");
+                    LOG_SYS("stat(\"" << std::string(fpath) << "\") failed.");
                     return 1;
                 }
                 if (!shouldCopyDir(relativeOldPath))
@@ -170,7 +170,7 @@ namespace
                 ut.modtime = st.st_mtime;
                 if (utime(newPath.toString().c_str(), &ut) == -1)
                 {
-                    Log::syserror("utime(\"" + newPath.toString() + "\") failed.");
+                    LOG_SYS("utime(\"" << newPath.toString() << "\") failed.");
                     return 1;
                 }
             }
@@ -210,7 +210,7 @@ namespace
         caps = cap_get_proc();
         if (caps == nullptr)
         {
-            Log::syserror("cap_get_proc() failed.");
+            LOG_SYS("cap_get_proc() failed.");
             std::_Exit(1);
         }
 
@@ -221,13 +221,13 @@ namespace
         if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
             cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
         {
-            Log::syserror("cap_set_flag() failed.");
+            LOG_SYS("cap_set_flag() failed.");
             std::_Exit(1);
         }
 
         if (cap_set_proc(caps) == -1)
         {
-            Log::syserror("cap_set_proc() failed.");
+            LOG_SYS("cap_set_proc() failed.");
             std::_Exit(1);
         }
 
@@ -252,7 +252,7 @@ namespace
         LOG_DBG("symlink(\"" << symlinkTarget << "\",\"" << symlinkSource.toString() << "\")");
         if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
         {
-            Log::syserror("symlink(\"" + symlinkTarget + "\",\"" + symlinkSource.toString() + "\") failed");
+            LOG_SYS("symlink(\"" << symlinkTarget << "\",\"" << symlinkSource.toString() << "\") failed");
             throw Exception("symlink() failed");
         }
     }
@@ -1388,25 +1388,25 @@ void lokit_main(const std::string& childRoot,
                       S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
                       makedev(1, 8)) != 0)
             {
-                Log::syserror("mknod(" + jailPath.toString() + "/dev/random) failed.");
+                LOG_SYS("mknod(" << jailPath.toString() << "/dev/random) failed.");
             }
             if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
                       S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
                       makedev(1, 9)) != 0)
             {
-                Log::syserror("mknod(" + jailPath.toString() + "/dev/urandom) failed.");
+                LOG_SYS("mknod(" << jailPath.toString() << "/dev/urandom) failed.");
             }
 
             LOG_INF("chroot(\"" << jailPath.toString() << "\")");
             if (chroot(jailPath.toString().c_str()) == -1)
             {
-                Log::syserror("chroot(\"" + jailPath.toString() + "\") failed.");
+                LOG_SYS("chroot(\"" << jailPath.toString() << "\") failed.");
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
 
             if (chdir("/") == -1)
             {
-                Log::syserror("chdir(\"/\") in jail failed.");
+                LOG_SYS("chdir(\"/\") in jail failed.");
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
 

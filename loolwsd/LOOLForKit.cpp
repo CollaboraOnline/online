@@ -113,7 +113,7 @@ static bool haveCapability(cap_value_t capability)
 
     if (caps == nullptr)
     {
-        Log::sysfatal("cap_get_proc() failed.");
+        LOG_SFL("cap_get_proc() failed.");
         return false;
     }
 
@@ -124,12 +124,12 @@ static bool haveCapability(cap_value_t capability)
     {
         if (cap_name)
         {
-            Log::sysfatal("cap_get_flag failed for " + std::string(cap_name) + ".");
+            LOG_SFL("cap_get_flag failed for " << cap_name << ".");
             cap_free(cap_name);
         }
         else
         {
-            Log::sysfatal("cap_get_flag failed for capability " + std::to_string(capability) + ".");
+            LOG_SFL("cap_get_flag failed for capability " << capability << ".");
         }
         return false;
     }
@@ -233,7 +233,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
         // Parent
         if (pid < 0)
         {
-            Log::syserror("Fork failed.");
+            LOG_SYS("Fork failed.");
         }
         else
         {

@@ -125,7 +125,7 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
             const auto pid = std::stoi(tokens[1]);
             if (kill(pid, SIGINT) != 0 && kill(pid, 0) !=0)
             {
-                Log::syserror("Cannot terminate PID: " + tokens[0]);
+                LOG_SYS("Cannot terminate PID: " << tokens[0]);
             }
         }
         catch(std::invalid_argument& exc)

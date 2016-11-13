@@ -176,7 +176,9 @@ namespace Log
 #define LOG_INF(X) if (Log::infoEnabled()) { LOG_BODY("INF", X); Log::logger().information(oss_.str()); }
 #define LOG_WRN(X) if (Log::warnEnabled()) { LOG_BODY("WRN", X); Log::logger().warning(oss_.str()); }
 #define LOG_ERR(X) if (Log::errorEnabled()) { LOG_BODY("ERR", X); Log::logger().error(oss_.str()); }
+#define LOG_SYS(X) if (Log::errorEnabled()) { LOG_BODY("ERR", X << " (errno: " << std::strerror(errno) << ")"); Log::logger().error(oss_.str()); }
 #define LOG_FTL(X) if (Log::fatalEnabled()) { LOG_BODY("FTL", X); Log::logger().fatal(oss_.str()); }
+#define LOG_SFL(X) if (Log::errorEnabled()) { LOG_BODY("FTL", X << " (errno: " << std::strerror(errno) << ")"); Log::logger().fatal(oss_.str()); }
 
 #endif
 
