@@ -579,8 +579,6 @@ private:
                     {
                         LOG_ERR("Multiple sessions during conversion. " << sessionsCount << " sessions remain.");
                     }
-
-                    session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE);
                 }
 
                 // Clean up the temporary directory the HTMLForm ctor created.
@@ -970,12 +968,9 @@ private:
         if (session->isCloseFrame())
         {
             LOG_TRC("Normal close handshake.");
-            if (session->shutdownPeer(WebSocket::WS_NORMAL_CLOSE))
-            {
-                // Client initiated close handshake
-                // respond close frame
-                ws->shutdown();
-            }
+            // Client initiated close handshake
+            // respond close frame
+            ws->shutdown();
         }
         else
         {
@@ -984,7 +979,6 @@ private:
             session->closeFrame();
             // FIXME: handle exception thrown from here ? ...
             ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
-            session->shutdownPeer(WebSocket::WS_ENDPOINT_GOING_AWAY);
         }
 
         LOG_INF("Finished GET request handler for session [" << id << "].");

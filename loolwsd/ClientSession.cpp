@@ -383,17 +383,6 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, St
     return true;
 }
 
-bool ClientSession::shutdownPeer(Poco::UInt16 statusCode)
-{
-    if (_peer && !_peer->isCloseFrame())
-    {
-        _peer->shutdown(statusCode);
-        return true;
-    }
-
-    return false;
-}
-
 bool ClientSession::forwardToChild(const std::string& message,
                                    const std::shared_ptr<DocumentBroker>& docBroker)
 {
