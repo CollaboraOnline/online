@@ -32,6 +32,7 @@
 #include <random>
 #include <sstream>
 #include <string>
+#include <thread>
 
 #include <Poco/Base64Encoder.h>
 #include <Poco/ConsoleChannel.h>
@@ -396,6 +397,34 @@ namespace Util
     {
         static std::atomic_int counter(0);
         return std::to_string(Poco::Process::id()) + "/" + std::to_string(counter++);
+    }
+
+    bool killChild(const int pid)
+    {
+        LOG_DBG("Killing PID: " << pid);
+        if (kill(pid, SIGTERM) == 0 || errno == ESRCH)
+        {
+            // Killed or doesn't exist.
+            return true;
+        }
+
+        LOG_SYS("Error when trying to kill PID: " << pid << ". Will wait for termination.");
+
+        const auto sleepMs = 50;
+        const auto count = std::max(CHILD_REBALANCE_INTERVAL_MS / sleepMs, 2);
+        for (int i = 0; i < count; ++i)
+        {
+            if (kill(pid, 0) == 0 || errno == ESRCH)
+            {
+                // Doesn't exist.
+                return true;
+            }
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
+        }
+
+        LOG_WRN("Cannot terminate PID: " << pid);
+        return false;
     }
 }
 
