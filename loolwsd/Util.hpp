@@ -84,7 +84,12 @@ namespace Util
 
     /// Trap signals to cleanup and exit the process gracefully.
     void setTerminationSignals();
+
+    /// Trap all fatal signals to assist debugging.
     void setFatalSignals();
+
+    /// Trap SIGINT, should be set by WSD only.
+    void setInterruptionSignal();
 
     void requestTermination(const Poco::Process::PID& pid);
 

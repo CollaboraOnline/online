@@ -1279,6 +1279,11 @@ void lokit_main(const std::string& childRoot,
                 bool queryVersion,
                 bool displayVersion)
 {
+    Util::setFatalSignals();
+    Util::setTerminationSignals();
+
+    Util::setThreadName("loolkit");
+
     // Reinitialize logging when forked.
     const bool logToFile = std::getenv("LOOL_LOGFILE");
     const char* logFilename = std::getenv("LOOL_LOGFILENAME");
@@ -1304,12 +1309,7 @@ void lokit_main(const std::string& childRoot,
     static const std::string pid = std::to_string(Process::id());
     static const std::string jailId = pid;
 
-    Util::setThreadName("loolkit");
-
     LOG_DBG("Process started.");
-
-    Util::setTerminationSignals();
-    Util::setFatalSignals();
 
     std::string userdir_url;
     std::string instdir_path;

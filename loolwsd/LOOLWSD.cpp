@@ -1846,8 +1846,9 @@ Process::PID LOOLWSD::createForKit()
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
-    Util::setTerminationSignals();
     Util::setFatalSignals();
+    Util::setTerminationSignals();
+    Util::setInterruptionSignal();
 
     // down-pay all the forkit linking cost once & early.
     Environment::set("LD_BIND_NOW", "1");
