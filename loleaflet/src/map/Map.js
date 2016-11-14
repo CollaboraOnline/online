@@ -785,7 +785,13 @@ L.Map = L.Evented.extend({
 			map._active = false;
 			clearTimeout(vex.timer);
 
-			var options = $.extend({}, vex.defaultOptions, {contentCSS: {'background':'rgba(0, 0, 0, 0)'}});
+			var options = $.extend({}, vex.defaultOptions, {
+				contentCSS: {'background':'rgba(0, 0, 0, 0)',
+				             'font-size': 'xx-large',
+				             'color': '#fff',
+				             'text-align': 'center'},
+				content: _('Inactive document - please click to resume editing')
+			});
 			options.id = vex.globalID;
 			vex.dialogID = options.id;
 			vex.globalID += 1;
@@ -804,7 +810,7 @@ L.Map = L.Evented.extend({
 			});
 			options.$vex.append(options.$vexOverlay);
 
-			options.$vexContent = $('<div>').addClass(vex.baseClassNames.content).addClass(options.contentClassName).css(options.contentCSS).data({
+			options.$vexContent = $('<div>').addClass(vex.baseClassNames.content).addClass(options.contentClassName).css(options.contentCSS).text(options.content).data({
 				vex: options
 			});
 			options.$vex.append(options.$vexContent);
