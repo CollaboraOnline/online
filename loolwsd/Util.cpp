@@ -51,6 +51,7 @@
 #include "Util.hpp"
 
 std::atomic<bool> TerminationFlag(false);
+std::atomic<bool> ShutdownFlag(false);
 std::mutex SigHandlerTrap;
 
 namespace Util

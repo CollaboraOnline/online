@@ -30,6 +30,9 @@
 /// Flag to stop pump loops.
 extern std::atomic<bool> TerminationFlag;
 
+/// Flag to shutdown the server.
+extern std::atomic<bool> ShutdownFlag;
+
 /// Mutex to trap signal handler, if any,
 /// and prevent _Exit while collecting backtrace.
 extern std::mutex SigHandlerTrap;

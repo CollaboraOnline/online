@@ -91,7 +91,7 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
              tokens[0] == "active_users_count" ||
              tokens[0] == "active_docs_count" ||
              tokens[0] == "mem_stats" ||
-             tokens[0] == "cpu_stats" )
+             tokens[0] == "cpu_stats")
     {
         const std::string result = model.query(tokens[0]);
         if (!result.empty())
@@ -143,6 +143,12 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
 
         std::string responseFrame = oss.str();
         sendTextFrame(responseFrame);
+    }
+    else if (tokens[0] == "shutdown")
+    {
+        LOG_INF("Shutdown requested by admin.");
+        ShutdownFlag = true;
+        return false;
     }
     else if (tokens[0] == "set" && tokens.count() > 1)
     {

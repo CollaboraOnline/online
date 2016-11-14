@@ -884,7 +884,7 @@ private:
                     return session->handleInput(payload.data(), payload.size());
                 },
                 [&session]() { session->closeFrame(); },
-                []() { return !!TerminationFlag; });
+                []() { return TerminationFlag || ShutdownFlag; });
 
             // Connection terminated. Destroy session.
             LOG_DBG("Client session [" << id << "] terminated. Cleaning up.");
@@ -1966,7 +1966,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     time_t last30SecCheck = time(nullptr);
     int status = 0;
-    while (!TerminationFlag)
+    while (!TerminationFlag && !ShutdownFlag)
     {
         UnitWSD::get().invokeTest();
         if (TerminationFlag)
@@ -2073,11 +2073,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #endif
     }
 
-    // stop the service, no more request
+    // Stop the listening to new connections
+    // and wait until sockets close.
+    LOG_INF("Stopping server socket listening.");
     srv.stop();
     srv2.stop();
-
-    // close all websockets
     threadPool.joinAll();
 
     // Terminate child processes
