@@ -58,7 +58,10 @@ static int getLoolKitProcessCount()
         }
         catch (const std::exception& ex)
         {
-            std::cerr << "Error while iterating processes: " << ex.what() << std::endl;
+            // 'File not found' is common here, since there is a race
+            // between iterating the /proc directory and opening files,
+            // the process in question might have been gone.
+            //std::cerr << "Error while iterating processes: " << ex.what() << std::endl;
         }
     }
 
