@@ -28,6 +28,10 @@ constexpr int WS_SEND_TIMEOUT_MS = 1000;
 /// which can be 1500 bytes long.
 constexpr int READ_BUFFER_SIZE = 2048;
 
+/// Message larger than this will be dropped as invalid
+/// or as intentionally flooding the server.
+constexpr int MAX_MESSAGE_SIZE = 100 * 1024 * READ_BUFFER_SIZE;
+
 constexpr auto JAILED_DOCUMENT_ROOT = "/user/docs/";
 constexpr auto CHILD_URI = "/loolws/child?";
 constexpr auto NEW_CHILD_URI = "/loolws/newchild?";
