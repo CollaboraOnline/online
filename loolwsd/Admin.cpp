@@ -213,7 +213,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
         model.subscribe(_sessionId, _adminWs);
     }
 
-    IoUtil::SocketProcessor(_adminWs,
+    IoUtil::SocketProcessor(_adminWs, "admin",
                             [this](const std::vector<char>& payload)
                             {
                                 return adminCommandHandler(payload);

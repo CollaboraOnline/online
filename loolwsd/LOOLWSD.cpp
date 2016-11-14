@@ -878,7 +878,7 @@ private:
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
 
             // Let messages flow.
-            IoUtil::SocketProcessor(ws,
+            IoUtil::SocketProcessor(ws, "client_ws_" + id,
                 [&session](const std::vector<char>& payload)
                 {
                     return session->handleInput(payload.data(), payload.size());

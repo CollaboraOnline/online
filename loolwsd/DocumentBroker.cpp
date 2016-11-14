@@ -37,9 +37,10 @@ using Poco::StringTokenizer;
 
 void ChildProcess::socketProcessor()
 {
-    Util::setThreadName("child_ws_" + std::to_string(_pid));
+    const auto name = "docbrk_ws_" + std::to_string(_pid);
+    Util::setThreadName(name);
 
-    IoUtil::SocketProcessor(_ws,
+    IoUtil::SocketProcessor(_ws, name,
         [this](const std::vector<char>& payload)
         {
             const auto message = LOOLProtocol::getAbbreviatedMessage(payload);
