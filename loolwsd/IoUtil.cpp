@@ -49,14 +49,15 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
 
     // Timeout given is in microseconds.
     static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+    const auto bufferSize = READ_BUFFER_SIZE * 100;
+    int flags = 0;
+    int n = -1;
+    bool stop = false;
+    std::vector<char> payload(bufferSize);
     try
     {
         ws->setReceiveTimeout(0);
 
-        int flags = 0;
-        int n = 0;
-        bool stop = false;
-        std::vector<char> payload(READ_BUFFER_SIZE * 100);
         payload.resize(0);
 
         for (;;)
@@ -75,22 +76,23 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
                 continue;
             }
 
-            payload.resize(payload.capacity());
             try
             {
+                payload.resize(payload.capacity());
+                n = -1;
                 n = ws->receiveFrame(payload.data(), payload.capacity(), flags);
+                payload.resize(n > 0 ? n : 0);
             }
             catch (const Poco::TimeoutException&)
             {
                 LOG_DBG("SocketProcessor: Spurious TimeoutException, ignored");
                 continue;
             }
-            payload.resize(n > 0 ? n : 0);
 
             if (n <= 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
             {
-                closeFrame();
                 LOG_WRN("Connection closed.");
+                closeFrame();
                 break;
             }
 
@@ -100,14 +102,16 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
             {
                 // One WS message split into multiple frames.
+                // TODO: Is this even possible with Poco if we never construct such messages outselves?
+                LOG_WRN("Receiving multi-parm frame.");
                 while (true)
                 {
                     char buffer[READ_BUFFER_SIZE * 10];
                     n = ws->receiveFrame(buffer, sizeof(buffer), flags);
                     if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
                     {
-                        closeFrame();
                         LOG_WRN("Connection closed while reading multiframe message.");
+                        closeFrame();
                         break;
                     }
 
@@ -123,17 +127,21 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             {
                 int size = 0;
                 Poco::StringTokenizer tokens(firstLine, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-                if (tokens.count() == 2 &&
-                    tokens[0] == "nextmessage:" && LOOLProtocol::getTokenInteger(tokens[1], "size", size) && size > 0)
+                // Check if it is a "nextmessage:" and in that case read the large
+                // follow-up message separately, and handle that only.
+                if (tokens.count() == 2 && tokens[0] == "nextmessage:" &&
+                    LOOLProtocol::getTokenInteger(tokens[1], "size", size) && size > 0)
                 {
-                    LOG_TRC("Getting large message of " << tokens[1] << " bytes.");
-
-                    // Check if it is a "nextmessage:" and in that case read the large
-                    // follow-up message separately, and handle that only.
-                    payload.resize(size);
-
-                    n = ws->receiveFrame(payload.data(), size, flags);
-                    payload.resize(n > 0 ? n : 0);
+                    LOG_TRC("Getting large message of " << size << " bytes.");
+                    if (size > MAX_MESSAGE_SIZE)
+                    {
+                        LOG_ERR("Large-message size (" << size << ") over limit or invalid.");
+                    }
+                    else
+                    {
+                        payload.resize(size);
+                        continue;
+                    }
                 }
             }
 
@@ -154,25 +162,23 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
                 break;
             }
         }
-
-        LOG_INF("SocketProcessor finishing. stop: " << (stop ? "true" : "false") <<
-                ", n: " << n << ", payload size: " << payload.size() <<
-                ", flags: " << std::hex << flags);
-
-        if ((flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE && payload.size() > 1)
-        {
-            std::string msg;
-            Poco::URI::encode(std::string(payload.data(), payload.size()), "", msg);
-            LOG_WRN("Last message (" << payload.size() <<
-                    " bytes) will not be processed: [" << msg << "].");
-        }
     }
     catch (const std::exception& exc)
     {
         LOG_ERR("SocketProcessor: exception: " << exc.what());
     }
 
-    LOG_INF("SocketProcessor finished.");
+    if ((flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE && n > 0 && payload.size() > 0)
+    {
+        std::string msg;
+        Poco::URI::encode(std::string(payload.data(), payload.size()), "", msg);
+        LOG_WRN("Last message (" << payload.size() <<
+                " bytes) will not be processed: [" << msg << "].");
+    }
+
+    LOG_INF("SocketProcessor finished. stop: " << (stop ? "true" : "false") <<
+            ", n: " << n << ", payload size: " << payload.size() <<
+            ", flags: " << std::hex << flags);
 }
 
 void shutdownWebSocket(const std::shared_ptr<LOOLWebSocket>& ws)
