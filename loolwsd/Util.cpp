@@ -199,14 +199,23 @@ namespace Util
     static
     void handleTerminationSignal(const int signal)
     {
-        if (!TerminationFlag)
+        if (!ShutdownFlag)
         {
-            TerminationFlag = true;
-
             Log::signalLogPrefix();
-            Log::signalLog(" Termination signal received: ");
+            Log::signalLog(" Shutdown signal received: ");
             Log::signalLog(signalName(signal));
             Log::signalLog("\n");
+            ShutdownFlag = true;
+            return;
+        }
+
+        if (!TerminationFlag)
+        {
+            Log::signalLogPrefix();
+            Log::signalLog(" Forced-Termination signal received: ");
+            Log::signalLog(signalName(signal));
+            Log::signalLog("\n");
+            TerminationFlag = true;
         }
     }
 
