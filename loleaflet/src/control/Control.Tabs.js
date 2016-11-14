@@ -50,7 +50,7 @@ L.Control.Tabs = L.Control.extend({
 						callback: function(key, options) {
 							var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
 							vex.dialog.confirm({
-								message: _('Are you sure you want to delete this sheet?'),
+								message: _('Are you sure you want to delete sheet, %sheet% ?').replace('%sheet%', options.$trigger.text()),
 								callback: function(data) {
 									if (data) {
 										map.deletePage(nPos);
