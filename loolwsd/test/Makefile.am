@@ -28,6 +28,7 @@ AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS
 
 wsd_sources = \
             ../common/FileUtil.cpp \
+            ../common/SigUtil.cpp \
             ../IoUtil.cpp \
             ../Log.cpp \
             ../LOOLKit.cpp \

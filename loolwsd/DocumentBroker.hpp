@@ -30,6 +30,8 @@
 #include "TileCache.hpp"
 #include "Util.hpp"
 
+#include "common/SigUtil.hpp"
+
 // Forwards.
 class DocumentBroker;
 
@@ -99,7 +101,7 @@ public:
             if (_pid != -1 && rude && kill(_pid, 0) != 0 && errno != ESRCH)
             {
                 LOG_INF("Killing child [" << _pid << "].");
-                if (Util::killChild(_pid))
+                if (SigUtil::killChild(_pid))
                 {
                     LOG_ERR("Cannot terminate lokit [" << _pid << "]. Abandoning.");
                 }

@@ -54,7 +54,7 @@
 #include "LOKitHelper.hpp"
 #include "LOOLKit.hpp"
 #include "LOOLProtocol.hpp"
-#include <LOOLWebSocket.hpp>
+#include "LOOLWebSocket.hpp"
 #include "LibreOfficeKit.hpp"
 #include "Log.hpp"
 #include "Png.hpp"
@@ -63,6 +63,8 @@
 #include "Unit.hpp"
 #include "UserMessages.hpp"
 #include "Util.hpp"
+
+#include "common/SigUtil.hpp"
 
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
 #define LIB_MERGED      "lib" "mergedlo" ".so"
@@ -1279,8 +1281,8 @@ void lokit_main(const std::string& childRoot,
                 bool queryVersion,
                 bool displayVersion)
 {
-    Util::setFatalSignals();
-    Util::setTerminationSignals();
+    SigUtil::setFatalSignals();
+    SigUtil::setTerminationSignals();
 
     Util::setThreadName("loolkit");
 

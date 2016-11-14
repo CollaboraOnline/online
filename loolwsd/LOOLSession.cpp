@@ -227,10 +227,6 @@ bool LOOLSession::handleInput(const char *buffer, int length)
     try
     {
         LOG_TRC(getName() << ": Recv: " << summary);
-        if (TerminationFlag)
-        {
-            LOG_WRN("Input while terminating: [" << summary << "].");
-        }
 
         return _handleInput(buffer, length);
     }

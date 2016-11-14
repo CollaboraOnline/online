@@ -22,6 +22,8 @@
 #include "Log.hpp"
 #include "Util.hpp"
 
+#include "common/SigUtil.hpp"
+
 UnitBase *UnitBase::Global = nullptr;
 
 static Poco::Thread TimeoutThread("unit timeout");
