@@ -41,6 +41,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Page break'), type: 'unocommand', uno: '.uno:InsertPageBreak'},
 				{name: _('Column break'), type: 'unocommand', uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
+				{name: _('Special character...'), id: 'specialcharacter', type: 'action'},
 				{name: _('Formatting mark'), type: 'menu', menu: [
 						{name: _('Non-breaking space'), type: 'unocommand', uno: '.uno:InsertNonBreakingSpace'},
 						{name: _('Non-breaking hyphen'), type: 'unocommand', uno: '.uno:InsertHardHyphen'},
@@ -172,7 +173,10 @@ L.Control.Menubar = L.Control.extend({
 												{name: _('Zoom out'), id: 'zoomout', type: 'action'},
 												{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
 			},
-			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'}]
+			{name: _('Insert'), type: 'menu', menu: [
+				{name: _('Image'), id: 'insertgraphic', type: 'action'},
+				{type: 'separator'},
+				{name: _('Special character...'), id: 'specialcharacter', type: 'action'}]
 			},
 			{name: _('Tables'), type: 'menu', menu: [{name: _('Insert'), type: 'menu', menu: [{name: _('Rows before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
 																						{name: _('Rows after'), type: 'unocommand', uno: '.uno:InsertRowsAfter'},
@@ -213,17 +217,21 @@ L.Control.Menubar = L.Control.extend({
 												{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
 			{name: _('View'), type: 'menu', menu: [{name: _('Full screen'), id: 'fullscreen', type: 'action'}]},
-			{name: _('Insert'), type: 'menu', menu: [{name: _('Image'), id: 'insertgraphic', type: 'action'},
-												  {name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
-												  {type: 'separator'},
-												  {name: _('Row'), type: 'unocommand', uno: '.uno:InsertRows'},
-												  {name: _('Column'), type: 'unocommand', uno: '.uno:InsertColumns'}]
+			{name: _('Insert'), type: 'menu', menu: [
+				{name: _('Image'), id: 'insertgraphic', type: 'action'},
+				{name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
+				{type: 'separator'},
+				{name: _('Row'), type: 'unocommand', uno: '.uno:InsertRows'},
+				{name: _('Column'), type: 'unocommand', uno: '.uno:InsertColumns'},
+				{type: 'separator'},
+				{name: _('Special character...'), id: 'specialcharacter', type: 'action'}]
 			},
-			{name: _('Cells'), type: 'menu', menu: [{name: _('Insert row'), type: 'unocommand', uno: '.uno:InsertRows'},
-												 {name: _('Insert column'), type: 'unocommand', uno: '.uno:InsertColumns'},
-												 {type: 'separator'},
-												 {name: _('Delete row'), type: 'unocommand', uno: '.uno:DeleteRows'},
-												 {name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
+			{name: _('Cells'), type: 'menu', menu: [
+				{name: _('Insert row'), type: 'unocommand', uno: '.uno:InsertRows'},
+				{name: _('Insert column'), type: 'unocommand', uno: '.uno:InsertColumns'},
+				{type: 'separator'},
+				{name: _('Delete row'), type: 'unocommand', uno: '.uno:DeleteRows'},
+				{name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
 			},
 			{name: _('Help'), type: 'menu', menu: [{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 			                                       {name: _('About'), id: 'about', type: 'action'}]
@@ -358,6 +366,10 @@ L.Control.Menubar = L.Control.extend({
 			map.downloadAs(fileName + '.' + format, format);
 		} else if (id === 'insertgraphic') {
 			L.DomUtil.get('insertgraphic').click();
+		} else if (id === 'specialcharacter') {
+			var fontList = $('.fonts-select option');
+			var selectedIndex = $('.fonts-select').prop('selectedIndex');
+			map._docLayer._onSpecialChar(fontList, selectedIndex);
 		} else if (id === 'zoomin' && map.getZoom() < map.getMaxZoom()) {
 			map.zoomIn(1);
 		} else if (id === 'zoomout' && map.getZoom() > map.getMinZoom()) {
