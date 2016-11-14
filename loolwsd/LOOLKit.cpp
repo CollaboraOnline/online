@@ -1467,8 +1467,8 @@ void lokit_main(const std::string& childRoot,
 
         auto queue = std::make_shared<TileQueue>();
 
-        const std::string socketName = "ChildControllerWS";
-        IoUtil::SocketProcessor(ws,
+        const std::string socketName = "child_ws_" + std::to_string(getpid());
+        IoUtil::SocketProcessor(ws, socketName,
                 [&socketName, &ws, &loKit, &queue](const std::vector<char>& data)
                 {
                     std::string message(data.data(), data.size());

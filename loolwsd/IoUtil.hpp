@@ -22,6 +22,7 @@ namespace IoUtil
     /// Synchronously process LOOLWebSocket requests and dispatch to handler.
     /// Handler returns false to end.
     void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
+                         const std::string& name,
                          const std::function<bool(const std::vector<char>&)>& handler,
                          const std::function<void()>& closeFrame,
                          const std::function<bool()>& stopPredicate);
