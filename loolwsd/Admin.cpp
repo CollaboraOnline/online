@@ -40,6 +40,8 @@
 #include "Unit.hpp"
 #include "Util.hpp"
 
+#include "common/SigUtil.hpp"
+
 using namespace LOOLProtocol;
 
 using Poco::StringTokenizer;
@@ -124,7 +126,7 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
         {
             const auto pid = std::stoi(tokens[1]);
             LOG_INF("Admin request to kill PID: " << pid);
-            Util::killChild(pid);
+            SigUtil::killChild(pid);
         }
         catch (std::invalid_argument& exc)
         {

@@ -114,6 +114,8 @@
 #include "UserMessages.hpp"
 #include "Util.hpp"
 
+#include "common/SigUtil.hpp"
+
 using namespace LOOLProtocol;
 
 using Poco::Environment;
@@ -1846,8 +1848,8 @@ Process::PID LOOLWSD::createForKit()
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
-    Util::setFatalSignals();
-    Util::setTerminationSignals();
+    SigUtil::setFatalSignals();
+    SigUtil::setTerminationSignals();
 
     // down-pay all the forkit linking cost once & early.
     Environment::set("LD_BIND_NOW", "1");
@@ -1863,7 +1865,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     char* locale = setlocale(LC_ALL, nullptr);
     if (locale == nullptr || std::strcmp(locale, "C") == 0)
+    {
         setlocale(LC_ALL, "en_US.utf8");
+    }
 
     if (access(Cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
@@ -1989,7 +1993,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                     {
                         LOG_ERR("Child process [" << pid << "] " <<
                                 (WCOREDUMP(status) ? "core-dumped" : "died") <<
-                                " with " << Util::signalName(WTERMSIG(status)));
+                                " with " << SigUtil::signalName(WTERMSIG(status)));
                     }
 
                     // Spawn a new forkit and try to dust it off and resume.
@@ -2003,7 +2007,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 else if (WIFSTOPPED(status) == true)
                 {
                     LOG_INF("Child process [" << pid << "] stopped with " <<
-                            Util::signalName(WSTOPSIG(status)));
+                            SigUtil::signalName(WSTOPSIG(status)));
                 }
                 else if (WIFCONTINUED(status) == true)
                 {
@@ -2082,7 +2086,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Terminate child processes
     LOG_INF("Requesting forkit process " << forKitPid << " to terminate.");
-    Util::requestTermination(forKitPid);
+    SigUtil::requestTermination(forKitPid);
     for (auto& child : NewChildren)
     {
         child->close(true);

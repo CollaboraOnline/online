@@ -27,16 +27,6 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
-/// Flag to stop pump loops.
-extern std::atomic<bool> TerminationFlag;
-
-/// Flag to shutdown the server.
-extern std::atomic<bool> ShutdownFlag;
-
-/// Mutex to trap signal handler, if any,
-/// and prevent _Exit while collecting backtrace.
-extern std::mutex SigHandlerTrap;
-
 namespace Util
 {
     namespace rng
@@ -81,22 +71,6 @@ namespace Util
     {
         assert(!mtx.try_lock());
     }
-
-    /// Returns the name of the signal.
-    const char* signalName(int signo);
-
-    /// Trap signals to cleanup and exit the process gracefully.
-    void setTerminationSignals();
-
-    /// Trap all fatal signals to assist debugging.
-    void setFatalSignals();
-
-    void requestTermination(const Poco::Process::PID& pid);
-
-    /// Kills a child process and returns true when
-    /// child pid is removed from the process table
-    /// after a certain (short) timeout.
-    bool killChild(const int pid);
 
     int getMemoryUsage(const Poco::Process::PID nPid);
 

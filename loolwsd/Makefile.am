@@ -32,6 +32,7 @@ AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
 shared_sources = ChildSession.cpp \
                  common/FileUtil.cpp \
+                 common/SigUtil.cpp \
                  IoUtil.cpp \
                  Log.cpp \
                  LOOLProtocol.cpp \
@@ -95,6 +96,7 @@ noinst_HEADERS = Admin.hpp \
                  Exceptions.hpp \
                  FileServer.hpp \
                  common/FileUtil.hpp \
+                 common/SigUtil.hpp \
                  IoUtil.hpp \
                  LibreOfficeKit.hpp \
                  Log.hpp \

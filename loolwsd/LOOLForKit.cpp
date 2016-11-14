@@ -32,12 +32,14 @@
 #include <Poco/Util/Application.h>
 
 #include "Common.hpp"
-#include "common/FileUtil.hpp"
 #include "IoUtil.hpp"
 #include "LOOLKit.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
+
+#include "common/FileUtil.hpp"
+#include "common/SigUtil.hpp"
 #include "security.h"
 
 using Poco::Process;
@@ -259,7 +261,9 @@ static void printArgumentHelp()
 int main(int argc, char** argv)
 {
     if (!hasCorrectUID("loolforkit"))
+    {
         return Application::EXIT_SOFTWARE;
+    }
 
     if (std::getenv("SLEEPFORDEBUGGER"))
     {
@@ -273,6 +277,9 @@ int main(int argc, char** argv)
         }
     }
 
+    SigUtil::setFatalSignals();
+    SigUtil::setTerminationSignals();
+
     // Initialization
     const bool logToFile = std::getenv("LOOL_LOGFILE");
     const char* logFilename = std::getenv("LOOL_LOGFILENAME");
@@ -285,9 +292,6 @@ int main(int argc, char** argv)
     }
 
     Log::initialize("frk", logLevel ? logLevel : "", logColor != nullptr, logToFile, logProperties);
-
-    Util::setTerminationSignals();
-    Util::setFatalSignals();
 
     std::string childRoot;
     std::string loSubPath;
