@@ -46,6 +46,7 @@ L.Map.include({
 			this._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
 		}
 		docLayer._drawSearchResults();
+		this.focus();
 	},
 
 	getPreview: function (id, index, maxWidth, maxHeight, options) {
