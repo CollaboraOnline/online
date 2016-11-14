@@ -125,6 +125,7 @@ void HTTPCrashTest::testBarren()
     try
     {
         killLoKitProcesses("(loolkit)");
+        countLoolKitProcesses(0);
 
         std::cerr << "Loading after kill." << std::endl;
 
@@ -148,6 +149,7 @@ void HTTPCrashTest::testCrashKit()
         auto socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
         killLoKitProcesses("(loolkit)");
+        countLoolKitProcesses(0);
 
         // We expect the client connection to close.
         // In the future we might restore the kit, but currently we don't.
@@ -202,8 +204,9 @@ void HTTPCrashTest::testCrashForkit()
         socket->shutdown();
 
 
-        std::cerr << "Killing forkit." << std::endl;
+        std::cerr << "Killing loolkit." << std::endl;
         killLoKitProcesses("(loolkit)");
+        countLoolKitProcesses(0);
         std::cerr << "Communicating after kill." << std::endl;
         loadDocAndGetSocket("empty.odt", _uri, testname);
     }
@@ -253,8 +256,6 @@ void HTTPCrashTest::killLoKitProcesses(const char* exec_filename)
         {
         }
     }
-
-    countLoolKitProcesses(0);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPCrashTest);
