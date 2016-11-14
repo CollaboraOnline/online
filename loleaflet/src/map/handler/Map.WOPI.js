@@ -48,8 +48,8 @@ L.Map.WOPI = L.Handler.extend({
 			this._map._socket.sendMessage('closedocument');
 		}
 		else if (msg.MessageId === 'Action_Save') {
-			var dontTerminateEdit = e.Values && e.Values['DontTerminateEdit'];
-			var dontSaveIfUnmodified = e.Values && e.Values['DontSaveIfUnmodified'];
+			var dontTerminateEdit = msg.Values && msg.Values['DontTerminateEdit'];
+			var dontSaveIfUnmodified = msg.Values && msg.Values['DontSaveIfUnmodified'];
 
 			this._map.save(dontTerminateEdit, dontSaveIfUnmodified);
 		}
