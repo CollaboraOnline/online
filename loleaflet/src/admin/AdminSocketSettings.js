@@ -25,6 +25,16 @@ var AdminSocketSettings = AdminSocketBase.extend({
 				command += ' cpu_stats_interval=' + cpuStatsInterval;
 				socketSettings.send(command);
 			});
+
+			$('#btnShutdown').click(function() {
+				vex.dialog.confirm({
+					message: _('Are you sure you want to shutdown the server?'),
+					callback: function(value) {
+						// TODO: Prompt for reason.
+						socketSettings.send('shutdown maintenance');
+					}
+				});
+			});
 		});
 	},
 
