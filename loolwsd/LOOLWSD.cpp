@@ -2076,6 +2076,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // Stop the listening to new connections
     // and wait until sockets close.
     LOG_INF("Stopping server socket listening.");
+    Util::alertAllUsers("internal", "shutdown");
     srv.stop();
     srv2.stop();
     threadPool.joinAll();
@@ -2142,6 +2143,8 @@ namespace Util
 void alertAllUsers(const std::string& cmd, const std::string& kind)
 {
     std::lock_guard<std::mutex> DocBrokersLock(DocBrokersMutex);
+
+    LOG_INF("Alerting all users: cmd=" << cmd << ", kind=" << kind);
 
     for (auto& brokerIt : DocBrokers)
     {
