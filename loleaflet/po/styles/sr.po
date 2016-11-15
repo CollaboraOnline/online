@@ -2024,3 +2024,381 @@ msgstr "Препиши"
 #: globstr.src
 msgid "Insert"
 msgstr "Уметни"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Основна латиница"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Латиница 1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "проширење латиничних I"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "проширење латиничних II"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA проширења"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "слова која мењају размак"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "комбинујући дијакритици"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "основни грчки"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "грчки и коптски симболи"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "ћирилични"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "јерменски"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "основни хебрејски"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "додатни хебрејски"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "основни арапски"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "додатни арапски"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "деванагари"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "бенгалски"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "гурмуки"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "гуџарати"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "тамилски"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "телугу"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "канада"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "малајалам"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "тајски"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "лаоски"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "основни грузијски"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "проширење грузијских"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "Хангул Јамо"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Додаци проширеној латиници"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "проширење грчких"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "општа интерпункција"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "експоненти и индекси"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Симболи валута"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "комбинујући дијакритици"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Симболи налик словима"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Облици бројева"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Стрелице"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "Математички оператори"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "разни технички"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Контролне слике"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Оптичко препознавање знака"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "затворени алфанумерички"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Простор за цртање"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Елементи блока"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Геометријски облици"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "разни симболи"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "штампарски украси"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "КJK симболи и интерпункција"
+
+#: ucsubset.src
+msgid "Hiragana"
+msgstr "хирагана"
+
+#: ucsubset.src
+msgid "Katakana"
+msgstr "катакана"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "Бопомофо"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Хангул компатибилни Јамо"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "КЈК разно"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "затворена КЈК слова и месеци"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "КЈК компатибилни"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "Хангул"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "КЈК обједињени идеограми"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Простор за приватну употребу"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "КЈК компатибилни идеограми"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "алфабетско представљање"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Арапски облици I"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "комбинујуће полуознаке"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "КЈК компатибилни облици"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "варијанте малих облика"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Арапски облици II"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Облици пуне и полуширине"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "посебни"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "синхалески"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "тибетски"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "бурмански"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "кмерски"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "огамски"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "руне"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "сиријски"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "Тана"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "етиопски"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "чероки"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "канадски слоговни"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "монголски"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Разни математички симболи I"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "додатне стелице I"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Брајево писмо"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Додатне стрелице II"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Разни математички симболи II"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "Допуна радикала за КЈК"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "Канђи радикали"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Идеограмски карактери"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "тагалог"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "Хануноо"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "тагбанва"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "бухид"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "Канбун"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Продужени Бопомофо"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "катакана"

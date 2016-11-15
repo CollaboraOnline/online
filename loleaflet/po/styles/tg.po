@@ -1945,3 +1945,49 @@ msgstr "Сарлавҳаи амудӣ, матн, диаграмма"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Сарлавҳаи амудӣ, матни амудӣ"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Арманӣ"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "Банғолӣ"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "Гуҷаратӣ"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "Тамилӣ"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "Телугуӣ"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "Каннадаӣ"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "Малаяламӣ"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "Лаосӣ"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "Синҳала"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "Хмерӣ"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Муғулӣ"

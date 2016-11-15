@@ -1958,3 +1958,305 @@ msgstr "Vertikale titel, teks, grafiek"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Vertical titel, vertikale teks"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Basiese Latyn"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Latyn-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "Latyn uitgebrei-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "Latyn uitgebrei-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA-uitbreidings"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Spasiewysigingsletters"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Kombinerende diakritiese tekens"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "Basiese Grieks"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Griekse simbole en Kopties"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Cyrillies"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Armeens"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Basiese Hebreeus"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Hebreeus uitgebrei"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Basiese Arabies"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Arabies uitgebrei"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "Bengaals"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "Goedjarati"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "Teloegoe"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "Malabaars"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "Thais"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "Basiese Georgies"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "Georgies uitgebrei"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "Hangoel Jamo"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Latyn uitgebrei bykomend"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "Grieks uitgebrei"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Algemene leestekens"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Superskrifte en subskrifte"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Geldeenheidsimbole"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "Kombinerende diakritiese simbole"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Letteragtige simbole"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Getalvorms"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Pyltjies"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "Wiskundige operateure"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Diverse tegniese"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Beheer prentjies"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Optiese karakterherkenning"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Ingeslote alfanumeriese karakters"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Kassietekening"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Blokelemente"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Geometriese vorms"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Diverse simbole"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "CJK-simbole en leestekens"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Hangoel-versoenbaarheid Jamo"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK Diverse"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "Ingeslote CJK-letters en -maande"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "CJK-versoenbaarheid"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "Hangoel"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "CJK Unified-ideogramme"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Area vir private gebruik"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK-versoenbare ideogramme"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Alfabetiese aanbiedingsvorms"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Arabiese aanbiedingsvorms-A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "Kombinerende halftekens"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK-versoenbaarheidsvorms"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Klein vormvariante"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Arabiese aanbiedingsvorms-B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Halfbreedte- en volbreedtevorms"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Spesiales"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "Sinhalees"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "Tibetaans"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "Birmaans"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Runies"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "Siries"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "Etiopies"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Kanadiese inheemse lettergrepe"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Mongools"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Diverse wiskundige simbole-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Aanvullende pyltjies-A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Braille-patrone"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Aanvullende pyltjies-B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Diverse wiskundige simbole-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK-radikale aanvullend"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Ideografiese beskrywende karakters"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Bopomofo uitgebrei"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Katakana fonetiese simbole"

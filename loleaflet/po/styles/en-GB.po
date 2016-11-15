@@ -1906,3 +1906,17 @@ msgstr "Last column"
 #: strings.src
 msgid "Centered Text"
 msgstr "Centred Text"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Latin Extended Additional"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Canadian Aboriginal Syllables"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "Kanxi Radicals"

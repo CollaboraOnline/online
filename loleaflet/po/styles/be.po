@@ -1967,3 +1967,397 @@ msgstr "Паўзверх"
 #: globstr.src
 msgid "Insert"
 msgstr "Уставіць"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Базавы лацінскі"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Лацінскі-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "Лацінскі пашыраны-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "Лацінскі пашыраны-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "Пашырэнні IPA"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Знакі мадыфікацыі інтэрвалу"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Камбінавальныя дыякрытычныя знакі"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "Базавы грэчаскі"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Грэчаскія сімвалы і коптскі"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Кірыліца"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Базавы яўрэйскі"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Яўрэйскі пашыраны"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Базавы арабскі"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Арабскі пашыраны"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "Дэванагары"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "Гурмукхі"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "Тайская"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "Базавая грузінскі"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "Грузінскі пашыраны"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "Хангыл джамо"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Лацінскі пашыраны дадаткі"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "Грэчаскі пашыраны"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Агульная пунктуацыя"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Індэксы верхнія і ніжнія"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Сімвалы грашовых адзінак"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "Камбінавальныя дыякрытычныя сімвалы"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Літарападобныя сімвалы"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Лічбавыя формы"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Рознае тэхнічнае"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Рысункі кантрольнікаў"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Аптычнае пазнаванне знакаў"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Упісаныя літары і лічбы"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Рысаванне прамавугольнікаў"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Блокавыя элементы"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Геаметрычныя формы"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Розныя сімвалы"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "Дынбац"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "К.Я.К. знакі і пунктуацыя"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "Бопомофо"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Хангыл сумяшчальнасць джамо"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "К.Я.К. рознае"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "К.Я.К. упісаныя літары і месяцы"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "К.Я.К. сумяшчальнасць"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "Хангул"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "К.Я.К. уніфікаваныя ідэаграфы"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "К.Я.К. уніфікаваныя ідэаграфы, пашырэнне A"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Абсяг прыватнага карыстання"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "К.Я.К. сумяшчальнасць ідэаграфы"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Алфавітныя формы прэзентацыі"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Арабскія формы прэзентацыі-A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "Камбінавальныя паў-знакі"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "К.Я.К. сумяшчальнасць формы"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Варыянты малых форм"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Арабскія формы прэзентацыі-B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Паў-шырокія і поўна-шырокія формы"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Спецыяльныя"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "Склады Йі"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "Радыкалы Йі"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "Візанційскія музычныя знакі"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "Музычныя знакі"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "Матэматычныя літарна-лічбавыя знакі"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "К.Я.К. уніфікаваныя ідэаграфы, пашырэнне B"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "К.Я.К. уніфікаваныя ідэаграфы, пашырэнне C"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "К.Я.К. уніфікаваныя ідэаграфы, пашырэнне D"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "К.Я.К., дадатковыя ідэаграфы сумяшчальнасці"
+
+#: ucsubset.src
+msgid "Cyrillic Supplement"
+msgstr "Кірыліца дадатковая"
+
+#: ucsubset.src
+msgid "Khmer Symbols"
+msgstr "Кхмерскія знакі"
+
+#: ucsubset.src
+msgid "Phonetic Extensions"
+msgstr "Фанетычныя пашырэнні"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "Розныя знакі і стрэлкі"
+
+#: ucsubset.src
+msgid "Linear B Syllabary"
+msgstr "Лінейнае пісьмо B, склады"
+
+#: ucsubset.src
+msgid "Linear B Ideograms"
+msgstr "Лінейнае пісьмо B, ідэаграмы"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "Эгейскія лічбы"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "М'янма"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "Огхам"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Рунічны"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "Сірыйскі"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "Таана"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "Эфіопскі"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "Чэракі"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Канадскіх абарыгенаў складавы"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Розныя матэматычныя сімвалы-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Дадатковыя стрэлкі-A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Узоры Брайля"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Дадатковыя стрэлкі-B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Розныя матэматычныя сімвалы-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "К.Я.К. радыкальны дадатак"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "Каншы радыкальныя"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Знакі ідэаграфічных апісанняў"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "Тагальская"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "Хануну"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "Тагбанва"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "Бухід"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "Канбун"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Бопомофо пашыраны"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Катакана фанетыка"
+
+#: ucsubset.src
+msgid "Ancient Greek Musical Notation"
+msgstr "Старажытнагрэчаскія музычныя знакі"
+
+#: ucsubset.src
+msgid "Ancient Greek Numbers"
+msgstr "Старажытнагрэчаскія лічбы"
+
+#: ucsubset.src
+msgid "Arabic Supplement"
+msgstr "Арабскія, дадатак"

@@ -2018,3 +2018,953 @@ msgstr "%1 个单词/字，%2 个字符"
 #: strings.src
 msgid "Slide %1 of %2"
 msgstr "幻灯片 %1，共 %2 张"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "基本拉丁文"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "拉丁文-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "拉丁文扩充 A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "拉丁文扩充 B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "国际音标扩充"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "间隔修饰符号"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "组合式符号"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "基本希腊语"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "希腊符号和古代埃及文"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "西里尔语"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "亚美尼亚语"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "基本希伯来语"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "希伯来语扩充"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "基本阿拉伯语"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "阿拉伯语扩充"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "梵文字母"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "孟加拉语"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "印度北部的 Gurmukhi 语言"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "印度北部的 Gujarati 语言"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "坦米尔语"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "印度北部的 Telugu 语言"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "(印度)卡纳达语"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "印度西南部的Dravidian语的方言"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "泰语"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "老挝语"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "基本格鲁吉亚语"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "格鲁吉亚语扩充"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "韩文 Jamo"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "拉丁文扩充附加"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "希腊语扩充"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "普通的标点符号"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "上标和下标"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "货币符号"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "组合式符号"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "类似字母的符号"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "数字符号"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "箭头符号"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "数学计算符号"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "杂项技术符号"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "控制图像"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "光学字符识别"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "带圈的字母数字"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "方块图画"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "区块元素"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "几何形状"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "杂项符号"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "装饰符号"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "中日韩符号和标点"
+
+#: ucsubset.src
+msgid "Hiragana"
+msgstr "平假名"
+
+#: ucsubset.src
+msgid "Katakana"
+msgstr "片假名"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "注音符号"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "韩文兼容 Jamo"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "杂项中日韩字符"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "带圈的中日韩字符和月份"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "中日韩兼容字符"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "韩文Hangul"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "中日韩统一表意文字"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "中日韩统一表意文字扩充 A"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "专用区"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "中日韩兼容表意文字"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "字母表示形式"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "阿拉伯语表示形式 A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "组合半角标记"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "中日韩兼容形式"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "小写变体"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "阿拉伯语表示形式 B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "半角及全角形式"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "特殊字符"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "彝文音节"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "彝文偏旁部首"
+
+#: ucsubset.src
+msgid "Old Italic"
+msgstr "古意大利文"
+
+#: ucsubset.src
+msgid "Gothic"
+msgstr "歌德文"
+
+#: ucsubset.src
+msgid "Deseret"
+msgstr "犹他州"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "拜占庭音乐符号"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "音乐符号"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "数学字母数字符号"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "中日韩统一表意文字扩充 B"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "中日韩统一表意文字扩充 C"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "中日韩统一表意文字扩充 D"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "CJK兼容表意字符"
+
+#: ucsubset.src
+msgid "Tags"
+msgstr "标签"
+
+#: ucsubset.src
+msgid "Cyrillic Supplement"
+msgstr "西里尔语扩充"
+
+#: ucsubset.src
+msgid "Variation Selectors"
+msgstr "变体选择器"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-A"
+msgstr "补充专用区域-A"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-B"
+msgstr "补充专用区域-B"
+
+#: ucsubset.src
+msgid "Limbu"
+msgstr "林布语"
+
+#: ucsubset.src
+msgid "Tai Le"
+msgstr "傣哪文"
+
+#: ucsubset.src
+msgid "Khmer Symbols"
+msgstr "高棉文符号"
+
+#: ucsubset.src
+msgid "Phonetic Extensions"
+msgstr "注音扩展"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "杂项符号和箭头"
+
+#: ucsubset.src
+msgid "Yijing Hexagram Symbols"
+msgstr "易经六十四卦象符号"
+
+#: ucsubset.src
+msgid "Linear B Syllabary"
+msgstr "线形B音节文字"
+
+#: ucsubset.src
+msgid "Linear B Ideograms"
+msgstr "线形B表意文字"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "爱琴数字"
+
+#: ucsubset.src
+msgid "Ugaritic"
+msgstr "乌加里特字母"
+
+#: ucsubset.src
+msgid "Shavian"
+msgstr "萧伯纳字母"
+
+#: ucsubset.src
+msgid "Osmanya"
+msgstr "奥斯马尼亚字母"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "锡兰语"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "西藏语"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "缅甸语"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "谷美尔语"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "欧甘文字"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "古代北欧文"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "古代叙利亚语"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "马尔代夫语"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "衣索比亚语"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "查拉几族土人语"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "加拿大土著语的音节"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "蒙古语"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "各种数学符号-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "附加的箭头-A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "盲文"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "附加的箭头-B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "各种数学符号-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "附加的中日韩文字部首"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "康熙字典部首"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "注音符号"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "菲律宾汤加洛格语"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "菲律宾的含努闹语"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "菲律宾塔格板瓦语"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "菲律宾的布黑德语"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "日文的古汉文"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "附加的注音符号"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "注音的片假名"
+
+#: ucsubset.src
+msgid "CJK Strokes"
+msgstr "中日韩笔画部件"
+
+#: ucsubset.src
+msgid "Cypriot Syllabary"
+msgstr "塞浦路斯音节文字"
+
+#: ucsubset.src
+msgid "Tai Xuan Jing Symbols"
+msgstr "太玄经符号"
+
+#: ucsubset.src
+msgid "Variation Selectors Supplement"
+msgstr "变体选择器补充"
+
+#: ucsubset.src
+msgid "Ancient Greek Musical Notation"
+msgstr "古希腊音乐记号"
+
+#: ucsubset.src
+msgid "Ancient Greek Numbers"
+msgstr "古希腊数字"
+
+#: ucsubset.src
+msgid "Arabic Supplement"
+msgstr "阿拉伯文扩充"
+
+#: ucsubset.src
+msgid "Buginese"
+msgstr "布吉文"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Supplement"
+msgstr "组合用附加符号补充"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "埃及古语"
+
+#: ucsubset.src
+msgid "Ethiopic Extended"
+msgstr "埃塞俄比亚语扩展"
+
+#: ucsubset.src
+msgid "Ethiopic Supplement"
+msgstr "埃塞俄比亚语扩充"
+
+#: ucsubset.src
+msgid "Georgian Supplement"
+msgstr "格鲁吉亚语扩充"
+
+#: ucsubset.src
+msgid "Glagolitic"
+msgstr "格拉哥里字母"
+
+#: ucsubset.src
+msgid "Kharoshthi"
+msgstr "佉卢文"
+
+#: ucsubset.src
+msgid "Modifier Tone Letters"
+msgstr "声调修饰符号"
+
+#: ucsubset.src
+msgid "New Tai Lue"
+msgstr "西双版纳新傣文"
+
+#: ucsubset.src
+msgid "Old Persian"
+msgstr "古波斯文"
+
+#: ucsubset.src
+msgid "Phonetic Extensions Supplement"
+msgstr "音标扩展补充"
+
+#: ucsubset.src
+msgid "Supplemental Punctuation"
+msgstr "补充标点符号"
+
+#: ucsubset.src
+msgid "Syloti Nagri"
+msgstr "锡尔赫特文"
+
+#: ucsubset.src
+msgid "Tifinagh"
+msgstr "提非纳文"
+
+#: ucsubset.src
+msgid "Vertical Forms"
+msgstr "竖排形式"
+
+#: ucsubset.src
+msgid "Balinese"
+msgstr "巴厘文"
+
+#: ucsubset.src
+msgid "Latin Extended-C"
+msgstr "拉丁文扩充-C"
+
+#: ucsubset.src
+msgid "Latin Extended-D"
+msgstr "拉丁文扩充-D"
+
+#: ucsubset.src
+msgid "Phags-Pa"
+msgstr "八思巴文"
+
+#: ucsubset.src
+msgid "Phoenician"
+msgstr "腓尼基文"
+
+#: ucsubset.src
+msgid "Cuneiform"
+msgstr "楔形文字"
+
+#: ucsubset.src
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "楔形文字数字和标点"
+
+#: ucsubset.src
+msgid "Counting Rod Numerals"
+msgstr "算筹数字"
+
+#: ucsubset.src
+msgid "Sundanese"
+msgstr "巽他文"
+
+#: ucsubset.src
+msgid "Lepcha"
+msgstr "雷布查文"
+
+#: ucsubset.src
+msgid "Ol Chiki"
+msgstr "桑塔利文"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-A"
+msgstr "西里尔字母扩展区-A"
+
+#: ucsubset.src
+msgid "Vai"
+msgstr "瓦依文"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-B"
+msgstr "西里尔文扩展区-B"
+
+#: ucsubset.src
+msgid "Saurashtra"
+msgstr "索拉什特拉文"
+
+#: ucsubset.src
+msgid "Kayah Li"
+msgstr "克耶字母"
+
+#: ucsubset.src
+msgid "Rejang"
+msgstr "拉让文"
+
+#: ucsubset.src
+msgid "Cham"
+msgstr "占语"
+
+#: ucsubset.src
+msgid "Ancient Symbols"
+msgstr "古代符号"
+
+#: ucsubset.src
+msgid "Phaistos Disc"
+msgstr "斐斯托斯文字"
+
+#: ucsubset.src
+msgid "Lycian"
+msgstr "利西亚文"
+
+#: ucsubset.src
+msgid "Carian"
+msgstr "卡里亚文"
+
+#: ucsubset.src
+msgid "Lydian"
+msgstr "吕底亚文"
+
+#: ucsubset.src
+msgid "Mahjong Tiles"
+msgstr "麻将牌面"
+
+#: ucsubset.src
+msgid "Domino Tiles"
+msgstr "西洋骨牌牌面"
+
+#: ucsubset.src
+msgid "Samaritan"
+msgstr "撒马利亚文"
+
+#: ucsubset.src
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "加拿大土著语音节文字扩展"
+
+#: ucsubset.src
+msgid "Tai Tham"
+msgstr "老傣文"
+
+#: ucsubset.src
+msgid "Vedic Extensions"
+msgstr "吠陀梵语扩展区"
+
+#: ucsubset.src
+msgid "Lisu"
+msgstr "傈僳语"
+
+#: ucsubset.src
+msgid "Bamum"
+msgstr "巴姆穆语"
+
+#: ucsubset.src
+msgid "Common Indic Number Forms"
+msgstr "常用印度数字形状"
+
+#: ucsubset.src
+msgid "Devanagari Extended"
+msgstr "天城体梵文字母扩展"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-A"
+msgstr "Hangul Jamo 扩展区-A"
+
+#: ucsubset.src
+msgid "Javanese"
+msgstr "爪哇语"
+
+#: ucsubset.src
+msgid "Myanmar Extended-A"
+msgstr "缅甸语扩展区-A"
+
+#: ucsubset.src
+msgid "Tai Viet"
+msgstr "越南傣文"
+
+#: ucsubset.src
+msgid "Meetei Mayek"
+msgstr "曼尼普尔文"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-B"
+msgstr "Hangul Jamo 扩展区-B"
+
+#: ucsubset.src
+msgid "Imperial Aramaic"
+msgstr "皇室阿拉姆文"
+
+#: ucsubset.src
+msgid "Old South Arabian"
+msgstr "古南阿拉伯字母"
+
+#: ucsubset.src
+msgid "Avestan"
+msgstr "阿维斯陀语"
+
+#: ucsubset.src
+msgid "Inscriptional Parthian"
+msgstr "帕提亚碑铭体"
+
+#: ucsubset.src
+msgid "Inscriptional Pahlavi"
+msgstr "巴拉维碑铭体"
+
+#: ucsubset.src
+msgid "Old Turkic"
+msgstr "古突厥语"
+
+#: ucsubset.src
+msgid "Rumi Numeral Symbols"
+msgstr "鲁米数字符号"
+
+#: ucsubset.src
+msgid "Kaithi"
+msgstr "凯提文"
+
+#: ucsubset.src
+msgid "Egyptian Hieroglyphs"
+msgstr "埃及象形文字"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "封闭式字母数字补充"
+
+#: ucsubset.src
+msgid "Enclosed Ideographic Supplement"
+msgstr "封闭式表意文字补充"
+
+#: ucsubset.src
+msgid "Mandaic"
+msgstr "曼达语"
+
+#: ucsubset.src
+msgid "Batak"
+msgstr "巴塔克文"
+
+#: ucsubset.src
+msgid "Ethiopic Extended-A"
+msgstr "埃塞俄比亚语扩展区-A"
+
+#: ucsubset.src
+msgid "Brahmi"
+msgstr "婆罗米字母"
+
+#: ucsubset.src
+msgid "Bamum Supplement"
+msgstr "巴姆穆补充"
+
+#: ucsubset.src
+msgid "Kana Supplement"
+msgstr "假名补充"
+
+#: ucsubset.src
+msgid "Playing Cards"
+msgstr "扑克牌"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "杂项符号和象形文字"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "情绪图案"
+
+#: ucsubset.src
+msgid "Transport And Map Symbols"
+msgstr "交通和地图符号"
+
+#: ucsubset.src
+msgid "Alchemical Symbols"
+msgstr "冶金术符号"
+
+#: ucsubset.src
+msgid "Arabic Extended-A"
+msgstr "阿拉伯语扩展区-A"
+
+#: ucsubset.src
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "阿拉伯语数学用字母符号"
+
+#: ucsubset.src
+msgid "Chakma"
+msgstr "查克马文"
+
+#: ucsubset.src
+msgid "Meetei Mayek Extensions"
+msgstr "曼尼普尔文扩展"
+
+#: ucsubset.src
+msgid "Meroitic Cursive"
+msgstr "麦罗埃文草书"
+
+#: ucsubset.src
+msgid "Meroitic Hieroglyphs"
+msgstr "麦罗埃象形文字"
+
+#: ucsubset.src
+msgid "Miao"
+msgstr "柏格理苗文"
+
+#: ucsubset.src
+msgid "Sharada"
+msgstr "Sharada 夏达拉文"
+
+#: ucsubset.src
+msgid "Sora Sompeng"
+msgstr "索朗桑朋文"
+
+#: ucsubset.src
+msgid "Sundanese Supplement"
+msgstr "巽丹文补充"
+
+#: ucsubset.src
+msgid "Takri"
+msgstr "塔克里文"
+
+#: ucsubset.src
+msgid "Caucasian Albanian"
+msgstr "高加索地区阿尔巴尼亚语"
+
+#: ucsubset.src
+msgid "Coptic Epact Numbers"
+msgstr "科普特闰余数字"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Extended"
+msgstr "组合用附加符号增补集"
+
+#: ucsubset.src
+msgid "Elbasan"
+msgstr "爱尔巴桑区"
+
+#: ucsubset.src
+msgid "Geometric Shapes Extended"
+msgstr "几何图形扩展区"
+
+#: ucsubset.src
+msgid "Latin Extended-E"
+msgstr "拉丁文扩展 E"
+
+#: ucsubset.src
+msgid "Linear A"
+msgstr "线形文字 A"
+
+#: ucsubset.src
+msgid "Myanmar Extended-B"
+msgstr "缅甸语扩展-B"
+
+#: ucsubset.src
+msgid "Old North Arabian"
+msgstr "古南阿拉伯字母"
+
+#: ucsubset.src
+msgid "Old Permic"
+msgstr "古彼尔姆诸语"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-C"
+msgstr "补充箭头-C"
+
+#: ucsubset.src
+msgid "Ahom"
+msgstr "阿霍姆语"
+
+#: ucsubset.src
+msgid "Cherokee Supplement"
+msgstr "切罗基语补充"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension E"
+msgstr "中日韩统一表意文字扩展区 E"
+
+#: ucsubset.src
+msgid "Early Dynastic Cuneiform"
+msgstr "早王朝时期的楔形文字"
+
+#: ucsubset.src
+msgid "Old Hungarian"
+msgstr "古匈牙利字母"
+
+#: ucsubset.src
+msgid "Supplemental Symbols And Pictographs"
+msgstr "补充符号和象形文字"
+
+#: ucsubset.src
+msgid "Sutton Signwriting"
+msgstr "萨顿手语符号 (Sutton Signwriting)"

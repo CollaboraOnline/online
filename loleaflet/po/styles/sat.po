@@ -1939,3 +1939,357 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "लेंगा कांधा"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "मूल लैटिन"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "लैटिन-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "लैटिन ओसार-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "लैटिन ओसार-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA पासनाव को"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "बोदोलाक् आखोर को फांक केयाक्"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "आखोर चिनहा़ को मेसा"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "पा़हिल  ग्रीक"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "ग्रीक  चिनहा़को आर कोपटिक"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "सिरिलिक"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "आरमेनियान"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "मुल हिबरु"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "ओसार बिबरु"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "मुल आरेबिक"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "ओसार आरेबिक"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "देवनगरि"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "बेंगाली"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "गुरूमुखी"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "गुजराती"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "तामिल"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "तेलगू"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "कन्नड़"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "मलयालम"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "थाईथाइ"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "लाव (~g)"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "मुल जोरजियन"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "जोरजियन ओसार"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "हानगल जामो"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "लेटिन बाड़ती ओसार"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "ग्रीक ओसार"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "साधोरोन चिनहा़ गार"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "ओल  गार आर चेतान फॉन्ट आर ओल गार लातार फॉन्ट"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "ओल आखोर चिनहा़ को मेसा"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "आखोर लेकान  चिनहा़"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "लेखा  तेयार को"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "एलखा बाबोत का़मियिच्"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "मेसा साना इसा़रा तेयाक्"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "कोबोच चिता़र को"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "ञेलाक आखोर चिनहा़"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "ओल एललेखा को सेलेद"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "बास्का तेयार"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "एसेत् जिनिस"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "गार एलखा रुप को"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "मालिन बारदुड़िच्"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "डिन्गबाट्स (~s)"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "CJK चिनहा़ आर  केचेत् ठाकेत् ओल  चिनहा़"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "बोपोमोफो"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "हानगुल  बेस का़मी  जामो"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK मेसा साना"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "CJK ओल आखओर आर चांदो को सोलोद आकाना"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "हा़नगुल l"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "CJK मित् लेका बिचार  काथा तेयार"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "निजेराक् बेभार जायगा"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK लेक  हुदिस ला़गित् बिचार काथा तेयार."
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "ओल आखोर थार लेका ते उदुक् सोदोर तेयार"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "आराबिक उदुक सोदोर तेयार -A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "हुडिञ तेयार बोदलाक् को"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK लेक तेयार"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "हुडिञ तेयार बोदोल"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "अरबी  उदुक् सोदोर B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "ओरधेक ओसार आर पुरा़ ओसार तेयार"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "विसेस"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "सिनहाला"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "तिब्बेतन"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "मियानमार"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "खामेर"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "ओघम् (~e)"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "रूनिक"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "शिरियक"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "थाना (~x)"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "इथियोपिक"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "चेरोकी"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "केनडन् आदिम चिकी आखोर को"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "मोंगोलियान (~i)"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "मेसा साना एलखा चिनहा़ को  -A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "जुटिजाक् सार को -A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "बरैली ना़मुना को"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "जुटिच् सार को -B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "मेसासाना एलखा चिनहा़ को -B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK रेहेत् साबाद जुटिच्"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "विचा़र काथा बिबरोन आखोर को"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "टागालोग (~l)"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "हानुनु (~y)"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "टागबानवा"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "बुहिद"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "कानबुन"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "बोपोमोफो  ओसार"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "काटाकाना साडे  आड़ाङ"

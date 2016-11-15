@@ -2009,3 +2009,1049 @@ msgstr "%1 сөз, %2 таңба"
 #: strings.src
 msgid "Slide %1 of %2"
 msgstr "Слайд %1, барлығы %2"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Негізгі латын"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Латынша-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "Латын A-үстемесі"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "Латын B-үстемесі"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "Фонетикалық таңбалар"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Бос аралықты түрлендіру әріптері"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Толықтыратын диакритикалық белгілері"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "Негізгі грек"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Грек және копт таңбалары"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Кирилл жазуы"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Армян"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Негізгі иврит"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Кеңейтілген иврит"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Негізгі арабша"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Кеңейтілген арабша"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "Деванагари"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "Бенгал"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "Гурмухи"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "Гуджарати"
+
+#: ucsubset.src
+msgid "Odia"
+msgstr "Одиа"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "Тамил"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "Телугу"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "Каннада"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "Малаялам"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "Тай"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "Лаос"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "Негізгі грузин"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "Кеңейтілген грузин"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "Хангыль джамо"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Латын қосымша үстемесі"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "Кеңейтілген грек"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Жалпы пунктуация"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Жоғарғы және төменгі индекстер"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Валюта белгісі"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "Толықтыратын диакритикалық белгілері"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Әріп тәрізді таңбалар"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Сан пішіндері"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Бағдаршалар"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "Математикалық амалдар"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Техникалық таңбалар"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Басқару кодтарының белгішелері"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Таңбаларды оптикалық тану"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Қоршалған әріп-сандықтар"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Қоршау құрамалары"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Толтыру таңбалары"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Геометиялық фигуралар"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Түрлі таңбалар"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "Dingbats таңбашалары"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "CJK - таңбалар және пунктуация"
+
+#: ucsubset.src
+msgid "Hiragana"
+msgstr "Хирагана"
+
+#: ucsubset.src
+msgid "Katakana"
+msgstr "Катакана"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "Бопомофо"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Хангыл үйлесімді Джамо"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "Әр түрлі CJK таңбалары"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "CJK - қоршалған таңбалар және айлар"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "CJK - үйлесімділік таңбалары"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "Хангыл"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "CJK - бірыңғай иероглифтер"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "CJK - бірыңғай иероглифтердің A үстемесі"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Жеке таңбалар ауқымы"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK - үйлесімдік иероглифтері"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Әріптердің безендіру нұсқалары"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Арабша безендіру-A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "Құрама жарты белгілері"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK - үйлесімділік пішіндері"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Шағын пішін түрлері"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Арабша безендіру-B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Ені жартылай және толық пішіндері"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Арнайы"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "Носу (Yi) буындары"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "Носу (Yi) түбірлері"
+
+#: ucsubset.src
+msgid "Old Italic"
+msgstr "Ескі итальян"
+
+#: ucsubset.src
+msgid "Gothic"
+msgstr "Готикалық"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "Византиялық музыка таңбалары"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "Музыкалық таңбалар"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "Математикалық әріпті-цифрлық таңбалар"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "CJK - бірыңғай иероглифтердің B үстемесі"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "CJK - бірыңғай иероглифтердің C үстемесі"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "CJK - бірыңғай иероглифтердің D үстемесі"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "CJK - қосымша үйлесімді иероглифтер"
+
+#: ucsubset.src
+msgid "Tags"
+msgstr "Белгілер"
+
+#: ucsubset.src
+msgid "Cyrillic Supplement"
+msgstr "Кирилл жазу қосымшасы"
+
+#: ucsubset.src
+msgid "Variation Selectors"
+msgstr "Түрлі ауыстырғыштар"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-A"
+msgstr "Қосымша пайдаланушы ауқымы A"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-B"
+msgstr "Қосымша пайдаланушы ауқымы B"
+
+#: ucsubset.src
+msgid "Limbu"
+msgstr "Лимбу"
+
+#: ucsubset.src
+msgid "Tai Le"
+msgstr "Тай-лэ"
+
+#: ucsubset.src
+msgid "Khmer Symbols"
+msgstr "Кхмер таңбалары"
+
+#: ucsubset.src
+msgid "Phonetic Extensions"
+msgstr "Фонетикалық кеңейтулер"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "Түрлі таңбалар және бағдаршалар"
+
+#: ucsubset.src
+msgid "Yijing Hexagram Symbols"
+msgstr "Ицзин гексаграммалары"
+
+#: ucsubset.src
+msgid "Linear B Syllabary"
+msgstr "Сызықты B буындар әліппесі"
+
+#: ucsubset.src
+msgid "Linear B Ideograms"
+msgstr "Сызықты B идеограммалар"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "Эгейлік сандар"
+
+#: ucsubset.src
+msgid "Ugaritic"
+msgstr "Угарит"
+
+#: ucsubset.src
+msgid "Shavian"
+msgstr "Шавиан"
+
+#: ucsubset.src
+msgid "Osmanya"
+msgstr "Сомали әліппесі"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "Сингалша"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "Тибетше"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "Бирмалық"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "Кхмер"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "Огхам"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Рун жазуы"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "Сириялық"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "Тхаана"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "Эфиопиялық"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "Чероки"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Канадалық аборигендер буындары"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Монғол"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Түрлі математикалық таңбалар-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Қосымша бағдаршалар A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Брайль әліппесі"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Қосымша бағдаршалар B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Түрлі математикалық таңбалар-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "Иероглиф түбірлер қосымшалары"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "Кандзи түбірлері"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Идеографикалық анықтама таңбалары"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "Тагалог"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "Хануну"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "Тагбанва"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "Бухид"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "Канбун"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Бопомофо (қытайша) үстемесі"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Катакана фонетикасы"
+
+#: ucsubset.src
+msgid "CJK Strokes"
+msgstr "CJK сызықтары"
+
+#: ucsubset.src
+msgid "Cypriot Syllabary"
+msgstr "Киприот буын әліппесі"
+
+#: ucsubset.src
+msgid "Tai Xuan Jing Symbols"
+msgstr "Тай Сюань Цзин таңбалары"
+
+#: ucsubset.src
+msgid "Variation Selectors Supplement"
+msgstr "Түрлерді таңдағыштар қосымшасы"
+
+#: ucsubset.src
+msgid "Ancient Greek Musical Notation"
+msgstr "Көне грек музыкалық ноталары"
+
+#: ucsubset.src
+msgid "Ancient Greek Numbers"
+msgstr "Көне грек сандары"
+
+#: ucsubset.src
+msgid "Arabic Supplement"
+msgstr "Араб қосымшасы"
+
+#: ucsubset.src
+msgid "Buginese"
+msgstr "Бугийлік"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Supplement"
+msgstr "Құрама диакритикалық белгілердің қосымшасы"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "Копт жазуы"
+
+#: ucsubset.src
+msgid "Ethiopic Extended"
+msgstr "Эфиоп үстемесі"
+
+#: ucsubset.src
+msgid "Ethiopic Supplement"
+msgstr "Эфиопиялық қосымша"
+
+#: ucsubset.src
+msgid "Georgian Supplement"
+msgstr "Грузин қосымша"
+
+#: ucsubset.src
+msgid "Glagolitic"
+msgstr "Глаголица"
+
+#: ucsubset.src
+msgid "Kharoshthi"
+msgstr "Кхароштхи"
+
+#: ucsubset.src
+msgid "Modifier Tone Letters"
+msgstr "Тон модификаторлары"
+
+#: ucsubset.src
+msgid "New Tai Lue"
+msgstr "Жаңа Тай-лэ"
+
+#: ucsubset.src
+msgid "Old Persian"
+msgstr "Көне парсы"
+
+#: ucsubset.src
+msgid "Phonetic Extensions Supplement"
+msgstr "Фонетикалық кеңейтулер үстемесі"
+
+#: ucsubset.src
+msgid "Supplemental Punctuation"
+msgstr "Қосымша пунктуация"
+
+#: ucsubset.src
+msgid "Syloti Nagri"
+msgstr "Силхети-нагари"
+
+#: ucsubset.src
+msgid "Tifinagh"
+msgstr "Көне ливиялық"
+
+#: ucsubset.src
+msgid "Vertical Forms"
+msgstr "Вертикалды пішіндер"
+
+#: ucsubset.src
+msgid "Nko"
+msgstr "Нко"
+
+#: ucsubset.src
+msgid "Balinese"
+msgstr "Балилік"
+
+#: ucsubset.src
+msgid "Latin Extended-C"
+msgstr "Латын C-үстемесі"
+
+#: ucsubset.src
+msgid "Latin Extended-D"
+msgstr "Латын D-үстемесі"
+
+#: ucsubset.src
+msgid "Phags-Pa"
+msgstr "Пагба"
+
+#: ucsubset.src
+msgid "Phoenician"
+msgstr "Финикиялық"
+
+#: ucsubset.src
+msgid "Cuneiform"
+msgstr "Сына жазуы"
+
+#: ucsubset.src
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "Сына жазудың сандар мен тыныс белгілері"
+
+#: ucsubset.src
+msgid "Counting Rod Numerals"
+msgstr "Санау таяқша сандары"
+
+#: ucsubset.src
+msgid "Sundanese"
+msgstr "Сундандық"
+
+#: ucsubset.src
+msgid "Lepcha"
+msgstr "Лепча"
+
+#: ucsubset.src
+msgid "Ol Chiki"
+msgstr "Ол-чики"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-A"
+msgstr "Кирилл жазуы A-үстемесі"
+
+#: ucsubset.src
+msgid "Vai"
+msgstr "Вай"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-B"
+msgstr "Кирилл жазуы B-үстемесі"
+
+#: ucsubset.src
+msgid "Saurashtra"
+msgstr "Саураштра"
+
+#: ucsubset.src
+msgid "Kayah Li"
+msgstr "Кая-ли"
+
+#: ucsubset.src
+msgid "Rejang"
+msgstr "Реджанг"
+
+#: ucsubset.src
+msgid "Cham"
+msgstr "Чам"
+
+#: ucsubset.src
+msgid "Ancient Symbols"
+msgstr "Көне таңбалар"
+
+#: ucsubset.src
+msgid "Phaistos Disc"
+msgstr "Фест дискі"
+
+#: ucsubset.src
+msgid "Lycian"
+msgstr "Ликиялық"
+
+#: ucsubset.src
+msgid "Carian"
+msgstr "Карийлік"
+
+#: ucsubset.src
+msgid "Lydian"
+msgstr "Лидиялық"
+
+#: ucsubset.src
+msgid "Mahjong Tiles"
+msgstr "Маджонг"
+
+#: ucsubset.src
+msgid "Domino Tiles"
+msgstr "Домино"
+
+#: ucsubset.src
+msgid "Samaritan"
+msgstr "Самаритяндық"
+
+#: ucsubset.src
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "Канадалық аборигендердің кеңейтілген буындары"
+
+#: ucsubset.src
+msgid "Tai Tham"
+msgstr "Тай-тхам"
+
+#: ucsubset.src
+msgid "Vedic Extensions"
+msgstr "Ведикалық үстемелер"
+
+#: ucsubset.src
+msgid "Lisu"
+msgstr "Лису"
+
+#: ucsubset.src
+msgid "Bamum"
+msgstr "Бамум"
+
+#: ucsubset.src
+msgid "Common Indic Number Forms"
+msgstr "Ортақ Үнді сан пішіндері"
+
+#: ucsubset.src
+msgid "Devanagari Extended"
+msgstr "Деванагари кеңейтілген"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-A"
+msgstr "Хангыль джамо кеңейтілген-A"
+
+#: ucsubset.src
+msgid "Javanese"
+msgstr "Явалық"
+
+#: ucsubset.src
+msgid "Myanmar Extended-A"
+msgstr "Мьянма A-үстемесі"
+
+#: ucsubset.src
+msgid "Tai Viet"
+msgstr "Тай-вьет"
+
+#: ucsubset.src
+msgid "Meetei Mayek"
+msgstr "Манипури"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-B"
+msgstr "Хангыль джамо кеңейтілген-B"
+
+#: ucsubset.src
+msgid "Imperial Aramaic"
+msgstr "Империялық арамеялық"
+
+#: ucsubset.src
+msgid "Old South Arabian"
+msgstr "Көне оңтүстік арабша"
+
+#: ucsubset.src
+msgid "Avestan"
+msgstr "Авестша"
+
+#: ucsubset.src
+msgid "Inscriptional Parthian"
+msgstr "Парфяндық"
+
+#: ucsubset.src
+msgid "Inscriptional Pahlavi"
+msgstr "Пехлевийлік"
+
+#: ucsubset.src
+msgid "Old Turkic"
+msgstr "Көне түрік"
+
+#: ucsubset.src
+msgid "Rumi Numeral Symbols"
+msgstr "Руми сандары"
+
+#: ucsubset.src
+msgid "Kaithi"
+msgstr "Кайтхи"
+
+#: ucsubset.src
+msgid "Egyptian Hieroglyphs"
+msgstr "Мысыр иероглифтері"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "Құрамдас қосымша әріптер және сандар"
+
+#: ucsubset.src
+msgid "Enclosed Ideographic Supplement"
+msgstr "Құрамдас қосымша идеограммалары"
+
+#: ucsubset.src
+msgid "Mandaic"
+msgstr "Мандейк"
+
+#: ucsubset.src
+msgid "Batak"
+msgstr "Батаки"
+
+#: ucsubset.src
+msgid "Ethiopic Extended-A"
+msgstr "Эфиоп A-үстемесі"
+
+#: ucsubset.src
+msgid "Brahmi"
+msgstr "Брахми"
+
+#: ucsubset.src
+msgid "Bamum Supplement"
+msgstr "Бамум, қосымшалар"
+
+#: ucsubset.src
+msgid "Kana Supplement"
+msgstr "Кана, қосымшалар"
+
+#: ucsubset.src
+msgid "Playing Cards"
+msgstr "Ойнау карталары"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "Түрлі таңбалар және бағдарлар"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "Смайликтер"
+
+#: ucsubset.src
+msgid "Transport And Map Symbols"
+msgstr "Көлік және карталар"
+
+#: ucsubset.src
+msgid "Alchemical Symbols"
+msgstr "Алхимиялық таңбалар"
+
+#: ucsubset.src
+msgid "Arabic Extended-A"
+msgstr "Арабша A-үстемесі"
+
+#: ucsubset.src
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "Араб математикалық әліпбилік таңбалар"
+
+#: ucsubset.src
+msgid "Chakma"
+msgstr "Чакма"
+
+#: ucsubset.src
+msgid "Meetei Mayek Extensions"
+msgstr "Манипури кеңейтілген"
+
+#: ucsubset.src
+msgid "Meroitic Cursive"
+msgstr "Мероит жазуы"
+
+#: ucsubset.src
+msgid "Meroitic Hieroglyphs"
+msgstr "Мероит иероглифтері"
+
+#: ucsubset.src
+msgid "Miao"
+msgstr "Мяо"
+
+#: ucsubset.src
+msgid "Sharada"
+msgstr "Шарада"
+
+#: ucsubset.src
+msgid "Sora Sompeng"
+msgstr "Соранг сомпенг"
+
+#: ucsubset.src
+msgid "Sundanese Supplement"
+msgstr "Сунданск, қосымшалар"
+
+#: ucsubset.src
+msgid "Takri"
+msgstr "Такри"
+
+#: ucsubset.src
+msgid "Bassa Vah"
+msgstr "Басса"
+
+#: ucsubset.src
+msgid "Caucasian Albanian"
+msgstr "Кавказдық албан"
+
+#: ucsubset.src
+msgid "Coptic Epact Numbers"
+msgstr "Coptic Epact сандары"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Extended"
+msgstr "Кеңейтілген құрама диакритикалық белгілер"
+
+#: ucsubset.src
+msgid "Duployan"
+msgstr "Дюплой"
+
+#: ucsubset.src
+msgid "Elbasan"
+msgstr "Эльбасан"
+
+#: ucsubset.src
+msgid "Geometric Shapes Extended"
+msgstr "Кеңейтілген геометриялық фигуралар"
+
+#: ucsubset.src
+msgid "Grantha"
+msgstr "Грантха"
+
+#: ucsubset.src
+msgid "Khojki"
+msgstr "Хойки"
+
+#: ucsubset.src
+msgid "Khudawadi"
+msgstr "Худабади"
+
+#: ucsubset.src
+msgid "Latin Extended-E"
+msgstr "Латын E-үстемесі"
+
+#: ucsubset.src
+msgid "Linear A"
+msgstr "Сызықты жазу A"
+
+#: ucsubset.src
+msgid "Mahajani"
+msgstr "Махаджани"
+
+#: ucsubset.src
+msgid "Manichaean"
+msgstr "Манихейлік"
+
+#: ucsubset.src
+msgid "Mende Kikakui"
+msgstr "Менде кикакуи"
+
+#: ucsubset.src
+msgid "Modi"
+msgstr "Моди"
+
+#: ucsubset.src
+msgid "Mro"
+msgstr "Мро"
+
+#: ucsubset.src
+msgid "Myanmar Extended-B"
+msgstr "Мьянма B-үстемесі"
+
+#: ucsubset.src
+msgid "Nabataean"
+msgstr "Набатей"
+
+#: ucsubset.src
+msgid "Old North Arabian"
+msgstr "Көне солтүстік арабша"
+
+#: ucsubset.src
+msgid "Old Permic"
+msgstr "Ескі пермдік"
+
+#: ucsubset.src
+msgid "Ornamental Dingbats"
+msgstr "Оюлы безендірулер"
+
+#: ucsubset.src
+msgid "Pahawh Hmong"
+msgstr "Пахау хмонг"
+
+#: ucsubset.src
+msgid "Palmyrene"
+msgstr "Пальмирлік"
+
+#: ucsubset.src
+msgid "Psalter Pahlavi"
+msgstr "Псалтирлік пахлави"
+
+#: ucsubset.src
+msgid "Shorthand Format Controls"
+msgstr "Стенографиялық пішім басқарушы таңбалары"
+
+#: ucsubset.src
+msgid "Siddham"
+msgstr "Сиддхам"
+
+#: ucsubset.src
+msgid "Sinhala Archaic Numbers"
+msgstr "Сингалдық көне сандар"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-C"
+msgstr "Қосымша бағдаршалар C"
+
+#: ucsubset.src
+msgid "Tirhuta"
+msgstr "Тирхута"
+
+#: ucsubset.src
+msgid "Warang Citi"
+msgstr "Варанг кшити"
+
+#: ucsubset.src
+msgid "Ahom"
+msgstr "Ахом"
+
+#: ucsubset.src
+msgid "Anatolian Hieroglyphs"
+msgstr "Анатолийдік иероглифтер"
+
+#: ucsubset.src
+msgid "Cherokee Supplement"
+msgstr "Чероки қосымшасы"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension E"
+msgstr "CJK - бірыңғай иероглифтердің E үстемесі"
+
+#: ucsubset.src
+msgid "Early Dynastic Cuneiform"
+msgstr "Көне әулеттік сына жазуы"
+
+#: ucsubset.src
+msgid "Hatran"
+msgstr "Хатр"
+
+#: ucsubset.src
+msgid "Multani"
+msgstr "Мультани"
+
+#: ucsubset.src
+msgid "Old Hungarian"
+msgstr "Венгр руналары"
+
+#: ucsubset.src
+msgid "Supplemental Symbols And Pictographs"
+msgstr "Қосымша таңбалар және пиктограммалар"
+
+#: ucsubset.src
+msgid "Sutton Signwriting"
+msgstr "Саттон ым жазуы"

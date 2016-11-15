@@ -1992,3 +1992,765 @@ msgstr "Ubaci"
 #: app.src
 msgid "%1 words, %2 characters"
 msgstr "%1 riječi, %2 znakova"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Latinica osnovni"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Latinica-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "Latinica proširenje-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "Latinica proširenje-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA proširenja"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Slova za modifikaciju proreda"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Kombinovani dijakritički znakovi"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "Grčki osnovni"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Grčki simboli i Koptski"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Ćirilica"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Armenski"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Hebrejski osnovni"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Hebrejski prošireni"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Arapski osnovni"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Arapski prošireni"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "Bengalski"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "Gudžarati"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "Tamilski"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "Kanada"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "Malajamanski"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "Tajlandski"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "Laoski"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "Gruzijski osnovni"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "Gruzijski prošireni"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Latinica prošireni dodaci"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "Grčki prošireni"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Opšta punktuacija"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Eksponenti i indeksi"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Simboli valuta"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "Kombinovani dijakritički znakovi"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Simboli slični slovima"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Oblici brojeva"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Strelice"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "Matematičke operacije"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Razni tehnički"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Kontrolne slike"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Optičko prepoznavanje znakova (OCR)"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Uključeni alfa-numerici"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Crtanje okvira"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Blokovski elementi"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Geometrijski oblici"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Razni simboli"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "Grafički simboli"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "CJK (Kina-Japan-Koreja) simboli i punktuacija"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Hangul kompatibilnost Jamo"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK (Kina-Japan-Koreja) razno"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "Uključena CJK (Kina-Japan-Koreja) slova i mjeseci"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "CJK (Kina-Japan-Koreja) kompatibilnost"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "CJK (Kina-Japan-Koreja) unificirani ideogrami"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "CJK prošireni unificirani ideogrami A"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Područje privatne upotrebe"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK (Kina-Japan-Koreja) kompatibilni ideogrami"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Abecedni prezentacijski oblici"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Arapski prezentacijski oblici-A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "Kombinovane polovične oznake"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK (Kina-Japan-Koreja) kompatibilne forme"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Varijante manjih formi"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Arapske prezentacione forme-B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Forme polovične i pune širine"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Posebno"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "Ji slogovi"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "ji radikali"
+
+#: ucsubset.src
+msgid "Old Italic"
+msgstr "Stari Italika"
+
+#: ucsubset.src
+msgid "Gothic"
+msgstr "Gotička"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "Bizantijski muzički simboli"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "Muzički simboli"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "Matematički alfanumerički simboli"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "CJK sjedinjeni ideografi proširenje B"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "Proširenje C CJK ujedinjenih ideograma"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "CJK ujedinjeni ideografi proširenje D"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "CJK saglasnosni ideografi dopunski"
+
+#: ucsubset.src
+msgid "Tags"
+msgstr "Oznake"
+
+#: ucsubset.src
+msgid "Cyrillic Supplement"
+msgstr "Ćirilični dodatak"
+
+#: ucsubset.src
+msgid "Variation Selectors"
+msgstr "Izbori varijacija"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-A"
+msgstr "Dodatno privatno korišteno područje-A"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-B"
+msgstr "Dodatno privatno korišteno područje-B"
+
+#: ucsubset.src
+msgid "Tai Le"
+msgstr "taj‑li"
+
+#: ucsubset.src
+msgid "Khmer Symbols"
+msgstr "Kmerski simboli"
+
+#: ucsubset.src
+msgid "Phonetic Extensions"
+msgstr "Fonetske ekstenzije"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "Razni simboli i strijele"
+
+#: ucsubset.src
+msgid "Yijing Hexagram Symbols"
+msgstr "jiđing heksagram simboli"
+
+#: ucsubset.src
+msgid "Linear B Syllabary"
+msgstr "Linearni B slog"
+
+#: ucsubset.src
+msgid "Linear B Ideograms"
+msgstr "Linearni B ideogrami"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "egejski brojevi"
+
+#: ucsubset.src
+msgid "Ugaritic"
+msgstr "Ugarski"
+
+#: ucsubset.src
+msgid "Shavian"
+msgstr "Šavijan"
+
+#: ucsubset.src
+msgid "Osmanya"
+msgstr "Osmanski"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "Tibetski"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "Burma"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "Kmerski"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Rune"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "Sirijska"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "Etiopski"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Canadan-ski aboridžinski suglasnici"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Mongolski"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Razni matematički simboli-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Dodatne strelice-A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Brajevi simboli"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Dodatne strelice-B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Razni matematički simboli-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK radikali dodaci"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "Kanđi radikali"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Ideografski opisni znakovi"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Bopomofo prošireni"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Katakana fonetski"
+
+#: ucsubset.src
+msgid "CJK Strokes"
+msgstr "CJK Potezi"
+
+#: ucsubset.src
+msgid "Cypriot Syllabary"
+msgstr "Kiparski slogovi"
+
+#: ucsubset.src
+msgid "Tai Xuan Jing Symbols"
+msgstr "Tai Xuan Jing simboli"
+
+#: ucsubset.src
+msgid "Variation Selectors Supplement"
+msgstr "Dodaci odabira varijacija"
+
+#: ucsubset.src
+msgid "Ancient Greek Musical Notation"
+msgstr "Drevna grčka muzička notacija"
+
+#: ucsubset.src
+msgid "Ancient Greek Numbers"
+msgstr "Starogrčki brojevi"
+
+#: ucsubset.src
+msgid "Arabic Supplement"
+msgstr "Arapski dodatak"
+
+#: ucsubset.src
+msgid "Buginese"
+msgstr "Bugijski"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Supplement"
+msgstr "Kombinuje dodatke za dijakritičke znake"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "Koptski"
+
+#: ucsubset.src
+msgid "Ethiopic Extended"
+msgstr "Etiopski, prosireni"
+
+#: ucsubset.src
+msgid "Ethiopic Supplement"
+msgstr "Etiopski dopunjeno"
+
+#: ucsubset.src
+msgid "Georgian Supplement"
+msgstr "Gruzijski dopunjeno"
+
+#: ucsubset.src
+msgid "Glagolitic"
+msgstr "Glagoljica"
+
+#: ucsubset.src
+msgid "Kharoshthi"
+msgstr "Karošti"
+
+#: ucsubset.src
+msgid "Modifier Tone Letters"
+msgstr "Modifikatori tona"
+
+#: ucsubset.src
+msgid "New Tai Lue"
+msgstr "Novi Tai Le"
+
+#: ucsubset.src
+msgid "Old Persian"
+msgstr "Stari persijski"
+
+#: ucsubset.src
+msgid "Phonetic Extensions Supplement"
+msgstr "Fonetska prosirenja dopuna"
+
+#: ucsubset.src
+msgid "Supplemental Punctuation"
+msgstr "Dodatna interpunkcija"
+
+#: ucsubset.src
+msgid "Tifinagh"
+msgstr "Tifinag"
+
+#: ucsubset.src
+msgid "Vertical Forms"
+msgstr "Vertikalne forme"
+
+#: ucsubset.src
+msgid "Balinese"
+msgstr "Balineze"
+
+#: ucsubset.src
+msgid "Latin Extended-C"
+msgstr "Latinički prošireni‑C"
+
+#: ucsubset.src
+msgid "Latin Extended-D"
+msgstr "Latinički prošireni‑D"
+
+#: ucsubset.src
+msgid "Phoenician"
+msgstr "Feničanski"
+
+#: ucsubset.src
+msgid "Cuneiform"
+msgstr "Klinasto pismo"
+
+#: ucsubset.src
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "Brojevi i interpunkcije klinastog pisma"
+
+#: ucsubset.src
+msgid "Counting Rod Numerals"
+msgstr "Brojanje štapićima"
+
+#: ucsubset.src
+msgid "Sundanese"
+msgstr "Sudanski"
+
+#: ucsubset.src
+msgid "Lepcha"
+msgstr "Lepča"
+
+#: ucsubset.src
+msgid "Ol Chiki"
+msgstr "Ol Čiki"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-A"
+msgstr "Ćirilično proširenje-A"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-B"
+msgstr "Ćirilični proširenje-B"
+
+#: ucsubset.src
+msgid "Kayah Li"
+msgstr "Kaja  Li"
+
+#: ucsubset.src
+msgid "Rejang"
+msgstr "Ređang"
+
+#: ucsubset.src
+msgid "Cham"
+msgstr "Čam"
+
+#: ucsubset.src
+msgid "Ancient Symbols"
+msgstr "Drevni simboli"
+
+#: ucsubset.src
+msgid "Phaistos Disc"
+msgstr "Faistos disk"
+
+#: ucsubset.src
+msgid "Lycian"
+msgstr "Lukijski"
+
+#: ucsubset.src
+msgid "Carian"
+msgstr "Šavijan"
+
+#: ucsubset.src
+msgid "Lydian"
+msgstr "Libijski"
+
+#: ucsubset.src
+msgid "Mahjong Tiles"
+msgstr "Mahdžong pločice"
+
+#: ucsubset.src
+msgid "Domino Tiles"
+msgstr "Domino pločice"
+
+#: ucsubset.src
+msgid "Samaritan"
+msgstr "Samarićanski"
+
+#: ucsubset.src
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "Kanadski Aboriginalni Syllabics produžen"
+
+#: ucsubset.src
+msgid "Tai Tham"
+msgstr "Tai tham"
+
+#: ucsubset.src
+msgid "Vedic Extensions"
+msgstr "Vedski prošireni"
+
+#: ucsubset.src
+msgid "Common Indic Number Forms"
+msgstr "Zajednički Indijski Oblici Brojeva"
+
+#: ucsubset.src
+msgid "Devanagari Extended"
+msgstr "Devanagari Prošireno"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-A"
+msgstr "Hangul Džamo proširenje-A"
+
+#: ucsubset.src
+msgid "Javanese"
+msgstr "Javanski"
+
+#: ucsubset.src
+msgid "Myanmar Extended-A"
+msgstr "Mjanmarski prošireni-A"
+
+#: ucsubset.src
+msgid "Tai Viet"
+msgstr "Taj Viet"
+
+#: ucsubset.src
+msgid "Meetei Mayek"
+msgstr "Mitej majek"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-B"
+msgstr "Hangul Džamo proširenje-B"
+
+#: ucsubset.src
+msgid "Imperial Aramaic"
+msgstr "Carski Aramejski"
+
+#: ucsubset.src
+msgid "Old South Arabian"
+msgstr "Stari Južnoarabijski"
+
+#: ucsubset.src
+msgid "Avestan"
+msgstr "Avestanski"
+
+#: ucsubset.src
+msgid "Inscriptional Parthian"
+msgstr "Pisani Parćanski"
+
+#: ucsubset.src
+msgid "Inscriptional Pahlavi"
+msgstr "Inskripcijski Pahlavi"
+
+#: ucsubset.src
+msgid "Old Turkic"
+msgstr "Stari Turski"
+
+#: ucsubset.src
+msgid "Rumi Numeral Symbols"
+msgstr "Rumi Brojni Simboli"
+
+#: ucsubset.src
+msgid "Kaithi"
+msgstr "Kaiti"
+
+#: ucsubset.src
+msgid "Egyptian Hieroglyphs"
+msgstr "Egipatski hijeroglifi"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "Zatvoreni Alfanumerički Dodatak"
+
+#: ucsubset.src
+msgid "Enclosed Ideographic Supplement"
+msgstr "Zatvoreni Ideogramski Dodatak"
+
+#: ucsubset.src
+msgid "Mandaic"
+msgstr "Mandejski"
+
+#: ucsubset.src
+msgid "Ethiopic Extended-A"
+msgstr "Etiopski Proširena-A"
+
+#: ucsubset.src
+msgid "Brahmi"
+msgstr "Brajevo pismo"
+
+#: ucsubset.src
+msgid "Bamum Supplement"
+msgstr "Bamum dodatak"
+
+#: ucsubset.src
+msgid "Kana Supplement"
+msgstr "Kana dodatak"
+
+#: ucsubset.src
+msgid "Playing Cards"
+msgstr "Igraće karte"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "Razni simboli i piktogrami"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "Emotikoni"
+
+#: ucsubset.src
+msgid "Transport And Map Symbols"
+msgstr "Saobraćajni i kartografski simboli"
+
+#: ucsubset.src
+msgid "Alchemical Symbols"
+msgstr "Alhemijski simboli"
+
+#: ucsubset.src
+msgid "Arabic Extended-A"
+msgstr "Arapski prošireni-A"
+
+#: ucsubset.src
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "Arapski matematski alfabetski simboli"
+
+#: ucsubset.src
+msgid "Chakma"
+msgstr "Čakma"
+
+#: ucsubset.src
+msgid "Meetei Mayek Extensions"
+msgstr "Mitej Majek proširenja"
+
+#: ucsubset.src
+msgid "Meroitic Cursive"
+msgstr "Meriotski kurzivni"
+
+#: ucsubset.src
+msgid "Meroitic Hieroglyphs"
+msgstr "Meriotski hijeroglifi"
+
+#: ucsubset.src
+msgid "Sharada"
+msgstr "Šarada"
+
+#: ucsubset.src
+msgid "Sundanese Supplement"
+msgstr "Sundanski dodatni"

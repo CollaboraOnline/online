@@ -2018,3 +2018,705 @@ msgstr "%1 gair, %2 nod"
 #: strings.src
 msgid "Slide %1 of %2"
 msgstr "Sleid %1 o %2"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Lladin Sylfaenol"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "Estyniad IPA"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Llythrennau Addasydd Bylchu"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Marciau Deiacritig Cyfunol"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "Groeg Sylfaenol"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Symbolau Groegaidd a Choptig"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Syrilig"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Armeneg"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Hebraeg Sylfaenol"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Hebraeg Estynedig"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Arabeg Sylfaenol"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Arabeg Estynedig"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "Georgaidd Sylfaenol"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "Georgaidd Estynedig"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Lladin Estynedig Ychwanegol"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "Groeg Estynedig"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Atalnodi cyffredinol"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Uwch ac Is Sgriptiau"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Symbolau Arian"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "Symbolau Deicritig Cyfunol"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Symbolau Llythrennog"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Ffurfiau Rhif"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Saethau"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Technegol Amrywiol"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Lluniau'r Rheolydd"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Adnabod Nodau Optegol (OCR)"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Alffaniwmerig Amgaeedig"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Llunio Blychau"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Elfennau Bloc"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Siapiau Geometrig"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Symbolau Amrywiol"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "Dingbatiau"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "Symbolau ac Atalnodi CJK"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Hangul Cydweddu Jamo"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK Amrywiol"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "Llythrennau CJK Amgaeedig a Misoedd"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "Cydnawsedd CJK"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "Ideograffau Unedig CJK"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "Ideograffau Unedig CJK Estyniad A"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Ardal Defnydd Preifat"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "Ideograffau Cydweddu CJK"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Ffurfiau Cyflwyniad Alffabetig"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Cyflwyniad Arabeg Ffurfiau-A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "Cyfuno Hanner Marciau"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "Ffurfiau Cydnawsedd CJK"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Amrywiolyn Ffurf Bychan"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Cyflwyniad Arabeg Ffurfiau-B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Ffurfiau Hanner Lled a Lled Llawn"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Arbenigol"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "Sillafau Yi"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "Cysefin Yi"
+
+#: ucsubset.src
+msgid "Old Italic"
+msgstr "Hen Italig"
+
+#: ucsubset.src
+msgid "Gothic"
+msgstr "Gotheg"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "Symbolau Cerddoriaeth Bysantaidd"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "Symbolau Cerddoriaeth"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "Symbolau Alffaniwmerig Mathamategol"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "Ideograffau Unedig CJK Estyniad B"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "Ideograffau Unedig CJK Estyniad C"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "Ideograffau Unedig CJK Estyniad D"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "Ideograffau Cydweddus CJK Atodol"
+
+#: ucsubset.src
+msgid "Tags"
+msgstr "Tagiau"
+
+#: ucsubset.src
+msgid "Cyrillic Supplement"
+msgstr "Atodiad Cyrilig"
+
+#: ucsubset.src
+msgid "Variation Selectors"
+msgstr "Dewiswyr Amrywiad"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-A"
+msgstr "Defnydd Preifat Atodol, Ardal-A"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-B"
+msgstr "Defnydd Preifat Atodol, Ardal-B"
+
+#: ucsubset.src
+msgid "Khmer Symbols"
+msgstr "Symbolau Khmer"
+
+#: ucsubset.src
+msgid "Phonetic Extensions"
+msgstr "Estyniadau Ffoneteg"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "Symbolau a Saethau Amrywiol"
+
+#: ucsubset.src
+msgid "Yijing Hexagram Symbols"
+msgstr "Symbolau Hecsagram Yijing"
+
+#: ucsubset.src
+msgid "Linear B Syllabary"
+msgstr "Syllwyddor Llinellog B"
+
+#: ucsubset.src
+msgid "Linear B Ideograms"
+msgstr "Ideogramau Llinellog B"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "Rhifau Ageaidd"
+
+#: ucsubset.src
+msgid "Ugaritic"
+msgstr "Ugaritig"
+
+#: ucsubset.src
+msgid "Shavian"
+msgstr "Shafiaidd"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "Tibetaidd"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "Ethioptig"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Sillafyddion Cynfrodorol Canada"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Mongoleg"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Mathemategol Amrywiol Symbolau-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Saethau-A Ychwanegol"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Patrymau Braille"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Saethau-B Ychwanegol"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Mathemategol Amrywiol Symbolau-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK Radical Ychwanegol"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "Radical Kangxi"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Nodau Disgrifiadol Ideograffig"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Bopomofo Estynedig"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Katakana Phoneteg"
+
+#: ucsubset.src
+msgid "CJK Strokes"
+msgstr "Strociau CJK"
+
+#: ucsubset.src
+msgid "Cypriot Syllabary"
+msgstr "Cyllwyddor Cypriaidd"
+
+#: ucsubset.src
+msgid "Tai Xuan Jing Symbols"
+msgstr "Symbolau Tai Xuan Jing"
+
+#: ucsubset.src
+msgid "Variation Selectors Supplement"
+msgstr "Dewiswyr Amrywiad Atodol"
+
+#: ucsubset.src
+msgid "Ancient Greek Musical Notation"
+msgstr "Nodiant Cerddorol Groegaidd Hynafol"
+
+#: ucsubset.src
+msgid "Ancient Greek Numbers"
+msgstr "Rhifau Groegaidd Hynafol"
+
+#: ucsubset.src
+msgid "Arabic Supplement"
+msgstr "Arabeg Atodol"
+
+#: ucsubset.src
+msgid "Buginese"
+msgstr "Bugineg"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Supplement"
+msgstr "Atodiad Cyfuno Marciau Deiacritig"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "Copteg"
+
+#: ucsubset.src
+msgid "Ethiopic Extended"
+msgstr "Ethiopeg Estynedig"
+
+#: ucsubset.src
+msgid "Ethiopic Supplement"
+msgstr "Ethiopeg Atodol"
+
+#: ucsubset.src
+msgid "Georgian Supplement"
+msgstr "Beorgiaidd Atodol"
+
+#: ucsubset.src
+msgid "Glagolitic"
+msgstr "Glagolitig"
+
+#: ucsubset.src
+msgid "Modifier Tone Letters"
+msgstr "Llythrennau Ton Newidiol"
+
+#: ucsubset.src
+msgid "Old Persian"
+msgstr "Persiaidd Hynafol"
+
+#: ucsubset.src
+msgid "Phonetic Extensions Supplement"
+msgstr "Estyniadau Ffonetig Atodol"
+
+#: ucsubset.src
+msgid "Supplemental Punctuation"
+msgstr "Atalnodi Atodol"
+
+#: ucsubset.src
+msgid "Vertical Forms"
+msgstr "Ffurfiau Fertigol"
+
+#: ucsubset.src
+msgid "Balinese"
+msgstr "Balineg"
+
+#: ucsubset.src
+msgid "Latin Extended-C"
+msgstr "Lladin Estynedig-C"
+
+#: ucsubset.src
+msgid "Latin Extended-D"
+msgstr "Lladin Estynedig-D"
+
+#: ucsubset.src
+msgid "Phoenician"
+msgstr "Pheneciaidd"
+
+#: ucsubset.src
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "Rhifau ac Atalnodi Cuneiform"
+
+#: ucsubset.src
+msgid "Counting Rod Numerals"
+msgstr "Rhifau Ffon Cyfrif"
+
+#: ucsubset.src
+msgid "Sundanese"
+msgstr "Sudanaidd"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-A"
+msgstr "Cyrillig Estynedig-A"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-B"
+msgstr "Cyrillig Estynedig-B"
+
+#: ucsubset.src
+msgid "Ancient Symbols"
+msgstr "Symbolau Hynafol"
+
+#: ucsubset.src
+msgid "Phaistos Disc"
+msgstr "Disg Phaisatos"
+
+#: ucsubset.src
+msgid "Lycian"
+msgstr "Lyciaidd"
+
+#: ucsubset.src
+msgid "Carian"
+msgstr "Canariaidd"
+
+#: ucsubset.src
+msgid "Lydian"
+msgstr "Lydiaidd"
+
+#: ucsubset.src
+msgid "Mahjong Tiles"
+msgstr "Teiliau Mahjong"
+
+#: ucsubset.src
+msgid "Domino Tiles"
+msgstr "Teiliau Domino"
+
+#: ucsubset.src
+msgid "Samaritan"
+msgstr "Samaritaidd"
+
+#: ucsubset.src
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "Syllafwyddor Cynfrodorol Canada Estynedig"
+
+#: ucsubset.src
+msgid "Vedic Extensions"
+msgstr "Estyniadau Verdig"
+
+#: ucsubset.src
+msgid "Common Indic Number Forms"
+msgstr "Ffurf Rhifau Cyffredin Indig"
+
+#: ucsubset.src
+msgid "Devanagari Extended"
+msgstr "Devanagari Estynedig"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-A"
+msgstr "Hangul Jamo Estynedig-A"
+
+#: ucsubset.src
+msgid "Javanese"
+msgstr "Javaneaidd"
+
+#: ucsubset.src
+msgid "Myanmar Extended-A"
+msgstr "Myanmar Estynedig-A"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-B"
+msgstr "Hangul Jamo Estynedig-B"
+
+#: ucsubset.src
+msgid "Imperial Aramaic"
+msgstr "Arameaidd Ymerodrol"
+
+#: ucsubset.src
+msgid "Old South Arabian"
+msgstr "De Arabaidd Hynafol"
+
+#: ucsubset.src
+msgid "Avestan"
+msgstr "Afestanaidd"
+
+#: ucsubset.src
+msgid "Inscriptional Parthian"
+msgstr "Parinthaidd Ysgrifol"
+
+#: ucsubset.src
+msgid "Inscriptional Pahlavi"
+msgstr "Pahlafaidd Ysgrifol"
+
+#: ucsubset.src
+msgid "Old Turkic"
+msgstr "Twrceg Hynafol"
+
+#: ucsubset.src
+msgid "Rumi Numeral Symbols"
+msgstr "Symbolau Rhifol Rumi"
+
+#: ucsubset.src
+msgid "Egyptian Hieroglyphs"
+msgstr "Hieroglyphau Eifftaidd"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "Affaniwmerig Caëedig Atodol"
+
+#: ucsubset.src
+msgid "Enclosed Ideographic Supplement"
+msgstr "Ideograffig Caëedig Atodol"
+
+#: ucsubset.src
+msgid "Ethiopic Extended-A"
+msgstr "Ethiopaidd Estynedig-A"
+
+#: ucsubset.src
+msgid "Bamum Supplement"
+msgstr "Bamum Atodol"
+
+#: ucsubset.src
+msgid "Kana Supplement"
+msgstr "Kana Atodol"
+
+#: ucsubset.src
+msgid "Playing Cards"
+msgstr "Cardiau Chwarae"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "Symbolau a Phictograffau Amrywiol"
+
+#: ucsubset.src
+msgid "Transport And Map Symbols"
+msgstr "Symbolau Trafnidiaeth a Mapiau"
+
+#: ucsubset.src
+msgid "Alchemical Symbols"
+msgstr "Symbolau Alcemegol"
+
+#: ucsubset.src
+msgid "Arabic Extended-A"
+msgstr "Arabeg Estynedig-A"
+
+#: ucsubset.src
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "Symbolau Gwyddor Mathamategol Arabaidd"
+
+#: ucsubset.src
+msgid "Meetei Mayek Extensions"
+msgstr "Estyniadau Meetei Mayek"
+
+#: ucsubset.src
+msgid "Meroitic Cursive"
+msgstr "Meroitig Rhedol"
+
+#: ucsubset.src
+msgid "Meroitic Hieroglyphs"
+msgstr "Hieroglyphau Meroitig"
+
+#: ucsubset.src
+msgid "Sora Sompeng"
+msgstr "Cursive"
+
+#: ucsubset.src
+msgid "Sundanese Supplement"
+msgstr "Sudaneg Atodol"
+
+#: ucsubset.src
+msgid "Caucasian Albanian"
+msgstr "Albanieg Cawcsasaidd"
+
+#: ucsubset.src
+msgid "Coptic Epact Numbers"
+msgstr "Rhifau Epact Copteg"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Extended"
+msgstr "Cyfuno Marciau Deiacritig Estynedig"
+
+#: ucsubset.src
+msgid "Geometric Shapes Extended"
+msgstr "Siapiau Geometrig Estynedig"
+
+#: ucsubset.src
+msgid "Latin Extended-E"
+msgstr "Lladin Estynedig-E"
+
+#: ucsubset.src
+msgid "Myanmar Extended-B"
+msgstr "Myanmar Estynedig-B"
+
+#: ucsubset.src
+msgid "Old North Arabian"
+msgstr "Arabaidd Hynafol Gogleddol"
+
+#: ucsubset.src
+msgid "Old Permic"
+msgstr "Hen Bermic"
+
+#: ucsubset.src
+msgid "Ornamental Dingbats"
+msgstr "Dingbatiau Addurniadol"
+
+#: ucsubset.src
+msgid "Shorthand Format Controls"
+msgstr "Rheoli Fformat Llawfer"
+
+#: ucsubset.src
+msgid "Sinhala Archaic Numbers"
+msgstr "Hen Rifau Sinhala"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-C"
+msgstr "Saethau Atodol - C"
+
+#: ucsubset.src
+msgid "Anatolian Hieroglyphs"
+msgstr "Hieroglyffau Anatolia"
+
+#: ucsubset.src
+msgid "Cherokee Supplement"
+msgstr "Cherokee Ychwanegol"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension E"
+msgstr "Ideograffau Unedig CJK Estyniad E"
+
+#: ucsubset.src
+msgid "Early Dynastic Cuneiform"
+msgstr "Cwnifform Llinachyddol Cynnar"
+
+#: ucsubset.src
+msgid "Old Hungarian"
+msgstr "Hen Hwngareg"
+
+#: ucsubset.src
+msgid "Supplemental Symbols And Pictographs"
+msgstr "Symbolau a Phictograffau Ychwanegol"
+
+#: ucsubset.src
+msgid "Sutton Signwriting"
+msgstr "Ysgrif Arwydd Sutton"

@@ -1942,3 +1942,5 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr ""
+
+# Translations of Unicode subsets from LibreOffice core

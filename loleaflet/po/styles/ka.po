@@ -1944,3 +1944,329 @@ msgstr "~ზედ გადაწერა"
 #: globstr.src
 msgid "Insert"
 msgstr "ჩასმა"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "დაშორების შემცვლელი სიმბოლოები"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "კომბინირებული დიაკრიტიკული ნიშნები"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "საბაზო ბერძნული"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "ბერძნული სიმბოლოები და კოპტური"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "კირილიცა"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "სომხური"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "ძირითადი ებრაული"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "ებრაული დამატებითი"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "ძირითადი არაბული"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "არაბული დამატებითი"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "დევანგარი"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "ბენგალიური"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "გურმუხი"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "გუჯარათი"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "თამილი"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "თელუგუ"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "კანადა"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "მალაიზიური"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "ტაილანდური"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "ლაოსური"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "ძირითადი ქართული"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "ქართული დამატებითი"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "ბერძნული დამატებითი"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "ისრები"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "მატემატიკური ოპერატორები"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "სხვასასხვა ტექნიკური"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "საკონტროლო ნახატები"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "სიმბოლოთა ოპტიკური ამოცნობა"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "ჩართული ასო-ციფრული ინდიკატორი"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "ველის ხატვა"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "დაბლოკილი ელემენტები"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "გეომეტრიული ელემენტები"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "სხვადასხვა სიმბოლოები"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "ტიპოგრ. მინიშნებები"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "CJK სიმბოლოები და პუნქტუაცია"
+
+#: ucsubset.src
+msgid "Hiragana"
+msgstr "ჰირაგანა"
+
+#: ucsubset.src
+msgid "Katakana"
+msgstr "კატაკანა"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "ბოპომოფო"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "ჰანგულის ტავსებადი ჯამო"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK სხვადასხვა"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "ჩართული CJK სიმბოლოები და თვეები"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "CJK-ს თავსებადი"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "ჰანგული"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "CJK გაერთიანებული იდეოგრაფები"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "კერძო არეალი"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK თავსებადი იდეოგრაფები"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "წარმოდგენის ანბანური ფორმები"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "არაბული პრეზენტაციის ფორმები - A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "ნახევარ ნიშნების შერწყმა"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK თავსებადობის ფორმები"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "მცირე ფორმების ვარიანტები"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "არაბული პრეზენტაციის ფორმები - B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "ნახევარი სიგანის და სრული სიგანის ფორმები"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "სპეციალური"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "სინჰალა"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "ტიბეტური"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "მიანმარი"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "ხმერი"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "ოგამი"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "რუნიული"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "სირიული"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "თაანა"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "ეთიოპური"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "ჩეროკი"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "კანადური აბორიგენული მარცვლები"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "მონღოლური"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "სხვადსხვა მათემატიკური სიმბოლოები-ა"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "დამატებითი ისრები-ა"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "ნიმუშები უსინათლოთათვის"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "დამატებითი ისრები-ბ"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "სხვადასხვა მათემატიკური სიმბოლოები-ბ"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK რადიკალური დამატებები"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "კანხი რადიკალები"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "იდეოგრაფიული განმსაზღვრელი სიმბოლოები"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "ჰანუნოო"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "ტაგბანვა"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "ბუჰიდი"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "კანბუნი"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "ბოპომოფო გაფართოებული"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "კატაკანას ფონეტიკა"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "სიცილაკი"

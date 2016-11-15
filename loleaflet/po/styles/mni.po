@@ -1972,3 +1972,9 @@ msgstr "ময়ুং ওইবা মিংথোল, তেক্স, চার
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "ময়ুং ওইবা মিংথোল,  ময়ুং ওইবা তেক্স"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "থাই"

@@ -2018,3 +2018,821 @@ msgstr "%1 palabras, %2 caracteres"
 #: strings.src
 msgid "Slide %1 of %2"
 msgstr "Diapositiva %1 de %2"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Latín básico"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Latín-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "Latín estendido-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "Latín estendido-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "Extensións IPA"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Letras modificadoras de espazamento"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Combinación de marcas diacríticas"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "Grego básico"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Símbolos gregos e copto"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Cirílico"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Armenio"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Hebreo básico"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Hebreo estendido"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Árabe básico"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Árabe estendido"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "Devanágari"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "Bengalí"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "Guxaratí"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "Támil"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "Telugú"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "Tailandés"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "Laosiano"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "Xeorxiano básico"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "Xeorxiano estendido"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Latín estendido adicional"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "Grego estendido"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Puntuación xeral"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Superíndices e subíndices"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Símbolos monetarios"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "Combinación de símbolos diacríticos"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Símbolos tipo letra"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Caracteres numéricos"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Frechas"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "Operadores matemáticos"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Símbolos técnicos variados"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Imaxes de control"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Recoñecemento óptico de caracteres"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Caracteres alfanuméricos incluídos"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Debuxo de caixa"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Elementos de bloque"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Formas xeométricas"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Símbolos diversos"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "Cousas"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "Puntuación e símbolos CJK"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Jamo para compatibilidade con hangul"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK diversos"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "Meses e letras CJK incluídos"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "Compatibilidade CJK"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "Ideogramas unificados CJK"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "Ideogramas unificados CJK extensión A"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Área de uso privado"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "Ideogramas de compatibilidade CJK"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Formas de presentación alfabética"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Formas A de presentación árabe"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "Marcas de combinación medias"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "Formas de compatibilidade CJK"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Variantes de formas pequenas"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Formas B de presentación árabe"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Formas de largura media e largura completa"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Especiais"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "Sílabas Yi"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "Radicais Yi"
+
+#: ucsubset.src
+msgid "Old Italic"
+msgstr "Cursiva antiga"
+
+#: ucsubset.src
+msgid "Gothic"
+msgstr "Gótica"
+
+#: ucsubset.src
+msgid "Deseret"
+msgstr "Caracteres Deseret"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "Símbolos musicais bizantinos"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "Símbolos musicais"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "Símbolos alfanuméricos matemáticos"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "Ideógrafos unificados CJK, extensión B"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "Ideogramas unificados CJK, extensión C"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "Ideogramas unificados CJK extensión D"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "Ideogramas de compatibiliade CJK suplemento"
+
+#: ucsubset.src
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: ucsubset.src
+msgid "Cyrillic Supplement"
+msgstr "Suplemento do cirílico"
+
+#: ucsubset.src
+msgid "Variation Selectors"
+msgstr "Selectores de variación"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-A"
+msgstr "Área-A de utilización privada suplementaria"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-B"
+msgstr "Área-B de utilización privada suplementaria"
+
+#: ucsubset.src
+msgid "Khmer Symbols"
+msgstr "Símbolos khmer"
+
+#: ucsubset.src
+msgid "Phonetic Extensions"
+msgstr "Extensións fonéticas"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "Símbolos e frechas diversos"
+
+#: ucsubset.src
+msgid "Yijing Hexagram Symbols"
+msgstr "Símbolos de hexagramas yijing"
+
+#: ucsubset.src
+msgid "Linear B Syllabary"
+msgstr "Silabario do linear B"
+
+#: ucsubset.src
+msgid "Linear B Ideograms"
+msgstr "Ideogramas do linear B"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "Números exeos"
+
+#: ucsubset.src
+msgid "Ugaritic"
+msgstr "Ugarítico"
+
+#: ucsubset.src
+msgid "Shavian"
+msgstr "Shaviano"
+
+#: ucsubset.src
+msgid "Osmanya"
+msgstr "Osmania"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "Cingalés"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "Tibetano"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "Cambodiano"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Rúnico"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "Sirio"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "Etíope"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Sílabas aborixes canadianas"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Mongol"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Símbolos matemáticos diversos A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Frechas suplementarias A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Patróns Braille"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Frechas suplementarias B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Símbolos matemáticos diversos B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "Suplemento radical de CJK"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "Radicais Kanxi"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Caracteres de descrición ideográficos"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Bopomofo estendido"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Fonética katakana"
+
+#: ucsubset.src
+msgid "CJK Strokes"
+msgstr "Trazos CJK"
+
+#: ucsubset.src
+msgid "Cypriot Syllabary"
+msgstr "Silabario chipriota"
+
+#: ucsubset.src
+msgid "Tai Xuan Jing Symbols"
+msgstr "Símbolos Tai Xuan Jing"
+
+#: ucsubset.src
+msgid "Variation Selectors Supplement"
+msgstr "Suplemento dos selectores de variación"
+
+#: ucsubset.src
+msgid "Ancient Greek Musical Notation"
+msgstr "Notación musical grega antiga"
+
+#: ucsubset.src
+msgid "Ancient Greek Numbers"
+msgstr "Números gregos antigos"
+
+#: ucsubset.src
+msgid "Arabic Supplement"
+msgstr "Suplemento de árabe"
+
+#: ucsubset.src
+msgid "Buginese"
+msgstr "Buginés"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Supplement"
+msgstr "Suplemento de combinación de marcas diacríticas"
+
+#: ucsubset.src
+msgid "Ethiopic Extended"
+msgstr "Etíope estendido"
+
+#: ucsubset.src
+msgid "Ethiopic Supplement"
+msgstr "Suplemento de etíope"
+
+#: ucsubset.src
+msgid "Georgian Supplement"
+msgstr "Suplemento de xeorxiano"
+
+#: ucsubset.src
+msgid "Glagolitic"
+msgstr "Glagolítico"
+
+#: ucsubset.src
+msgid "Modifier Tone Letters"
+msgstr "Letras modificadoras do ton"
+
+#: ucsubset.src
+msgid "New Tai Lue"
+msgstr "Novo Tai Lue"
+
+#: ucsubset.src
+msgid "Old Persian"
+msgstr "Persa antigo"
+
+#: ucsubset.src
+msgid "Phonetic Extensions Supplement"
+msgstr "Suplemento de extensións fonéticas"
+
+#: ucsubset.src
+msgid "Supplemental Punctuation"
+msgstr "Puntuación adicional"
+
+#: ucsubset.src
+msgid "Vertical Forms"
+msgstr "Formas verticais"
+
+#: ucsubset.src
+msgid "Balinese"
+msgstr "Balinés"
+
+#: ucsubset.src
+msgid "Latin Extended-C"
+msgstr "Latín estendido-C"
+
+#: ucsubset.src
+msgid "Latin Extended-D"
+msgstr "Latín estendido-D"
+
+#: ucsubset.src
+msgid "Phags-Pa"
+msgstr "Phags-pa"
+
+#: ucsubset.src
+msgid "Phoenician"
+msgstr "Fenicio"
+
+#: ucsubset.src
+msgid "Cuneiform"
+msgstr "Cuneiforme"
+
+#: ucsubset.src
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "Números e puntuación cuneiforme"
+
+#: ucsubset.src
+msgid "Counting Rod Numerals"
+msgstr "Numeración de varas chinesa"
+
+#: ucsubset.src
+msgid "Sundanese"
+msgstr "Sudanés"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-A"
+msgstr "Cirílico estendido A"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-B"
+msgstr "Cirílico estendido-B"
+
+#: ucsubset.src
+msgid "Ancient Symbols"
+msgstr "Símbolos antigos"
+
+#: ucsubset.src
+msgid "Phaistos Disc"
+msgstr "Disco phaistos"
+
+#: ucsubset.src
+msgid "Lycian"
+msgstr "Licio"
+
+#: ucsubset.src
+msgid "Carian"
+msgstr "Cario"
+
+#: ucsubset.src
+msgid "Lydian"
+msgstr "Lidio"
+
+#: ucsubset.src
+msgid "Mahjong Tiles"
+msgstr "Pezas do Mahjong"
+
+#: ucsubset.src
+msgid "Domino Tiles"
+msgstr "Pezas do dominó"
+
+#: ucsubset.src
+msgid "Samaritan"
+msgstr "Samaritano"
+
+#: ucsubset.src
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "Silabario aborixe canadiano estendido"
+
+#: ucsubset.src
+msgid "Vedic Extensions"
+msgstr "Extensións do sánscrito"
+
+#: ucsubset.src
+msgid "Common Indic Number Forms"
+msgstr "Formas numéricas do índico común"
+
+#: ucsubset.src
+msgid "Devanagari Extended"
+msgstr "Devanágari estendido"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-A"
+msgstr "Hangul Jamo estendido-A"
+
+#: ucsubset.src
+msgid "Javanese"
+msgstr "Xavanés"
+
+#: ucsubset.src
+msgid "Myanmar Extended-A"
+msgstr "Birmano estendido-A"
+
+#: ucsubset.src
+msgid "Tai Viet"
+msgstr "Tailandés vietnamita"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-B"
+msgstr "Hangul Jamo estendido-B"
+
+#: ucsubset.src
+msgid "Imperial Aramaic"
+msgstr "Arameo imperial"
+
+#: ucsubset.src
+msgid "Old South Arabian"
+msgstr "Árabe antigo do sur"
+
+#: ucsubset.src
+msgid "Avestan"
+msgstr "Avéstico"
+
+#: ucsubset.src
+msgid "Inscriptional Parthian"
+msgstr "Parto inscricional"
+
+#: ucsubset.src
+msgid "Inscriptional Pahlavi"
+msgstr "Pahlavi inscricional"
+
+#: ucsubset.src
+msgid "Old Turkic"
+msgstr "Turco antigo"
+
+#: ucsubset.src
+msgid "Rumi Numeral Symbols"
+msgstr "Símbolos numéricos rumi"
+
+#: ucsubset.src
+msgid "Egyptian Hieroglyphs"
+msgstr "Xeróglifos exipcios"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "Suplemento alfanumérico adxunto"
+
+#: ucsubset.src
+msgid "Enclosed Ideographic Supplement"
+msgstr "Suplemento ideográfico adxunto"
+
+#: ucsubset.src
+msgid "Mandaic"
+msgstr "Mandaico"
+
+#: ucsubset.src
+msgid "Ethiopic Extended-A"
+msgstr "Etíope estendido-A"
+
+#: ucsubset.src
+msgid "Bamum Supplement"
+msgstr "Suplemento Bamum"
+
+#: ucsubset.src
+msgid "Kana Supplement"
+msgstr "Suplemento Kana"
+
+#: ucsubset.src
+msgid "Playing Cards"
+msgstr "Naipes"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "Símbolos e pictogramas varios"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "Emoticóns"
+
+#: ucsubset.src
+msgid "Transport And Map Symbols"
+msgstr "Símbolos de transporte e mapas"
+
+#: ucsubset.src
+msgid "Alchemical Symbols"
+msgstr "Símbolos da alquimia"
+
+#: ucsubset.src
+msgid "Arabic Extended-A"
+msgstr "Árabe estendido-A"
+
+#: ucsubset.src
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "Símbolos alfabéticos matemáticos árabes"
+
+#: ucsubset.src
+msgid "Meetei Mayek Extensions"
+msgstr "Extensións Meitei Mayek"
+
+#: ucsubset.src
+msgid "Meroitic Cursive"
+msgstr "Meroítico cursivo"
+
+#: ucsubset.src
+msgid "Meroitic Hieroglyphs"
+msgstr "Xeróglifos meroíticos"
+
+#: ucsubset.src
+msgid "Sundanese Supplement"
+msgstr "Suplemento de sudanés"
+
+#: ucsubset.src
+msgid "Caucasian Albanian"
+msgstr "Albanés caucásico"
+
+#: ucsubset.src
+msgid "Coptic Epact Numbers"
+msgstr "Números epacta coptos"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Extended"
+msgstr "Combinación de marcas diacríticas estendidas"
+
+#: ucsubset.src
+msgid "Duployan"
+msgstr "Duployana"
+
+#: ucsubset.src
+msgid "Elbasan"
+msgstr "Elbasani"
+
+#: ucsubset.src
+msgid "Geometric Shapes Extended"
+msgstr "Formas xeométricas estendidas"
+
+#: ucsubset.src
+msgid "Latin Extended-E"
+msgstr "Latín estendido-E"
+
+#: ucsubset.src
+msgid "Linear A"
+msgstr "Lineal A"
+
+#: ucsubset.src
+msgid "Manichaean"
+msgstr "Maniqueo"
+
+#: ucsubset.src
+msgid "Myanmar Extended-B"
+msgstr "Birmano estendido-B"
+
+#: ucsubset.src
+msgid "Nabataean"
+msgstr "Nabateo"
+
+#: ucsubset.src
+msgid "Old North Arabian"
+msgstr "Árabe antigo do norte"
+
+#: ucsubset.src
+msgid "Old Permic"
+msgstr "Pérmico antigo"
+
+#: ucsubset.src
+msgid "Ornamental Dingbats"
+msgstr "Cousas ornamentais"
+
+#: ucsubset.src
+msgid "Pahawh Hmong"
+msgstr "Hmong Pahawh"
+
+#: ucsubset.src
+msgid "Palmyrene"
+msgstr "Palmireño"
+
+#: ucsubset.src
+msgid "Psalter Pahlavi"
+msgstr "Pahlavi do Salterio"
+
+#: ucsubset.src
+msgid "Shorthand Format Controls"
+msgstr "Controles de formato de taquigrafía"
+
+#: ucsubset.src
+msgid "Sinhala Archaic Numbers"
+msgstr "Números arcaicos do cingalés"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-C"
+msgstr "Frechas suplementarias C"
+
+#: ucsubset.src
+msgid "Anatolian Hieroglyphs"
+msgstr "Xeroglifos anatolios"
+
+#: ucsubset.src
+msgid "Cherokee Supplement"
+msgstr "Suplemento do cherokee"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension E"
+msgstr "Ideogramas unificados CJK extensión E"
+
+#: ucsubset.src
+msgid "Early Dynastic Cuneiform"
+msgstr "Cuneiforme dinástico arcaico"
+
+#: ucsubset.src
+msgid "Old Hungarian"
+msgstr "Húngaro antigo"
+
+#: ucsubset.src
+msgid "Supplemental Symbols And Pictographs"
+msgstr "Símbolos e pictogramas suplementarios"
+
+#: ucsubset.src
+msgid "Sutton Signwriting"
+msgstr "Escrita de sinais de Sutton"

@@ -1998,3 +1998,365 @@ msgstr "ऊर्ध्वाधर-शीर्षकम्, पाठः, त�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "ऊर्ध्वाधर-शीर्षकम्, ऊर्ध्वाधर-पाठः"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "आधारभूतलैटिन"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "लैटिन-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "लैटिन विस्तृता-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "लैटिन विस्तृता-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA विस्तारः"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "अन्तरणपरिवर्तकाक्षराः"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "डाइक्रिटिकचिह्नानि संयोजयति"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "आधारभूतग्रीक"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "ग्रीकसंकेताः कोप्टिक च"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "सिरिलिक"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "अर्मेनियन्"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "आधारभूतहिब्रू"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "हिब्रू विस्तृता"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "आधारभूतारबी"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "अरबीविस्तृता"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "देवनागरी"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "बङ्गाली "
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "गुरूमुखी"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "गुजराती "
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "तमिल् "
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "तेलुगु "
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "कन्नडा "
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "मलयालम्"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "लाओ"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "आधारभूतजॉर्जियन"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "जॉर्जियन विस्तृता"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "हांगुल जामो"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "लैटिन विस्तृता अतिरिक्ताः"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "ग्रीक विस्तृता"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "सामान्य विराम-चिह्नानि"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "अधिस्क्रिप्टानि उपस्क्रिप्टानि च"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "डाइक्रिटिकचिह्नानि संयोजयति"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "अक्षर इव संकेताः"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "संख्याप्रारूपाणि"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "गणितीयसञ्चालकाः"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "विविधप्राविधिकीयम्"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "नियंत्रण चित्राणि"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "दृश्याक्षरप्रत्यभिज्ञानम्"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "संलग्नं वर्णांकिकम्"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "कोष्ठालेखनम्"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "ब्लॉक अवयवाः"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "ज्यामियाः आकृतयः"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "विविधसंकेताः"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "डिंगबैटानि"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "CJK संकेताः विरामचिह्नानि च"
+
+#: ucsubset.src
+msgid "Katakana"
+msgstr "कटकाना"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "बोपोमोफो"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "हांगुलसुसंगतिजामो"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK विविधम्"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "संलग्नाः CJK अक्षराः मासाः च"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "हाङ्गुल्"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "CJK एकरूपितानि भावचित्राणि"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "वैयक्तिकोपयोगस्थानम्"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK सुसंगतिभावचित्राणि"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "वर्णमालायिप्रस्तुतिप्रपत्राणि"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "अरबीप्रस्तुतिप्रपत्राणि-A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "अर्धचिह्नानि संयोजयति"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK सुसंगतिप्रपत्राणि"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "लघुरूपभेदः"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "अरबीप्रस्तुतिप्रपत्राणि-B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "अर्द्धपरिणाहानि पूर्णपरिणाहानि च प्रपत्राणि"
+
+#: ucsubset.src
+msgid "Limbu"
+msgstr "लिम्बु"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "सिंहला"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "टिबेटियन्"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "म्यान्मारः"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "ख्मेर् "
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "ओघम"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "रूनिक"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "सिरियक"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "थाना"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "इथियोपियायी"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "चेरोकी"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "कनाडीय-मौलाक्षराः"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "मोङ्गोलियन् "
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "विविधगणितीयसंकेताः-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "पूरकीयशरचिह्नानि-A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "ब्रेलप्रारूपाणि"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "पूरकीयशरचिह्नानि-B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "विविधगणितीयसंकेताः-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK मौलिकपूरकम्"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "भावलिपीयविवरणसंप्रतीकाः"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "टेगेलोग् "
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "हानुनू"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "टैगबनवा"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "ब्यूहिड"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "कानबुन"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "बोपोमोफो विस्तृता"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "कटकानाध्वनिविज्ञानम्"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "कोप्टोपिक्"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "भावचिह्नानि"

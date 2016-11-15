@@ -1926,3 +1926,61 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Lescht Kolonne"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Latäin-1"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Kyrillesch"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Armenesch"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "Bengalesch"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "Laotesch"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Feiler"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "Singhalesesch"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "Tibetesch"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "Birmanesch"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "Ogam"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Runen"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "Syresch"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "Ethiopesch"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Mongolesch"

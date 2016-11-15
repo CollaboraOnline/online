@@ -2018,3 +2018,941 @@ msgstr "%1 vārdi, %2 rakstzīmes"
 #: strings.src
 msgid "Slide %1 of %2"
 msgstr "Slaids %1 no %2"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Latīņu pamata"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Latīņu-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "Latīņu paplašinātā-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "Latīņu paplašinātā-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA paplašinājumi"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Atstarpes modificējošās zīmes"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Kombinējošās diakritiskās zīmes"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "Grieķu pamata"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Grieķu simboli un koptu"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Kirilica"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Armēņu"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Ivrita pamata"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Ivrita paplašinātā"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Arābu pamata"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Arābu paplašinātā"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "Dēvanāgarī"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "Bengāļu"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "Gurmukhī"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "Gudžaratu"
+
+#: ucsubset.src
+msgid "Odia"
+msgstr "Oriju"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "Tamilu"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "Kannadu"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "Malajalu"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "Taju"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "Laosiešu"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "Gruzīnu pamata"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "Gruzijas paplašinātā"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "Hangul džamo"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Latīņu paplašinātā papildu"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "Grieķu paplašinātā"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Vispārējā interpunkcija"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Augšraksti un apakšraksti"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Valūtas simboli"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "Kombinējošie diakritiskie simboli"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Burtveida simboli"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Skaitļu formas"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Bultas"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "Matemātiskie operatori"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Dažādi tehniskie simboli"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Komandu apzīmējumi"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Rakstzīmju optiskā pazīšana"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Apvilktie burti un cipari"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Kastu zīmēšana"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Bloku elementi"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Ģeometriskās figūras"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Dažādi simboli"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "Dekorzīmes"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "CJK simboli un punktuācija"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Hangul savietojamības džamo"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK dažādi"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "Apvilktie CJK burti un mēneši"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "CJK savietojamība"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "CJK vienotās ideogrammas"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "CJK vienotie ideogrāfu paplašinājumi A"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Privātai lietošanai"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK savietojamības ideogrammas"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Burtu attēlošanas formas"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Arābu burtu attēlošanas formas-A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "Kombinējošās pusatzīmes"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK savietojamības formas"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Mazie formu varianti"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Arābu burtu attēlošanas formas-B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Pusplatuma un pilna platuma formas"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Īpašās zīmes"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "Yi zilbes"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "Yi radikāļi"
+
+#: ucsubset.src
+msgid "Old Italic"
+msgstr "Senais Itāļu"
+
+#: ucsubset.src
+msgid "Gothic"
+msgstr "Gotu"
+
+#: ucsubset.src
+msgid "Deseret"
+msgstr "Tuksneša"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "Bizantiešu mūzikas simboli"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "Mūzikas simboli"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "Matemātiskie burtu-ciparu simboli"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "CJK vienoto ideogrammu paplašinājums B"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "CJK vienoto ideogrammu paplašinājumi A"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "CJK vienotie ideogrammu paplašinājumi D"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "CJK savietojamības ideogrammu papildinājums"
+
+#: ucsubset.src
+msgid "Tags"
+msgstr "Birkas"
+
+#: ucsubset.src
+msgid "Cyrillic Supplement"
+msgstr "Kirilicas pielikums"
+
+#: ucsubset.src
+msgid "Variation Selectors"
+msgstr "Variāciju selektori"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-A"
+msgstr "Papildu privātas lietošanas lauks-A"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-B"
+msgstr "Papildu privātas lietošanas lauks-B"
+
+#: ucsubset.src
+msgid "Tai Le"
+msgstr "Tai le"
+
+#: ucsubset.src
+msgid "Khmer Symbols"
+msgstr "Khmeru simboli"
+
+#: ucsubset.src
+msgid "Phonetic Extensions"
+msgstr "Fonētiskie paplašinājumi"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "Dažādi simboli un bultas"
+
+#: ucsubset.src
+msgid "Yijing Hexagram Symbols"
+msgstr "Yijing heksagrammu simboli"
+
+#: ucsubset.src
+msgid "Linear B Syllabary"
+msgstr "Lineārais B zilbjuraksts"
+
+#: ucsubset.src
+msgid "Linear B Ideograms"
+msgstr "Lineārās B ideogrammas"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "Aegean cipari"
+
+#: ucsubset.src
+msgid "Ugaritic"
+msgstr "Ugaritiešu"
+
+#: ucsubset.src
+msgid "Shavian"
+msgstr "Šavu"
+
+#: ucsubset.src
+msgid "Osmanya"
+msgstr "Osmaņu"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "Singāļu"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "Tibetiešu"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "Birmiešu"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "Khmeru"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "Ogam"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Rūnu"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "Sīriešu"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "Tāna"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "Etiopiešu"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "Čiroku"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Kanādas aborigēnu zilbes"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Mongoļu"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Dažādi matemātiskie simboli-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Papildu bultas-A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Braila raksts"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Papildu bultas-B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Dažādi matemātiskie simboli-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK radikāļu pielikums"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "Kangxi saknes"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Aprakstošās ideogrammas"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "Tagalu"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "Tagbanva"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Bopomofo paplašinātā"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Katakana fonētiskās"
+
+#: ucsubset.src
+msgid "CJK Strokes"
+msgstr "CJK vilkumi"
+
+#: ucsubset.src
+msgid "Cypriot Syllabary"
+msgstr "Kipras zilbju raksts"
+
+#: ucsubset.src
+msgid "Tai Xuan Jing Symbols"
+msgstr "Tai Xuan Jing simboli"
+
+#: ucsubset.src
+msgid "Variation Selectors Supplement"
+msgstr "Papildus variāciju selektors"
+
+#: ucsubset.src
+msgid "Ancient Greek Musical Notation"
+msgstr "Sengrieķu mūzikas nošu raksts"
+
+#: ucsubset.src
+msgid "Ancient Greek Numbers"
+msgstr "Sengrieķu cipari"
+
+#: ucsubset.src
+msgid "Arabic Supplement"
+msgstr "Arābu pielikums"
+
+#: ucsubset.src
+msgid "Buginese"
+msgstr "Bugu"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Supplement"
+msgstr "Papildu diakritisko zīmju kombinēšana"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "Koptu"
+
+#: ucsubset.src
+msgid "Ethiopic Extended"
+msgstr "Etiopiešu paplašinātais"
+
+#: ucsubset.src
+msgid "Ethiopic Supplement"
+msgstr "Etiopiešu pielikums"
+
+#: ucsubset.src
+msgid "Georgian Supplement"
+msgstr "Gruzīnu pielikums"
+
+#: ucsubset.src
+msgid "Glagolitic"
+msgstr "Glagolica"
+
+#: ucsubset.src
+msgid "Kharoshthi"
+msgstr "Karošti"
+
+#: ucsubset.src
+msgid "Modifier Tone Letters"
+msgstr "Skaņas modificējamās zīmes"
+
+#: ucsubset.src
+msgid "New Tai Lue"
+msgstr "Jaunais tai lue"
+
+#: ucsubset.src
+msgid "Old Persian"
+msgstr "Seno persiešu"
+
+#: ucsubset.src
+msgid "Phonetic Extensions Supplement"
+msgstr "Fonētisko paplašinājumu pielikums"
+
+#: ucsubset.src
+msgid "Supplemental Punctuation"
+msgstr "Papildu interpunkcija"
+
+#: ucsubset.src
+msgid "Syloti Nagri"
+msgstr "Syloti Nagri raksts"
+
+#: ucsubset.src
+msgid "Tifinagh"
+msgstr "Tifinaga"
+
+#: ucsubset.src
+msgid "Vertical Forms"
+msgstr "Vertikālās formas"
+
+#: ucsubset.src
+msgid "Balinese"
+msgstr "Baliešu"
+
+#: ucsubset.src
+msgid "Latin Extended-C"
+msgstr "Latīņu paplašinātais-C"
+
+#: ucsubset.src
+msgid "Latin Extended-D"
+msgstr "Latīņu paplašinātais-D"
+
+#: ucsubset.src
+msgid "Phags-Pa"
+msgstr "Fags-pa"
+
+#: ucsubset.src
+msgid "Phoenician"
+msgstr "Feniķiešu"
+
+#: ucsubset.src
+msgid "Cuneiform"
+msgstr "Ķīļraksts"
+
+#: ucsubset.src
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "Ķīļraksta skaitļi un interpunkcija"
+
+#: ucsubset.src
+msgid "Counting Rod Numerals"
+msgstr "Skaitāmkociņu skaitļi"
+
+#: ucsubset.src
+msgid "Sundanese"
+msgstr "Sundaniešu"
+
+#: ucsubset.src
+msgid "Lepcha"
+msgstr "Lepča"
+
+#: ucsubset.src
+msgid "Ol Chiki"
+msgstr "Ol čiki"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-A"
+msgstr "Kirilicas paplašinātais-A"
+
+#: ucsubset.src
+msgid "Vai"
+msgstr "Vaju"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-B"
+msgstr "Kirilicas paplašinātais-B"
+
+#: ucsubset.src
+msgid "Saurashtra"
+msgstr "Saurašta"
+
+#: ucsubset.src
+msgid "Kayah Li"
+msgstr "Kajaš Li"
+
+#: ucsubset.src
+msgid "Rejang"
+msgstr "Redžangas"
+
+#: ucsubset.src
+msgid "Cham"
+msgstr "Čamorru"
+
+#: ucsubset.src
+msgid "Ancient Symbols"
+msgstr "Uzsvaru simboli"
+
+#: ucsubset.src
+msgid "Phaistos Disc"
+msgstr "Faistas disks"
+
+#: ucsubset.src
+msgid "Lycian"
+msgstr "Līciešu"
+
+#: ucsubset.src
+msgid "Carian"
+msgstr "Kariešu"
+
+#: ucsubset.src
+msgid "Lydian"
+msgstr "Līdiešu"
+
+#: ucsubset.src
+msgid "Mahjong Tiles"
+msgstr "Mahjong kauliņi"
+
+#: ucsubset.src
+msgid "Domino Tiles"
+msgstr "Domino kauliņi"
+
+#: ucsubset.src
+msgid "Samaritan"
+msgstr "Samārijas"
+
+#: ucsubset.src
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "Kanādas iezemiešu zilbes paplašinātas"
+
+#: ucsubset.src
+msgid "Tai Tham"
+msgstr "Tai tam"
+
+#: ucsubset.src
+msgid "Vedic Extensions"
+msgstr "Vēdu paplašinājumi"
+
+#: ucsubset.src
+msgid "Common Indic Number Forms"
+msgstr "Kopīgās indoāriešu skaitļu formas"
+
+#: ucsubset.src
+msgid "Devanagari Extended"
+msgstr "Dēvanāgarī paplašinātais"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-A"
+msgstr "Hangul džamo paplašinātais-A"
+
+#: ucsubset.src
+msgid "Javanese"
+msgstr "Javiešu"
+
+#: ucsubset.src
+msgid "Myanmar Extended-A"
+msgstr "Mjanmas paplašinātais-A"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-B"
+msgstr "Hangulas džamo paplašinātais-B"
+
+#: ucsubset.src
+msgid "Imperial Aramaic"
+msgstr "Imperiālā aramiešu"
+
+#: ucsubset.src
+msgid "Old South Arabian"
+msgstr "Senā dienvidarābu"
+
+#: ucsubset.src
+msgid "Avestan"
+msgstr "Avesta"
+
+#: ucsubset.src
+msgid "Inscriptional Parthian"
+msgstr "Partiešu"
+
+#: ucsubset.src
+msgid "Inscriptional Pahlavi"
+msgstr "Pehlevi"
+
+#: ucsubset.src
+msgid "Old Turkic"
+msgstr "Senais turku"
+
+#: ucsubset.src
+msgid "Rumi Numeral Symbols"
+msgstr "Rumi skaitļu simboli"
+
+#: ucsubset.src
+msgid "Egyptian Hieroglyphs"
+msgstr "Ēģiptiešu hieroglifi"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "Apvilktie burtu-ciparu papildinājumi"
+
+#: ucsubset.src
+msgid "Enclosed Ideographic Supplement"
+msgstr "Apvilktie ideogrāfiski papildinājumi"
+
+#: ucsubset.src
+msgid "Ethiopic Extended-A"
+msgstr "Etiopiešu paplašinātais-A"
+
+#: ucsubset.src
+msgid "Bamum Supplement"
+msgstr "Bamum pielikums"
+
+#: ucsubset.src
+msgid "Kana Supplement"
+msgstr "Kana pielikums"
+
+#: ucsubset.src
+msgid "Playing Cards"
+msgstr "Spēļu kārtis"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "Dažādi simboli un piktogrammas"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "Emocijas"
+
+#: ucsubset.src
+msgid "Transport And Map Symbols"
+msgstr "Transporta un karšu simboli"
+
+#: ucsubset.src
+msgid "Alchemical Symbols"
+msgstr "Alķīmiskie simboli"
+
+#: ucsubset.src
+msgid "Arabic Extended-A"
+msgstr "Arābu paplašinātais-A"
+
+#: ucsubset.src
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "Arābu matemātiskie burtu-ciparu simboli"
+
+#: ucsubset.src
+msgid "Chakma"
+msgstr "Čakma"
+
+#: ucsubset.src
+msgid "Meetei Mayek Extensions"
+msgstr "Meetei Mayek paplašinājumi"
+
+#: ucsubset.src
+msgid "Meroitic Cursive"
+msgstr "Meroītu kursīvs"
+
+#: ucsubset.src
+msgid "Meroitic Hieroglyphs"
+msgstr "Meroītu hieroglifi"
+
+#: ucsubset.src
+msgid "Sharada"
+msgstr "Šarada"
+
+#: ucsubset.src
+msgid "Sundanese Supplement"
+msgstr "Sundaniešu pielikums"
+
+#: ucsubset.src
+msgid "Bassa Vah"
+msgstr "Bassa raksts"
+
+#: ucsubset.src
+msgid "Caucasian Albanian"
+msgstr "Kaukāza albāņu"
+
+#: ucsubset.src
+msgid "Coptic Epact Numbers"
+msgstr "Koptu epakta skaitļi"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Extended"
+msgstr "Kombinējošās diakritiskās zīmes paplašinātā"
+
+#: ucsubset.src
+msgid "Duployan"
+msgstr "Duplo"
+
+#: ucsubset.src
+msgid "Elbasan"
+msgstr "Elbasanas"
+
+#: ucsubset.src
+msgid "Geometric Shapes Extended"
+msgstr "Ģeometrisko figūru paplašinātā"
+
+#: ucsubset.src
+msgid "Grantha"
+msgstr "Granta"
+
+#: ucsubset.src
+msgid "Khudawadi"
+msgstr "Sindi"
+
+#: ucsubset.src
+msgid "Latin Extended-E"
+msgstr "Latīņu paplašinātā-E"
+
+#: ucsubset.src
+msgid "Linear A"
+msgstr "Lineārā A"
+
+#: ucsubset.src
+msgid "Manichaean"
+msgstr "Maniheistas"
+
+#: ucsubset.src
+msgid "Mende Kikakui"
+msgstr "Mendu Kikakui"
+
+#: ucsubset.src
+msgid "Myanmar Extended-B"
+msgstr "Mjanmas paplašinātais-B"
+
+#: ucsubset.src
+msgid "Nabataean"
+msgstr "Nabateja"
+
+#: ucsubset.src
+msgid "Old North Arabian"
+msgstr "Vecā Ziemeļarābijas"
+
+#: ucsubset.src
+msgid "Old Permic"
+msgstr "Vecā Permijas"
+
+#: ucsubset.src
+msgid "Ornamental Dingbats"
+msgstr "Rotājošās dekorzīmes"
+
+#: ucsubset.src
+msgid "Pahawh Hmong"
+msgstr "Pahav Hmong"
+
+#: ucsubset.src
+msgid "Palmyrene"
+msgstr "Palmīras"
+
+#: ucsubset.src
+msgid "Pau Cin Hau"
+msgstr "Pau cin hau"
+
+#: ucsubset.src
+msgid "Psalter Pahlavi"
+msgstr "Psalmu Pehveli"
+
+#: ucsubset.src
+msgid "Shorthand Format Controls"
+msgstr "Īsinājuma formāta vadīklas"
+
+#: ucsubset.src
+msgid "Siddham"
+msgstr "Sidham"
+
+#: ucsubset.src
+msgid "Sinhala Archaic Numbers"
+msgstr "Singāļu arhaiskie skaitļi"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-C"
+msgstr "Papildu bultas-C"
+
+#: ucsubset.src
+msgid "Warang Citi"
+msgstr "Varangas Citi"
+
+#: ucsubset.src
+msgid "Anatolian Hieroglyphs"
+msgstr "Anatoliešu hieroglifi"
+
+#: ucsubset.src
+msgid "Cherokee Supplement"
+msgstr "Čiroku pielikums"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension E"
+msgstr "CJK vienotie ideogrāfu paplašinājumi E"
+
+#: ucsubset.src
+msgid "Early Dynastic Cuneiform"
+msgstr "Agrīnais dinastijas ķīļraksts"
+
+#: ucsubset.src
+msgid "Old Hungarian"
+msgstr "Senungāru"
+
+#: ucsubset.src
+msgid "Supplemental Symbols And Pictographs"
+msgstr "Papildu simboli un piktogrammas"
+
+#: ucsubset.src
+msgid "Sutton Signwriting"
+msgstr "Sutona zīmju rakstība"

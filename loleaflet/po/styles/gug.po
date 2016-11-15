@@ -1988,3 +1988,57 @@ msgstr "%1 ñe'ẽkuéra, %2 caracteres"
 #: strings.src
 msgid "Slide %1 of %2"
 msgstr "Diapositiva %1 de %2"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "Extensiónes AFI"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "Bengalí"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Puntuación general"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Símbolos Numéricos"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Flechas"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Símbolos Misceláneos"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "Misceláneo CJK"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Rúnico"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Braille"
+
+#: ucsubset.src
+msgid "New Tai Lue"
+msgstr "Pyahu Tai Lü"
+
+#: ucsubset.src
+msgid "Vertical Forms"
+msgstr "Formas Verticales"
+
+#: ucsubset.src
+msgid "Javanese"
+msgstr "Javanés"
+
+#: ucsubset.src
+msgid "Transport And Map Symbols"
+msgstr "Transporte ha Símbolos de Mapa"

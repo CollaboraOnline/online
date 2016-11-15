@@ -1951,3 +1951,13 @@ msgstr "Mada Wima, Matini, Chati"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Mada Wima, Matini Wima"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Kiarmenia"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Kimongolia"
