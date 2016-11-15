@@ -333,7 +333,7 @@ $(function () {
 		items: [
 			{type: 'html', id: 'left'},
 			{type: 'button',  id: 'save', img: 'save', hint: _('Save'), uno: 'Save'},
-			{type: 'break'},
+			{type: 'break', id: 'savebreak'},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _('Undo'), uno: 'Undo'},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _('Redo'), uno: 'Redo'},
 			{type: 'button',  id: 'repair', img: 'repair', hint: _('Document repair')},
@@ -726,6 +726,7 @@ function onFormulaBarBlur() {
 map.on('wopiprops', function(e) {
 	if (e.HideSaveOption) {
 		w2ui['toolbar-up'].hide('save');
+		w2ui['toolbar-up'].hide('savebreak');
 	}
 });
 
