@@ -18,6 +18,7 @@ git mv wsd/test/* test
 git mv wsd/bundled/* bundled
 git mv wsd/etc/* etc
 git mv wsd/debian/* debian
+git mv wsd/common/* common
 
 for commonfile in IoUtil Log MessageQueue Unit UnitHTTP Util; do
     git mv wsd/$commonfile.cpp common;
@@ -27,6 +28,10 @@ git mv wsd/Png.hpp common
 git mv wsd/Common.hpp common
 git mv wsd/Rectangle.hpp common
 git mv wsd/LOOLProtocol.cpp common/Protocol.cpp
+git mv wsd/LOOLProtocol.hpp common/Protocol.hpp
+git mv wsd/LOOLSession.cpp common/Session.cpp
+git mv wsd/LOOLSession.hpp common/Session.hpp
+git mv wsd/security.h common/security.h
 
 git mv wsd/LibreOfficeKit.hpp kit
 git mv wsd/ChildSession.cpp kit
