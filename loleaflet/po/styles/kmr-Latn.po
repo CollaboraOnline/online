@@ -2155,3 +2155,13 @@ msgstr "Sembolên Matematîkî ên Cûr Bi Cûr-A"
 #: ucsubset.src
 msgid "Bopomofo Extended"
 msgstr "Bopomofoya Berfirehkirî"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Navê Fontê:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Tîpa Taybet"

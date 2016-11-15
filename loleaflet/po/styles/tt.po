@@ -2240,3 +2240,5 @@ msgstr "Өстәлмә уклар-A"
 #: ucsubset.src
 msgid "Braille Patterns"
 msgstr "Брайль калыплары"
+
+# Translation of Special Characters dialog from LibreOffice core

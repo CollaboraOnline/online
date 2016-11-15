@@ -2758,3 +2758,21 @@ msgstr "Simbòls e pictogramas suplementaris"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Transcripcion Sutton de lengas de signes"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Nom de poliça:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Caractèrs especials"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Exadecimal :"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Apercebut :"

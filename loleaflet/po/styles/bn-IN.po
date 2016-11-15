@@ -2796,3 +2796,17 @@ msgstr "সুদানিজ সাপ্লিমেন্ট"
 #: ucsubset.src
 msgid "Takri"
 msgstr "টাকরি"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ফন্টের নাম:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "বিশেষ অক্ষর"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "প্রাকদর্শন:"

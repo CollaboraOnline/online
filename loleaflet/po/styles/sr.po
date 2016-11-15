@@ -2402,3 +2402,13 @@ msgstr "Продужени Бопомофо"
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "катакана"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Име фонта:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Посебни знаци"

@@ -2260,3 +2260,13 @@ msgstr "Bopomofo uitgebrei"
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "Katakana fonetiese simbole"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Fontnaam:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Spesiale karakters"

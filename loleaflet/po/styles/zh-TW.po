@@ -3064,3 +3064,21 @@ msgstr "補充符號和象形圖示"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "薩頓手語符號"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "字型名稱:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "特殊字元"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "十六進制："
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "預覽："

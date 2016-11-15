@@ -2768,3 +2768,17 @@ msgstr "Supplerende symboler og pictogrammer"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Sutton tegnsprogskrift"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Skrifttypenavn:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Specialtegn"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Forhåndsvisning:"

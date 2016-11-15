@@ -2263,3 +2263,9 @@ msgstr "बोपोमोफो विस्तृत"
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "कटकना फोनेटिक्स"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "अक्षरसंच नांव:"

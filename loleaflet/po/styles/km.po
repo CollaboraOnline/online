@@ -2688,3 +2688,13 @@ msgstr "ផ្នែក​បន្ថែម​របស់ Meetei Mayek"
 #: ucsubset.src
 msgid "Sundanese Supplement"
 msgstr "ស៊ូដង់​បង្គ្រប់"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ឈ្មោះ​ពុម្ពអក្សរ:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "តួអក្សរ​ពិសេស"

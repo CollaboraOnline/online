@@ -2812,3 +2812,21 @@ msgstr "Foirlionadh Shamhlaidhean is Dealbhan"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Comharran Sutton"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Ainm a' chruth-chlò:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Caractaran sònraichte"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Sia-dheicheach:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Ro-shealladh:"

@@ -2500,3 +2500,17 @@ msgstr "סמלי הבעה"
 #: ucsubset.src
 msgid "Sundanese Supplement"
 msgstr "השלמה לסונדית"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "שם גופן:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "תווים מיוחדים"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "תצוגה מקדימה:"

@@ -2764,3 +2764,17 @@ msgstr "Äldre ungerska"
 #: ucsubset.src
 msgid "Supplemental Symbols And Pictographs"
 msgstr "Kompletterande symboler och piktogram"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Teckensnittsnamn:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Specialtecken"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Förhandsgranskning:"

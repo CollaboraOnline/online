@@ -2270,3 +2270,13 @@ msgstr "კატაკანას ფონეტიკა"
 #: ucsubset.src
 msgid "Emoticons"
 msgstr "სიცილაკი"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "შრიფტის სახელი:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "სპეციალური სიმბოლოები"

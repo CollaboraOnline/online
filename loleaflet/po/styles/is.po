@@ -2820,3 +2820,21 @@ msgstr "Ýmis aukaleg tákn og myndmerki"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Sutton táknskrift"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Heiti leturgerðar:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Sértákn"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Sextándakerfis:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Forskoðun:"

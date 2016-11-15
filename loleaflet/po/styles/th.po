@@ -2220,3 +2220,13 @@ msgstr "ส่วนขยายเกี่ยวกับคัมภีร์
 #: ucsubset.src
 msgid "Meetei Mayek Extensions"
 msgstr "ส่วนขยาย Meetei Mayek"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ชื่อแบบอักษร:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "อักขระพิเศษ"

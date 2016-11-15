@@ -2223,3 +2223,13 @@ msgstr "Tagbanva"
 #: ucsubset.src
 msgid "Bopomofo Extended"
 msgstr "Kengaytirilgan bopomofo (xitoycha)"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Shriftning nomi:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Maxsus belgilar"

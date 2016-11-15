@@ -1984,3 +1984,9 @@ msgstr "ख्मेर"
 #: ucsubset.src
 msgid "Mongolian"
 msgstr "मंगोलियाइ"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "फंट नाम:"

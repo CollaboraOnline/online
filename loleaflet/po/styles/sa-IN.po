@@ -2360,3 +2360,9 @@ msgstr "कोप्टोपिक्"
 #: ucsubset.src
 msgid "Emoticons"
 msgstr "भावचिह्नानि"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "अक्षरगणनाम:"

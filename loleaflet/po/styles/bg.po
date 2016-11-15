@@ -3063,3 +3063,21 @@ msgstr "Допълнителни символи и пиктограми"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Жестово писмо на Сътън"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Име на шрифт:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Специални знаци"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Шестнайсетично:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Мостра:"

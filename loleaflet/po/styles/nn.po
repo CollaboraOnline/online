@@ -2765,3 +2765,21 @@ msgstr "Tilleggs-symbol og -piktogram"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Sutton signwriting"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Skriftnamn:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Spesialteikn"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Heksadesimal:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Førehandsvising:"

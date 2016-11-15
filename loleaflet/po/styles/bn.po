@@ -2367,3 +2367,13 @@ msgstr "বোপোমোফো বর্ধিত"
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "কাটাকানা ফনেটিক্স"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ফন্টের নাম:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "বিশেষ অক্ষর"

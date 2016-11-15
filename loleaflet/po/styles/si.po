@@ -2304,3 +2304,13 @@ msgstr "කොප්ටික්"
 #: ucsubset.src
 msgid "Emoticons"
 msgstr "ඉමොටිකොන"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "අකුරු නාමය:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "විශේෂ අකුරු"

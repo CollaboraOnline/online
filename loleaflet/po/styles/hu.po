@@ -2776,3 +2776,21 @@ msgstr "Kiegészítő szimbólumok és piktogramok"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Sutton-féle jelnyelv"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Betűkészlet neve:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Különleges karakterek"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Hexadecimális:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Előnézet:"

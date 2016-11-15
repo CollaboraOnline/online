@@ -1984,3 +1984,5 @@ msgstr "Ethiopesch"
 #: ucsubset.src
 msgid "Mongolian"
 msgstr "Mongolesch"
+
+# Translation of Special Characters dialog from LibreOffice core

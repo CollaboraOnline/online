@@ -2692,3 +2692,21 @@ msgstr "Simboluri și pictograme suplimentare"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Limbaj mimico-gestual (transcriere Sutton)"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Numele fontului:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Caractere speciale"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Hexazecimal:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Previzualizare:"

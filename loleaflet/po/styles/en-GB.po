@@ -1920,3 +1920,5 @@ msgstr "Canadian Aboriginal Syllables"
 #: ucsubset.src
 msgid "Kangxi Radicals"
 msgstr "Kanxi Radicals"
+
+# Translation of Special Characters dialog from LibreOffice core

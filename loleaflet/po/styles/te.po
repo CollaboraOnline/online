@@ -2862,3 +2862,13 @@ msgstr "సుడానీస్ వుపభాగం"
 #: ucsubset.src
 msgid "Takri"
 msgstr "టక్రి"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "అక్షరశైలి పేరు:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "ప్రత్యేకమైన అక్షరములు"

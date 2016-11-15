@@ -2923,3 +2923,17 @@ msgstr "補助矢印C"
 #: ucsubset.src
 msgid "CJK Unified Ideographs Extension E"
 msgstr "CJK統合漢字拡張E"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "フォント名:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "特殊文字"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "プレビュー:"

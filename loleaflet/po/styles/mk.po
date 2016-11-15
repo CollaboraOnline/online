@@ -1988,3 +1988,9 @@ msgstr "Монголски"
 #: ucsubset.src
 msgid "Tagalog"
 msgstr "Тагалог"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Име на фонт:"

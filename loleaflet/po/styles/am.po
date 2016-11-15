@@ -2231,3 +2231,17 @@ msgstr "Shorthand አቀራረብ መቆጣጠሪያ"
 #: ucsubset.src
 msgid "Supplemental Arrows-C"
 msgstr "ተጨማሪ ቀስቶች-C"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "የፊደሉ ስም:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "የተለዩ ባህሪዎች"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "ቅድመ እይታ:"

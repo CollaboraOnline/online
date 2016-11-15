@@ -2843,3 +2843,21 @@ msgstr "Verschiedene piktografische Symbole, Ergänzung"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Sutton-Zeichenschrift"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Schriftart:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Sonderzeichen"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Hexadezimal:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Vorschau:"

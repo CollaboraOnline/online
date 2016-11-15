@@ -1965,3 +1965,9 @@ msgstr "ໄທ"
 #: ucsubset.src
 msgid "Arrows"
 msgstr "ລູກສອນ"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ຊື່ແບບຕົວອັກສອນ:"

@@ -3072,3 +3072,21 @@ msgstr "பல்வகை துணை சின்னங்களும் ப
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "சட்டன் சைன்ரைட்டிங்"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "எழுத்துரு பெயர்:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "சிறப்பு வரியுருக்கள்"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "பதின்அறுமம்:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "முன்னோட்டம்"
