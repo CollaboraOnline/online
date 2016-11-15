@@ -2769,12 +2769,17 @@ Editor to WOPI host
 	<tr>
 		<td><code><b>App_LoadingStatus</b></code></td>
 		<td><code>
-		    <nobr>DocumentLoadedTime: &lt;Number&gt;</nobr>
+		    <nobr>Status: &lt;String&gt;</nobr>
+		    <nobr>DocumentLoadedTime: &lt;Timestamp&gt;</nobr>
 		</code></td>
-		<td>When loleaflet frame is completely ready. Host can start
-		sending other messages using post message API.
-		DocumentLoadedTime is timestamp when frame is
-		ready/loaded.</td>
+		<td>If Status is Frame_Ready, loleaflet frame is loaded and UI
+		can be shown. <br/>
+		When Status is Document_Loaded, document has been completely
+		loaded and host can also start sending document-specific query
+		messages using post message API such as Get_Views,
+		Get_Export_Formats etc. DocumentLoadedTime is specified
+		only in this case.
+		</td>
 	</tr>
 </table>
 WOPI host to editor

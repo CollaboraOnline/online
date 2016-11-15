@@ -820,6 +820,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onViewInfoMsg: function(textMsg) {
 		textMsg = textMsg.substring('viewinfo: '.length);
 		var viewInfo = JSON.parse(textMsg);
+		this._map.fire('viewinfo', viewInfo);
 
 		// A new view
 		var viewIds = [];
