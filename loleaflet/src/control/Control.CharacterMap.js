@@ -208,10 +208,11 @@ L.Control.CharacterMap = L.Control.extend({
 	},
 
 	_onFontNamesChange: function (e) {
-		/* if (this._hexa.data) {
+		if (this._hexa.data) {
+			this._map._socket.sendMessage('renderfont font=' +
 				window.encodeURIComponent(this._fontNames.options[this._fontNames.selectedIndex].value) +
 				' char=' + String.fromCharCode(this._hexa.data));
-		}*/
+		}
 	},
 
 	_onInsertClick: function (e) {
@@ -239,9 +240,9 @@ L.Control.CharacterMap = L.Control.extend({
 		var target = e.target || e.srcElement;
 		this._hexa.data = target.data;
 		this._hexa.innerHTML = 'U+' + target.data.toString(16).toUpperCase();
-		/*this._map._socket.sendMessage('renderfont font=' +
+		this._map._socket.sendMessage('renderfont font=' +
 			window.encodeURIComponent(this._fontNames.options[this._fontNames.selectedIndex].value) +
-			' char=' + String.fromCharCode(this._hexa.data));*/
+			' char=' + String.fromCharCode(this._hexa.data));
 	},
 
 	_onUnicodeChartChange: function (e) {
