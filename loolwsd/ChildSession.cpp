@@ -100,7 +100,9 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         std::vector<int> viewIds(viewCount);
         getLOKitDocument()->getViewIds(viewIds.data(), viewCount);
 
-        const int curPart = getLOKitDocument()->getPart();
+        int curPart = 0;
+        if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
+            curPart = getLOKitDocument()->getPart();
 
         lockLokDoc.unlock();
 
@@ -919,7 +921,7 @@ bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, StringT
 
     getLOKitDocument()->setView(_viewId);
 
-    if (part != getLOKitDocument()->getPart())
+    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT && part != getLOKitDocument()->getPart())
     {
         getLOKitDocument()->setPart(part);
     }
