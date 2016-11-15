@@ -348,15 +348,24 @@ connectLOKit(const Poco::URI& uri,
     int retries = 10;
     do
     {
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
-        auto ws = std::make_shared<LOOLWebSocket>(*session, request, response);
-        const auto expected_response = "statusindicator: ready";
-        if (getResponseString(ws, expected_response, name) == expected_response)
+        try
         {
-            return ws;
+            std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
+            auto ws = std::make_shared<LOOLWebSocket>(*session, request, response);
+            const auto expected_response = "statusindicator: ready";
+            if (getResponseString(ws, expected_response, name) == expected_response)
+            {
+                return ws;
+            }
+
+            std::cerr << (11 - retries);
+        }
+        catch (const std::exception& ex)
+        {
+            std::cerr << std::endl << "Error connecting: " << ex.what() << std::endl;
         }
 
-        std::cerr << (11 - retries);
+        std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
     }
     while (retries--);
 
