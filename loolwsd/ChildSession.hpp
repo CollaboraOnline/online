@@ -12,13 +12,15 @@
 
 #include <mutex>
 
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
 #include <Poco/NotificationQueue.h>
 #include <Poco/Thread.h>
 
 #include "Common.hpp"
 #include "LOOLKit.hpp"
 #include "LOOLSession.hpp"
-#include "LibreOfficeKit.hpp"
 
 class ChildSession;
 
@@ -28,23 +30,31 @@ class IDocumentManager
 {
 public:
     /// Reqest loading a document, or a new view, if one exists.
-    virtual std::shared_ptr<lok::Document> onLoad(const std::string& sessionId,
-                                                  const std::string& jailedFilePath,
-                                                  const std::string& userName,
-                                                  const std::string& docPassword,
-                                                  const std::string& renderOpts,
-                                                  const bool haveDocPassword)
+    virtual bool onLoad(const std::string& sessionId,
+                        const std::string& jailedFilePath,
+                        const std::string& userName,
+                        const std::string& docPassword,
+                        const std::string& renderOpts,
+                        const bool haveDocPassword)
         = 0;
 
     /// Unload a client session, which unloads the document
     /// if it is the last and only.
     virtual void onUnload(const ChildSession& session) = 0;
 
+    /// Access to the document instance.
+    virtual std::shared_ptr<lok::Document> getLOKitDocument() = 0;
+
     /// Send updated view info to all active sessions
     virtual void notifyViewInfo(const std::vector<int>& viewIds) = 0;
     /// Get a view ID <-> UserInfo map.
     virtual std::map<int, UserInfo> getViewInfo() = 0;
     virtual std::mutex& getMutex() = 0;
+
+    /// Mutex guarding the document - so that we can lock operations like
+    /// setting a view followed by a tile render, etc.
+    virtual std::mutex& getDocumentMutex() = 0;
+
     virtual std::shared_ptr<TileQueue>& getTileQueue() = 0;
 
     virtual bool sendTextFrame(const std::string& message) = 0;
@@ -115,6 +125,11 @@ private:
     virtual void disconnect() override;
     virtual bool _handleInput(const char* buffer, int length) override;
 
+    std::shared_ptr<lok::Document> getLOKitDocument()
+    {
+        return _docManager.getLOKitDocument();
+    }
+
 private:
     const std::string _jailId;
     IDocumentManager& _docManager;
@@ -125,7 +140,6 @@ private:
     /// Whether document has been opened succesfuly
     bool _isDocLoaded;
 
-    std::shared_ptr<lok::Document> _loKitDocument;
     std::string _docType;
     std::map<std::string, std::string> _lastDocStates;
     std::map<int, std::string> _lastDocEvents;

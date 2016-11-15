@@ -61,6 +61,7 @@ struct _LibreOfficeKitClass
     void (*freeError) (char* pFree);
 
 #if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
+    /// @see lok::Office::registerCallback().
     void (*registerCallback) (LibreOfficeKit* pThis,
                               LibreOfficeKitCallback pCallback,
                               void* pData);

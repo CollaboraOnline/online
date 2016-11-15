@@ -154,24 +154,31 @@ class DummyDocument : public IDocumentManager
 {
     std::shared_ptr<TileQueue> _tileQueue;
     std::mutex _mutex;
+    std::mutex _documentMutex;
 public:
     DummyDocument()
         : _tileQueue(new TileQueue()),
-        _mutex()
+        _mutex(),
+        _documentMutex()
     {
     }
-    std::shared_ptr<lok::Document> onLoad(const std::string& /*sessionId*/,
-                                          const std::string& /*jailedFilePath*/,
-                                          const std::string& /*userName*/,
-                                          const std::string& /*docPassword*/,
-                                          const std::string& /*renderOpts*/,
-                                          const bool /*haveDocPassword*/) override
+    bool onLoad(const std::string& /*sessionId*/,
+                const std::string& /*jailedFilePath*/,
+                const std::string& /*userName*/,
+                const std::string& /*docPassword*/,
+                const std::string& /*renderOpts*/,
+                const bool /*haveDocPassword*/) override
     {
-        return nullptr;
+        return false;
     }
 
     void onUnload(const ChildSession& /*session*/) override
     {
+    }
+
+    std::shared_ptr<lok::Document> getLOKitDocument() override
+    {
+        return nullptr;
     }
 
     void notifyViewInfo(const std::vector<int>& /*viewIds*/) override
@@ -184,6 +191,11 @@ public:
     }
 
     std::mutex& getMutex() override
+    {
+        return _mutex;
+    }
+
+    std::mutex& getDocumentMutex() override
     {
         return _mutex;
     }
