@@ -1938,3 +1938,53 @@ msgstr "Вертикален наслов, текст, графикон"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Вертикален наслов, вертикален текст"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Ерменски"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "бенгалски"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "Гујарати"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "Тамилски"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "Телугу"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "Канада"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "Малајалам"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "Лао"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "Синхалски"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "Кмерски"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Монголски"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "Тагалог"

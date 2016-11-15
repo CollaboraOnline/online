@@ -1971,3 +1971,349 @@ msgstr "Ṱhoho ya Vethikhaḽa, Ḽiṅwalwa, Tshati"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Ṱhoho ya Vethikhaḽa, Ḽiṅwalwa ḽa Vethikhaḽa"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Tshilatini tsha Murango"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Tshilatini-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "Tshilatini tsho Engedzwaho-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "Tshilatini tsho Engedzwaho-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "Nyengedzo ya IPA"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Maledere a Khwiniso ya Tshikhala"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Thanganyiso ya Zwiga zwa Daikiretiki"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "Thsigerika Murango"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Simbolo dza Tshigerika na Khophutiki"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Tshisiriliki"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Tshiamenia"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Tshihevehru Murango"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Tshihevheru tsho engedzedzwaho"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Tshiarabia Murango"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Tshiarabia tsho Engedzwaho"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "Tshidevanagari"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "Tshibengali"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "Tshigumuki"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "Tshigudzherati"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "Tshitamili"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "Tshitelegu"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "Tshikannada"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "Tshimayalami"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "Tshitahi"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "Tshilao"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "Tshidzhidzhia Murango"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "Tshidzhodzhia tsho Engedzwaho"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "Tshihangulu Dzhamo"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Zwinwevho zwaTshilatini tsho Engedzwaho"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "Tshigerika tsho Engedzwaho"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Zwiga zwa tswayongangaredzo"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Dzisuphasikiriputi na Dzisabusikiriputi"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Symbolo dza Dzitshelede"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "U tanganya Dzisimbolo dza Daikiretiki"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Simbolo dzi no nga Maledere"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Tshivhumbeo tsha Nomboro"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Misevhe"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "Dziophareitha dza Metse"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Zwinwevho zwa Tshitekeniki"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Ndaula Zwifanyiso"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Tshitenwa tshi Vhonalaho tsho Wanaluswa"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Dzialfanumeriki dzo Valeaho"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Nyolo ya Bogisi"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Dzielemente dza Buloko"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Zwivhumbeo zwa Tshidzheometiri"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Simbolo Dzinwevho"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "Dzidingibete"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "Simbolo dza CJK na Tswayo dza u vhala"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Khomphathibilithi Dzhamo ya Hangulu"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "Zwinwevho zwa CJK"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "Maledere o dzheniswaho a CJK na Minwedzi"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "Khomphathibilithi ya CJK"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "Hangulu"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "Ideogirafu dzo Vhofhekanywaho dza CJK"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Fhethu ha U shumisa ha Phuraivethe"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "Ideogirafu dzi elanaho dza CJK"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Fomo dza Mukumedzo nga Aliphabethe"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Fomo-A dza Mukumedzo nga Alifabethe"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "U tanganya Dzihafu Maka"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "Dzifomo dza CJK Compatibility"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Dzivariente dza Fomo Thukhu"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Dzifomo-B dza Mukumedzo wa Tshiarabu"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Fomo dza Hafu ya Vhuphara na Vhuphara ho dalaho"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Zwipentshela"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "Tibetani"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "Myanimara"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "Khimere"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "Oghamu"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Runiki"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "Siriaki"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "Tshiitopia"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "Tshorokii"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Madungo a Vhongwaniwapo vha Khanadani"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Mumongolia"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Simbolo Dzinwevho dza Metse dza A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Misevhe ya SapulumeNṱhari ya A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Phatheni dza Bureile"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Misevhe ya SapulumeNṱhary ya B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Simbolo Dzinwevho dza Metse dza-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "Sapulumente dza CJK Radical"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Zwitenwa zwa Thaluso zwa Ideogirafiki"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "Tagalogo"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "Buhidi"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "Kanbuni"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Bopomofo yo Engedzedzwaho"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Fonetiki ya Katakana"

@@ -2018,3 +2018,841 @@ msgstr "%1 slov, %2 znakov"
 #: strings.src
 msgid "Slide %1 of %2"
 msgstr "Snímka %1 z %2"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Základná latinka"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "Latin rozšírené-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "Latin rozšírené-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA prípony"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Odsadenie písma"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Zlúčenie diakritických značiek"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "Grécky (základný)"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Grécke symboly a Coptic"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Azbuka"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "arménčina"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Hebrejčina (základná)"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Hebrejčina (rozšírená)"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Arabčina (základná)"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Arabčina (rozšírená)"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "bengálčina"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "gudžarátčina"
+
+#: ucsubset.src
+msgid "Odia"
+msgstr "urijčina"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "tamilčina"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "telugčina"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "kannadčina"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "malajálamčina"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "thajčina"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "laoština"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "gruzínčina (základná)"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "gruzínčina (rozšírená)"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Latin rozšírená s prídavkami"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "gréčtina (rozšírená)"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "všeobecná interpunkcia"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Horný a dolný index"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Symboly meny"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "Kombinované diakritické symboly"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Znakové symboly"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Číselné tvary"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Šípky"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "Matematické operátory"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Rôzne technické symboly"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Riadiace znaky"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Strojovo čitateľné znaky"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Priložené písmená a číslice"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Kreslenie rámčekov"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Blokové prvky"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Geometrické tvary"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Rôzne symboly"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "Symboly"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "CJK (symboly a interpunkcia)"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Hangul kompatibilita Jamo"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK (rôzne)"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "Uzatvorené CJK znaky a mesiace"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "CJK (kompatibilné)"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "Unifikované ideogramy CJK"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "Rozšírenie A unifikovaných ideogramov CJK"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Súkromná oblasť"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "Kompatibilné ideogramy CJK"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Abecedné prezentačné tvary"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Arabské prezentačné tvary - A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "Kombinované polovičné znaky"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK (kompatibilné formy)"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Malé varianty foriem"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Arabské prezentačné tvary - B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Útvary s polovičnou a plnou šírkou"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Zvláštnosti"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "Yi slabiky"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "Yi kmene"
+
+#: ucsubset.src
+msgid "Old Italic"
+msgstr "Stará italika"
+
+#: ucsubset.src
+msgid "Gothic"
+msgstr "Gotické"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "Byzantské hudobné symboly"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "Hudobné symboly"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "Matematické alfanumerické symboly"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "Rozšírenie B unifikovaných ideogramov CJK"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "Rozšírenie C unifikovaných ideogramov CJK"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "Rozšírenie D unifikovaných ideogramov CJK"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "Dodatočné kompatibilné ideogramy CJK"
+
+#: ucsubset.src
+msgid "Tags"
+msgstr "Značky"
+
+#: ucsubset.src
+msgid "Cyrillic Supplement"
+msgstr "Cyrilika dodatok"
+
+#: ucsubset.src
+msgid "Variation Selectors"
+msgstr "Selektory variácií"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-A"
+msgstr "Doplnková oblasť pre súkromné použitie-A"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-B"
+msgstr "Doplnková oblasť pre súkromné použitie-B"
+
+#: ucsubset.src
+msgid "Khmer Symbols"
+msgstr "Kmérske symboly"
+
+#: ucsubset.src
+msgid "Phonetic Extensions"
+msgstr "Fonetické rozšírenia"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "Rôzne symboly a šípky"
+
+#: ucsubset.src
+msgid "Yijing Hexagram Symbols"
+msgstr "Šesťcípe symboly Yijing"
+
+#: ucsubset.src
+msgid "Linear B Syllabary"
+msgstr "Lineárne B sylabické písmo"
+
+#: ucsubset.src
+msgid "Linear B Ideograms"
+msgstr "Lineárne B ideogramy"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "Egejské číslice"
+
+#: ucsubset.src
+msgid "Ugaritic"
+msgstr "ugaritčina"
+
+#: ucsubset.src
+msgid "Shavian"
+msgstr "Shawova abeceda"
+
+#: ucsubset.src
+msgid "Osmanya"
+msgstr "Osmančina"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "sinhala"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "tibetčina"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "mjanmarčina"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "khmérčina"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "runové"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "sýrčina"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "čerokí"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Kanadské pôvodné slabiky"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "mongolčina"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Rôzne matematické symboly-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Doplnkové šípky-A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Braille vzory"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Doplnkové šípky-B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Rôzne matematické symboly-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK Radical doplnky"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "Kandži radikály"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Ideografické popisné znaky"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "tagalog"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Bopomofo rozšírené"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Katakana fonetické"
+
+#: ucsubset.src
+msgid "CJK Strokes"
+msgstr "CJK ťahy"
+
+#: ucsubset.src
+msgid "Cypriot Syllabary"
+msgstr "Cyperské sylabické písmo"
+
+#: ucsubset.src
+msgid "Tai Xuan Jing Symbols"
+msgstr "Symboly Tai Xuan Jing"
+
+#: ucsubset.src
+msgid "Variation Selectors Supplement"
+msgstr "Doplnkové selektory variant"
+
+#: ucsubset.src
+msgid "Ancient Greek Musical Notation"
+msgstr "Starogrécka hudobná notácia"
+
+#: ucsubset.src
+msgid "Ancient Greek Numbers"
+msgstr "Starogrécke čísla"
+
+#: ucsubset.src
+msgid "Arabic Supplement"
+msgstr "Arabské doplnky"
+
+#: ucsubset.src
+msgid "Buginese"
+msgstr "bugiština"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Supplement"
+msgstr "Doplnky na kombinovanie diakritických značiek"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "koptčina"
+
+#: ucsubset.src
+msgid "Ethiopic Extended"
+msgstr "Etiópske rozšírené"
+
+#: ucsubset.src
+msgid "Ethiopic Supplement"
+msgstr "Etiópske doplnky"
+
+#: ucsubset.src
+msgid "Georgian Supplement"
+msgstr "Gruzínske doplnky"
+
+#: ucsubset.src
+msgid "Glagolitic"
+msgstr "Hlaholika"
+
+#: ucsubset.src
+msgid "Kharoshthi"
+msgstr "Kharóšthí"
+
+#: ucsubset.src
+msgid "Modifier Tone Letters"
+msgstr "Tonálne modifikátory"
+
+#: ucsubset.src
+msgid "New Tai Lue"
+msgstr "Nové Tai Lue"
+
+#: ucsubset.src
+msgid "Old Persian"
+msgstr "Staré perzské"
+
+#: ucsubset.src
+msgid "Phonetic Extensions Supplement"
+msgstr "Doplnky fonetických rozšírení"
+
+#: ucsubset.src
+msgid "Supplemental Punctuation"
+msgstr "Doplnková interpunkcia"
+
+#: ucsubset.src
+msgid "Vertical Forms"
+msgstr "Vertikálne tvary"
+
+#: ucsubset.src
+msgid "Balinese"
+msgstr "balijčina"
+
+#: ucsubset.src
+msgid "Latin Extended-C"
+msgstr "Latinka rozšírená-C"
+
+#: ucsubset.src
+msgid "Latin Extended-D"
+msgstr "Latinka rozšírená-D"
+
+#: ucsubset.src
+msgid "Phags-Pa"
+msgstr "Phags Pa"
+
+#: ucsubset.src
+msgid "Phoenician"
+msgstr "feničtina"
+
+#: ucsubset.src
+msgid "Cuneiform"
+msgstr "Klinové písmo"
+
+#: ucsubset.src
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "Čísla a interpunkcia klinového písma"
+
+#: ucsubset.src
+msgid "Counting Rod Numerals"
+msgstr "Číslice v čínskom paličkovom zápise"
+
+#: ucsubset.src
+msgid "Sundanese"
+msgstr "Sundčina"
+
+#: ucsubset.src
+msgid "Lepcha"
+msgstr "Lepča"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-A"
+msgstr "Cyrilika rozšírená-A"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-B"
+msgstr "Cyrilika rozšírená-B"
+
+#: ucsubset.src
+msgid "Ancient Symbols"
+msgstr "Staré symboly"
+
+#: ucsubset.src
+msgid "Phaistos Disc"
+msgstr "Faistský disk"
+
+#: ucsubset.src
+msgid "Lycian"
+msgstr "lýcijčina"
+
+#: ucsubset.src
+msgid "Carian"
+msgstr "karyjčina"
+
+#: ucsubset.src
+msgid "Lydian"
+msgstr "lýdčina"
+
+#: ucsubset.src
+msgid "Mahjong Tiles"
+msgstr "Kocky Mahjong"
+
+#: ucsubset.src
+msgid "Domino Tiles"
+msgstr "Kocky domino"
+
+#: ucsubset.src
+msgid "Samaritan"
+msgstr "Samaritánčtina"
+
+#: ucsubset.src
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "Rozšírené kanadské domorodé slabikové"
+
+#: ucsubset.src
+msgid "Vedic Extensions"
+msgstr "Védske rozšírenia"
+
+#: ucsubset.src
+msgid "Common Indic Number Forms"
+msgstr "Bežné indické číselné formy"
+
+#: ucsubset.src
+msgid "Devanagari Extended"
+msgstr "Rozšířené dévanágarí"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-A"
+msgstr "Hangul Jamo rozšírené-A"
+
+#: ucsubset.src
+msgid "Javanese"
+msgstr "jávčina"
+
+#: ucsubset.src
+msgid "Myanmar Extended-A"
+msgstr "Mjanmarské rozšírené-A"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-B"
+msgstr "Hangul Jamo rozšírené-B"
+
+#: ucsubset.src
+msgid "Imperial Aramaic"
+msgstr "Imperiálna aramejčina"
+
+#: ucsubset.src
+msgid "Old South Arabian"
+msgstr "Južná staroarabčina"
+
+#: ucsubset.src
+msgid "Avestan"
+msgstr "avestčina"
+
+#: ucsubset.src
+msgid "Inscriptional Parthian"
+msgstr "Písaná parthajčina"
+
+#: ucsubset.src
+msgid "Inscriptional Pahlavi"
+msgstr "Písaná pahlávčina"
+
+#: ucsubset.src
+msgid "Old Turkic"
+msgstr "staroturečtina"
+
+#: ucsubset.src
+msgid "Rumi Numeral Symbols"
+msgstr "Číselné symboly rumi"
+
+#: ucsubset.src
+msgid "Egyptian Hieroglyphs"
+msgstr "Egyptské hieroglyfy"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "Doplnkové uzatvorené alfanumerické znaky"
+
+#: ucsubset.src
+msgid "Enclosed Ideographic Supplement"
+msgstr "Doplnkové uzatvorené znaky CJK"
+
+#: ucsubset.src
+msgid "Ethiopic Extended-A"
+msgstr "Etiópske rozšírené-A"
+
+#: ucsubset.src
+msgid "Brahmi"
+msgstr "Brahmajčina"
+
+#: ucsubset.src
+msgid "Bamum Supplement"
+msgstr "Bamut doplnky"
+
+#: ucsubset.src
+msgid "Kana Supplement"
+msgstr "Kana doplnky"
+
+#: ucsubset.src
+msgid "Playing Cards"
+msgstr "Hracie karty"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "Rôzne symboly a piktogramy"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "Emotikony"
+
+#: ucsubset.src
+msgid "Transport And Map Symbols"
+msgstr "Dopravné a mapové symboly"
+
+#: ucsubset.src
+msgid "Alchemical Symbols"
+msgstr "Alchymické symboly"
+
+#: ucsubset.src
+msgid "Arabic Extended-A"
+msgstr "Arabčina rozšírená-A"
+
+#: ucsubset.src
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "Arabské matematické abecedné symboly"
+
+#: ucsubset.src
+msgid "Chakma"
+msgstr "Čakma"
+
+#: ucsubset.src
+msgid "Meetei Mayek Extensions"
+msgstr "Rozšírenia Meetei Mayek"
+
+#: ucsubset.src
+msgid "Meroitic Cursive"
+msgstr "Meroitická kurzíva"
+
+#: ucsubset.src
+msgid "Meroitic Hieroglyphs"
+msgstr "Meroitické hieroglyfy"
+
+#: ucsubset.src
+msgid "Sharada"
+msgstr "Šáradá"
+
+#: ucsubset.src
+msgid "Sundanese Supplement"
+msgstr "Doplnkové sundské"
+
+#: ucsubset.src
+msgid "Caucasian Albanian"
+msgstr "Kaukazsko-albánske"
+
+#: ucsubset.src
+msgid "Coptic Epact Numbers"
+msgstr "Koptické epaktné čísla"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Extended"
+msgstr "Kombinačné diakritické značky, doplnok"
+
+#: ucsubset.src
+msgid "Geometric Shapes Extended"
+msgstr "Geometrické útvary, rozšírené"
+
+#: ucsubset.src
+msgid "Latin Extended-E"
+msgstr "Latin rozšírené-E"
+
+#: ucsubset.src
+msgid "Linear A"
+msgstr "Lineárne písmo A"
+
+#: ucsubset.src
+msgid "Myanmar Extended-B"
+msgstr "Mjanmarské rozšírené-B"
+
+#: ucsubset.src
+msgid "Nabataean"
+msgstr "Nabatejské"
+
+#: ucsubset.src
+msgid "Old North Arabian"
+msgstr "Južná staroarabčina"
+
+#: ucsubset.src
+msgid "Old Permic"
+msgstr "Staropermské"
+
+#: ucsubset.src
+msgid "Ornamental Dingbats"
+msgstr "Ornamentálne symboly"
+
+#: ucsubset.src
+msgid "Palmyrene"
+msgstr "Palmýrske"
+
+#: ucsubset.src
+msgid "Psalter Pahlavi"
+msgstr "Žalmové pahlaví"
+
+#: ucsubset.src
+msgid "Shorthand Format Controls"
+msgstr "Značky formátovania tesnopisu"
+
+#: ucsubset.src
+msgid "Sinhala Archaic Numbers"
+msgstr "Sinhálske archaické číslice"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-C"
+msgstr "Doplnkové šípky-C"
+
+#: ucsubset.src
+msgid "Ahom"
+msgstr "Ahomské"
+
+#: ucsubset.src
+msgid "Anatolian Hieroglyphs"
+msgstr "Anatolské hieroglyfy"
+
+#: ucsubset.src
+msgid "Cherokee Supplement"
+msgstr "Doplnkové čerokézske"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension E"
+msgstr "Rozšírenie E unifikovaných ideogramov CJK"
+
+#: ucsubset.src
+msgid "Early Dynastic Cuneiform"
+msgstr "Ranné dynastické klinové písmo"
+
+#: ucsubset.src
+msgid "Hatran"
+msgstr "Hatranské arménske"
+
+#: ucsubset.src
+msgid "Multani"
+msgstr "Multanské"
+
+#: ucsubset.src
+msgid "Old Hungarian"
+msgstr "Staromaďarské"
+
+#: ucsubset.src
+msgid "Supplemental Symbols And Pictographs"
+msgstr "Doplnkové symboly a piktogramy"
+
+#: ucsubset.src
+msgid "Sutton Signwriting"
+msgstr "Suttonovej posunková abeceda"

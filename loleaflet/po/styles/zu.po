@@ -2009,3 +2009,353 @@ msgstr "Isihloko esime ngobude, Umbhalo, Ishathi"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Isihloko esime ngobude, Umbhalo ome ngobude"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Isi-Lathini Esilula"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Isi-Latin-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "Isi-Lathini Esongeziwe-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "Isi-Lathini Esongeziwe-A"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "Izandiso ze-IPA"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Yehlukanisa ofebana bokulungisa"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Ixuba izimpawu ezihlukanisayo"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "IsiGreki Esilula"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Izimpawu zesiGreki kanye nokwama-Copt"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Isi-Sikrilikha"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Isi-Ameniya"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Isi-Hebheru Esilula"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Isi-Hebheru Esandisiwe"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Isi-Arabhu Esilula"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Isi-Arabhu Esandisiwe"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "IsiBengali"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "IsiGujarati"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "IsiTamil"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "IsiTelugu"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "IsiKhanada"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "IsiMaleshiya"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "IsiThai"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "Isi-Jojiyani Esilula"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "IsiJojani Esongeziwe"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "Isi-Hangul Jamo"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Okongeziwe kwanwetsha kwesi-Latin"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "IsiGreki sinwetshiwe"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Ukuphawula okwaziwayo"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Imibhalo emikhulu kanyen Nemibhalo emincane"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Izimpawu Zemali"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "Ixuba Izimpawu Ezahlukanisayo"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Izimpawu ezifana nofebana"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Amafomu ezinombolo"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Izimpawu"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "Izimpawu zezibalo"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Ingxubevange yobuchwepheshe"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Izithombe Zokuphatha"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Ukwaziwa kophawu olubonakalayo"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Izimpawu ezifakiwe"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Ibhokisi lokudweba"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Izingxenye zebhokisi"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Izimo ze-Geometry"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Izimpawu eziyingxubevange"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "Ama-dingbat"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "Izimpawu ze-CJK kanye nokuphawula"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "I-Jamo ehambelenayo ye-Hangul"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "Ingxubevange ye-CJK"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "Ofebana be-CJK kanye nezinyanga ezingaphakathi"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "Ukufanelana kwe-CJK"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "IsiHangul"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "Izimpawu zemidwebo ezibumbene ze-CJK"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Indawo Yokusebenza yangasese"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "Izimpawu zemidwebo ezihambelana ne-CJK"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Amafomu omboniso ahamba ngofebana"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Amafomu-A omboniso wesi-Arabhu"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "Ukuxuba izimpawu ezingohhafu"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "Amafomu ahambelanayo e-CJK"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Ushintsho oluncane lwamafomu"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Amafomu-B omboniso wesi-Arabhu"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Amafomu anobubanzi obunguhhafu kanye nobugcwele"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Okukhethekile"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "I-Sinhala"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "Okwase-Tibet"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "I-Myanmar"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "I-Khmer"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "I-Ogham"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Uphawu lwakudala"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "Okwase-Siriya"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "I-Thaana"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "OkwaseTopiya"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "I-Cherokee"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Ongwaqa bendalo base-Canada"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Okwase-Mongolia"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Izimpawu zezibalo zika-A eziyingxubevange"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Imicibisholo ka-A yokwengeza"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Amaphethini amachashaza olimi"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Izimpawu zokushintsha za-B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Izimpawu eziyingxubevange Zezibalo-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "Ukushintshwa Okusheshayo kwe-CJK"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Izimpawu Zencazelo Ezichaza icebo"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "Qopha izwi"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "I-Hanunoo"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "I-Tagbanwa"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "I-Buhid"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "I-Kanbun"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "I-Bopomofo Eyongeziwe"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Ukubizwa kogwaqa kwe-Katakana"

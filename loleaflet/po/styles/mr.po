@@ -1998,3 +1998,885 @@ msgstr "खोडून पुनः लिहा"
 #: globstr.src
 msgid "Insert"
 msgstr "अंतर्भुत करा"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "मुळ लॅटिन"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "लॅटिन-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "लॅटिन विस्तृत-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "लॅटिन विस्तृत-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA ऐक्सटेनशनस्"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "सुधारित अक्षरांमध्ये अंतर ठेवणे"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "स्वरभेदचिन्हांचा संयोग करा"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "मुळ ग्रीक"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "ग्रीक चिन्हे आणि कॉप्टिक"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "सिरिलिक"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "अर्मेनियन"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "मुळ हिब्रू"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "विस्तृत हिब्रू"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "मुळ अरेबिक"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "विस्तृत अरेबिक"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "देवनागरी"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "बंगाली"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "गुरूमुखी"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "गुजराती"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "तामिळ"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "तेलगु"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "कन्नड"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "मल्याळम्"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "थाई"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "लाओ"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "मुळ जॉर्जियन"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "विस्तृत जॉर्जियन"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "हंगुल जामो"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "लेटिन विस्तृत अतिरिक्त"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "विस्तृत ग्रीक"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "सर्वसाधारण विराम चिन्हांकन"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "माथालेखन आणि पायथालेखन"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "चलन चिन्ह"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "स्वरभेदचिन्हांचा संयोग करा"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "अक्षर नुरूप चिन्हे"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "संख्या फॉर्म"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "बाण"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "गणित सम्बन्धी प्रवर्तक"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "विविध तांत्रिकी"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "चित्रांवर नियंत्रण करा"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "ऑप्टिकल अक्षर ओळखणे"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "सोबत जोडलेले आल्फा न्यूमरिक"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "बॉक्स रेखाचित्र"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "ब्लॉक मूलद्रव्ये"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "भूमितीय आकार"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "विविध चिन्हे"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "डिन्गबॅट्स"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "CJK चिन्हे आणि विराम चिन्हांकन"
+
+#: ucsubset.src
+msgid "Hiragana"
+msgstr "हिरागाना"
+
+#: ucsubset.src
+msgid "Katakana"
+msgstr "कटकाना"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "बोपोमोफो"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "हंगुल सुसंगतता जामो"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK इतर"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "सोबत जोडलेले CJK पत्रे आणि महिने"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "CJK सुसंगतता"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "हंगुल"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "CJK एकरूपी चित्रलिपी"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "CJK युनिफाइड आयडिओग्राफ्स एक्सटेंशन A"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "खाजगी उपयोग क्षेत्र"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK ची सुसंगत चित्रलिपी"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "वर्णाक्षर सादरीकरणाचे नमुने"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "अरेबिक सादरीकरणाचा फॉर्म-A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "अर्ध्या खुणांचा संयोग करा"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK ची सुसंगत नमुने"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "छोटा फॉर्म प्रकार"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "अरेबिक प्रस्तुति फॉर्म-B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "अर्ध्या आणि पूर्ण रुंदीचे नमुने"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "विशेष"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "यि सिलॅबल्स"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "यि रॅडिकल्स"
+
+#: ucsubset.src
+msgid "Old Italic"
+msgstr "जुणे इटॅलिक"
+
+#: ucsubset.src
+msgid "Gothic"
+msgstr "गॉथिक"
+
+#: ucsubset.src
+msgid "Deseret"
+msgstr "डेजेरेट"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "बायझंटाइन संगीत चिन्हे"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "संगीत चिन्हे"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "मॅथेमॅटिकल अल्फान्युमेरिक चिन्हे"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "CJK युनिफाइड आयडिओग्राफ्स् एक्सटेंशन B"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "CJK युनिफाइड आयडिओग्राफ्स् एक्सटेंशन C"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "CJK युनिफाइड आयडिओग्राफ्स् एक्सटेंशन D"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "CJK कॉमपॅटिबिलिटि इडिग्रॉफ्स सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Tags"
+msgstr "टॅग्ज"
+
+#: ucsubset.src
+msgid "Cyrillic Supplement"
+msgstr "सिरिल्लिक सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Variation Selectors"
+msgstr "वेरिएशन सिरेक्टर्स"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-A"
+msgstr "सप्लिमेंट्रि प्राइव्हेट युज एरिया-ए"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-B"
+msgstr "सप्लिमेंट्रि प्राइव्हेट युज एरिया-बि"
+
+#: ucsubset.src
+msgid "Limbu"
+msgstr "लीम्बू"
+
+#: ucsubset.src
+msgid "Tai Le"
+msgstr "ताइ लि"
+
+#: ucsubset.src
+msgid "Khmer Symbols"
+msgstr "ख्मेर चिन्हे"
+
+#: ucsubset.src
+msgid "Phonetic Extensions"
+msgstr "फोनेटिक एक्सटेंशन्स"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "मिश्र चिन्हे व बाण"
+
+#: ucsubset.src
+msgid "Yijing Hexagram Symbols"
+msgstr "यिजिंग हेक्साग्राम चिन्हे"
+
+#: ucsubset.src
+msgid "Linear B Syllabary"
+msgstr "लिनिअर बि सिलॅबरि"
+
+#: ucsubset.src
+msgid "Linear B Ideograms"
+msgstr "लिनिअर बि इडिओग्राम्स"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "ऐजिअन नंबर्स"
+
+#: ucsubset.src
+msgid "Ugaritic"
+msgstr "उगारिटिक"
+
+#: ucsubset.src
+msgid "Shavian"
+msgstr "शाविअन"
+
+#: ucsubset.src
+msgid "Osmanya"
+msgstr "ओसमान्या"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "सिंहला"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "टिबेटियन"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "म्यानमार"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "ख्मेर"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "ओघम्"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "रूनिक"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "सिरियक"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "थाना"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "इथियोपिक"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "चेरोकी"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "कॅनडन आदिवासी शब्दांश"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "मंगोलियन"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "संकिर्ण गणित सम्बन्धी चिन्हे-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "पुरवणीचे बाण -A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "ब्रेल नमूनें"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "पुरवणीचे बाण-B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "संकिर्ण गणित सम्बन्धी चिन्हे-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK मुळ पुरवणी"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "कांग्सी रॅडिकल्स"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "चित्रलिपी वर्णन अक्षरे"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "टॅगलॉग"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "हानुनू"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "टॅगबॅन्वा"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "बुहीड"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "कनबन"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "बोपोमोफो विस्तृत"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "कटकना फोनेटिक्स"
+
+#: ucsubset.src
+msgid "CJK Strokes"
+msgstr "CJK स्ट्रोक्स"
+
+#: ucsubset.src
+msgid "Cypriot Syllabary"
+msgstr "सिप्रिओट सिलॅबरि"
+
+#: ucsubset.src
+msgid "Tai Xuan Jing Symbols"
+msgstr "ताइ जुआन जिंग चिन्ह"
+
+#: ucsubset.src
+msgid "Variation Selectors Supplement"
+msgstr "वेरिएशन सिलेक्टर्स सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Ancient Greek Musical Notation"
+msgstr "अँशिएंट ग्रीक म्युजिकल लेखन"
+
+#: ucsubset.src
+msgid "Ancient Greek Numbers"
+msgstr "अँशिएंट ग्रीक क्रमांक"
+
+#: ucsubset.src
+msgid "Arabic Supplement"
+msgstr "अरेबिक सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Buginese"
+msgstr "बुगिनेज"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Supplement"
+msgstr "डायक्रिटिकल मार्क्स सप्लिमेंट एकत्र करत आहे"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "कोप्टिक"
+
+#: ucsubset.src
+msgid "Ethiopic Extended"
+msgstr "इथिओपिक विस्तारित"
+
+#: ucsubset.src
+msgid "Ethiopic Supplement"
+msgstr "इथिओपिक सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Georgian Supplement"
+msgstr "जॉर्जिअन सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Glagolitic"
+msgstr "ग्लागोलिटिक"
+
+#: ucsubset.src
+msgid "Kharoshthi"
+msgstr "खारोशथि"
+
+#: ucsubset.src
+msgid "Modifier Tone Letters"
+msgstr "मॉडिफायर टोन अक्षरे"
+
+#: ucsubset.src
+msgid "New Tai Lue"
+msgstr "नवीन तै ल्युए"
+
+#: ucsubset.src
+msgid "Old Persian"
+msgstr "जुणे पर्शिअन"
+
+#: ucsubset.src
+msgid "Phonetic Extensions Supplement"
+msgstr "फोनेटिक एक्सटेंशन्स सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Supplemental Punctuation"
+msgstr "पूरक विरामचिन्ह"
+
+#: ucsubset.src
+msgid "Syloti Nagri"
+msgstr "सायलोटि नगरि"
+
+#: ucsubset.src
+msgid "Tifinagh"
+msgstr "तिफिनाघ"
+
+#: ucsubset.src
+msgid "Vertical Forms"
+msgstr "उभे रूपण"
+
+#: ucsubset.src
+msgid "Nko"
+msgstr "न्को"
+
+#: ucsubset.src
+msgid "Balinese"
+msgstr "बालिनेज"
+
+#: ucsubset.src
+msgid "Latin Extended-C"
+msgstr "लॅटिन एक्सटेंडेड-C"
+
+#: ucsubset.src
+msgid "Latin Extended-D"
+msgstr "लॅटिन एक्सटेंडेड-D"
+
+#: ucsubset.src
+msgid "Phags-Pa"
+msgstr "फॅग्ज-पा"
+
+#: ucsubset.src
+msgid "Phoenician"
+msgstr "फिनिशिअन"
+
+#: ucsubset.src
+msgid "Cuneiform"
+msgstr "क्युनैफॉर्म"
+
+#: ucsubset.src
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "क्युनैफॉर्म संख्या व विरामचिन्ह"
+
+#: ucsubset.src
+msgid "Counting Rod Numerals"
+msgstr "रॉड क्रमांकांचे गणन करत आहे"
+
+#: ucsubset.src
+msgid "Sundanese"
+msgstr "सुदानिज्"
+
+#: ucsubset.src
+msgid "Lepcha"
+msgstr "लेप्चा"
+
+#: ucsubset.src
+msgid "Ol Chiki"
+msgstr "ओल चिकि"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-A"
+msgstr "सिरिल्लिक एक्सटेंडेड-A"
+
+#: ucsubset.src
+msgid "Vai"
+msgstr "वै"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-B"
+msgstr "सिरिल्लिक एक्सटेंडेड-B"
+
+#: ucsubset.src
+msgid "Saurashtra"
+msgstr "सौराष्ट्र"
+
+#: ucsubset.src
+msgid "Kayah Li"
+msgstr "काय लि"
+
+#: ucsubset.src
+msgid "Rejang"
+msgstr "रेजँग"
+
+#: ucsubset.src
+msgid "Cham"
+msgstr "चॅम"
+
+#: ucsubset.src
+msgid "Ancient Symbols"
+msgstr "अँशिएंट सिम्बॉल्स"
+
+#: ucsubset.src
+msgid "Phaistos Disc"
+msgstr "फैस्टोस डिस्क"
+
+#: ucsubset.src
+msgid "Lycian"
+msgstr "लिसिअन"
+
+#: ucsubset.src
+msgid "Carian"
+msgstr "करिअन"
+
+#: ucsubset.src
+msgid "Lydian"
+msgstr "लिडिअन"
+
+#: ucsubset.src
+msgid "Mahjong Tiles"
+msgstr "म्हजोंग टाइल्स"
+
+#: ucsubset.src
+msgid "Domino Tiles"
+msgstr "डॉमिनो टाइल्स"
+
+#: ucsubset.src
+msgid "Samaritan"
+msgstr "समॅरिटन"
+
+#: ucsubset.src
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "कनेडिअन अबओरिजनल सिलॅबिक्स् एक्सटेंडेड"
+
+#: ucsubset.src
+msgid "Tai Tham"
+msgstr "थाइ थॅम"
+
+#: ucsubset.src
+msgid "Vedic Extensions"
+msgstr "वेदिक एक्सटेंशन्स्"
+
+#: ucsubset.src
+msgid "Lisu"
+msgstr "लिसु"
+
+#: ucsubset.src
+msgid "Bamum"
+msgstr "बामुम"
+
+#: ucsubset.src
+msgid "Common Indic Number Forms"
+msgstr "कॉमन इंडिक नंबर स्वरूप"
+
+#: ucsubset.src
+msgid "Devanagari Extended"
+msgstr "देवानगरि विस्तारित"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-A"
+msgstr "हंगुल जमो एक्सटेंडेड-A"
+
+#: ucsubset.src
+msgid "Javanese"
+msgstr "जावानिज्"
+
+#: ucsubset.src
+msgid "Myanmar Extended-A"
+msgstr "म्यांमार विस्तारित-A"
+
+#: ucsubset.src
+msgid "Tai Viet"
+msgstr "ताइ विएट"
+
+#: ucsubset.src
+msgid "Meetei Mayek"
+msgstr "मीतै मायेक"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-B"
+msgstr "हंगुल जमो एक्सटेंडेड-B"
+
+#: ucsubset.src
+msgid "Imperial Aramaic"
+msgstr "इम्पिरिअल अरामैक"
+
+#: ucsubset.src
+msgid "Old South Arabian"
+msgstr "ओल्ड साऊथ अरेबिअन"
+
+#: ucsubset.src
+msgid "Avestan"
+msgstr "अवेस्टन"
+
+#: ucsubset.src
+msgid "Inscriptional Parthian"
+msgstr "इंस्क्रिप्शनल पार्शिअन"
+
+#: ucsubset.src
+msgid "Inscriptional Pahlavi"
+msgstr "इंस्क्रिप्शनल पह्लवि"
+
+#: ucsubset.src
+msgid "Old Turkic"
+msgstr "ओल्ड टिर्किक्"
+
+#: ucsubset.src
+msgid "Rumi Numeral Symbols"
+msgstr "रुमि न्युमेरल चिन्ह"
+
+#: ucsubset.src
+msgid "Kaithi"
+msgstr "कैथि"
+
+#: ucsubset.src
+msgid "Egyptian Hieroglyphs"
+msgstr "इजिप्शिअन हिर्रोग्लिफ्स्"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "अंतर्भुतीय अल्फान्युमेरिक सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Enclosed Ideographic Supplement"
+msgstr "अंतर्भुतीय आइडिओग्राफिक सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Mandaic"
+msgstr "मॅनडैक"
+
+#: ucsubset.src
+msgid "Batak"
+msgstr "बटक"
+
+#: ucsubset.src
+msgid "Ethiopic Extended-A"
+msgstr "इथिओपिक विस्तारित-A"
+
+#: ucsubset.src
+msgid "Brahmi"
+msgstr "ब्रह्मि"
+
+#: ucsubset.src
+msgid "Bamum Supplement"
+msgstr "बामुम सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Kana Supplement"
+msgstr "काला सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Playing Cards"
+msgstr "पत्ते"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "विविध चिन्ह व पिक्टोग्राफ्स्"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "इमोटिकॉन्स"
+
+#: ucsubset.src
+msgid "Transport And Map Symbols"
+msgstr "ट्रांस्पोर्ट व मॅप चिन्ह"
+
+#: ucsubset.src
+msgid "Alchemical Symbols"
+msgstr "अल्केमिकेल चिन्ह"
+
+#: ucsubset.src
+msgid "Arabic Extended-A"
+msgstr "अरेबिक एक्सटेंडेड-A"
+
+#: ucsubset.src
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "अरेबिक मॅथेमॅटिकल अल्फाबेटिक चिन्ह"
+
+#: ucsubset.src
+msgid "Chakma"
+msgstr "चकमा"
+
+#: ucsubset.src
+msgid "Meetei Mayek Extensions"
+msgstr "मीतै मायेक एक्सटेंशन्स्"
+
+#: ucsubset.src
+msgid "Meroitic Cursive"
+msgstr "मेरिओटिक कर्सिव्ह"
+
+#: ucsubset.src
+msgid "Meroitic Hieroglyphs"
+msgstr "मेरिओटिक हिर्रोग्लिफ्स्"
+
+#: ucsubset.src
+msgid "Miao"
+msgstr "मैओ"
+
+#: ucsubset.src
+msgid "Sharada"
+msgstr "शार्दा"
+
+#: ucsubset.src
+msgid "Sora Sompeng"
+msgstr "सोरा सोमपेंग"
+
+#: ucsubset.src
+msgid "Sundanese Supplement"
+msgstr "सुदानिज् सप्लिमेंट"
+
+#: ucsubset.src
+msgid "Takri"
+msgstr "तक्रि"

@@ -1936,3 +1936,101 @@ msgstr "अधिलेखन"
 #: globstr.src
 msgid "Insert"
 msgstr "घुसाउनुहोस्"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "आर्मेनियाली"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "बङ्गाली"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "गुजराती"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "तामिल"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "तेलगु"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "कान्नाडा"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "मलायालम"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "थाई"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "लाओ"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "मुद्रा प्रतीक"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "बाँण"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "विविधता विकल्पहरू"
+
+#: ucsubset.src
+msgid "Hiragana"
+msgstr "हिरागाना"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "विविध"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "मिल्दोपना"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "विशेष"
+
+#: ucsubset.src
+msgid "Limbu"
+msgstr "लिम्बु"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "सिन्हाला"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "खमेर"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "मङ्गोलियाली"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "वर्णन"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "तागालोग"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "कोप्टिक"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "इमोटाइकोनहरू"

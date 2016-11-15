@@ -1938,3 +1938,49 @@ msgstr "लंबरूप शीर्षक, पाठ, चार्ट"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "लंबरूप शीर्षक, लंबरूप पाठ "
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "गुजराती"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "तमिल"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "तेलुगु"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "कन्नड"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "मलयालम"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "थाई"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "लाओ"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "सिंहला"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "तिब्बती"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "ख्मेर"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "मंगोलियाइ"

@@ -2018,3 +2018,485 @@ msgstr "%1 מילים, %2 תווים"
 #: strings.src
 msgid "Slide %1 of %2"
 msgstr "שקופית %1 מתוך %2"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "לטינית בסיסית"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "לטינית־1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "לטינית מורחבת־A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "לטינית מורחבת־B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "הרחבות IPA"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "תווי שינוי רווח"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "שילוב סימני ניקוד"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "יוונית בסיסית"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "סמלים יוונים וקופטים"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "קירילית"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "ארמנית"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "עברית בסיסית"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "עברית מורחבת"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "ערבית בסיסית"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "ערבית מורחבת"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "דוונאגרית"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "בנגלית"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "גורמוכית"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "גוג'ארטית (הודו)"
+
+#: ucsubset.src
+msgid "Odia"
+msgstr "אודיה"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "טמילית"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "טלוגו"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "קנדה"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "מלאיאלאם"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "תאילנדית"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "לאו"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "גאורגית בסיסית"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "גאורגית מורחבת"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "הנגול ג'אמו"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "תוספות מורחבות לטיניות"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "יוונית מורחבת"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "סימני פיסוק כלליים"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "כתוביות עיליות ותחתיות"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "סמלי מטבע"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "סימני ניקוד משולבים"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "סימנים דמויי תווים"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "צורות מספריות"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "חצים"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "אופרטורים מתמטיים"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "סימנים טכניים שונים"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "תמונות בקרה"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "זיהוי תווים בסריקה אופטית"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "תווים אלפאנומרים סגורים"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "תווים לשרטוט תיבות"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "רכיבי בלוק"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "צורות גאומטריות"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "סימנים שונים"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "צורות גרפיות מיוחדות"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "סימני פיסוק אסייתיים"
+
+#: ucsubset.src
+msgid "Hiragana"
+msgstr "הירגאנה"
+
+#: ucsubset.src
+msgid "Katakana"
+msgstr "קטאקנה"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "בופומופו"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "ג'אמו תואמת הנגול"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "סימנים שונים של שפות אסייתיות"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "אותיות וחודשי CJK מצורפים"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "תאימות לשפות אסייתיות"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "הנגול"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "אידיאוגרמות מאוחדות אסייתיות"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "אידאוגרפיים מאוחדים לסינית, ליפנית ולקוריאנית, הרחבה א׳"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "אזור שמור לשימוש פרטי"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "אידיוגרפים להתאמה לשפות אסייאתיות"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "צורות תצוגה אלפאבתיים"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "צורות ערביות לתצוגה־A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "צירוף חצאי סימנים"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "צורות להתאמה לשפות אסייאתיות"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "גרסאות שונות של צורות קטנות"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "צורות ערביות לתצוגה־B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "צורות בחצי רוחב ורוחב מלא"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "סימנים מיוחדים"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "הברות יי"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "שורשי יי"
+
+#: ucsubset.src
+msgid "Old Italic"
+msgstr "איטאלית עתיקה"
+
+#: ucsubset.src
+msgid "Gothic"
+msgstr "גותי"
+
+#: ucsubset.src
+msgid "Deseret"
+msgstr "אוגריתי"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "סמלים מוזיקליים ביזנטים"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "סימנים מוזיקליים"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "סמלים מתמטיים אלפאנומריים"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "אידאוגרפיים מאוחדים לסינית, ליפנית ולקוריאנית הרחבה ב׳"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "אידאוגרפיים מאוחדים לסינית, ליפנית ולקוריאנית הרחבה ג׳"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "אידאוגרפיים מאוחדים לסינית, ליפנית ולקוריאנית הרחבה ד׳"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "השלמת אידיאוגרמות תאימות לסינית, יפנית וקוריאנית"
+
+#: ucsubset.src
+msgid "Tags"
+msgstr "תגיות"
+
+#: ucsubset.src
+msgid "Limbu"
+msgstr "לימבו"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "מספרים אגאיים"
+
+#: ucsubset.src
+msgid "Ugaritic"
+msgstr "אוגריתית"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "סינהלית"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "טיבטית"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "מיינמרית"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "חמרית"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "אוחמית"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "רונית"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "סוריאק"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "תאנה"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "אתיופית"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "צ'רוקי"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "הברות ילידים קאנדיים"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "מונגולית"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "סימנים מתמטיים שונים - א"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "חיצים נוספים - א"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "דוגמאות ברייל"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "חיצים נוספים - ב"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "סימנים מתמטיים שונים - ב"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "תוספת CJK בסיסית (Radical)"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "שורשי קאנגשי"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "אותיות תאור אידיוגרפיים"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "טגאלוג"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "הנונו"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "טאגבאנווא"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "ביהוד"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "קאנבון"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "בופומופו מורחבת"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "פונטיקת קאטאקנה"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "קופטית"
+
+#: ucsubset.src
+msgid "Old Persian"
+msgstr "פרסית עתיקה"
+
+#: ucsubset.src
+msgid "Nko"
+msgstr "נ׳קו"
+
+#: ucsubset.src
+msgid "Mahjong Tiles"
+msgstr "אריחי מה-ג׳ונג"
+
+#: ucsubset.src
+msgid "Domino Tiles"
+msgstr "אריחי דומינו"
+
+#: ucsubset.src
+msgid "Playing Cards"
+msgstr "קלפי משחק"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "סמלי הבעה"
+
+#: ucsubset.src
+msgid "Sundanese Supplement"
+msgstr "השלמה לסונדית"

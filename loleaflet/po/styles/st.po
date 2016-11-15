@@ -1991,3 +1991,345 @@ msgstr "Sehlooho se Tsepameng, Mongolo, Tjhate"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "Sehlooho se Tsepameng, Mongolo o Tsepameng"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Latine ya Motheho"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Latine-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "Latine Atolositswe-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "Latine Atolositswe-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA Dikatoloso"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Ditlhaku tse Ntlafatsang tsa Dikgeo Dipakeng"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Ho Kopanya Matshwao a Qapodiso"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "Sekgerike sa Motheo"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Matshwao a Sekgerike le Coptike"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Cyrillike"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Searmenia"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Seheberu sa Motheo"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Seheberu Atolositswe"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Searabia sa Motheho"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Searabia Atolositswe"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "Sedevanagari"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "Sebengali"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "Segurmukhi"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "Segujarati"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "Setamile"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "Setelugu"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "Sekannada"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "Semalayalam"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "Sethai"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "Selao"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "Segeorgia sa Motheho"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "Segeorgia Atolositswe"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "Sehangul Jamo"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Ditlatsetso tse Atolositsweng tsa Selatine"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "Sekgerike Atolositswe"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Kakaretso ya tshebediso ya matshwao a puo"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Mongolo wa ka hodima mola le wa ka tlasa mola"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Disimbole Tse ntseng di Sebediswa"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "Ho kopanya Matshwao a Ditlhaku"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Matshwao a Tshwanang le Ditlhaku"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Diforomo tsa Dinomoro"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Metsu"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "Basebetsi ba Mmetse"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Sethekgenike ho Tsena le Tsane"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Laola Ditshwantsho"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Kelohloko ya Kharektara ka Leihlo"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Dialphanumerike tse Dikanyeditsweng"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Ho Takwa ha Lebokose"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Dielemente tsa Bloko"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Dibopeho tsa Geometriki"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Ditshwantso tsa Hona le Hane"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "Didingbate"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "Matshwao a CJK le Matshwao a Puo"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Jamo ya Tumalantso le Hangul"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK Hona le Hane"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "Kenyeleditswe Mangolo a CJK Le Dikgwedi"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "CJK Tumellano"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "Diideograf tse Kopaneng tsa CJK"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Sebaka sa Tshebediso e Poraevete"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "Diideograf tse Dumallanang tsa CJK"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Diforomo tsa Tlhahiso ka Alfabete"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Diforomo-A tsa Tlhahiso tsa Searabia"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "Ho kopanya Matshwao a Dihalofo"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK Diforomo tsa Tumellano"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Divariente tsa Sebopeho se Senyane"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Diforomo-B tsa Tlhahiso tsa Searabia"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Diforomo tsa Halofo-bophara le Bophara bo feletseng"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Tse ikgethileng"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "Sesinhala"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "Setibetan"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "Semyanmar"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "Sekhmer"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "Seogham"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Serunic"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "Seseria"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "Sethaana"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "Setopia"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "Secherokee"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Dinoko tsa Secanada sa Pele"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Semongolia"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Matshwao-A a Fapafapaneng a Mmetse"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Metsu-A ya Tlatsetso"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Dipaterone tsa Braille"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Metsu-B ya Tlatsetso"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Matshwao-B a Fapafapaneng a Mmetse"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK Tlatsetso e sa Tlwaelehang"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Dikharethara tsa Tlhaloso ya Ideografi"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "Tagalogo"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Bopomofo Atolositswe"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Difonetike tsa Katakana"

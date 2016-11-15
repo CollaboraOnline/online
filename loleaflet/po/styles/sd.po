@@ -1997,3 +1997,373 @@ msgstr "عمودي عنوان، متن، تختي"
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "عمودي عنوان، عمودي متن "
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "بنيادي ليٽن"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "ليٽن -1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "وڌايل ليٽن -A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "وڌايل ليٽن-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA واڌارا"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "وٿي ڏيڻ ۾ ڦيرڦار ڪندڙ اَکرَ"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "اعرابون ڳنڍڻ"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "بنيادي يوناني"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "يوناني علامتون ۽ ڪاپٽڪ"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "سائريلڪ"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "آرمينين"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "بنيادي هيبرو"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "وڌايل هيبرو"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "بنيادي عربي"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "وڌايل عربي"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "ديوناگري"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "بنگالي"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "گرمکي"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "گجراتي"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "تامل"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "تيلگو"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "ڪنڙ"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "ملايلم"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "ٿائي"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "لائو"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "بنيادي جارجين"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "وڌايل جارجين"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "هنگل جامو"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "وڌايل واڌو ليٽن"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "وڌايل يوناني"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "عام بيهڪ جي نشاني"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "سپراسڪرپٽس ۽ سب اسڪرپٽس"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "اعرابن جون علامتون ڳنڍڻ"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "اکر جهڙيون علامتون"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "اَنگ جا روپ"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "حسابي ڪارروايون"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "ڦٽڪر تڪنيڪي"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "تصويرن تي ضابطو"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "روشنيءَ وارا اکر سڃاڻڻ"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "جوڙيل اکرن ۽ انگن جو سرشتو"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "باڪس نقش"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "بلاڪ جا عناسرَ"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "جاميٽرڪ شڪليون"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "ڦٽڪر علامتون"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "ڊنگبيٽس"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "CJK علامتون ۽ بيهڪ جي نشاني"
+
+#: ucsubset.src
+msgid "Hiragana"
+msgstr "هيراگانا"
+
+#: ucsubset.src
+msgid "Katakana"
+msgstr "ڪٽڪانا"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "بوپو موفو"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "هينگل موافقت وارو جامو"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK ڦٽڪر"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "سان جوڙيل CJK اکر ۽ مهنا"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "هنگل"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "CJK ملايل ڀاوَ اَکرَ"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "ذاتي اِستعمال جو کيتر"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK موافقت وارا ڀاوَ اکرَ"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "آئيويٽا موجب پيشڪش جا روپ"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "عربي پيشڪش جا روپ -A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "اڌ نسان ڳنڍڻ"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK موافقت وارا روپَ"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "ننڍا روپ ڦرندڙَ"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "عربي پيشڪش جا روپ-B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "اڌ-ويڪر ۽ پوري -ويڪر جا روپ"
+
+#: ucsubset.src
+msgid "Limbu"
+msgstr "للبو"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "سنهلا"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "ٿٻٽي"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "ميامار"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "کمير"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "اوگهام"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "رونڪ"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "سائرئڪ"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "ٿانا"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "ايٿئوپڪ"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "چيروڪي"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "ڪنيڙين قديم اُچارَ"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "منگولين"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "ڦٽڪر حسابي علامتون -A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "زيادهہ تيرَ -A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "بريل نمونا"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "زيادهہ تير -B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "ڦٽڪر حسابي علامتون -B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK  مول ضمومو"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "ڀاوَ اکر بيان ڪندڙ اَکر"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "ٽاگالوگ"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "هننو"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "تيگبانوا"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "بوُهِد"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "ڪنبن"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "وڌايل بوپو موفو"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "ڪٽڪانا اُچاري سرشتو"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "ڪوپٽڪ"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "ترنگون"

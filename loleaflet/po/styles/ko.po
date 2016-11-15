@@ -2008,3 +2008,689 @@ msgstr "단어 %1 개, 문자 %2 개"
 #: strings.src
 msgid "Slide %1 of %2"
 msgstr "%2 의 %1 슬라이드"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "기본 라틴어"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "라틴어-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "라틴어, 확장-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "라틴어, 확장-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA 확장"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "간격 조정 문자"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "조합 분음 기호(액센트)"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "기본 그리스어"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "그리스 기호와 콥트어"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "키릴 자모"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "아르메니아어"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "기본 히브리어"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "히브리어(확장)"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "기본 아랍어"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "아랍어(확장)"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "데바나가리어"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "벵골어"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "굴묵키어"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "구자라트어"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "타밀어"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "텔루구어"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "카나다어"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "말라얄람어"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "태국어"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "라오스어"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "기본 그루지아어"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "그루지아어 (확장)"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "한글 자모"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "라틴어 (확장 추가)"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "그리스어 (확장)"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "일반 문장 부호"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "위 첨자 및 아래 첨자"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "통화 기호"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "복합 변별적 기호"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "글자꼴 기호"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "숫자 형식"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "화살표"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "수학 연산자"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "여러 가지 기술 기호"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "제어 문자 표시"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "광학 문자 판독"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "원문자 (알파벳)"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "상자 그리기"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "블록 기호"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "기하학적 기호"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "기타 기호"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "딩뱃 기호"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "한중일 기호 및 문장 부호"
+
+#: ucsubset.src
+msgid "Hiragana"
+msgstr "히라가나"
+
+#: ucsubset.src
+msgid "Katakana"
+msgstr "가타카나"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "보포모포"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "한글 호환 자모"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "한중일 기타 문자"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "한중일 괄호 문자"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "한중일 호환"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "한글"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "한중일 통합 한자"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "한중일 통합 한자 확장-A"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "사용자 영역(고어/구결)"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "한중일 호환 한자"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "알파벳 프레젠테이션 형식"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "아랍어 프레젠테이션 유형-A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "반 마크 조합"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "한중일 호환 형식"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "작은꼴 변형"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "아랍어 프레젠테이션 유형-B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "반자 및 전자 형식"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "특수 기호"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "이(Yi) 음절"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "이(Yi) 부수"
+
+#: ucsubset.src
+msgid "Old Italic"
+msgstr "구 이탤릭체"
+
+#: ucsubset.src
+msgid "Gothic"
+msgstr "고딕"
+
+#: ucsubset.src
+msgid "Deseret"
+msgstr "데저럿"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "비잔틴 음악 기호"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "음악 기호"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "수학용 알파벳/숫자 기호"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "한중일 통합 한자 확장 B"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "한중일 통합 한자 확장 C"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "한중일 통합 한자 확장 A"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "한중일 호환한자 추가"
+
+#: ucsubset.src
+msgid "Tags"
+msgstr "태그"
+
+#: ucsubset.src
+msgid "Cyrillic Supplement"
+msgstr "키릴 자모 추가"
+
+#: ucsubset.src
+msgid "Variation Selectors"
+msgstr "모양 구별 문자"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-A"
+msgstr "보충 사용자 영역-A"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-B"
+msgstr "보충 사용자 영역-B"
+
+#: ucsubset.src
+msgid "Limbu"
+msgstr "림부"
+
+#: ucsubset.src
+msgid "Tai Le"
+msgstr "타이 레 문자"
+
+#: ucsubset.src
+msgid "Khmer Symbols"
+msgstr "크메르 기호"
+
+#: ucsubset.src
+msgid "Phonetic Extensions"
+msgstr "음성 확장"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "기타 기호 및 화살표"
+
+#: ucsubset.src
+msgid "Yijing Hexagram Symbols"
+msgstr "주역 괘 기호"
+
+#: ucsubset.src
+msgid "Linear B Syllabary"
+msgstr "선형 B 음절표"
+
+#: ucsubset.src
+msgid "Linear B Ideograms"
+msgstr "선형 B 한자"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "에게 숫자"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "싱헐리즈어"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "티베트어"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "미얀마어"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "크메르어"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "오검 문자"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "룬 문자"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "시리아어"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "타나 문자"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "에티오피아어"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "체르키어"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "캐나다 토착 음절"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "몽골어"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "기타 수학 기호 A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "추가 화살표 A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "브라유 점자"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "추가 화살표 B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "기타 수학 기호 B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "한중일 어근 추가"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "Kangxi 어근"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "표의 설명 문자"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "타갈로그"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "하누누"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "탁반와"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "부히드"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "칸분"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "보포모포 확장"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "가타카나 발음 표기"
+
+#: ucsubset.src
+msgid "Buginese"
+msgstr "부기스어"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Supplement"
+msgstr "조합 분음 기호 추가"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "콥트어"
+
+#: ucsubset.src
+msgid "Ethiopic Extended"
+msgstr "에티오피아어 확장"
+
+#: ucsubset.src
+msgid "Ethiopic Supplement"
+msgstr "에티오피아어 추가"
+
+#: ucsubset.src
+msgid "Georgian Supplement"
+msgstr "그루지야어 추가"
+
+#: ucsubset.src
+msgid "Glagolitic"
+msgstr "글라골 문자"
+
+#: ucsubset.src
+msgid "Kharoshthi"
+msgstr "카로슈티 문자"
+
+#: ucsubset.src
+msgid "Modifier Tone Letters"
+msgstr "어조 조정 문자"
+
+#: ucsubset.src
+msgid "New Tai Lue"
+msgstr "신타이 루에"
+
+#: ucsubset.src
+msgid "Latin Extended-C"
+msgstr "라틴어, 확장-C"
+
+#: ucsubset.src
+msgid "Latin Extended-D"
+msgstr "라틴어 확장-D"
+
+#: ucsubset.src
+msgid "Phags-Pa"
+msgstr "파스파 문자"
+
+#: ucsubset.src
+msgid "Phoenician"
+msgstr "페니키아어"
+
+#: ucsubset.src
+msgid "Cuneiform"
+msgstr "설형 문자"
+
+#: ucsubset.src
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "설형 문자(숫자와 구두점)"
+
+#: ucsubset.src
+msgid "Counting Rod Numerals"
+msgstr "산가지 문자"
+
+#: ucsubset.src
+msgid "Sundanese"
+msgstr "순다 문자"
+
+#: ucsubset.src
+msgid "Lepcha"
+msgstr "렙차어"
+
+#: ucsubset.src
+msgid "Ol Chiki"
+msgstr "올 치키 문자"
+
+#: ucsubset.src
+msgid "Cham"
+msgstr "참족어"
+
+#: ucsubset.src
+msgid "Lycian"
+msgstr "리키아 문자"
+
+#: ucsubset.src
+msgid "Carian"
+msgstr "카리 문자"
+
+#: ucsubset.src
+msgid "Lydian"
+msgstr "리디아 문자"
+
+#: ucsubset.src
+msgid "Mahjong Tiles"
+msgstr "마작 타일"
+
+#: ucsubset.src
+msgid "Domino Tiles"
+msgstr "도미노 타일"
+
+#: ucsubset.src
+msgid "Samaritan"
+msgstr "사마리아 문자"
+
+#: ucsubset.src
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "캐나다 원주민 기호 확장"
+
+#: ucsubset.src
+msgid "Tai Tham"
+msgstr "타이탐 문자"
+
+#: ucsubset.src
+msgid "Vedic Extensions"
+msgstr "베다어 확장"
+
+#: ucsubset.src
+msgid "Lisu"
+msgstr "리수어"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-B"
+msgstr "한글 자모 확장-B"
+
+#: ucsubset.src
+msgid "Imperial Aramaic"
+msgstr "제국 아람 문자"
+
+#: ucsubset.src
+msgid "Old South Arabian"
+msgstr "고대 남아라비아 문자"
+
+#: ucsubset.src
+msgid "Avestan"
+msgstr "아베스타 문자"
+
+#: ucsubset.src
+msgid "Inscriptional Parthian"
+msgstr "파르티아 문자"
+
+#: ucsubset.src
+msgid "Inscriptional Pahlavi"
+msgstr "초기 팔레비 문자"
+
+#: ucsubset.src
+msgid "Old Turkic"
+msgstr "고대 튀르크 문자"
+
+#: ucsubset.src
+msgid "Rumi Numeral Symbols"
+msgstr "루미 숫자 기호"
+
+#: ucsubset.src
+msgid "Kaithi"
+msgstr "카이티 문자"
+
+#: ucsubset.src
+msgid "Playing Cards"
+msgstr "카드 게임"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "기타 기호 및 상형 문자"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "감정 표현 기호"
+
+#: ucsubset.src
+msgid "Transport And Map Symbols"
+msgstr "교통 및 지도 기호"
+
+#: ucsubset.src
+msgid "Alchemical Symbols"
+msgstr "연금술 기호"
+
+#: ucsubset.src
+msgid "Arabic Extended-A"
+msgstr "아랍어 (확장)-A"
+
+#: ucsubset.src
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "아랍 수학적 알파벳 기호"
+
+#: ucsubset.src
+msgid "Chakma"
+msgstr "차크마 문자"
+
+#: ucsubset.src
+msgid "Meetei Mayek Extensions"
+msgstr "메이테이 문자 확장"
+
+#: ucsubset.src
+msgid "Meroitic Cursive"
+msgstr "메로에 문자 흘림체"

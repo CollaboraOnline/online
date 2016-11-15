@@ -1979,3 +1979,881 @@ msgstr "Hunte-borreessi"
 #: globstr.src
 msgid "Insert"
 msgstr "Surki"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "Safote Laatine"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "Laatine-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "Laatinete Seedisama-A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "Laatinete Seedisama-B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "IPA Seedishsha"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "Fooqisate Woyyeessaano Fidalla"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "Xaadisaano Sorote Malaatta "
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "Safote Girike"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "Girikete Malaattanna Koptiikitte"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "Siriilitte"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "Harmeenete"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "Safote Hibiriwu"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "Hibiriwu Seedisama"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "Safote Arawe"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "Arawete Seedisama"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "Hindete Fidalaante"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "Bangilaancho"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "Punjaabi Iskirpte"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "Gujaraati"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "Taimiili"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "Telluguu"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "Kaanede"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "Malleyalem"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "Tay"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "Lowu"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "Safote Joorgaane"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "Joorjaanete Seedisama"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "Hanguli Jaamo"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "Laatinete Seedisama Lexxonnire"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "Girikete Seedisama"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "Xaphooma borraatishsha"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "Ali-cinaancho borronna Wori-cinaancho borro"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "Womaashshu Malaatta"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "Xaadisaano Sorote Malaatta "
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "Fidalaamma Malaatta"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "Kiirote Suudda"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "Worbichuwa"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "Shallagaano Assaano"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "Karsi-borxaafu Tekinikaale"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "Qorqorshu Misilla"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "Optikaale Fikiimu Afammishsha"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "Hanqafantino Fidalikiiro"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "Saaxinete Misile"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "Tayshu Milla"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "Jiometirete Suudda"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "Karsi-borxaafu Malaatta"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "Attamaanchu malaatta"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "CJK Malaattanna Borraatishsha"
+
+#: ucsubset.src
+msgid "Hiragana"
+msgstr "Hiragaana"
+
+#: ucsubset.src
+msgid "Katakana"
+msgstr "Katakaana"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "Boppomofo"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "Hanguli Sumamme Jaamo"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "CJK Krsi-borxaafa"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "Hanqafantino CJK Fidallanna Aganna"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "CJK Sumamme"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "Hanguli"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "CJK Mittoo'mitino Hedi-riqiwaano-malaatta"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension A"
+msgstr "CJK Mittoo'mitino Hedi-riqiwaano-malaatta Seedishsha-A"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "Annanni Horoonsi'ro Darga"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK Sumamme Hedi-riqiwaano-malaatta"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "Fidalaantete Shiqishshi Suudda"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "Arawete Shiqishshi Suudda-A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "Xaadisaano Taaluu-taalo Malaatta"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "CJK Sumamme Suudda"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "Shiimmaadda Suudu Soorramaano "
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "Arawete Shiqishshi Suudda-B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "Boco-baqonna Wo'ma-baqo Suudda"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "Addire"
+
+#: ucsubset.src
+msgid "Yi Syllables"
+msgstr "Yi Silabisubba"
+
+#: ucsubset.src
+msgid "Yi Radicals"
+msgstr "Yi Xintunnire"
+
+#: ucsubset.src
+msgid "Old Italic"
+msgstr "Akala Haawittaame borro"
+
+#: ucsubset.src
+msgid "Gothic"
+msgstr "Gootike"
+
+#: ucsubset.src
+msgid "Deseret"
+msgstr "Baraha"
+
+#: ucsubset.src
+msgid "Byzantine Musical Symbols"
+msgstr "Biyzantane Muuziiqu Malaatta"
+
+#: ucsubset.src
+msgid "Musical Symbols"
+msgstr "Muuziiqu Malaatta"
+
+#: ucsubset.src
+msgid "Mathematical Alphanumeric Symbols"
+msgstr "Shallagote Aantekiirote Malaatta"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension B"
+msgstr "CJK Mittoo'mitino Hedi-riqiwaano-malaatta Seedishsha-A"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension C"
+msgstr "CJK Mittoo'mitino Hedi-riqiwaano-malaatta Seedishsha-A"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs Extension D"
+msgstr "CJK Mittoo'mitino Hedi-riqiwaano-malaatta Seedishsha-A"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "CJK Sumamme Hedi-riqiwaano-malaatta Ledo"
+
+#: ucsubset.src
+msgid "Tags"
+msgstr "Giggishshubba"
+
+#: ucsubset.src
+msgid "Cyrillic Supplement"
+msgstr "Siriilitte Irkishsha"
+
+#: ucsubset.src
+msgid "Variation Selectors"
+msgstr "Badooshshu Dooraano"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-A"
+msgstr "Ledote Umu Horoonsirate Darga-A"
+
+#: ucsubset.src
+msgid "Supplementary Private Use Area-B"
+msgstr "Ledote Umu Horoonsirate Darga-B"
+
+#: ucsubset.src
+msgid "Tai Le"
+msgstr "Taai Le"
+
+#: ucsubset.src
+msgid "Khmer Symbols"
+msgstr "Khmer Malaatta"
+
+#: ucsubset.src
+msgid "Phonetic Extensions"
+msgstr "Phonetike Seedishubba"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "Dani tuqa Malaatta Nna Worbichuwa"
+
+#: ucsubset.src
+msgid "Yijing Hexagram Symbols"
+msgstr "Yijing Ontegiraame Malaatta"
+
+#: ucsubset.src
+msgid "Linear B Syllabary"
+msgstr "Shiimiidi B Siyllabare"
+
+#: ucsubset.src
+msgid "Linear B Ideograms"
+msgstr "Shiimiidi B Ayidogiraamma"
+
+#: ucsubset.src
+msgid "Aegean Numbers"
+msgstr "Aejeanu Kiirra"
+
+#: ucsubset.src
+msgid "Ugaritic"
+msgstr "Ugaritike"
+
+#: ucsubset.src
+msgid "Shavian"
+msgstr "Shavyaane"
+
+#: ucsubset.src
+msgid "Osmanya"
+msgstr "Osmaane"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "Sinaala"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "Tibeete"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "Miyanimaari"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "Kimeeri"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "Ogaami"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "Ruunete"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "Sooriyu"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "Taana"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "Tophiyu"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "Cheerooke"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "Kanaadu Aborijaanete Qoonqote-tuqqo"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "Mongoliyu"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Karsi-borxaafa Shallagaano Malaatta-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "Irkote Worbichuwa-A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "Bireelete Budi-dirto"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "Irkote Worbichuwa-B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Kasi-borxaafu Shallagaano Malaatta-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "CJK Bayra Irko"
+
+#: ucsubset.src
+msgid "Kangxi Radicals"
+msgstr "Kaagksi Safo"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "Hedi-riqiwaano-malaatta Xawishshi Fikiima"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "Tagaloge"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "Hannunoo"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "Tagibaana"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "Buhiidi"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "Kanbuuni"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "Boppomofu Seedisama"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "Katakaanu Qoonqallo"
+
+#: ucsubset.src
+msgid "CJK Strokes"
+msgstr "CJK Bicamme xuruurra"
+
+#: ucsubset.src
+msgid "Cypriot Syllabary"
+msgstr "Cypriot Siyllabaare"
+
+#: ucsubset.src
+msgid "Tai Xuan Jing Symbols"
+msgstr "Tai Xuan Jing Malaatta"
+
+#: ucsubset.src
+msgid "Variation Selectors Supplement"
+msgstr "Ledote Badooshshu Dooraano"
+
+#: ucsubset.src
+msgid "Ancient Greek Musical Notation"
+msgstr "Hundi Giriikete Muuziiqu Malaatta"
+
+#: ucsubset.src
+msgid "Ancient Greek Numbers"
+msgstr "Hundi Giriikete Kiirra"
+
+#: ucsubset.src
+msgid "Arabic Supplement"
+msgstr "Arabete Ledo"
+
+#: ucsubset.src
+msgid "Buginese"
+msgstr "Bujinise"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks Supplement"
+msgstr "Xaadisaano Sorote Malaatta Ledo"
+
+#: ucsubset.src
+msgid "Coptic"
+msgstr "Koptike"
+
+#: ucsubset.src
+msgid "Ethiopic Extended"
+msgstr "Hala'litino Itiyophiyunnita"
+
+#: ucsubset.src
+msgid "Ethiopic Supplement"
+msgstr "Ledantino Itiyophiyunnita"
+
+#: ucsubset.src
+msgid "Georgian Supplement"
+msgstr "Georgoryan ledo"
+
+#: ucsubset.src
+msgid "Glagolitic"
+msgstr "Glagolitike"
+
+#: ucsubset.src
+msgid "Kharoshthi"
+msgstr "Kharoshize"
+
+#: ucsubset.src
+msgid "Modifier Tone Letters"
+msgstr "Sooraancho Huuro Borruwa"
+
+#: ucsubset.src
+msgid "New Tai Lue"
+msgstr "Haaroo Tai Lue"
+
+#: ucsubset.src
+msgid "Old Persian"
+msgstr "Akala Pershiyunnita"
+
+#: ucsubset.src
+msgid "Phonetic Extensions Supplement"
+msgstr "Ledantino Phoneetike Seedishshubba"
+
+#: ucsubset.src
+msgid "Supplemental Punctuation"
+msgstr "Ledamishshu Borgarsha"
+
+#: ucsubset.src
+msgid "Syloti Nagri"
+msgstr "Sayooti Najari"
+
+#: ucsubset.src
+msgid "Tifinagh"
+msgstr "Tifinahi"
+
+#: ucsubset.src
+msgid "Vertical Forms"
+msgstr "Hossitte Formuwa"
+
+#: ucsubset.src
+msgid "Nko"
+msgstr "Niko"
+
+#: ucsubset.src
+msgid "Balinese"
+msgstr "Baalinese"
+
+#: ucsubset.src
+msgid "Latin Extended-C"
+msgstr "Laatiine Seedisamme-C"
+
+#: ucsubset.src
+msgid "Latin Extended-D"
+msgstr "Laatinete Seedisama-A"
+
+#: ucsubset.src
+msgid "Phags-Pa"
+msgstr "Phagsi-Pa"
+
+#: ucsubset.src
+msgid "Phoenician"
+msgstr "Phoeneshaane"
+
+#: ucsubset.src
+msgid "Cuneiform"
+msgstr "Cuneiforme"
+
+#: ucsubset.src
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "Cuneiforme Kiirra Nna Borgarsha"
+
+#: ucsubset.src
+msgid "Counting Rod Numerals"
+msgstr "Kiirate Doogo Kiirra"
+
+#: ucsubset.src
+msgid "Sundanese"
+msgstr "Suundanese"
+
+#: ucsubset.src
+msgid "Lepcha"
+msgstr "Lepecha"
+
+#: ucsubset.src
+msgid "Ol Chiki"
+msgstr "Ol Chikki"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-A"
+msgstr "Cyrillike Seedisama-A"
+
+#: ucsubset.src
+msgid "Vai"
+msgstr "Vaai"
+
+#: ucsubset.src
+msgid "Cyrillic Extended-B"
+msgstr "Cyrillike Seedisama-B"
+
+#: ucsubset.src
+msgid "Saurashtra"
+msgstr "Saurashitra"
+
+#: ucsubset.src
+msgid "Kayah Li"
+msgstr "Kaayah Li"
+
+#: ucsubset.src
+msgid "Rejang"
+msgstr "Rejangi"
+
+#: ucsubset.src
+msgid "Cham"
+msgstr "Diqillisa"
+
+#: ucsubset.src
+msgid "Ancient Symbols"
+msgstr "Hunidi Malaatta"
+
+#: ucsubset.src
+msgid "Phaistos Disc"
+msgstr "Phaistos Diske"
+
+#: ucsubset.src
+msgid "Lycian"
+msgstr "Liycian"
+
+#: ucsubset.src
+msgid "Carian"
+msgstr "Karian"
+
+#: ucsubset.src
+msgid "Lydian"
+msgstr "Liydian"
+
+#: ucsubset.src
+msgid "Mahjong Tiles"
+msgstr "Mahjong Taalubba"
+
+#: ucsubset.src
+msgid "Domino Tiles"
+msgstr "Domino Taalubba"
+
+#: ucsubset.src
+msgid "Samaritan"
+msgstr "Samaaritane"
+
+#: ucsubset.src
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "Kanaadu Aborjinaale Siylabikubba Seedishsha"
+
+#: ucsubset.src
+msgid "Tai Tham"
+msgstr "Tai Thami"
+
+#: ucsubset.src
+msgid "Vedic Extensions"
+msgstr "Veedike Seedishubba"
+
+#: ucsubset.src
+msgid "Lisu"
+msgstr "Liisu"
+
+#: ucsubset.src
+msgid "Bamum"
+msgstr "Baamum"
+
+#: ucsubset.src
+msgid "Common Indic Number Forms"
+msgstr "Gutu Indete Kiiro Formuwa"
+
+#: ucsubset.src
+msgid "Devanagari Extended"
+msgstr "Devanajare Seeddinota"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-A"
+msgstr "Hanjul Jaamo Seeddinota-A"
+
+#: ucsubset.src
+msgid "Javanese"
+msgstr "Jaavanese"
+
+#: ucsubset.src
+msgid "Myanmar Extended-A"
+msgstr "Myanmar Seeddinota-A"
+
+#: ucsubset.src
+msgid "Tai Viet"
+msgstr "Taai Viet"
+
+#: ucsubset.src
+msgid "Meetei Mayek"
+msgstr "Meetei Mayeke"
+
+#: ucsubset.src
+msgid "Hangul Jamo Extended-B"
+msgstr "Hanjul Jaamo Seeddinota-B"
+
+#: ucsubset.src
+msgid "Imperial Aramaic"
+msgstr "Imperiale Aramake"
+
+#: ucsubset.src
+msgid "Old South Arabian"
+msgstr "Akala Wodiidi Arabeta"
+
+#: ucsubset.src
+msgid "Avestan"
+msgstr "Avestane"
+
+#: ucsubset.src
+msgid "Inscriptional Parthian"
+msgstr "Partianete Kinchu aani borro"
+
+#: ucsubset.src
+msgid "Inscriptional Pahlavi"
+msgstr "Pahlaavi Kinchu aani borro"
+
+#: ucsubset.src
+msgid "Old Turkic"
+msgstr "Akala Turkennita"
+
+#: ucsubset.src
+msgid "Rumi Numeral Symbols"
+msgstr "Ruumi Kiirote Malaatta"
+
+#: ucsubset.src
+msgid "Kaithi"
+msgstr "Kaiti"
+
+#: ucsubset.src
+msgid "Egyptian Hieroglyphs"
+msgstr "Ijipitete Herogilafike"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "Shiqqino Umikiiro ledo"
+
+#: ucsubset.src
+msgid "Enclosed Ideographic Supplement"
+msgstr "Shiqqino Ayidogirafike ledo"
+
+#: ucsubset.src
+msgid "Mandaic"
+msgstr "Mandake"
+
+#: ucsubset.src
+msgid "Batak"
+msgstr "Bataki"
+
+#: ucsubset.src
+msgid "Ethiopic Extended-A"
+msgstr "Hala'lado Itiyophiyunnita-A"
+
+#: ucsubset.src
+msgid "Brahmi"
+msgstr "Birahmi"
+
+#: ucsubset.src
+msgid "Bamum Supplement"
+msgstr "Baamum Ledo"
+
+#: ucsubset.src
+msgid "Kana Supplement"
+msgstr "Kaana Ledo"
+
+#: ucsubset.src
+msgid "Playing Cards"
+msgstr "Kaartubba"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "Dani tuqa Malaatta Nna Pikitogiraafubba"
+
+#: ucsubset.src
+msgid "Emoticons"
+msgstr "Emotikonse"
+
+#: ucsubset.src
+msgid "Transport And Map Symbols"
+msgstr "Hodhishshu Nna Kaartu Malaatta"
+
+#: ucsubset.src
+msgid "Alchemical Symbols"
+msgstr "Alkemikaale Malaatta"
+
+#: ucsubset.src
+msgid "Arabic Extended-A"
+msgstr "Arawete Seedisama-A"
+
+#: ucsubset.src
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "Shallagote Fidalete Aante Malaatta"
+
+#: ucsubset.src
+msgid "Chakma"
+msgstr "Chaakma"
+
+#: ucsubset.src
+msgid "Meetei Mayek Extensions"
+msgstr "Meetei Mayek Seedishshubba"
+
+#: ucsubset.src
+msgid "Meroitic Cursive"
+msgstr "Meroitike Amadama fidale borro"
+
+#: ucsubset.src
+msgid "Meroitic Hieroglyphs"
+msgstr "Meroitic Herogilafubba"
+
+#: ucsubset.src
+msgid "Miao"
+msgstr "Miiao"
+
+#: ucsubset.src
+msgid "Sharada"
+msgstr "Shaarada"
+
+#: ucsubset.src
+msgid "Sora Sompeng"
+msgstr "Sora Sompengi"
+
+#: ucsubset.src
+msgid "Sundanese Supplement"
+msgstr "Sundaanesete Ledo"
+
+#: ucsubset.src
+msgid "Takri"
+msgstr "Takiri"

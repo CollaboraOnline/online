@@ -1955,3 +1955,13 @@ msgstr "ຫົວຂໍ້ແນວຕ້ັງ, ຕົວອັກສອນ,ຮ
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "ຫົວຂໍ້ແນວຕັ້ງ, ຕົວອັກສອນແນວຕັ້ງ"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "ໄທ"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "ລູກສອນ"

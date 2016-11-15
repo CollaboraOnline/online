@@ -1849,3 +1849,377 @@ msgstr "གཞུང་སྒྲིག་ཁ་བྱང་། གཞུང་�
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "གཞུང་སྒྲིག་ཁ་བྱང་། གཞུང་སྒྲིག་ཡི་གེ"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Basic Latin"
+msgstr "ལ་ཏིང་རྨང་གཞིའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Latin-1"
+msgstr "ལ་ཏིང་སྐད་-1"
+
+#: ucsubset.src
+msgid "Latin Extended-A"
+msgstr "ལ་ཏིང་སྐད་རྒྱ་སྐྱེད་ A"
+
+#: ucsubset.src
+msgid "Latin Extended-B"
+msgstr "ལ་ཏིང་སྐད་རྒྱ་སྐྱེད་ B"
+
+#: ucsubset.src
+msgid "IPA Extensions"
+msgstr "རྒྱལ་སྤྱིའི་སྒྲ་རྟགས་ཆེར་སྐྱེད།"
+
+#: ucsubset.src
+msgid "Spacing Modifier Letters"
+msgstr "བར་ཆོད་རྒྱན་སྤྲོད་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "Combining Diacritical Marks"
+msgstr "ཚོ་སྒྲིག་ཚུལ་གྱི་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "Basic Greek"
+msgstr "ཀེ་རེ་སེའི་རྨང་གཞིའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Greek Symbols And Coptic"
+msgstr "ཀེ་རེ་སེའི་མཚོན་རྟགས་དང་གནའ་རབས་ཨེ་ཇེའི་ཡི་གེ།"
+
+#: ucsubset.src
+msgid "Cyrillic"
+msgstr "ཤི་ལོར་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Armenian"
+msgstr "ཡ་མེ་ནི་ཡའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Basic Hebrew"
+msgstr "ཤི་སོ་ལའི་རྨང་གཞིའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Hebrew Extended"
+msgstr "ཤི་པོ་ལེའི་སྐད་ཡིག་ཆེ་སྐྱེད།"
+
+#: ucsubset.src
+msgid "Basic Arabic"
+msgstr "ཨ་རབ་ཀྱི་རྨང་གཞིའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Arabic Extended"
+msgstr "ཨ་རབ་སྐད་ཡིག་ཆེར་བསྐྱེད།"
+
+#: ucsubset.src
+msgid "Devanagari"
+msgstr "ལེགས་སྦྱར་ཡིག་འབྲུ།"
+
+#: ucsubset.src
+msgid "Bengali"
+msgstr "བྷང་ག་ལ་འི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Gurmukhi"
+msgstr "རྒྱ་གར་བྱང་ཕྱོགས་ཀྱི་ Gujarati སྐད་བརྡ།"
+
+#: ucsubset.src
+msgid "Gujarati"
+msgstr "རྒྱ་གར་བྱང་ཕྱོགས་ཀྱི་ Gujarati སྐད་བརྡ།"
+
+#: ucsubset.src
+msgid "Tamil"
+msgstr "ཐན་མིན་སྐད་ཡིག།"
+
+#: ucsubset.src
+msgid "Telugu"
+msgstr "རྒྱ་གར་བྱང་ཕྱོགས་ཀྱི་ Telugu སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Kannada"
+msgstr "(རྒྱ་གར་)ཁ་ན་དའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Malayalam"
+msgstr "རྒྱ་གར་ལྷོ་ཕྱོགས་ཀྱི་Dravidianསྐད་ཀྱི་ཡུག་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "ཐེ་ལན་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Lao"
+msgstr "ལོ་སེའི་སྐད་ཡིག།"
+
+#: ucsubset.src
+msgid "Basic Georgian"
+msgstr "ག་ལུ་ཅེ་ཡའི་རྨང་གཞིའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Georgian Extended"
+msgstr "ག་ལུ་ཅེ་ཡའི་སྐད་ཡིག་ཆེ་སྐྱེད།"
+
+#: ucsubset.src
+msgid "Hangul Jamo"
+msgstr "ཀུ་རེ་ཡའི་སྐད་ཡིག་ Jamo"
+
+#: ucsubset.src
+msgid "Latin Extended Additionals"
+msgstr "ལ་ཏིང་སྐད་རྒྱ་སྐྱེད་ཟུར་སྣོན།"
+
+#: ucsubset.src
+msgid "Greek Extended"
+msgstr "ཀེ་རེ་སེའི་སྐད་ཆེ་སྐྱེད།"
+
+#: ucsubset.src
+msgid "General punctuation"
+msgstr "སྤྱི་བཏང་གི་བརྡ་རྟགས་མཚོན་བཤད།"
+
+#: ucsubset.src
+msgid "Superscripts and Subscripts"
+msgstr "གོང་རྟགས་དང་གཤམ་རྟགས།"
+
+#: ucsubset.src
+msgid "Currency Symbols"
+msgstr "དངུལ་ལོར་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "Combining Diacritical Symbols"
+msgstr "ཚོ་སྒྲིག་ཚུལ་གྱི་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "Letterlike Symbols"
+msgstr "ཡིག་འབྲུ་འདྲ་བའི་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "Number Forms"
+msgstr "གྲངས་ཀའི་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "Arrows"
+msgstr "མདའ་རྩེ་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "Mathematical Operators"
+msgstr "གྲངས་རིག་རྩིས་རྒྱག་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "Miscellaneous Technical"
+msgstr "ཙག་ཙིག་ལག་རྩལ་སྤྱོད་རྟགས།"
+
+#: ucsubset.src
+msgid "Control Pictures"
+msgstr "མཐེབ་གཞོང་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "Optical Character Recognition"
+msgstr "འོད་རིག་ཤན་འབྱེད་ཐུབ་པའི་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "Enclosed Alphanumerics"
+msgstr "གུག་རྟགས་ལྡན་པའི་ཡིག་འབྲུའི་གྲངས་ཀ།"
+
+#: ucsubset.src
+msgid "Box Drawing"
+msgstr "རེའུ་འགོད་རྟགས།"
+
+#: ucsubset.src
+msgid "Block Elements"
+msgstr "གྲུ་བཞིའི་གཞི་རྒྱུ།"
+
+#: ucsubset.src
+msgid "Geometric Shapes"
+msgstr "དབྱིབས་རྩིས་རིས་དབྱིབས་རྟགས།"
+
+#: ucsubset.src
+msgid "Miscellaneous Symbols"
+msgstr "མཚོན་རྟགས་སྣ་ཚོགས།"
+
+#: ucsubset.src
+msgid "Dingbats"
+msgstr "རྒྱན་སྤྲོད་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "CJK Symbols And Punctuation"
+msgstr "ཀྲུང་ལྗར་ཀུའི་མཚོན་རྟགས་དང་བརྡ་རྟགས།"
+
+#: ucsubset.src
+msgid "Hiragana"
+msgstr "དམངས་སྤྱོད་ཡི་གེ།"
+
+#: ucsubset.src
+msgid "Katakana"
+msgstr "གཞུང་སྤྱོད་ཡི་གེ།"
+
+#: ucsubset.src
+msgid "Bopomofo"
+msgstr "སྒྲ་སྦྱོར་མཚོན་རྟགས་ཪྙིང་པ།"
+
+#: ucsubset.src
+msgid "Hangul Compatibility Jamo"
+msgstr "ཀུ་རེ་ཡའི་སྐད་ཡིག་མཐུན་འཇུག་ Jamo"
+
+#: ucsubset.src
+msgid "CJK Miscellaneous"
+msgstr "ཀྲུང་ལྗར་ཀུའི་ཡིག་རྟགས་སྣ་ཚོགས།"
+
+#: ucsubset.src
+msgid "Enclosed CJK Letters And Months"
+msgstr "གུག་རྟགས་ལྡན་པའི་ཀྲུང་ལྗར་ཀུའི་ཡིག་རྟགས་དང་ཟླ་དུས།"
+
+#: ucsubset.src
+msgid "CJK Compatibility"
+msgstr "ཀྲུང་ལྗར་ཀུའི་མཐུན་འཇུག"
+
+#: ucsubset.src
+msgid "Hangul"
+msgstr "ཀུ་རེ་ཡའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "CJK Unified Ideographs"
+msgstr "ཀྲུང་ལྗར་ཀུའི་གཅིག་གྱུར་རྒྱ་ཡིག"
+
+#: ucsubset.src
+msgid "Private Use Area"
+msgstr "ཆེད་སྤྱོད་ཁུལ།"
+
+#: ucsubset.src
+msgid "CJK Compatibility Ideographs"
+msgstr "ཀྲུང་ལྗར་ཀུའི་མཐུན་འཇུག་རྒྱ་ཡིག"
+
+#: ucsubset.src
+msgid "Alphabetic Presentation Forms"
+msgstr "ཡིག་འབྲུའི་གསལ་སྟོན་རྣམ་པ།"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-A"
+msgstr "ཨ་རབ་ཀྱི་གསལ་སྟོན་རྣམ་པ་A"
+
+#: ucsubset.src
+msgid "Combining Half Marks"
+msgstr "སྟོས་ཟླའི་མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "CJK Compatibility Forms"
+msgstr "ཀྲུང་ལྗར་ཀུའི་མཐུན་འཇུག་རྣམ་པ།"
+
+#: ucsubset.src
+msgid "Small Form Variants"
+msgstr "ཡིག་ཆུང་འགྱུར་གཟུགས།"
+
+#: ucsubset.src
+msgid "Arabic Presentation Forms-B"
+msgstr "ཨ་རབ་ཀྱི་གསལ་སྟོན་རྣམ་པ་ B"
+
+#: ucsubset.src
+msgid "Half-width and Full-width Forms"
+msgstr "ཕྱིད་གཟུགས་དང་གང་གཟུགས་ཡིག་རྟགས།"
+
+#: ucsubset.src
+msgid "Specials"
+msgstr "མཚོན་རྟགས།"
+
+#: ucsubset.src
+msgid "Sinhala"
+msgstr "ཤིའི་ལན་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Tibetan"
+msgstr "བོད་ཡིག"
+
+#: ucsubset.src
+msgid "Myanmar"
+msgstr "འབར་མའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Khmer"
+msgstr "ཀུ་མེར་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Ogham"
+msgstr "ཨོ་ཀེམ་ཡི་གེ།"
+
+#: ucsubset.src
+msgid "Runic"
+msgstr "གནའ་རབ་ཡོ་རོབ་བྱང་མའི་སྐད་ཡིག།"
+
+#: ucsubset.src
+msgid "Syriac"
+msgstr "གནའ་རབ་ཀྱི་སི་རི་ཡའི་སྐད་ཡིག།"
+
+#: ucsubset.src
+msgid "Thaana"
+msgstr "མར་ཏེ་ཕུའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Ethiopic"
+msgstr "དབྱི་སུ་པི་ཡའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Cherokee"
+msgstr "ཁྲ་ལ་ཅི་རིགས་ཀྱི་ཡུལ་མིའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Canadan Aboriginal Syllables"
+msgstr "ཁ་ན་ཏའི་ཡུལ་དེ་རང་གི་སྡོད་པའི་སྒྲ་ཁྱིམ།"
+
+#: ucsubset.src
+msgid "Mongolian"
+msgstr "སོག་པོའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "གྲངས་རིག་མཚོན་རྟགས་སྣ་ཚོགས་-A"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-A"
+msgstr "ཟུར་སྣོན་གྱི་མདའ་རྩེ་-A"
+
+#: ucsubset.src
+msgid "Braille Patterns"
+msgstr "ལོང་ཡིག"
+
+#: ucsubset.src
+msgid "Supplemental Arrows-B"
+msgstr "ཟུར་སྣོན་གྱི་མདའ་རྩེ་-B"
+
+#: ucsubset.src
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "གྲངས་རིག་མཚོན་རྟགས་སྣ་ཚོགས་-B"
+
+#: ucsubset.src
+msgid "CJK Radical Supplement"
+msgstr "ཟུར་སྣོན་གྱི་ཀྲུང་ལྗར་ཀུའི་ཡི་གེའི་ཡིག་སྡེ།"
+
+#: ucsubset.src
+msgid "Ideographic Description Characters"
+msgstr "སྒྲ་སྦྱོར་མཚོན་རྟགས"
+
+#: ucsubset.src
+msgid "Tagalog"
+msgstr "ཧྥི་ལི་ཕིན་གྱི་ཐང་ཅ་ལོ་ཀེའི་སྐད་ཡིག།"
+
+#: ucsubset.src
+msgid "Hanunoo"
+msgstr "ཧྥི་ལི་ཕིན་གི་ཧན་ནུའུ་ནོག་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Tagbanwa"
+msgstr "ཧྥི་ལི་ཕིན་གྱི་ཐང་ཅ་ལོ་ཀེའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Buhid"
+msgstr "ཧྥི་ལི་ཕིན་གྱི་ཕུ་ཧེ་ཏེའི་སྐད་ཡིག"
+
+#: ucsubset.src
+msgid "Kanbun"
+msgstr "ལྗར་པན་སྐད་ཡིག་གི་གནའ་བོའི་རྒྱ་ཡིག"
+
+#: ucsubset.src
+msgid "Bopomofo Extended"
+msgstr "ཞོར་སྣོན་གྱི་སྒྲ་སྦྱོར་མཚོན་རྟགས"
+
+#: ucsubset.src
+msgid "Katakana Phonetics"
+msgstr "སྒྲ་བཀོད་ཀྱི་གཞུང་སྤྱོད་ཀྱི་ཡི་གེ།"

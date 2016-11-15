@@ -1921,3 +1921,5 @@ msgctxt ""
 "string.text"
 msgid "Last column"
 msgstr "Last column"
+
+# Translations of Unicode subsets from LibreOffice core

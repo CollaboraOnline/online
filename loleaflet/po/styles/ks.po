@@ -1939,3 +1939,9 @@ msgstr " كھڈا عنوان،مواد  ،چارٹ "
 #: strings.src
 msgid "Vertical Title, Vertical Text"
 msgstr "كھڈا عنوان، كھڈا مواد"
+
+# Translations of Unicode subsets from LibreOffice core
+
+#: ucsubset.src
+msgid "Thai"
+msgstr "تھائی لینڈ"
