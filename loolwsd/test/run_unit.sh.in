@@ -70,9 +70,9 @@ if test "z$tst" == "z"; then
                                  --o:lo_template_path="$lo_path" \
                                  --o:child_root_path="$jails_path" \
                                  --o:storage.filesystem[@allow]=true \
+                                 --o:logging.level=trace \
                                  --o:admin_console.username=admin --o:admin_console.password=admin \
                                  > "$tst_log" 2>&1 &
-
      echo "  executing test"
 
      oldpath=`pwd`
@@ -86,6 +86,7 @@ if test "z$tst" == "z"; then
 	 retval=1
      fi
 
+     echo "killing $!"
      kill $!
 
      exit $retval
@@ -97,6 +98,7 @@ else # newer unit tests.
                                    --o:lo_template_path="$lo_path" \
                                    --o:child_root_path="$jails_path" \
                                    --o:storage.filesystem[@allow]=true \
+                                   --o:logging.level=trace \
                                    --o:admin_console.username=admin --o:admin_console.password=admin \
                                    --unitlib=".libs/$tst.so" > "$tst_log" 2>&1; then
         echo "Test $tst passed."
