@@ -3012,3 +3012,21 @@ msgstr "Suplementaj simboloj kaj bildsimboloj"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Sutton-gestoskribo"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Tipara nomo:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Specialaj signoj"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Deksesuma:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Antaŭvido:"

@@ -2956,3 +2956,21 @@ msgstr "Papildu simboli un piktogrammas"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Sutona zīmju rakstība"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Fonta nosaukums:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Īpašās rakstzīmes"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Heksadecimālais:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Priekšskatījums:"

@@ -2956,3 +2956,21 @@ msgstr "Arouezioù ha keallunioù ouzhpenn"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Skrivadur an arouezioù mod Sutton"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Anv an nodrezh:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Arouezennoù arbennik"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "C'hwezekredel :"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Alberz :"

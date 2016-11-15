@@ -1904,3 +1904,5 @@ msgid "Last column"
 msgstr ""
 
 # Translations of Unicode subsets from LibreOffice core
+
+# Translation of Special Characters dialog from LibreOffice core

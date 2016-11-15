@@ -2293,3 +2293,5 @@ msgstr "बोपोमोफो  ओसार"
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "काटाकाना साडे  आड़ाङ"
+
+# Translation of Special Characters dialog from LibreOffice core

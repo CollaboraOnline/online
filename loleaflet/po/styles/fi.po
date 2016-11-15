@@ -2812,3 +2812,21 @@ msgstr "Symboleita ja piktogrammeja (laajennus)"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Suttonin viittomakirjoitus"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Fontin nimi:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Lisää erikoismerkki"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Heksadesimaali:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Esikatselu:"

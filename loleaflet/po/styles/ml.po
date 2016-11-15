@@ -2875,3 +2875,13 @@ msgstr "സുഡാനീസ് സപ്ലിമെന്റ്"
 #: ucsubset.src
 msgid "Takri"
 msgstr "തക്രി"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ഫോണ്ഡിന്റെ പേര‌്:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "പ്രത്യേക അക്ഷരങ്ങള്‍"

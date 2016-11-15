@@ -2899,3 +2899,21 @@ msgstr "Doplňkové symboly a piktogramy"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Znakopis Suttonové"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Název písma:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Speciální znaky"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Še_stnáctkově:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Náhled:"

@@ -2784,3 +2784,21 @@ msgstr "Anadolu Resimyazıları"
 #: ucsubset.src
 msgid "CJK Unified Ideographs Extension E"
 msgstr "CJK Birleştirilmiş Ideograf Uzantısı E"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Yazı Tipi Adı:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Özel Karakterler"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Onaltılık:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Önizleme:"

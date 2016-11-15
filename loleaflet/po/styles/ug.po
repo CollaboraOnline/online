@@ -2854,3 +2854,13 @@ msgstr "سوندا كېڭەيتىلمىسى"
 #: ucsubset.src
 msgid "Takri"
 msgstr "تاكرىچە"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "خەت نۇسخا ئاتى:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "ئالاھىدە ھەرپلەر"

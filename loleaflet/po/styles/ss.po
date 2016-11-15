@@ -2360,3 +2360,13 @@ msgstr "Bubopomofo bandzisiwe"
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "Kubhalwa kwesiKatakana"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Libito lefonti:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Tinhlavu letisipeshali"

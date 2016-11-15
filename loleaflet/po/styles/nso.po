@@ -2304,3 +2304,9 @@ msgstr "Bopomogo e okeditšwego"
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "Sefonetiki sa Katakana"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Leina la fonte:"

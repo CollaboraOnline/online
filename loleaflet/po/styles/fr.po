@@ -2795,3 +2795,21 @@ msgstr "Hongrois ancien"
 #: ucsubset.src
 msgid "Supplemental Symbols And Pictographs"
 msgstr "Symboles et pictogrammes additionnels"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Nom de police:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Caractères spéciaux"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Hexadécimal :"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Aperçu :"

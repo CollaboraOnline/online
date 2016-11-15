@@ -2880,3 +2880,13 @@ msgstr "सुदानिज् सप्लिमेंट"
 #: ucsubset.src
 msgid "Takri"
 msgstr "तक्रि"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "फाँट् नाव:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "विशेष अक्षरे"

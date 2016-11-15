@@ -1978,3 +1978,9 @@ msgstr "ময়ুং ওইবা মিংথোল,  ময়ুং ওইবা
 #: ucsubset.src
 msgid "Thai"
 msgstr "থাই"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ফোন্ত মমিং:"

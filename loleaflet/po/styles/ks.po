@@ -1945,3 +1945,9 @@ msgstr "كھڈا عنوان، كھڈا مواد"
 #: ucsubset.src
 msgid "Thai"
 msgstr "تھائی لینڈ"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "فانٹ نام:"

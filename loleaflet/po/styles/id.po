@@ -2655,3 +2655,21 @@ msgstr "Permik Kuno"
 #: ucsubset.src
 msgid "Supplemental Arrows-C"
 msgstr "Suplemen Panah-C"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Nama Fonta:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Karakter Khusus"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Heksadesimal:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Pratilik:"

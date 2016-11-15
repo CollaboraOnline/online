@@ -2724,3 +2724,17 @@ msgstr "Mongais"
 #: ucsubset.src
 msgid "Sundanese Supplement"
 msgstr "Forlíonadh Sundánach"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Ainm an Chló:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Carachtair Speisialta"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Réamhamharc:"

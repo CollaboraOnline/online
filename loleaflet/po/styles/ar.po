@@ -2900,3 +2900,17 @@ msgstr "سُنداني تكميلي"
 #: ucsubset.src
 msgid "Takri"
 msgstr "تاكري"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "اسم الخط:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "أحرف خاصة"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "معاينة:"

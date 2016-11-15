@@ -3044,3 +3044,21 @@ msgstr "Dodatni simboli in piktogrami"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Zapis znakovnega jezika"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Ime pisave:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Posebni znaki"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Šestnajstiško:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Predogled:"

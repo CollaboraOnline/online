@@ -2880,3 +2880,21 @@ msgstr "Uzupełnienie symboli i piktogramów"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Język migowy Sutton"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Nazwa czcionki:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Znaki specjalne"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Heksadecymalny:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Podgląd:"

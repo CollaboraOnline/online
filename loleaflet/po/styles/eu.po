@@ -2828,3 +2828,21 @@ msgstr "Ikur eta piktografia osagarriak"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Sutton keinu-idazkera"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Letra-tipoaren izena:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Karaktere bereziak"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Hexadezimala:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Aurrebista:"

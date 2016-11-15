@@ -2317,3 +2317,13 @@ msgstr "Bopomofo yo Engedzedzwaho"
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "Fonetiki ya Katakana"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Dzina ḽa Muṅwalo:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Maledere a tshipentshela"

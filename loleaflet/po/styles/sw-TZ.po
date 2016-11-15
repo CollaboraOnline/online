@@ -1961,3 +1961,9 @@ msgstr "Kiarmenia"
 #: ucsubset.src
 msgid "Mongolian"
 msgstr "Kimongolia"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Jina la Fonti:"

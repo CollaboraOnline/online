@@ -2004,3 +2004,9 @@ msgstr "Kumeri"
 #: ucsubset.src
 msgid "Mongolian"
 msgstr "Nyamongoliya"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Izina ry'Umukono:"

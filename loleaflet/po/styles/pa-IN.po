@@ -2384,3 +2384,13 @@ msgstr "ਕੋਪਟੀਕ"
 #: ucsubset.src
 msgid "Emoticons"
 msgstr "ਭਾਵ-ਆਈਕਾਨ"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ਫੋਂਟ ਨਾਂ:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "ਖਾਸ ਅੱਖਰ"

@@ -2333,3 +2333,13 @@ msgstr "Bopomofo Atolositswe"
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "Difonetike tsa Katakana"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Lebitso la Fonto:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Dicharektara tse Ikgethileng"

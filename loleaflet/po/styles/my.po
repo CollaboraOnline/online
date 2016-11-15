@@ -2362,3 +2362,13 @@ msgstr "ကော့တစ်"
 #: ucsubset.src
 msgid "Emoticons"
 msgstr "အသုံးပြုသူ၏ စိတ်ခံစားမှုပြ ပရိုဂရမ်သင်္ကေတ(အိုင်ကွန်)များ"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ဖောင့်အမည်:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "အထူး အက္ခရာ၊သင်္ကေတများ"

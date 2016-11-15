@@ -2884,3 +2884,13 @@ msgstr "চুণ্ডানিচ পৰিপূৰিকা"
 #: ucsubset.src
 msgid "Takri"
 msgstr "টাক্ৰি"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ফন্টৰ নাম:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "বিশেষ আখৰসমূহ"

@@ -2464,3 +2464,21 @@ msgstr "Lotynų plėtinys E"
 #: ucsubset.src
 msgid "Supplemental Arrows-C"
 msgstr "Papildomos rodyklės-C"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Šrifto pavadinimas:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Specialieji rašmenys"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Šešioliktainis:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Peržiūra:"

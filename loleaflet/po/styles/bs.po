@@ -2754,3 +2754,13 @@ msgstr "Šarada"
 #: ucsubset.src
 msgid "Sundanese Supplement"
 msgstr "Sundanski dodatni"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Vrsta slova:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Posebni znakovi"

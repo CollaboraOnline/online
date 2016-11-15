@@ -2365,3 +2365,13 @@ msgstr "IsiBopomofo Extended"
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "Iifonetiki zeKatakana"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Igama Lefonti:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Imibhalo Enjengonobumba Yohlobo Olulodwa"

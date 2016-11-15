@@ -2361,3 +2361,9 @@ msgstr "Старажытнагрэчаскія лічбы"
 #: ucsubset.src
 msgid "Arabic Supplement"
 msgstr "Арабскія, дадатак"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Адмысловыя знакі"

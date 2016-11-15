@@ -2037,3 +2037,13 @@ msgstr "خمری"
 #: ucsubset.src
 msgid "Mongolian"
 msgstr "مغولی"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "نام قلم:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "نویسه‌های ویژه"

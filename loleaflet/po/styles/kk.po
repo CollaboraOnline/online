@@ -3055,3 +3055,21 @@ msgstr "Қосымша таңбалар және пиктограммалар"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Саттон ым жазуы"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Қаріп аты:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Арнайы таңбалар"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Оналтылық:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Алдын-ала қарау:"

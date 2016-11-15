@@ -2042,3 +2042,17 @@ msgstr "Javanés"
 #: ucsubset.src
 msgid "Transport And Map Symbols"
 msgstr "Transporte ha Símbolos de Mapa"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Téra Letra Háicha:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Teko Poravopyre kuéra"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Techauka Mboyve:"

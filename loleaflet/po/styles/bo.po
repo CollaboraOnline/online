@@ -2223,3 +2223,9 @@ msgstr "ཞོར་སྣོན་གྱི་སྒྲ་སྦྱོར་མ
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "སྒྲ་བཀོད་ཀྱི་གཞུང་སྤྱོད་ཀྱི་ཡི་གེ།"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ཡིག་གཟུགས།:"

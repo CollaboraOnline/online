@@ -2866,3 +2866,13 @@ msgstr "ସଣ୍ଡାନିଜ ଅନୁପୁରକ"
 #: ucsubset.src
 msgid "Takri"
 msgstr "ତାକ୍ରି"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "ଅକ୍ଷରରୂପ ନାମ:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "ବିଶେଷ ଅକ୍ଷରଗୁଡିକ"

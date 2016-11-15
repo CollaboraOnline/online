@@ -2201,3 +2201,13 @@ msgstr "Pllaka Domino"
 #: ucsubset.src
 msgid "Old Turkic"
 msgstr "Turke e vjetër"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Emri i shkronjave:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Shkronja të veçanta"

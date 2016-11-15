@@ -2704,3 +2704,13 @@ msgstr "Xeroglíficos meroíticos"
 #: ucsubset.src
 msgid "Sundanese Supplement"
 msgstr "Suplementu de sundanés"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Nome de fonte:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Caráuteres especiales"

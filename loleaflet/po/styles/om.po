@@ -2310,3 +2310,13 @@ msgstr "Bopoomoofoo Dheerate"
 #: ucsubset.src
 msgid "Katakana Phonetics"
 msgstr "Xinsagalee Katakaanaa"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Maqaa bocquu:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Arfiilee Addaa"

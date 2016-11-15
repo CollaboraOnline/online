@@ -2720,3 +2720,21 @@ msgstr "Symbolau a Phictograffau Ychwanegol"
 #: ucsubset.src
 msgid "Sutton Signwriting"
 msgstr "Ysgrif Arwydd Sutton"
+
+# Translation of Special Characters dialog from LibreOffice core
+
+#: GenericCommands.xcu
+msgid "Font Name:"
+msgstr "Enw Ffont:"
+
+#: specialcharacters.ui
+msgid "Special Characters"
+msgstr "Nodau Arbennig"
+
+#: specialcharacters.ui
+msgid "Hexadecimal:"
+msgstr "Hecsadegol:"
+
+#: asianphoneticguidedialog.ui
+msgid "Preview:"
+msgstr "Rhagolwg:"
