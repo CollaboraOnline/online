@@ -230,15 +230,13 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
     const std::string& accessToken = form.get("access_token", "");
     const std::string& accessTokenTtl = form.get("access_token_ttl", "");
 
-    // As of now only alphanumeric characters are allowed in access token
-    // Sanitize user input before replacing
-    Poco::RegularExpression re("[a-zA-Z0-9_]*", Poco::RegularExpression::RE_ANCHORED);
-    if (!re.match(accessToken, 0, 0) || !re.match(accessTokenTtl, 0, 0))
-    {
-        throw Poco::FileAccessDeniedException("Invalid access token provided. Only alphanumeric and _ are allowed ");
-    }
+    // Escape bad characters in access token.
+    // This is placed directly in javascript in loleaflet.html, we need to make sure
+    // that no one can do anything nasty with their clever inputs.
+    std::string escapedAccessToken;
+    Poco::URI::encode(accessToken, "'", escapedAccessToken);
 
-    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), accessToken);
+    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), accessTokenTtl);
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
