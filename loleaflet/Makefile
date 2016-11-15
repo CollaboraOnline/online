@@ -38,6 +38,8 @@ dist: all
 	rm -rf loleaflet-$(VERSION)
 	mkdir loleaflet-$(VERSION)
 	cp -ar dist loleaflet-$(VERSION)
+	mkdir -p loleaflet-$(VERSION)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
+	cp -a node_modules/jquery-ui/themes/ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png loleaflet-$(VERSION)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
 	tar cfz loleaflet-$(VERSION).tar.gz loleaflet-$(VERSION)
 	rm -rf loleaflet-$(VERSION)
 
