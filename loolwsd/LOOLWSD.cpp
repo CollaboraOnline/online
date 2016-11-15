@@ -1998,6 +1998,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                     }
 
                     // Spawn a new forkit and try to dust it off and resume.
+                    close(ForKitWritePipe);
                     forKitPid = createForKit();
                     if (forKitPid < 0)
                     {
