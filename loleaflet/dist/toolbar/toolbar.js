@@ -924,6 +924,7 @@ map.on('showbusy', function(e) {
 map.on('wopiprops', function(e) {
 	if (e.HideSaveOption) {
 		w2ui['toolbar-up'].hide('save');
+		w2ui['toolbar-up'].hide('savebreak');
 	}
 });
 
