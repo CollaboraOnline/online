@@ -732,6 +732,12 @@ function onFormulaBarBlur() {
 	}, 250);
 }
 
+map.on('wopiprops', function(e) {
+	if (e.HideSaveOption) {
+		w2ui['toolbar-up'].hide('save');
+	}
+});
+
 map.on('doclayerinit', function () {
 	var toolbar = w2ui['toolbar-up'];
 	var docType = map.getDocType();
@@ -739,12 +745,12 @@ map.on('doclayerinit', function () {
 		if (docType === 'presentation') {
 			toolbar.hide('annotation');
 
-			toolbar = w2ui['presentation-toolbar'];
-			toolbar.show('presentation');
-			toolbar.show('presentationbreak');
-			toolbar.show('insertpage');
-			toolbar.show('duplicatepage');
-			toolbar.show('deletepage');
+			var presentationToolbar = w2ui['presentation-toolbar'];
+			presentationToolbar.show('presentation');
+			presentationToolbar.show('presentationbreak');
+			presentationToolbar.show('insertpage');
+			presentationToolbar.show('duplicatepage');
+			presentationToolbar.show('deletepage');
 		}
 		else if (docType === 'drawing') {
 			toolbar.hide('annotation');
@@ -755,10 +761,6 @@ map.on('doclayerinit', function () {
 		else if (docType !== 'spreadsheet') {
 			toolbar.hide('annotation');
 		}
-	}
-
-	if (map['wopi'].HideSaveOption) {
-		toolbar.hide('save');
 	}
 
 	var statusbar = w2ui['toolbar-down'];
