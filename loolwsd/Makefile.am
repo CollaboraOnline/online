@@ -98,7 +98,6 @@ noinst_HEADERS = Admin.hpp \
                  common/FileUtil.hpp \
                  common/SigUtil.hpp \
                  IoUtil.hpp \
-                 LibreOfficeKit.hpp \
                  Log.hpp \
                  LOKitHelper.hpp \
                  LOOLKit.hpp \

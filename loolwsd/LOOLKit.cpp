@@ -31,6 +31,7 @@
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
 
 #include <Poco/Exception.h>
 #include <Poco/JSON/Object.h>
@@ -55,7 +56,6 @@
 #include "LOOLKit.hpp"
 #include "LOOLProtocol.hpp"
 #include "LOOLWebSocket.hpp"
-#include "LibreOfficeKit.hpp"
 #include "Log.hpp"
 #include "Png.hpp"
 #include "Rectangle.hpp"
@@ -295,10 +295,11 @@ public:
         _docPasswordType(PasswordType::ToView),
         _stop(false),
         _mutex(),
+        _documentMutex(),
         _isLoading(0)
     {
         LOG_INF("Document ctor for url [" << _url << "] on child [" << _jailId << "].");
-        assert(_loKit && _loKit->get());
+        assert(_loKit);
 
         _callbackThread.start(*this);
     }
@@ -479,7 +480,7 @@ public:
             return;
         }
 
-        std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
+        std::unique_lock<std::mutex> lock(_documentMutex);
         if (_loKitDocument->getViewsCount() <= 0)
         {
             LOG_ERR("Tile rendering requested without views.");
@@ -550,7 +551,7 @@ public:
             return;
         }
 
-        std::unique_lock<std::mutex> lock(_loKitDocument->getLock());
+        std::unique_lock<std::mutex> lock(_documentMutex);
         if (_loKitDocument->getViewsCount() <= 0)
         {
             LOG_ERR("Tile rendering requested without views.");
@@ -739,12 +740,12 @@ private:
     }
 
     /// Load a document (or view) and register callbacks.
-    std::shared_ptr<lok::Document> onLoad(const std::string& sessionId,
-                                          const std::string& uri,
-                                          const std::string& userName,
-                                          const std::string& docPassword,
-                                          const std::string& renderOpts,
-                                          const bool haveDocPassword) override
+    bool onLoad(const std::string& sessionId,
+                const std::string& uri,
+                const std::string& userName,
+                const std::string& docPassword,
+                const std::string& renderOpts,
+                const bool haveDocPassword) override
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
@@ -765,13 +766,13 @@ private:
             load(sessionId, uri, userName, docPassword, renderOpts, haveDocPassword);
             if (!_loKitDocument || !_loKitDocument->get())
             {
-                return nullptr;
+                return false;
             }
         }
         catch (const std::exception& exc)
         {
             LOG_ERR("Exception while loading [" << uri << "] : " << exc.what());
-            return nullptr;
+            return false;
         }
 
         // Done loading, let the next one in (if any).
@@ -780,7 +781,7 @@ private:
         --_isLoading;
         _cvLoading.notify_one();
 
-        return _loKitDocument;
+        return true;
     }
 
     void onUnload(const ChildSession& session) override
@@ -797,7 +798,7 @@ private:
             return;
         }
 
-        std::unique_lock<std::mutex> lockLokDoc(_loKitDocument->getLock());
+        std::unique_lock<std::mutex> lockLokDoc(_documentMutex);
 
         _loKitDocument->setView(viewId);
         _loKitDocument->registerCallback(nullptr, nullptr);
@@ -907,7 +908,7 @@ private:
         std::map<std::string, int> viewColors;
 
         {
-            auto lock(_loKitDocument->getLock());
+            std::unique_lock<std::mutex> lock(_documentMutex);
 
             char* pValues = _loKitDocument->getCommandValues(".uno:TrackedChangeAuthors");
             colorValues = std::string(pValues == nullptr ? "" : pValues);
@@ -965,16 +966,12 @@ private:
             // This is the first time we are loading the document
             LOG_INF("Loading new document from URI: [" << uri << "] for session [" << sessionId << "].");
 
-            auto lock(_loKit->getLock());
+            _loKit->registerCallback(GlobalCallback, this);
 
-            if (LIBREOFFICEKIT_HAS(_loKit->get(), registerCallback))
-            {
-                _loKit->get()->pClass->registerCallback(_loKit->get(), GlobalCallback, this);
-                const auto flags = LOK_FEATURE_DOCUMENT_PASSWORD
-                                 | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY
-                                 | LOK_FEATURE_PART_IN_INVALIDATION_CALLBACK;
-                _loKit->setOptionalFeatures(flags);
-            }
+            const auto flags = LOK_FEATURE_DOCUMENT_PASSWORD
+                             | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY
+                             | LOK_FEATURE_PART_IN_INVALIDATION_CALLBACK;
+            _loKit->setOptionalFeatures(flags);
 
             // Save the provided password with us and the jailed url
             _haveDocPassword = haveDocPassword;
@@ -983,9 +980,9 @@ private:
             _isDocPasswordProtected = false;
 
             LOG_DBG("Calling lokit::documentLoad.");
-            _loKitDocument = _loKit->documentLoad(uri.c_str());
+            _loKitDocument.reset(_loKit->documentLoad(uri.c_str()));
             LOG_DBG("Returned lokit::documentLoad.");
-            auto l(_loKitDocument->getLock());
+            std::unique_lock<std::mutex> l(_documentMutex);
             lockLokDoc.swap(l);
 
             if (!_loKitDocument || !_loKitDocument->get())
@@ -1022,7 +1019,7 @@ private:
         }
         else
         {
-            auto l(_loKitDocument->getLock());
+            std::unique_lock<std::mutex> l(_documentMutex);
             lockLokDoc.swap(l);
 
             // Check if this document requires password
@@ -1236,6 +1233,18 @@ private:
         LOG_DBG("Thread finished.");
     }
 
+    /// Return access to the lok::Document instance.
+    std::shared_ptr<lok::Document> getLOKitDocument() override
+    {
+        return _loKitDocument;
+    }
+
+    /// Return access to the lok::Document instance.
+    std::mutex& getDocumentMutex() override
+    {
+        return _documentMutex;
+    }
+
 private:
     std::shared_ptr<lok::Office> _loKit;
     const std::string _jailId;
@@ -1259,6 +1268,11 @@ private:
 
     std::atomic<bool> _stop;
     mutable std::mutex _mutex;
+
+    /// Mutex guarding the lok::Document so that we can lock operations
+    /// like setting a view followed by a tile render, etc.
+    std::mutex _documentMutex;
+
     std::condition_variable _cvLoading;
     std::atomic_size_t _isLoading;
     std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
@@ -1435,14 +1449,14 @@ void lokit_main(const std::string& childRoot,
             }
 
             loKit = std::make_shared<lok::Office>(kit);
-            if (!loKit || !loKit->get())
+            if (!loKit)
             {
                 LOG_FTL("LibreOfficeKit initialization failed. Exiting.");
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
         }
 
-        assert(loKit && loKit->get());
+        assert(loKit);
         LOG_INF("Process is ready.");
 
         // Open websocket connection between the child process and WSD.

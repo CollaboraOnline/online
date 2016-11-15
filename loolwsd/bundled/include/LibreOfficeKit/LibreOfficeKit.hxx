@@ -7,15 +7,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_LIBREOFFICEKIT_HPP
-#define INCLUDED_LIBREOFFICEKIT_HPP
+#ifndef INCLUDED_LIBREOFFICEKIT_LIBREOFFICEKIT_HXX
+#define INCLUDED_LIBREOFFICEKIT_LIBREOFFICEKIT_HXX
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.h>
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+#include <cstddef>
 
-#include "Log.hpp"
+#include "LibreOfficeKit.h"
+#include "LibreOfficeKitInit.h"
 
+/*
+ * The reasons this C++ code is not as pretty as it could be are:
+ *  a) provide a pure C API - that's useful for some people
+ *  b) allow ABI stability - C++ vtables are not good for that.
+ *  c) avoid C++ types as part of the API.
+ */
 namespace lok
 {
 
@@ -23,31 +28,17 @@ namespace lok
 class Document
 {
 private:
-    LibreOfficeKitDocument* _pDoc;
-    std::mutex _mutex;
+    LibreOfficeKitDocument* mpDoc;
 
 public:
     /// A lok::Document is typically created by the lok::Office::documentLoad() method.
     inline Document(LibreOfficeKitDocument* pDoc) :
-        _pDoc(pDoc),
-        _mutex()
-    {
-        Log::trace("lok::Document ctor.");
-    }
+        mpDoc(pDoc)
+    {}
 
     inline ~Document()
     {
-        Log::trace("lok::~Document dtor.");
-        _pDoc->pClass->destroy(_pDoc);
-    }
-
-    /// This lock must be held while calling
-    /// one or more members of this class if
-    /// the client is multi-threaded.
-    /// No member function takes this lock otherwise.
-    std::unique_lock<std::mutex> getLock()
-    {
-        return std::unique_lock<std::mutex>(_mutex);
+        mpDoc->pClass->destroy(mpDoc);
     }
 
     /**
@@ -65,16 +56,11 @@ public:
      */
     inline bool saveAs(const char* pUrl, const char* pFormat = NULL, const char* pFilterOptions = NULL)
     {
-        Log::trace() << "lok::Document: saveAs: URL: [" << pUrl << "], Format: [" << pFormat
-                     << "], FilterOptions: " << pFilterOptions << "." << Log::end;
-        return _pDoc->pClass->saveAs(_pDoc, pUrl, pFormat, pFilterOptions) != 0;
+        return mpDoc->pClass->saveAs(mpDoc, pUrl, pFormat, pFilterOptions) != 0;
     }
 
     /// Gives access to the underlying C pointer.
-    inline LibreOfficeKitDocument *get()
-    {
-        return _pDoc;
-    }
+    inline LibreOfficeKitDocument *get() { return mpDoc; }
 
 #if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
     /**
@@ -84,7 +70,7 @@ public:
      */
     inline int getDocumentType()
     {
-        return _pDoc->pClass->getDocumentType(_pDoc);
+        return mpDoc->pClass->getDocumentType(mpDoc);
     }
 
     /**
@@ -95,7 +81,7 @@ public:
      */
     inline int getParts()
     {
-        return _pDoc->pClass->getParts(_pDoc);
+        return mpDoc->pClass->getParts(mpDoc);
     }
 
     /**
@@ -109,40 +95,36 @@ public:
      */
     inline char* getPartPageRectangles()
     {
-        return _pDoc->pClass->getPartPageRectangles(_pDoc);
+        return mpDoc->pClass->getPartPageRectangles(mpDoc);
     }
 
     /// Get the current part of the document.
-    /// Note: For Writer documents this always returns 0
-    /// since text docs have a single coordinate system.
     inline int getPart()
     {
-        return getDocumentType() == LOK_DOCTYPE_TEXT ? 0 : _pDoc->pClass->getPart(_pDoc);
+        return mpDoc->pClass->getPart(mpDoc);
     }
 
     /// Set the current part of the document.
     inline void setPart(int nPart)
     {
-        Log::trace() << "lok::Document: setPart: Part: " << nPart << "." << Log::end;
-        _pDoc->pClass->setPart(_pDoc, nPart);
+        mpDoc->pClass->setPart(mpDoc, nPart);
     }
 
     /// Get the current part's name.
     inline char* getPartName(int nPart)
     {
-        return _pDoc->pClass->getPartName(_pDoc, nPart);
+        return mpDoc->pClass->getPartName(mpDoc, nPart);
     }
 
     /// Get the current part's hash.
     inline char* getPartHash(int nPart)
     {
-        return _pDoc->pClass->getPartHash(_pDoc, nPart);
+        return mpDoc->pClass->getPartHash(mpDoc, nPart);
     }
 
     inline void setPartMode(int nMode)
     {
-        Log::trace() << "lok::Document: setPartMode: Mode: " << nMode << "." << Log::end;
-        _pDoc->pClass->setPartMode(_pDoc, nMode);
+        mpDoc->pClass->setPartMode(mpDoc, nMode);
     }
 
     /**
@@ -168,7 +150,7 @@ public:
                           const int nTileWidth,
                           const int nTileHeight)
     {
-        return _pDoc->pClass->paintTile(_pDoc, pBuffer, nCanvasWidth, nCanvasHeight,
+        return mpDoc->pClass->paintTile(mpDoc, pBuffer, nCanvasWidth, nCanvasHeight,
                                 nTilePosX, nTilePosY, nTileWidth, nTileHeight);
     }
 
@@ -179,13 +161,13 @@ public:
      */
     inline int getTileMode()
     {
-        return _pDoc->pClass->getTileMode(_pDoc);
+        return mpDoc->pClass->getTileMode(mpDoc);
     }
 
     /// Get the document sizes in TWIPs.
     inline void getDocumentSize(long* pWidth, long* pHeight)
     {
-        _pDoc->pClass->getDocumentSize(_pDoc, pWidth, pHeight);
+        mpDoc->pClass->getDocumentSize(mpDoc, pWidth, pHeight);
     }
 
     /**
@@ -210,8 +192,7 @@ public:
      */
     inline void initializeForRendering(const char* pArguments = NULL)
     {
-        Log::trace() << "lok::Document: initializeForRendering: Arguments: [" << pArguments << "]." << Log::end;
-        _pDoc->pClass->initializeForRendering(_pDoc, pArguments);
+        mpDoc->pClass->initializeForRendering(mpDoc, pArguments);
     }
 
     /**
@@ -223,7 +204,7 @@ public:
      */
     inline void registerCallback(LibreOfficeKitCallback pCallback, void* pData)
     {
-        _pDoc->pClass->registerCallback(_pDoc, pCallback, pData);
+        mpDoc->pClass->registerCallback(mpDoc, pCallback, pData);
     }
 
     /**
@@ -235,9 +216,7 @@ public:
      */
     inline void postKeyEvent(int nType, int nCharCode, int nKeyCode)
     {
-        Log::trace() << "lok::Document: postKeyEvent: Type=" << nType
-                     << ", CharCode=" << nCharCode << ", KeyCode=" << nKeyCode << Log::end;
-        _pDoc->pClass->postKeyEvent(_pDoc, nType, nCharCode, nKeyCode);
+        mpDoc->pClass->postKeyEvent(mpDoc, nType, nCharCode, nKeyCode);
     }
 
     /**
@@ -252,10 +231,7 @@ public:
      */
     inline void postMouseEvent(int nType, int nX, int nY, int nCount, int nButtons, int nModifier)
     {
-        Log::trace() << "lok::Document: postMouseEvent: Type=" << nType
-                     << ", X=" << nX << ", nY=" << nY << ", Count=" << nCount
-                     << ", Buttons=" << nButtons << ", Modifier=" << nModifier << Log::end;
-        _pDoc->pClass->postMouseEvent(_pDoc, nType, nX, nY, nCount, nButtons, nModifier);
+        mpDoc->pClass->postMouseEvent(mpDoc, nType, nX, nY, nCount, nButtons, nModifier);
     }
 
     /**
@@ -281,10 +257,7 @@ public:
      */
     inline void postUnoCommand(const char* pCommand, const char* pArguments = NULL, bool bNotifyWhenFinished = false)
     {
-        Log::trace() << "lok::Document: postUnoCommand: Command=" << pCommand
-                     << ", Args=" << (pArguments ? pArguments : "''")
-                     << ", NotifyWhenFinished=" << bNotifyWhenFinished << Log::end;
-        _pDoc->pClass->postUnoCommand(_pDoc, pCommand, pArguments, bNotifyWhenFinished);
+        mpDoc->pClass->postUnoCommand(mpDoc, pCommand, pArguments, bNotifyWhenFinished);
     }
 
     /**
@@ -296,7 +269,7 @@ public:
      */
     inline void setTextSelection(int nType, int nX, int nY)
     {
-        _pDoc->pClass->setTextSelection(_pDoc, nType, nX, nY);
+        mpDoc->pClass->setTextSelection(mpDoc, nType, nX, nY);
     }
 
     /**
@@ -307,7 +280,7 @@ public:
      */
     inline char* getTextSelection(const char* pMimeType, char** pUsedMimeType = NULL)
     {
-        return _pDoc->pClass->getTextSelection(_pDoc, pMimeType, pUsedMimeType);
+        return mpDoc->pClass->getTextSelection(mpDoc, pMimeType, pUsedMimeType);
     }
 
     /**
@@ -319,7 +292,7 @@ public:
      */
     inline bool paste(const char* pMimeType, const char* pData, size_t nSize)
     {
-        return _pDoc->pClass->paste(_pDoc, pMimeType, pData, nSize);
+        return mpDoc->pClass->paste(mpDoc, pMimeType, pData, nSize);
     }
 
     /**
@@ -331,7 +304,7 @@ public:
      */
     inline void setGraphicSelection(int nType, int nX, int nY)
     {
-        _pDoc->pClass->setGraphicSelection(_pDoc, nType, nX, nY);
+        mpDoc->pClass->setGraphicSelection(mpDoc, nType, nX, nY);
     }
 
     /**
@@ -339,7 +312,7 @@ public:
      */
     inline void resetSelection()
     {
-        _pDoc->pClass->resetSelection(_pDoc);
+        mpDoc->pClass->resetSelection(mpDoc);
     }
 
     /**
@@ -350,7 +323,7 @@ public:
      */
     inline char* getCommandValues(const char* pCommand)
     {
-        return _pDoc->pClass->getCommandValues(_pDoc, pCommand);
+        return mpDoc->pClass->getCommandValues(mpDoc, pCommand);
     }
 
     /**
@@ -367,11 +340,7 @@ public:
             int nTileTwipWidth,
             int nTileTwipHeight)
     {
-        Log::trace() << "lok::Document: setClientZoom: TilePixelWidth: " << nTilePixelWidth
-                     << ", TilePixelHeight: " << nTileTwipHeight
-                     <<  ", TileTwipWidth: " << nTileTwipWidth
-                     << ", TileTwipHeight: " << nTileTwipHeight << "." << Log::end;
-        _pDoc->pClass->setClientZoom(_pDoc, nTilePixelWidth, nTilePixelHeight, nTileTwipWidth, nTileTwipHeight);
+        mpDoc->pClass->setClientZoom(mpDoc, nTilePixelWidth, nTilePixelHeight, nTileTwipWidth, nTileTwipHeight);
     }
 
     /**
@@ -386,10 +355,7 @@ public:
      */
     inline void setClientVisibleArea(int nX, int nY, int nWidth, int nHeight)
     {
-        Log::trace() << "lok::Document: setClientVisibleArea: X: " << nX
-                     << ", Y: " << nY << ", Width: " << nWidth
-                     << ", Height: " << nHeight << "." << Log::end;
-        _pDoc->pClass->setClientVisibleArea(_pDoc, nX, nY, nWidth, nHeight);
+        mpDoc->pClass->setClientVisibleArea(mpDoc, nX, nY, nWidth, nHeight);
     }
 
     /**
@@ -399,8 +365,7 @@ public:
      */
     int createView()
     {
-        Log::trace() << "lok::Document: createView" << Log::end;
-        return _pDoc->pClass->createView(_pDoc);
+        return mpDoc->pClass->createView(mpDoc);
     }
 
     /**
@@ -409,8 +374,7 @@ public:
      */
     void destroyView(int nId)
     {
-        Log::trace() << "lok::Document: destroyView: " << nId << Log::end;
-        _pDoc->pClass->destroyView(_pDoc, nId);
+        mpDoc->pClass->destroyView(mpDoc, nId);
     }
 
     /**
@@ -419,9 +383,7 @@ public:
      */
     void setView(int nId)
     {
-        Log::trace() << "lok::Document: setView: " << nId << Log::end;
-        assert(nId >= 0 && "ViewID must be non-negative.");
-        _pDoc->pClass->setView(_pDoc, nId);
+        mpDoc->pClass->setView(mpDoc, nId);
     }
 
     /**
@@ -430,7 +392,7 @@ public:
      */
     int getView()
     {
-        return _pDoc->pClass->getView(_pDoc);
+        return mpDoc->pClass->getView(mpDoc);
     }
 
     /**
@@ -438,26 +400,11 @@ public:
      */
     inline int getViewsCount()
     {
-        return _pDoc->pClass->getViewsCount(_pDoc);
+        return mpDoc->pClass->getViewsCount(mpDoc);
     }
 
     /**
-     * Returns the viewID for each existing view. Since viewIDs are not reused,
-     * viewIDs are not the same as the index of the view in the view array over
-     * time. Use getViewsCount() to know the minimal nSize that's large enough.
-     *
-     * @param pArray the array to write the viewIDs into
-     * @param nSize the size of pArray
-     * @returns true if pArray was large enough and result is written, false
-     * otherwise.
-     */
-    inline int getViewIds(int* pArray, size_t nSize)
-    {
-        return _pDoc->pClass->getViewIds(_pDoc, pArray, nSize);
-    }
-
-    /**
-     * Paints a font name to be displayed in the font list
+     * Paints a font name or character if provided to be displayed in the font list
      * @param pFontName the font to be painted
      */
     inline unsigned char* renderFont(const char *pFontName,
@@ -465,7 +412,7 @@ public:
                           int *pFontWidth,
                           int *pFontHeight)
     {
-        return _pDoc->pClass->renderFont(_pDoc, pFontName, pChar, pFontWidth, pFontHeight);
+        return mpDoc->pClass->renderFont(mpDoc, pFontName, pChar, pFontWidth, pFontHeight);
     }
 
     /**
@@ -483,10 +430,26 @@ public:
                               const int nTileWidth,
                               const int nTileHeight)
     {
-        return _pDoc->pClass->paintPartTile(_pDoc, pBuffer, nPart,
+        return mpDoc->pClass->paintPartTile(mpDoc, pBuffer, nPart,
                                             nCanvasWidth, nCanvasHeight,
                                             nTilePosX, nTilePosY,
                                             nTileWidth, nTileHeight);
+    }
+
+    /**
+     * Returns the viewID for each existing view. Since viewIDs are not reused,
+     * viewIDs are not the same as the index of the view in the view array over
+     * time. Use getViewsCount() to know the minimal nSize that's large enough.
+     *
+     * @param pArray the array to write the viewIDs into
+     * @param nSize the size of pArray
+     * @returns true if pArray was large enough and result is written, false
+     * otherwise.
+     */
+    inline bool getViewIds(int* pArray,
+                           size_t nSize)
+    {
+        return mpDoc->pClass->getViewIds(mpDoc, pArray, nSize);
     }
 
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
@@ -496,44 +459,17 @@ public:
 class Office
 {
 private:
-    LibreOfficeKit* _pOffice;
-    std::mutex _mutex;
+    LibreOfficeKit* mpThis;
 
 public:
     /// A lok::Office is typically created by the lok_cpp_init() function.
     inline Office(LibreOfficeKit* pThis) :
-        _pOffice(pThis),
-        _mutex()
-    {
-        Log::trace("lok::Office ctor.");
-        assert(_pOffice);
-    }
+        mpThis(pThis)
+    {}
 
     inline ~Office()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
-        Log::trace("lok::~Office dtor.");
-        try
-        {
-            _pOffice->pClass->destroy(_pOffice);
-        }
-        catch (const std::exception& ex)
-        {
-            LOG_ERR("Exception while destroying LibreOfficeKit instance: " << ex.what());
-        }
-    }
-
-    /// This lock must be held while calling
-    /// one or more member of this class.
-    std::unique_lock<std::mutex> getLock()
-    {
-        return std::unique_lock<std::mutex>(_mutex);
-    }
-
-    /// Gives access to the underlying C pointer.
-    inline LibreOfficeKit* get()
-    {
-        return _pOffice;
+        mpThis->pClass->destroy(mpThis);
     }
 
     /**
@@ -541,36 +477,52 @@ public:
      *
      * @param pUrl the URL of the document to load
      * @param pFilterOptions options for the import filter, e.g. SkipImages.
+     * @since pFilterOptions argument added in LibreOffice 5.0
      */
-    inline std::shared_ptr<Document> documentLoad(const char* pUrl, const char* pFilterOptions = NULL)
+    inline Document* documentLoad(const char* pUrl, const char* pFilterOptions = NULL)
     {
-        Log::trace() << "lok::Office: documentLoad: URL: [" << pUrl
-                     << "], FilterOptions: [" << pFilterOptions
-                     << "]." << Log::end;
         LibreOfficeKitDocument* pDoc = NULL;
 
-        if (LIBREOFFICEKIT_HAS(_pOffice, documentLoadWithOptions))
-            pDoc = _pOffice->pClass->documentLoadWithOptions(_pOffice, pUrl, pFilterOptions);
+        if (LIBREOFFICEKIT_HAS(mpThis, documentLoadWithOptions))
+            pDoc = mpThis->pClass->documentLoadWithOptions(mpThis, pUrl, pFilterOptions);
         else
-            pDoc = _pOffice->pClass->documentLoad(_pOffice, pUrl);
+            pDoc = mpThis->pClass->documentLoad(mpThis, pUrl);
 
-        return std::make_shared<lok::Document>(pDoc);
+        if (pDoc == NULL)
+            return NULL;
+
+        return new Document(pDoc);
     }
 
     /// Returns the last error as a string, the returned pointer has to be freed by the caller.
     inline char* getError()
     {
-        return _pOffice->pClass->getError(_pOffice);
+        return mpThis->pClass->getError(mpThis);
     }
 
-    /// Frees the memory pointed to by pFree.
+    /**
+     * Frees the memory pointed to by pFree.
+     *
+     * @since LibreOffice 5.2
+     */
     inline void freeError(char* pFree)
     {
-        _pOffice->pClass->freeError(pFree);
+        mpThis->pClass->freeError(pFree);
     }
 
-
 #if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
+    /**
+     * Registers a callback. LOK will invoke this function when it wants to
+     * inform the client about events.
+     *
+     * @param pCallback the callback to invoke
+     * @param pData the user data, will be passed to the callback on invocation
+     */
+    inline void registerCallback(LibreOfficeKitCallback pCallback, void* pData)
+    {
+        mpThis->pClass->registerCallback(mpThis, pCallback, pData);
+    }
+
     /**
      * Returns details of filter types.
      *
@@ -587,7 +539,7 @@ public:
      */
     inline char* getFilterTypes()
     {
-        return _pOffice->pClass->getFilterTypes(_pOffice);
+        return mpThis->pClass->getFilterTypes(mpThis);
     }
 
     /**
@@ -597,7 +549,7 @@ public:
      */
     void setOptionalFeatures(uint64_t features)
     {
-        return _pOffice->pClass->setOptionalFeatures(_pOffice, features);
+        return mpThis->pClass->setOptionalFeatures(mpThis, features);
     }
 
     /**
@@ -621,26 +573,38 @@ public:
      */
     inline void setDocumentPassword(char const* pURL, char const* pPassword)
     {
-        _pOffice->pClass->setDocumentPassword(_pOffice, pURL, pPassword);
+        mpThis->pClass->setDocumentPassword(mpThis, pURL, pPassword);
     }
 
     /**
      * Get version information of the LOKit process
      *
-     * @returns string containing version information in format:
-     * PRODUCT_NAME PRODUCT_VERSION PRODUCT_EXTENSION BUILD_ID
+     * @returns JSON string containing version information in format:
+     * {ProductName: <>, ProductVersion: <>, ProductExtension: <>, BuildId: <>}
      *
-     * Eg: LibreOffice 5.3 .0.0 alpha0 <commit hash>
+     * Eg: {"ProductName": "LibreOffice",
+     * "ProductVersion": "5.3",
+     * "ProductExtension": ".0.0.alpha0",
+     * "BuildId": "<full 40 char git hash>"}
      */
     inline char* getVersionInfo()
     {
-        return _pOffice->pClass->getVersionInfo(_pOffice);
+        return mpThis->pClass->getVersionInfo(mpThis);
     }
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
 
+/// Factory method to create a lok::Office instance.
+inline Office* lok_cpp_init(const char* pInstallPath, const char* pUserProfileUrl = NULL)
+{
+    LibreOfficeKit* pThis = lok_init_2(pInstallPath, pUserProfileUrl);
+    if (pThis == NULL || pThis->pClass->nSize == 0)
+        return NULL;
+    return new ::lok::Office(pThis);
 }
 
-#endif // INCLUDED_LIBREOFFICEKIT_HPP
+}
+
+#endif // INCLUDED_LIBREOFFICEKIT_LIBREOFFICEKIT_HXX
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
