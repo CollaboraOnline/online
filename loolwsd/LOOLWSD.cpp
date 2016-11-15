@@ -1818,7 +1818,6 @@ Process::PID LOOLWSD::createForKit()
         args.push_back("--version");
 
     std::string forKitPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
-
     if (NoCapsForKit)
     {
         forKitPath = forKitPath + std::string("-nocaps");
@@ -1836,6 +1835,8 @@ Process::PID LOOLWSD::createForKit()
     ForKitWritePipe = dup(inPipe.writeHandle());
 
     const auto forkitPid = child.id();
+
+    LOG_INF("Forkit process launched: " << forkitPid);
 
     // Init the Admin manager
     Admin::instance().setForKitPid(forkitPid);
