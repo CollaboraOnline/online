@@ -284,6 +284,11 @@ int PipeReader::readLine(std::string& line,
         else if (ready < 0)
         {
             // error.
+            if (errno != EINTR)
+            {
+                LOG_SYS("Pipe polling failed.");
+            }
+
             return ready;
         }
         else if (pipe.revents & (POLLIN | POLLPRI))
