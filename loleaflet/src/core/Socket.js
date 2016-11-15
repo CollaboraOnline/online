@@ -180,18 +180,7 @@ L.Socket = L.Class.extend({
 		else if (textMsg.startsWith('wopi: ')) {
 			// Handle WOPI related messages
 			var wopiInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			// Store postmessageorigin property in our WOPI handler, if it exists
-			if (this._map['wopi'] && !!wopiInfo['PostMessageOrigin']) {
-				this._map['wopi'].PostMessageOrigin = wopiInfo['PostMessageOrigin'];
-				this._map['wopi'].DocumentLoadedTime = Date.now();
-				// Tell the host that we are ready now
-				this._map.fire('postMessage', {msgId: 'App_LoadingStatus', args: {'DocumentLoadedTime': this._map['wopi'].DocumentLoadedTime}});
-			}
-
-			this._map['wopi'].HidePrintOption = !!wopiInfo['HidePrintOption'];
-			this._map['wopi'].HideSaveOption = !!wopiInfo['HideSaveOption'];
-			this._map['wopi'].HideExportOption = !!wopiInfo['HideExportOption'];
-
+			this._map.fire('wopiprops', wopiInfo);
 			return;
 		}
 		else if (textMsg.startsWith('close: ')) {
@@ -412,6 +401,9 @@ L.Socket = L.Class.extend({
 		}
 
 		this._map.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
+
+		// Reset wopi's app loaded so that reconnecting again informs outerframe about initialization again
+		this._map['wopi'].resetAppLoaded();
 	},
 
 	parseServerCmd: function (msg) {
