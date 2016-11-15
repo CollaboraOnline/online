@@ -88,7 +88,7 @@ public:
             return false;
         }
 
-        Log::info("ForKit command: [" + message + "].");
+        LOG_INF("ForKit command: [" << message << "].");
         StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
         if (tokens[0] == "spawn" && tokens.count() == 2)
@@ -96,12 +96,12 @@ public:
             const auto count = std::stoi(tokens[1]);
             if (count > 0)
             {
-                Log::info("Spawning " + tokens[1] + " " + (count == 1 ? "child" : "children") + " per request.");
+                LOG_INF("Spawning " << tokens[1] << ' ' << (count == 1 ? "child" : "children") << " per request.");
                 ForkCounter = count;
             }
             else
             {
-                Log::warn("Cannot spawn " + tokens[1] + " children as requested.");
+                LOG_WRN("Cannot spawn " << tokens[1] << " children as requested.");
             }
         }
 
@@ -140,24 +140,24 @@ static bool haveCapability(cap_value_t capability)
     {
         if (cap_name)
         {
-            Log::fatal("Capability " + std::string(cap_name) + " is not set for the loolforkit program.");
+            LOG_FTL("Capability " << cap_name << " is not set for the loolforkit program.");
             cap_free(cap_name);
         }
         else
         {
-            Log::error("Capability " + std::to_string(capability) + " is not set for the loolforkit program.");
+            LOG_ERR("Capability " << capability << " is not set for the loolforkit program.");
         }
         return false;
     }
 
     if (cap_name)
     {
-        Log::info("Have capability " + std::string(cap_name));
+        LOG_INF("Have capability " << cap_name);
         cap_free(cap_name);
     }
     else
     {
-        Log::info("Have capability " + std::to_string(capability));
+        LOG_INF("Have capability " << capability);
     }
 
     return true;
@@ -187,13 +187,13 @@ static void cleanupChildren()
     {
         if (childJails.find(exitedChildPid) != childJails.end())
         {
-            Log::info("Child " + std::to_string(exitedChildPid) + " has exited, removing its jail '" + childJails[exitedChildPid] + "'");
+            LOG_INF("Child " << exitedChildPid << " has exited, removing its jail '" << childJails[exitedChildPid] << "'");
             FileUtil::removeFile(childJails[exitedChildPid], true);
             childJails.erase(exitedChildPid);
         }
         else
         {
-            Log::error("Unknown child " + std::to_string(exitedChildPid) + " has exited");
+            LOG_ERR("Unknown child " << exitedChildPid << " has exited");
         }
     }
 }
@@ -204,7 +204,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& loSubPath,
                                 bool queryVersion = false)
 {
-    Log::debug("Forking a loolkit process.");
+    LOG_DBG("Forking a loolkit process.");
 
     Process::PID pid;
     if (!(pid = fork()))
@@ -239,7 +239,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
         }
         else
         {
-            Log::info("Forked kit [" + std::to_string(pid) + "].");
+            LOG_INF("Forked kit [" << pid << "].");
             childJails[pid] = childRoot + std::to_string(pid);
         }
 
@@ -373,12 +373,12 @@ int main(int argc, char** argv)
     if (!UnitBase::init(UnitBase::UnitType::TYPE_KIT,
                         UnitTestLibrary))
     {
-        Log::error("Failed to load kit unit test library");
+        LOG_ERR("Failed to load kit unit test library");
         return Application::EXIT_USAGE;
     }
 
     if (!std::getenv("LD_BIND_NOW"))
-        Log::info("Note: LD_BIND_NOW is not set.");
+        LOG_INF("Note: LD_BIND_NOW is not set.");
 
     if (!haveCorrectCapabilities())
         return Application::EXIT_SOFTWARE;
@@ -387,7 +387,7 @@ int main(int argc, char** argv)
     if (!globalPreinit(loTemplate))
         std::_Exit(Application::EXIT_SOFTWARE);
 
-    Log::info("Preinit stage OK.");
+    LOG_INF("Preinit stage OK.");
 
     // We must have at least one child, more are created dynamically.
     // Ask this first child to send version information to master process
@@ -398,7 +398,7 @@ int main(int argc, char** argv)
     }
 
     CommandDispatcher commandDispatcher(0);
-    Log::info("ForKit process is ready.");
+    LOG_INF("ForKit process is ready.");
 
     while (!TerminationFlag)
     {
@@ -406,7 +406,7 @@ int main(int argc, char** argv)
 
         if (!commandDispatcher.pollAndDispatch())
         {
-            Log::info("Child dispatcher flagged for termination.");
+            LOG_INF("Child dispatcher flagged for termination.");
             break;
         }
 
@@ -414,13 +414,13 @@ int main(int argc, char** argv)
         {
             // Create as many as requested.
             int spawn = ForkCounter;
-            Log::info() << "Creating " << spawn << " new child." << Log::end;
+            LOG_INF("Creating " << spawn << " new child.");
             size_t newInstances = 0;
             do
             {
                 if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
                 {
-                    Log::error("Failed to create a kit process.");
+                    LOG_ERR("Failed to create a kit process.");
                 }
                 else
                 {
@@ -440,7 +440,7 @@ int main(int argc, char** argv)
     int returnValue = Application::EXIT_OK;
     UnitKit::get().returnValue(returnValue);
 
-    Log::info("ForKit process finished.");
+    LOG_INF("ForKit process finished.");
     std::_Exit(returnValue);
 }
 
