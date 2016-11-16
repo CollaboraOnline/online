@@ -119,17 +119,15 @@ namespace SigUtil
     static
     void handleTerminationSignal(const int signal)
     {
-        if (!ShutdownFlag)
+        if (!ShutdownFlag && signal == SIGINT)
         {
             Log::signalLogPrefix();
             Log::signalLog(" Shutdown signal received: ");
             Log::signalLog(signalName(signal));
             Log::signalLog("\n");
             ShutdownFlag = true;
-            return;
         }
-
-        if (!TerminationFlag)
+        else
         {
             Log::signalLogPrefix();
             Log::signalLog(" Forced-Termination signal received: ");
