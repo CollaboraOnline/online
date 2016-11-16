@@ -101,6 +101,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		}
 		if (command.part === this._selectedPart &&
 			command.part !== this._lastValidPart) {
+			this._map.fire('updatepart', {part: this._lastValidPart, docType: this._docType});
 			this._lastValidPart = command.part;
 			this._map.fire('updatepart', {part: command.part, docType: this._docType});
 		}
