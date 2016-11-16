@@ -200,8 +200,11 @@ void TileQueue::deprioritizePreviews()
 
         // stop at the first non-tile or non-'id' (preview) message
         std::string id;
-        if (LOOLProtocol::getFirstToken(message) != "tile" || !LOOLProtocol::getTokenStringFromMessage(message, "id", id))
+        if (LOOLProtocol::getFirstToken(message) != "tile" ||
+            !LOOLProtocol::getTokenStringFromMessage(message, "id", id))
+        {
             break;
+        }
 
         _queue.pop_front();
         _queue.push_back(front);
@@ -243,11 +246,13 @@ MessageQueue::Payload TileQueue::get_impl()
         // avoid starving - stop the search when we reach a non-tile,
         // otherwise we may keep growing the queue of unhandled stuff (both
         // tiles and non-tiles)
-        if (LOOLProtocol::getFirstToken(prio) != "tile" || LOOLProtocol::getTokenStringFromMessage(prio, "id", id))
+        if (LOOLProtocol::getFirstToken(prio) != "tile" ||
+            LOOLProtocol::getTokenStringFromMessage(prio, "id", id))
+        {
             break;
+        }
 
-        int p = priority(prio);
-
+        const int p = priority(prio);
         if (p > prioritySoFar)
         {
             prioritySoFar = p;
@@ -256,7 +261,9 @@ MessageQueue::Payload TileQueue::get_impl()
 
             // found the highest priority already?
             if (prioritySoFar == static_cast<int>(_viewOrder.size()) - 1)
+            {
                 break;
+            }
         }
     }
 
@@ -270,7 +277,8 @@ MessageQueue::Payload TileQueue::get_impl()
     {
         auto& it = _queue[i];
         msg = std::string(it.data(), it.size());
-        if (LOOLProtocol::getFirstToken(msg) != "tile" || LOOLProtocol::getTokenStringFromMessage(msg, "id", id))
+        if (LOOLProtocol::getFirstToken(msg) != "tile" ||
+            LOOLProtocol::getTokenStringFromMessage(msg, "id", id))
         {
             // Don't combine non-tiles or tiles with id.
             ++i;
