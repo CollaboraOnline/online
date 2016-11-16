@@ -2743,6 +2743,12 @@ The <code>id</code> property of ErrorEvent can have the following values:
     specification</a> with few extensions/modifications. All messages sent are
   in this form</p>
 
+<p>It is to be noted that as mentioned in WOPI specs, loleaflet frame will
+  ignore all post messages coming from the host frame
+  if <code>Host_PostMessageReady</code> has not been received. Further, no post
+  messages will be emitted if 'PostMessageOrigin' property is missing from
+  server response.</p>
+
 <pre><code class="javascript">
 {
     "MessageId": "&lt;MessageId&gt;",
