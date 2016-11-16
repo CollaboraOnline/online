@@ -72,20 +72,22 @@ public:
     {
         std::string message;
         const auto ready = readLine(message, [](){ return TerminationFlag.load(); });
-        if (ready == 0)
-        {
-            // Timeout.
-            return true;
-        }
-        else if (ready < 0)
+        if (ready <= 0)
         {
             // Termination is done via SIGTERM, which breaks the wait.
-            if (!TerminationFlag)
+            if (TerminationFlag)
             {
-                Log::error("Error reading from pipe [" + getName() + "].");
+                if (ready < 0)
+                {
+                    LOG_INF("Poll interrupted in " << getName() << " and Termination flag set.");
+                }
+
+                // Break.
+                return false;
             }
 
-            return false;
+            // Timeout.
+            return true;
         }
 
         LOG_INF("ForKit command: [" << message << "].");
