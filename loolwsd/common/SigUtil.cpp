@@ -242,18 +242,6 @@ namespace SigUtil
         strncpy(FatalGdbString, streamStr.c_str(), sizeof(FatalGdbString));
     }
 
-    void requestTermination(const Poco::Process::PID& pid)
-    {
-        try
-        {
-            Poco::Process::requestTermination(pid);
-        }
-        catch(const Poco::Exception& exc)
-        {
-            Log::warn("Util::requestTermination: Exception: " + exc.message());
-        }
-    }
-
     bool killChild(const int pid)
     {
         LOG_DBG("Killing PID: " << pid);
