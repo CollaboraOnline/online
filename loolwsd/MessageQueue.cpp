@@ -94,8 +94,7 @@ void TileQueue::put_impl(const Payload& value)
 
     if (firstToken == "canceltiles")
     {
-        Log::trace("Processing " + msg);
-        Log::trace() << "Before canceltiles have " << _queue.size() << " in queue." << Log::end;
+        LOG_TRC("Processing [" << msg << "]. Before canceltiles have " << _queue.size() << " in queue.");
         const auto seqs = msg.substr(12);
         StringTokenizer tokens(seqs, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         _queue.erase(std::remove_if(_queue.begin(), _queue.end(),
@@ -109,7 +108,7 @@ void TileQueue::put_impl(const Payload& value)
                     {
                         if (s.find("ver=" + tokens[i]) != std::string::npos)
                         {
-                            Log::trace("Matched " + tokens[i] + ", Removing [" + s + "]");
+                            LOG_TRC("Matched " << tokens[i] << ", Removing [" << s << "]");
                             return true;
                         }
                     }
@@ -119,7 +118,7 @@ void TileQueue::put_impl(const Payload& value)
                 }), _queue.end());
 
         // Don't push canceltiles into the queue.
-        Log::trace() << "After canceltiles have " << _queue.size() << " in queue." << Log::end;
+        LOG_TRC("After canceltiles have " << _queue.size() << " in queue.");
         return;
     }
     else if (firstToken == "tilecombine")
@@ -171,7 +170,7 @@ void TileQueue::removeDuplicate(const std::string& tileMsg)
         const std::string oldMsg = old.substr(0, old.find(" ver"));
         if (newMsg == oldMsg)
         {
-            Log::debug() << "Remove duplicate message: " << old << " -> " << tileMsg << Log::end;
+            LOG_DBG("Remove duplicate message: " << old << " -> " << tileMsg);
             _queue.erase(_queue.begin() + i);
             break;
         }
@@ -221,7 +220,7 @@ MessageQueue::Payload TileQueue::get_impl()
     if (!isTile || isPreview)
     {
         // Don't combine non-tiles or tiles with id.
-        Log::trace() << "MessageQueue res: " << msg << Log::end;
+        LOG_TRC("MessageQueue res: " << msg);
         _queue.pop_front();
 
         // de-prioritize the other tiles with id - usually the previews in
@@ -279,7 +278,7 @@ MessageQueue::Payload TileQueue::get_impl()
         }
 
         auto tile2 = TileDesc::parse(msg);
-        Log::trace() << "combining candidate: " << msg << Log::end;
+        LOG_TRC("Combining candidate: " << msg);
 
         // Check if it's on the same row.
         if (tiles[0].onSameRow(tile2))
@@ -293,17 +292,17 @@ MessageQueue::Payload TileQueue::get_impl()
         }
     }
 
-    Log::trace() << "Combined " << tiles.size() << " tiles, leaving " << _queue.size() << " in queue." << Log::end;
+    LOG_TRC("Combined " << tiles.size() << " tiles, leaving " << _queue.size() << " in queue.");
 
     if (tiles.size() == 1)
     {
         msg = tiles[0].serialize("tile");
-        Log::trace() << "MessageQueue res: " << msg << Log::end;
+        LOG_TRC("MessageQueue res: " << msg);
         return Payload(msg.data(), msg.data() + msg.size());
     }
 
     auto tileCombined = TileCombined::create(tiles).serialize("tilecombine");
-    Log::trace() << "MessageQueue res: " << tileCombined << Log::end;
+    LOG_TRC("MessageQueue res: " << tileCombined);
     return Payload(tileCombined.data(), tileCombined.data() + tileCombined.size());
 }
 
