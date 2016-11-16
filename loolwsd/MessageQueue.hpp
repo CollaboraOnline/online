@@ -12,6 +12,7 @@
 
 #include <algorithm>
 #include <condition_variable>
+#include <functional>
 #include <deque>
 #include <map>
 #include <mutex>
