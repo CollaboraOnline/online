@@ -37,8 +37,6 @@ namespace SigUtil
     /// Trap all fatal signals to assist debugging.
     void setFatalSignals();
 
-    void requestTermination(const Poco::Process::PID& pid);
-
     /// Kills a child process and returns true when
     /// child pid is removed from the process table
     /// after a certain (short) timeout.

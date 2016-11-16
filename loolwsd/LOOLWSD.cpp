@@ -2088,7 +2088,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Terminate child processes
     LOG_INF("Requesting forkit process " << forKitPid << " to terminate.");
-    SigUtil::requestTermination(forKitPid);
+    SigUtil::killChild(forKitPid);
+
+    // Terminate child processes
+    LOG_INF("Requesting child processes to terminate.");
     for (auto& child : NewChildren)
     {
         child->close(true);
