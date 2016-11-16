@@ -2032,7 +2032,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             {
                 // No child processes.
                 LOG_FTL("No Forkit instance. Terminating.");
-                TerminationFlag = true;
                 break;
             }
         }
@@ -2072,7 +2071,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         if (careerSpanSeconds > 0 && time(nullptr) > startTimeSpan + careerSpanSeconds)
         {
             LOG_INF((time(nullptr) - startTimeSpan) << " seconds gone, finishing as requested.");
-            TerminationFlag = true;
             break;
         }
 #endif
@@ -2080,8 +2078,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Stop the listening to new connections
     // and wait until sockets close.
-    LOG_INF("Stopping server socket listening.");
+    LOG_INF("Stopping server socket listening. ShutdownFlag: " <<
+            ShutdownFlag << ", TerminationFlag: " << TerminationFlag);
     Util::alertAllUsers("internal", "shutdown");
+
     srv.stop();
     srv2.stop();
     threadPool.joinAll();
@@ -2094,10 +2094,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         child->close(true);
     }
 
-    // Wait for forkit process finish
+    // Wait for forkit process finish.
     waitpid(forKitPid, &status, WUNTRACED);
     close(ForKitWritePipe);
 
+    // In case forkit didn't cleanup fully.'
     LOG_INF("Cleaning up childroot directory [" << ChildRoot << "].");
     std::vector<std::string> jails;
     File(ChildRoot).list(jails);
