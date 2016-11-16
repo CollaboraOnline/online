@@ -175,6 +175,7 @@ UnitKit::~UnitKit()
 
 void UnitBase::exitTest(TestResult result)
 {
+    LOG_INF("exitTest: " << result << ". Flagging for termination.");
     _setRetValue = true;
     _retValue = result == TestResult::TEST_OK ?
         Poco::Util::Application::EXIT_OK :
@@ -184,7 +185,7 @@ void UnitBase::exitTest(TestResult result)
 
 void UnitBase::timeout()
 {
-    std::cerr << "Timed out waiting for unit test to complete" << std::endl;
+    LOG_ERR("Timed out waiting for unit test to complete");
     exitTest(TestResult::TEST_TIMED_OUT);
 }
 
