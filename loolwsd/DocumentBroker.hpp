@@ -242,7 +242,12 @@ public:
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id);
 
-    void alertAllUsersOfDocument(const std::string& cmd, const std::string& kind);
+    void alertAllUsers(const std::string& msg);
+
+    void alertAllUsers(const std::string& cmd, const std::string& kind)
+    {
+        alertAllUsers("error: cmd=" + cmd + " kind=" + kind);
+    }
 
     /// Invalidate the cursor position.
     void invalidateCursor(int x, int y, int w, int h)
