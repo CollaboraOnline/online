@@ -2078,7 +2078,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // and wait until sockets close.
     LOG_INF("Stopping server socket listening. ShutdownFlag: " <<
             ShutdownFlag << ", TerminationFlag: " << TerminationFlag);
-    Util::alertAllUsers("internal", "shutdown");
+    Util::alertAllUsers("close: shutdown");
 
     srv.stop();
     srv2.stop();
@@ -2149,14 +2149,19 @@ namespace Util
 
 void alertAllUsers(const std::string& cmd, const std::string& kind)
 {
+    alertAllUsers("error: cmd=" + cmd + " kind=" + kind);
+}
+
+void alertAllUsers(const std::string& msg)
+{
     std::lock_guard<std::mutex> DocBrokersLock(DocBrokersMutex);
 
-    LOG_INF("Alerting all users: cmd=" << cmd << ", kind=" << kind);
+    LOG_INF("Alerting all users: [" << msg << "]");
 
     for (auto& brokerIt : DocBrokers)
     {
         auto lock = brokerIt.second->getLock();
-        brokerIt.second->alertAllUsersOfDocument(cmd, kind);
+        brokerIt.second->alertAllUsers(msg);
     }
 }
 

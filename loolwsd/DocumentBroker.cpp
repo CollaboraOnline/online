@@ -517,7 +517,7 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
         // even if in this case it might be a totally different location (file system, or
         // some other type of storage somewhere). This message is not sent to all clients,
         // though, just to all sessions of this document.
-        alertAllUsersOfDocument("internal", "diskfull");
+        alertAllUsers("internal", "diskfull");
         throw;
     }
 
@@ -572,13 +572,10 @@ size_t DocumentBroker::removeSession(const std::string& id)
     return _sessions.size();
 }
 
-void DocumentBroker::alertAllUsersOfDocument(const std::string& cmd, const std::string& kind)
+void DocumentBroker::alertAllUsers(const std::string& msg)
 {
     Util::assertIsLocked(_mutex);
 
-    std::stringstream ss;
-    ss << "error: cmd=" << cmd << " kind=" << kind;
-    const auto msg = ss.str();
     for (auto& it : _sessions)
     {
         it.second->sendTextFrame(msg);

@@ -47,14 +47,24 @@ namespace Util
     bool windowingAvailable();
 
 #ifndef BUILDING_TESTS
-    // Send a 'error:' message with the specified cmd and kind parameters to all connected
-    // clients. This function can be called either in loolwsd or loolkit processes, even if only
-    // loolwsd obviously has contact with the actual clients; in loolkit it will be forwarded to
-    // loolwsd for redistribution. (This function must be implemented separately in each program
-    // that uses it, it is not in Util.cpp.)
+
+    /// Send a message to all clients.
+    void alertAllUsers(const std::string& msg);
+
+    /// Send a 'error:' message with the specified cmd and kind parameters to all connected
+    /// clients. This function can be called either in loolwsd or loolkit processes, even if only
+    /// loolwsd obviously has contact with the actual clients; in loolkit it will be forwarded to
+    /// loolwsd for redistribution. (This function must be implemented separately in each program
+    /// that uses it, it is not in Util.cpp.)
     void alertAllUsers(const std::string& cmd, const std::string& kind);
 #else
-    // No-op implementation in the test programs
+
+    /// No-op implementation in the test programs
+    inline void alertAllUsers(const std::string&)
+    {
+    }
+
+    /// No-op implementation in the test programs
     inline void alertAllUsers(const std::string&, const std::string&)
     {
     }
