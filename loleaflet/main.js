@@ -81,7 +81,7 @@ global.errorMessages = errorMessages;
 var docURL, docParams;
 var isWopi = false;
 if (wopiSrc != '') {
-    docURL = wopiSrc;
+	docURL = decodeURIComponent(wopiSrc);
 	docParams = wopiParams;
 	isWopi = true;
 } else {

@@ -1126,9 +1126,7 @@ public:
                     // sending incomplete frames.
                     ws->setBlocking(true);
                     ws->setSendTimeout(WS_SEND_TIMEOUT_MS * 1000);
-                    std::string decodedUri;
-                    URI::decode(reqPathTokens[1], decodedUri);
-                    handleGetRequest(decodedUri, ws, id);
+                    handleGetRequest(reqPathTokens[1], ws, id);
                 }
                 catch (const WebSocketErrorMessageException& exc)
                 {

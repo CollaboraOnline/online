@@ -81,7 +81,7 @@ L.Socket = L.Class.extend({
 		// TODO: Move the version number somewhere sensible.
 		this._doSend('loolclient ' + this.ProtocolVersionNumber);
 
-		var msg = 'load url=' + this._map.options.doc;
+		var msg = 'load url=' + encodeURIComponent(this._map.options.doc);
 		if (this._map._docLayer) {
 			// we are reconnecting after a lost connection
 			msg += ' part=' + this._map.getCurrentPartNumber();
