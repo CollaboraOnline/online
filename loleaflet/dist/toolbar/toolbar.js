@@ -1351,7 +1351,9 @@ function updateUserListCount() {
 		userlistItem.text = _('No users');
 	}
 
+	var zoomlevel = $('#zoomlevel').html();
 	w2ui['toolbar-down'].refresh();
+	$('#zoomlevel').html(zoomlevel);
 }
 
 map.on('addview', function(e) {
