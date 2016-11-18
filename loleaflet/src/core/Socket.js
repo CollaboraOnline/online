@@ -83,6 +83,7 @@ L.Socket = L.Class.extend({
 
 		var msg = 'load url=' + encodeURIComponent(this._map.options.doc);
 		if (this._map._docLayer) {
+			this._reconnecting = true;
 			// we are reconnecting after a lost connection
 			msg += ' part=' + this._map.getCurrentPartNumber();
 		}
@@ -359,8 +360,9 @@ L.Socket = L.Class.extend({
 			this._map._docLayer = docLayer;
 			this._map.addLayer(docLayer);
 			this._map.fire('doclayerinit');
-		} else if (textMsg.startsWith('status:')) {
+		} else if (textMsg.startsWith('status:') && this._reconnecting) {
 			// we are reconnecting ...
+			this._reconecting = false;
 			this._map._docLayer._onMessage('invalidatetiles: EMPTY', null);
 			this._map.fire('statusindicator', {statusType: 'reconnected'});
 			this._map.setPermission(this._map.options.permission);
