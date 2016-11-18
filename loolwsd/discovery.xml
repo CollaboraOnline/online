@@ -72,13 +72,15 @@
         </app>
 
 	<!-- Math documents -->
+	<!-- In fact Math documents are not supported at all.
+	     See: https://bugs.documentfoundation.org/show_bug.cgi?id=97006
 	<app name="application/vnd.sun.xml.math">
             <action name="view" ext="sxm"/>
         </app>
 	<app name="application/vnd.oasis.opendocument.formula">
             <action name="edit" ext="odf"/>
         </app>
-
+	-->
 	<!-- Text template documents -->
 	<app name="application/vnd.sun.xml.writer.template">
             <action name="view" ext="stw"/>
