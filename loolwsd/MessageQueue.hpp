@@ -25,8 +25,7 @@ public:
 
     typedef std::vector<char> Payload;
 
-    MessageQueue() :
-        _mutex()
+    MessageQueue()
     {
     }
 
