@@ -74,7 +74,7 @@ public:
 	assert(_ws.get());
     }
 
-    virtual void invokeTest()
+    virtual void invokeTest() override
     {
 	switch(_phase)
 	{
