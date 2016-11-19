@@ -584,7 +584,14 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 
     for (auto& it : _sessions)
     {
-        it.second->sendTextFrame(msg);
+        try
+        {
+            it.second->sendTextFrame(msg);
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Error while alerting all users [" << msg << "]: " << ex.what());
+        }
     }
 }
 
@@ -926,7 +933,14 @@ void DocumentBroker::childSocketTerminated()
     // For now, close the connections to cleanup.
     for (auto& pair : _sessions)
     {
-        pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY);
+        try
+        {
+            pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY);
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Error while terminating client connection [" << pair.first << "]: " << ex.what());
+        }
     }
 }
 
@@ -940,9 +954,16 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
     // Close all running sessions
     for (auto& pair : _sessions)
     {
-        // See protocol.txt for this application-level close frame
-        pair.second->sendTextFrame("close: " + closeReason);
-        pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY, closeReason);
+        try
+        {
+            // See protocol.txt for this application-level close frame.
+            pair.second->sendTextFrame("close: " + closeReason);
+            pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY, closeReason);
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Error while terminating client connection [" << pair.first << "]: " << ex.what());
+        }
     }
 
     // First flag to stop as it might be waiting on our lock
