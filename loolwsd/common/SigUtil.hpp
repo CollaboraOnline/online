@@ -16,9 +16,6 @@
 /// Flag to stop pump loops.
 extern std::atomic<bool> TerminationFlag;
 
-/// Flag to shutdown the server.
-extern std::atomic<bool> ShutdownFlag;
-
 /// Mutex to trap signal handler, if any,
 /// and prevent _Exit while collecting backtrace.
 extern std::mutex SigHandlerTrap;
@@ -48,6 +45,9 @@ namespace SigUtil
     /// shutting down.
     /// Returns true if shutdown is requested.
     bool handleShutdownRequest();
+
+    /// Returns true if Shutdown is in progress.
+    bool isShuttingDown();
 
     /// Kills a child process and returns true when
     /// child pid is removed from the process table

@@ -51,9 +51,12 @@
 #include "Util.hpp"
 
 std::atomic<bool> TerminationFlag(false);
-std::atomic<bool> ShutdownFlag(false);
 std::mutex SigHandlerTrap;
 
+/// Flag to shutdown the server.
+std::atomic<bool> ShutdownFlag;
+
+/// Flag to request WSD to notify clients and shutdown.
 static std::atomic<bool> ShutdownRequestFlag(false);
 
 namespace SigUtil
@@ -260,6 +263,11 @@ namespace SigUtil
         }
 
         return false;
+    }
+
+    bool isShuttingDown()
+    {
+        return ShutdownFlag;
     }
 
     bool killChild(const int pid)
