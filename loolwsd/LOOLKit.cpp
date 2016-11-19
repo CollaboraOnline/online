@@ -1644,10 +1644,17 @@ namespace Util
 {
 
 #ifndef BUILDING_TESTS
+
+void alertAllUsers(const std::string& msg)
+{
+    document->sendTextFrame(msg);
+}
+
 void alertAllUsers(const std::string& cmd, const std::string& kind)
 {
-    document->sendTextFrame("errortoall: cmd=" + cmd + " kind=" + kind);
+    alertAllUsers("errortoall: cmd=" + cmd + " kind=" + kind);
 }
+
 #endif
 
 }
