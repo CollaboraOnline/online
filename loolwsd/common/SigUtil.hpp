@@ -12,9 +12,6 @@
 
 #include <atomic>
 #include <mutex>
-#include <string>
-
-#include <Poco/Process.h>
 
 /// Flag to stop pump loops.
 extern std::atomic<bool> TerminationFlag;
