@@ -274,8 +274,8 @@ L.Control.CharacterMap = L.Control.extend({
 	],
 
 	fillCharacters: function (index) {
-		var start = this.unicodeCharts[index].start;
-		var end = this.unicodeCharts[index].end;
+		var start = this.unicodeBlocks[index].start;
+		var end = this.unicodeBlocks[index].end;
 		var it = 0;
 		var tr, td;
 		L.DomUtil.empty(this._tbody);
@@ -340,16 +340,23 @@ L.Control.CharacterMap = L.Control.extend({
 		content.appendChild(labelTitle);
 		content.appendChild(document.createElement('br'));
 		content.appendChild(document.createElement('br'));
-		this._unicodeChart = L.DomUtil.create('select', 'loleaflet-controls', content);
-		L.DomEvent.on(this._unicodeChart, 'change', this._onUnicodeChartChange, this);
+		var label = L.DomUtil.create('span', 'loleaflet-controls', content);
+		label.innerHTML = '<b>' + _('Font Name:') + '</b>';
+		content.appendChild(document.createElement('br'));
+		this._fontNames = L.DomUtil.create('select', 'loleaflet-controls', content);
+		L.DomEvent.on(this._fontNames, 'change', this._onFontNamesChange, this);
+		content.appendChild(document.createElement('br'));
+		content.appendChild(document.createElement('br'));
+		label = L.DomUtil.create('span', 'loleaflet-controls', content);
+		label.innerHTML = '<b>' + _('Subset:') + '</b>';
+		content.appendChild(document.createElement('br'));
+		this._unicodeSubset = L.DomUtil.create('select', 'loleaflet-controls', content);
+		L.DomEvent.on(this._unicodeSubset, 'change', this._onUnicodeSubsetChange, this);
 		content.appendChild(document.createElement('br'));
 		var table = L.DomUtil.create('table', 'loleaflet-character', content);
 		this._tbody = L.DomUtil.create('tbody', '', table);
 		content.appendChild(document.createElement('br'));
-		var label = L.DomUtil.create('span', 'loleaflet-controls', content);
-		label.innerHTML = '<b>' + _('Font Name:') + '</b>';
-		this._fontNames = L.DomUtil.create('select', 'loleaflet-controls', content);
-		L.DomEvent.on(this._fontNames, 'change', this._onFontNamesChange, this);
+		content.appendChild(document.createElement('br'));
 		label = L.DomUtil.create('span', 'loleaflet-controls', content);
 		label.innerHTML = '<b>' + _('Hexadecimal:') + '</b>';
 		this._hexa = L.DomUtil.create('span', 'loleaflet-controls', content);
@@ -368,8 +375,8 @@ L.Control.CharacterMap = L.Control.extend({
 		button.type = 'button';
 		button.value = _('Cancel');
 		L.DomEvent.on(button, 'click', this._onCancelClick, this);
-		this.fillDropDown(this._unicodeChart, this.unicodeCharts, 0);
-		this.fillCharacters(this._unicodeChart.selectedIndex);
+		this.fillDropDown(this._unicodeSubset, this.unicodeBlocks, 1);
+		this.fillCharacters(this._unicodeSubset.selectedIndex);
 	},
 
 	_onCancelClick: function (e) {
@@ -420,7 +427,7 @@ L.Control.CharacterMap = L.Control.extend({
 			' char=' + String.fromCharCode(this._hexa.data));
 	},
 
-	_onUnicodeChartChange: function (e) {
+	_onUnicodeSubsetChange: function (e) {
 		var target = e.target || e.srcElement;
 		this.fillCharacters(target.selectedIndex);
 	}
