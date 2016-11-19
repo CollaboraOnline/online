@@ -149,7 +149,7 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
     else if (tokens[0] == "shutdown")
     {
         LOG_INF("Shutdown requested by admin.");
-        ShutdownFlag = true;
+        SigUtil::requestShutdown();
         return false;
     }
     else if (tokens[0] == "set" && tokens.count() > 1)

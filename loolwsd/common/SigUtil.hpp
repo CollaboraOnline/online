@@ -37,6 +37,21 @@ namespace SigUtil
     /// Trap all fatal signals to assist debugging.
     void setFatalSignals();
 
+    /// Requests the server to initiate graceful shutdown.
+    /// Shutting down is a multi-stage process, because
+    /// it can be requested via signals.
+    /// Since we need to notify clients, we can't
+    /// invoke the sockets while in a signal handler.
+    /// This flags the server to notify clients first
+    /// then flags for shutdown.
+    void requestShutdown();
+
+    /// Checks for shutdown request and,
+    /// after notifying clients, flags for
+    /// shutting down.
+    /// Returns true if shutdown is requested.
+    bool handleShutdownRequest();
+
     /// Kills a child process and returns true when
     /// child pid is removed from the process table
     /// after a certain (short) timeout.

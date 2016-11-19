@@ -582,6 +582,7 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 {
     Util::assertIsLocked(_mutex);
 
+    LOG_DBG("Alerting all users: " << msg);
     for (auto& it : _sessions)
     {
         try

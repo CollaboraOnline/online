@@ -54,6 +54,8 @@ std::atomic<bool> TerminationFlag(false);
 std::atomic<bool> ShutdownFlag(false);
 std::mutex SigHandlerTrap;
 
+static std::atomic<bool> ShutdownRequestFlag(false);
+
 namespace SigUtil
 {
     const char *signalName(const int signo)
@@ -125,7 +127,7 @@ namespace SigUtil
             Log::signalLog(" Shutdown signal received: ");
             Log::signalLog(signalName(signal));
             Log::signalLog("\n");
-            ShutdownFlag = true;
+            SigUtil::requestShutdown();
         }
         else
         {
@@ -240,6 +242,24 @@ namespace SigUtil
         std::string streamStr = stream.str();
         assert (sizeof (FatalGdbString) > strlen(streamStr.c_str()) + 1);
         strncpy(FatalGdbString, streamStr.c_str(), sizeof(FatalGdbString));
+    }
+
+    void requestShutdown()
+    {
+        ShutdownRequestFlag = true;
+    }
+
+    bool handleShutdownRequest()
+    {
+        if (ShutdownRequestFlag)
+        {
+            LOG_INF("Shutdown requested. Initiating WSD shutdown.");
+            Util::alertAllUsers("close: shutdown");
+            ShutdownFlag = true;
+            return true;
+        }
+
+        return false;
     }
 
     bool killChild(const int pid)
