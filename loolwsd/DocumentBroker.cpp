@@ -131,9 +131,15 @@ Poco::URI DocumentBroker::sanitizeURI(const std::string& uri)
 
 std::string DocumentBroker::getDocKey(const Poco::URI& uri)
 {
-    // Keep the host as part of the key to close a potential security hole.
+    // If multiple host-names are used to access us, then
+    // they must be aliases. Permission to access aliased hosts
+    // is checked at the point of accepting incoming connections.
+    // At this point storing the hostname artificially discriminates
+    // between aliases and forces same document (when opened from
+    // alias hosts) to load as separate documents and sharing doesn't
+    // work. Worse, saving overwrites one another.
     std::string docKey;
-    Poco::URI::encode(uri.getHost() + uri.getPath(), "", docKey);
+    Poco::URI::encode(uri.getPath(), "", docKey);
     return docKey;
 }
 
