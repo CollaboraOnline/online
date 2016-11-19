@@ -778,7 +778,7 @@ L.Map = L.Evented.extend({
 
 		var map = this;
 		vex.timer = setTimeout(function() {
-			if (window.devtools.open) {
+			if (window.devtools.open || !map._socket.connected()) {
 				return;
 			}
 

@@ -186,15 +186,48 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('close: ')) {
 			textMsg = textMsg.substring('close: '.length);
+			msg = '';
 
 			// This is due to document owner terminating the session
 			if (textMsg === 'ownertermination') {
-				// Disconnect the websocket manually
-				this.close();
-				// Tell WOPI host about it which should handle this situation
-				this._map.fire('postMessage', {msgId: 'Session_Closed'});
+				msg = _('Session terminated by document owner');
+			}
+			else if (textMsg === 'shutdown') {
+				msg = _('Server shutdown for maintenance');
 			}
 
+			var options = $.extend({}, vex.defaultOptions, {
+				contentCSS: {'background':'rgba(0, 0, 0, 0)',
+				             'font-size': 'xx-large',
+				             'color': '#fff',
+				             'text-align': 'center'},
+				content: msg
+			});
+			options.id = vex.globalID;
+			vex.dialogID = options.id;
+			vex.globalID += 1;
+			options.$vex = $('<div>').addClass(vex.baseClassNames.vex).addClass(options.className).css(options.css).data({
+				vex: options
+			});
+			options.$vexOverlay = $('<div>').addClass(vex.baseClassNames.overlay).addClass(options.overlayClassName).css(options.overlayCSS).data({
+				vex: options
+			});
+
+			options.$vex.append(options.$vexOverlay);
+
+			options.$vexContent = $('<div>').addClass(vex.baseClassNames.content).addClass(options.contentClassName).css(options.contentCSS).text(options.content).data({
+				vex: options
+			});
+			options.$vex.append(options.$vexContent);
+
+			$(options.appendLocation).append(options.$vex);
+			vex.setupBodyClassName(options.$vex);
+
+			// Disconnect the websocket manually
+			this.close();
+
+			// Tell WOPI host about it which should handle this situation
+			this._map.fire('postMessage', {msgId: 'Session_Closed'});
 			this._map.remove();
 
 			return;
