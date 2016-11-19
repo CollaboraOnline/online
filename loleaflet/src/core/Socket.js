@@ -196,6 +196,13 @@ L.Socket = L.Class.extend({
 				msg = _('Server shutdown for maintenance');
 			}
 
+			// Close any open dialogs first.
+			if (vex.dialogID > 0) {
+				var id = vex.dialogID;
+				vex.dialogID = -1;
+				vex.close(id);
+			}
+
 			var options = $.extend({}, vex.defaultOptions, {
 				contentCSS: {'background':'rgba(0, 0, 0, 0)',
 				             'font-size': 'xx-large',
