@@ -1971,7 +1971,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     while (!TerminationFlag && !ShutdownFlag)
     {
         UnitWSD::get().invokeTest();
-        if (TerminationFlag)
+        if (TerminationFlag || SigUtil::handleShutdownRequest())
         {
             break;
         }
@@ -2078,7 +2078,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // and wait until sockets close.
     LOG_INF("Stopping server socket listening. ShutdownFlag: " <<
             ShutdownFlag << ", TerminationFlag: " << TerminationFlag);
-    Util::alertAllUsers("close: shutdown");
 
     srv.stop();
     srv2.stop();
