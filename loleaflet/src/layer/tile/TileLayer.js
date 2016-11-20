@@ -433,6 +433,11 @@ L.TileLayer = L.GridLayer.extend({
 				commandName: obj.commandName,
 				commandValues: obj.commandValues
 			});
+		} else {
+			this._map.fire('commandvalues', {
+				commandName: obj.commandName,
+				commandValues: obj.commandValues
+			});
 		}
 	},
 
