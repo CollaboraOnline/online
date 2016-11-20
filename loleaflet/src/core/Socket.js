@@ -435,6 +435,7 @@ L.Socket = L.Class.extend({
 	},
 
 	_onSocketClose: function (e) {
+		var isActive = this._map._active;
 		this._map.hideBusy();
 		this._map._active = false;
 
@@ -442,7 +443,9 @@ L.Socket = L.Class.extend({
 			this._map._docLayer.removeAllViews();
 		}
 
-		this._map.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
+		if (isActive) {
+			this._map.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
+		}
 
 		// Reset wopi's app loaded so that reconnecting again informs outerframe about initialization again
 		this._map['wopi'].resetAppLoaded();
