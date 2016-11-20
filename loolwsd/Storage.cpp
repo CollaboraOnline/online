@@ -429,8 +429,6 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
 /// uri format: http://server/<...>/wopi*/files/<id>/content
 std::string WopiStorage::loadStorageFileToLocal()
 {
-    LOG_INF("Downloading URI [" << _uri.toString() << "].");
-
     // WOPI URI to download files ends in '/contents'.
     // Add it here to get the payload instead of file info.
     Poco::URI uriObject(_uri);
@@ -448,7 +446,7 @@ std::string WopiStorage::loadStorageFileToLocal()
     std::istream& rs = psession->receiveResponse(response);
 
     auto logger = Log::trace();
-    logger << "WOPI::GetFile header for URI [" << _uri.toString() << "]:\n";
+    logger << "WOPI::GetFile header for URI [" << uriObject.toString() << "]:\n";
     for (auto& pair : response)
     {
         logger << '\t' + pair.first + ": " + pair.second << " / ";
