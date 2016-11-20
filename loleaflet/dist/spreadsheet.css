@@ -54,10 +54,6 @@
 	border-top: 0px;
 	}
 
-.spreadsheet-tab.context-menu-disabled {
-	color: grey;
-	}
-
 .spreadsheet-header-corner {
 	border: 1px solid darkgrey;
 	background-color: lightgrey;
