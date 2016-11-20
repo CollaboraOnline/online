@@ -157,8 +157,24 @@ namespace LOOLProtocol
 
     bool getTokenStringFromMessage(const std::string& message, const std::string& name, std::string& value)
     {
-        Poco::StringTokenizer tokens(message, " \n", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-        return getTokenString(tokens, name, value);
+        if (message.size() > name.size() + 1)
+        {
+            auto pos = message.find(name);
+            while (pos != std::string::npos)
+            {
+                const auto beg = pos + name.size();
+                if (message[beg] == '=')
+                {
+                    const auto end = message.find_first_of(" \n", beg);
+                    value = message.substr(beg + 1, end - beg - 1);
+                    return true;
+                }
+
+                pos = message.find(name, pos + name.size());
+            }
+        }
+
+        return false;
     }
 
     bool getTokenKeywordFromMessage(const std::string& message, const std::string& name, const std::map<std::string, int>& map, int& value)
