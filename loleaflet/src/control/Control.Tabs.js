@@ -122,20 +122,11 @@ L.Control.Tabs = L.Control.extend({
 				if (part === selectedPart) {
 					L.DomUtil.addClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
 				}
-
-				if (map._permission === 'edit') {
-					L.DomUtil.removeClass(this._spreadsheetTabs[key], 'context-menu-disabled');
-				} else {
-					L.DomUtil.addClass(this._spreadsheetTabs[key], 'context-menu-disabled');
-				}
 			}
 		}
 	},
 
 	_setPart: function (e) {
-		if (map._permission !== 'edit') {
-			return;
-		}
 		var part =  e.target.id.match(/\d+/g)[0];
 		if (part !== null) {
 			this._map.setPart(parseInt(part));
