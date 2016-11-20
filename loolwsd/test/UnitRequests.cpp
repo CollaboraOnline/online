@@ -25,15 +25,16 @@ using namespace helpers;
 class UnitRequests : public UnitWSD
 {
     enum {
-	PHASE_LOAD,
-	PHASE_FILTER
+        PHASE_LOAD,
+        PHASE_FILTER,
+        PHASE_FILTERED
     } _phase;
 
     TestResult _testResult;
     std::unique_ptr<UnitWebSocket> _ws;
 public:
     UnitRequests() :
-	_phase(PHASE_LOAD)
+        _phase(PHASE_LOAD)
     {
         std::cerr << "UnitRequests startup\n";
     }
@@ -43,49 +44,52 @@ public:
 	    Poco::Net::HTTPServerRequest& request,
 	    Poco::Net::HTTPServerResponse& /*response*/) override
     {
-	if (type == UnitWSD::TestRequest::TEST_REQ_CLIENT)
-	{
-	    std::string uri = request.getURI();
-	    // Get the embedded document URL: '/lool/docUrl/ws/'
-	    uri = uri.substr(uri.find("lool/") + std::string("lool/").size());
-	    uri = uri.substr(0, uri.find("/ws"));
+        if (_phase == PHASE_FILTER && type == UnitWSD::TestRequest::TEST_REQ_CLIENT)
+        {
+            std::string uri = request.getURI();
+            // Get the embedded document URL: '/lool/docUrl/ws/'
+            uri = uri.substr(uri.find("lool/") + std::string("lool/").size());
+            uri = uri.substr(0, uri.find("/ws"));
+            Poco::URI requestUri(uri);
+            _testResult = TestResult::TEST_OK;
+            // If this is a simple encoded string, it would be treated as
+            // relative, otherwise non-relative.
+            // We require this embedded url to be encoded as otherwise it would
+            // be treated as a resource on the server due to the presence of
+            // un-encoded '/'
+            if (!requestUri.isRelative())
+            {
+                _testResult = TestResult::TEST_FAILED;
+            }
 
-	    Poco::URI requestUri(uri);
-	    _testResult = TestResult::TEST_OK;
-	    // If this is a simple encoded string, it would be treated as
-	    // relative, otherwise non-relative.
-	    // We require this embedded url to be encoded as otherwise it would
-	    // be treated as a resource on the server due to the presence of
-	    // un-encoded '/'
-	    if (!requestUri.isRelative())
-	    {
-		_testResult = TestResult::TEST_FAILED;
-	    }
-	}
+            _phase = PHASE_FILTERED;
+        }
         return false;
     }
 
     void loadDocument()
     {
-	std::string docPath;
-	std::string docURL;
-	getDocumentPathAndURL("empty.odt", docPath, docURL);
-	_ws = std::unique_ptr<UnitWebSocket>(new UnitWebSocket(docURL));
-	assert(_ws.get());
+        std::string docPath;
+        std::string docURL;
+        getDocumentPathAndURL("empty.odt", docPath, docURL);
+        _ws = std::unique_ptr<UnitWebSocket>(new UnitWebSocket(docURL));
+        assert(_ws.get());
     }
 
     virtual void invokeTest() override
     {
-	switch(_phase)
-	{
-	case PHASE_LOAD:
-	    _phase = PHASE_FILTER;
-	    loadDocument();
-	    break;
-	case PHASE_FILTER:
-	    exitTest(_testResult);
-	    break;
-	}
+        switch(_phase)
+        {
+            case PHASE_LOAD:
+                _phase = PHASE_FILTER;
+                loadDocument();
+                break;
+            case PHASE_FILTER:
+                break;
+            case PHASE_FILTERED:
+                exitTest(_testResult);
+                break;
+        }
     }
 };
 
