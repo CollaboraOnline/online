@@ -27,8 +27,7 @@ L.Control.Tabs = L.Control.extend({
 		this._tabsInitialized = false;
 		this._spreadsheetTabs = {};
 		var docContainer = map.options.documentContainer;
-		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tab', docContainer.parentElement);
-		this._tabsCont.id = 'spreadsheet-tab';
+		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', docContainer.parentElement);
 
 		$.contextMenu({
 			selector: '.spreadsheet-context-menu',
