@@ -18,7 +18,7 @@ L.Control.Tabs = L.Control.extend({
 			this._initialize();
 		}
 		setTimeout(function() {
-			$('.spreadsheet-context-menu').contextMenu(e.perm === 'edit');
+			$('.spreadsheet-tab').contextMenu(e.perm === 'edit');
 		}, 1000);
 	},
 
@@ -30,7 +30,7 @@ L.Control.Tabs = L.Control.extend({
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', docContainer.parentElement);
 
 		$.contextMenu({
-			selector: '.spreadsheet-context-menu',
+			selector: '.spreadsheet-tab',
 			className: 'loleaflet-font',
 			callback: function(key, options) {
 				var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
@@ -104,7 +104,7 @@ L.Control.Tabs = L.Control.extend({
 
 				for (var i = 0; i < parts; i++) {
 					var id = 'spreadsheet-tab' + i;
-					var tab = L.DomUtil.create('div', 'spreadsheet-context-menu', ssTabScroll);
+					var tab = L.DomUtil.create('div', 'spreadsheet-tab', ssTabScroll);
 					tab.innerHTML = e.partNames[i];
 					tab.id = id;
 
@@ -118,9 +118,9 @@ L.Control.Tabs = L.Control.extend({
 			}
 			for (var key in this._spreadsheetTabs) {
 				var part =  parseInt(key.match(/\d+/g)[0]);
-				L.DomUtil.removeClass(this._spreadsheetTabs[key], 'spreadsheet-context-menu-selected');
+				L.DomUtil.removeClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
 				if (part === selectedPart) {
-					L.DomUtil.addClass(this._spreadsheetTabs[key], 'spreadsheet-context-menu-selected');
+					L.DomUtil.addClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
 				}
 
 				if (map._permission === 'edit') {
