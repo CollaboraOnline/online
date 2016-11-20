@@ -29,7 +29,7 @@
 	margin-left: 6px;
 	}
 
-.spreadsheet-context-menu {
+.spreadsheet-tab {
 	margin: 0px;
 	margin-top: 2px;
 	margin-right: 3px;
@@ -45,7 +45,7 @@
 	color: black;
 	}
 
-.spreadsheet-context-menu-selected {
+.spreadsheet-tab-selected {
 	background: white !important;
 	color: black !important;
 	margin-top: 0px;
@@ -54,7 +54,7 @@
 	border-top: 0px;
 	}
 
-.spreadsheet-context-menu.context-menu-disabled {
+.spreadsheet-tab.context-menu-disabled {
 	color: grey;
 	}
 
