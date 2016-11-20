@@ -120,24 +120,29 @@ L.WriterTileLayer = L.TileLayer.extend({
 
 	_onStatusMsg: function (textMsg) {
 		var command = this._map._socket.parseServerCmd(textMsg);
-		if (command.width && command.height && this._documentInfo !== textMsg) {
+		if (!command.width || !command.height || this._documentInfo === textMsg)
+			return;
+
+		var sizeChanged = command.width !== this._docWidthTwips || command.height !== this._docHeightTwips;
+		if (sizeChanged) {
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
 			this._docType = command.type;
-			this._updateMaxBounds(true);
-			this._documentInfo = textMsg;
-			this._selectedPart = 0;
-			this._parts = 1;
-			this._currentPage = command.selectedPart;
-			this._pages = command.parts;
 			this._viewId = parseInt(command.viewid);
-			this._map.fire('pagenumberchanged', {
-				currentPage: this._currentPage,
-				pages: this._pages,
-				docType: this._docType
-			});
-			this._resetPreFetching(true);
-			this._update();
+			this._updateMaxBounds(true);
 		}
+
+		this._documentInfo = textMsg;
+		this._selectedPart = 0;
+		this._parts = 1;
+		this._currentPage = command.selectedPart;
+		this._pages = command.parts;
+		this._map.fire('pagenumberchanged', {
+			currentPage: this._currentPage,
+			pages: this._pages,
+			docType: this._docType
+		});
+		this._resetPreFetching(true);
+		this._update();
 	}
 });
