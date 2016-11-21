@@ -157,6 +157,26 @@ bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
     return encodeSubBufferToPNG(pixmap, 0, 0, width, height, width, height, output, mode);
 }
 
+inline
+uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
+                       int width, int height, int bufferWidth, int bufferHeight)
+{
+    if (bufferWidth < width || bufferHeight < height)
+        return 0; // magic invalid hash.
+
+    // assume a consistent mode - RGBA vs. BGRA for process
+    uint64_t nHash = 1073741789;
+    for (int y = 0; y < height; ++y)
+    {
+        size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
+        uint32_t *rgba = reinterpret_cast<uint32_t *>(pixmap + position);
+        // Lameness for now.
+        for (int x = 0; x < width; ++x)
+            nHash = (nHash << 7) + rgba[x] - nHash;
+    }
+    return nHash;
+}
+
 static
 void readTileData(png_structp png_ptr, png_bytep data, png_size_t length)
 {
