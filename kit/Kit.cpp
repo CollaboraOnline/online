@@ -261,6 +261,118 @@ namespace
 #endif
 }
 
+/// A quick & dirty cache of the last few PNGs
+/// and their hashes to avoid re-compression
+/// wherever possible.
+class PngCache
+{
+    typedef std::shared_ptr< std::vector< char > > CacheData;
+    struct CacheEntry {
+        size_t    _hitCount;
+        CacheData _data;
+        CacheEntry(size_t defaultSize) :
+            _hitCount(0),
+            _data( new std::vector< char >() )
+        {
+            _data->reserve( defaultSize );
+        }
+    } ;
+    size_t _cacheSize;
+    std::map< uint64_t, CacheEntry > _cache;
+
+    void balanceCache()
+    {
+        // A normalish PNG image size for text in a writer document is
+        // around 4k for a content tile, and sub 1k for a background one.
+        if (_cacheSize > (1024 * 4 * 32) /* 128k of cache */)
+        {
+            size_t avgHits = 0;
+            for (auto it = _cache.begin(); it != _cache.end(); ++it)
+                avgHits += it->second._hitCount;
+
+            LOG_DBG("cache " << _cache.size() << " items total size " <<
+                    _cacheSize << " total hits " << avgHits << " at balance start");
+            avgHits /= _cache.size();
+
+            for (auto it = _cache.begin(); it != _cache.end();)
+            {
+                if (it->second._hitCount <= avgHits)
+                {
+                    _cacheSize -= it->second._data->size();
+                    _cache.erase(it++);
+                }
+                else
+                {
+                    it->second._hitCount /= 2;
+                    ++it;
+                }
+            }
+
+            LOG_DBG("cache " << _cache.size() << " items total size " <<
+                    _cacheSize << " after balance");
+        }
+    }
+
+    bool cacheEncodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
+                                   int width, int height,
+                                   int bufferWidth, int bufferHeight,
+                                   std::vector<char>& output, LibreOfficeKitTileMode mode)
+    {
+        uint64_t hash = png::hashSubBuffer(pixmap, startX, startY, width, height,
+                                           bufferWidth, bufferHeight);
+        if (hash) {
+            auto it = _cache.find(hash);
+            if (it != _cache.end())
+            {
+                LOG_DBG("PNG cache with hash " << hash << " hit.");
+                output.insert(output.end(),
+                              it->second._data->begin(),
+                              it->second._data->end());
+                it->second._hitCount++;
+                return true;
+            }
+        }
+        LOG_DBG("PNG cache with hash " << hash << " missed.");
+        CacheEntry newEntry(bufferWidth * bufferHeight * 1);
+        if (png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
+                                      bufferWidth, bufferHeight,
+                                      *newEntry._data, mode))
+        {
+            if (hash)
+            {
+                _cache.insert(std::pair< uint64_t, CacheEntry >( hash, newEntry ));
+                _cacheSize += newEntry._data->size();
+            }
+            output.insert(output.end(),
+                          newEntry._data->begin(),
+                          newEntry._data->end());
+            balanceCache();
+            return true;
+        }
+        else
+            return false;
+    }
+
+public:
+    PngCache() : _cacheSize(0)
+    {
+    }
+    bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
+                           std::vector<char>& output, LibreOfficeKitTileMode mode)
+    {
+        return cacheEncodeSubBufferToPNG(pixmap, 0, 0, width, height,
+                                         width, height, output, mode);
+    }
+    bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
+                              int width, int height,
+                              int bufferWidth, int bufferHeight,
+                              std::vector<char>& output, LibreOfficeKitTileMode mode)
+    {
+        return cacheEncodeSubBufferToPNG(pixmap, startX, startY, width, height,
+                                         bufferWidth, bufferHeight, output, mode);
+    }
+};
+
 /// A document container.
 /// Owns LOKitDocument instance and connections.
 /// Manages the lifetime of a document.
@@ -499,7 +611,7 @@ public:
                 " ms (" << area / elapsed << " MP/s).");
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
-        if (!png::encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
+        if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");
@@ -582,7 +694,7 @@ public:
             const auto oldSize = output.size();
             const auto pixelWidth = tileCombined.getWidth();
             const auto pixelHeight = tileCombined.getHeight();
-            if (!png::encodeSubBufferToPNG(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight,
+            if (!_pngCache.encodeSubBufferToPNG(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight,
                                            pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode))
             {
                 //FIXME: Return error.
@@ -1256,6 +1368,7 @@ private:
     std::shared_ptr<lok::Document> _loKitDocument;
     std::shared_ptr<TileQueue> _tileQueue;
     std::shared_ptr<LOOLWebSocket> _ws;
+    PngCache _pngCache;
 
     // Document password provided
     std::string _docPassword;
