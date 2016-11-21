@@ -10,7 +10,9 @@
 #ifndef INCLUDED_LOOLWEBSOCKET_HPP
 #define INCLUDED_LOOLWEBSOCKET_HPP
 
+#include <cstdlib>
 #include <mutex>
+#include <thread>
 
 #include <Poco/Net/WebSocket.h>
 
@@ -28,6 +30,24 @@ class LOOLWebSocket : public Poco::Net::WebSocket
 {
 private:
     std::mutex _mutex;
+
+#ifdef ENABLE_DEBUG
+    std::chrono::milliseconds getWebSocketDelay()
+    {
+        unsigned long baseDelay = WS_DELAY_MS;
+        unsigned long jitter = WS_JITTER_MS;
+        if (std::getenv("LOOL_WS_DELAY"))
+        {
+            baseDelay = std::stoul(std::getenv("LOOL_WS_DELAY"));
+        }
+        if (std::getenv("LOOL_WS_JITTER"))
+        {
+            jitter = std::stoul(std::getenv("LOOL_WS_JITTER"));
+        }
+
+        return std::chrono::milliseconds(baseDelay + (std::rand() % jitter));
+    }
+#endif
 
 public:
     LOOLWebSocket(const Socket& socket) :
@@ -61,6 +81,10 @@ public:
     /// Should we also factor out the handling of non-final and continuation frames into this?
     int receiveFrame(char* buffer, const int length, int& flags)
     {
+#ifdef ENABLE_DEBUG
+        // Delay receiving the frame
+        std::this_thread::sleep_for(getWebSocketDelay());
+#endif
         // Timeout given is in microseconds.
         static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
 
@@ -87,6 +111,10 @@ public:
     /// Wrapper for Poco::Net::WebSocket::sendFrame() that handles large frames.
     int sendFrame(const char* buffer, const int length, const int flags = FRAME_TEXT)
     {
+#ifdef ENABLE_DEBUG
+        // Delay sending the frame
+        std::this_thread::sleep_for(getWebSocketDelay());
+#endif
         std::unique_lock<std::mutex> lock(_mutex);
 
         // Size after which messages will be sent preceded with
