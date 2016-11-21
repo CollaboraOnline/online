@@ -247,7 +247,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
 
     // Call the storage specific file info functions
     std::string userid, username;
-    std::chrono::duration<double> getInfoCallDuration;
+    std::chrono::duration<double> getInfoCallDuration(0);
     if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
     {
         const WopiStorage::WOPIFileInfo wopifileinfo = static_cast<WopiStorage*>(_storage.get())->getWOPIFileInfo(uriPublic);
