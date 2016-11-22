@@ -448,8 +448,24 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
     LOG_INF("Autosave triggered for doc [" << _docKey << "].");
     Util::assertIsLocked(_mutex);
 
-    // Save using session holding the edit-lock (or first if multview).
+    std::shared_ptr<ClientSession> savingSession;
     for (auto& sessionIt : _sessions)
+    {
+        // Save the document using first session available ...
+        if (!savingSession)
+        {
+            savingSession = sessionIt.second;
+        }
+
+        // or if any of the sessions is document owner, use that.
+        if (sessionIt.second->isDocumentOwner())
+        {
+            savingSession = sessionIt.second;
+            break;
+        }
+    }
+
+    if (savingSession)
     {
         // Invalidate the timestamp to force persisting.
         _lastFileModifiedTime.fromEpochTime(0);
@@ -484,7 +500,7 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
         const auto saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);
         const auto command = "uno .uno:Save " + saveArgs;
-        forwardToChild(sessionIt.second->getId(), command);
+        forwardToChild(savingSession->getId(), command);
         return true;
     }
 
