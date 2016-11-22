@@ -62,7 +62,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testBadRequest);
     CPPUNIT_TEST(testHandShake);
     CPPUNIT_TEST(testCloseAfterClose);
-    CPPUNIT_TEST(testConnectNoLoad);
+    CPPUNIT_TEST(testConnectNoLoad); // This fails most of the times but occasionally succeeds
     CPPUNIT_TEST(testLoad);
     CPPUNIT_TEST(testBadLoad);
     CPPUNIT_TEST(testReload);
