@@ -318,7 +318,7 @@ void HTTPWSTest::testCloseAfterClose()
 
         // no more messages is received.
         bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
-        std::cout << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
+        std::cerr << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
         CPPUNIT_ASSERT_EQUAL(0, bytes);
         CPPUNIT_ASSERT_EQUAL(0, flags);
     }
@@ -527,7 +527,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         socket->shutdown();
 
         // Load the same document and check that the last changes (pasted text) is saved.
-        std::cout << "Loading again." << std::endl;
+        std::cerr << "Loading again." << std::endl;
         socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
         // Should have no new instances.
@@ -1344,7 +1344,7 @@ void HTTPWSTest::testCalcEditRendering()
     sendTextFrame(socket, req);
 
     const auto tile = getResponseMessage(socket, "tile:", testname);
-    std::cout << "size: " << tile.size() << std::endl;
+    std::cerr << "size: " << tile.size() << std::endl;
 
     // Return early for now when on LO >= 5.2.
     std::string clientVersion = "loolclient 0.1";
