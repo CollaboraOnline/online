@@ -289,6 +289,7 @@ L.Control.CharacterMap = L.Control.extend({
 			td.innerHTML = '&#x' + start.toString(16);
 			td.data = start;
 			L.DomEvent.on(td, 'click', this._onSymbolClick, this);
+			L.DomEvent.on(td, 'dblclick', this._onSymbolDblClick, this);
 			start++;
 			it++;
 		}
@@ -425,20 +426,8 @@ L.Control.CharacterMap = L.Control.extend({
 	},
 
 	_onInsertClick: function (e) {
-		if (this._hexa.data) {
-			var command = {
-				Symbols: {
-					type: 'string',
-					value: String.fromCharCode(this._hexa.data)
-				},
-				FontName: {
-					type: 'string',
-					value: this._fontNames.options[this._fontNames.selectedIndex].value
-				}
-			};
-			this._map.sendUnoCommand('.uno:InsertSymbol', command);
-			this._onCloseClick(e);
-		}
+		this._sendSymbol();
+		this._onCloseClick(e);
 	},
 
 	_onRenderFontPreview: function (e) {
@@ -452,6 +441,31 @@ L.Control.CharacterMap = L.Control.extend({
 		this._map._socket.sendMessage('renderfont font=' +
 			window.encodeURIComponent(this._fontNames.options[this._fontNames.selectedIndex].value) +
 			' char=' + String.fromCharCode(this._hexa.data));
+	},
+
+	_onSymbolDblClick: function (e) {
+		var target = e.target || e.srcElement;
+		this._hexa.data = target.data;
+		this._sendSymbol();
+		setTimeout(L.bind(function () {
+			this._onCloseClick();
+		}, this), 0);
+	},
+
+	_sendSymbol: function () {
+		if (this._hexa.data) {
+			var command = {
+				Symbols: {
+					type: 'string',
+					value: String.fromCharCode(this._hexa.data)
+				},
+				FontName: {
+					type: 'string',
+					value: this._fontNames.options[this._fontNames.selectedIndex].value
+				}
+			};
+			this._map.sendUnoCommand('.uno:InsertSymbol', command);
+		}
 	},
 
 	_onUnicodeSubsetChange: function (e) {
