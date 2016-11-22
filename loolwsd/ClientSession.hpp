@@ -41,6 +41,7 @@ public:
     void setUserId(const std::string& userId) { _userId = userId; }
     void setUserName(const std::string& userName) { _userName = userName; }
     void setDocumentOwner(const bool isDocumentOwner) { _isDocumentOwner = isDocumentOwner; }
+    bool isDocumentOwner() const { return _isDocumentOwner; }
 
     /**
      * Return the URL of the saved-as document when it's ready. If called
