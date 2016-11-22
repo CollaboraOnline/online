@@ -53,6 +53,7 @@ pot:
 		src/admin/AdminSocketBase.js \
 		src/admin/AdminSocketOverview.js \
 		src/admin/Util.js \
+		src/control/Control.CharacterMap.js \
 		src/control/Control.ColumnHeader.js \
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.Menubar.js \
