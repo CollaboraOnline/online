@@ -5,11 +5,13 @@
 /* global vex */
 L.Control.Dialog = L.Control.extend({
 	onAdd: function (map) {
+		// TODO: Better distinction between warnings and errors
 		map.on('error', this._onError, this);
+		map.on('warn', this._onError, this);
 		map.on('print', this._onPrint, this);
 	},
 
-	_onError: function (e) {
+	_onError: function(e) {
 		if (vex.dialogID > 0 && !this._map._fatal) {
 			// TODO. queue message errors and pop-up dialogs
 			// Close other dialogs before presenting a new one.

@@ -241,11 +241,11 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'storage') {
 			if (command.errorKind === 'savediskfull') {
-				// Just warn the user
 				this._map.fire('error', {msg: errorMessages.storage.savediskfull});
 			}
 			else if (command.errorKind === 'savefailed') {
-				this._map.fire('error', {msg: errorMessages.storage.savefailed});
+				// Just warn the user
+				this._map.fire('warn', {msg: errorMessages.storage.savefailed});
 			}
 
 			return;
