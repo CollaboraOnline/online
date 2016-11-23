@@ -251,7 +251,7 @@ std::string LocalStorage::loadStorageFileToLocal()
     return Poco::Path(_jailPath, filename).toString();
 }
 
-bool LocalStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
+StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
 {
     try
     {
@@ -269,7 +269,7 @@ bool LocalStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
         throw;
     }
 
-    return true;
+    return StorageBase::SaveResult::OK;
 }
 
 namespace {
@@ -472,7 +472,7 @@ std::string WopiStorage::loadStorageFileToLocal()
     return Poco::Path(_jailPath, _fileInfo._filename).toString();
 }
 
-bool WopiStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
+StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
 {
     LOG_INF("Uploading URI [" << uriPublic.toString() << "] from [" << _jailedFilePath + "].");
     // TODO: Check if this URI has write permission (canWrite = true)
@@ -499,12 +499,21 @@ bool WopiStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)
     Poco::StreamCopier::copyStream(rs, oss);
 
     LOG_INF("WOPI::PutFile response: " << oss.str());
-    const auto success = (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK);
     LOG_INF("WOPI::PutFile uploaded " << size << " bytes from [" << _jailedFilePath <<
             "] -> [" << uriObject.toString() << "]: " <<
             response.getStatus() << " " << response.getReason());
 
-    return success;
+    StorageBase::SaveResult saveResult = StorageBase::SaveResult::FAILED;
+    if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
+    {
+        saveResult = StorageBase::SaveResult::OK;
+    }
+    else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_REQUESTENTITYTOOLARGE)
+    {
+        saveResult = StorageBase::SaveResult::DISKFULL;
+    }
+
+    return saveResult;
 }
 
 std::string WebDAVStorage::loadStorageFileToLocal()
@@ -514,10 +523,10 @@ std::string WebDAVStorage::loadStorageFileToLocal()
     return _uri.toString();
 }
 
-bool WebDAVStorage::saveLocalFileToStorage(const Poco::URI& /*uriPublic*/)
+StorageBase::SaveResult WebDAVStorage::saveLocalFileToStorage(const Poco::URI& /*uriPublic*/)
 {
     // TODO: implement webdav PUT.
-    return false;
+    return StorageBase::SaveResult::OK;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

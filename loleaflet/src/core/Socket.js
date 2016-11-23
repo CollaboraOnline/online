@@ -239,6 +239,17 @@ L.Socket = L.Class.extend({
 
 			return;
 		}
+		else if (textMsg.startsWith('error:') && command.errorCmd === 'storage') {
+			if (command.errorKind === 'savediskfull') {
+				// Just warn the user
+				this._map.fire('error', {msg: errorMessages.storage.savediskfull});
+			}
+			else if (command.errorKind === 'savefailed') {
+				this._map.fire('error', {msg: errorMessages.storage.savefailed});
+			}
+
+			return;
+		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'internal') {
 			this._map._fatal = true;
 			if (command.errorKind === 'diskfull') {

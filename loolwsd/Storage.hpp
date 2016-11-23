@@ -52,6 +52,13 @@ public:
         size_t _size;
     };
 
+    enum SaveResult
+    {
+        OK,
+        DISKFULL,
+        FAILED
+    };
+
     /// localStorePath the absolute root path of the chroot.
     /// jailPath the path within the jail that the child uses.
     StorageBase(const Poco::URI& uri,
@@ -80,7 +87,7 @@ public:
     virtual std::string loadStorageFileToLocal() = 0;
 
     /// Writes the contents of the file back to the source.
-    virtual bool saveLocalFileToStorage(const Poco::URI& uriPublic) = 0;
+    virtual SaveResult saveLocalFileToStorage(const Poco::URI& uriPublic) = 0;
 
     static size_t getFileSize(const std::string& filename);
 
@@ -140,7 +147,7 @@ public:
 
     std::string loadStorageFileToLocal() override;
 
-    bool saveLocalFileToStorage(const Poco::URI& uriPublic) override;
+    SaveResult saveLocalFileToStorage(const Poco::URI& uriPublic) override;
 
 private:
     /// True if the jailed file is not linked but copied.
@@ -214,7 +221,7 @@ public:
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string loadStorageFileToLocal() override;
 
-    bool saveLocalFileToStorage(const Poco::URI& uriPublic) override;
+    SaveResult saveLocalFileToStorage(const Poco::URI& uriPublic) override;
 
     /// Total time taken for making WOPI calls during load
     std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
@@ -244,7 +251,7 @@ public:
 
     std::string loadStorageFileToLocal() override;
 
-    bool saveLocalFileToStorage(const Poco::URI& uriPublic) override;
+    SaveResult saveLocalFileToStorage(const Poco::URI& uriPublic) override;
 
 private:
     std::unique_ptr<AuthBase> _authAgent;

@@ -87,7 +87,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                 }
 
                 if (!_docBroker->save(getId(), success, result))
-                    peer->sendTextFrame("error: cmd=internal kind=diskfull");
+                    LOG_ERR("Saving document to storage failed.");
                 return true;
             }
         }

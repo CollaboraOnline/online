@@ -366,7 +366,8 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     LOG_DBG("Saving to URI [" << uri << "].");
 
     assert(_storage && _tileCache);
-    if (_storage->saveLocalFileToStorage(uriPublic))
+    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(uriPublic);
+    if (storageSaveResult == StorageBase::SaveResult::OK)
     {
         _isModified = false;
         _tileCache->setUnsavedChanges(false);
@@ -376,6 +377,20 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         LOG_DBG("Saved to URI [" << uri << "] and updated tile cache.");
         _saveCV.notify_all();
         return true;
+    }
+    else if (storageSaveResult == StorageBase::SaveResult::DISKFULL)
+    {
+        // Make everyone readonly and tell everyone that storage is low on diskspace
+        for (auto& sessionIt : _sessions)
+        {
+            sessionIt.second->setReadOnly();
+            sessionIt.second->sendTextFrame("perm: readonly");
+            sessionIt.second->sendTextFrame("error: cmd=storage kind=savediskfull");
+        }
+    }
+    else if (storageSaveResult == StorageBase::SaveResult::FAILED)
+    {
+        it->second->sendTextFrame("error: cmd=storage kind=savefailed");
     }
 
     LOG_ERR("Failed to save to URI [" << uri << "].");

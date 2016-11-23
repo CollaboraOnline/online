@@ -220,9 +220,14 @@ error: cmd=<command> kind=<kind> [code=<error_code>] [params=1,2,3,...,N]
 <freeErrorText>
 
     <command> is the command part of the corresponding client->server
-    message that caused the error. <command> can also be 'internal'
-    for errors generated without directly corresponding to a client
-    message. <kind> is some single-word classification
+    message that caused the error.
+
+    <command> can also take following values:
+    'internal': for errors generated without directly corresponding to a client
+    message.
+    'storage': for errors pertaining to storage (filesysytem, wopi etc.)
+
+    <kind> is some single-word classification
 
     <code> (when provided) further specifies the error as forwarded from
     LibreOffice
