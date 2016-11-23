@@ -120,6 +120,7 @@ noinst_HEADERS = Admin.hpp \
                  UserMessages.hpp \
                  Util.hpp \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h \
+                 bundled/include/LibreOfficeKit/LibreOfficeKit.hxx \
                  bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitInit.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h \
