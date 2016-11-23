@@ -892,7 +892,12 @@ private:
             LOG_TRC("Sending to Client [" << status << "].");
             ws->sendFrame(status.data(), status.size());
 
-            FileUtil::checkDiskSpaceOnRegisteredFileSystems();
+            const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
+            if (!fs.empty())
+            {
+                LOG_WRN("File system of " << fs << " dangerously low on disk space");
+                Util::alertAllUsers("error: cmd=internal kind=diskfull");
+            }
 
             // Request the child to connect to us and add this session.
             auto sessionsCount = docBroker->addSession(session);
