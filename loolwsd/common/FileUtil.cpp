@@ -148,17 +148,18 @@ namespace FileUtil
     {
         std::lock_guard<std::mutex> lock(fsmutex);
 
-        if (path != "")
+        if (!path.empty())
         {
             std::string dirPath = path;
             std::string::size_type lastSlash = dirPath.rfind('/');
             assert(lastSlash != std::string::npos);
-            dirPath = dirPath.substr(0, lastSlash + 1) + ".";
+            dirPath = dirPath.substr(0, lastSlash + 1) + '.';
 
             struct stat s;
-            if (stat(dirPath.c_str(), &s) == -1)
-                return;
-            filesystems.insert(fs(dirPath, s.st_dev));
+            if (stat(dirPath.c_str(), &s) == 0)
+            {
+                filesystems.insert(fs(dirPath, s.st_dev));
+            }
         }
     }
 
@@ -187,7 +188,8 @@ namespace FileUtil
 
     bool checkDiskSpace(const std::string& path)
     {
-        assert(path != "");
+        assert(!path.empty());
+
         struct statfs sfs;
         if (statfs(path.c_str(), &sfs) == -1)
             return true;
