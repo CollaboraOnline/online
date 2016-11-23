@@ -163,7 +163,7 @@ namespace FileUtil
         }
     }
 
-    void checkDiskSpaceOnRegisteredFileSystems()
+    std::string checkDiskSpaceOnRegisteredFileSystems()
     {
         std::lock_guard<std::mutex> lock(fsmutex);
 
@@ -172,7 +172,7 @@ namespace FileUtil
 
         // Don't check more often that once a minute
         if (std::chrono::duration_cast<std::chrono::seconds>(now - lastCheck).count() < 60)
-            return;
+            return std::string();
 
         lastCheck = now;
 
@@ -180,10 +180,11 @@ namespace FileUtil
         {
             if (!checkDiskSpace(i.path))
             {
-                alertAllUsersAndLog("File system of " + i.path + " dangerously low on disk space", "internal", "diskfull");
-                break;
+                return i.path;
             }
         }
+
+        return std::string();
     }
 
     bool checkDiskSpace(const std::string& path)
