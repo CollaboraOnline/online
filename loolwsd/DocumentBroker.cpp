@@ -161,8 +161,6 @@ DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
     _cursorPosY(0),
     _cursorWidth(0),
     _cursorHeight(0),
-    _mutex(),
-    _saveMutex(),
     _tileVersion(0),
     _debugRenderedTileCount(0)
 {
