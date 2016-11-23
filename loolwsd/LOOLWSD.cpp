@@ -313,6 +313,7 @@ static bool cleanupChildren()
 /// Called on startup only.
 static void preForkChildren()
 {
+    std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
@@ -851,8 +852,6 @@ private:
             DocBrokers.insert(it, std::make_pair(docKey, docBroker));
         }
 
-        docBrokersLock.unlock();
-
         // Validate the broker.
         if (!docBroker || !docBroker->isAlive())
         {
@@ -862,6 +861,8 @@ private:
 
             throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
         }
+
+        docBrokersLock.unlock();
 
         // Check if readonly session is required
         bool isReadOnly = false;
