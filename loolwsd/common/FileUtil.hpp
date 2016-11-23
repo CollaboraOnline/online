@@ -51,7 +51,7 @@ namespace FileUtil
     // Perform the check. If the free space on any of the registered file systems is below 5%, call
     // 'alertAllUsers("internal", "diskfull")'. The check will be made no more often than once a
     // minute.
-    void checkDiskSpaceOnRegisteredFileSystems();
+    std::string checkDiskSpaceOnRegisteredFileSystems();
 
     // Check disk space on a specific file system, the one where 'path' is located. This does not
     // add that file system to the list used by 'registerFileSystemForDiskSpaceChecks'. If the free

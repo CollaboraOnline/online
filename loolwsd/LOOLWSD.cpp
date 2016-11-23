@@ -228,6 +228,20 @@ void shutdownLimitReached(LOOLWebSocket& ws)
     }
 }
 
+/// Internal implementation to alert all clients
+/// connected to any document.
+void alertAllUsersInternal(const std::string& msg)
+{
+    Util::assertIsLocked(DocBrokersMutex);
+
+    LOG_INF("Alerting all users: [" << msg << "]");
+
+    for (auto& brokerIt : DocBrokers)
+    {
+        auto lock = brokerIt.second->getLock();
+        brokerIt.second->alertAllUsers(msg);
+    }
+}
 }
 
 /// Remove dead DocBrokers.
@@ -260,7 +274,13 @@ static void forkChildren(const int number)
 
     if (number > 0)
     {
-        FileUtil::checkDiskSpaceOnRegisteredFileSystems();
+        const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
+        if (!fs.empty())
+        {
+            LOG_WRN("File system of " << fs << " dangerously low on disk space");
+            alertAllUsersInternal("error: cmd=internal kind=diskfull");
+        }
+
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
 
@@ -2155,13 +2175,7 @@ void alertAllUsers(const std::string& msg)
 {
     std::lock_guard<std::mutex> DocBrokersLock(DocBrokersMutex);
 
-    LOG_INF("Alerting all users: [" << msg << "]");
-
-    for (auto& brokerIt : DocBrokers)
-    {
-        auto lock = brokerIt.second->getLock();
-        brokerIt.second->alertAllUsers(msg);
-    }
+    alertAllUsersInternal(msg);
 }
 
 }
