@@ -154,23 +154,23 @@ void TileQueue::removeDuplicate(const std::string& tileMsg)
 {
     assert(LOOLProtocol::getFirstToken(tileMsg) == "tile");
 
-    // FIXME: This looks rather fragile; but OTOH if I understand correctly this doesn't handle
-    // input from clients, but strings we have created ourselves here in C++ code, so probably we
-    // can be sure that the "ver" parameter is always in such a location that this does what we
-    // mean.
-    // FIXME: also the ver=... is only for debugging from what I can see, so
-    // double-check if we can actually avoid the 'ver' everywhere in the non-debug
-    // builds
-    const std::string newMsg = tileMsg.substr(0, tileMsg.find(" ver"));
+    // Ver is always provided at this point and it is necessary to
+    // return back to clients the last rendered version of a tile
+    // in case there are new invalidations and requests while rendering.
+    // Here we compare duplicates without 'ver' since that's irrelevant.
+    auto newMsgPos = tileMsg.find(" ver");
+    if (newMsgPos == std::string::npos)
+    {
+        newMsgPos = tileMsg.size() - 1;
+    }
 
     for (size_t i = 0; i < _queue.size(); ++i)
     {
         auto& it = _queue[i];
-        const std::string old(it.data(), it.size());
-        const std::string oldMsg = old.substr(0, old.find(" ver"));
-        if (newMsg == oldMsg)
+        if (it.size() > newMsgPos &&
+            strncmp(tileMsg.data(), it.data(), newMsgPos) == 0)
         {
-            LOG_DBG("Remove duplicate message: " << old << " -> " << tileMsg);
+            LOG_TRC("Remove duplicate message: " << std::string(it.data(), it.size()) << " -> " << tileMsg);
             _queue.erase(_queue.begin() + i);
             break;
         }
