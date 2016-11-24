@@ -33,7 +33,6 @@ git mv wsd/LOOLSession.cpp common/Session.cpp
 git mv wsd/LOOLSession.hpp common/Session.hpp
 git mv wsd/security.h common/security.h
 
-git mv wsd/LibreOfficeKit.hpp kit
 git mv wsd/ChildSession.cpp kit
 git mv wsd/ChildSession.hpp kit
 git mv wsd/LOOLForKit.cpp kit/ForKit.cpp
