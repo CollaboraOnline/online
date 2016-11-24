@@ -244,6 +244,7 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
 {
     const auto ret = _documents.emplace(docKey, Document(docKey, pid, filename));
     ret.first->second.addView(sessionId);
+    LOG_DBG("Added admin document [" + docKey + "].");
 
     // Notify the subscribers
     const unsigned memUsage = Util::getMemoryUsage(pid);
@@ -285,16 +286,18 @@ void AdminModel::removeDocument(const std::string& docKey)
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end())
     {
+        std::ostringstream oss;
+        oss << "rmdoc "
+            << docIt->second.getPid() << ' ';
+        const std::string msg = oss.str();
+
         for (const auto& pair : docIt->second.getViews())
         {
             // Notify the subscribers
-            std::ostringstream oss;
-            oss << "rmdoc "
-                << docIt->second.getPid() << ' '
-                << pair.first;
-            notify(oss.str());
+            notify(msg + pair.first);
         }
 
+        LOG_DBG("Removed admin document [" + docKey + "].");
         _documents.erase(docIt);
     }
 }
@@ -302,7 +305,7 @@ void AdminModel::removeDocument(const std::string& docKey)
 std::string AdminModel::getMemStats()
 {
     std::ostringstream oss;
-    for (auto& i: _memStats)
+    for (const auto& i: _memStats)
     {
         oss << i << ',';
     }
@@ -313,7 +316,7 @@ std::string AdminModel::getMemStats()
 std::string AdminModel::getCpuStats()
 {
     std::ostringstream oss;
-    for (auto& i: _cpuStats)
+    for (const auto& i: _cpuStats)
     {
         oss << i << ',';
     }
@@ -324,7 +327,7 @@ std::string AdminModel::getCpuStats()
 unsigned AdminModel::getTotalActiveViews()
 {
     unsigned nTotalViews = 0;
-    for (auto& it: _documents)
+    for (const auto& it: _documents)
     {
         if (!it.second.isExpired())
         {

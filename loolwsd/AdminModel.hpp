@@ -43,18 +43,14 @@ private:
 class Document
 {
 public:
-    Document(std::string docKey, Poco::Process::PID pid, std::string filename)
-        : _docKey(std::move(docKey)),
+    Document(const std::string& docKey,
+             Poco::Process::PID pid,
+             const std::string& filename)
+        : _docKey(docKey),
           _pid(pid),
-          _filename(std::move(filename)),
+          _filename(filename),
           _start(std::time(nullptr))
     {
-        Log::info("Document " + _docKey + " ctor.");
-    }
-
-    ~Document()
-    {
-        Log::info("Document " + _docKey + " dtor.");
     }
 
     Poco::Process::PID getPid() const { return _pid; }
