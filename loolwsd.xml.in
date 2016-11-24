@@ -9,7 +9,7 @@
     <child_root_path desc="Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate. Must be an empty directory." type="path" relative="true" default="jails"></child_root_path>
 
     <server_name desc="Hostname:port of the server running loolwsd. If empty, it's derived from the request." type="string" default=""></server_name>
-    <file_server_root_path desc="Path to the directory that should be considered root for the file server. This should be the directory containing loleaflet." type="path" relative="true" default="../loleaflet/../"></file_server_root_path>
+    <file_server_root_path desc="Path to the directory that should be considered root for the file server. This should be the directory containing loleaflet." type="path" relative="true" default="loleaflet/../"></file_server_root_path>
 
     <num_prespawn_children desc="Number of child processes to keep started in advance and waiting for new clients." type="uint" default="1">1</num_prespawn_children>
     <per_document desc="Document-specific settings, including LO Core settings.">

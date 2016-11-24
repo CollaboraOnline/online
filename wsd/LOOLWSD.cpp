@@ -1489,7 +1489,7 @@ void LOOLWSD::initialize(Application& self)
             { "child_root_path", "jails" },
             { "lo_jail_subpath", "lo" },
             { "server_name", "" },
-            { "file_server_root_path", "../loleaflet/../" },
+            { "file_server_root_path", "loleaflet/.." },
             { "num_prespawn_children", "1" },
             { "per_document.max_concurrency", "4" },
             { "loleaflet_html", "loleaflet.html" },
@@ -1927,7 +1927,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     FileUtil::registerFileSystemForDiskSpaceChecks(Cache + "/.");
 
     if (FileServerRoot.empty())
-        FileServerRoot = Poco::Path(Application::instance().commandPath()).parent().parent().toString();
+        FileServerRoot = Poco::Path(Application::instance().commandPath()).parent().toString();
     FileServerRoot = Poco::Path(FileServerRoot).absolute().toString();
     LOG_DBG("FileServerRoot: " << FileServerRoot);
 
