@@ -53,3 +53,7 @@ body {
 .loleaflet-controls {
 	margin-right: 10px;
 }
+
+.loleaflet-scrolled {
+	overflow: auto;
+}

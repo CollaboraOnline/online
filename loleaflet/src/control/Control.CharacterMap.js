@@ -331,7 +331,7 @@ L.Control.CharacterMap = L.Control.extend({
 
 
 	show: function () {
-		this._tbody.setAttribute('style', 'max-height:' + this._map.getSize().y / 2 + 'px');
+		this._content.setAttribute('style', 'max-height:' + (this._map.getSize().y - 50) + 'px');
 		this._container.style.visibility = '';
 	},
 
@@ -343,7 +343,7 @@ L.Control.CharacterMap = L.Control.extend({
 		closeButton.innerHTML = '&#215;';
 		L.DomEvent.on(closeButton, 'click', this._onCloseClick, this);
 		var wrapper = L.DomUtil.create('div', 'leaflet-popup-content-wrapper', this._container);
-		var content = L.DomUtil.create('div', 'leaflet-popup-content', wrapper);
+		var content = this._content = L.DomUtil.create('div', 'leaflet-popup-content loleaflet-scrolled', wrapper);
 		var labelTitle = document.createElement('span');
 		labelTitle.innerHTML = '<b>' + _('Special Characters') + '</b>';
 		content.appendChild(labelTitle);
