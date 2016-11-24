@@ -21,6 +21,7 @@
     top: 0;
     position: fixed;
     height: 25px;
+    display: inline-flex;
     right: 0;
     left: 0;
     padding-left: 125px;
