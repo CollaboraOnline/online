@@ -40,7 +40,7 @@
 #include <Common.hpp>
 #include <UserMessages.hpp>
 #include <Util.hpp>
-#include <LOOLProtocol.hpp>
+#include <Protocol.hpp>
 #include <LOOLWebSocket.hpp>
 #include "helpers.hpp"
 #include "countloolkits.hpp"

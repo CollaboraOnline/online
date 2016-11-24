@@ -16,7 +16,7 @@
 
 #include "Common.hpp"
 #include "IoUtil.hpp"
-#include "LOOLProtocol.hpp"
+#include "Protocol.hpp"
 #include <LOOLWebSocket.hpp>
 #include "Unit.hpp"
 #include "Util.hpp"

@@ -19,7 +19,7 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "LOOLProtocol.hpp"
+#include "Protocol.hpp"
 #include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "Unit.hpp"

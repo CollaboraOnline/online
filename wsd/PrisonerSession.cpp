@@ -17,8 +17,8 @@
 #include <Poco/URIStreamOpener.h>
 
 #include "Common.hpp"
-#include "LOOLProtocol.hpp"
-#include "LOOLSession.hpp"
+#include "Protocol.hpp"
+#include "Session.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "ClientSession.hpp"

@@ -22,7 +22,7 @@
 #include "Admin.hpp"
 #include "ClientSession.hpp"
 #include "Exceptions.hpp"
-#include "LOOLProtocol.hpp"
+#include "Protocol.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "PrisonerSession.hpp"

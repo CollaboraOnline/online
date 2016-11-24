@@ -33,7 +33,7 @@
 #include "ClientSession.hpp"
 #include "Common.hpp"
 #include "common/FileUtil.hpp"
-#include "LOOLProtocol.hpp"
+#include "Protocol.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
 

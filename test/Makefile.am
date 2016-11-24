@@ -9,7 +9,8 @@ check_PROGRAMS = test
 
 noinst_PROGRAMS = test unittest
 
-AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(top_srcdir)/test/data\"
+AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(top_srcdir)/test/data\" \
+	-I${top_srcdir}/common -I${top_srcdir}/wsd -I${top_srcdir}/kit
 
 noinst_LTLIBRARIES = \
         unit-timeout.la unit-prefork.la \
@@ -29,15 +30,15 @@ AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS
 wsd_sources = \
             ../common/FileUtil.cpp \
             ../common/SigUtil.cpp \
-            ../IoUtil.cpp \
-            ../Log.cpp \
-            ../LOOLKit.cpp \
-            ../LOOLProtocol.cpp \
-            ../LOOLSession.cpp \
-            ../TileCache.cpp \
-            ../MessageQueue.cpp \
-            ../Unit.cpp \
-            ../Util.cpp
+            ../common/IoUtil.cpp \
+            ../common/Log.cpp \
+            ../common/Protocol.cpp \
+            ../common/Session.cpp \
+	    ../common/MessageQueue.cpp \
+            ../kit/Kit.cpp \
+            ../wsd/TileCache.cpp \
+            ../common/Unit.cpp \
+            ../common/Util.cpp
 
 test_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
 test_SOURCES = TileCacheTests.cpp integration-http-server.cpp \

@@ -10,7 +10,7 @@
 #ifndef INCLUDED_CLIENTSSESSION_HPP
 #define INCLUDED_CLIENTSSESSION_HPP
 
-#include "LOOLSession.hpp"
+#include "Session.hpp"
 #include "MessageQueue.hpp"
 
 #include <Poco/URI.h>

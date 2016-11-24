@@ -19,7 +19,7 @@
 #include <Poco/URI.h>
 
 #include "common/FileUtil.hpp"
-#include "LOKitHelper.hpp"
+#include "KitHelper.hpp"
 #include "Log.hpp"
 #include "Png.hpp"
 #include "Util.hpp"

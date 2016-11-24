@@ -19,8 +19,8 @@
 #include <Poco/Thread.h>
 
 #include "Common.hpp"
-#include "LOOLKit.hpp"
-#include "LOOLSession.hpp"
+#include "Kit.hpp"
+#include "Session.hpp"
 
 class ChildSession;
 

@@ -13,8 +13,8 @@
 
 #include <ChildSession.hpp>
 #include <Common.hpp>
-#include <LOOLKit.hpp>
-#include <LOOLProtocol.hpp>
+#include <Kit.hpp>
+#include <Protocol.hpp>
 #include <MessageQueue.hpp>
 #include <Util.hpp>
 

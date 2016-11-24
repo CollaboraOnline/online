@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "LOOLSession.hpp"
+#include "Session.hpp"
 #include "config.h"
 
 #include <sys/stat.h>
@@ -34,7 +34,7 @@
 
 #include "Common.hpp"
 #include "IoUtil.hpp"
-#include "LOOLProtocol.hpp"
+#include "Protocol.hpp"
 #include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "TileCache.hpp"

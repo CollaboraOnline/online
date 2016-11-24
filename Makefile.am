@@ -24,109 +24,114 @@ endif
 
 ACLOCAL_AMFLAGS = -I m4
 
-AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"'
+# quick and easy for now.
+include_paths = -I${top_srcdir}/common -I${top_srcdir}/wsd -I${top_srcdir}/kit
+
+AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"' ${include_paths}
 AM_LDFLAGS = -pthread -Wl,-E
 
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
-shared_sources = ChildSession.cpp \
-                 common/FileUtil.cpp \
+shared_sources = common/FileUtil.cpp \
+                 common/IoUtil.cpp \
+                 common/Log.cpp \
+                 common/Protocol.cpp \
+                 common/Session.cpp \
+                 common/MessageQueue.cpp \
                  common/SigUtil.cpp \
-                 IoUtil.cpp \
-                 Log.cpp \
-                 LOOLProtocol.cpp \
-                 LOOLSession.cpp \
-                 MessageQueue.cpp \
-                 Unit.cpp \
-                 UnitHTTP.cpp \
-                 Util.cpp
+                 common/Unit.cpp \
+                 common/UnitHTTP.cpp \
+                 common/Util.cpp
 
-loolwsd_SOURCES = Admin.cpp \
-                  AdminModel.cpp \
-                  Auth.cpp \
-                  DocumentBroker.cpp \
-                  LOOLWSD.cpp \
-                  ClientSession.cpp \
-                  FileServer.cpp \
-                  PrisonerSession.cpp \
-                  Storage.cpp \
-                  TileCache.cpp \
+loolwsd_SOURCES = wsd/Admin.cpp \
+                  wsd/AdminModel.cpp \
+                  wsd/Auth.cpp \
+                  wsd/DocumentBroker.cpp \
+                  wsd/LOOLWSD.cpp \
+                  wsd/ClientSession.cpp \
+                  wsd/FileServer.cpp \
+                  wsd/PrisonerSession.cpp \
+                  wsd/Storage.cpp \
+                  wsd/TileCache.cpp \
                   $(shared_sources)
 
 noinst_PROGRAMS = connect \
                   lokitclient \
                   loolforkit-nocaps
 
-connect_SOURCES = Connect.cpp \
-                  Log.cpp \
-                  LOOLProtocol.cpp \
-                  Util.cpp
+connect_SOURCES = tools/Connect.cpp \
+                  common/Log.cpp \
+                  common/Protocol.cpp \
+                  common/Util.cpp
 
-lokitclient_SOURCES = IoUtil.cpp \
-                      Log.cpp \
-                      LOKitClient.cpp \
-                      LOOLProtocol.cpp \
-                      Util.cpp
+lokitclient_SOURCES = common/IoUtil.cpp \
+                      common/Log.cpp \
+                      tools/KitClient.cpp \
+                      common/Protocol.cpp \
+                      common/Util.cpp
 
-loolforkit_SOURCES = LOOLForKit.cpp \
-                     LOOLKit.cpp \
+loolforkit_SOURCES = kit/ChildSession.cpp \
+                     kit/ForKit.cpp \
+                     kit/Kit.cpp \
                      $(shared_sources)
 
 # build a binary with no caps to help debugging
 loolforkit_nocaps_SOURCES = $(loolforkit_SOURCES)
 
-loolmount_SOURCES = loolmount.c
+loolmount_SOURCES = tools/mount.cpp
 
-loolmap_SOURCES = loolmap.c
+loolmap_SOURCES = tools/map.cpp
 
-looltool_SOURCES = LOOLTool.cpp
+looltool_SOURCES = tools/Tool.cpp
 
-loolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\"
-loolstress_SOURCES = LOOLStress.cpp \
-                     LOOLProtocol.cpp \
-                     Log.cpp
+loolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" ${include_paths}
+loolstress_SOURCES = tools/Stress.cpp \
+                     common/Protocol.cpp \
+                     common/Log.cpp
 
-noinst_HEADERS = Admin.hpp \
-                 AdminModel.hpp \
-                 Auth.hpp \
-                 ChildSession.hpp \
-                 Common.hpp \
-                 DocumentBroker.hpp \
-                 Exceptions.hpp \
-                 FileServer.hpp \
-                 common/FileUtil.hpp \
-                 common/SigUtil.hpp \
-                 IoUtil.hpp \
-                 Log.hpp \
-                 LOKitHelper.hpp \
-                 LOOLKit.hpp \
-                 LOOLProtocol.hpp \
-                 LOOLSession.hpp \
-                 LOOLWebSocket.hpp \
-                 LOOLWSD.hpp \
-                 ClientSession.hpp \
-                 PrisonerSession.hpp \
-                 MessageQueue.hpp \
-                 Png.hpp \
-                 QueueHandler.hpp \
-                 Rectangle.hpp \
-                 Storage.hpp \
-                 TileCache.hpp \
-                 TileDesc.hpp \
-                 TraceFile.hpp \
-                 Unit.hpp \
-                 UnitHTTP.hpp \
-                 UserMessages.hpp \
-                 Util.hpp \
+wsd_headers = wsd/Admin.hpp \
+              wsd/AdminModel.hpp \
+              wsd/Auth.hpp \
+              wsd/ClientSession.hpp \
+              wsd/DocumentBroker.hpp \
+              wsd/Exceptions.hpp \
+              wsd/FileServer.hpp \
+              wsd/LOOLWebSocket.hpp \
+              wsd/LOOLWSD.hpp \
+              wsd/PrisonerSession.hpp \
+              wsd/QueueHandler.hpp \
+              wsd/Storage.hpp \
+              wsd/TileCache.hpp \
+              wsd/TileDesc.hpp \
+              wsd/TraceFile.hpp \
+              wsd/UserMessages.hpp
+
+shared_headers = common/Common.hpp \
+                 common/IoUtil.hpp \
+                 common/Log.hpp \
+                 common/Protocol.hpp \
+                 common/Session.hpp \
+                 common/Unit.hpp \
+                 common/UnitHTTP.hpp \
+                 common/Util.hpp \
+                 common/MessageQueue.hpp \
+                 common/Png.hpp \
+                 common/Rectangle.hpp \
+                 common/security.h
+
+kit_headers = kit/ChildSession.hpp \
+              kit/Kit.hpp \
+	      kit/KitHelper.hpp
+
+noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.hxx \
                  bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitInit.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h \
                  test/countloolkits.hpp \
-                 test/helpers.hpp \
-                 security.h
+                 test/helpers.hpp
 
 EXTRA_DIST = discovery.xml \
              favicon.ico \

@@ -33,7 +33,7 @@
 
 #include "Common.hpp"
 #include "IoUtil.hpp"
-#include "LOOLKit.hpp"
+#include "Kit.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"

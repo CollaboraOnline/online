@@ -101,8 +101,8 @@
 #include "FileServer.hpp"
 #include "common/FileUtil.hpp"
 #include "IoUtil.hpp"
-#include "LOOLProtocol.hpp"
-#include "LOOLSession.hpp"
+#include "Protocol.hpp"
+#include "Session.hpp"
 #include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "PrisonerSession.hpp"

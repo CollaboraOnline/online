@@ -12,7 +12,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include "Common.hpp"
-#include "LOOLProtocol.hpp"
+#include "Protocol.hpp"
 #include "MessageQueue.hpp"
 #include "Util.hpp"
 

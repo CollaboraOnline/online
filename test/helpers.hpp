@@ -41,7 +41,7 @@
 
 #include <Common.hpp>
 #include "common/FileUtil.hpp"
-#include <LOOLProtocol.hpp>
+#include <Protocol.hpp>
 #include <LOOLWebSocket.hpp>
 #include <UserMessages.hpp>
 #include <Util.hpp>

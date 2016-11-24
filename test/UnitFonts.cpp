@@ -20,7 +20,7 @@
 #include <Poco/Timestamp.h>
 
 #include "Common.hpp"
-#include "LOOLProtocol.hpp"
+#include "Protocol.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"

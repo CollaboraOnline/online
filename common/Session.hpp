@@ -22,7 +22,7 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/Types.h>
 
-#include "LOOLProtocol.hpp"
+#include "Protocol.hpp"
 #include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "MessageQueue.hpp"

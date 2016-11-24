@@ -17,7 +17,7 @@
 #include <Poco/Net/WebSocket.h>
 
 #include <Common.hpp>
-#include <LOOLProtocol.hpp>
+#include <Protocol.hpp>
 #include <Log.hpp>
 
 /// WebSocket that is thread safe, and handles large frames transparently.

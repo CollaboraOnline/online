@@ -18,7 +18,7 @@
 #include <Poco/StringTokenizer.h>
 
 #include "Exceptions.hpp"
-#include "LOOLProtocol.hpp"
+#include "Protocol.hpp"
 
 /// Tile Descriptor
 /// Represents a tile's coordinates and dimensions.

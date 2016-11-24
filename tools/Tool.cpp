@@ -40,7 +40,7 @@
 #include <Poco/Util/OptionSet.h>
 
 #include "Common.hpp"
-#include "LOOLProtocol.hpp"
+#include "Protocol.hpp"
 #include "Util.hpp"
 
 #include <Poco/Util/Application.h>

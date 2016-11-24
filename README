@@ -1,16 +1,22 @@
 LibreOffice on-line.
 
-This project fundamentally has two pieces:
+This project has several components:
 
-loolwsd/
-	The server side component.
+wsd/
+	The Web Services Daemon - which accepts external connections.
+
+kit/
+	The client which lives in its own chroot and renders documents.
+
+common/
+	Shared code between these processes.
 
 loleaflet/
-	The client side component.
+	The client side JavaScript component.
 
-First compile loolwsd, and then loleaflet.
+It is recommended to read these files:
 
-Since you need both of these to get things working, it is recommended
-to read the READMEs in both projects.
+	wsd/README
+	loleaflet/README
 
 Enjoy.

@@ -27,7 +27,7 @@
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
-#include "LOKitHelper.hpp"
+#include "KitHelper.hpp"
 #include "Png.hpp"
 #include "Util.hpp"
 

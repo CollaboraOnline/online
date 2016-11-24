@@ -41,7 +41,7 @@
 #include <Poco/Version.h>
 
 #include "Common.hpp"
-#include "LOOLProtocol.hpp"
+#include "Protocol.hpp"
 #include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "Util.hpp"

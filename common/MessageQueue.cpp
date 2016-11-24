@@ -13,7 +13,7 @@
 
 #include <Poco/StringTokenizer.h>
 
-#include <LOOLProtocol.hpp>
+#include <Protocol.hpp>
 #include <Log.hpp>
 #include <TileDesc.hpp>
 

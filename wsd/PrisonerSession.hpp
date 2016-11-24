@@ -10,7 +10,7 @@
 #ifndef INCLUDED_PRISONERSESSION_HPP
 #define INCLUDED_PRISONERSESSION_HPP
 
-#include "LOOLSession.hpp"
+#include "Session.hpp"
 
 class DocumentBroker;
 class ClientSession;

@@ -9,8 +9,8 @@
 
 #include <Poco/Runnable.h>
 
-#include "LOOLProtocol.hpp"
-#include "LOOLSession.hpp"
+#include "Protocol.hpp"
+#include "Session.hpp"
 #include "MessageQueue.hpp"
 #include "Util.hpp"
 

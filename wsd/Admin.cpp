@@ -31,8 +31,8 @@
 #include "Common.hpp"
 #include "FileServer.hpp"
 #include "IoUtil.hpp"
-#include "LOOLProtocol.hpp"
-#include <LOOLWebSocket.hpp>
+#include "Protocol.hpp"
+#include "LOOLWebSocket.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "Storage.hpp"
