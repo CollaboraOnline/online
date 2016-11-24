@@ -108,6 +108,39 @@ public:
         return -1;
     }
 
+
+    /// Wrapper for Poco::Net::WebSocket::receiveFrame() that handles PING frames
+    /// (by replying with a PONG frame) and PONG frames. PONG frames are ignored.
+    /// Should we also factor out the handling of non-final and continuation frames into this?
+    int receiveFrame(Poco::Buffer<char>& buffer, int& flags)
+    {
+#ifdef ENABLE_DEBUG
+        // Delay receiving the frame
+        std::this_thread::sleep_for(getWebSocketDelay());
+#endif
+        // Timeout given is in microseconds.
+        static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+
+        while (poll(waitTime, Poco::Net::Socket::SELECT_READ))
+        {
+            const int n = Poco::Net::WebSocket::receiveFrame(buffer, flags);
+            if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
+            {
+                sendFrame(buffer.begin(), n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG);
+            }
+            else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
+            {
+                // In case we do send pongs in the future.
+            }
+            else
+            {
+                return n;
+            }
+        }
+
+        return -1;
+    }
+
     /// Wrapper for Poco::Net::WebSocket::sendFrame() that handles large frames.
     int sendFrame(const char* buffer, const int length, const int flags = FRAME_TEXT)
     {
@@ -116,19 +149,6 @@ public:
         std::this_thread::sleep_for(getWebSocketDelay());
 #endif
         std::unique_lock<std::mutex> lock(_mutex);
-
-        // Size after which messages will be sent preceded with
-        // 'nextmessage' frame to let the receiver know in advance
-        // the size of larger coming message. All messages up to this
-        // size are considered small messages.
-        constexpr int SMALL_MESSAGE_SIZE = READ_BUFFER_SIZE / 2;
-
-        if (length > SMALL_MESSAGE_SIZE)
-        {
-            const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-            Poco::Net::WebSocket::sendFrame(nextmessage.data(), nextmessage.size());
-            Log::debug("Message is long, sent " + nextmessage);
-        }
 
         const int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
 

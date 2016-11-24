@@ -197,6 +197,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
         int retries = timeoutMs / 500;
         const Poco::Timespan waitTime(retries ? timeoutMs * 1000 / retries : timeoutMs * 1000);
         std::vector<char> response;
+        Poco::Buffer<char> buffer(READ_BUFFER_SIZE);
 
         bool timedout = false;
         ws.setReceiveTimeout(0);
@@ -210,9 +211,10 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
                     timedout = false;
                 }
 
-                response.resize(READ_BUFFER_SIZE);
-                int bytes = ws.receiveFrame(response.data(), response.size(), flags);
-                response.resize(bytes >= 0 ? bytes : 0);
+                response.resize(0);
+                buffer.resize(0);
+                const int bytes = ws.receiveFrame(buffer, flags);
+                response.insert(response.end(), buffer.begin(), buffer.end());
                 std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags) << std::endl;
                 const auto message = LOOLProtocol::getFirstLine(response);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
@@ -221,26 +223,6 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
                     {
                         return response;
                     }
-                    else if (LOOLProtocol::matchPrefix("nextmessage", message))
-                    {
-                        int size = 0;
-                        if (LOOLProtocol::getTokenIntegerFromMessage(message, "size", size) && size > 0)
-                        {
-                            response.resize(size);
-                            bytes = ws.receiveFrame(response.data(), response.size(), flags);
-                            response.resize(bytes >= 0 ? bytes : 0);
-                            std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags) << std::endl;
-                            if (bytes > 0 &&
-                                LOOLProtocol::matchPrefix(prefix, LOOLProtocol::getFirstLine(response)))
-                            {
-                                return response;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    response.resize(0);
                 }
 
                 if (bytes <= 0)
