@@ -29,7 +29,12 @@ L.Map.TouchZoom = L.Handler.extend({
 		this._startDist = p1.distanceTo(p2);
 
 		this._moved = false;
-		this._zooming = true;
+		if (map.getDocType() === 'spreadsheet') {
+			this._zooming = false;
+		}
+		else {
+			this._zooming = true;
+		}
 
 		this._centerOffset = viewCenter.subtract(this._startCenter);
 
