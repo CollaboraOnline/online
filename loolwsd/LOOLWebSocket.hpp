@@ -45,7 +45,7 @@ private:
             jitter = std::stoul(std::getenv("LOOL_WS_JITTER"));
         }
 
-        return std::chrono::milliseconds(baseDelay + (std::rand() % jitter));
+        return std::chrono::milliseconds(baseDelay + (jitter > 0 ? (std::rand() % jitter) : 0));
     }
 #endif
 
