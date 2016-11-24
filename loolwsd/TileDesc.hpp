@@ -120,17 +120,19 @@ public:
             << " tileposx=" << _tilePosX
             << " tileposy=" << _tilePosY
             << " tilewidth=" << _tileWidth
-            << " tileheight=" << _tileHeight
-            << " ver=" << _ver;
-
-        if (_imgSize > 0)
-        {
-            oss << " imgsize=" << _imgSize;
-        }
+            << " tileheight=" << _tileHeight;
 
         if (_id >= 0)
         {
             oss << " id=" << _id;
+        }
+
+        // Anything after ver is optional.
+        oss << " ver=" << _ver;
+
+        if (_imgSize > 0)
+        {
+            oss << " imgsize=" << _imgSize;
         }
 
         if (_broadcast)
@@ -162,8 +164,10 @@ public:
                 pairs[name] = value;
             }
         }
+
         std::string s;
-        bool broadcast = (LOOLProtocol::getTokenString(tokens, "broadcast", s) && s == "yes");
+        const bool broadcast = (LOOLProtocol::getTokenString(tokens, "broadcast", s) &&
+                                s == "yes");
 
         return TileDesc(pairs["part"], pairs["width"], pairs["height"],
                         pairs["tileposx"], pairs["tileposy"],
@@ -304,14 +308,15 @@ public:
 
         oss << " tilewidth=" << _tileWidth
             << " tileheight=" << _tileHeight;
-        if (_ver >= 0)
-        {
-            oss << " ver=" << _ver;
-        }
 
         if (_id >= 0)
         {
             oss << " id=" << _id;
+        }
+
+        if (_ver >= 0)
+        {
+            oss << " ver=" << _ver;
         }
 
         return oss.str();
