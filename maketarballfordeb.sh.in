@@ -7,7 +7,7 @@ tar xzf $SRCDIR/loolwsd-@PACKAGE_VERSION@.tar.gz
 cp -a $SRCDIR/debian loolwsd-@PACKAGE_VERSION@
 mkdir loolwsd-@PACKAGE_VERSION@/loleaflet
 cd loolwsd-@PACKAGE_VERSION@/loleaflet
-tar xzf $SRCDIR/../loleaflet/loleaflet-@PACKAGE_VERSION@.tar.gz --strip-components=1
+tar xzf $SRCDIR/loleaflet/loleaflet-@PACKAGE_VERSION@.tar.gz --strip-components=1
 cd $TEMPDIR
 tar czf $SRCDIR/loolwsd_@PACKAGE_VERSION@.orig.tar.gz loolwsd-@PACKAGE_VERSION@
 cd $SRCDIR
