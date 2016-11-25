@@ -118,6 +118,7 @@ shared_headers = common/Common.hpp \
                  common/MessageQueue.hpp \
                  common/Png.hpp \
                  common/Rectangle.hpp \
+                 common/SigUtil.hpp \
                  common/security.h
 
 kit_headers = kit/ChildSession.hpp \
