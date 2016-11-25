@@ -109,6 +109,7 @@ wsd_headers = wsd/Admin.hpp \
 
 shared_headers = common/Common.hpp \
                  common/IoUtil.hpp \
+                 common/FileUtil.hpp \
                  common/Log.hpp \
                  common/Protocol.hpp \
                  common/Session.hpp \
