@@ -171,13 +171,13 @@ L.Map.Keyboard = L.Handler.extend({
 
 		this._map.on('mousedown', this._onMouseDown, this);
 		this._map.on('keydown keyup keypress', this._onKeyDown, this);
-		this._map.on('compositionend', this._onKeyDown, this);
+		this._map.on('compositionstart compositionupdate compositionend textInput', this._onKeyDown, this);
 	},
 
 	removeHooks: function () {
 		this._map.off('mousedown', this._onMouseDown, this);
 		this._map.off('keydown keyup keypress', this._onKeyDown, this);
-		this._map.off('compositionend', this._onKeyDown, this);
+		this._map.off('compositionstart compositionupdate compositionend textInput', this._onKeyDown, this);
 	},
 
 	_setPanOffset: function (pan) {
@@ -285,6 +285,14 @@ L.Map.Keyboard = L.Handler.extend({
 
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
+
+		// Hack for making space work in chrome when IME is enabled
+		// Chrome doesn't fire compositionend event when IME is enabled and user presses <space>.
+		// However, it sends 'textInput' event in such a case. treat it like 'compositionend' events
+		if (e.type === 'textInput' && e.originalEvent.data === ' ') {
+			e.type = 'compositionend';
+		}
+
 		if (e.type === 'compositionend') {
 			var compCharCodes = [];
 			for (var i = 0; i < e.originalEvent.data.length; i++) {
@@ -357,6 +365,7 @@ L.Map.Keyboard = L.Handler.extend({
 				map.setZoom(map.getZoom() + (e.shiftKey ? 3 : 1) * this._zoomKeys[key]);
 			}
 		}
+
 		L.DomEvent.stopPropagation(e.originalEvent);
 	},
 
