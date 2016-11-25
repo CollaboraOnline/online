@@ -44,16 +44,17 @@ namespace {
     std::string readFontList(const std::shared_ptr<LOOLWebSocket> &socket)
     {
         int flags;
-        Poco::Buffer<char> buffer(READ_BUFFER_SIZE);
+        char buffer[100 * 1000];
 
-        buffer.resize(0);
-        const int length = socket->receiveFrame(buffer, flags);
+        int length = socket->receiveFrame(buffer, sizeof (buffer), flags);
         if (length > 0)
         {
-            return std::string(buffer.begin(), length);
+            assert(length<(int)sizeof(buffer));
+            buffer[length] = '\0';
+            return std::string(buffer);
         }
-
-        return std::string("read failure");
+        else
+            return std::string("read failure");
     }
 }
 

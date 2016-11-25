@@ -164,12 +164,11 @@ void HTTPCrashTest::testCrashKit()
         // receive close frame handshake
         int bytes;
         int flags;
-        Poco::Buffer<char> buffer(READ_BUFFER_SIZE);
+        char buffer[READ_BUFFER_SIZE];
         do
         {
-            buffer.resize(0);
-            bytes = socket->receiveFrame(buffer, flags);
-            std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer.begin(), bytes, flags) << std::endl;
+            bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
+            std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
         }
         while ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
@@ -177,7 +176,7 @@ void HTTPCrashTest::testCrashKit()
         socket->shutdown();
 
         // no more messages is received.
-        bytes = socket->receiveFrame(buffer, flags);
+        bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
         CPPUNIT_ASSERT_MESSAGE("Expected no more data", bytes <= 2); // The 2-byte marker is ok.
         CPPUNIT_ASSERT_EQUAL(0x88, flags);
     }
