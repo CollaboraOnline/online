@@ -894,6 +894,14 @@ L.Map = L.Evented.extend({
 			//type = e.type === 'keypress' && e.keyCode === 13 ? 'click' : e.type;
 		    type = e.type;
 
+		// For touch devices, to pop-up the keyboard, it is required to call
+		// .focus() method on hidden input within actual 'click' event here
+		// Calling from some other place with no real 'click' event doesn't work
+		if (type === 'click') {
+			this._textArea.blur();
+			this._textArea.focus();
+		}
+
 		// we need to keep track if we have entered/left the map
 		this._mouseEnteringLeaving = false;
 		// mouse leaving the map ?
