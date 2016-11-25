@@ -196,7 +196,7 @@ void shutdownLimitReached(LOOLWebSocket& ws)
     {
         int flags = 0;
         int retries = 7;
-        std::vector<char> buffer(READ_BUFFER_SIZE * 100);
+        Poco::Buffer<char> buffer(READ_BUFFER_SIZE);
 
         const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
         do
@@ -214,7 +214,8 @@ void shutdownLimitReached(LOOLWebSocket& ws)
             // Ignore incoming messages.
             if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
             {
-                ws.receiveFrame(buffer.data(), buffer.capacity(), flags);
+                buffer.resize(0);
+                ws.receiveFrame(buffer, flags);
             }
 
             // Shutdown.

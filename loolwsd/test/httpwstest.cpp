@@ -253,37 +253,42 @@ void HTTPWSTest::testHandShake()
         socket.setReceiveTimeout(0);
 
         int flags = 0;
-        char buffer[1024] = {0};
-        int bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: find"), std::string(buffer, bytes));
+        Poco::Buffer<char> buffer(READ_BUFFER_SIZE);
+        buffer.resize(0);
+        int bytes = socket.receiveFrame(buffer, flags);
+        CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: find"), std::string(buffer.begin(), bytes));
 
-        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        if (bytes > 0 && !std::strstr(buffer, "error:"))
+        buffer.resize(0);
+        bytes = socket.receiveFrame(buffer, flags);
+        if (bytes > 0 && !std::strstr(buffer.begin(), "error:"))
         {
-            CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: connect"), std::string(buffer, bytes));
+            CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: connect"), std::string(buffer.begin(), bytes));
 
-            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            if (!std::strstr(buffer, "error:"))
+            buffer.resize(0);
+            bytes = socket.receiveFrame(buffer, flags);
+            if (!std::strstr(buffer.begin(), "error:"))
             {
-                CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: ready"), std::string(buffer, bytes));
+                CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: ready"), std::string(buffer.begin(), bytes));
             }
             else
             {
                 // check error message
-                CPPUNIT_ASSERT(std::strstr(SERVICE_UNAVAILABLE_INTERNAL_ERROR, buffer) != nullptr);
+                CPPUNIT_ASSERT(std::strstr(SERVICE_UNAVAILABLE_INTERNAL_ERROR, buffer.begin()) != nullptr);
 
                 // close frame message
-                bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+                buffer.resize(0);
+                bytes = socket.receiveFrame(buffer, flags);
                 CPPUNIT_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE);
             }
         }
         else
         {
             // check error message
-            CPPUNIT_ASSERT(std::strstr(SERVICE_UNAVAILABLE_INTERNAL_ERROR, buffer) != nullptr);
+            CPPUNIT_ASSERT(std::strstr(SERVICE_UNAVAILABLE_INTERNAL_ERROR, buffer.begin()) != nullptr);
 
             // close frame message
-            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            buffer.resize(0);
+            bytes = socket.receiveFrame(buffer, flags);
             CPPUNIT_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE);
         }
     }
@@ -309,15 +314,16 @@ void HTTPWSTest::testCloseAfterClose()
         // receive close frame handshake
         int bytes;
         int flags;
-        char buffer[READ_BUFFER_SIZE];
+        Poco::Buffer<char> buffer(READ_BUFFER_SIZE);
         do
         {
-            bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
+            buffer.resize(0);
+            bytes = socket->receiveFrame(buffer, flags);
         }
         while (bytes && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
         // no more messages is received.
-        bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
+        bytes = socket->receiveFrame(buffer, flags);
         std::cerr << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
         CPPUNIT_ASSERT_EQUAL(0, bytes);
         CPPUNIT_ASSERT_EQUAL(0, flags);

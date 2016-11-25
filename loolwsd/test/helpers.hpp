@@ -173,7 +173,8 @@ int getErrorCode(LOOLWebSocket& ws, std::string& message)
     ws.setReceiveTimeout(timeout);
     do
     {
-        bytes = ws.receiveFrame(buffer.begin(), READ_BUFFER_SIZE, flags);
+        buffer.resize(0);
+        bytes = ws.receiveFrame(buffer, flags);
     }
     while ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
@@ -409,7 +410,7 @@ void SocketProcessor(const std::string& name,
     const Poco::Timespan waitTime(timeoutMs * 1000);
     int flags = 0;
     int n = 0;
-    char buffer[READ_BUFFER_SIZE];
+    Poco::Buffer<char> buffer(READ_BUFFER_SIZE);
     do
     {
         if (!socket->poll(waitTime, Poco::Net::Socket::SELECT_READ))
@@ -418,11 +419,12 @@ void SocketProcessor(const std::string& name,
             break;
         }
 
-        n = socket->receiveFrame(buffer, sizeof(buffer), flags);
-        std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, n, flags) << std::endl;
+        buffer.resize(0);
+        n = socket->receiveFrame(buffer, flags);
+        std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer.begin(), n, flags) << std::endl;
         if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
         {
-            if (!handler(std::string(buffer, n)))
+            if (!handler(std::string(buffer.begin(), n)))
             {
                 break;
             }

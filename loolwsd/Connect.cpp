@@ -89,23 +89,24 @@ public:
         {
             do
             {
-                char buffer[100000];
-                n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
+                Poco::Buffer<char> buffer(READ_BUFFER_SIZE);
+                buffer.resize(0);
+                n = _ws.receiveFrame(buffer, flags);
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
                     {
                         std::unique_lock<std::mutex> lock(coutMutex);
-                        std::cout << "Got " << getAbbreviatedFrameDump(buffer, n, flags) << std::endl;
+                        std::cout << "Got " << getAbbreviatedFrameDump(buffer.begin(), n, flags) << std::endl;
                     }
 
-                    std::string firstLine = getFirstLine(buffer, n);
+                    const std::string firstLine = getFirstLine(buffer.begin(), n);
                     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
                     if (std::getenv("DISPLAY") != nullptr && tokens[0] == "tile:")
                     {
                         TemporaryFile pngFile;
                         std::ofstream pngStream(pngFile.path(), std::ios::binary);
-                        pngStream.write(buffer + firstLine.size() + 1, n - firstLine.size() - 1);
+                        pngStream.write(buffer.begin() + firstLine.size() + 1, n - firstLine.size() - 1);
                         pngStream.close();
                         if (std::system((std::string("display ") + pngFile.path()).c_str()) == -1)
                         {

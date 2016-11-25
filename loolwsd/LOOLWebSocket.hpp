@@ -79,39 +79,6 @@ public:
     /// Wrapper for Poco::Net::WebSocket::receiveFrame() that handles PING frames
     /// (by replying with a PONG frame) and PONG frames. PONG frames are ignored.
     /// Should we also factor out the handling of non-final and continuation frames into this?
-    int receiveFrame(char* buffer, const int length, int& flags)
-    {
-#ifdef ENABLE_DEBUG
-        // Delay receiving the frame
-        std::this_thread::sleep_for(getWebSocketDelay());
-#endif
-        // Timeout given is in microseconds.
-        static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
-
-        while (poll(waitTime, Poco::Net::Socket::SELECT_READ))
-        {
-            const int n = Poco::Net::WebSocket::receiveFrame(buffer, length, flags);
-            if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
-            {
-                sendFrame(buffer, n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG);
-            }
-            else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
-            {
-                // In case we do send pongs in the future.
-            }
-            else
-            {
-                return n;
-            }
-        }
-
-        return -1;
-    }
-
-
-    /// Wrapper for Poco::Net::WebSocket::receiveFrame() that handles PING frames
-    /// (by replying with a PONG frame) and PONG frames. PONG frames are ignored.
-    /// Should we also factor out the handling of non-final and continuation frames into this?
     int receiveFrame(Poco::Buffer<char>& buffer, int& flags)
     {
 #ifdef ENABLE_DEBUG
