@@ -286,7 +286,10 @@ L.Map.Keyboard = L.Handler.extend({
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
 		if (e.type === 'compositionend') {
-			charCode = keyCode = e.originalEvent.data.charCodeAt();
+			var compCharCodes = [];
+			for (var i = 0; i < e.originalEvent.data.length; i++) {
+				compCharCodes.push(e.originalEvent.data[i].charCodeAt());
+			}
 		}
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
 
@@ -317,7 +320,12 @@ L.Map.Keyboard = L.Handler.extend({
 					// key press times will be paired with the invalidation messages
 					docLayer._debugKeypressQueue.push(+new Date());
 				}
-				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+				if (e.type === 'compositionend') {
+					// Set all keycodes to zero
+					docLayer._postKeyboardEvents('input', compCharCodes, Array.apply(null, Array(compCharCodes.length)).map(Number.prototype.valueOf, 0));
+				} else {
+					docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+				}
 			}
 			else if (e.type === 'keyup') {
 				docLayer._postKeyboardEvent('up', charCode, unoKeyCode);
