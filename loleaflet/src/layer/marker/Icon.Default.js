@@ -30,15 +30,13 @@ L.Icon.Default = L.Icon.extend({
 
 L.Icon.Default.imagePath = (function () {
 	var scripts = document.getElementsByTagName('script'),
-	    leafletRe = /[\/^]leaflet[\-\._]?([\w\-\._]*)\.js\??/;
+	    leafletRe = /[\/^]loleaflet/;
 
 	var i, len, src, path;
-
 	for (i = 0, len = scripts.length; i < len; i++) {
 		src = scripts[i].src;
-
 		if (src.match(leafletRe)) {
-			path = src.split(leafletRe)[0];
+			path = src.substring(0, src.lastIndexOf('/'));
 			return (path ? path + '/' : '') + 'images';
 		}
 	}
