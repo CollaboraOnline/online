@@ -9,6 +9,7 @@
 .cxx_tags
 .yavide_proj
 .yavide_session
+.vscode
 Makefile
 Makefile.in
 loolwsd.spec
