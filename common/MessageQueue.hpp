@@ -13,7 +13,6 @@
 #include <algorithm>
 #include <condition_variable>
 #include <functional>
-#include <deque>
 #include <map>
 #include <mutex>
 #include <vector>
@@ -65,7 +64,7 @@ protected:
 
     void clear_impl();
 
-    std::deque<Payload> _queue;
+    std::vector<Payload> _queue;
 };
 
 /** MessageQueue specialized for priority handling of tiles.

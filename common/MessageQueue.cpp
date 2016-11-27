@@ -78,7 +78,7 @@ bool MessageQueue::wait_impl() const
 MessageQueue::Payload MessageQueue::get_impl()
 {
     Payload result = _queue.front();
-    _queue.pop_front();
+    _queue.erase(_queue.begin());
     return result;
 }
 
@@ -206,7 +206,7 @@ void TileQueue::deprioritizePreviews()
             break;
         }
 
-        _queue.pop_front();
+        _queue.erase(_queue.begin());
         _queue.push_back(front);
     }
 }
@@ -224,7 +224,7 @@ MessageQueue::Payload TileQueue::get_impl()
     {
         // Don't combine non-tiles or tiles with id.
         LOG_TRC("MessageQueue res: " << msg);
-        _queue.pop_front();
+        _queue.erase(_queue.begin());
 
         // de-prioritize the other tiles with id - usually the previews in
         // Impress
