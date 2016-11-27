@@ -271,13 +271,15 @@ class PngCache
         size_t    _hitCount;
         CacheData _data;
         CacheEntry(size_t defaultSize) :
-            _hitCount(0),
+            _hitCount(1),   // Every entry is used at least once; prevent removal at birth.
             _data( new std::vector< char >() )
         {
             _data->reserve( defaultSize );
         }
     } ;
     size_t _cacheSize;
+    static const size_t CacheSizeSoftLimit = (1024 * 4 * 32); // 128k of cache
+    static const size_t CacheSizeHardLimit = CacheSizeSoftLimit * 2;
     size_t _cacheHits;
     size_t _cacheTests;
     std::map< uint64_t, CacheEntry > _cache;
@@ -286,7 +288,7 @@ class PngCache
     {
         // A normalish PNG image size for text in a writer document is
         // around 4k for a content tile, and sub 1k for a background one.
-        if (_cacheSize > (1024 * 4 * 32) /* 128k of cache */)
+        if (_cacheSize > CacheSizeHardLimit)
         {
             size_t avgHits = 0;
             for (auto it = _cache.begin(); it != _cache.end(); ++it)
@@ -299,14 +301,18 @@ class PngCache
 
             for (auto it = _cache.begin(); it != _cache.end();)
             {
-                if (it->second._hitCount <= avgHits)
+                if ((_cacheSize > CacheSizeSoftLimit && it->second._hitCount == 0) ||
+                    (_cacheSize > CacheSizeHardLimit && it->second._hitCount > 0 && it->second._hitCount <= avgHits))
                 {
+                    // Shrink cache when we exceed the size to maximize
+                    // the chance of hitting these entries in the future.
                     _cacheSize -= it->second._data->size();
                     it = _cache.erase(it);
                 }
                 else
                 {
-                    it->second._hitCount /= 2;
+                    if (it->second._hitCount > 0)
+                        it->second._hitCount--;
                     ++it;
                 }
             }
