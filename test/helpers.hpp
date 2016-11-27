@@ -212,7 +212,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
 
                 response.resize(READ_BUFFER_SIZE);
                 int bytes = ws.receiveFrame(response.data(), response.size(), flags);
-                response.resize(bytes >= 0 ? bytes : 0);
+                response.resize(std::max(bytes, 0));
                 std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags) << std::endl;
                 const auto message = LOOLProtocol::getFirstLine(response);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
@@ -228,7 +228,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
                         {
                             response.resize(size);
                             bytes = ws.receiveFrame(response.data(), response.size(), flags);
-                            response.resize(bytes >= 0 ? bytes : 0);
+                            response.resize(std::max(bytes, 0));
                             std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags) << std::endl;
                             if (bytes > 0 &&
                                 LOOLProtocol::matchPrefix(prefix, LOOLProtocol::getFirstLine(response)))

@@ -50,11 +50,10 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
 
     // Timeout given is in microseconds.
     static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
-    const auto bufferSize = READ_BUFFER_SIZE * 100;
     int flags = 0;
     int n = -1;
     bool stop = false;
-    std::vector<char> payload(bufferSize);
+    std::vector<char> payload(READ_BUFFER_SIZE);
     try
     {
         ws->setReceiveTimeout(0);
@@ -81,8 +80,8 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             {
                 payload.resize(payload.capacity());
                 n = -1;
-                n = ws->receiveFrame(payload.data(), payload.capacity(), flags);
-                payload.resize(n > 0 ? n : 0);
+                n = ws->receiveFrame(payload.data(), payload.size(), flags);
+                payload.resize(std::max(n, 0));
             }
             catch (const Poco::TimeoutException&)
             {
@@ -107,7 +106,7 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
                 LOG_WRN("SocketProcessor [" << name << "]: Receiving multi-parm frame.");
                 while (true)
                 {
-                    char buffer[READ_BUFFER_SIZE * 10];
+                    char buffer[READ_BUFFER_SIZE];
                     n = ws->receiveFrame(buffer, sizeof(buffer), flags);
                     if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
                     {

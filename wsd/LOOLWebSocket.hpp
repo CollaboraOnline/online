@@ -117,17 +117,11 @@ public:
 #endif
         std::unique_lock<std::mutex> lock(_mutex);
 
-        // Size after which messages will be sent preceded with
-        // 'nextmessage' frame to let the receiver know in advance
-        // the size of larger coming message. All messages up to this
-        // size are considered small messages.
-        constexpr int SMALL_MESSAGE_SIZE = READ_BUFFER_SIZE / 2;
-
-        if (length > SMALL_MESSAGE_SIZE)
+        if (length >= LARGE_MESSAGE_SIZE)
         {
             const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
             Poco::Net::WebSocket::sendFrame(nextmessage.data(), nextmessage.size());
-            Log::debug("Message is long, sent " + nextmessage);
+            LOG_TRC("Message is long, sent " + nextmessage);
         }
 
         const int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
@@ -141,7 +135,7 @@ public:
         }
         else
         {
-            LOG_DBG("Sent frame: " << LOOLProtocol::getAbbreviatedMessage(buffer, length));
+            LOG_TRC("Sent frame: " << LOOLProtocol::getAbbreviatedMessage(buffer, length));
         }
 
         return result;
