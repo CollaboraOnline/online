@@ -278,6 +278,8 @@ class PngCache
         }
     } ;
     size_t _cacheSize;
+    size_t _cacheHits;
+    size_t _cacheTests;
     std::map< uint64_t, CacheEntry > _cache;
 
     void balanceCache()
@@ -291,7 +293,8 @@ class PngCache
                 avgHits += it->second._hitCount;
 
             LOG_DBG("cache " << _cache.size() << " items total size " <<
-                    _cacheSize << " total hits " << avgHits << " at balance start");
+                    _cacheSize << " current hits " << avgHits << ", total hit rate " <<
+                    (_cacheHits * 100. / _cacheTests) << "% at balance start");
             avgHits /= _cache.size();
 
             for (auto it = _cache.begin(); it != _cache.end();)
@@ -299,7 +302,7 @@ class PngCache
                 if (it->second._hitCount <= avgHits)
                 {
                     _cacheSize -= it->second._data->size();
-                    _cache.erase(it++);
+                    it = _cache.erase(it);
                 }
                 else
                 {
@@ -320,10 +323,13 @@ class PngCache
     {
         uint64_t hash = png::hashSubBuffer(pixmap, startX, startY, width, height,
                                            bufferWidth, bufferHeight);
-        if (hash) {
+        if (hash)
+        {
+            ++_cacheTests;
             auto it = _cache.find(hash);
             if (it != _cache.end())
             {
+                ++_cacheHits;
                 LOG_DBG("PNG cache with hash " << hash << " hit.");
                 output.insert(output.end(),
                               it->second._data->begin(),
@@ -332,6 +338,7 @@ class PngCache
                 return true;
             }
         }
+
         LOG_DBG("PNG cache with hash " << hash << " missed.");
         CacheEntry newEntry(bufferWidth * bufferHeight * 1);
         if (png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
@@ -340,9 +347,10 @@ class PngCache
         {
             if (hash)
             {
-                _cache.insert(std::pair< uint64_t, CacheEntry >( hash, newEntry ));
+                _cache.emplace(hash, newEntry);
                 _cacheSize += newEntry._data->size();
             }
+
             output.insert(output.end(),
                           newEntry._data->begin(),
                           newEntry._data->end());
@@ -354,9 +362,13 @@ class PngCache
     }
 
 public:
-    PngCache() : _cacheSize(0)
+    PngCache() :
+        _cacheSize(0),
+        _cacheHits(0),
+        _cacheTests(0)
     {
     }
+
     bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
                            std::vector<char>& output, LibreOfficeKitTileMode mode)
     {
