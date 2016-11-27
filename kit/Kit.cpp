@@ -322,13 +322,10 @@ class PngCache
         }
     }
 
-    bool cacheEncodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
-                                   int width, int height,
-                                   int bufferWidth, int bufferHeight,
-                                   std::vector<char>& output, LibreOfficeKitTileMode mode)
+    /// Lookup an entry in the cache and store the data in output.
+    /// Returns true on success, otherwise false.
+    bool cacheTest(const uint64_t hash, std::vector<char>& output)
     {
-        uint64_t hash = png::hashSubBuffer(pixmap, startX, startY, width, height,
-                                           bufferWidth, bufferHeight);
         if (hash)
         {
             ++_cacheTests;
@@ -343,6 +340,21 @@ class PngCache
                 it->second._hitCount++;
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    bool cacheEncodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
+                                   int width, int height,
+                                   int bufferWidth, int bufferHeight,
+                                   std::vector<char>& output, LibreOfficeKitTileMode mode)
+    {
+        uint64_t hash = png::hashSubBuffer(pixmap, startX, startY, width, height,
+                                           bufferWidth, bufferHeight);
+        if (cacheTest(hash, output))
+        {
+            return true;
         }
 
         LOG_DBG("PNG cache with hash " << hash << " missed.");
