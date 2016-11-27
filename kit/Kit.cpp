@@ -348,15 +348,9 @@ class PngCache
     bool cacheEncodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
                                    int width, int height,
                                    int bufferWidth, int bufferHeight,
-                                   std::vector<char>& output, LibreOfficeKitTileMode mode)
+                                   std::vector<char>& output, LibreOfficeKitTileMode mode,
+                                   const uint64_t hash)
     {
-        uint64_t hash = png::hashSubBuffer(pixmap, startX, startY, width, height,
-                                           bufferWidth, bufferHeight);
-        if (cacheTest(hash, output))
-        {
-            return true;
-        }
-
         LOG_DBG("PNG cache with hash " << hash << " missed.");
         CacheEntry newEntry(bufferWidth * bufferHeight * 1);
         if (png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
@@ -390,16 +384,30 @@ public:
     bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
                            std::vector<char>& output, LibreOfficeKitTileMode mode)
     {
+        const uint64_t hash = png::hashBuffer(pixmap, width, height);
+        if (cacheTest(hash, output))
+        {
+            return true;
+        }
+
         return cacheEncodeSubBufferToPNG(pixmap, 0, 0, width, height,
-                                         width, height, output, mode);
+                                         width, height, output, mode, hash);
     }
+
     bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
                               int width, int height,
                               int bufferWidth, int bufferHeight,
                               std::vector<char>& output, LibreOfficeKitTileMode mode)
     {
+        const uint64_t hash = png::hashSubBuffer(pixmap, startX, startY, width, height,
+                                                 bufferWidth, bufferHeight);
+        if (cacheTest(hash, output))
+        {
+            return true;
+        }
+
         return cacheEncodeSubBufferToPNG(pixmap, startX, startY, width, height,
-                                         bufferWidth, bufferHeight, output, mode);
+                                         bufferWidth, bufferHeight, output, mode, hash);
     }
 };
 
