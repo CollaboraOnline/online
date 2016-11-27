@@ -319,7 +319,7 @@ bool ClientSession::getPartPageRectangles(const char *buffer, int length,
 bool ClientSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens,
                                       const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    std::string font, text, encodedChar;
+    std::string font, text;
     if (tokens.count() < 2 ||
         !getTokenString(tokens[1], "font", font))
     {
@@ -327,14 +327,13 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, StringToke
     }
 
     getTokenString(tokens[2], "char", text);
-    Poco::URI::encode(text, "", encodedChar);
     const std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
 
     std::vector<char> output;
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    std::unique_ptr<std::fstream> cachedRendering = docBroker->tileCache().lookupCachedFile(font+encodedChar, "font");
+    std::unique_ptr<std::fstream> cachedRendering = docBroker->tileCache().lookupCachedFile(font+text, "font");
     if (cachedRendering && cachedRendering->is_open())
     {
         cachedRendering->seekg(0, std::ios_base::end);

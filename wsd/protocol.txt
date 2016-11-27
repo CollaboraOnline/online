@@ -89,10 +89,11 @@ ping
 
     requests a 'pong' server message.
 
-renderfont font=<font>
+renderfont font=<font> char=<characters>
 
     requests the rendering of the given font.
     The font parameter is URL encoded
+    The char parameter is URL encoded
 
 requestloksession
 
