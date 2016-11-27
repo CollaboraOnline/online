@@ -54,11 +54,11 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
     int n = -1;
     bool stop = false;
     std::vector<char> payload(READ_BUFFER_SIZE);
+    payload.resize(0);
     try
     {
+        // We poll, no need for timeout.
         ws->setReceiveTimeout(0);
-
-        payload.resize(0);
 
         for (;;)
         {
@@ -160,6 +160,14 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             {
                 LOG_INF("SocketProcessor [" << name << "]: Handler flagged to finish.");
                 break;
+            }
+
+            if (payload.capacity() > READ_BUFFER_SIZE * 4)
+            {
+                LOG_INF("Compacting buffer of SocketProcessor [" << name << "] from " <<
+                        payload.capacity() / 1024 << "KB to " << READ_BUFFER_SIZE / 1024 << "KB.");
+                payload = std::vector<char>(READ_BUFFER_SIZE);
+                payload.resize(0);
             }
         }
     }
