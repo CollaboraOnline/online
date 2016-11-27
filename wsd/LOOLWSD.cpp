@@ -225,6 +225,15 @@ void shutdownLimitReached(LOOLWebSocket& ws)
     catch (const std::exception& ex)
     {
         LOG_ERR("Error while shuting down socket on reaching limit: " << ex.what());
+        try
+        {
+            // Persist, in case it was unrelated error.
+            ws.shutdown(WebSocket::WS_POLICY_VIOLATION);
+        }
+        catch (const std::exception&)
+        {
+            // Nothing to do.
+        }
     }
 }
 
