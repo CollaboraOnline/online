@@ -324,7 +324,7 @@ bool isDocumentLoaded(LOOLWebSocket& ws, const std::string& name = "", bool isVi
 {
     const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
     const auto message = getResponseString(ws, prefix, name);
-    return LOOLProtocol::getFirstToken(message) == prefix;
+    return LOOLProtocol::matchPrefix(prefix, message);
 }
 
 inline
