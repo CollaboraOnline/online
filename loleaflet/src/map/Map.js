@@ -746,15 +746,13 @@ L.Map = L.Evented.extend({
 				this._socket.sendMessage('useractive');
 				this._active = true;
 				this._docLayer._onMessage('invalidatetiles: EMPTY', null);
+				if (vex.dialogID > 0) {
+					var id = vex.dialogID;
+					vex.dialogID = -1;
+					return vex.close(id);
+				}
 			} else {
-				this._active = true;
 				this._socket.initialize(this);
-			}
-
-			if (vex.dialogID > 0) {
-				var id = vex.dialogID;
-				vex.dialogID = -1;
-				return vex.close(id);
 			}
 		}
 
