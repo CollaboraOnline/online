@@ -40,6 +40,7 @@ shared_sources = common/FileUtil.cpp \
                  common/Session.cpp \
                  common/MessageQueue.cpp \
                  common/SigUtil.cpp \
+                 common/SpookyV2.cpp \
                  common/Unit.cpp \
                  common/UnitHTTP.cpp \
                  common/Util.cpp

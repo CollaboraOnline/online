@@ -50,6 +50,8 @@
 
 #include <cassert>
 
+#include "SpookyV2.h"
+
 namespace png
 {
 
@@ -165,16 +167,18 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
         return 0; // magic invalid hash.
 
     // assume a consistent mode - RGBA vs. BGRA for process
-    uint64_t nHash = 1073741789;
+    SpookyHash hash;
+    hash.Init(1073741789, 1073741789); // Seeds can be anything.
     for (int y = 0; y < height; ++y)
     {
-        size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
-        uint32_t *rgba = reinterpret_cast<uint32_t *>(pixmap + position);
-        // Lameness for now.
-        for (int x = 0; x < width; ++x)
-            nHash = (nHash << 7) + rgba[x] - nHash;
+        const size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
+        hash.Update(pixmap + position, width * 4);
     }
-    return nHash;
+
+    uint64_t nHash1;
+    uint64_t nHash2;
+    hash.Final(&nHash1, &nHash2);
+    return nHash1;
 }
 
 static
