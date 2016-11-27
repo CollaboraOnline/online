@@ -248,6 +248,12 @@ close: <reason>
     ability to kill all other sessions if EnableOwnerTermination flag in WOPI
     CheckFileInfo is 'true' (assumed to be 'false' by default).
 
+
+    * shuttingdown - Sent when the server is going down in a graceful fashion.
+    The server doesn't disconnect from clients yet, but starts
+    saving document and tearing down internals.
+
+
 getchildid: id=<id>
 
     Returns the child id

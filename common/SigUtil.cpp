@@ -257,7 +257,7 @@ namespace SigUtil
         if (ShutdownRequestFlag)
         {
             LOG_INF("Shutdown requested. Initiating WSD shutdown.");
-            Util::alertAllUsers("close: shutdown");
+            Util::alertAllUsers("close: shuttingdown");
             ShutdownFlag = true;
             return true;
         }

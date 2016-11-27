@@ -192,8 +192,8 @@ L.Socket = L.Class.extend({
 			if (textMsg === 'ownertermination') {
 				msg = _('Session terminated by document owner');
 			}
-			else if (textMsg === 'shutdown') {
-				msg = _('Server shutdown for maintenance');
+			else if (textMsg === 'shuttingdown') {
+				msg = _('Server is shutting down for maintenance (auto-saving)');
 			}
 
 			// Close any open dialogs first.
@@ -230,12 +230,14 @@ L.Socket = L.Class.extend({
 			$(options.appendLocation).append(options.$vex);
 			vex.setupBodyClassName(options.$vex);
 
-			// Disconnect the websocket manually
-			this.close();
+			if (textMsg !== 'shuttingdown') {
+				// Tell WOPI host about it which should handle this situation
+				this._map.fire('postMessage', {msgId: 'Session_Closed'});
+			}
 
-			// Tell WOPI host about it which should handle this situation
-			this._map.fire('postMessage', {msgId: 'Session_Closed'});
-			this._map.remove();
+			if (textMsg === 'ownertermination') {
+				this._map.remove();
+			}
 
 			return;
 		}
