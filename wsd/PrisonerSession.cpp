@@ -243,6 +243,8 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             Poco::URI::encode(text, "", encodedChar);
             assert(firstLine.size() < static_cast<std::string::size_type>(length));
             _docBroker->tileCache().saveRendering(font+encodedChar, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+            forwardToPeer(_peer, buffer, length, true);
+            return true;
         }
     }
     else
