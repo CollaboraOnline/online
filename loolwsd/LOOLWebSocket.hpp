@@ -31,11 +31,11 @@ class LOOLWebSocket : public Poco::Net::WebSocket
 private:
     std::mutex _mutex;
 
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
     std::chrono::milliseconds getWebSocketDelay()
     {
-        unsigned long baseDelay = WS_DELAY_MS;
-        unsigned long jitter = WS_JITTER_MS;
+        unsigned long baseDelay = 0;
+        unsigned long jitter = 0;
         if (std::getenv("LOOL_WS_DELAY"))
         {
             baseDelay = std::stoul(std::getenv("LOOL_WS_DELAY"));
@@ -81,7 +81,7 @@ public:
     /// Should we also factor out the handling of non-final and continuation frames into this?
     int receiveFrame(char* buffer, const int length, int& flags)
     {
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
         // Delay receiving the frame
         std::this_thread::sleep_for(getWebSocketDelay());
 #endif
@@ -111,7 +111,7 @@ public:
     /// Wrapper for Poco::Net::WebSocket::sendFrame() that handles large frames.
     int sendFrame(const char* buffer, const int length, const int flags = FRAME_TEXT)
     {
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
         // Delay sending the frame
         std::this_thread::sleep_for(getWebSocketDelay());
 #endif
