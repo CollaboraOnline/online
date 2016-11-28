@@ -2114,9 +2114,14 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     LOG_INF("Stopping server socket listening. ShutdownFlag: " <<
             SigUtil::isShuttingDown() << ", TerminationFlag: " << TerminationFlag);
 
+    // Wait until documents are saved and sessions closed.
     srv.stop();
     srv2.stop();
     threadPool.joinAll();
+
+    // atexit handlers tend to free Admin before Documents
+    LOG_INF("Cleaning up lingering documents.");
+    DocBrokers.clear();
 
     // Terminate child processes
     LOG_INF("Requesting forkit process " << forKitPid << " to terminate.");
@@ -2133,7 +2138,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     waitpid(forKitPid, &status, WUNTRACED);
     close(ForKitWritePipe);
 
-    // In case forkit didn't cleanup fully.'
+    // In case forkit didn't cleanup properly, don't leave jails behind.
     LOG_INF("Cleaning up childroot directory [" << ChildRoot << "].");
     std::vector<std::string> jails;
     File(ChildRoot).list(jails);
@@ -2144,21 +2149,17 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         FileUtil::removeFile(path, true);
     }
 
+    // Finally, we no longer need SSL.
     if (LOOLWSD::isSSLEnabled())
     {
         Poco::Net::uninitializeSSL();
         Poco::Crypto::uninitializeCrypto();
     }
 
-    // atexit handlers tend to free Admin before Documents
-    LOG_INF("Cleaning up lingering documents.");
-    DocBrokers.clear();
-
-    LOG_INF("Process [loolwsd] finished.");
-
     int returnValue = Application::EXIT_OK;
     UnitWSD::get().returnValue(returnValue);
 
+    LOG_INF("Process [loolwsd] finished.");
     return returnValue;
 }
 
