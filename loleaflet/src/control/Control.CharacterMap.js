@@ -297,7 +297,6 @@ L.Control.CharacterMap = L.Control.extend({
 				img.src = L.Icon.Default.imagePath + '/loading.gif';
 				this.cacheGlyph[encodedFont + encodedChar] = img;
 				this._map._socket.sendMessage('renderfont font=' + encodedFont + ' char=' + encodedChar);
-				console.log('send=' + start.toString(16).toUpperCase() + ' encoded='  +encodedFont + encodedChar);
 			}
 			L.DomEvent.on(td, 'click', this._onSymbolClick, this);
 			L.DomEvent.on(td, 'dblclick', this._onSymbolDblClick, this);
@@ -442,8 +441,6 @@ L.Control.CharacterMap = L.Control.extend({
 	_onRenderFontPreview: function (e) {
 		if (this.cacheGlyph[e.font + e.char]) {
 			this.cacheGlyph[e.font + e.char].src = e.img;
-		} else {
-			console.log('failed to get font image' + e.font + e.char);
 		}
 	},
 
