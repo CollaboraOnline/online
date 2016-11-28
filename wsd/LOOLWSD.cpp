@@ -17,7 +17,7 @@
 #define LOOLWSD_TEST_LOLEAFLET_UI "/loleaflet/" LOOLWSD_VERSION_HASH "/loleaflet.html"
 
 /* Default document used in the start test URI */
-#define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH "test/data/hello.odt"
+#define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH "test/data/hello-world.odt"
 
 // This is the main source for the loolwsd program. LOOL uses several loolwsd processes: one main
 // parent process that listens on the TCP port and accepts connections from LOOL clients, and a
