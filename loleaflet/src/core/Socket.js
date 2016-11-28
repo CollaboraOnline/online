@@ -195,6 +195,36 @@ L.Socket = L.Class.extend({
 			else if (textMsg === 'shuttingdown') {
 				msg = _('Server is shutting down for maintenance (auto-saving)');
 			}
+			else if (textMsg === 'recycling') {
+				msg = _('Server is recycling and will be available shortly');
+
+				this._map._active = false;
+
+				// Prevent reconnecting the world at the same time.
+				var min = 5000;
+				var max = 10000;
+				var timeoutMs = Math.floor(Math.random() * (max - min) + min);
+
+				socket = this;
+				map = this._map;
+				vex.timer = setInterval(function() {
+					if (socket.connected()) {
+						// We're connected: cancel timer and dialog.
+						clearTimeout(vex.timer);
+						if (vex.dialogID > 0) {
+							var id = vex.dialogID;
+							vex.dialogID = -1;
+							vex.close(id);
+						}
+						return;
+					}
+
+					try {
+						socket.initialize(map);
+					} catch (error) {
+					}
+				}, timeoutMs);
+			}
 
 			// Close any open dialogs first.
 			if (vex.dialogID > 0) {

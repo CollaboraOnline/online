@@ -175,6 +175,10 @@ static std::atomic<int> OutstandingForks(1); // Forkit always spawns 1.
 static std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 static std::mutex DocBrokersMutex;
 
+/// Used when shutting down to notify them all that the server is recycling.
+static std::vector<std::shared_ptr<LOOLWebSocket>> ClientWebSockets;
+static std::mutex ClientWebSocketsMutex;
+
 #if ENABLE_DEBUG
 static int careerSpanSeconds = 0;
 #endif
@@ -983,6 +987,13 @@ private:
                 }
             }
 
+            if (SigUtil::isShuttingDown())
+            {
+                std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
+                LOG_TRC("Capturing Client WS for [" << id << "]");
+                ClientWebSockets.push_back(ws);
+            }
+
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession: " + uri);
             LOG_INF("Finishing GET request handler for session [" << id << "].");
         }
@@ -1011,11 +1022,14 @@ private:
         }
         else
         {
-            // something wrong, with internal exceptions
-            LOG_TRC("Abnormal close handshake.");
-            session->closeFrame();
-            // FIXME: handle exception thrown from here ? ...
-            ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
+            if (!SigUtil::isShuttingDown())
+            {
+                // something wrong, with internal exceptions
+                LOG_TRC("Abnormal close handshake.");
+                session->closeFrame();
+                // FIXME: handle exception thrown from here ? ...
+                ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
+            }
         }
 
         LOG_INF("Finished GET request handler for session [" << id << "].");
@@ -2147,6 +2161,27 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         const auto path = ChildRoot + jail;
         LOG_INF("Removing jail [" << path << "].");
         FileUtil::removeFile(path, true);
+    }
+
+    if (SigUtil::isShuttingDown())
+    {
+        // At this point there should be no other thread, but...
+        std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
+
+        LOG_INF("Notifying clients that we are recycling.");
+        static const std::string msg("close: recycling");
+        for (auto& ws : ClientWebSockets)
+        {
+            try
+            {
+                ws->sendFrame(msg.data(), msg.size());
+                ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
+            }
+            catch (const std::exception& ex)
+            {
+                LOG_ERR("Error while notifying client of recycle: " << ex.what());
+            }
+        }
     }
 
     // Finally, we no longer need SSL.
