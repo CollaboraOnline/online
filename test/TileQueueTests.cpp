@@ -109,24 +109,27 @@ void TileQueueTests::testTileCombinedRendering()
 
     const std::string resHor = "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 imgsize=0,0 tilewidth=3840 tileheight=3840";
     const TileQueue::Payload payloadHor(resHor.data(), resHor.data() + resHor.size());
-    const std::string resVer = "tilecombine part=0 width=256 height=256 tileposx=0,0 tileposy=0,3840 imgsize=0,0 tilewidth=3840 tileheight=3840";
-    const TileQueue::Payload payloadVer(resVer.data(), resVer.data() + resVer.size());
-    const std::string resFull = "tilecombine part=0 width=256 height=256 tileposx=0,3840,0 tileposy=0,0,3840 imgsize=0,0,0 tilewidth=3840 tileheight=3840";
+    const std::string resVer1 = "tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1";
+    const TileQueue::Payload payloadVer1(resVer1.data(), resVer1.data() + resVer1.size());
+    const std::string resVer2 = "tile part=0 width=256 height=256 tileposx=0 tileposy=3840 tilewidth=3840 tileheight=3840 ver=-1";
+    const TileQueue::Payload payloadVer2(resVer2.data(), resVer2.data() + resVer2.size());
+    const std::string resFull = "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 imgsize=0,0 tilewidth=3840 tileheight=3840";
     const TileQueue::Payload payloadFull(resFull.data(), resFull.data() + resFull.size());
 
     TileQueue queue;
 
-    // Horizontal.
+    // Horizontal - combine both.
     queue.put(req1);
     queue.put(req2);
     CPPUNIT_ASSERT_EQUAL(payloadHor, queue.get());
 
-    // Vertical.
+    // Vertical - not combined.
     queue.put(req1);
     queue.put(req3);
-    CPPUNIT_ASSERT_EQUAL(payloadVer, queue.get());
+    CPPUNIT_ASSERT_EQUAL(payloadVer1, queue.get());
+    CPPUNIT_ASSERT_EQUAL(payloadVer2, queue.get());
 
-    // Vertical.
+    // Vertical - combine first row only.
     queue.put(req1);
     queue.put(req2);
     queue.put(req3);

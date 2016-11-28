@@ -591,18 +591,24 @@ size_t DocumentBroker::removeSession(const std::string& id)
 {
     Util::assertIsLocked(_mutex);
 
-    auto it = _sessions.find(id);
-    if (it != _sessions.end())
+    try
     {
-        _sessions.erase(it);
+        Admin::instance().rmDoc(_docKey, id);
 
-        // Let the child know the client has disconnected.
-        const std::string msg("child-" + id + " disconnect");
-        _childProcess->sendTextFrame(msg);
+        auto it = _sessions.find(id);
+        if (it != _sessions.end())
+        {
+            _sessions.erase(it);
+
+            // Let the child know the client has disconnected.
+            const std::string msg("child-" + id + " disconnect");
+            _childProcess->sendTextFrame(msg);
+        }
     }
-
-    // Lets remove this session from the admin console too
-    Admin::instance().rmDoc(_docKey, id);
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Error while removing session [" << id << "]: " << ex.what());
+    }
 
     return _sessions.size();
 }
