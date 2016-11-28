@@ -876,6 +876,7 @@ L.TileLayer = L.GridLayer.extend({
 		var command = this._map._socket.parseServerCmd(textMsg);
 		this._map.fire('renderfont', {
 			font: command.font,
+			char: command.char,
 			img: img
 		});
 	},

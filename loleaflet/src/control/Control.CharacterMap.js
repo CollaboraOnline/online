@@ -274,22 +274,34 @@ L.Control.CharacterMap = L.Control.extend({
 	],
 
 	cacheSubset: {},
+	cacheGlyph: {},
 
 	fillCharacters: function (index) {
 		var start = this.unicodeBlocks[index].start;
 		var end = this.unicodeBlocks[index].end;
+		var encodedFont = window.encodeURIComponent(this._fontNames.options[this._fontNames.selectedIndex].value);
 		var it = 0;
-		var tr, td;
+		var tr, td, img, encodedChar;
 		L.DomUtil.empty(this._tbody);
 		while (start <= end) {
 			if (it % 20 === 0) {
 				tr = L.DomUtil.create('tr', '', this._tbody);
 			}
 			td = L.DomUtil.create('td', '', tr);
-			td.innerHTML = '&#x' + start.toString(16);
-			td.data = start;
+			encodedChar = window.encodeURIComponent(String.fromCharCode(start));
+			if (this.cacheGlyph[encodedFont + encodedChar]) {
+				img = this.cacheGlyph[encodedFont + encodedChar];
+			} else {
+				img = document.createElement('img');
+				img.data = start;
+				img.src = L.Icon.Default.imagePath + '/loading.gif';
+				this.cacheGlyph[encodedFont + encodedChar] = img;
+				this._map._socket.sendMessage('renderfont font=' + encodedFont + ' char=' + encodedChar);
+				console.log('send=' + start.toString(16).toUpperCase() + ' encoded='  +encodedFont + encodedChar);
+			}
 			L.DomEvent.on(td, 'click', this._onSymbolClick, this);
 			L.DomEvent.on(td, 'dblclick', this._onSymbolDblClick, this);
+			td.appendChild(img);
 			start++;
 			it++;
 		}
@@ -363,15 +375,12 @@ L.Control.CharacterMap = L.Control.extend({
 		L.DomEvent.on(this._unicodeSubset, 'change', this._onUnicodeSubsetChange, this);
 		content.appendChild(document.createElement('br'));
 		content.appendChild(document.createElement('br'));
-		label = L.DomUtil.create('span', 'loleaflet-controls', content);
-		label.innerHTML = '<b>' + _('Special Characters rendered by the User Agent:') + '</b>';
-		content.appendChild(document.createElement('br'));
 		var table = L.DomUtil.create('table', 'loleaflet-character', content);
 		this._tbody = L.DomUtil.create('tbody', '', table);
 		content.appendChild(document.createElement('br'));
 		content.appendChild(document.createElement('br'));
 		label = L.DomUtil.create('span', 'loleaflet-controls', content);
-		label.innerHTML = '<b>' + _('Special Character rendered by Server Side:') + '</b>';
+		label.innerHTML = '<b>' + _('Selected Character:') + '</b>';
 		this._preview = L.DomUtil.create('img', '', content);
 		content.appendChild(document.createElement('br'));
 		content.appendChild(document.createElement('br'));
@@ -431,16 +440,24 @@ L.Control.CharacterMap = L.Control.extend({
 	},
 
 	_onRenderFontPreview: function (e) {
-		this._preview.src = e.img;
+		if (this.cacheGlyph[e.font + e.char]) {
+			this.cacheGlyph[e.font + e.char].src = e.img;
+		} else {
+			console.log('failed to get font image' + e.font + e.char);
+		}
 	},
 
 	_onSymbolClick: function (e) {
 		var target = e.target || e.srcElement;
+		var encodedFont = window.encodeURIComponent(this._fontNames.options[this._fontNames.selectedIndex].value);
+		var encodedChar = window.encodeURIComponent(String.fromCharCode(target.data));
 		this._hexa.data = target.data;
-		this._hexa.innerHTML = 'U+' + target.data.toString(16).toUpperCase();
-		this._map._socket.sendMessage('renderfont font=' +
-			window.encodeURIComponent(this._fontNames.options[this._fontNames.selectedIndex].value) +
-			' char=' + String.fromCharCode(this._hexa.data));
+		if (this.cacheGlyph[encodedFont + encodedChar]) {
+			this._preview.src = this.cacheGlyph[encodedFont + encodedChar].src;
+		} else {
+			this._preview.src = L.Icon.Default.imagePath + '/loading.gif';
+		}
+		this._hexa.innerHTML = 'U+' + this._hexa.data.toString(16).toUpperCase();
 	},
 
 	_onSymbolDblClick: function (e) {
