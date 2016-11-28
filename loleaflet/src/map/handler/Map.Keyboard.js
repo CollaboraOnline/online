@@ -383,6 +383,18 @@ L.Map.Keyboard = L.Handler.extend({
 			e.originalEvent.preventDefault();
 		}
 
+		if (e.originalEvent.ctrlKey && (e.originalEvent.key === 'z' || e.originalEvent.key === 'Z')) {
+			this._map._socket.sendMessage('uno .uno:Undo');
+			e.originalEvent.preventDefault();
+			return true;
+		}
+
+		if (e.originalEvent.ctrlKey && (e.originalEvent.key === 'y' || e.originalEvent.key === 'Y')) {
+			this._map._socket.sendMessage('uno .uno:Redo');
+			e.originalEvent.preventDefault();
+			return true;
+		}
+
 		if (e.originalEvent.altKey || e.originalEvent.shiftKey) {
 
 			// need to handle Ctrl + Alt + C separately for Firefox

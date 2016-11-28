@@ -973,8 +973,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._map.hideBusy();
-		// TODO when implemented in the LOK, add also obj.result
-		this._map.fire('commandresult', {commandName: commandName, success: success});
+		this._map.fire('commandresult', {commandName: commandName, success: success, result: obj.result});
 
 	},
 

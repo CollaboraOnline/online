@@ -1206,6 +1206,11 @@ map.on('commandresult', function (e) {
 			window.parent.documentsMain.saveDocumentBack();
 		}
 	}
+	else if ((commandName === '.uno:Undo' || commandName === '.uno:Redo') &&
+		e.success === true && e.result.value && e.result.value === '130') { /*UNDO_CONFLICT*/
+		$('#tb_toolbar-up_item_repair').w2overlay({ html: '<div style="padding: 10px; line-height: 150%">' +
+			_('Conflict Undo/Redo with multiple users. Please use document repair to resolve') + '</div>'});
+	}
 });
 
 map.on('cellformula', function (e) {
