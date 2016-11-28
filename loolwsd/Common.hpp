@@ -22,8 +22,6 @@ constexpr long CHILD_TIMEOUT_MS = COMMAND_TIMEOUT_MS;
 constexpr int CHILD_REBALANCE_INTERVAL_MS = CHILD_TIMEOUT_MS / 10;
 constexpr int POLL_TIMEOUT_MS = COMMAND_TIMEOUT_MS / 10;
 constexpr int WS_SEND_TIMEOUT_MS = 1000;
-constexpr int WS_DELAY_MS = 10;
-constexpr int WS_JITTER_MS = 5;
 
 /// Pipe and Socket read buffer size.
 /// Should be large enough for ethernet packets
