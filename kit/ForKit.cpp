@@ -75,9 +75,9 @@ public:
         if (ready <= 0)
         {
             // Termination is done via SIGTERM, which breaks the wait.
-            if (TerminationFlag)
+            if (ready < 0)
             {
-                if (ready < 0)
+                if (TerminationFlag)
                 {
                     LOG_INF("Poll interrupted in " << getName() << " and Termination flag set.");
                 }
