@@ -104,7 +104,8 @@ public:
             return false;
         }
 
-        return other.getTilePosY() == getTilePosY();
+        return other.getTilePosY() + other.getTileHeight() >= getTilePosY() &&
+               other.getTilePosY() <= getTilePosY() + getTileHeight();
     }
 
     /// Serialize this instance into a string.
