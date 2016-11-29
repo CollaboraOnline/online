@@ -48,7 +48,7 @@ require('./dist/plugins/draw-0.2.4/dist/leaflet.draw.js');
 var wopiSrc = getParameterByName('WOPISrc');
 
 if (wopiSrc !== '' && access_token !== '') {
-    var wopiParams = { 'access_token': access_token };
+	var wopiParams = { 'access_token': access_token, 'access_token_ttl': access_token_ttl };
 }
 
 var filePath = getParameterByName('file_path');

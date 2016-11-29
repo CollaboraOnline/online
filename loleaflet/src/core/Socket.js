@@ -22,7 +22,28 @@ L.Socket = L.Class.extend({
 			this._map.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ' + e), cmd: 'socket', kind: 'failed', id: 3});
 			return null;
 		}
+
+		if (map.options.docParams.access_token && parseInt(map.options.docParams.access_token_ttl)) {
+			var tokenExpiryWarning = 900 * 1000; // Warn when 15 minutes remain
+			clearTimeout(this._accessTokenExpireTimeout);
+			this._accessTokenExpireTimeout = setTimeout(L.bind(this._sessionExpiredWarning, this),
+			                                            parseInt(map.options.docParams.access_token_ttl) - Date.now() - tokenExpiryWarning);
+		}
 		this._msgQueue = [];
+	},
+
+	_sessionExpiredWarning: function() {
+		clearTimeout(this._accessTokenExpireTimeout);
+		var expirymsg = errorMessages.sessionexpiry;
+		if (parseInt(this._map.options.docParams.access_token_ttl) - Date.now() <= 0) {
+			expirymsg = errorMessages.sessionexpired;
+		}
+		var timerepr = $.timeago(parseInt(this._map.options.docParams.access_token_ttl)).replace(' ago', '');
+		this._map.fire('warn', {msg: expirymsg.replace('%time', timerepr)});
+
+		// If user still doesn't refresh the session, warn again periodically
+		this._accessTokenExpireTimeout = setTimeout(L.bind(this._sessionExpiredWarning, this),
+		                                            120 * 1000);
 	},
 
 	close: function () {
@@ -30,6 +51,8 @@ L.Socket = L.Class.extend({
 		this.socket.onclose = function () {};
 		this.socket.onmessage = function () {};
 		this.socket.close();
+
+		clearTimeout(this._accessTokenExpireTimeout);
 	},
 
 	connected: function() {
