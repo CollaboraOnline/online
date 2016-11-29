@@ -79,6 +79,7 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             try
             {
                 payload.resize(payload.capacity());
+                n = -1; // In case receiveFrame throws we log dropped data.
                 n = ws->receiveFrame(payload.data(), payload.size(), flags);
                 payload.resize(std::max(n, 0));
             }
