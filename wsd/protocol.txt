@@ -384,7 +384,11 @@ wopi: <JSON>
      capabilities/information for loleaflet to act accordingly.
 
      Properties mentioned:
-     PostMessageOrigin: See WOPI specs for more information
+     + PostMessageOrigin: See WOPI specs for more information
+     + HideSaveOption: (boolean): If loleaflet should hide the save options
+     + HidePrintOption: (boolean): If loleaflet should hide print options
+     + HideExportOption: (boolean): If loleaflet should hide the export options
+       this implies 'Download as' options in file menu
 
 child -> parent
 ===============
