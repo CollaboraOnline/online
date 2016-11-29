@@ -329,6 +329,7 @@ int PipeReader::readLine(std::string& line,
         }
         else if (pipe.revents & (POLLERR | POLLHUP | POLLNVAL))
         {
+            LOG_FTL("Pipe closed.");
             return -1;
         }
     }
