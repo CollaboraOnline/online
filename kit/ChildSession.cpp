@@ -1053,6 +1053,11 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
                               " width=" + std::to_string(width) +
                               " height=" + std::to_string(height));
             }
+            if (tokens.count() == 2 && tokens[0] == "EMPTY")
+            {
+                const std::string part = (_docType != "text" ? tokens[1].c_str() : "0"); // Writer renders everything as part 0.
+                sendTextFrame("invalidatetiles: EMPTY, " + part);
+            }
             else
             {
                 sendTextFrame("invalidatetiles: " + rPayload);
