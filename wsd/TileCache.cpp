@@ -376,7 +376,7 @@ void TileCache::invalidateTiles(const std::string& tiles)
         }
     }
 
-    Log::error("Unexpected invalidatetiles request: " + tiles);
+    LOG_ERR("Unexpected invalidatetiles request [" << tiles << "].");
 }
 
 void TileCache::removeFile(const std::string& fileName)
