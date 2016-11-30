@@ -827,9 +827,12 @@ L.Map = L.Evented.extend({
 		if (!this._loaded) { return; }
 
 		var doclayer = this._docLayer;
-		if (doclayer && doclayer._isCursorVisible && doclayer._isCursorOverlayVisible) {
-			doclayer._visibleCursorOnLostFocus = doclayer._visibleCursor;
-			doclayer._isCursorOverlayVisibleOnLostFocus = doclayer._isCursorVisibleOnLostFocus = true;
+		if (!doclayer) {
+			return;
+		}
+		doclayer._isCursorVisibleOnLostFocus = doclayer._isCursorOverlayVisible;
+		doclayer._isCursorOverlayVisibleOnLostFocus = doclayer._isCursorOverlayVisible;
+		if (doclayer._isCursorVisible && doclayer._isCursorOverlayVisible) {
 			doclayer._isCursorOverlayVisible = false;
 			doclayer._onUpdateCursor();
 		}
