@@ -362,6 +362,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
 bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     std::string font, text, decodedFont, decodedChar;
+    bool bSuccess;
 
     if (tokens.count() < 3 ||
         !getTokenString(tokens[1], "font", font))
@@ -404,15 +405,22 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
 
     LOG_TRC("renderFont [" << font << "] rendered in " << (timestamp.elapsed()/1000.) << "ms");
 
-    if (!ptrFont ||
-        !png::encodeBufferToPNG(ptrFont, width, height, output, LOK_TILEMODE_RGBA))
+    if (!ptrFont)
     {
-        std::free(ptrFont);
-        return sendTextFrame("error: cmd=renderfont kind=failure");
+        return sendTextFrame(output.data(), output.size());
+    }
+
+    if (png::encodeBufferToPNG(ptrFont, width, height, output, LOK_TILEMODE_RGBA))
+    {
+        bSuccess = sendTextFrame(output.data(), output.size());
+    }
+    else
+    {
+        bSuccess = sendTextFrame("error: cmd=renderfont kind=failure");
     }
 
     std::free(ptrFont);
-    return sendTextFrame(output.data(), output.size());
+    return bSuccess;
 }
 
 bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
