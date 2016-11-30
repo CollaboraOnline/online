@@ -10,12 +10,16 @@ L.Control.Scroll = L.Control.extend({
 		this._mockDoc = L.DomUtil.create('div', '', this._scrollContainer);
 		this._mockDoc.id = 'mock-doc';
 
+		this._prevScrollX = 0;
+		this._prevScrollY = 0;
+
 		map.on('scrollto', this._onScrollTo, this);
 		map.on('scrollby', this._onScrollBy, this);
 		map.on('scrollvelocity', this._onScrollVelocity, this);
 		map.on('handleautoscroll', this._onHandleAutoScroll, this);
 		map.on('docsize', this._onUpdateSize, this);
 		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
+		map.on('updaterowcolumnheaders', this._onUpdateRowColumnHeaders, this);
 
 		var control = this;
 		$('.scroll-container').mCustomScrollbar({
@@ -34,7 +38,53 @@ L.Control.Scroll = L.Control.extend({
 		});
 	},
 
+	_onCalcScroll: function (e) {
+		if (!this._map._enabled) {
+			return;
+		}
+
+		var newLeft = -e.mcs.left;
+		if (newLeft > this._prevScrollX) {
+			var viewportWidth = this._map.getSize().x;
+			var docWidth = this._map._docLayer._docPixelSize.x;
+			newLeft = Math.min(newLeft, docWidth - viewportWidth);
+		}
+		else {
+			newLeft = Math.max(newLeft, 0);
+		}
+
+		var newTop = -e.mcs.top;
+		if (newTop > this._prevScrollY) {
+			var viewportHeight = this._map.getSize().y;
+			var docHeight = Math.round(this._map._docLayer._docPixelSize.y);
+			newTop = Math.min(newTop, docHeight - viewportHeight);
+		}
+		else {
+			newTop = Math.max(newTop, 0);
+		}
+
+		var offset = new L.Point(
+				newLeft - this._prevScrollX,
+				newTop - this._prevScrollY);
+
+		if (offset.equals(new L.Point(0, 0))) {
+			return;
+		}
+
+		this._onUpdateRowColumnHeaders({ x: newLeft, y: newTop, offset: offset});
+
+		this._prevScrollY = newTop;
+		this._prevScrollX = newLeft;
+		this._map.fire('scrolloffset', offset);
+		this._map.scroll(offset.x, offset.y);
+	},
+
 	_onScroll: function (e) {
+		if (this._map._docLayer._docType === 'spreadsheet') {
+			this._onCalcScroll(e);
+			return;
+		}
+
 		if (!this._map._enabled) {
 			return;
 		}
@@ -43,15 +93,9 @@ L.Control.Scroll = L.Control.extend({
 			this._ignoreScroll = null;
 			return;
 		}
-		if (this._prevScrollY === undefined) {
-			this._prevScrollY = 0;
-		}
-		if (this._prevScrollX === undefined) {
-			this._prevScrollX = 0;
-		}
 		var offset = new L.Point(
-				-e.mcs.left - this._prevScrollX,
-				-e.mcs.top - this._prevScrollY);
+			-e.mcs.left - this._prevScrollX,
+			-e.mcs.top - this._prevScrollY);
 
 		if (!offset.equals(new L.Point(0, 0))) {
 			this._prevScrollY = -e.mcs.top;
@@ -62,6 +106,10 @@ L.Control.Scroll = L.Control.extend({
 	},
 
 	_onScrollEnd: function (e) {
+		// needed in order to keep the row/column header correctly aligned
+		if (this._map._docLayer._docType === 'spreadsheet') {
+			return;
+		}
 		this._prevScrollY = -e.mcs.top;
 		this._prevScrollX = -e.mcs.left;
 	},
@@ -118,16 +166,20 @@ L.Control.Scroll = L.Control.extend({
 	},
 
 	_onUpdateSize: function (e) {
+		if (!this._mockDoc) {
+			return;
+		}
+
 		// we need to avoid precision issues in comparison (in the end values are pixels)
 		var prevDocWidth = Math.ceil(parseFloat(L.DomUtil.getStyle(this._mockDoc, 'width')));
 		var prevDocHeight = Math.ceil(parseFloat(L.DomUtil.getStyle(this._mockDoc, 'height')));
 		var newDocWidth = Math.ceil(e.x);
 		var newDocHeight = Math.ceil(e.y);
+
 		// for writer documents, ignore scroll while document size is being reduced
 		if (this._map.getDocType() === 'text' && newDocHeight < prevDocHeight) {
 			this._ignoreScroll = true;
 		}
-
 		L.DomUtil.setStyle(this._mockDoc, 'width', e.x + 'px');
 		L.DomUtil.setStyle(this._mockDoc, 'height', e.y + 'px');
 
@@ -140,11 +192,48 @@ L.Control.Scroll = L.Control.extend({
 	},
 
 	_onUpdateScrollOffset: function (e) {
+		// used on window resize
+		if (this._map._docLayer._docType === 'spreadsheet') {
+			var offset = new L.Point(e.x - this._prevScrollX, e.y - this._prevScrollY);
+			if (!offset.equals(new L.Point(0, 0))) {
+				this._onUpdateRowColumnHeaders({x: e.x, y: e.y, offset: offset});
+			}
+		}
 		this._ignoreScroll = null;
 		$('.scroll-container').mCustomScrollbar('stop');
 		this._prevScrollY = e.y;
 		this._prevScrollX = e.x;
 		$('.scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x], {callbacks: false, timeout:0});
+	},
+
+	_onUpdateRowColumnHeaders: function(e) {
+		var offset = e.offset || {};
+
+		var topLeftPoint = new L.Point(e.x, e.y);
+		var sizePx = this._map.getSize();
+
+		if (topLeftPoint.x === undefined) {
+			topLeftPoint.x = this._map._getTopLeftPoint().x;
+		}
+		if (topLeftPoint.y === undefined) {
+			topLeftPoint.y = this._map._getTopLeftPoint().y;
+		}
+
+		if (offset.x === 0) {
+			topLeftPoint.x = -1;
+			sizePx.x = 0;
+		}
+		if (offset.y === 0) {
+			topLeftPoint.y = -1;
+			sizePx.y = 0;
+		}
+
+		var pos = this._map._docLayer._pixelsToTwips(topLeftPoint);
+		var size = this._map._docLayer._pixelsToTwips(sizePx);
+		var payload = 'commandvalues command=.uno:ViewRowColumnHeaders?x=' + Math.round(pos.x) + '&y=' + Math.round(pos.y) +
+			'&width=' + Math.round(size.x) + '&height=' + Math.round(size.y);
+
+		this._map._socket.sendMessage(payload);
 	}
 });
 

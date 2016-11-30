@@ -17,7 +17,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._initialized = true;
 		this._map.on('scrolloffset', this.offsetScrollPosition, this);
 		this._map.on('updatescrolloffset', this.setScrollPosition, this);
-		this._map.on('updateviewport', this.setViewPort, this);
 		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
 		this._map.on('updateselectionheader', this._onUpdateSelection, this);
 		this._map.on('clearselectionheader', this._onClearSelection, this);
@@ -28,9 +27,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var headersContainer = L.DomUtil.create('div', 'spreadsheet-header-columns-container', rowColumnFrame);
 		this._columns = L.DomUtil.create('div', 'spreadsheet-header-columns', headersContainer);
 
+		this._leftOffset = 0;
 		this._position = 0;
-		this._totalWidth = 0;
-		this._viewPort = 0;
 
 		var colHeaderObj = this;
 		$.contextMenu({
@@ -99,6 +97,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			this._selectColumn(colAlpha, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertColumns');
+		this._updateColumnHeader();
 	},
 
 	deleteColumn: function(colAlpha) {
@@ -106,6 +105,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			this._selectColumn(colAlpha, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteColumns');
+		this._updateColumnHeader();
 	},
 
 	hideColumn: function(colAlpha) {
@@ -113,6 +113,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			this._selectColumn(colAlpha, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideColumn');
+		this._updateColumnHeader();
 	},
 
 	showColumn: function(colAlpha) {
@@ -120,25 +121,17 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			this._selectColumn(colAlpha, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowColumn');
-	},
-
-	setViewPort: function(e) {
-		this._viewPort = e.columns.viewPort;
-		this._totalWidth = e.columns.totalWidth;
+		this._updateColumnHeader();
 	},
 
 	setScrollPosition: function (e) {
 		var position = -e.x;
 		this._position = Math.min(0, position);
-		L.DomUtil.setStyle(this._columns, 'left', this._position + 'px');
 	},
 
 	offsetScrollPosition: function (e) {
 		var offset = e.x;
-		this._position = Math.min(0,
-					  Math.max(this._position - offset,
-						   -(this._totalWidth - this._viewPort)));
-		L.DomUtil.setStyle(this._columns, 'left', this._position + 'px');
+		this._position = Math.min(0, this._position- offset);
 	},
 
 	_onClearSelection: function (e) {
@@ -153,16 +146,27 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this.updateCurrent(this._columns, e.x);
 	},
 
+	_updateColumnHeader: function () {
+		this._map.fire('updaterowcolumnheaders', {x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
+	},
+
 	viewRowColumnHeaders: function (e) {
-		this.fillColumns(e.data.columns, e.converter, e.context);
+		if (e.data.columns && e.data.columns.length > 0) {
+			this.fillColumns(e.data.columns, e.converter, e.context);
+			L.DomUtil.setStyle(this._columns, 'left', (this._position + this._leftOffset) + 'px');
+		}
 	},
 
 	fillColumns: function (columns, converter, context) {
 		var iterator, twip, width, column, text, resize;
 
 		L.DomUtil.empty(this._columns);
-		for (iterator = 0; iterator < columns.length; iterator++) {
-			width = columns[iterator].size - (iterator > 0 ? columns[iterator - 1].size : 0);
+		var leftOffset = new L.Point(columns[0].size, columns[0].size);
+		// column[0] is a dummy column header whose text attribute is set to the column index
+		var leftmostCol = parseInt(columns[0].text);
+		this._leftOffset = Math.round(converter.call(context, leftOffset).x);
+		for (iterator = 1; iterator < columns.length; iterator++) {
+			width = columns[iterator].size - columns[iterator - 1].size;
 			twip = new L.Point(width, width);
 			column = L.DomUtil.create('div', 'spreadsheet-header-column', this._columns);
 			text = L.DomUtil.create('div', 'spreadsheet-header-column-text', column);
@@ -175,7 +179,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			if (width <= 0) {
 				L.DomUtil.setStyle(column, 'display', 'none');
 			} else if (width < 10) {
-				text.column = iterator + 1;
+				text.column = iterator + leftmostCol;
 				text.width = width;
 				L.DomUtil.setStyle(column, 'width', width + 'px');
 				L.DomUtil.setStyle(column, 'cursor', 'col-resize');
@@ -183,7 +187,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 				L.DomUtil.setStyle(resize, 'display', 'none');
 				this.mouseInit(text);
 			} else {
-				resize.column = iterator + 1;
+				resize.column = iterator + leftmostCol;
 				resize.width = width;
 				L.DomUtil.setStyle(column, 'width', width + 'px');
 				L.DomUtil.setStyle(text, 'width', width - 3 + 'px');
@@ -303,6 +307,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			};
 
 			this._map.sendUnoCommand('.uno:ColumnWidth', command);
+			this._updateColumnHeader();
 		}
 
 		this._map.removeLayer(this._vertLine);

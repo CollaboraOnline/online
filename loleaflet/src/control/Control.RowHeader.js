@@ -17,7 +17,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._initialized = true;
 		this._map.on('scrolloffset', this.offsetScrollPosition, this);
 		this._map.on('updatescrolloffset', this.setScrollPosition, this);
-		this._map.on('updateviewport', this.setViewPort, this);
 		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
 		this._map.on('updateselectionheader', this._onUpdateSelection, this);
 		this._map.on('clearselectionheader', this._onClearSelection, this);
@@ -26,9 +25,8 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var headersContainer = L.DomUtil.create('div', 'spreadsheet-header-rows-container', rowColumnFrame);
 		this._rows = L.DomUtil.create('div', 'spreadsheet-header-rows', headersContainer);
 
+		this._topOffset = 0;
 		this._position = 0;
-		this._totalHeight = 0;
-		this._viewPort = 0;
 
 		var rowHeaderObj = this;
 		$.contextMenu({
@@ -95,6 +93,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this._selectRow(row, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertRows');
+		this._updateRowHeader();
 	},
 
 	deleteRow: function(row) {
@@ -102,6 +101,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this._selectRow(row, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteRows');
+		this._updateRowHeader();
 	},
 
 	hideRow: function(row) {
@@ -109,32 +109,25 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this._selectRow(row, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideRow');
+		this._updateRowHeader();
 	},
 
 	showRow: function(row) {
 		if (this._map._docLayer._selections.getLayers().length === 0) {
-			this._selectColumn(row, 0);
+			this._selectRow(row, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowRow');
-	},
-
-	setViewPort: function(e) {
-		this._viewPort = e.rows.viewPort;
-		this._totalHeight = e.rows.totalHeight;
+		this._updateRowHeader();
 	},
 
 	setScrollPosition: function (e) {
 		var position = -e.y;
 		this._position = Math.min(0, position);
-		L.DomUtil.setStyle(this._rows, 'top', this._position + 'px');
 	},
 
 	offsetScrollPosition: function (e) {
 		var offset = e.y;
-		this._position = Math.min(0,
-		Math.max(this._position - offset,
-			-(this._totalHeight - this._viewPort)));
-		L.DomUtil.setStyle(this._rows, 'top', this._position + 'px');
+		this._position = Math.min(0, this._position - offset);
 	},
 
 	_onClearSelection: function (e) {
@@ -149,16 +142,26 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this.updateCurrent(this._rows, e.y);
 	},
 
+	_updateRowHeader: function () {
+		this._map.fire('updaterowcolumnheaders', {x: 0, y: this._map._getTopLeftPoint().y, offset: {x: 0, y: undefined}});
+	},
+
 	viewRowColumnHeaders: function (e) {
-		this.fillRows(e.data.rows, e.converter, e.context);
+		if (e.data.rows && e.data.rows.length) {
+			this.fillRows(e.data.rows, e.converter, e.context);
+			L.DomUtil.setStyle(this._rows, 'top', (this._position + this._topOffset) + 'px');
+		}
 	},
 
 	fillRows: function (rows, converter, context) {
 		var iterator, twip, height, row, text, resize;
 
 		L.DomUtil.empty(this._rows);
-		for (iterator = 0; iterator < rows.length; iterator++) {
-			height = rows[iterator].size - (iterator > 0 ? rows[iterator - 1].size : 0);
+		var topOffset = new L.Point(rows[0].size, rows[0].size);
+		var topRow = parseInt(rows[0].text);
+		this._topOffset = Math.round(converter.call(context, topOffset).y);
+		for (iterator = 1; iterator < rows.length; iterator++) {
+			height = rows[iterator].size - rows[iterator - 1].size;
 			twip = new L.Point(height, height);
 			row = L.DomUtil.create('div', 'spreadsheet-header-row', this._rows);
 			text = L.DomUtil.create('div', 'spreadsheet-header-row-text', row);
@@ -171,7 +174,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			if (height <= 0) {
 				L.DomUtil.setStyle(row, 'display', 'none');
 			} else if (height < 10) {
-				text.row = iterator + 1;
+				text.row = iterator + topRow;
 				text.height = height;
 				L.DomUtil.setStyle(row, 'height', height + 'px');
 				L.DomUtil.setStyle(row, 'cursor', 'row-resize');
@@ -180,7 +183,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 				L.DomUtil.setStyle(resize, 'display', 'none');
 				this.mouseInit(text);
 			} else {
-				resize.row = iterator + 1;
+				resize.row = iterator + topRow;
 				resize.height = height;
 				L.DomUtil.setStyle(row, 'height', height + 'px');
 				L.DomUtil.setStyle(text, 'line-height', height - 3 + 'px');
@@ -283,6 +286,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			};
 
 			this._map.sendUnoCommand('.uno:RowHeight', command);
+			this._updateRowHeader();
 		}
 
 		this._map.removeLayer(this._horzLine);

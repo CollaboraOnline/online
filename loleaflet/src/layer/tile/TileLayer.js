@@ -1199,8 +1199,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postKeyboardEvent: function(type, charcode, keycode) {
-		if (this._docType === 'spreadsheet' && this._prevCellCursor && type === 'input')
-		{
+		if (this._docType === 'spreadsheet' && this._prevCellCursor && type === 'input') {
 			if (keycode === 1030) { // PgUp
 				if (this._cellCursorOnPgUp) {
 					return;
@@ -1542,17 +1541,18 @@ L.TileLayer = L.GridLayer.extend({
 						scrollY = (this._cellCursor.getNorth() - mapBounds.getNorth()) + mapHalfHeight;
 					}
 				}
-				else {
+				else if (horizontalDirection !== 0 || verticalDirection != 0) {
 					var spacingX = Math.abs(this._cellCursor.getEast() - this._cellCursor.getWest()) / 4.0;
 					var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 4.0;
-					if (horizontalDirection === -1 && this._cellCursor.getWest() < mapBounds.getWest()) {
+
+					if (this._cellCursor.getWest() < mapBounds.getWest()) {
 						scrollX = this._cellCursor.getWest() - mapBounds.getWest() - spacingX;
-					} else if (horizontalDirection === 1 && this._cellCursor.getEast() > mapBounds.getEast()) {
+					} else if (this._cellCursor.getEast() > mapBounds.getEast()) {
 						scrollX = this._cellCursor.getEast() - mapBounds.getEast() + spacingX;
 					}
-					if (verticalDirection === 1 && this._cellCursor.getNorth() > mapBounds.getNorth()) {
+					if (this._cellCursor.getNorth() > mapBounds.getNorth()) {
 						scrollY = this._cellCursor.getNorth() - mapBounds.getNorth() + spacingY;
-					} else if (verticalDirection === -1 && this._cellCursor.getSouth() < mapBounds.getSouth()) {
+					} else if (this._cellCursor.getSouth() < mapBounds.getSouth()) {
 						scrollY = this._cellCursor.getSouth() - mapBounds.getSouth() - spacingY;
 					}
 				}

@@ -30,10 +30,18 @@ L.Control.Header = L.Control.extend({
 	},
 
 	clearSelection: function (element) {
+		if (this._selection.start === -1 && this._selection.end === -1)
+			return;
 		var childs = element.children;
-		for (var iterator = this._selection.start; iterator <= this._selection.end; iterator++) {
+		// if the selection is cleared when the end selection cell is not in the current viewport,
+		// we have _selection.end === -1, since only a portion of the header is fetched;
+		// so, without the following hack, the selection would not be cleared correctly
+		var start = (this._selection.start === -1) ? 0 : this._selection.start;
+		var end = (this._selection.end === -1) ? childs.length : this._selection.end + 1;
+		for (var iterator = start; iterator < end; iterator++) {
 			this.unselect(childs[iterator]);
 		}
+
 		this._selection.start = this._selection.end = -1;
 		// after clearing selection, we need to select the header entry for the current cursor position,
 		// since we can't be sure that the selection clearing is due to click on a cell
@@ -50,7 +58,8 @@ L.Control.Header = L.Control.extend({
 		for (var len = childs.length; iterator < len; iterator++) {
 			x0 = (iterator > 0 ? childs[iterator - 1].size : 0);
 			x1 = childs[iterator].size;
-			if (x0 <= start && start <= x1) {
+			// 'start < x1' not '<=' or we get highlighted also the `start-row - 1` and `start-column - 1` headers
+			if (x0 <= start && start < x1) {
 				selected = true;
 				itStart = iterator;
 			}

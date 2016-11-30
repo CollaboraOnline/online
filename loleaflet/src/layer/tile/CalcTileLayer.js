@@ -15,7 +15,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 	beforeAdd: function (map) {
 		map._addZoomLimit(this);
 		map.on('zoomend', this._onZoomRowColumns, this);
-		map.on('resize', this._onUpdateViewPort, this);
 	},
 
 	_onInvalidateTilesMsg: function (textMsg) {
@@ -139,7 +138,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 		if (part !== this._selectedPart) {
 			this._map.setPart(part);
 			this._map.fire('setpart', {selectedPart: this._selectedPart});
-			this._map._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
+			// TODO: test it!
+			this._map.fire('updaterowcolumnheaders');
 		}
 	},
 
@@ -149,22 +149,16 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
 			this._clientZoom = null;
 		}
-		this._map._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
+		// TODO: test it!
+		this._map.fire('updaterowcolumnheaders');
 	},
 
-	_onUpdateViewPort: function () {
-		var width = parseInt(L.DomUtil.getStyle(this._map._container, 'width'));
-		var height = parseInt(L.DomUtil.getStyle(this._map._container, 'height'));
-		this._map.fire('updateviewport', {
-			rows: {
-				totalHeight: this._docPixelSize.y,
-				viewPort: height
-			},
-			columns: {
-				totalWidth: this._docPixelSize.x,
-				viewPort: width
-			}
-		});
+	_onUpdateCurrentHeader: function() {
+		var pos = new L.Point(-1, -1);
+		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
+			pos = this._cellCursorTwips.min.add([1, 1]);
+		}
+		this._map.fire('updatecurrentheader', pos);
 	},
 
 	_onUpdateSelectionHeader: function () {
@@ -221,9 +215,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 				this._preFetchBorder = null;
 			}
 		}
-
-		// Force fetching of row/column headers
-		this._onZoomRowColumns();
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -234,7 +225,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 				converter: this._twipsToPixels,
 				context: this
 			});
-			this._onUpdateViewPort();
+			this._onUpdateCurrentHeader();
 			this._onUpdateSelectionHeader();
 		}
 		else {
@@ -248,11 +239,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onCellCursorMsg: function (textMsg) {
-		var pos = new L.Point(-1, -1);
 		L.TileLayer.prototype._onCellCursorMsg.call(this, textMsg);
-		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
-			pos = this._cellCursorTwips.min.add([1, 1]);
-		}
-		this._map.fire('updatecurrentheader', pos);
+		this._onUpdateCurrentHeader();
 	}
 });
