@@ -126,6 +126,14 @@ L.Util = {
 		return ((!existingUrl || existingUrl.indexOf('?') === -1) ? '?' : '&') + params.join('&');
 	},
 
+	round: function(x, e) {
+		if (!e) {
+			return Math.round(x);
+		}
+		var f = 1.0/e;
+		return Math.round(x * f) * e;
+	},
+
 	// super-simple templating facility, used for TileLayer URLs
 	template: function (str, data) {
 		return str.replace(L.Util.templateRe, function (str, key) {
@@ -194,3 +202,4 @@ L.extend = L.Util.extend;
 L.bind = L.Util.bind;
 L.stamp = L.Util.stamp;
 L.setOptions = L.Util.setOptions;
+L.round = L.Util.round;
