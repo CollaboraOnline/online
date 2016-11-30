@@ -111,6 +111,13 @@ namespace LOOLProtocol
     }
 
     inline
+    bool matchPrefix(const std::string& prefix, const std::vector<char>& message)
+    {
+        return (message.size() >= prefix.size() &&
+                prefix.compare(0, prefix.size(), message.data(), prefix.size()) == 0);
+    }
+
+    inline
     bool matchPrefix(const std::string& prefix, const std::string& message, const bool ignoreWhitespace)
     {
         if (ignoreWhitespace)

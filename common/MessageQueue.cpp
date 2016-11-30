@@ -191,46 +191,174 @@ int TileQueue::priority(const std::string& tileMsg)
     return -1;
 }
 
-void TileQueue::deprioritizePreviews()
+int TileQueue::findFirstNonPreview(bool preferTiles) const
 {
+    int firstTile = -1;
+    int firstElse = -1;
     for (size_t i = 0; i < _queue.size(); ++i)
     {
-        const auto front = _queue.front();
-        const std::string message(front.data(), front.size());
+        const auto& front = _queue[i];
+        const bool isTile = LOOLProtocol::matchPrefix("tile", front);
+        //LOG_WRN("#" << i << " " << (isTile ? "isTile" : "non-tile"));
 
-        // stop at the first non-tile or non-'id' (preview) message
-        std::string id;
-        if (!LOOLProtocol::matchPrefix("tile", message) ||
-            !LOOLProtocol::getTokenStringFromMessage(message, "id", id))
+        if (isTile && firstTile < 0)
+        {
+            const std::string msg(front.data(), front.size());
+            std::string id;
+            const bool isPreview = LOOLProtocol::getTokenStringFromMessage(msg, "id", id);
+            //LOG_WRN("#" << i << " " << (isPreview ? "isPreview" : "isTile") << ": " << msg);
+            if (!isPreview)
+            {
+                firstTile = i;
+                //LOG_WRN("firstTile: #" << i);
+            }
+        }
+        else if (!isTile && firstElse < 0)
+        {
+            firstElse = i;
+            //LOG_WRN("firstElse: #" << i);
+        }
+        else if (firstTile >=0 && firstElse >= 0)
         {
             break;
         }
-
-        _queue.erase(_queue.begin());
-        _queue.push_back(front);
     }
+
+    if (preferTiles && firstTile >= 0)
+    {
+        return firstTile;
+    }
+
+    if (firstElse >= 0)
+    {
+        return firstElse;
+    }
+
+    if (firstTile >= 0)
+    {
+        return firstTile;
+    }
+
+    return -1;
+}
+
+void TileQueue::bumpToTop(const size_t index)
+{
+    if (index > 0)
+    {
+        Payload payload(_queue[index]);
+        //LOG_WRN("Bumping: " << std::string(payload.data(), payload.size()));
+
+        _queue.erase(_queue.begin() + index);
+        _queue.insert(_queue.begin(), payload);
+    }
+}
+
+void TileQueue::updateTimestamps(const bool isTile)
+{
+    if (isTile)
+    {
+        _lastGetTile = true;
+        _lastTileGetTime = std::chrono::steady_clock::now();
+    }
+    else if (_lastGetTile)
+    {
+        // Update non-tile timestamp when switching from tiles.
+        _lastGetTile = false;
+        _lastGetTime = std::chrono::steady_clock::now();
+    }
+}
+
+bool TileQueue::shouldPreferTiles() const
+{
+    if (_lastGetTile)
+    {
+        // If we had just done a tile, do something else.
+        LOG_TRC("Last was tile, doing non-tiles.");
+        return false;
+    }
+
+    // Check how long it's been since we'd done tiles.
+    const auto tileDuration = (_lastGetTime - _lastTileGetTime);
+    const auto tileDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(tileDuration).count();
+    const auto duration = (std::chrono::steady_clock::now() - _lastGetTime);
+    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+    LOG_TRC("Tile duration: " << tileDurationMs << "ms, nonTile duration: " << durationMs << "ms.");
+
+    if (durationMs > MaxTileSkipDurationMs)
+    {
+        LOG_TRC("Capping non-tiles to 100ms. Prefer tiles now.");
+        return true;
+    }
+
+    if (durationMs > tileDurationMs)
+    {
+        LOG_TRC("Capping non-tiles to tileDurationMs (" << tileDurationMs << "). Prefer tiles now.");
+        return true;
+    }
+
+    // We can still do some more non-tiles.
+    LOG_TRC("Have time for more non-tiles.");
+    return false;
 }
 
 MessageQueue::Payload TileQueue::get_impl()
 {
-    const auto front = _queue.front();
+    LOG_TRC("MessageQueue depth: " << _queue.size());
 
-    auto msg = std::string(front.data(), front.size());
+    auto front = _queue.front();
+    bool isTileFirst = LOOLProtocol::matchPrefix("tile", front);
+    //LOG_WRN("isTileFirst: " << isTileFirst);
 
-    std::string id;
-    bool isTile = LOOLProtocol::matchPrefix("tile", msg);
-    bool isPreview = isTile && LOOLProtocol::getTokenStringFromMessage(msg, "id", id);
-    if (!isTile || isPreview)
+    if (_queue.size() == 1)
     {
-        // Don't combine non-tiles or tiles with id.
-        LOG_TRC("MessageQueue res: " << msg);
+        updateTimestamps(isTileFirst);
+
+        //const auto msg = std::string(front.data(), front.size());
+        //LOG_TRC("MessageQueue res only: " << msg);
         _queue.erase(_queue.begin());
+        return front;
+    }
 
-        // de-prioritize the other tiles with id - usually the previews in
-        // Impress
-        if (isPreview)
-            deprioritizePreviews();
+    // Drain callbacks as soon and as fast as possible.
+    if (!isTileFirst && LOOLProtocol::matchPrefix("callback", front))
+    {
+        updateTimestamps(false);
 
+        //const auto msg = std::string(front.data(), front.size());
+        //LOG_TRC("MessageQueue res call: " << msg);
+        _queue.erase(_queue.begin());
+        return front;
+    }
+
+    // TODO: Try draining all callbacks first.
+
+    const bool preferTiles = shouldPreferTiles();
+    const int nonPreviewIndex = findFirstNonPreview(preferTiles);
+    //LOG_WRN("First non-preview: " << nonPreviewIndex);
+    if (nonPreviewIndex < 0)
+    {
+        // We are left with previews only.
+        updateTimestamps(true); // We're doing a tile.
+
+        //const auto msg = std::string(front.data(), front.size());
+        //LOG_TRC("MessageQueue res prev: " << msg);
+        _queue.erase(_queue.begin());
+        return front;
+    }
+
+    bumpToTop(nonPreviewIndex);
+    front = _queue.front();
+    isTileFirst = LOOLProtocol::matchPrefix("tile", front);
+    //LOG_WRN("New front: " << std::string(front.data(), front.size()));
+
+    if (!isTileFirst)
+    {
+        updateTimestamps(false);
+
+        //const auto msg = std::string(front.data(), front.size());
+        //LOG_TRC("MessageQueue res call: " << msg);
+        _queue.erase(_queue.begin());
         return front;
     }
 
@@ -238,6 +366,7 @@ MessageQueue::Payload TileQueue::get_impl()
     // position, otherwise handle the one that is at the front
     int prioritized = 0;
     int prioritySoFar = -1;
+    std::string msg(front.data(), front.size());
     for (size_t i = 0; i < _queue.size(); ++i)
     {
         auto& it = _queue[i];
@@ -246,6 +375,7 @@ MessageQueue::Payload TileQueue::get_impl()
         // avoid starving - stop the search when we reach a non-tile,
         // otherwise we may keep growing the queue of unhandled stuff (both
         // tiles and non-tiles)
+        std::string id;
         if (!LOOLProtocol::matchPrefix("tile", prio) ||
             LOOLProtocol::getTokenStringFromMessage(prio, "id", id))
         {
@@ -277,6 +407,7 @@ MessageQueue::Payload TileQueue::get_impl()
     {
         auto& it = _queue[i];
         msg = std::string(it.data(), it.size());
+        std::string id;
         if (!LOOLProtocol::matchPrefix("tile", msg) ||
             LOOLProtocol::getTokenStringFromMessage(msg, "id", id))
         {
@@ -286,7 +417,7 @@ MessageQueue::Payload TileQueue::get_impl()
         }
 
         auto tile2 = TileDesc::parse(msg);
-        LOG_TRC("Combining candidate: " << msg);
+        //LOG_TRC("Combining candidate: " << msg);
 
         // Check if it's on the same row.
         if (tiles[0].onSameRow(tile2))
@@ -300,6 +431,8 @@ MessageQueue::Payload TileQueue::get_impl()
         }
     }
 
+    updateTimestamps(true);
+
     LOG_TRC("Combined " << tiles.size() << " tiles, leaving " << _queue.size() << " in queue.");
 
     if (tiles.size() == 1)
@@ -309,7 +442,7 @@ MessageQueue::Payload TileQueue::get_impl()
         return Payload(msg.data(), msg.data() + msg.size());
     }
 
-    auto tileCombined = TileCombined::create(tiles).serialize("tilecombine");
+    const auto tileCombined = TileCombined::create(tiles).serialize("tilecombine");
     LOG_TRC("MessageQueue res: " << tileCombined);
     return Payload(tileCombined.data(), tileCombined.data() + tileCombined.size());
 }
