@@ -509,7 +509,8 @@ L.Map = L.Evented.extend({
 
 	project: function (latlng, zoom) { // (LatLng[, Number]) -> Point
 		zoom = zoom === undefined ? this._zoom : zoom;
-		return this.options.crs.latLngToPoint(L.latLng(latlng), zoom);
+		var projectedPoint = this.options.crs.latLngToPoint(L.latLng(latlng), zoom);
+		return new L.Point(L.round(projectedPoint.x, 1e-6), L.round(projectedPoint.y, 1e-6));
 	},
 
 	unproject: function (point, zoom) { // (Point[, Number]) -> LatLng
@@ -1057,6 +1058,11 @@ L.Map = L.Evented.extend({
 		return left + right > 0 ?
 			Math.round(left - right) / 2 :
 			Math.max(0, Math.ceil(left)) - Math.max(0, Math.floor(right));
+		// TODO: do we really need ceil and floor ?
+		// for spreadsheets it can cause one pixel alignment offset btw grid and row/column header
+		// and a one pixel horizontal auto-scrolling issue;
+		// both issues have been fixed by rounding the projection: see Map.project above;
+		// anyway in case of similar problems, this code needs to be checked
 	},
 
 	_limitZoom: function (zoom) {
