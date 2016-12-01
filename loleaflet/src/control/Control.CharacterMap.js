@@ -422,6 +422,9 @@ L.Control.CharacterMap = L.Control.extend({
 				option.innerHTML = this.unicodeBlocks[list[iterator]].name;
 			}, this);
 			this._onUnicodeSubsetChange();
+		} else {
+			L.DomUtil.remove(this._fontNames.options[this._fontNames.selectedIndex]);
+			this._onFontNamesChange();
 		}
 	},
 
