@@ -268,22 +268,6 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
-		// Change slides with PgUp/PgDown in Presentation
-		if (this._map.getDocType() === 'presentation' && !this.modifier && e.type === 'keyup') {
-			var _keyCode = e.originalEvent.keyCode;
-			if (_keyCode === this.keyCodes.pageUp || _keyCode === this.keyCodes.pageDown) {
-				e.originalEvent.preventDefault();
-				e.originalEvent.stopPropagation();
-
-				if (_keyCode === this.keyCodes.pageUp) {
-					this._map.setPart('prev');
-				}
-				else if (_keyCode === this.keyCodes.pageDown) {
-					this._map.setPart('next');
-				}
-			}
-		}
-
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
 
