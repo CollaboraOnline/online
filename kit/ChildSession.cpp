@@ -109,8 +109,11 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         // Notify all views about updated view info
         _docManager.notifyViewInfo(viewIds);
 
-        sendTextFrame("curpart: part=" + std::to_string(curPart));
-        sendTextFrame("setpart: part=" + std::to_string(curPart));
+        if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
+        {
+            sendTextFrame("curpart: part=" + std::to_string(curPart));
+            sendTextFrame("setpart: part=" + std::to_string(curPart));
+        }
 
         //TODO: Is the order of these important?
         for (const auto& pair : _lastDocEvents)
