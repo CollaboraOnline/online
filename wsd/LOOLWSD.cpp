@@ -291,8 +291,6 @@ static void forkChildren(const int number)
         if (!fs.empty())
         {
             LOG_WRN("File system of " << fs << " dangerously low on disk space");
-
-            std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
             alertAllUsersInternal("error: cmd=internal kind=diskfull");
         }
 
