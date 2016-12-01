@@ -235,6 +235,7 @@ L.Map.Keyboard = L.Handler.extend({
 		var alt = e.originalEvent.altKey ? this.keyModifier.alt : 0;
 		var cmd = e.originalEvent.metaKey ? this.keyModifier.ctrl : 0;
 		var location = e.originalEvent.location;
+		this._keyHandled = this._keyHandled || false;
 		this.modifier = shift | ctrl | alt | cmd;
 
 		// On Windows, pressing AltGr = Alt + Ctrl
@@ -286,13 +287,6 @@ L.Map.Keyboard = L.Handler.extend({
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
 
-		// Hack for making space work in chrome when IME is enabled
-		// Chrome doesn't fire compositionend event when IME is enabled and user presses <space>.
-		// However, it sends 'textInput' event in such a case. treat it like 'compositionend' events
-		if (e.type === 'textInput' && e.originalEvent.data === ' ') {
-			e.type = 'compositionend';
-		}
-
 		if (e.type === 'compositionend') {
 			var compCharCodes = [];
 			for (var i = 0; i < e.originalEvent.data.length; i++) {
@@ -313,8 +307,13 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this._map._permission === 'edit') {
 			docLayer._resetPreFetching();
 
-			if (e.type === 'keydown' && this.handleOnKeyDown[keyCode] && charCode === 0) {
-				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+			if (e.type === 'keydown') {
+				this._keyHandled = false;
+				this._bufferedTextInputEvent = null;
+
+				if (this.handleOnKeyDown[keyCode] && charCode === 0) {
+					docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+				}
 			}
 			else if ((e.type === 'keypress' || e.type === 'compositionend') &&
 				(!this.handleOnKeyDown[keyCode] || charCode !== 0)) {
@@ -334,9 +333,28 @@ L.Map.Keyboard = L.Handler.extend({
 				} else {
 					docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
 				}
+
+				this._keyHandled = true;
+			}
+			else if (e.type === 'textInput') {
+				// Store the textInput event
+				this._bufferedTextInputEvent = e;
 			}
 			else if (e.type === 'keyup') {
+				// Hack for making space work in chrome when IME is enabled
+				// Chrome doesn't fire compositionend event or keypress when
+				// IME is enabled *and* user presses <space>.
+				// However, it sends 'textInput' event in such a case.
+				// Use the buffered textInput event if its the space key and has not been
+				// handled already by 'keypress' or 'compositionend' events above
+				if (!this._keyHandled && this._bufferedTextInputEvent && e.originalEvent.key === this._bufferedTextInputEvent.originalEvent.data) {
+					charCode = e.originalEvent.keyCode;
+					docLayer._postKeyboardEvent('input', charCode, 0);
+				}
 				docLayer._postKeyboardEvent('up', charCode, unoKeyCode);
+
+				this._keyHandled = true;
+				this._bufferedTextInputEvent = null;
 			}
 			if (keyCode === 9) {
 				// tab would change focus to other DOM elements
