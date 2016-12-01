@@ -26,7 +26,7 @@ constexpr int WS_SEND_TIMEOUT_MS = 1000;
 /// Pipe and Socket read buffer size.
 /// Should be large enough for ethernet packets
 /// which can be 1500 bytes long.
-constexpr int READ_BUFFER_SIZE = 64 * 1024;
+constexpr long READ_BUFFER_SIZE = 64 * 1024;
 
 /// Size beyond which messages will be sent preceded with
 /// 'nextmessage' frame to let the receiver know in advance
