@@ -118,14 +118,25 @@ L.Control.Scroll = L.Control.extend({
 	},
 
 	_onUpdateSize: function (e) {
+		// we need to avoid precision issues in comparison (in the end values are pixels)
+		var prevDocWidth = Math.ceil(parseFloat(L.DomUtil.getStyle(this._mockDoc, 'width')));
+		var prevDocHeight = Math.ceil(parseFloat(L.DomUtil.getStyle(this._mockDoc, 'height')));
+		var newDocWidth = Math.ceil(e.x);
+		var newDocHeight = Math.ceil(e.y);
 		// for writer documents, ignore scroll while document size is being reduced
-		var prevDocY = parseFloat(L.DomUtil.getStyle(this._mockDoc, 'height'));
-		if (this._map.getDocType() === 'text' && e.y < prevDocY) {
+		if (this._map.getDocType() === 'text' && newDocHeight < prevDocHeight) {
 			this._ignoreScroll = true;
 		}
 
 		L.DomUtil.setStyle(this._mockDoc, 'width', e.x + 'px');
 		L.DomUtil.setStyle(this._mockDoc, 'height', e.y + 'px');
+
+		// custom scrollbar plugin checks automatically for content height changes but not for content width changes
+		// so we need to update scrollbars explicitly; moreover we want to avoid to have 'update' invoked twice
+		// in case prevDocHeight !== newDocHeight
+		if (prevDocWidth !== newDocWidth && prevDocHeight === newDocHeight) {
+			$('.scroll-container').mCustomScrollbar('update');
+		}
 	},
 
 	_onUpdateScrollOffset: function (e) {
