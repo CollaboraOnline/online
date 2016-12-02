@@ -90,7 +90,12 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
                 continue;
             }
 
-            if (n <= 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
+            if (n == -1)
+            {
+                LOG_DBG("SocketProcessor [" << name << "]: was not an interesting frame, nothing to do here");
+                continue;
+            }
+            else if (n == 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
             {
                 LOG_WRN("SocketProcessor [" << name << "]: Connection closed.");
                 closeFrame();
