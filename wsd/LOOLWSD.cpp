@@ -327,7 +327,7 @@ static bool cleanupChildren()
 /// Called on startup only.
 static void preForkChildren()
 {
-    std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
@@ -647,7 +647,7 @@ private:
                 const std::string formName(form.get("name"));
 
                 // Validate the docKey
-                std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
+                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
                 std::string decodedUri;
                 URI::decode(tokens[2], decodedUri);
                 const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
@@ -658,7 +658,7 @@ private:
                 {
                     throw BadRequestException("DocKey [" + docKey + "] or childid [" + formChildid + "] is invalid.");
                 }
-                DocBrokersLock.unlock();
+                docBrokersLock.unlock();
 
                 // protect against attempts to inject something funny here
                 if (formChildid.find('/') == std::string::npos && formName.find('/') == std::string::npos)
@@ -682,7 +682,7 @@ private:
             std::string decodedUri;
             URI::decode(tokens[2], decodedUri);
             const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
-            std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
+            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
             auto docBrokerIt = DocBrokers.find(docKey);
             if (docBrokerIt == DocBrokers.end())
             {
@@ -702,7 +702,7 @@ private:
             {
                 throw BadRequestException("RandomDir cannot be equal to ChildId");
             }
-            DocBrokersLock.unlock();
+            docBrokersLock.unlock();
 
             std::string fileName;
             bool responded = false;
@@ -2088,7 +2088,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             {
                 try
                 {
-                    std::unique_lock<std::mutex> DocBrokersLock(DocBrokersMutex);
+                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
                     cleanupDocBrokers();
                     for (auto& pair : DocBrokers)
                     {
@@ -2223,7 +2223,7 @@ void alertAllUsers(const std::string& cmd, const std::string& kind)
 
 void alertAllUsers(const std::string& msg)
 {
-    std::lock_guard<std::mutex> DocBrokersLock(DocBrokersMutex);
+    std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
     alertAllUsersInternal(msg);
 }
