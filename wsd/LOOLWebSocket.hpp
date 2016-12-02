@@ -131,11 +131,11 @@ public:
         if (result != length)
         {
             LOG_ERR("Sent incomplete message, expected " << length << " bytes but sent " << result <<
-                    " while sending: " << LOOLProtocol::getAbbreviatedMessage(buffer, length));
+                    " while sending: " << LOOLProtocol::getAbbreviatedFrameDump(buffer, length, flags));
         }
         else
         {
-            LOG_TRC("Sent frame: " << LOOLProtocol::getAbbreviatedMessage(buffer, length));
+            LOG_TRC("Sent frame: " << LOOLProtocol::getAbbreviatedFrameDump(buffer, length, flags));
         }
 
         return result;
