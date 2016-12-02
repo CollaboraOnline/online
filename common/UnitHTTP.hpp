@@ -74,7 +74,6 @@ public:
     UnitHTTPServerRequest(UnitHTTPServerResponse& inResponse,
                           const std::string& uri) :
         _response(inResponse),
-        _clientAddress(),
         _serverAddress(MasterPortNumber)
     {
         setURI(uri);
