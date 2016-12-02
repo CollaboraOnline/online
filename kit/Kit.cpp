@@ -607,7 +607,6 @@ public:
     {
         assert(ws && "Expected a non-null websocket.");
         auto tile = TileDesc::parse(tokens);
-        const double area = tile.getWidth() * tile.getHeight();
 
         // Send back the request with all optional parameters given in the request.
         const auto tileMsg = tile.serialize("tile:");
@@ -638,8 +637,7 @@ public:
             return;
         }
 
-        LOG_TRC("+paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() <<
-                ") " << "ver: " << tile.getVersion());
+        const double area = tile.getWidth() * tile.getHeight();
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tile.getPart(),
                                       tile.getWidth(), tile.getHeight(),
@@ -694,8 +692,7 @@ public:
         const size_t tilesByY = renderArea.getHeight() / tileCombined.getTileHeight();
         const size_t pixmapWidth = tilesByX * tileCombined.getWidth();
         const size_t pixmapHeight = tilesByY * tileCombined.getHeight();
-        const double area = pixmapWidth * pixmapHeight;
-        const size_t pixmapSize = 4 * area;
+        const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
         std::vector<unsigned char> pixmap(pixmapSize, 0);
 
         if (!_loKitDocument)
@@ -711,8 +708,7 @@ public:
             return;
         }
 
-        LOG_DBG("+paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
-                renderArea.getWidth() << ", " << renderArea.getHeight() << ") ver: " << tileCombined.getVersion());
+        const double area = pixmapWidth * pixmapHeight;
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tileCombined.getPart(),
                                       pixmapWidth, pixmapHeight,

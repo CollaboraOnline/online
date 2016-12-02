@@ -56,10 +56,10 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
 
 void TileQueueTests::testTileQueuePriority()
 {
-    const std::string reqHigh = "tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1";
+    const std::string reqHigh = "tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840";
     const std::string resHigh = "tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1";
     const TileQueue::Payload payloadHigh(resHigh.data(), resHigh.data() + resHigh.size());
-    const std::string reqLow = "tile part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840 ver=-1";
+    const std::string reqLow = "tile part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
     const std::string resLow = "tile part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840 ver=-1";
     const TileQueue::Payload payloadLow(resLow.data(), resLow.data() + resLow.size());
 
@@ -232,14 +232,14 @@ void TileQueueTests::testPreviewsDeprioritization()
 
     queue.put(tiles[0]);
 
-    CPPUNIT_ASSERT_EQUAL(tiles[0], payloadAsString(queue.get()));
     CPPUNIT_ASSERT_EQUAL(previews[0], payloadAsString(queue.get()));
+    CPPUNIT_ASSERT_EQUAL(tiles[0], payloadAsString(queue.get()));
     CPPUNIT_ASSERT_EQUAL(previews[1], payloadAsString(queue.get()));
 
     queue.put(tiles[1]);
 
-    CPPUNIT_ASSERT_EQUAL(tiles[1], payloadAsString(queue.get()));
     CPPUNIT_ASSERT_EQUAL(previews[2], payloadAsString(queue.get()));
+    CPPUNIT_ASSERT_EQUAL(tiles[1], payloadAsString(queue.get()));
     CPPUNIT_ASSERT_EQUAL(previews[3], payloadAsString(queue.get()));
 
     // stays empty after all is done
