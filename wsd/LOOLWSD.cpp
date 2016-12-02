@@ -270,6 +270,7 @@ bool cleanupDocBrokers()
 
 static void forkChildren(const int number)
 {
+    Util::assertIsLocked(DocBrokersMutex);
     Util::assertIsLocked(NewChildrenMutex);
 
     if (number > 0)
@@ -332,12 +333,8 @@ static void preForkChildren()
 static void prespawnChildren()
 {
     // First remove dead DocBrokers, if possible.
-    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
-    if (docBrokersLock.try_lock())
-    {
-        cleanupDocBrokers();
-        docBrokersLock.unlock();
-    }
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+    cleanupDocBrokers();
 
     std::unique_lock<std::mutex> lock(NewChildrenMutex, std::defer_lock);
     if (!lock.try_lock())
@@ -384,6 +381,7 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
 
 static std::shared_ptr<ChildProcess> getNewChild()
 {
+    Util::assertIsLocked(DocBrokersMutex);
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
     namespace chrono = std::chrono;
@@ -518,6 +516,13 @@ private:
                 {
                     LOG_INF("Conversion request for URI [" << fromPath << "].");
 
+                    auto uriPublic = DocumentBroker::sanitizeURI(fromPath);
+                    const auto docKey = DocumentBroker::getDocKey(uriPublic);
+
+                    // This lock could become a bottleneck.
+                    // In that case, we can use a pool and index by publicPath.
+                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+
                     // Request a kit process for this doc.
                     auto child = getNewChild();
                     if (!child)
@@ -526,15 +531,9 @@ private:
                         throw std::runtime_error("Failed to spawn lokit child.");
                     }
 
-                    auto uriPublic = DocumentBroker::sanitizeURI(fromPath);
-                    const auto docKey = DocumentBroker::getDocKey(uriPublic);
                     LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
                     auto docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
                     child->setDocumentBroker(docBroker);
-
-                    // This lock could become a bottleneck.
-                    // In that case, we can use a pool and index by publicPath.
-                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                     cleanupDocBrokers();
 
