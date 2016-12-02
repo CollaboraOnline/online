@@ -78,6 +78,10 @@ public:
 
     /// Wrapper for Poco::Net::WebSocket::receiveFrame() that handles PING frames
     /// (by replying with a PONG frame) and PONG frames. PONG frames are ignored.
+
+    /// Returns number of bytes received, or 0 if the Poco receiveFrame() returned 0,
+    /// or -1 if no "interesting" (not PING or PONG) frame was actually received).
+
     /// Should we also factor out the handling of non-final and continuation frames into this?
     int receiveFrame(char* buffer, const int length, int& flags)
     {
