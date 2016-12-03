@@ -146,6 +146,8 @@ void UnitWSD::configure(Poco::Util::LayeredConfiguration &config)
     {
         // Force HTTP - helps stracing.
         config.setBool("ssl.enable", false);
+        // Use http:// everywhere.
+        config.setBool("ssl.termination", false);
         // Force console output - easier to debug.
         config.setBool("logging.file[@enable]", false);
     }
