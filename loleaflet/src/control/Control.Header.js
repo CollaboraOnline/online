@@ -35,6 +35,10 @@ L.Control.Header = L.Control.extend({
 			this.unselect(childs[iterator]);
 		}
 		this._selection.start = this._selection.end = -1;
+		// after clearing selection, we need to select the header entry for the current cursor position,
+		// since we can't be sure that the selection clearing is due to click on a cell
+		// different from the one where the cursor is already placed
+		this.select(childs[this._current]);
 	},
 
 	updateSelection: function(element, start, end) {
@@ -56,6 +60,15 @@ L.Control.Header = L.Control.extend({
 			if (x0 <= end && end <= x1) {
 				itEnd = iterator;
 				break;
+			}
+		}
+
+		// we need to unselect the row (column) header entry for the current cell cursor position
+		// since the selection could be due to selecting a whole row (column), so the selection
+		// does not start by clicking on a cell
+		if (this._current !== -1 && itStart !== -1 && itEnd !== -1) {
+			if (this._current < itStart || this._current > itEnd) {
+				this.unselect(childs[this._current]);
 			}
 		}
 		if (this._selection.start !== -1 && itStart !== -1 && itStart > this._selection.start) {
@@ -85,8 +98,14 @@ L.Control.Header = L.Control.extend({
 			x0 = (iterator > 0 ? childs[iterator - 1].size : 0);
 			x1 = childs[iterator].size;
 			if (x0 <= start && start <= x1) {
-				this.unselect(childs[this._current]);
-				this.select(childs[iterator]);
+				// when a whole row (column) is selected the cell cursor is moved to the first column (row)
+				// but this action should not cause to select/unselect anything, on the contrary we end up
+				// with all column (row) header entries selected but the one where the cell cursor was
+				// previously placed
+				if (this._selection.start === -1 && this._selection.end === -1) {
+					this.unselect(childs[this._current]);
+					this.select(childs[iterator]);
+				}
 				this._current = iterator;
 				break;
 			}
