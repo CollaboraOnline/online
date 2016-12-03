@@ -49,9 +49,7 @@ public:
           _childDirty(0)
     {
         setHasKitHooks();
-#ifdef TEST_DIRTY_NUMBERS
-        setTimeout(100 * 1000);
-#endif
+        setTimeout(60 * 1000);
     }
 
     virtual void preSpawnCount(int &numPrefork) override
@@ -103,7 +101,7 @@ public:
                 LOG_INF("Getting memory of child #" << i + 1 << " of " << _childSockets.size());
 
                 _childSockets[i]->sendFrame("unit-memdump: \n", sizeof("unit-memdump: \n"));
-                if (_cv.wait_for(lock, std::chrono::milliseconds(5 * 1000)) == std::cv_status::timeout)
+                if (_cv.wait_for(lock, std::chrono::milliseconds(10 * 1000)) == std::cv_status::timeout)
                 {
                     _failure = "Timed out waiting for child to respond to unit-memdump.";
                     std::cerr << _failure << std::endl;
