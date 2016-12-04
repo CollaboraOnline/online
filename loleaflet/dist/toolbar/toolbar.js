@@ -367,6 +367,18 @@ $(function () {
 			{type: 'button',  id: 'alignhorizontal',  img: 'alignhorizontal', hint: _('Center horizontally'), uno: 'CenterPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"2"}}'},
 			{type: 'button',  id: 'alignright',  img: 'alignright', hint: _('Align right'), uno: 'RightPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"3"}}'},
 			{type: 'button',  id: 'alignblock',  img: 'alignblock', hint: _('Justified'), uno: 'JustifyPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"4"}}'},
+			{type: 'button',  id: 'wraptext',  img: 'wraptext', hint: _('Wrap Text'), uno: 'WrapText'},
+			{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _('Merge and Center Cells'), uno: 'ToggleMergeCells'},
+			{type: 'break',   id: 'break-toggle'},
+			{type: 'button',  id: 'numberformatcurrency',  img: 'numberformatcurrency', hint: _('Format as Currency'), uno: 'NumberFormatCurrency'},
+			{type: 'button',  id: 'numberformatpercent',  img: 'numberformatpercent', hint: _('Format as Percent'), uno: 'NumberFormatPercent'},
+			{type: 'button',  id: 'numberformatdecimal',  img: 'numberformatdecimal', hint: _('Format as Number'), uno: 'NumberFormatDecimal'},
+			{type: 'button',  id: 'numberformatdate',  img: 'numberformatdate', hint: _('Format as Date'), uno: 'NumberFormatDate'},
+			{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _('Add Decimal Place'), uno: 'NumberFormatIncDecimals'},
+			{type: 'button',  id: 'numberformatdecdecimals',  img: 'numberformatdecdecimals', hint: _('Delete Decimal Place'), uno: 'NumberFormatDecDecimals'},
+			{type: 'break',   id: 'break-number'},
+			{type: 'button',  id: 'sortascending',  img: 'sortascending', hint: _('Sort Ascending'), uno: 'SortAscending'},
+			{type: 'button',  id: 'sortdescending',  img: 'sortdescending', hint: _('Sort Descending'), uno: 'SortDescending'},
 			{type: 'break',   id: 'break-align'},
 			{type: 'button',  id: 'bullet',  img: 'bullet', hint: _('Bullets on/off'), uno: 'DefaultBullet'},
 			{type: 'button',  id: 'numbering',  img: 'numbering', hint: _('Numbering on/off'), uno: 'DefaultNumbering'},
@@ -507,7 +519,7 @@ var userPopupTimeout = null;
 function toggleButton(toolbar, state, command)
 {
 	var checked;
-	command = command.replace('.uno:', '');
+	command = command.replace('.uno:', '').toLowerCase();
 	var item = toolbar.get(command);
 	if (!item) {
 		return;
@@ -531,7 +543,7 @@ function toggleButton(toolbar, state, command)
 function disableButton(toolbar, state, command)
 {
 	var disabled;
-	command = command.replace('.uno:', '');
+	command = command.replace('.uno:', '').toLowerCase();
 	var item = toolbar.get(command);
 	if (!item) {
 		return;
@@ -739,37 +751,16 @@ map.on('wopiprops', function(e) {
 });
 
 map.on('doclayerinit', function () {
-	var toolbar = w2ui['toolbar-up'];
-	var docType = map.getDocType();
-	if (docType !== 'text') {
-		if (docType === 'presentation') {
-			toolbar.hide('annotation');
-
-			var presentationToolbar = w2ui['presentation-toolbar'];
-			presentationToolbar.show('presentation');
-			presentationToolbar.show('presentationbreak');
-			presentationToolbar.show('insertpage');
-			presentationToolbar.show('duplicatepage');
-			presentationToolbar.show('deletepage');
-		}
-		else if (docType === 'drawing') {
-			toolbar.hide('annotation');
-		}
-		else if (docType === 'spreadsheet') {
-			toolbar.hide('inserttable');
-		}
-		else if (docType !== 'spreadsheet') {
-			toolbar.hide('annotation');
-		}
-	}
-
+	var toolbarUp = w2ui['toolbar-up'];
+	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var statusbar = w2ui['toolbar-down'];
+	var docType = map.getDocType();
+
 	switch (docType) {
 	case 'spreadsheet':
-		statusbar.hide('zoomreset');
-		statusbar.hide('zoomout');
-		statusbar.hide('zoomin');
-		statusbar.hide('zoomlevel');
+		toolbarUp.remove('inserttable', 'styles', 'alignblock', 'bullet', 'numbering', 'break-numbering');
+		toolbarUpMore.remove('inserttable', 'styles', 'alignblock', 'bullet', 'numbering', 'break-numbering');
+		statusbar.remove('zoomreset', 'zoomout', 'zoomin', 'zoomlevel');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'StatusDocPos',
@@ -797,25 +788,10 @@ map.on('doclayerinit', function () {
 				{ func: '16', text: _('None'), icon: 'selected'},
 		]},
 		]);
-		toolbar.remove('styles', 'alignblock', 'bullet', 'numbering', 'break-numbering');
-		toolbar.insert('break-align', [
-			{type: 'button',  id: 'WrapText',  img: 'wraptext', hint: _('Wrap Text'), uno: 'WrapText'},
-			{type: 'button',  id: 'ToggleMergeCells',  img: 'togglemergecells', hint: _('Merge and Center Cells'), uno: 'ToggleMergeCells'},
-			{type: 'break',   id: 'break-toggle'},
-			{type: 'button',  id: 'NumberFormatCurrency',  img: 'numberformatcurrency', hint: _('Format as Currency'), uno: 'NumberFormatCurrency'},
-			{type: 'button',  id: 'NumberFormatPercent',  img: 'numberformatpercent', hint: _('Format as Percent'), uno: 'NumberFormatPercent'},
-			{type: 'button',  id: 'NumberFormatDecimal',  img: 'numberformatdecimal', hint: _('Format as Number'), uno: 'NumberFormatDecimal'},
-			{type: 'button',  id: 'NumberFormatDate',  img: 'numberformatdate', hint: _('Format as Date'), uno: 'NumberFormatDate'},
-			{type: 'button',  id: 'NumberFormatIncDecimals',  img: 'numberformatincdecimals', hint: _('Add Decimal Place'), uno: 'NumberFormatIncDecimals'},
-			{type: 'button',  id: 'NumberFormatDecDecimals',  img: 'numberformatdecdecimals', hint: _('Delete Decimal Place'), uno: 'NumberFormatDecDecimals'},
-			{type: 'break',   id: 'break-number'},
-			{type: 'button',  id: 'SortAscending',  img: 'sortascending', hint: _('Sort Ascending'), uno: 'SortAscending'},
-			{type: 'button',  id: 'SortDescending',  img: 'sortdescending', hint: _('Sort Descending'), uno: 'SortDescending'},
-		]);
-		statusbar.refresh();
-		toolbar.refresh();
 		break;
 	case 'text':
+		toolbarUp.remove('wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
+		toolbarUpMore.remove('wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'StatePageNumber',
@@ -830,21 +806,32 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'SelectionMode',
 				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
-		statusbar.refresh();
 		break;
 	case 'presentation':
+		var presentationToolbar = w2ui['presentation-toolbar'];
+		presentationToolbar.show('presentation', 'presentationbreak', 'insertpage', 'duplicatepage', 'deletepage');
+		toolbarUp.remove('annotation', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
+		toolbarUpMore.remove('annotation', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'PageStatus',
 				html: '<div id="PageStatus" class="loleaflet-font" title="'+_('Number of Slides')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
-		statusbar.refresh();
+		break;
+	case 'drawing':
+		toolbarUp.remove('annotation', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
+		toolbarUpMore.remove('annotation', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		break;
 	}
+	toolbarUp.refresh();
+	toolbarUpMore.refresh();
+	statusbar.refresh();
+	resizeToolbar();
 });
 
 map.on('commandstatechanged', function (e) {
 	var toolbar = w2ui['toolbar-up'];
+	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var statusbar = w2ui['toolbar-down'];
 	var commandName = e.commandName;
 	var state = e.state;
@@ -996,16 +983,18 @@ map.on('commandstatechanged', function (e) {
 	else if (commandName === '.uno:WrapText' ||
 		 commandName === '.uno:ToggleMergeCells' ||
 		 commandName === '.uno:NumberFormatCurrency' ||
+		 commandName === '.uno:NumberFormatDecimal' ||
 		 commandName === '.uno:NumberFormatPercent' ||
 		 commandName === '.uno:NumberFormatDate') {
 		toggleButton(toolbar, state, commandName);
+		toggleButton(toolbarUpMore, state, commandName);
 	}
 	else if (commandName === '.uno:SortAscending' ||
 		 commandName === '.uno:SortDescending') {
 		disableButton(toolbar, state, commandName);
+		disableButton(toolbarUpMore, state, commandName);
 	}
 
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var id = commandName.toLowerCase().substr(5);
 	if (typeof formatButtons[id] !== 'undefined') {
 		if (state === 'true') {
