@@ -38,9 +38,17 @@ var Util = Base.extend({
 		}
 
 		if (hrs) {
-			res = hrs + ':' + mins + _(' hrs');
+			if (mins < 10) {
+				res = hrs + ':0' + mins + _(' hrs');
+			} else {
+				res = hrs + ':' + mins + _(' hrs');
+			}
 		} else if (mins) {
-			res = mins + ':' + secs + _(' mins');
+			if (secs < 10) {
+				res = mins + ':0' + secs + _(' mins');
+			} else {
+				res = mins + ':' + secs + _(' mins');
+			}
 		} else if (secs) {
 			res = secs + _(' s');
 		} else {
