@@ -827,14 +827,16 @@ L.Map = L.Evented.extend({
 		if (!this._loaded) { return; }
 
 		var doclayer = this._docLayer;
-		if (!doclayer) {
-			return;
-		}
-		doclayer._isCursorVisibleOnLostFocus = doclayer._isCursorOverlayVisible;
+		if (!doclayer) { return; }
+
+		// save state of cursor (blinking marker) and the cursor overlay
+		doclayer._isCursorVisibleOnLostFocus = doclayer._isCursorVisible;
 		doclayer._isCursorOverlayVisibleOnLostFocus = doclayer._isCursorOverlayVisible;
+
+		// if the blinking cursor is visible, disable the overlay when we go out of focus
 		if (doclayer._isCursorVisible && doclayer._isCursorOverlayVisible) {
 			doclayer._isCursorOverlayVisible = false;
-			doclayer._onUpdateCursor();
+			doclayer._updateCursorAndOverlay();
 		}
 
 		this._deactivate();
@@ -844,15 +846,15 @@ L.Map = L.Evented.extend({
 		if (!this._loaded) { return; }
 
 		var doclayer = this._docLayer;
-		if (doclayer && doclayer._isCursorVisibleOnLostFocus && doclayer._isCursorOverlayVisibleOnLostFocus) {
+		if (doclayer) {
 			// we restore the old cursor position by a small delay, so that if the user clicks
 			// inside the document we skip to restore it, so that the user does not see the cursor
 			// jumping from the old position to the new one
 			setTimeout(function () {
-				if (doclayer._isCursorOverlayVisible) { return; } // user has clicked inside the document
-				doclayer._isCursorOverlayVisible = doclayer._isCursorVisible = true;
-				doclayer._visibleCursor = doclayer._visibleCursorOnLostFocus;
-				doclayer._onUpdateCursor();
+				// restore the state that was before focus was lost
+				doclayer._isCursorOverlayVisible = doclayer._isCursorOverlayVisibleOnLostFocus;
+				doclayer._isCursorVisible = doclayer._isCursorVisibleOnLostFocus;
+				doclayer._updateCursorAndOverlay();
 			}, 300);
 		}
 
