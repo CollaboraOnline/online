@@ -213,9 +213,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else
     {
-        // Allow 'downloadas' for all kinds of views
-        if ( (isReadOnly()) && tokens[0] != "downloadas" &&
-             tokens[0] != "userinactive" && tokens[0] != "useractive")
+        if (!filterMessage(firstLine))
         {
             const std::string dummyFrame = "dummymsg";
             return forwardToChild(dummyFrame, docBroker);
@@ -389,6 +387,22 @@ bool ClientSession::forwardToChild(const std::string& message,
                                    const std::shared_ptr<DocumentBroker>& docBroker)
 {
     return docBroker->forwardToChild(getId(), message);
+}
+
+bool ClientSession::filterMessage(const std::string& message) const
+{
+    bool allowed = true;
+    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    if (isReadOnly())
+    {
+        allowed = false;
+        if (tokens[0] == "downloadas" || tokens[0] == "userinactive" || tokens[0] == "useractive")
+        {
+            allowed = true;
+        }
+    }
+
+    return allowed;
 }
 
 void ClientSession::setReadOnly()
