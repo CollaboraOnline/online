@@ -745,7 +745,7 @@ map.on('doclayerinit', function () {
 	case 'spreadsheet':
 		toolbarUp.remove('inserttable', 'styles', 'alignblock', 'bullet', 'numbering', 'break-numbering');
 		toolbarUpMore.remove('inserttable', 'styles', 'alignblock', 'bullet', 'numbering', 'break-numbering');
-		statusbar.remove('zoomreset', 'zoomout', 'zoomin', 'zoomlevel');
+		statusbar.disable('zoomreset', 'zoomout', 'zoomin', 'zoomlevel');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'StatusDocPos',
