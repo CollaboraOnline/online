@@ -493,7 +493,11 @@ var formatButtons = {
 	'fontcolor': true, 'backcolor': true, 'bullet': true, 'numbering': true,
 	'alignleft': true, 'alignhorizontal': true, 'alignright': true, 'alignblock': true,
 	'incrementindent': true, 'decrementindent': true, 'insertgraphic': true,
-	'insertfootnote': true, 'repair': true, 'specialcharacter': true
+	'insertfootnote': true, 'repair': true, 'specialcharacter': true,
+	'wraptext': true, 'togglemergecells': true, 'numberformatcurrency': true,
+	'numberformatpercent': true, 'numberformatdecimal': true, 'numberformatdate': true,
+	'numberformatincdecimals': true, 'numberformatdecdecimals': true,
+	'sortascending': true, 'sortdescending': true
 };
 
 var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
@@ -964,20 +968,6 @@ map.on('commandstatechanged', function (e) {
 	else if (commandName === '.uno:PageStatus') {
 		state = toLocalePattern('Slide %1 of %2', 'Slide (\\d+) of (\\d+)', state, '%1', '%2');
 		$('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
-	}
-	else if (commandName === '.uno:WrapText' ||
-		 commandName === '.uno:ToggleMergeCells' ||
-		 commandName === '.uno:NumberFormatCurrency' ||
-		 commandName === '.uno:NumberFormatDecimal' ||
-		 commandName === '.uno:NumberFormatPercent' ||
-		 commandName === '.uno:NumberFormatDate') {
-		toggleButton(toolbar, state, commandName);
-		toggleButton(toolbarUpMore, state, commandName);
-	}
-	else if (commandName === '.uno:SortAscending' ||
-		 commandName === '.uno:SortDescending') {
-		disableButton(toolbar, state, commandName);
-		disableButton(toolbarUpMore, state, commandName);
 	}
 
 	var id = commandName.toLowerCase().substr(5);
