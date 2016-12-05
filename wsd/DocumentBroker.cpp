@@ -1028,4 +1028,9 @@ void DocumentBroker::closeDocument(const std::string& reason)
     terminateChild(lock, reason);
 }
 
+void DocumentBroker::updateLastActivityTime()
+{
+    Admin::instance().updateLastActivityTime(_docKey);
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

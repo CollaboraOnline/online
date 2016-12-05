@@ -388,4 +388,9 @@ AdminModel& Admin::getModel()
     return _model;
 }
 
+void Admin::updateLastActivityTime(const std::string& docKey)
+{
+    _model.updateLastActivityTime(docKey);
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

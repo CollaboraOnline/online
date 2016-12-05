@@ -301,6 +301,8 @@ public:
 
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
 
+    void updateLastActivityTime();
+
 private:
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const bool dontSaveIfUnmodified);

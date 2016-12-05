@@ -548,6 +548,11 @@ section). Others are just response messages to some client command.
     <memory consumed> in kilobytes sent from admin -> client after every
     mem_stats_interval (see `set` command for list of settings)
 
+[*] resetidle <pid>
+
+    <pid> process id hosting the document
+    reset the idle time counter for the document
+
 InvalidAuthToken
 
     This is sent when invalid auth token is provided in 'auth' command. See
@@ -557,11 +562,13 @@ NotAuthenticated
 
     When client sends an admin command that requires authentication.
 
-documents <pid> <filename> <number of views> <memory consumed> <elapsed time>
+documents <pid> <filename> <number of views> <memory consumed> <elapsed time> <idle time>
 <pid> <filename> ....
 ...
 
     <elapsed time> is in seconds since the first view of the document was opened
+    <idle time> is in seconds since some user did something in his view of the document (even just moving
+        the insertion cursor)
     <number of views> Number of users/views opening this(<pid>) document
     Other parameters are same as mentioned in `adddoc`
 

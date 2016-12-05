@@ -91,6 +91,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         // Keep track of timestamps of incoming client messages that indicate user activity.
         updateLastActivityTime();
+        docBroker->updateLastActivityTime();
     }
 
     if (tokens[0] == "loolclient")

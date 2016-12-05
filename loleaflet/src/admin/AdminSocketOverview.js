@@ -23,7 +23,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		this.base.call(this);
 
 		this.socket.send('documents');
-		this.socket.send('subscribe adddoc rmdoc');
+		this.socket.send('subscribe adddoc rmdoc resetidle');
 
 		this._getBasicStats();
 		var socketOverview = this;
@@ -35,6 +35,11 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		this._docElapsedTimeIntervalId =
 		setInterval(function() {
 			$('td.elapsed_time').each(function() {
+				var newSecs = parseInt($(this).val()) + 1;
+				$(this).val(newSecs);
+				$(this).html(Util.humanizeSecs(newSecs));
+			});
+			$('td.idle_time').each(function() {
 				var newSecs = parseInt($(this).val()) + 1;
 				$(this).val(newSecs);
 				$(this).html(Util.humanizeSecs(newSecs));
@@ -80,7 +85,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		}
 
 		var $rowContainer;
-		var $pid, $name, $views, $mem, $docTime, $doc, $a;
+		var $pid, $name, $views, $mem, $docTime, $docIdle, $doc, $a;
 		var nViews, nTotalViews;
 		var docProps, sPid, sName, sViews, sMem, sDocTime;
 		if (textMsg.startsWith('documents')) {
@@ -93,7 +98,9 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				sViews = docProps[2];
 				sMem = docProps[3];
 				sDocTime = docProps[4];
+				sDocIdle = docProps[5];
 
+				$doc = $('#doc' + sPid);
 				$rowContainer = $(document.createElement('tr')).attr('id', 'doc' + sPid);
 
 				$pid = $(document.createElement('td')).text(sPid);
@@ -103,19 +110,31 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				$rowContainer.append($name);
 
 				$views = $(document.createElement('td')).attr('id', 'docview' + sPid)
-					                                    .text(sViews);
+									    .text(sViews);
 				$rowContainer.append($views);
 
 				$mem = $(document.createElement('td')).text(Util.humanizeMem(parseInt(sMem)));
 				$rowContainer.append($mem);
 
 				$docTime = $(document.createElement('td')).addClass('elapsed_time')
-					                                      .val(parseInt(sDocTime))
-					                                      .text(Util.humanizeSecs(sDocTime));
+									      .val(parseInt(sDocTime))
+									      .text(Util.humanizeSecs(sDocTime));
 				$rowContainer.append($docTime);
 
+				$docIdle = $(document.createElement('td')).attr('id', 'docidle' + sPid)
+									      .addClass('idle_time')
+									      .val(parseInt(sDocIdle))
+									      .text(Util.humanizeSecs(sDocIdle));
+				$rowContainer.append($docIdle);
 				$('#doclist').append($rowContainer);
 			}
+		}
+		else if (textMsg.startsWith('resetidle')) {
+			textMsg = textMsg.substring('resetidle'.length);
+			docProps = textMsg.trim().split(' ');
+			sPid = docProps[0];
+			var $idle = $(document.getElementById('docidle' + sPid));
+			$idle.val(0).text(Util.humanizeSecs(0));
 		}
 		else if (textMsg.startsWith('adddoc')) {
 			textMsg = textMsg.substring('adddoc'.length);
@@ -146,6 +165,12 @@ var AdminSocketOverview = AdminSocketBase.extend({
 					                                      .val(0)
 					                                      .text(Util.humanizeSecs(0));
 				$rowContainer.append($docTime);
+
+				$docIdle = $(document.createElement('td')).attr('id', 'docidle' + sPid)
+									      .addClass('idle_time')
+					                                      .val(0)
+					                                      .text(Util.humanizeSecs(0));
+				$rowContainer.append($docIdle);
 
 				$('#doclist').append($rowContainer);
 
