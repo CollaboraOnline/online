@@ -160,14 +160,14 @@ bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
 }
 
 inline
-uint64_t hashBuffer(unsigned char* pixmap, int width, int height)
+uint64_t hashBuffer(unsigned char* pixmap, long width, long height)
 {
     return SpookyHash::Hash64(pixmap, width * height * 4, 1073741789);
 }
 
 inline
 uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
-                       int width, int height, int bufferWidth, int bufferHeight)
+                       long width, long height, int bufferWidth, int bufferHeight)
 {
     if (bufferWidth < width || bufferHeight < height)
         return 0; // magic invalid hash.
