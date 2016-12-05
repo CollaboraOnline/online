@@ -1287,11 +1287,31 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 
-		if (this._map._permission === 'edit' && this._isCursorVisible && this._isCursorOverlayVisible
-				&& !this._isEmptyRectangle(this._visibleCursor)) {
+		this._updateCursorAndOverlay();
+
+		this.eachView(this._viewCursors, function (item) {
+			var viewCursorMarker = item.marker;
+			if (viewCursorMarker) {
+				viewCursorMarker.setOpacity(this._map.hasLayer(this._cursorMarker) && this._cursorMarker.getLatLng().equals(viewCursorMarker.getLatLng()) ? 0 : 1);
+			}
+		}, this, true);
+	},
+
+	// enable or disable blinking cursor and  the cursor overlay depending on
+	// the state of the document (if the falgs are set)
+	_updateCursorAndOverlay: function (update) {
+		if (this._map._permission === 'edit'
+		&& this._isCursorVisible
+		&& this._isCursorOverlayVisible
+		&& !this._isEmptyRectangle(this._visibleCursor)) {
+
+			var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
+									 this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
+
+			var cursorPos = this._visibleCursor.getNorthWest();
+
 			if (!this._cursorMarker) {
-				this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())),
-					{blink: true});
+				this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), {blink: true});
 			}
 			else {
 				this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
@@ -1302,13 +1322,6 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._cursorMarker);
 			this._isCursorOverlayVisible = false;
 		}
-
-		this.eachView(this._viewCursors, function (item) {
-			var viewCursorMarker = item.marker;
-			if (viewCursorMarker) {
-				viewCursorMarker.setOpacity(this._map.hasLayer(this._cursorMarker) && this._cursorMarker.getLatLng().equals(viewCursorMarker.getLatLng()) ? 0 : 1);
-			}
-		}, this, true);
 	},
 
 	// Update colored non-blinking view cursor
