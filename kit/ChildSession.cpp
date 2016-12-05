@@ -1115,8 +1115,26 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
         sendTextFrame("searchresultselection: " + rPayload);
         break;
     case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
-        getStatus("", 0);
-        getPartPageRectangles("", 0);
+        {
+            //TODO: clenaup and merge.
+
+            std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+            const int parts = getLOKitDocument()->getParts();
+            for (int i = 0; i < parts; ++i)
+            {
+                sendTextFrame("invalidatetiles:"
+                              " part=" + std::to_string(i) +
+                              " x=0" +
+                              " y=0" +
+                              " width=" + std::to_string(INT_MAX) +
+                              " height=" + std::to_string(INT_MAX));
+            }
+
+            lock.unlock();
+
+            getStatus("", 0);
+            getPartPageRectangles("", 0);
+        }
         break;
     case LOK_CALLBACK_SET_PART:
         sendTextFrame("setpart: " + rPayload);
