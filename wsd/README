@@ -207,7 +207,7 @@ is expired after every half an hour, so websocket connection to admin console
 must be established within this period.
 
 It should also be possible to do various sorts of tasks such as killing
-documents that are open for more than last 10 hours etc. See protocol.txt for
+documents that are open for more than 10 hours etc. See protocol.txt for
 various commands. Only tricky thing here is getting the JWT token which can
 be obtained as described above.
 
