@@ -87,6 +87,10 @@ private:
     bool forwardToChild(const std::string& message,
                         const std::shared_ptr<DocumentBroker>& docBroker);
 
+    /// Returns true if given message from the client should be allowed or not
+    /// Eg. in readonly mode only few messages should be allowed
+    bool filterMessage(const std::string& msg) const;
+
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 
