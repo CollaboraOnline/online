@@ -16,6 +16,7 @@ l10nstrings.strPid = _('PID');
 l10nstrings.strDocument = _('Document');
 l10nstrings.strNumberOfViews = _('Number of views');
 l10nstrings.strElapsedTime = _('Elapsed time');
+l10nstrings.strIdleTime = _('Idle time');
 l10nstrings.strKill = _('Kill');
 l10nstrings.strGraphs = _('Graphs');
 l10nstrings.strSave = _('Save');

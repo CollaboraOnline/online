@@ -94,6 +94,8 @@ public:
 
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_modelMutex); }
 
+    void updateLastActivityTime(const std::string& docKey);
+
 private:
     Admin();
 

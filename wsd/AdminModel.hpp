@@ -49,7 +49,8 @@ public:
         : _docKey(docKey),
           _pid(pid),
           _filename(filename),
-          _start(std::time(nullptr))
+          _start(std::time(nullptr)),
+          _lastActivity(_start)
     {
     }
 
@@ -61,6 +62,8 @@ public:
 
     std::time_t getElapsedTime() const { return std::time(nullptr) - _start; }
 
+    std::time_t getIdleTime() const { return std::time(nullptr) - _lastActivity; }
+
     void addView(const std::string& sessionId);
 
     int expireView(const std::string& sessionId);
@@ -68,6 +71,8 @@ public:
     unsigned getActiveViews() const { return _activeViews; }
 
     const std::map<std::string, View>& getViews() const { return _views; }
+
+    void updateLastActivityTime() { _lastActivity = std::time(nullptr); }
 
 private:
     const std::string _docKey;
@@ -80,6 +85,7 @@ private:
     std::string _filename;
 
     std::time_t _start;
+    std::time_t _lastActivity;
     std::time_t _end = 0;
 };
 
@@ -165,6 +171,8 @@ public:
 
     void removeDocument(const std::string& docKey, const std::string& sessionId);
     void removeDocument(const std::string& docKey);
+
+    void updateLastActivityTime(const std::string& docKey);
 
 private:
     std::string getMemStats();

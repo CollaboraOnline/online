@@ -351,11 +351,25 @@ std::string AdminModel::getDocuments() const
                 << encodedFilename << ' '
                 << it.second.getActiveViews() << ' '
                 << Util::getMemoryUsage(it.second.getPid()) << ' '
-                << it.second.getElapsedTime() << " \n ";
+                << it.second.getElapsedTime() << ' '
+                << it.second.getIdleTime() << " \n ";
         }
     }
 
     return oss.str();
+}
+
+void AdminModel::updateLastActivityTime(const std::string& docKey)
+{
+    auto docIt = _documents.find(docKey);
+    if (docIt != _documents.end())
+    {
+        if (docIt->second.getIdleTime() >= 10)
+        {
+            docIt->second.updateLastActivityTime();
+            notify("resetidle " + std::to_string(docIt->second.getPid()));
+        }
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
