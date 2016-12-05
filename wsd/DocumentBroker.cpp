@@ -384,7 +384,6 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         for (auto& sessionIt : _sessions)
         {
             sessionIt.second->setReadOnly();
-            sessionIt.second->sendTextFrame("perm: readonly");
             sessionIt.second->sendTextFrame("error: cmd=storage kind=savediskfull");
         }
     }
