@@ -123,7 +123,7 @@ L.Control.Header = L.Control.extend({
 		L.DomUtil.disableTextSelection();
 
 		L.DomEvent.stopPropagation(e);
-		L.DomEvent.on(document, 'mousemove', this._onMouseMove, this)
+		L.DomEvent.on(document, 'mousemove', this._onMouseMove, this);
 		L.DomEvent.on(document, 'mouseup', this._onMouseUp, this);
 
 		var rect = target.parentNode.getBoundingClientRect();
