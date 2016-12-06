@@ -190,6 +190,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 			}
 			L.DomEvent.addListener(text, 'click', this._onRowHeaderClick, this);
 		}
+
+		if ($('.spreadsheet-header-row-text').length > 0) {
+			$('.spreadsheet-header-row-text').contextMenu(this._map._permission === 'edit');
+		}
 	},
 
 	_selectRow: function(row, modifier) {
@@ -319,9 +323,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 		if (!this._initialized) {
 			this._initialize();
 		}
-		setTimeout(function() {
-			$('.spreadsheet-header-row').contextMenu(e.perm === 'edit');
-		}, 1000);
+		// Enable context menu on row headers only if permission is 'edit'
+		if ($('.spreadsheet-header-row-text').length > 0) {
+			$('.spreadsheet-header-row-text').contextMenu(e.perm === 'edit');
+		}
 	}
 });
 
