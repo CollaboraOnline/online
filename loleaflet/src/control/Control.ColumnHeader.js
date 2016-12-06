@@ -192,6 +192,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			}
 			L.DomEvent.addListener(text, 'click', this._onColumnHeaderClick, this);
 		}
+
+		if ($('.spreadsheet-header-column-text').length > 0) {
+			$('.spreadsheet-header-column-text').contextMenu(this._map._permission === 'edit');
+		}
 	},
 
 	_colAlphaToNumber: function(alpha) {
@@ -332,9 +336,9 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		if (!this._initialized) {
 			this._initialize();
 		}
-		setTimeout(function() {
-			$('.spreadsheet-header-column').contextMenu(e.perm === 'edit');
-		}, 1000);
+		if ($('.spreadsheet-header-column-text').length > 0) {
+			$('.spreadsheet-header-column-text').contextMenu(e.perm === 'edit');
+		}
 	}
 });
 
