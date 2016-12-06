@@ -121,7 +121,8 @@ shared_headers = common/Common.hpp \
                  common/Png.hpp \
                  common/Rectangle.hpp \
                  common/SigUtil.hpp \
-                 common/security.h
+                 common/security.h \
+                 common/SpookyV2.h
 
 kit_headers = kit/ChildSession.hpp \
               kit/Kit.hpp \
