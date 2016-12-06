@@ -444,8 +444,6 @@ public:
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
         _stop(false),
-        _mutex(),
-        _documentMutex(),
         _isLoading(0)
     {
         LOG_INF("Document ctor for url [" << _url << "] on child [" << _jailId << "].");
