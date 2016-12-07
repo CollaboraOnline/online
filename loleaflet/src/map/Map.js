@@ -901,7 +901,7 @@ L.Map = L.Evented.extend({
 		// For touch devices, to pop-up the keyboard, it is required to call
 		// .focus() method on hidden input within actual 'click' event here
 		// Calling from some other place with no real 'click' event doesn't work
-		if (type === 'click') {
+		if (type === 'click' && this._permission === 'edit') {
 			this._textArea.blur();
 			this._textArea.focus();
 		}
