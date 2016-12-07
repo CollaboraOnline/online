@@ -718,10 +718,10 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (!this._isEmptyRectangle(this._cellViewCursors[viewId].bounds) && this._selectedPart === viewPart) {
 			if (!cellViewCursorMarker) {
-				var borderColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
-				cellViewCursorMarker = L.rectangle(this._cellViewCursors[viewId].bounds, {fill: false, color: borderColor, weight: 2});
+				var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
+				cellViewCursorMarker = L.rectangle(this._cellViewCursors[viewId].bounds, {fill: false, color: backgroundColor, weight: 2});
 				this._cellViewCursors[viewId].marker = cellViewCursorMarker;
-				cellViewCursorMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, borderColor: borderColor});
+				cellViewCursorMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, backgroundColor: backgroundColor, color: 'white', closeButton: false});
 			}
 			else {
 				cellViewCursorMarker.setBounds(this._cellViewCursors[viewId].bounds);
@@ -765,8 +765,8 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 
-			var borderColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
-			this._cellViewCursors[viewId].marker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, borderColor: borderColor});
+			var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
+			this._cellViewCursors[viewId].marker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, backgroundColor: backgroundColor, color: 'white', closeButton: false});
 		}
 	},
 
@@ -1430,7 +1430,7 @@ L.TileLayer = L.GridLayer.extend({
 					color: color
 				});
 				// Disable autoPan, so the graphic view selection doesn't make the view jump to the popup.
-				viewMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, borderColor: color});
+				viewMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, backgroundColor: color, color: 'white', closeButton: false});
 				this._graphicViewMarkers[viewId].marker = viewMarker;
 			}
 			else {
