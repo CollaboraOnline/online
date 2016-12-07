@@ -56,10 +56,13 @@ L.TileLayer = L.GridLayer.extend({
 
 		options = L.setOptions(this, options);
 
-		// detecting retina displays, adjusting tileSize and zoom levels
-		if (options.detectRetina && L.Browser.retina && options.maxZoom > 0) {
+		this._tileWidthPx = options.tileSize;
+		this._tileHeightPx = options.tileSize;
 
-			options.tileSize = Math.floor(options.tileSize / 2);
+		// detecting retina displays, adjusting tileWidthPx, tileHeightPx and zoom levels
+		if (options.detectRetina && L.Browser.retina && options.maxZoom > 0) {
+			this._tileWidthPx *= 2;
+			this._tileHeightPx *= 2;
 			options.zoomOffset++;
 
 			options.minZoom = Math.max(0, options.minZoom);
@@ -133,8 +136,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._previewInvalidations = [];
 		this._partPageRectanglesTwips = [];
 		this._partPageRectanglesPixels = [];
-		this._clientZoom = 'tilepixelwidth=' + this.options.tileSize + ' ' +
-			'tilepixelheight=' + this.options.tileSize + ' ' +
+		this._clientZoom = 'tilepixelwidth=' + this._tileWidthPx + ' ' +
+			'tilepixelheight=' + this._tileHeightPx + ' ' +
 			'tiletwipwidth=' + this.options.tileWidthTwips + ' ' +
 			'tiletwipheight=' + this.options.tileHeightTwips;
 
@@ -1849,8 +1852,8 @@ L.TileLayer = L.GridLayer.extend({
 	_onCellCursorShift: function (force) {
 		if (this._cellCursorMarker || force) {
 			this._map._socket.sendMessage('commandvalues command=.uno:CellCursor'
-			                     + '?outputHeight=' + this._tileSize
-			                     + '&outputWidth=' + this._tileSize
+			                     + '?outputHeight=' + this._tileWidthPx
+			                     + '&outputWidth=' + this._tileHeightPx
 			                     + '&tileHeight=' + this._tileWidthTwips
 			                     + '&tileWidth=' + this._tileHeightTwips);
 		}
@@ -1922,8 +1925,8 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_updateClientZoom: function () {
-		this._clientZoom = 'tilepixelwidth=' + this._tileSize + ' ' +
-			'tilepixelheight=' + this._tileSize + ' ' +
+		this._clientZoom = 'tilepixelwidth=' + this._tileWidthPx + ' ' +
+			'tilepixelheight=' + this._tileHeightPx + ' ' +
 			'tiletwipwidth=' + this._tileWidthTwips + ' ' +
 			'tiletwipheight=' + this._tileHeightTwips;
 	},
