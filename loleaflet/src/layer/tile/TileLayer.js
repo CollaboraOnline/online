@@ -47,8 +47,7 @@ L.TileLayer = L.GridLayer.extend({
 		zoomReverse: false,
 		detectRetina: false,
 		crossOrigin: false,
-		previewInvalidationTimeout: 1000,
-		defaultPermission: 'view'
+		previewInvalidationTimeout: 1000
 	},
 
 	initialize: function (url, options) {
