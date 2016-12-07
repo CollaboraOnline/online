@@ -69,8 +69,8 @@ L.WriterTileLayer = L.TileLayer.extend({
 			// always 0 anyway
 			var message = 'tilecombine ' +
 				'part=' + command.part + ' ' +
-				'width=' + this._tileSize + ' ' +
-				'height=' + this._tileSize + ' ' +
+				'width=' + this._tileWidthPx + ' ' +
+				'height=' + this._tileHeightPx + ' ' +
 				'tileposx=' + tilePositionsX + ' ' +
 				'tileposy=' + tilePositionsY + ' ' +
 				'tilewidth=' + this._tileWidthTwips + ' ' +
