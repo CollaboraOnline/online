@@ -56,8 +56,7 @@ public:
         _compress(compress),
         _filter(true),
         _stream(path, compress ? std::ios::binary : std::ios::out),
-        _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP),
-        _mutex()
+        _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP)
     {
         for (const auto& f : filters)
         {
