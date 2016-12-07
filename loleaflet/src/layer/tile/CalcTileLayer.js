@@ -83,8 +83,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 		{
 			var message = 'tilecombine ' +
 				'part=' + command.part + ' ' +
-				'width=' + this._tileSize + ' ' +
-				'height=' + this._tileSize + ' ' +
+				'width=' + this._tileWidthPx + ' ' +
+				'height=' + this._tileHeightPx + ' ' +
 				'tileposx=' + tilePositionsX + ' ' +
 				'tileposy=' + tilePositionsY + ' ' +
 				'tilewidth=' + this._tileWidthTwips + ' ' +
