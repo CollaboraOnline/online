@@ -38,6 +38,7 @@ namespace Poco
     }
 }
 
+class LOOLSession;
 class StorageBase;
 
 typedef UnitBase *(CreateUnitHooksFunction)();
@@ -87,6 +88,20 @@ public:
 
     /// Tweak the return value from the process.
     virtual void returnValue(int& /* retValue */);
+
+    /// Input message either for WSD or Kit
+    virtual bool filterSessionInput(LOOLSession *, const char */* buffer */,
+                                    int /* length */,
+                                    std::unique_ptr< std::vector<char> > & /* replace */)
+    {
+        return false;
+    }
+
+    static UnitBase& get()
+    {
+        assert(Global);
+        return *static_cast<UnitBase *>(Global);
+    }
 
 private:
     void setHandle(void *dlHandle) { _dlHandle = dlHandle; }

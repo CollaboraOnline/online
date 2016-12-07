@@ -39,6 +39,7 @@
 #include "Log.hpp"
 #include "TileCache.hpp"
 #include "Util.hpp"
+#include "Unit.hpp"
 
 using namespace LOOLProtocol;
 
@@ -222,22 +223,30 @@ bool LOOLSession::handleInput(const char *buffer, int length)
 {
     assert(buffer != nullptr);
 
-    const auto summary = getAbbreviatedMessage(buffer, length);
     try
     {
-        LOG_TRC(getName() << ": Recv: " << summary);
+        std::unique_ptr< std::vector<char> > replace;
+        if (UnitBase::get().filterSessionInput(this, buffer, length, replace))
+        {
+            buffer = replace->data();
+            length = replace->size();
+        }
+
+        LOG_TRC(getName() << ": Recv: " << getAbbreviatedMessage(buffer, length));
 
         return _handleInput(buffer, length);
     }
     catch (const Exception& exc)
     {
-        LOG_ERR("LOOLSession::handleInput: Exception while handling [" << summary <<
+        LOG_ERR("LOOLSession::handleInput: Exception while handling [" <<
+                getAbbreviatedMessage(buffer, length) <<
                 "] in " << getName() << ": " << exc.displayText() <<
                 (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("LOOLSession::handleInput: Exception while handling [" << summary << "]: " << exc.what());
+        LOG_ERR("LOOLSession::handleInput: Exception while handling [" <<
+                getAbbreviatedMessage(buffer, length) << "]: " << exc.what());
     }
 
     return false;
