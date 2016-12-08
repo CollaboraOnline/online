@@ -7,12 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <dlfcn.h>
-#include <ftw.h>
 #include <cassert>
 #include <iostream>
-#include <sys/types.h>
-#include <dirent.h>
 #include <random>
 
 #include "Common.hpp"

@@ -16,7 +16,8 @@ noinst_LTLIBRARIES = \
         unit-timeout.la unit-prefork.la \
         unit-storage.la unit-fonts.la \
         unit-admin.la unit-tilecache.la \
-	unit-fuzz.la unit-requests.la
+	unit-fuzz.la unit-requests.la \
+	unit-oob.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
@@ -51,6 +52,7 @@ unittest_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
 unit_requests_la_SOURCES = UnitRequests.cpp
+unit_oob_la_SOURCES = UnitOOB.cpp
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
 unit_admin_la_SOURCES = UnitAdmin.cpp
 unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
@@ -70,7 +72,7 @@ if HAVE_LO_PATH
 check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME unit-fonts.la is unstable, disabled for now.
-TESTS = unit-tilecache.la unit-storage.la unit-timeout.la unit-prefork.la unit-admin.la unit-requests.la
+TESTS = unit-oob.la unit-tilecache.la unit-storage.la unit-timeout.la unit-prefork.la unit-admin.la unit-requests.la
 else
 TESTS = ${top_builddir}/test/test
 endif
