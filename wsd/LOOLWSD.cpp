@@ -1256,7 +1256,11 @@ public:
     {
         LOG_TRC("Child connection with URI [" << request.getURI() << "].");
         assert(request.serverAddress().port() == MasterPortNumber);
-        assert(request.getURI().find(NEW_CHILD_URI) == 0);
+        if (request.getURI().find(NEW_CHILD_URI) != 0)
+        {
+            LOG_ERR("Invalid incoming URI.");
+            return;
+        }
 
         // New Child is spawned.
         const auto params = Poco::URI(request.getURI()).getQueryParameters();
