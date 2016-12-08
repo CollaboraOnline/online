@@ -13,6 +13,9 @@
 /* Default host used in the start test URI */
 #define LOOLWSD_TEST_HOST "localhost"
 
+/* Default loleaflet UI used in the admin console URI */
+#define LOOLWSD_TEST_ADMIN_CONSOLE "/loleaflet/dist/admin/admin.html"
+
 /* Default loleaflet UI used in the start test URI */
 #define LOOLWSD_TEST_LOLEAFLET_UI "/loleaflet/" LOOLWSD_VERSION_HASH "/loleaflet.html"
 
@@ -1434,19 +1437,45 @@ ServerSocket* findFreeMasterPort(int &nMasterPortNumber)
     return socket;
 }
 
+static inline std::string getLaunchBase(const std::string &credentials)
+{
+    std::ostringstream oss;
+    oss << "    ";
+    oss << ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://");
+    oss << credentials;
+    oss << LOOLWSD_TEST_HOST ":";
+    oss << ClientPortNumber;
+
+    return oss.str();
+}
+
 static inline std::string getLaunchURI()
 {
     const std::string aAbsTopSrcDir = Poco::Path(Application::instance().commandPath()).parent().toString();
 
     std::ostringstream oss;
-    oss << "    ";
-    oss << ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://");
-    oss << LOOLWSD_TEST_HOST ":";
-    oss << ClientPortNumber;
+
+    oss << getLaunchBase("");
     oss << LOOLWSD_TEST_LOLEAFLET_UI;
     oss << "?file_path=file://";
     oss << Poco::Path(aAbsTopSrcDir).absolute().toString();
     oss << LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH;
+
+    return oss.str();
+}
+
+static inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
+{
+    std::string user = config.getString("admin_console.username", "");
+    std::string passwd = config.getString("admin_console.password", "");
+
+    if (user.empty() || passwd.empty())
+        return "";
+
+    std::ostringstream oss;
+
+    oss << getLaunchBase(user + ":" + passwd + "@");
+    oss << LOOLWSD_TEST_ADMIN_CONSOLE;
 
     return oss.str();
 }
@@ -1681,6 +1710,11 @@ void LOOLWSD::initialize(Application& self)
 #if ENABLE_DEBUG
     std::cerr << "\nLaunch this in your browser:\n\n"
               << getLaunchURI() << '\n' << std::endl;
+
+    std::string adminURI = getAdminURI(config());
+    if (!adminURI.empty())
+        std::cerr << "\nOr for the Admin Console see:: \n\n"
+                  << adminURI << '\n' << std::endl;
 #endif
 }
 
