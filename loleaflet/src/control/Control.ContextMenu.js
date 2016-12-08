@@ -134,11 +134,11 @@ L.Control.ContextMenu = L.Control.extend({
 
 				if (item.checktype === 'checkmark') {
 					if (item.checked === 'true') {
-						contextMenu[item.command.icon] = 'checkmark';
+						contextMenu[item.command]['icon'] = 'lo-checkmark';
 					}
 				} else if (item.checktype === 'radio') {
 					if (item.checked === 'true') {
-						contextMenu[item.command.icon] = 'radio';
+						contextMenu[item.command]['icon'] = 'radio';
 					}
 				}
 

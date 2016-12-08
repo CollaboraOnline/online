@@ -57,3 +57,12 @@ body {
 .loleaflet-scrolled {
 	overflow: auto;
 }
+
+/* Important to override context-menu-icon's font-family here otherwise, jquery-contextmenu.css
+ * will try to load its own font file which is not available in dist/ */
+.context-menu-icon::before {
+	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
+}
+.context-menu-icon-lo-checkmark:before {
+	content: '\2713';
+}
