@@ -52,6 +52,16 @@ function resizeToolbar() {
 	}
 }
 
+function _cancelSearch() {
+	var toolbar = w2ui['toolbar-down'];
+	map.resetSelection();
+	toolbar.hide('cancelsearch');
+	toolbar.disable('searchprev');
+	toolbar.disable('searchnext');
+	L.DomUtil.get('search-input').value = '';
+	map.focus();
+}
+
 function onClick(id, item, subItem) {
 	if (w2ui['toolbar-up'].get(id) !== null) {
 		var toolbar = w2ui['toolbar-up'];
@@ -130,11 +140,7 @@ function onClick(id, item, subItem) {
 		map.search(L.DomUtil.get('search-input').value);
 	}
 	else if (id === 'cancelsearch') {
-		map.resetSelection();
-		toolbar.hide('cancelsearch');
-		toolbar.disable('searchprev');
-		toolbar.disable('searchnext');
-		L.DomUtil.get('search-input').value = '';
+		_cancelSearch();
 	}
 	else if (id === 'presentation' && map.getDocType() === 'presentation') {
 		map.fire('fullscreen');
@@ -468,7 +474,7 @@ $(function () {
 			{type: 'html',  id: 'search',
 			 html: '<div style="padding: 3px 10px;" class="loleaflet-font">' +
 			 ' ' + _('Search:') +
-			 '    <input size="10" id="search-input" onkeypress="onSearch(event)"' +
+			 '    <input size="10" id="search-input" oninput="onSearch(event)" onkeypress="onSearchKeyPress(event)" ' +
 			 'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
 			 '</div>'
 			},
@@ -587,15 +593,23 @@ function selectItem(item, func)
 }
 
 function onSearch(e) {
-	if (e.keyCode === 13) {
-		var toolbar = w2ui['toolbar-down'];
-		map.search(L.DomUtil.get('search-input').value);
-		toolbar.enable('searchprev');
-		toolbar.enable('searchnext');
-		toolbar.show('cancelsearch');
-	}
-	else {
-		map.fire('requestloksession');
+	var toolbar = w2ui['toolbar-down'];
+	map.search(L.DomUtil.get('search-input').value);
+	toolbar.enable('searchprev');
+	toolbar.enable('searchnext');
+	toolbar.show('cancelsearch');
+}
+
+function onSearchKeyPress(e) {
+	if (e.keyCode === 13) { // Enter key
+		if (e.shiftKey) {
+			// search backwards
+			map.search(L.DomUtil.get('search-input').value, true);
+		} else {
+			map.search(L.DomUtil.get('search-input').value);
+		}
+	} else if (e.keyCode === 27) { // Escape key
+		_cancelSearch();
 	}
 }
 
