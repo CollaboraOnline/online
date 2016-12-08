@@ -283,6 +283,7 @@ Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
 
 int getLevenshteinDist(const std::string& string1, const std::string& string2) {
     int matrix[string1.size() + 1][string2.size() + 1];
+    std::memset(matrix, 0, sizeof(matrix[0][0]) * (string1.size() + 1) * (string2.size() + 1));
 
     for (size_t i = 0; i < string1.size() + 1; i++)
     {
