@@ -1316,7 +1316,7 @@ map.on('statusindicator', function (e) {
 });
 
 map.on('keydown', function (e) {
-	if (e.originalEvent.ctrlKey &&
+	if (e.originalEvent.ctrlKey && !e.originalEvent.altKey &&
 	   (e.originalEvent.key === 'f' || e.originalEvent.key === 'F')) {
 		L.DomUtil.get('search-input').focus();
 		e.originalEvent.preventDefault();
