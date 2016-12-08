@@ -3,9 +3,7 @@
 # DO NOT EDIT - this file is generated from run_unit.sh.in.
 #
 
-echo
-echo "Running unit-test:"
-echo $0 $@
+cmd_line="$0 $@"
 
 # substituted variables in one place:
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -31,6 +29,10 @@ while test $# -gt 0; do
   esac
   shift
 done
+
+echo
+echo "Running $tst"
+echo "	$cmd_line"
 
 # drop .la suffix
 tst=`echo $tst | sed s/\.la//`;
