@@ -178,12 +178,18 @@ function onClick(id, item, subItem) {
 	else if (id === 'fontcolor') {
 		// absolutely no idea why, but without the timeout, the popup is
 		// closed as soon as it is opend
-		setTimeout(function () {$('#fontColorPicker').colorpicker('showPalette');}, 0);
+		setTimeout(function () {
+			$('#fontColorPicker').colorpicker('showPalette');
+			$('.ui-widget-content').addClass('loleaflet-font');
+		}, 0);
 	}
 	else if (id === 'backcolor') {
 		// absolutely no idea why, but without the timeout, the popup is
 		// closed as soon as it is opend
-		setTimeout(function () {$('#backColorPicker').colorpicker('showPalette');}, 0);
+		setTimeout(function () {
+			$('#backColorPicker').colorpicker('showPalette');
+			$('.ui-widget-content').addClass('loleaflet-font');
+		}, 0);
 	}
 	else if (id === 'sum') {
 		map.sendUnoCommand('.uno:AutoSum');
