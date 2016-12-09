@@ -155,8 +155,8 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     const auto cachedName = (tileBeingRendered ? tileBeingRendered->getCacheName()
                                                : cacheFileName(tile));
 
-    // Ignore if we can't save the tile, things will work anyway, but slower. An error indication
-    // has been supposed to be sent to all users in that case.
+    // Ignore if we can't save the tile, things will work anyway, but slower.
+    // An error indication is supposed to be sent to all users in that case.
     const auto fileName = _cacheDir + "/" + cachedName;
     if (FileUtil::saveDataToFileSafely(fileName, data, size))
     {
@@ -171,7 +171,8 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
             std::string response = tile.serialize("tile:");
             Log::debug("Sending tile message to subscribers: " + response);
 
-            std::vector<char> output(256 + size);
+            std::shared_ptr<std::vector<char>> payload = std::make_shared<std::vector<char>>(256 + size);
+            auto& output = *payload;
             output.resize(response.size() + 1 + size);
 
             std::memcpy(output.data(), response.data(), response.size());
