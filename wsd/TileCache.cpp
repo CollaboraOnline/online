@@ -145,6 +145,11 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
     return nullptr;
 }
 
+static void enqueueTask(const std::function<void()>& func)
+{
+    func();
+}
+
 void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const size_t size)
 {
     std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
@@ -175,23 +180,28 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
             auto& output = *payload;
             output.resize(response.size() + 1 + size);
 
+            // Send to first subscriber as-is (without cache marker).
             std::memcpy(output.data(), response.data(), response.size());
             output[response.size()] = '\n';
             std::memcpy(output.data() + response.size() + 1, data, size);
 
-            // Send to first subscriber as-is (without cache marker).
-            auto firstSubscriber = tileBeingRendered->_subscribers[0].lock();
-            if (firstSubscriber)
-            {
-                try
+            auto& firstSubscriber = tileBeingRendered->_subscribers[0];
+            enqueueTask([firstSubscriber, payload]()
                 {
-                    firstSubscriber->sendBinaryFrame(output.data(), output.size());
+                    auto session = firstSubscriber.lock();
+                    if (session)
+                    {
+                        try
+                        {
+                            session->sendBinaryFrame(payload->data(), payload->size());
+                        }
+                        catch (const std::exception& ex)
+                        {
+                            LOG_ERR("Failed to send tile to " << session->getName() << ": " << ex.what());
+                        }
+                    }
                 }
-                catch (const std::exception& ex)
-                {
-                    Log::warn("Failed to send tile to " + firstSubscriber->getName() + ": " + ex.what());
-                }
-            }
+            );
 
             // All others must get served from the cache.
             response += " renderid=cached\n";
@@ -201,18 +211,23 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
 
             for (size_t i = 1; i < tileBeingRendered->_subscribers.size(); ++i)
             {
-                auto subscriber = tileBeingRendered->_subscribers[i].lock();
-                if (subscriber)
-                {
-                    try
+                auto& subscriber = tileBeingRendered->_subscribers[i];
+                enqueueTask([subscriber, payload]()
                     {
-                        subscriber->sendBinaryFrame(output.data(), output.size());
+                        auto session = subscriber.lock();
+                        if (session)
+                        {
+                            try
+                            {
+                                session->sendBinaryFrame(payload->data(), payload->size());
+                            }
+                            catch (const std::exception& ex)
+                            {
+                                LOG_ERR("Failed to send tile to " << session->getName() << ": " << ex.what());
+                            }
+                        }
                     }
-                    catch (const std::exception& ex)
-                    {
-                        Log::warn("Failed to send tile to " + subscriber->getName() + ": " + ex.what());
-                    }
-                }
+                );
             }
         }
         else
