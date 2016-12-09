@@ -99,10 +99,12 @@ exports.build = function (callback, compsBase32, buildName) {
 
 	console.log('\tUncompressed: ' + bytesToKB(newSrc.length) + srcDelta);
 
-	if (newSrc !== oldSrc) {
-		fs.writeFileSync(srcPath, newSrc);
-		console.log('\tSaved to ' + srcPath);
+	if (srcDelta === ' (unchanged)') {
+		return;
 	}
+
+	fs.writeFileSync(srcPath, newSrc);
+	console.log('\tSaved to ' + srcPath);
 
 	var path = pathPart + '.js',
 		oldCompressed = loadSilently(path),
