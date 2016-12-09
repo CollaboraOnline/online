@@ -63,20 +63,20 @@ file('dist/admin/admin-src.js', build.getAdminFiles(), {async: true}, function()
 });
 
 desc('Create final bundled js file to be used by main lool editor');
-file('dist/bundle.js', build.getBundleFiles(), {async: true}, function(debug, minify) {
-	debug = debug === 'true';
-	minify = minify === 'true';
+file('dist/bundle.js', build.getBundleFiles(), {async: true}, function() {
+	var debug = process.env.debug === 'true';
+	var minify = process.env.minify === 'true';
 
-	console.log('Creating bundle.js ...');
+	console.log('Creating bundle.js (debug=' + debug +', minify=' + minify + ') ...');
 	build.bundle(debug, minify, complete);
 });
 
 desc('Create final bundle js file to be used by admin console');
-file('dist/admin-bundle.js', build.getAdminBundleFiles(), {async: true}, function(debug, minify) {
-	debug = debug === 'true';
-	minify = minify === 'true';
+file('dist/admin-bundle.js', build.getAdminBundleFiles(), {async: true}, function() {
+	var debug = process.env.debug === 'true';
+	var minify = process.env.minify === 'true';
 
-	console.log('Creating admin-bundle.js ...');
+	console.log('Creating admin-bundle.js (debug=' + debug +', minify=' + minify + ') ...');
 	build.bundleAdmin(debug, minify, complete);
 });
 
