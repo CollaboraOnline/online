@@ -808,7 +808,7 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
 void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 {
     const std::string firstLine = getFirstLine(payload);
-    LOG_DBG("Handling tile combined: " << firstLine);
+    LOG_DBG("Handling tile: " << firstLine);
 
     try
     {
@@ -959,7 +959,7 @@ bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vecto
     }
     else
     {
-        LOG_ERR("Failed to parse prefix of forward-to-client message: " << prefix);
+        LOG_ERR("Unexpected prefix of forward-to-client message: " << prefix);
     }
 
     return false;
