@@ -14,12 +14,9 @@ MINIFY=false
 .PHONY: build
 build:
 	npm install
-	jake lint
-	jake build
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
-	jake bundle[,$(DEBUG),$(MINIFY)]
-	jake bundle[admin,$(DEBUG),$(MINIFY)]
+	jake build
 
 .PHONY: build-l10n
 build-l10n:

@@ -8,6 +8,45 @@ var fs = require('fs'),
     deps = require('./deps.js').deps,
     adminDeps = require('./adminDeps.js').adminDeps;
 
+// TODO: Don't hardcode leaflet-draw version here
+var JSBundleFiles = [
+	'main.js',
+	'dist/leaflet-src.js',
+	'dist/errormessages.js',
+	'dist/plugins/draw-0.2.4/dist/leaflet.draw.js'
+];
+
+var CSSBundleFiles = [
+	'main.css',
+	'dist/leaflet.css',
+	'dist/selectionMarkers.css',
+	'dist/loleaflet.css',
+	'dist/toolbar.css',
+	'dist/partsPreviewControl.css',
+	'dist/scrollBar.css',
+	'dist/searchControl.css',
+	'dist/spreadsheet.css',
+	'plugins/draw-0.2.4/dist/leaflet.draw.css',
+	'dist/sm-simple.css'
+];
+
+var adminBundleFiles = [
+	'main-admin.js',
+	'dist/admin/admin-src.js',
+	'dist/admin/bootstrap/ie10-viewport-bug-workaround.css',
+	'admin.strings.js',
+	'dist/admin/bootstrap/holder.min.js',
+	'dist/admin/bootstrap/ie10-viewport-bug-workaround.js'
+];
+
+exports.getBundleFiles = function() {
+	return JSBundleFiles.concat(CSSBundleFiles);
+};
+
+exports.getAdminBundleFiles = function() {
+	return adminBundleFiles;
+};
+
 function getFiles(compsBase32) {
 	var memo = {},
 	    comps;
@@ -60,6 +99,7 @@ function getAdminFiles() {
 }
 
 exports.getFiles = getFiles;
+exports.getAdminFiles = getAdminFiles;
 
 function getSizeDelta(newContent, oldContent, fixCRLF) {
 	if (!oldContent) {
@@ -97,7 +137,7 @@ function bytesToKB(bytes) {
     return (bytes / 1024).toFixed(2) + ' KB';
 }
 
-function bundle(files, destFilename, debug, minify) {
+function bundle(files, destFilename, debug, minify, callback) {
 	var bundler = browserify(files, {debug: debug});
 	bundler = bundler.transform(browserifyCss);
 	if (minify) {
@@ -115,15 +155,16 @@ function bundle(files, destFilename, debug, minify) {
 
 	bundleFs.on('finish', function() {
 		console.log('Finish writing to dist/' + destFilename);
+		callback();
 	});
 };
 
-exports.bundle = function(debug, minify) {
-	bundle(['main.js'], 'bundle.js', debug, minify);
+exports.bundle = function(debug, minify, callback) {
+	bundle(['main.js'], 'bundle.js', debug, minify, callback);
 };
 
-exports.bundleAdmin = function(debug, minify) {
-	bundle(['main-admin.js'], 'admin-bundle.js', debug, minify);
+exports.bundleAdmin = function(debug, minify, callback) {
+	bundle(['main-admin.js'], 'admin-bundle.js', debug, minify, callback);
 };
 
 exports.build = function (callback, version, compsBase32, buildName) {
@@ -148,17 +189,6 @@ exports.build = function (callback, version, compsBase32, buildName) {
 	if (newSrc !== oldSrc) {
 		fs.writeFileSync(srcPath, newSrc);
 		console.log('\tSaved to ' + srcPath);
-	}
-
-	// Also combine and copy the admin JS files
-	// TODO: Also minify if admin complexity increases in future
-	var adminNewSrc = combineFiles(getAdminFiles()),
-	    adminPath = 'dist/admin/admin-src.js',
-	    adminOldSrc = loadSilently(adminPath);
-
-	if (adminNewSrc != adminOldSrc) {
-		fs.writeFileSync(adminPath, adminNewSrc);
-		console.log('\tAdmin files saved to ' + adminPath);
 	}
 
 	var path = pathPart + '.js',
@@ -196,6 +226,21 @@ exports.build = function (callback, version, compsBase32, buildName) {
 			done();
 		}
 	});
+};
+
+exports.buildadmin = function(callback) {
+	// TODO: Also minify if admin complexity increases in future
+	var adminNewSrc = combineFiles(getAdminFiles()),
+	    adminPath = 'dist/admin/admin-src.js',
+	    adminOldSrc = loadSilently(adminPath),
+	    adminSrcDelta = getSizeDelta(adminNewSrc, adminOldSrc, true);
+
+	if (adminSrcDelta !== ' (unchanged)') {
+		fs.writeFileSync(adminPath, adminNewSrc);
+		console.log('\tAdmin files saved to ' + adminPath);
+	}
+
+	callback();
 };
 
 exports.test = function(complete, fail) {

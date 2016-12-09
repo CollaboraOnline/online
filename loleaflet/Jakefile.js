@@ -19,7 +19,7 @@ function hint(msg, args) {
 	return function () {
 		console.log(msg);
 		jake.exec('node node_modules/eslint/bin/eslint.js ' + args,
-				{printStdout: true}, function () {
+		          {printStdout: true}, function () {
 			console.log('\tCheck passed.\n');
 			complete();
 		});
@@ -29,33 +29,73 @@ function hint(msg, args) {
 desc('Check Leaflet source for errors with ESLint');
 task('lint', {async: true}, hint('Checking for JS errors...', 'src dist --config .eslintrc'));
 
+desc('Check admin source for errors with ESLint');
+task('lintadmin', {async: true}, hint('Checking for admin JS errors...', 'src/admin --config .eslintrc'));
+
 desc('Check Leaflet specs source for errors with ESLint');
 task('lintspec', {async: true}, hint('Checking for specs JS errors...', 'spec/suites --config spec/.eslintrc'));
 
-desc('Combine and compress Leaflet source files');
-task('build', {async: true}, function (compsBase32, buildName) {
-	var v;
-
-	jake.exec('git log -1 --pretty=format:"%h"', {breakOnError: false}, function () {
-		build.build(complete, v, compsBase32, buildName);
-
-	}).on('stdout', function (data) {
-		v = version + ' (' + data.toString() + ')';
-	}).on('error', function () {
-		v = version;
+desc('Create a combined leaflet file');
+file('dist/leaflet-src.js', build.getFiles(), {async: true}, function() {
+	var lint = jake.Task['lint'];
+	lint.addListener('complete', function(value) {
+		var v;
+		jake.exec('git log -1 --pretty=format:"%h"', {breakOnError: false}, function () {
+			console.log('Building leaflet-src.js ...');
+			build.build(complete, v);
+		}).on('stdout', function (data) {
+			v = version + ' (' + data.toString() + ')';
+		}).on('error', function () {
+			v = version;
+		});
 	});
+	lint.invoke();
 });
 
-desc('Browserify and bundle all js and css files');
-task('bundle', {async: true}, function (type, debug, minify) {
+desc('Create a combined admin file');
+file('dist/admin/admin-src.js', build.getAdminFiles(), {async: true}, function() {
+	var lint = jake.Task['lintadmin'];
+	lint.addListener('complete', function(value) {
+		console.log('Building admin-src.js ...');
+		build.buildadmin(complete);
+	});
+	lint.invoke();
+});
+
+desc('Create final bundled js file to be used by main lool editor');
+file('dist/bundle.js', build.getBundleFiles(), {async: true}, function(debug, minify) {
 	debug = debug === 'true';
 	minify = minify === 'true';
 
-	if (type === 'admin') {
-		build.bundleAdmin(debug, minify);
-	} else {
-		build.bundle(debug, minify);
-	}
+	console.log('Creating bundle.js ...');
+	build.bundle(debug, minify, complete);
+});
+
+desc('Create final bundle js file to be used by admin console');
+file('dist/admin-bundle.js', build.getAdminBundleFiles(), {async: true}, function(debug, minify) {
+	debug = debug === 'true';
+	minify = minify === 'true';
+
+	console.log('Creating admin-bundle.js ...');
+	build.bundleAdmin(debug, minify, complete);
+});
+
+desc('Create final bundled JS files');
+task('build', {async: true}, function () {
+	// TODO: Build both admin-bundle and bundle parallely
+	var bundlejs = jake.Task['dist/bundle.js'];
+	bundlejs.addListener('complete', function(value) {
+		console.log('Finished building loleaflet');
+		complete();
+	});
+
+	var adminbundlejs = jake.Task['dist/admin-bundle.js'];
+	adminbundlejs.addListener('complete', function(value) {
+		console.log('Finished building admin');
+		bundlejs.invoke();
+	});
+
+	adminbundlejs.invoke();
 });
 
 desc('Run PhantomJS tests');
