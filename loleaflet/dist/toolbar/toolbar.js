@@ -532,47 +532,6 @@ var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
 var userLeftPopupMessage = '<div>' + _('%user has left') + '</div>';
 var userPopupTimeout = null;
 
-function toggleButton(toolbar, state, command)
-{
-	var checked;
-	command = command.replace('.uno:', '').toLowerCase();
-	var item = toolbar.get(command);
-	if (!item) {
-		return;
-	}
-
-	if (state) {
-		checked = item.disabled ? toolbar.enable(command) : undefined;
-
-		if (state == 'true') {
-			checked = !item.checked ? toolbar.check(command) : undefined;
-		}
-		else {
-			checked = item.checked ? toolbar.uncheck(command) : undefined;
-		}
-	}
-	else {
-		checked = !item.disabled ? toolbar.disable(command) : undefined;
-	}
-}
-
-function disableButton(toolbar, state, command)
-{
-	var disabled;
-	command = command.replace('.uno:', '').toLowerCase();
-	var item = toolbar.get(command);
-	if (!item) {
-		return;
-	}
-
-	if (state) {
-		disabled = item.disabled ? toolbar.enable(command) : undefined;
-	}
-	else {
-		disabled = !item.disabled ? toolbar.disable(command) : undefined;
-	}
-}
-
 function toLocalePattern (pattern, regex, text, sub1, sub2) {
 	var matches = new RegExp(regex, 'g').exec(text);
 	if (matches) {
