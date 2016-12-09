@@ -16,7 +16,7 @@ build:
 	npm install
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
-	jake build
+	jake build debug=$(DEBUG) minify=$(MINIFY)
 
 .PHONY: build-l10n
 build-l10n:
