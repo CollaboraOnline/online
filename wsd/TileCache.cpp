@@ -173,10 +173,10 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
             std::string response = tile.serialize("tile:");
             LOG_DBG("Sending tile message to " << subscriberCount << " subscribers: " + response);
 
-            std::shared_ptr<MessagePayload> payload = std::make_shared<MessagePayload>(256 + size, MessagePayload::Type::Binary);
+            std::shared_ptr<MessagePayload> payload = std::make_shared<MessagePayload>(response.size() + 1 + size,
+                                                                                       MessagePayload::Type::Binary);
             {
                 auto& output = payload->data();
-                output.resize(response.size() + 1 + size);
 
                 // Send to first subscriber as-is (without cache marker).
                 std::memcpy(output.data(), response.data(), response.size());
@@ -189,14 +189,14 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
 
             if (subscriberCount > 1)
             {
-                // Create a new Payload.
-                payload.reset();
-                payload = std::make_shared<MessagePayload>(256 + size, MessagePayload::Type::Binary);
-                auto& output = payload->data();
-
                 // All others must get served from the cache.
                 response += " renderid=cached\n";
-                output.resize(response.size() + size);
+
+                // Create a new Payload.
+                payload.reset();
+                payload = std::make_shared<MessagePayload>(response.size() + size, MessagePayload::Type::Binary);
+                auto& output = payload->data();
+
                 std::memcpy(output.data(), response.data(), response.size());
                 std::memcpy(output.data() + response.size(), data, size);
 
