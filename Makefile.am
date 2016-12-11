@@ -39,7 +39,6 @@ shared_sources = common/FileUtil.cpp \
                  common/Protocol.cpp \
                  common/Session.cpp \
                  common/MessageQueue.cpp \
-                 common/SenderQueue.cpp \
                  common/SigUtil.cpp \
                  common/SpookyV2.cpp \
                  common/Unit.cpp \
@@ -54,6 +53,7 @@ loolwsd_SOURCES = wsd/Admin.cpp \
                   wsd/ClientSession.cpp \
                   wsd/FileServer.cpp \
                   wsd/PrisonerSession.cpp \
+                  wsd/SenderQueue.cpp \
                   wsd/Storage.cpp \
                   wsd/TileCache.cpp \
                   $(shared_sources)
@@ -103,6 +103,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/LOOLWSD.hpp \
               wsd/PrisonerSession.hpp \
               wsd/QueueHandler.hpp \
+              wsd/SenderQueue.hpp \
               wsd/Storage.hpp \
               wsd/TileCache.hpp \
               wsd/TileDesc.hpp \
@@ -121,7 +122,6 @@ shared_headers = common/Common.hpp \
                  common/MessageQueue.hpp \
                  common/Png.hpp \
                  common/Rectangle.hpp \
-                 common/SenderQueue.hpp \
                  common/SigUtil.hpp \
                  common/security.h \
                  common/SpookyV2.h

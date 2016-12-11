@@ -33,8 +33,8 @@
 #include "ClientSession.hpp"
 #include "Common.hpp"
 #include "common/FileUtil.hpp"
-#include "common/SenderQueue.hpp"
 #include "Protocol.hpp"
+#include "SenderQueue.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
 
