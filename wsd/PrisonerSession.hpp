@@ -30,6 +30,9 @@ private:
     /// Handle messages from the Kit to the client.
     virtual bool _handleInput(const char* buffer, int length) override;
 
+    bool forwardToPeer(const std::shared_ptr<ClientSession>& clientSession,
+                       const char* buffer, int length, const bool binary);
+
 private:
     std::shared_ptr<DocumentBroker> _docBroker;
     std::weak_ptr<ClientSession> _peer;

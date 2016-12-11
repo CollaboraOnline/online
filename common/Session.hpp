@@ -94,34 +94,6 @@ protected:
         _lastActivityTime = std::chrono::steady_clock::now();
     }
 
-    template <typename T>
-    bool forwardToPeer(T& p, const char* buffer, int length, const bool binary)
-    {
-        const auto message = LOOLProtocol::getAbbreviatedMessage(buffer, length);
-
-        auto peer = p.lock();
-        if (!peer)
-        {
-            throw Poco::ProtocolException(getName() + ": no peer to forward to: [" + message + "].");
-        }
-        else if (peer->isCloseFrame())
-        {
-            LOG_TRC(getName() << ": peer began the closing handshake. Dropping forward message [" << message << "].");
-            return true;
-        }
-        else if (peer->isHeadless())
-        {
-            // Fail silently and return as there is no actual websocket
-            // connection in this case.
-            LOG_INF(getName() << ": Headless peer, not forwarding message [" << message << "].");
-            return true;
-        }
-
-        LOG_TRC(getName() << " -> " << peer->getName() << ": " << message);
-        return binary ? peer->sendBinaryFrame(buffer, length)
-                      : peer->sendTextFrame(buffer, length);
-    }
-
     /// Internal lock shared with derived classes.
     std::unique_lock<std::mutex> getLock()
     {

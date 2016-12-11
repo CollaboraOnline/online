@@ -109,7 +109,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                     errorKind == "passwordrequired:to-modify" ||
                     errorKind == "wrongpassword")
                 {
-                    forwardToPeer(_peer, buffer, length, isBinary);
+                    forwardToPeer(peer, buffer, length, isBinary);
                     LOG_WRN("Document load failed: " << errorKind);
                     return false;
                 }
@@ -175,7 +175,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             _docBroker->setLoaded();
 
             // Forward the status response to the client.
-            return forwardToPeer(_peer, buffer, length, isBinary);
+            return forwardToPeer(peer, buffer, length, isBinary);
         }
         else if (tokens[0] == "commandvalues:")
         {
@@ -242,7 +242,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             getTokenString(tokens[2], "char", text);
             assert(firstLine.size() < static_cast<std::string::size_type>(length));
             _docBroker->tileCache().saveRendering(font+text, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
-            forwardToPeer(_peer, buffer, length, true);
+            forwardToPeer(peer, buffer, length, true);
             return true;
         }
     }
@@ -257,8 +257,31 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
     isBinary = buffer[length - 1] != '}' && firstLine.find('{') == std::string::npos;
 
     // Forward everything else.
-    forwardToPeer(_peer, buffer, length, isBinary);
+    forwardToPeer(peer, buffer, length, isBinary);
     return true;
+}
+
+bool PrisonerSession::forwardToPeer(const std::shared_ptr<ClientSession>& clientSession,
+                                    const char* buffer, int length, const bool binary)
+{
+    const auto message = LOOLProtocol::getAbbreviatedMessage(buffer, length);
+
+    if (clientSession->isCloseFrame())
+    {
+        LOG_TRC(getName() << ": peer began the closing handshake. Dropping forward message [" << message << "].");
+        return true;
+    }
+    else if (clientSession->isHeadless())
+    {
+        // Fail silently and return as there is no actual websocket
+        // connection in this case.
+        LOG_INF(getName() << ": Headless peer, not forwarding message [" << message << "].");
+        return true;
+    }
+
+    LOG_TRC(getName() << " -> " << clientSession->getName() << ": " << message);
+    return binary ? clientSession->sendBinaryFrame(buffer, length)
+                  : clientSession->sendTextFrame(buffer, length);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
