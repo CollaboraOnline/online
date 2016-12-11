@@ -23,6 +23,7 @@
 #include "Log.hpp"
 #include "ClientSession.hpp"
 #include "Rectangle.hpp"
+#include "SenderQueue.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "IoUtil.hpp"
@@ -280,8 +281,14 @@ bool PrisonerSession::forwardToPeer(const std::shared_ptr<ClientSession>& client
     }
 
     LOG_TRC(getName() << " -> " << clientSession->getName() << ": " << message);
-    return binary ? clientSession->sendBinaryFrame(buffer, length)
-                  : clientSession->sendTextFrame(buffer, length);
+
+    auto payload = std::make_shared<MessagePayload>(length, binary ? MessagePayload::Type::Binary
+                                                                   : MessagePayload::Type::Text);
+    auto& output = payload->data();
+    std::memcpy(output.data(), buffer, length);
+    SenderQueue::instance().enqueue(clientSession, payload);
+
+    return true;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
