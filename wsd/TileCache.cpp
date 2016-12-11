@@ -186,7 +186,6 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
 
             auto& firstSubscriber = tileBeingRendered->_subscribers[0];
             SenderQueue::instance().enqueue(firstSubscriber, payload);
-            DispatchSendItem();
 
             if (subscriberCount > 1)
             {
@@ -205,7 +204,6 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
                 {
                     auto& subscriber = tileBeingRendered->_subscribers[i];
                     SenderQueue::instance().enqueue(subscriber, payload);
-                    DispatchSendItem();
                 }
             }
         }

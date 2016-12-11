@@ -15,8 +15,9 @@
 #include <Log.hpp>
 
 SenderQueue SenderQueue::TheQueue;
+SenderThreadPool SenderThreadPool::ThePool;
 
-bool DispatchSendItem(const size_t timeoutMs)
+bool SenderThreadPool::dispatchItem(const size_t timeoutMs)
 {
     SendItem item;
     if (SenderQueue::instance().waitDequeue(item, timeoutMs))
@@ -44,6 +45,76 @@ bool DispatchSendItem(const size_t timeoutMs)
     }
 
     return false;
+}
+
+std::shared_ptr<SenderThreadPool::ThreadData> SenderThreadPool::createThread()
+{
+    if (!stopping())
+    {
+        std::shared_ptr<ThreadData> data(std::make_shared<ThreadData>());
+        std::thread thread([this, data]{ threadFunction(data); });
+        data->swap(thread);
+        return data;
+    }
+
+    return nullptr;
+}
+
+bool SenderThreadPool::rebalance()
+{
+    std::unique_lock<std::mutex> lock(_mutex, std::defer_lock);
+    if (!lock.try_lock())
+    {
+        // A sibling is likely rebalancing.
+        return false;
+    }
+
+    const auto threadCount = _threads.size();
+    LOG_DBG("SenderThreadPool: rebalancing " << threadCount << " threads.");
+
+    // First cleanup the non-joinables.
+    for (int i = _threads.size() - 1; i >= 0; --i)
+    {
+        if (!_threads[i]->joinable())
+        {
+            _threads.erase(_threads.begin() + i);
+        }
+    }
+
+    LOG_DBG("SenderThreadPool: removed " << threadCount - _threads.size() << " dead threads.");
+
+    while (_threads.size() < _optimalThreadCount && !stopping())
+    {
+        auto newThreadData = createThread();
+        if (newThreadData)
+        {
+            _threads.push_back(newThreadData);
+        }
+    }
+
+    // Need to reduce?
+    return _threads.size() > _optimalThreadCount;
+}
+
+void SenderThreadPool::threadFunction(const std::shared_ptr<ThreadData>& data)
+{
+    LOG_DBG("SenderThread started");
+    while (!stopping())
+    {
+        if (!dispatchItem(HousekeepIdleIntervalMs) && !stopping())
+        {
+            // We timed out. Seems we have more threads than work.
+            if (rebalance())
+            {
+                // We've been considered expendable.
+                LOG_DBG("SenderThread marked to die");
+                break;
+            }
+        }
+    }
+
+    data->detach();
+    LOG_DBG("SenderThread finished");
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -10,12 +10,11 @@
 #ifndef INCLUDED_SENDERQUEUE_HPP
 #define INCLUDED_SENDERQUEUE_HPP
 
-#include <functional>
+#include <deque>
+#include <memory>
+#include <vector>
 
-#include <Poco/NotificationQueue.h>
-#include <Poco/Runnable.h>
-#include <Poco/ThreadPool.h>
-
+#include "common/SigUtil.hpp"
 #include "Session.hpp"
 #include "Log.hpp"
 
@@ -33,9 +32,6 @@ public:
     }
 
     std::vector<char>& data() { return _data; }
-
-    Type getType() const { return _type; }
-    void setType(const Type type) { _type = type; }
 
     /// Returns true if and only if the payload is considered Binary.
     bool isBinary() const { return _type == Type::Binary; }
@@ -59,6 +55,13 @@ public:
 
     static SenderQueue& instance() { return TheQueue; }
 
+    bool stopping() const { return _stop || TerminationFlag; }
+    void stop()
+    {
+         _stop = true;
+         _cv.notify_all();
+    }
+
     size_t enqueue(const std::weak_ptr<LOOLSession>& session,
                    const std::shared_ptr<MessagePayload>& data)
     {
@@ -80,16 +83,20 @@ public:
 
         std::unique_lock<std::mutex> lock(_mutex);
 
-        LOG_TRC("SenderQueue size: " << _queue.size());
         if (!_queue.empty() ||
-            _cv.wait_for(lock, timeToWait, [this](){ return !_queue.empty(); }))
+            _cv.wait_for(lock, timeToWait, [this](){ return !_queue.empty() || stopping(); }))
         {
-            item = _queue.front();
-            _queue.pop_front();
-            return true;
+            if (!stopping())
+            {
+                item = _queue.front();
+                _queue.pop_front();
+                return true;
+            }
+
+            LOG_WRN("SenderQueue: stopping");
+            return false;
         }
 
-        LOG_WRN("SenderQueue: timeout");
         return false;
     }
 
@@ -103,13 +110,84 @@ private:
     mutable std::mutex _mutex;
     std::condition_variable _cv;
     std::deque<SendItem> _queue;
+    std::atomic<bool> _stop;
 
     /// The only SenderQueue instance.
     static SenderQueue TheQueue;
 };
 
-/// Dequeue a SendItem and send it.
-bool DispatchSendItem(const size_t timeoutMs = std::numeric_limits<size_t>::max());
+/// Pool of sender threads.
+/// These are dedicated threads that only dequeue from
+/// the SenderQueue and send to the target Session.
+/// This pool has long-running threads that grow
+/// only on congention and shrink otherwise.
+class SenderThreadPool
+{
+public:
+    SenderThreadPool() :
+        _optimalThreadCount(std::min(2U, std::thread::hardware_concurrency())),
+        _stop(false)
+    {
+        LOG_INF("Creating SenderThreadPool with " << _optimalThreadCount << " optimal threads.");
+        for (size_t i = 0; i < _optimalThreadCount; ++i)
+        {
+            _threads.push_back(createThread());
+        }
+    }
+
+    ~SenderThreadPool()
+    {
+        // Stop us and the queue.
+        stop();
+        SenderQueue::instance().stop();
+
+        for (const auto& threadData : _threads)
+        {
+            if (threadData && threadData->joinable())
+            {
+                threadData->join();
+            }
+        }
+    }
+
+    SenderThreadPool& instance() { return ThePool; }
+
+    void stop() { _stop = true; }
+    bool stopping() const { return _stop || TerminationFlag; }
+
+private:
+
+    typedef std::thread ThreadData;
+
+    /// Dequeue a SendItem and send it.
+    bool dispatchItem(const size_t timeoutMs);
+
+    /// Create a new thread and add to the pool.
+    std::shared_ptr<ThreadData> createThread();
+
+    /// Rebalance the number of threads.
+    /// Returns true if we need to reduce the threads.
+    bool rebalance();
+
+    /// The worker thread entry function.
+    void threadFunction(const std::shared_ptr<ThreadData>& data);
+
+private:
+    /// A minimum of 2, but ideally as many as cores.
+    const size_t _optimalThreadCount;
+
+    /// Stop condition to take the pool down.
+    std::atomic<bool> _stop;
+
+    std::vector<std::shared_ptr<ThreadData>> _threads;
+    mutable std::mutex _mutex;
+
+    /// How often to do housekeeping when we idle.
+    static constexpr size_t HousekeepIdleIntervalMs = 60000;
+
+    /// The only pool.
+    static SenderThreadPool ThePool;
+};
 
 #endif
 
