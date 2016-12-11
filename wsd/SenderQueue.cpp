@@ -25,8 +25,13 @@ bool SenderThreadPool::dispatchItem(const size_t timeoutMs)
         auto session = item.Session.lock();
         if (session)
         {
+            // Make sure we have extra threads before potentially getting stuck.
+            checkAndGrow();
+
             try
             {
+                IdleCountGuard guard(_idleThreadCount);
+
                 const std::vector<char>& data = item.Data->data();
                 if (item.Data->isBinary())
                 {
@@ -41,6 +46,10 @@ bool SenderThreadPool::dispatchItem(const size_t timeoutMs)
             {
                 LOG_ERR("Failed to send tile to " << session->getName() << ": " << ex.what());
             }
+        }
+        else
+        {
+            LOG_WRN("Discarding send data for expired session.");
         }
     }
 
@@ -58,6 +67,31 @@ std::shared_ptr<SenderThreadPool::ThreadData> SenderThreadPool::createThread()
     }
 
     return nullptr;
+}
+
+void SenderThreadPool::checkAndGrow()
+{
+    auto queueSize = SenderQueue::instance().size();
+    if (_idleThreadCount <= 1 && queueSize > 1)
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+
+        // Check again, in case rebalancing already did the trick.
+        queueSize = SenderQueue::instance().size();
+        if (_idleThreadCount <= 1 && queueSize > 1 &&
+            _maxThreadCount > _threads.size() && !stopping())
+        {
+            LOG_TRC("SenderThreadPool: growing. Cur: " << _threads.size() << ", Max: " << _maxThreadCount <<
+                    ", Idles: " << _idleThreadCount << ", Q: " << queueSize);
+
+            // We have room to grow.
+            auto newThreadData = createThread();
+            if (newThreadData)
+            {
+                _threads.push_back(newThreadData);
+            }
+        }
+    }
 }
 
 bool SenderThreadPool::rebalance()
@@ -81,7 +115,9 @@ bool SenderThreadPool::rebalance()
         }
     }
 
-    LOG_DBG("SenderThreadPool: removed " << threadCount - _threads.size() << " dead threads.");
+    const auto threadCountNew = _threads.size();
+    LOG_DBG("SenderThreadPool: removed " << threadCount - threadCountNew <<
+            " dead threads to have " << threadCountNew << ".");
 
     while (_threads.size() < _optimalThreadCount && !stopping())
     {
@@ -93,12 +129,15 @@ bool SenderThreadPool::rebalance()
     }
 
     // Need to reduce?
+    LOG_DBG("SenderThreadPool: threads: " << _threads.size());
     return _threads.size() > _optimalThreadCount;
 }
 
 void SenderThreadPool::threadFunction(const std::shared_ptr<ThreadData>& data)
 {
     LOG_DBG("SenderThread started");
+    ++_idleThreadCount;
+
     while (!stopping())
     {
         if (!dispatchItem(HousekeepIdleIntervalMs) && !stopping())

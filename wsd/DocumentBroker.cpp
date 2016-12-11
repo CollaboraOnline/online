@@ -584,6 +584,9 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     // Now we are ready to bridge between the kit and client.
     session->bridgePrisonerSession();
 
+    // Provision for another thread to service this session.
+    SenderThreadPool::instance().incMaxThreadCount();
+
     return count;
 }
 
@@ -594,6 +597,9 @@ size_t DocumentBroker::removeSession(const std::string& id)
     try
     {
         Admin::instance().rmDoc(_docKey, id);
+
+        // Reduce thread provisioning.
+        SenderThreadPool::instance().decMaxThreadCount();
 
         auto it = _sessions.find(id);
         if (it != _sessions.end())

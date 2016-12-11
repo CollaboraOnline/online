@@ -49,7 +49,7 @@ struct SendItem
 };
 
 /// A queue of data to send to certain Sessions.
-class SenderQueue
+class SenderQueue final
 {
 public:
 
@@ -93,7 +93,7 @@ public:
                 return true;
             }
 
-            LOG_WRN("SenderQueue: stopping");
+            LOG_INF("SenderQueue: stopping");
             return false;
         }
 
@@ -121,11 +121,13 @@ private:
 /// the SenderQueue and send to the target Session.
 /// This pool has long-running threads that grow
 /// only on congention and shrink otherwise.
-class SenderThreadPool
+class SenderThreadPool final
 {
 public:
     SenderThreadPool() :
         _optimalThreadCount(std::min(2U, std::thread::hardware_concurrency())),
+        _maxThreadCount(_optimalThreadCount),
+        _idleThreadCount(0),
         _stop(false)
     {
         LOG_INF("Creating SenderThreadPool with " << _optimalThreadCount << " optimal threads.");
@@ -150,12 +152,35 @@ public:
         }
     }
 
-    SenderThreadPool& instance() { return ThePool; }
+    static SenderThreadPool& instance() { return ThePool; }
 
     void stop() { _stop = true; }
     bool stopping() const { return _stop || TerminationFlag; }
 
+    void incMaxThreadCount() { ++_maxThreadCount; }
+    void decMaxThreadCount() { --_maxThreadCount; }
+
 private:
+
+    /// Count idle threads safely.
+    /// Decrements count on ctor, and increments on dtor.
+    class IdleCountGuard final
+    {
+    public:
+        IdleCountGuard(std::atomic<size_t>& var) :
+            _var(var)
+        {
+            --_var;
+        }
+
+        ~IdleCountGuard()
+        {
+            ++_var;
+        }
+
+    private:
+        std::atomic<size_t>& _var;
+    };
 
     typedef std::thread ThreadData;
 
@@ -169,12 +194,21 @@ private:
     /// Returns true if we need to reduce the threads.
     bool rebalance();
 
+    /// Grow the pool if congestion is detected.
+    void checkAndGrow();
+
     /// The worker thread entry function.
     void threadFunction(const std::shared_ptr<ThreadData>& data);
 
 private:
     /// A minimum of 2, but ideally as many as cores.
     const size_t _optimalThreadCount;
+
+    /// Never exceed this number of threads.
+    size_t _maxThreadCount;
+
+    /// The number of threads not sending data.
+    std::atomic<size_t> _idleThreadCount;
 
     /// Stop condition to take the pool down.
     std::atomic<bool> _stop;
