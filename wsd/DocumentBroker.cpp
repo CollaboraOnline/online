@@ -28,6 +28,7 @@
 #include "PrisonerSession.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
+#include "SenderQueue.hpp"
 #include "Unit.hpp"
 
 using namespace LOOLProtocol;

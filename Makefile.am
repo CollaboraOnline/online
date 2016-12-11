@@ -39,6 +39,7 @@ shared_sources = common/FileUtil.cpp \
                  common/Protocol.cpp \
                  common/Session.cpp \
                  common/MessageQueue.cpp \
+                 common/SenderQueue.cpp \
                  common/SigUtil.cpp \
                  common/SpookyV2.cpp \
                  common/Unit.cpp \
@@ -120,6 +121,7 @@ shared_headers = common/Common.hpp \
                  common/MessageQueue.hpp \
                  common/Png.hpp \
                  common/Rectangle.hpp \
+                 common/SenderQueue.hpp \
                  common/SigUtil.hpp \
                  common/security.h \
                  common/SpookyV2.h
