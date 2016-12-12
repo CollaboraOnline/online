@@ -2,7 +2,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global vex $ w2ui w2utils */
+/* global vex $ */
 L.Map = L.Evented.extend({
 
 	options: {
@@ -156,7 +156,7 @@ L.Map = L.Evented.extend({
 		// If document is already loaded, ask the toolbar widget to show busy
 		// status on the bottom statusbar
 		if (this._docLayer) {
-			w2utils.lock(w2ui['toolbar-down'].box, label, true);
+			this.fire('showbusy', {label: label});
 			return;
 		}
 
@@ -170,9 +170,7 @@ L.Map = L.Evented.extend({
 	},
 
 	hideBusy: function () {
-		if (w2ui['toolbar-down'].box.firstChild.className === 'w2ui-lock') {
-			w2utils.unlock(w2ui['toolbar-down'].box);
-		}
+		this.fire('hidebusy');
 
 		if (this.hasLayer(this._progressBar)) {
 			this.removeLayer(this._progressBar);
