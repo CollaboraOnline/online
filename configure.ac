@@ -300,6 +300,7 @@ AC_SUBST(LOOLWSD_DATADIR)
 
 AC_CONFIG_FILES([Makefile
                  test/Makefile
+                 loleaflet/Makefile
                  loolwsd.spec
                  loolwsd.xml
                  maketarballfordeb.sh])

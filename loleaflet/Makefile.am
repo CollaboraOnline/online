@@ -8,14 +8,13 @@ VERSION=2.0.0+
 # Version number of the bundled 'draw' thing
 DRAW_VERSION=0.2.4
 
-DEBUG=false
 MINIFY=false
 
 .PHONY: build
 build: node_modules
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
-	jake build debug=$(DEBUG) minify=$(MINIFY)
+	jake build debug=$(ENABLE_DEBUG) minify=$(MINIFY)
 
 node_modules: npm-shrinkwrap.json
 	npm install
@@ -30,11 +29,11 @@ build-l10n:
 	util/po2json.py --quiet po/styles/*.po
 	mv po/styles/*.json dist/l10n/styles/
 
-all: build build-l10n
+all-local: build
 
 .PHONY: dist
 dist: MINIFY=true
-dist: all
+dist: all build-l10n
 	rm -rf loleaflet-$(VERSION)
 	mkdir loleaflet-$(VERSION)
 	cp -ar dist loleaflet-$(VERSION)
@@ -69,6 +68,11 @@ pot:
 l10n: pot
 	for i in po/ui-*.po; do pot2po --input=po/templates/loleaflet-ui.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
 	for i in po/help-*.po; do pot2po --input=po/templates/loleaflet-help.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
+
+clean-local:
+	rm -rf node_modules
+	cd dist && rm -f bundle.js bundle.js.map admin-bundle.js admin-bundle.js.map
+	cd plugins/draw-$(DRAW_VERSION) && rm -f dist/*.js
 
 spec/data/load-test:
 	if [ ! -d spec/data/load_test ]; then \

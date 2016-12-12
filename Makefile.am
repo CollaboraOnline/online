@@ -1,4 +1,4 @@
-SUBDIRS = . test
+SUBDIRS = . test loleaflet
 
 export ENABLE_DEBUG
 
