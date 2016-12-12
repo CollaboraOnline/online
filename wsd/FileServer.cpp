@@ -237,13 +237,20 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
     Poco::URI::encode(accessToken, "'", escapedAccessToken);
 
     unsigned long tokenTtl = 0;
-    try
+    if (accessTokenTtl != "")
     {
-        tokenTtl = std::stoul(accessTokenTtl);
+        try
+        {
+            tokenTtl = std::stoul(accessTokenTtl);
+        }
+        catch(const std::exception& exc)
+        {
+            LOG_ERR("access_token_ttl must be a unix timestamp of when token will expire");
+        }
     }
-    catch(const std::exception& exc)
+    else
     {
-        LOG_ERR("access_token_ttl must be a unix timestamp of when token will expire");
+        LOG_WRN("WOPI host did not pass access_token_ttl");
     }
 
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
