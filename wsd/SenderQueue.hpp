@@ -69,11 +69,11 @@ public:
 
         std::unique_lock<std::mutex> lock(_mutex);
         _queue.push_back(item);
-        const size_t size = _queue.size();
+        const size_t queuesize = _queue.size();
         lock.unlock();
 
         _cv.notify_one();
-        return size;
+        return queuesize;
     }
 
     bool waitDequeue(SendItem& item,
