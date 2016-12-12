@@ -626,14 +626,10 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
     LOG_DBG("Alerting all users of [" << _docKey << "]: " << msg);
     for (auto& it : _sessions)
     {
-        try
-        {
-            it.second->sendTextFrame(msg);
-        }
-        catch (const std::exception& ex)
-        {
-            LOG_ERR("Error while alerting all users [" << msg << "]: " << ex.what());
-        }
+        auto payload = std::make_shared<MessagePayload>(msg.size(), MessagePayload::Type::Text);
+        auto& output = payload->data();
+        std::memcpy(output.data(), msg.data(), msg.size());
+        SenderQueue::instance().enqueue(it.second, payload);
     }
 }
 
