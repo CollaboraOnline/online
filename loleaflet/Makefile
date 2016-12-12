@@ -12,11 +12,14 @@ DEBUG=false
 MINIFY=false
 
 .PHONY: build
-build:
-	npm install
+build: node_modules
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
 	jake build debug=$(DEBUG) minify=$(MINIFY)
+
+node_modules: npm-shrinkwrap.json
+	npm install
+	touch node_modules
 
 .PHONY: build-l10n
 build-l10n:
