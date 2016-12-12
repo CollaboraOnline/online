@@ -77,7 +77,7 @@ L.Socket = L.Class.extend({
 			if (typeof msg === 'string') {
 				L.Log.log(msg, L.OUTGOING, coords);
 				if (this._map._docLayer && this._map._docLayer._debug) {
-					console.log(+new Date() + ' %cOUTGOING%c: ' + msg.concat(' ').replace(' ', '%c ', 1), 'background:#fbb;color:black', 'color:red', 'color:black');
+					console.log(+new Date() + ' %cOUTGOING%c: ' + msg.concat(' ').replace(' ', '%c '), 'background:#fbb;color:black', 'color:red', 'color:black');
 				}
 			}
 		}
@@ -92,7 +92,7 @@ L.Socket = L.Class.extend({
 		if (typeof msg === 'string') {
 			L.Log.log(msg, L.OUTGOING, coords);
 			if (this._map._docLayer && this._map._docLayer._debug) {
-				console.log(+new Date() + ' %cOUTGOING%c: ' + msg.concat(' ').replace(' ', '%c ', 1), 'background:#fbb;color:black', 'color:red', 'color:black');
+				console.log(+new Date() + ' %cOUTGOING%c: ' + msg.concat(' ').replace(' ', '%c '), 'background:#fbb;color:black', 'color:red', 'color:black');
 			}
 		}
 
@@ -157,7 +157,7 @@ L.Socket = L.Class.extend({
 		}
 
 		if (this._map._docLayer && this._map._docLayer._debug) {
-			console.log(+new Date() + ' %cINCOMING%c: ' + textMsg.concat(' ').replace(' ', '%c ', 1), 'background:#ddf;color:black', 'color:blue', 'color:black');
+			console.log(+new Date() + ' %cINCOMING%c: ' + textMsg.concat(' ').replace(' ', '%c '), 'background:#ddf;color:black', 'color:blue', 'color:black');
 		}
 
 		var command = this.parseServerCmd(textMsg);
