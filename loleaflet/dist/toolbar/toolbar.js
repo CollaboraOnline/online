@@ -2,7 +2,7 @@
  * LibreOffice Online toolbar
  */
 
-/* global $ map closebutton w2ui vex _ */
+/* global $ map closebutton w2ui w2utils vex _ */
 
 function onDelete(e) {
 	if (e !== false) {
@@ -728,6 +728,17 @@ function onFormulaBarBlur() {
 		formulabar.hide('acceptformula');
 	}, 250);
 }
+
+map.on('hidebusy', function() {
+	// If locked, unlock
+	if (w2ui['toolbar-down'].box.firstChild.className === 'w2ui-lock') {
+		w2utils.unlock(w2ui['toolbar-down'].box);
+	}
+});
+
+map.on('showbusy', function(e) {
+	w2utils.lock(w2ui['toolbar-down'].box, e.label, true);
+});
 
 map.on('wopiprops', function(e) {
 	if (e.HideSaveOption) {
