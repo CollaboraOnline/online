@@ -1273,8 +1273,6 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update cursor layer (blinking cursor).
 	_onUpdateCursor: function (e) {
-		var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
-						 this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
 		var cursorPos = this._visibleCursor.getNorthWest();
 
 		if (!e && !this._map.getBounds().contains(this._visibleCursor) && this._isCursorVisible) {
