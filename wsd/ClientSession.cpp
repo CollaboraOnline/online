@@ -185,8 +185,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "closedocument")
     {
-        // If this session is the owner of the file, let it close all sessions
-        if (_isDocumentOwner)
+        // If this session is the owner of the file & 'EnableOwnerTermination' feature
+        // is turned on by WOPI, let it close all sessions
+        if (_isDocumentOwner && _wopiFileInfo && _wopiFileInfo->_enableOwnerTermination)
         {
             LOG_DBG("Session [" + getId() + "] requested owner termination");
             docBroker->closeDocument("ownertermination");
