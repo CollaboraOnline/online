@@ -110,7 +110,7 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
                 continue;
             }
 
-            assert(n > 0);
+            LOG_CHECK(n > 0);
 
             const std::string firstLine = LOOLProtocol::getFirstLine(payload);
             if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
@@ -164,12 +164,7 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
                 }
             }
 
-            if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
-            {
-                closeFrame();
-                LOG_WRN("SocketProcessor [" << name << "]: Connection closed.");
-                break;
-            }
+            LOG_CHECK(n > 0);
 
             // Call the handler.
             const auto success = handler(payload);
