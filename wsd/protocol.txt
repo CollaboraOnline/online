@@ -34,7 +34,10 @@ canceltiles
 downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
 
     Exports the current document to the desired format and returns a download URL
-    The id identifies the request on the client.
+    The id identifies the request on the client. id can take following values:
+    * 'print': When request for download is basically for print purposes
+    * 'slideshow': When request for download is for showing slideshow
+    * 'export': Just a simple download
 
 getchildid
 
