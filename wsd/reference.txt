@@ -5,3 +5,47 @@ Document conversion:
     - API: HTTP POST to /lool/convert-to
         - parameters: format=<format> (see e.g. "png", "pdf" or "txt"), and the file itself in the payload
     - example: curl -F "data=@test.txt" -F "format=pdf" https://localhost:9980/lool/convert-to
+
+WOPI Extensions
+===============
+
+LibreOffice Online uses WOPI protocol to interact with hosts who wants to
+integrate LibreOffice Online in them.
+
+Refer to WOPI docs[https://wopi.readthedocs.io/en/latest/] for detailed
+information. This documentation only mentions extensions to upstream WOPI protocol,
+WOPI extensions, that are implemented by LibreOffice-Online backend in addition to
+upstream WOPI protocol.
+
+(Please note that upstream WOPI implementation is also not 100% complete)
+
+CheckFileInfo response properties
+----------------------------------
+
+HidePrintOption
+	If set to true, hides the print option from the filemenu bar in the UI
+
+HideSaveOption
+	If set to true, hides the save button from the toolbar and file menubar
+	in the UI
+
+HideExportOption
+	Hides 'Download as' option in the file menubar
+
+DisablePrint
+	Disables print functionality in libreoffice online backend. If true,
+	HidePrintOption is assumed to be true
+
+DisableExport
+	Disables export functionality in backend. If set to true,
+	HideExportOption is assumed to be true
+
+DisableCopy
+	Disables copy/paste from/to the document in libreoffice online backend
+
+EnableOwnerTermination
+	If set to true, it allows the document owner (the one with OwnerId =
+	UserId) to send a 'closedocument' message (see protocol.txt)
+
+Note that it is possible to just hide print,save,export options while still
+being able to access them from WOPI hosts using PostMessage API (see loleaflet/reference.html)
