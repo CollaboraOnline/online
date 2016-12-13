@@ -715,10 +715,17 @@ private:
             LOG_INF("HTTP request for: " << filePath.toString());
             if (filePath.isAbsolute() && File(filePath).exists())
             {
+                std::string contentType = getContentType(fileName);
                 response.set("Access-Control-Allow-Origin", "*");
+                if (Poco::Path(fileName).getExtension() == "pdf")
+                {
+                    contentType = "application/pdf";
+                    response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                }
+
                 try
                 {
-                    response.sendFile(filePath.toString(), getContentType(fileName));
+                    response.sendFile(filePath.toString(), contentType);
                     responded = true;
                 }
                 catch (const Exception& exc)
