@@ -248,11 +248,11 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     std::chrono::duration<double> getInfoCallDuration(0);
     if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
     {
-        const WopiStorage::WOPIFileInfo wopifileinfo = static_cast<WopiStorage*>(_storage.get())->getWOPIFileInfo(uriPublic);
-        userid = wopifileinfo._userid;
-        username = wopifileinfo._username;
+        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = static_cast<WopiStorage*>(_storage.get())->getWOPIFileInfo(uriPublic);
+        userid = wopifileinfo->_userid;
+        username = wopifileinfo->_username;
 
-        if (!wopifileinfo._userCanWrite)
+        if (!wopifileinfo->_userCanWrite)
         {
             LOG_DBG("Setting the session as readonly");
             session->setReadOnly();
@@ -260,14 +260,14 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
 
         // Construct a JSON containing relevant WOPI host properties
         Object::Ptr wopiInfo = new Object();
-        if (!wopifileinfo._postMessageOrigin.empty())
+        if (!wopifileinfo->_postMessageOrigin.empty())
         {
-            wopiInfo->set("PostMessageOrigin", wopifileinfo._postMessageOrigin);
+            wopiInfo->set("PostMessageOrigin", wopifileinfo->_postMessageOrigin);
         }
 
-        wopiInfo->set("HidePrintOption", wopifileinfo._hidePrintOption);
-        wopiInfo->set("HideSaveOption", wopifileinfo._hideSaveOption);
-        wopiInfo->set("HideExportOption", wopifileinfo._hideExportOption);
+        wopiInfo->set("HidePrintOption", wopifileinfo->_hidePrintOption);
+        wopiInfo->set("HideSaveOption", wopifileinfo->_hideSaveOption);
+        wopiInfo->set("HideExportOption", wopifileinfo->_hideExportOption);
 
         std::ostringstream ossWopiInfo;
         wopiInfo->stringify(ossWopiInfo);
@@ -280,13 +280,16 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
             session->setDocumentOwner(true);
         }
 
-        getInfoCallDuration = wopifileinfo._callDuration;
+        getInfoCallDuration = wopifileinfo->_callDuration;
+
+        // Pass the ownership to client session
+        session->setWopiFileInfo(wopifileinfo);
     }
     else if (dynamic_cast<LocalStorage*>(_storage.get()) != nullptr)
     {
-        const LocalStorage::LocalFileInfo localfileinfo = static_cast<LocalStorage*>(_storage.get())->getLocalFileInfo(uriPublic);
-        userid = localfileinfo._userid;
-        username = localfileinfo._username;
+        std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo = static_cast<LocalStorage*>(_storage.get())->getLocalFileInfo(uriPublic);
+        userid = localfileinfo->_userid;
+        username = localfileinfo->_username;
     }
 
     LOG_DBG("Setting username [" << username << "] and userId [" << userid << "] for session [" << sessionId << "]");

@@ -186,7 +186,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
 
 std::atomic<unsigned> LocalStorage::LastLocalStorageId;
 
-LocalStorage::LocalFileInfo LocalStorage::getLocalFileInfo(const Poco::URI& uriPublic)
+std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo(const Poco::URI& uriPublic)
 {
     const auto path = Poco::Path(uriPublic.getPath());
     Log::debug("Getting info for local uri [" + uriPublic.toString() + "], path [" + path.toString() + "].");
@@ -202,7 +202,7 @@ LocalStorage::LocalFileInfo LocalStorage::getLocalFileInfo(const Poco::URI& uriP
     }
 
     // Set automatic userid and username
-    return LocalFileInfo({"localhost", std::string("Local Host #") + std::to_string(LastLocalStorageId++)});
+    return std::unique_ptr<LocalStorage::LocalFileInfo>(new LocalFileInfo({"localhost", std::string("Local Host #") + std::to_string(LastLocalStorageId++)}));
 }
 
 std::string LocalStorage::loadStorageFileToLocal()
@@ -353,7 +353,7 @@ void getWOPIValue(const Poco::JSON::Object::Ptr &object, const std::string& key,
 
 } // anonymous namespace
 
-WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPublic)
+std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Poco::URI& uriPublic)
 {
     Log::debug("Getting info for wopi uri [" + uriPublic.toString() + "].");
 
@@ -422,7 +422,7 @@ WopiStorage::WOPIFileInfo WopiStorage::getWOPIFileInfo(const Poco::URI& uriPubli
         _fileInfo = FileInfo({filename, ownerId, Poco::Timestamp(), size});
     }
 
-    return WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, callDuration});
+    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, callDuration}));
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content

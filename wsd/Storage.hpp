@@ -148,7 +148,7 @@ public:
     /// Returns the URI specific file data
     /// Also stores the basic file information which can then be
     /// obtained using getFileInfo method
-    LocalFileInfo getLocalFileInfo(const Poco::URI& uriPublic);
+    std::unique_ptr<LocalFileInfo> getLocalFileInfo(const Poco::URI& uriPublic);
 
     std::string loadStorageFileToLocal() override;
 
@@ -221,7 +221,7 @@ public:
     /// Returns the response of CheckFileInfo WOPI call for given URI
     /// Also extracts the basic file information from the response
     /// which can then be obtained using getFileInfo()
-    WOPIFileInfo getWOPIFileInfo(const Poco::URI& uriPublic);
+    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Poco::URI& uriPublic);
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string loadStorageFileToLocal() override;
