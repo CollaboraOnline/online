@@ -32,7 +32,7 @@ private:
     std::mutex _mutex;
 
 #if ENABLE_DEBUG
-    std::chrono::milliseconds getWebSocketDelay()
+    static std::chrono::milliseconds getWebSocketDelay()
     {
         unsigned long baseDelay = 0;
         unsigned long jitter = 0;
@@ -89,20 +89,33 @@ public:
         // Delay receiving the frame
         std::this_thread::sleep_for(getWebSocketDelay());
 #endif
-        // Timeout given is in microseconds.
-        static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+        // Timeout is in microseconds. We don't need this, except to yield the cpu.
+        static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000 / 10);
+        static const Poco::Timespan waitZero(0);
+        std::unique_lock<std::mutex> lock(_mutex);
 
         while (poll(waitTime, Poco::Net::Socket::SELECT_READ))
         {
             const int n = Poco::Net::WebSocket::receiveFrame(buffer, length, flags);
+
             LOG_TRC("Got frame: " << LOOLProtocol::getAbbreviatedFrameDump(buffer, n, flags));
-            if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
+
+            if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING &&
+                (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
             {
-                sendFrame(buffer, n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG);
+                // Echo back the ping message.
+                if (poll(waitZero, Socket::SelectMode::SELECT_ERROR) ||
+                    !poll(waitZero, Socket::SelectMode::SELECT_WRITE) ||
+                    Poco::Net::WebSocket::sendFrame(buffer, n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG) != n)
+                {
+                    LOG_WRN("Sending Pong failed.");
+                    return -1;
+                }
             }
-            else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
+            else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG &&
+                     (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
             {
-                // In case we do send pongs in the future.
+                // In case we do send pings in the future.
             }
             else
             {
@@ -110,6 +123,7 @@ public:
             }
         }
 
+        // Not ready for read.
         return -1;
     }
 
@@ -120,23 +134,40 @@ public:
         // Delay sending the frame
         std::this_thread::sleep_for(getWebSocketDelay());
 #endif
+        static const Poco::Timespan waitZero(0);
         std::unique_lock<std::mutex> lock(_mutex);
 
         if (length >= LARGE_MESSAGE_SIZE)
         {
             const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-            Poco::Net::WebSocket::sendFrame(nextmessage.data(), nextmessage.size());
-            LOG_TRC("Message is long, sent " + nextmessage);
+            const int size = nextmessage.size();
+
+            if (!poll(waitZero, Socket::SelectMode::SELECT_ERROR) &&
+                poll(waitZero, Socket::SelectMode::SELECT_WRITE) &&
+                Poco::Net::WebSocket::sendFrame(nextmessage.data(), size) == size)
+            {
+                LOG_TRC("Sent long message preample: " + nextmessage);
+            }
+            else
+            {
+                LOG_WRN("Failed to send long message preample.");
+                return -1;
+            }
         }
 
-        const int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
+        int result = -1;
+        if (!poll(waitZero, Socket::SelectMode::SELECT_ERROR) &&
+            poll(waitZero, Socket::SelectMode::SELECT_WRITE))
+        {
+            result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
+        }
 
         lock.unlock();
 
         if (result != length)
         {
             LOG_ERR("Sent incomplete message, expected " << length << " bytes but sent " << result <<
-                    " while sending: " << LOOLProtocol::getAbbreviatedFrameDump(buffer, length, flags));
+                    " for: " << LOOLProtocol::getAbbreviatedFrameDump(buffer, length, flags));
         }
         else
         {
