@@ -10,6 +10,9 @@ L.Map.WOPI = L.Handler.extend({
 	HidePrintOption: false,
 	HideSaveOption: false,
 	HideExportOption: false,
+	DisablePrint: false,
+	DisableExport: false,
+	DisableCopy: false,
 
 	_appLoadedConditions: {
 		doclayerinit: false,
@@ -57,6 +60,9 @@ L.Map.WOPI = L.Handler.extend({
 		this.HidePrintOption = !!wopiInfo['HidePrintOption'];
 		this.HideSaveOption = !!wopiInfo['HideSaveOption'];
 		this.HideExportOption = !!wopiInfo['HideExportOption'];
+		this.DisablePrint = !!wopiInfo['DisablePrint'];
+		this.DisableExport = !!wopiInfo['DisableExport'];
+		this.DisableCopy = !!wopiInfo['DisableCopy'];
 
 		this._map.fire('postMessage', {msgId: 'App_LoadingStatus', args: {Status: 'Frame_Ready'}});
 	},
