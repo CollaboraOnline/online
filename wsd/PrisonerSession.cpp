@@ -36,7 +36,7 @@ using Poco::StringTokenizer;
 
 PrisonerSession::PrisonerSession(std::shared_ptr<ClientSession> clientSession,
                                  std::shared_ptr<DocumentBroker> docBroker) :
-    Session(clientSession->getId(), Kind::ToPrisoner, nullptr),
+    Session("ToPrisoner-" + clientSession->getId(), clientSession->getId(), nullptr),
     _docBroker(std::move(docBroker)),
     _peer(clientSession),
     _curPart(0)

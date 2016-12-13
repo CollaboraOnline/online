@@ -39,7 +39,7 @@ ClientSession::ClientSession(const std::string& id,
                              const std::shared_ptr<DocumentBroker>& docBroker,
                              const Poco::URI& uriPublic,
                              const bool readOnly) :
-    Session(id, Kind::ToClient, ws),
+    Session("ToClient-" + id, id, ws),
     _docBroker(docBroker),
     _uriPublic(uriPublic),
     _isReadOnly(readOnly),

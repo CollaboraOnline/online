@@ -32,17 +32,6 @@
 class Session
 {
 public:
-    /// We have three kinds of Websocket sessions
-    /// 1) Between the master loolwsd server to the end-user LOOL client
-    /// 2) Between the master loolwsd server and a jailed child process, in the master process
-    /// 3) Ditto, in the jailed process
-    enum class Kind
-    {
-        ToClient,
-        ToPrisoner,
-        ToMaster
-    };
-
     const std::string& getId() const { return _id; }
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
@@ -77,13 +66,10 @@ public:
     void closeFrame() { _isCloseFrame = true; };
     bool isCloseFrame() const { return _isCloseFrame; }
 
-    Kind getKind() const { return _kind; }
-
     bool isHeadless() const { return _ws == nullptr; }
 
 protected:
-    Session(const std::string& id, const Kind kind,
-                std::shared_ptr<LOOLWebSocket> ws);
+    Session(const std::string& name, const std::string& id, const std::shared_ptr<LOOLWebSocket>& ws);
     virtual ~Session();
 
     /// Parses the options of the "load" command, shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
@@ -106,12 +92,6 @@ private:
 private:
     /// A session ID specific to an end-to-end connection (from user to lokit).
     const std::string _id;
-
-    // Our kind signifies to what we are connected to.
-    const Kind _kind;
-
-    // The kind cached as a string.
-    const std::string _kindString;
 
     /// A readable name that identifies our peer and ID.
     const std::string _name;
@@ -157,23 +137,6 @@ protected:
     /// Name of the user to whom the session belongs to
     std::string _userName;
 };
-
-template <typename charT, typename traits>
-inline std::basic_ostream<charT, traits>& operator<<(std::basic_ostream<charT, traits>& stream, Session::Kind kind)
-{
-    switch (kind)
-    {
-    case Session::Kind::ToClient:
-        return stream << "TO_CLIENT";
-    case Session::Kind::ToPrisoner:
-        return stream << "TO_PRISONER";
-    case Session::Kind::ToMaster:
-        return stream << "TO_MASTER";
-    default:
-        assert(false);
-        return stream << "UNK_" + std::to_string(static_cast<int>(kind));
-    }
-}
 
 #endif
 
