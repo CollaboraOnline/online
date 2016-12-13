@@ -11,6 +11,7 @@
 #define INCLUDED_CLIENTSSESSION_HPP
 
 #include "Session.hpp"
+#include "Storage.hpp"
 #include "MessageQueue.hpp"
 #include "SenderQueue.hpp"
 
@@ -93,6 +94,9 @@ public:
     /// client made the request to us
     const Poco::URI& getPublicUri() const { return _uriPublic; }
 
+    /// Set WOPI fileinfo object
+    void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
+
 private:
     virtual bool _handleInput(const char* buffer, int length) override;
 
@@ -145,6 +149,9 @@ private:
     SenderQueue<std::shared_ptr<MessagePayload>> _senderQueue;
     std::thread _senderThread;
     std::atomic<bool> _stop;
+    
+    /// Wopi FileInfo object
+    std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;
 };
 
 #endif
