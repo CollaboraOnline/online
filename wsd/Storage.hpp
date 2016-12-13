@@ -180,6 +180,9 @@ public:
                      const bool hideSaveOption,
                      const bool hideExportOption,
                      const bool enableOwnerTermination,
+                     const bool disablePrint,
+                     const bool disableExport,
+                     const bool disableCopy,
                      const std::chrono::duration<double> callDuration)
             : _userid(userid),
               _username(username),
@@ -189,6 +192,9 @@ public:
               _hideSaveOption(hideSaveOption),
               _hideExportOption(hideExportOption),
               _enableOwnerTermination(enableOwnerTermination),
+              _disablePrint(disablePrint),
+              _disableExport(disableExport),
+              _disableCopy(disableCopy),
               _callDuration(callDuration)
             {
             }
@@ -209,6 +215,12 @@ public:
         bool _hideExportOption;
         /// If WOPI host has enabled owner termination feature on
         bool _enableOwnerTermination;
+        /// If WOPI host has allowed the user to print the document
+        bool _disablePrint;
+        /// If WOPI host has allowed the user to export the document
+        bool _disableExport;
+        /// If WOPI host has allowed the user to copy to/from the document
+        bool _disableCopy;
         /// Time it took to call WOPI's CheckFileInfo
         std::chrono::duration<double> _callDuration;
     };
