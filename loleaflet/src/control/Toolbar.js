@@ -58,7 +58,7 @@ L.Map.include({
 		if (options === undefined || options === null) {
 			options = '';
 		}
-		id = id || -1; // not a special download
+		id = id || 'export'; // not any special download, simple export
 
 		this.showBusy(_('Downloading...'), false);
 		this._socket.sendMessage('downloadas ' +
