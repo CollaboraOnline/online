@@ -43,7 +43,7 @@ private:
 
 struct SendItem
 {
-    std::weak_ptr<LOOLSession> Session;
+    std::weak_ptr<::Session> Session;
     std::shared_ptr<MessagePayload> Data;
     std::chrono::steady_clock::time_point BirthTime;
 };
@@ -62,7 +62,7 @@ public:
          _cv.notify_all();
     }
 
-    size_t enqueue(const std::weak_ptr<LOOLSession>& session,
+    size_t enqueue(const std::weak_ptr<Session>& session,
                    const std::shared_ptr<MessagePayload>& data)
     {
         SendItem item = { session, data, std::chrono::steady_clock::now() };

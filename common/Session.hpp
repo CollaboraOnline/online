@@ -7,8 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_LOOLSESSION_HPP
-#define INCLUDED_LOOLSESSION_HPP
+#ifndef INCLUDED_SESSION_HPP
+#define INCLUDED_SESSION_HPP
 
 #include <atomic>
 #include <cassert>
@@ -29,7 +29,7 @@
 #include "TileCache.hpp"
 
 /// Base class of a LOOLWebSocket session.
-class LOOLSession
+class Session
 {
 public:
     /// We have three kinds of Websocket sessions
@@ -82,9 +82,9 @@ public:
     bool isHeadless() const { return _ws == nullptr; }
 
 protected:
-    LOOLSession(const std::string& id, const Kind kind,
+    Session(const std::string& id, const Kind kind,
                 std::shared_ptr<LOOLWebSocket> ws);
-    virtual ~LOOLSession();
+    virtual ~Session();
 
     /// Parses the options of the "load" command, shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
     void parseDocOptions(const Poco::StringTokenizer& tokens, int& part, std::string& timestamp);
@@ -159,15 +159,15 @@ protected:
 };
 
 template <typename charT, typename traits>
-inline std::basic_ostream<charT, traits>& operator<<(std::basic_ostream<charT, traits>& stream, LOOLSession::Kind kind)
+inline std::basic_ostream<charT, traits>& operator<<(std::basic_ostream<charT, traits>& stream, Session::Kind kind)
 {
     switch (kind)
     {
-    case LOOLSession::Kind::ToClient:
+    case Session::Kind::ToClient:
         return stream << "TO_CLIENT";
-    case LOOLSession::Kind::ToPrisoner:
+    case Session::Kind::ToPrisoner:
         return stream << "TO_PRISONER";
-    case LOOLSession::Kind::ToMaster:
+    case Session::Kind::ToMaster:
         return stream << "TO_MASTER";
     default:
         assert(false);

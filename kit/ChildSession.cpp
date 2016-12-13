@@ -37,7 +37,7 @@ std::recursive_mutex ChildSession::Mutex;
 ChildSession::ChildSession(const std::string& id,
                            const std::string& jailId,
                            IDocumentManager& docManager) :
-    LOOLSession(id, Kind::ToMaster, nullptr),
+    Session(id, Kind::ToMaster, nullptr),
     _jailId(jailId),
     _docManager(docManager),
     _viewId(-1),
@@ -68,7 +68,7 @@ void ChildSession::disconnect()
             LOG_WRN("Skipping unload on incomplete view.");
         }
 
-        LOOLSession::disconnect();
+        Session::disconnect();
     }
 }
 

@@ -61,7 +61,7 @@ public:
 };
 
 /// Represents a session to the WSD process, in a Kit process. Note that this is not a singleton.
-class ChildSession final : public LOOLSession
+class ChildSession final : public Session
 {
 public:
     /// Create a new ChildSession

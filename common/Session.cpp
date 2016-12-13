@@ -49,7 +49,7 @@ using Poco::Net::Socket;
 using Poco::Net::WebSocket;
 using Poco::StringTokenizer;
 
-LOOLSession::LOOLSession(const std::string& id, const Kind kind,
+Session::Session(const std::string& id, const Kind kind,
                          std::shared_ptr<LOOLWebSocket> ws) :
     _id(id),
     _kind(kind),
@@ -67,11 +67,11 @@ LOOLSession::LOOLSession(const std::string& id, const Kind kind,
 {
 }
 
-LOOLSession::~LOOLSession()
+Session::~Session()
 {
 }
 
-bool LOOLSession::sendTextFrame(const char* buffer, const int length)
+bool Session::sendTextFrame(const char* buffer, const int length)
 {
     LOG_TRC(getName() << ": Send: " << getAbbreviatedMessage(buffer, length));
     try
@@ -89,14 +89,14 @@ bool LOOLSession::sendTextFrame(const char* buffer, const int length)
     }
     catch (const Exception& exc)
     {
-        LOG_ERR("LOOLSession::sendTextFrame: Exception: " << exc.displayText() <<
+        LOG_ERR("Session::sendTextFrame: Exception: " << exc.displayText() <<
                 (exc.nested() ? "( " + exc.nested()->displayText() + ")" : ""));
     }
 
     return false;
 }
 
-bool LOOLSession::sendBinaryFrame(const char *buffer, int length)
+bool Session::sendBinaryFrame(const char *buffer, int length)
 {
     LOG_TRC(getName() << ": Send: " << std::to_string(length) << " bytes.");
     try
@@ -114,14 +114,14 @@ bool LOOLSession::sendBinaryFrame(const char *buffer, int length)
     }
     catch (const Exception& exc)
     {
-        LOG_ERR("LOOLSession::sendBinaryFrame: Exception: " << exc.displayText() <<
+        LOG_ERR("Session::sendBinaryFrame: Exception: " << exc.displayText() <<
                 (exc.nested() ? "( " + exc.nested()->displayText() + ")" : ""));
     }
 
     return false;
 }
 
-void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std::string& timestamp)
+void Session::parseDocOptions(const StringTokenizer& tokens, int& part, std::string& timestamp)
 {
     // First token is the "load" command itself.
     size_t offset = 1;
@@ -178,7 +178,7 @@ void LOOLSession::parseDocOptions(const StringTokenizer& tokens, int& part, std:
     }
 }
 
-void LOOLSession::disconnect()
+void Session::disconnect()
 {
     try
     {
@@ -190,19 +190,19 @@ void LOOLSession::disconnect()
     }
     catch (const IOException& exc)
     {
-        LOG_ERR("LOOLSession::disconnect: Exception: " << exc.displayText() <<
+        LOG_ERR("Session::disconnect: Exception: " << exc.displayText() <<
                 (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
     }
 }
 
-bool LOOLSession::handleDisconnect()
+bool Session::handleDisconnect()
 {
     _disconnected = true;
     IoUtil::shutdownWebSocket(_ws);
     return false;
 }
 
-void LOOLSession::shutdown(Poco::UInt16 statusCode, const std::string& statusMessage)
+void Session::shutdown(Poco::UInt16 statusCode, const std::string& statusMessage)
 {
     if (_ws)
     {
@@ -213,13 +213,13 @@ void LOOLSession::shutdown(Poco::UInt16 statusCode, const std::string& statusMes
         }
         catch (const Poco::Exception &exc)
         {
-            LOG_WRN("LOOLSession::shutdown LOOLWebSocket: Exception: " <<
+            LOG_WRN("Session::shutdown LOOLWebSocket: Exception: " <<
                     exc.displayText() << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
         }
     }
 }
 
-bool LOOLSession::handleInput(const char *buffer, int length)
+bool Session::handleInput(const char *buffer, int length)
 {
     assert(buffer != nullptr);
 
@@ -238,14 +238,14 @@ bool LOOLSession::handleInput(const char *buffer, int length)
     }
     catch (const Exception& exc)
     {
-        LOG_ERR("LOOLSession::handleInput: Exception while handling [" <<
+        LOG_ERR("Session::handleInput: Exception while handling [" <<
                 getAbbreviatedMessage(buffer, length) <<
                 "] in " << getName() << ": " << exc.displayText() <<
                 (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("LOOLSession::handleInput: Exception while handling [" <<
+        LOG_ERR("Session::handleInput: Exception while handling [" <<
                 getAbbreviatedMessage(buffer, length) << "]: " << exc.what());
     }
 

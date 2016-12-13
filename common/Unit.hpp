@@ -38,7 +38,7 @@ namespace Poco
     }
 }
 
-class LOOLSession;
+class Session;
 class StorageBase;
 
 typedef UnitBase *(CreateUnitHooksFunction)();
@@ -90,7 +90,7 @@ public:
     virtual void returnValue(int& /* retValue */);
 
     /// Input message either for WSD or Kit
-    virtual bool filterSessionInput(LOOLSession *, const char */* buffer */,
+    virtual bool filterSessionInput(Session *, const char */* buffer */,
                                     int /* length */,
                                     std::unique_ptr< std::vector<char> > & /* replace */)
     {

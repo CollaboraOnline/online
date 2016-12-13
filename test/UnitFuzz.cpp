@@ -66,7 +66,7 @@ public:
      * Note: Fuzzers are fragile and their performance is rather
      * sensitive. Please avoid random code tweaking in this method.
      */
-    virtual bool filterSessionInput(LOOLSession *, const char *buffer,
+    virtual bool filterSessionInput(Session *, const char *buffer,
                                     int length,
                                     std::unique_ptr< std::vector<char> > &replace) override
     {

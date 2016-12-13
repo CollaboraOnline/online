@@ -18,7 +18,8 @@ class ClientSession;
 /// Represents an internal session to a Kit process, in the WSD process.
 /// This doesn't really have a direct connection to any Kit process, rather
 /// all communication to said Kit process is really handled by DocumentBroker.
-class PrisonerSession final : public LOOLSession, public std::enable_shared_from_this<PrisonerSession>
+class PrisonerSession final : public Session,
+                              public std::enable_shared_from_this<PrisonerSession>
 {
 public:
     PrisonerSession(std::shared_ptr<ClientSession> clientSession,

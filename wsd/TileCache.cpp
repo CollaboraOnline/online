@@ -436,7 +436,7 @@ void TileCache::saveLastModified(const Timestamp& timestamp)
 // FIXME: to be further simplified when we centralize tile messages.
 void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber)
 {
-    assert(subscriber->getKind() == LOOLSession::Kind::ToClient);
+    assert(subscriber->getKind() == Session::Kind::ToClient);
 
     std::ostringstream oss;
     oss << '(' << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ')';
