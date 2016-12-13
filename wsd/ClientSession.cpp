@@ -418,6 +418,14 @@ bool ClientSession::filterMessage(const std::string& message) const
                 LOG_WRN("No value of id in downloadas message");
         }
     }
+    else if (tokens[0] == "gettextselection" || tokens[0] == "paste" || tokens[0] == "insertfile")
+    {
+        if (_wopiFileInfo && _wopiFileInfo->_disableCopy)
+        {
+            allowed = false;
+            LOG_WRN("WOPI host has disabled copying to/from the document");
+        }
+    }
     else if (isReadOnly())
     {
         // By default, don't allow anything
