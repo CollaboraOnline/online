@@ -403,10 +403,43 @@ bool ClientSession::filterMessage(const std::string& message) const
 {
     bool allowed = true;
     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-    if (isReadOnly())
+
+    // Set allowed flag to false depending on if particular WOPI properties are set
+    if (tokens[0] == "downloadas")
     {
+        std::string id;
+        if (getTokenString(tokens[2], "id", id))
+        {
+            if (id == "print" && _wopiFileInfo && _wopiFileInfo->_disablePrint)
+            {
+                allowed = false;
+                LOG_WRN("WOPI host has disabled print for this session");
+            }
+            else if (id == "export" && _wopiFileInfo && _wopiFileInfo->_disableExport)
+            {
+                allowed = false;
+                LOG_WRN("WOPI host has disabled export for this session");
+            }
+        }
+        else
+        {
+                allowed = false;
+                LOG_WRN("No value of id in downloadas message");
+        }
+    }
+    else if (tokens[0] == "gettextselection" || tokens[0] == "paste" || tokens[0] == "insertfile")
+    {
+        if (_wopiFileInfo && _wopiFileInfo->_disableCopy)
+        {
+            allowed = false;
+            LOG_WRN("WOPI host has disabled copying to/from the document");
+        }
+    }
+    else if (isReadOnly())
+    {
+        // By default, don't allow anything
         allowed = false;
-        if (tokens[0] == "downloadas" || tokens[0] == "userinactive" || tokens[0] == "useractive")
+        if (tokens[0] == "userinactive" || tokens[0] == "useractive")
         {
             allowed = true;
         }

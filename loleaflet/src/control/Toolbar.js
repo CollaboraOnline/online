@@ -52,13 +52,20 @@ L.Map.include({
 			return;
 		}
 
+		id = id || 'export'; // not any special download, simple export
+
+		if ((id === 'print' && this['wopi'].DisablePrint) ||
+		    (id === 'export' && this['wopi'].DisableExport)) {
+			this.hideBusy();
+			return;
+		}
+
 		if (format === undefined || format === null) {
 			format = '';
 		}
 		if (options === undefined || options === null) {
 			options = '';
 		}
-		id = id || -1; // not a special download
 
 		this.showBusy(_('Downloading...'), false);
 		this._socket.sendMessage('downloadas ' +

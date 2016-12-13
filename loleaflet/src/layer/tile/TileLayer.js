@@ -476,7 +476,7 @@ L.TileLayer = L.GridLayer.extend({
 		else if (command.id === 'slideshow') {
 			this._map.fire('slidedownloadready', {url: url});
 		}
-		else {
+		else if (command.id === 'export') {
 			this._map._fileDownloader.src = url;
 		}
 	},

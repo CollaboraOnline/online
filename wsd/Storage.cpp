@@ -390,6 +390,9 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
     bool hidePrintOption = false;
     bool hideSaveOption = false;
     bool hideExportOption = false;
+    bool disablePrint = false;
+    bool disableExport = false;
+    bool disableCopy = false;
     std::string resMsg;
     Poco::StreamCopier::copyToString(rs, resMsg);
 
@@ -414,6 +417,9 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
         getWOPIValue(object, "HideSaveOption", hideSaveOption);
         getWOPIValue(object, "HideExportOption", hideExportOption);
         getWOPIValue(object, "EnableOwnerTermination", enableOwnerTermination);
+        getWOPIValue(object, "DisablePrint", disablePrint);
+        getWOPIValue(object, "DisableExport", disableExport);
+        getWOPIValue(object, "DisableCopy", disableCopy);
     }
     else
         Log::error("WOPI::CheckFileInfo is missing JSON payload");
@@ -424,7 +430,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
         _fileInfo = FileInfo({filename, ownerId, Poco::Timestamp(), size});
     }
 
-    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, callDuration}));
+    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, callDuration}));
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content

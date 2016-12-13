@@ -266,9 +266,18 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
             wopiInfo->set("PostMessageOrigin", wopifileinfo->_postMessageOrigin);
         }
 
+        // If print, export are disabled, order client to hide these options in the UI
+        if (wopifileinfo->_disablePrint)
+            wopifileinfo->_hidePrintOption = true;
+        if (wopifileinfo->_disableExport)
+            wopifileinfo->_hideExportOption = true;
+
         wopiInfo->set("HidePrintOption", wopifileinfo->_hidePrintOption);
         wopiInfo->set("HideSaveOption", wopifileinfo->_hideSaveOption);
         wopiInfo->set("HideExportOption", wopifileinfo->_hideExportOption);
+        wopiInfo->set("DisablePrint", wopifileinfo->_disablePrint);
+        wopiInfo->set("DisableExport", wopifileinfo->_disableExport);
+        wopiInfo->set("DisableCopy", wopifileinfo->_disableCopy);
 
         std::ostringstream ossWopiInfo;
         wopiInfo->stringify(ossWopiInfo);
