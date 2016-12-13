@@ -1502,7 +1502,7 @@ std::atomic<unsigned> LOOLWSD::NumConnections;
 std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
 
 /// Helper class to hold default configuration entries.
-class AppConfigMap : public Poco::Util::MapConfiguration
+class AppConfigMap final : public Poco::Util::MapConfiguration
 {
 public:
     AppConfigMap(const std::map<std::string, std::string>& map)
