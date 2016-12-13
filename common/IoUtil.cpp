@@ -72,6 +72,14 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             if (!ws->poll(waitTime, Poco::Net::Socket::SELECT_READ) ||
                 stopPredicate())
             {
+                // If SELECT_READ fails, it might mean the socket is in error.
+                if (ws->poll(Poco::Timespan(0), Poco::Net::Socket::SELECT_ERROR))
+                {
+                    LOG_WRN("SocketProcessor [" << name << "]: Socket error.");
+                    closeFrame();
+                    break;
+                }
+
                 // Wait some more.
                 continue;
             }
@@ -79,7 +87,7 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             try
             {
                 payload.resize(payload.capacity());
-                n = -1; // In case receiveFrame throws we log dropped data.
+                n = -1; // In case receiveFrame throws we log dropped data below.
                 (void)n;
                 n = ws->receiveFrame(payload.data(), payload.size(), flags);
                 payload.resize(std::max(n, 0));
@@ -90,16 +98,16 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
                 continue;
             }
 
-            if (n == -1)
-            {
-                LOG_DBG("SocketProcessor [" << name << "]: was not an interesting frame, nothing to do here");
-                continue;
-            }
-            else if (n == 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
+            if (n == 0 || ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE))
             {
                 LOG_WRN("SocketProcessor [" << name << "]: Connection closed.");
                 closeFrame();
                 break;
+            }
+            else if (n < 0)
+            {
+                LOG_DBG("SocketProcessor [" << name << "]: was not an interesting frame, nothing to do here");
+                continue;
             }
 
             assert(n > 0);
@@ -109,16 +117,21 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             {
                 // One WS message split into multiple frames.
                 // TODO: Is this even possible with Poco if we never construct such messages outselves?
-                LOG_WRN("SocketProcessor [" << name << "]: Receiving multi-parm frame.");
+                LOG_WRN("SocketProcessor [" << name << "]: Receiving multi-part frame.");
                 while (true)
                 {
                     char buffer[READ_BUFFER_SIZE];
                     n = ws->receiveFrame(buffer, sizeof(buffer), flags);
-                    if (n <= 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
+                    if (n == 0 || (flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
                     {
                         LOG_WRN("SocketProcessor [" << name << "]: Connection closed while reading multiframe message.");
                         closeFrame();
                         break;
+                    }
+                    else if (n < 0)
+                    {
+                        LOG_DBG("SocketProcessor [" << name << "]: was not an interesting frame, nothing to do here");
+                        continue;
                     }
 
                     payload.insert(payload.end(), buffer, buffer + n);
