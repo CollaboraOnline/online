@@ -97,11 +97,15 @@ public:
         while (poll(waitTime, Poco::Net::Socket::SELECT_READ))
         {
             const int n = Poco::Net::WebSocket::receiveFrame(buffer, length, flags);
-
             LOG_TRC("Got frame: " << LOOLProtocol::getAbbreviatedFrameDump(buffer, n, flags));
 
-            if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING &&
-                (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+            if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
+            {
+                // Nothing to do.
+                return n;
+            }
+
+            if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
             {
                 // Echo back the ping message.
                 if (poll(waitZero, Socket::SelectMode::SELECT_ERROR) ||
@@ -112,8 +116,7 @@ public:
                     return -1;
                 }
             }
-            else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG &&
-                     (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
+            else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
             {
                 // In case we do send pings in the future.
             }
