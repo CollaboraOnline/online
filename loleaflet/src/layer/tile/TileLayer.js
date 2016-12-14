@@ -465,7 +465,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		this._map.hideBusy();
 		if (command.id === 'print') {
-			if (L.Browser.gecko || this._map.options.print === false) {
+			if (L.Browser.gecko || L.Browser.edge || this._map.options.print === false) {
 				// the print dialog doesn't work well on firefox
 				this._map.fire('print', {url: url});
 			}
