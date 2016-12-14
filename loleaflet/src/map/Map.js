@@ -766,7 +766,7 @@ L.Map = L.Evented.extend({
 
 	_dim: function() {
 		// console.log('_dim:');
-		if (window.devtools.open || !map._socket.connected()) {
+		if (!map._socket.connected()) {
 			return;
 		}
 
@@ -837,7 +837,7 @@ L.Map = L.Evented.extend({
 		// console.log('_deactivate:');
 		clearTimeout(vex.timer);
 
-		if (!window.devtools.open && (!this._active || vex.dialogID > 0)) {
+		if (!this._active || vex.dialogID > 0) {
 			// A dialog is already dimming the screen and probably
 			// shows an error message. Leave it alone.
 			this._active = false;
