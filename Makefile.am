@@ -53,7 +53,6 @@ loolwsd_SOURCES = wsd/Admin.cpp \
                   wsd/ClientSession.cpp \
                   wsd/FileServer.cpp \
                   wsd/PrisonerSession.cpp \
-                  wsd/SenderQueue.cpp \
                   wsd/Storage.cpp \
                   wsd/TileCache.cpp \
                   $(shared_sources)

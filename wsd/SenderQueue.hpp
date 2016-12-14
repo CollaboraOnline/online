@@ -10,12 +10,14 @@
 #ifndef INCLUDED_SENDERQUEUE_HPP
 #define INCLUDED_SENDERQUEUE_HPP
 
+#include <condition_variable>
 #include <deque>
 #include <memory>
+#include <mutex>
 #include <vector>
 
 #include "common/SigUtil.hpp"
-#include "Session.hpp"
+#include "LOOLWebSocket.hpp"
 #include "Log.hpp"
 
 /// The payload type used to send/receive data.
@@ -43,32 +45,38 @@ private:
 
 struct SendItem
 {
-    std::weak_ptr<::Session> Session;
+    std::weak_ptr<LOOLWebSocket> Socket;
     std::shared_ptr<MessagePayload> Data;
+    std::string Meta;
     std::chrono::steady_clock::time_point BirthTime;
 };
 
-/// A queue of data to send to certain Sessions.
+/// A queue of data to send to certain Session's WS.
+template <typename Item>
 class SenderQueue final
 {
 public:
 
-    static SenderQueue& instance() { return TheQueue; }
+    SenderQueue() :
+        _stop(false)
+    {
+    }
 
     bool stopping() const { return _stop || TerminationFlag; }
     void stop()
     {
-         _stop = true;
-         _cv.notify_all();
+        _stop = true;
+        _cv.notify_all();
     }
 
-    size_t enqueue(const std::weak_ptr<Session>& session,
-                   const std::shared_ptr<MessagePayload>& data)
+    size_t enqueue(const Item& item)
     {
-        SendItem item = { session, data, std::chrono::steady_clock::now() };
-
         std::unique_lock<std::mutex> lock(_mutex);
-        _queue.push_back(item);
+        if (!stopping())
+        {
+            _queue.push_back(item);
+        }
+
         const size_t queuesize = _queue.size();
         lock.unlock();
 
@@ -76,7 +84,7 @@ public:
         return queuesize;
     }
 
-    bool waitDequeue(SendItem& item,
+    bool waitDequeue(Item& item,
                      const size_t timeoutMs = std::numeric_limits<size_t>::max())
     {
         const auto timeToWait = std::chrono::milliseconds(timeoutMs);
@@ -93,7 +101,7 @@ public:
                 return true;
             }
 
-            LOG_INF("SenderQueue: stopping");
+            LOG_DBG("SenderQueue: stopping");
             return false;
         }
 
@@ -109,16 +117,13 @@ public:
 private:
     mutable std::mutex _mutex;
     std::condition_variable _cv;
-    std::deque<SendItem> _queue;
+    std::deque<Item> _queue;
     std::atomic<bool> _stop;
-
-    /// The only SenderQueue instance.
-    static SenderQueue TheQueue;
 };
 
 /// Pool of sender threads.
 /// These are dedicated threads that only dequeue from
-/// the SenderQueue and send to the target Session.
+/// the SenderQueue and send to the target Session's WS.
 /// This pool has long-running threads that grow
 /// only on congention and shrink otherwise.
 class SenderThreadPool final
@@ -141,7 +146,7 @@ public:
     {
         // Stop us and the queue.
         stop();
-        SenderQueue::instance().stop();
+        //SenderQueue::instance().stop();
 
         for (const auto& threadData : _threads)
         {
@@ -151,8 +156,6 @@ public:
             }
         }
     }
-
-    static SenderThreadPool& instance() { return ThePool; }
 
     void stop() { _stop = true; }
     bool stopping() const { return _stop || TerminationFlag; }
@@ -218,9 +221,6 @@ private:
 
     /// How often to do housekeeping when we idle.
     static constexpr size_t HousekeepIdleIntervalMs = 60000;
-
-    /// The only pool.
-    static SenderThreadPool ThePool;
 };
 
 #endif

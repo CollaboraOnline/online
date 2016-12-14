@@ -37,7 +37,6 @@ wsd_sources = \
             ../common/Session.cpp \
             ../common/MessageQueue.cpp \
             ../kit/Kit.cpp \
-            ../wsd/SenderQueue.cpp \
             ../wsd/TileCache.cpp \
             ../common/Unit.cpp \
             ../common/Util.cpp

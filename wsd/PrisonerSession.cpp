@@ -286,7 +286,7 @@ bool PrisonerSession::forwardToPeer(const std::shared_ptr<ClientSession>& client
                                                                    : MessagePayload::Type::Text);
     auto& output = payload->data();
     std::memcpy(output.data(), buffer, length);
-    SenderQueue::instance().enqueue(clientSession, payload);
+    clientSession->enqueueSendMessage(payload);
 
     return true;
 }
