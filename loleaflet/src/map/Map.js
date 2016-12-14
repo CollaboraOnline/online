@@ -20,6 +20,8 @@ L.Map = L.Evented.extend({
 		urlPrefix: 'lool'
 	},
 
+	lastActiveTime: Date.now(),
+
 	initialize: function (id, options) { // (HTMLElement or String, Object)
 		options = L.setOptions(this, options);
 
@@ -737,17 +739,20 @@ L.Map = L.Evented.extend({
 	},
 
 	_activate: function () {
+		// console.log('_activate:');
 		clearTimeout(vex.timer);
 
 		if (!this._active) {
 			// Only activate when we are connected.
 			if (this._socket.connected()) {
+				// console.log('  sending useractive');
 				this._socket.sendMessage('useractive');
 				this._active = true;
 				this._docLayer._onMessage('invalidatetiles: EMPTY', null);
 				if (vex.dialogID > 0) {
 					var id = vex.dialogID;
 					vex.dialogID = -1;
+					this._startInactiveTimer();
 					return vex.close(id);
 				}
 			} else {
@@ -755,10 +760,81 @@ L.Map = L.Evented.extend({
 			}
 		}
 
+		this._startInactiveTimer();
 		return false;
 	},
 
+	_dim: function() {
+		// console.log('_dim:');
+		if (window.devtools.open || !map._socket.connected()) {
+			return;
+		}
+
+		// console.log('  cont');
+		map._active = false;
+		clearTimeout(vex.timer);
+
+		var options = $.extend({}, vex.defaultOptions, {
+			contentCSS: {'background':'rgba(0, 0, 0, 0)',
+				     'font-size': 'xx-large',
+				     'color': '#fff',
+				     'text-align': 'center'},
+			content: _('Inactive document - please click to resume editing')
+		});
+		options.id = vex.globalID;
+		vex.dialogID = options.id;
+		vex.globalID += 1;
+		options.$vex = $('<div>').addClass(vex.baseClassNames.vex).addClass(options.className).css(options.css).data({
+			vex: options
+		});
+		options.$vexOverlay = $('<div>').addClass(vex.baseClassNames.overlay).addClass(options.overlayClassName).css(options.overlayCSS).data({
+			vex: options
+		});
+
+		options.$vexOverlay.bind('click.vex', function(e) {
+			// console.log('click.vex function');
+			if (e.target !== this) {
+				// console.log('  early return');
+				return 0;
+			}
+			// console.log('  calling _activate');
+			return map._activate();
+		});
+		options.$vex.append(options.$vexOverlay);
+
+		options.$vexContent = $('<div>').addClass(vex.baseClassNames.content).addClass(options.contentClassName).css(options.contentCSS).text(options.content).data({
+			vex: options
+		});
+		options.$vex.append(options.$vexContent);
+
+		$(options.appendLocation).append(options.$vex);
+		vex.setupBodyClassName(options.$vex);
+
+		map._doclayer && map._docLayer._onMessage('textselection:', null);
+		// console.log('  sending userinactive');
+		map._socket.sendMessage('userinactive');
+	},
+
+	_dimIfInactive: function () {
+		// console.log('_dimIfInactive: diff=' + (Date.now() - map.lastActiveTime));
+		if ((Date.now() - map.lastActiveTime) >= 10 * 60 * 1000) { // Dim 10 minutes after last user activity
+			map._dim();
+		} else {
+			map._startInactiveTimer();
+		}
+	},
+
+	_startInactiveTimer: function () {
+		// console.log('_startInactiveTimer:');
+		clearTimeout(vex.timer);
+		var map = this;
+		vex.timer = setTimeout(function() {
+			map._dimIfInactive();
+		}, 1 * 60 * 1000); // Check once a minute
+	},
+
 	_deactivate: function () {
+		// console.log('_deactivate:');
 		clearTimeout(vex.timer);
 
 		if (!window.devtools.open && (!this._active || vex.dialogID > 0)) {
@@ -767,6 +843,7 @@ L.Map = L.Evented.extend({
 			this._active = false;
 			this._docLayer && this._docLayer._onMessage('textselection:', null);
 			if (this._socket.connected()) {
+				// console.log('  sending userinactive');
 				this._socket.sendMessage('userinactive');
 			}
 
@@ -775,46 +852,7 @@ L.Map = L.Evented.extend({
 
 		var map = this;
 		vex.timer = setTimeout(function() {
-			if (window.devtools.open || !map._socket.connected()) {
-				return;
-			}
-
-			map._active = false;
-			clearTimeout(vex.timer);
-
-			var options = $.extend({}, vex.defaultOptions, {
-				contentCSS: {'background':'rgba(0, 0, 0, 0)',
-				             'font-size': 'xx-large',
-				             'color': '#fff',
-				             'text-align': 'center'},
-				content: _('Inactive document - please click to resume editing')
-			});
-			options.id = vex.globalID;
-			vex.dialogID = options.id;
-			vex.globalID += 1;
-			options.$vex = $('<div>').addClass(vex.baseClassNames.vex).addClass(options.className).css(options.css).data({
-				vex: options
-			});
-			options.$vexOverlay = $('<div>').addClass(vex.baseClassNames.overlay).addClass(options.overlayClassName).css(options.overlayCSS).data({
-				vex: options
-			});
-
-			options.$vex.bind('click.vex', function(e) {
-				return map._activate();
-			});
-			options.$vex.append(options.$vexOverlay);
-
-			options.$vexContent = $('<div>').addClass(vex.baseClassNames.content).addClass(options.contentClassName).css(options.contentCSS).text(options.content).data({
-				vex: options
-			});
-			options.$vex.append(options.$vexContent);
-
-			$(options.appendLocation).append(options.$vex);
-			vex.setupBodyClassName(options.$vex);
-
-			map._doclayer && map._docLayer._onMessage('textselection:', null);
-			map._socket.sendMessage('userinactive');
-
+			map._dim();
 		}, 30 * 1000); // Dim in 30 seconds.
 	},
 
@@ -839,8 +877,10 @@ L.Map = L.Evented.extend({
 	},
 
 	_onGotFocus: function () {
+		// console.log('_onGotFocus:');
 		if (!this._loaded) { return; }
 
+		// console.log('  cont');
 		var doclayer = this._docLayer;
 		if (doclayer &&
 		    typeof doclayer._isCursorOverlayVisibleOnLostFocus !== 'undefined' &&
@@ -890,6 +930,8 @@ L.Map = L.Evented.extend({
 
 	_handleDOMEvent: function (e) {
 		if (!this._loaded || !this._enabled || L.DomEvent._skipped(e)) { return; }
+
+		this.lastActiveTime = Date.now();
 
 		// find the layer the event is propagating from
 		var target = this._targets[L.stamp(e.target || e.srcElement)],
