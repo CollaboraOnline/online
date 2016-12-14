@@ -23,6 +23,7 @@
 #include "Log.hpp"
 #include "ClientSession.hpp"
 #include "Rectangle.hpp"
+#include "SenderQueue.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "IoUtil.hpp"

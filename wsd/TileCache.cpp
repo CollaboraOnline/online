@@ -34,6 +34,7 @@
 #include "Common.hpp"
 #include "common/FileUtil.hpp"
 #include "Protocol.hpp"
+#include "SenderQueue.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
 
@@ -155,8 +156,8 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     const auto cachedName = (tileBeingRendered ? tileBeingRendered->getCacheName()
                                                : cacheFileName(tile));
 
-    // Ignore if we can't save the tile, things will work anyway, but slower. An error indication
-    // has been supposed to be sent to all users in that case.
+    // Ignore if we can't save the tile, things will work anyway, but slower.
+    // An error indication is supposed to be sent to all users in that case.
     const auto fileName = _cacheDir + "/" + cachedName;
     if (FileUtil::saveDataToFileSafely(fileName, data, size))
     {
@@ -166,50 +167,50 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     // Notify subscribers, if any.
     if (tileBeingRendered)
     {
-        if (!tileBeingRendered->_subscribers.empty())
+        const auto subscriberCount = tileBeingRendered->_subscribers.size();
+        if (subscriberCount > 0)
         {
             std::string response = tile.serialize("tile:");
-            Log::debug("Sending tile message to subscribers: " + response);
+            LOG_DBG("Sending tile message to " << subscriberCount << " subscribers: " + response);
 
-            std::vector<char> output(256 + size);
-            output.resize(response.size() + 1 + size);
-
-            std::memcpy(output.data(), response.data(), response.size());
-            output[response.size()] = '\n';
-            std::memcpy(output.data() + response.size() + 1, data, size);
-
-            // Send to first subscriber as-is (without cache marker).
-            auto firstSubscriber = tileBeingRendered->_subscribers[0].lock();
-            if (firstSubscriber)
+            std::shared_ptr<MessagePayload> payload = std::make_shared<MessagePayload>(response.size() + 1 + size,
+                                                                                       MessagePayload::Type::Binary);
             {
-                try
-                {
-                    firstSubscriber->sendBinaryFrame(output.data(), output.size());
-                }
-                catch (const std::exception& ex)
-                {
-                    Log::warn("Failed to send tile to " + firstSubscriber->getName() + ": " + ex.what());
-                }
+                auto& output = payload->data();
+
+                // Send to first subscriber as-is (without cache marker).
+                std::memcpy(output.data(), response.data(), response.size());
+                output[response.size()] = '\n';
+                std::memcpy(output.data() + response.size() + 1, data, size);
             }
 
-            // All others must get served from the cache.
-            response += " renderid=cached\n";
-            output.resize(response.size() + size);
-            std::memcpy(output.data(), response.data(), response.size());
-            std::memcpy(output.data() + response.size(), data, size);
-
-            for (size_t i = 1; i < tileBeingRendered->_subscribers.size(); ++i)
+            auto& firstSubscriber = tileBeingRendered->_subscribers[0];
+            auto firstSession = firstSubscriber.lock();
+            if (firstSession)
             {
-                auto subscriber = tileBeingRendered->_subscribers[i].lock();
-                if (subscriber)
+                firstSession->enqueueSendMessage(payload);
+            }
+
+            if (subscriberCount > 1)
+            {
+                // All others must get served from the cache.
+                response += " renderid=cached\n";
+
+                // Create a new Payload.
+                payload.reset();
+                payload = std::make_shared<MessagePayload>(response.size() + size, MessagePayload::Type::Binary);
+                auto& output = payload->data();
+
+                std::memcpy(output.data(), response.data(), response.size());
+                std::memcpy(output.data() + response.size(), data, size);
+
+                for (size_t i = 1; i < subscriberCount; ++i)
                 {
-                    try
+                    auto& subscriber = tileBeingRendered->_subscribers[i];
+                    auto session = subscriber.lock();
+                    if (session)
                     {
-                        subscriber->sendBinaryFrame(output.data(), output.size());
-                    }
-                    catch (const std::exception& ex)
-                    {
-                        Log::warn("Failed to send tile to " + subscriber->getName() + ": " + ex.what());
+                        session->enqueueSendMessage(payload);
                     }
                 }
             }
@@ -443,7 +444,7 @@ void TileCache::saveLastModified(const Timestamp& timestamp)
 }
 
 // FIXME: to be further simplified when we centralize tile messages.
-void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession> &subscriber)
+void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession>& subscriber)
 {
     assert(subscriber->getKind() == LOOLSession::Kind::ToClient);
 

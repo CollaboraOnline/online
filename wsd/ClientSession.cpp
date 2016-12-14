@@ -44,9 +44,12 @@ ClientSession::ClientSession(const std::string& id,
     _uriPublic(uriPublic),
     _isReadOnly(readOnly),
     _isDocumentOwner(false),
-    _loadPart(-1)
+    _loadPart(-1),
+    _stop(false)
 {
     Log::info("ClientSession ctor [" + getName() + "].");
+
+    _senderThread = std::thread([this]{ senderThread(); });
 }
 
 ClientSession::~ClientSession()
@@ -55,6 +58,13 @@ ClientSession::~ClientSession()
 
     // Release the save-as queue.
     _saveAsQueue.put("");
+
+    stop();
+    if (_senderThread.joinable())
+    {
+        _senderThread.join();
+    }
+
 }
 
 void ClientSession::bridgePrisonerSession()
@@ -416,6 +426,38 @@ void ClientSession::setReadOnly()
     _isReadOnly = true;
     // Also inform the client
     sendTextFrame("perm: readonly");
+}
+
+void ClientSession::senderThread()
+{
+    LOG_DBG(getName() + " SenderThread started");
+
+    while (!stopping())
+    {
+        std::shared_ptr<MessagePayload> item;
+        if (_senderQueue.waitDequeue(item, static_cast<size_t>(COMMAND_TIMEOUT_MS)))
+        {
+            const std::vector<char>& data = item->data();
+            try
+            {
+                if (item->isBinary())
+                {
+                    LOOLSession::sendBinaryFrame(data.data(), data.size());
+                }
+                else
+                {
+                    LOOLSession::sendTextFrame(data.data(), data.size());
+                }
+            }
+            catch (const std::exception& ex)
+            {
+                LOG_ERR("Failed to send message [" << LOOLProtocol::getAbbreviatedMessage(data) <<
+                        "] to " << getName() << ": " << ex.what());
+            }
+        }
+    }
+
+    LOG_DBG(getName() + " SenderThread finished");
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -28,6 +28,7 @@
 #include "PrisonerSession.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
+#include "SenderQueue.hpp"
 #include "Unit.hpp"
 
 using namespace LOOLProtocol;
@@ -243,7 +244,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
 
     assert(_storage != nullptr);
 
-    // Call the storage specific file info functions
+    // Call the storage specific fileinfo functions
     std::string userid, username;
     std::chrono::duration<double> getInfoCallDuration(0);
     if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
@@ -616,17 +617,14 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 {
     Util::assertIsLocked(_mutex);
 
+    auto payload = std::make_shared<MessagePayload>(msg.size(), MessagePayload::Type::Text);
+    auto& output = payload->data();
+    std::memcpy(output.data(), msg.data(), msg.size());
+
     LOG_DBG("Alerting all users of [" << _docKey << "]: " << msg);
     for (auto& it : _sessions)
     {
-        try
-        {
-            it.second->sendTextFrame(msg);
-        }
-        catch (const std::exception& ex)
-        {
-            LOG_ERR("Error while alerting all users [" << msg << "]: " << ex.what());
-        }
+        it.second->enqueueSendMessage(payload);
     }
 }
 
@@ -808,7 +806,7 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
 void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 {
     const std::string firstLine = getFirstLine(payload);
-    LOG_DBG("Handling tile combined: " << firstLine);
+    LOG_DBG("Handling tile: " << firstLine);
 
     try
     {
@@ -959,7 +957,7 @@ bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vecto
     }
     else
     {
-        LOG_ERR("Failed to parse prefix of forward-to-client message: " << prefix);
+        LOG_ERR("Unexpected prefix of forward-to-client message: " << prefix);
     }
 
     return false;

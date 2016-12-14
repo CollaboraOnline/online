@@ -12,6 +12,7 @@
 
 #include "Session.hpp"
 #include "MessageQueue.hpp"
+#include "SenderQueue.hpp"
 
 #include <Poco/URI.h>
 
@@ -42,6 +43,38 @@ public:
     void setUserName(const std::string& userName) { _userName = userName; }
     void setDocumentOwner(const bool documentOwner) { _isDocumentOwner = documentOwner; }
     bool isDocumentOwner() const { return _isDocumentOwner; }
+
+    using LOOLSession::sendTextFrame;
+
+    bool sendBinaryFrame(const char* buffer, int length) override
+    {
+        auto payload = std::make_shared<MessagePayload>(length, MessagePayload::Type::Binary);
+        auto& output = payload->data();
+        std::memcpy(output.data(), buffer, length);
+        enqueueSendMessage(payload);
+        return true;
+    }
+
+    bool sendTextFrame(const char* buffer, const int length) override
+    {
+        auto payload = std::make_shared<MessagePayload>(length, MessagePayload::Type::Text);
+        auto& output = payload->data();
+        std::memcpy(output.data(), buffer, length);
+        enqueueSendMessage(payload);
+        return true;
+    }
+
+    void enqueueSendMessage(const std::shared_ptr<MessagePayload>& data)
+    {
+        _senderQueue.enqueue(data);
+    }
+
+    bool stopping() const { return _stop || _senderQueue.stopping(); }
+    void stop()
+    {
+        _stop = true;
+        _senderQueue.stop();
+    }
 
     /**
      * Return the URL of the saved-as document when it's ready. If called
@@ -91,6 +124,8 @@ private:
     /// Eg. in readonly mode only few messages should be allowed
     bool filterMessage(const std::string& msg) const;
 
+    void senderThread();
+
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 
@@ -110,6 +145,10 @@ private:
     MessageQueue _saveAsQueue;
 
     int _loadPart;
+
+    SenderQueue<std::shared_ptr<MessagePayload>> _senderQueue;
+    std::thread _senderThread;
+    std::atomic<bool> _stop;
 };
 
 #endif
