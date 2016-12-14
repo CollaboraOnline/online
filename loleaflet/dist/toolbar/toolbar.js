@@ -414,6 +414,25 @@ $(function () {
 				$('#backColorPicker').on('change.color', onColorPick);
 			}
 
+			if (map.getDocType() === 'presentation') {
+				// Fill the style select box if not yet filled
+				if ($('.styles-select')[0] && $('.styles-select')[0].length === 0) {
+					var data = [''];
+					// Inserts a separator element
+					data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
+
+					L.Styles.impressLayout.forEach(function(layout) {
+						data = data.concat({id: layout.id, text: _(layout.text)});
+					}, this);
+
+					$('.styles-select').select2({
+						data: data,
+						placeholder: _('Layout')
+					});
+					$('.styles-select').on('select2:select', onStyleSelect);
+				}
+			}
+
 			insertTable();
 		}
 	});
@@ -1306,26 +1325,6 @@ map.on('updatepermission', function (e) {
 			toolbar.disable(id);
 		});
 		$('#search-input').prop('disabled', true);
-	}
-});
-
-map.on('statusindicator', function (e) {
-	if (e.statusType === 'loleafletloaded') {
-		var data = [''];
-		if (map.getDocType() === 'presentation') {
-			// Inserts a separator element
-			data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
-
-			L.Styles.impressLayout.forEach(function(layout) {
-				data = data.concat({id: layout.id, text: _(layout.text)});
-			}, this);
-
-			$('.styles-select').select2({
-				data: data,
-				placeholder: _('Layout')
-			});
-			$('.styles-select').on('select2:select', onStyleSelect);
-		}
 	}
 });
 
