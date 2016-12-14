@@ -50,10 +50,10 @@ L.Map.Print = L.Handler.extend({
 		this._printIframe.contentWindow.focus(); // Required for IE
 		this._printIframe.contentWindow.print();
 		// couldn't find another way to remove it
-		setTimeout(L.bind(this._closePrintDialog, this), 1000);
+		setTimeout(L.bind(this._closePrintIframe, this), 300 * 1000);
 	},
 
-	_closePrintDialog: function () {
+	_closePrintIframe: function () {
 		L.DomUtil.remove(this._printIframe);
 		this._map.focus();
 	}
