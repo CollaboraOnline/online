@@ -1392,7 +1392,6 @@ $(window).resize(function() {
 });
 
 $(document).ready(function() {
-	resizeToolbar();
 	var toolbar = w2ui['toolbar-up'];
 	if (closebutton) {
 		toolbar.show('close');
