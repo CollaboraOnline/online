@@ -43,5 +43,9 @@ DisableExport
 DisableCopy
 	Disables copy/paste from/to the document in libreoffice online backend
 
+EnableOwnerTermination
+	If set to true, it allows the document owner (the one with OwnerId =
+	UserId) to send a 'closedocument' message (see protocol.txt)
+
 Note that it is possible to just hide print,save,export options while still
 being able to access them from WOPI hosts using PostMessage API (see loleaflet/reference.html)
