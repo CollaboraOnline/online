@@ -428,7 +428,7 @@ $(function () {
 			}
 
 			// Fill the style select box if not yet filled
-			if ($('.styles-select')[0].length === 0) {
+			if ($('.styles-select')[0] && $('.styles-select')[0].length === 0) {
 				var data = [''];
 				// Inserts a separator element
 				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
