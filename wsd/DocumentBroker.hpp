@@ -301,6 +301,8 @@ public:
 
     void updateLastActivityTime();
 
+    std::time_t getIdleTime() const { return std::time(nullptr) - _lastActivity; }
+
 private:
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const bool dontSaveIfUnmodified);
@@ -342,6 +344,8 @@ private:
     std::atomic<size_t> _tileVersion;
 
     int _debugRenderedTileCount;
+
+    std::time_t _lastActivity;
 
     static constexpr auto IdleSaveDurationMs = 30 * 1000;
     static constexpr auto AutoSaveDurationMs = 300 * 1000;

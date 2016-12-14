@@ -11,6 +11,7 @@
 #include "config.h"
 
 #include <cassert>
+#include <ctime>
 #include <fstream>
 #include <sstream>
 
@@ -1038,6 +1039,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
 
 void DocumentBroker::updateLastActivityTime()
 {
+    _lastActivity = std::time(nullptr);
     Admin::instance().updateLastActivityTime(_docKey);
 }
 
