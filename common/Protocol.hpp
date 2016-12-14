@@ -150,7 +150,8 @@ namespace LOOLProtocol
 
         return (token.find("tile") == std::string::npos &&
                 token.find("status") == std::string::npos &&
-                token.find("state") == std::string::npos);
+                token.find("state") == std::string::npos &&
+                token != "userinactive");
     }
 
     /// Returns the first line of a message.
