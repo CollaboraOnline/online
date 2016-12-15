@@ -427,21 +427,23 @@ $(function () {
 				$('#backColorPicker').on('change.color', onColorPick);
 			}
 
-			// Fill the style select box if not yet filled
-			if ($('.styles-select')[0] && $('.styles-select')[0].length === 0) {
-				var data = [''];
-				// Inserts a separator element
-				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
+			if (map.getDocType() === 'presentation') {
+				// Fill the style select box if not yet filled
+				if ($('.styles-select')[0] && $('.styles-select')[0].length === 0) {
+					var data = [''];
+					// Inserts a separator element
+					data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
 
-				L.Styles.impressLayout.forEach(function(layout) {
-					data = data.concat({id: layout.id, text: _(layout.text)});
-				}, this);
+					L.Styles.impressLayout.forEach(function(layout) {
+						data = data.concat({id: layout.id, text: _(layout.text)});
+					}, this);
 
-				$('.styles-select').select2({
-					data: data,
-					placeholder: _('Layout')
-				});
-				$('.styles-select').on('select2:select', onStyleSelect);
+					$('.styles-select').select2({
+						data: data,
+						placeholder: _('Layout')
+					});
+					$('.styles-select').on('select2:select', onStyleSelect);
+				}
 			}
 
 			insertTable();
