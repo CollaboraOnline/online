@@ -108,9 +108,7 @@ public:
             if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
             {
                 // Echo back the ping message.
-                if (poll(waitZero, Socket::SelectMode::SELECT_ERROR) ||
-                    !poll(waitZero, Socket::SelectMode::SELECT_WRITE) ||
-                    Poco::Net::WebSocket::sendFrame(buffer, n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG) != n)
+                if (Poco::Net::WebSocket::sendFrame(buffer, n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG) != n)
                 {
                     LOG_WRN("Sending Pong failed.");
                     return -1;
@@ -145,9 +143,7 @@ public:
             const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
             const int size = nextmessage.size();
 
-            if (!poll(waitZero, Socket::SelectMode::SELECT_ERROR) &&
-                poll(waitZero, Socket::SelectMode::SELECT_WRITE) &&
-                Poco::Net::WebSocket::sendFrame(nextmessage.data(), size) == size)
+            if (Poco::Net::WebSocket::sendFrame(nextmessage.data(), size) == size)
             {
                 LOG_TRC("Sent long message preample: " + nextmessage);
             }
@@ -158,12 +154,7 @@ public:
             }
         }
 
-        int result = -1;
-        if (!poll(waitZero, Socket::SelectMode::SELECT_ERROR) &&
-            poll(waitZero, Socket::SelectMode::SELECT_WRITE))
-        {
-            result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
-        }
+        int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
 
         lock.unlock();
 
