@@ -28,7 +28,6 @@ vex.dialog = require('vex-js/js/vex.dialog.js');
 vex.defaultOptions.className = 'vex-theme-plain';
 global.vex = vex;
 
-global.devtools = require('devtools-detect');
 var errorMessages = require('./dist/errormessages');
 
 function getParameterByName(name) {
