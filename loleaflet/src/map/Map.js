@@ -740,13 +740,13 @@ L.Map = L.Evented.extend({
 	},
 
 	_activate: function () {
-		// console.log('_activate:');
+		console.debug('_activate:');
 		clearTimeout(vex.timer);
 
 		if (!this._active) {
 			// Only activate when we are connected.
 			if (this._socket.connected()) {
-				// console.log('  sending useractive');
+				console.debug('sending useractive');
 				this._socket.sendMessage('useractive');
 				this._active = true;
 				this._docLayer._onMessage('invalidatetiles: EMPTY', null);
@@ -766,12 +766,11 @@ L.Map = L.Evented.extend({
 	},
 
 	_dim: function() {
-		// console.log('_dim:');
+		console.debug('_dim:');
 		if (!this._socket.connected()) {
 			return;
 		}
 
-		// console.log('  cont');
 		this._active = false;
 		clearTimeout(vex.timer);
 
@@ -794,7 +793,7 @@ L.Map = L.Evented.extend({
 
 		var map = this;
 		options.$vex.bind('click.vex', function(e) {
-			// console.log('click.vex function');
+			console.debug('_dim: click.vex function');
 			return map._activate();
 		});
 		options.$vex.append(options.$vexOverlay);
@@ -808,12 +807,12 @@ L.Map = L.Evented.extend({
 		vex.setupBodyClassName(options.$vex);
 
 		this._doclayer && this._docLayer._onMessage('textselection:', null);
-		// console.log('  sending userinactive');
+		console.debug('_dim: sending userinactive');
 		this._socket.sendMessage('userinactive');
 	},
 
 	_dimIfInactive: function () {
-		// console.log('_dimIfInactive: diff=' + (Date.now() - map.lastActiveTime));
+		console.debug('_dimIfInactive: diff=' + (Date.now() - this.lastActiveTime));
 		if ((Date.now() - this.lastActiveTime) >= 1 * 60 * 1000) { // Dim 10 minutes after last user activity
 			this._dim();
 		} else {
@@ -822,7 +821,7 @@ L.Map = L.Evented.extend({
 	},
 
 	_startInactiveTimer: function () {
-		// console.log('_startInactiveTimer:');
+		console.debug('_startInactiveTimer:');
 		clearTimeout(vex.timer);
 		var map = this;
 		vex.timer = setTimeout(function() {
@@ -831,7 +830,7 @@ L.Map = L.Evented.extend({
 	},
 
 	_deactivate: function () {
-		// console.log('_deactivate:');
+		console.debug('_deactivate:');
 		clearTimeout(vex.timer);
 
 		if (!this._active || vex.dialogID > 0) {
@@ -840,7 +839,7 @@ L.Map = L.Evented.extend({
 			this._active = false;
 			this._docLayer && this._docLayer._onMessage('textselection:', null);
 			if (this._socket.connected()) {
-				// console.log('  sending userinactive');
+				console.debug('_deactivate: sending userinactive');
 				this._socket.sendMessage('userinactive');
 			}
 
@@ -873,10 +872,9 @@ L.Map = L.Evented.extend({
 	},
 
 	_onGotFocus: function () {
-		// console.log('_onGotFocus:');
+		console.debug('_onGotFocus:');
 		if (!this._loaded) { return; }
 
-		// console.log('  cont');
 		var doclayer = this._docLayer;
 		if (doclayer) {
 			// we restore the old cursor position by a small delay, so that if the user clicks
