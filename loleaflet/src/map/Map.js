@@ -792,13 +792,8 @@ L.Map = L.Evented.extend({
 			vex: options
 		});
 
-		options.$vexOverlay.bind('click.vex', function(e) {
+		options.$vex.bind('click.vex', function(e) {
 			// console.log('click.vex function');
-			if (e.target !== this) {
-				// console.log('  early return');
-				return 0;
-			}
-			// console.log('  calling _activate');
 			return map._activate();
 		});
 		options.$vex.append(options.$vexOverlay);
