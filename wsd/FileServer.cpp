@@ -261,6 +261,10 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
 
+    const auto& config = Application::instance().config();
+    const auto loleafletLogging = config.getString("loleaflet_logging", "false");
+    Poco::replaceInPlace(preprocess, std::string("%LOLEAFLET_LOGGING%"), loleafletLogging);
+
     response.setContentType("text/html");
     response.setContentLength(preprocess.length());
     response.setChunkedTransferEncoding(false);

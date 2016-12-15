@@ -33,6 +33,8 @@
         </file>
     </logging>
 
+    <loleaflet_logging desc="Logging in the browser console" default="@LOLEAFLET_LOGGING@">@LOLEAFLET_LOGGING@</loleaflet_logging>
+
     <trace desc="Dump commands and notifications for replay" enable="true">
         <path desc="Output file path" compress="true">/tmp/looltrace.gz</path>
         <filter>

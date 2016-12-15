@@ -1557,6 +1557,7 @@ void LOOLWSD::initialize(Application& self)
             { "loleaflet_html", "loleaflet.html" },
             { "logging.color", "true" },
             { "logging.level", "trace" },
+            { "loleaflet_logging", "false" },
             { "ssl.enable", "true" },
             { "ssl.termination", "true" },
             { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },

@@ -109,6 +109,7 @@ ENABLE_DEBUG=
 LOOLWSD_LOGLEVEL="warning"
 LOOLWSD_LOG_TO_FILE="false"
 LOOLWSD_LOGFILE="/var/log/loolwsd.log"
+LOLEAFLET_LOGGING="false"
 debug_msg="secure mode: product build"
 if test "$enable_debug" = "yes"; then
    AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces])
@@ -116,6 +117,7 @@ if test "$enable_debug" = "yes"; then
    LOOLWSD_LOGLEVEL="trace"
    LOOLWSD_LOG_TO_FILE="true"
    LOOLWSD_LOGFILE="/tmp/loolwsd.log"
+   LOLEAFLET_LOGGING="true"
    debug_msg="low security debugging mode"
 else
     AC_DEFINE([ENABLE_DEBUG],0,[Whether to compile in some extra debugging support code and disable some security pieces])
@@ -123,6 +125,7 @@ fi
 AC_SUBST(ENABLE_DEBUG)
 AC_SUBST(LOOLWSD_LOGLEVEL)
 AC_SUBST(LOOLWSD_LOG_TO_FILE)
+AC_SUBST(LOLEAFLET_LOGGING)
 
 if test -n "$with_logfile" ; then
    LOOLWSD_LOGFILE="$with_logfile"
@@ -324,4 +327,3 @@ echo "    \$ make run # to start loolwsd
 fi
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:
-
