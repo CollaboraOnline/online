@@ -165,7 +165,7 @@ L.Socket = L.Class.extend({
 			// This must be the first message, unless we reconnect.
 			var loolwsdVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			var h = loolwsdVersionObj.Hash;
-			if (parseInt(h,16).toString(16) === h.toLowerCase()) {
+			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a target="_blank" href="https://gerrit.libreoffice.org/gitweb?p=online.git;a=log;h=' + h + '">' + h + '</a>';
 				$('#loolwsd-version').html(loolwsdVersionObj.Version + ' (git hash: ' + h + ')');
 			}
@@ -181,7 +181,7 @@ L.Socket = L.Class.extend({
 		else if (textMsg.startsWith('lokitversion ')) {
 			var lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			var h = lokitVersionObj.BuildId.substring(0, 7);
-			if (parseInt(h,16).toString(16) === h.toLowerCase()) {
+			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a target="_blank" href="https://gerrit.libreoffice.org/gitweb?p=core.git;a=log;h=' + h + '">' + h + '</a>';
 			}
 			$('#lokit-version').html(lokitVersionObj.ProductName + ' ' +
