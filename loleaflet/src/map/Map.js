@@ -767,12 +767,12 @@ L.Map = L.Evented.extend({
 
 	_dim: function() {
 		// console.log('_dim:');
-		if (!map._socket.connected()) {
+		if (!this._socket.connected()) {
 			return;
 		}
 
 		// console.log('  cont');
-		map._active = false;
+		this._active = false;
 		clearTimeout(vex.timer);
 
 		var options = $.extend({}, vex.defaultOptions, {
@@ -792,6 +792,7 @@ L.Map = L.Evented.extend({
 			vex: options
 		});
 
+		var map = this;
 		options.$vex.bind('click.vex', function(e) {
 			// console.log('click.vex function');
 			return map._activate();
@@ -806,17 +807,17 @@ L.Map = L.Evented.extend({
 		$(options.appendLocation).append(options.$vex);
 		vex.setupBodyClassName(options.$vex);
 
-		map._doclayer && map._docLayer._onMessage('textselection:', null);
+		this._doclayer && this._docLayer._onMessage('textselection:', null);
 		// console.log('  sending userinactive');
-		map._socket.sendMessage('userinactive');
+		this._socket.sendMessage('userinactive');
 	},
 
 	_dimIfInactive: function () {
 		// console.log('_dimIfInactive: diff=' + (Date.now() - map.lastActiveTime));
-		if ((Date.now() - map.lastActiveTime) >= 10 * 60 * 1000) { // Dim 10 minutes after last user activity
-			map._dim();
+		if ((Date.now() - this.lastActiveTime) >= 1 * 60 * 1000) { // Dim 10 minutes after last user activity
+			this._dim();
 		} else {
-			map._startInactiveTimer();
+			this._startInactiveTimer();
 		}
 	},
 
