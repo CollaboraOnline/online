@@ -813,7 +813,7 @@ L.Map = L.Evented.extend({
 
 	_dimIfInactive: function () {
 		console.debug('_dimIfInactive: diff=' + (Date.now() - this.lastActiveTime));
-		if ((Date.now() - this.lastActiveTime) >= 1 * 60 * 1000) { // Dim 10 minutes after last user activity
+		if ((Date.now() - this.lastActiveTime) >= 10 * 60 * 1000) { // Dim 10 minutes after last user activity
 			this._dim();
 		} else {
 			this._startInactiveTimer();
