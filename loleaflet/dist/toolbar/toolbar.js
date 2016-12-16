@@ -327,6 +327,11 @@ function onColorPick(e, color) {
 	map.focus();
 }
 
+// This object is used to store enabled/disabled state of each and every eligible item
+// (i.e the one having UNO command) of toolbar-up. When the permission is changed to/from
+// edit/view mode, state from this object is read and then applied on corresponding buttons
+var formatButtons = {};
+
 $(function () {
 	$('#toolbar-up-more').w2toolbar({
 		name: 'toolbar-up-more',
@@ -380,8 +385,8 @@ $(function () {
 			{type: 'button',  id: 'sortascending',  img: 'sortascending', hint: _('Sort Ascending'), uno: 'SortAscending'},
 			{type: 'button',  id: 'sortdescending',  img: 'sortdescending', hint: _('Sort Descending'), uno: 'SortDescending'},
 			{type: 'break',   id: 'break-align'},
-			{type: 'button',  id: 'bullet',  img: 'bullet', hint: _('Bullets on/off'), uno: 'DefaultBullet'},
-			{type: 'button',  id: 'numbering',  img: 'numbering', hint: _('Numbering on/off'), uno: 'DefaultNumbering'},
+			{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _('Bullets on/off'), uno: 'DefaultBullet'},
+			{type: 'button',  id: 'defaultnumbering',  img: 'numbering', hint: _('Numbering on/off'), uno: 'DefaultNumbering'},
 			{type: 'break',   id: 'break-numbering'},
 			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _('Increase indent'), uno: 'IncrementIndent'},
 			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _('Decrease indent'), uno: 'DecrementIndent'},
@@ -431,6 +436,15 @@ $(function () {
 						placeholder: _('Layout')
 					});
 					$('.styles-select').on('select2:select', onStyleSelect);
+				}
+			}
+
+			// Intialize the formatButtons object
+			if (Object.keys(formatButtons).length === 0) {
+				for (var itemIdx in w2ui['toolbar-up'].items) {
+					if (w2ui['toolbar-up'].items[itemIdx].uno) {
+						formatButtons[w2ui['toolbar-up'].items[itemIdx].id] = true;
+					}
 				}
 			}
 
@@ -519,21 +533,6 @@ $(function () {
 		}
 	});
 });
-
-// This object is used to track enabled/disabled state when one is in view mode
-var formatButtons = {
-	'undo': true, 'redo': true, 'save': true,
-	'bold': true, 'italic': true, 'underline': true, 'strikeout': true,
-	'insertannotation': true, 'inserttable': true,
-	'fontcolor': true, 'backcolor': true, 'bullet': true, 'numbering': true,
-	'alignleft': true, 'alignhorizontal': true, 'alignright': true, 'alignblock': true,
-	'incrementindent': true, 'decrementindent': true, 'insertgraphic': true,
-	'insertfootnote': true, 'repair': true, 'specialcharacter': true,
-	'wraptext': true, 'togglemergecells': true, 'numberformatcurrency': true,
-	'numberformatpercent': true, 'numberformatdecimal': true, 'numberformatdate': true,
-	'numberformatincdecimals': true, 'numberformatdecdecimals': true,
-	'sortascending': true, 'sortdescending': true
-};
 
 var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
 var userLeftPopupMessage = '<div>' + _('%user has left') + '</div>';
