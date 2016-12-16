@@ -15,10 +15,12 @@
 #include <fstream>
 #include <string>
 
+#include <Poco/DateTime.h>
+#include <Poco/DateTimeParser.h>
+#include <Poco/Exception.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/DNS.h>
-#include <Poco/Exception.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -26,6 +28,7 @@
 #include <Poco/Net/NetworkInterface.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/StreamCopier.h>
+#include <Poco/Timestamp.h>
 
 #include "Auth.hpp"
 #include "Common.hpp"
@@ -393,6 +396,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
     bool disablePrint = false;
     bool disableExport = false;
     bool disableCopy = false;
+    std::string lastModifiedTime;
     std::string resMsg;
     Poco::StreamCopier::copyToString(rs, resMsg);
 
@@ -420,14 +424,33 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
         getWOPIValue(object, "DisablePrint", disablePrint);
         getWOPIValue(object, "DisableExport", disableExport);
         getWOPIValue(object, "DisableCopy", disableCopy);
+        getWOPIValue(object, "LastModifiedTime", lastModifiedTime);
     }
     else
         Log::error("WOPI::CheckFileInfo is missing JSON payload");
 
     if (!_fileInfo.isValid())
     {
-        // WOPI doesn't support file last modified time.
-        _fileInfo = FileInfo({filename, ownerId, Poco::Timestamp(), size});
+        Poco::Timestamp modifiedTime = Poco::Timestamp::fromEpochTime(0);
+        if (lastModifiedTime != "")
+        {
+            Poco::DateTime dateTime;
+            int timeZoneDifferential;
+            bool valid = false;
+            try
+            {
+                Poco::DateTimeParser::parse(Poco::DateTimeFormat::ISO8601_FRAC_FORMAT, lastModifiedTime, dateTime, timeZoneDifferential);
+                valid = true;
+            }
+            catch (const Poco::SyntaxException& exc)
+            {
+                LOG_WRN("LastModifiedTime property [" + lastModifiedTime + "] was invalid format: " << exc.displayText() <<
+                        (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+            }
+            if (valid)
+                modifiedTime = dateTime.timestamp();
+        }
+        _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
     }
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, callDuration}));
