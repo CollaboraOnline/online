@@ -33,3 +33,7 @@ UnitWebSocket::UnitWebSocket(const std::string &docURL)
     }
 }
 
+LOOLWebSocket* UnitWebSocket::getLOOLWebSocket() const
+{
+    return _socket;
+}
