@@ -51,6 +51,13 @@ private:
     }
 #endif
 
+    void setMinSocketBufferSize()
+    {
+        // Lets set it to zero as system will automatically adjust it to minimum
+        setSendBufferSize(0);
+        LOG_INF("Send buffer size for web socket set to minimum: " << getSendBufferSize());
+    }
+
 public:
     LOOLWebSocket(const Socket& socket) :
         Poco::Net::WebSocket(socket)
@@ -61,6 +68,14 @@ public:
                   Poco::Net::HTTPServerResponse& response) :
         Poco::Net::WebSocket(request, response)
     {
+#if ENABLE_DEBUG
+        setMinSocketBufferSize();
+#else
+        if (UnitWSD::isUnitTesting())
+        {
+            setMinSocketBufferSize();
+        }
+#endif
     }
 
     LOOLWebSocket(Poco::Net::HTTPClientSession& cs,
@@ -68,6 +83,14 @@ public:
                   Poco::Net::HTTPResponse& response) :
         Poco::Net::WebSocket(cs, request, response)
     {
+#if ENABLE_DEBUG
+        setMinSocketBufferSize();
+#else
+        if (UnitWSD::isUnitTesting())
+        {
+            setMinSocketBufferSize();
+        }
+#endif
     }
 
     LOOLWebSocket(Poco::Net::HTTPClientSession& cs,
@@ -76,6 +99,14 @@ public:
                   Poco::Net::HTTPCredentials& credentials) :
         Poco::Net::WebSocket(cs, request, response, credentials)
     {
+#if ENABLE_DEBUG
+        setMinSocketBufferSize();
+#else
+        if (UnitWSD::isUnitTesting())
+        {
+            setMinSocketBufferSize();
+        }
+#endif
     }
 
     /// Wrapper for Poco::Net::WebSocket::receiveFrame() that handles PING frames
