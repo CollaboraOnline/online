@@ -1000,10 +1000,12 @@ map.on('commandstatechanged', function (e) {
 	var id = commandName.toLowerCase().substr(5);
 	if (typeof formatButtons[id] !== 'undefined') {
 		if (state === 'true') {
+			toolbar.enable(id);
 			toolbar.check(id);
 			toolbarUpMore.check(id);
 		}
 		else if (state === 'false') {
+			toolbar.enable(id);
 			toolbar.uncheck(id);
 			toolbarUpMore.uncheck(id);
 		}
@@ -1027,6 +1029,7 @@ map.on('commandstatechanged', function (e) {
 				toolbar.enable(id);
 				toolbarUpMore.enable(id);
 			} else {
+				toolbar.uncheck(id);
 				toolbar.disable(id);
 				toolbarUpMore.disable(id);
 			}
