@@ -16,7 +16,8 @@ noinst_LTLIBRARIES = \
         unit-timeout.la unit-prefork.la \
         unit-storage.la unit-fonts.la \
         unit-admin.la unit-tilecache.la \
-	unit-fuzz.la unit-requests.la
+	unit-fuzz.la unit-requests.la \
+	unit-minsocketbuffersize.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
@@ -59,6 +60,7 @@ unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_storage_la_SOURCES = UnitStorage.cpp
 unit_tilecache_la_SOURCES = UnitTileCache.cpp
+unit_minsocketbuffersize_la_SOURCES = UnitMinSocketBufferSize.cpp
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -70,7 +72,7 @@ if HAVE_LO_PATH
 check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME unit-fonts.la is unstable, disabled for now.
-TESTS = unit-tilecache.la unit-storage.la unit-timeout.la unit-prefork.la unit-admin.la unit-requests.la
+TESTS = unit-tilecache.la unit-storage.la unit-timeout.la unit-prefork.la unit-admin.la unit-requests.la unit-minsocketbuffersize.la
 else
 TESTS = ${top_builddir}/test/test
 endif

@@ -130,6 +130,8 @@ public:
         delete _socket;
         delete _session;
     }
+
+    LOOLWebSocket* getLOOLWebSocket() const;
 };
 
 #endif
