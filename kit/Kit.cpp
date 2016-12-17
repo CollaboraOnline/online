@@ -1612,10 +1612,6 @@ void lokit_main(const std::string& childRoot,
         assert(loKit);
         LOG_INF("Process is ready.");
 
-        // Open websocket connection between the child process and WSD.
-        HTTPClientSession cs("127.0.0.1", MasterPortNumber);
-        cs.setTimeout(0);
-
         std::string requestUrl = std::string(NEW_CHILD_URI) + "pid=" + pid;
         if (queryVersion)
         {
@@ -1629,6 +1625,9 @@ void lokit_main(const std::string& childRoot,
             free(versionInfo);
         }
 
+        // Open websocket connection between the child process and WSD.
+        HTTPClientSession cs("127.0.0.1", MasterPortNumber);
+        cs.setTimeout(0);
         HTTPRequest request(HTTPRequest::HTTP_GET, requestUrl);
         HTTPResponse response;
         auto ws = std::make_shared<LOOLWebSocket>(cs, request, response);
