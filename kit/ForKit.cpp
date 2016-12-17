@@ -393,7 +393,8 @@ int main(int argc, char** argv)
 
     // We must have at least one child, more are created dynamically.
     // Ask this first child to send version information to master process
-    if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, true) < 0)
+    Process::PID forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, true);
+    if (forKitPid < 0)
     {
         Log::fatal("Failed to create a kit process.");
         std::_Exit(Application::EXIT_SOFTWARE);
