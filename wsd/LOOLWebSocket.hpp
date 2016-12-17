@@ -49,7 +49,6 @@ private:
 
         return std::chrono::milliseconds(baseDelay + (jitter > 0 ? (std::rand() % jitter) : 0));
     }
-#endif
 
     void setMinSocketBufferSize()
     {
@@ -57,6 +56,7 @@ private:
         setSendBufferSize(0);
         LOG_INF("Send buffer size for web socket set to minimum: " << getSendBufferSize());
     }
+#endif
 
 public:
     LOOLWebSocket(const Socket& socket) :
@@ -70,11 +70,6 @@ public:
     {
 #if ENABLE_DEBUG
         setMinSocketBufferSize();
-#else
-        if (UnitWSD::isUnitTesting())
-        {
-            setMinSocketBufferSize();
-        }
 #endif
     }
 
@@ -85,11 +80,6 @@ public:
     {
 #if ENABLE_DEBUG
         setMinSocketBufferSize();
-#else
-        if (UnitWSD::isUnitTesting())
-        {
-            setMinSocketBufferSize();
-        }
 #endif
     }
 
@@ -101,11 +91,6 @@ public:
     {
 #if ENABLE_DEBUG
         setMinSocketBufferSize();
-#else
-        if (UnitWSD::isUnitTesting())
-        {
-            setMinSocketBufferSize();
-        }
 #endif
     }
 
