@@ -41,14 +41,14 @@ wsd_sources = \
             ../common/Unit.cpp \
             ../common/Util.cpp
 
-test_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
-test_SOURCES = TileCacheTests.cpp integration-http-server.cpp \
-               httpwstest.cpp httpcrashtest.cpp httpwserror.cpp test.cpp $(wsd_sources)
-test_LDADD = $(CPPUNIT_LIBS)
-
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
 unittest_SOURCES = TileQueueTests.cpp WhiteBoxTests.cpp test.cpp $(wsd_sources)
 unittest_LDADD = $(CPPUNIT_LIBS)
+
+test_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
+test_SOURCES = TileCacheTests.cpp integration-http-server.cpp \
+               httpwstest.cpp httpcrashtest.cpp httpwserror.cpp $(unittest_SOURCES)
+test_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
 unit_oob_la_SOURCES = UnitOOB.cpp
