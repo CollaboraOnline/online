@@ -14,8 +14,8 @@
 #include <ChildSession.hpp>
 #include <Common.hpp>
 #include <Kit.hpp>
-#include <Protocol.hpp>
 #include <MessageQueue.hpp>
+#include <Protocol.hpp>
 #include <Util.hpp>
 
 /// WhiteBox unit-tests.
@@ -73,6 +73,55 @@ void WhiteBoxTests::testLOOLProtocolFunctions()
     CPPUNIT_ASSERT(LOOLProtocol::getTokenKeywordFromMessage(message, "mumble", map, mumble));
     CPPUNIT_ASSERT_EQUAL(2, mumble);
 
+    CPPUNIT_ASSERT_EQUAL(1UL, Util::trimmed("A").size());
+    CPPUNIT_ASSERT_EQUAL(std::string("A"), Util::trimmed("A"));
+
+    CPPUNIT_ASSERT_EQUAL(1UL, Util::trimmed(" X").size());
+    CPPUNIT_ASSERT_EQUAL(std::string("X"), Util::trimmed(" X"));
+
+    CPPUNIT_ASSERT_EQUAL(1UL, Util::trimmed("Y ").size());
+    CPPUNIT_ASSERT_EQUAL(std::string("Y"), Util::trimmed("Y "));
+
+    CPPUNIT_ASSERT_EQUAL(1UL, Util::trimmed(" Z ").size());
+    CPPUNIT_ASSERT_EQUAL(std::string("Z"), Util::trimmed(" Z "));
+
+    CPPUNIT_ASSERT_EQUAL(0UL, Util::trimmed(" ").size());
+    CPPUNIT_ASSERT_EQUAL(std::string(""), Util::trimmed(" "));
+
+    CPPUNIT_ASSERT_EQUAL(0UL, Util::trimmed("   ").size());
+    CPPUNIT_ASSERT_EQUAL(std::string(""), Util::trimmed("   "));
+
+    std::string s;
+
+    s = "A";
+    CPPUNIT_ASSERT_EQUAL(1UL, Util::trim(s).size());
+    s = "A";
+    CPPUNIT_ASSERT_EQUAL(std::string("A"), Util::trim(s));
+
+    s = " X";
+    CPPUNIT_ASSERT_EQUAL(1UL, Util::trim(s).size());
+    s = " X";
+    CPPUNIT_ASSERT_EQUAL(std::string("X"), Util::trim(s));
+
+    s = "Y ";
+    CPPUNIT_ASSERT_EQUAL(1UL, Util::trim(s).size());
+    s = "Y ";
+    CPPUNIT_ASSERT_EQUAL(std::string("Y"), Util::trim(s));
+
+    s = " Z ";
+    CPPUNIT_ASSERT_EQUAL(1UL, Util::trim(s).size());
+    s = " Z ";
+    CPPUNIT_ASSERT_EQUAL(std::string("Z"), Util::trim(s));
+
+    s = " ";
+    CPPUNIT_ASSERT_EQUAL(0UL, Util::trim(s).size());
+    s = " ";
+    CPPUNIT_ASSERT_EQUAL(std::string(""), Util::trim(s));
+
+    s = "   ";
+    CPPUNIT_ASSERT_EQUAL(0UL, Util::trim(s).size());
+    s = "   ";
+    CPPUNIT_ASSERT_EQUAL(std::string(""), Util::trim(s));
 }
 
 void WhiteBoxTests::testRegexListMatcher()

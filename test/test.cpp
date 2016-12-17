@@ -58,7 +58,6 @@ int main(int /*argc*/, char** /*argv*/)
 {
     Log::initialize("tst");
 
-
     CPPUNIT_NS::TestResult controller;
     CPPUNIT_NS::TestResultCollector result;
     controller.addListener(&result);

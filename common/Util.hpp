@@ -120,6 +120,66 @@ namespace Util
         return s;
     }
 
+    /// Trim spaces from both left and right. Just spaces.
+    inline std::string& trim(std::string& s)
+    {
+        const auto first = s.find_first_not_of(' ');
+        const auto last = s.find_last_not_of(' ');
+        if (first != std::string::npos)
+        {
+            if (last != std::string::npos)
+            {
+                s = s.substr(first, last + 1 - first);
+            }
+            else
+            {
+                s = s.substr(first);
+            }
+        }
+        else
+        {
+            if (last != std::string::npos)
+            {
+                s = s.substr(0, last + 1);
+            }
+            else
+            {
+                s.clear();
+            }
+        }
+
+        return s;
+    }
+
+    /// Trim spaces from both left and right and copy. Just spaces.
+    inline std::string trimmed(const std::string& s)
+    {
+        const auto first = s.find_first_not_of(' ');
+        const auto last = s.find_last_not_of(' ');
+        if (first != std::string::npos)
+        {
+            if (last != std::string::npos)
+            {
+                return s.substr(first, last + 1 - first);
+            }
+
+            return s.substr(first);
+        }
+
+        if (last != std::string::npos)
+        {
+            return s.substr(0, last + 1);
+        }
+
+        return std::string();
+    }
+
+    /// Trim spaces from left and right. Just spaces.
+    inline std::string trimmed(const char* s)
+    {
+        return trimmed(std::string(s));
+    }
+
     /// Given one or more patterns to allow, and one or more to deny,
     /// the match member will return true if, and only if, the subject
     /// matches the allowed list, but not the deny.
