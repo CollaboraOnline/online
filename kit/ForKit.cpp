@@ -443,6 +443,11 @@ int main(int argc, char** argv)
     int returnValue = Application::EXIT_OK;
     UnitKit::get().returnValue(returnValue);
 
+#if 0
+    int status = 0;
+    waitpid(forKitPid, &status, WUNTRACED);
+#endif
+
     LOG_INF("ForKit process finished.");
     std::_Exit(returnValue);
 }
