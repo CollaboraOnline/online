@@ -171,16 +171,12 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
             std::string response = tile.serialize("tile:");
             LOG_DBG("Sending tile message to " << subscriberCount << " subscribers: " + response);
 
-            std::shared_ptr<MessagePayload> payload = std::make_shared<MessagePayload>(response.size() + 1 + size,
-                                                                                       MessagePayload::Type::Binary);
-            {
-                auto& output = payload->data();
-
-                // Send to first subscriber as-is (without cache marker).
-                std::memcpy(output.data(), response.data(), response.size());
-                output[response.size()] = '\n';
-                std::memcpy(output.data() + response.size() + 1, data, size);
-            }
+            // Send to first subscriber as-is (without cache marker).
+            auto payload = std::make_shared<MessagePayload>(response,
+                                                            MessagePayload::Type::Binary,
+                                                            response.size() + 1 + size);
+            payload->append("\n", 1);
+            payload->append(data, size);
 
             auto& firstSubscriber = tileBeingRendered->_subscribers[0];
             auto firstSession = firstSubscriber.lock();
@@ -196,11 +192,10 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
 
                 // Create a new Payload.
                 payload.reset();
-                payload = std::make_shared<MessagePayload>(response.size() + size, MessagePayload::Type::Binary);
-                auto& output = payload->data();
-
-                std::memcpy(output.data(), response.data(), response.size());
-                std::memcpy(output.data() + response.size(), data, size);
+                payload = std::make_shared<MessagePayload>(response,
+                                                           MessagePayload::Type::Binary,
+                                                           response.size() + size);
+                payload->append(data, size);
 
                 for (size_t i = 1; i < subscriberCount; ++i)
                 {

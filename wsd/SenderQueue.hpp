@@ -27,20 +27,50 @@ public:
 
     enum class Type { Text, Binary };
 
-    MessagePayload(const size_t size, enum Type type) :
-        _data(size),
+    /// Construct a text message.
+    MessagePayload(const std::string& message) :
+        _data(message.data(), message.data() + message.size()),
+        _type(Type::Text)
+    {
+    }
+
+    /// Construct a message from a string with type and
+    /// reserve extra space (total, including message).
+    MessagePayload(const std::string& message,
+                   const enum Type type,
+                   const size_t reserve = 0) :
+        _data(reserve),
+        _type(type)
+    {
+        _data.resize(message.size());
+        std::memcpy(_data.data(), message.data(), message.size());
+    }
+
+    MessagePayload(const char* data,
+                   const size_t size,
+                   const enum Type type) :
+        _data(data, data + size),
         _type(type)
     {
     }
 
-    std::vector<char>& data() { return _data; }
+    size_t size() const { return _data.size(); }
+    const std::vector<char>& data() const { return _data; }
+
+    /// Append more data to the message.
+    void append(const char* data, const size_t size)
+    {
+        const auto curSize = _data.size();
+        _data.resize(curSize + size);
+        std::memcpy(_data.data() + curSize, data, size);
+    }
 
     /// Returns true if and only if the payload is considered Binary.
     bool isBinary() const { return _type == Type::Binary; }
 
 private:
     std::vector<char> _data;
-    Type _type;
+    const Type _type;
 };
 
 struct SendItem
