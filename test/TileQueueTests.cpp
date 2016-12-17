@@ -14,6 +14,7 @@
 #include "Common.hpp"
 #include "Protocol.hpp"
 #include "MessageQueue.hpp"
+#include "SenderQueue.hpp"
 #include "Util.hpp"
 
 namespace CPPUNIT_NS
@@ -44,6 +45,9 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testTileRecombining);
     CPPUNIT_TEST(testViewOrder);
     CPPUNIT_TEST(testPreviewsDeprioritization);
+    CPPUNIT_TEST(testSenderQueue);
+    CPPUNIT_TEST(testSenderQueueTileDeduplication);
+    CPPUNIT_TEST(testInvalidateViewCursorDeduplication);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -52,6 +56,9 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     void testTileRecombining();
     void testViewOrder();
     void testPreviewsDeprioritization();
+    void testSenderQueue();
+    void testSenderQueueTileDeduplication();
+    void testInvalidateViewCursorDeduplication();
 };
 
 void TileQueueTests::testTileQueuePriority()
@@ -257,6 +264,154 @@ void TileQueueTests::testPreviewsDeprioritization()
 
     // stays empty after all is done
     CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue._queue.size()));
+}
+
+void TileQueueTests::testSenderQueue()
+{
+    SenderQueue<std::shared_ptr<MessagePayload>> queue;
+
+    std::shared_ptr<MessagePayload> item;
+
+    // Empty queue
+    CPPUNIT_ASSERT_EQUAL(false, queue.waitDequeue(item, 10));
+    CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
+
+    const std::vector<std::string> messages =
+    {
+        "message 1",
+        "message 2",
+        "message 3"
+    };
+
+    for (const auto& msg : messages)
+    {
+        queue.enqueue(std::make_shared<MessagePayload>(msg));
+    }
+
+    CPPUNIT_ASSERT_EQUAL(3UL, queue.size());
+
+    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(2UL, queue.size());
+    CPPUNIT_ASSERT_EQUAL(messages[0], std::string(item->data().data(), item->data().size()));
+
+    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(1UL, queue.size());
+    CPPUNIT_ASSERT_EQUAL(messages[1], std::string(item->data().data(), item->data().size()));
+
+    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
+    CPPUNIT_ASSERT_EQUAL(messages[2], std::string(item->data().data(), item->data().size()));
+
+    CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
+}
+
+void TileQueueTests::testSenderQueueTileDeduplication()
+{
+    SenderQueue<std::shared_ptr<MessagePayload>> queue;
+
+    std::shared_ptr<MessagePayload> item;
+
+    // Empty queue
+    CPPUNIT_ASSERT_EQUAL(false, queue.waitDequeue(item, 10));
+    CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
+
+    const std::vector<std::string> part_messages =
+    {
+        "tile: part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=0",
+        "tile: part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=1",
+        "tile: part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1"
+    };
+
+    for (const auto& msg : part_messages)
+    {
+        queue.enqueue(std::make_shared<MessagePayload>(msg));
+    }
+
+    CPPUNIT_ASSERT_EQUAL(3UL, queue.size());
+    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 10));
+    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 10));
+    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 10));
+
+    CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
+
+    const std::vector<std::string> dup_messages =
+    {
+        "tile: part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1",
+        "tile: part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=1",
+        "tile: part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=1"
+    };
+
+    for (const auto& msg : dup_messages)
+    {
+        queue.enqueue(std::make_shared<MessagePayload>(msg));
+    }
+
+    CPPUNIT_ASSERT_EQUAL(1UL, queue.size());
+    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 10));
+
+    // The last one should persist.
+    CPPUNIT_ASSERT_EQUAL(dup_messages[2], std::string(item->data().data(), item->data().size()));
+
+    CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
+}
+
+void TileQueueTests::testInvalidateViewCursorDeduplication()
+{
+    SenderQueue<std::shared_ptr<MessagePayload>> queue;
+
+    std::shared_ptr<MessagePayload> item;
+
+    // Empty queue
+    CPPUNIT_ASSERT_EQUAL(false, queue.waitDequeue(item, 10));
+    CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
+
+    const std::vector<std::string> view_messages =
+    {
+        "invalidateviewcursor: {    \"viewId\": \"1\",     \"rectangle\": \"3999, 1418, 0, 298\",     \"part\": \"0\" }",
+        "invalidateviewcursor: {    \"viewId\": \"2\",     \"rectangle\": \"3999, 1418, 0, 298\",     \"part\": \"0\" }",
+        "invalidateviewcursor: {    \"viewId\": \"3\",     \"rectangle\": \"3999, 1418, 0, 298\",     \"part\": \"0\" }",
+    };
+
+    for (const auto& msg : view_messages)
+    {
+        queue.enqueue(std::make_shared<MessagePayload>(msg));
+    }
+
+    CPPUNIT_ASSERT_EQUAL(3UL, queue.size());
+
+    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(2UL, queue.size());
+    CPPUNIT_ASSERT_EQUAL(view_messages[0], std::string(item->data().data(), item->data().size()));
+
+    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(1UL, queue.size());
+    CPPUNIT_ASSERT_EQUAL(view_messages[1], std::string(item->data().data(), item->data().size()));
+
+    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
+    CPPUNIT_ASSERT_EQUAL(view_messages[2], std::string(item->data().data(), item->data().size()));
+
+    CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
+
+    const std::vector<std::string> dup_messages =
+    {
+        "invalidateviewcursor: {    \"viewId\": \"1\",     \"rectangle\": \"3999, 1418, 0, 298\",     \"part\": \"0\" }",
+        "invalidateviewcursor: {    \"viewId\": \"1\",     \"rectangle\": \"1000, 1418, 0, 298\",     \"part\": \"0\" }",
+        "invalidateviewcursor: {    \"viewId\": \"1\",     \"rectangle\": \"2000, 1418, 0, 298\",     \"part\": \"0\" }",
+    };
+
+    for (const auto& msg : dup_messages)
+    {
+        queue.enqueue(std::make_shared<MessagePayload>(msg));
+    }
+
+    CPPUNIT_ASSERT_EQUAL(1UL, queue.size());
+    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+
+    // The last one should persist.
+    CPPUNIT_ASSERT_EQUAL(dup_messages[2], std::string(item->data().data(), item->data().size()));
+
+    CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileQueueTests);

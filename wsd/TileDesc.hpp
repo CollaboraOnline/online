@@ -65,6 +65,19 @@ public:
     int getId() const { return _id; }
     bool getBroadcast() const { return _broadcast; }
 
+    bool operator==(const TileDesc& other) const
+    {
+        return _part == other._part &&
+               _width == other._width &&
+               _height == other._height &&
+               _tilePosX == other._tilePosX &&
+               _tilePosY == other._tilePosY &&
+               _tileWidth == other._tileWidth &&
+               _tileHeight == other._tileHeight &&
+               _id == other._id &&
+               _broadcast == other._broadcast;
+    }
+
     bool intersectsWithRect(int x, int y, int w, int h) const
     {
         return x + w >= getTilePosX() &&

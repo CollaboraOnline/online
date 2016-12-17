@@ -24,6 +24,8 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(WhiteBoxTests);
 
     CPPUNIT_TEST(testLOOLProtocolFunctions);
+    CPPUNIT_TEST(testMessageAbbreviation);
+    CPPUNIT_TEST(testTokenizer);
     CPPUNIT_TEST(testRegexListMatcher);
     CPPUNIT_TEST(testRegexListMatcher_Init);
     CPPUNIT_TEST(testEmptyCellCursor);
@@ -31,6 +33,8 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
     void testLOOLProtocolFunctions();
+    void testMessageAbbreviation();
+    void testTokenizer();
     void testRegexListMatcher();
     void testRegexListMatcher_Init();
     void testEmptyCellCursor();
@@ -73,6 +77,103 @@ void WhiteBoxTests::testLOOLProtocolFunctions()
     CPPUNIT_ASSERT(LOOLProtocol::getTokenKeywordFromMessage(message, "mumble", map, mumble));
     CPPUNIT_ASSERT_EQUAL(2, mumble);
 
+}
+
+void WhiteBoxTests::testMessageAbbreviation()
+{
+    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getDelimitedInitialSubstring(nullptr, 5, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getDelimitedInitialSubstring(nullptr, -1, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getDelimitedInitialSubstring("abc", 0, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getDelimitedInitialSubstring("abc", -1, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string("ab"), LOOLProtocol::getDelimitedInitialSubstring("abc", 2, '\n'));
+
+    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getAbbreviatedMessage(nullptr, 5));
+    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getAbbreviatedMessage(nullptr, -1));
+    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getAbbreviatedMessage("abc", 0));
+    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getAbbreviatedMessage("abc", -1));
+    CPPUNIT_ASSERT_EQUAL(std::string("ab"), LOOLProtocol::getAbbreviatedMessage("abc", 2));
+
+    std::string s;
+    std::string abbr;
+
+    s = "abcdefg";
+    CPPUNIT_ASSERT_EQUAL(s, LOOLProtocol::getAbbreviatedMessage(s));
+
+    s = "1234567890123\n45678901234567890123456789012345678901234567890123";
+    abbr = "1234567890123...";
+    CPPUNIT_ASSERT_EQUAL(abbr, LOOLProtocol::getAbbreviatedMessage(s.data(), s.size()));
+    CPPUNIT_ASSERT_EQUAL(abbr, LOOLProtocol::getAbbreviatedMessage(s));
+
+    // 120 characters. Change when the abbreviation max-length changes.
+    s = "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    CPPUNIT_ASSERT_EQUAL(s, LOOLProtocol::getAbbreviatedMessage(s.data(), s.size()));
+    CPPUNIT_ASSERT_EQUAL(s, LOOLProtocol::getAbbreviatedMessage(s));
+
+    abbr = s + "...";
+    s += "more data";
+    CPPUNIT_ASSERT_EQUAL(abbr, LOOLProtocol::getAbbreviatedMessage(s.data(), s.size()));
+    CPPUNIT_ASSERT_EQUAL(abbr, LOOLProtocol::getAbbreviatedMessage(s));
+}
+
+void WhiteBoxTests::testTokenizer()
+{
+    std::vector<std::string> tokens;
+
+    tokens = LOOLProtocol::tokenize("");
+    CPPUNIT_ASSERT_EQUAL(0UL, tokens.size());
+
+    tokens = LOOLProtocol::tokenize("  ");
+    CPPUNIT_ASSERT_EQUAL(0UL, tokens.size());
+
+    tokens = LOOLProtocol::tokenize("A");
+    CPPUNIT_ASSERT_EQUAL(1UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
+
+    tokens = LOOLProtocol::tokenize("  A");
+    CPPUNIT_ASSERT_EQUAL(1UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
+
+    tokens = LOOLProtocol::tokenize("A  ");
+    CPPUNIT_ASSERT_EQUAL(1UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
+
+    tokens = LOOLProtocol::tokenize(" A ");
+    CPPUNIT_ASSERT_EQUAL(1UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
+
+    tokens = LOOLProtocol::tokenize(" A  Z ");
+    CPPUNIT_ASSERT_EQUAL(2UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
+    CPPUNIT_ASSERT_EQUAL(std::string("Z"), tokens[1]);
+
+    tokens = LOOLProtocol::tokenize("\n");
+    CPPUNIT_ASSERT_EQUAL(0UL, tokens.size());
+
+    tokens = LOOLProtocol::tokenize(" A  \nZ ");
+    CPPUNIT_ASSERT_EQUAL(1UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
+
+    tokens = LOOLProtocol::tokenize(" A  Z\n ");
+    CPPUNIT_ASSERT_EQUAL(2UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
+    CPPUNIT_ASSERT_EQUAL(std::string("Z"), tokens[1]);
+
+    tokens = LOOLProtocol::tokenize(" A  Z  \n ");
+    CPPUNIT_ASSERT_EQUAL(2UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
+    CPPUNIT_ASSERT_EQUAL(std::string("Z"), tokens[1]);
+
+    tokens = LOOLProtocol::tokenize("tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1");
+    CPPUNIT_ASSERT_EQUAL(9UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(std::string("tile"), tokens[0]);
+    CPPUNIT_ASSERT_EQUAL(std::string("part=0"), tokens[1]);
+    CPPUNIT_ASSERT_EQUAL(std::string("width=256"), tokens[2]);
+    CPPUNIT_ASSERT_EQUAL(std::string("height=256"), tokens[3]);
+    CPPUNIT_ASSERT_EQUAL(std::string("tileposx=0"), tokens[4]);
+    CPPUNIT_ASSERT_EQUAL(std::string("tileposy=0"), tokens[5]);
+    CPPUNIT_ASSERT_EQUAL(std::string("tilewidth=3840"), tokens[6]);
+    CPPUNIT_ASSERT_EQUAL(std::string("tileheight=3840"), tokens[7]);
+    CPPUNIT_ASSERT_EQUAL(std::string("ver=-1"), tokens[8]);
 }
 
 void WhiteBoxTests::testRegexListMatcher()
