@@ -120,16 +120,22 @@ namespace LOOLProtocol
         return tokenize(s.data(), s.size());
     }
 
+    inline size_t getDelimiterPosition(const char* message, const int length, const char delim)
+    {
+        if (message && length > 0)
+        {
+            const char *founddelim = static_cast<const char *>(std::memchr(message, delim, length));
+            const auto size = (founddelim == nullptr ? length : founddelim - message);
+            return size;
+        }
+
+        return 0;
+    }
+
     inline
     std::string getDelimitedInitialSubstring(const char *message, const int length, const char delim)
     {
-        if (message == nullptr || length <= 0)
-        {
-            return "";
-        }
-
-        const char *founddelim = static_cast<const char *>(std::memchr(message, delim, length));
-        const auto size = (founddelim == nullptr ? length : founddelim - message);
+        const auto size = getDelimiterPosition(message, length, delim);
         return std::string(message, size);
     }
 
@@ -221,7 +227,7 @@ namespace LOOLProtocol
     {
         if (message == nullptr || length <= 0)
         {
-            return "";
+            return std::string();
         }
 
         const auto firstLine = getFirstLine(message, std::min(length, 120));
@@ -233,6 +239,19 @@ namespace LOOLProtocol
         }
 
         return firstLine;
+    }
+
+    inline std::string getAbbreviatedMessage(const std::string& message)
+    {
+        const auto pos = getDelimiterPosition(message.data(), std::min(message.size(), 120UL), '\n');
+
+        // If first line is less than the length (minus newline), add ellipsis.
+        if (pos < static_cast<std::string::size_type>(message.size()) - 1)
+        {
+            return message.substr(0, pos) + "...";
+        }
+
+        return message;
     }
 
     template <typename T>
