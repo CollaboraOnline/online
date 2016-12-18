@@ -211,6 +211,22 @@ private:
                 _queue.erase(pos);
             }
         }
+        else if (command == "statusindicatorsetvalue:" ||
+                 command == "invalidatecursor:")
+        {
+            // Remove previous identical enties of this command,
+            // if any, and use most recent (incoming).
+            const auto& pos = std::find_if(_queue.begin(), _queue.end(),
+                [&command](const queue_item_t& cur)
+                {
+                    return (cur->firstToken() == command);
+                });
+
+            if (pos != _queue.end())
+            {
+                _queue.erase(pos);
+            }
+        }
         else if (command == "invalidateviewcursor:")
         {
             // Remove previous cursor invalidation for same view,
