@@ -19,6 +19,7 @@
 #include "common/SigUtil.hpp"
 #include "LOOLWebSocket.hpp"
 #include "Log.hpp"
+#include "TileDesc.hpp"
 
 /// The payload type used to send/receive data.
 class MessagePayload
@@ -115,7 +116,10 @@ public:
         std::unique_lock<std::mutex> lock(_mutex);
         if (!stopping())
         {
-            _queue.push_back(item);
+            if (deduplicate(item))
+            {
+                _queue.push_back(item);
+            }
         }
 
         const size_t queuesize = _queue.size();
@@ -156,9 +160,40 @@ public:
     }
 
 private:
+    /// Deduplicate messages based on the new one.
+    /// Returns true if the new message should be
+    /// enqueued, otherwise false.
+    bool deduplicate(const Item& item)
+    {
+        const std::string line = LOOLProtocol::getFirstLine(item->data());
+        const std::string command = LOOLProtocol::getFirstToken(line);
+        if (command == "tile:")
+        {
+            TileDesc newTile = TileDesc::parse(line);
+            auto begin = std::remove_if(_queue.begin(), _queue.end(),
+            [&newTile](const queue_item_t& cur)
+            {
+                const std::string curLine = LOOLProtocol::getFirstLine(cur->data());
+                const std::string curCommand = LOOLProtocol::getFirstToken(curLine);
+                if (curCommand == "tile:")
+                {
+                    return (newTile == TileDesc::parse(curLine));
+                }
+
+                return false;
+            });
+
+            _queue.erase(begin, _queue.end());
+        }
+
+        return true;
+    }
+
+private:
     mutable std::mutex _mutex;
     std::condition_variable _cv;
     std::deque<Item> _queue;
+    typedef typename std::deque<Item>::value_type queue_item_t;
     std::atomic<bool> _stop;
 };
 
