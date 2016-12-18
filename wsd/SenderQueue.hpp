@@ -16,6 +16,11 @@
 #include <mutex>
 #include <vector>
 
+#include <Poco/Dynamic/Var.h>
+#include <Poco/JSON/JSON.h>
+#include <Poco/JSON/Object.h>
+#include <Poco/JSON/Parser.h>
+
 #include "common/SigUtil.hpp"
 #include "LOOLWebSocket.hpp"
 #include "Log.hpp"
@@ -26,16 +31,17 @@ class MessagePayload
 {
 public:
 
-    enum class Type { Text, Binary };
+    enum class Type { Text, JSON, Binary };
 
     /// Construct a text message.
     /// message must include the full first-line.
-    MessagePayload(const std::string& message) :
+    MessagePayload(const std::string& message,
+                   const enum Type type = Type::Text) :
         _data(message.data(), message.data() + message.size()),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
         _abbreviation(LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
-        _type(Type::Text)
+        _type(type)
     {
     }
 
@@ -44,8 +50,8 @@ public:
     /// message must include the full first-line.
     MessagePayload(const std::string& message,
                    const enum Type type,
-                   const size_t reserve = 0) :
-        _data(reserve),
+                   const size_t reserve) :
+        _data(std::max(reserve, message.size())),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
         _abbreviation(LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
@@ -75,6 +81,18 @@ public:
     const std::string& firstToken() const { return _tokens[0]; }
     const std::string& firstLine() const { return _firstLine; }
     const std::string& abbreviation() const { return _abbreviation; }
+
+    /// Returns the json part of the message, if any.
+    std::string jsonString() const
+    {
+        if (_tokens.size() > 1 && _tokens[1] == "{")
+        {
+            const auto firstTokenSize = _tokens[0].size();
+            return std::string(_data.data() + firstTokenSize, _data.size() - firstTokenSize);
+        }
+
+        return std::string();
+    }
 
     /// Append more data to the message.
     void append(const char* data, const size_t size)
@@ -186,6 +204,35 @@ private:
                 {
                     return (cur->firstToken() == "tile:" &&
                             newTile == TileDesc::parse(cur->firstLine()));
+                });
+
+            if (pos != _queue.end())
+            {
+                _queue.erase(pos);
+            }
+        }
+        else if (command == "invalidateviewcursor:")
+        {
+            // Remove previous cursor invalidation for same view,
+            // if any, and use most recent (incoming).
+            const std::string newMsg = item->jsonString();
+            Poco::JSON::Parser newParser;
+            const auto newResult = newParser.parse(newMsg);
+            const auto& newJson = newResult.extract<Poco::JSON::Object::Ptr>();
+            const auto viewId = newJson->get("viewId").toString();
+            const auto& pos = std::find_if(_queue.begin(), _queue.end(),
+                [command, viewId](const queue_item_t& cur)
+                {
+                    if (cur->firstToken() == command)
+                    {
+                        const std::string msg = cur->jsonString();
+                        Poco::JSON::Parser parser;
+                        const auto result = parser.parse(msg);
+                        const auto& json = result.extract<Poco::JSON::Object::Ptr>();
+                        return (viewId == json->get("viewId").toString());
+                    }
+
+                    return false;
                 });
 
             if (pos != _queue.end())
