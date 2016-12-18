@@ -33,6 +33,8 @@ public:
     MessagePayload(const std::string& message) :
         _data(message.data(), message.data() + message.size()),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
+        _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
+        _abbreviation(LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
         _type(Type::Text)
     {
     }
@@ -45,6 +47,8 @@ public:
                    const size_t reserve = 0) :
         _data(reserve),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
+        _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
+        _abbreviation(LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
         _type(type)
     {
         _data.resize(message.size());
@@ -58,6 +62,8 @@ public:
                    const enum Type type) :
         _data(data, data + size),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
+        _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
+        _abbreviation(LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
         _type(type)
     {
     }
@@ -67,6 +73,8 @@ public:
 
     const std::vector<std::string>& tokens() const { return _tokens; }
     const std::string& firstToken() const { return _tokens[0]; }
+    const std::string& firstLine() const { return _firstLine; }
+    const std::string& abbreviation() const { return _abbreviation; }
 
     /// Append more data to the message.
     void append(const char* data, const size_t size)
@@ -82,6 +90,8 @@ public:
 private:
     std::vector<char> _data;
     const std::vector<std::string> _tokens;
+    const std::string _firstLine;
+    const std::string _abbreviation;
     const Type _type;
 };
 
@@ -165,19 +175,17 @@ private:
     /// enqueued, otherwise false.
     bool deduplicate(const Item& item)
     {
-        const std::string line = LOOLProtocol::getFirstLine(item->data());
-        const std::string command = LOOLProtocol::getFirstToken(line);
+        const std::string command = item->firstToken();
         if (command == "tile:")
         {
-            TileDesc newTile = TileDesc::parse(line);
+            TileDesc newTile = TileDesc::parse(item->firstLine());
             auto begin = std::remove_if(_queue.begin(), _queue.end(),
             [&newTile](const queue_item_t& cur)
             {
-                const std::string curLine = LOOLProtocol::getFirstLine(cur->data());
-                const std::string curCommand = LOOLProtocol::getFirstToken(curLine);
+                const std::string curCommand = cur->firstToken();
                 if (curCommand == "tile:")
                 {
-                    return (newTile == TileDesc::parse(curLine));
+                    return (newTile == TileDesc::parse(cur->firstLine()));
                 }
 
                 return false;
