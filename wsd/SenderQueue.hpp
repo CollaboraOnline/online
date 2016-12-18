@@ -175,23 +175,23 @@ private:
     /// enqueued, otherwise false.
     bool deduplicate(const Item& item)
     {
+        // Deduplicate messages based on the incoming one.
         const std::string command = item->firstToken();
         if (command == "tile:")
         {
-            TileDesc newTile = TileDesc::parse(item->firstLine());
-            auto begin = std::remove_if(_queue.begin(), _queue.end(),
-            [&newTile](const queue_item_t& cur)
-            {
-                const std::string curCommand = cur->firstToken();
-                if (curCommand == "tile:")
+            // Remove previous identical tile, if any, and use most recent (incoming).
+            const TileDesc newTile = TileDesc::parse(item->firstLine());
+            const auto& pos = std::find_if(_queue.begin(), _queue.end(),
+                [&newTile](const queue_item_t& cur)
                 {
-                    return (newTile == TileDesc::parse(cur->firstLine()));
-                }
+                    return (cur->firstToken() == "tile:" &&
+                            newTile == TileDesc::parse(cur->firstLine()));
+                });
 
-                return false;
-            });
-
-            _queue.erase(begin, _queue.end());
+            if (pos != _queue.end())
+            {
+                _queue.erase(pos);
+            }
         }
 
         return true;
