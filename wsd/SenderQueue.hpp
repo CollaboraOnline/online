@@ -28,34 +28,44 @@ public:
     enum class Type { Text, Binary };
 
     /// Construct a text message.
+    /// message must include the full first-line.
     MessagePayload(const std::string& message) :
         _data(message.data(), message.data() + message.size()),
+        _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _type(Type::Text)
     {
     }
 
     /// Construct a message from a string with type and
     /// reserve extra space (total, including message).
+    /// message must include the full first-line.
     MessagePayload(const std::string& message,
                    const enum Type type,
                    const size_t reserve = 0) :
         _data(reserve),
+        _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _type(type)
     {
         _data.resize(message.size());
         std::memcpy(_data.data(), message.data(), message.size());
     }
 
+    /// Construct a message from a character array with type.
+    /// data must be include the full first-line.
     MessagePayload(const char* data,
                    const size_t size,
                    const enum Type type) :
         _data(data, data + size),
+        _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _type(type)
     {
     }
 
     size_t size() const { return _data.size(); }
     const std::vector<char>& data() const { return _data; }
+
+    const std::vector<std::string>& tokens() const { return _tokens; }
+    const std::string& firstToken() const { return _tokens[0]; }
 
     /// Append more data to the message.
     void append(const char* data, const size_t size)
@@ -70,6 +80,7 @@ public:
 
 private:
     std::vector<char> _data;
+    const std::vector<std::string> _tokens;
     const Type _type;
 };
 

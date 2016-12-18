@@ -77,6 +77,49 @@ namespace LOOLProtocol
     // Functions that parse messages. All return false if parsing fails
     bool parseStatus(const std::string& message, LibreOfficeKitDocumentType& type, int& nParts, int& currentPart, int& width, int& height);
 
+    /// Tokenize space-delimited values until we hit new-line or the end.
+    inline
+    std::vector<std::string> tokenize(const char* data, const size_t size)
+    {
+        std::vector<std::string> tokens;
+        if (size == 0 || data == nullptr)
+        {
+            return tokens;
+        }
+
+        const char* start = data;
+        const char* end = data;
+        for (size_t i = 0; i < size && data[i] != '\n'; ++i, ++end)
+        {
+            if (data[i] == ' ')
+            {
+                if (start != end && *start != ' ')
+                {
+                    tokens.emplace_back(start, end);
+                }
+
+                start = end;
+            }
+            else if (*start == ' ')
+            {
+                ++start;
+            }
+        }
+
+        if (start != end && *start != ' ' && *start != '\n')
+        {
+            tokens.emplace_back(start, end);
+        }
+
+        return tokens;
+    }
+
+    inline
+    std::vector<std::string> tokenize(const std::string& s)
+    {
+        return tokenize(s.data(), s.size());
+    }
+
     inline
     std::string getDelimitedInitialSubstring(const char *message, const int length, const char delim)
     {
