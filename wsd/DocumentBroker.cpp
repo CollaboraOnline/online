@@ -228,6 +228,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
 
     LOG_INF("jailPath: " << jailPath.toString() << ", jailRoot: " << jailRoot);
 
+    bool firstInstance = false;
     if (_storage == nullptr)
     {
         // TODO: Maybe better to pass docKey to storage here instead of uriPublic here because
@@ -241,6 +242,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
             LOG_ERR("Failed to create Storage instance for [" << _docKey << "] in " << jailPath.toString());
             return false;
         }
+        firstInstance = true;
     }
 
     assert(_storage != nullptr);
@@ -314,6 +316,9 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
         LOG_ERR("Invalid fileinfo for URI [" << uriPublic.toString() << "].");
         return false;
     }
+
+    if (firstInstance)
+        _origDocumentLastModifiedTime = fileInfo._modifiedTime;
 
     // Lets load the document now
     const bool loaded = _storage->isLoaded();
