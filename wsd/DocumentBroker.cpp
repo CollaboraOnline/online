@@ -494,7 +494,7 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
     if (savingSession)
     {
         // Invalidate the timestamp to force persisting.
-        _lastFileModifiedTime.fromEpochTime(0);
+        _lastFileModifiedTime = Poco::Timestamp::fromEpochTime(0);
 
         // We do not want save to terminate editing mode if we are in edit mode now
 
