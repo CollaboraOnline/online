@@ -67,7 +67,7 @@ public:
         _uri(uri),
         _localStorePath(localStorePath),
         _jailPath(jailPath),
-        _fileInfo("", "lool", Poco::Timestamp(), 0),
+        _fileInfo("", "lool", Poco::Timestamp::fromEpochTime(0), 0),
         _isLoaded(false)
     {
         Log::debug("Storage ctor: " + uri.toString());
