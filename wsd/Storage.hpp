@@ -80,7 +80,7 @@ public:
     bool isLoaded() const { return _isLoaded; }
 
     /// Returns the basic information about the file.
-    virtual FileInfo getFileInfo() { return _fileInfo; }
+    FileInfo getFileInfo() { return _fileInfo; }
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
