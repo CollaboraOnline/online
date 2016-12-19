@@ -63,10 +63,10 @@ public:
 
     /// Construct a message from a character array with type.
     /// data must be include the full first-line.
-    MessagePayload(const char* data,
-                   const size_t size,
+    MessagePayload(const char* p,
+                   const size_t len,
                    const enum Type type) :
-        _data(data, data + size),
+        _data(p, p + len),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
         _abbreviation(LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
@@ -95,11 +95,11 @@ public:
     }
 
     /// Append more data to the message.
-    void append(const char* data, const size_t size)
+    void append(const char* p, const size_t len)
     {
         const auto curSize = _data.size();
-        _data.resize(curSize + size);
-        std::memcpy(_data.data() + curSize, data, size);
+        _data.resize(curSize + len);
+        std::memcpy(_data.data() + curSize, p, len);
     }
 
     /// Returns true if and only if the payload is considered Binary.
