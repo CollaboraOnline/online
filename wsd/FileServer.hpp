@@ -13,16 +13,10 @@
 #include "config.h"
 
 #include <string>
-#include <vector>
 
-#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
-#include <Poco/Net/HTTPServer.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
-#include <Poco/Net/SecureServerSocket.h>
-
-#include "Log.hpp"
 
 /// Handles file requests over HTTP(S).
 class FileServerRequestHandler : public Poco::Net::HTTPRequestHandler

@@ -60,19 +60,19 @@ bool FileServerRequestHandler::isAdminLoggedIn(HTTPServerRequest& request, HTTPS
     try
     {
         const std::string jwtToken = cookies.get("jwt");
-        Log::info("Verifying JWT token: " + jwtToken);
+        LOG_INF("Verifying JWT token: " << jwtToken);
         JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
         if (authAgent.verify(jwtToken))
         {
-            Log::trace("JWT token is valid");
+            LOG_TRC("JWT token is valid");
             return true;
         }
 
-        Log::info("Invalid JWT token, let the administrator re-login");
+        LOG_INF("Invalid JWT token, let the administrator re-login");
     }
     catch (const Poco::Exception& exc)
     {
-        Log::info("No existing JWT cookie found");
+        LOG_INF("No existing JWT cookie found");
     }
 
     // If no cookie found, or is invalid, let admin re-login
@@ -80,7 +80,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(HTTPServerRequest& request, HTTPS
     const auto pass = config.getString("admin_console.password", "");
     if (user.empty() || pass.empty())
     {
-        Log::error("Admin Console credentials missing. Denying access until set.");
+        LOG_ERR("Admin Console credentials missing. Denying access until set.");
         return false;
     }
 
@@ -100,7 +100,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(HTTPServerRequest& request, HTTPS
         return true;
     }
 
-    Log::info("Wrong admin credentials.");
+    LOG_INF("Wrong admin credentials.");
     return false;
 }
 
@@ -109,7 +109,7 @@ void FileServerRequestHandler::handleRequest(HTTPServerRequest& request, HTTPSer
     try
     {
         Poco::URI requestUri(request.getURI());
-        Log::trace("Fileserver request: " + requestUri.toString());
+        LOG_TRC("Fileserver request: " << requestUri.toString());
         requestUri.normalize(); // avoid .'s and ..'s
 
         std::vector<std::string> requestSegments;
@@ -169,7 +169,7 @@ void FileServerRequestHandler::handleRequest(HTTPServerRequest& request, HTTPSer
     }
     catch (const Poco::Net::NotAuthenticatedException& exc)
     {
-        Log::error("FileServerRequestHandler::NotAuthenticated: " + exc.displayText());
+        LOG_ERR("FileServerRequestHandler::NotAuthenticated: " << exc.displayText());
         response.set("WWW-Authenticate", "Basic realm=\"online\"");
         response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
         response.setContentLength(0);
@@ -177,14 +177,14 @@ void FileServerRequestHandler::handleRequest(HTTPServerRequest& request, HTTPSer
     }
     catch (const Poco::FileAccessDeniedException& exc)
     {
-        Log::error("FileServerRequestHandler: " + exc.displayText());
+        LOG_ERR("FileServerRequestHandler: " << exc.displayText());
         response.setStatusAndReason(HTTPResponse::HTTP_FORBIDDEN);
         response.setContentLength(0); // TODO return some 403 page?
         response.send();
     }
     catch (const Poco::FileNotFoundException& exc)
     {
-        Log::error("FileServerRequestHandler: " + exc.displayText());
+        LOG_ERR("FileServerRequestHandler: " << exc.displayText());
         response.setStatusAndReason(HTTPResponse::HTTP_NOT_FOUND);
         response.setContentLength(0); // TODO return some 404 page?
         response.send();
@@ -211,11 +211,11 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
 
     const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
     const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
-    Log::debug("Preprocessing file: " + path.toString());
+    LOG_DBG("Preprocessing file: " << path.toString());
 
     if (!Poco::File(path).exists())
     {
-        Log::error("File [" + path.toString() + "] does not exist.");
+        LOG_ERR("File [" << path.toString() << "] does not exist.");
         response.setStatusAndReason(HTTPResponse::HTTP_NOT_FOUND);
         response.setContentLength(0); // TODO return some 404 page?
         response.send();
@@ -275,7 +275,7 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
 
 FileServer::FileServer()
 {
-    Log::info("FileServer ctor.");
+    LOG_INF("FileServer ctor.");
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
