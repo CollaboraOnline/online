@@ -30,7 +30,7 @@ namespace
 {
     void alertAllUsersAndLog(const std::string& message, const std::string& cmd, const std::string& kind)
     {
-        Log::error(message);
+        LOG_ERR(message);
         Util::alertAllUsers(cmd, kind);
     }
 }
@@ -93,7 +93,7 @@ namespace FileUtil
                     // Everything OK, rename the file to its proper name
                     if (std::rename(tempFileName.c_str(), fileName.c_str()) == 0)
                     {
-                        Log::debug() << "Renaming " << tempFileName << " to " << fileName << " OK." << Log::end;
+                        LOG_DBG("Renaming " << tempFileName << " to " << fileName << " OK.");
                         return true;
                     }
                     else

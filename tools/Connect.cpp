@@ -156,7 +156,7 @@ protected:
     {
         if (args.size() < 1)
         {
-            Log::error("Usage: connect documentURI [serverURI]");
+            LOG_ERR("Usage: connect documentURI [serverURI]");
             return Application::EXIT_USAGE;
         }
 

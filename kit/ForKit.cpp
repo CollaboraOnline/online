@@ -396,7 +396,7 @@ int main(int argc, char** argv)
     Process::PID forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, true);
     if (forKitPid < 0)
     {
-        Log::fatal("Failed to create a kit process.");
+        LOG_FTL("Failed to create a kit process.");
         std::_Exit(Application::EXIT_SOFTWARE);
     }
 

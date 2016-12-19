@@ -154,9 +154,9 @@ namespace Util
 
             return std::stoi(sResponse);
         }
-        catch(const std::exception&)
+        catch (const std::exception&)
         {
-            Log::warn() << "Trying to find memory of invalid/dead PID " << nPid << Log::end;
+            LOG_WRN("Trying to find memory of invalid/dead PID " << nPid);
         }
 
         return -1;
