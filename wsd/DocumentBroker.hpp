@@ -170,7 +170,6 @@ private:
     std::atomic<bool> _stop;
 };
 
-class PrisonerSession;
 class ClientSession;
 
 /// DocumentBroker is responsible for setting up a document
