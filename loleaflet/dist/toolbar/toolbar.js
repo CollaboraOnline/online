@@ -848,8 +848,8 @@ map.on('doclayerinit', function () {
 
 	switch (docType) {
 	case 'spreadsheet':
-		toolbarUp.remove('inserttable', 'styles', 'alignblock', 'bullet', 'numbering', 'break-numbering');
-		toolbarUpMore.remove('inserttable', 'styles', 'alignblock', 'bullet', 'numbering', 'break-numbering');
+		toolbarUp.remove('inserttable', 'styles', 'alignblock', 'defaultbullet', 'defaultnumbering', 'break-numbering');
+		toolbarUpMore.remove('inserttable', 'styles', 'alignblock', 'defaultbullet', 'defaultnumbering', 'break-numbering');
 		statusbar.disable('zoomreset', 'zoomout', 'zoomin', 'zoomlevel');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
