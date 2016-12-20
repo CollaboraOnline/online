@@ -309,7 +309,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     session->setUserId(userid);
     session->setUserName(username);
 
-    // Get basic file information from the storage
+    // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() callns
     const auto fileInfo = _storage->getFileInfo();
     if (!fileInfo.isValid())
     {
@@ -318,7 +318,22 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     }
 
     if (firstInstance)
-        _origDocumentLastModifiedTime = fileInfo._modifiedTime;
+    {
+        _documentLastModifiedTime = fileInfo._modifiedTime;
+        LOG_DBG("Document timestamp: " << Poco::DateTimeFormatter::format(Poco::DateTime(_documentLastModifiedTime),
+                                                                          Poco::DateTimeFormat::ISO8601_FORMAT));
+    }
+    else
+    {
+        // Check if document has been modified by some external action
+        LOG_DBG("Timestamp now: " << Poco::DateTimeFormatter::format(Poco::DateTime(fileInfo._modifiedTime),
+                                                                     Poco::DateTimeFormat::ISO8601_FORMAT));
+        if (_documentLastModifiedTime != fileInfo._modifiedTime)
+        {
+            LOG_ERR("Document has been modified behind our back, URI [" << uriPublic.toString() << "].");
+            // What do do?
+        }
+    }
 
     // Lets load the document now
     const bool loaded = _storage->isLoaded();
@@ -384,6 +399,9 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
 
     LOG_DBG("Saving to URI [" << uri << "].");
 
+    // FIXME: We should check before persisting the document that it hasn't been updated in its
+    // storage behind our backs.
+
     assert(_storage && _tileCache);
     StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(uriPublic);
     if (storageSaveResult == StorageBase::SaveResult::OK)
@@ -393,8 +411,28 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         _lastFileModifiedTime = newFileModifiedTime;
         _tileCache->saveLastModified(_lastFileModifiedTime);
         _lastSaveTime = std::chrono::steady_clock::now();
+
+        // Calling getWOPIFileInfo() or getLocalFileInfo() has the side-effect of updating
+        // StorageBase::_fileInfo. Get the timestamp of the document as persisted in its storage
+        // from there.
+        // FIXME: Yes, of course we should turn this stuff into a virtual function and avoid this
+        // dynamic_cast dance.
+        if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
+        {
+            auto wopiFileInfo = static_cast<WopiStorage*>(_storage.get())->getWOPIFileInfo(uriPublic);
+        }
+        else if (dynamic_cast<LocalStorage*>(_storage.get()) != nullptr)
+        {
+            auto localFileInfo = static_cast<LocalStorage*>(_storage.get())->getLocalFileInfo(uriPublic);
+        }
+        // So set _documentLastModifiedTime then
+        _documentLastModifiedTime = _storage->getFileInfo()._modifiedTime;
+
         LOG_DBG("Saved to URI [" << uri << "] and updated tile cache.");
+        LOG_DBG("Timestamp now: " << Poco::DateTimeFormatter::format(Poco::DateTime(_documentLastModifiedTime),
+                                                                     Poco::DateTimeFormat::ISO8601_FORMAT));
         _saveCV.notify_all();
+
         return true;
     }
     else if (storageSaveResult == StorageBase::SaveResult::DISKFULL)
