@@ -102,6 +102,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/LOOLWSD.hpp \
               wsd/PrisonerSession.hpp \
               wsd/QueueHandler.hpp \
+              wsd/SenderQueue.hpp \
               wsd/Storage.hpp \
               wsd/TileCache.hpp \
               wsd/TileDesc.hpp \
