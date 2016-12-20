@@ -194,15 +194,12 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo(cons
     const auto path = Poco::Path(uriPublic.getPath());
     Log::debug("Getting info for local uri [" + uriPublic.toString() + "], path [" + path.toString() + "].");
 
-    if (!_fileInfo.isValid())
-    {
-        const auto& filename = path.getFileName();
-        const auto file = Poco::File(path);
-        const auto lastModified = file.getLastModified();
-        const auto size = file.getSize();
+    const auto& filename = path.getFileName();
+    const auto file = Poco::File(path);
+    const auto lastModified = file.getLastModified();
+    const auto size = file.getSize();
 
-        _fileInfo = FileInfo({filename, "localhost", lastModified, size});
-    }
+    _fileInfo = FileInfo({filename, "localhost", lastModified, size});
 
     // Set automatic userid and username
     return std::unique_ptr<LocalStorage::LocalFileInfo>(new LocalFileInfo({"localhost", std::string("Local Host #") + std::to_string(LastLocalStorageId++)}));
@@ -429,29 +426,26 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
     else
         Log::error("WOPI::CheckFileInfo is missing JSON payload");
 
-    if (!_fileInfo.isValid())
+    Poco::Timestamp modifiedTime = Poco::Timestamp::fromEpochTime(0);
+    if (lastModifiedTime != "")
     {
-        Poco::Timestamp modifiedTime = Poco::Timestamp::fromEpochTime(0);
-        if (lastModifiedTime != "")
+        Poco::DateTime dateTime;
+        int timeZoneDifferential;
+        bool valid = false;
+        try
         {
-            Poco::DateTime dateTime;
-            int timeZoneDifferential;
-            bool valid = false;
-            try
-            {
-                Poco::DateTimeParser::parse(Poco::DateTimeFormat::ISO8601_FRAC_FORMAT, lastModifiedTime, dateTime, timeZoneDifferential);
-                valid = true;
-            }
-            catch (const Poco::SyntaxException& exc)
-            {
-                LOG_WRN("LastModifiedTime property [" + lastModifiedTime + "] was invalid format: " << exc.displayText() <<
-                        (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
-            }
-            if (valid)
-                modifiedTime = dateTime.timestamp();
+            Poco::DateTimeParser::parse(Poco::DateTimeFormat::ISO8601_FRAC_FORMAT, lastModifiedTime, dateTime, timeZoneDifferential);
+            valid = true;
         }
-        _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
+        catch (const Poco::SyntaxException& exc)
+        {
+            LOG_WRN("LastModifiedTime property [" + lastModifiedTime + "] was invalid format: " << exc.displayText() <<
+                    (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+        }
+        if (valid)
+            modifiedTime = dateTime.timestamp();
     }
+    _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, callDuration}));
 }
