@@ -148,7 +148,9 @@ void FileServerRequestHandler::handleRequest(HTTPServerRequest& request, HTTPSer
 
             const std::size_t extPoint = endPoint.find_last_of('.');
             if (extPoint == std::string::npos)
+            {
                 throw Poco::FileNotFoundException("Invalid file.");
+            }
 
             const std::string fileType = endPoint.substr(extPoint + 1);
             std::string mimeType;
@@ -199,8 +201,8 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPServerRequest
 
     std::string path(requestUri.getPath());
 
-    // convert version back to a real file name
-    Poco::replaceInPlace(path, std::string("/loleaflet/" LOOLWSD_VERSION_HASH "/"), std::string("/loleaflet/dist/"));
+    // Convert version back to a real file name. Remove first foreslash as the root ends in one.
+    Poco::replaceInPlace(path, std::string("/loleaflet/" LOOLWSD_VERSION_HASH "/"), std::string("loleaflet/dist/"));
 
     return path;
 }
