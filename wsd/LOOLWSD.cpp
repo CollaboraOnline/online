@@ -329,7 +329,7 @@ static bool cleanupChildren()
     {
         if (!NewChildren[i]->isAlive())
         {
-            LOG_WRN("Removing unused dead child [" << NewChildren[i]->getPid() << "].");
+            LOG_WRN("Removing dead spare child [" << NewChildren[i]->getPid() << "].");
             NewChildren.erase(NewChildren.begin() + i);
             removed = true;
         }
@@ -382,12 +382,16 @@ static void prespawnChildren()
         OutstandingForks = 0;
     }
 
+    const auto available = NewChildren.size();
     int balance = LOOLWSD::NumPreSpawnedChildren;
-    balance -= NewChildren.size();
+    balance -= available;
     balance -= OutstandingForks;
 
-    if (rebalance || durationMs >= CHILD_TIMEOUT_MS)
+    if (balance > 0 && (rebalance || durationMs >= CHILD_TIMEOUT_MS))
     {
+        LOG_DBG("prespawnChildren: Have " << available << " spare " <<
+                (available == 1 ? "child" : "children") <<
+                ", forking " << balance << " more.");
         forkChildren(balance);
     }
 }
@@ -399,9 +403,10 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     --OutstandingForks;
     NewChildren.emplace_back(child);
     const auto count = NewChildren.size();
+    LOG_INF("Have " << count << " spare " <<
+            (count == 1 ? "child" : "children") << " after adding.");
     lock.unlock();
 
-    LOG_INF("Have " << count << " " << (count == 1 ? "child." : "children."));
     NewChildrenCV.notify_one();
     return count;
 }
@@ -430,14 +435,21 @@ static std::shared_ptr<ChildProcess> getNewChild()
             balance = std::max(balance, 0);
         }
 
-        LOG_DBG("getNewChild: Have " << available << " children, forking " << balance);
-        forkChildren(balance);
+        if (balance > 0)
+        {
+            LOG_DBG("getNewChild: Have " << available << " spare " <<
+                    (available == 1 ? "child" : "children") <<
+                    ", forking " << balance << " more.");
+            forkChildren(balance);
+        }
 
         const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_MS);
         if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
         {
             auto child = NewChildren.back();
             NewChildren.pop_back();
+            LOG_DBG("getNewChild: Have " << available << " spare " <<
+                    (available == 1 ? "child" : "children") << " after poping.");
 
             // Validate before returning.
             if (child && child->isAlive())
