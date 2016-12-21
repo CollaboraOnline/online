@@ -74,6 +74,7 @@ void ChildSession::disconnect()
 
 bool ChildSession::_handleInput(const char *buffer, int length)
 {
+    LOG_TRC(getName() + ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 

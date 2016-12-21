@@ -228,8 +228,6 @@ bool Session::handleInput(const char *buffer, int length)
             length = replace->size();
         }
 
-        LOG_TRC(getName() << ": Recv: " << getAbbreviatedMessage(buffer, length));
-
         return _handleInput(buffer, length);
     }
     catch (const Exception& exc)

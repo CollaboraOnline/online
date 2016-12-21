@@ -77,9 +77,9 @@ void ClientSession::bridgePrisonerSession()
 
 bool ClientSession::_handleInput(const char *buffer, int length)
 {
+    LOG_TRC(getName() + ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-    Log::trace(getName() + ": handling [" + firstLine + "].");
 
     auto docBroker = getDocumentBroker();
     if (!docBroker)
