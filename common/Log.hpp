@@ -181,6 +181,7 @@ namespace Log
 #define LOG_SFL(X) if (Log::errorEnabled()) { LOG_BODY("FTL", X << " (errno: " << std::strerror(errno) << ")"); Log::logger().fatal(oss_.str()); }
 
 #define LOG_CHECK(X) if (!(X)) { LOG_ERR("Check failed. Expected (" #X ")."); }
+#define LOG_CHECK_RET(X, RET) if (!(X)) { LOG_ERR("Check failed. Expected (" #X ")."); return RET; }
 
 #endif
 

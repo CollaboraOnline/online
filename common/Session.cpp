@@ -217,7 +217,7 @@ void Session::shutdown(Poco::UInt16 statusCode, const std::string& statusMessage
 
 bool Session::handleInput(const char *buffer, int length)
 {
-    assert(buffer != nullptr);
+    LOG_CHECK_RET(buffer != nullptr, false);
 
     try
     {
