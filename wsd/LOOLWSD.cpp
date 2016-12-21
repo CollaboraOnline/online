@@ -265,7 +265,18 @@ bool cleanupDocBrokers()
         }
     }
 
-    return (count != DocBrokers.size());
+    if (count != DocBrokers.size())
+    {
+        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after cleanup.");
+        for (auto& pair : DocBrokers)
+        {
+            LOG_TRC("DocumentBroker [" << pair.first << "].");
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 static void forkChildren(const int number)
@@ -596,6 +607,7 @@ private:
                         LOG_DBG("Removing DocumentBroker for docKey [" << docKey << "].");
                         DocBrokers.erase(docKey);
                         docBroker->terminateChild(docLock);
+                        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing.");
                     }
                     else
                     {
@@ -760,7 +772,7 @@ private:
         if (it != DocBrokers.end() && it->first == docKey)
         {
             // Get the DocumentBroker from the Cache.
-            LOG_DBG("Found DocumentBroker for docKey [" << docKey << "].");
+            LOG_DBG("Found DocumentBroker with docKey [" << docKey << "].");
             docBroker = it->second;
             assert(docBroker);
 
@@ -824,6 +836,7 @@ private:
         }
 
         Util::assertIsLocked(docBrokersLock);
+        LOG_DBG("No DocumentBroker with docKey [" << docKey << "] found. New Child and Document.");
 
         if (TerminationFlag)
         {
@@ -976,6 +989,7 @@ private:
                         LOG_INF("Removing DocumentBroker for docKey [" << docKey << "].");
                         DocBrokers.erase(docKey);
                         docBroker->terminateChild(lock);
+                        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing.");
                     }
                 }
             }
