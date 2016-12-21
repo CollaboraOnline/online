@@ -40,14 +40,14 @@ ClientSession::ClientSession(const std::string& id,
     _loadPart(-1),
     _stop(false)
 {
-    Log::info("ClientSession ctor [" + getName() + "].");
+    LOG_INF("ClientSession ctor [" << getName() << "].");
 
     _senderThread = std::thread([this]{ senderThread(); });
 }
 
 ClientSession::~ClientSession()
 {
-    Log::info("~ClientSession dtor [" + getName() + "].");
+    LOG_INF("~ClientSession dtor [" << getName() << "].");
 
     // Release the save-as queue.
     _saveAsQueue.put("");
@@ -77,14 +77,14 @@ void ClientSession::bridgePrisonerSession()
 
 bool ClientSession::_handleInput(const char *buffer, int length)
 {
-    LOG_TRC(getName() + ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
+    LOG_TRC(getName() << ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
     auto docBroker = getDocumentBroker();
     if (!docBroker)
     {
-        Log::error("No DocBroker found. Terminating session " + getName());
+        LOG_ERR("No DocBroker found. Terminating session " << getName());
         return false;
     }
 
@@ -183,7 +183,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // is turned on by WOPI, let it close all sessions
         if (_isDocumentOwner && _wopiFileInfo && _wopiFileInfo->_enableOwnerTermination)
         {
-            LOG_DBG("Session [" + getId() + "] requested owner termination");
+            LOG_DBG("Session [" << getId() << "] requested owner termination");
             docBroker->closeDocument("ownertermination");
         }
 
@@ -247,7 +247,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
         return false;
     }
 
-    Log::info("Requesting document load from child.");
+    LOG_INF("Requesting document load from child.");
     try
     {
         std::string timestamp;
@@ -363,7 +363,7 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringToke
     }
     catch (const std::exception& exc)
     {
-        Log::error(std::string("Failed to process tile command: ") + exc.what() + ".");
+        LOG_ERR("Failed to process tile command: " << exc.what());
         return sendTextFrame("error: cmd=tile kind=invalid");
     }
 
@@ -380,7 +380,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, St
     }
     catch (const std::exception& exc)
     {
-        Log::error(std::string("Failed to process tilecombine command: ") + exc.what() + ".");
+        LOG_ERR("Failed to process tilecombine command: " << exc.what());
         return sendTextFrame("error: cmd=tile kind=invalid");
     }
 
@@ -458,7 +458,7 @@ void ClientSession::setReadOnly()
 
 void ClientSession::senderThread()
 {
-    LOG_DBG(getName() + " SenderThread started");
+    LOG_DBG(getName() << " SenderThread started");
 
     while (!stopping())
     {
@@ -485,7 +485,7 @@ void ClientSession::senderThread()
         }
     }
 
-    LOG_DBG(getName() + " SenderThread finished");
+    LOG_DBG(getName() << " SenderThread finished");
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
