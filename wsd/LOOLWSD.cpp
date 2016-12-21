@@ -281,7 +281,18 @@ bool cleanupDocBrokers()
         }
     }
 
-    return (count != DocBrokers.size());
+    if (count != DocBrokers.size())
+    {
+        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after cleanup.");
+        for (auto& pair : DocBrokers)
+        {
+            LOG_TRC("DocumentBroker [" << pair.first << "].");
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 static void forkChildren(const int number)
@@ -556,6 +567,7 @@ private:
                     // FIXME: What if the same document is already open? Need a fake dockey here?
                     LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
                     DocBrokers.emplace(docKey, docBroker);
+                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting.");
 
                     // Load the document.
                     std::shared_ptr<LOOLWebSocket> ws;
@@ -612,6 +624,7 @@ private:
                         LOG_DBG("Removing DocumentBroker for docKey [" << docKey << "].");
                         DocBrokers.erase(docKey);
                         docBroker->terminateChild(docLock);
+                        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing.");
                     }
                     else
                     {
@@ -772,11 +785,11 @@ private:
         cleanupDocBrokers();
 
         // Lookup this document.
-        auto it = DocBrokers.lower_bound(docKey);
-        if (it != DocBrokers.end() && it->first == docKey)
+        auto it = DocBrokers.find(docKey);
+        if (it != DocBrokers.end())
         {
             // Get the DocumentBroker from the Cache.
-            LOG_DBG("Found DocumentBroker for docKey [" << docKey << "].");
+            LOG_DBG("Found DocumentBroker with docKey [" << docKey << "].");
             docBroker = it->second;
             assert(docBroker);
 
@@ -828,8 +841,8 @@ private:
 
                 // Retake the lock and recheck if another thread created the DocBroker.
                 docBrokersLock.lock();
-                it = DocBrokers.lower_bound(docKey);
-                if (it != DocBrokers.end() && it->first == docKey)
+                it = DocBrokers.find(docKey);
+                if (it != DocBrokers.end())
                 {
                     // Get the DocumentBroker from the Cache.
                     LOG_DBG("Found DocumentBroker for docKey [" << docKey << "].");
@@ -840,6 +853,7 @@ private:
         }
 
         Util::assertIsLocked(docBrokersLock);
+        LOG_DBG("No DocumentBroker with docKey [" << docKey << "] found. New Child and Document.");
 
         if (TerminationFlag)
         {
@@ -871,7 +885,8 @@ private:
             LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
             docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
             child->setDocumentBroker(docBroker);
-            DocBrokers.insert(it, std::make_pair(docKey, docBroker));
+            DocBrokers.emplace(docKey, docBroker);
+            LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting.");
         }
 
         // Validate the broker.
@@ -992,6 +1007,7 @@ private:
                         LOG_INF("Removing DocumentBroker for docKey [" << docKey << "].");
                         DocBrokers.erase(docKey);
                         docBroker->terminateChild(lock);
+                        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing.");
                     }
                 }
             }
