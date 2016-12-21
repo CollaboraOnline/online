@@ -10,13 +10,11 @@
 #include "PrisonerSession.hpp"
 #include "config.h"
 
-#include <Poco/FileStream.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-#include <Poco/URI.h>
-#include <Poco/URIStreamOpener.h>
 
 #include "Common.hpp"
+#include "DocumentBroker.hpp"
 #include "Protocol.hpp"
 #include "Session.hpp"
 #include "LOOLWSD.hpp"

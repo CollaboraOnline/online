@@ -35,9 +35,11 @@
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/Util/Timer.h>
 
+#include "Auth.hpp"
 #include "Common.hpp"
 #include "FileServer.hpp"
 #include "LOOLWSD.hpp"
+#include "Log.hpp"
 
 using Poco::FileInputStream;
 using Poco::Net::HTMLForm;

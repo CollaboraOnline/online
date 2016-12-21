@@ -12,22 +12,15 @@
 
 #include <fstream>
 
-#include <Poco/FileStream.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
 #include <Poco/URI.h>
-#include <Poco/URIStreamOpener.h>
 
 #include "Common.hpp"
-#include "IoUtil.hpp"
-#include "Protocol.hpp"
-#include "Session.hpp"
+#include "DocumentBroker.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "PrisonerSession.hpp"
-#include "Rectangle.hpp"
-#include "Storage.hpp"
-#include "TileCache.hpp"
+#include "Protocol.hpp"
+#include "Session.hpp"
 #include "Util.hpp"
 
 using namespace LOOLProtocol;

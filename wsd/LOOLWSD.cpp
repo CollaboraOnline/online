@@ -100,6 +100,7 @@
 #include "Auth.hpp"
 #include "ClientSession.hpp"
 #include "Common.hpp"
+#include "DocumentBroker.hpp"
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
 #include "common/FileUtil.hpp"

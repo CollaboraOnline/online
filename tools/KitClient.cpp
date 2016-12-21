@@ -20,7 +20,6 @@
 
 #include <Poco/Buffer.h>
 #include <Poco/Process.h>
-#include <Poco/Random.h>
 #include <Poco/String.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/TemporaryFile.h>

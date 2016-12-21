@@ -14,10 +14,8 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
-#include <random>
 
 #include <Poco/Net/HTMLForm.h>
-#include <Poco/Net/NetException.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -27,12 +25,7 @@
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/StreamCopier.h>
-#include <Poco/URI.h>
-#include <Poco/Process.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/Thread.h>
-#include <Poco/Timespan.h>
-#include <Poco/Timestamp.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Util/HelpFormatter.h>
@@ -42,9 +35,6 @@
 #include "Common.hpp"
 #include "Protocol.hpp"
 #include "Util.hpp"
-
-#include <Poco/Util/Application.h>
-#include <Poco/Util/OptionSet.h>
 
 /// Simple command-line tool for file format conversion.
 class Tool: public Poco::Util::Application

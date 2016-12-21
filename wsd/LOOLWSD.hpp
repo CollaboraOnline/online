@@ -11,18 +11,14 @@
 #define INCLUDED_LOOLWSD_HPP
 
 #include <atomic>
-#include <mutex>
+#include <map>
 #include <string>
 
 #include <Poco/Path.h>
 #include <Poco/Process.h>
-#include <Poco/Random.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
 
-#include "Auth.hpp"
-#include "Common.hpp"
-#include "DocumentBroker.hpp"
 #include "Util.hpp"
 
 class TraceFileWriter;

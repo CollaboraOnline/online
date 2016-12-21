@@ -29,22 +29,9 @@
 #include <iomanip>
 #include <iostream>
 #include <mutex>
-#include <random>
 #include <sstream>
 #include <string>
 #include <thread>
-
-#include <Poco/Base64Encoder.h>
-#include <Poco/ConsoleChannel.h>
-#include <Poco/Exception.h>
-#include <Poco/Format.h>
-#include <Poco/Net/WebSocket.h>
-#include <Poco/Process.h>
-#include <Poco/RandomStream.h>
-#include <Poco/TemporaryFile.h>
-#include <Poco/Thread.h>
-#include <Poco/Timestamp.h>
-#include <Poco/Util/Application.h>
 
 #include "Common.hpp"
 #include "Log.hpp"

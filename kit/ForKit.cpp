@@ -23,7 +23,6 @@
 #include <cstring>
 #include <iostream>
 #include <map>
-#include <set>
 
 #include <Poco/Path.h>
 #include <Poco/Process.h>

@@ -15,28 +15,15 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
-#include <random>
 #include <thread>
 
-#include <Poco/Net/NetException.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/KeyConsoleHandler.h>
-#include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/StreamCopier.h>
-#include <Poco/URI.h>
-#include <Poco/Process.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/Thread.h>
-#include <Poco/Timespan.h>
-#include <Poco/Timestamp.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/Option.h>
-#include <Poco/Util/OptionSet.h>
-
-#include <Poco/Util/Application.h>
 #include <Poco/Util/OptionSet.h>
 
 #include "TraceFile.hpp"

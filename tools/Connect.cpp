@@ -24,21 +24,13 @@
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/NetException.h>
-#include <Poco/Net/PrivateKeyPassphraseHandler.h>
 #include <Poco/Net/SSLManager.h>
-#include <Poco/Net/SocketStream.h>
-#include <Poco/Net/StreamSocket.h>
-#include <Poco/Net/TCPServer.h>
-#include <Poco/Net/TCPServerConnection.h>
-#include <Poco/Net/TCPServerConnectionFactory.h>
-#include <Poco/Process.h>
 #include <Poco/SharedPtr.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
-#include <Poco/Version.h>
 
 #include "Common.hpp"
 #include "Protocol.hpp"

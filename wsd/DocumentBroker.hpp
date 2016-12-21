@@ -25,15 +25,16 @@
 
 #include "IoUtil.hpp"
 #include "Log.hpp"
-#include <LOOLWebSocket.hpp>
-#include "Storage.hpp"
-#include "TileCache.hpp"
+#include "LOOLWebSocket.hpp"
+#include "TileDesc.hpp"
 #include "Util.hpp"
 
 #include "common/SigUtil.hpp"
 
 // Forwards.
 class DocumentBroker;
+class StorageBase;
+class TileCache;
 
 /// Represents a new LOK child that is read
 /// to host a document.
