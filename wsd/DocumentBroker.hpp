@@ -140,17 +140,15 @@ public:
         return false;
     }
 
-    /// Check whether this child is alive and able to respond.
+    /// Check whether this child is alive and socket not in error.
     /// Note: zombies will show as alive, and sockets have waiting
     /// time after the other end-point closes. So this isn't accurate.
     bool isAlive() const
     {
         try
         {
-            using namespace Poco::Net;
             return (_pid > 1 && _ws && kill(_pid, 0) == 0 &&
-                    _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_WRITE) &&
-                    !_ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR));
+                    !_ws->poll(Poco::Timespan(0), Poco::Net::Socket::SelectMode::SELECT_ERROR));
         }
         catch (const std::exception& exc)
         {
