@@ -567,7 +567,9 @@ L.Map = L.Evented.extend({
 	},
 
 	focus: function () {
+		console.debug('focus:');
 		if (this._docLayer && document.activeElement !== this._docLayer._textArea) {
+			console.debug('focus: focussing');
 			this._docLayer._textArea.focus();
 		}
 	},
@@ -754,6 +756,7 @@ L.Map = L.Evented.extend({
 					var id = vex.dialogID;
 					vex.dialogID = -1;
 					this._startInactiveTimer();
+					this.focus();
 					return vex.close(id);
 				}
 			} else {
@@ -762,6 +765,7 @@ L.Map = L.Evented.extend({
 		}
 
 		this._startInactiveTimer();
+		this.focus();
 		return false;
 	},
 
