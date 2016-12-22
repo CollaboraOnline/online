@@ -19,15 +19,15 @@ using namespace helpers;
 
 class UnitStorage : public UnitWSD
 {
-    enum {
-        PHASE_LOAD,             // load the document
-        PHASE_FILTER,           // throw filter exception
-        PHASE_RE_LOAD,          // re-load the document
+    enum class Phase {
+        Load,             // load the document
+        Filter,           // throw filter exception
+        Reload,           // re-load the document
     } _phase;
     std::unique_ptr<UnitWebSocket> _ws;
 public:
     UnitStorage() :
-        _phase(PHASE_LOAD)
+        _phase(Phase::Load)
     {
     }
 
@@ -35,9 +35,9 @@ public:
                             const std::string &/* jailId */,
                             bool &/* result */)
     {
-        if (_phase == PHASE_FILTER)
+        if (_phase == Phase::Filter)
         {
-            _phase = PHASE_RE_LOAD;
+            _phase = Phase::Reload;
             LOG_INF("Throwing low disk space exception.");
             throw StorageSpaceLowException("test: low disk space");
         }
@@ -57,16 +57,16 @@ public:
     {
         switch (_phase)
         {
-        case PHASE_LOAD:
-            _phase = PHASE_FILTER;
+        case Phase::Load:
+            _phase = Phase::Filter;
             loadDocument();
             break;
-        case PHASE_FILTER:
+        case Phase::Filter:
             break;
-        case PHASE_RE_LOAD:
+        case Phase::Reload:
             loadDocument();
             _ws.reset();
-            exitTest(TEST_OK);
+            exitTest(TestResult::Ok);
             break;
         }
     }

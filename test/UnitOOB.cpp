@@ -38,8 +38,8 @@ public:
         UnitHTTPServerRequest request(response, "nonsense URI");
 
         // ensure we handle invalid URIs without asserting.
-        testHandleRequest(TestRequest::TEST_REQ_PRISONER, request, response);
-        exitTest(TestResult::TEST_OK);
+        testHandleRequest(TestRequest::Prisoner, request, response);
+        exitTest(TestResult::Ok);
     }
 };
 

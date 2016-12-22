@@ -61,11 +61,11 @@ protected:
     /// If the test times out this gets invoked, the default just exits.
     virtual void timeout();
 
-    enum TestResult
+    enum class TestResult
     {
-        TEST_FAILED,
-        TEST_OK,
-        TEST_TIMED_OUT
+        Failed,
+        Ok,
+        TimedOut
     };
 
     /// Encourages the process to exit with this value (unless hooked)
@@ -75,10 +75,10 @@ protected:
     virtual ~UnitBase();
 
 public:
-    enum UnitType
+    enum class UnitType
     {
-        TYPE_WSD,
-        TYPE_KIT
+        Wsd,
+        Kit
     };
     /// Load unit test hook shared library from this path
     static bool init(UnitType type, const std::string& unitLibPath);
@@ -127,14 +127,14 @@ public:
 
     static UnitWSD& get()
     {
-        assert(Global && Global->_type == UnitType::TYPE_WSD);
+        assert(Global && Global->_type == UnitType::Wsd);
         return *static_cast<UnitWSD *>(Global);
     }
 
-    enum TestRequest
+    enum class TestRequest
     {
-        TEST_REQ_CLIENT,
-        TEST_REQ_PRISONER
+        Client,
+        Prisoner
     };
     /// Simulate an incoming request
     void testHandleRequest(TestRequest type,
@@ -218,7 +218,7 @@ public:
     virtual ~UnitKit();
     static UnitKit& get()
     {
-        assert(Global && Global->_type == UnitType::TYPE_KIT);
+        assert(Global && Global->_type == UnitType::Kit);
         return *static_cast<UnitKit *>(Global);
     }
 

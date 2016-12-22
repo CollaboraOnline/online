@@ -1110,7 +1110,7 @@ public:
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
         if (UnitWSD::get().filterHandleRequest(
-                UnitWSD::TestRequest::TEST_REQ_CLIENT,
+                UnitWSD::TestRequest::Client,
                 request, response))
             return;
 
@@ -1271,7 +1271,7 @@ public:
     void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
     {
         if (UnitWSD::get().filterHandleRequest(
-                UnitWSD::TestRequest::TEST_REQ_PRISONER,
+                UnitWSD::TestRequest::Prisoner,
                 request, response))
             return;
 
@@ -1552,7 +1552,7 @@ void LOOLWSD::initialize(Application& self)
         throw std::runtime_error("Do not run as root. Please run as lool user.");
     }
 
-    if (!UnitWSD::init(UnitWSD::UnitType::TYPE_WSD, UnitTestLibrary))
+    if (!UnitWSD::init(UnitWSD::UnitType::Wsd, UnitTestLibrary))
     {
         throw std::runtime_error("Failed to load wsd unit test library.");
     }
@@ -2290,10 +2290,10 @@ void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request
 {
     switch (type)
     {
-    case TestRequest::TEST_REQ_CLIENT:
+    case TestRequest::Client:
         ClientRequestHandler::handleClientRequest(request, response);
         break;
-    case TestRequest::TEST_REQ_PRISONER:
+    case TestRequest::Prisoner:
         PrisonerRequestHandler::handlePrisonerRequest(request, response);
         break;
     default:

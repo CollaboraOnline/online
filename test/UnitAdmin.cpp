@@ -75,11 +75,11 @@ private:
 
         session->sendRequest(request);
         session->receiveResponse(response);
-        TestResult res = TestResult::TEST_FAILED;
+        TestResult res = TestResult::Failed;
         if (response.getStatus() == HTTPResponse::HTTP_UNAUTHORIZED)
-            res = TestResult::TEST_OK;
+            res = TestResult::Ok;
 
-        Log::info(std::string("testIncorrectPassword: ") + (res == TestResult::TEST_OK ? "OK" : "FAIL"));
+        Log::info(std::string("testIncorrectPassword: ") + (res == TestResult::Ok ? "OK" : "FAIL"));
         return res;
     }
 
@@ -106,21 +106,21 @@ private:
         std::string cookiePath = cookies[0].getPath();
         bool secure = cookies[0].getSecure();
         std::string value = cookies[0].getValue();
-        TestResult res = TestResult::TEST_FAILED;
+        TestResult res = TestResult::Failed;
         if (cookiePath.find_first_of("/loleaflet/dist/admin/") == 0 &&
             value != "" &&
             secure)
         {
             // Set JWT cookie to be used for subsequent tests
             _jwtCookie = value;
-            res = TestResult::TEST_OK;
+            res = TestResult::Ok;
         }
         else
         {
             Log::info("testCorrectPassword: Invalid cookie properties");
         }
 
-        Log::info(std::string("testCorrectPassword: ") + (res == TestResult::TEST_OK ? "OK" : "FAIL"));
+        Log::info(std::string("testCorrectPassword: ") + (res == TestResult::Ok ? "OK" : "FAIL"));
         return res;
     }
 
@@ -139,7 +139,7 @@ private:
         if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
             Log::info("testWebSocketWithoutAuth: Timed out waiting for admin console message");
-            return TestResult::TEST_TIMED_OUT;
+            return TestResult::TimedOut;
         }
         lock.unlock();
 
@@ -148,11 +148,11 @@ private:
             tokens[0] != "NotAuthenticated")
         {
             Log::info("testWebSocketWithoutAuth: Unrecognized message format");
-            return TestResult::TEST_FAILED;
+            return TestResult::Failed;
         }
 
         Log::info(std::string("testWebSocketWithoutAuth: OK"));
-        return TestResult::TEST_OK;
+        return TestResult::Ok;
     }
 
     TestResult testWebSocketWithIncorrectAuthToken()
@@ -170,7 +170,7 @@ private:
         if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
             Log::info("testWebSocketWithIncorrectAuthToken: Timed out waiting for admin console message");
-            return TestResult::TEST_TIMED_OUT;
+            return TestResult::TimedOut;
         }
         lock.unlock();
 
@@ -179,11 +179,11 @@ private:
             tokens[0] != "InvalidAuthToken")
         {
             Log::info("testWebSocketWithIncorrectAuthToken: Unrecognized message format");
-            return TestResult::TEST_FAILED;
+            return TestResult::Failed;
         }
 
         Log::info(std::string("testWebSocketWithIncorrectAuthToken: OK"));
-        return TestResult::TEST_OK;
+        return TestResult::Ok;
     }
 
     TestResult testAddDocNotify()
@@ -221,7 +221,7 @@ private:
         if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
             Log::info("testAddDocNotify: Timed out waiting for admin console message");
-            return TestResult::TEST_TIMED_OUT;
+            return TestResult::TimedOut;
         }
         lock.unlock();
 
@@ -232,7 +232,7 @@ private:
                 tokens[2] != documentPath1.substr(documentPath1.find_last_of("/") + 1) )
             {
                 Log::info("testAddDocNotify: Unrecognized message format");
-                return TestResult::TEST_FAILED;
+                return TestResult::Failed;
             }
 
             // store document pid
@@ -249,7 +249,7 @@ private:
         if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
             Log::info("testAddDocNotify: Timed out waiting for admin console message");
-            return TestResult::TEST_TIMED_OUT;
+            return TestResult::TimedOut;
         }
         lock.unlock();
 
@@ -260,7 +260,7 @@ private:
                 tokens[2] != documentPath1.substr(documentPath1.find_last_of("/") + 1) )
             {
                 Log::info("testAddDocNotify: Unrecognized message format");
-                return TestResult::TEST_FAILED;
+                return TestResult::Failed;
             }
 
             // store document pid
@@ -284,7 +284,7 @@ private:
         if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
             Log::info("testAddDocNotify: Timed out waiting for admin console message");
-            return TestResult::TEST_TIMED_OUT;
+            return TestResult::TimedOut;
         }
         lock.unlock();
 
@@ -295,7 +295,7 @@ private:
                 tokens[2] != documentPath2.substr(documentPath2.find_last_of("/") + 1) )
             {
                 Log::info("testAddDocNotify: Unrecognized message format");
-                return TestResult::TEST_FAILED;
+                return TestResult::Failed;
             }
 
             // store document pid
@@ -305,7 +305,7 @@ private:
         _docsCount++;
 
         Log::info(std::string("testAddDocNotify: OK"));
-        return TestResult::TEST_OK;
+        return TestResult::Ok;
     }
 
     TestResult testUsersCount()
@@ -318,7 +318,7 @@ private:
         if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
             Log::info("testUsersCount: Timed out waiting for admin console message");
-            return TestResult::TEST_TIMED_OUT;
+            return TestResult::TimedOut;
         }
         lock.unlock();
 
@@ -327,18 +327,18 @@ private:
             tokens[0] != "active_users_count")
         {
             Log::info("testUsersCount: Unrecognized message format");
-            return TestResult::TEST_FAILED;
+            return TestResult::Failed;
         }
         else if (std::stoi(tokens[1]) != _usersCount)
         {
             Log::info("testUsersCount: Incorrect users count "
                       ", expected: " + std::to_string(_usersCount) +
                       ", actual: " + tokens[1]);
-            return TestResult::TEST_FAILED;
+            return TestResult::Failed;
         }
 
         Log::info(std::string("testUsersCount: OK"));
-        return TestResult::TEST_OK;
+        return TestResult::Ok;
     }
 
     TestResult testDocCount()
@@ -351,7 +351,7 @@ private:
         if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
             Log::info("testDocCount: Timed out waiting for admin console message");
-            return TestResult::TEST_TIMED_OUT;
+            return TestResult::TimedOut;
         }
         lock.unlock();
 
@@ -361,18 +361,18 @@ private:
             std::stoi(tokens[1]) != _docsCount)
         {
             Log::info("testDocCount: Unrecognized message format");
-            return TestResult::TEST_FAILED;
+            return TestResult::Failed;
         }
         else if (std::stoi(tokens[1]) != _docsCount)
         {
             Log::info("testDocCount: Incorrect doc count "
                       ", expected: " + std::to_string(_docsCount) +
                       ", actual: " + tokens[1]);
-            return TestResult::TEST_FAILED;
+            return TestResult::Failed;
         }
 
         Log::info(std::string("testDocCount: OK"));
-        return TestResult::TEST_OK;
+        return TestResult::Ok;
     }
 
     TestResult testRmDocNotify()
@@ -387,7 +387,7 @@ private:
         if (_messageReceivedCV.wait_for(lock, std::chrono::milliseconds(_messageTimeoutMilliSeconds)) == std::cv_status::timeout)
         {
             Log::info("testRmDocNotify: Timed out waiting for admin console message");
-            return TestResult::TEST_TIMED_OUT;
+            return TestResult::TimedOut;
         }
         lock.unlock();
 
@@ -397,12 +397,12 @@ private:
             stoi(tokens[1]) != _docPid1)
         {
             Log::info("testRmDocNotify: Invalid message format");
-            return TestResult::TEST_FAILED;
+            return TestResult::Failed;
         }
         _usersCount--;
 
         Log::info(std::string("testRmDocNotify: OK"));
-        return TestResult::TEST_OK;
+        return TestResult::Ok;
     }
 
 public:
@@ -438,9 +438,9 @@ public:
             Log::info("UnitAdmin:: Starting test #" + std::to_string(_testCounter));
             TestResult res = ((*this).*(test))();
             Log::info("UnitAdmin:: Finished test #" + std::to_string(_testCounter));
-            if (res != TestResult::TEST_OK)
+            if (res != TestResult::Ok)
             {
-                Log::info("Exiting with " + (res == TestResult::TEST_FAILED ? "FAIL" : (res == TestResult::TEST_TIMED_OUT) ? "TIMEOUT" : "??? (" + std::to_string(res) + ")"));
+                Log::info("Exiting with " + (res == TestResult::Failed ? "FAIL" : (res == TestResult::TimedOut) ? "TIMEOUT" : "??? (" + std::to_string((int)res) + ")"));
                 exitTest(res);
                 assert(false);
                 return;
@@ -450,7 +450,7 @@ public:
             if (_tests.size() == _testCounter)
             {
                 Log::info("Exiting with OK");
-                exitTest(TestResult::TEST_OK);
+                exitTest(TestResult::Ok);
             }
 
             _isTestRunning = false;

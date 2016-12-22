@@ -77,7 +77,7 @@ public:
         {
             std::cerr << "Error - font list mismatch" << std::endl;
             std::cerr << "Kit : '" << _fontsKit << "' vs. Broker : '" << _fontsBroker << "'" << std::endl;
-            exitTest(TestResult::TEST_FAILED);
+            exitTest(TestResult::Failed);
         }
         else
         {
@@ -85,7 +85,7 @@ public:
             if (tokens.count() > 0)
                 std::cerr << "  " << tokens[0] << std::endl;
 
-            exitTest(TestResult::TEST_OK);
+            exitTest(TestResult::Ok);
         }
     }
 
@@ -103,7 +103,7 @@ public:
                      Poco::Net::HTTPServerRequest& request,
                      Poco::Net::HTTPServerResponse& response) override
     {
-        if (type == UnitWSD::TestRequest::TEST_REQ_PRISONER &&
+        if (type == UnitWSD::TestRequest::Prisoner &&
             request.getURI().find(UNIT_URI) == 0)
         {
             auto ws = std::make_shared<LOOLWebSocket>(request, response);

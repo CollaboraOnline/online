@@ -20,14 +20,14 @@ using namespace helpers;
 
 class UnitTileCache: public UnitWSD
 {
-    enum {
-        PHASE_LOAD,             // load the document
-        PHASE_TILE,             // lookup tile method
+    enum class Phase {
+        Load,             // load the document
+        Tile,             // lookup tile method
     } _phase;
     std::unique_ptr<UnitWebSocket> _ws;
 public:
     UnitTileCache() :
-        _phase(PHASE_LOAD)
+        _phase(Phase::Load)
     {
     }
 
@@ -41,16 +41,16 @@ public:
         cacheFile.reset();
 
         // FIXME: push through to the right place to exercise this.
-        exitTest(TestResult::TEST_OK);
+        exitTest(TestResult::Ok);
     }
 
     virtual void invokeTest()
     {
         switch (_phase)
         {
-        case PHASE_LOAD:
+        case Phase::Load:
         {
-            _phase = PHASE_TILE;
+            _phase = Phase::Tile;
             std::string docPath;
             std::string docURL;
             getDocumentPathAndURL("empty.odt", docPath, docURL);
@@ -58,10 +58,10 @@ public:
             assert(_ws.get());
 
             // FIXME: need to invoke the tile lookup ...
-            exitTest(TestResult::TEST_OK);
+            exitTest(TestResult::Ok);
             break;
         }
-        case PHASE_TILE:
+        case Phase::Tile:
             break;
         }
     }
@@ -76,7 +76,7 @@ private:
                 }
                 catch (const Poco::Exception& exc)
                 {
-                    exitTest(TestResult::TEST_FAILED);
+                    exitTest(TestResult::Failed);
                 }
             });
     }

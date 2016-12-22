@@ -372,7 +372,7 @@ int main(int argc, char** argv)
         return Application::EXIT_USAGE;
     }
 
-    if (!UnitBase::init(UnitBase::UnitType::TYPE_KIT,
+    if (!UnitBase::init(UnitBase::UnitType::Kit,
                         UnitTestLibrary))
     {
         LOG_ERR("Failed to load kit unit test library");

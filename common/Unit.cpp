@@ -40,10 +40,10 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
     const char *symbol = NULL;
     switch (type)
     {
-        case TYPE_WSD:
+        case UnitType::Wsd:
             symbol = "unit_create_wsd";
             break;
-        case TYPE_KIT:
+        case UnitType::Kit:
             symbol = "unit_create_kit";
             break;
     }
@@ -84,10 +84,10 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
     {
         switch (type)
         {
-        case TYPE_WSD:
+        case UnitType::Wsd:
             Global = new UnitWSD();
             break;
-        case TYPE_KIT:
+        case UnitType::Kit:
             Global = new UnitKit();
             break;
         default:
@@ -119,7 +119,7 @@ UnitBase::UnitBase()
       _retValue(0),
       _timeoutMilliSeconds(30 * 1000),
       _timeoutShutdown(false),
-      _type(TYPE_WSD)
+      _type(UnitType::Wsd)
 {
 }
 
@@ -177,9 +177,9 @@ UnitKit::~UnitKit()
 
 void UnitBase::exitTest(TestResult result)
 {
-    LOG_INF("exitTest: " << result << ". Flagging for termination.");
+    LOG_INF("exitTest: " << (int)result << ". Flagging for termination.");
     _setRetValue = true;
-    _retValue = result == TestResult::TEST_OK ?
+    _retValue = result == TestResult::Ok ?
         Poco::Util::Application::EXIT_OK :
         Poco::Util::Application::EXIT_SOFTWARE;
     TerminationFlag = true;
@@ -188,7 +188,7 @@ void UnitBase::exitTest(TestResult result)
 void UnitBase::timeout()
 {
     LOG_ERR("Timed out waiting for unit test to complete");
-    exitTest(TestResult::TEST_TIMED_OUT);
+    exitTest(TestResult::TimedOut);
 }
 
 void UnitBase::returnValue(int &retValue)

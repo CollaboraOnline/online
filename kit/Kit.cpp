@@ -102,7 +102,7 @@ static std::shared_ptr<Document> document;
 namespace
 {
 #ifndef BUILDING_TESTS
-    typedef enum { COPY_ALL, COPY_LO, COPY_NO_USR } LinkOrCopyType;
+    enum class LinkOrCopyType { All, LO, NoUsr };
     LinkOrCopyType linkOrCopyType;
     std::string sourceForLinkOrCopy;
     Path destinationForLinkOrCopy;
@@ -111,10 +111,10 @@ namespace
     {
         switch (linkOrCopyType)
         {
-        case COPY_NO_USR:
+        case LinkOrCopyType::NoUsr:
             // bind mounted.
             return strcmp(path,"usr") != 0;
-        case COPY_LO:
+        case LinkOrCopyType::LO:
             return
                 strcmp(path, "program/wizards") != 0 &&
                 strcmp(path, "sdk") != 0 &&
@@ -124,7 +124,7 @@ namespace
                 strcmp(path, "share/template") != 0 &&
                 strcmp(path, "share/config/wizard") != 0 &&
                 strcmp(path, "share/config/wizard") != 0;
-        default: // COPY_ALL
+        default: // LinkOrCopyType::All
             return true;
         }
     }
@@ -1534,8 +1534,8 @@ void lokit_main(const std::string& childRoot,
                 LOG_DBG("Initialized jail bind mount.");
             }
             linkOrCopy(sysTemplate, jailPath,
-                       bLoopMounted ? COPY_NO_USR : COPY_ALL);
-            linkOrCopy(loTemplate, jailLOInstallation, COPY_LO);
+                       bLoopMounted ? LinkOrCopyType::NoUsr : LinkOrCopyType::All);
+            linkOrCopy(loTemplate, jailLOInstallation, LinkOrCopyType::LO);
 
             // We need this because sometimes the hostname is not resolved
             const auto networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};

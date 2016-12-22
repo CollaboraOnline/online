@@ -50,11 +50,11 @@ public:
     // sanity check the non-unit-test paths
     static void testDefaultKits()
     {
-        bool madeWSD = init(UnitType::TYPE_WSD, std::string());
+        bool madeWSD = init(UnitType::Wsd, std::string());
         assert(madeWSD);
         delete UnitBase::Global;
         UnitBase::Global = NULL;
-        bool madeKit = init(UnitType::TYPE_KIT, std::string());
+        bool madeKit = init(UnitType::Kit, std::string());
         assert(madeKit);
         delete UnitBase::Global;
         UnitBase::Global = NULL;

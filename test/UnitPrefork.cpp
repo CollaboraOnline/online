@@ -105,7 +105,7 @@ public:
                 {
                     _failure = "Timed out waiting for child to respond to unit-memdump.";
                     std::cerr << _failure << std::endl;
-                    exitTest(TestResult::TEST_FAILED);
+                    exitTest(TestResult::Failed);
                     return;
                 }
 
@@ -131,12 +131,12 @@ public:
             if (!_failure.empty())
             {
                 std::cerr << "UnitPrefork failed due to: " << _failure << std::endl;
-                exitTest(TestResult::TEST_FAILED);
+                exitTest(TestResult::Failed);
             }
             else
             {
                 std::cerr << "UnitPrefork success." << std::endl;
-                exitTest(TestResult::TEST_OK);
+                exitTest(TestResult::Ok);
             }
         }
     }

@@ -136,7 +136,7 @@ public:
 
 void TileCacheTests::testSimple()
 {
-    if (!UnitWSD::init(UnitWSD::UnitType::TYPE_WSD, ""))
+    if (!UnitWSD::init(UnitWSD::UnitType::Wsd, ""))
     {
         throw std::runtime_error("Failed to load wsd unit test library.");
     }

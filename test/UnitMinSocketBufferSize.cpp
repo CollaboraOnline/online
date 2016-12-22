@@ -17,16 +17,16 @@ using namespace helpers;
 
 class UnitMinSocketBufferSize: public UnitWSD
 {
-    enum {
-        PHASE_LOAD,             // load the document
-        PHASE_REQUEST,          // Request tiles etc.
-        PHASE_CHECK_RESPONSE    // Check if we got correct response
+    enum class Phase {
+        Load,             // load the document
+        Request,          // Request tiles etc.
+        CheckResponse     // Check if we got correct response
     } _phase;
     std::string _docURL, _docPath;
     std::unique_ptr<UnitWebSocket> _ws;
 public:
     UnitMinSocketBufferSize() :
-        _phase(PHASE_LOAD)
+        _phase(Phase::Load)
     {
     }
 
@@ -34,17 +34,17 @@ public:
     {
         switch (_phase)
         {
-        case PHASE_LOAD:
+        case Phase::Load:
         {
             getDocumentPathAndURL("Example.odt", _docPath, _docURL);
             _ws = std::unique_ptr<UnitWebSocket>(new UnitWebSocket(_docURL));
             assert(_ws.get());
 
-            _phase = PHASE_REQUEST;
+            _phase = Phase::Request;
             LOG_DBG("Document loaded successfully.");
             break;
         }
-        case PHASE_REQUEST:
+        case Phase::Request:
         {
             const std::string loadMsg = "load url=" + _docURL;
             const std::string tilecombineMsg = "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520,15360,15360,15360,15360 tilewidth=3840 tileheight=3840";
@@ -52,10 +52,10 @@ public:
             _ws->getLOOLWebSocket()->sendFrame(tilecombineMsg.data(), tilecombineMsg.size());
 
             LOG_DBG("Tilecombine request sent");
-            _phase = PHASE_CHECK_RESPONSE;
+            _phase = Phase::CheckResponse;
             break;
         }
-        case PHASE_CHECK_RESPONSE:
+        case Phase::CheckResponse:
             LOG_DBG("Checking if get back all the tiles");
             int nTiles = 20;
             bool success = true;
@@ -70,7 +70,7 @@ public:
                 }
             }
 
-            exitTest(success ? TestResult::TEST_OK : TestResult::TEST_FAILED);
+            exitTest(success ? TestResult::Ok : TestResult::Failed);
             break;
         }
     }

@@ -52,7 +52,7 @@ public:
         size_t _size;
     };
 
-    enum SaveResult
+    enum class SaveResult
     {
         OK,
         DISKFULL,
