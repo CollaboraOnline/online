@@ -47,7 +47,6 @@ class Stress: public Poco::Util::Application
 {
 public:
     Stress();
-    ~Stress() {}
 
     static bool Benchmark;
     static size_t Iterations;

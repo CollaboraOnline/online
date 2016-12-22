@@ -1786,11 +1786,6 @@ void LOOLWSD::initializeSSL()
     Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
 }
 
-void LOOLWSD::uninitialize()
-{
-    ServerApplication::uninitialize();
-}
-
 void LOOLWSD::dumpEventTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
 {
     if (TraceDumper)

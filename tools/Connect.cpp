@@ -147,10 +147,6 @@ public:
     {
     }
 
-    ~Connect()
-    {
-    }
-
 protected:
     int main(const std::vector<std::string>& args) override
     {

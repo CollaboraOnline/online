@@ -140,9 +140,6 @@ public:
         std::cerr << "\n\nYour KIT process has fuzzing hooks\n\n\n";
         setTimeout(3600 * 1000); /* one hour */
     }
-    ~UnitKitFuzz()
-    {
-    }
     virtual bool filterKitMessage(const std::shared_ptr<LOOLWebSocket> & /* ws */,
                                   std::string & /* message */) override
     {

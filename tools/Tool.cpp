@@ -51,7 +51,6 @@ class Tool: public Poco::Util::Application
 {
 public:
     Tool();
-    ~Tool() {}
 
     unsigned    _numWorkers;
     std::string _serverURI;
