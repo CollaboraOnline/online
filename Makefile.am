@@ -143,7 +143,8 @@ EXTRA_DIST = discovery.xml \
              sysconfig.loolwsd \
              etc/key.pem \
              etc/cert.pem \
-             etc/ca-chain.cert.pem
+             etc/ca-chain.cert.pem \
+	     $(shell cd $(top_srcdir); git ls-files)
 
 if HAVE_LO_PATH
 
