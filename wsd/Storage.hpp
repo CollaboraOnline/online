@@ -70,7 +70,7 @@ public:
         _fileInfo("", "lool", Poco::Timestamp::fromEpochTime(0), 0),
         _isLoaded(false)
     {
-        Log::debug("Storage ctor: " + uri.toString());
+        LOG_DBG("Storage ctor: " << uri.toString());
     }
 
     std::string getLocalRootPath() const;
@@ -123,11 +123,12 @@ public:
         StorageBase(uri, localStorePath, jailPath),
         _isCopy(false)
     {
-        Log::info("LocalStorage ctor with localStorePath: [" + localStorePath +
-                  "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
+        LOG_INF("LocalStorage ctor with localStorePath: [" << localStorePath <<
+                "], jailPath: [" << jailPath << "], uri: [" << uri.toString() << "].");
     }
 
-    class LocalFileInfo {
+    class LocalFileInfo
+    {
     public:
         LocalFileInfo(const std::string& userid,
                       const std::string& username)
@@ -165,8 +166,8 @@ public:
         StorageBase(uri, localStorePath, jailPath),
         _wopiLoadDuration(0)
     {
-        Log::info("WopiStorage ctor with localStorePath: [" + localStorePath +
-                  "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
+        LOG_INF("WopiStorage ctor with localStorePath: [" << localStorePath <<
+                "], jailPath: [" << jailPath << "], uri: [" << uri.toString() << "].");
     }
 
     class WOPIFileInfo
@@ -254,8 +255,8 @@ public:
         StorageBase(uri, localStorePath, jailPath),
         _authAgent(std::move(authAgent))
     {
-        Log::info("WebDAVStorage ctor with localStorePath: [" + localStorePath +
-                  "], jailPath: [" + jailPath + "], uri: [" + uri.toString() + "].");
+        LOG_INF("WebDAVStorage ctor with localStorePath: [" << localStorePath <<
+                "], jailPath: [" << jailPath << "], uri: [" << uri.toString() << "].");
     }
 
     // Implement me

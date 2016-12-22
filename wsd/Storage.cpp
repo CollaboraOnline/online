@@ -108,14 +108,14 @@ bool isLocalhost(const std::string& targetHost)
     }
     catch (const Poco::Exception& exc)
     {
-        Log::warn("Poco::Net::DNS::resolveOne(\"" + targetHost + "\") failed: " + exc.displayText());
+        LOG_WRN("Poco::Net::DNS::resolveOne(\"" << targetHost << "\") failed: " << exc.displayText());
         try
         {
             targetAddress = Poco::Net::IPAddress(targetHost).toString();
         }
         catch (const Poco::Exception& exc1)
         {
-            Log::warn("Poco::Net::IPAddress(\"" + targetHost + "\") failed: " + exc1.displayText());
+            LOG_WRN("Poco::Net::IPAddress(\"" << targetHost << "\") failed: " << exc1.displayText());
         }
     }
 
@@ -192,7 +192,7 @@ std::atomic<unsigned> LocalStorage::LastLocalStorageId;
 std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo(const Poco::URI& uriPublic)
 {
     const auto path = Poco::Path(uriPublic.getPath());
-    Log::debug("Getting info for local uri [" + uriPublic.toString() + "], path [" + path.toString() + "].");
+    LOG_DBG("Getting info for local uri [" << uriPublic.toString() << "], path [" << path.toString() << "].");
 
     const auto& filename = path.getFileName();
     const auto file = Poco::File(path);
@@ -213,7 +213,7 @@ std::string LocalStorage::loadStorageFileToLocal()
     const auto filename = Poco::Path(_uri.getPath()).getFileName();
     _jailedFilePath = Poco::Path(rootPath, filename).toString();
     LOG_INF("Public URI [" << _uri.getPath() <<
-            "] jailed to [" + _jailedFilePath + "].");
+            "] jailed to [" << _jailedFilePath << "].");
 
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
     const auto publicFilePath = _uri.getPath();
@@ -227,7 +227,7 @@ std::string LocalStorage::loadStorageFileToLocal()
     if (!Poco::File(_jailedFilePath).exists() && link(publicFilePath.c_str(), _jailedFilePath.c_str()) == -1)
     {
         // Failed
-        Log::warn("link(\"" + publicFilePath + "\", \"" + _jailedFilePath + "\") failed. Will copy.");
+        LOG_WRN("link(\"" << publicFilePath << "\", \"" << _jailedFilePath << "\") failed. Will copy.");
     }
 
     try
@@ -242,7 +242,7 @@ std::string LocalStorage::loadStorageFileToLocal()
     }
     catch (const Poco::Exception& exc)
     {
-        Log::error("copyTo(\"" + publicFilePath + "\", \"" + _jailedFilePath + "\") failed: " + exc.displayText());
+        LOG_ERR("copyTo(\"" << publicFilePath << "\", \"" << _jailedFilePath << "\") failed: " << exc.displayText());
         throw;
     }
 
@@ -357,7 +357,7 @@ void getWOPIValue(const Poco::JSON::Object::Ptr &object, const std::string& key,
 
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Poco::URI& uriPublic)
 {
-    LOG_DBG("Getting info for wopi uri [" + uriPublic.toString() + "].");
+    LOG_DBG("Getting info for wopi uri [" << uriPublic.toString() << "].");
 
     std::string resMsg;
     const auto startTime = std::chrono::steady_clock::now();
@@ -374,13 +374,17 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
         std::istream& rs = psession->receiveResponse(response);
         callDuration = (std::chrono::steady_clock::now() - startTime);
 
-        auto logger = Log::trace();
-        logger << "WOPI::CheckFileInfo header for URI [" << uriPublic.toString() << "]:\n";
-        for (auto& pair : response)
+        if (Log::traceEnabled())
         {
-            logger << '\t' + pair.first + ": " + pair.second << " / ";
+            auto logger = Log::trace();
+            logger << "WOPI::CheckFileInfo header for URI [" << uriPublic.toString() << "]:\n";
+            for (const auto& pair : response)
+            {
+                logger << '\t' << pair.first << ": " << pair.second << " / ";
+            }
+
+            logger << Log::end;
         }
-        logger << Log::end;
 
         Poco::StreamCopier::copyToString(rs, resMsg);
     }
@@ -408,7 +412,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
     bool disableCopy = false;
     std::string lastModifiedTime;
 
-    LOG_DBG("WOPI::CheckFileInfo returned: " + resMsg + ". Call duration: " + std::to_string(callDuration.count()) + "s");
+    LOG_DBG("WOPI::CheckFileInfo returned: " << resMsg << ". Call duration: " << callDuration.count() << "s");
     const auto index = resMsg.find_first_of('{');
     if (index != std::string::npos)
     {
@@ -433,7 +437,9 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
         getWOPIValue(object, "LastModifiedTime", lastModifiedTime);
     }
     else
+    {
         LOG_ERR("WOPI::CheckFileInfo is missing JSON payload");
+    }
 
     Poco::Timestamp modifiedTime = Poco::Timestamp::fromEpochTime(0);
     if (lastModifiedTime != "")
@@ -448,12 +454,15 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
         }
         catch (const Poco::SyntaxException& exc)
         {
-            LOG_WRN("LastModifiedTime property [" + lastModifiedTime + "] was invalid format: " << exc.displayText() <<
+            LOG_WRN("LastModifiedTime property [" << lastModifiedTime << "] was invalid format: " << exc.displayText() <<
                     (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
         }
         if (valid)
+        {
             modifiedTime = dateTime.timestamp();
+        }
     }
+
     _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, callDuration}));
@@ -466,7 +475,7 @@ std::string WopiStorage::loadStorageFileToLocal()
     // Add it here to get the payload instead of file info.
     Poco::URI uriObject(_uri);
     uriObject.setPath(uriObject.getPath() + "/contents");
-    LOG_DBG("Wopi requesting: " + uriObject.toString());
+    LOG_DBG("Wopi requesting: " << uriObject.toString());
 
     const auto startTime = std::chrono::steady_clock::now();
     try
@@ -482,13 +491,17 @@ std::string WopiStorage::loadStorageFileToLocal()
         const std::chrono::duration<double> diff = (std::chrono::steady_clock::now() - startTime);
         _wopiLoadDuration += diff;
 
-        auto logger = Log::trace();
-        logger << "WOPI::GetFile header for URI [" << uriObject.toString() << "]:\n";
-        for (auto& pair : response)
+        if (Log::traceEnabled())
         {
-            logger << '\t' + pair.first + ": " + pair.second << " / ";
+            auto logger = Log::trace();
+            logger << "WOPI::GetFile header for URI [" << uriObject.toString() << "]:\n";
+            for (const auto& pair : response)
+            {
+                logger << '\t' << pair.first << ": " << pair.second << " / ";
+            }
+
+            logger << Log::end;
         }
-        logger << Log::end;
 
         _jailedFilePath = Poco::Path(getLocalRootPath(), _fileInfo._filename).toString();
         std::ofstream ofs(_jailedFilePath);
@@ -517,6 +530,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Poco::URI& uri
     LOG_INF("Uploading URI [" << uriPublic.toString() << "] from [" << _jailedFilePath + "].");
     // TODO: Check if this URI has write permission (canWrite = true)
     const auto size = getFileSize(_jailedFilePath);
+
     Poco::URI uriObject(uriPublic);
     uriObject.setPath(uriObject.getPath() + "/contents");
     LOG_DBG("Wopi posting: " + uriObject.toString());
