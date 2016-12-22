@@ -233,7 +233,7 @@ public:
             strncat(name, ent->d_name, 1024);
             size_t len;
             memset(buffer, 0, sizeof(buffer));
-            if ((len = readlink(name, buffer, sizeof(buffer)-1) > 0))
+            if ((len = readlink(name, buffer, sizeof(buffer)-1)) > 0)
             {
                 assert(len<sizeof(buffer));
                 numSockets++;

@@ -1065,7 +1065,7 @@ void HTTPWSTest::getPartHashCodes(const std::string status,
     {
         CPPUNIT_ASSERT_EQUAL(1, (int)matches.size());
         const auto str = status.substr(matches[0].offset, matches[0].length);
-        if (number.match(str, 0) > 0)
+        if (number.match(str, 0))
         {
             parts.push_back(str);
         }
