@@ -965,15 +965,16 @@ private:
     std::map<int, UserInfo> getViewInfo() override
     {
         std::unique_lock<std::mutex> lock(_mutex);
-        std::map<int, UserInfo> viewInfo;
 
-        for (auto& pair : _sessions)
+        std::map<int, UserInfo> viewInfo;
+        for (const auto& pair : _sessions)
         {
             const auto& session = pair.second;
             const auto viewId = session->getViewId();
             viewInfo[viewId] = UserInfo({session->getViewUserId(), session->getViewUserName()});
         }
 
+        // Copy the old sessions to provide disconnected user info.
         viewInfo.insert(_oldSessionIds.begin(), _oldSessionIds.end());
 
         return viewInfo;
@@ -995,6 +996,7 @@ private:
         // Store the list of viewid, username mapping in a map
         std::map<int, UserInfo> viewInfoMap = getViewInfo();
         std::map<std::string, int> viewColorsMap = getViewColors();
+
         std::unique_lock<std::mutex> lock(_mutex);
 
         // Double check if list of viewids from core and our list matches,
@@ -1028,8 +1030,10 @@ private:
         std::ostringstream ossViewInfo;
         viewInfoArray->stringify(ossViewInfo);
 
-        // Broadcast updated viewinfo to all _active_ connections
-        for (auto& pair : _sessions)
+        // Broadcast updated viewinfo to all _active_ connections.
+        // These are internal sockets, so unless WSD is chocked,
+        // no need to send on separate thread.
+        for (const auto& pair : _sessions)
         {
             const auto session = pair.second;
             if (!session->isCloseFrame() && session->isActive())
@@ -1207,7 +1211,6 @@ private:
             std::string decodedUserName;
             URI::decode(userName, decodedUserName);
             authorObj->set("value", decodedUserName);
-
             renderOptsObj->set(".uno:Author", authorObj);
         }
 
@@ -1218,7 +1221,8 @@ private:
         // registerCallback(), as the previous creates a new view in Impress.
         _loKitDocument->initializeForRendering(ossRenderOpts.str().c_str());
 
-        session->setViewId((viewId = _loKitDocument->getView()));
+        viewId = _loKitDocument->getView();
+        session->setViewId(viewId);
         _viewIdToCallbackDescr.emplace(viewId,
                                        std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
         _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
@@ -1419,6 +1423,8 @@ private:
     std::atomic_size_t _isLoading;
     std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
     std::map<std::string, std::shared_ptr<ChildSession>> _sessions;
+
+    /// For showing disconnected user info in the doc repair dialog.
     std::map<int, UserInfo> _oldSessionIds;
     Poco::Thread _callbackThread;
 };
