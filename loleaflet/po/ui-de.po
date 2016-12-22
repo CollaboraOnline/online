@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-01 11:33+0000\n"
+"POT-Creation-Date: 2016-12-22 13:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 1.14.0-rc1\n"
+"X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /de/libo_online/loleaflet-ui-de.po\n"
-"X-Pootle-Revision: 661176\n"
+"X-Pootle-Revision: 717517\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -79,10 +79,10 @@ msgid "Graphs"
 msgstr "Diagramme"
 
 #: admin.strings.js:21
-#: dist/toolbar/toolbar.js:337
-#: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:63
-#: src/control/Control.Menubar.js:109
+#: dist/toolbar/toolbar.js:344
+#: src/control/Control.Menubar.js:11
+#: src/control/Control.Menubar.js:163
+#: src/control/Control.Menubar.js:221
 msgid "Save"
 msgstr "Speichern"
 
@@ -214,8 +214,8 @@ msgstr ""
 msgid ""
 "This development build is limited to %0 documents, and %1 connections - to "
 "avoid the impression that it is suitable for deployment in large "
-"enterprises. To find out more about deploying and scaling %2 checkout: <br/><"
-"a href=\"%3\">%3</a>."
+"enterprises. To find out more about deploying and scaling %2 check out: "
+"<br/><a href=\"%3\">%3</a>."
 msgstr ""
 "Diese Entwicklerversion ist auf %0 Dokumente und %1 Verbindungen limitiert - "
 "um den Eindruck zu vermeiden, dass sie zum Einsatz in großen Unternehmen "
@@ -251,386 +251,397 @@ msgstr ""
 msgid "Are you sure you want to delete this page?"
 msgstr "Sind Sie sicher, dass Sie diese Folie löschen möchten?"
 
-#: dist/toolbar/toolbar.js:328
+#: dist/toolbar/toolbar.js:335
 msgid "Textwrap"
 msgstr "Textumlauf"
 
-#: dist/toolbar/toolbar.js:329
+#: dist/toolbar/toolbar.js:336
 msgid "No wrap"
 msgstr "Kein Umlauf"
 
-#: dist/toolbar/toolbar.js:330
+#: dist/toolbar/toolbar.js:337
 msgid "Page wrap"
 msgstr "Paralleler Umlauf"
 
-#: dist/toolbar/toolbar.js:331
+#: dist/toolbar/toolbar.js:338
 msgid "Wrap anchor only"
 msgstr "Nur Ankerumlauf"
 
-#: dist/toolbar/toolbar.js:332
+#: dist/toolbar/toolbar.js:339
 msgid "Ideal wrap"
 msgstr "Optimaler Umlauf"
 
-#: dist/toolbar/toolbar.js:333
+#: dist/toolbar/toolbar.js:340
 msgid "Left wrap"
 msgstr "Linker Umlauf"
 
-#: dist/toolbar/toolbar.js:334
+#: dist/toolbar/toolbar.js:341
 msgid "Right wrap"
 msgstr "Rechter Umlauf"
 
-#: dist/toolbar/toolbar.js:335
+#: dist/toolbar/toolbar.js:342
 msgid "Wrap through"
 msgstr "Durchlauf"
 
-#: dist/toolbar/toolbar.js:339
-#: src/control/Control.Menubar.js:19
-#: src/control/Control.Menubar.js:71
-#: src/control/Control.Menubar.js:117
+#: dist/toolbar/toolbar.js:346
+#: src/control/Control.Menubar.js:22
+#: src/control/Control.Menubar.js:173
+#: src/control/Control.Menubar.js:231
 msgid "Undo"
 msgstr "Rückgängig"
 
-#: dist/toolbar/toolbar.js:340
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:72
-#: src/control/Control.Menubar.js:118
+#: dist/toolbar/toolbar.js:347
+#: src/control/Control.Menubar.js:23
+#: src/control/Control.Menubar.js:174
+#: src/control/Control.Menubar.js:232
 msgid "Redo"
 msgstr "Wiederholen"
 
-#: dist/toolbar/toolbar.js:341
+#: dist/toolbar/toolbar.js:348
 msgid "Document repair"
 msgstr "Dokument reparieren"
 
-#: dist/toolbar/toolbar.js:347
+#: dist/toolbar/toolbar.js:354
+#: src/control/Control.Menubar.js:60
 msgid "Bold"
 msgstr "Fett"
 
-#: dist/toolbar/toolbar.js:348
+#: dist/toolbar/toolbar.js:355
+#: src/control/Control.Menubar.js:61
 msgid "Italic"
 msgstr "Kursiv"
 
-#: dist/toolbar/toolbar.js:349
+#: dist/toolbar/toolbar.js:356
+#: src/control/Control.Menubar.js:62
 msgid "Underline"
 msgstr "Unterstrichen"
 
-#: dist/toolbar/toolbar.js:350
+#: dist/toolbar/toolbar.js:357
 msgid "Strikeout"
 msgstr "Durchgestrichen"
 
-#: dist/toolbar/toolbar.js:352
+#: dist/toolbar/toolbar.js:359
 msgid "Insert Footnote"
 msgstr "Fußnote einfügen"
 
-#: dist/toolbar/toolbar.js:355
+#: dist/toolbar/toolbar.js:362
 msgid "Font color"
 msgstr "Schriftfarbe"
 
-#: dist/toolbar/toolbar.js:357
+#: dist/toolbar/toolbar.js:364
 msgid "Highlighting"
 msgstr "Hervorhebung"
 
-#: dist/toolbar/toolbar.js:359
+#: dist/toolbar/toolbar.js:366
 msgid "Align left"
 msgstr "Linksbündig"
 
-#: dist/toolbar/toolbar.js:360
+#: dist/toolbar/toolbar.js:367
 msgid "Center horizontally"
 msgstr "Zentriert"
 
-#: dist/toolbar/toolbar.js:361
+#: dist/toolbar/toolbar.js:368
 msgid "Align right"
 msgstr "Rechtsbündig"
 
-#: dist/toolbar/toolbar.js:362
+#: dist/toolbar/toolbar.js:369
+#: src/control/Control.Menubar.js:101
 msgid "Justified"
 msgstr "Blocksatz"
 
-#: dist/toolbar/toolbar.js:364
+#: dist/toolbar/toolbar.js:371
+#: src/control/Control.Menubar.js:107
 msgid "Bullets on/off"
 msgstr "Aufzählung an/aus"
 
-#: dist/toolbar/toolbar.js:365
+#: dist/toolbar/toolbar.js:372
+#: src/control/Control.Menubar.js:108
 msgid "Numbering on/off"
 msgstr "Nummerierung an/aus"
 
-#: dist/toolbar/toolbar.js:367
+#: dist/toolbar/toolbar.js:374
+#: src/control/Control.Menubar.js:95
 msgid "Increase indent"
 msgstr "Einzug vergrößern"
 
-#: dist/toolbar/toolbar.js:368
+#: dist/toolbar/toolbar.js:375
+#: src/control/Control.Menubar.js:96
 msgid "Decrease indent"
 msgstr "Einzug verkleinern"
 
-#: dist/toolbar/toolbar.js:371
+#: dist/toolbar/toolbar.js:378
 msgid "Insert table"
 msgstr "Tabelle einfügen"
 
-#: dist/toolbar/toolbar.js:372
+#: dist/toolbar/toolbar.js:379
 msgid "Insert comment"
 msgstr "Kommentar einfügen"
 
-#: dist/toolbar/toolbar.js:373
+#: dist/toolbar/toolbar.js:380
 msgid "Insert graphic"
 msgstr "Grafik einfügen"
 
-#: dist/toolbar/toolbar.js:375
+#: dist/toolbar/toolbar.js:381
+msgid "Special Character"
+msgstr "Sonderzeichen"
+
+#: dist/toolbar/toolbar.js:383
 msgid "More"
 msgstr "Weitere"
 
-#: dist/toolbar/toolbar.js:376
+#: dist/toolbar/toolbar.js:384
 msgid "Close document"
 msgstr "Dokument schließen"
 
-#: dist/toolbar/toolbar.js:406
-#: dist/toolbar/toolbar.js:776
+#: dist/toolbar/toolbar.js:414
+#: dist/toolbar/toolbar.js:795
 msgid "Sum"
 msgstr "Summe"
 
-#: dist/toolbar/toolbar.js:407
+#: dist/toolbar/toolbar.js:415
 msgid "Function"
 msgstr "Funktion"
 
-#: dist/toolbar/toolbar.js:408
+#: dist/toolbar/toolbar.js:416
+#: src/control/Control.CharacterMap.js:389
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: dist/toolbar/toolbar.js:409
+#: dist/toolbar/toolbar.js:417
 msgid "Accept"
 msgstr "Übernehmen"
 
-#: dist/toolbar/toolbar.js:420
+#: dist/toolbar/toolbar.js:428
 msgid "First sheet"
 msgstr "Erste Tabelle"
 
-#: dist/toolbar/toolbar.js:421
+#: dist/toolbar/toolbar.js:429
 msgid "Previous sheet"
 msgstr "Vorherige Tabelle"
 
-#: dist/toolbar/toolbar.js:422
+#: dist/toolbar/toolbar.js:430
 msgid "Next sheet"
 msgstr "Nächste Tabelle"
 
-#: dist/toolbar/toolbar.js:423
+#: dist/toolbar/toolbar.js:431
 msgid "Last sheet"
 msgstr "Letzte Tabelle"
 
-#: dist/toolbar/toolbar.js:433
-#: src/control/Control.Menubar.js:101
+#: dist/toolbar/toolbar.js:441
+#: src/control/Control.Menubar.js:211
 msgid "Fullscreen presentation"
 msgstr "Vollbild Präsentation"
 
-#: dist/toolbar/toolbar.js:435
+#: dist/toolbar/toolbar.js:443
 msgid "Insert slide"
 msgstr "Folie einfügen"
 
-#: dist/toolbar/toolbar.js:436
-#: src/control/Control.Menubar.js:98
+#: dist/toolbar/toolbar.js:444
+#: src/control/Control.Menubar.js:208
 msgid "Duplicate slide"
 msgstr "Folie doppeln"
 
-#: dist/toolbar/toolbar.js:437
-#: src/control/Control.Menubar.js:99
+#: dist/toolbar/toolbar.js:445
+#: src/control/Control.Menubar.js:209
 msgid "Delete slide"
 msgstr "Folie löschen"
 
-#: dist/toolbar/toolbar.js:450
+#: dist/toolbar/toolbar.js:458
 msgid "Search:"
 msgstr "Suchen:"
 
-#: dist/toolbar/toolbar.js:455
+#: dist/toolbar/toolbar.js:463
 msgid "Search backwards"
 msgstr "Rückwärts suchen"
 
-#: dist/toolbar/toolbar.js:456
+#: dist/toolbar/toolbar.js:464
 msgid "Search forward"
 msgstr "Vorwärts suchen"
 
-#: dist/toolbar/toolbar.js:457
+#: dist/toolbar/toolbar.js:465
 msgid "Cancel the search"
 msgstr "Suche abbrechen"
 
-#: dist/toolbar/toolbar.js:462
-#: dist/toolbar/toolbar.js:1326
+#: dist/toolbar/toolbar.js:470
+#: dist/toolbar/toolbar.js:1366
 msgid "No users"
 msgstr "Keine Benutzer"
 
-#: dist/toolbar/toolbar.js:464
+#: dist/toolbar/toolbar.js:472
 msgid "Previous page"
 msgstr "Vorherige Seite"
 
-#: dist/toolbar/toolbar.js:465
+#: dist/toolbar/toolbar.js:473
 msgid "Next page"
 msgstr "Nächste Seite"
 
-#: dist/toolbar/toolbar.js:467
-#: src/control/Control.Menubar.js:41
-#: src/control/Control.Menubar.js:86
-#: src/control/Control.Menubar.js:136
+#: dist/toolbar/toolbar.js:475
+#: src/control/Control.Menubar.js:36
+#: src/control/Control.Menubar.js:187
 msgid "Reset zoom"
 msgstr "Maßstab zurücksetzen"
 
-#: dist/toolbar/toolbar.js:468
-#: src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:85
-#: src/control/Control.Menubar.js:135
+#: dist/toolbar/toolbar.js:476
+#: src/control/Control.Menubar.js:35
+#: src/control/Control.Menubar.js:186
 msgid "Zoom out"
 msgstr "Verkleinern"
 
-#: dist/toolbar/toolbar.js:470
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:84
-#: src/control/Control.Menubar.js:134
+#: dist/toolbar/toolbar.js:478
+#: src/control/Control.Menubar.js:34
+#: src/control/Control.Menubar.js:185
 msgid "Zoom in"
 msgstr "Vergrößern"
 
-#: dist/toolbar/toolbar.js:494
+#: dist/toolbar/toolbar.js:503
 msgid "%user has joined"
 msgstr "%user ist beigetreten"
 
-#: dist/toolbar/toolbar.js:495
+#: dist/toolbar/toolbar.js:504
 msgid "%user has left"
 msgstr "%user hat verlassen"
 
-#: dist/toolbar/toolbar.js:625
-#: dist/toolbar/toolbar.js:1115
+#: dist/toolbar/toolbar.js:634
+#: dist/toolbar/toolbar.js:1134
 msgid "Size"
 msgstr "Größe"
 
-#: dist/toolbar/toolbar.js:757
+#: dist/toolbar/toolbar.js:776
 msgid "Number of Sheets"
 msgstr "Anzahl an Tabellen"
 
-#: dist/toolbar/toolbar.js:760
+#: dist/toolbar/toolbar.js:779
 msgid "Selected range of cells"
 msgstr "Ausgewählter Zellbereich"
 
-#: dist/toolbar/toolbar.js:763
-#: dist/toolbar/toolbar.js:809
+#: dist/toolbar/toolbar.js:782
+#: dist/toolbar/toolbar.js:828
 msgid "Entering text mode"
 msgstr "Texteingabemodus aktivieren"
 
-#: dist/toolbar/toolbar.js:766
-#: dist/toolbar/toolbar.js:812
+#: dist/toolbar/toolbar.js:785
+#: dist/toolbar/toolbar.js:831
 msgid "Selection Mode"
 msgstr "Auswahlmodus"
 
-#: dist/toolbar/toolbar.js:769
+#: dist/toolbar/toolbar.js:788
 msgid "Choice of functions"
 msgstr "Funktionsauswahl"
 
-#: dist/toolbar/toolbar.js:771
+#: dist/toolbar/toolbar.js:790
 msgid "Average"
 msgstr "Mittelwert"
 
-#: dist/toolbar/toolbar.js:772
+#: dist/toolbar/toolbar.js:791
 msgid "CountA"
 msgstr "Anzahl2"
 
-#: dist/toolbar/toolbar.js:773
+#: dist/toolbar/toolbar.js:792
 msgid "Count"
 msgstr "Anzahl"
 
-#: dist/toolbar/toolbar.js:774
+#: dist/toolbar/toolbar.js:793
 msgid "Maximum"
 msgstr "Maximum"
 
-#: dist/toolbar/toolbar.js:775
+#: dist/toolbar/toolbar.js:794
 msgid "Minimum"
 msgstr "Minimum"
 
-#: dist/toolbar/toolbar.js:777
+#: dist/toolbar/toolbar.js:796
 msgid "Selection count"
 msgstr "Anzahl der Auswahl"
 
-#: dist/toolbar/toolbar.js:778
+#: dist/toolbar/toolbar.js:797
+#: src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr "Keine"
 
-#: dist/toolbar/toolbar.js:783
+#: dist/toolbar/toolbar.js:802
 msgid "Wrap Text"
 msgstr "Text umbrechen"
 
-#: dist/toolbar/toolbar.js:784
+#: dist/toolbar/toolbar.js:803
 msgid "Merge and Center Cells"
 msgstr "Zellen verbinden und zentrieren"
 
-#: dist/toolbar/toolbar.js:786
+#: dist/toolbar/toolbar.js:805
 msgid "Format as Currency"
 msgstr "Als Währung formatieren"
 
-#: dist/toolbar/toolbar.js:787
+#: dist/toolbar/toolbar.js:806
 msgid "Format as Percent"
 msgstr "Als Prozent formatieren"
 
-#: dist/toolbar/toolbar.js:788
+#: dist/toolbar/toolbar.js:807
 msgid "Format as Number"
 msgstr "Als Zahl formatieren"
 
-#: dist/toolbar/toolbar.js:789
+#: dist/toolbar/toolbar.js:808
 msgid "Format as Date"
 msgstr "Als Datum formatieren"
 
-#: dist/toolbar/toolbar.js:790
+#: dist/toolbar/toolbar.js:809
 msgid "Add Decimal Place"
 msgstr "Dezimalstelle hinzufügen"
 
-#: dist/toolbar/toolbar.js:791
+#: dist/toolbar/toolbar.js:810
 msgid "Delete Decimal Place"
 msgstr "Dezimalstelle entfernen"
 
-#: dist/toolbar/toolbar.js:793
+#: dist/toolbar/toolbar.js:812
 msgid "Sort Ascending"
 msgstr "Aufsteigend sortieren"
 
-#: dist/toolbar/toolbar.js:794
+#: dist/toolbar/toolbar.js:813
 msgid "Sort Descending"
 msgstr "Absteigend sortieren"
 
-#: dist/toolbar/toolbar.js:803
+#: dist/toolbar/toolbar.js:822
 msgid "Number of Pages"
 msgstr "Anzahl an Seiten"
 
-#: dist/toolbar/toolbar.js:806
+#: dist/toolbar/toolbar.js:825
 msgid "Word Counter"
 msgstr "Anzahl an Wörtern"
 
-#: dist/toolbar/toolbar.js:820
+#: dist/toolbar/toolbar.js:839
 msgid "Number of Slides"
 msgstr "Anzahl an Folien"
 
-#: dist/toolbar/toolbar.js:939
+#: dist/toolbar/toolbar.js:958
 msgid "Document saved"
 msgstr "Dokument gespeichert"
 
-#: dist/toolbar/toolbar.js:1098
+#: dist/toolbar/toolbar.js:1117
 msgid "Style"
 msgstr "Aussehen"
 
-#: dist/toolbar/toolbar.js:1110
+#: dist/toolbar/toolbar.js:1129
 msgid "Font"
 msgstr "Schriftart"
 
-#: dist/toolbar/toolbar.js:1134
+#: dist/toolbar/toolbar.js:1153
 msgid "Previous slide"
 msgstr "Vorherige Folie"
 
-#: dist/toolbar/toolbar.js:1135
+#: dist/toolbar/toolbar.js:1154
 msgid "Next slide"
 msgstr "Nächste Folie"
 
-#: dist/toolbar/toolbar.js:1303
+#: dist/toolbar/toolbar.js:1322
 msgid "Layout"
 msgstr "Layout"
 
-#: dist/toolbar/toolbar.js:1317
+#: dist/toolbar/toolbar.js:1357
 msgid "%n users"
 msgstr "%n Benutzer"
 
-#: dist/toolbar/toolbar.js:1324
+#: dist/toolbar/toolbar.js:1364
 msgid "1 user"
 msgstr "1 Benutzer"
 
-#: dist/toolbar/toolbar.js:1349
+#: dist/toolbar/toolbar.js:1391
 #: src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr "Sie"
@@ -671,20 +682,1106 @@ msgstr " Minuten"
 msgid " s"
 msgstr " Sekunden"
 
-#: src/control/Control.ColumnHeader.js:38
+#: src/control/Control.CharacterMap.js:12
+msgid "Basic Latin"
+msgstr "Lateinisch"
+
+#: src/control/Control.CharacterMap.js:13
+msgid "Latin-1"
+msgstr "Lateinisch, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:14
+msgid "Latin Extended-A"
+msgstr "Lateinisch, Erweiterung A"
+
+#: src/control/Control.CharacterMap.js:15
+msgid "Latin Extended-B"
+msgstr "Lateinisch, Erweiterung B"
+
+#: src/control/Control.CharacterMap.js:16
+msgid "IPA Extensions"
+msgstr "Lautschrift-Erweiterungen"
+
+#: src/control/Control.CharacterMap.js:17
+msgid "Spacing Modifier Letters"
+msgstr "Phonetische Hilfszeichen"
+
+#: src/control/Control.CharacterMap.js:18
+msgid "Combining Diacritical Marks"
+msgstr "Kombinierende diakritische Zeichen"
+
+#: src/control/Control.CharacterMap.js:19
+msgid "Basic Greek"
+msgstr "Griechisch"
+
+#: src/control/Control.CharacterMap.js:20
+msgid "Cyrillic"
+msgstr "Kyrillisch"
+
+#: src/control/Control.CharacterMap.js:21
+msgid "Armenian"
+msgstr "Armenisch"
+
+#: src/control/Control.CharacterMap.js:22
+msgid "Basic Hebrew"
+msgstr "Hebräisch"
+
+#: src/control/Control.CharacterMap.js:23
+msgid "Basic Arabic"
+msgstr "Arabisch"
+
+#: src/control/Control.CharacterMap.js:24
+msgid "Syriac"
+msgstr "Syrisch"
+
+#: src/control/Control.CharacterMap.js:25
+msgid "Thaana"
+msgstr "Thaana"
+
+#: src/control/Control.CharacterMap.js:26
+msgid "Devanagari"
+msgstr "Devanagari"
+
+#: src/control/Control.CharacterMap.js:27
+msgid "Bengali"
+msgstr "Bengalisch"
+
+#: src/control/Control.CharacterMap.js:28
+msgid "Gurmukhi"
+msgstr "Gurmukhi"
+
+#: src/control/Control.CharacterMap.js:29
+msgid "Gujarati"
+msgstr "Gujarati"
+
+#: src/control/Control.CharacterMap.js:30
+msgid "Odia"
+msgstr "Oriya"
+
+#: src/control/Control.CharacterMap.js:31
+msgid "Tamil"
+msgstr "Tamilisch"
+
+#: src/control/Control.CharacterMap.js:32
+msgid "Telugu"
+msgstr "Telugu"
+
+#: src/control/Control.CharacterMap.js:33
+msgid "Kannada"
+msgstr "Kannada"
+
+#: src/control/Control.CharacterMap.js:34
+msgid "Malayalam"
+msgstr "Malayalam"
+
+#: src/control/Control.CharacterMap.js:35
+msgid "Sinhala"
+msgstr "Singhalesisch"
+
+#: src/control/Control.CharacterMap.js:36
+msgid "Thai"
+msgstr "Thailändisch"
+
+#: src/control/Control.CharacterMap.js:37
+msgid "Lao"
+msgstr "Laotisch"
+
+#: src/control/Control.CharacterMap.js:38
+msgid "Tibetan"
+msgstr "Tibetisch"
+
+#: src/control/Control.CharacterMap.js:39
+msgid "Myanmar"
+msgstr "Birmanisch"
+
+#: src/control/Control.CharacterMap.js:40
+msgid "Basic Georgian"
+msgstr "Georgisch"
+
+#: src/control/Control.CharacterMap.js:41
+msgid "Hangul Jamo"
+msgstr "Hangeul-Jamo"
+
+#: src/control/Control.CharacterMap.js:42
+msgid "Ethiopic"
+msgstr "Äthiopisch"
+
+#: src/control/Control.CharacterMap.js:43
+msgid "Cherokee"
+msgstr "Cherokee"
+
+#: src/control/Control.CharacterMap.js:44
+msgid "Canadian Aboriginal Syllables"
+msgstr "Vereinheitlichte Silbenzeichen kanadischer Ureinwohner"
+
+#: src/control/Control.CharacterMap.js:45
+msgid "Ogham"
+msgstr "Ogam"
+
+#: src/control/Control.CharacterMap.js:46
+msgid "Runic"
+msgstr "Runen"
+
+#: src/control/Control.CharacterMap.js:47
+msgid "Khmer"
+msgstr "Khmer"
+
+#: src/control/Control.CharacterMap.js:48
+msgid "Mongolian"
+msgstr "Mongolisch"
+
+#: src/control/Control.CharacterMap.js:49
+msgid "Latin Extended Additional"
+msgstr "Lateinisch, weitere Zusätze"
+
+#: src/control/Control.CharacterMap.js:50
+msgid "Greek Extended"
+msgstr "Griechisch, Erweiterung"
+
+#: src/control/Control.CharacterMap.js:51
+msgid "General Punctuation"
+msgstr "Interpunktion"
+
+#: src/control/Control.CharacterMap.js:52
+msgid "Superscripts and Subscripts"
+msgstr "Hoch- und tiefgestellte Zeichen"
+
+#: src/control/Control.CharacterMap.js:53
+msgid "Currency Symbols"
+msgstr "Währungszeichen"
+
+#: src/control/Control.CharacterMap.js:54
+msgid "Combining Diacritical Symbols"
+msgstr "Kombinierende diakritische Zeichen für Symbole"
+
+#: src/control/Control.CharacterMap.js:55
+msgid "Letterlike Symbols"
+msgstr "Buchstabenähnlich Symbole"
+
+#: src/control/Control.CharacterMap.js:56
+msgid "Number Forms"
+msgstr "Zahlzeichen"
+
+#: src/control/Control.CharacterMap.js:57
+msgid "Arrows"
+msgstr "Pfeile"
+
+#: src/control/Control.CharacterMap.js:58
+msgid "Mathematical Operators"
+msgstr "Mathematische Operatoren"
+
+#: src/control/Control.CharacterMap.js:59
+msgid "Miscellaneous Technical"
+msgstr "Verschiedene technische Zeichen"
+
+#: src/control/Control.CharacterMap.js:60
+msgid "Control Pictures"
+msgstr "Symbole für Steuerzeichen"
+
+#: src/control/Control.CharacterMap.js:61
+msgid "Optical Character Recognition"
+msgstr "Optische Zeichenerkennung"
+
+#: src/control/Control.CharacterMap.js:62
+msgid "Enclosed Alphanumerics"
+msgstr "Umschlossene alphanumerische Zeichen"
+
+#: src/control/Control.CharacterMap.js:63
+msgid "Box Drawing"
+msgstr "Rahmenzeichnung"
+
+#: src/control/Control.CharacterMap.js:64
+msgid "Block Elements"
+msgstr "Blockelemente"
+
+#: src/control/Control.CharacterMap.js:65
+msgid "Geometric Shapes"
+msgstr "Geometrische Formen"
+
+#: src/control/Control.CharacterMap.js:66
+msgid "Miscellaneous Symbols"
+msgstr "Verschiedene Symbole"
+
+#: src/control/Control.CharacterMap.js:67
+msgid "Dingbats"
+msgstr "Dingbats"
+
+#: src/control/Control.CharacterMap.js:68
+msgid "Braille Patterns"
+msgstr "Braille-Zeichen"
+
+#: src/control/Control.CharacterMap.js:69
+msgid "CJK Radicals Supplement"
+msgstr "CJK-Radikale, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:70
+msgid "Kangxi Radicals"
+msgstr "Kangxi-Radikale"
+
+#: src/control/Control.CharacterMap.js:71
+msgid "Ideographic Description Characters"
+msgstr "Ideographische Beschreibungszeichen"
+
+#: src/control/Control.CharacterMap.js:72
+msgid "CJK Symbols and Punctuation"
+msgstr "CJK-Symbole und -Interpunktion"
+
+#: src/control/Control.CharacterMap.js:73
+msgid "Hiragana"
+msgstr "Hiragana"
+
+#: src/control/Control.CharacterMap.js:74
+msgid "Katakana"
+msgstr "Katakana"
+
+#: src/control/Control.CharacterMap.js:75
+msgid "Bopomofo"
+msgstr "Bopomofo"
+
+#: src/control/Control.CharacterMap.js:76
+msgid "Hangul Compatability Jamo"
+msgstr "Hangeul-Jamo, Kompatibilität"
+
+#: src/control/Control.CharacterMap.js:77
+msgid "Kanbun"
+msgstr "Kanbun"
+
+#: src/control/Control.CharacterMap.js:78
+msgid "Bopomofo Extended"
+msgstr "Bopomofo, Erweiterung"
+
+#: src/control/Control.CharacterMap.js:79
+msgid "Enclosed CJK Letters and Months"
+msgstr "Umschlossene CJK-Zeichen und -Monate"
+
+#: src/control/Control.CharacterMap.js:80
+msgid "CJK Compatibility"
+msgstr "CJK-Kompatibilität"
+
+#: src/control/Control.CharacterMap.js:81
+msgid "CJK Unified Ideographs Extension A"
+msgstr "Vereinheitlichte CJK-Ideogramme, Erweiterung A"
+
+#: src/control/Control.CharacterMap.js:82
+msgid "CJK Unified Ideographs"
+msgstr "Vereinheitlichte CJK-Ideogramme"
+
+#: src/control/Control.CharacterMap.js:83
+msgid "Yi Syllables"
+msgstr "Yi-Silbenzeichen"
+
+#: src/control/Control.CharacterMap.js:84
+msgid "Yi Radicals"
+msgstr "Yi-Radikale"
+
+#: src/control/Control.CharacterMap.js:85
+msgid "Hangul"
+msgstr "Hangeul"
+
+#: src/control/Control.CharacterMap.js:86
+msgid "High Surrogates"
+msgstr "High Surrogates"
+
+#: src/control/Control.CharacterMap.js:87
+msgid "High Private Use Surrogates"
+msgstr "High Surrogates (privater Bereich)"
+
+#: src/control/Control.CharacterMap.js:88
+msgid "Low Surrogates"
+msgstr "Low Surrogates"
+
+#: src/control/Control.CharacterMap.js:89
+msgid "Private Use Area"
+msgstr "Zeichensatzspezifische Symbole"
+
+#: src/control/Control.CharacterMap.js:90
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK-Kompatibilitätsideogramme"
+
+#: src/control/Control.CharacterMap.js:91
+msgid "Alphabetic Presentation Forms"
+msgstr "Alphabetische Präsentationsformen"
+
+#: src/control/Control.CharacterMap.js:92
+msgid "Arabic Presentation Forms-A"
+msgstr "Arabisch, Präsentationsformen A"
+
+#: src/control/Control.CharacterMap.js:93
+msgid "Combining Half Marks"
+msgstr "Kombinierende halbe diakritische Zeichen"
+
+#: src/control/Control.CharacterMap.js:94
+msgid "CJK Compatibility Forms"
+msgstr "CJK-Kompatibilitätsformen"
+
+#: src/control/Control.CharacterMap.js:95
+msgid "Small Form Variants"
+msgstr "Kleine Formvarianten"
+
+#: src/control/Control.CharacterMap.js:96
+msgid "Arabic Presentation Forms-B"
+msgstr "Arabisch, Präsentationsformen B"
+
+#: src/control/Control.CharacterMap.js:97
+msgid "Specials"
+msgstr "Spezielle Zeichen"
+
+#: src/control/Control.CharacterMap.js:98
+msgid "Halfwidth and Fullwidth Forms"
+msgstr "Halbbreite und vollbreite Formen"
+
+#: src/control/Control.CharacterMap.js:99
+msgid "Old Italic"
+msgstr "Altitalisch"
+
+#: src/control/Control.CharacterMap.js:100
+msgid "Gothic"
+msgstr "Gotisch"
+
+#: src/control/Control.CharacterMap.js:101
+msgid "Deseret"
+msgstr "Mormonisch"
+
+#: src/control/Control.CharacterMap.js:102
+msgid "Byzantine Musical Symbols"
+msgstr "Byzantinisch, Notenschriftzeichen"
+
+#: src/control/Control.CharacterMap.js:103
+#: src/control/Control.CharacterMap.js:104
+msgid "Musical Symbols"
+msgstr "Notenschriftzeichen"
+
+#: src/control/Control.CharacterMap.js:105
+msgid "CJK Unified Ideographs Extension B"
+msgstr "Vereinheitlichte CJK-Ideogramme, Erweiterung B"
+
+#: src/control/Control.CharacterMap.js:106
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "CJK-Kompatibilitätsideogramme, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:107
+msgid "Tags"
+msgstr "Sprachtags"
+
+#: src/control/Control.CharacterMap.js:108
+msgid "Cyrillic Supplement"
+msgstr "Kyrillisch, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:109
+msgid "Tagalog"
+msgstr "Tagalog"
+
+#: src/control/Control.CharacterMap.js:110
+msgid "Hanunoo"
+msgstr "Hanunóo"
+
+#: src/control/Control.CharacterMap.js:111
+msgid "Buhid"
+msgstr "Buid"
+
+#: src/control/Control.CharacterMap.js:112
+msgid "Tagbanwa"
+msgstr "Tagbanuwa"
+
+#: src/control/Control.CharacterMap.js:113
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Verschiedene Mathematische Symbole A"
+
+#: src/control/Control.CharacterMap.js:114
+msgid "Supplemental Arrows-A"
+msgstr "Pfeile, Ergänzung A"
+
+#: src/control/Control.CharacterMap.js:115
+msgid "Supplemental Arrows-B"
+msgstr "Pfeile, Ergänzung B"
+
+#: src/control/Control.CharacterMap.js:116
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Verschiedene Mathematische Symbole B"
+
+#: src/control/Control.CharacterMap.js:117
+msgid "Supplemental Mathematical Operators"
+msgstr "Mathematische Operatoren, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:118
+msgid "Katakana Phonetics Extensions"
+msgstr "Katakana, phonetische Erweiterungen"
+
+#: src/control/Control.CharacterMap.js:119
+msgid "Variation Selectors"
+msgstr "Variantenselektoren"
+
+#: src/control/Control.CharacterMap.js:120
+msgid "Supplementary Private Use Area-A"
+msgstr "Bereich zum privaten Gebrauch, Ergänzung A"
+
+#: src/control/Control.CharacterMap.js:121
+msgid "Supplementary Private Use Area-B"
+msgstr "Bereich zum privaten Gebrauch, Ergänzung B"
+
+#: src/control/Control.CharacterMap.js:122
+msgid "Limbu"
+msgstr "Limbu"
+
+#: src/control/Control.CharacterMap.js:123
+msgid "Tai Le"
+msgstr "Tai Lue"
+
+#: src/control/Control.CharacterMap.js:124
+msgid "Khmer Symbols"
+msgstr "Khmer, Symbole"
+
+#: src/control/Control.CharacterMap.js:125
+msgid "Phonetic Extensions"
+msgstr "Phonetische Erweiterungen"
+
+#: src/control/Control.CharacterMap.js:126
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "Verschiedene Symbole und Pfeile"
+
+#: src/control/Control.CharacterMap.js:127
+msgid "Yijing Hexagram Symbols"
+msgstr "I-Ging-Hexagramme"
+
+#: src/control/Control.CharacterMap.js:128
+msgid "Linear B Syllabary"
+msgstr "Linear B, Silbenzeichen"
+
+#: src/control/Control.CharacterMap.js:129
+msgid "Linear B Ideograms"
+msgstr "Linear B, Ideogramme"
+
+#: src/control/Control.CharacterMap.js:130
+msgid "Aegean Numbers"
+msgstr "Ägäisch, Zahlzeichen"
+
+#: src/control/Control.CharacterMap.js:131
+msgid "Ugaritic"
+msgstr "Ugaritisch"
+
+#: src/control/Control.CharacterMap.js:132
+msgid "Shavian"
+msgstr "Shaw"
+
+#: src/control/Control.CharacterMap.js:133
+msgid "Osmanya"
+msgstr "Osmaniya"
+
+#: src/control/Control.CharacterMap.js:134
+msgid "Cypriot Syllabary"
+msgstr "Kyprisch"
+
+#: src/control/Control.CharacterMap.js:135
+msgid "Tai Xuan Jing Symbols"
+msgstr "Tai-Xuan-Jing-Symbole"
+
+#: src/control/Control.CharacterMap.js:136
+msgid "Variation Selectors Supplement"
+msgstr "Variantenselektoren, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:137
+msgid "Ancient Greek Musical Notation"
+msgstr "Altgriechisch, Notenschriftzeichen"
+
+#: src/control/Control.CharacterMap.js:138
+msgid "Ancient Greek Numbers"
+msgstr "Altgriechisch, Zahlzeichen"
+
+#: src/control/Control.CharacterMap.js:139
+msgid "Arabic Supplement"
+msgstr "Arabisch, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:140
+msgid "Buginese"
+msgstr "Buginesisch"
+
+#: src/control/Control.CharacterMap.js:141
+msgid "CJK Strokes"
+msgstr "CJK-Striche"
+
+#: src/control/Control.CharacterMap.js:142
+msgid "Combining Diacritical Marks Supplement"
+msgstr "Kombinierende diakritische Zeichen, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:143
+msgid "Coptic"
+msgstr "Koptisch"
+
+#: src/control/Control.CharacterMap.js:144
+msgid "Ethiopic Extended"
+msgstr "Äthiopisch, Zusatz"
+
+#: src/control/Control.CharacterMap.js:145
+msgid "Ethiopic Supplement"
+msgstr "Äthiopisch, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:146
+msgid "Georgian Supplement"
+msgstr "Georgisch, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:147
+msgid "Glagolitic"
+msgstr "Glagolitisch"
+
+#: src/control/Control.CharacterMap.js:148
+msgid "Kharoshthi"
+msgstr "Kharoshthi"
+
+#: src/control/Control.CharacterMap.js:149
+msgid "Modifier Tone Letters"
+msgstr "Modifizierende Tonzeichen"
+
+#: src/control/Control.CharacterMap.js:150
+msgid "\"New Tai Lue"
+msgstr "Tai Lue (neu)"
+
+#: src/control/Control.CharacterMap.js:151
+msgid "Old Persian"
+msgstr "Altpersisch"
+
+#: src/control/Control.CharacterMap.js:152
+msgid "Phonetic Extensions Supplement"
+msgstr "Phonetische Erweiterungen, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:153
+msgid "Supplemental Punctuation"
+msgstr "Interpunktion, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:154
+msgid "Syloti Nagri"
+msgstr "Syloti Nagri"
+
+#: src/control/Control.CharacterMap.js:155
+msgid "Tifinagh"
+msgstr "Tifinagh"
+
+#: src/control/Control.CharacterMap.js:156
+msgid "Vertical Forms"
+msgstr "Vertikale Formen"
+
+#: src/control/Control.CharacterMap.js:157
+msgid "Nko"
+msgstr "N'Ko"
+
+#: src/control/Control.CharacterMap.js:158
+msgid "Balinese"
+msgstr "Balinesisch"
+
+#: src/control/Control.CharacterMap.js:159
+msgid "Latin Extended-C"
+msgstr "Lateinisch, Erweiterung C"
+
+#: src/control/Control.CharacterMap.js:160
+msgid "Latin Extended-D"
+msgstr "Lateinisch, Erweiterung D"
+
+#: src/control/Control.CharacterMap.js:161
+msgid "Phags-Pa"
+msgstr "Phagspa"
+
+#: src/control/Control.CharacterMap.js:162
+msgid "Phoenician"
+msgstr "Phönizisch"
+
+#: src/control/Control.CharacterMap.js:163
+msgid "Cuneiform"
+msgstr "Keilschrift"
+
+#: src/control/Control.CharacterMap.js:164
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "Keilschrift, Zahlzeichen und Interpunktion"
+
+#: src/control/Control.CharacterMap.js:165
+msgid "Counting Rod Numerals"
+msgstr "Zählstabziffern"
+
+#: src/control/Control.CharacterMap.js:166
+msgid "Sundanese"
+msgstr "Sudanesisch"
+
+#: src/control/Control.CharacterMap.js:167
+msgid "Lepcha"
+msgstr "Lepcha"
+
+#: src/control/Control.CharacterMap.js:168
+msgid "Ol Chiki"
+msgstr "Ol Chiki"
+
+#: src/control/Control.CharacterMap.js:169
+msgid "Cyrillic Extended-A"
+msgstr "Kyrillisch, Erweiterung A"
+
+#: src/control/Control.CharacterMap.js:170
+msgid "Vai"
+msgstr "Vai"
+
+#: src/control/Control.CharacterMap.js:171
+msgid "Cyrillic Extended-B"
+msgstr "Kyrillisch, Erweiterung B"
+
+#: src/control/Control.CharacterMap.js:172
+msgid "Saurashtra"
+msgstr "Saurashtra"
+
+#: src/control/Control.CharacterMap.js:173
+msgid "Kayah Li"
+msgstr "Kayah Li"
+
+#: src/control/Control.CharacterMap.js:174
+msgid "Rejang"
+msgstr "Rejang"
+
+#: src/control/Control.CharacterMap.js:175
+msgid "Cham"
+msgstr "Cham"
+
+#: src/control/Control.CharacterMap.js:176
+msgid "Ancient Symbols"
+msgstr "Alte Symbole"
+
+#: src/control/Control.CharacterMap.js:177
+msgid "Phaistos Disc"
+msgstr "Diskos von Phaistos"
+
+#: src/control/Control.CharacterMap.js:178
+msgid "Lycian"
+msgstr "Lykisch"
+
+#: src/control/Control.CharacterMap.js:179
+msgid "Carian"
+msgstr "Karisch"
+
+#: src/control/Control.CharacterMap.js:180
+msgid "Lydian"
+msgstr "Lydisch"
+
+#: src/control/Control.CharacterMap.js:181
+msgid "Mahjong Tiles"
+msgstr "Mahjonggsteine"
+
+#: src/control/Control.CharacterMap.js:182
+msgid "Domino Tiles"
+msgstr "Dominosteine"
+
+#: src/control/Control.CharacterMap.js:183
+msgid "Samaritan"
+msgstr "Samaritanisch"
+
+#: src/control/Control.CharacterMap.js:184
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "Vereinheitlichte Silbenzeichen kanadischer Ureinwohner, Erweiterung"
+
+#: src/control/Control.CharacterMap.js:185
+msgid "Tai Tham"
+msgstr "Lanna"
+
+#: src/control/Control.CharacterMap.js:186
+msgid "Vedic Extensions"
+msgstr "Vedische Erweiterungen"
+
+#: src/control/Control.CharacterMap.js:187
+msgid "Lisu"
+msgstr "Lisu"
+
+#: src/control/Control.CharacterMap.js:188
+msgid "Bamum"
+msgstr "Bamum"
+
+#: src/control/Control.CharacterMap.js:189
+msgid "Common Indic Number Forms"
+msgstr "Allgemeine indische Ziffern"
+
+#: src/control/Control.CharacterMap.js:190
+msgid "Devanagari Extended"
+msgstr "Devanagari, Erweiterung"
+
+#: src/control/Control.CharacterMap.js:191
+msgid "Hangul Jamo Extended-A"
+msgstr "Hangeul-Jamo, Erweiterung A"
+
+#: src/control/Control.CharacterMap.js:192
+msgid "Javanese"
+msgstr "Javanisch"
+
+#: src/control/Control.CharacterMap.js:193
+msgid "Myanmar Extended-A"
+msgstr "Birmanisch, Erweiterung A"
+
+#: src/control/Control.CharacterMap.js:194
+msgid "Tai Viet"
+msgstr "Tai Viet"
+
+#: src/control/Control.CharacterMap.js:195
+msgid "Meetei Mayek"
+msgstr "Meitei-Mayek"
+
+#: src/control/Control.CharacterMap.js:196
+msgid "Hangul Jamo Extended-B"
+msgstr "Hangeul-Jamo, Erweiterung B"
+
+#: src/control/Control.CharacterMap.js:197
+msgid "Imperial Aramaic"
+msgstr "Aramäisch"
+
+#: src/control/Control.CharacterMap.js:198
+msgid "Old South Arabian"
+msgstr "Altsüdarabisch"
+
+#: src/control/Control.CharacterMap.js:199
+msgid "Avestan"
+msgstr "Avestisch"
+
+#: src/control/Control.CharacterMap.js:200
+msgid "Inscriptional Parthian"
+msgstr "Parthisch"
+
+#: src/control/Control.CharacterMap.js:201
+msgid "Inscriptional Pahlavi"
+msgstr "Inschriften-Pahlavi"
+
+#: src/control/Control.CharacterMap.js:202
+msgid "Old Turkic"
+msgstr "Alttürkisch"
+
+#: src/control/Control.CharacterMap.js:203
+msgid "Rumi Numeral Symbols"
+msgstr "Rumi-Ziffern"
+
+#: src/control/Control.CharacterMap.js:204
+msgid "Kaithi"
+msgstr "Kaithi"
+
+#: src/control/Control.CharacterMap.js:205
+msgid "Egyptian Hieroglyphs"
+msgstr "Ägyptisch, Hieroglyphen"
+
+#: src/control/Control.CharacterMap.js:206
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "Umschlossene alphanumerische Zeichen, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:207
+msgid "Enclosed Ideographic Supplement"
+msgstr "Zusätzliche umschlossene CJK-Zeichen"
+
+#: src/control/Control.CharacterMap.js:208
+msgid "CJK Unified Ideographs Extension C"
+msgstr "Vereinheitlichte CJK-Ideogramme, Erweiterung C"
+
+#: src/control/Control.CharacterMap.js:209
+msgid "Mandaic"
+msgstr "Mandäisch"
+
+#: src/control/Control.CharacterMap.js:210
+msgid "Batak"
+msgstr "Batak"
+
+#: src/control/Control.CharacterMap.js:211
+msgid "Ethiopic Extended-A"
+msgstr "Äthiopisch, Erweiterung A"
+
+#: src/control/Control.CharacterMap.js:212
+msgid "Brahmi"
+msgstr "Brahmi"
+
+#: src/control/Control.CharacterMap.js:213
+msgid "Bamum Supplement"
+msgstr "Bamum, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:214
+msgid "Kana Supplement"
+msgstr "Kana"
+
+#: src/control/Control.CharacterMap.js:215
+msgid "Playing Cards"
+msgstr "Spielkarten"
+
+#: src/control/Control.CharacterMap.js:216
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "Verschiedene piktografische Symbole"
+
+#: src/control/Control.CharacterMap.js:217
+msgid "Emoticons"
+msgstr "Smileys"
+
+#: src/control/Control.CharacterMap.js:218
+msgid "Transport And Map Symbols"
+msgstr "Verkehrs- und Kartensymbole"
+
+#: src/control/Control.CharacterMap.js:219
+msgid "Alchemical Symbols"
+msgstr "Alchemistische Symbole"
+
+#: src/control/Control.CharacterMap.js:220
+msgid "CJK Unified Ideographs Extension D"
+msgstr "Vereinheitlichte CJK-Ideogramme, Erweiterung D"
+
+#: src/control/Control.CharacterMap.js:221
+msgid "Arabic Extended-A"
+msgstr "Arabisch, Erweiterung A"
+
+#: src/control/Control.CharacterMap.js:222
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "Arabisch, mathematische alphanumerische Zeichen"
+
+#: src/control/Control.CharacterMap.js:223
+msgid "Chakma"
+msgstr "Chakma"
+
+#: src/control/Control.CharacterMap.js:224
+msgid "Meetei Mayek Extensions"
+msgstr "Meitei-Mayek, Erweiterung"
+
+#: src/control/Control.CharacterMap.js:225
+msgid "Meroitic Cursive"
+msgstr "Meroitisch-demotisch"
+
+#: src/control/Control.CharacterMap.js:226
+msgid "Meroitic Hieroglyphs"
+msgstr "Meroitisch, Hieroglyphen"
+
+#: src/control/Control.CharacterMap.js:227
+msgid "Miao"
+msgstr "Pollard"
+
+#: src/control/Control.CharacterMap.js:228
+msgid "Sharada"
+msgstr "Sharada"
+
+#: src/control/Control.CharacterMap.js:229
+msgid "Sora Sompeng"
+msgstr "Sorang-Sompeng"
+
+#: src/control/Control.CharacterMap.js:230
+msgid "Sundanese Supplement"
+msgstr "Sundanesisch, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:231
+msgid "Takri"
+msgstr "Takri"
+
+#: src/control/Control.CharacterMap.js:232
+msgid "Bassa Vah"
+msgstr "Bassa Vah"
+
+#: src/control/Control.CharacterMap.js:233
+msgid "Caucasian Albanian"
+msgstr "Kaukasisch-albanisch"
+
+#: src/control/Control.CharacterMap.js:234
+msgid "Coptic Epact Numbers"
+msgstr "Koptisch, Zahlzeichen"
+
+#: src/control/Control.CharacterMap.js:235
+msgid "Combining Diacritical Marks Extended"
+msgstr "Kombinierende diakritische Zeichen, Erweiterung"
+
+#: src/control/Control.CharacterMap.js:236
+msgid "Duployan"
+msgstr "Duployé"
+
+#: src/control/Control.CharacterMap.js:237
+msgid "Elbasan"
+msgstr "Elbasan"
+
+#: src/control/Control.CharacterMap.js:238
+msgid "Geometric Shapes Extended"
+msgstr "Geometrische Formen, Erweiterung"
+
+#: src/control/Control.CharacterMap.js:239
+msgid "Grantha"
+msgstr "Grantha"
+
+#: src/control/Control.CharacterMap.js:240
+msgid "Khojki"
+msgstr "Khojki"
+
+#: src/control/Control.CharacterMap.js:241
+msgid "Khudawadi"
+msgstr "Khudabadi"
+
+#: src/control/Control.CharacterMap.js:242
+msgid "Latin Extended-E"
+msgstr "Latein, Erweiterung E"
+
+#: src/control/Control.CharacterMap.js:243
+msgid "Linear A"
+msgstr "Linear A"
+
+#: src/control/Control.CharacterMap.js:244
+msgid "Mahajani"
+msgstr "Mahajani"
+
+#: src/control/Control.CharacterMap.js:245
+msgid "Manichaean"
+msgstr "Manichäisch"
+
+#: src/control/Control.CharacterMap.js:246
+msgid "Mende Kikakui"
+msgstr "Mende"
+
+#: src/control/Control.CharacterMap.js:247
+msgid "Modi"
+msgstr "Modi"
+
+#: src/control/Control.CharacterMap.js:248
+msgid "Mro"
+msgstr "Mro"
+
+#: src/control/Control.CharacterMap.js:249
+msgid "Myanmar Extended-B"
+msgstr "Birmanisch, Erweiterung B"
+
+#: src/control/Control.CharacterMap.js:250
+msgid "Nabataean"
+msgstr "Nabatäisch"
+
+#: src/control/Control.CharacterMap.js:251
+msgid "Old North Arabian"
+msgstr "Altnordarabisch"
+
+#: src/control/Control.CharacterMap.js:252
+msgid "Old Permic"
+msgstr "Altpermisch"
+
+#: src/control/Control.CharacterMap.js:253
+msgid "Ornamental Dingbats"
+msgstr "Ziersymbole"
+
+#: src/control/Control.CharacterMap.js:254
+msgid "Pahawh Hmong"
+msgstr "Pahawh Hmong"
+
+#: src/control/Control.CharacterMap.js:255
+msgid "Palmyrene"
+msgstr "Palmyrenisch"
+
+#: src/control/Control.CharacterMap.js:256
+msgid "Pau Cin Hau"
+msgstr "Pau Cin Hau"
+
+#: src/control/Control.CharacterMap.js:257
+msgid "Psalter Pahlavi"
+msgstr "Psalter-Pahlavi"
+
+#: src/control/Control.CharacterMap.js:258
+msgid "Shorthand Format Controls"
+msgstr "Kurzschrift-Steuerzeichen"
+
+#: src/control/Control.CharacterMap.js:259
+msgid "Siddham"
+msgstr "Siddham"
+
+#: src/control/Control.CharacterMap.js:260
+msgid "Sinhala Archaic Numbers"
+msgstr "Singhalesisch, Zahlzeichen"
+
+#: src/control/Control.CharacterMap.js:261
+msgid "Supplemental Arrows-C"
+msgstr "Pfeile, Ergänzung C"
+
+#: src/control/Control.CharacterMap.js:262
+msgid "Tirhuta"
+msgstr "Tirhuta"
+
+#: src/control/Control.CharacterMap.js:263
+msgid "Warang Citi"
+msgstr "Varang Kshiti"
+
+#: src/control/Control.CharacterMap.js:264
+msgid "Ahom"
+msgstr "Ahom"
+
+#: src/control/Control.CharacterMap.js:265
+msgid "Anatolian Hieroglyphs"
+msgstr "Anatolisch, Hieroglyphen"
+
+#: src/control/Control.CharacterMap.js:266
+msgid "Cherokee Supplement"
+msgstr "Cherokee, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:267
+msgid "CJK Unified Ideographs Extension E"
+msgstr "Vereinheitlichte CJK-Ideogramme, Erweiterung E"
+
+#: src/control/Control.CharacterMap.js:268
+msgid "Early Dynastic Cuneiform"
+msgstr "Frühe Keilschrift"
+
+#: src/control/Control.CharacterMap.js:269
+msgid "Hatran"
+msgstr "Hatran"
+
+#: src/control/Control.CharacterMap.js:270
+msgid "Multani"
+msgstr "Multanisch"
+
+#: src/control/Control.CharacterMap.js:271
+msgid "Old Hungarian"
+msgstr "Altungarisch"
+
+#: src/control/Control.CharacterMap.js:272
+msgid "Supplemental Symbols And Pictographs"
+msgstr "Verschiedene piktografische Symbole, Ergänzung"
+
+#: src/control/Control.CharacterMap.js:273
+msgid "Sutton Signwriting"
+msgstr "Sutton"
+
+#: src/control/Control.CharacterMap.js:348
+msgid "Special Characters"
+msgstr "Sonderzeichen"
+
+#: src/control/Control.CharacterMap.js:353
+msgid "Font Name:"
+msgstr "Schriftart:"
+
+#: src/control/Control.CharacterMap.js:360
+msgid "Subset:"
+msgstr "Untergruppe:"
+
+#: src/control/Control.CharacterMap.js:367
+msgid "Special Characters rendered by the User Agent:"
+msgstr "Sonderzeichen, auf Benutzerseite gerendert:"
+
+#: src/control/Control.CharacterMap.js:374
+msgid "Special Character rendered by Server Side:"
+msgstr "Sonderzeichen, serverseitig gerendert:"
+
+#: src/control/Control.CharacterMap.js:379
+msgid "Hexadecimal:"
+msgstr "Hexadezimal:"
+
+#: src/control/Control.CharacterMap.js:385
+#: src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:138
+#: src/control/Control.Menubar.js:189
+#: src/control/Control.Menubar.js:195
+#: src/control/Control.Menubar.js:243
+msgid "Insert"
+msgstr "Einfügen"
+
+#: src/control/Control.ColumnHeader.js:41
 msgid "Insert column before"
 msgstr "Spalte davor einfügen"
 
-#: src/control/Control.ColumnHeader.js:45
-#: src/control/Control.Menubar.js:142
+#: src/control/Control.ColumnHeader.js:48
+#: src/control/Control.Menubar.js:257
 msgid "Delete column"
 msgstr "Spalte löschen"
 
-#: src/control/Control.ColumnHeader.js:52
+#: src/control/Control.ColumnHeader.js:55
 msgid "Optimal Width"
 msgstr "Optimale Breite"
 
-#: src/control/Control.ColumnHeader.js:67
+#: src/control/Control.ColumnHeader.js:62
+msgid "Hide Columns"
+msgstr "Spalten ausblenden"
+
+#: src/control/Control.ColumnHeader.js:69
+msgid "Show Columns"
+msgstr "Spalten einblenden"
+
+#: src/control/Control.ColumnHeader.js:84
 msgid "Optimal Column Width"
 msgstr "Optimale Spaltenbreite"
 
@@ -701,8 +1798,8 @@ msgid "Index"
 msgstr "Index"
 
 #: src/control/Control.DocumentRepair.js:44
-#: src/control/Control.Menubar.js:29
-#: src/control/Control.Menubar.js:127
+#: src/control/Control.Menubar.js:40
+#: src/control/Control.Menubar.js:245
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -719,271 +1816,523 @@ msgid "Jump to state"
 msgstr "Zum Status springen"
 
 #: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:63
-#: src/control/Control.Menubar.js:109
+#: src/control/Control.Menubar.js:162
+#: src/control/Control.Menubar.js:220
 msgid "File"
 msgstr "Datei"
 
-#: src/control/Control.Menubar.js:11
-#: src/control/Control.Menubar.js:64
-#: src/control/Control.Menubar.js:110
+#: src/control/Control.Menubar.js:12
+#: src/control/Control.Menubar.js:164
+#: src/control/Control.Menubar.js:222
 msgid "Print"
 msgstr "Drucken"
 
-#: src/control/Control.Menubar.js:12
-#: src/control/Control.Menubar.js:65
-#: src/control/Control.Menubar.js:111
+#: src/control/Control.Menubar.js:13
+#: src/control/Control.Menubar.js:165
+#: src/control/Control.Menubar.js:223
 msgid "See revision history"
 msgstr "Vergleichen Sie die Versionsgeschichte"
 
-#: src/control/Control.Menubar.js:13
-#: src/control/Control.Menubar.js:66
-#: src/control/Control.Menubar.js:112
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:166
+#: src/control/Control.Menubar.js:224
 msgid "Download as"
 msgstr "Herunterladen als"
 
-#: src/control/Control.Menubar.js:13
-#: src/control/Control.Menubar.js:66
-#: src/control/Control.Menubar.js:112
+#: src/control/Control.Menubar.js:15
+#: src/control/Control.Menubar.js:167
+#: src/control/Control.Menubar.js:225
 msgid "PDF Document (.pdf)"
 msgstr "PDF Dokument (.pdf)"
 
-#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:16
 msgid "ODF text document (.odt)"
 msgstr "ODF Textdokument (.odt)"
 
-#: src/control/Control.Menubar.js:15
+#: src/control/Control.Menubar.js:17
 msgid "Microsoft Word 2003 (.doc)"
 msgstr "Microsoft Word 2003 (.doc)"
 
-#: src/control/Control.Menubar.js:16
+#: src/control/Control.Menubar.js:18
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:18
-#: src/control/Control.Menubar.js:71
-#: src/control/Control.Menubar.js:117
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:172
+#: src/control/Control.Menubar.js:230
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: src/control/Control.Menubar.js:18
+#: src/control/Control.Menubar.js:21
 msgid "Repair"
 msgstr "Reparieren"
 
-#: src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:74
-#: src/control/Control.Menubar.js:120
+#: src/control/Control.Menubar.js:25
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:234
 msgid "Cut"
 msgstr "Ausschneiden"
 
-#: src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:75
-#: src/control/Control.Menubar.js:121
+#: src/control/Control.Menubar.js:26
+#: src/control/Control.Menubar.js:177
+#: src/control/Control.Menubar.js:235
 msgid "Copy"
 msgstr "Kopieren"
 
-#: src/control/Control.Menubar.js:24
-#: src/control/Control.Menubar.js:76
-#: src/control/Control.Menubar.js:122
+#: src/control/Control.Menubar.js:27
+#: src/control/Control.Menubar.js:178
+#: src/control/Control.Menubar.js:236
 msgid "Paste"
 msgstr "Einfügen"
 
-#: src/control/Control.Menubar.js:26
-#: src/control/Control.Menubar.js:78
-#: src/control/Control.Menubar.js:124
+#: src/control/Control.Menubar.js:29
+#: src/control/Control.Menubar.js:180
+#: src/control/Control.Menubar.js:238
 msgid "Select all"
 msgstr "Alles auswählen"
 
-#: src/control/Control.Menubar.js:28
-#: src/control/Control.Menubar.js:43
-#: src/control/Control.Menubar.js:80
-#: src/control/Control.Menubar.js:88
-#: src/control/Control.Menubar.js:126
-msgid "Insert"
-msgstr "Einfügen"
-
-#: src/control/Control.Menubar.js:28
-#: src/control/Control.Menubar.js:80
-#: src/control/Control.Menubar.js:126
-msgid "Image"
-msgstr "Bild"
-
 #: src/control/Control.Menubar.js:31
-msgid "Footnote"
-msgstr "Fußnote"
-
-#: src/control/Control.Menubar.js:32
-msgid "Endnote"
-msgstr "Endnote"
-
-#: src/control/Control.Menubar.js:34
-msgid "Page break"
-msgstr "Seitenumbruch"
-
-#: src/control/Control.Menubar.js:35
-msgid "Column break"
-msgstr "Spaltenumbruch"
-
-#: src/control/Control.Menubar.js:37
-#: src/control/Control.Menubar.js:82
-#: src/control/Control.Menubar.js:132
+#: src/control/Control.Menubar.js:182
+#: src/control/Control.Menubar.js:240
 msgid "View"
 msgstr "Ansicht"
 
-#: src/control/Control.Menubar.js:37
-#: src/control/Control.Menubar.js:82
-#: src/control/Control.Menubar.js:132
+#: src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:183
+#: src/control/Control.Menubar.js:241
 msgid "Full screen"
 msgstr "Vollbild"
 
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:190
+#: src/control/Control.Menubar.js:244
+msgid "Image"
+msgstr "Bild"
+
+#: src/control/Control.Menubar.js:42
+msgid "Footnote"
+msgstr "Fußnote"
+
 #: src/control/Control.Menubar.js:43
+msgid "Endnote"
+msgstr "Endnote"
+
+#: src/control/Control.Menubar.js:45
+msgid "Page break"
+msgstr "Seitenumbruch"
+
+#: src/control/Control.Menubar.js:46
+msgid "Column break"
+msgstr "Spaltenumbruch"
+
+#: src/control/Control.Menubar.js:48
+#: src/control/Control.Menubar.js:192
+#: src/control/Control.Menubar.js:250
+msgid "Special character..."
+msgstr "Sonderzeichen..."
+
+#: src/control/Control.Menubar.js:49
+msgid "Formatting mark"
+msgstr "Formatierungszeichen"
+
+#: src/control/Control.Menubar.js:50
+msgid "Non-breaking space"
+msgstr "Geschütztes Leerzeichen"
+
+#: src/control/Control.Menubar.js:51
+msgid "Non-breaking hyphen"
+msgstr "Geschützter Bindestrich"
+
+#: src/control/Control.Menubar.js:52
+msgid "Soft hyphen"
+msgstr "Weiches Trennzeichen"
+
+#: src/control/Control.Menubar.js:53
+msgid "No-width optional break"
+msgstr "Leerzeichen ohne Breite"
+
+#: src/control/Control.Menubar.js:54
+msgid "No-width no break"
+msgstr "Verbindungszeichen ohne Breite"
+
+#: src/control/Control.Menubar.js:55
+msgid "Left-to-right mark"
+msgstr "Links nach rechts-Markierung"
+
+#: src/control/Control.Menubar.js:56
+msgid "Right-to-left mark"
+msgstr "Rechts nach links-Markierung"
+
+#: src/control/Control.Menubar.js:58
+msgid "Format"
+msgstr "Format"
+
+#: src/control/Control.Menubar.js:59
+msgid "Text"
+msgstr "Text"
+
+#: src/control/Control.Menubar.js:63
+msgid "Double underline"
+msgstr "Doppelt unterstrichen"
+
+#: src/control/Control.Menubar.js:64
+msgid "Strikethrough"
+msgstr "Durchgestrichen"
+
+#: src/control/Control.Menubar.js:65
+msgid "Overline"
+msgstr "Überstrichen"
+
+#: src/control/Control.Menubar.js:67
+msgid "Superscript"
+msgstr "Hochgestellt"
+
+#: src/control/Control.Menubar.js:68
+msgid "Subscript"
+msgstr "Tiefgestellt"
+
+#: src/control/Control.Menubar.js:69
+msgid "ꜱᴍᴀʟʟ ᴄᴀᴘꜱ"
+msgstr "Kapitälchen"
+
+#: src/control/Control.Menubar.js:71
+msgid "Shadow"
+msgstr "Schatten"
+
+#: src/control/Control.Menubar.js:72
+msgid "Outline"
+msgstr "Umriss"
+
+#: src/control/Control.Menubar.js:74
+msgid "Increase size"
+msgstr "Schriftröße vergrößern"
+
+#: src/control/Control.Menubar.js:75
+msgid "Decrease size"
+msgstr "Schriftgröße verkleinern"
+
+#: src/control/Control.Menubar.js:77
+msgid "UPPERCASE"
+msgstr "GROSSBUCHSTABEN"
+
+#: src/control/Control.Menubar.js:78
+msgid "lowercase"
+msgstr "kleinbuchstaben"
+
+#: src/control/Control.Menubar.js:79
+msgid "Cycle case"
+msgstr "Schreibweise rotieren"
+
+#: src/control/Control.Menubar.js:81
+msgid "Sentence case"
+msgstr "Satzanfang groß"
+
+#: src/control/Control.Menubar.js:82
+msgid "Capitalize Every Word"
+msgstr "Jedes Wort Großschreiben"
+
+#: src/control/Control.Menubar.js:83
+msgid "tOGGLE cASE"
+msgstr "sCHREIBWEISE uMKEHREN"
+
+#: src/control/Control.Menubar.js:84
+msgid "Text orientation"
+msgstr "Textausrichtung"
+
+#: src/control/Control.Menubar.js:85
+msgid "Set paragraph left-to-right"
+msgstr "Absatz auf links nach rechts setzen"
+
+#: src/control/Control.Menubar.js:86
+msgid "Set paragraph right-to-left"
+msgstr "Absatz auf rechts nach links setzen"
+
+#: src/control/Control.Menubar.js:87
+msgid "Spacing"
+msgstr "Abstand"
+
 #: src/control/Control.Menubar.js:88
+msgid "Line spacing: 1"
+msgstr "Zeilenabstand: 1"
+
+#: src/control/Control.Menubar.js:89
+msgid "Line spacing: 1.5"
+msgstr "Zeilenabstand: 1,5"
+
+#: src/control/Control.Menubar.js:90
+msgid "Line spacing: 2"
+msgstr "Zeilenabstand: 2"
+
+#: src/control/Control.Menubar.js:92
+msgid "Increase paragraph spacing"
+msgstr "Absatzabstand vergrößern"
+
+#: src/control/Control.Menubar.js:93
+msgid "Decrease paragraph spacing"
+msgstr "Absatzabstand verkleinern"
+
+#: src/control/Control.Menubar.js:97
+msgid "Align"
+msgstr "Ausrichtung"
+
+#: src/control/Control.Menubar.js:98
+msgid "Left"
+msgstr "Links"
+
+#: src/control/Control.Menubar.js:99
+msgid "Centered"
+msgstr "Zentriert"
+
+#: src/control/Control.Menubar.js:100
+msgid "Right"
+msgstr "Rechts"
+
+#: src/control/Control.Menubar.js:103
+msgid "Top"
+msgstr "Oben"
+
+#: src/control/Control.Menubar.js:104
+msgid "Center"
+msgstr "Mitte"
+
+#: src/control/Control.Menubar.js:105
+msgid "Bottom"
+msgstr "Unten"
+
+#: src/control/Control.Menubar.js:106
+msgid "Lists"
+msgstr "Listen"
+
+#: src/control/Control.Menubar.js:110
+msgid "Demote one level"
+msgstr "Eine Ebene niedriger verschieben"
+
+#: src/control/Control.Menubar.js:111
+msgid "Promote one level"
+msgstr "Eine Ebene höher verschieben"
+
+#: src/control/Control.Menubar.js:112
+msgid "Demote one level with subpoints"
+msgstr "Mit Unterpunkten eine Ebene niedriger verschieben"
+
+#: src/control/Control.Menubar.js:113
+msgid "Promote one level with subpoints"
+msgstr "Mit Unterpunkten eine Ebene höher verschieben"
+
+#: src/control/Control.Menubar.js:115
+msgid "Move down"
+msgstr "Nach unten verschieben"
+
+#: src/control/Control.Menubar.js:116
+msgid "Move up"
+msgstr "Nach oben verschieben"
+
+#: src/control/Control.Menubar.js:117
+msgid "Move down with subpoints"
+msgstr "Mit Unterpunkten nach unten verschieben"
+
+#: src/control/Control.Menubar.js:118
+msgid "Move up with subpoints"
+msgstr "Mit Unterpunkten nach oben verschieben"
+
+#: src/control/Control.Menubar.js:120
+msgid "Insert unnumbered entry"
+msgstr "Eintrag ohne Nummer einfügen"
+
+#: src/control/Control.Menubar.js:121
+msgid "Restart numbering"
+msgstr "Nummerierung neu starten"
+
+#: src/control/Control.Menubar.js:123
+msgid "To next paragraph in level"
+msgstr "Zum nächsten Absatz gleicher Ebene springen"
+
+#: src/control/Control.Menubar.js:124
+msgid "To previous paragraph in level"
+msgstr "Zum vorherigen Absatz gleicher Ebene springen"
+
+#: src/control/Control.Menubar.js:125
+msgid "Continue previous numbering"
+msgstr "Vorherige Nummerierung fortsetzen"
+
+#: src/control/Control.Menubar.js:126
+msgid "Clear direct formatting"
+msgstr "Direkte Formatierung löschen"
+
+#: src/control/Control.Menubar.js:127
+msgid "Page"
+msgstr "Seite"
+
+#: src/control/Control.Menubar.js:128
+#: src/control/Control.Menubar.js:130
+#: src/control/Control.Menubar.js:132
+#: src/control/Control.Menubar.js:134
+msgid "Portrait"
+msgstr "Hochformat"
+
+#: src/control/Control.Menubar.js:129
+#: src/control/Control.Menubar.js:131
+#: src/control/Control.Menubar.js:133
+#: src/control/Control.Menubar.js:135
+msgid "Landscape"
+msgstr "Querformat"
+
+#: src/control/Control.Menubar.js:137
+#: src/control/Control.Menubar.js:194
 msgid "Tables"
 msgstr "Tabellen"
 
-#: src/control/Control.Menubar.js:43
-#: src/control/Control.Menubar.js:88
+#: src/control/Control.Menubar.js:139
+#: src/control/Control.Menubar.js:196
 msgid "Rows before"
 msgstr "Zeilen oberhalb"
 
-#: src/control/Control.Menubar.js:44
-#: src/control/Control.Menubar.js:89
+#: src/control/Control.Menubar.js:140
+#: src/control/Control.Menubar.js:197
 msgid "Rows after"
 msgstr "Zeilen unterhalb"
 
-#: src/control/Control.Menubar.js:46
-#: src/control/Control.Menubar.js:91
+#: src/control/Control.Menubar.js:142
+#: src/control/Control.Menubar.js:199
 msgid "Columns left"
 msgstr "Spalten links"
 
-#: src/control/Control.Menubar.js:47
-#: src/control/Control.Menubar.js:92
+#: src/control/Control.Menubar.js:143
+#: src/control/Control.Menubar.js:200
 msgid "Columns right"
 msgstr "Spalten rechts"
 
-#: src/control/Control.Menubar.js:48
-#: src/control/Control.Menubar.js:93
+#: src/control/Control.Menubar.js:144
+#: src/control/Control.Menubar.js:201
 msgid "Delete"
 msgstr "Löschen"
 
-#: src/control/Control.Menubar.js:48
-#: src/control/Control.Menubar.js:93
+#: src/control/Control.Menubar.js:145
+#: src/control/Control.Menubar.js:202
 msgid "Rows"
 msgstr "Zeilen"
 
-#: src/control/Control.Menubar.js:49
-#: src/control/Control.Menubar.js:94
+#: src/control/Control.Menubar.js:146
+#: src/control/Control.Menubar.js:203
 msgid "Columns"
 msgstr "Spalten"
 
-#: src/control/Control.Menubar.js:50
-#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:147
+#: src/control/Control.Menubar.js:149
 msgid "Table"
 msgstr "Tabelle"
 
-#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:148
 msgid "Select"
 msgstr "Auswählen"
 
-#: src/control/Control.Menubar.js:52
-#: src/control/Control.Menubar.js:129
+#: src/control/Control.Menubar.js:150
+#: src/control/Control.Menubar.js:247
 msgid "Row"
 msgstr "Zeile"
 
-#: src/control/Control.Menubar.js:53
-#: src/control/Control.Menubar.js:130
+#: src/control/Control.Menubar.js:151
+#: src/control/Control.Menubar.js:248
 msgid "Column"
 msgstr "Spalte"
 
-#: src/control/Control.Menubar.js:54
+#: src/control/Control.Menubar.js:152
 msgid "Cell"
 msgstr "Cell"
 
-#: src/control/Control.Menubar.js:55
-#: src/control/Control.Menubar.js:95
+#: src/control/Control.Menubar.js:153
+#: src/control/Control.Menubar.js:204
 msgid "Merge cells"
 msgstr "Zellen verbinden"
 
-#: src/control/Control.Menubar.js:57
-#: src/control/Control.Menubar.js:103
-#: src/control/Control.Menubar.js:144
+#: src/control/Control.Menubar.js:155
+#: src/control/Control.Menubar.js:213
+#: src/control/Control.Menubar.js:259
 msgid "Help"
 msgstr "Hilfe"
 
-#: src/control/Control.Menubar.js:57
-#: src/control/Control.Menubar.js:103
-#: src/control/Control.Menubar.js:144
+#: src/control/Control.Menubar.js:156
+#: src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:260
 msgid "Keyboard shortcuts"
 msgstr "Tastaturkürzel"
 
-#: src/control/Control.Menubar.js:58
-#: src/control/Control.Menubar.js:104
-#: src/control/Control.Menubar.js:145
+#: src/control/Control.Menubar.js:157
+#: src/control/Control.Menubar.js:215
+#: src/control/Control.Menubar.js:261
 msgid "About"
 msgstr "Über"
 
-#: src/control/Control.Menubar.js:67
+#: src/control/Control.Menubar.js:168
 msgid "ODF presentation (.odp)"
 msgstr "ODF Präsentation (.odp)"
 
-#: src/control/Control.Menubar.js:68
+#: src/control/Control.Menubar.js:169
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:170
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:97
+#: src/control/Control.Menubar.js:206
 msgid "Slide"
 msgstr "Folie"
 
-#: src/control/Control.Menubar.js:97
+#: src/control/Control.Menubar.js:207
 msgid "New slide"
 msgstr "Neue Folie"
 
-#: src/control/Control.Menubar.js:113
+#: src/control/Control.Menubar.js:226
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF Tabellendokument (.ods)"
 
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:227
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:115
+#: src/control/Control.Menubar.js:228
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:138
+#: src/control/Control.Menubar.js:252
 msgid "Cells"
 msgstr "Zellen"
 
-#: src/control/Control.Menubar.js:138
+#: src/control/Control.Menubar.js:253
 msgid "Insert row"
 msgstr "Zeile einfügen"
 
-#: src/control/Control.Menubar.js:139
+#: src/control/Control.Menubar.js:254
 msgid "Insert column"
 msgstr "Spalte einfügen"
 
-#: src/control/Control.Menubar.js:141
-#: src/control/Control.RowHeader.js:43
+#: src/control/Control.Menubar.js:256
+#: src/control/Control.RowHeader.js:46
 msgid "Delete row"
 msgstr "Zeile löschen"
 
-#: src/control/Control.Menubar.js:314
+#: src/control/Control.Menubar.js:434
 msgid "Are you sure you want to delete this slide?"
 msgstr "Sind Sie sicher, dass Sie diese Folie löschen möchten?"
 
-#: src/control/Control.RowHeader.js:36
+#: src/control/Control.RowHeader.js:39
 msgid "Insert row above"
 msgstr "Zeile oberhalb einfügen"
 
-#: src/control/Control.RowHeader.js:50
+#: src/control/Control.RowHeader.js:53
 msgid "Optimal Height"
 msgstr "Optimale Höhe"
 
-#: src/control/Control.RowHeader.js:63
+#: src/control/Control.RowHeader.js:60
+msgid "Hide Rows"
+msgstr "Zeilen ausblenden"
+
+#: src/control/Control.RowHeader.js:67
+msgid "Show Rows"
+msgstr "Zeilen einblenden"
+
+#: src/control/Control.RowHeader.js:80
 msgid "Optimal Row Height"
 msgstr "Optimale Zeilenhöhe"
 
@@ -1000,8 +2349,8 @@ msgid "Delete sheet"
 msgstr "Tabelle löschen"
 
 #: src/control/Control.Tabs.js:52
-msgid "Are you sure you want to delete this sheet?"
-msgstr "Sind Sie sicher, dass Sie diese Tabelle löschen möchten?"
+msgid "Are you sure you want to delete sheet, %sheet% ?"
+msgstr "Sind Sie sicher, dass Sie Tabelle %sheet% löschen möchten?"
 
 #: src/control/Control.Tabs.js:61
 msgid "Rename sheet"
@@ -1017,11 +2366,11 @@ msgid "Downloading..."
 msgstr "Wird heruntergeladen..."
 
 #: src/control/Toolbar.js:84
-#: src/map/Map.js:856
+#: src/map/Map.js:864
 msgid "Saving..."
 msgstr "Speichern..."
 
-#: src/control/Toolbar.js:216
+#: src/control/Toolbar.js:230
 msgid "This version of %productName is powered by"
 msgstr "Diese Version von %productName wird bereitgestellt von"
 
@@ -1029,32 +2378,40 @@ msgstr "Diese Version von %productName wird bereitgestellt von"
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Es ist ein Fehler beim Verbinden mit LibreOffice Online aufgetreten: "
 
-#: src/core/Socket.js:138
+#: src/core/Socket.js:155
 msgid "Unsupported server version."
 msgstr "Diese Serverversion wird nicht unterstützt."
 
-#: src/core/Socket.js:173
+#: src/core/Socket.js:193
+msgid "Session terminated by document owner"
+msgstr "Sitzung durch Dokumenteigentümer beendet"
+
+#: src/core/Socket.js:196
+msgid "Server shutdown for maintenance"
+msgstr "Server für Wartung heruntergefahren"
+
+#: src/core/Socket.js:268
 msgid "Document requires password to view."
 msgstr "Das Dokument benötigt ein Kennwort zum Ansehen."
 
-#: src/core/Socket.js:176
+#: src/core/Socket.js:271
 msgid "Document requires password to modify."
 msgstr "Das Dokument benötigt ein Kennwort zum Bearbeiten."
 
-#: src/core/Socket.js:178
+#: src/core/Socket.js:273
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Klicken Sie auf Abbrechen, um das Dokument im Ansichtsmodus zu öffnen"
 
-#: src/core/Socket.js:182
+#: src/core/Socket.js:277
 msgid "Wrong password provided. Please try again."
 msgstr ""
 "Sie haben ein falsches Kennwort eingegeben. Bitte versuchen Sie es erneut."
 
-#: src/core/Socket.js:231
+#: src/core/Socket.js:326
 msgid "Connecting..."
 msgstr "Verbinden..."
 
-#: src/core/Socket.js:349
+#: src/core/Socket.js:447
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1066,7 +2423,11 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Initialisierung..."
 
-#: src/map/Map.js:859
+#: src/map/Map.js:793
+msgid "Inactive document - please click to resume editing"
+msgstr "Inaktives Dokument - zum Fortsetzen der Bearbeitung bitte klicken"
+
+#: src/map/Map.js:867
 msgid "Loading..."
 msgstr "Laden..."
 
