@@ -45,9 +45,6 @@ void ChildProcess::socketProcessor()
     IoUtil::SocketProcessor(_ws, name,
         [this](const std::vector<char>& payload)
         {
-            const auto message = LOOLProtocol::getAbbreviatedMessage(payload);
-            LOG_TRC("Recv from child [" << message << "].");
-
             if (UnitWSD::get().filterChildMessage(payload))
             {
                 return true;
@@ -63,7 +60,8 @@ void ChildProcess::socketProcessor()
             }
 
             LOG_WRN("Child " << this->_pid <<
-                    " has no DocumentBroker to handle message: [" << message << "].");
+                    " has no DocumentBroker to handle message: [" <<
+                    LOOLProtocol::getAbbreviatedMessage(payload) << "].");
             return true;
         },
         []() { },
@@ -687,7 +685,7 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 bool DocumentBroker::handleInput(const std::vector<char>& payload)
 {
     const auto msg = LOOLProtocol::getAbbreviatedMessage(payload);
-    LOG_TRC("DocumentBroker got child message: [" << msg << "].");
+    LOG_TRC("DocumentBroker handling child message: [" << msg << "].");
 
     LOOLWSD::dumpOutgoingTrace(getJailId(), "0", msg);
 
