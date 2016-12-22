@@ -309,7 +309,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     session->setUserId(userid);
     session->setUserName(username);
 
-    // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() callns
+    // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
     const auto fileInfo = _storage->getFileInfo();
     if (!fileInfo.isValid())
     {
