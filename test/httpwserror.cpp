@@ -57,7 +57,7 @@ public:
         Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::AcceptCertificateHandler(false);
         Poco::Net::Context::Params sslParams;
         Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
-        Poco::Net::SSLManager::instance().initializeClient(0, invalidCertHandler, sslContext);
+        Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
 #endif
     }
 

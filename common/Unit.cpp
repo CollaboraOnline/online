@@ -34,10 +34,10 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
     if (!dlHandle)
     {
         LOG_ERR("Failed to load " << unitLibPath << ": " << dlerror());
-        return NULL;
+        return nullptr;
     }
 
-    const char *symbol = NULL;
+    const char *symbol = nullptr;
     switch (type)
     {
         case UnitType::Wsd:
@@ -52,7 +52,7 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
     if (!createHooks)
     {
         LOG_ERR("No " << symbol << " symbol in " << unitLibPath);
-        return NULL;
+        return nullptr;
     }
     UnitBase *pHooks = createHooks();
 
@@ -99,7 +99,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
     if (Global)
         Global->_type = type;
 
-    return Global != NULL;
+    return Global != nullptr;
 }
 
 bool UnitBase::isUnitTesting()
@@ -114,7 +114,7 @@ void UnitBase::setTimeout(int timeoutMilliSeconds)
 }
 
 UnitBase::UnitBase()
-    : _dlHandle(NULL),
+    : _dlHandle(nullptr),
       _setRetValue(false),
       _retValue(0),
       _timeoutMilliSeconds(30 * 1000),
@@ -128,7 +128,7 @@ UnitBase::~UnitBase()
 // FIXME: we should really clean-up properly.
 //    if (_dlHandle)
 //        dlclose(_dlHandle);
-    _dlHandle = NULL;
+    _dlHandle = nullptr;
 }
 
 UnitWSD::UnitWSD()

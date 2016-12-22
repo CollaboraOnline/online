@@ -208,7 +208,7 @@ std::vector<png_bytep> decodePNG(std::stringstream& stream, png_uint_32& height,
         throw std::runtime_error("Invalid PNG signature.");
     }
 
-    png_structp ptrPNG = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    png_structp ptrPNG = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
     if (ptrPNG == nullptr)
     {
         throw std::runtime_error("png_create_read_struct failed.");

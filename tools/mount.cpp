@@ -22,14 +22,14 @@ int main(int argc, char **argv)
     if (argc < 3)
         return 1;
 
-    int retval = mount (argv[1], argv[2], 0, MS_BIND, 0);
+    int retval = mount (argv[1], argv[2], nullptr, MS_BIND, nullptr);
     if (retval)
         return retval;
 
     // apparently this has to be done in a 2nd pass.
-    return mount(argv[1], argv[2], 0,
+    return mount(argv[1], argv[2], nullptr,
                  (MS_BIND | MS_REMOUNT | MS_NOATIME | MS_NODEV |
-                  MS_NOSUID | MS_RDONLY  | MS_SILENT), 0);
+                  MS_NOSUID | MS_RDONLY  | MS_SILENT), nullptr);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

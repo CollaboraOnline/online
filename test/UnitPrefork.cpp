@@ -199,7 +199,7 @@ class UnitKitPrefork : public UnitKit
 
 public:
     UnitKitPrefork()
-        : _procSMaps(NULL)
+        : _procSMaps(nullptr)
     {
         std::cerr << "UnitKit Prefork init !\n";
     }
@@ -277,7 +277,7 @@ public:
                                      std::to_string(getpid()) +
                                      std::string("/smaps");
         _procSMaps = fopen(procName.c_str(), "r");
-        if (_procSMaps == NULL)
+        if (_procSMaps == nullptr)
         {
             _failure = "Failed to open process: " + procName;
             throw std::runtime_error(_failure);

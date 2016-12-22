@@ -31,7 +31,7 @@ namespace {
     // interrogate the vcl/ fontmanager for its hook ...
     std::string getFontList()
     {
-        void *me = dlopen(NULL,RTLD_NOW);
+        void *me = dlopen(nullptr,RTLD_NOW);
         typedef const char *(GetFontsFn)(void);
         GetFontsFn *fn = reinterpret_cast<GetFontsFn *>(
                                 dlsym(me, "unit_online_get_fonts"));

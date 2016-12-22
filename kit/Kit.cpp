@@ -1505,7 +1505,7 @@ void lokit_main(const std::string& childRoot,
             symlinkPathToJail(jailPath, loTemplate, loSubPath);
 
             // Font paths can end up as realpaths so match that too.
-            char *resolved = realpath(loTemplate.c_str(), NULL);
+            char *resolved = realpath(loTemplate.c_str(), nullptr);
             if (resolved)
             {
                 if (strcmp(loTemplate.c_str(), resolved) != 0)

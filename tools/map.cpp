@@ -85,7 +85,7 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
     unsigned long long smap_value;
     char smap_key[MAP_SIZE];
 
-    if ((file_pointer = fopen(file, "r")) == NULL)
+    if ((file_pointer = fopen(file, "r")) == nullptr)
         error(EXIT_FAILURE, errno, "%s", file);
 
     while (fgets(buffer, sizeof(buffer), file_pointer))
@@ -159,7 +159,7 @@ int main(int argc, char **argv)
 
         if (*dir_proc->d_name > '0' && *dir_proc->d_name <= '9')
         {
-            pid_proc = strtoul(dir_proc->d_name, NULL, 10);
+            pid_proc = strtoul(dir_proc->d_name, nullptr, 10);
             snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "cmdline");
             if (read_buffer(cmdline, sizeof(cmdline), path_proc, ' ') &&
                 strstr(cmdline, argv[1]) &&

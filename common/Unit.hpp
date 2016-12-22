@@ -246,7 +246,7 @@ public:
     virtual LibreOfficeKit *lok_init(const char * /* instdir */,
                                      const char * /* userdir */)
     {
-        return NULL;
+        return nullptr;
     }
 };
 

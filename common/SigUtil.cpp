@@ -181,7 +181,7 @@ namespace SigUtil
         action.sa_flags = 0;
         action.sa_handler = SIG_DFL;
 
-        sigaction(signal, &action, NULL);
+        sigaction(signal, &action, nullptr);
 
         char header[32];
         sprintf(header, "Backtrace %d:\n", getpid());
@@ -192,7 +192,7 @@ namespace SigUtil
         if (numSlots > 0)
         {
             char **symbols = backtrace_symbols(backtraceBuffer, numSlots);
-            if (symbols != NULL)
+            if (symbols != nullptr)
             {
                 struct iovec ioVector[maxSlots*2+1];
                 ioVector[0].iov_base = (void*)header;
@@ -230,11 +230,11 @@ namespace SigUtil
         action.sa_flags = 0;
         action.sa_handler = handleFatalSignal;
 
-        sigaction(SIGSEGV, &action, NULL);
-        sigaction(SIGBUS, &action, NULL);
-        sigaction(SIGABRT, &action, NULL);
-        sigaction(SIGILL, &action, NULL);
-        sigaction(SIGFPE, &action, NULL);
+        sigaction(SIGSEGV, &action, nullptr);
+        sigaction(SIGBUS, &action, nullptr);
+        sigaction(SIGABRT, &action, nullptr);
+        sigaction(SIGILL, &action, nullptr);
+        sigaction(SIGFPE, &action, nullptr);
 
         // prepare this in advance just in case.
         std::ostringstream stream;

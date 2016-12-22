@@ -122,7 +122,7 @@ public:
         Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::AcceptCertificateHandler(false);
         Poco::Net::Context::Params sslParams;
         Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
-        Poco::Net::SSLManager::instance().initializeClient(0, invalidCertHandler, sslContext);
+        Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
 #endif
     }
 
@@ -900,7 +900,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
     }
 
     // random setclientpart
-    std::srand(std::time(0));
+    std::srand(std::time(nullptr));
     std::vector<int> vParts = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     std::random_shuffle(vParts.begin(), vParts.end());
     for (auto it : vParts)

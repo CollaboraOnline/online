@@ -100,6 +100,11 @@ AC_ARG_WITH([max-connections],
             AS_HELP_STRING([--max-connections],
                            [Compile with a hard-coded limit on the total number of client connections]))
 
+AC_ARG_WITH([compiler-plugins],
+            AS_HELP_STRING([--with-compiler-plugins=<path>],
+                [Experimental! Unlikely to work for anyone except Noel! Enable compiler plugins that will perform additional checks during
+                 building.]))
+
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -291,6 +296,10 @@ while :; do
     LOOLWSD_CACHEDIR=`eval echo $LOOLWSD_CACHEDIR`
     test $LOOLWSD_CACHEDIR = $oldvalue && break
 done
+
+# need this after the other stuff that uses the compiler because we don't want to run configure-tests with the plugins enabled
+AS_IF([test -n "$with_compiler_plugins"],
+      [CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang ${with_compiler_plugins}/compilerplugins/obj/plugin.so -Xclang -add-plugin -Xclang loplugin"])
 
 AC_DEFINE_UNQUOTED([LOOLWSD_CACHEDIR],["$LOOLWSD_CACHEDIR"],[Cache folder])
 AC_SUBST(LOOLWSD_CACHEDIR)
