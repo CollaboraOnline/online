@@ -61,7 +61,6 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         throw Poco::ProtocolException("The session has not been assigned a peer.");
     }
 
-    bool isBinary = true;
     if (tokens[0] == "unocommandresult:")
     {
         const std::string stringMsg(buffer, length);
@@ -108,7 +107,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                     errorKind == "passwordrequired:to-modify" ||
                     errorKind == "wrongpassword")
                 {
-                    forwardToPeer(peer, buffer, length, isBinary);
+                    forwardToPeer(peer, buffer, length, false);
                     LOG_WRN("Document load failed: " << errorKind);
                     return false;
                 }
@@ -174,7 +173,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             _docBroker->setLoaded();
 
             // Forward the status response to the client.
-            return forwardToPeer(peer, buffer, length, isBinary);
+            return forwardToPeer(peer, buffer, length, false);
         }
         else if (tokens[0] == "commandvalues:")
         {
@@ -253,7 +252,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
     // Detect json messages, since we must send those as text even though they are multiline.
     // If not, the UI will read the first line of a binary payload, assuming that's the only
     // text part and the rest is binary.
-    isBinary = buffer[length - 1] != '}' && firstLine.find('{') == std::string::npos;
+    const bool isBinary = buffer[length - 1] != '}' && firstLine.find('{') == std::string::npos;
 
     // Forward everything else.
     forwardToPeer(peer, buffer, length, isBinary);
