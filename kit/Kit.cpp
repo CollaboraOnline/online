@@ -887,8 +887,9 @@ private:
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        LOG_INF("Loading session [" << sessionId << "] on url [" << uri <<
-                "] is loading. " << _sessions.size() << " views loaded.");
+        LOG_INF("Loading url [" << uri <<
+                "] for session [" << sessionId << "] which has " << _sessions.size() <<
+                " views loaded. Another load in progress: " << _isLoading);
 
         while (_isLoading)
         {
@@ -909,12 +910,13 @@ private:
         }
         catch (const std::exception& exc)
         {
-            LOG_ERR("Exception while loading [" << uri << "] : " << exc.what());
+            LOG_ERR("Exception while loading url [" << uri <<
+                    "] for session [" << sessionId << "]: " << exc.what());
             return false;
         }
 
         // Done loading, let the next one in (if any).
-        assert(_loKitDocument && _loKitDocument->get() && "Uninitialized lok::Document instance");
+        LOG_CHECK_RET(_loKitDocument && _loKitDocument->get() && "Uninitialized lok::Document instance", false);
         lock.lock();
         --_isLoading;
         _cvLoading.notify_one();
@@ -951,8 +953,8 @@ private:
         _loKitDocument->getViewIds(viewIds.data(), viewCount);
 
         LOG_INF("Document [" << _url << "] session [" <<
-                sessionId << "] unloaded. Have " << viewCount <<
-                " view" << (viewCount != 1 ? "s" : ""));
+                sessionId << "] unloaded view [" << viewId << "]. Have " <<
+                viewCount << " view" << (viewCount != 1 ? "s" : ""));
 
         lockLokDoc.unlock();
 
@@ -1180,9 +1182,9 @@ private:
                 }
             }
 
-            LOG_INF("Loading view to document from URI: [" << uri << "] for session [" << sessionId << "].");
+            LOG_INF("Creating view to url [" << uri << "] for session [" << sessionId << "].");
             _loKitDocument->createView();
-            LOG_TRC("View created.");
+            LOG_TRC("View to url [" << uri << "] created.");
         }
 
         Util::assertIsLocked(lockLokDoc);
@@ -1222,8 +1224,9 @@ private:
         _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
 
         const int viewCount = _loKitDocument->getViewsCount();
-        LOG_INF("Document [" << _url << "] view [" << viewId << "] loaded. Have " <<
-                viewCount << " view" << (viewCount != 1 ? "s." : "."));
+        LOG_INF("Document url [" << _url << "] for session [" <<
+                sessionId << "] loaded view [" << viewId << "]. Have " <<
+                viewCount << " view" << (viewCount != 1 ? "s" : ""));
 
         return _loKitDocument;
     }
@@ -1341,8 +1344,8 @@ private:
                             }
                             else
                             {
-                                LOG_ERR("Session thread for session " << session->getId() << " for view " <<
-                                        viewId << " is not running. Dropping [" << LOKitHelper::kitCallbackTypeToString(type) <<
+                                LOG_ERR("Session-thread of session [" << session->getId() << "] for view [" <<
+                                        viewId << "] is not running. Dropping [" << LOKitHelper::kitCallbackTypeToString(type) <<
                                         "] payload [" << payload << "].");
                             }
 
