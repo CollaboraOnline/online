@@ -612,13 +612,13 @@ public:
         std::vector<unsigned char> pixmap;
         pixmap.resize(output.capacity());
 
+        std::unique_lock<std::mutex> lock(_documentMutex);
         if (!_loKitDocument)
         {
             LOG_ERR("Tile rendering requested before loading document.");
             return;
         }
 
-        std::unique_lock<std::mutex> lock(_documentMutex);
         if (_loKitDocument->getViewsCount() <= 0)
         {
             LOG_ERR("Tile rendering requested without views.");
@@ -685,13 +685,13 @@ public:
         const size_t pixmapSize = 4 * area;
         std::vector<unsigned char> pixmap(pixmapSize, 0);
 
+        std::unique_lock<std::mutex> lock(_documentMutex);
         if (!_loKitDocument)
         {
             LOG_ERR("Tile rendering requested before loading document.");
             return;
         }
 
-        std::unique_lock<std::mutex> lock(_documentMutex);
         if (_loKitDocument->getViewsCount() <= 0)
         {
             LOG_ERR("Tile rendering requested without views.");
@@ -934,13 +934,13 @@ private:
         const auto viewId = session.getViewId();
         _tileQueue->removeCursorPosition(viewId);
 
+
+        std::unique_lock<std::mutex> lockLokDoc(_documentMutex);
         if (_loKitDocument == nullptr)
         {
             LOG_ERR("Unloading session [" << sessionId << "] without loKitDocument.");
             return;
         }
-
-        std::unique_lock<std::mutex> lockLokDoc(_documentMutex);
 
         _loKitDocument->setView(viewId);
         _loKitDocument->registerCallback(nullptr, nullptr);
@@ -1098,7 +1098,7 @@ private:
     {
         const std::string sessionId = session->getId();
 
-        std::unique_lock<std::mutex> lockLokDoc;
+        std::unique_lock<std::mutex> lock(_documentMutex);
 
         if (!_loKitDocument)
         {
@@ -1122,9 +1122,6 @@ private:
             Timestamp timestamp;
             _loKitDocument.reset(_loKit->documentLoad(uri.c_str()));
             LOG_DBG("Returned lokit::documentLoad(" << uri << ") in " << (timestamp.elapsed()  / 1000.) << "ms.");
-
-            std::unique_lock<std::mutex> l(_documentMutex);
-            lockLokDoc.swap(l);
 
             if (!_loKitDocument || !_loKitDocument->get())
             {
@@ -1160,9 +1157,6 @@ private:
         }
         else
         {
-            std::unique_lock<std::mutex> l(_documentMutex);
-            lockLokDoc.swap(l);
-
             LOG_INF("Document with url [" << uri << "] already loaded. Need to create new view for session [" << sessionId << "].");
 
             // Check if this document requires password
@@ -1189,8 +1183,6 @@ private:
             _loKitDocument->createView();
             LOG_TRC("View to url [" << uri << "] created.");
         }
-
-        Util::assertIsLocked(lockLokDoc);
 
         Object::Ptr renderOptsObj;
 
