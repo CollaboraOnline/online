@@ -901,8 +901,7 @@ private:
 
         try
         {
-            load(session, uri, userName, docPassword, renderOpts, haveDocPassword);
-            if (!_loKitDocument || !_loKitDocument->get())
+            if (!load(session, uri, userName, docPassword, renderOpts, haveDocPassword))
             {
                 return false;
             }
@@ -916,10 +915,6 @@ private:
 
         // Retake the lock (technically, not needed).
         lock.lock();
-
-        // Done loading, let the next one in (if any).
-        LOG_CHECK_RET(_loKitDocument && _loKitDocument->get() && "Uninitialized lok::Document instance", false);
-
         --_isLoading;
         _cvLoading.notify_one();
 
