@@ -502,7 +502,6 @@ public:
     size_t purgeSessions()
     {
         std::vector<std::shared_ptr<ChildSession>> deadSessions;
-        size_t numRunning = 0;
         size_t num_sessions = 0;
         {
             std::unique_lock<std::mutex> lock(_mutex, std::defer_lock);
@@ -516,35 +515,25 @@ public:
             // bluntly exit, no need to clean up our own data structures. Also, there is a bug that
             // causes the deadSessions.clear() call below to crash in some situations when the last
             // session is being removed.
-            for (auto it = _sessions.cbegin(); it != _sessions.cend(); ++it)
+            for (auto it = _sessions.cbegin(); it != _sessions.cend(); )
             {
-                if (!it->second->isCloseFrame())
-                    numRunning++;
-            }
-
-            if (numRunning > 0)
-            {
-                for (auto it = _sessions.cbegin(); it != _sessions.cend(); )
+                if (it->second->isCloseFrame())
                 {
-                    if (it->second->isCloseFrame())
-                    {
-                        deadSessions.push_back(it->second);
-                        it = _sessions.erase(it);
-                    }
-                    else
-                    {
-                        ++it;
-                    }
+                    deadSessions.push_back(it->second);
+                    it = _sessions.erase(it);
+                }
+                else
+                {
+                    ++it;
                 }
             }
 
             num_sessions = _sessions.size();
-        }
-
-        if (numRunning == 0)
-        {
-            LOG_INF("No more sessions, exiting bluntly");
-            std::_Exit(Application::EXIT_OK);
+            if (num_sessions == 0)
+            {
+                LOG_INF("No more sessions, exiting bluntly");
+                std::_Exit(Application::EXIT_OK);
+            }
         }
 
         // Don't destroy sessions while holding our lock.
