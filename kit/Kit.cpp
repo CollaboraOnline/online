@@ -1188,7 +1188,7 @@ private:
 
         Util::assertIsLocked(lockLokDoc);
 
-        Object::Ptr renderOptsObj = new Object();
+        Object::Ptr renderOptsObj;
 
         // Fill the object with renderoptions, if any
         if (!_renderOpts.empty())
@@ -1197,11 +1197,14 @@ private:
             Poco::Dynamic::Var var = parser.parse(_renderOpts);
             renderOptsObj = var.extract<Object::Ptr>();
         }
+        else if (!userName.empty())
+        {
+            renderOptsObj = new Object();
+        }
 
         // Append name of the user, if any, who opened the document to rendering options
         if (!userName.empty())
         {
-            Object::Ptr authorContainer = new Object();
             Object::Ptr authorObj = new Object();
             authorObj->set("type", "string");
             std::string decodedUserName;
@@ -1210,15 +1213,24 @@ private:
             renderOptsObj->set(".uno:Author", authorObj);
         }
 
-        std::ostringstream ossRenderOpts;
-        renderOptsObj->stringify(ossRenderOpts);
+        std::string renderParams;
+        if (renderOptsObj)
+        {
+            std::ostringstream ossRenderOpts;
+            renderOptsObj->stringify(ossRenderOpts);
+            renderParams = ossRenderOpts.str();
+        }
+
+        LOG_INF("Initializing for rendering session [" << sessionId << "] on document url [" <<
+                _url << "] with: [" << renderParams << "].");
 
         // initializeForRendering() should be called before
         // registerCallback(), as the previous creates a new view in Impress.
-        _loKitDocument->initializeForRendering(ossRenderOpts.str().c_str());
+        _loKitDocument->initializeForRendering(renderParams.c_str());
 
         const int viewId = _loKitDocument->getView();
         session->setViewId(viewId);
+
         _viewIdToCallbackDescr.emplace(viewId,
                                        std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
         _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
