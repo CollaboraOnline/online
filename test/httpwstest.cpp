@@ -64,6 +64,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCloseAfterClose);
     CPPUNIT_TEST(testConnectNoLoad); // This fails most of the times but occasionally succeeds
     CPPUNIT_TEST(testLoad);
+    CPPUNIT_TEST(testLoadTortureODT);
+    CPPUNIT_TEST(testLoadTortureODS);
+    CPPUNIT_TEST(testLoadTortureODP);
     CPPUNIT_TEST(testLoadTorture);
     CPPUNIT_TEST(testBadLoad);
     CPPUNIT_TEST(testReload);
@@ -108,6 +111,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testCloseAfterClose();
     void testConnectNoLoad();
     void testLoad();
+    void testLoadTortureODT();
+    void testLoadTortureODS();
+    void testLoadTortureODP();
     void testLoadTorture();
     void testBadLoad();
     void testReload();
@@ -147,7 +153,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     void loadDoc(const std::string& documentURL, const std::string& testname);
 
-    void loadTorture(const std::string& docName,
+    int loadTorture(const std::string& testname,
+                     const std::string& docName,
                      const size_t thread_count,
                      const size_t loads_per_thread,
                      const size_t max_jitter_ms);
@@ -385,19 +392,15 @@ void HTTPWSTest::testLoad()
     loadDoc(documentURL, "load ");
 }
 
-void HTTPWSTest::loadTorture(const std::string& docName,
+int HTTPWSTest::loadTorture(const std::string& testname,
+                             const std::string& docName,
                              const size_t thread_count,
                              const size_t loads_per_thread,
                              const size_t max_jitter_ms)
 {
-    const auto testname = "loadTorture ";
-
     // Load same document from many threads together.
     std::string documentPath, documentURL;
     getDocumentPathAndURL(docName, documentPath, documentURL);
-
-    const auto number_of_loads = thread_count * loads_per_thread;
-    const int exp_sum_view_ids = number_of_loads * (number_of_loads - 1) / 2; // 0-based view-ids.
 
     std::atomic<int> sum_view_ids;
     sum_view_ids = 0;
@@ -440,23 +443,69 @@ void HTTPWSTest::loadTorture(const std::string& docName,
         thread.join();
     }
 
-    CPPUNIT_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids.load());
+    return sum_view_ids;
+}
+
+void HTTPWSTest::testLoadTortureODT()
+{
+    const auto thread_count = 3;
+    const auto loads_per_thread = 2;
+    const auto max_jitter_ms = 100;
+
+    const auto testname = "loadTortureODT ";
+    const auto sum_view_ids = loadTorture(testname, "empty.odt", thread_count, loads_per_thread, max_jitter_ms);
+
+    // This only works when the first view-ID is 0 and increments monotonously.
+    const auto number_of_loads = thread_count * loads_per_thread;
+    const int exp_sum_view_ids = number_of_loads * (number_of_loads - 1) / 2; // 0-based view-ids.
+    CPPUNIT_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids);
+}
+
+void HTTPWSTest::testLoadTortureODS()
+{
+    const auto thread_count = 2;
+    const auto loads_per_thread = 2;
+    const auto max_jitter_ms = 75;
+
+    const auto testname = "loadTortureODS ";
+    const auto sum_view_ids = loadTorture(testname, "empty.ods", thread_count, loads_per_thread, max_jitter_ms);
+
+    // This only works when the first view-ID is 0 and increments monotonously.
+    const auto number_of_loads = thread_count * loads_per_thread;
+    const int exp_sum_view_ids = number_of_loads * (number_of_loads - 1) / 2; // 0-based view-ids.
+    CPPUNIT_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids);
+}
+
+void HTTPWSTest::testLoadTortureODP()
+{
+    const auto thread_count = 2;
+    const auto loads_per_thread = 2;
+    const auto max_jitter_ms = 75;
+
+    const auto testname = "loadTortureODP ";
+    const auto sum_view_ids = loadTorture(testname, "empty.odp", thread_count, loads_per_thread, max_jitter_ms);
+
+    // For ODP the view-id is always odd, and we expect not to skip any ids.
+    const auto number_of_loads = thread_count * loads_per_thread;
+    const int exp_sum_view_ids = number_of_loads * number_of_loads; // Odd view-ids only.
+    CPPUNIT_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids);
 }
 
 void HTTPWSTest::testLoadTorture()
 {
-    const auto thread_count = 3;
-    const auto loads_per_thread = 3;
+    const auto thread_count = 1;
+    const auto loads_per_thread = 1;
     const auto max_jitter_ms = 75;
 
-    std::vector<std::string> docNames = { "setclientpart.ods", "hello.odt", "empty.ods" };
+    std::vector<std::string> docNames = { "setclientpart.ods", "hello.odt", "viewcursor.odp" };
 
     std::vector<std::thread> threads;
     for (const auto& docName : docNames)
     {
         threads.emplace_back([&]
         {
-            loadTorture(docName, thread_count, loads_per_thread, max_jitter_ms);
+            const auto testname = "loadTorture_" + docName + ' ';
+            loadTorture(testname, docName, thread_count, loads_per_thread, max_jitter_ms);
         });
     }
 
