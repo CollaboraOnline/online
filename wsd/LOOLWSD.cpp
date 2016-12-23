@@ -2108,12 +2108,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                         break;
                     }
                 }
-                else if (WIFSTOPPED(status) == true)
+                else if (WIFSTOPPED(status))
                 {
                     LOG_INF("Child process [" << pid << "] stopped with " <<
                             SigUtil::signalName(WSTOPSIG(status)));
                 }
-                else if (WIFCONTINUED(status) == true)
+                else if (WIFCONTINUED(status))
                 {
                     LOG_INF("Child process [" << pid << "] resumed with SIGCONT.");
                 }
