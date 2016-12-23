@@ -120,11 +120,6 @@ namespace
         {
         }
 
-        fs(dev_t d)
-            : fs("", d)
-        {
-        }
-
         std::string path;
         dev_t dev;
     };

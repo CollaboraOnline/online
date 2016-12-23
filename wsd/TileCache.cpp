@@ -96,11 +96,6 @@ struct TileCache::TileBeingRendered
     std::chrono::steady_clock::time_point getStartTime() const { return _startTime; }
     double getElapsedTimeMs() const { return std::chrono::duration_cast<std::chrono::milliseconds>
                                               (std::chrono::steady_clock::now() - _startTime).count(); }
-    void resetStartTime()
-    {
-        _startTime = std::chrono::steady_clock::now();
-    }
-
 private:
     std::chrono::steady_clock::time_point _startTime;
     TileDesc _tile;

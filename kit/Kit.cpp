@@ -868,20 +868,6 @@ public:
 
 private:
 
-    static void DocumentCallback(const int nType, const char* pPayload, void* pData)
-    {
-        if (TerminationFlag)
-        {
-            return;
-        }
-
-        const std::string payload = pPayload ? pPayload : "(nil)";
-        LOG_TRC("Document::DocumentCallback " << LOKitHelper::kitCallbackTypeToString(nType) <<
-                " [" << payload << "].");
-        Document* self = reinterpret_cast<Document*>(pData);
-        self->broadcastCallbackToClients(nType, pPayload);
-    }
-
     /// Helper method to broadcast callback and its payload to all clients
     void broadcastCallbackToClients(const int nType, const std::string& payload)
     {

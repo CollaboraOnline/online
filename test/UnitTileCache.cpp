@@ -65,21 +65,6 @@ public:
             break;
         }
     }
-
-private:
-    void clientThread()
-    {
-        std::thread t([&]()
-            {
-                try
-                {
-                }
-                catch (const Poco::Exception& exc)
-                {
-                    exitTest(TestResult::Failed);
-                }
-            });
-    }
 };
 
 UnitBase *unit_create_wsd(void)
