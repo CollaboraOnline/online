@@ -1780,7 +1780,7 @@ bool globalPreinit(const std::string &loTemplate)
         }
     }
 
-    LokHookPreInit* preInit = (LokHookPreInit *)dlsym(handle, "lok_preinit");
+    LokHookPreInit* preInit = reinterpret_cast<LokHookPreInit *>(dlsym(handle, "lok_preinit"));
     if (!preInit)
     {
         LOG_FTL("No lok_preinit symbol in " << loadedLibrary << ": " << dlerror());

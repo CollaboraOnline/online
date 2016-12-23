@@ -64,7 +64,7 @@ extern "C"
 
     static void user_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
     {
-        std::vector<char>* outputp = (std::vector<char>*)png_get_io_ptr(png_ptr);
+        std::vector<char>* outputp = static_cast<std::vector<char>*>(png_get_io_ptr(png_ptr));
         const size_t oldsize = outputp->size();
         outputp->resize(oldsize + length);
         std::memcpy(outputp->data() + oldsize, data, length);
@@ -194,15 +194,15 @@ void readTileData(png_structp png_ptr, png_bytep data, png_size_t length)
     assert(io_ptr);
 
     assert(io_ptr != nullptr);
-    std::stringstream& streamTile = *(std::stringstream*)io_ptr;
-    streamTile.read((char*)data, length);
+    std::stringstream& streamTile = *static_cast<std::stringstream*>(io_ptr);
+    streamTile.read(reinterpret_cast<char*>(data), length);
 }
 
 inline
 std::vector<png_bytep> decodePNG(std::stringstream& stream, png_uint_32& height, png_uint_32& width, png_uint_32& rowBytes)
 {
     png_byte signature[0x08];
-    stream.read((char *)signature, 0x08);
+    stream.read(reinterpret_cast<char *>(signature), 0x08);
     if (png_sig_cmp(signature, 0x00, 0x08))
     {
         throw std::runtime_error("Invalid PNG signature.");

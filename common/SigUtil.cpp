@@ -195,13 +195,13 @@ namespace SigUtil
             if (symbols != nullptr)
             {
                 struct iovec ioVector[maxSlots*2+1];
-                ioVector[0].iov_base = (void*)header;
-                ioVector[0].iov_len = std::strlen((const char*)ioVector[0].iov_base);
+                ioVector[0].iov_base = static_cast<void*>(header);
+                ioVector[0].iov_len = std::strlen(static_cast<const char*>(ioVector[0].iov_base));
                 for (int i = 0; i < numSlots; i++)
                 {
                     ioVector[1+i*2+0].iov_base = symbols[i];
-                    ioVector[1+i*2+0].iov_len = std::strlen((const char *)ioVector[1+i*2+0].iov_base);
-                    ioVector[1+i*2+1].iov_base = (void*)"\n";
+                    ioVector[1+i*2+0].iov_len = std::strlen(static_cast<const char *>(ioVector[1+i*2+0].iov_base));
+                    ioVector[1+i*2+1].iov_base = const_cast<void*>(static_cast<const void*>("\n"));
                     ioVector[1+i*2+1].iov_len = 1;
                 }
 
