@@ -357,26 +357,39 @@ void getWOPIValue(const Poco::JSON::Object::Ptr &object, const std::string& key,
 
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Poco::URI& uriPublic)
 {
-    Log::debug("Getting info for wopi uri [" + uriPublic.toString() + "].");
+    LOG_DBG("Getting info for wopi uri [" + uriPublic.toString() + "].");
 
+    std::string resMsg;
     const auto startTime = std::chrono::steady_clock::now();
-    std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriPublic));
-
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriPublic.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
-    request.set("User-Agent", "LOOLWSD WOPI Agent");
-    psession->sendRequest(request);
-
-    Poco::Net::HTTPResponse response;
-
-    std::istream& rs = psession->receiveResponse(response);
-    auto logger = Log::trace();
-    logger << "WOPI::CheckFileInfo header for URI [" << uriPublic.toString() << "]:\n";
-    for (auto& pair : response)
+    std::chrono::duration<double> callDuration(0);
+    try
     {
-        logger << '\t' + pair.first + ": " + pair.second << " / ";
-    }
+        std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriPublic));
 
-    logger << Log::end;
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriPublic.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+        request.set("User-Agent", "LOOLWSD WOPI Agent");
+        psession->sendRequest(request);
+
+        Poco::Net::HTTPResponse response;
+        std::istream& rs = psession->receiveResponse(response);
+        callDuration = (std::chrono::steady_clock::now() - startTime);
+
+        auto logger = Log::trace();
+        logger << "WOPI::CheckFileInfo header for URI [" << uriPublic.toString() << "]:\n";
+        for (auto& pair : response)
+        {
+            logger << '\t' + pair.first + ": " + pair.second << " / ";
+        }
+        logger << Log::end;
+
+        Poco::StreamCopier::copyToString(rs, resMsg);
+    }
+    catch(const Poco::Exception& pexc)
+    {
+        LOG_ERR("Cannot get file info from WOPI storage uri [" + uriPublic.toString() + "]. Error: " << pexc.displayText() <<
+                (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));
+        throw;
+    }
 
     // Parse the response.
     std::string filename;
@@ -394,12 +407,8 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
     bool disableExport = false;
     bool disableCopy = false;
     std::string lastModifiedTime;
-    std::string resMsg;
-    Poco::StreamCopier::copyToString(rs, resMsg);
 
-    const auto endTime = std::chrono::steady_clock::now();
-    const std::chrono::duration<double> callDuration = (endTime - startTime);
-    Log::debug("WOPI::CheckFileInfo returned: " + resMsg + ". Call duration: " + std::to_string(callDuration.count()) + "s");
+    LOG_DBG("WOPI::CheckFileInfo returned: " + resMsg + ". Call duration: " + std::to_string(callDuration.count()) + "s");
     const auto index = resMsg.find_first_of('{');
     if (index != std::string::npos)
     {
@@ -424,7 +433,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
         getWOPIValue(object, "LastModifiedTime", lastModifiedTime);
     }
     else
-        Log::error("WOPI::CheckFileInfo is missing JSON payload");
+        LOG_ERR("WOPI::CheckFileInfo is missing JSON payload");
 
     Poco::Timestamp modifiedTime = Poco::Timestamp::fromEpochTime(0);
     if (lastModifiedTime != "")
@@ -457,39 +466,46 @@ std::string WopiStorage::loadStorageFileToLocal()
     // Add it here to get the payload instead of file info.
     Poco::URI uriObject(_uri);
     uriObject.setPath(uriObject.getPath() + "/contents");
-    Log::debug("Wopi requesting: " + uriObject.toString());
+    LOG_DBG("Wopi requesting: " + uriObject.toString());
 
     const auto startTime = std::chrono::steady_clock::now();
-    std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
-
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
-    request.set("User-Agent", "LOOLWSD WOPI Agent");
-    psession->sendRequest(request);
-
-    Poco::Net::HTTPResponse response;
-    std::istream& rs = psession->receiveResponse(response);
-
-    auto logger = Log::trace();
-    logger << "WOPI::GetFile header for URI [" << uriObject.toString() << "]:\n";
-    for (auto& pair : response)
+    try
     {
-        logger << '\t' + pair.first + ": " + pair.second << " / ";
+        std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+        request.set("User-Agent", "LOOLWSD WOPI Agent");
+        psession->sendRequest(request);
+
+        Poco::Net::HTTPResponse response;
+        std::istream& rs = psession->receiveResponse(response);
+        const std::chrono::duration<double> diff = (std::chrono::steady_clock::now() - startTime);
+        _wopiLoadDuration += diff;
+
+        auto logger = Log::trace();
+        logger << "WOPI::GetFile header for URI [" << uriObject.toString() << "]:\n";
+        for (auto& pair : response)
+        {
+            logger << '\t' + pair.first + ": " + pair.second << " / ";
+        }
+        logger << Log::end;
+
+        _jailedFilePath = Poco::Path(getLocalRootPath(), _fileInfo._filename).toString();
+        std::ofstream ofs(_jailedFilePath);
+        std::copy(std::istreambuf_iterator<char>(rs),
+                  std::istreambuf_iterator<char>(),
+                  std::ostreambuf_iterator<char>(ofs));
+
+        LOG_INF("WOPI::GetFile downloaded " << getFileSize(_jailedFilePath) << " bytes from [" << uriObject.toString() <<
+                "] -> " << _jailedFilePath << " in " << diff.count() << "s : " <<
+                response.getStatus() << " " << response.getReason());
     }
-
-    logger << Log::end;
-
-    _jailedFilePath = Poco::Path(getLocalRootPath(), _fileInfo._filename).toString();
-    std::ofstream ofs(_jailedFilePath);
-    std::copy(std::istreambuf_iterator<char>(rs),
-              std::istreambuf_iterator<char>(),
-              std::ostreambuf_iterator<char>(ofs));
-    const auto endTime = std::chrono::steady_clock::now();
-    const std::chrono::duration<double> diff = (endTime - startTime);
-    _wopiLoadDuration += diff;
-    const auto size = getFileSize(_jailedFilePath);
-    LOG_INF("WOPI::GetFile downloaded " << size << " bytes from [" << uriObject.toString() <<
-            "] -> " << _jailedFilePath << " in " << diff.count() << "s : " <<
-            response.getStatus() << " " << response.getReason());
+    catch(const Poco::Exception& pexc)
+    {
+        LOG_ERR("Cannot load document from WOPI storage uri [" + uriObject.toString() + "]. Error: " << pexc.displayText() <<
+                (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));
+        throw;
+    }
 
     _isLoaded = true;
     // Now return the jailed path.
@@ -501,40 +517,47 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Poco::URI& uri
     LOG_INF("Uploading URI [" << uriPublic.toString() << "] from [" << _jailedFilePath + "].");
     // TODO: Check if this URI has write permission (canWrite = true)
     const auto size = getFileSize(_jailedFilePath);
-
     Poco::URI uriObject(uriPublic);
     uriObject.setPath(uriObject.getPath() + "/contents");
-    Log::debug("Wopi posting: " + uriObject.toString());
+    LOG_DBG("Wopi posting: " + uriObject.toString());
 
-    std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
-
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
-    request.set("X-WOPI-Override", "PUT");
-    request.setContentType("application/octet-stream");
-    request.setContentLength(size);
-
-    std::ostream& os = psession->sendRequest(request);
-    std::ifstream ifs(_jailedFilePath);
-    Poco::StreamCopier::copyStream(ifs, os);
-
-    Poco::Net::HTTPResponse response;
-    std::istream& rs = psession->receiveResponse(response);
     std::ostringstream oss;
-    Poco::StreamCopier::copyStream(rs, oss);
-
-    LOG_INF("WOPI::PutFile response: " << oss.str());
-    LOG_INF("WOPI::PutFile uploaded " << size << " bytes from [" << _jailedFilePath <<
-            "] -> [" << uriObject.toString() << "]: " <<
-            response.getStatus() << " " << response.getReason());
-
     StorageBase::SaveResult saveResult = StorageBase::SaveResult::FAILED;
-    if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
+    try
     {
-        saveResult = StorageBase::SaveResult::OK;
+        std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+        request.set("X-WOPI-Override", "PUT");
+        request.setContentType("application/octet-stream");
+        request.setContentLength(size);
+
+        std::ostream& os = psession->sendRequest(request);
+        std::ifstream ifs(_jailedFilePath);
+        Poco::StreamCopier::copyStream(ifs, os);
+
+        Poco::Net::HTTPResponse response;
+        std::istream& rs = psession->receiveResponse(response);
+        Poco::StreamCopier::copyStream(rs, oss);
+        LOG_INF("WOPI::PutFile response: " << oss.str());
+        LOG_INF("WOPI::PutFile uploaded " << size << " bytes from [" << _jailedFilePath <<
+                "] -> [" << uriObject.toString() << "]: " <<
+                response.getStatus() << " " << response.getReason());
+
+        if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
+        {
+            saveResult = StorageBase::SaveResult::OK;
+        }
+        else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_REQUESTENTITYTOOLARGE)
+        {
+            saveResult = StorageBase::SaveResult::DISKFULL;
+        }
     }
-    else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_REQUESTENTITYTOOLARGE)
+    catch(const Poco::Exception& pexc)
     {
-        saveResult = StorageBase::SaveResult::DISKFULL;
+        LOG_ERR("Cannot save file to WOPI storage uri [" + uriObject.toString() + "]. Error: " << pexc.displayText() <<
+                (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));
+        saveResult = StorageBase::SaveResult::FAILED;
     }
 
     return saveResult;
