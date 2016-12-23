@@ -1264,20 +1264,29 @@ private:
         std::string sessionId;
         if (LOOLProtocol::parseNameValuePair(prefix, name, sessionId, '-') && name == "child")
         {
+            std::unique_lock<std::mutex> lock(_mutex);
+
             const auto it = _sessions.find(sessionId);
             if (it != _sessions.end())
             {
+                auto session = it->second;
+
                 static const std::string disconnect("disconnect");
                 if (size == disconnect.size() &&
                     strncmp(data, disconnect.data(), disconnect.size()) == 0)
                 {
                     LOG_DBG("Removing ChildSession " << sessionId);
-                    _oldSessionIds[it->second->getViewId()] = UserInfo({it->second->getViewUserId(), it->second->getViewUserName()});
+                    _oldSessionIds[session->getViewId()] = UserInfo({session->getViewUserId(), session->getViewUserName()});
                     _sessions.erase(it);
+
+                    // No longer needed, and allow session dtor to take it.
+                    lock.unlock();
+                    session.reset();
                     return true;
                 }
 
-                auto session = it->second;
+                // No longer needed, and allow the handler to take it.
+                lock.unlock();
                 if (session)
                 {
                     return session->handleInput(data, size);
