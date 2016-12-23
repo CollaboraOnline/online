@@ -1697,10 +1697,10 @@ void LOOLWSD::initialize(Application& self)
     // In Trial Versions we might want to set some limits.
     LOOLWSD::NumConnections = 0;
     LOG_INF("Open Documents Limit: " <<
-            (MAX_DOCUMENTS ? std::to_string(MAX_DOCUMENTS) : std::string("unlimited")));
+            (MAX_DOCUMENTS != 0 ? std::to_string(MAX_DOCUMENTS) : std::string("unlimited")));
 
     LOG_INF("Client Connections Limit: " <<
-            (MAX_CONNECTIONS ? std::to_string(MAX_CONNECTIONS) : std::string("unlimited")));
+            (MAX_CONNECTIONS != 0 ? std::to_string(MAX_CONNECTIONS) : std::string("unlimited")));
 
     // Command Tracing.
     if (getConfigValue<bool>(conf, "trace[@enable]", false))
