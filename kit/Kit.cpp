@@ -887,9 +887,9 @@ private:
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        LOG_INF("Loading url [" << uri <<
-                "] for session [" << sessionId << "] which has " << _sessions.size() <<
-                " views loaded. Another load in progress: " << _isLoading);
+        LOG_INF("Loading url [" << uri << "] for session [" << sessionId <<
+                "] which has " << (_sessions.size() - 1) <<
+                " sessions. Another load in progress: " << _isLoading);
 
         while (_isLoading)
         {
@@ -954,7 +954,7 @@ private:
 
         LOG_INF("Document [" << _url << "] session [" <<
                 sessionId << "] unloaded view [" << viewId << "]. Have " <<
-                viewCount << " view" << (viewCount != 1 ? "s" : ""));
+                viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
         lockLokDoc.unlock();
 
@@ -1196,7 +1196,8 @@ private:
         Object::Ptr renderOptsObj = new Object();
 
         // Fill the object with renderoptions, if any
-        if (!_renderOpts.empty()) {
+        if (!_renderOpts.empty())
+        {
             Parser parser;
             Poco::Dynamic::Var var = parser.parse(_renderOpts);
             renderOptsObj = var.extract<Object::Ptr>();
@@ -1230,7 +1231,7 @@ private:
         const int viewCount = _loKitDocument->getViewsCount();
         LOG_INF("Document url [" << _url << "] for session [" <<
                 sessionId << "] loaded view [" << viewId << "]. Have " <<
-                viewCount << " view" << (viewCount != 1 ? "s" : ""));
+                viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
         return _loKitDocument;
     }
@@ -1251,8 +1252,6 @@ private:
 
         auto data = payload.data() + index;
         auto size = payload.size() - index;
-        const auto abbrMessage = getAbbreviatedMessage(data, size);
-        LOG_TRC("Forwarding payload to " << prefix << ' ' << abbrMessage);
 
         std::string name;
         std::string sessionId;
@@ -1278,6 +1277,7 @@ private:
                 }
             }
 
+            const auto abbrMessage = getAbbreviatedMessage(data, size);
             LOG_WRN("Child session [" << sessionId << "] not found to forward message: " << abbrMessage);
         }
         else
@@ -1299,8 +1299,11 @@ private:
             while (!_stop && !TerminationFlag)
             {
                 const TileQueue::Payload input = _tileQueue->get();
+                LOG_TRC("Kit Recv " << LOOLProtocol::getAbbreviatedMessage(input));
+
                 if (_stop || TerminationFlag)
                 {
+                    LOG_INF("Kit: Stop flagged.");
                     break;
                 }
 
