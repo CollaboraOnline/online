@@ -189,8 +189,7 @@ static int careerSpanSeconds = 0;
 namespace
 {
 
-static inline
-void shutdownLimitReached(LOOLWebSocket& ws)
+inline void shutdownLimitReached(LOOLWebSocket& ws)
 {
     const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
 
@@ -1395,7 +1394,7 @@ public:
 namespace
 {
 
-static inline ServerSocket* getServerSocket(int nPortNumber, bool reuseDetails)
+inline ServerSocket* getServerSocket(int nPortNumber, bool reuseDetails)
 {
     try
     {
@@ -1415,7 +1414,7 @@ static inline ServerSocket* getServerSocket(int nPortNumber, bool reuseDetails)
     }
 }
 
-static inline ServerSocket* findFreeServerPort(int& nClientPortNumber)
+inline ServerSocket* findFreeServerPort(int& nClientPortNumber)
 {
     ServerSocket* socket = nullptr;
     while (!socket)
@@ -1430,7 +1429,7 @@ static inline ServerSocket* findFreeServerPort(int& nClientPortNumber)
     return socket;
 }
 
-static inline ServerSocket* getMasterSocket(int nMasterPortNumber)
+inline ServerSocket* getMasterSocket(int nMasterPortNumber)
 {
     try
     {
@@ -1444,8 +1443,7 @@ static inline ServerSocket* getMasterSocket(int nMasterPortNumber)
     }
 }
 
-static inline
-ServerSocket* findFreeMasterPort(int &nMasterPortNumber)
+inline ServerSocket* findFreeMasterPort(int &nMasterPortNumber)
 {
     ServerSocket* socket = nullptr;
     while (!socket)
@@ -1460,7 +1458,7 @@ ServerSocket* findFreeMasterPort(int &nMasterPortNumber)
     return socket;
 }
 
-static inline std::string getLaunchBase(const std::string &credentials)
+inline std::string getLaunchBase(const std::string &credentials)
 {
     std::ostringstream oss;
     oss << "    ";
@@ -1472,7 +1470,7 @@ static inline std::string getLaunchBase(const std::string &credentials)
     return oss.str();
 }
 
-static inline std::string getLaunchURI()
+inline std::string getLaunchURI()
 {
     const std::string aAbsTopSrcDir = Poco::Path(Application::instance().commandPath()).parent().toString();
 
@@ -1487,7 +1485,7 @@ static inline std::string getLaunchURI()
     return oss.str();
 }
 
-static inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
+inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
 {
     std::string user = config.getString("admin_console.username", "");
     std::string passwd = config.getString("admin_console.password", "");

@@ -274,7 +274,7 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Poco::URI& ur
 
 namespace {
 
-static inline
+inline
 Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
 {
     return (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(), Poco::Net::SSLManager::instance().defaultClientContext())
