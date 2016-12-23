@@ -848,9 +848,12 @@ private:
                 }
             }
         }
+        else
+        {
+            LOG_DBG("No DocumentBroker with docKey [" << docKey << "] found. New Child and Document.");
+        }
 
         Util::assertIsLocked(docBrokersLock);
-        LOG_DBG("No DocumentBroker with docKey [" << docKey << "] found. New Child and Document.");
 
         if (TerminationFlag)
         {
