@@ -154,7 +154,7 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
     }
     else if (tokens[0] == "set" && tokens.count() > 1)
     {
-        for (unsigned i = 1; i < tokens.count(); i++)
+        for (size_t i = 1; i < tokens.count(); i++)
         {
             StringTokenizer setting(tokens[i], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             unsigned settingVal = 0;

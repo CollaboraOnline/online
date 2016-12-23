@@ -489,7 +489,7 @@ int Stress::main(const std::vector<std::string>& args)
     std::vector<std::shared_ptr<Worker>> workers;
 
     unsigned index = 0;
-    for (unsigned i = 0; i < args.size(); ++i)
+    for (size_t i = 0; i < args.size(); ++i)
     {
         std::cout << "Arg: " << args[i] << std::endl;
         for (unsigned j = 0; j < _numClients; ++j, ++index)

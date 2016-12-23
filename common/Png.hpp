@@ -175,7 +175,7 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
     // assume a consistent mode - RGBA vs. BGRA for process
     SpookyHash hash;
     hash.Init(1073741789, 1073741789); // Seeds can be anything.
-    for (int y = 0; y < height; ++y)
+    for (long y = 0; y < height; ++y)
     {
         const size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
         hash.Update(pixmap + position, width * 4);
