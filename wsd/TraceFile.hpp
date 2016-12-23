@@ -265,7 +265,7 @@ private:
         _epochStart = _records[0].TimestampNs;
     }
 
-    std::vector<std::string> split(const std::string& s, const char delim) const
+    static std::vector<std::string> split(const std::string& s, const char delim)
     {
         std::stringstream ss(s);
         std::string item;

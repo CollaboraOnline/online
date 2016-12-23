@@ -21,9 +21,9 @@
 /// Handles file requests over HTTP(S).
 class FileServerRequestHandler : public Poco::Net::HTTPRequestHandler
 {
-    std::string getRequestPathname(const Poco::Net::HTTPServerRequest& request);
+    static std::string getRequestPathname(const Poco::Net::HTTPServerRequest& request);
 
-    void preprocessFile(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) throw(Poco::FileAccessDeniedException);
+    static void preprocessFile(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) throw(Poco::FileAccessDeniedException);
 
 public:
     /// Evaluate if the cookie exists, and if not, ask for the credentials.

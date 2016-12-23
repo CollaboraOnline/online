@@ -84,7 +84,7 @@ private:
 
     void initializeSSL();
     void displayHelp();
-    Poco::Process::PID createForKit();
+    static Poco::Process::PID createForKit();
 
     class ConfigValueGetter
     {

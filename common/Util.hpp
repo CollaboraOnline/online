@@ -237,7 +237,7 @@ namespace Util
         }
 
     private:
-        bool match(const std::set<std::string>& set, const std::string& subject) const
+        static bool match(const std::set<std::string>& set, const std::string& subject)
         {
             if (set.find(subject) != set.end())
             {

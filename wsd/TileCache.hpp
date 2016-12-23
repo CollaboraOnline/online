@@ -79,11 +79,11 @@ private:
     // Removes the given file from the cache
     void removeFile(const std::string& fileName);
 
-    std::string cacheFileName(const TileDesc& tile);
-    bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight) const;
+    static std::string cacheFileName(const TileDesc& tile);
+    static bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
 
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
-    bool intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height) const;
+    static bool intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height);
 
     /// Load the timestamp from modtime.txt.
     Poco::Timestamp getLastModified();

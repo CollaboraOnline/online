@@ -137,7 +137,7 @@ public:
         Prisoner
     };
     /// Simulate an incoming request
-    void testHandleRequest(TestRequest type,
+    static void testHandleRequest(TestRequest type,
                            UnitHTTPServerRequest& request,
                            UnitHTTPServerResponse& response);
     /// Do we have hooks for the Kit too

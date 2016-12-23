@@ -385,12 +385,12 @@ std::string TileCache::cacheFileName(const TileDesc& tile)
     return oss.str();
 }
 
-bool TileCache::parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight) const
+bool TileCache::parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight)
 {
     return (std::sscanf(fileName.c_str(), "%d_%dx%d.%d,%d.%dx%d.png", &part, &width, &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight) == 7);
 }
 
-bool TileCache::intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height) const
+bool TileCache::intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height)
 {
     int tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight;
     if (parseCacheFileName(fileName, tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight))
