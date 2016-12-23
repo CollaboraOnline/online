@@ -1118,9 +1118,11 @@ private:
             _jailedUrl = uri;
             _isDocPasswordProtected = false;
 
-            LOG_DBG("Calling lokit::documentLoad.");
+            LOG_DBG("Calling lokit::documentLoad(" << uri << ").");
+            Timestamp timestamp;
             _loKitDocument.reset(_loKit->documentLoad(uri.c_str()));
-            LOG_DBG("Returned lokit::documentLoad.");
+            LOG_DBG("Returned lokit::documentLoad(" << uri << ") in " << (timestamp.elapsed()  / 1000.) << "ms.");
+
             std::unique_lock<std::mutex> l(_documentMutex);
             lockLokDoc.swap(l);
 
@@ -1160,6 +1162,8 @@ private:
         {
             std::unique_lock<std::mutex> l(_documentMutex);
             lockLokDoc.swap(l);
+
+            LOG_INF("Document with url [" << uri << "] already loaded. Need to create new view for session [" << sessionId << "].");
 
             // Check if this document requires password
             if (_isDocPasswordProtected)
