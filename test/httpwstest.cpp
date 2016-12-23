@@ -1470,7 +1470,7 @@ void HTTPWSTest::testStateChanged(const std::string& filename, std::vector<std::
         std::ostringstream ostr;
 
         ostr << filename << " : Missing Uno Commands: " << std::endl;
-        for (auto itUno : vecCommands)
+        for (auto & itUno : vecCommands)
             ostr << itUno << std::endl;
 
         CPPUNIT_FAIL(ostr.str());
