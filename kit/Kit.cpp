@@ -896,13 +896,23 @@ private:
             _cvLoading.wait(lock);
         }
 
+        // This shouldn't happen, but for sanity.
+        const auto it = _sessions.find(sessionId);
+        if (it == _sessions.end() || !it->second)
+        {
+            LOG_ERR("Cannot find session [" << sessionId << "] to load view for.");
+            return false;
+        }
+
+        auto session = it->second;
+
         // Flag and release lock.
         ++_isLoading;
         lock.unlock();
 
         try
         {
-            load(sessionId, uri, userName, docPassword, renderOpts, haveDocPassword);
+            load(session, uri, userName, docPassword, renderOpts, haveDocPassword);
             if (!_loKitDocument || !_loKitDocument->get())
             {
                 return false;
@@ -915,9 +925,12 @@ private:
             return false;
         }
 
+        // Retake the lock (technically, not needed).
+        lock.lock();
+
         // Done loading, let the next one in (if any).
         LOG_CHECK_RET(_loKitDocument && _loKitDocument->get() && "Uninitialized lok::Document instance", false);
-        lock.lock();
+
         --_isLoading;
         _cvLoading.notify_one();
 
@@ -1087,22 +1100,15 @@ private:
         return viewColors;
     }
 
-    std::shared_ptr<lok::Document> load(const std::string& sessionId,
+    std::shared_ptr<lok::Document> load(const std::shared_ptr<ChildSession>& session,
                                         const std::string& uri,
                                         const std::string& userName,
                                         const std::string& docPassword,
                                         const std::string& renderOpts,
                                         const bool haveDocPassword)
     {
-        const auto it = _sessions.find(sessionId);
-        if (it == _sessions.end() || !it->second)
-        {
-            LOG_ERR("Cannot find session [" << sessionId << "].");
-            return nullptr;
-        }
+        const std::string sessionId = session->getId();
 
-        auto session = it->second;
-        int viewId = 0;
         std::unique_lock<std::mutex> lockLokDoc;
 
         if (!_loKitDocument)
@@ -1222,7 +1228,7 @@ private:
         // registerCallback(), as the previous creates a new view in Impress.
         _loKitDocument->initializeForRendering(ossRenderOpts.str().c_str());
 
-        viewId = _loKitDocument->getView();
+        const int viewId = _loKitDocument->getView();
         session->setViewId(viewId);
         _viewIdToCallbackDescr.emplace(viewId,
                                        std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
