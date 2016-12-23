@@ -795,7 +795,7 @@ public:
         const std::string payload = pPayload ? pPayload : "(nil)";
         LOG_TRC("Document::GlobalCallback " << LOKitHelper::kitCallbackTypeToString(nType) <<
                 " [" << payload << "].");
-        Document* self = reinterpret_cast<Document*>(pData);
+        Document* self = static_cast<Document*>(pData);
         if (nType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY ||
             nType == LOK_CALLBACK_DOCUMENT_PASSWORD)
         {
@@ -815,7 +815,7 @@ public:
             return;
         }
 
-        CallbackDescriptor* pDescr = reinterpret_cast<CallbackDescriptor*>(pData);
+        CallbackDescriptor* pDescr = static_cast<CallbackDescriptor*>(pData);
         assert(pDescr && "Null callback data.");
         assert(pDescr->Doc && "Null Document instance.");
 

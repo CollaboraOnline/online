@@ -100,7 +100,7 @@ public:
     static UnitBase& get()
     {
         assert(Global);
-        return *static_cast<UnitBase *>(Global);
+        return *Global;
     }
 
 private:
