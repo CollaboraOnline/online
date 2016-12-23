@@ -145,7 +145,7 @@ Poco::Net::HTTPClientSession* createSession(const Poco::URI& uri)
 }
 
 inline
-std::string getTestServerURI()
+std::string const & getTestServerURI()
 {
     static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
 
