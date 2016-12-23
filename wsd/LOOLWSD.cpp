@@ -479,7 +479,7 @@ public:
         if (!params.has("filename"))
             return;
 
-        Path tempPath = Path::forDirectory(TemporaryFile().tempName() + "/");
+        Path tempPath = Path::forDirectory(Poco::TemporaryFile::tempName() + "/");
         File(tempPath).createDirectories();
         // Prevent user inputting anything funny here.
         // A "filename" should always be a filename, not a path

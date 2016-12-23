@@ -71,7 +71,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         if (Global)
         {
             TimeoutThread.startFunc([](){
-                    TimeoutThread.trySleep(Global->_timeoutMilliSeconds);
+                    Poco::Thread::trySleep(Global->_timeoutMilliSeconds);
                     if (!Global->_timeoutShutdown)
                     {
                         LOG_ERR("Unit test timeout");
