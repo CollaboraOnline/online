@@ -404,7 +404,7 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     NewChildren.emplace_back(child);
     const auto count = NewChildren.size();
     LOG_INF("Have " << count << " spare " <<
-            (count == 1 ? "child" : "children") << " after adding.");
+            (count == 1 ? "child" : "children") << " after adding [" << child->getPid() << "].");
     lock.unlock();
 
     NewChildrenCV.notify_one();
@@ -449,7 +449,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
             auto child = NewChildren.back();
             NewChildren.pop_back();
             LOG_DBG("getNewChild: Have " << available << " spare " <<
-                    (available == 1 ? "child" : "children") << " after poping.");
+                    (available == 1 ? "child" : "children") << " after poping [" << child->getPid() << "].");
 
             // Validate before returning.
             if (child && child->isAlive())
@@ -579,7 +579,7 @@ private:
                     // FIXME: What if the same document is already open? Need a fake dockey here?
                     LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
                     DocBrokers.emplace(docKey, docBroker);
-                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting.");
+                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
 
                     // Load the document.
                     std::shared_ptr<LOOLWebSocket> ws;
@@ -636,7 +636,7 @@ private:
                         LOG_DBG("Removing DocumentBroker for docKey [" << docKey << "].");
                         DocBrokers.erase(docKey);
                         docBroker->terminateChild(docLock);
-                        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing.");
+                        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing [" << docKey << "].");
                     }
                     else
                     {
@@ -775,15 +775,18 @@ private:
     /// Handle GET requests.
     static void handleGetRequest(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id)
     {
-        LOG_INF("Starting GET request handler for session [" << id << "].");
+        LOG_INF("Starting GET request handler for session [" << id << "] on url [" << uri << "].");
 
-        // indicator to the client that document broker is searching
+        // Indicate to the client that document broker is searching.
         std::string status("statusindicator: find");
         LOG_TRC("Sending to Client [" << status << "].");
         ws->sendFrame(status.data(), status.size());
 
         const auto uriPublic = DocumentBroker::sanitizeURI(uri);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
+        LOG_INF("Sanitized url [" << uri << "] to [" << uriPublic.toString() <<
+                "] and mapped to docKey [" << docKey << "].");
+
         std::shared_ptr<DocumentBroker> docBroker;
 
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
@@ -898,7 +901,7 @@ private:
             docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
             child->setDocumentBroker(docBroker);
             DocBrokers.emplace(docKey, docBroker);
-            LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting.");
+            LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
         }
 
         // Validate the broker.
@@ -931,7 +934,7 @@ private:
         // Below this, we need to cleanup internal references.
         try
         {
-            // indicator to a client that is waiting to connect to lokit process
+            // Indicate to the client that is waiting to connect to lokit process.
             status = "statusindicator: connect";
             LOG_TRC("Sending to Client [" << status << "].");
             ws->sendFrame(status.data(), status.size());
@@ -944,7 +947,7 @@ private:
             const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
             if (!fs.empty())
             {
-                LOG_WRN("File system of " << fs << " dangerously low on disk space");
+                LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
                 Util::alertAllUsers("error: cmd=internal kind=diskfull");
             }
 
@@ -1019,7 +1022,7 @@ private:
                         LOG_INF("Removing DocumentBroker for docKey [" << docKey << "].");
                         DocBrokers.erase(docKey);
                         docBroker->terminateChild(lock);
-                        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing.");
+                        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing [" << docKey << "].");
                     }
                 }
             }
@@ -1207,9 +1210,9 @@ public:
                 {
                     // First, setup WS options.
                     // We need blocking here, because the POCO's
-                    // implementation of handling of non-blocking in
-                    // websockes in broken; essentially it leads to
-                    // sending incomplete frames.
+                    // non-blocking implementation of websockes is
+                    // broken; essentially it leads to sending
+                    // incomplete frames.
                     ws->setBlocking(true);
                     ws->setSendTimeout(WS_SEND_TIMEOUT_MS * 1000);
                     handleGetRequest(reqPathTokens[1], ws, id);
