@@ -1179,39 +1179,7 @@ private:
             LOG_TRC("View to url [" << uri << "] created.");
         }
 
-        Object::Ptr renderOptsObj;
-
-        // Fill the object with renderoptions, if any
-        if (!_renderOpts.empty())
-        {
-            Parser parser;
-            Poco::Dynamic::Var var = parser.parse(_renderOpts);
-            renderOptsObj = var.extract<Object::Ptr>();
-        }
-        else if (!userName.empty())
-        {
-            renderOptsObj = new Object();
-        }
-
-        // Append name of the user, if any, who opened the document to rendering options
-        if (!userName.empty())
-        {
-            Object::Ptr authorObj = new Object();
-            authorObj->set("type", "string");
-            std::string decodedUserName;
-            URI::decode(userName, decodedUserName);
-            authorObj->set("value", decodedUserName);
-            renderOptsObj->set(".uno:Author", authorObj);
-        }
-
-        std::string renderParams;
-        if (renderOptsObj)
-        {
-            std::ostringstream ossRenderOpts;
-            renderOptsObj->stringify(ossRenderOpts);
-            renderParams = ossRenderOpts.str();
-        }
-
+        const std::string renderParams = makeRenderParams(userName);
         LOG_INF("Initializing for rendering session [" << sessionId << "] on document url [" <<
                 _url << "] with: [" << renderParams << "].");
 
@@ -1293,6 +1261,44 @@ private:
         }
 
         return false;
+    }
+
+    std::string makeRenderParams(const std::string& userName)
+    {
+        Object::Ptr renderOptsObj;
+
+        // Fill the object with renderoptions, if any
+        if (!_renderOpts.empty())
+        {
+            Parser parser;
+            Poco::Dynamic::Var var = parser.parse(_renderOpts);
+            renderOptsObj = var.extract<Object::Ptr>();
+        }
+        else if (!userName.empty())
+        {
+            renderOptsObj = new Object();
+        }
+
+        // Append name of the user, if any, who opened the document to rendering options
+        if (!userName.empty())
+        {
+            Object::Ptr authorObj = new Object();
+            authorObj->set("type", "string");
+            std::string decodedUserName;
+            URI::decode(userName, decodedUserName);
+            authorObj->set("value", decodedUserName);
+            renderOptsObj->set(".uno:Author", authorObj);
+        }
+
+        std::string renderParams;
+        if (renderOptsObj)
+        {
+            std::ostringstream ossRenderOpts;
+            renderOptsObj->stringify(ossRenderOpts);
+            renderParams = ossRenderOpts.str();
+        }
+
+        return renderParams;
     }
 
     void run() override
