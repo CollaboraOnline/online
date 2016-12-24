@@ -787,9 +787,20 @@ private:
         LOG_INF("Sanitized url [" << uri << "] to [" << uriPublic.toString() <<
                 "] and mapped to docKey [" << docKey << "].");
 
-        std::shared_ptr<DocumentBroker> docBroker;
+        // Check if readonly session is required
+        bool isReadOnly = false;
+        for (const auto& param : uriPublic.getQueryParameters())
+        {
+            LOG_DBG("Query param: " << param.first << ", value: " << param.second);
+            if (param.first == "permission" && param.second == "readonly")
+            {
+                isReadOnly = true;
+            }
+        }
 
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+
+        cleanupDocBrokers();
 
         if (TerminationFlag)
         {
@@ -797,17 +808,15 @@ private:
             return;
         }
 
-        cleanupDocBrokers();
+        std::shared_ptr<DocumentBroker> docBroker;
 
         // Lookup this document.
         auto it = DocBrokers.find(docKey);
-        if (it != DocBrokers.end())
+        if (it != DocBrokers.end() && it->second)
         {
             // Get the DocumentBroker from the Cache.
             LOG_DBG("Found DocumentBroker with docKey [" << docKey << "].");
             docBroker = it->second;
-            assert(docBroker);
-
             if (docBroker->isMarkedToDestroy())
             {
                 // Let the waiting happen in parallel to new requests.
@@ -915,15 +924,6 @@ private:
         }
 
         docBrokersLock.unlock();
-
-        // Check if readonly session is required
-        bool isReadOnly = false;
-        for (const auto& param : uriPublic.getQueryParameters())
-        {
-            LOG_DBG("Query param: " << param.first << ", value: " << param.second);
-            if (param.first == "permission")
-                isReadOnly = param.second == "readonly";
-        }
 
         // In case of WOPI and if this session is not set as readonly, it might be set so
         // later after making a call to WOPI host which tells us the permission on files
