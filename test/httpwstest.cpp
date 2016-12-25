@@ -34,7 +34,6 @@
 #include <Poco/RegularExpression.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/Thread.h>
 #include <Poco/URI.h>
 
 #include <cppunit/extensions/HelperMacros.h>
@@ -156,7 +155,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     int loadTorture(const std::string& testname,
                      const std::string& docName,
                      const size_t thread_count,
-                     const size_t loads_per_thread,
                      const size_t max_jitter_ms);
 
     void getPartHashCodes(const std::string response,
@@ -393,10 +391,9 @@ void HTTPWSTest::testLoad()
 }
 
 int HTTPWSTest::loadTorture(const std::string& testname,
-                             const std::string& docName,
-                             const size_t thread_count,
-                             const size_t loads_per_thread,
-                             const size_t max_jitter_ms)
+                            const std::string& docName,
+                            const size_t thread_count,
+                            const size_t max_jitter_ms)
 {
     // Load same document from many threads together.
     std::string documentPath, documentURL;
@@ -404,43 +401,81 @@ int HTTPWSTest::loadTorture(const std::string& testname,
 
     std::atomic<int> sum_view_ids;
     sum_view_ids = 0;
+    std::atomic<int> num_of_views(0);
+    std::atomic<int> num_to_load(thread_count);
 
     std::vector<std::thread> threads;
     for (size_t i = 0; i < thread_count; ++i)
     {
         threads.emplace_back([&]
         {
+            std::ostringstream oss;
+            oss << std::hex << std::this_thread::get_id();
+            const std::string id = oss.str();
+
+            std::cerr << testname << ": #" << id << ", views: " << num_of_views << ", to load: " << num_to_load << std::endl;
             try
             {
-                for (size_t j = 0; j < loads_per_thread; ++j)
+                // Load a document and wait for the status.
+                Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+                Poco::Net::HTTPResponse response;
+                auto socket = connectLOKit(_uri, request, response, testname);
+                sendTextFrame(socket, "load url=" + documentURL, testname);
+
+                const auto status = assertResponseString(socket, "status:", testname);
+                int viewid = -1;
+                LOOLProtocol::getTokenIntegerFromMessage(status, "viewid", viewid);
+                sum_view_ids += viewid;
+                ++num_of_views;
+                --num_to_load;
+
+                std::cerr << testname << ": #" << id << ", loaded views: " << num_of_views << ", to load: " << num_to_load << std::endl;
+
+                while (true)
                 {
-                    // Load a document and wait for the status.
-                    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-                    auto socket = connectLOKit(_uri, request, _response, testname);
-                    sendTextFrame(socket, "load url=" + documentURL, testname);
-
-                    const auto status = assertResponseString(socket, "status:", testname);
-                    int viewid = -1;
-                    LOOLProtocol::getTokenIntegerFromMessage(status, "viewid", viewid);
-                    sum_view_ids += viewid;
-
-                    if (max_jitter_ms > 0)
+                    if (num_to_load == 0)
                     {
-                        const auto ms = std::chrono::milliseconds(Util::rng::getNext() % max_jitter_ms);
-                        std::this_thread::sleep_for(ms);
+                        // Unload at once, nothing more left to do.
+                        std::cerr << testname << ": #" << id << ", no more to load, unloading." << std::endl;
+                        break;
+                    }
+
+                    const auto ms = (max_jitter_ms > 0
+                                    ? std::chrono::milliseconds(Util::rng::getNext() % max_jitter_ms)
+                                    : std::chrono::milliseconds(0));
+                    std::this_thread::sleep_for(ms);
+
+                    // Unload only when we aren't the last/only.
+                    if (--num_of_views > 0)
+                    {
+                        std::cerr << testname << ": #" << id << ", views: " << num_of_views << " not the last/only, unloading." << std::endl;
+                        break;
+                    }
+                    else
+                    {
+                        // Correct back, since we aren't unloading just yet.
+                        ++num_of_views;
                     }
                 }
             }
-            catch (const Poco::Exception& exc)
+            catch (const std::exception& exc)
             {
-                CPPUNIT_FAIL(exc.displayText());
+                std::cerr << testname << ": #" << id << ", Exception: " << exc.what() << std::endl;
+                --num_to_load;
             }
         });
     }
 
     for (auto& thread : threads)
     {
-        thread.join();
+        try
+        {
+            thread.join();
+        }
+        catch (const std::exception& exc)
+        {
+            std::cerr << testname << ": Exception: " << exc.what() << std::endl;
+        }
     }
 
     return sum_view_ids;
@@ -448,53 +483,49 @@ int HTTPWSTest::loadTorture(const std::string& testname,
 
 void HTTPWSTest::testLoadTortureODT()
 {
-    const auto thread_count = 3;
-    const auto loads_per_thread = 2;
+    const auto thread_count = 6;
     const auto max_jitter_ms = 100;
 
     const auto testname = "loadTortureODT ";
-    const auto sum_view_ids = loadTorture(testname, "empty.odt", thread_count, loads_per_thread, max_jitter_ms);
+    const auto sum_view_ids = loadTorture(testname, "empty.odt", thread_count, max_jitter_ms);
 
     // This only works when the first view-ID is 0 and increments monotonously.
-    const auto number_of_loads = thread_count * loads_per_thread;
+    const auto number_of_loads = thread_count;
     const int exp_sum_view_ids = number_of_loads * (number_of_loads - 1) / 2; // 0-based view-ids.
     CPPUNIT_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids);
 }
 
 void HTTPWSTest::testLoadTortureODS()
 {
-    const auto thread_count = 2;
-    const auto loads_per_thread = 2;
-    const auto max_jitter_ms = 75;
+    const auto thread_count = 6;
+    const auto max_jitter_ms = 100;
 
     const auto testname = "loadTortureODS ";
-    const auto sum_view_ids = loadTorture(testname, "empty.ods", thread_count, loads_per_thread, max_jitter_ms);
+    const auto sum_view_ids = loadTorture(testname, "empty.ods", thread_count, max_jitter_ms);
 
     // This only works when the first view-ID is 0 and increments monotonously.
-    const auto number_of_loads = thread_count * loads_per_thread;
+    const auto number_of_loads = thread_count;
     const int exp_sum_view_ids = number_of_loads * (number_of_loads - 1) / 2; // 0-based view-ids.
     CPPUNIT_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids);
 }
 
 void HTTPWSTest::testLoadTortureODP()
 {
-    const auto thread_count = 2;
-    const auto loads_per_thread = 2;
-    const auto max_jitter_ms = 75;
+    const auto thread_count = 6;
+    const auto max_jitter_ms = 100;
 
     const auto testname = "loadTortureODP ";
-    const auto sum_view_ids = loadTorture(testname, "empty.odp", thread_count, loads_per_thread, max_jitter_ms);
+    const auto sum_view_ids = loadTorture(testname, "empty.odp", thread_count, max_jitter_ms);
 
     // For ODP the view-id is always odd, and we expect not to skip any ids.
-    const auto number_of_loads = thread_count * loads_per_thread;
+    const auto number_of_loads = thread_count;
     const int exp_sum_view_ids = number_of_loads * number_of_loads; // Odd view-ids only.
     CPPUNIT_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids);
 }
 
 void HTTPWSTest::testLoadTorture()
 {
-    const auto thread_count = 1;
-    const auto loads_per_thread = 1;
+    const auto thread_count = 3;
     const auto max_jitter_ms = 75;
 
     std::vector<std::string> docNames = { "setclientpart.ods", "hello.odt", "viewcursor.odp" };
@@ -505,7 +536,7 @@ void HTTPWSTest::testLoadTorture()
         threads.emplace_back([&]
         {
             const auto testname = "loadTorture_" + docName + ' ';
-            loadTorture(testname, docName, thread_count, loads_per_thread, max_jitter_ms);
+            loadTorture(testname, docName, thread_count, max_jitter_ms);
         });
     }
 
