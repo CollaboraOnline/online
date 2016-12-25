@@ -531,7 +531,7 @@ public:
             num_sessions = _sessions.size();
             if (num_sessions == 0)
             {
-                LOG_INF("No more sessions, exiting bluntly");
+                LOG_INF("Document [" << _url << "] has no more views, exiting bluntly.");
                 std::_Exit(Application::EXIT_OK);
             }
         }
@@ -543,22 +543,6 @@ public:
         deadSessions.clear();
 
         return num_sessions;
-    }
-
-    /// Returns true if at least one *live* connection exists.
-    /// Does not consider user activity, just socket status.
-    bool hasSessions()
-    {
-        // -ve values for failure.
-        return purgeSessions() != 0;
-    }
-
-    /// Returns true if there is no activity and
-    /// the document is saved.
-    bool canDiscard()
-    {
-        //TODO: Implement proper time-out on inactivity.
-        return !hasSessions();
     }
 
     /// Set Document password for given URL
@@ -941,17 +925,21 @@ private:
         _loKitDocument->registerCallback(nullptr, nullptr);
         _loKitDocument->destroyView(viewId);
         _viewIdToCallbackDescr.erase(viewId);
-        LOG_DBG("Destroyed view [" << viewId << "] with session [" <<
-                sessionId << "] on url [" << _url << "].");
 
-        // Get the list of view ids from the core
         const int viewCount = _loKitDocument->getViewsCount();
-        std::vector<int> viewIds(viewCount);
-        _loKitDocument->getViewIds(viewIds.data(), viewCount);
-
         LOG_INF("Document [" << _url << "] session [" <<
                 sessionId << "] unloaded view [" << viewId << "]. Have " <<
                 viewCount << " view" << (viewCount != 1 ? "s." : "."));
+
+        if (viewCount <= 0)
+        {
+            LOG_INF("Document [" << _url << "] has no more views, exiting bluntly.");
+            std::_Exit(Application::EXIT_OK);
+        }
+
+        // Get the list of view ids from the core
+        std::vector<int> viewIds(viewCount);
+        _loKitDocument->getViewIds(viewIds.data(), viewCount);
 
         lockLokDoc.unlock();
 
@@ -1703,11 +1691,6 @@ void lokit_main(const std::string& childRoot,
                             LOG_WRN("No document while processing " << tokens[0] << " request.");
                         }
                     }
-                    else if (document && document->canDiscard())
-                    {
-                        LOG_INF("Last session discarded. Terminating.");
-                        TerminationFlag = true;
-                    }
                     else
                     {
                         LOG_ERR("Bad or unknown token [" << tokens[0] << "]");
@@ -1718,7 +1701,7 @@ void lokit_main(const std::string& childRoot,
                 []() {},
                 []()
                 {
-                    if (document && document->canDiscard())
+                    if (document && document->purgeSessions() == 0)
                     {
                         LOG_INF("Last session discarded. Terminating.");
                         TerminationFlag = true;
