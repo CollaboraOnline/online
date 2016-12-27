@@ -138,8 +138,8 @@ public:
     };
     /// Simulate an incoming request
     static void testHandleRequest(TestRequest type,
-                           UnitHTTPServerRequest& request,
-                           UnitHTTPServerResponse& response);
+                                  UnitHTTPServerRequest& request,
+                                  UnitHTTPServerResponse& response);
     /// Do we have hooks for the Kit too
     bool hasKitHooks() { return _hasKitHooks; }
     /// set in your unit if you want to be injected into the kit too.
