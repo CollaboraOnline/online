@@ -114,4 +114,9 @@ map.addControl(L.control.rowHeader());
 map.addControl(L.control.contextMenu());
 map.addControl(L.control.menubar());
 
+window.addEventListener('beforeunload', function () {
+	if (global.map && global.map._socket) {
+		global.map._socket.close();
+	}
+});
 //require('./dist/toolbar/toolbar');
