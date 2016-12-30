@@ -1055,7 +1055,7 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
     LOG_INF("Terminating child [" << getPid() << "] of doc [" << _docKey << "].");
 
     // Close all running sessions
-    for (auto& pair : _sessions)
+    for (const auto& pair : _sessions)
     {
         try
         {

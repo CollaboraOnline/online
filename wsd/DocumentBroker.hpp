@@ -75,7 +75,7 @@ public:
 
         try
         {
-            if (_pid != -1 && _ws)
+            if (isAlive())
             {
                 sendTextFrame("exit");
             }
