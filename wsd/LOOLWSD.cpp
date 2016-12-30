@@ -269,11 +269,16 @@ bool cleanupDocBrokers()
     const auto count = DocBrokers.size();
     for (auto it = DocBrokers.begin(); it != DocBrokers.end(); )
     {
+        auto docBroker = it->second;
+        auto lock = docBroker->getLock();
+
         // Cleanup used and dead entries.
-        if (it->second->isLoaded() && !it->second->isAlive())
+        if (docBroker->isLoaded() &&
+            (docBroker->getSessionsCount() == 0 || !docBroker->isAlive()))
         {
-            LOG_DBG("Removing dead DocBroker [" << it->first << "].");
+            LOG_DBG("Removing dead DocumentBroker for docKey [" << it->first << "].");
             it = DocBrokers.erase(it);
+            docBroker->terminateChild(lock);
         }
         else
         {
