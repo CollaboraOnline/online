@@ -1021,18 +1021,7 @@ private:
                 // order and check again. We can't take the DocBrokersMutex while
                 // holding the docBroker lock as that can deadlock with autoSave below.
                 std::unique_lock<std::mutex> docBrokersLock2(DocBrokersMutex);
-                it = DocBrokers.find(docKey);
-                if (it != DocBrokers.end() && it->second)
-                {
-                    auto lock = it->second->getLock();
-                    if (it->second->getSessionsCount() == 0)
-                    {
-                        LOG_INF("Removing DocumentBroker for docKey [" << docKey << "].");
-                        DocBrokers.erase(docKey);
-                        docBroker->terminateChild(lock);
-                        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing [" << docKey << "].");
-                    }
-                }
+                cleanupDocBrokers();
             }
 
             if (SigUtil::isShuttingDown())
