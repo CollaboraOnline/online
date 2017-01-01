@@ -301,7 +301,11 @@ public:
 
     void updateLastActivityTime();
 
-    std::time_t getIdleTime() const { return std::time(nullptr) - _lastActivity; }
+    std::size_t getIdleTimeSecs() const
+    {
+        const auto duration = (std::chrono::steady_clock::now() - _lastActivity);
+        return std::chrono::duration_cast<std::chrono::seconds>(duration).count();
+    }
 
 private:
     /// Sends the .uno:Save command to LoKit.
@@ -346,7 +350,7 @@ private:
 
     int _debugRenderedTileCount;
 
-    std::time_t _lastActivity;
+    std::chrono::steady_clock::time_point _lastActivity;
 
     static constexpr auto IdleSaveDurationMs = 30 * 1000;
     static constexpr auto AutoSaveDurationMs = 300 * 1000;

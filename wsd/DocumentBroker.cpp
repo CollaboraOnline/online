@@ -1089,7 +1089,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
 
 void DocumentBroker::updateLastActivityTime()
 {
-    _lastActivity = std::time(nullptr);
+    _lastActivity = std::chrono::steady_clock::now();
     Admin::instance().updateLastActivityTime(_docKey);
 }
 

@@ -274,7 +274,7 @@ bool cleanupDocBrokers()
         auto lock = docBroker->getLock();
 
         // Remove idle documents after 1 hour.
-        const bool idle = (docBroker->getIdleTime() >= 3600);
+        const bool idle = (docBroker->getIdleTimeSecs() >= 3600);
 
         // Cleanup used and dead entries.
         if (docBroker->isLoaded() &&
@@ -2086,11 +2086,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     LOG_INF("Starting master server listening on " << ClientPortNumber);
     srv.start();
 
+
 #if ENABLE_DEBUG
     time_t startTimeSpan = time(nullptr);
 #endif
 
-    time_t last30SecCheck = time(nullptr);
+    auto last30SecCheckTime = std::chrono::steady_clock::now();
     int status = 0;
     while (!TerminationFlag && !SigUtil::isShuttingDown())
     {
@@ -2173,7 +2174,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 // Nothing more to do this round.
             }
             else if (!std::getenv("LOOL_NO_AUTOSAVE") &&
-                     (time(nullptr) >= last30SecCheck + 30))
+                     std::chrono::duration_cast<std::chrono::seconds>
+                        (std::chrono::steady_clock::now() - last30SecCheckTime).count() >= 30)
             {
                 try
                 {
@@ -2190,7 +2192,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                     LOG_ERR("Exception: " << exc.what());
                 }
 
-                last30SecCheck = time(nullptr);
+                last30SecCheckTime = std::chrono::steady_clock::now();
             }
             else
             {
