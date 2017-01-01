@@ -371,7 +371,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     // notify the waiting thread, if any.
     if (!success && result == "unmodified")
     {
-        LOG_DBG("Save skipped as document was not modified.");
+        LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
         _saveCV.notify_all();
         return true;
     }
@@ -379,7 +379,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     const auto it = _sessions.find(sessionId);
     if (it == _sessions.end())
     {
-        LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving.");
+        LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving docKey [" << _docKey << "].");
         _saveCV.notify_all();
         return false;
     }
@@ -393,13 +393,13 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     if (!_lastEditableSession && newFileModifiedTime == _lastFileModifiedTime)
     {
         // Nothing to do.
-        LOG_DBG("Skipping unnecessary saving to URI [" << uri << "]. File last modified " <<
-                _lastFileModifiedTime.elapsed() / 1000000 << " seconds ago.");
+        LOG_DBG("Skipping unnecessary saving to URI [" << uri << "] with docKey [" << _docKey <<
+                "]. File last modified " << _lastFileModifiedTime.elapsed() / 1000000 << " seconds ago.");
         _saveCV.notify_all();
         return true;
     }
 
-    LOG_DBG("Saving to URI [" << uri << "].");
+    LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uri << "].");
 
     // FIXME: We should check before persisting the document that it hasn't been updated in its
     // storage behind our backs.
@@ -430,15 +430,15 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         // So set _documentLastModifiedTime then
         _documentLastModifiedTime = _storage->getFileInfo()._modifiedTime;
 
-        LOG_DBG("Saved to URI [" << uri << "] and updated tile cache.");
-        LOG_DBG("Timestamp now: " << Poco::DateTimeFormatter::format(Poco::DateTime(_documentLastModifiedTime),
-                                                                     Poco::DateTimeFormat::ISO8601_FORMAT));
+        LOG_DBG("Saved docKey [" << _docKey << "] to URI [" << uri << "] and updated tile cache. Document modified timestamp: " <<
+                Poco::DateTimeFormatter::format(Poco::DateTime(_documentLastModifiedTime),
+                                                               Poco::DateTimeFormat::ISO8601_FORMAT));
         _saveCV.notify_all();
         return true;
     }
     else if (storageSaveResult == StorageBase::SaveResult::DISKFULL)
     {
-        LOG_WRN("Disk full while saving [" << uri <<
+        LOG_WRN("Disk full while saving docKey [" << _docKey << "] to URI [" << uri <<
                 "]. Making all sessions on doc read-only and notifying clients.");
 
         // Make everyone readonly and tell everyone that storage is low on diskspace.
@@ -451,7 +451,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     else if (storageSaveResult == StorageBase::SaveResult::FAILED)
     {
         //TODO: Should we notify all clients?
-        LOG_ERR("Failed to save to URI [" << uri << "]. Notifying client.");
+        LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << uri << "]. Notifying client.");
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
     }
 
@@ -485,14 +485,14 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs, std:
     {
         // Find the most recent activity.
         double inactivityTimeMs = std::numeric_limits<double>::max();
-        for (auto& sessionIt : _sessions)
+        for (const auto& sessionIt : _sessions)
         {
             inactivityTimeMs = std::min(sessionIt.second->getInactivityMS(), inactivityTimeMs);
         }
 
-        LOG_TRC("Most recent activity was " << inactivityTimeMs << " ms ago.");
         const auto timeSinceLastSaveMs = getTimeSinceLastSaveMs();
-        LOG_TRC("Time since last save is " << timeSinceLastSaveMs << " ms.");
+        LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSaveMs <<
+                " ms and most recent activity was " << inactivityTimeMs << "ms ago.");
 
         // Either we've been idle long enough, or it's auto-save time.
         if (inactivityTimeMs >= IdleSaveDurationMs ||
@@ -506,13 +506,14 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs, std:
     if (sent && waitTimeoutMs > 0)
     {
         LOG_TRC("Waiting for save event for [" << _docKey << "].");
-        if (_saveCV.wait_for(lock, std::chrono::milliseconds(waitTimeoutMs)) == std::cv_status::no_timeout)
+        _saveCV.wait_for(lock, std::chrono::milliseconds(waitTimeoutMs));
+        if (lastSaveTime != _lastSaveTime)
         {
             LOG_DBG("Successfully persisted document [" << _docKey << "] or document was not modified.");
             return true;
         }
 
-        return (lastSaveTime != _lastSaveTime);
+        return false;
     }
 
     return sent;
