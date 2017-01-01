@@ -51,10 +51,6 @@ public:
     /// Thread safe remove_if.
     void remove_if(const std::function<bool(const Payload&)>& pred);
 
-private:
-    std::mutex _mutex;
-    std::condition_variable _cv;
-
 protected:
     virtual void put_impl(const Payload& value);
 
@@ -64,7 +60,16 @@ protected:
 
     void clear_impl();
 
+    /// Get the queue lock when accessing members of derived classes.
+    std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
+
+protected:
     std::vector<Payload> _queue;
+
+private:
+    std::mutex _mutex;
+    std::condition_variable _cv;
+
 };
 
 /** MessageQueue specialized for priority handling of tiles.
@@ -96,6 +101,9 @@ public:
     void updateCursorPosition(int viewId, int part, int x, int y, int width, int height)
     {
         auto cursorPosition = CursorPosition({ part, x, y, width, height });
+
+        auto lock = getLock();
+
         auto it = _cursorPositions.find(viewId);
         if (it != _cursorPositions.end())
         {
@@ -119,6 +127,8 @@ public:
 
     void removeCursorPosition(int viewId)
     {
+        auto lock = getLock();
+
         const auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
         if (view != _viewOrder.end())
         {

@@ -797,8 +797,6 @@ public:
                 "] [" << LOKitHelper::kitCallbackTypeToString(nType) <<
                 "] [" << payload << "].");
 
-        std::unique_lock<std::mutex> lock(pDescr->Doc->getMutex());
-
         if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
             nType == LOK_CALLBACK_CELL_CURSOR)
         {
@@ -844,8 +842,6 @@ private:
     /// Helper method to broadcast callback and its payload to all clients
     void broadcastCallbackToClients(const int nType, const std::string& payload)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
-
         // "-1" means broadcast
         _tileQueue->put("callback -1 " + std::to_string(nType) + " " + payload);
     }
