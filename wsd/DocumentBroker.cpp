@@ -367,24 +367,25 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
 {
     std::unique_lock<std::mutex> lock(_saveMutex);
 
+    // If save requested, but core didn't save because document was unmodified
+    // notify the waiting thread, if any.
+    if (!success && result == "unmodified")
+    {
+        LOG_DBG("Save skipped as document was not modified.");
+        _saveCV.notify_all();
+        return true;
+    }
+
     const auto it = _sessions.find(sessionId);
     if (it == _sessions.end())
     {
         LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving.");
+        _saveCV.notify_all();
         return false;
     }
 
     const Poco::URI& uriPublic = it->second->getPublicUri();
     const auto uri = uriPublic.toString();
-
-    // If save requested, but core didn't save because document was unmodified
-    // notify the waiting thread, if any.
-    if (!success && result == "unmodified")
-    {
-        LOG_DBG("Save skipped as document was not modified");
-        _saveCV.notify_all();
-        return true;
-    }
 
     // If we aren't destroying the last editable session just yet, and the file
     // timestamp hasn't changed, skip saving.
@@ -394,6 +395,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         // Nothing to do.
         LOG_DBG("Skipping unnecessary saving to URI [" << uri << "]. File last modified " <<
                 _lastFileModifiedTime.elapsed() / 1000000 << " seconds ago.");
+        _saveCV.notify_all();
         return true;
     }
 
@@ -432,7 +434,6 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         LOG_DBG("Timestamp now: " << Poco::DateTimeFormatter::format(Poco::DateTime(_documentLastModifiedTime),
                                                                      Poco::DateTimeFormat::ISO8601_FORMAT));
         _saveCV.notify_all();
-
         return true;
     }
     else if (storageSaveResult == StorageBase::SaveResult::DISKFULL)
@@ -454,6 +455,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
     }
 
+    _saveCV.notify_all();
     return false;
 }
 
