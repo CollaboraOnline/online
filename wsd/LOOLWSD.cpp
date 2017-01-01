@@ -300,7 +300,9 @@ bool cleanupDocBrokers()
     return false;
 }
 
-static void forkChildren(const int number)
+/// Forks as many children as requested.
+/// Returns true only if at least one child was requested to spawn.
+static bool forkChildren(const int number)
 {
     Util::assertIsLocked(DocBrokersMutex);
     Util::assertIsLocked(NewChildrenMutex);
@@ -320,7 +322,10 @@ static void forkChildren(const int number)
         ++OutstandingForks;
         IoUtil::writeToPipe(LOOLWSD::ForKitWritePipe, aMessage);
         LastForkRequestTime = std::chrono::steady_clock::now();
+        return true;
     }
+
+    return false;
 }
 
 /// Cleans up dead children.
@@ -343,7 +348,7 @@ static bool cleanupChildren()
     return removed;
 }
 
-static void rebalanceChildren(int balance, const bool force);
+static bool rebalanceChildren(int balance, const bool force);
 
 /// Called on startup only.
 static void preForkChildren()
@@ -364,7 +369,8 @@ static void preForkChildren()
 
 /// Proactively spawn children processes
 /// to load documents with alacrity.
-static void prespawnChildren(const bool force)
+/// Returns true only if at least one child was requested to spawn.
+static bool prespawnChildren(const bool force)
 {
     // First remove dead DocBrokers, if possible.
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
@@ -374,14 +380,17 @@ static void prespawnChildren(const bool force)
     if (!lock.try_lock())
     {
         // We are forking already? Try later.
-        return;
+        return false;
     }
 
     const int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
-    rebalanceChildren(numPreSpawn, force);
+    return rebalanceChildren(numPreSpawn, force);
 }
 
-static void rebalanceChildren(int balance, const bool force)
+/// Decides how many children need spawning and spanws.
+/// When force is true, no check of elapsed time since last request is done.
+/// Returns true only if at least one child was requested to spawn.
+static bool rebalanceChildren(int balance, const bool force)
 {
     Util::assertIsLocked(DocBrokersMutex);
     Util::assertIsLocked(NewChildrenMutex);
@@ -407,8 +416,10 @@ static void rebalanceChildren(int balance, const bool force)
         LOG_DBG("prespawnChildren: Have " << available << " spare " <<
                 (available == 1 ? "child" : "children") <<
                 ", forking " << balance << " more.");
-        forkChildren(balance);
+        return forkChildren(balance);
     }
+
+    return false;
 }
 
 static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
