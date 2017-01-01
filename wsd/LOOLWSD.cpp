@@ -343,6 +343,8 @@ static bool cleanupChildren()
     return removed;
 }
 
+static void rebalanceChildren(int balance);
+
 /// Called on startup only.
 static void preForkChildren()
 {
@@ -353,14 +355,14 @@ static void preForkChildren()
     UnitWSD::get().preSpawnCount(numPreSpawn);
 
     --numPreSpawn; // ForKit always spawns one child at startup.
-    forkChildren(numPreSpawn);
+    rebalanceChildren(numPreSpawn);
 
     // Wait until we have at least one child.
     const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_MS);
     NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); });
 }
 
-/// Proatively spawn children processes
+/// Proactively spawn children processes
 /// to load documents with alacrity.
 static void prespawnChildren()
 {
@@ -375,6 +377,15 @@ static void prespawnChildren()
         return;
     }
 
+    const int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
+    rebalanceChildren(numPreSpawn);
+}
+
+static void rebalanceChildren(int balance)
+{
+    Util::assertIsLocked(DocBrokersMutex);
+    Util::assertIsLocked(NewChildrenMutex);
+
     // Do the cleanup first.
     const bool rebalance = cleanupChildren();
 
@@ -388,7 +399,6 @@ static void prespawnChildren()
     }
 
     const auto available = NewChildren.size();
-    int balance = LOOLWSD::NumPreSpawnedChildren;
     balance -= available;
     balance -= OutstandingForks;
 
