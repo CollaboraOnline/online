@@ -792,6 +792,9 @@ public:
         assert(pDescr && "Null callback data.");
         assert(pDescr->Doc && "Null Document instance.");
 
+        auto tileQueue = pDescr->Doc->getTileQueue();
+        assert(tileQueue && "Null TileQueue.");
+
         const std::string payload = pPayload ? pPayload : "(nil)";
         LOG_TRC("Document::ViewCallback [" << pDescr->ViewId <<
                 "] [" << LOKitHelper::kitCallbackTypeToString(nType) <<
@@ -809,7 +812,7 @@ public:
                 auto cursorWidth = std::stoi(tokens[2]);
                 auto cursorHeight = std::stoi(tokens[3]);
 
-                pDescr->Doc->getTileQueue()->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
+                tileQueue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
             }
         }
         else if (nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
@@ -830,11 +833,11 @@ public:
                 auto cursorWidth = std::stoi(tokens[2]);
                 auto cursorHeight = std::stoi(tokens[3]);
 
-                pDescr->Doc->getTileQueue()->updateCursorPosition(std::stoi(viewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
+                tileQueue->updateCursorPosition(std::stoi(viewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
             }
         }
 
-        pDescr->Doc->getTileQueue()->put("callback " + std::to_string(pDescr->ViewId) + " " + std::to_string(nType) + " " + payload);
+        tileQueue->put("callback " + std::to_string(pDescr->ViewId) + ' ' + std::to_string(nType) + ' ' + payload);
     }
 
 private:
@@ -843,7 +846,7 @@ private:
     void broadcastCallbackToClients(const int nType, const std::string& payload)
     {
         // "-1" means broadcast
-        _tileQueue->put("callback -1 " + std::to_string(nType) + " " + payload);
+        _tileQueue->put("callback -1 " + std::to_string(nType) + ' ' + payload);
     }
 
     /// Load a document (or view) and register callbacks.
@@ -908,7 +911,6 @@ private:
 
         const auto viewId = session.getViewId();
         _tileQueue->removeCursorPosition(viewId);
-
 
         std::unique_lock<std::mutex> lockLokDoc(_documentMutex);
         if (_loKitDocument == nullptr)

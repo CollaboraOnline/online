@@ -100,18 +100,18 @@ public:
 
     void updateCursorPosition(int viewId, int part, int x, int y, int width, int height)
     {
-        auto cursorPosition = CursorPosition({ part, x, y, width, height });
+        const auto cursorPosition = CursorPosition({ part, x, y, width, height });
 
         auto lock = getLock();
 
-        auto it = _cursorPositions.find(viewId);
-        if (it != _cursorPositions.end())
+        auto it = _cursorPositions.lower_bound(viewId);
+        if (it != _cursorPositions.end() && it->first == viewId)
         {
             it->second = cursorPosition;
         }
         else
         {
-            _cursorPositions[viewId] = cursorPosition;
+            _cursorPositions.insert(it, std::make_pair(viewId, cursorPosition));
         }
 
         // Move to front, so the current front view
