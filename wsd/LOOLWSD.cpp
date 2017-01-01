@@ -2163,8 +2163,13 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         }
         else // pid == 0, no children have died
         {
-            if (!std::getenv("LOOL_NO_AUTOSAVE") &&
-                (time(nullptr) >= last30SecCheck + 30))
+            // Make sure we have sufficient reserves.
+            if (prespawnChildren(false))
+            {
+                // Nothing more to do this round.
+            }
+            else if (!std::getenv("LOOL_NO_AUTOSAVE") &&
+                     (time(nullptr) >= last30SecCheck + 30))
             {
                 try
                 {
@@ -2183,40 +2188,35 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
                 last30SecCheck = time(nullptr);
             }
-            else
+            else if (time(nullptr) >= lastOneHourCheck + 900) // Every 15 minutes
             {
-                // Every 15 minutes
-                if (time(nullptr) >= lastOneHourCheck + 900)
+                // Bluntly close documents that have been idle over an hour. (By that time
+                // loleaflet's greying-out has already also kicked in.)
+                try
                 {
-                    // Bluntly close documents that have been idle over an hour. (By that time
-                    // loleaflet's greying-out has already also kicked in.)
-                    try
+                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+                    for (auto& pair : DocBrokers)
                     {
-                        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-                        for (auto& pair : DocBrokers)
+                        auto docLock = pair.second->getLock();
+                        if (pair.second->getIdleTime() >= 3600)
                         {
-                            auto docLock = pair.second->getLock();
-                            if (pair.second->getIdleTime() >= 3600)
-                            {
-                                LOG_INF("Terminating idle document " + pair.second->getDocKey());
-                                pair.second->terminateChild(docLock);
-                            }
+                            LOG_INF("Terminating idle document " + pair.second->getDocKey());
+                            pair.second->terminateChild(docLock);
                         }
                     }
-                    catch (const std::exception& exc)
-                    {
-                        LOG_ERR("Exception: " << exc.what());
-                    }
-
-                    lastOneHourCheck = time(nullptr);
+                }
+                catch (const std::exception& exc)
+                {
+                    LOG_ERR("Exception: " << exc.what());
                 }
 
-                // Don't wait if we had been saving, which takes a while anyway.
+                lastOneHourCheck = time(nullptr);
+            }
+            else
+            {
+                // Wait if we had done no work.
                 std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS));
             }
-
-            // Make sure we have sufficient reserves.
-            prespawnChildren(false);
         }
 
 #if ENABLE_DEBUG
