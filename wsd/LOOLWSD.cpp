@@ -343,7 +343,7 @@ static bool cleanupChildren()
     return removed;
 }
 
-static void rebalanceChildren(int balance);
+static void rebalanceChildren(int balance, const bool force);
 
 /// Called on startup only.
 static void preForkChildren()
@@ -355,7 +355,7 @@ static void preForkChildren()
     UnitWSD::get().preSpawnCount(numPreSpawn);
 
     --numPreSpawn; // ForKit always spawns one child at startup.
-    rebalanceChildren(numPreSpawn);
+    rebalanceChildren(numPreSpawn, true); // Force on startup.
 
     // Wait until we have at least one child.
     const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_MS);
@@ -364,7 +364,7 @@ static void preForkChildren()
 
 /// Proactively spawn children processes
 /// to load documents with alacrity.
-static void prespawnChildren()
+static void prespawnChildren(const bool force)
 {
     // First remove dead DocBrokers, if possible.
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
@@ -378,10 +378,10 @@ static void prespawnChildren()
     }
 
     const int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
-    rebalanceChildren(numPreSpawn);
+    rebalanceChildren(numPreSpawn, force);
 }
 
-static void rebalanceChildren(int balance)
+static void rebalanceChildren(int balance, const bool force)
 {
     Util::assertIsLocked(DocBrokersMutex);
     Util::assertIsLocked(NewChildrenMutex);
@@ -402,7 +402,7 @@ static void rebalanceChildren(int balance)
     balance -= available;
     balance -= OutstandingForks;
 
-    if (balance > 0 && (rebalance || durationMs >= CHILD_TIMEOUT_MS))
+    if (balance > 0 && (force || rebalance || durationMs >= CHILD_TIMEOUT_MS))
     {
         LOG_DBG("prespawnChildren: Have " << available << " spare " <<
                 (available == 1 ? "child" : "children") <<
@@ -437,7 +437,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
     {
         int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
         ++numPreSpawn; // Replace the one we'll dispatch just now.
-        rebalanceChildren(numPreSpawn);
+        rebalanceChildren(numPreSpawn, false);
 
         const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_MS);
         if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
@@ -2205,7 +2205,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             }
 
             // Make sure we have sufficient reserves.
-            prespawnChildren();
+            prespawnChildren(false);
         }
 
 #if ENABLE_DEBUG
