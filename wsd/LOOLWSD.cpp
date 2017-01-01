@@ -260,7 +260,8 @@ void alertAllUsersInternal(const std::string& msg)
 }
 }
 
-/// Remove dead DocBrokers.
+/// Remove dead and idle DocBrokers.
+/// The client of idle document should've greyed-out long ago.
 /// Returns true if at least one is removed.
 bool cleanupDocBrokers()
 {
@@ -272,11 +273,15 @@ bool cleanupDocBrokers()
         auto docBroker = it->second;
         auto lock = docBroker->getLock();
 
+        // Remove idle documents after 1 hour.
+        const bool idle = (docBroker->getIdleTime() >= 3600);
+
         // Cleanup used and dead entries.
         if (docBroker->isLoaded() &&
-            (docBroker->getSessionsCount() == 0 || !docBroker->isAlive()))
+            (docBroker->getSessionsCount() == 0 || !docBroker->isAlive() || idle))
         {
-            LOG_DBG("Removing dead DocumentBroker for docKey [" << it->first << "].");
+            LOG_INF("Removing " << (idle ? "idle" : "dead") <<
+                    " DocumentBroker for docKey [" << it->first << "].");
             it = DocBrokers.erase(it);
             docBroker->terminateChild(lock);
         }
@@ -2086,7 +2091,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #endif
 
     time_t last30SecCheck = time(nullptr);
-    time_t lastOneHourCheck = time(nullptr);
     int status = 0;
     while (!TerminationFlag && !SigUtil::isShuttingDown())
     {
@@ -2187,30 +2191,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 }
 
                 last30SecCheck = time(nullptr);
-            }
-            else if (time(nullptr) >= lastOneHourCheck + 900) // Every 15 minutes
-            {
-                // Bluntly close documents that have been idle over an hour. (By that time
-                // loleaflet's greying-out has already also kicked in.)
-                try
-                {
-                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-                    for (auto& pair : DocBrokers)
-                    {
-                        auto docLock = pair.second->getLock();
-                        if (pair.second->getIdleTime() >= 3600)
-                        {
-                            LOG_INF("Terminating idle document " + pair.second->getDocKey());
-                            pair.second->terminateChild(docLock);
-                        }
-                    }
-                }
-                catch (const std::exception& exc)
-                {
-                    LOG_ERR("Exception: " << exc.what());
-                }
-
-                lastOneHourCheck = time(nullptr);
             }
             else
             {
