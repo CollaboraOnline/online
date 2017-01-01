@@ -435,34 +435,16 @@ static std::shared_ptr<ChildProcess> getNewChild()
     const auto startTime = chrono::steady_clock::now();
     do
     {
-        // Do the cleanup first.
-        cleanupChildren();
-
-        const int available = NewChildren.size();
-        int balance = LOOLWSD::NumPreSpawnedChildren;
-        if (available == 0)
-        {
-            LOG_WRN("getNewChild: No available child. Sending spawn request to forkit and failing.");
-        }
-        else
-        {
-            balance -= available - 1; // Minus the one we'll dispatch just now.
-            balance = std::max(balance, 0);
-        }
-
-        if (balance > 0)
-        {
-            LOG_DBG("getNewChild: Have " << available << " spare " <<
-                    (available == 1 ? "child" : "children") <<
-                    ", forking " << balance << " more.");
-            forkChildren(balance);
-        }
+        int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
+        ++numPreSpawn; // Replace the one we'll dispatch just now.
+        rebalanceChildren(numPreSpawn);
 
         const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_MS);
         if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
         {
             auto child = NewChildren.back();
             NewChildren.pop_back();
+            const auto available = NewChildren.size();
             LOG_DBG("getNewChild: Have " << available << " spare " <<
                     (available == 1 ? "child" : "children") << " after poping [" << child->getPid() << "].");
 
