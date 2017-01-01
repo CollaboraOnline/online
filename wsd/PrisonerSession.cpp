@@ -84,8 +84,8 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                         result = resultObj->get("value").toString();
                 }
 
-                if (!_docBroker->save(getId(), success, result))
-                    LOG_ERR("Saving document to storage failed.");
+                // Save to Storage and log result.
+                _docBroker->save(getId(), success, result);
                 return true;
             }
         }

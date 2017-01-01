@@ -370,7 +370,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     const auto it = _sessions.find(sessionId);
     if (it == _sessions.end())
     {
-        LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving");
+        LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving.");
         return false;
     }
 
@@ -437,8 +437,11 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     }
     else if (storageSaveResult == StorageBase::SaveResult::DISKFULL)
     {
-        // Make everyone readonly and tell everyone that storage is low on diskspace
-        for (auto& sessionIt : _sessions)
+        LOG_WRN("Disk full while saving [" << uri <<
+                "]. Making all sessions on doc read-only and notifying clients.");
+
+        // Make everyone readonly and tell everyone that storage is low on diskspace.
+        for (const auto& sessionIt : _sessions)
         {
             sessionIt.second->setReadOnly();
             sessionIt.second->sendTextFrame("error: cmd=storage kind=savediskfull");
@@ -446,10 +449,11 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     }
     else if (storageSaveResult == StorageBase::SaveResult::FAILED)
     {
+        //TODO: Should we notify all clients?
+        LOG_ERR("Failed to save to URI [" << uri << "]. Notifying client.");
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
     }
 
-    LOG_ERR("Failed to save to URI [" << uri << "].");
     return false;
 }
 
@@ -502,7 +506,7 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs, std:
         LOG_TRC("Waiting for save event for [" << _docKey << "].");
         if (_saveCV.wait_for(lock, std::chrono::milliseconds(waitTimeoutMs)) == std::cv_status::no_timeout)
         {
-            LOG_DBG("Successfully persisted document [" << _docKey << "] or document was not modified");
+            LOG_DBG("Successfully persisted document [" << _docKey << "] or document was not modified.");
             return true;
         }
 
