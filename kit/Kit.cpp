@@ -552,6 +552,8 @@ public:
                 " passwordProvided=" << _haveDocPassword <<
                 " password='" << _docPassword <<  "'");
 
+        Util::assertIsLocked(_documentMutex);
+
         if (_isDocPasswordProtected && _haveDocPassword)
         {
             // it means this is the second attempt with the wrong password; abort the load operation
