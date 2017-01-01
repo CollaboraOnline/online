@@ -353,7 +353,40 @@ static bool cleanupChildren()
     return removed;
 }
 
-static bool rebalanceChildren(int balance, const bool force);
+/// Decides how many children need spawning and spanws.
+/// When force is true, no check of elapsed time since last request is done.
+/// Returns true only if at least one child was requested to spawn.
+static bool rebalanceChildren(int balance, const bool force)
+{
+    Util::assertIsLocked(DocBrokersMutex);
+    Util::assertIsLocked(NewChildrenMutex);
+
+    // Do the cleanup first.
+    const bool rebalance = cleanupChildren();
+
+    const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTime);
+    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+    if (durationMs >= CHILD_TIMEOUT_MS)
+    {
+        // Children taking too long to spawn.
+        // Forget we had requested any, and request anew.
+        OutstandingForks = 0;
+    }
+
+    const auto available = NewChildren.size();
+    balance -= available;
+    balance -= OutstandingForks;
+
+    if (balance > 0 && (force || rebalance || durationMs >= CHILD_TIMEOUT_MS))
+    {
+        LOG_DBG("prespawnChildren: Have " << available << " spare " <<
+                (available == 1 ? "child" : "children") <<
+                ", forking " << balance << " more.");
+        return forkChildren(balance);
+    }
+
+    return false;
+}
 
 /// Called on startup only.
 static void preForkChildren()
@@ -390,41 +423,6 @@ static bool prespawnChildren(const bool force)
 
     const int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
     return rebalanceChildren(numPreSpawn, force);
-}
-
-/// Decides how many children need spawning and spanws.
-/// When force is true, no check of elapsed time since last request is done.
-/// Returns true only if at least one child was requested to spawn.
-static bool rebalanceChildren(int balance, const bool force)
-{
-    Util::assertIsLocked(DocBrokersMutex);
-    Util::assertIsLocked(NewChildrenMutex);
-
-    // Do the cleanup first.
-    const bool rebalance = cleanupChildren();
-
-    const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTime);
-    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-    if (durationMs >= CHILD_TIMEOUT_MS)
-    {
-        // Children taking too long to spawn.
-        // Forget we had requested any, and request anew.
-        OutstandingForks = 0;
-    }
-
-    const auto available = NewChildren.size();
-    balance -= available;
-    balance -= OutstandingForks;
-
-    if (balance > 0 && (force || rebalance || durationMs >= CHILD_TIMEOUT_MS))
-    {
-        LOG_DBG("prespawnChildren: Have " << available << " spare " <<
-                (available == 1 ? "child" : "children") <<
-                ", forking " << balance << " more.");
-        return forkChildren(balance);
-    }
-
-    return false;
 }
 
 static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
