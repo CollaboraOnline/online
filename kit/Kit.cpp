@@ -683,7 +683,7 @@ public:
         }
 
         LOG_DBG("+paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
-                renderArea.getWidth() << ", " << renderArea.getHeight() << ") ver: " << tileCombined.getVersion());
+                renderArea.getWidth() << ", " << renderArea.getHeight() << ").");
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tileCombined.getPart(),
                                       pixmapWidth, pixmapHeight,
@@ -691,7 +691,7 @@ public:
                                       renderArea.getWidth(), renderArea.getHeight());
         const auto elapsed = timestamp.elapsed();
         LOG_DBG("paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
-                renderArea.getWidth() << ", " << renderArea.getHeight() << ") ver: " << tileCombined.getVersion() <<
+                renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
                 " rendered in " << (elapsed/1000.) << " ms (" << area / elapsed << " MP/s).");
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 

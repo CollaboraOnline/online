@@ -135,13 +135,13 @@ public:
             << " tilewidth=" << _tileWidth
             << " tileheight=" << _tileHeight;
 
+        // Anything after ver is optional.
+        oss << " ver=" << _ver;
+
         if (_id >= 0)
         {
             oss << " id=" << _id;
         }
-
-        // Anything after ver is optional.
-        oss << " ver=" << _ver;
 
         if (_imgSize > 0)
         {
@@ -219,14 +219,13 @@ class TileCombined
 private:
     TileCombined(int part, int width, int height,
                  const std::string& tilePositionsX, const std::string& tilePositionsY,
-                 int tileWidth, int tileHeight, int ver,
+                 int tileWidth, int tileHeight, const std::string& vers,
                  const std::string& imgSizes, int id) :
         _part(part),
         _width(width),
         _height(height),
         _tileWidth(tileWidth),
         _tileHeight(tileHeight),
-        _ver(ver),
         _id(id)
     {
         if (_part < 0 ||
@@ -241,11 +240,14 @@ private:
         Poco::StringTokenizer positionXtokens(tilePositionsX, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         Poco::StringTokenizer positionYtokens(tilePositionsY, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         Poco::StringTokenizer sizeTokens(imgSizes, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer verTokens(vers, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
 
         const auto numberOfPositions = positionYtokens.count();
 
         // check that number of positions for X and Y is the same
-        if (numberOfPositions != positionXtokens.count() || (!imgSizes.empty() && numberOfPositions != sizeTokens.count()))
+        if (numberOfPositions != positionXtokens.count() ||
+            (!imgSizes.empty() && numberOfPositions != sizeTokens.count()) ||
+            (!vers.empty() && numberOfPositions != verTokens.count()))
         {
             throw BadArgumentException("Invalid tilecombine descriptor. Uneven number of tiles.");
         }
@@ -255,19 +257,25 @@ private:
             int x = 0;
             if (!LOOLProtocol::stringToInteger(positionXtokens[i], x))
             {
-                throw BadArgumentException("Invalid tilecombine descriptor.");
+                throw BadArgumentException("Invalid 'tileposx' in tilecombine descriptor.");
             }
 
             int y = 0;
             if (!LOOLProtocol::stringToInteger(positionYtokens[i], y))
             {
-                throw BadArgumentException("Invalid tilecombine descriptor.");
+                throw BadArgumentException("Invalid 'tileposy' in tilecombine descriptor.");
             }
 
             int size = 0;
             if (sizeTokens.count() && !LOOLProtocol::stringToInteger(sizeTokens[i], size))
             {
-                throw BadArgumentException("Invalid tilecombine descriptor.");
+                throw BadArgumentException("Invalid 'imgsize' in tilecombine descriptor.");
+            }
+
+            int ver = -1;
+            if (verTokens.count() && !verTokens[i].empty() && !LOOLProtocol::stringToInteger(verTokens[i], ver))
+            {
+                throw BadArgumentException("Invalid 'ver' in tilecombine descriptor.");
             }
 
             _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight, ver, size, id, false);
@@ -280,8 +288,6 @@ public:
     int getHeight() const { return _height; }
     int getTileWidth() const { return _tileWidth; }
     int getTileHeight() const { return _tileHeight; }
-    int getVersion() const { return _ver; }
-    void setVersion(const int ver) { _ver = ver; }
 
     const std::vector<TileDesc>& getTiles() const { return _tiles; }
     std::vector<TileDesc>& getTiles() { return _tiles; }
@@ -322,14 +328,17 @@ public:
         oss << " tilewidth=" << _tileWidth
             << " tileheight=" << _tileHeight;
 
+        oss << " ver=";
+        for (const auto& tile : _tiles)
+        {
+            oss << tile.getVersion() << ',';
+        }
+
+        oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+
         if (_id >= 0)
         {
             oss << " id=" << _id;
-        }
-
-        if (_ver >= 0)
-        {
-            oss << " ver=" << _ver;
         }
 
         return oss.str();
@@ -343,12 +352,12 @@ public:
         std::map<std::string, int> pairs;
 
         // Optional.
-        pairs["ver"] = -1;
         pairs["id"] = -1;
 
         std::string tilePositionsX;
         std::string tilePositionsY;
         std::string imgSizes;
+        std::string versions;
         for (size_t i = 0; i < tokens.count(); ++i)
         {
             std::string name;
@@ -367,6 +376,10 @@ public:
                 {
                     imgSizes = value;
                 }
+                else if (name == "ver")
+                {
+                    versions = value;
+                }
                 else
                 {
                     int v = 0;
@@ -381,7 +394,7 @@ public:
         return TileCombined(pairs["part"], pairs["width"], pairs["height"],
                             tilePositionsX, tilePositionsY,
                             pairs["tilewidth"], pairs["tileheight"],
-                            pairs["ver"],
+                            versions,
                             imgSizes, pairs["id"]);
     }
 
@@ -399,17 +412,19 @@ public:
 
         std::ostringstream xs;
         std::ostringstream ys;
-        int ver = -1;
+        std::ostringstream vers;
 
-        for (auto& tile : tiles)
+        for (const auto& tile : tiles)
         {
             xs << tile.getTilePosX() << ',';
             ys << tile.getTilePosY() << ',';
-            ver = std::max(tile.getVersion(), ver);
+            vers << tile.getVersion() << ',';
         }
 
+        vers.seekp(-1, std::ios_base::cur); // Remove last comma.
         return TileCombined(tiles[0].getPart(), tiles[0].getWidth(), tiles[0].getHeight(),
-                            xs.str(), ys.str(), tiles[0].getTileWidth(), tiles[0].getTileHeight(), ver, "", -1);
+                            xs.str(), ys.str(), tiles[0].getTileWidth(), tiles[0].getTileHeight(),
+                            vers.str(), "", -1);
     }
 
 private:
@@ -419,7 +434,6 @@ private:
     int _height;
     int _tileWidth;
     int _tileHeight;
-    int _ver; //< Versioning support.
     int _id;
 };
 
