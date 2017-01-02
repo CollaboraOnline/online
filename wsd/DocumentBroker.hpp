@@ -226,13 +226,6 @@ public:
         return _sessions.size();
     }
 
-    /// @eturn the time in milliseconds since last save.
-    double getTimeSinceLastSaveMs() const
-    {
-        const auto duration = (std::chrono::steady_clock::now() - _lastSaveTime);
-        return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-    }
-
     std::string getJailRoot() const;
 
     /// Add a new session. Returns the new number of sessions.
@@ -303,7 +296,7 @@ public:
 
     std::size_t getIdleTimeSecs() const
     {
-        const auto duration = (std::chrono::steady_clock::now() - _lastActivity);
+        const auto duration = (std::chrono::steady_clock::now() - _lastActivityTime);
         return std::chrono::duration_cast<std::chrono::seconds>(duration).count();
     }
 
@@ -326,8 +319,15 @@ private:
     Poco::URI _uriJailed;
     std::string _jailId;
     std::string _filename;
+
+    /// The last time we tried saving, regardless of whether the
+    /// document was modified and saved or not.
     std::chrono::steady_clock::time_point _lastSaveTime;
+
+    /// The document's last-modified time on storage.
     Poco::Timestamp _documentLastModifiedTime;
+
+    /// The jailed file last-modified time.
     Poco::Timestamp _lastFileModifiedTime;
     std::map<std::string, std::shared_ptr<ClientSession> > _sessions;
     std::unique_ptr<StorageBase> _storage;
@@ -350,7 +350,7 @@ private:
 
     int _debugRenderedTileCount;
 
-    std::chrono::steady_clock::time_point _lastActivity;
+    std::chrono::steady_clock::time_point _lastActivityTime;
 
     static constexpr auto IdleSaveDurationMs = 30 * 1000;
     static constexpr auto AutoSaveDurationMs = 300 * 1000;

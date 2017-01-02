@@ -372,6 +372,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     if (!success && result == "unmodified")
     {
         LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
+        _lastSaveTime = std::chrono::steady_clock::now();
         _saveCV.notify_all();
         return true;
     }
@@ -395,6 +396,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         // Nothing to do.
         LOG_DBG("Skipping unnecessary saving to URI [" << uri << "] with docKey [" << _docKey <<
                 "]. File last modified " << _lastFileModifiedTime.elapsed() / 1000000 << " seconds ago.");
+        _lastSaveTime = std::chrono::steady_clock::now();
         _saveCV.notify_all();
         return true;
     }
@@ -483,16 +485,11 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs, std:
     }
     else if (_isModified)
     {
-        // Find the most recent activity.
-        double inactivityTimeMs = std::numeric_limits<double>::max();
-        for (const auto& sessionIt : _sessions)
-        {
-            inactivityTimeMs = std::min(sessionIt.second->getInactivityMS(), inactivityTimeMs);
-        }
-
-        const auto timeSinceLastSaveMs = getTimeSinceLastSaveMs();
+        const auto now = std::chrono::steady_clock::now();
+        const auto inactivityTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime).count();
+        const auto timeSinceLastSaveMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastSaveTime).count();
         LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSaveMs <<
-                " ms and most recent activity was " << inactivityTimeMs << "ms ago.");
+                "ms and most recent activity was " << inactivityTimeMs << "ms ago.");
 
         // Either we've been idle long enough, or it's auto-save time.
         if (inactivityTimeMs >= IdleSaveDurationMs ||
@@ -1089,7 +1086,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
 
 void DocumentBroker::updateLastActivityTime()
 {
-    _lastActivity = std::chrono::steady_clock::now();
+    _lastActivityTime = std::chrono::steady_clock::now();
     Admin::instance().updateLastActivityTime(_docKey);
 }
 
