@@ -377,7 +377,7 @@ static bool rebalanceChildren(int balance, const bool force)
     balance -= available;
     balance -= OutstandingForks;
 
-    if (balance > 0 && (force || rebalance || durationMs >= CHILD_TIMEOUT_MS))
+    if (balance > 0 && (force || rebalance || OutstandingForks == 0))
     {
         LOG_DBG("prespawnChildren: Have " << available << " spare " <<
                 (available == 1 ? "child" : "children") <<
