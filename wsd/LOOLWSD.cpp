@@ -818,7 +818,12 @@ private:
                 }
             }
 
-            processGetRequest(uri, ws, id, uriPublic, docKey, isReadOnly);
+            auto docBroker = findOrCreateDocBroker(docKey, ws, id, uriPublic);
+            if (docBroker)
+            {
+                // Process the request in an exception-safe way.
+                processGetRequest(uri, ws, id, uriPublic, docBroker, isReadOnly);
+            }
         }
         catch (const WebSocketErrorMessageException& exc)
         {
@@ -845,10 +850,18 @@ private:
         LOG_INF("Finished GET request handler for session [" << id << "] on uri [" << uri << "].");
     }
 
-    /// Process GET requests.
-    static void processGetRequest(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id,
-                                  const Poco::URI& uriPublic, const std::string& docKey, const bool isReadOnly)
+    /// Find the DocumentBroker for the given docKey, if one exists.
+    /// Otherwise, creates and adds a new one to DocBrokers.
+    /// May return null if terminating or MaxDocuments limit is reached.
+    /// After returning a valid instance DocBrokers must be cleaned up after exceptions.
+    static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(const std::string& docKey,
+                                                                 std::shared_ptr<LOOLWebSocket>& ws,
+                                                                 const std::string& id,
+                                                                 const Poco::URI& uriPublic)
     {
+        LOG_INF("Find or create DocBroker for docKey [" << docKey <<
+                "] for session [" << id << "] on url [" << uriPublic.toString() << "].");
+
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
         cleanupDocBrokers();
@@ -856,7 +869,7 @@ private:
         if (TerminationFlag)
         {
             LOG_ERR("Termination flag set. No loading new session [" << id << "]");
-            return;
+            return nullptr;
         }
 
         std::shared_ptr<DocumentBroker> docBroker;
@@ -904,7 +917,7 @@ private:
                     if (TerminationFlag)
                     {
                         LOG_ERR("Termination flag set. Not loading new session [" << id << "]");
-                        return;
+                        return nullptr;
                     }
                 }
 
@@ -936,8 +949,13 @@ private:
         if (TerminationFlag)
         {
             LOG_ERR("Termination flag set. No loading new session [" << id << "]");
-            return;
+            return nullptr;
         }
+
+        // Indicate to the client that we're connecting to the docbroker.
+        const std::string statusConnect = "statusindicator: connect";
+        LOG_TRC("Sending to Client [" << statusConnect << "].");
+        ws->sendFrame(statusConnect.data(), statusConnect.size());
 
         if (!docBroker)
         {
@@ -946,7 +964,7 @@ private:
             {
                 LOG_ERR("Maximum number of open documents reached.");
                 shutdownLimitReached(*ws);
-                return;
+                return nullptr;
             }
 #endif
 
@@ -977,7 +995,15 @@ private:
             throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
         }
 
-        docBrokersLock.unlock();
+        return docBroker;
+    }
+
+    /// Process GET requests.
+    static void processGetRequest(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id,
+                                  const Poco::URI& uriPublic, const std::shared_ptr<DocumentBroker>& docBroker, const bool isReadOnly)
+    {
+        LOG_CHECK_RET(docBroker && "Null docBroker instance", );
+        const auto docKey = docBroker->getDocKey();
 
         // In case of WOPI and if this session is not set as readonly, it might be set so
         // later after making a call to WOPI host which tells us the permission on files
@@ -988,11 +1014,6 @@ private:
         // Below this, we need to cleanup internal references.
         try
         {
-            // Indicate to the client that we're connecting to the docbroker.
-            const std::string statusConnect = "statusindicator: connect";
-            LOG_TRC("Sending to Client [" << statusConnect << "].");
-            ws->sendFrame(statusConnect.data(), statusConnect.size());
-
             // Now the bridge beetween the client and kit process is connected
             const std::string statusReady = "statusindicator: ready";
             LOG_TRC("Sending to Client [" << statusReady << "].");
