@@ -454,9 +454,9 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
             }
         }
 
-        Log::debug() << "Subscribing to tile " << name << " which has "
+        Log::debug() << "Subscribing " << subscriber->getName() << " to tile " << name << " which has "
                      << tileBeingRendered->_subscribers.size()
-                     << " subscribers already. Adding one more." << Log::end;
+                     << " subscribers already." << Log::end;
         tileBeingRendered->_subscribers.push_back(subscriber);
 
         const auto duration = (std::chrono::steady_clock::now() - tileBeingRendered->getStartTime());
@@ -468,8 +468,8 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
     }
     else
     {
-        Log::debug() << "Subscribing to tile " << name << " which has no subscribers. Subscribing for ver: "
-                     << tile.getVersion() << "." << Log::end;
+        Log::debug() << "Subscribing " << subscriber->getName() << " to tile " << name
+                     << " ver=" << tile.getVersion() << " which has no subscribers." << Log::end;
 
         const std::string cachedName = cacheFileName(tile);
 
@@ -508,7 +508,7 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
                                         [sub](std::weak_ptr<ClientSession>& ptr){ return ptr.lock().get() == sub; });
         if (itRem != subscribers.end())
         {
-            Log::trace("Tile " + it->first + " has " + std::to_string(subscribers.size()) + " subscribers. Removing one.");
+            Log::trace("Tile " + it->first + " has " + std::to_string(subscribers.size()) + " subscribers. Removing " + subscriber->getName() + ".");
             subscribers.erase(itRem, itRem + 1);
             if (subscribers.empty())
             {
