@@ -52,9 +52,9 @@ public:
                    const enum Type type,
                    const size_t reserve) :
         _data(std::max(reserve, message.size())),
-        _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
-        _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
-        _abbreviation(LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
+        _tokens(LOOLProtocol::tokenize(message)),
+        _firstLine(LOOLProtocol::getFirstLine(message)),
+        _abbreviation(LOOLProtocol::getAbbreviatedMessage(message)),
         _type(type)
     {
         _data.resize(message.size());
