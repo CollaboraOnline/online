@@ -315,7 +315,7 @@ template <typename T>
 std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string name = "")
 {
     const auto res = getResponseString(ws, prefix, name, 1000);
-    CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
+    CPPUNIT_ASSERT_MESSAGE(name + "Did not expect getting message [" + res + "].", res.empty());
     return res;
 }
 

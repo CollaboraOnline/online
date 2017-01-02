@@ -236,13 +236,30 @@ void TileCacheTests::testPerformance()
 void TileCacheTests::testCancelTiles()
 {
     const auto testName = "cancelTiles ";
-    auto socket = loadDocAndGetSocket("setclientpart.ods", _uri, testName);
 
-    // Request a huge tile, and cancel immediately.
-    sendTextFrame(socket, "tilecombine part=0 width=2560 height=2560 tileposx=0 tileposy=0 tilewidth=38400 tileheight=38400");
-    sendTextFrame(socket, "canceltiles");
+    // The tile response can race past the canceltiles,
+    // so be forgiving to avoid spurious failures.
+    const size_t repeat = 4;
+    for (size_t i = 1; i <= repeat; ++i)
+    {
+        std::cerr << "cancelTiles try #" << i << std::endl;
 
-    assertNotInResponse(socket, "tile:", testName);
+        auto socket = loadDocAndGetSocket("setclientpart.ods", _uri, testName);
+
+        // Request a huge tile, and cancel immediately.
+        sendTextFrame(socket, "tilecombine part=0 width=2560 height=2560 tileposx=0 tileposy=0 tilewidth=38400 tileheight=38400");
+        sendTextFrame(socket, "canceltiles");
+
+        const auto res = getResponseString(socket, "tile:", testName, 1000);
+        if (res.empty())
+        {
+            break;
+        }
+        else if (i == repeat)
+        {
+            CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
+        }
+    }
 }
 
 void TileCacheTests::testCancelTilesMultiView()
@@ -250,27 +267,39 @@ void TileCacheTests::testCancelTilesMultiView()
     std::string documentPath, documentURL;
     getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL);
 
-    auto socket1 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-1 ");
-    auto socket2 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-2 ", true);
-
-    sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-1 ");
-    sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
-
-    sendTextFrame(socket1, "canceltiles");
-
-    for (auto i = 0; i < 4; ++i)
+    // The tile response can race past the canceltiles,
+    // so be forgiving to avoid spurious failures.
+    const size_t repeat = 4;
+    for (size_t j = 1; j <= repeat; ++j)
     {
-        getTileMessage(*socket2, "cancelTilesMultiView-2 ");
+        std::cerr << "cancelTilesMultiView try #" << j << std::endl;
+
+        // Request a huge tile, and cancel immediately.
+        auto socket1 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-1 ");
+        auto socket2 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-2 ", true);
+
+        sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-1 ");
+        sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
+
+        sendTextFrame(socket1, "canceltiles");
+        auto res = getResponseString(socket1, "tile:", "cancelTilesMultiView-1 ", 1000);
+        if (!res.empty() && j == repeat)
+        {
+            CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
+        }
+
+        for (auto i = 0; i < 4; ++i)
+        {
+            getTileMessage(*socket2, "cancelTilesMultiView-2 ");
+        }
+
+        // Should never get more than 4 tiles on socket2.
+        assertNotInResponse(socket2, "tile:", "cancelTilesMultiView-2 ");
+        if (res.empty())
+        {
+            break;
+        }
     }
-
-    // FIXME: Note that especially when this is run on a loaded machine, the server might not honor
-    // the 'canceltiles' but still send out a tile, or it has already sent the tile before it even
-    // gets the 'canceltiles'. That is not an error. It is a bit silly to have it cause an assertion
-    // failure here. Transient failures make a unit test worse than no unit test. Should we remove
-    // this testCancelTilesMultiView altogether?
-
-    assertNotInResponse(socket1, "tile:", "cancelTilesMultiView-1 ");
-    assertNotInResponse(socket2, "tile:", "cancelTilesMultiView-2 ");
 }
 
 void TileCacheTests::testUnresponsiveClient()
