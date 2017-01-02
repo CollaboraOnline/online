@@ -324,7 +324,7 @@ static bool forkChildren(const int number)
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
 
-        ++OutstandingForks;
+        OutstandingForks += number;
         IoUtil::writeToPipe(LOOLWSD::ForKitWritePipe, aMessage);
         LastForkRequestTime = std::chrono::steady_clock::now();
         return true;
