@@ -15,6 +15,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <numeric>
 #include <thread>
 
 #include <Poco/Net/HTTPRequest.h>
