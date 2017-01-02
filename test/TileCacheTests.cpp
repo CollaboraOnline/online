@@ -282,10 +282,10 @@ void TileCacheTests::testCancelTilesMultiView()
         sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
 
         sendTextFrame(socket1, "canceltiles");
-        auto res = getResponseString(socket1, "tile:", "cancelTilesMultiView-1 ", 1000);
-        if (!res.empty() && j == repeat)
+        const auto res1 = getResponseString(socket1, "tile:", "cancelTilesMultiView-1 ", 1000);
+        if (!res1.empty() && j == repeat)
         {
-            CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
+            CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res1 + "].", res1.empty());
         }
 
         for (auto i = 0; i < 4; ++i)
@@ -294,8 +294,16 @@ void TileCacheTests::testCancelTilesMultiView()
         }
 
         // Should never get more than 4 tiles on socket2.
-        assertNotInResponse(socket2, "tile:", "cancelTilesMultiView-2 ");
-        if (res.empty())
+        // Though in practice we get the rendering result from socket1's request and ours.
+        // This happens because we currently always send back tiles even if they are of old version
+        // because we want to be responsive, since we've rendered them anyway.
+        const auto res2 = getResponseString(socket2, "tile:", "cancelTilesMultiView-2 ", 1000);
+        if (!res2.empty() && j == repeat)
+        {
+            CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res2 + "].", res2.empty());
+        }
+
+        if (res1.empty() && res2.empty())
         {
             break;
         }
