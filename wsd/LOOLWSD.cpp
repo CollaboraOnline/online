@@ -787,7 +787,46 @@ private:
     static void handleGetRequest(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id)
     {
         LOG_INF("Starting GET request handler for session [" << id << "] on url [" << uri << "].");
+        try
+        {
+            // First, setup WS options.
+            // We need blocking here, because the POCO's
+            // non-blocking implementation of websockes is
+            // broken; essentially it leads to sending
+            // incomplete frames.
+            ws->setBlocking(true);
+            ws->setSendTimeout(WS_SEND_TIMEOUT_MS * 1000);
 
+            processGetRequest(uri, ws, id);
+        }
+        catch (const WebSocketErrorMessageException& exc)
+        {
+            // Internal error that should be passed on to the client.
+            const auto msg = exc.toString();
+            LOG_ERR("handleGetRequest: WebSocketErrorMessageException: " << msg);
+            try
+            {
+                ws->sendFrame(msg.data(), msg.size());
+                // abnormal close frame handshake
+                ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
+            }
+            catch (const std::exception& exc2)
+            {
+                LOG_ERR("handleGetRequest: exception while sending WS error message [" << msg << "]: " << exc2.what());
+            }
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_INF("Finished GET request handler for session [" << id << "] on uri [" << uri << "] with exception: " << exc.what());
+            throw;
+        }
+
+        LOG_INF("Finished GET request handler for session [" << id << "] on uri [" << uri << "].");
+    }
+
+    /// Process GET requests.
+    static void processGetRequest(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id)
+    {
         // Indicate to the client that document broker is searching.
         std::string status("statusindicator: find");
         LOG_TRC("Sending to Client [" << status << "].");
@@ -1074,8 +1113,6 @@ private:
                 ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
             }
         }
-
-        LOG_INF("Finished GET request handler for session [" << id << "].");
     }
 
     /// Sends back the WOPI Discovery XML.
@@ -1209,32 +1246,7 @@ public:
             {
                 auto ws = std::make_shared<LOOLWebSocket>(request, response);
                 responded = true; // After upgrading to WS we should not set HTTP response.
-                try
-                {
-                    // First, setup WS options.
-                    // We need blocking here, because the POCO's
-                    // non-blocking implementation of websockes is
-                    // broken; essentially it leads to sending
-                    // incomplete frames.
-                    ws->setBlocking(true);
-                    ws->setSendTimeout(WS_SEND_TIMEOUT_MS * 1000);
-                    handleGetRequest(reqPathTokens[1], ws, id);
-                }
-                catch (const WebSocketErrorMessageException& exc)
-                {
-                    // Internal error that should be passed on to the client.
-                    LOG_ERR("ClientRequestHandler::handleClientRequest: WebSocketErrorMessageException: " << exc.toString());
-                    try
-                    {
-                        ws->sendFrame(exc.what(), std::strlen(exc.what()));
-                        // abnormal close frame handshake
-                        ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
-                    }
-                    catch (const std::exception& exc2)
-                    {
-                        LOG_ERR("ClientRequestHandler::handleClientRequest: exception while sending WS error message: " << exc2.what());
-                    }
-                }
+                handleGetRequest(reqPathTokens[1], ws, id);
             }
             else
             {
@@ -1266,7 +1278,7 @@ public:
 
         if (responded)
         {
-                LOG_DBG("Already sent response!?");
+            LOG_DBG("Already sent response!?");
         }
         else
         {
