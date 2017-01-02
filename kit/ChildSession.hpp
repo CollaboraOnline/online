@@ -11,6 +11,7 @@
 #define INCLUDED_CHILDSESSION_HPP
 
 #include <mutex>
+#include <unordered_map>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
@@ -58,6 +59,41 @@ public:
     virtual std::shared_ptr<TileQueue>& getTileQueue() = 0;
 
     virtual bool sendTextFrame(const std::string& message) = 0;
+};
+
+struct RecordedEvent
+{
+    int _type;
+    std::string _payload;
+};
+
+class StateRecorder
+{
+public:
+    std::unordered_map<std::string, std::string> _recordedStates;
+    std::unordered_map<int, std::unordered_map<int, RecordedEvent>> _recordedViewEvents;
+    std::unordered_map<int, RecordedEvent> _recordedEvents;
+
+    void recordEvent(const int type, const std::string& payload)
+    {
+        _recordedEvents[type] = {type, payload};
+    }
+
+    void recordViewEvent(const int viewId, const int type, const std::string& payload)
+    {
+        _recordedViewEvents[viewId][type] = {type, payload};
+    }
+
+    void recordState(const std::string& name, const std::string& value)
+    {
+        _recordedStates[name] = value;
+    }
+
+    void clear()
+    {
+        _recordedEvents.clear();
+        _recordedViewEvents.clear();
+    }
 };
 
 /// Represents a session to the WSD process, in a Kit process. Note that this is not a singleton.
@@ -122,6 +158,8 @@ private:
     bool setClientPart(const char* buffer, int length, Poco::StringTokenizer& tokens);
     bool setPage(const char* buffer, int length, Poco::StringTokenizer& tokens);
 
+    void rememberEventsForInactiveUser(const int nType, const std::string& rPayload);
+
     virtual void disconnect() override;
     virtual bool _handleInput(const char* buffer, int length) override;
 
@@ -141,8 +179,8 @@ private:
     bool _isDocLoaded;
 
     std::string _docType;
-    std::map<std::string, std::string> _lastDocStates;
-    std::map<int, std::string> _lastDocEvents;
+
+    StateRecorder _stateRecorder;
 
     /// Synchronize _loKitDocument access.
     /// This should be owned by Document.

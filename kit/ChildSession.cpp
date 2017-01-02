@@ -115,19 +115,31 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             sendTextFrame("setpart: part=" + std::to_string(curPart));
         }
 
-        //TODO: Is the order of these important?
-        for (const auto& pair : _lastDocEvents)
+        for (const auto& viewPair : _stateRecorder._recordedViewEvents)
         {
-            const auto typeName = LOKitHelper::kitCallbackTypeToString(pair.first);
-            LOG_TRC("Replaying missed event: " << typeName << ": " << pair.second);
-            loKitCallback(pair.first, pair.second);
+                for (const auto& eventPair : viewPair.second)
+                {
+                    const RecordedEvent& event = eventPair.second;
+                    LOG_TRC("Replaying missed view event: " <<  viewPair.first << " " << LOKitHelper::kitCallbackTypeToString(event._type)
+                                                            << ": " << event._payload);
+                    loKitCallback(event._type, event._payload);
+                }
         }
 
-        for (const auto& pair : _lastDocStates)
+        for (const auto& eventPair : _stateRecorder._recordedEvents)
         {
-            LOG_TRC("Replaying missed state-change: STATE_CHANGED: " << pair.second);
+            const RecordedEvent& event = eventPair.second;
+            LOG_TRC("Replaying missed event: " << LOKitHelper::kitCallbackTypeToString(event._type) << ": " << event._payload);
+            loKitCallback(event._type, event._payload);
+        }
+
+        for (const auto& pair : _stateRecorder._recordedStates)
+        {
+            LOG_TRC("Replaying missed state-change: " << pair.second);
             loKitCallback(LOK_CALLBACK_STATE_CHANGED, pair.second);
         }
+
+        _stateRecorder.clear();
 
         LOG_TRC("Finished replaying messages.");
     }
@@ -969,6 +981,50 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokeniz
     return true;
 }
 
+/* If the user is inactive we have to remember important events so that when
+ * the user becomes active again, we can replay the events.
+ */
+void ChildSession::rememberEventsForInactiveUser(const int nType, const std::string& rPayload)
+{
+    if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+        nType == LOK_CALLBACK_CURSOR_VISIBLE ||
+        nType == LOK_CALLBACK_TEXT_SELECTION ||
+        nType == LOK_CALLBACK_TEXT_SELECTION_START ||
+        nType == LOK_CALLBACK_TEXT_SELECTION_END ||
+        nType == LOK_CALLBACK_CELL_FORMULA ||
+        nType == LOK_CALLBACK_CELL_CURSOR ||
+        nType == LOK_CALLBACK_GRAPHIC_SELECTION ||
+        nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED)
+    {
+        auto lock(getLock());
+        _stateRecorder.recordEvent(nType, rPayload);
+    }
+    else if (nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
+        nType == LOK_CALLBACK_TEXT_VIEW_SELECTION ||
+        nType == LOK_CALLBACK_CELL_VIEW_CURSOR ||
+        nType == LOK_CALLBACK_GRAPHIC_VIEW_SELECTION ||
+        nType == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
+        nType == LOK_CALLBACK_VIEW_LOCK)
+    {
+        auto lock(getLock());
+        Poco::JSON::Parser parser;
+
+        auto root = parser.parse(rPayload).extract<Poco::JSON::Object::Ptr>();
+        int viewId = root->getValue<int>("viewId");
+        _stateRecorder.recordViewEvent(viewId, nType, rPayload);
+    }
+    else if (nType == LOK_CALLBACK_STATE_CHANGED)
+    {
+        std::string name;
+        std::string value;
+        if (LOOLProtocol::parseNameValuePair(rPayload, name, value, '='))
+        {
+            auto lock(getLock());
+            _stateRecorder.recordState(name, value);
+        }
+    }
+}
+
 void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
 {
     const auto typeName = LOKitHelper::kitCallbackTypeToString(nType);
@@ -987,40 +1043,7 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
     }
     else if (!isActive())
     {
-        // Cache important notifications to replay them when our client
-        // goes inactive and loses them.
-        if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
-            nType == LOK_CALLBACK_CURSOR_VISIBLE ||
-            nType == LOK_CALLBACK_CELL_CURSOR ||
-            nType == LOK_CALLBACK_CELL_FORMULA ||
-            nType == LOK_CALLBACK_GRAPHIC_SELECTION ||
-            nType == LOK_CALLBACK_TEXT_SELECTION ||
-            nType == LOK_CALLBACK_TEXT_SELECTION_START ||
-            nType == LOK_CALLBACK_TEXT_SELECTION_END ||
-            nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
-            nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
-            nType == LOK_CALLBACK_TEXT_VIEW_SELECTION ||
-            nType == LOK_CALLBACK_CELL_VIEW_CURSOR ||
-            nType == LOK_CALLBACK_GRAPHIC_VIEW_SELECTION ||
-            nType == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
-            nType == LOK_CALLBACK_VIEW_LOCK)
-        {
-            auto lock(getLock());
-
-            _lastDocEvents[nType] = rPayload;
-        }
-
-        if (nType == LOK_CALLBACK_STATE_CHANGED)
-        {
-            std::string name;
-            std::string value;
-            if (LOOLProtocol::parseNameValuePair(rPayload, name, value, '='))
-            {
-                auto lock(getLock());
-
-                _lastDocStates[name] = rPayload;
-            }
-        }
+        rememberEventsForInactiveUser(nType, rPayload);
 
         // Pass save notifications through.
         if (nType != LOK_CALLBACK_UNO_COMMAND_RESULT || rPayload.find(".uno:Save") == std::string::npos)
