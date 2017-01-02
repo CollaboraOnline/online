@@ -59,7 +59,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(HTTPWSTest);
 
     CPPUNIT_TEST(testBadRequest);
-    CPPUNIT_TEST(testHandShake);
+    CPPUNIT_TEST(testHandshake);
     CPPUNIT_TEST(testCloseAfterClose);
     CPPUNIT_TEST(testConnectNoLoad); // This fails most of the times but occasionally succeeds
     CPPUNIT_TEST(testLoad);
@@ -106,7 +106,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     void testCountHowManyLoolkits();
     void testBadRequest();
-    void testHandShake();
+    void testHandshake();
     void testCloseAfterClose();
     void testConnectNoLoad();
     void testLoad();
@@ -250,7 +250,7 @@ void HTTPWSTest::testBadRequest()
     }
 }
 
-void HTTPWSTest::testHandShake()
+void HTTPWSTest::testHandshake()
 {
     try
     {

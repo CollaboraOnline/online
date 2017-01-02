@@ -1137,7 +1137,7 @@ public:
         {
             --LOOLWSD::NumConnections;
             LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
-            // accept hand shake
+            // accept handshake
             LOOLWebSocket ws(request, response);
             shutdownLimitReached(ws);
             return;
