@@ -797,7 +797,28 @@ private:
             ws->setBlocking(true);
             ws->setSendTimeout(WS_SEND_TIMEOUT_MS * 1000);
 
-            processGetRequest(uri, ws, id);
+            // Indicate to the client that document broker is searching.
+            const std::string status("statusindicator: find");
+            LOG_TRC("Sending to Client [" << status << "].");
+            ws->sendFrame(status.data(), status.size());
+
+            const auto uriPublic = DocumentBroker::sanitizeURI(uri);
+            const auto docKey = DocumentBroker::getDocKey(uriPublic);
+            LOG_INF("Sanitized URI [" << uri << "] to [" << uriPublic.toString() <<
+                    "] and mapped to docKey [" << docKey << "] for session [" << id << "].");
+
+            // Check if readonly session is required
+            bool isReadOnly = false;
+            for (const auto& param : uriPublic.getQueryParameters())
+            {
+                LOG_DBG("Query param: " << param.first << ", value: " << param.second);
+                if (param.first == "permission" && param.second == "readonly")
+                {
+                    isReadOnly = true;
+                }
+            }
+
+            processGetRequest(uri, ws, id, uriPublic, docKey, isReadOnly);
         }
         catch (const WebSocketErrorMessageException& exc)
         {
@@ -825,29 +846,9 @@ private:
     }
 
     /// Process GET requests.
-    static void processGetRequest(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id)
+    static void processGetRequest(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id,
+                                  const Poco::URI& uriPublic, const std::string& docKey, const bool isReadOnly)
     {
-        // Indicate to the client that document broker is searching.
-        std::string status("statusindicator: find");
-        LOG_TRC("Sending to Client [" << status << "].");
-        ws->sendFrame(status.data(), status.size());
-
-        const auto uriPublic = DocumentBroker::sanitizeURI(uri);
-        const auto docKey = DocumentBroker::getDocKey(uriPublic);
-        LOG_INF("Sanitized url [" << uri << "] to [" << uriPublic.toString() <<
-                "] and mapped to docKey [" << docKey << "].");
-
-        // Check if readonly session is required
-        bool isReadOnly = false;
-        for (const auto& param : uriPublic.getQueryParameters())
-        {
-            LOG_DBG("Query param: " << param.first << ", value: " << param.second);
-            if (param.first == "permission" && param.second == "readonly")
-            {
-                isReadOnly = true;
-            }
-        }
-
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
         cleanupDocBrokers();
@@ -987,15 +988,15 @@ private:
         // Below this, we need to cleanup internal references.
         try
         {
-            // Indicate to the client that is waiting to connect to lokit process.
-            status = "statusindicator: connect";
-            LOG_TRC("Sending to Client [" << status << "].");
-            ws->sendFrame(status.data(), status.size());
+            // Indicate to the client that we're connecting to the docbroker.
+            const std::string statusConnect = "statusindicator: connect";
+            LOG_TRC("Sending to Client [" << statusConnect << "].");
+            ws->sendFrame(statusConnect.data(), statusConnect.size());
 
             // Now the bridge beetween the client and kit process is connected
-            status = "statusindicator: ready";
-            LOG_TRC("Sending to Client [" << status << "].");
-            ws->sendFrame(status.data(), status.size());
+            const std::string statusReady = "statusindicator: ready";
+            LOG_TRC("Sending to Client [" << statusReady << "].");
+            ws->sendFrame(statusReady.data(), statusReady.size());
 
             const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
             if (!fs.empty())
@@ -1086,7 +1087,7 @@ private:
         catch (const UnauthorizedRequestException& exc)
         {
             LOG_ERR("Error in client request handler: " << exc.toString());
-            status = "error: cmd=internal kind=unauthorized";
+            const std::string status = "error: cmd=internal kind=unauthorized";
             LOG_TRC("Sending to Client [" << status << "].");
             ws->sendFrame(status.data(), status.size());
         }
