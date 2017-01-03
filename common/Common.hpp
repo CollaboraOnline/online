@@ -11,9 +11,6 @@
 #ifndef INCLUDED_COMMON_HPP
 #define INCLUDED_COMMON_HPP
 
-// The maximum number of client connections we can accept.
-constexpr int MAX_SESSIONS = 1024;
-
 constexpr int DEFAULT_CLIENT_PORT_NUMBER = 9980;
 constexpr int DEFAULT_MASTER_PORT_NUMBER = 9981;
 

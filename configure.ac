@@ -92,13 +92,13 @@ AC_ARG_ENABLE([ssl],
             AS_HELP_STRING([--disable-ssl],
                            [Compile without SSL support]))
 
-AC_ARG_WITH([max-documents],
-             AS_HELP_STRING([--max-documents],
-                            [Compile with a hard-coded limit on the number of documents]))
-
 AC_ARG_WITH([max-connections],
             AS_HELP_STRING([--max-connections],
-                           [Compile with a hard-coded limit on the total number of client connections]))
+                           [Set the limit on the total number of client connections. Def: 20, Min: 3.]))
+
+AC_ARG_WITH([max-documents],
+             AS_HELP_STRING([--max-documents],
+                           [Set the limit on the total number of documents. Def: 10, Min: 2.]))
 
 AC_ARG_WITH([compiler-plugins],
             AS_HELP_STRING([--with-compiler-plugins=<path>],
@@ -137,22 +137,23 @@ if test -n "$with_logfile" ; then
 fi
 AC_SUBST(LOOLWSD_LOGFILE)
 
-MAX_DOCUMENTS=10
-AS_IF([test -n "$with_max_documents"],
-      [MAX_DOCUMENTS="$with_max_documents"])
-AC_DEFINE_UNQUOTED([MAX_DOCUMENTS],[$MAX_DOCUMENTS],[Limit the maximum number of open documents])
-AC_SUBST(MAX_DOCUMENTS)
-
 MAX_CONNECTIONS=20
-AS_IF([test -n "$with_max_connections"],
+AS_IF([test -n "$with_max_connections" -a "$with_max_connections" -gt "0"],
       [MAX_CONNECTIONS="$with_max_connections"])
+AS_IF([test "$MAX_CONNECTIONS" -lt "3"],
+      [MAX_CONNECTIONS="3"])
 AC_DEFINE_UNQUOTED([MAX_CONNECTIONS],[$MAX_CONNECTIONS],[Limit the maximum number of open connections])
 AC_SUBST(MAX_CONNECTIONS)
 
-if test $MAX_CONNECTIONS -lt $MAX_DOCUMENTS; then
-    AC_MSG_ERROR([Each document must have at least one connection, therefore, max_connections cannot be less than
-                  max_documents.])
-fi
+MAX_DOCUMENTS=10
+AS_IF([test -n "$with_max_documents" -a "$with_max_documents" -gt "0" -a "$with_max_documents" -lt "$MAX_CONNECTIONS"],
+      [MAX_DOCUMENTS="$with_max_documents"])
+AS_IF([test "$MAX_DOCUMENTS" -gt "$MAX_CONNECTIONS"],
+      [MAX_DOCUMENTS="$MAX_CONNECTIONS"])
+AS_IF([test "$MAX_DOCUMENTS" -lt "2"],
+      [MAX_DOCUMENTS="2"])
+AC_DEFINE_UNQUOTED([MAX_DOCUMENTS],[$MAX_DOCUMENTS],[Limit the maximum number of open documents])
+AC_SUBST(MAX_DOCUMENTS)
 
 # Test for build environment
 

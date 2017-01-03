@@ -1757,13 +1757,12 @@ void LOOLWSD::initialize(Application& self)
     // Otherwise we profile the soft-device at jail creation time.
     setenv("SAL_DISABLE_OPENCL", "true", 1);
 
-    // In Trial Versions we might want to set some limits.
-    LOOLWSD::NumConnections = 0;
-    LOG_INF("Open Documents Limit: " <<
-            (MAX_DOCUMENTS != 0 ? std::to_string(MAX_DOCUMENTS) : std::string("unlimited")));
+    // Log the connection and document limits.
+    static_assert(MAX_DOCUMENTS > 0 && MAX_DOCUMENTS <= MAX_CONNECTIONS, "MAX_DOCUMENTS must be positive and no more than MAX_CONNECTIONS");
+    LOG_INF("Maximum concurrent open Documents limit: " << MAX_DOCUMENTS);
+    LOG_INF("Maximum concurrent client Connections limit: " << MAX_CONNECTIONS);
 
-    LOG_INF("Client Connections Limit: " <<
-            (MAX_CONNECTIONS != 0 ? std::to_string(MAX_CONNECTIONS) : std::string("unlimited")));
+    LOOLWSD::NumConnections = 0;
 
     // Command Tracing.
     if (getConfigValue<bool>(conf, "trace[@enable]", false))
@@ -2080,14 +2079,17 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // Note: TCPServer internally uses a ThreadPool to
     // dispatch connections (the default if not given).
     // The capacity of the ThreadPool is increased here to
-    // match MAX_SESSIONS. The pool must have sufficient available
+    // match MAX_CONNECTIONS. The pool must have sufficient available
     // threads to dispatch new connections, otherwise will deadlock.
-    auto params1 = new HTTPServerParams();
-    params1->setMaxThreads(MAX_SESSIONS);
-    auto params2 = new HTTPServerParams();
-    params2->setMaxThreads(MAX_SESSIONS);
+    static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
+    const auto maxThreadCount = MAX_CONNECTIONS + 1; // Spare for admin.
 
-    ThreadPool threadPool(NumPreSpawnedChildren * 6, MAX_SESSIONS * 2);
+    auto params1 = new HTTPServerParams();
+    params1->setMaxThreads(maxThreadCount);
+    auto params2 = new HTTPServerParams();
+    params2->setMaxThreads(maxThreadCount);
+
+    ThreadPool threadPool(NumPreSpawnedChildren * 6, maxThreadCount * 2);
 
     // Start internal server for child processes.
     SocketAddress addr2("127.0.0.1", MasterPortNumber);
