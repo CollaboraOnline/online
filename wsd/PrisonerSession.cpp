@@ -186,8 +186,8 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                 const auto result = parser.parse(stringJSON);
                 const auto& object = result.extract<Poco::JSON::Object::Ptr>();
                 const std::string commandName = object->has("commandName") ? object->get("commandName").toString() : "";
-                if (commandName.find(".uno:CharFontName") != std::string::npos ||
-                    commandName.find(".uno:StyleApply") != std::string::npos)
+                if (commandName == ".uno:CharFontName" ||
+                    commandName == ".uno:StyleApply")
                 {
                     // other commands should not be cached
                     _docBroker->tileCache().saveTextFile(stringMsg, "cmdValues" + commandName + ".txt");
