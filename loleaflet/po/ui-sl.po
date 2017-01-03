@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 23:37+0100\n"
-"PO-Revision-Date: 2016-11-09 00:12+0100\n"
+"POT-Creation-Date: 2017-01-03 12:10+0100\n"
+"PO-Revision-Date: 2017-01-03 13:02+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
 "Language: sl\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
 "%100==4 ? 2 : 3);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0beta1\n"
 "X-Accelerator-Marker: ~\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -75,32 +75,36 @@ msgid "Elapsed time"
 msgstr "Pretekli čas"
 
 #: admin.strings.js:19
+msgid "Idle time"
+msgstr "Čas nedejavnosti"
+
+#: admin.strings.js:20
 msgid "Kill"
 msgstr "Ubij"
 
-#: admin.strings.js:20
+#: admin.strings.js:21
 msgid "Graphs"
 msgstr "Grafikoni"
 
-#: admin.strings.js:21 dist/toolbar/toolbar.js:339
-#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:152
-#: src/control/Control.Menubar.js:198
+#: admin.strings.js:22 dist/toolbar/toolbar.js:364
+#: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:163
+#: src/control/Control.Menubar.js:221
 msgid "Save"
 msgstr "Shrani"
 
-#: admin.strings.js:22
+#: admin.strings.js:23
 msgid "Cache size of memory statistics"
 msgstr "Velikost medpomnilnika za statistiko pomnilnika"
 
-#: admin.strings.js:23
+#: admin.strings.js:24
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Časovni interval za statistiko pomnilnika (v ms)"
 
-#: admin.strings.js:24
+#: admin.strings.js:25
 msgid "Cache size of CPU statistics"
 msgstr "Velikost medpomnilnika za statistiko CPE"
 
-#: admin.strings.js:25
+#: admin.strings.js:26
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Časovni interval za statistiko CPE (v ms)"
 
@@ -248,372 +252,415 @@ msgstr ""
 "Napačen WOPISrc (raba: WOPISrc=veljavno kodiran URI) ali file_path (raba: "
 "file_path=/pod/do/dokumenta/)"
 
-#: dist/toolbar/toolbar.js:150
+#: dist/errormessages.js:7
+msgid ""
+"Your session will expire in %time. Please save your work and refresh the "
+"session (or webpage) to continue."
+msgstr ""
+"Vaša seja bo potekla v %time. Shranite svoje delo in osvežite sejo (ali "
+"spletno stran) za nadaljevanje z delom."
+
+#: dist/errormessages.js:8
+msgid ""
+"Your session has been expired. Further changes to document might not be "
+"saved. Please refresh the session (or webpage) to continue."
+msgstr ""
+"Vaša seja je potekla. Nadaljnje spremembe dokumenta najbrž niso shranjene. "
+"Osvežite sejo (ali spletno stran) za nadaljevanje."
+
+#: dist/errormessages.js:11
+msgid ""
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server administrator to continue editing."
+msgstr ""
+"Na strežniku ni več prostora na disku. Dokument bo shranjen samo za branje. "
+"Za nadaljevanje urejanja stopite v stik s skrbnikom strežnika."
+
+#: dist/errormessages.js:12
+msgid ""
+"Document cannot be saved to storage. Check your permissions or contact the "
+"storage server administrator."
+msgstr ""
+"Dokumenta ni mogoče shraniti v shrambo. Preverite svoje pravice ali stopite "
+"v stik z upraviteljem strežnika shrambe."
+
+#: dist/toolbar/toolbar.js:159
 msgid "Are you sure you want to delete this page?"
 msgstr "Ali ste prepričani, da želite izbrisati to stran?"
 
-#: dist/toolbar/toolbar.js:330
+#: dist/toolbar/toolbar.js:355
 msgid "Textwrap"
 msgstr "Oblivanje besedila"
 
-#: dist/toolbar/toolbar.js:331
+#: dist/toolbar/toolbar.js:356
 msgid "No wrap"
 msgstr "Brez oblivanja"
 
-#: dist/toolbar/toolbar.js:332
+#: dist/toolbar/toolbar.js:357
 msgid "Page wrap"
 msgstr "Oblivanje strani"
 
-#: dist/toolbar/toolbar.js:333
+#: dist/toolbar/toolbar.js:358
 msgid "Wrap anchor only"
 msgstr "Oblij samo sidro"
 
-#: dist/toolbar/toolbar.js:334
+#: dist/toolbar/toolbar.js:359
 msgid "Ideal wrap"
 msgstr "Idealno oblivanje"
 
-#: dist/toolbar/toolbar.js:335
+#: dist/toolbar/toolbar.js:360
 msgid "Left wrap"
 msgstr "Levo oblivanje"
 
-#: dist/toolbar/toolbar.js:336
+#: dist/toolbar/toolbar.js:361
 msgid "Right wrap"
 msgstr "Desno oblivanje"
 
-#: dist/toolbar/toolbar.js:337
+#: dist/toolbar/toolbar.js:362
 msgid "Wrap through"
 msgstr "Oblij skozi"
 
-#: dist/toolbar/toolbar.js:341 src/control/Control.Menubar.js:19
-#: src/control/Control.Menubar.js:160 src/control/Control.Menubar.js:206
+#: dist/toolbar/toolbar.js:366 src/control/Control.Menubar.js:22
+#: src/control/Control.Menubar.js:173 src/control/Control.Menubar.js:231
 msgid "Undo"
 msgstr "Razveljavi"
 
-#: dist/toolbar/toolbar.js:342 src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:161 src/control/Control.Menubar.js:207
+#: dist/toolbar/toolbar.js:367 src/control/Control.Menubar.js:23
+#: src/control/Control.Menubar.js:174 src/control/Control.Menubar.js:232
 msgid "Redo"
 msgstr "Ponovi"
 
-#: dist/toolbar/toolbar.js:343
+#: dist/toolbar/toolbar.js:368
 msgid "Document repair"
 msgstr "Popravi dokument"
 
-#: dist/toolbar/toolbar.js:349 src/control/Control.Menubar.js:55
+#: dist/toolbar/toolbar.js:374 src/control/Control.Menubar.js:60
 msgid "Bold"
 msgstr "Krepko"
 
-#: dist/toolbar/toolbar.js:350 src/control/Control.Menubar.js:56
+#: dist/toolbar/toolbar.js:375 src/control/Control.Menubar.js:61
 msgid "Italic"
 msgstr "Ležeče"
 
-#: dist/toolbar/toolbar.js:351 src/control/Control.Menubar.js:57
+#: dist/toolbar/toolbar.js:376 src/control/Control.Menubar.js:62
 msgid "Underline"
 msgstr "Podčrtano"
 
-#: dist/toolbar/toolbar.js:352
+#: dist/toolbar/toolbar.js:377
 msgid "Strikeout"
 msgstr "Prečrtano"
 
-#: dist/toolbar/toolbar.js:354
+#: dist/toolbar/toolbar.js:379
 msgid "Insert Footnote"
 msgstr "Vstavi sprotno opombo"
 
-#: dist/toolbar/toolbar.js:357
+#: dist/toolbar/toolbar.js:382
 msgid "Font color"
 msgstr "Barva pisave"
 
-#: dist/toolbar/toolbar.js:359
+#: dist/toolbar/toolbar.js:384
 msgid "Highlighting"
 msgstr "Poudarjanje"
 
-#: dist/toolbar/toolbar.js:361
+#: dist/toolbar/toolbar.js:386
 msgid "Align left"
 msgstr "Poravnaj levo"
 
-#: dist/toolbar/toolbar.js:362
+#: dist/toolbar/toolbar.js:387
 msgid "Center horizontally"
 msgstr "Vodoravno na sredino"
 
-#: dist/toolbar/toolbar.js:363
+#: dist/toolbar/toolbar.js:388
 msgid "Align right"
 msgstr "Poravnaj desno"
 
-#: dist/toolbar/toolbar.js:364 src/control/Control.Menubar.js:96
+#: dist/toolbar/toolbar.js:389 src/control/Control.Menubar.js:101
 msgid "Justified"
 msgstr "Obojestransko"
 
-#: dist/toolbar/toolbar.js:366 src/control/Control.Menubar.js:102
-msgid "Bullets on/off"
-msgstr "Oznake vključene/izključene"
-
-#: dist/toolbar/toolbar.js:367 src/control/Control.Menubar.js:103
-msgid "Numbering on/off"
-msgstr "Oštevilčevanje vključeno/izključeno"
-
-#: dist/toolbar/toolbar.js:369 src/control/Control.Menubar.js:90
-msgid "Increase indent"
-msgstr "Povečaj zamik"
-
-#: dist/toolbar/toolbar.js:370 src/control/Control.Menubar.js:91
-msgid "Decrease indent"
-msgstr "Zmanjšaj zamik"
-
-#: dist/toolbar/toolbar.js:373
-msgid "Insert table"
-msgstr "Vstavi tabelo"
-
-#: dist/toolbar/toolbar.js:374
-msgid "Insert comment"
-msgstr "Vstavi komentar"
-
-#: dist/toolbar/toolbar.js:375
-msgid "Insert graphic"
-msgstr "Vstavi sliko"
-
-#: dist/toolbar/toolbar.js:377
-msgid "More"
-msgstr "Dodatno"
-
-#: dist/toolbar/toolbar.js:378
-msgid "Close document"
-msgstr "Zapri dokument"
-
-#: dist/toolbar/toolbar.js:408 dist/toolbar/toolbar.js:783
-msgid "Sum"
-msgstr "Vsota"
-
-#: dist/toolbar/toolbar.js:409
-msgid "Function"
-msgstr "Funkcija"
-
-#: dist/toolbar/toolbar.js:410
-msgid "Cancel"
-msgstr "Prekliči"
-
-#: dist/toolbar/toolbar.js:411
-msgid "Accept"
-msgstr "Sprejmi"
-
-#: dist/toolbar/toolbar.js:422
-msgid "First sheet"
-msgstr "Prvi delovni list"
-
-#: dist/toolbar/toolbar.js:423
-msgid "Previous sheet"
-msgstr "Prejšnji delovni list"
-
-#: dist/toolbar/toolbar.js:424
-msgid "Next sheet"
-msgstr "Naslednji delovni list"
-
-#: dist/toolbar/toolbar.js:425
-msgid "Last sheet"
-msgstr "Zadnji delovni list"
-
-#: dist/toolbar/toolbar.js:435 src/control/Control.Menubar.js:190
-msgid "Fullscreen presentation"
-msgstr "Celozaslonska predstavitev"
-
-#: dist/toolbar/toolbar.js:437
-msgid "Insert slide"
-msgstr "Vstavi prosojnico"
-
-#: dist/toolbar/toolbar.js:438 src/control/Control.Menubar.js:187
-msgid "Duplicate slide"
-msgstr "Podvoji prosojnico"
-
-#: dist/toolbar/toolbar.js:439 src/control/Control.Menubar.js:188
-msgid "Delete slide"
-msgstr "Izbriši prosojnico"
-
-#: dist/toolbar/toolbar.js:452
-msgid "Search:"
-msgstr "Išči:"
-
-#: dist/toolbar/toolbar.js:457
-msgid "Search backwards"
-msgstr "Išči nazaj"
-
-#: dist/toolbar/toolbar.js:458
-msgid "Search forward"
-msgstr "Išči naprej"
-
-#: dist/toolbar/toolbar.js:459
-msgid "Cancel the search"
-msgstr "Prekliči iskanje"
-
-#: dist/toolbar/toolbar.js:464 dist/toolbar/toolbar.js:1354
-msgid "No users"
-msgstr "Ni uporabnikov"
-
-#: dist/toolbar/toolbar.js:466
-msgid "Previous page"
-msgstr "Prejšnja stran"
-
-#: dist/toolbar/toolbar.js:467
-msgid "Next page"
-msgstr "Naslednja stran"
-
-#: dist/toolbar/toolbar.js:469 src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:173
-msgid "Reset zoom"
-msgstr "Ponastavi povečavo"
-
-#: dist/toolbar/toolbar.js:470 src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:172
-msgid "Zoom out"
-msgstr "Približaj"
-
-#: dist/toolbar/toolbar.js:472 src/control/Control.Menubar.js:30
-#: src/control/Control.Menubar.js:171
-msgid "Zoom in"
-msgstr "Oddalji"
-
-#: dist/toolbar/toolbar.js:497
-msgid "%user has joined"
-msgstr "Pridružil se je uporabnik %user"
-
-#: dist/toolbar/toolbar.js:498
-msgid "%user has left"
-msgstr "Odšel je uporabnik %user"
-
-#: dist/toolbar/toolbar.js:628 dist/toolbar/toolbar.js:1122
-msgid "Size"
-msgstr "Velikost"
-
-#: dist/toolbar/toolbar.js:764
-msgid "Number of Sheets"
-msgstr "Število delovnih listov"
-
-#: dist/toolbar/toolbar.js:767
-msgid "Selected range of cells"
-msgstr "Izbran obseg celic"
-
-#: dist/toolbar/toolbar.js:770 dist/toolbar/toolbar.js:816
-msgid "Entering text mode"
-msgstr "Vstopanje v besedilni način"
-
-#: dist/toolbar/toolbar.js:773 dist/toolbar/toolbar.js:819
-msgid "Selection Mode"
-msgstr "Izbirni način"
-
-#: dist/toolbar/toolbar.js:776
-msgid "Choice of functions"
-msgstr "Izbor funkcij"
-
-#: dist/toolbar/toolbar.js:778
-msgid "Average"
-msgstr "Povprečno"
-
-#: dist/toolbar/toolbar.js:779
-msgid "CountA"
-msgstr "ŠtevecA"
-
-#: dist/toolbar/toolbar.js:780
-msgid "Count"
-msgstr "Števec"
-
-#: dist/toolbar/toolbar.js:781
-msgid "Maximum"
-msgstr "Največ"
-
-#: dist/toolbar/toolbar.js:782
-msgid "Minimum"
-msgstr "Najmanj"
-
-#: dist/toolbar/toolbar.js:784
-msgid "Selection count"
-msgstr "Seštevek izbora"
-
-#: dist/toolbar/toolbar.js:785
-msgid "None"
-msgstr "Brez"
-
-#: dist/toolbar/toolbar.js:790
+#: dist/toolbar/toolbar.js:390
 msgid "Wrap Text"
 msgstr "Prelomi besedilo"
 
-#: dist/toolbar/toolbar.js:791
+#: dist/toolbar/toolbar.js:391
 msgid "Merge and Center Cells"
 msgstr "Spoji celice in jih poravnaj na sredino"
 
-#: dist/toolbar/toolbar.js:793
+#: dist/toolbar/toolbar.js:393
 msgid "Format as Currency"
 msgstr "Oblikuj kot valuto"
 
-#: dist/toolbar/toolbar.js:794
+#: dist/toolbar/toolbar.js:394
 msgid "Format as Percent"
 msgstr "Oblikuj kot odstotek"
 
-#: dist/toolbar/toolbar.js:795
+#: dist/toolbar/toolbar.js:395
 msgid "Format as Number"
 msgstr "Oblikuj kot število"
 
-#: dist/toolbar/toolbar.js:796
+#: dist/toolbar/toolbar.js:396
 msgid "Format as Date"
 msgstr "Oblikuj kot datum"
 
-#: dist/toolbar/toolbar.js:797
+#: dist/toolbar/toolbar.js:397
 msgid "Add Decimal Place"
 msgstr "Dodaj decimalno mesto"
 
-#: dist/toolbar/toolbar.js:798
+#: dist/toolbar/toolbar.js:398
 msgid "Delete Decimal Place"
 msgstr "Izbriši decimalno mesto"
 
-#: dist/toolbar/toolbar.js:800
+#: dist/toolbar/toolbar.js:400
 msgid "Sort Ascending"
 msgstr "Razvrsti naraščajoče"
 
-#: dist/toolbar/toolbar.js:801
+#: dist/toolbar/toolbar.js:401
 msgid "Sort Descending"
 msgstr "Razvrsti padajoče"
 
-#: dist/toolbar/toolbar.js:810
-msgid "Number of Pages"
-msgstr "Število strani"
+#: dist/toolbar/toolbar.js:403 src/control/Control.Menubar.js:107
+msgid "Bullets on/off"
+msgstr "Oznake vključene/izključene"
 
-#: dist/toolbar/toolbar.js:813
-msgid "Word Counter"
-msgstr "Števec besed"
+#: dist/toolbar/toolbar.js:404 src/control/Control.Menubar.js:108
+msgid "Numbering on/off"
+msgstr "Oštevilčevanje vključeno/izključeno"
 
-#: dist/toolbar/toolbar.js:827
-msgid "Number of Slides"
-msgstr "Število prosojnic"
+#: dist/toolbar/toolbar.js:406 src/control/Control.Menubar.js:95
+msgid "Increase indent"
+msgstr "Povečaj zamik"
 
-#: dist/toolbar/toolbar.js:946
-msgid "Document saved"
-msgstr "Dokument shranjen"
+#: dist/toolbar/toolbar.js:407 src/control/Control.Menubar.js:96
+msgid "Decrease indent"
+msgstr "Zmanjšaj zamik"
 
-#: dist/toolbar/toolbar.js:1105
-msgid "Style"
-msgstr "Slog"
+#: dist/toolbar/toolbar.js:410
+msgid "Insert table"
+msgstr "Vstavi tabelo"
 
-#: dist/toolbar/toolbar.js:1117
-msgid "Font"
-msgstr "Pisava"
+#: dist/toolbar/toolbar.js:411
+msgid "Insert comment"
+msgstr "Vstavi komentar"
 
-#: dist/toolbar/toolbar.js:1141
-msgid "Previous slide"
-msgstr "Prejšnja prosojnica"
+#: dist/toolbar/toolbar.js:412
+msgid "Insert graphic"
+msgstr "Vstavi sliko"
 
-#: dist/toolbar/toolbar.js:1142
-msgid "Next slide"
-msgstr "Naslednja prosojnica"
+#: dist/toolbar/toolbar.js:413
+msgid "Special Character"
+msgstr "Poseben znak"
 
-#: dist/toolbar/toolbar.js:1310
+#: dist/toolbar/toolbar.js:415
+msgid "More"
+msgstr "Dodatno"
+
+#: dist/toolbar/toolbar.js:416
+msgid "Close document"
+msgstr "Zapri dokument"
+
+#: dist/toolbar/toolbar.js:451
 msgid "Layout"
 msgstr "Postavitev"
 
-#: dist/toolbar/toolbar.js:1345
+#: dist/toolbar/toolbar.js:474 dist/toolbar/toolbar.js:801
+msgid "Sum"
+msgstr "Vsota"
+
+#: dist/toolbar/toolbar.js:475
+msgid "Function"
+msgstr "Funkcija"
+
+#: dist/toolbar/toolbar.js:476 src/control/Control.CharacterMap.js:428
+msgid "Cancel"
+msgstr "Prekliči"
+
+#: dist/toolbar/toolbar.js:477
+msgid "Accept"
+msgstr "Sprejmi"
+
+#: dist/toolbar/toolbar.js:488
+msgid "First sheet"
+msgstr "Prvi delovni list"
+
+#: dist/toolbar/toolbar.js:489
+msgid "Previous sheet"
+msgstr "Prejšnji delovni list"
+
+#: dist/toolbar/toolbar.js:490
+msgid "Next sheet"
+msgstr "Naslednji delovni list"
+
+#: dist/toolbar/toolbar.js:491
+msgid "Last sheet"
+msgstr "Zadnji delovni list"
+
+#: dist/toolbar/toolbar.js:501 src/control/Control.Menubar.js:211
+msgid "Fullscreen presentation"
+msgstr "Celozaslonska predstavitev"
+
+#: dist/toolbar/toolbar.js:503
+msgid "Insert slide"
+msgstr "Vstavi prosojnico"
+
+#: dist/toolbar/toolbar.js:504 src/control/Control.Menubar.js:208
+msgid "Duplicate slide"
+msgstr "Podvoji prosojnico"
+
+#: dist/toolbar/toolbar.js:505 src/control/Control.Menubar.js:209
+msgid "Delete slide"
+msgstr "Izbriši prosojnico"
+
+#: dist/toolbar/toolbar.js:518
+msgid "Search:"
+msgstr "Išči:"
+
+#: dist/toolbar/toolbar.js:523
+msgid "Search backwards"
+msgstr "Išči nazaj"
+
+#: dist/toolbar/toolbar.js:524
+msgid "Search forward"
+msgstr "Išči naprej"
+
+#: dist/toolbar/toolbar.js:525
+msgid "Cancel the search"
+msgstr "Prekliči iskanje"
+
+#: dist/toolbar/toolbar.js:530 dist/toolbar/toolbar.js:1344
+msgid "No users"
+msgstr "Ni uporabnikov"
+
+#: dist/toolbar/toolbar.js:532
+msgid "Previous page"
+msgstr "Prejšnja stran"
+
+#: dist/toolbar/toolbar.js:533
+msgid "Next page"
+msgstr "Naslednja stran"
+
+#: dist/toolbar/toolbar.js:535 src/control/Control.Menubar.js:36
+#: src/control/Control.Menubar.js:187
+msgid "Reset zoom"
+msgstr "Ponastavi povečavo"
+
+#: dist/toolbar/toolbar.js:536 src/control/Control.Menubar.js:35
+#: src/control/Control.Menubar.js:186
+msgid "Zoom out"
+msgstr "Približaj"
+
+#: dist/toolbar/toolbar.js:538 src/control/Control.Menubar.js:34
+#: src/control/Control.Menubar.js:185
+msgid "Zoom in"
+msgstr "Oddalji"
+
+#: dist/toolbar/toolbar.js:552
+msgid "%user has joined"
+msgstr "Pridružil se je uporabnik %user"
+
+#: dist/toolbar/toolbar.js:553
+msgid "%user has left"
+msgstr "Odšel je uporabnik %user"
+
+#: dist/toolbar/toolbar.js:650 dist/toolbar/toolbar.js:1127
+msgid "Size"
+msgstr "Velikost"
+
+#: dist/toolbar/toolbar.js:782
+msgid "Number of Sheets"
+msgstr "Število delovnih listov"
+
+#: dist/toolbar/toolbar.js:785
+msgid "Selected range of cells"
+msgstr "Izbran obseg celic"
+
+#: dist/toolbar/toolbar.js:788 dist/toolbar/toolbar.js:819
+msgid "Entering text mode"
+msgstr "Vstopanje v besedilni način"
+
+#: dist/toolbar/toolbar.js:791 dist/toolbar/toolbar.js:822
+msgid "Selection Mode"
+msgstr "Izbirni način"
+
+#: dist/toolbar/toolbar.js:794
+msgid "Choice of functions"
+msgstr "Izbor funkcij"
+
+#: dist/toolbar/toolbar.js:796
+msgid "Average"
+msgstr "Povprečno"
+
+#: dist/toolbar/toolbar.js:797
+msgid "CountA"
+msgstr "ŠtevecA"
+
+#: dist/toolbar/toolbar.js:798
+msgid "Count"
+msgstr "Števec"
+
+#: dist/toolbar/toolbar.js:799
+msgid "Maximum"
+msgstr "Največ"
+
+#: dist/toolbar/toolbar.js:800
+msgid "Minimum"
+msgstr "Najmanj"
+
+#: dist/toolbar/toolbar.js:802
+msgid "Selection count"
+msgstr "Seštevek izbora"
+
+#: dist/toolbar/toolbar.js:803 src/control/Control.CharacterMap.js:11
+msgid "None"
+msgstr "Brez"
+
+#: dist/toolbar/toolbar.js:813
+msgid "Number of Pages"
+msgstr "Število strani"
+
+#: dist/toolbar/toolbar.js:816
+msgid "Word Counter"
+msgstr "Števec besed"
+
+#: dist/toolbar/toolbar.js:833
+msgid "Number of Slides"
+msgstr "Število prosojnic"
+
+#: dist/toolbar/toolbar.js:960
+msgid "Document saved"
+msgstr "Dokument shranjen"
+
+#: dist/toolbar/toolbar.js:1110
+msgid "Style"
+msgstr "Slog"
+
+#: dist/toolbar/toolbar.js:1122
+msgid "Font"
+msgstr "Pisava"
+
+#: dist/toolbar/toolbar.js:1146
+msgid "Previous slide"
+msgstr "Prejšnja prosojnica"
+
+#: dist/toolbar/toolbar.js:1147
+msgid "Next slide"
+msgstr "Naslednja prosojnica"
+
+#: dist/toolbar/toolbar.js:1205
+msgid ""
+"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
+msgstr ""
+"Spor razveljavljanja/ponavljanja med več uporabniki. Uporabite popravilo "
+"dokumenta za razrešitev težave."
+
+#: dist/toolbar/toolbar.js:1335
 msgid "%n users"
 msgstr "%n uporabnikov"
 
-#: dist/toolbar/toolbar.js:1352
+#: dist/toolbar/toolbar.js:1342
 msgid "1 user"
 msgstr "1 uporabnik"
 
-#: dist/toolbar/toolbar.js:1377 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1369 src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr "Vi"
 
@@ -621,7 +668,7 @@ msgstr "Vi"
 msgid "Connection error"
 msgstr "Napaka povezave"
 
-#: src/admin/AdminSocketOverview.js:61
+#: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ste prepričani, da želite zaključiti to sejo?"
 
@@ -641,23 +688,1095 @@ msgstr "GB"
 msgid "TB"
 msgstr "TB"
 
-#: src/admin/Util.js:41
+#: src/admin/Util.js:42 src/admin/Util.js:44
 msgid " hrs"
 msgstr " ur"
 
-#: src/admin/Util.js:43
+#: src/admin/Util.js:48 src/admin/Util.js:50
 msgid " mins"
 msgstr " min"
 
-#: src/admin/Util.js:45
+#: src/admin/Util.js:53
 msgid " s"
 msgstr " s"
+
+#: src/control/Control.CharacterMap.js:12
+msgid "Basic Latin"
+msgstr "Latinica, osnovna"
+
+#: src/control/Control.CharacterMap.js:13
+msgid "Latin-1"
+msgstr "Latinica – 1"
+
+#: src/control/Control.CharacterMap.js:14
+msgid "Latin Extended-A"
+msgstr "Latinica, razširitev – A"
+
+#: src/control/Control.CharacterMap.js:15
+msgid "Latin Extended-B"
+msgstr "Latinica, razširitev – B"
+
+#: src/control/Control.CharacterMap.js:16
+msgid "IPA Extensions"
+msgstr "IPA, razširitve"
+
+#: src/control/Control.CharacterMap.js:17
+msgid "Spacing Modifier Letters"
+msgstr "Črke za spreminjanje razmika"
+
+#: src/control/Control.CharacterMap.js:18
+msgid "Combining Diacritical Marks"
+msgstr "Kombinirane razločevalne oznake"
+
+#: src/control/Control.CharacterMap.js:19
+msgid "Basic Greek"
+msgstr "Grška, osnovna"
+
+#: src/control/Control.CharacterMap.js:20
+msgid "Cyrillic"
+msgstr "Cirilica"
+
+#: src/control/Control.CharacterMap.js:21
+msgid "Armenian"
+msgstr "Armenska"
+
+#: src/control/Control.CharacterMap.js:22
+msgid "Basic Hebrew"
+msgstr "Hebrejska, osnovna"
+
+#: src/control/Control.CharacterMap.js:23
+msgid "Basic Arabic"
+msgstr "Arabska, osnovna"
+
+#: src/control/Control.CharacterMap.js:24
+msgid "Syriac"
+msgstr "Starosirska"
+
+#: src/control/Control.CharacterMap.js:25
+msgid "Thaana"
+msgstr "Thaanska"
+
+#: src/control/Control.CharacterMap.js:26
+msgid "Devanagari"
+msgstr "Devanagarska"
+
+#: src/control/Control.CharacterMap.js:27
+msgid "Bengali"
+msgstr "Bengalska"
+
+#: src/control/Control.CharacterMap.js:28
+msgid "Gurmukhi"
+msgstr "Gurmukhijska"
+
+#: src/control/Control.CharacterMap.js:29
+msgid "Gujarati"
+msgstr "Gudžaratska"
+
+#: src/control/Control.CharacterMap.js:30
+msgid "Odia"
+msgstr "Odijska"
+
+#: src/control/Control.CharacterMap.js:31
+msgid "Tamil"
+msgstr "Tamilska"
+
+#: src/control/Control.CharacterMap.js:32
+msgid "Telugu"
+msgstr "Teluška"
+
+#: src/control/Control.CharacterMap.js:33
+msgid "Kannada"
+msgstr "Kanareška"
+
+#: src/control/Control.CharacterMap.js:34
+msgid "Malayalam"
+msgstr "Malajalamska"
+
+#: src/control/Control.CharacterMap.js:35
+msgid "Sinhala"
+msgstr "Sinhalska"
+
+#: src/control/Control.CharacterMap.js:36
+msgid "Thai"
+msgstr "Tajska"
+
+#: src/control/Control.CharacterMap.js:37
+msgid "Lao"
+msgstr "Laoška"
+
+#: src/control/Control.CharacterMap.js:38
+msgid "Tibetan"
+msgstr "Tibetanska"
+
+#: src/control/Control.CharacterMap.js:39
+msgid "Myanmar"
+msgstr "Mjanmarska"
+
+#: src/control/Control.CharacterMap.js:40
+msgid "Basic Georgian"
+msgstr "Gruzijska, osnovna"
+
+#: src/control/Control.CharacterMap.js:41
+msgid "Hangul Jamo"
+msgstr "Hangulska, jamska"
+
+#: src/control/Control.CharacterMap.js:43
+msgid "Ethiopic"
+msgstr "Etiopska"
+
+#: src/control/Control.CharacterMap.js:44
+msgid "Cherokee"
+msgstr "Čerokeška"
+
+#: src/control/Control.CharacterMap.js:46
+msgid "Canadian Aboriginal Syllables"
+msgstr "Zlogovna abeceda kanadskih Indijancev"
+
+#: src/control/Control.CharacterMap.js:47
+msgid "Ogham"
+msgstr "Ogamska"
+
+#: src/control/Control.CharacterMap.js:48
+msgid "Runic"
+msgstr "Runska"
+
+#: src/control/Control.CharacterMap.js:49
+msgid "Khmer"
+msgstr "Kmerska"
+
+#: src/control/Control.CharacterMap.js:50
+msgid "Mongolian"
+msgstr "Mongolska"
+
+#: src/control/Control.CharacterMap.js:51
+msgid "Latin Extended Additional"
+msgstr "Latinica, dodatno razširjena"
+
+#: src/control/Control.CharacterMap.js:52
+msgid "Greek Extended"
+msgstr "Grška, razširjena"
+
+#: src/control/Control.CharacterMap.js:53
+msgid "General Punctuation"
+msgstr "Splošna ločila"
+
+#: src/control/Control.CharacterMap.js:54
+msgid "Superscripts and Subscripts"
+msgstr "Nadpisano in podpisano"
+
+#: src/control/Control.CharacterMap.js:55
+msgid "Currency Symbols"
+msgstr "Valutni simboli"
+
+#: src/control/Control.CharacterMap.js:56
+msgid "Combining Diacritical Symbols"
+msgstr "Sestavljivi diakritični simboli"
+
+#: src/control/Control.CharacterMap.js:57
+msgid "Letterlike Symbols"
+msgstr "Simboli kot črke"
+
+#: src/control/Control.CharacterMap.js:58
+msgid "Number Forms"
+msgstr "Oblike števil"
+
+#: src/control/Control.CharacterMap.js:59
+msgid "Arrows"
+msgstr "Puščice"
+
+#: src/control/Control.CharacterMap.js:60
+msgid "Mathematical Operators"
+msgstr "Matematični operatorji"
+
+#: src/control/Control.CharacterMap.js:61
+msgid "Miscellaneous Technical"
+msgstr "Razni tehniški"
+
+#: src/control/Control.CharacterMap.js:62
+msgid "Control Pictures"
+msgstr "Slike za nadzor"
+
+#: src/control/Control.CharacterMap.js:63
+msgid "Optical Character Recognition"
+msgstr "Optično razpoznavanje znakov"
+
+#: src/control/Control.CharacterMap.js:64
+msgid "Enclosed Alphanumerics"
+msgstr "Vključeni alfanumerični"
+
+#: src/control/Control.CharacterMap.js:65
+msgid "Box Drawing"
+msgstr "Risanje polj"
+
+#: src/control/Control.CharacterMap.js:66
+msgid "Block Elements"
+msgstr "Blokovni elementi"
+
+#: src/control/Control.CharacterMap.js:67
+msgid "Geometric Shapes"
+msgstr "Geometrične oblike"
+
+#: src/control/Control.CharacterMap.js:68
+msgid "Miscellaneous Symbols"
+msgstr "Razni simboli"
+
+#: src/control/Control.CharacterMap.js:69
+msgid "Dingbats"
+msgstr "Dingbati"
+
+#: src/control/Control.CharacterMap.js:70
+msgid "Braille Patterns"
+msgstr "Brajica, vzorci"
+
+#: src/control/Control.CharacterMap.js:71
+msgid "CJK Radicals Supplement"
+msgstr "KJK, koreni – dodatek"
+
+#: src/control/Control.CharacterMap.js:72
+msgid "Kangxi Radicals"
+msgstr "Kangksi, koreni"
+
+#: src/control/Control.CharacterMap.js:73
+msgid "Ideographic Description Characters"
+msgstr "Ideografski opisni znaki"
+
+#: src/control/Control.CharacterMap.js:74
+msgid "CJK Symbols and Punctuation"
+msgstr "KJK, simboli in ločila"
+
+#: src/control/Control.CharacterMap.js:75
+msgid "Hiragana"
+msgstr "Hiragana"
+
+#: src/control/Control.CharacterMap.js:76
+msgid "Katakana"
+msgstr "Katakana"
+
+#: src/control/Control.CharacterMap.js:77
+msgid "Bopomofo"
+msgstr "Bopomofska"
+
+#: src/control/Control.CharacterMap.js:78
+msgid "Hangul Compatibility Jamo"
+msgstr "Hangulska, združljiva z jamsko"
+
+#: src/control/Control.CharacterMap.js:79
+msgid "Kanbun"
+msgstr "Kanbunska"
+
+#: src/control/Control.CharacterMap.js:80
+msgid "Bopomofo Extended"
+msgstr "Bopomofska, razširjena"
+
+#: src/control/Control.CharacterMap.js:81
+msgid "Enclosed CJK Letters and Months"
+msgstr "KJK, vključene črke in meseci"
+
+#: src/control/Control.CharacterMap.js:82
+msgid "CJK Compatibility"
+msgstr "KJK, združljivostna"
+
+#: src/control/Control.CharacterMap.js:84
+msgid "CJK Unified Ideographs Extension A"
+msgstr "KJK, poenotena pojmovna znamenja, razširitev A"
+
+#: src/control/Control.CharacterMap.js:86
+msgid "CJK Unified Ideographs"
+msgstr "KJK, poenotena pojmovna znamenja"
+
+#: src/control/Control.CharacterMap.js:88
+msgid "Yi Syllables"
+msgstr "Ji, zlogi"
+
+#: src/control/Control.CharacterMap.js:90
+msgid "Yi Radicals"
+msgstr "Ji, koreni"
+
+#: src/control/Control.CharacterMap.js:92
+msgid "Hangul"
+msgstr "Hangulska"
+
+#: src/control/Control.CharacterMap.js:94
+msgid "High Surrogates"
+msgstr "Visoki nadomestki"
+
+#: src/control/Control.CharacterMap.js:95
+msgid "High Private Use Surrogates"
+msgstr "Visoki nadomestki za zasebno rabo"
+
+#: src/control/Control.CharacterMap.js:97
+msgid "Low Surrogates"
+msgstr "Nizki nadomestki"
+
+#: src/control/Control.CharacterMap.js:99
+msgid "Private Use Area"
+msgstr "Področje za zasebno uporabo"
+
+#: src/control/Control.CharacterMap.js:101
+msgid "CJK Compatibility Ideographs"
+msgstr "KJK, združljiva pojmovna znamenja"
+
+#: src/control/Control.CharacterMap.js:102
+msgid "Alphabetic Presentation Forms"
+msgstr "Abecedne predstavitvene oblike"
+
+#: src/control/Control.CharacterMap.js:104
+msgid "Arabic Presentation Forms-A"
+msgstr "Arabske predstavitvene oblike – A"
+
+#: src/control/Control.CharacterMap.js:105
+msgid "Combining Half Marks"
+msgstr "Sestavljive polovične oznake"
+
+#: src/control/Control.CharacterMap.js:106
+msgid "CJK Compatibility Forms"
+msgstr "KJK, združljive oblike"
+
+#: src/control/Control.CharacterMap.js:107
+msgid "Small Form Variants"
+msgstr "Različice majhnih oblik"
+
+#: src/control/Control.CharacterMap.js:108
+msgid "Arabic Presentation Forms-B"
+msgstr "Arabske predstavitvene oblike – B"
+
+#: src/control/Control.CharacterMap.js:109
+msgid "Specials"
+msgstr "Posebnosti"
+
+#: src/control/Control.CharacterMap.js:110
+msgid "Halfwidth and Fullwidth Forms"
+msgstr "Oblike polovične in celotne širine"
+
+#: src/control/Control.CharacterMap.js:111
+msgid "Old Italic"
+msgstr "Staro italska"
+
+#: src/control/Control.CharacterMap.js:112
+msgid "Gothic"
+msgstr "Gotica"
+
+#: src/control/Control.CharacterMap.js:113
+msgid "Deseret"
+msgstr "Deseretska"
+
+#: src/control/Control.CharacterMap.js:114
+msgid "Byzantine Musical Symbols"
+msgstr "Bizantinski glasbeni simboli"
+
+#: src/control/Control.CharacterMap.js:115
+#: src/control/Control.CharacterMap.js:116
+msgid "Musical Symbols"
+msgstr "Glasbeni simboli"
+
+#: src/control/Control.CharacterMap.js:118
+msgid "CJK Unified Ideographs Extension B"
+msgstr "KJK, poenotena pojmovna znamenja, razširitev B"
+
+#: src/control/Control.CharacterMap.js:121
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "KJK, združljiva pojmovna znamenja, dodatek"
+
+#: src/control/Control.CharacterMap.js:122
+msgid "Tags"
+msgstr "Značke"
+
+#: src/control/Control.CharacterMap.js:123
+msgid "Cyrillic Supplement"
+msgstr "Cirilica, dodatek"
+
+#: src/control/Control.CharacterMap.js:124
+msgid "Tagalog"
+msgstr "Tagaloška"
+
+#: src/control/Control.CharacterMap.js:125
+msgid "Hanunoo"
+msgstr "Hanunujska"
+
+#: src/control/Control.CharacterMap.js:126
+msgid "Buhid"
+msgstr "Buhidska"
+
+#: src/control/Control.CharacterMap.js:127
+msgid "Tagbanwa"
+msgstr "Tagbanvaška"
+
+#: src/control/Control.CharacterMap.js:128
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Razni matematični simboli – A"
+
+#: src/control/Control.CharacterMap.js:129
+msgid "Supplemental Arrows-A"
+msgstr "Dodatne puščice – A"
+
+#: src/control/Control.CharacterMap.js:130
+msgid "Supplemental Arrows-B"
+msgstr "Dodatne puščice – B"
+
+#: src/control/Control.CharacterMap.js:131
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Razni matematični simboli – B"
+
+#: src/control/Control.CharacterMap.js:132
+msgid "Supplemental Mathematical Operators"
+msgstr "Matematični operatorji, dodatek"
+
+#: src/control/Control.CharacterMap.js:133
+msgid "Katakana Phonetics Extensions"
+msgstr "Katakana, fonetični zapis"
+
+#: src/control/Control.CharacterMap.js:134
+msgid "Variation Selectors"
+msgstr "Dopolnjeni izbirniki različic"
+
+#: src/control/Control.CharacterMap.js:136
+msgid "Supplementary Private Use Area-A"
+msgstr "Dopolnjeno območje zasebne rabe – A"
+
+#: src/control/Control.CharacterMap.js:139
+msgid "Supplementary Private Use Area-B"
+msgstr "Dopolnjeno območje zasebne rabe – B"
+
+#: src/control/Control.CharacterMap.js:140
+msgid "Limbu"
+msgstr "Limbujska"
+
+#: src/control/Control.CharacterMap.js:141
+msgid "Tai Le"
+msgstr "Tajlejska"
+
+#: src/control/Control.CharacterMap.js:142
+msgid "Khmer Symbols"
+msgstr "Kmerski simboli"
+
+#: src/control/Control.CharacterMap.js:143
+msgid "Phonetic Extensions"
+msgstr "Fonetične razširitve"
+
+#: src/control/Control.CharacterMap.js:144
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "Razni simboli in puščice"
+
+#: src/control/Control.CharacterMap.js:145
+msgid "Yijing Hexagram Symbols"
+msgstr "Jidžing, heksagramski simboli"
+
+#: src/control/Control.CharacterMap.js:146
+msgid "Linear B Syllabary"
+msgstr "Linear B, zlogi"
+
+#: src/control/Control.CharacterMap.js:147
+msgid "Linear B Ideograms"
+msgstr "Linear B, ideogrami"
+
+#: src/control/Control.CharacterMap.js:148
+msgid "Aegean Numbers"
+msgstr "Egejske številke"
+
+#: src/control/Control.CharacterMap.js:149
+msgid "Ugaritic"
+msgstr "Ugaritska"
+
+#: src/control/Control.CharacterMap.js:150
+msgid "Shavian"
+msgstr "Šavijska"
+
+#: src/control/Control.CharacterMap.js:151
+msgid "Osmanya"
+msgstr "Osmanjaška"
+
+#: src/control/Control.CharacterMap.js:152
+msgid "Cypriot Syllabary"
+msgstr "Ciprska, zlogovna"
+
+#: src/control/Control.CharacterMap.js:153
+msgid "Tai Xuan Jing Symbols"
+msgstr "Taj Šuan Jing, simboli"
+
+#: src/control/Control.CharacterMap.js:154
+msgid "Variation Selectors Supplement"
+msgstr "Dopolnjeni izbirniki različic"
+
+#: src/control/Control.CharacterMap.js:155
+msgid "Ancient Greek Musical Notation"
+msgstr "Starogrški glasbeni zapis"
+
+#: src/control/Control.CharacterMap.js:156
+msgid "Ancient Greek Numbers"
+msgstr "Starogrške številke"
+
+#: src/control/Control.CharacterMap.js:157
+msgid "Arabic Supplement"
+msgstr "Arabska, dodatek"
+
+#: src/control/Control.CharacterMap.js:158
+msgid "Buginese"
+msgstr "Bugineška"
+
+#: src/control/Control.CharacterMap.js:159
+msgid "CJK Strokes"
+msgstr "KJK, poteze"
+
+#: src/control/Control.CharacterMap.js:160
+msgid "Combining Diacritical Marks Supplement"
+msgstr "Kombinacijske diakritične oznake, dodatek"
+
+#: src/control/Control.CharacterMap.js:161
+msgid "Coptic"
+msgstr "Koptska"
+
+#: src/control/Control.CharacterMap.js:162
+msgid "Ethiopic Extended"
+msgstr "Etiopska, razširjena"
+
+#: src/control/Control.CharacterMap.js:163
+msgid "Ethiopic Supplement"
+msgstr "Etiopska, dodatek"
+
+#: src/control/Control.CharacterMap.js:164
+msgid "Georgian Supplement"
+msgstr "Gruzijska, dodatek"
+
+#: src/control/Control.CharacterMap.js:165
+msgid "Glagolitic"
+msgstr "Glagolica"
+
+#: src/control/Control.CharacterMap.js:166
+msgid "Kharoshthi"
+msgstr "Karošti"
+
+#: src/control/Control.CharacterMap.js:167
+msgid "Modifier Tone Letters"
+msgstr "Črke – spremenilniki tona"
+
+#: src/control/Control.CharacterMap.js:168
+msgid "New Tai Lue"
+msgstr "Novi taj lue"
+
+#: src/control/Control.CharacterMap.js:169
+msgid "Old Persian"
+msgstr "Staroperzijska"
+
+#: src/control/Control.CharacterMap.js:170
+msgid "Phonetic Extensions Supplement"
+msgstr "Fonetične razširitve, dodatek"
+
+#: src/control/Control.CharacterMap.js:171
+msgid "Supplemental Punctuation"
+msgstr "Dopolnilna ločila"
+
+#: src/control/Control.CharacterMap.js:172
+msgid "Syloti Nagri"
+msgstr "Silotska"
+
+#: src/control/Control.CharacterMap.js:173
+msgid "Tifinagh"
+msgstr "Tifinaška"
+
+#: src/control/Control.CharacterMap.js:174
+msgid "Vertical Forms"
+msgstr "Navpične oblike"
+
+#: src/control/Control.CharacterMap.js:175
+msgid "Nko"
+msgstr "Nkojska"
+
+#: src/control/Control.CharacterMap.js:176
+msgid "Balinese"
+msgstr "Balijska"
+
+#: src/control/Control.CharacterMap.js:177
+msgid "Latin Extended-C"
+msgstr "Latinica, razširjena – C"
+
+#: src/control/Control.CharacterMap.js:178
+msgid "Latin Extended-D"
+msgstr "Latinica, razširjena – D"
+
+#: src/control/Control.CharacterMap.js:179
+msgid "Phags-Pa"
+msgstr "Fags-pa"
+
+#: src/control/Control.CharacterMap.js:180
+msgid "Phoenician"
+msgstr "Feničanska"
+
+#: src/control/Control.CharacterMap.js:182
+msgid "Cuneiform"
+msgstr "Klinopis"
+
+#: src/control/Control.CharacterMap.js:183
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "Klinopis, števke in ločila"
+
+#: src/control/Control.CharacterMap.js:184
+msgid "Counting Rod Numerals"
+msgstr "Števniki števnih palic"
+
+#: src/control/Control.CharacterMap.js:185
+msgid "Sundanese"
+msgstr "Sundska"
+
+#: src/control/Control.CharacterMap.js:186
+msgid "Lepcha"
+msgstr "Lepča"
+
+#: src/control/Control.CharacterMap.js:187
+msgid "Ol Chiki"
+msgstr "Olčiška"
+
+#: src/control/Control.CharacterMap.js:188
+msgid "Cyrillic Extended-A"
+msgstr "Cirilica, razširjena – A"
+
+#: src/control/Control.CharacterMap.js:190
+msgid "Vai"
+msgstr "Vaj"
+
+#: src/control/Control.CharacterMap.js:191
+msgid "Cyrillic Extended-B"
+msgstr "Cirilica, razširjena – B"
+
+#: src/control/Control.CharacterMap.js:192
+msgid "Saurashtra"
+msgstr "Savraštra"
+
+#: src/control/Control.CharacterMap.js:193
+msgid "Kayah Li"
+msgstr "Kajaa li"
+
+#: src/control/Control.CharacterMap.js:194
+msgid "Rejang"
+msgstr "Redžang"
+
+#: src/control/Control.CharacterMap.js:195
+msgid "Cham"
+msgstr "Čamska"
+
+#: src/control/Control.CharacterMap.js:196
+msgid "Ancient Symbols"
+msgstr "Starodavni simboli"
+
+#: src/control/Control.CharacterMap.js:197
+msgid "Phaistos Disc"
+msgstr "Fajski disk"
+
+#: src/control/Control.CharacterMap.js:198
+msgid "Lycian"
+msgstr "Licijska"
+
+#: src/control/Control.CharacterMap.js:199
+msgid "Carian"
+msgstr "Karijska"
+
+#: src/control/Control.CharacterMap.js:200
+msgid "Lydian"
+msgstr "Lidijska"
+
+#: src/control/Control.CharacterMap.js:201
+msgid "Mahjong Tiles"
+msgstr "Ploščki mahjong"
+
+#: src/control/Control.CharacterMap.js:202
+msgid "Domino Tiles"
+msgstr "Domine"
+
+#: src/control/Control.CharacterMap.js:203
+msgid "Samaritan"
+msgstr "Samaritanska"
+
+#: src/control/Control.CharacterMap.js:204
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "Zlogovna abeceda kanadskih Indijancev, razširjena"
+
+#: src/control/Control.CharacterMap.js:205
+msgid "Tai Tham"
+msgstr "Tajtamska"
+
+#: src/control/Control.CharacterMap.js:206
+msgid "Vedic Extensions"
+msgstr "Vedske razširitive"
+
+#: src/control/Control.CharacterMap.js:207
+msgid "Lisu"
+msgstr "Lisujska"
+
+#: src/control/Control.CharacterMap.js:208
+msgid "Bamum"
+msgstr "Bamumska"
+
+#: src/control/Control.CharacterMap.js:209
+msgid "Common Indic Number Forms"
+msgstr "Pogoste indijske številske oblike"
+
+#: src/control/Control.CharacterMap.js:210
+msgid "Devanagari Extended"
+msgstr "Devanagari, razširjena"
+
+#: src/control/Control.CharacterMap.js:211
+msgid "Hangul Jamo Extended-A"
+msgstr "Hangulska, jamska, razširjena – A"
+
+#: src/control/Control.CharacterMap.js:212
+msgid "Javanese"
+msgstr "Javanska"
+
+#: src/control/Control.CharacterMap.js:213
+msgid "Myanmar Extended-A"
+msgstr "Mjanmarska, razširjena – A"
+
+#: src/control/Control.CharacterMap.js:214
+msgid "Tai Viet"
+msgstr "Tajvjet"
+
+#: src/control/Control.CharacterMap.js:215
+msgid "Meetei Mayek"
+msgstr "Mitej majek"
+
+#: src/control/Control.CharacterMap.js:216
+msgid "Hangul Jamo Extended-B"
+msgstr "Hangulska, jamska, razširjena – B"
+
+#: src/control/Control.CharacterMap.js:217
+msgid "Imperial Aramaic"
+msgstr "Aramejska"
+
+#: src/control/Control.CharacterMap.js:218
+msgid "Old South Arabian"
+msgstr "Staro južnoarabska"
+
+#: src/control/Control.CharacterMap.js:219
+msgid "Avestan"
+msgstr "Avestska"
+
+#: src/control/Control.CharacterMap.js:220
+msgid "Inscriptional Parthian"
+msgstr "Vpisna partijska"
+
+#: src/control/Control.CharacterMap.js:221
+msgid "Inscriptional Pahlavi"
+msgstr "Vpisna pahlavijska"
+
+#: src/control/Control.CharacterMap.js:222
+msgid "Old Turkic"
+msgstr "Staroturška"
+
+#: src/control/Control.CharacterMap.js:223
+msgid "Rumi Numeral Symbols"
+msgstr "Rumski številski simboli"
+
+#: src/control/Control.CharacterMap.js:224
+msgid "Kaithi"
+msgstr "Kajtska"
+
+#: src/control/Control.CharacterMap.js:226
+msgid "Egyptian Hieroglyphs"
+msgstr "Egipčanska hieroglifna"
+
+#: src/control/Control.CharacterMap.js:227
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "Vključena številsko-črkovna dopolnila"
+
+#: src/control/Control.CharacterMap.js:228
+msgid "Enclosed Ideographic Supplement"
+msgstr "Vključena ideografska dopolnila"
+
+#: src/control/Control.CharacterMap.js:230
+msgid "CJK Unified Ideographs Extension C"
+msgstr "KJK, poenotena pojmovna znamenja, razširitev C"
+
+#: src/control/Control.CharacterMap.js:231
+msgid "Mandaic"
+msgstr "Mandajska"
+
+#: src/control/Control.CharacterMap.js:232
+msgid "Batak"
+msgstr "Bataška"
+
+#: src/control/Control.CharacterMap.js:233
+msgid "Ethiopic Extended-A"
+msgstr "Etiopska, razširjena – A"
+
+#: src/control/Control.CharacterMap.js:234
+msgid "Brahmi"
+msgstr "Brahmi"
+
+#: src/control/Control.CharacterMap.js:236
+msgid "Bamum Supplement"
+msgstr "Bamum, dopolnjena"
+
+#: src/control/Control.CharacterMap.js:237
+msgid "Kana Supplement"
+msgstr "Kana, dopolnjena"
+
+#: src/control/Control.CharacterMap.js:238
+msgid "Playing Cards"
+msgstr "Igralne karte"
+
+#: src/control/Control.CharacterMap.js:240
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "Razni simboli in piktogrami"
+
+#: src/control/Control.CharacterMap.js:241
+msgid "Emoticons"
+msgstr "Emotikoni"
+
+#: src/control/Control.CharacterMap.js:242
+msgid "Transport And Map Symbols"
+msgstr "Simboli prometa in zemljevidov"
+
+#: src/control/Control.CharacterMap.js:243
+msgid "Alchemical Symbols"
+msgstr "Alkemijski simboli"
+
+#: src/control/Control.CharacterMap.js:245
+msgid "CJK Unified Ideographs Extension D"
+msgstr "KJK, poenotena pojmovna znamenja, razširitev D"
+
+#: src/control/Control.CharacterMap.js:247
+msgid "Arabic Extended-A"
+msgstr "Arabska, razširjena – A"
+
+#: src/control/Control.CharacterMap.js:248
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "Razni matematični črkovni simboli"
+
+#: src/control/Control.CharacterMap.js:249
+msgid "Chakma"
+msgstr "Čakma"
+
+#: src/control/Control.CharacterMap.js:250
+msgid "Meetei Mayek Extensions"
+msgstr "Mitaj majek, razširitve"
+
+#: src/control/Control.CharacterMap.js:251
+msgid "Meroitic Cursive"
+msgstr "Meroitska, pisana"
+
+#: src/control/Control.CharacterMap.js:252
+msgid "Meroitic Hieroglyphs"
+msgstr "Meroitska, hieroglifi"
+
+#: src/control/Control.CharacterMap.js:253
+msgid "Miao"
+msgstr "Mjaoška"
+
+#: src/control/Control.CharacterMap.js:254
+msgid "Sharada"
+msgstr "Šaradska"
+
+#: src/control/Control.CharacterMap.js:255
+msgid "Sora Sompeng"
+msgstr "Sora sompeng"
+
+#: src/control/Control.CharacterMap.js:256
+msgid "Sundanese Supplement"
+msgstr "Sundska, dopolnjena"
+
+#: src/control/Control.CharacterMap.js:257
+msgid "Takri"
+msgstr "Takrijska"
+
+#: src/control/Control.CharacterMap.js:258
+msgid "Bassa Vah"
+msgstr "Basa (Vah)"
+
+#: src/control/Control.CharacterMap.js:259
+msgid "Caucasian Albanian"
+msgstr "Kavkazijska albanska"
+
+#: src/control/Control.CharacterMap.js:260
+msgid "Coptic Epact Numbers"
+msgstr "Koptske števke epakt"
+
+#: src/control/Control.CharacterMap.js:261
+msgid "Combining Diacritical Marks Extended"
+msgstr "Kombinirane razločevalne oznake, razširjena"
+
+#: src/control/Control.CharacterMap.js:262
+msgid "Duployan"
+msgstr "Duplojanska"
+
+#: src/control/Control.CharacterMap.js:263
+msgid "Elbasan"
+msgstr "Elbasanska"
+
+#: src/control/Control.CharacterMap.js:264
+msgid "Geometric Shapes Extended"
+msgstr "Geometrične oblike, razširjena"
+
+#: src/control/Control.CharacterMap.js:265
+msgid "Grantha"
+msgstr "Grantajska"
+
+#: src/control/Control.CharacterMap.js:266
+msgid "Khojki"
+msgstr "Kodžki"
+
+#: src/control/Control.CharacterMap.js:267
+msgid "Khudawadi"
+msgstr "Kudavadska"
+
+#: src/control/Control.CharacterMap.js:268
+msgid "Latin Extended-E"
+msgstr "Latinica, razširjena – E"
+
+#: src/control/Control.CharacterMap.js:270
+msgid "Linear A"
+msgstr "Linear A"
+
+#: src/control/Control.CharacterMap.js:271
+msgid "Mahajani"
+msgstr "Mahadžani"
+
+#: src/control/Control.CharacterMap.js:272
+msgid "Manichaean"
+msgstr "Manikejska"
+
+#: src/control/Control.CharacterMap.js:273
+msgid "Mende Kikakui"
+msgstr "Mende kikakuj"
+
+#: src/control/Control.CharacterMap.js:274
+msgid "Modi"
+msgstr "Modi"
+
+#: src/control/Control.CharacterMap.js:275
+msgid "Mro"
+msgstr "Mro"
+
+#: src/control/Control.CharacterMap.js:276
+msgid "Myanmar Extended-B"
+msgstr "Mjanmarska, razširjena – B"
+
+#: src/control/Control.CharacterMap.js:277
+msgid "Nabataean"
+msgstr "Nabataejska"
+
+#: src/control/Control.CharacterMap.js:278
+msgid "Old North Arabian"
+msgstr "Staro severnoarabska"
+
+#: src/control/Control.CharacterMap.js:279
+msgid "Old Permic"
+msgstr "Staropermijska"
+
+#: src/control/Control.CharacterMap.js:280
+msgid "Ornamental Dingbats"
+msgstr "Ornamentni dingbati"
+
+#: src/control/Control.CharacterMap.js:281
+msgid "Pahawh Hmong"
+msgstr "Pahav hmong"
+
+#: src/control/Control.CharacterMap.js:282
+msgid "Palmyrene"
+msgstr "Palmirenska"
+
+#: src/control/Control.CharacterMap.js:283
+msgid "Pau Cin Hau"
+msgstr "Pau cin hau"
+
+#: src/control/Control.CharacterMap.js:284
+msgid "Psalter Pahlavi"
+msgstr "Vpisna pahlavijska"
+
+#: src/control/Control.CharacterMap.js:285
+msgid "Shorthand Format Controls"
+msgstr "Okrajšani kontrolniki oblike"
+
+#: src/control/Control.CharacterMap.js:286
+msgid "Siddham"
+msgstr "Sidamska"
+
+#: src/control/Control.CharacterMap.js:287
+msgid "Sinhala Archaic Numbers"
+msgstr "Sinhalska, arhaične številke"
+
+#: src/control/Control.CharacterMap.js:288
+msgid "Supplemental Arrows-C"
+msgstr "Dodatne puščice – C"
+
+#: src/control/Control.CharacterMap.js:289
+msgid "Tirhuta"
+msgstr "Tirhutska"
+
+#: src/control/Control.CharacterMap.js:290
+msgid "Warang Citi"
+msgstr "Varang citi"
+
+#: src/control/Control.CharacterMap.js:291
+msgid "Ahom"
+msgstr "Ahomska"
+
+#: src/control/Control.CharacterMap.js:293
+msgid "Anatolian Hieroglyphs"
+msgstr "Anatolska hieroglifna"
+
+#: src/control/Control.CharacterMap.js:294
+msgid "Cherokee Supplement"
+msgstr "Čerokeška, dodatek"
+
+#: src/control/Control.CharacterMap.js:295
+#: src/control/Control.CharacterMap.js:296
+msgid "CJK Unified Ideographs Extension E"
+msgstr "KJK, poenotena pojmovna znamenja, razširitev E"
+
+#: src/control/Control.CharacterMap.js:298
+msgid "Early Dynastic Cuneiform"
+msgstr "Zgodnje dinastični klinopis"
+
+#: src/control/Control.CharacterMap.js:299
+msgid "Hatran"
+msgstr "Hatranska"
+
+#: src/control/Control.CharacterMap.js:300
+msgid "Multani"
+msgstr "Multanska"
+
+#: src/control/Control.CharacterMap.js:301
+msgid "Old Hungarian"
+msgstr "Stara madžarska"
+
+#: src/control/Control.CharacterMap.js:302
+msgid "Supplemental Symbols And Pictographs"
+msgstr "Dodatni simboli in piktogrami"
+
+#: src/control/Control.CharacterMap.js:304
+msgid "Sutton Signwriting"
+msgstr "Zapis znakovnega jezika"
+
+#: src/control/Control.CharacterMap.js:390
+msgid "Special Characters"
+msgstr "Posebni znaki"
+
+#: src/control/Control.CharacterMap.js:395
+msgid "Font Name:"
+msgstr "Ime pisave:"
+
+#: src/control/Control.CharacterMap.js:402
+msgid "Subset:"
+msgstr "Podmnožica:"
+
+#: src/control/Control.CharacterMap.js:413
+msgid "Selected Character:"
+msgstr "Izbrani znak:"
+
+#: src/control/Control.CharacterMap.js:418
+msgid "Hexadecimal:"
+msgstr "Šestnajstiško:"
+
+#: src/control/Control.CharacterMap.js:424 src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:138 src/control/Control.Menubar.js:189
+#: src/control/Control.Menubar.js:195 src/control/Control.Menubar.js:243
+msgid "Insert"
+msgstr "Vstavi"
 
 #: src/control/Control.ColumnHeader.js:41
 msgid "Insert column before"
 msgstr "Vstavi stolpec pred"
 
-#: src/control/Control.ColumnHeader.js:48 src/control/Control.Menubar.js:226
+#: src/control/Control.ColumnHeader.js:48 src/control/Control.Menubar.js:257
 msgid "Delete column"
 msgstr "Izbriši stolpec"
 
@@ -689,8 +1808,8 @@ msgstr "Vrsta"
 msgid "Index"
 msgstr "Kazalo"
 
-#: src/control/Control.DocumentRepair.js:44 src/control/Control.Menubar.js:36
-#: src/control/Control.Menubar.js:217
+#: src/control/Control.DocumentRepair.js:44 src/control/Control.Menubar.js:40
+#: src/control/Control.Menubar.js:245
 msgid "Comment"
 msgstr "Komentar"
 
@@ -706,471 +1825,470 @@ msgstr "Časovni žig"
 msgid "Jump to state"
 msgstr "Skoči na stanje"
 
-#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:152
-#: src/control/Control.Menubar.js:198
+#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:162
+#: src/control/Control.Menubar.js:220
 msgid "File"
 msgstr "Datoteka"
 
-#: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:153
-#: src/control/Control.Menubar.js:199
+#: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:164
+#: src/control/Control.Menubar.js:222
 msgid "Print"
 msgstr "Natisni"
 
-#: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:154
-#: src/control/Control.Menubar.js:200
+#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:165
+#: src/control/Control.Menubar.js:223
 msgid "See revision history"
 msgstr "Glej zgodovino revizij"
 
-#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:155
-#: src/control/Control.Menubar.js:201
+#: src/control/Control.Menubar.js:14 src/control/Control.Menubar.js:166
+#: src/control/Control.Menubar.js:224
 msgid "Download as"
 msgstr "Prenesi kot"
 
-#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:155
-#: src/control/Control.Menubar.js:201
+#: src/control/Control.Menubar.js:15 src/control/Control.Menubar.js:167
+#: src/control/Control.Menubar.js:225
 msgid "PDF Document (.pdf)"
 msgstr "Dokument PDF (.pdf)"
 
-#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:16
 msgid "ODF text document (.odt)"
 msgstr "Besedilni dokument ODF (.odt)"
 
-#: src/control/Control.Menubar.js:15
+#: src/control/Control.Menubar.js:17
 msgid "Microsoft Word 2003 (.doc)"
 msgstr "Microsoft Word 2003 (.doc)"
 
-#: src/control/Control.Menubar.js:16
+#: src/control/Control.Menubar.js:18
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:18 src/control/Control.Menubar.js:160
-#: src/control/Control.Menubar.js:206
+#: src/control/Control.Menubar.js:20 src/control/Control.Menubar.js:172
+#: src/control/Control.Menubar.js:230
 msgid "Edit"
 msgstr "Uredi"
 
-#: src/control/Control.Menubar.js:18
+#: src/control/Control.Menubar.js:21
 msgid "Repair"
 msgstr "Popravi"
 
-#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:163
-#: src/control/Control.Menubar.js:209
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:234
 msgid "Cut"
 msgstr "Izreži"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:164
-#: src/control/Control.Menubar.js:210
+#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:177
+#: src/control/Control.Menubar.js:235
 msgid "Copy"
 msgstr "Kopiraj"
 
-#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:165
-#: src/control/Control.Menubar.js:211
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:178
+#: src/control/Control.Menubar.js:236
 msgid "Paste"
 msgstr "Prilepi"
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:167
-#: src/control/Control.Menubar.js:213
+#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:180
+#: src/control/Control.Menubar.js:238
 msgid "Select all"
 msgstr "Izberi vse"
 
-#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:169
-#: src/control/Control.Menubar.js:215
+#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:182
+#: src/control/Control.Menubar.js:240
 msgid "View"
 msgstr "Pogled"
 
-#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:169
-#: src/control/Control.Menubar.js:215
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:183
+#: src/control/Control.Menubar.js:241
 msgid "Full screen"
 msgstr "Cel zaslon"
 
-#: src/control/Control.Menubar.js:34 src/control/Control.Menubar.js:132
-#: src/control/Control.Menubar.js:175 src/control/Control.Menubar.js:177
-#: src/control/Control.Menubar.js:216
-msgid "Insert"
-msgstr "Vstavi"
-
-#: src/control/Control.Menubar.js:35 src/control/Control.Menubar.js:175
-#: src/control/Control.Menubar.js:216
+#: src/control/Control.Menubar.js:39 src/control/Control.Menubar.js:190
+#: src/control/Control.Menubar.js:244
 msgid "Image"
 msgstr "Slika"
 
-#: src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:42
 msgid "Footnote"
 msgstr "Sprotna opomba"
 
-#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:43
 msgid "Endnote"
 msgstr "Končna opomba"
 
-#: src/control/Control.Menubar.js:41
+#: src/control/Control.Menubar.js:45
 msgid "Page break"
 msgstr "Prelom strani"
 
-#: src/control/Control.Menubar.js:42
+#: src/control/Control.Menubar.js:46
 msgid "Column break"
 msgstr "Prelom stolpca"
 
-#: src/control/Control.Menubar.js:44
+#: src/control/Control.Menubar.js:48 src/control/Control.Menubar.js:192
+#: src/control/Control.Menubar.js:250
+msgid "Special character..."
+msgstr "Poseben znak ..."
+
+#: src/control/Control.Menubar.js:49
 msgid "Formatting mark"
 msgstr "Oblikovalna oznaka"
 
-#: src/control/Control.Menubar.js:45
+#: src/control/Control.Menubar.js:50
 msgid "Non-breaking space"
 msgstr "Nedeljivi presledek"
 
-#: src/control/Control.Menubar.js:46
+#: src/control/Control.Menubar.js:51
 msgid "Non-breaking hyphen"
 msgstr "Nedeljivi pomišljaj"
 
-#: src/control/Control.Menubar.js:47
+#: src/control/Control.Menubar.js:52
 msgid "Soft hyphen"
 msgstr "Delilni vezaj"
 
-#: src/control/Control.Menubar.js:48
+#: src/control/Control.Menubar.js:53
 msgid "No-width optional break"
 msgstr "Možni prelomni znak ničte širine"
 
-#: src/control/Control.Menubar.js:49
+#: src/control/Control.Menubar.js:54
 msgid "No-width no break"
 msgstr "Brez prelomni znak ničte širine"
 
-#: src/control/Control.Menubar.js:50
+#: src/control/Control.Menubar.js:55
 msgid "Left-to-right mark"
 msgstr "Oznaka od leve proti desni"
 
-#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:56
 msgid "Right-to-left mark"
 msgstr "Oznaka od desne proti levi"
 
-#: src/control/Control.Menubar.js:53
+#: src/control/Control.Menubar.js:58
 msgid "Format"
 msgstr "Oblika"
 
-#: src/control/Control.Menubar.js:54
+#: src/control/Control.Menubar.js:59
 msgid "Text"
 msgstr "Besedilo"
 
-#: src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:63
 msgid "Double underline"
 msgstr "Dvojno podčrtano"
 
-#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:64
 msgid "Strikethrough"
 msgstr "Prečrtano"
 
-#: src/control/Control.Menubar.js:60
+#: src/control/Control.Menubar.js:65
 msgid "Overline"
 msgstr "Nadčrtano"
 
-#: src/control/Control.Menubar.js:62
+#: src/control/Control.Menubar.js:67
 msgid "Superscript"
 msgstr "Nadpisano"
 
-#: src/control/Control.Menubar.js:63
+#: src/control/Control.Menubar.js:68
 msgid "Subscript"
 msgstr "Podpisano"
 
-#: src/control/Control.Menubar.js:64
+#: src/control/Control.Menubar.js:69
 msgid "ꜱᴍᴀʟʟ ᴄᴀᴘꜱ"
 msgstr "POMANJŠANE VELIKE ČRKE"
 
-#: src/control/Control.Menubar.js:66
+#: src/control/Control.Menubar.js:71
 msgid "Shadow"
 msgstr "Senca"
 
-#: src/control/Control.Menubar.js:67
+#: src/control/Control.Menubar.js:72
 msgid "Outline"
 msgstr "Oris"
 
-#: src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:74
 msgid "Increase size"
 msgstr "Povečaj velikost"
 
-#: src/control/Control.Menubar.js:70
+#: src/control/Control.Menubar.js:75
 msgid "Decrease size"
 msgstr "Zmanjšaj velikost"
 
-#: src/control/Control.Menubar.js:72
+#: src/control/Control.Menubar.js:77
 msgid "UPPERCASE"
 msgstr "VELIKE ČRKE"
 
-#: src/control/Control.Menubar.js:73
+#: src/control/Control.Menubar.js:78
 msgid "lowercase"
 msgstr "male črke"
 
-#: src/control/Control.Menubar.js:74
+#: src/control/Control.Menubar.js:79
 msgid "Cycle case"
 msgstr "Zamenjaj velikost črk"
 
-#: src/control/Control.Menubar.js:76
+#: src/control/Control.Menubar.js:81
 msgid "Sentence case"
 msgstr "Velika začetnica stavka"
 
-#: src/control/Control.Menubar.js:77
+#: src/control/Control.Menubar.js:82
 msgid "Capitalize Every Word"
 msgstr "Velike Začetnice Besed"
 
-#: src/control/Control.Menubar.js:78
+#: src/control/Control.Menubar.js:83
 msgid "tOGGLE cASE"
 msgstr "pREOBRNI vELIKE/mALE"
 
-#: src/control/Control.Menubar.js:79
+#: src/control/Control.Menubar.js:84
 msgid "Text orientation"
 msgstr "Usmerjenost besedila"
 
-#: src/control/Control.Menubar.js:80
+#: src/control/Control.Menubar.js:85
 msgid "Set paragraph left-to-right"
 msgstr "Določi odstavek od leve proti desni"
 
-#: src/control/Control.Menubar.js:81
+#: src/control/Control.Menubar.js:86
 msgid "Set paragraph right-to-left"
 msgstr "Določi odstavek od desne proti levi"
 
-#: src/control/Control.Menubar.js:82
+#: src/control/Control.Menubar.js:87
 msgid "Spacing"
 msgstr "Razmik"
 
-#: src/control/Control.Menubar.js:83
+#: src/control/Control.Menubar.js:88
 msgid "Line spacing: 1"
 msgstr "Razmik med vrsticami: 1"
 
-#: src/control/Control.Menubar.js:84
+#: src/control/Control.Menubar.js:89
 msgid "Line spacing: 1.5"
 msgstr "Razmik med vrsticami: 1,5"
 
-#: src/control/Control.Menubar.js:85
+#: src/control/Control.Menubar.js:90
 msgid "Line spacing: 2"
 msgstr "Razmik med vrsticami: 2"
 
-#: src/control/Control.Menubar.js:87
+#: src/control/Control.Menubar.js:92
 msgid "Increase paragraph spacing"
 msgstr "Povečaj razmik med odstavki"
 
-#: src/control/Control.Menubar.js:88
+#: src/control/Control.Menubar.js:93
 msgid "Decrease paragraph spacing"
 msgstr "Zmanjšaj razmik med odstavki"
 
-#: src/control/Control.Menubar.js:92
+#: src/control/Control.Menubar.js:97
 msgid "Align"
 msgstr "Poravnaj"
 
-#: src/control/Control.Menubar.js:93
+#: src/control/Control.Menubar.js:98
 msgid "Left"
 msgstr "Levo "
 
-#: src/control/Control.Menubar.js:94
+#: src/control/Control.Menubar.js:99
 msgid "Centered"
 msgstr "Na sredini"
 
-#: src/control/Control.Menubar.js:95
+#: src/control/Control.Menubar.js:100
 msgid "Right"
 msgstr "Desno"
 
-#: src/control/Control.Menubar.js:98
+#: src/control/Control.Menubar.js:103
 msgid "Top"
 msgstr "Zgoraj"
 
-#: src/control/Control.Menubar.js:99
+#: src/control/Control.Menubar.js:104
 msgid "Center"
 msgstr "Sredina"
 
-#: src/control/Control.Menubar.js:100
+#: src/control/Control.Menubar.js:105
 msgid "Bottom"
 msgstr "Spodaj"
 
-#: src/control/Control.Menubar.js:101
+#: src/control/Control.Menubar.js:106
 msgid "Lists"
 msgstr "Seznami"
 
-#: src/control/Control.Menubar.js:105
+#: src/control/Control.Menubar.js:110
 msgid "Demote one level"
 msgstr "Ponižaj za eno raven"
 
-#: src/control/Control.Menubar.js:106
+#: src/control/Control.Menubar.js:111
 msgid "Promote one level"
 msgstr "Povišaj za eno raven"
 
-#: src/control/Control.Menubar.js:107
+#: src/control/Control.Menubar.js:112
 msgid "Demote one level with subpoints"
 msgstr "Ponižaj za eno raven s podtočkami"
 
-#: src/control/Control.Menubar.js:108
+#: src/control/Control.Menubar.js:113
 msgid "Promote one level with subpoints"
 msgstr "Povišaj za eno raven s podtočkami"
 
-#: src/control/Control.Menubar.js:110
+#: src/control/Control.Menubar.js:115
 msgid "Move down"
 msgstr "Premakni navzdol"
 
-#: src/control/Control.Menubar.js:111
+#: src/control/Control.Menubar.js:116
 msgid "Move up"
 msgstr "Premakni navzgor"
 
-#: src/control/Control.Menubar.js:112
+#: src/control/Control.Menubar.js:117
 msgid "Move down with subpoints"
 msgstr "Premakni navzdol s podtočkami"
 
-#: src/control/Control.Menubar.js:113
+#: src/control/Control.Menubar.js:118
 msgid "Move up with subpoints"
 msgstr "Premakni navzgor s podtočkami"
 
-#: src/control/Control.Menubar.js:115
+#: src/control/Control.Menubar.js:120
 msgid "Insert unnumbered entry"
 msgstr "Vstavi neoštevilčen vnos"
 
-#: src/control/Control.Menubar.js:116
+#: src/control/Control.Menubar.js:121
 msgid "Restart numbering"
 msgstr "Ponovno začni oštev."
 
-#: src/control/Control.Menubar.js:118
+#: src/control/Control.Menubar.js:123
 msgid "To next paragraph in level"
 msgstr "Do naslednjega odstavka na isti ravni"
 
-#: src/control/Control.Menubar.js:119
+#: src/control/Control.Menubar.js:124
 msgid "To previous paragraph in level"
 msgstr "Do prejšnjega odstavka na isti ravni"
 
-#: src/control/Control.Menubar.js:120
+#: src/control/Control.Menubar.js:125
 msgid "Continue previous numbering"
 msgstr "Nadaljuj prejšnje številčenje"
 
-#: src/control/Control.Menubar.js:121
+#: src/control/Control.Menubar.js:126
 msgid "Clear direct formatting"
 msgstr "Počisti neposredno oblikovanje"
 
-#: src/control/Control.Menubar.js:122
+#: src/control/Control.Menubar.js:127
 msgid "Page"
 msgstr "Stran"
 
-#: src/control/Control.Menubar.js:123 src/control/Control.Menubar.js:125
-#: src/control/Control.Menubar.js:127 src/control/Control.Menubar.js:129
+#: src/control/Control.Menubar.js:128 src/control/Control.Menubar.js:130
+#: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:134
 msgid "Portrait"
 msgstr "Pokončno"
 
-#: src/control/Control.Menubar.js:124 src/control/Control.Menubar.js:126
-#: src/control/Control.Menubar.js:128 src/control/Control.Menubar.js:130
+#: src/control/Control.Menubar.js:129 src/control/Control.Menubar.js:131
+#: src/control/Control.Menubar.js:133 src/control/Control.Menubar.js:135
 msgid "Landscape"
 msgstr "Ležeče"
 
-#: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:177
+#: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:194
 msgid "Tables"
 msgstr "Tabele"
 
-#: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:177
+#: src/control/Control.Menubar.js:139 src/control/Control.Menubar.js:196
 msgid "Rows before"
 msgstr "Vrstice pred"
 
-#: src/control/Control.Menubar.js:133 src/control/Control.Menubar.js:178
+#: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:197
 msgid "Rows after"
 msgstr "Vrstice po"
 
-#: src/control/Control.Menubar.js:135 src/control/Control.Menubar.js:180
+#: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:199
 msgid "Columns left"
 msgstr "Stolpci levo"
 
-#: src/control/Control.Menubar.js:136 src/control/Control.Menubar.js:181
+#: src/control/Control.Menubar.js:143 src/control/Control.Menubar.js:200
 msgid "Columns right"
 msgstr "Stolpci desno"
 
-#: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:182
+#: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:201
 msgid "Delete"
 msgstr "Izbriši"
 
-#: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:182
+#: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:202
 msgid "Rows"
 msgstr "Vrstice"
 
-#: src/control/Control.Menubar.js:138 src/control/Control.Menubar.js:183
+#: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:203
 msgid "Columns"
 msgstr "Stolpci"
 
-#: src/control/Control.Menubar.js:139 src/control/Control.Menubar.js:140
+#: src/control/Control.Menubar.js:147 src/control/Control.Menubar.js:149
 msgid "Table"
 msgstr "Tabela"
 
-#: src/control/Control.Menubar.js:140
+#: src/control/Control.Menubar.js:148
 msgid "Select"
 msgstr "Izberi"
 
-#: src/control/Control.Menubar.js:141 src/control/Control.Menubar.js:219
+#: src/control/Control.Menubar.js:150 src/control/Control.Menubar.js:247
 msgid "Row"
 msgstr "Vrstica"
 
-#: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:220
+#: src/control/Control.Menubar.js:151 src/control/Control.Menubar.js:248
 msgid "Column"
 msgstr "Stolpec"
 
-#: src/control/Control.Menubar.js:143
+#: src/control/Control.Menubar.js:152
 msgid "Cell"
 msgstr "Celica"
 
-#: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:184
+#: src/control/Control.Menubar.js:153 src/control/Control.Menubar.js:204
 msgid "Merge cells"
 msgstr "Spoji celice"
 
-#: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:192
-#: src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:155 src/control/Control.Menubar.js:213
+#: src/control/Control.Menubar.js:259
 msgid "Help"
 msgstr "Pomoč"
 
-#: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:192
-#: src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:156 src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:260
 msgid "Keyboard shortcuts"
 msgstr "Tipke za bližnjice"
 
-#: src/control/Control.Menubar.js:147 src/control/Control.Menubar.js:193
-#: src/control/Control.Menubar.js:229
+#: src/control/Control.Menubar.js:157 src/control/Control.Menubar.js:215
+#: src/control/Control.Menubar.js:261
 msgid "About"
 msgstr "O programu"
 
-#: src/control/Control.Menubar.js:156
+#: src/control/Control.Menubar.js:168
 msgid "ODF presentation (.odp)"
 msgstr "Predstavitev ODF (.odp)"
 
-#: src/control/Control.Menubar.js:157
+#: src/control/Control.Menubar.js:169
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:158
+#: src/control/Control.Menubar.js:170
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:186
+#: src/control/Control.Menubar.js:206
 msgid "Slide"
 msgstr "Prosojnica"
 
-#: src/control/Control.Menubar.js:186
+#: src/control/Control.Menubar.js:207
 msgid "New slide"
 msgstr "Nova prosojnica"
 
-#: src/control/Control.Menubar.js:202
+#: src/control/Control.Menubar.js:226
 msgid "ODF spreadsheet (.ods)"
 msgstr "Preglednica ODF (.ods)"
 
-#: src/control/Control.Menubar.js:203
+#: src/control/Control.Menubar.js:227
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:204
+#: src/control/Control.Menubar.js:228
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:222
+#: src/control/Control.Menubar.js:252
 msgid "Cells"
 msgstr "Celice"
 
-#: src/control/Control.Menubar.js:222
+#: src/control/Control.Menubar.js:253
 msgid "Insert row"
 msgstr "Vstavi vrstico"
 
-#: src/control/Control.Menubar.js:223
+#: src/control/Control.Menubar.js:254
 msgid "Insert column"
 msgstr "Vstavi stolpec"
 
-#: src/control/Control.Menubar.js:225 src/control/Control.RowHeader.js:46
+#: src/control/Control.Menubar.js:256 src/control/Control.RowHeader.js:46
 msgid "Delete row"
 msgstr "Izbriši vrstico"
 
-#: src/control/Control.Menubar.js:398
+#: src/control/Control.Menubar.js:434
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ali ste prepričani, da želite izbrisati to prosojnico?"
 
@@ -1194,82 +2312,98 @@ msgstr "Pokaži vrstice"
 msgid "Optimal Row Height"
 msgstr "Optimalna višina vrstice"
 
-#: src/control/Control.Tabs.js:47
+#: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
 msgstr "Vstavi delovni list pred tem"
 
-#: src/control/Control.Tabs.js:48
+#: src/control/Control.Tabs.js:47
 msgid "Insert sheet after this"
 msgstr "Vstavi delovni list za tem"
 
-#: src/control/Control.Tabs.js:49
+#: src/control/Control.Tabs.js:48
 msgid "Delete sheet"
 msgstr "Izbriši delovni list"
 
-#: src/control/Control.Tabs.js:53
-msgid "Are you sure you want to delete this sheet?"
-msgstr "Ali ste prepričani, da želite izbrisati ta delovni list?"
+#: src/control/Control.Tabs.js:52
+msgid "Are you sure you want to delete sheet, %sheet% ?"
+msgstr "Ali ste prepričani, da želite izbrisati delovni list %sheet%?"
 
-#: src/control/Control.Tabs.js:62
+#: src/control/Control.Tabs.js:61
 msgid "Rename sheet"
 msgstr "Preimenuj delovni list"
 
-#: src/control/Control.Tabs.js:66
+#: src/control/Control.Tabs.js:65
 msgid "Enter new sheet name"
 msgstr "Vnesite ime za nov delovni list"
 
-#: src/control/Toolbar.js:63 src/control/Toolbar.js:72
+#: src/control/Toolbar.js:70 src/control/Toolbar.js:79
 msgid "Downloading..."
 msgstr "Prejemanje ..."
 
-#: src/control/Toolbar.js:84 src/map/Map.js:903
+#: src/control/Toolbar.js:91 src/map/Map.js:901
 msgid "Saving..."
 msgstr "Shranjevanje ..."
 
-#: src/control/Toolbar.js:216
+#: src/control/Toolbar.js:237
 msgid "This version of %productName is powered by"
 msgstr "To različico %productName poganja"
 
-#: src/core/Socket.js:22
+#: src/core/Socket.js:23
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Pri povezovanju z LibreOffice Online je prišlo do težave: "
 
-#: src/core/Socket.js:154
+#: src/core/Socket.js:179
 msgid "Unsupported server version."
 msgstr "Nepodprta različica strežnika."
 
-#: src/core/Socket.js:218
+#: src/core/Socket.js:217
+msgid "Session terminated by document owner"
+msgstr "Sejo je zaključil lastnik dokumenta"
+
+#: src/core/Socket.js:220
+msgid "Server is shutting down for maintenance (auto-saving)"
+msgstr "Strežnik se ugaša zaradi vzdrževanja (samodejno shranjevanje)"
+
+#: src/core/Socket.js:223
+msgid "Server is recycling and will be available shortly"
+msgstr "Strežnik se ponovno zaganja in bo na voljo v kratkem."
+
+#: src/core/Socket.js:335
 msgid "Document requires password to view."
 msgstr "Za ogled dokumenta je potrebno geslo."
 
-#: src/core/Socket.js:221
+#: src/core/Socket.js:338
 msgid "Document requires password to modify."
 msgstr "Za spreminjanje dokumenta je potrebno geslo."
 
-#: src/core/Socket.js:223
+#: src/core/Socket.js:340
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Pritisnite Prekliči za odpiranje v oglednem načinu."
 
-#: src/core/Socket.js:227
+#: src/core/Socket.js:344
 msgid "Wrong password provided. Please try again."
 msgstr "Vnesli ste napačno geslo. Poskusite znova."
 
-#: src/core/Socket.js:276
+#: src/core/Socket.js:393
 msgid "Connecting..."
 msgstr "Povezovanje ..."
 
-#: src/core/Socket.js:394
+#: src/core/Socket.js:514
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 "Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
 
-#: src/map/Map.js:118
+#: src/map/Map.js:121
 msgid "Initializing..."
 msgstr "Inicializacija ..."
 
-#: src/map/Map.js:906
+#: src/map/Map.js:782
+msgid "Inactive document - please click to resume editing"
+msgstr "Neaktivni dokument – kliknite za nadaljevanje urejanja"
+
+#: src/map/Map.js:904
 msgid "Loading..."
 msgstr "Nalaganje ..."
 
