@@ -396,12 +396,6 @@ wopi: <JSON>
 child -> parent
 ===============
 
-child <id>
-
-    Must be the first message sent from the child to the parent. The
-    parent has passed the id (a 64-bit random number) to the child
-    when starting it, so this is how the child identificates itself.
-
 curpart: part=<partNumber>
 
     Sent to the parent process before certain messages that the parent
