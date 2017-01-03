@@ -1064,43 +1064,25 @@ private:
 
             // Connection terminated. Destroy session.
             LOG_DBG("Client session [" << id << "] terminated. Cleaning up.");
+
+            auto docLock = docBroker->getLock();
+
+            // We issue a force-save when last editable (non-readonly) session is going away
+            const bool forceSave = docBroker->startDestroy(id);
+            if (forceSave)
             {
-                auto docLock = docBroker->getLock();
-
-                // We cannot destroy it, before save, if this is the last session.
-                // Otherwise, we may end up removing the one and only session.
-                bool removedSession = false;
-
-                // We issue a force-save when last editable (non-readonly) session is going away
-                const bool forceSave = docBroker->startDestroy(id);
-
-                auto sessionsCount = docBroker->getSessionsCount();
-                if (sessionsCount > 1)
-                {
-                    sessionsCount = docBroker->removeSession(id);
-                    removedSession = true;
-                    LOG_TRC(docKey << ", ws_sessions--: " << sessionsCount);
-                }
-
-                // If we are the last, we must wait for the save to complete.
-                if (forceSave)
-                {
-                    LOG_INF("Shutdown of the last editable (non-readonly) session, saving the document before tearing down.");
-                }
-
-                // We need to wait until the save notification reaches us
-                // and Storage persists the document.
-                if (!docBroker->autoSave(forceSave, COMMAND_TIMEOUT_MS, docLock))
-                {
-                    LOG_ERR("Auto-save before closing failed.");
-                }
-
-                if (!removedSession)
-                {
-                    sessionsCount = docBroker->removeSession(id);
-                    LOG_TRC(docKey << ", ws_sessions--: " << sessionsCount);
-                }
+                LOG_INF("Shutdown of the last editable (non-readonly) session, saving the document before tearing down.");
             }
+
+            // We need to wait until the save notification reaches us
+            // and Storage persists the document.
+            if (!docBroker->autoSave(forceSave, COMMAND_TIMEOUT_MS, docLock))
+            {
+                LOG_ERR("Auto-save before closing failed.");
+            }
+
+            const auto sessionsCount = docBroker->removeSession(id);
+            docLock.unlock();
 
             if (sessionsCount == 0)
             {
