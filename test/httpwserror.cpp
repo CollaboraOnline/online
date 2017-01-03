@@ -96,8 +96,16 @@ void HTTPWSError::testNoExtraLoolKitsLeft()
 
 void HTTPWSError::testMaxDocuments()
 {
-#if MAX_DOCUMENTS > 0
+    static_assert(MAX_DOCUMENTS >= 2, "MAX_DOCUMENTS must be at least 2");
     const auto testname = "maxDocuments ";
+
+    if (MAX_DOCUMENTS > 50)
+    {
+        std::cerr << "Skipping " << testname << "test since MAX_DOCUMENTS (" << MAX_DOCUMENTS
+                  << ") is too high to test. Set to a more sensible number, ideally a dozen or so." << std::endl;
+        return;
+    }
+
     try
     {
         // Load a document.
@@ -117,13 +125,11 @@ void HTTPWSError::testMaxDocuments()
         std::string docURL;
         getDocumentPathAndURL("empty.odt", docPath, docURL);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-        LOOLWebSocket socket(*session, request, _response);
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
+        auto socket = std::make_shared<LOOLWebSocket>(*session, request, _response);
 
-        // send loolclient, load and partpagerectangles
-        sendTextFrame(socket, "loolclient ", testname);
-        sendTextFrame(socket, "load ", testname);
-        sendTextFrame(socket, "partpagerectangles ", testname);
+        // Send load request, which will fail.
+        sendTextFrame(socket, "load url=" + docURL, testname);
 
         assertResponseString(socket, "error:", testname);
 
@@ -131,13 +137,12 @@ void HTTPWSError::testMaxDocuments()
         const auto statusCode = getErrorCode(socket, message);
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
 
-        socket.shutdown();
+        socket->shutdown();
     }
     catch (const Poco::Exception& exc)
     {
         CPPUNIT_FAIL(exc.displayText());
     }
-#endif
 }
 
 void HTTPWSError::testMaxConnections()
