@@ -621,11 +621,6 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     _lastEditableSession = false;
     _markToDestroy = false;
 
-    if (session->isReadOnly())
-    {
-        LOG_DBG("Adding a readonly session [" << id << "]");
-    }
-
     if (!_sessions.emplace(id, session).second)
     {
         LOG_WRN("DocumentBroker: Trying to add already existing session.");
@@ -638,11 +633,15 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     // Request a new session from the child kit.
     _childProcess->sendTextFrame(aMessage);
 
+    // Now we are ready to bridge between the kit and client.
+    session->bridgePrisonerSession();
+
     // Tell the admin console about this new doc
     Admin::instance().addDoc(_docKey, getPid(), getFilename(), id);
 
-    // Now we are ready to bridge between the kit and client.
-    session->bridgePrisonerSession();
+    LOG_TRC("Added " << (session->isReadOnly() ? "readonly" : "non-readonly") <<
+            " session [" << id << "] to docKey [" <<
+            _docKey << "] to have " << count << " sessions.");
 
     return count;
 }
@@ -663,6 +662,16 @@ size_t DocumentBroker::removeSession(const std::string& id)
             // Let the child know the client has disconnected.
             const std::string msg("child-" + id + " disconnect");
             _childProcess->sendTextFrame(msg);
+
+            const auto count = _sessions.size();
+            LOG_TRC("Removed " << (it->second->isReadOnly() ? "readonly" : "non-readonly") <<
+                    " session [" << id << "] from docKey [" <<
+                    _docKey << "] to have " << count << " sessions.");
+            return count;
+        }
+        else
+        {
+            LOG_TRC("Session [" << id << "] not found to remove from docKey [" << _docKey << "]");
         }
     }
     catch (const std::exception& ex)

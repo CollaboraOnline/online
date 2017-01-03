@@ -1032,10 +1032,7 @@ private:
             }
 
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
-
-            // Request the child to connect to us and add this session.
-            const auto sessionsCount = docBroker->addSession(session);
-            LOG_TRC(docKey << ", ws_sessions++: " << sessionsCount);
+            docBroker->addSession(session);
         }
         catch (const std::exception& exc)
         {
@@ -1043,6 +1040,7 @@ private:
 
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
             auto lock = docBroker->getLock();
+            docBroker->removeSession(id);
             if (docBroker->getSessionsCount() == 0 || !docBroker->isAlive())
             {
                 LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
