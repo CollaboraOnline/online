@@ -449,6 +449,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
     const auto startTime = chrono::steady_clock::now();
     do
     {
+        LOG_DBG("getNewChild: Rebalancing children.");
         int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
         ++numPreSpawn; // Replace the one we'll dispatch just now.
         rebalanceChildren(numPreSpawn, false);
@@ -459,18 +460,22 @@ static std::shared_ptr<ChildProcess> getNewChild()
             auto child = NewChildren.back();
             NewChildren.pop_back();
             const auto available = NewChildren.size();
-            LOG_DBG("getNewChild: Have " << available << " spare " <<
-                    (available == 1 ? "child" : "children") << " after poping [" << child->getPid() << "].");
 
             // Validate before returning.
             if (child && child->isAlive())
             {
-                LOG_DBG("getNewChild: Returning new child [" << child->getPid() << "].");
+                LOG_DBG("getNewChild: Have " << available << " spare " <<
+                        (available == 1 ? "child" : "children") <<
+                        " after poping [" << child->getPid() << "] to return.");
                 return child;
             }
-        }
 
-        LOG_WRN("getNewChild: No available child. Sending spawn request to forkit and failing.");
+            LOG_WRN("getNewChild: popped dead child, need to find another.");
+        }
+        else
+        {
+            LOG_WRN("getNewChild: No available child. Sending spawn request to forkit and failing.");
+        }
     }
     while (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() <
            CHILD_TIMEOUT_MS * 4);
