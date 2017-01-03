@@ -142,8 +142,16 @@ void HTTPWSError::testMaxDocuments()
 
 void HTTPWSError::testMaxConnections()
 {
-#if MAX_CONNECTIONS > 0
+    static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
     const auto testname = "maxConnections ";
+
+    if (MAX_CONNECTIONS > 100)
+    {
+        std::cerr << "Skipping " << testname << "test since MAX_CONNECTION (" << MAX_CONNECTIONS
+                  << ") is too high to test. Set to a more sensible number, ideally a dozen or so." << std::endl;
+        return;
+    }
+
     try
     {
         std::cerr << "Opening max number of connections: " << MAX_CONNECTIONS << std::endl;
@@ -158,7 +166,7 @@ void HTTPWSError::testMaxConnections()
         std::cerr << "Opened connect #1 of " << MAX_CONNECTIONS << std::endl;
 
         std::vector<std::shared_ptr<LOOLWebSocket>> views;
-        for(int it = 1; it < MAX_CONNECTIONS; it++)
+        for (int it = 1; it < MAX_CONNECTIONS; ++it)
         {
             std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
             auto ws = std::make_shared<LOOLWebSocket>(*session, request, _response);
@@ -170,24 +178,21 @@ void HTTPWSError::testMaxConnections()
 
         // try to connect MAX_CONNECTIONS + 1
         std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
-        LOOLWebSocket socketN(*session, request, _response);
+        auto socketN = std::make_shared<LOOLWebSocket>(*session, request, _response);
 
-        // send loolclient, load and partpagerectangles
-        sendTextFrame(socketN, "loolclient ", testname);
-        sendTextFrame(socketN, "load ", testname);
-        sendTextFrame(socketN, "partpagerectangles ", testname);
+        // Send load request, which will fail.
+        sendTextFrame(socketN, "load url=" + docURL, testname);
 
         std::string message;
         const auto statusCode = getErrorCode(socketN, message);
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
 
-        socketN.shutdown();
+        socketN->shutdown();
     }
     catch (const Poco::Exception& exc)
     {
         CPPUNIT_FAIL(exc.displayText());
     }
-#endif
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPWSError);

@@ -188,6 +188,12 @@ int getErrorCode(LOOLWebSocket& ws, std::string& message)
 }
 
 inline
+int getErrorCode(const std::shared_ptr<LOOLWebSocket>& ws, std::string& message)
+{
+    return getErrorCode(*ws, message);
+}
+
+inline
 std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefix, std::string name = "", const size_t timeoutMs = 10000)
 {
     name = name + '[' + prefix + "] ";
