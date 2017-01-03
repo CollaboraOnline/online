@@ -1203,8 +1203,8 @@ public:
                 request, response))
             return;
 
-#if MAX_CONNECTIONS > 0
-        if (++LOOLWSD::NumConnections > MAX_CONNECTIONS)
+        const auto connectionNum = ++LOOLWSD::NumConnections;
+        if (connectionNum > MAX_CONNECTIONS)
         {
             --LOOLWSD::NumConnections;
             LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
@@ -1213,18 +1213,24 @@ public:
             shutdownLimitReached(ws);
             return;
         }
-#endif
 
-        handleClientRequest(request, response);
+        try
+        {
+            const auto id = LOOLWSD::GenSessionId();
+            LOG_TRC("Accepted connection #" << connectionNum << " of " <<
+                    MAX_CONNECTIONS << " as session [" << id << "].");
+            handleClientRequest(request, response, id);
+        }
+        catch (const std::exception& exc)
+        {
+            // Nothing to do.
+        }
 
-#if MAX_CONNECTIONS > 0
         --LOOLWSD::NumConnections;
-#endif
     }
 
-    static void handleClientRequest(HTTPServerRequest& request, HTTPServerResponse& response)
+    static void handleClientRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
-        const auto id = LOOLWSD::GenSessionId();
         Util::setThreadName("client_ws_" + id);
 
         LOG_DBG("Thread started.");
@@ -2336,7 +2342,7 @@ void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request
     switch (type)
     {
     case TestRequest::Client:
-        ClientRequestHandler::handleClientRequest(request, response);
+        ClientRequestHandler::handleClientRequest(request, response, LOOLWSD::GenSessionId());
         break;
     case TestRequest::Prisoner:
         PrisonerRequestHandler::handlePrisonerRequest(request, response);
