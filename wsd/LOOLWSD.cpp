@@ -982,7 +982,7 @@ private:
                 throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
             }
 
-            // Set one we just created.
+            // Set the one we just created.
             LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
             docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
             child->setDocumentBroker(docBroker);
@@ -1019,7 +1019,7 @@ private:
         // Below this, we need to cleanup internal references.
         try
         {
-            // Now the bridge beetween the client and kit process is connected
+            // Now the bridge between the client and kit process is connected
             const std::string statusReady = "statusindicator: ready";
             LOG_TRC("Sending to Client [" << statusReady << "].");
             ws->sendFrame(statusReady.data(), statusReady.size());
@@ -1031,12 +1031,30 @@ private:
                 Util::alertAllUsers("error: cmd=internal kind=diskfull");
             }
 
-            // Request the child to connect to us and add this session.
-            auto sessionsCount = docBroker->addSession(session);
-            LOG_TRC(docKey << ", ws_sessions++: " << sessionsCount);
-
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
 
+            // Request the child to connect to us and add this session.
+            const auto sessionsCount = docBroker->addSession(session);
+            LOG_TRC(docKey << ", ws_sessions++: " << sessionsCount);
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_WRN("Exception while preparing session [" << id << "].");
+
+            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+            auto lock = docBroker->getLock();
+            if (docBroker->getSessionsCount() == 0 || !docBroker->isAlive())
+            {
+                LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
+                DocBrokers.erase(docKey);
+                docBroker->terminateChild(lock);
+            }
+
+            return;
+        }
+
+        try
+        {
             // Let messages flow.
             IoUtil::SocketProcessor(ws, "client_ws_" + id,
                 [&session](const std::vector<char>& payload)
@@ -1058,7 +1076,7 @@ private:
                 // We issue a force-save when last editable (non-readonly) session is going away
                 const bool forceSave = docBroker->startDestroy(id);
 
-                sessionsCount = docBroker->getSessionsCount();
+                auto sessionsCount = docBroker->getSessionsCount();
                 if (sessionsCount > 1)
                 {
                     sessionsCount = docBroker->removeSession(id);
@@ -1092,8 +1110,14 @@ private:
                 // DocBroker. But first we need to take both locks in the correct
                 // order and check again. We can't take the DocBrokersMutex while
                 // holding the docBroker lock as that can deadlock with autoSave below.
-                std::unique_lock<std::mutex> docBrokersLock2(DocBrokersMutex);
-                cleanupDocBrokers();
+                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+                auto lock = docBroker->getLock();
+                if (docBroker->getSessionsCount() == 0 || !docBroker->isAlive())
+                {
+                    LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
+                    DocBrokers.erase(docKey);
+                    docBroker->terminateChild(lock);
+                }
             }
 
             if (SigUtil::isShuttingDown())
