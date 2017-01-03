@@ -1100,13 +1100,6 @@ private:
                 }
             }
 
-            if (SigUtil::isShuttingDown())
-            {
-                std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
-                LOG_TRC("Capturing Client WS for [" << id << "]");
-                ClientWebSockets.push_back(ws);
-            }
-
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession: " + uri);
             LOG_INF("Finishing GET request handler for session [" << id << "].");
         }
@@ -1126,23 +1119,33 @@ private:
             LOG_ERR("Error in client request handler: " << exc.what());
         }
 
-        if (session->isCloseFrame())
+        try
         {
-            LOG_TRC("Normal close handshake.");
-            // Client initiated close handshake
-            // respond close frame
-            ws->shutdown();
-        }
-        else
-        {
-            if (!SigUtil::isShuttingDown())
+            if (session->isCloseFrame())
+            {
+                LOG_TRC("Normal close handshake.");
+                // Client initiated close handshake
+                // respond close frame
+                ws->shutdown();
+            }
+            else if (!SigUtil::isShuttingDown())
             {
                 // something wrong, with internal exceptions
                 LOG_TRC("Abnormal close handshake.");
                 session->closeFrame();
-                // FIXME: handle exception thrown from here ? ...
                 ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
             }
+            else
+            {
+                std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
+                LOG_TRC("Capturing Client WS for [" << id << "]");
+                ClientWebSockets.push_back(ws);
+            }
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_WRN("Exception while closing socket for session [" << id <<
+                    "] of docKey [" << docKey << "]: " << exc.what());
         }
     }
 
