@@ -1010,16 +1010,15 @@ private:
         LOG_CHECK_RET(docBroker && "Null docBroker instance", );
         const auto docKey = docBroker->getDocKey();
 
-        // In case of WOPI and if this session is not set as readonly, it might be set so
-        // later after making a call to WOPI host which tells us the permission on files
-        // (UserCanWrite param)
-        auto session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic, isReadOnly);
-
-        // Above this point exceptions are safe and will auto-cleanup.
-        // Below this, we need to cleanup internal references.
+        std::shared_ptr<ClientSession> session;
         try
         {
-            // Now the bridge between the client and kit process is connected
+            // In case of WOPI, if this session is not set as readonly, it might be set so
+            // later after making a call to WOPI host which tells us the permission on files
+            // (UserCanWrite param).
+            session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic, isReadOnly);
+
+            // Now we have a DocumentBroker and we're ready to process client commands.
             const std::string statusReady = "statusindicator: ready";
             LOG_TRC("Sending to Client [" << statusReady << "].");
             ws->sendFrame(statusReady.data(), statusReady.size());
@@ -1051,6 +1050,7 @@ private:
             return;
         }
 
+        LOG_CHECK_RET(session && "Null ClientSession instance", );
         try
         {
             // Let messages flow.
