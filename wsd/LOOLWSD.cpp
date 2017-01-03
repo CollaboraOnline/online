@@ -205,7 +205,7 @@ inline void shutdownLimitReached(LOOLWebSocket& ws)
         int retries = 7;
         std::vector<char> buffer(READ_BUFFER_SIZE * 100);
 
-        const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+        const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000 / retries);
         do
         {
             if (ws.poll(Poco::Timespan(0), Poco::Net::Socket::SelectMode::SELECT_ERROR))
@@ -227,7 +227,7 @@ inline void shutdownLimitReached(LOOLWebSocket& ws)
             // Shutdown.
             ws.shutdown(WebSocket::WS_POLICY_VIOLATION);
         }
-        while (retries > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+        while (--retries > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
     }
     catch (const std::exception& ex)
     {
