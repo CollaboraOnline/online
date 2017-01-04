@@ -398,7 +398,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
         return false;
     }
 
-    std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
+    const std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
 
     std::vector<char> output;
     output.resize(response.size());
