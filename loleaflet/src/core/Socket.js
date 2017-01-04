@@ -563,9 +563,6 @@ L.Socket = L.Class.extend({
 				// remove newline characters
 				command.type = tokens[i].substring(5).replace(/(\r\n|\n|\r)/gm, '');
 			}
-			else if (tokens[i].substring(0, 9) === 'prefetch=') {
-				command.preFetch = tokens[i].substring(9);
-			}
 			else if (tokens[i].substring(0, 4) === 'cmd=') {
 				command.errorCmd = tokens[i].substring(4);
 			}

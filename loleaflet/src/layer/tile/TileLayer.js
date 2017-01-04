@@ -1146,9 +1146,6 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			tile.el.src = img;
 		}
-		else if (command.preFetch === 'true') {
-			this._tileCache[key] = img;
-		}
 		L.Log.log(textMsg, L.INCOMING, key);
 	},
 
