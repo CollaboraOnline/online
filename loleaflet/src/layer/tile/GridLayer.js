@@ -748,8 +748,7 @@ L.GridLayer = L.Layer.extend({
 		if (!tile) { return; }
 
 		// FIXME: this _tileCache is used for prev/next slide; but it is
-		// dangerous in connection with typing / invalidation, so let's
-		// comment it out for now
+		// dangerous in connection with typing / invalidation
 		if (!(this._tiles[key]._invalidCount > 0)) {
 			this._tileCache[key] = tile.el.src;
 		}
