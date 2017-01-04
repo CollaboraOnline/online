@@ -27,7 +27,6 @@
 #include <memory>
 #include <sstream>
 #include <thread>
-#include <thread>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
