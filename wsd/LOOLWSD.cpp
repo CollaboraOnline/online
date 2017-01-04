@@ -314,7 +314,7 @@ static bool forkChildren(const int number)
 
     if (number > 0)
     {
-        const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
+        const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems(false);
         if (!fs.empty())
         {
             LOG_WRN("File system of " << fs << " dangerously low on disk space");
@@ -1027,7 +1027,11 @@ private:
             if (!fs.empty())
             {
                 LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
-                Util::alertAllUsers("error: cmd=internal kind=diskfull");
+                const std::string diskfullMsg = "error: cmd=internal kind=diskfull";
+                // Alert the session currently being opened
+                ws->sendFrame(diskfullMsg.data(), diskfullMsg.size());
+                // Alert all other existing sessions also
+                Util::alertAllUsers(diskfullMsg);
             }
 
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);

@@ -158,7 +158,7 @@ namespace FileUtil
         }
     }
 
-    std::string checkDiskSpaceOnRegisteredFileSystems()
+    std::string checkDiskSpaceOnRegisteredFileSystems(const bool cacheLastCheck)
     {
         std::lock_guard<std::mutex> lock(fsmutex);
 
@@ -169,7 +169,8 @@ namespace FileUtil
         if (std::chrono::duration_cast<std::chrono::seconds>(now - lastCheck).count() < 60)
             return std::string();
 
-        lastCheck = now;
+        if (cacheLastCheck)
+            lastCheck = now;
 
         for (auto& i: filesystems)
         {
