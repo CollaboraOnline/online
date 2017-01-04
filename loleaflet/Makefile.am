@@ -10,6 +10,8 @@ DRAW_VERSION=0.2.4
 
 MINIFY=false
 
+EXTRA_DIST = $(shell git ls-files)
+
 .PHONY: build
 build: node_modules
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
