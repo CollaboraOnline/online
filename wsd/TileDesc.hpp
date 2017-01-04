@@ -36,7 +36,9 @@ public:
         _ver(ver),
         _imgSize(imgSize),
         _id(id),
-        _broadcast(broadcast)
+        _broadcast(broadcast),
+        _oldHash(0),
+        _hash(0)
     {
         if (_part < 0 ||
             _width <= 0 ||
@@ -64,6 +66,10 @@ public:
     void setImgSize(const int imgSize) { _imgSize = imgSize; }
     int getId() const { return _id; }
     bool getBroadcast() const { return _broadcast; }
+    void setOldHash(uint64_t hash) { _oldHash = hash; }
+    uint64_t getOldHash() const { return _oldHash; }
+    void setHash(uint64_t hash) { _hash = hash; }
+    uint64_t getHash() const { return _hash; }
 
     bool operator==(const TileDesc& other) const
     {
@@ -133,7 +139,9 @@ public:
             << " tileposx=" << _tilePosX
             << " tileposy=" << _tilePosY
             << " tilewidth=" << _tileWidth
-            << " tileheight=" << _tileHeight;
+            << " tileheight=" << _tileHeight
+            << " oldhash=" << _oldHash
+            << " hash=" << _hash;
 
         // Anything after ver is optional.
         oss << " ver=" << _ver;
@@ -168,13 +176,22 @@ public:
         pairs["imgsize"] = 0;
         pairs["id"] = -1;
 
+        uint64_t oldHash = 0;
+        uint64_t hash = 0;
         for (size_t i = 0; i < tokens.count(); ++i)
         {
-            std::string name;
-            int value = -1;
-            if (LOOLProtocol::parseNameIntegerPair(tokens[i], name, value))
+            if (LOOLProtocol::getTokenUInt64(tokens[i], "oldhash", oldHash))
+                ;
+            else if (LOOLProtocol::getTokenUInt64(tokens[i], "hash", hash))
+                ;
+            else
             {
-                pairs[name] = value;
+                std::string name;
+                int value = -1;
+                if (LOOLProtocol::parseNameIntegerPair(tokens[i], name, value))
+                {
+                    pairs[name] = value;
+                }
             }
         }
 
@@ -182,11 +199,15 @@ public:
         const bool broadcast = (LOOLProtocol::getTokenString(tokens, "broadcast", s) &&
                                 s == "yes");
 
-        return TileDesc(pairs["part"], pairs["width"], pairs["height"],
-                        pairs["tileposx"], pairs["tileposy"],
-                        pairs["tilewidth"], pairs["tileheight"],
-                        pairs["ver"],
-                        pairs["imgsize"], pairs["id"], broadcast);
+        auto result = TileDesc(pairs["part"], pairs["width"], pairs["height"],
+                               pairs["tileposx"], pairs["tileposy"],
+                               pairs["tilewidth"], pairs["tileheight"],
+                               pairs["ver"],
+                               pairs["imgsize"], pairs["id"], broadcast);
+        result.setOldHash(oldHash);
+        result.setHash(hash);
+
+        return result;
     }
 
     /// Deserialize a TileDesc from a string format.
@@ -209,6 +230,8 @@ private:
     int _imgSize; //< Used for responses.
     int _id;
     bool _broadcast;
+    uint64_t _oldHash;
+    uint64_t _hash;
 };
 
 /// One or more tile header.
@@ -220,7 +243,9 @@ private:
     TileCombined(int part, int width, int height,
                  const std::string& tilePositionsX, const std::string& tilePositionsY,
                  int tileWidth, int tileHeight, const std::string& vers,
-                 const std::string& imgSizes, int id) :
+                 const std::string& imgSizes, int id,
+                 const std::string& oldHashes,
+                 const std::string& hashes) :
         _part(part),
         _width(width),
         _height(height),
@@ -239,17 +264,21 @@ private:
 
         Poco::StringTokenizer positionXtokens(tilePositionsX, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         Poco::StringTokenizer positionYtokens(tilePositionsY, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        Poco::StringTokenizer sizeTokens(imgSizes, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer imgSizeTokens(imgSizes, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         Poco::StringTokenizer verTokens(vers, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer oldHashTokens(oldHashes, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer hashTokens(hashes, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
 
-        const auto numberOfPositions = positionYtokens.count();
+        const auto numberOfPositions = positionXtokens.count();
 
-        // check that number of positions for X and Y is the same
-        if (numberOfPositions != positionXtokens.count() ||
-            (!imgSizes.empty() && numberOfPositions != sizeTokens.count()) ||
-            (!vers.empty() && numberOfPositions != verTokens.count()))
+        // check that the comma-separated strings have the same number of elements
+        if (numberOfPositions != positionYtokens.count() ||
+            (!imgSizes.empty() && numberOfPositions != imgSizeTokens.count()) ||
+            (!vers.empty() && numberOfPositions != verTokens.count()) ||
+            (!oldHashes.empty() && numberOfPositions != oldHashTokens.count()) ||
+            (!hashes.empty() && numberOfPositions != hashTokens.count()))
         {
-            throw BadArgumentException("Invalid tilecombine descriptor. Uneven number of tiles.");
+            throw BadArgumentException("Invalid tilecombine descriptor. Unequal number of tiles in parameters.");
         }
 
         for (size_t i = 0; i < numberOfPositions; ++i)
@@ -266,8 +295,8 @@ private:
                 throw BadArgumentException("Invalid 'tileposy' in tilecombine descriptor.");
             }
 
-            int size = 0;
-            if (sizeTokens.count() && !LOOLProtocol::stringToInteger(sizeTokens[i], size))
+            int imgSize = 0;
+            if (imgSizeTokens.count() && !LOOLProtocol::stringToInteger(imgSizeTokens[i], imgSize))
             {
                 throw BadArgumentException("Invalid 'imgsize' in tilecombine descriptor.");
             }
@@ -278,7 +307,21 @@ private:
                 throw BadArgumentException("Invalid 'ver' in tilecombine descriptor.");
             }
 
-            _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight, ver, size, id, false);
+            uint64_t oldHash = 0;
+            if (oldHashTokens.count() && !LOOLProtocol::stringToUInt64(oldHashTokens[i], oldHash))
+            {
+                throw BadArgumentException("Invalid tilecombine descriptor.");
+            }
+
+            uint64_t hash = 0;
+            if (hashTokens.count() && !LOOLProtocol::stringToUInt64(hashTokens[i], hash))
+            {
+                throw BadArgumentException("Invalid tilecombine descriptor.");
+            }
+
+            _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight, ver, imgSize, id, false);
+            _tiles.back().setOldHash(oldHash);
+            _tiles.back().setHash(hash);
         }
     }
 
@@ -306,24 +349,21 @@ public:
         {
             oss << tile.getTilePosX() << ',';
         }
-
-        oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+        oss.seekp(-1, std::ios_base::cur); // Seek back over last comma, overwritten below.
 
         oss << " tileposy=";
         for (const auto& tile : _tiles)
         {
             oss << tile.getTilePosY() << ',';
         }
-
-        oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+        oss.seekp(-1, std::ios_base::cur); // Ditto.
 
         oss << " imgsize=";
         for (const auto& tile : _tiles)
         {
-            oss << tile.getImgSize() << ',';
+            oss << tile.getImgSize() << ','; // Ditto.
         }
-
-        oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+        oss.seekp(-1, std::ios_base::cur);
 
         oss << " tilewidth=" << _tileWidth
             << " tileheight=" << _tileHeight;
@@ -333,15 +373,30 @@ public:
         {
             oss << tile.getVersion() << ',';
         }
+        oss.seekp(-1, std::ios_base::cur); // Ditto.
 
-        oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+        oss << " oldhash=";
+        for (const auto& tile : _tiles)
+        {
+            oss << tile.getOldHash() << ',';
+        }
+        oss.seekp(-1, std::ios_base::cur); // Ditto
+
+        oss << " hash=";
+        for (const auto& tile : _tiles)
+        {
+            oss << tile.getHash() << ',';
+        }
+        oss.seekp(-1, std::ios_base::cur); // See beow.
 
         if (_id >= 0)
         {
             oss << " id=" << _id;
         }
 
-        return oss.str();
+        // Make sure we don't return a potential trailing comma that
+        // we have seeked back over but not overwritten after all.
+        return oss.str().substr(0, oss.tellp());
     }
 
     /// Deserialize a TileDesc from a tokenized string.
@@ -358,6 +413,8 @@ public:
         std::string tilePositionsY;
         std::string imgSizes;
         std::string versions;
+        std::string oldhashes;
+        std::string hashes;
         for (size_t i = 0; i < tokens.count(); ++i)
         {
             std::string name;
@@ -380,6 +437,14 @@ public:
                 {
                     versions = value;
                 }
+                else if (name == "oldhash")
+                {
+                    oldhashes = value;
+                }
+                else if (name == "hash")
+                {
+                    hashes = value;
+                }
                 else
                 {
                     int v = 0;
@@ -395,7 +460,7 @@ public:
                             tilePositionsX, tilePositionsY,
                             pairs["tilewidth"], pairs["tileheight"],
                             versions,
-                            imgSizes, pairs["id"]);
+                            imgSizes, pairs["id"], oldhashes, hashes);
     }
 
     /// Deserialize a TileDesc from a string format.
@@ -413,18 +478,22 @@ public:
         std::ostringstream xs;
         std::ostringstream ys;
         std::ostringstream vers;
+        std::ostringstream oldhs;
+        std::ostringstream hs;
 
         for (const auto& tile : tiles)
         {
             xs << tile.getTilePosX() << ',';
             ys << tile.getTilePosY() << ',';
             vers << tile.getVersion() << ',';
+            oldhs << tile.getOldHash() << ',';
+            hs << tile.getHash() << ',';
         }
 
         vers.seekp(-1, std::ios_base::cur); // Remove last comma.
         return TileCombined(tiles[0].getPart(), tiles[0].getWidth(), tiles[0].getHeight(),
                             xs.str(), ys.str(), tiles[0].getTileWidth(), tiles[0].getTileHeight(),
-                            vers.str(), "", -1);
+                            vers.str(), "", -1, oldhs.str(), hs.str());
     }
 
 private:

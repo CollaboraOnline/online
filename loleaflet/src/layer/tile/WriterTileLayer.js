@@ -28,6 +28,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
 		var tilePositionsX = '';
 		var tilePositionsY = '';
+		var oldHashes = '';
 		var needsNewTiles = false;
 		for (var key in this._tiles) {
 			var coords = this._tiles[key].coords;
@@ -50,6 +51,15 @@ L.WriterTileLayer = L.TileLayer.extend({
 						tilePositionsY += ',';
 					}
 					tilePositionsY += tileTopLeft.y;
+					if (oldHashes !== '') {
+						oldHashes += ',';
+					}
+					if (this._tiles[key].oldhash === undefined) {
+						oldHashes += '0';
+					}
+					else {
+						oldHashes += this._tiles[key].oldhash;
+					}
 					needsNewTiles = true;
 					if (this._debug) {
 						this._debugAddInvalidationData(this._tiles[key]);
@@ -75,7 +85,8 @@ L.WriterTileLayer = L.TileLayer.extend({
 				'tileposx=' + tilePositionsX + ' ' +
 				'tileposy=' + tilePositionsY + ' ' +
 				'tilewidth=' + this._tileWidthTwips + ' ' +
-				'tileheight=' + this._tileHeightTwips;
+				'tileheight=' + this._tileHeightTwips + ' ' +
+				'oldhash=' + oldHashes;
 
 			this._map._socket.sendMessage(message, '');
 

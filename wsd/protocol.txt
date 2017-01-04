@@ -126,10 +126,11 @@ status
 
 styles
 
-tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth>
-tileheight=<tileHeight> [timestamp=<time>] [id=<id> broadcast=<yesOrNo>]
+tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [id=<id> broadcast=<yesOrNo>] [oldhash=<hash>]
 
-    Parameters are numbers except broadcast which is 'yes' or 'no'.
+    Parameters are numbers except broadcast which is 'yes' or 'no' and
+    hash which is a 64-bit hash. (There is no need for the client to
+    parse it into a number, it can be treated as an opaque string.)
 
     Note: id must be echoed back in the response verbatim. It and the
     following parameter, broadcast, are used when rendering slide
@@ -139,8 +140,10 @@ tileheight=<tileHeight> [timestamp=<time>] [id=<id> broadcast=<yesOrNo>]
 
 tilecombine <parameters>
 
-    Accept same parameters as 'tile' message except parameters 'tileposx' and 'tileposy'
-    can be a comma separated list, and number of elements in both must be same.
+    Accepts same parameters as the 'tile' message except that
+    parameters 'tileposx', 'tileposy' and 'oldhash' are
+    comma-separated lists, and the number of elements in each must be
+    same.
 
 uno <command>
 
@@ -305,15 +308,16 @@ textselectioncontent: <content>
 
     Current selection's content
 
-tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [renderid=<id>]
+tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [renderid=<id>] [hash=<hash>]
 <binaryPngImage>
 
     The parameters from the corresponding 'tile' command.
 
-    Additionally, in a debug build, the renderid is either a unique
-    identifier, different for each actual call to LibreOfficeKit to
-    render a tile, or the string 'cached' if the tile was found in the
-    cache.
+    In a debug build, the renderid is either a unique identifier,
+    different for each actual call to LibreOfficeKit to render a tile,
+    or the string 'cached' if the tile was found in the cache. hash is
+    a hash of the tile contents, and can be included by the client in
+    the next 'tile' message requesting the same tile.
 
 Each LOK_CALLBACK_FOO_BAR callback except
 LOK_CALLBACK_INVALIDATE_TILES causes a corresponding message to the

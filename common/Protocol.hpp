@@ -10,6 +10,7 @@
 #ifndef INCLUDED_LOOLPROTOCOL_HPP
 #define INCLUDED_LOOLPROTOCOL_HPP
 
+#include <cstdint>
 #include <cstring>
 #include <map>
 #include <sstream>
@@ -41,6 +42,8 @@ namespace LOOLProtocol
     std::tuple<int, int, std::string> ParseVersion(const std::string& version);
 
     bool stringToInteger(const std::string& input, int& value);
+    bool stringToUInt64(const std::string& input, uint64_t& value);
+
     inline
     bool parseNameValuePair(const std::string& token, std::string& name, std::string& value, const char delim = '=')
     {
@@ -63,6 +66,7 @@ namespace LOOLProtocol
     }
 
     bool getTokenInteger(const std::string& token, const std::string& name, int& value);
+    bool getTokenUInt64(const std::string& token, const std::string& name, uint64_t& value);
     bool getTokenString(const std::string& token, const std::string& name, std::string& value);
     bool getTokenKeyword(const std::string& token, const std::string& name, const std::map<std::string, int>& map, int& value);
 

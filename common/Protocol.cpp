@@ -58,6 +58,20 @@ namespace LOOLProtocol
         return true;
     }
 
+    bool stringToUInt64(const std::string& input, uint64_t& value)
+    {
+        try
+        {
+            value = std::stoull(input);
+        }
+        catch (std::invalid_argument&)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     bool getTokenInteger(const std::string& token, const std::string& name, int& value)
     {
         size_t nextIdx;
@@ -67,6 +81,28 @@ namespace LOOLProtocol
                 token.substr(0, name.size()) != name ||
                 token[name.size()] != '=' ||
                 (value = std::stoi(token.substr(name.size() + 1), &nextIdx), false) ||
+                nextIdx != token.size() - name.size() - 1)
+            {
+                return false;
+            }
+        }
+        catch (std::invalid_argument&)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    bool getTokenUInt64(const std::string& token, const std::string& name, uint64_t& value)
+    {
+        size_t nextIdx;
+        try
+        {
+            if (token.size() < name.size() + 2 ||
+                token.substr(0, name.size()) != name ||
+                token[name.size()] != '=' ||
+                (value = std::stoull(token.substr(name.size() + 1), &nextIdx), false) ||
                 nextIdx != token.size() - name.size() - 1)
             {
                 return false;

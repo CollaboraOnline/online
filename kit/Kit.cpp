@@ -380,9 +380,9 @@ public:
     }
 
     bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
-                           std::vector<char>& output, LibreOfficeKitTileMode mode)
+                           std::vector<char>& output, LibreOfficeKitTileMode mode,
+                           uint64_t hash)
     {
-        const uint64_t hash = Png::hashBuffer(pixmap, width, height);
         if (cacheTest(hash, output))
         {
             return true;
@@ -395,10 +395,9 @@ public:
     bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
                               int width, int height,
                               int bufferWidth, int bufferHeight,
-                              std::vector<char>& output, LibreOfficeKitTileMode mode)
+                              std::vector<char>& output, LibreOfficeKitTileMode mode,
+                              uint64_t hash)
     {
-        const uint64_t hash = Png::hashSubBuffer(pixmap, startX, startY, width, height,
-                                                 bufferWidth, bufferHeight);
         if (cacheTest(hash, output))
         {
             return true;
@@ -622,7 +621,15 @@ public:
                 " ms (" << area / elapsed << " MP/s).");
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
-        if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode))
+        const uint64_t hash = Png::hashBuffer(pixmap.data(), tile.getWidth(), tile.getHeight());
+        if (hash != 0 && tile.getOldHash() == hash)
+        {
+            // The tile content is identical to what the client already has, so skip it
+            LOG_TRC("Match oldhash==hash (" << hash << "), skipping");
+            return;
+        }
+
+        if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode, hash))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");
@@ -707,8 +714,20 @@ public:
             const auto oldSize = output.size();
             const auto pixelWidth = tileCombined.getWidth();
             const auto pixelHeight = tileCombined.getHeight();
+
+            const uint64_t hash = Png::hashSubBuffer(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight,
+                                                     pixelWidth, pixelHeight, pixmapWidth, pixmapHeight);
+
+            if (hash != 0 && tiles[tileIndex].getOldHash() == hash)
+            {
+                // The tile content is identical to what the client already has, so skip it
+                LOG_TRC("Match for tile #" << tileIndex << " at (" << positionX << "," << positionY << ") oldhash==hash (" << hash << "), skipping");
+                tiles.erase(tiles.begin() + tileIndex);
+                continue;
+            }
+
             if (!_pngCache.encodeSubBufferToPNG(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight,
-                                                pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode))
+                                                pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode, hash))
             {
                 //FIXME: Return error.
                 //sendTextFrame("error: cmd=tile kind=failure");
@@ -717,8 +736,10 @@ public:
             }
 
             const auto imgSize = output.size() - oldSize;
-            LOG_TRC("Encoded tile #" << tileIndex << " in " << imgSize << " bytes.");
-            tiles[tileIndex++].setImgSize(imgSize);
+            LOG_TRC("Encoded tile #" << tileIndex << " at (" << positionX << "," << positionY << ") with oldhash=" << tiles[tileIndex].getOldHash() << ", hash=" << hash << " in " << imgSize << " bytes.");
+            tiles[tileIndex].setHash(hash);
+            tiles[tileIndex].setImgSize(imgSize);
+            tileIndex++;
         }
 
 #if ENABLE_DEBUG

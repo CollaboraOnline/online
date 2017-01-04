@@ -602,6 +602,9 @@ L.Socket = L.Class.extend({
 			else if (tokens[i].substring(0, 12) === 'rendercount=') {
 				command.rendercount = parseInt(tokens[i].substring(12));
 			}
+			else if (tokens[i].startsWith('hash=')) {
+				command.hash = tokens[i].substring(tokens[i].indexOf('=')+1);
+			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
 			var defaultZoom = this._map.options.zoom;
