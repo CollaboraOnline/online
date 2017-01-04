@@ -12,8 +12,7 @@ MINIFY=false
 
 EXTRA_DIST = $(shell git ls-files)
 
-.PHONY: build
-build: node_modules
+all-local: node_modules
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
 	jake build debug=$(ENABLE_DEBUG) minify=$(MINIFY)
@@ -24,25 +23,27 @@ node_modules: npm-shrinkwrap.json
 
 .PHONY: build-l10n
 build-l10n:
-	mkdir -p dist/l10n/styles
-
 	util/po2json.py --quiet po/*.po
-	mv po/*.json dist/l10n/
 	util/po2json.py --quiet po/styles/*.po
+
+.PHONY: move-l10n-to-dist
+move-l10n-to-dist:
+	mv po/*.json dist/l10n/
 	mv po/styles/*.json dist/l10n/styles/
 
-all-local: build
+install-data-hook:
+	mkdir -p $(DESTDIR)$(pkgdatadir)/loleaflet; \
+	cp -ar dist/ $(DESTDIR)$(pkgdatadir)/loleaflet/;
 
-.PHONY: dist
-dist: MINIFY=true
-dist: all build-l10n
-	rm -rf loleaflet-$(VERSION)
-	mkdir loleaflet-$(VERSION)
-	cp -ar dist loleaflet-$(VERSION)
-	mkdir -p loleaflet-$(VERSION)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
-	cp -a node_modules/jquery-ui/themes/ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png loleaflet-$(VERSION)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
-	tar cfz loleaflet-$(VERSION).tar.gz loleaflet-$(VERSION)
-	rm -rf loleaflet-$(VERSION)
+dist-hook: build-l10n
+	chmod u+w $(distdir)/dist
+
+	mkdir -p $(distdir)/dist/l10n/styles
+	mv po/*.json $(distdir)/dist/l10n/
+	mv po/styles/*.json $(distdir)/dist/l10n/styles/
+
+	mkdir -p $(distdir)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
+	cp -a node_modules/jquery-ui/themes/ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png $(distdir)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
 
 pot:
 	xgettext --from-code=UTF-8 --keyword=_ --output=po/templates/loleaflet-ui.pot \
