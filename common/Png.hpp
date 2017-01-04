@@ -192,8 +192,6 @@ void readTileData(png_structp png_ptr, png_bytep data, png_size_t length)
 {
     png_voidp io_ptr = png_get_io_ptr(png_ptr);
     assert(io_ptr);
-
-    assert(io_ptr != nullptr);
     std::stringstream& streamTile = *static_cast<std::stringstream*>(io_ptr);
     streamTile.read(reinterpret_cast<char*>(data), length);
 }
