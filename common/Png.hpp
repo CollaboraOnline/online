@@ -52,7 +52,7 @@
 
 #include "SpookyV2.h"
 
-namespace png
+namespace Png
 {
 
 // Callback functions for libpng

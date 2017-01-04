@@ -423,7 +423,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, Str
         return sendTextFrame(output.data(), output.size());
     }
 
-    if (png::encodeBufferToPNG(ptrFont, width, height, output, LOK_TILEMODE_RGBA))
+    if (Png::encodeBufferToPNG(ptrFont, width, height, output, LOK_TILEMODE_RGBA))
     {
         bSuccess = sendTextFrame(output.data(), output.size());
     }

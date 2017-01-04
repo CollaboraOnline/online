@@ -1543,7 +1543,7 @@ void HTTPWSTest::testCalcEditRendering()
     png_uint_32 height = 0;
     png_uint_32 width = 0;
     png_uint_32 rowBytes = 0;
-    auto rows = png::decodePNG(streamRes, height, width, rowBytes);
+    auto rows = Png::decodePNG(streamRes, height, width, rowBytes);
 
     const std::vector<char> exp = readDataFromFile("calc_render_0_512x512.3840,0.7680x7680.png");
     std::stringstream streamExp;
@@ -1552,7 +1552,7 @@ void HTTPWSTest::testCalcEditRendering()
     png_uint_32 heightExp = 0;
     png_uint_32 widthExp = 0;
     png_uint_32 rowBytesExp = 0;
-    auto rowsExp = png::decodePNG(streamExp, heightExp, widthExp, rowBytesExp);
+    auto rowsExp = Png::decodePNG(streamExp, heightExp, widthExp, rowBytesExp);
 
     CPPUNIT_ASSERT_EQUAL(heightExp, height);
     CPPUNIT_ASSERT_EQUAL(widthExp, width);

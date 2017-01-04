@@ -178,7 +178,7 @@ protected:
                 std::vector<char> png;
                 const auto mode = static_cast<LibreOfficeKitTileMode>(loKitDocument->pClass->getTileMode(loKitDocument));
 
-                png::encodeBufferToPNG(pixmap.data(), canvasWidth, canvasHeight, png, mode);
+                Png::encodeBufferToPNG(pixmap.data(), canvasWidth, canvasHeight, png, mode);
 
                 TemporaryFile pngFile;
                 std::ofstream pngStream(pngFile.path(), std::ios::binary);

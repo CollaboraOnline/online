@@ -627,7 +627,7 @@ void TileCacheTests::checkBlackTile(std::stringstream& tile)
     png_uint_32 width = 0;
     png_uint_32 rowBytes = 0;
 
-    auto rows = png::decodePNG(tile, height, width, rowBytes);
+    auto rows = Png::decodePNG(tile, height, width, rowBytes);
 
     png_uint_32 black = 0;
     for (png_uint_32 itRow = 0; itRow < height; ++itRow)

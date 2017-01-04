@@ -353,7 +353,7 @@ class PngCache
     {
         LOG_DBG("PNG cache with hash " << hash << " missed.");
         CacheEntry newEntry(bufferWidth * bufferHeight * 1);
-        if (png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
+        if (Png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
                                       bufferWidth, bufferHeight,
                                       *newEntry._data, mode))
         {
@@ -384,7 +384,7 @@ public:
     bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
                            std::vector<char>& output, LibreOfficeKitTileMode mode)
     {
-        const uint64_t hash = png::hashBuffer(pixmap, width, height);
+        const uint64_t hash = Png::hashBuffer(pixmap, width, height);
         if (cacheTest(hash, output))
         {
             return true;
@@ -399,7 +399,7 @@ public:
                               int bufferWidth, int bufferHeight,
                               std::vector<char>& output, LibreOfficeKitTileMode mode)
     {
-        const uint64_t hash = png::hashSubBuffer(pixmap, startX, startY, width, height,
+        const uint64_t hash = Png::hashSubBuffer(pixmap, startX, startY, width, height,
                                                  bufferWidth, bufferHeight);
         if (cacheTest(hash, output))
         {
