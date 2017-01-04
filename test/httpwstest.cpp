@@ -2195,6 +2195,7 @@ void HTTPWSTest::testAlertAllUsers()
 {
     // Load two documents, each in two sessions. Tell one session to fake a disk full
     // situation. Expect to get the corresponding error back in all sessions.
+    static_assert(MAX_DOCUMENTS >= 2, "MAX_DOCUMENTS must be at least 2");
     const auto testname = "alertAllUsers ";
     try
     {
@@ -2207,18 +2208,20 @@ void HTTPWSTest::testAlertAllUsers()
         Poco::Net::HTTPRequest* request[2];
 
         for (int i = 0; i < 2; i++)
+        {
             request[i] = new Poco::Net::HTTPRequest(Poco::Net::HTTPRequest::HTTP_GET, docURL[i]);
+        }
 
         std::shared_ptr<LOOLWebSocket> socket[4];
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 2; i++)
         {
-            socket[i] = connectLOKit(_uri, *(request[i/2]), _response);
-            sendTextFrame(socket[i], "load url=" + docURL[i/2], testname);
+            socket[i] = connectLOKit(_uri, *(request[i%2]), _response);
+            sendTextFrame(socket[i], "load url=" + docURL[i%2], testname);
         }
 
         sendTextFrame(socket[0], "uno .uno:fakeDiskFull", testname);
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 2; i++)
         {
             std::string response = getResponseString(socket[i], "error:", testname);
             Poco::StringTokenizer tokens(response.substr(6), " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
