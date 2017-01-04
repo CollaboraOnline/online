@@ -2048,8 +2048,7 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type,
 
         // Check document size
         sendTextFrame(socket, "status", Poco::format(view, itView));
-        auto response = getResponseString(socket, "status:", Poco::format(view, itView));
-        CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, std::string("status:")), !response.empty());
+        auto response = assertResponseString(socket, "status:", Poco::format(view, itView));
         int docPart = -1;
         int docParts = 0;
         int docHeight = 0;
@@ -2070,11 +2069,8 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type,
 
         // Connect and load 0..N Views, where N<=limit
         std::vector<std::shared_ptr<LOOLWebSocket>> views;
-#if MAX_DOCUMENTS > 0
-        const auto limit = std::min(5, MAX_DOCUMENTS - 1); // +1 connection above
-#else
-        constexpr auto limit = 5;
-#endif
+        static_assert(MAX_DOCUMENTS >= 2, "MAX_DOCUMENTS must be at least 2");
+        const auto limit = std::max(2, MAX_DOCUMENTS - 1); // +1 connection above
         for (itView = 0; itView < limit; ++itView)
         {
             views.emplace_back(loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView)));

@@ -964,14 +964,13 @@ private:
 
         if (!docBroker)
         {
-#if MAX_DOCUMENTS > 0
+            static_assert(MAX_DOCUMENTS > 0, "MAX_DOCUMENTS must be positive");
             if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
             {
                 LOG_ERR("Maximum number of open documents reached.");
                 shutdownLimitReached(*ws);
                 return nullptr;
             }
-#endif
 
             // Request a kit process for this doc.
             auto child = getNewChild();
