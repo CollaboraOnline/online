@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.TileLayer is used for standard xyz-numbered tile layers.
  */

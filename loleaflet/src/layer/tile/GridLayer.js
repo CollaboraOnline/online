@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.GridLayer is used as base class for grid-like layers like TileLayer.
  */
