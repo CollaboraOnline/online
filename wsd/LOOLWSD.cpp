@@ -411,7 +411,13 @@ static void preForkChildren()
 static bool prespawnChildren(const bool force)
 {
     // First remove dead DocBrokers, if possible.
-    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
+    if (!docBrokersLock.try_lock())
+    {
+        // Busy, try again later.
+        return false;
+    }
+
     cleanupDocBrokers();
 
     std::unique_lock<std::mutex> lock(NewChildrenMutex, std::defer_lock);
