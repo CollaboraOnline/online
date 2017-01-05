@@ -119,7 +119,7 @@ L.Map.Keyboard = L.Handler.extend({
 		222 : null  // single quote	: UNKOWN
 	},
 
-	handleOnKeyDown: {
+	handleOnKeyDownKeys: {
 		// these keys need to be handled on keydown in order for them
 		// to work on chrome
 		8   : true, // backspace
@@ -178,6 +178,19 @@ L.Map.Keyboard = L.Handler.extend({
 		this._map.off('mousedown', this._onMouseDown, this);
 		this._map.off('keydown keyup keypress', this._onKeyDown, this);
 		this._map.off('compositionstart compositionupdate compositionend textInput', this._onKeyDown, this);
+	},
+
+	_handleOnKeyDown: function (keyCode, modifier) {
+		if (modifier & this.keyModifier.shift) {
+			// don't handle shift+insert, shift+delete
+			// These are converted to 'cut', 'paste' events which are
+			// automatically handled by us, so avoid double-handling
+			if (keyCode === 45 || keyCode === 46) {
+				return false;
+			}
+		}
+
+		return this.handleOnKeyDownKeys[keyCode];
 	},
 
 	_setPanOffset: function (pan) {
@@ -295,12 +308,12 @@ L.Map.Keyboard = L.Handler.extend({
 				this._keyHandled = false;
 				this._bufferedTextInputEvent = null;
 
-				if (this.handleOnKeyDown[keyCode] && charCode === 0) {
+				if (this._handleOnKeyDown(keyCode, this.modifier) && charCode === 0) {
 					docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
 				}
 			}
 			else if ((e.type === 'keypress' || e.type === 'compositionend') &&
-				(!this.handleOnKeyDown[keyCode] || charCode !== 0)) {
+			         (!this._handleOnKeyDown(keyCode, this.modifier) || charCode !== 0)) {
 				if (charCode === keyCode && charCode !== 13) {
 					// Chrome sets keyCode = charCode for printable keys
 					// while LO requires it to be 0
