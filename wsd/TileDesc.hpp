@@ -219,8 +219,8 @@ class TileCombined
 private:
     TileCombined(int part, int width, int height,
                  const std::string& tilePositionsX, const std::string& tilePositionsY,
-                 int tileWidth, int tileHeight, int ver = -1,
-                 const std::string& imgSizes = "", int id = -1) :
+                 int tileWidth, int tileHeight, int ver,
+                 const std::string& imgSizes, int id) :
         _part(part),
         _width(width),
         _height(height),
