@@ -68,8 +68,6 @@
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
 #define LIB_MERGED      "lib" "mergedlo" ".so"
 
-typedef int (LokHookPreInit)  (const char *install_path, const char *user_profile_path);
-
 using Poco::Exception;
 using Poco::File;
 using Poco::JSON::Array;
