@@ -368,10 +368,10 @@ $(function () {
 			{type: 'html',  id: 'backcolor-html', html: '<input id="backColorPicker" style="display:none;">'},
 			{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _('Highlighting')},
 			{type: 'break'},
-			{type: 'button',  id: 'alignleft',  img: 'alignleft', hint: _('Align left'), uno: 'LeftPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"1"}}'},
-			{type: 'button',  id: 'alignhorizontal',  img: 'alignhorizontal', hint: _('Center horizontally'), uno: 'CenterPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"2"}}'},
-			{type: 'button',  id: 'alignright',  img: 'alignright', hint: _('Align right'), uno: 'RightPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"3"}}'},
-			{type: 'button',  id: 'alignblock',  img: 'alignblock', hint: _('Justified'), uno: 'JustifyPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"4"}}'},
+			{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _('Align left'), uno: 'LeftPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"1"}}'},
+			{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _('Center horizontally'), uno: 'CenterPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"2"}}'},
+			{type: 'button',  id: 'rightpara',  img: 'alignright', hint: _('Align right'), uno: 'RightPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"3"}}'},
+			{type: 'button',  id: 'justifypara',  img: 'alignblock', hint: _('Justified'), uno: 'JustifyPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"4"}}'},
 			{type: 'break',  id: 'wraptextseparator'},
 			{type: 'button',  id: 'wraptext',  img: 'wraptext', hint: _('Wrap Text'), uno: 'WrapText'},
 			{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _('Merge and Center Cells'), uno: 'ToggleMergeCells'},
@@ -586,6 +586,11 @@ function toLocalePattern (pattern, regex, text, sub1, sub2) {
 		text = pattern.toLocaleString().replace(sub1, parseInt(matches[1].replace(',','')).toLocaleString(String.locale)).replace(sub2, parseInt(matches[2].replace(',','')).toLocaleString(String.locale));
 	}
 	return text;
+}
+
+function unoCmdToToolbarId(commandname)
+{
+	return commandname.toLowerCase().substr(5);
 }
 
 function selectItem(item, func)
@@ -873,6 +878,7 @@ map.on('commandstatechanged', function (e) {
 	var found = false;
 	var value, color, div;
 	var matches;
+
 	if (commandName === '.uno:AssignLayout') {
 		$('.styles-select').val(state).trigger('change');
 	} else if (commandName === '.uno:StyleApply') {
@@ -1016,7 +1022,7 @@ map.on('commandstatechanged', function (e) {
 		$('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 	}
 
-	var id = commandName.toLowerCase().substr(5);
+	var id = unoCmdToToolbarId(commandName);
 	if (typeof formatButtons[id] !== 'undefined') {
 		if (state === 'true') {
 			toolbar.enable(id);
