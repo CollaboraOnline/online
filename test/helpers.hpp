@@ -112,9 +112,10 @@ std::vector<char> readDataFromFile(std::unique_ptr<std::fstream>& file)
 }
 
 inline
-void getDocumentPathAndURL(const std::string& docFilename, std::string& documentPath, std::string& documentURL)
+void getDocumentPathAndURL(const std::string& docFilename, std::string& documentPath, std::string& documentURL, std::string prefix="")
 {
-    documentPath = FileUtil::getTempFilePath(TDOC, docFilename);
+    std::replace(prefix.begin(), prefix.end(), ' ', '_');
+    documentPath = FileUtil::getTempFilePath(TDOC, docFilename, prefix);
     std::string encodedUri;
     Poco::URI::encode("file://" + Poco::Path(documentPath).makeAbsolute().toString(), ":/?", encodedUri);
     documentURL = "lool/" + encodedUri + "/ws";

@@ -44,13 +44,19 @@ namespace FileUtil
         return name;
     }
 
-    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename)
+    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename, const std::string& dstFilenamePrefix)
     {
         const std::string srcPath = srcDir + '/' + srcFilename;
-        const std::string dstPath = Poco::Path::temp() + Util::encodeId(Util::rng::getNext()) + '_' + srcFilename;
+        const std::string dstFilename = dstFilenamePrefix + Util::encodeId(Util::rng::getNext()) + '_' + srcFilename;
+        const std::string dstPath = Poco::Path(Poco::Path::temp(), dstFilename).toString();
         Poco::File(srcPath).copyTo(dstPath);
         Poco::TemporaryFile::registerForDeletion(dstPath);
         return dstPath;
+    }
+
+    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename)
+    {
+        return getTempFilePath(srcDir, srcFilename, "");
     }
 
     bool saveDataToFileSafely(const std::string& fileName, const char *data, size_t size)

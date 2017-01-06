@@ -179,8 +179,9 @@ void TileCacheTests::testSimple()
 
 void TileCacheTests::testSimpleCombine()
 {
+    const auto testname = "simpleCombine ";
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
     // First.
     auto socket1 = loadDocAndGetSocket(_uri, documentURL, "simpleCombine-1 ");
@@ -265,7 +266,7 @@ void TileCacheTests::testCancelTiles()
 void TileCacheTests::testCancelTilesMultiView()
 {
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL);
+    getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, "cancelTilesMultiView ");
 
     // The tile response can race past the canceltiles,
     // so be forgiving to avoid spurious failures.
@@ -313,7 +314,7 @@ void TileCacheTests::testCancelTilesMultiView()
 void TileCacheTests::testUnresponsiveClient()
 {
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, "unresponsiveClient ");
 
     std::cerr << "Connecting first client." << std::endl;
     auto socket1 = loadDocAndGetSocket(_uri, documentURL, "unresponsiveClient-1 ");
@@ -473,7 +474,7 @@ void TileCacheTests::testTilesRenderedJustOnceMultiClient()
     const auto testname4 = testname + "-4 ";
 
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("with_comment.odt", documentPath, documentURL);
+    getDocumentPathAndURL("with_comment.odt", documentPath, documentURL, testname);
 
     std::cerr << "Connecting first client." << std::endl;
     auto socket = loadDocAndGetSocket(_uri, documentURL, testname1);
@@ -563,7 +564,7 @@ void TileCacheTests::testTilesRenderedJustOnceMultiClient()
 void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
 {
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, "simultaneousTilesrenderedJustOnce ");
 
     std::cerr << "Connecting first client." << std::endl;
     auto socket1 = loadDocAndGetSocket(_uri, documentURL, "simultaneousTilesRenderdJustOnce-1 ");
@@ -678,31 +679,32 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, con
 
 void TileCacheTests::testTileInvalidateWriter()
 {
+    const auto testname = "tileInvalidateWriter ";
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("empty.odt", documentPath, documentURL);
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-    auto socket = loadDocAndGetSocket(_uri, documentURL);
+    auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
     std::string text = "Test. Now go 3 \"Enters\":\n\n\nNow after the enters, goes this text";
     for (char ch : text)
     {
         sendChar(socket, ch); // Send ordinary characters and wait for response -> one tile invalidation for each
-        assertResponseString(socket, "invalidatetiles:");
+        assertResponseString(socket, "invalidatetiles:", testname);
     }
 
     text = "\n\n\n";
     for (char ch : text)
     {
         sendChar(socket, ch, skCtrl); // Send 3 Ctrl+Enter -> 3 new pages
-        assertResponseString(socket, "invalidatetiles:");
+        assertResponseString(socket, "invalidatetiles:", testname);
     }
 
     text = "abcde";
     for (char ch : text)
     {
         sendChar(socket, ch);
-        assertResponseString(socket, "invalidatetiles:");
+        assertResponseString(socket, "invalidatetiles:", testname);
     }
 
     // While extra invalidates are not desirable, they are inevitable at the moment.
@@ -716,7 +718,7 @@ void TileCacheTests::testTileInvalidateWriterPage()
     const auto testname = "tileInvalidateWriterPage ";
 
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("empty.odt", documentPath, documentURL);
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
     auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
@@ -736,11 +738,12 @@ void TileCacheTests::testTileInvalidateWriterPage()
 // This isn't yet used
 void TileCacheTests::testWriterAnyKey()
 {
+    const auto testname = "writerAnyKey ";
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("empty.odt", documentPath, documentURL);
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-    auto socket = loadDocAndGetSocket(_uri, documentURL);
+    auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
     // Now test "usual" keycodes (TODO: whole 32-bit range)
     for (int i=0; i<0x1000; ++i)
@@ -851,8 +854,8 @@ void TileCacheTests::tileInvalidatePart(const std::string& filename, const std::
     const std::string testname2 = testname + "-2 ";
 
     std::string documentPath, documentURL;
-    getDocumentPathAndURL(filename, documentPath, documentURL);
-    auto socket1 = loadDocAndGetSocket(_uri, documentURL);
+    getDocumentPathAndURL(filename, documentPath, documentURL, testname);
+    auto socket1 = loadDocAndGetSocket(_uri, documentURL, testname1);
 
     sendTextFrame(socket1, "setclientpart part=2", testname1);
     assertResponseString(socket1, "setpart:", testname1);

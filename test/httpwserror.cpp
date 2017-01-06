@@ -123,7 +123,7 @@ void HTTPWSError::testMaxDocuments()
         // try to open MAX_DOCUMENTS + 1
         std::string docPath;
         std::string docURL;
-        getDocumentPathAndURL("empty.odt", docPath, docURL);
+        getDocumentPathAndURL("empty.odt", docPath, docURL, testname);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
         auto socket = std::make_shared<LOOLWebSocket>(*session, request, _response);
@@ -165,7 +165,7 @@ void HTTPWSError::testMaxConnections()
         std::string docPath;
         std::string docURL;
 
-        getDocumentPathAndURL("empty.odt", docPath, docURL);
+        getDocumentPathAndURL("empty.odt", docPath, docURL, testname);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
         auto socket = loadDocAndGetSocket(_uri, docURL, testname);
         std::cerr << "Opened connect #1 of " << MAX_CONNECTIONS << std::endl;

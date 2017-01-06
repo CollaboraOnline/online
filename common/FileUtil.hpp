@@ -86,6 +86,9 @@ namespace FileUtil
     /// Returns the created file path.
     std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename);
 
+    /// Make a temp copy of a file, and prepend it with a prefix.
+    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename, const std::string& dstFilenamePrefix);
+
 } // end namespace FileUtil
 
 #endif
