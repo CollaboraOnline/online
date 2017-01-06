@@ -10,8 +10,17 @@
 #ifndef INCLUDED_COUNTLOOLKITPROCESSES_HPP
 #define INCLUDED_COUNTLOOLKITPROCESSES_HPP
 
+#include <iostream>
+#include <thread>
+
+#include <cppunit/extensions/HelperMacros.h>
+
 #include <Poco/DirectoryIterator.h>
+#include <Poco/FileStream.h>
+#include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
+
+#include <Common.hpp>
 
 /// Counts the number of LoolKit process instances without wiating.
 static int getLoolKitProcessCount()
@@ -33,6 +42,7 @@ static int getLoolKitProcessCount()
             {
                 pid = 0;
             }
+
             if (pid > 1 && endPos == fileName.length())
             {
                 Poco::FileInputStream stat(procEntry.toString() + "/stat");
@@ -70,16 +80,11 @@ static int getLoolKitProcessCount()
 
 static int countLoolKitProcesses(const int expected)
 {
-    std::cerr << "Waiting to have " << expected << " loolkit processes. Loolkits: ";
-
-    // We have to wait at least for the time the call docBroker->autoSave(forceSave,
-    // COMMAND_TIMEOUT_MS)) in ClientRequestHandler:::handleGetRequest() can take to wait for
-    // information about a successful auto-save. In the HTTPWSTest::testConnectNoLoad() there is
-    // nothing to auto-save, so it waits in vain.
+    std::cerr << "Waiting until loolkit processes are exactly " << expected << ". Loolkits: ";
 
     // This does not need to depend on any constant from Common.hpp.
     // The shorter the better (the quicker the test runs).
-    const auto sleepMs = 100;
+    const auto sleepMs = 50;
 
     // This has to cause waiting for at least COMMAND_TIMEOUT_MS. Add one second for safety.
     const size_t repeat = ((COMMAND_TIMEOUT_MS + 1000) / sleepMs);
@@ -93,7 +98,7 @@ static int countLoolKitProcesses(const int expected)
         }
 
         // Give polls in the lool processes time to time out etc
-        Poco::Thread::sleep(sleepMs);
+        std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
 
         count = getLoolKitProcessCount();
     }
@@ -105,6 +110,26 @@ static int countLoolKitProcesses(const int expected)
     }
 
     return count;
+}
+
+// FIXME: we probably should make this extern
+// and reuse it. As it stands now, it is per
+// translation unit, which isn't desirable if
+// (in the non-ideal event that) it's not 1,
+// it will cause testNoExtraLoolKitsLeft to
+// wait unnecessarily and fail.
+static int InitialLoolKitCount = 1;
+
+static void testCountHowManyLoolkits()
+{
+    InitialLoolKitCount = countLoolKitProcesses(InitialLoolKitCount);
+    CPPUNIT_ASSERT(InitialLoolKitCount > 0);
+}
+
+static void testNoExtraLoolKitsLeft()
+{
+    const auto countNow = countLoolKitProcesses(InitialLoolKitCount);
+    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
 }
 
 #endif

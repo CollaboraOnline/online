@@ -19,6 +19,8 @@
 #include "TileCache.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
+
+#include "countloolkits.hpp"
 #include "helpers.hpp"
 
 using namespace helpers;
@@ -132,6 +134,16 @@ public:
         Poco::Net::uninitializeSSL();
     }
 #endif
+
+    void setUp()
+    {
+        testCountHowManyLoolkits();
+    }
+
+    void tearDown()
+    {
+        testNoExtraLoolKitsLeft();
+    }
 };
 
 void TileCacheTests::testSimple()

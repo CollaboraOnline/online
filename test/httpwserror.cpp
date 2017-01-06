@@ -33,7 +33,6 @@ class HTTPWSError : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPResponse _response;
-    static int InitialLoolKitCount;
 
     CPPUNIT_TEST_SUITE(HTTPWSError);
 
@@ -42,8 +41,6 @@ class HTTPWSError : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
-    void testCountHowManyLoolkits();
-    void testNoExtraLoolKitsLeft();
     void testMaxDocuments();
     void testMaxConnections();
 
@@ -78,21 +75,6 @@ public:
         testNoExtraLoolKitsLeft();
     }
 };
-
-int HTTPWSError::InitialLoolKitCount = 1;
-
-void HTTPWSError::testCountHowManyLoolkits()
-{
-    InitialLoolKitCount = countLoolKitProcesses(InitialLoolKitCount);
-    CPPUNIT_ASSERT(InitialLoolKitCount > 0);
-}
-
-void HTTPWSError::testNoExtraLoolKitsLeft()
-{
-    const auto countNow = countLoolKitProcesses(InitialLoolKitCount);
-
-    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
-}
 
 void HTTPWSError::testMaxDocuments()
 {

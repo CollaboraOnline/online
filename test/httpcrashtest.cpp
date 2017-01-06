@@ -52,7 +52,6 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPResponse _response;
-    static int InitialLoolKitCount;
 
     CPPUNIT_TEST_SUITE(HTTPCrashTest);
 
@@ -62,11 +61,9 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
-    void testCountHowManyLoolkits();
     void testBarren();
     void testCrashKit();
     void testCrashForkit();
-    void testNoExtraLoolKitsLeft();
 
     static
     void killLoKitProcesses(const char* exec_filename);
@@ -102,21 +99,6 @@ public:
         testNoExtraLoolKitsLeft();
     }
 };
-
-int HTTPCrashTest::InitialLoolKitCount = 1;
-
-void HTTPCrashTest::testCountHowManyLoolkits()
-{
-    InitialLoolKitCount = countLoolKitProcesses(InitialLoolKitCount);
-    CPPUNIT_ASSERT(InitialLoolKitCount > 0);
-}
-
-void HTTPCrashTest::testNoExtraLoolKitsLeft()
-{
-    const auto countNow = countLoolKitProcesses(InitialLoolKitCount);
-
-    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
-}
 
 void HTTPCrashTest::testBarren()
 {

@@ -17,7 +17,6 @@
 #include <vector>
 
 #include <Poco/Dynamic/Var.h>
-#include <Poco/FileStream.h>
 #include <Poco/JSON/JSON.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
@@ -32,7 +31,6 @@
 #include <Poco/Net/Socket.h>
 #include <Poco/Path.h>
 #include <Poco/RegularExpression.h>
-#include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
@@ -44,6 +42,7 @@
 #include "Png.hpp"
 #include "UserMessages.hpp"
 #include "Util.hpp"
+
 #include "countloolkits.hpp"
 #include "helpers.hpp"
 
@@ -54,7 +53,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPResponse _response;
-    static int InitialLoolKitCount;
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
 
@@ -104,7 +102,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
-    void testCountHowManyLoolkits();
     void testBadRequest();
     void testHandshake();
     void testCloseAfterClose();
@@ -128,7 +125,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testPasswordProtectedDocumentWithCorrectPassword();
     void testPasswordProtectedDocumentWithCorrectPasswordAgain();
     void testInsertDelete();
-    void testNoExtraLoolKitsLeft();
     void testSlideShow();
     void testInactiveClient();
     void testMaxColumn();
@@ -211,14 +207,6 @@ public:
         testNoExtraLoolKitsLeft();
     }
 };
-
-int HTTPWSTest::InitialLoolKitCount = 1;
-
-void HTTPWSTest::testCountHowManyLoolkits()
-{
-    InitialLoolKitCount = countLoolKitProcesses(InitialLoolKitCount);
-    CPPUNIT_ASSERT(InitialLoolKitCount > 0);
-}
 
 void HTTPWSTest::testBadRequest()
 {
@@ -1195,12 +1183,6 @@ void HTTPWSTest::testMaxRow()
     {
         CPPUNIT_FAIL(exc.displayText());
     }
-}
-
-void HTTPWSTest::testNoExtraLoolKitsLeft()
-{
-    const auto countNow = countLoolKitProcesses(InitialLoolKitCount);
-    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
 }
 
 void HTTPWSTest::getPartHashCodes(const std::string status,

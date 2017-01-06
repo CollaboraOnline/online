@@ -36,7 +36,6 @@
 class HTTPServerTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
-    static int InitialLoolKitCount;
 
     CPPUNIT_TEST_SUITE(HTTPServerTest);
 
@@ -49,16 +48,12 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
-    void testCountHowManyLoolkits();
-
     void testDiscovery();
     void testLoleafletGet();
     void testLoleafletPost();
     void testScriptsAndLinksGet();
     void testScriptsAndLinksPost();
     void testConvertTo();
-
-    void testNoExtraLoolKitsLeft();
 
 public:
     HTTPServerTest()
@@ -91,14 +86,6 @@ public:
         testNoExtraLoolKitsLeft();
     }
 };
-
-int HTTPServerTest::InitialLoolKitCount = 1;
-
-void HTTPServerTest::testCountHowManyLoolkits()
-{
-    InitialLoolKitCount = countLoolKitProcesses(InitialLoolKitCount);
-    CPPUNIT_ASSERT(InitialLoolKitCount > 0);
-}
 
 void HTTPServerTest::testDiscovery()
 {
@@ -274,13 +261,6 @@ void HTTPServerTest::testConvertTo()
     if (actualString.size() > 3 && actualString[0] == '\xEF' && actualString[1] == '\xBB' && actualString[2] == '\xBF')
         actualString = actualString.substr(3);
     CPPUNIT_ASSERT_EQUAL(expectedStream.str(), actualString);
-}
-
-void HTTPServerTest::testNoExtraLoolKitsLeft()
-{
-    const auto countNow = countLoolKitProcesses(InitialLoolKitCount);
-
-    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPServerTest);
