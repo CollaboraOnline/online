@@ -548,7 +548,7 @@ public:
     {
         LOG_INF("setDocumentPassword: passwordProtected=" << _isDocPasswordProtected <<
                 " passwordProvided=" << _haveDocPassword <<
-                " password='" << _docPassword <<  "'");
+                " password='" << _docPassword << "'");
 
         Util::assertIsLocked(_documentMutex);
 
@@ -702,13 +702,13 @@ public:
         for (Util::Rectangle& tileRect : tileRecs)
         {
             const size_t positionX = (tileRect.getLeft() - renderArea.getLeft()) / tileCombined.getTileWidth();
-            const size_t positionY = (tileRect.getTop() - renderArea.getTop())  / tileCombined.getTileHeight();
+            const size_t positionY = (tileRect.getTop() - renderArea.getTop()) / tileCombined.getTileHeight();
 
             const auto oldSize = output.size();
             const auto pixelWidth = tileCombined.getWidth();
             const auto pixelHeight = tileCombined.getHeight();
             if (!_pngCache.encodeSubBufferToPNG(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight,
-                                           pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode))
+                                                pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode))
             {
                 //FIXME: Return error.
                 //sendTextFrame("error: cmd=tile kind=failure");
@@ -1102,7 +1102,7 @@ private:
             LOG_DBG("Calling lokit::documentLoad(" << uri << ").");
             Timestamp timestamp;
             _loKitDocument.reset(_loKit->documentLoad(uri.c_str()));
-            LOG_DBG("Returned lokit::documentLoad(" << uri << ") in " << (timestamp.elapsed()  / 1000.) << "ms.");
+            LOG_DBG("Returned lokit::documentLoad(" << uri << ") in " << (timestamp.elapsed() / 1000.) << "ms.");
 
             if (!_loKitDocument || !_loKitDocument->get())
             {
