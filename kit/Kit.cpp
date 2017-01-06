@@ -95,6 +95,7 @@ using namespace LOOLProtocol;
 // We only host a single document in our lifetime.
 class Document;
 static std::shared_ptr<Document> document;
+static LokHookFunction2* pInit = nullptr;
 
 namespace
 {
@@ -1594,7 +1595,7 @@ void lokit_main(const std::string& childRoot,
             auto kit = UnitKit::get().lok_init(instdir, userdir);
             if (!kit)
             {
-                kit = lok_init_2(instdir, userdir);
+                kit = (pInit ? pInit(instdir, userdir) : lok_init_2(instdir, userdir));
             }
 
             loKit = std::make_shared<lok::Office>(kit);
@@ -1790,6 +1791,12 @@ bool globalPreinit(const std::string &loTemplate)
     {
         LOG_FTL("No lok_preinit symbol in " << loadedLibrary << ": " << dlerror());
         return false;
+    }
+
+    pInit = reinterpret_cast<LokHookFunction2 *>(dlsym(handle, "libreofficekit_hook_2"));
+    if (!pInit)
+    {
+        LOG_FTL("No libreofficekit_hook_2 symbol in " << loadedLibrary << ": " << dlerror());
     }
 
     LOG_TRC("lok_preinit(" << loTemplate << "/program\", \"file:///user\")");
