@@ -385,7 +385,7 @@ L.Map.Keyboard = L.Handler.extend({
 			e.originalEvent.preventDefault();
 		}
 
-		if (e.originalEvent.ctrlKey && (e.originalEvent.key === 'h' || e.originalEvent.key === 'H')) {
+		if (e.originalEvent.ctrlKey && e.originalEvent.shiftKey && e.originalEvent.key === '?') {
 			map.showLOKeyboardHelp();
 			e.originalEvent.preventDefault();
 			return true;
