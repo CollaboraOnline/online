@@ -398,6 +398,12 @@ L.Map.Keyboard = L.Handler.extend({
 			e.originalEvent.preventDefault();
 		}
 
+		if (e.originalEvent.ctrlKey && (e.originalEvent.key === 'h' || e.originalEvent.key === 'H')) {
+			map.showLOKeyboardHelp();
+			e.originalEvent.preventDefault();
+			return true;
+		}
+
 		if (e.originalEvent.ctrlKey && (e.originalEvent.key === 'z' || e.originalEvent.key === 'Z')) {
 			this._map._socket.sendMessage('uno .uno:Undo');
 			e.originalEvent.preventDefault();
