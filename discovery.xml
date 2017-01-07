@@ -254,6 +254,12 @@
         <app name="application/rtf">
             <action name="edit" ext="rtf"/>
         </app>
+        <app name="text/rtf">
+            <action name="edit" ext="rtf"/>
+        </app>
+        <app name="text/plain">
+            <action name="edit" ext="txt"/>
+        </app>
         <app name="application/x-fictionbook+xml">
             <action name="view" ext="fb2"/>
         </app>
