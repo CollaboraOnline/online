@@ -207,8 +207,8 @@ static int createLibreOfficeKit(const std::string& childRoot,
 {
     LOG_DBG("Forking a loolkit process.");
 
-    Process::PID pid;
-    if (!(pid = fork()))
+    const Process::PID pid = fork();
+    if (!pid)
     {
         // Child
 
@@ -412,31 +412,24 @@ int main(int argc, char** argv)
             break;
         }
 
+        // Cleanup first, to reduce disk load.
+        cleanupChildren();
+
         if (ForkCounter > 0)
         {
             // Create as many as requested.
-            int spawn = ForkCounter;
-            LOG_INF("Creating " << spawn << " new child.");
-            size_t newInstances = 0;
-            do
+            const size_t count = ForkCounter;
+            LOG_INF("Spawning " << count << " new child" << (count == 1 ? "." : "ren."));
+            const size_t retry = count * 2;
+            for (size_t i = 0; ForkCounter > 0 && i < retry; ++i)
             {
-                if (createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
+                if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
                 {
                     LOG_ERR("Failed to create a kit process.");
-                }
-                else
-                {
-                    ++newInstances;
+                    ++ForkCounter;
                 }
             }
-            while (--spawn > 0);
-
-            // If we need to spawn more, retry later.
-            ForkCounter = (newInstances >= ForkCounter ? 0 : ForkCounter - newInstances);
         }
-
-        // We virtually always fork when a child exits.
-        cleanupChildren();
     }
 
     int returnValue = Application::EXIT_OK;
