@@ -11,6 +11,7 @@
 
 #include <atomic>
 #include <cassert>
+#include <ctime>
 #include <iomanip>
 #include <sstream>
 #include <string>
@@ -154,8 +155,13 @@ namespace Log
 
         logger.setLevel(logLevel.empty() ? std::string("trace") : logLevel);
 
-        info("Initializing " + name);
-        info("Log level is [" + std::to_string(logger.getLevel()) + "].");
+        const std::time_t t = std::time(nullptr);
+        oss.str("");
+        oss.clear();
+        oss << "Initializing " << name << ". Local time: " << std::put_time(std::localtime(&t), "%c %Z")
+            << ". UTC: " << std::put_time(std::gmtime(&t), "%c %Z")
+            <<  ". Log level is [" << logger.getLevel() << "].";
+        info(oss.str());
     }
 
     Poco::Logger& logger()
