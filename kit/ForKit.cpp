@@ -97,7 +97,7 @@ public:
             const auto count = std::stoi(tokens[1]);
             if (count > 0)
             {
-                LOG_INF("Spawning " << tokens[1] << ' ' << (count == 1 ? "child" : "children") << " per request.");
+                LOG_INF("Setting to spawn " << tokens[1] << " child" << (count == 1 ? "" : "ren") << " per request.");
                 ForkCounter = count;
             }
             else

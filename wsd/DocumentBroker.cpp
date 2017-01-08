@@ -652,6 +652,9 @@ size_t DocumentBroker::removeSession(const std::string& id)
 
     try
     {
+        LOG_INF("Removing session [" << id << "] on docKey [" << _docKey <<
+                "]. Have " << _sessions.size() << " sessions.");
+
         Admin::instance().rmDoc(_docKey, id);
 
         auto it = _sessions.find(id);
@@ -672,7 +675,8 @@ size_t DocumentBroker::removeSession(const std::string& id)
         }
         else
         {
-            LOG_TRC("Session [" << id << "] not found to remove from docKey [" << _docKey << "]");
+            LOG_TRC("Session [" << id << "] not found to remove from docKey [" <<
+                    _docKey << "]. Have " << _sessions.size() << " sessions.");
         }
     }
     catch (const std::exception& ex)

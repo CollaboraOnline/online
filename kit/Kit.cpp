@@ -1220,9 +1220,12 @@ private:
                 if (size == disconnect.size() &&
                     strncmp(data, disconnect.data(), disconnect.size()) == 0)
                 {
-                    LOG_DBG("Removing ChildSession " << sessionId);
+                    LOG_DBG("Removing ChildSession [" << sessionId << "].");
                     _oldSessionIds[session->getViewId()] = UserInfo({session->getViewUserId(), session->getViewUserName()});
                     _sessions.erase(it);
+                    const auto count = _sessions.size();
+                    LOG_DBG("Have " << count << " child" << (count == 1 ? "" : "ren") <<
+                            " after removing ChildSession [" << sessionId << "].");
 
                     // No longer needed, and allow session dtor to take it.
                     lock.unlock();
