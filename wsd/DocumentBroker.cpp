@@ -373,6 +373,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     {
         LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
         _lastSaveTime = std::chrono::steady_clock::now();
+        lock.unlock();
         _saveCV.notify_all();
         return true;
     }
@@ -381,6 +382,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     if (it == _sessions.end())
     {
         LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving docKey [" << _docKey << "].");
+        lock.unlock();
         _saveCV.notify_all();
         return false;
     }
@@ -388,8 +390,8 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     const Poco::URI& uriPublic = it->second->getPublicUri();
     const auto uri = uriPublic.toString();
 
-    // If we aren't destroying the last editable session just yet, and the file
-    // timestamp hasn't changed, skip saving.
+    // If we aren't destroying the last editable session just yet,
+    // and the file timestamp hasn't changed, skip saving.
     const auto newFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
     if (!_lastEditableSession && newFileModifiedTime == _lastFileModifiedTime)
     {
@@ -397,6 +399,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         LOG_DBG("Skipping unnecessary saving to URI [" << uri << "] with docKey [" << _docKey <<
                 "]. File last modified " << _lastFileModifiedTime.elapsed() / 1000000 << " seconds ago.");
         _lastSaveTime = std::chrono::steady_clock::now();
+        lock.unlock();
         _saveCV.notify_all();
         return true;
     }
@@ -435,6 +438,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         LOG_DBG("Saved docKey [" << _docKey << "] to URI [" << uri << "] and updated tile cache. Document modified timestamp: " <<
                 Poco::DateTimeFormatter::format(Poco::DateTime(_documentLastModifiedTime),
                                                                Poco::DateTimeFormat::ISO8601_FORMAT));
+        lock.unlock();
         _saveCV.notify_all();
         return true;
     }
@@ -457,6 +461,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
     }
 
+    lock.unlock();
     _saveCV.notify_all();
     return false;
 }

@@ -917,8 +917,6 @@ private:
             return false;
         }
 
-        // Retake the lock (technically, not needed).
-        lock.lock();
         --_isLoading;
         _cvLoading.notify_one();
 
