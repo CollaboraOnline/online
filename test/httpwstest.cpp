@@ -88,7 +88,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInsertAnnotationCalc);
     CPPUNIT_TEST(testCalcEditRendering);
     CPPUNIT_TEST(testFontList);
-    CPPUNIT_TEST(testStateUnoCommand);
+    CPPUNIT_TEST(testStateUnoCommandWriter);
+    CPPUNIT_TEST(testStateUnoCommandCalc);
+    CPPUNIT_TEST(testStateUnoCommandImpress);
     CPPUNIT_TEST(testColumnRowResize);
     CPPUNIT_TEST(testOptimalResize);
     CPPUNIT_TEST(testInvalidateViewCursor);
@@ -136,7 +138,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testInsertAnnotationCalc();
     void testCalcEditRendering();
     void testFontList();
-    void testStateUnoCommand();
+    void testStateUnoCommandWriter();
+    void testStateUnoCommandCalc();
+    void testStateUnoCommandImpress();
     void testColumnRowResize();
     void testOptimalResize();
     void testInvalidateViewCursor();
@@ -175,7 +179,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                      const std::string& testname);
 
     std::string getFontList(const std::string& message);
-    void testStateChanged(const std::string& filename, std::vector<std::string>& vecComands);
+    void testStateChanged(const std::string& filename, std::set<std::string>& vecComands);
     double getColRowSize(const std::string& property, const std::string& message, int index);
     double getColRowSize(const std::shared_ptr<LOOLWebSocket>& socket, const std::string& item, int index, const std::string& testname);
     void testEachView(const std::string& doc, const std::string& type, const std::string& protocol, const std::string& view, const std::string& testname);
@@ -1592,97 +1596,41 @@ void HTTPWSTest::testFontList()
     }
 }
 
-void HTTPWSTest::testStateChanged(const std::string& filename, std::vector<std::string>& vecCommands)
+void HTTPWSTest::testStateChanged(const std::string& filename, std::set<std::string>& commands)
 {
-    const auto testname = "stateChanged ";
+    const auto testname = "stateChanged_" + filename + " ";
+
+    Poco::RegularExpression reUno("\\.[a-zA-Z]*\\:[a-zA-Z]*\\=");
 
     auto socket = loadDocAndGetSocket(filename, _uri, testname);
     SocketProcessor(testname, socket,
         [&](const std::string& msg)
         {
             Poco::RegularExpression::MatchVec matches;
-            Poco::RegularExpression reUno("\\.[a-zA-Z]*\\:[a-zA-Z]*\\=");
-
             if (reUno.match(msg, 0, matches) > 0 && matches.size() == 1)
             {
-                const auto str = msg.substr(matches[0].offset, matches[0].length);
-                auto result = std::find(std::begin(vecCommands), std::end(vecCommands), str);
-
-                if (result != std::end(vecCommands))
-                {
-                    vecCommands.erase(result);
-                }
+                commands.erase(msg.substr(matches[0].offset, matches[0].length));
             }
 
-            if (vecCommands.size() == 0)
-                return false;
-
-            return true;
+            return !commands.empty();
         });
 
-    if (vecCommands.size() > 0 )
+    if (!commands.empty())
     {
         std::ostringstream ostr;
-
         ostr << filename << " : Missing Uno Commands: " << std::endl;
-        for (auto & itUno : vecCommands)
+        for (auto & itUno : commands)
+        {
             ostr << itUno << std::endl;
+        }
 
         CPPUNIT_FAIL(ostr.str());
     }
 }
 
-void HTTPWSTest::testStateUnoCommand()
+void HTTPWSTest::testStateUnoCommandWriter()
 {
-    std::vector<std::string> calcCommands
-    {
-        ".uno:BackgroundColor=",
-        ".uno:Bold=",
-        ".uno:CenterPara=",
-        ".uno:CharBackColor=",
-        ".uno:CharFontName=",
-        ".uno:Color=",
-        ".uno:FontHeight=",
-        ".uno:Italic=",
-        ".uno:JustifyPara=",
-        ".uno:OutlineFont=",
-        ".uno:LeftPara=",
-        ".uno:RightPara=",
-        ".uno:Shadowed=",
-        ".uno:SubScript=",
-        ".uno:SuperScript=",
-        ".uno:Strikeout=",
-        ".uno:StyleApply=",
-        ".uno:Underline=",
-        ".uno:ModifiedStatus=",
-        ".uno:Undo=",
-        ".uno:Redo=",
-        ".uno:Cut=",
-        ".uno:Copy=",
-        ".uno:Paste=",
-        ".uno:SelectAll=",
-        ".uno:InsertAnnotation=",
-        ".uno:InsertRowsBefore=",
-        ".uno:InsertRowsAfter=",
-        ".uno:InsertColumnsBefore=",
-        ".uno:InsertColumnsAfter=",
-        ".uno:DeleteRows=",
-        ".uno:DeleteColumns=",
-        ".uno:StatusDocPos=",
-        ".uno:RowColSelCount=",
-        ".uno:StatusPageStyle=",
-        ".uno:InsertMode=",
-        ".uno:StatusSelectionMode=",
-        ".uno:StateTableCell=",
-        ".uno:StatusBarFunc=",
-        ".uno:WrapText=",
-        ".uno:ToggleMergeCells=",
-        ".uno:NumberFormatCurrency=",
-        ".uno:NumberFormatPercent=",
-        ".uno:NumberFormatDate="
-    };
-
-    std::vector<std::string> writerCommands
+    std::set<std::string> writerCommands
     {
         ".uno:BackColor=",
         ".uno:BackgroundColor=",
@@ -1736,7 +1684,79 @@ void HTTPWSTest::testStateUnoCommand()
         ".uno:NumberFormatDate="
     };
 
-    std::vector<std::string> impressCommands
+    try
+    {
+        testStateChanged("empty.odt", writerCommands);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testStateUnoCommandCalc()
+{
+    std::set<std::string> calcCommands
+    {
+        ".uno:BackgroundColor=",
+        ".uno:Bold=",
+        ".uno:CenterPara=",
+        ".uno:CharBackColor=",
+        ".uno:CharFontName=",
+        ".uno:Color=",
+        ".uno:FontHeight=",
+        ".uno:Italic=",
+        ".uno:JustifyPara=",
+        ".uno:OutlineFont=",
+        ".uno:LeftPara=",
+        ".uno:RightPara=",
+        ".uno:Shadowed=",
+        ".uno:SubScript=",
+        ".uno:SuperScript=",
+        ".uno:Strikeout=",
+        ".uno:StyleApply=",
+        ".uno:Underline=",
+        ".uno:ModifiedStatus=",
+        ".uno:Undo=",
+        ".uno:Redo=",
+        ".uno:Cut=",
+        ".uno:Copy=",
+        ".uno:Paste=",
+        ".uno:SelectAll=",
+        ".uno:InsertAnnotation=",
+        ".uno:InsertRowsBefore=",
+        ".uno:InsertRowsAfter=",
+        ".uno:InsertColumnsBefore=",
+        ".uno:InsertColumnsAfter=",
+        ".uno:DeleteRows=",
+        ".uno:DeleteColumns=",
+        ".uno:StatusDocPos=",
+        ".uno:RowColSelCount=",
+        ".uno:StatusPageStyle=",
+        ".uno:InsertMode=",
+        ".uno:StatusSelectionMode=",
+        ".uno:StateTableCell=",
+        ".uno:StatusBarFunc=",
+        ".uno:WrapText=",
+        ".uno:ToggleMergeCells=",
+        ".uno:NumberFormatCurrency=",
+        ".uno:NumberFormatPercent=",
+        ".uno:NumberFormatDate="
+    };
+
+    try
+    {
+        testStateChanged("empty.ods", calcCommands);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testStateUnoCommandImpress()
+{
+    std::set<std::string> impressCommands
     {
         ".uno:Bold=",
         ".uno:CenterPara=",
@@ -1785,9 +1805,7 @@ void HTTPWSTest::testStateUnoCommand()
 
     try
     {
-        testStateChanged(std::string("setclientpart.ods"), calcCommands);
-        testStateChanged(std::string("hello.odt"), writerCommands);
-        testStateChanged(std::string("setclientpart.odp"), impressCommands);
+        testStateChanged("empty.odp", impressCommands);
     }
     catch (const Poco::Exception& exc)
     {
