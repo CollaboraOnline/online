@@ -94,7 +94,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInvalidateViewCursor);
     CPPUNIT_TEST(testViewCursorVisible);
     CPPUNIT_TEST(testCellViewCursor);
-    CPPUNIT_TEST(testGraphicViewSelection);
+    CPPUNIT_TEST(testGraphicViewSelectionWriter);
+    CPPUNIT_TEST(testGraphicViewSelectionCalc);
+    CPPUNIT_TEST(testGraphicViewSelectionImpress);
     CPPUNIT_TEST(testGraphicInvalidate);
     CPPUNIT_TEST(testCursorPosition);
     CPPUNIT_TEST(testAlertAllUsers);
@@ -140,7 +142,9 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testInvalidateViewCursor();
     void testViewCursorVisible();
     void testCellViewCursor();
-    void testGraphicViewSelection();
+    void testGraphicViewSelectionWriter();
+    void testGraphicViewSelectionCalc();
+    void testGraphicViewSelectionImpress();
     void testGraphicInvalidate();
     void testCursorPosition();
     void testAlertAllUsers();
@@ -2089,15 +2093,19 @@ void HTTPWSTest::testCellViewCursor()
     testEachView("empty.ods", "spreadsheet", "cellcursor:", "cellviewcursor:", "cellViewCursor");
 }
 
-void HTTPWSTest::testGraphicViewSelection()
+void HTTPWSTest::testGraphicViewSelectionWriter()
+{
+    testEachView("graphicviewselection.odt", "text", "graphicselection:", "graphicviewselection:", "graphicViewSelection-odt ");
+}
+
+void HTTPWSTest::testGraphicViewSelectionCalc()
+{
+    testEachView("graphicviewselection.ods", "spreadsheet", "graphicselection:", "graphicviewselection:", "graphicViewSelection-ods ");
+}
+
+void HTTPWSTest::testGraphicViewSelectionImpress()
 {
     testEachView("graphicviewselection.odp", "presentation", "graphicselection:", "graphicviewselection:", "graphicViewSelection-odp ");
-
-    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countLoolKitProcesses(InitialLoolKitCount));
-    testEachView("graphicviewselection.odt", "text", "graphicselection:", "graphicviewselection:", "graphicViewSelection-odt ");
-
-    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countLoolKitProcesses(InitialLoolKitCount));
-    testEachView("graphicviewselection.ods", "spreadsheet", "graphicselection:", "graphicviewselection:", "graphicViewSelection-ods ");
 }
 
 void HTTPWSTest::testGraphicInvalidate()
