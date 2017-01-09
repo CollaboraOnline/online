@@ -119,17 +119,25 @@ static int countLoolKitProcesses(const int expected)
 // it will cause testNoExtraLoolKitsLeft to
 // wait unnecessarily and fail.
 static int InitialLoolKitCount = 1;
+static std::chrono::steady_clock::time_point TestStartTime;
 
 static void testCountHowManyLoolkits()
 {
     InitialLoolKitCount = countLoolKitProcesses(InitialLoolKitCount);
     CPPUNIT_ASSERT(InitialLoolKitCount > 0);
+
+    TestStartTime = std::chrono::steady_clock::now();
 }
 
 static void testNoExtraLoolKitsLeft()
 {
     const auto countNow = countLoolKitProcesses(InitialLoolKitCount);
     CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
+
+    const auto duration = (std::chrono::steady_clock::now() - TestStartTime);
+    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+
+    std::cout << " (" << durationMs << " ms)";
 }
 
 #endif

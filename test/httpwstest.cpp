@@ -2072,8 +2072,6 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type,
     {
         CPPUNIT_FAIL(exc.displayText());
     }
-
-    testNoExtraLoolKitsLeft();
 }
 
 void HTTPWSTest::testInvalidateViewCursor()
@@ -2094,7 +2092,11 @@ void HTTPWSTest::testCellViewCursor()
 void HTTPWSTest::testGraphicViewSelection()
 {
     testEachView("graphicviewselection.odp", "presentation", "graphicselection:", "graphicviewselection:", "graphicViewSelection-odp ");
+
+    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countLoolKitProcesses(InitialLoolKitCount));
     testEachView("graphicviewselection.odt", "text", "graphicselection:", "graphicviewselection:", "graphicViewSelection-odt ");
+
+    CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countLoolKitProcesses(InitialLoolKitCount));
     testEachView("graphicviewselection.ods", "spreadsheet", "graphicselection:", "graphicviewselection:", "graphicViewSelection-ods ");
 }
 
