@@ -56,10 +56,10 @@ namespace LOOLProtocol
     }
 
     inline
-    bool parseNameIntegerPair(const std::string& token, std::string& name, int& value, const char delim = '=')
+    bool parseNameIntegerPair(const std::string& token, std::string& name, int& value)
     {
         std::string strValue;
-        return parseNameValuePair(token, name, strValue, delim) && stringToInteger(strValue, value);
+        return parseNameValuePair(token, name, strValue, '=') && stringToInteger(strValue, value);
     }
 
     bool getTokenInteger(const std::string& token, const std::string& name, int& value);
