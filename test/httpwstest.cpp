@@ -77,6 +77,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPasswordProtectedDocumentWithWrongPassword);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPassword);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPasswordAgain);
+    CPPUNIT_TEST(testPasswordProtectedOOXMLDocument);
+    CPPUNIT_TEST(testPasswordProtectedBinaryMSOfficeDocument);
     CPPUNIT_TEST(testInsertDelete);
     CPPUNIT_TEST(testSlideShow);
     CPPUNIT_TEST(testInactiveClient);
@@ -120,6 +122,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testPasswordProtectedDocumentWithWrongPassword();
     void testPasswordProtectedDocumentWithCorrectPassword();
     void testPasswordProtectedDocumentWithCorrectPasswordAgain();
+    void testPasswordProtectedOOXMLDocument();
+    void testPasswordProtectedBinaryMSOfficeDocument();
     void testInsertDelete();
     void testNoExtraLoolKitsLeft();
     void testSlideShow();
@@ -748,6 +752,48 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
 void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPasswordAgain()
 {
     testPasswordProtectedDocumentWithCorrectPassword();
+}
+
+void HTTPWSTest::testPasswordProtectedOOXMLDocument()
+{
+    try
+    {
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("password-protected.docx", documentPath, documentURL);
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        auto socket = connectLOKit(_uri, request, _response);
+
+        // Send a load request with correct password
+        sendTextFrame(socket, "load url=" + documentURL + " password=abc");
+
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket));
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testPasswordProtectedBinaryMSOfficeDocument()
+{
+    try
+    {
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("password-protected.doc", documentPath, documentURL);
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        auto socket = connectLOKit(_uri, request, _response);
+
+        // Send a load request with correct password
+        sendTextFrame(socket, "load url=" + documentURL + " password=abc");
+
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket));
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
 }
 
 void HTTPWSTest::testInsertDelete()
