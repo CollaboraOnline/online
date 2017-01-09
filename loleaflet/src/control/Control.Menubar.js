@@ -273,9 +273,7 @@ L.Control.Menubar = L.Control.extend({
 
 	onAdd: function (map) {
 		this._initialized = false;
-		var docContainer = map.options.documentContainer;
-		this._menubarCont = L.DomUtil.create('ul', 'sm sm-simple', docContainer.parentElement);
-		this._menubarCont.id = 'main-menu';
+		this._menubarCont = L.DomUtil.get('main-menu');
 
 		map.on('doclayerinit', this._onDocLayerInit, this);
 		map.on('commandstatechanged', this._onCommandStateChanged, this);
