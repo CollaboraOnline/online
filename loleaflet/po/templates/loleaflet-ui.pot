@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-19 19:19+0100\n"
+"POT-Creation-Date: 2017-01-09 12:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -355,287 +355,287 @@ msgstr ""
 msgid "Justified"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:390
+#: dist/toolbar/toolbar.js:391
 msgid "Wrap Text"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:391
+#: dist/toolbar/toolbar.js:392
 msgid "Merge and Center Cells"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:393
+#: dist/toolbar/toolbar.js:394
 msgid "Format as Currency"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:394
+#: dist/toolbar/toolbar.js:395
 msgid "Format as Percent"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:395
+#: dist/toolbar/toolbar.js:396
 msgid "Format as Number"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:396
+#: dist/toolbar/toolbar.js:397
 msgid "Format as Date"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:397
+#: dist/toolbar/toolbar.js:398
 msgid "Add Decimal Place"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:398
+#: dist/toolbar/toolbar.js:399
 msgid "Delete Decimal Place"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:400
+#: dist/toolbar/toolbar.js:401
 msgid "Sort Ascending"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:401
+#: dist/toolbar/toolbar.js:402
 msgid "Sort Descending"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:403 src/control/Control.Menubar.js:107
+#: dist/toolbar/toolbar.js:404 src/control/Control.Menubar.js:107
 msgid "Bullets on/off"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:404 src/control/Control.Menubar.js:108
+#: dist/toolbar/toolbar.js:405 src/control/Control.Menubar.js:108
 msgid "Numbering on/off"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:406 src/control/Control.Menubar.js:95
+#: dist/toolbar/toolbar.js:407 src/control/Control.Menubar.js:95
 msgid "Increase indent"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:407 src/control/Control.Menubar.js:96
+#: dist/toolbar/toolbar.js:408 src/control/Control.Menubar.js:96
 msgid "Decrease indent"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:410
+#: dist/toolbar/toolbar.js:411
 msgid "Insert table"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:411
+#: dist/toolbar/toolbar.js:412
 msgid "Insert comment"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:412
+#: dist/toolbar/toolbar.js:413
 msgid "Insert graphic"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:413
+#: dist/toolbar/toolbar.js:414
 msgid "Special Character"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:415
+#: dist/toolbar/toolbar.js:416
 msgid "More"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:416
+#: dist/toolbar/toolbar.js:417
 msgid "Close document"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:451
+#: dist/toolbar/toolbar.js:496
 msgid "Layout"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:474 dist/toolbar/toolbar.js:801
+#: dist/toolbar/toolbar.js:519 dist/toolbar/toolbar.js:851
 msgid "Sum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:475
+#: dist/toolbar/toolbar.js:520
 msgid "Function"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:476 src/control/Control.CharacterMap.js:428
+#: dist/toolbar/toolbar.js:521 src/control/Control.CharacterMap.js:428
 msgid "Cancel"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:477
+#: dist/toolbar/toolbar.js:522
 msgid "Accept"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:488
+#: dist/toolbar/toolbar.js:533
 msgid "First sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:489
+#: dist/toolbar/toolbar.js:534
 msgid "Previous sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:490
+#: dist/toolbar/toolbar.js:535
 msgid "Next sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:491
+#: dist/toolbar/toolbar.js:536
 msgid "Last sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:501 src/control/Control.Menubar.js:211
+#: dist/toolbar/toolbar.js:546 src/control/Control.Menubar.js:211
 msgid "Fullscreen presentation"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:503
+#: dist/toolbar/toolbar.js:548
 msgid "Insert slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:504 src/control/Control.Menubar.js:208
+#: dist/toolbar/toolbar.js:549 src/control/Control.Menubar.js:208
 msgid "Duplicate slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:505 src/control/Control.Menubar.js:209
+#: dist/toolbar/toolbar.js:550 src/control/Control.Menubar.js:209
 msgid "Delete slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:518
+#: dist/toolbar/toolbar.js:563
 msgid "Search:"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:523
+#: dist/toolbar/toolbar.js:568
 msgid "Search backwards"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:524
+#: dist/toolbar/toolbar.js:569
 msgid "Search forward"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:525
+#: dist/toolbar/toolbar.js:570
 msgid "Cancel the search"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:530 dist/toolbar/toolbar.js:1344
+#: dist/toolbar/toolbar.js:575 dist/toolbar/toolbar.js:1404
 msgid "No users"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:532
+#: dist/toolbar/toolbar.js:577
 msgid "Previous page"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:533
+#: dist/toolbar/toolbar.js:578
 msgid "Next page"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:535 src/control/Control.Menubar.js:36
+#: dist/toolbar/toolbar.js:580 src/control/Control.Menubar.js:36
 #: src/control/Control.Menubar.js:187
 msgid "Reset zoom"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:536 src/control/Control.Menubar.js:35
+#: dist/toolbar/toolbar.js:581 src/control/Control.Menubar.js:35
 #: src/control/Control.Menubar.js:186
 msgid "Zoom out"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:538 src/control/Control.Menubar.js:34
+#: dist/toolbar/toolbar.js:583 src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:185
 msgid "Zoom in"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:552
+#: dist/toolbar/toolbar.js:597
 msgid "%user has joined"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:553
+#: dist/toolbar/toolbar.js:598
 msgid "%user has left"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:650 dist/toolbar/toolbar.js:1127
+#: dist/toolbar/toolbar.js:700 dist/toolbar/toolbar.js:1187
 msgid "Size"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:782
+#: dist/toolbar/toolbar.js:832
 msgid "Number of Sheets"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:785
+#: dist/toolbar/toolbar.js:835
 msgid "Selected range of cells"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:788 dist/toolbar/toolbar.js:819
+#: dist/toolbar/toolbar.js:838 dist/toolbar/toolbar.js:869
 msgid "Entering text mode"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:791 dist/toolbar/toolbar.js:822
+#: dist/toolbar/toolbar.js:841 dist/toolbar/toolbar.js:872
 msgid "Selection Mode"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:794
+#: dist/toolbar/toolbar.js:844
 msgid "Choice of functions"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:796
+#: dist/toolbar/toolbar.js:846
 msgid "Average"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:797
+#: dist/toolbar/toolbar.js:847
 msgid "CountA"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:798
+#: dist/toolbar/toolbar.js:848
 msgid "Count"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:799
+#: dist/toolbar/toolbar.js:849
 msgid "Maximum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:800
+#: dist/toolbar/toolbar.js:850
 msgid "Minimum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:802
+#: dist/toolbar/toolbar.js:852
 msgid "Selection count"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:803 src/control/Control.CharacterMap.js:11
+#: dist/toolbar/toolbar.js:853 src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:813
+#: dist/toolbar/toolbar.js:863
 msgid "Number of Pages"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:816
+#: dist/toolbar/toolbar.js:866
 msgid "Word Counter"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:833
+#: dist/toolbar/toolbar.js:883
 msgid "Number of Slides"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:960
+#: dist/toolbar/toolbar.js:1011
 msgid "Document saved"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1110
+#: dist/toolbar/toolbar.js:1170
 msgid "Style"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1122
+#: dist/toolbar/toolbar.js:1182
 msgid "Font"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1146
+#: dist/toolbar/toolbar.js:1206
 msgid "Previous slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1147
+#: dist/toolbar/toolbar.js:1207
 msgid "Next slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1205
+#: dist/toolbar/toolbar.js:1265
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1335
+#: dist/toolbar/toolbar.js:1395
 msgid "%n users"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1342
+#: dist/toolbar/toolbar.js:1402
 msgid "1 user"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1369 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1429 src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr ""
 
@@ -2315,11 +2315,11 @@ msgstr ""
 msgid "Downloading..."
 msgstr ""
 
-#: src/control/Toolbar.js:91 src/map/Map.js:901
+#: src/control/Toolbar.js:91 src/map/Map.js:905
 msgid "Saving..."
 msgstr ""
 
-#: src/control/Toolbar.js:237
+#: src/control/Toolbar.js:242
 msgid "This version of %productName is powered by"
 msgstr ""
 
@@ -2373,11 +2373,11 @@ msgstr ""
 msgid "Initializing..."
 msgstr ""
 
-#: src/map/Map.js:782
+#: src/map/Map.js:786
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 
-#: src/map/Map.js:904
+#: src/map/Map.js:908
 msgid "Loading..."
 msgstr ""
 
