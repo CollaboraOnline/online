@@ -1,21 +1,8 @@
-#toolbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding-bottom: 15px;
-    text-align: center;
-}
-
 #toolbar-up {
     left: 0;
     right: 0;
     text-align: center;
-    padding: 6px;
-    padding-top: 6px;
-    padding-bottom: 4px;
     z-index: 1000;
-    margin-top: 25px;
 }
 
 #toolbar-down {
@@ -47,14 +34,11 @@
 }
 
 #presentation-toolbar {
-    background: #DFDFDF;
-    left: 0;
+    background-color: #dfdfdf;
     text-align: center;
-    bottom: 33px;
-    width: 203px;
-    padding: 0;
     position: absolute;
     z-index: 500;
+    width: 100%;
 }
 
 /* center the toolbar */
@@ -72,11 +56,10 @@
     width: 800px;
 }
 #tb_toolbar-up_item_close {
-    position: absolute;
-    padding-right: 6px;
-    margin-top: -25px;
+    position: fixed;
     z-index: 1050;
     right: 0;
+    top: 0;
 }
 #tb_toolbar-up_item_right {
     width: 100%;

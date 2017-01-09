@@ -4,16 +4,119 @@
 
 /* global $ map closebutton w2ui w2utils vex _ */
 
+var mobileWidth = 768;
+
 function onDelete(e) {
 	if (e !== false) {
 		map.deletePage();
 	}
 }
 
+// When we are in mobile view, only these items in toolbar-up will be shown
+var toolbarUpMobileItems = [
+	'left',
+	'save',
+	'savebreak',
+	'bold',
+	'italic',
+	'underline',
+	'strikeout',
+	'formatbreak',
+	'leftpara',
+	'centerpara',
+	'rightpara',
+	'justifypara',
+	'close'
+];
+
+var statusbarMobileItems = [
+	'search',
+	'searchprev',
+	'searchnext',
+	'cancelsearch',
+	'left',
+	'right',
+	'userlist',
+	'userlistbreak',
+	'prev',
+	'next'
+];
+
+var nUsers, oneUser, noUser;
+
+function _mobilify() {
+	var toolbarUp = w2ui['toolbar-up'];
+	var toolbarUpMore = w2ui['toolbar-up-more'];
+	var statusbar = w2ui['toolbar-down'];
+
+	for (var itemIdx in toolbarUp.items) {
+		var id = toolbarUp.items[itemIdx].id;
+		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && !toolbarUp.get(id).hidden) {
+			toolbarUp.hide(id);
+		}
+	}
+	for (itemIdx in toolbarUpMore.items) {
+		id = toolbarUpMore.items[itemIdx].id;
+		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && !toolbarUp.get(id).hidden) {
+			toolbarUpMore.hide(id);
+		}
+	}
+
+	for (itemIdx in statusbar.items) {
+		id = statusbar.items[itemIdx].id;
+		if (statusbarMobileItems.indexOf(id) === -1 && !statusbar.get(id).hidden) {
+			statusbar.hide(id);
+		}
+	}
+
+	nUsers = '%n';
+	oneUser = '1';
+	noUser = '0';
+	updateUserListCount();
+}
+
+function _unmobilify() {
+	var toolbarUp = w2ui['toolbar-up'];
+	var toolbarUpMore = w2ui['toolbar-up-more'];
+	var statusbar = w2ui['toolbar-down'];
+
+	for (var itemIdx in toolbarUp.items) {
+		var id = toolbarUp.items[itemIdx].id;
+		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && toolbarUp.get(id).hidden) {
+			toolbarUp.show(id);
+		}
+	}
+	for (itemIdx in toolbarUpMore.items) {
+		id = toolbarUpMore.items[itemIdx].id;
+		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUpMore.get(id) && toolbarUpMore.get(id).hidden) {
+			toolbarUpMore.show(id);
+		}
+	}
+
+	for (itemIdx in statusbar.items) {
+		id = statusbar.items[itemIdx].id;
+		if (statusbarMobileItems.indexOf(id) === -1 && statusbar.get(id).hidden) {
+			statusbar.show(id);
+		}
+	}
+
+	nUsers = _('%n users');
+	oneUser = _('1 user');
+	noUser = _('0 user');
+	updateUserListCount();
+}
+
 function resizeToolbar() {
 	var hasMoreItems = false;
 	var toolbarUp = w2ui['toolbar-up'];
 	var toolbarUpMore = w2ui['toolbar-up-more'];
+
+	if ($(window).width() < mobileWidth) {
+		_mobilify();
+	} else {
+		_unmobilify();
+	}
+
 	// move items from toolbar-up-more -> toolbar-up
 	while ($('#toolbar-up')[0].scrollWidth <= $(window).width()) {
 		var item = toolbarUpMore.items[0];
@@ -27,7 +130,7 @@ function resizeToolbar() {
 	// move items from toolbar-up -> toolbar-up-more
 	while ($('#toolbar-up')[0].scrollWidth > Math.max($(window).width(), parseInt($('body').css('min-width')))) {
 		var itemId = toolbarUp.items[toolbarUp.items.length - 4].id;
-		if (itemId === 'resizebreak') {
+		if ($(window).width() >= mobileWidth && itemId === 'resizebreak') {
 			return;
 		}
 		item = toolbarUp.get(itemId);
@@ -361,7 +464,7 @@ $(function () {
 			{type: 'button',  id: 'italic', img: 'italic', hint: _('Italic'), uno: 'Italic'},
 			{type: 'button',  id: 'underline',  img: 'underline', hint: _('Underline'), uno: 'Underline'},
 			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _('Strikeout'), uno: 'Strikeout'},
-			{type: 'break'},
+			{type: 'break', id: 'formatbreak'},
 			{type: 'html',  id: 'fontcolor-html', html: '<input id="fontColorPicker" style="display:none;">'},
 			{type: 'button',  id: 'fontcolor', img: 'color', hint: _('Font color')},
 			{type: 'html',  id: 'backcolor-html', html: '<input id="backColorPicker" style="display:none;">'},
@@ -555,9 +658,9 @@ $(function () {
 			{type: 'html',  id: 'left'},
 			{type: 'html',  id: 'right'},
 			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
-			{type: 'break'},
+			{type: 'break', id: 'modifiedstatuslabelbreak'},
 			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table></div>' },
-			{type: 'break'},
+			{type: 'break', id: 'userlistbreak'},
 			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
 			{type: 'button',  id: 'next', img: 'next', hint: _('Next page')},
 			{type: 'break', id: 'prevnextbreak'},
@@ -879,6 +982,10 @@ map.on('doclayerinit', function () {
 				{ func: '16', text: _('None'), icon: 'selected'},
 		]},
 		]);
+
+		// Remove irrelevant toolbars
+		$('#presentation-toolbar').hide();
+
 		break;
 	case 'text':
 		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
@@ -897,6 +1004,12 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'SelectionMode',
 				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
+
+		// Remove irrelevant toolbars
+		$('#formulabar').hide();
+		$('#spreadsheet-toolbar').hide();
+		$('#presentation-toolbar').hide();
+
 		break;
 	case 'presentation':
 		var presentationToolbar = w2ui['presentation-toolbar'];
@@ -908,10 +1021,20 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'PageStatus',
 				html: '<div id="PageStatus" class="loleaflet-font" title="'+_('Number of Slides')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
+
+		// Remove irrelevant toolbars
+		$('#formulabar').hide();
+		$('#spreadsheet-toolbar').hide();
+
 		break;
 	case 'drawing':
 		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		toolbarUpMore.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
+
+		// Remove irrelevant toolbars
+		$('#formulabar').hide();
+		$('#spreadsheet-toolbar').hide();
+
 		break;
 	}
 	toolbarUp.refresh();
@@ -1417,16 +1540,16 @@ function getUserItem(viewId, userName, color) {
 
 	return html;
 }
-var nUsers = _('%n users');
+
 function updateUserListCount() {
 	var userlistItem = w2ui['toolbar-down'].get('userlist');
 	var count = $(userlistItem.html).find('#userlist_table tbody tr').length;
 	if (count > 1) {
 		userlistItem.text = nUsers.replace('%n', count);
 	} else if (count === 1) {
-		userlistItem.text = _('1 user');
+		userlistItem.text = oneUser;
 	} else {
-		userlistItem.text = _('No users');
+		userlistItem.text = noUser;
 	}
 
 	var zoomlevel = $('#zoomlevel').html();

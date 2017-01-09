@@ -273,9 +273,7 @@ L.Control.Menubar = L.Control.extend({
 
 	onAdd: function (map) {
 		this._initialized = false;
-		var docContainer = map.options.documentContainer;
-		this._menubarCont = L.DomUtil.create('ul', 'sm sm-simple', docContainer.parentElement);
-		this._menubarCont.id = 'main-menu';
+		this._menubarCont = L.DomUtil.get('main-menu');
 
 		map.on('doclayerinit', this._onDocLayerInit, this);
 		map.on('commandstatechanged', this._onCommandStateChanged, this);
@@ -317,6 +315,28 @@ L.Control.Menubar = L.Control.extend({
 		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
 		$('#main-menu').bind('beforeshow.smapi', {self: this}, this._beforeShow);
 		$('#main-menu').bind('click.smapi', {self: this}, this._onClicked);
+
+		// SmartMenus mobile menu toggle button
+		$(function() {
+			var $mainMenuState = $('#main-menu-state');
+			if ($mainMenuState.length) {
+				// animate mobile menu
+				$mainMenuState.change(function(e) {
+					var $menu = $('#main-menu');
+					if (this.checked) {
+						$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
+					} else {
+						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
+					}
+				});
+				// hide mobile menu beforeunload
+				$(window).bind('beforeunload unload', function() {
+					if ($mainMenuState[0].checked) {
+						$mainMenuState[0].click();
+					}
+				});
+			}
+		});
 
 		this._initialized = true;
 	},

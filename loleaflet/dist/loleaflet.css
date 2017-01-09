@@ -17,21 +17,30 @@
 	z-index: 10;
 }
 
-#main-menu {
-    top: 0;
-    position: fixed;
-    height: 25px;
-    display: inline-flex;
-    right: 0;
-    left: 0;
-    padding-left: 125px;
-    z-index: 1000;
-    outline: none;
-}
-
 body {
     margin: 0;
-    min-width: 600px;
+}
+
+#presentation-controls-wrapper {
+    background: #dfdfdf;
+    position: absolute;
+    top: 70px;
+    left: 0px;
+    bottom: 66px;
+    max-width: 214px;
+    border-top: 1px solid #b6b6b6;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    /* Show slidesorter beyond 768px only */
+    #presentation-controls-wrapper {
+	display: none;
+    }
+
+    #document-container.parts-preview-document {
+	left: 0px !important;
+    }
 }
 
 .loleaflet-font {

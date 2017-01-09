@@ -1,0 +1,216 @@
+#main-menu {
+    top: 30px;
+    height: 25px;
+    padding-left: 125px;
+    z-index: 1000;
+    outline: none;
+}
+
+.header-wrapper {
+    background: #efefef; /* Fill up white areas with grey */
+    min-height: 70px; /* Map starts from 70px onwards in case of writer, calc */
+}
+.main-nav {
+    height: 30px; /* on mouseover menubar items, border emerges */
+}
+
+/* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
+.lo-menu {
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active {
+    font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.lo-menu a.disabled {
+    cursor: default;
+}
+.lo-menu > li > a.has-submenu {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    z-index: 500;
+    border-left: 1px solid #efefef;
+    border-right: 1px solid #efefef;
+}
+
+.lo-menu {
+    background: #efefef;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;
+    cursor: default;
+}
+.lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
+    padding: 5px 15px;
+    color: #000;
+}
+.lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
+    background: #538ecd;
+    color: #fff;
+}
+.lo-menu > li {
+    background: #efefef; /* top-level menus remain greyish */
+}
+.lo-menu > li > a:hover, .lo-menu > li > a:focus, .lo-menu > li > a:active, .lo-menu > li > a.highlighted {
+    background: #fff;
+    color: #000;
+    border-color: #bbbbbb;
+    border-bottom: 1px solid #bbb;
+}
+.lo-menu > li > a.highlighted {
+    border-bottom-color: #fff;
+}
+.lo-menu > li > ul {
+    margin-top: -1px !important;
+    z-index: 400;
+}
+.lo-menu > li > a span.sub-arrow {
+    display: none;
+}
+.lo-menu ul {
+    border: 1px solid #bbbbbb;
+    background: white;
+}
+.lo-menu ul a span.sub-arrow {
+    right: 0;
+    margin-right: 5px;
+    background: transparent; /* we want them to be transparent always whether mobile or desktop */
+}
+.lo-menu ul > li {
+    border-left: 0;
+    border-top: none;
+}
+.lo-menu a.separator {
+    height: 1px;
+    margin: 4px 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: #efefef;
+}
+/* lo-menu customizations end */
+
+.main-nav:after {
+    clear: both;
+    content: "\00a0";
+    display: block;
+    height: 0;
+    font: 0px/0 serif;
+    overflow: hidden;
+}
+
+/* Mobile menu toggle button */
+
+.main-menu-btn {
+    z-index: 2000;
+    float: left;
+    left: 35px;
+    margin: 2px 10px;
+    position: relative;
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    text-indent: 21px;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+/* hamburger icon */
+
+.main-menu-btn-icon,
+.main-menu-btn-icon:before,
+.main-menu-btn-icon:after {
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    height: 2px;
+    width: 20px;
+    background: #555;
+    -webkit-transition: all 0.25s;
+    transition: all 0.25s;
+}
+
+.main-menu-btn-icon:before {
+    content: '';
+    top: -7px;
+    left: 0;
+}
+
+.main-menu-btn-icon:after {
+    content: '';
+    top: 7px;
+    left: 0;
+}
+
+
+/* x icon */
+
+#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon {
+    height: 0;
+    background: transparent;
+}
+
+#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon:before {
+    top: 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon:after {
+    top: 0;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+/* hide menu state checkbox (keep it visible to screen readers) */
+
+#main-menu-state {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+
+/* hide the menu in mobile view */
+
+#main-menu-state:not(:checked) ~ #main-menu {
+    display: none;
+}
+
+#main-menu-state:checked ~ #main-menu {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    /* hide the button in desktop view */
+    .main-menu-btn {
+	position: absolute;
+	top: -99999px;
+    }
+    /* always show the menu in desktop view */
+    #main-menu-state:not(:checked) ~ #main-menu {
+	display: block;
+    }
+    #main-menu {
+	top: 0;
+    }
+}

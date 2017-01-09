@@ -6,7 +6,9 @@ L.Map.include({
 		this._permission = perm;
 		if (perm === 'edit') {
 			this._socket.sendMessage('requestloksession');
-			this.dragging.disable();
+			if (!L.Browser.touch) {
+				this.dragging.disable();
+			}
 		}
 		else if (perm === 'view' || perm === 'readonly') {
 			this.dragging.enable();
