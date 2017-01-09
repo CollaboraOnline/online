@@ -9,3 +9,85 @@
     z-index: 1000;
     outline: none;
 }
+
+/* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
+.lo-menu {
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active {
+    font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.lo-menu a.disabled {
+    cursor: default;
+}
+.lo-menu > li > a.has-submenu {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    z-index: 500;
+    border-left: 1px solid #efefef;
+    border-right: 1px solid #efefef;
+}
+
+.lo-menu {
+    background: #efefef;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;
+    cursor: default;
+}
+.lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
+    padding: 5px 15px;
+    color: #000;
+}
+.lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
+    background: #538ecd;
+    color: #fff;
+}
+.lo-menu > li > a:hover, .lo-menu > li > a:focus, .lo-menu > li > a:active, .lo-menu > li > a.highlighted {
+    background: #fff;
+    color: #000;
+    border-color: #bbbbbb;
+    border-bottom: 1px solid #bbb;
+}
+.lo-menu > li > a.highlighted {
+    border-bottom-color: #fff;
+}
+.lo-menu > li > ul {
+    margin-top: -1px !important;
+    z-index: 400;
+}
+.lo-menu > li > a span.sub-arrow {
+    display: none;
+}
+.lo-menu ul {
+    border: 1px solid #bbbbbb;
+    background: white;
+}
+.lo-menu ul a span.sub-arrow {
+    right: 0;
+    margin-right: 5px;
+}
+.lo-menu ul > li {
+    border-left: 0;
+    border-top: none;
+}
+.lo-menu a.separator {
+    height: 1px;
+    margin: 4px 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: #efefef;
+}
+/* lo-menu customizations end */

@@ -26,8 +26,8 @@ var CSSBundleFiles = [
 	'dist/scrollBar.css',
 	'dist/searchControl.css',
 	'dist/spreadsheet.css',
+	'dist/menubar.css',
 	'plugins/draw-0.2.4/dist/leaflet.draw.css',
-	'dist/sm-simple.css'
 ];
 
 var adminBundleFiles = [
