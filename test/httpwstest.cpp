@@ -1317,6 +1317,7 @@ void HTTPWSTest::testInsertAnnotationWriter()
 
     // Insert comment.
     sendTextFrame(socket, "uno .uno:InsertAnnotation", testname);
+    assertResponseString(socket, "invalidatetiles:", testname);
 
     // Paste some text.
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nxxx yyy zzzz", testname);
