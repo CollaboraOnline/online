@@ -56,6 +56,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPerformance);
     CPPUNIT_TEST(testCancelTiles);
     CPPUNIT_TEST(testCancelTilesMultiView);
+    CPPUNIT_TEST(testDisconnectMultiView);
     CPPUNIT_TEST(testUnresponsiveClient);
     CPPUNIT_TEST(testImpressTiles);
     CPPUNIT_TEST(testClientPartImpress);
@@ -79,6 +80,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testPerformance();
     void testCancelTiles();
     void testCancelTilesMultiView();
+    void testDisconnectMultiView();
     void testUnresponsiveClient();
     void testImpressTiles();
     void testClientPartImpress();
@@ -318,6 +320,35 @@ void TileCacheTests::testCancelTilesMultiView()
         {
             break;
         }
+    }
+}
+
+void TileCacheTests::testDisconnectMultiView()
+{
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, "cancelTilesMultiView ");
+
+    const size_t repeat = 4;
+    for (size_t j = 1; j <= repeat; ++j)
+    {
+        std::cerr << "cancelTilesMultiView try #" << j << std::endl;
+
+        // Request a huge tile, and cancel immediately.
+        auto socket1 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-1 ");
+        auto socket2 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-2 ", true);
+
+        sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-1 ");
+        sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
+
+        socket1->shutdown();
+
+        for (auto i = 0; i < 4; ++i)
+        {
+            getTileMessage(*socket2, "cancelTilesMultiView-2 ");
+        }
+
+        // Should never get more than 4 tiles on socket2.
+        const auto res2 = getResponseString(socket2, "tile:", "cancelTilesMultiView-2 ", 1000);
     }
 }
 
