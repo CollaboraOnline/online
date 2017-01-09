@@ -158,9 +158,22 @@ namespace Log
         const std::time_t t = std::time(nullptr);
         oss.str("");
         oss.clear();
-        oss << "Initializing " << name << ". Local time: " << std::put_time(std::localtime(&t), "%c %Z")
-            << ". UTC: " << std::put_time(std::gmtime(&t), "%c %Z")
-            <<  ". Log level is [" << logger.getLevel() << "].";
+
+        oss << "Initializing " << name << ".";
+
+        // TODO: replace with std::put_time when we move to gcc 5+.
+        char buf[32];
+        if (strftime(buf, sizeof(buf), "%a %F %T%z", std::localtime(&t)) > 0)
+        {
+            oss << " Local time: " << buf << ".";
+        }
+
+        if (strftime(buf, sizeof(buf), "%a %F %T%z", std::gmtime(&t)) > 0)
+        {
+            oss << " UTC time: " << buf << ".";
+        }
+
+        oss <<  " Log level is [" << logger.getLevel() << "].";
         info(oss.str());
     }
 
