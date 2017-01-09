@@ -6,6 +6,7 @@
 @import url('dist/scrollBar.css');
 @import url('dist/searchControl.css');
 @import url('dist/spreadsheet.css');
+@import url('dist/menubar.css');
 @import url('plugins/draw-0.2.4/dist/leaflet.draw.css');
 
 @import url('node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css');
