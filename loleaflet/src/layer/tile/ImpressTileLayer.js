@@ -34,7 +34,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			var tileTopLeft = this._coordsToTwips(coords);
 			var tileBottomRight = new L.Point(this._tileWidthTwips, this._tileHeightTwips);
 			var bounds = new L.Bounds(tileTopLeft, tileTopLeft.add(tileBottomRight));
-			if (invalidBounds.intersects(bounds) && coords.part === command.part) {
+			if (coords.part === command.part && invalidBounds.intersects(bounds)) {
 				if (this._tiles[key]._invalidCount) {
 					this._tiles[key]._invalidCount += 1;
 				}
