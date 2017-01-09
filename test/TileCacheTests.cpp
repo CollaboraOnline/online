@@ -981,8 +981,9 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
 
     // random setclientpart
     std::srand(std::time(nullptr));
-    std::vector<int> vParts = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> vParts = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     std::random_shuffle(vParts.begin(), vParts.end());
+    int requests = 0;
     for (auto it : vParts)
     {
         if (currentPart != it)
@@ -996,6 +997,12 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
             assertResponseString(socket, "setpart:", name);
 
             requestTiles(socket, it, docWidth, docHeight, name);
+
+            if (++requests >= 3)
+            {
+                // No need to test all parts.
+                break;
+            }
         }
 
         currentPart = it;
