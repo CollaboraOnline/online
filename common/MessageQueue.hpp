@@ -17,25 +17,34 @@
 #include <mutex>
 #include <vector>
 
-/** Thread-safe message queue (FIFO).
-*/
-class MessageQueue
+/// Thread-safe message queue (FIFO).
+template <typename T>
+class MessageQueueBase
 {
 public:
+    typedef T Payload;
 
-    typedef std::vector<char> Payload;
-
-    MessageQueue()
+    MessageQueueBase()
     {
     }
 
-    virtual ~MessageQueue();
+    virtual ~MessageQueueBase()
+    {
+        clear();
+    }
 
-    MessageQueue(const MessageQueue&) = delete;
-    MessageQueue& operator=(const MessageQueue&) = delete;
+    MessageQueueBase(const MessageQueueBase&) = delete;
+    MessageQueueBase& operator=(const MessageQueueBase&) = delete;
 
     /// Thread safe insert the message.
-    void put(const Payload& value);
+    void put(const Payload& value)
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+        put_impl(value);
+        lock.unlock();
+        _cv.notify_one();
+    }
+
     void put(const std::string& value)
     {
         put(Payload(value.data(), value.data() + value.size()));
@@ -43,22 +52,64 @@ public:
 
     /// Thread safe obtaining of the message.
     /// timeoutMs can be 0 to signify infinity.
-    Payload get(const unsigned timeoutMs = 0);
+    Payload get(const unsigned timeoutMs = 0)
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        if (timeoutMs > 0)
+        {
+            if (!_cv.wait_for(lock, std::chrono::milliseconds(timeoutMs),
+                            [this] { return wait_impl(); }))
+            {
+                throw std::runtime_error("Timed out waiting to get queue item.");
+            }
+        }
+        else
+        {
+            _cv.wait(lock, [this] { return wait_impl(); });
+        }
+
+        return get_impl();
+    }
+
 
     /// Thread safe removal of all the pending messages.
-    void clear();
+    void clear()
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+        clear_impl();
+    }
 
     /// Thread safe remove_if.
-    void remove_if(const std::function<bool(const Payload&)>& pred);
+    void remove_if(const std::function<bool(const Payload&)>& pred)
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+        std::remove_if(_queue.begin(), _queue.end(), pred);
+    }
 
 protected:
-    virtual void put_impl(const Payload& value);
+    virtual void put_impl(const Payload& value)
+    {
+        const auto msg = std::string(value.data(), value.size());
+        _queue.push_back(value);
+    }
 
-    bool wait_impl() const;
+    bool wait_impl() const
+    {
+        return _queue.size() > 0;
+    }
 
-    virtual Payload get_impl();
+    virtual Payload get_impl()
+    {
+        Payload result = _queue.front();
+        _queue.erase(_queue.begin());
+        return result;
+    }
 
-    void clear_impl();
+    void clear_impl()
+    {
+        _queue.clear();
+    }
 
     /// Get the queue lock when accessing members of derived classes.
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
@@ -72,8 +123,9 @@ private:
 
 };
 
-/** MessageQueue specialized for priority handling of tiles.
-*/
+typedef MessageQueueBase<std::vector<char>> MessageQueue;
+
+/// MessageQueue specialized for priority handling of tiles.
 class TileQueue : public MessageQueue
 {
     friend class TileQueueTests;

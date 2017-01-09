@@ -19,74 +19,6 @@
 
 using Poco::StringTokenizer;
 
-MessageQueue::~MessageQueue()
-{
-    clear();
-}
-
-void MessageQueue::put(const Payload& value)
-{
-    std::unique_lock<std::mutex> lock(_mutex);
-    put_impl(value);
-    lock.unlock();
-    _cv.notify_one();
-}
-
-MessageQueue::Payload MessageQueue::get(const unsigned timeoutMs)
-{
-    std::unique_lock<std::mutex> lock(_mutex);
-
-    if (timeoutMs > 0)
-    {
-        if (!_cv.wait_for(lock, std::chrono::milliseconds(timeoutMs),
-                          [this] { return wait_impl(); }))
-        {
-            throw std::runtime_error("Timed out waiting to get queue item.");
-        }
-    }
-    else
-    {
-        _cv.wait(lock, [this] { return wait_impl(); });
-    }
-
-    return get_impl();
-}
-
-void MessageQueue::clear()
-{
-    std::unique_lock<std::mutex> lock(_mutex);
-    clear_impl();
-}
-
-void MessageQueue::remove_if(const std::function<bool(const Payload&)>& pred)
-{
-    std::unique_lock<std::mutex> lock(_mutex);
-    std::remove_if(_queue.begin(), _queue.end(), pred);
-}
-
-void MessageQueue::put_impl(const Payload& value)
-{
-    const auto msg = std::string(value.data(), value.size());
-    _queue.push_back(value);
-}
-
-bool MessageQueue::wait_impl() const
-{
-    return _queue.size() > 0;
-}
-
-MessageQueue::Payload MessageQueue::get_impl()
-{
-    Payload result = _queue.front();
-    _queue.erase(_queue.begin());
-    return result;
-}
-
-void MessageQueue::clear_impl()
-{
-    _queue.clear();
-}
-
 void TileQueue::put_impl(const Payload& value)
 {
     const auto msg = std::string(value.data(), value.size());
@@ -302,7 +234,7 @@ bool TileQueue::shouldPreferTiles() const
     return false;
 }
 
-MessageQueue::Payload TileQueue::get_impl()
+TileQueue::Payload TileQueue::get_impl()
 {
     LOG_TRC("MessageQueue depth: " << _queue.size());
 
