@@ -103,20 +103,20 @@
 #include "DocumentBroker.hpp"
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
-#include "common/FileUtil.hpp"
 #include "IoUtil.hpp"
-#include "Protocol.hpp"
-#include "Session.hpp"
-#include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "PrisonerSession.hpp"
+#include "Protocol.hpp"
 #include "QueueHandler.hpp"
+#include "Session.hpp"
 #include "Storage.hpp"
 #include "TraceFile.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
 #include "UserMessages.hpp"
 #include "Util.hpp"
+#include "common/FileUtil.hpp"
+#include <LOOLWebSocket.hpp>
 
 #include "common/SigUtil.hpp"
 
@@ -172,16 +172,16 @@ int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 /// New LOK child processes ready to host documents.
 //TODO: Move to a more sensible namespace.
 static bool DisplayVersion = false;
-static std::vector<std::shared_ptr<ChildProcess>> NewChildren;
+static std::vector<std::shared_ptr<ChildProcess> > NewChildren;
 static std::mutex NewChildrenMutex;
 static std::condition_variable NewChildrenCV;
 static std::chrono::steady_clock::time_point LastForkRequestTime = std::chrono::steady_clock::now();
 static std::atomic<int> OutstandingForks(1); // Forkit always spawns 1.
-static std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
+static std::map<std::string, std::shared_ptr<DocumentBroker> > DocBrokers;
 static std::mutex DocBrokersMutex;
 
 /// Used when shutting down to notify them all that the server is recycling.
-static std::vector<std::shared_ptr<LOOLWebSocket>> ClientWebSockets;
+static std::vector<std::shared_ptr<LOOLWebSocket> > ClientWebSockets;
 static std::mutex ClientWebSocketsMutex;
 
 #if ENABLE_DEBUG
