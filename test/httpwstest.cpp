@@ -571,11 +571,14 @@ void HTTPWSTest::testBadLoad()
 
 void HTTPWSTest::testReload()
 {
+    auto const testname = "reload ";
+
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL);
     for (auto i = 0; i < 3; ++i)
     {
-        loadDoc(documentURL, "reload ");
+        std::cerr << testname << "loading #" << (i+1) << std::endl;
+        loadDoc(documentURL, testname);
     }
 }
 

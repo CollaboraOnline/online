@@ -633,8 +633,6 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
 
     const auto count = _sessions.size();
 
-    lock.unlock();
-
     // Request a new session from the child kit.
     _childProcess->sendTextFrame(aMessage);
 

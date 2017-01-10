@@ -950,8 +950,14 @@ private:
 
         if (viewCount <= 0)
         {
-            LOG_INF("Document [" << _url << "] has no more views, exiting bluntly.");
-            std::_Exit(Application::EXIT_OK);
+            std::unique_lock<std::mutex> lock(_mutex);
+            if (_sessions.empty())
+            {
+                LOG_INF("Document [" << _url << "] has no more views, exiting bluntly.");
+                std::_Exit(Application::EXIT_OK);
+            }
+
+            return;
         }
 
         // Get the list of view ids from the core
