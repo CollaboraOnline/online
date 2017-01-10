@@ -594,10 +594,10 @@ std::string DocumentBroker::getJailRoot() const
 
 size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
 {
+    Util::assertIsLocked(_mutex);
+
     const auto id = session->getId();
     const std::string aMessage = "session " + id + " " + _docKey;
-
-    std::unique_lock<std::mutex> lock(_mutex);
 
     try
     {

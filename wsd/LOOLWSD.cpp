@@ -608,7 +608,9 @@ private:
                     std::shared_ptr<LOOLWebSocket> ws;
                     auto session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic);
 
+                    auto lock = docBroker->getLock();
                     auto sessionsCount = docBroker->addSession(session);
+                    lock.unlock();
                     LOG_TRC(docKey << ", ws_sessions++: " << sessionsCount);
 
                     docBrokersLock.unlock();
