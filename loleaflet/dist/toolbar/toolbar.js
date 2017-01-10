@@ -913,6 +913,10 @@ map.on('doclayerinit', function () {
 				{ func: '16', text: _('None'), icon: 'selected'},
 		]},
 		]);
+
+		// Remove irrelevant toolbars
+		$('#presentation-toolbar').hide();
+
 		break;
 	case 'text':
 		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
@@ -931,6 +935,12 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'SelectionMode',
 				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
+
+		// Remove irrelevant toolbars
+		$('#formulabar').hide();
+		$('#spreadsheet-toolbar').hide();
+		$('#presentation-toolbar').hide();
+
 		break;
 	case 'presentation':
 		var presentationToolbar = w2ui['presentation-toolbar'];
@@ -942,10 +952,20 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'PageStatus',
 				html: '<div id="PageStatus" class="loleaflet-font" title="'+_('Number of Slides')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 		]);
+
+		// Remove irrelevant toolbars
+		$('#formulabar').hide();
+		$('#spreadsheet-toolbar').hide();
+
 		break;
 	case 'drawing':
 		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		toolbarUpMore.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
+
+		// Remove irrelevant toolbars
+		$('#formulabar').hide();
+		$('#spreadsheet-toolbar').hide();
+
 		break;
 	}
 	toolbarUp.refresh();
