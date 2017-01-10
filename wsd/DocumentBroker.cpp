@@ -960,6 +960,8 @@ bool DocumentBroker::startDestroy(const std::string& id)
 
     // Last view going away, can destroy.
     _markToDestroy = (_sessions.size() <= 1);
+    LOG_DBG("startDestroy on session [" << id << "] on docKey [" << _docKey <<
+            "], markToDestroy: " << _markToDestroy << ", lastEditableSession: " << _lastEditableSession);
     return _lastEditableSession;
 }
 

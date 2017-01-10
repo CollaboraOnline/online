@@ -833,8 +833,12 @@ private:
             auto docBroker = findOrCreateDocBroker(docKey, ws, id, uriPublic);
             if (docBroker)
             {
-                // Process the request in an exception-safe way.
-                processGetRequest(uri, ws, id, uriPublic, docBroker, isReadOnly);
+                auto session = createNewClientSession(uri, ws, id, uriPublic, docBroker, isReadOnly);
+                if (session)
+                {
+                    // Process the request in an exception-safe way.
+                    processGetRequest(uri, ws, id, docBroker, session);
+                }
             }
         }
         catch (const WebSocketErrorMessageException& exc)
@@ -1105,47 +1109,14 @@ private:
     }
 
     /// Process GET requests.
-    static void processGetRequest(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id,
-                                  const Poco::URI& uriPublic, const std::shared_ptr<DocumentBroker>& docBroker, const bool isReadOnly)
+    static void processGetRequest(const std::string& uri,
+                                  std::shared_ptr<LOOLWebSocket>& ws,
+                                  const std::string& id,
+                                  const std::shared_ptr<DocumentBroker>& docBroker,
+                                  const std::shared_ptr<ClientSession>& session)
     {
         LOG_CHECK_RET(docBroker && "Null docBroker instance", );
         const auto docKey = docBroker->getDocKey();
-
-        std::shared_ptr<ClientSession> session;
-        try
-        {
-            // In case of WOPI, if this session is not set as readonly, it might be set so
-            // later after making a call to WOPI host which tells us the permission on files
-            // (UserCanWrite param).
-            session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic, isReadOnly);
-
-            // Now we have a DocumentBroker and we're ready to process client commands.
-            const std::string statusReady = "statusindicator: ready";
-            LOG_TRC("Sending to Client [" << statusReady << "].");
-            ws->sendFrame(statusReady.data(), statusReady.size());
-
-            const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
-            if (!fs.empty())
-            {
-                LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
-                const std::string diskfullMsg = "error: cmd=internal kind=diskfull";
-                // Alert the session currently being opened
-                ws->sendFrame(diskfullMsg.data(), diskfullMsg.size());
-                // Alert all other existing sessions also
-                Util::alertAllUsers(diskfullMsg);
-            }
-
-            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
-            docBroker->addSession(session);
-        }
-        catch (const std::exception& exc)
-        {
-            LOG_WRN("Exception while preparing session [" << id << "].");
-            removeDocBrokerSession(docBroker, id);
-
-            return;
-        }
-
         LOG_CHECK_RET(session && "Null ClientSession instance", );
         try
         {
@@ -1159,7 +1130,7 @@ private:
                 []() { return TerminationFlag || SigUtil::isShuttingDown(); });
 
             // Connection terminated. Destroy session.
-            LOG_DBG("Client session [" << id << "] terminated. Cleaning up.");
+            LOG_DBG("Client session [" << id << "] on docKey [" << docKey << "] terminated. Cleaning up.");
 
             auto docLock = docBroker->getLock();
 
