@@ -36,15 +36,20 @@
         The "map" div is the actual document and it has the document's size
         and width, this being inside the smaller "document-container" will
         cause the content to overflow, creating scrollbars -->
-    <div id="logo" class="logo"></div>
-    <ul id="main-menu" class="sm sm-simple lo-menu"></ul>
-    <div>
-      <div id="toolbar" style="visibility: hidden;"></div>
-      <div id="toolbar-up"></div>
-      <div id="formulabar"></div>
-      <div id="toolbar-up-more"></div>
+
+    <div class="header-wrapper">
+      <div id="logo" class="logo"></div>
+      <nav class="main-nav" role="navigation">
+	<ul id="main-menu" class="sm sm-simple lo-menu"></ul>
+      </nav>
+      <div class="toolbar-wrapper">
+	<div id="toolbar" style="visibility: hidden;"></div>
+	<div id="toolbar-up"></div>
+	<div id="formulabar"></div>
+	<div id="toolbar-up-more"></div>
+      </div>
+      <input id="insertgraphic" type="file" onchange="onInsertFile()" style="position: fixed; top: -100em">
     </div>
-    <input id="insertgraphic" type="file" onchange="onInsertFile()" style="position: fixed; top: -100em">
 
     <div id="document-container">
       <div id="map"></div>
