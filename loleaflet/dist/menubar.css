@@ -1,13 +1,17 @@
 #main-menu {
     top: 0;
-    position: fixed;
     height: 25px;
-    display: inline-flex;
-    right: 0;
-    left: 0;
     padding-left: 125px;
     z-index: 1000;
     outline: none;
+}
+
+.header-wrapper {
+    background: #efefef; /* Fill up white areas with grey */
+    min-height: 70px; /* Map starts from 70px onwards in case of writer, calc */
+}
+.main-nav {
+    height: 30px; /* on mouseover menubar items, border emerges */
 }
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */

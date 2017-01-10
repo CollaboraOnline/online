@@ -1,21 +1,8 @@
-#toolbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding-bottom: 15px;
-    text-align: center;
-}
-
 #toolbar-up {
     left: 0;
     right: 0;
     text-align: center;
-    padding: 6px;
-    padding-top: 6px;
-    padding-bottom: 4px;
     z-index: 1000;
-    margin-top: 25px;
 }
 
 #toolbar-down {
