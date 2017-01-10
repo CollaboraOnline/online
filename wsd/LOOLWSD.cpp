@@ -971,29 +971,7 @@ private:
 
         if (!docBroker)
         {
-            static_assert(MAX_DOCUMENTS > 0, "MAX_DOCUMENTS must be positive");
-            if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
-            {
-                LOG_ERR("Maximum number of open documents reached.");
-                shutdownLimitReached(*ws);
-                return nullptr;
-            }
-
-            // Request a kit process for this doc.
-            auto child = getNewChild();
-            if (!child)
-            {
-                // Let the client know we can't serve now.
-                LOG_ERR("Failed to get new child. Service Unavailable.");
-                throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
-            }
-
-            // Set the one we just created.
-            LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-            docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
-            child->setDocumentBroker(docBroker);
-            DocBrokers.emplace(docKey, docBroker);
-            LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+            docBroker = createNewDocBroker(docKey, ws, uriPublic);
         }
 
         // Validate the broker.
@@ -1005,6 +983,39 @@ private:
 
             throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
         }
+
+        return docBroker;
+    }
+
+    static std::shared_ptr<DocumentBroker> createNewDocBroker(const std::string& docKey,
+                                                              std::shared_ptr<LOOLWebSocket>& ws,
+                                                              const Poco::URI& uriPublic)
+    {
+        Util::assertIsLocked(DocBrokersMutex);
+
+        static_assert(MAX_DOCUMENTS > 0, "MAX_DOCUMENTS must be positive");
+        if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
+        {
+            LOG_ERR("Maximum number of open documents reached.");
+            shutdownLimitReached(*ws);
+            return nullptr;
+        }
+
+        // Request a kit process for this doc.
+        auto child = getNewChild();
+        if (!child)
+        {
+            // Let the client know we can't serve now.
+            LOG_ERR("Failed to get new child. Service Unavailable.");
+            throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
+        }
+
+        // Set the one we just created.
+        LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+        auto docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
+        child->setDocumentBroker(docBroker);
+        DocBrokers.emplace(docKey, docBroker);
+        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
 
         return docBroker;
     }
