@@ -1020,6 +1020,28 @@ private:
         return docBroker;
     }
 
+    /// Remove DocumentBroker session and instance from DocBrokers.
+    static void removeDocBrokerSession(const std::shared_ptr<DocumentBroker>& docBroker, const std::string& id = "")
+    {
+        LOG_CHECK_RET(docBroker && "Null docBroker instance", );
+
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+        auto lock = docBroker->getLock();
+
+        if (!id.empty())
+        {
+             docBroker->removeSession(id);
+        }
+
+        if (docBroker->getSessionsCount() == 0 || !docBroker->isAlive())
+        {
+            const auto docKey = docBroker->getDocKey();
+            LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
+            DocBrokers.erase(docKey);
+            docBroker->terminateChild(lock);
+         }
+    }
+
     /// Process GET requests.
     static void processGetRequest(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id,
                                   const Poco::URI& uriPublic, const std::shared_ptr<DocumentBroker>& docBroker, const bool isReadOnly)
@@ -1057,16 +1079,7 @@ private:
         catch (const std::exception& exc)
         {
             LOG_WRN("Exception while preparing session [" << id << "].");
-
-            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-            auto lock = docBroker->getLock();
-            docBroker->removeSession(id);
-            if (docBroker->getSessionsCount() == 0 || !docBroker->isAlive())
-            {
-                LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
-                DocBrokers.erase(docKey);
-                docBroker->terminateChild(lock);
-            }
+            removeDocBrokerSession(docBroker, id);
 
             return;
         }
@@ -1107,18 +1120,8 @@ private:
 
             if (sessionsCount == 0)
             {
-                // We've supposedly destroyed the last session and can do away with
-                // DocBroker. But first we need to take both locks in the correct
-                // order and check again. We can't take the DocBrokersMutex while
-                // holding the docBroker lock as that can deadlock with autoSave below.
-                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-                auto lock = docBroker->getLock();
-                if (docBroker->getSessionsCount() == 0 || !docBroker->isAlive())
-                {
-                    LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
-                    DocBrokers.erase(docKey);
-                    docBroker->terminateChild(lock);
-                }
+                // We've supposedly destroyed the last session, now cleanup.
+                removeDocBrokerSession(docBroker);
             }
 
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession: " + uri);
