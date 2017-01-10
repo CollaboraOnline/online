@@ -1020,6 +1020,68 @@ private:
         return docBroker;
     }
 
+    static std::shared_ptr<ClientSession> createNewClientSession(const std::string& uri,
+                                                                 std::shared_ptr<LOOLWebSocket>& ws,
+                                                                 const std::string& id,
+                                                                 const Poco::URI& uriPublic,
+                                                                 const std::shared_ptr<DocumentBroker>& docBroker,
+                                                                 const bool isReadOnly)
+    {
+        LOG_CHECK_RET(docBroker && "Null docBroker instance", nullptr);
+        try
+        {
+            auto lock = docBroker->getLock();
+
+            // Validate the broker.
+            if (!docBroker->isAlive())
+            {
+                LOG_ERR("DocBroker is invalid or premature termination of child process.");
+                removeDocBrokerSession(docBroker);
+                return nullptr;
+            }
+
+            if (docBroker->isMarkedToDestroy())
+            {
+                LOG_ERR("DocBroker is marked to destroy, can't add session.");
+                removeDocBrokerSession(docBroker);
+                return nullptr;
+            }
+
+            // Now we have a DocumentBroker and we're ready to process client commands.
+            const std::string statusReady = "statusindicator: ready";
+            LOG_TRC("Sending to Client [" << statusReady << "].");
+            ws->sendFrame(statusReady.data(), statusReady.size());
+
+            // In case of WOPI, if this session is not set as readonly, it might be set so
+            // later after making a call to WOPI host which tells us the permission on files
+            // (UserCanWrite param).
+            auto session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic, isReadOnly);
+
+            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
+            docBroker->addSession(session);
+
+            lock.unlock();
+
+            const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
+            if (!fs.empty())
+            {
+                LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
+                const std::string diskfullMsg = "error: cmd=internal kind=diskfull";
+                // Alert all other existing sessions also
+                Util::alertAllUsers(diskfullMsg);
+            }
+
+            return session;
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_WRN("Exception while preparing session [" << id << "]: " << exc.what());
+            removeDocBrokerSession(docBroker, id);
+        }
+
+        return nullptr;
+    }
+
     /// Remove DocumentBroker session and instance from DocBrokers.
     static void removeDocBrokerSession(const std::shared_ptr<DocumentBroker>& docBroker, const std::string& id = "")
     {
@@ -1030,7 +1092,7 @@ private:
 
         if (!id.empty())
         {
-             docBroker->removeSession(id);
+            docBroker->removeSession(id);
         }
 
         if (docBroker->getSessionsCount() == 0 || !docBroker->isAlive())
@@ -1039,7 +1101,7 @@ private:
             LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
             DocBrokers.erase(docKey);
             docBroker->terminateChild(lock);
-         }
+        }
     }
 
     /// Process GET requests.
