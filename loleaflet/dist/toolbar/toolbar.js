@@ -10,10 +10,70 @@ function onDelete(e) {
 	}
 }
 
+// When we are in mobile view, only these items in toolbar-up will be shown
+var toolbarUpMobileItems = [
+	'left',
+	'save',
+	'savebreak',
+	'bold',
+	'italic',
+	'underline',
+	'strikeout',
+	'formatbreak',
+	'leftpara',
+	'centerpara',
+	'rightpara',
+	'justifypara',
+	'close'
+];
+
+function _mobilify() {
+	var toolbarUp = w2ui['toolbar-up'];
+	var toolbarUpMore = w2ui['toolbar-up-more'];
+
+	for (var itemIdx in toolbarUp.items) {
+		var id = toolbarUp.items[itemIdx].id;
+		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && !toolbarUp.get(id).hidden) {
+			toolbarUp.hide(id);
+		}
+	}
+	for (itemIdx in toolbarUpMore.items) {
+		id = toolbarUpMore.items[itemIdx].id;
+		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && !toolbarUp.get(id).hidden) {
+			toolbarUpMore.hide(id);
+		}
+	}
+}
+
+function _unmobilify() {
+	var toolbarUp = w2ui['toolbar-up'];
+	var toolbarUpMore = w2ui['toolbar-up-more'];
+
+	for (var itemIdx in toolbarUp.items) {
+		var id = toolbarUp.items[itemIdx].id;
+		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && toolbarUp.get(id).hidden) {
+			toolbarUp.show(id);
+		}
+	}
+	for (itemIdx in toolbarUpMore.items) {
+		id = toolbarUpMore.items[itemIdx].id;
+		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUpMore.get(id) && toolbarUpMore.get(id).hidden) {
+			toolbarUpMore.show(id);
+		}
+	}
+}
+
 function resizeToolbar() {
 	var hasMoreItems = false;
 	var toolbarUp = w2ui['toolbar-up'];
 	var toolbarUpMore = w2ui['toolbar-up-more'];
+
+	if ($(window).width() <= 768) {
+		_mobilify();
+	} else {
+		_unmobilify();
+	}
+
 	// move items from toolbar-up-more -> toolbar-up
 	while ($('#toolbar-up')[0].scrollWidth <= $(window).width()) {
 		var item = toolbarUpMore.items[0];
@@ -27,7 +87,7 @@ function resizeToolbar() {
 	// move items from toolbar-up -> toolbar-up-more
 	while ($('#toolbar-up')[0].scrollWidth > Math.max($(window).width(), parseInt($('body').css('min-width')))) {
 		var itemId = toolbarUp.items[toolbarUp.items.length - 4].id;
-		if (itemId === 'resizebreak') {
+		if ($(window).width() > 768 && itemId === 'resizebreak') {
 			return;
 		}
 		item = toolbarUp.get(itemId);
@@ -362,7 +422,7 @@ $(function () {
 				{ text: _('Wrap through'), id: 'wrap-WrapThrough' }
 			]},
 			{type: 'button',  id: 'save', img: 'save', hint: _('Save'), uno: 'Save'},
-			{type: 'break'},
+			{type: 'break', id: 'savebreak'},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _('Undo'), uno: 'Undo'},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _('Redo'), uno: 'Redo'},
 			{type: 'button',  id: 'repair', img: 'repair', hint: _('Document repair')},
@@ -375,7 +435,7 @@ $(function () {
 			{type: 'button',  id: 'italic', img: 'italic', hint: _('Italic'), uno: 'Italic'},
 			{type: 'button',  id: 'underline',  img: 'underline', hint: _('Underline'), uno: 'Underline'},
 			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _('Strikeout'), uno: 'Strikeout'},
-			{type: 'break'},
+			{type: 'break', id: 'formatbreak'},
 			{type: 'button',  id: 'insertfootnote', img: 'insertfootnote', hint: _('Insert Footnote'), uno: 'InsertFootnote' },
 			{type: 'break' },
 			{type: 'html',  id: 'fontcolor-html', html: '<input id="fontColorPicker" style="display:none;">'},
