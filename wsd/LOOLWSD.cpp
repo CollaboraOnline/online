@@ -832,31 +832,42 @@ private:
                 }
             }
 
-            auto docBroker = findOrCreateDocBroker(docKey, ws, id, uriPublic);
-            if (docBroker)
+            int retry = 3;
+            while (retry-- > 0)
             {
-                auto session = createNewClientSession(uri, ws, id, uriPublic, docBroker, isReadOnly);
-                if (session)
+                auto docBroker = findOrCreateDocBroker(docKey, ws, id, uriPublic);
+                if (docBroker)
                 {
-                    // Process the request in an exception-safe way.
-                    processGetRequest(uri, ws, id, docBroker, session);
+                    auto session = createNewClientSession(uri, ws, id, uriPublic, docBroker, isReadOnly);
+                    if (session)
+                    {
+                        // Process the request in an exception-safe way.
+                        processGetRequest(uri, ws, id, docBroker, session);
+                        break;
+                    }
                 }
-            }
-        }
-        catch (const WebSocketErrorMessageException& exc)
-        {
-            // Internal error that should be passed on to the client.
-            const auto msg = exc.toString();
-            LOG_ERR("handleGetRequest: WebSocketErrorMessageException: " << msg);
-            try
-            {
-                ws->sendFrame(msg.data(), msg.size());
-                // abnormal close frame handshake
-                ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
-            }
-            catch (const std::exception& exc2)
-            {
-                LOG_ERR("handleGetRequest: exception while sending WS error message [" << msg << "]: " << exc2.what());
+
+                if (retry > 0)
+                {
+                    LOG_WRN("Failed to connect DocBroker and Client Session, retrying.");
+                }
+                else
+                {
+                    const std::string msg = SERVICE_UNAVAILABLE_INTERNAL_ERROR;
+                    LOG_ERR("handleGetRequest: Giving up trying to connect client: " << msg);
+                    try
+                    {
+                        ws->sendFrame(msg.data(), msg.size());
+                        // abnormal close frame handshake
+                        ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
+                    }
+                    catch (const std::exception& exc2)
+                    {
+                        LOG_ERR("handleGetRequest: exception while sending WS error message [" << msg << "]: " << exc2.what());
+                    }
+
+                    break;
+                }
             }
         }
         catch (const std::exception& exc)
@@ -980,16 +991,6 @@ private:
             docBroker = createNewDocBroker(docKey, ws, uriPublic);
         }
 
-        // Validate the broker.
-        if (!docBroker || !docBroker->isAlive())
-        {
-            LOG_ERR("DocBroker is invalid or premature termination of child "
-                    "process. Service Unavailable.");
-            DocBrokers.erase(docKey);
-
-            throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
-        }
-
         return docBroker;
     }
 
@@ -1013,7 +1014,7 @@ private:
         {
             // Let the client know we can't serve now.
             LOG_ERR("Failed to get new child. Service Unavailable.");
-            throw WebSocketErrorMessageException(SERVICE_UNAVAILABLE_INTERNAL_ERROR);
+            return nullptr;
         }
 
         // Set the one we just created.
@@ -1042,6 +1043,7 @@ private:
             if (!docBroker->isAlive())
             {
                 LOG_ERR("DocBroker is invalid or premature termination of child process.");
+                lock.unlock();
                 removeDocBrokerSession(docBroker);
                 return nullptr;
             }
@@ -1049,6 +1051,7 @@ private:
             if (docBroker->isMarkedToDestroy())
             {
                 LOG_ERR("DocBroker is marked to destroy, can't add session.");
+                lock.unlock();
                 removeDocBrokerSession(docBroker);
                 return nullptr;
             }
@@ -1161,10 +1164,6 @@ private:
 
             LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession: " + uri);
             LOG_INF("Finishing GET request handler for session [" << id << "].");
-        }
-        catch (const WebSocketErrorMessageException&)
-        {
-            throw;
         }
         catch (const UnauthorizedRequestException& exc)
         {
