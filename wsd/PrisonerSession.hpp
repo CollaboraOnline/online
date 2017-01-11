@@ -27,6 +27,9 @@ public:
 
     virtual ~PrisonerSession();
 
+    /// Returns true if we've got status message.
+    bool gotStatus() const { return _gotStatus; }
+
 private:
     /// Handle messages from the Kit to the client.
     virtual bool _handleInput(const char* buffer, int length) override;
@@ -38,6 +41,7 @@ private:
     std::shared_ptr<DocumentBroker> _docBroker;
     std::weak_ptr<ClientSession> _peer;
     int _curPart;
+    bool _gotStatus;
 };
 
 #endif

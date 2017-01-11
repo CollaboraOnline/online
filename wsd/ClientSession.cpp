@@ -38,6 +38,7 @@ ClientSession::ClientSession(const std::string& id,
     _isReadOnly(readOnly),
     _isDocumentOwner(false),
     _loadPart(-1),
+    _isLoadRequested(false),
     _stop(false)
 {
     LOG_INF("ClientSession ctor [" << getName() << "].");
@@ -57,7 +58,11 @@ ClientSession::~ClientSession()
     {
         _senderThread.join();
     }
+}
 
+bool ClientSession::isLoaded() const
+{
+    return _isLoadRequested && _peer && _peer->gotStatus();
 }
 
 void ClientSession::bridgePrisonerSession()
@@ -279,7 +284,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
             oss << " options=" << _docOptions;
 
         const auto loadRequest = oss.str();
-        return forwardToChild(loadRequest, docBroker);
+        if (forwardToChild(loadRequest, docBroker))
+        {
+            _isLoadRequested = true;
+            return true;
+        }
     }
     catch (const Poco::SyntaxException&)
     {

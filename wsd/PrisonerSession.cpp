@@ -37,7 +37,8 @@ PrisonerSession::PrisonerSession(std::shared_ptr<ClientSession> clientSession,
     Session("ToPrisoner-" + clientSession->getId(), clientSession->getId(), nullptr),
     _docBroker(std::move(docBroker)),
     _peer(clientSession),
-    _curPart(0)
+    _curPart(0),
+    _gotStatus(false)
 {
     LOG_INF("PrisonerSession ctor [" << getName() << "].");
 }
@@ -170,6 +171,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens[0] == "status:")
         {
+            _gotStatus = true;
             _docBroker->setLoaded();
 
             // Forward the status response to the client.

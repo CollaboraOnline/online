@@ -35,6 +35,8 @@ public:
     void setReadOnly();
     bool isReadOnly() const { return _isReadOnly; }
 
+    bool isLoaded() const;
+
     /// Create and connect Prisoner Session between DocumentBroker and us.
     void bridgePrisonerSession();
     std::shared_ptr<PrisonerSession> getPeer() const { return _peer; }
@@ -146,6 +148,8 @@ private:
     MessageQueue _saveAsQueue;
 
     int _loadPart;
+
+    bool _isLoadRequested;
 
     /// Wopi FileInfo object
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;
