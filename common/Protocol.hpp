@@ -230,7 +230,7 @@ namespace LOOLProtocol
             return std::string();
         }
 
-        const auto firstLine = getFirstLine(message, std::min(length, 120));
+        const auto firstLine = getFirstLine(message, std::min(length, 500));
 
         // If first line is less than the length (minus newline), add ellipsis.
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
@@ -243,7 +243,7 @@ namespace LOOLProtocol
 
     inline std::string getAbbreviatedMessage(const std::string& message)
     {
-        const auto pos = getDelimiterPosition(message.data(), std::min(message.size(), 120UL), '\n');
+        const auto pos = getDelimiterPosition(message.data(), std::min(message.size(), 500UL), '\n');
 
         // If first line is less than the length (minus newline), add ellipsis.
         if (pos < static_cast<std::string::size_type>(message.size()) - 1)

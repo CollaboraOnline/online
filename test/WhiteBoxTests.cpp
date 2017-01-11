@@ -152,16 +152,6 @@ void WhiteBoxTests::testMessageAbbreviation()
     abbr = "1234567890123...";
     CPPUNIT_ASSERT_EQUAL(abbr, LOOLProtocol::getAbbreviatedMessage(s.data(), s.size()));
     CPPUNIT_ASSERT_EQUAL(abbr, LOOLProtocol::getAbbreviatedMessage(s));
-
-    // 120 characters. Change when the abbreviation max-length changes.
-    s = "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
-    CPPUNIT_ASSERT_EQUAL(s, LOOLProtocol::getAbbreviatedMessage(s.data(), s.size()));
-    CPPUNIT_ASSERT_EQUAL(s, LOOLProtocol::getAbbreviatedMessage(s));
-
-    abbr = s + "...";
-    s += "more data";
-    CPPUNIT_ASSERT_EQUAL(abbr, LOOLProtocol::getAbbreviatedMessage(s.data(), s.size()));
-    CPPUNIT_ASSERT_EQUAL(abbr, LOOLProtocol::getAbbreviatedMessage(s));
 }
 
 void WhiteBoxTests::testTokenizer()
