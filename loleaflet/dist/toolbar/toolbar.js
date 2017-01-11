@@ -4,6 +4,8 @@
 
 /* global $ map closebutton w2ui w2utils vex _ */
 
+var mobileWidth = 768;
+
 function onDelete(e) {
 	if (e !== false) {
 		map.deletePage();
@@ -97,7 +99,7 @@ function resizeToolbar() {
 	var toolbarUp = w2ui['toolbar-up'];
 	var toolbarUpMore = w2ui['toolbar-up-more'];
 
-	if ($(window).width() <= 768) {
+	if ($(window).width() < mobileWidth) {
 		_mobilify();
 	} else {
 		_unmobilify();
@@ -116,7 +118,7 @@ function resizeToolbar() {
 	// move items from toolbar-up -> toolbar-up-more
 	while ($('#toolbar-up')[0].scrollWidth > Math.max($(window).width(), parseInt($('body').css('min-width')))) {
 		var itemId = toolbarUp.items[toolbarUp.items.length - 4].id;
-		if ($(window).width() > 768 && itemId === 'resizebreak') {
+		if ($(window).width() >= mobileWidth && itemId === 'resizebreak') {
 			return;
 		}
 		item = toolbarUp.get(itemId);
