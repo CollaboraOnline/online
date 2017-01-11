@@ -940,15 +940,9 @@ private:
 
         _loKitDocument->setView(viewId);
         _loKitDocument->registerCallback(nullptr, nullptr);
-        _loKitDocument->destroyView(viewId);
-        _viewIdToCallbackDescr.erase(viewId);
 
-        const int viewCount = _loKitDocument->getViewsCount();
-        LOG_INF("Document [" << _url << "] session [" <<
-                sessionId << "] unloaded view [" << viewId << "]. Have " <<
-                viewCount << " view" << (viewCount != 1 ? "s." : "."));
-
-        if (viewCount <= 0)
+        int viewCount = _loKitDocument->getViewsCount();
+        if (viewCount == 1)
         {
             std::unique_lock<std::mutex> lock(_mutex);
             if (_sessions.empty())
@@ -957,17 +951,35 @@ private:
                 std::_Exit(Application::EXIT_OK);
             }
 
+            LOG_INF("Document [" << _url << "] has no more views, but has " <<
+                    _sessions.size() << " sessions still. Destroying the document.");
+            _loKitDocument.reset();
+            LOG_INF("Document [" << _url << "] session [" << sessionId << "] unloaded Document.");
             return;
         }
+        else
+        {
+            _loKitDocument->destroyView(viewId);
+        }
 
-        // Get the list of view ids from the core
-        std::vector<int> viewIds(viewCount);
-        _loKitDocument->getViewIds(viewIds.data(), viewCount);
+         _viewIdToCallbackDescr.erase(viewId);
 
-        lockLokDoc.unlock();
+        viewCount = _loKitDocument->getViewsCount();
+        LOG_INF("Document [" << _url << "] session [" <<
+                sessionId << "] unloaded view [" << viewId << "]. Have " <<
+                viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
-        // Broadcast updated view info
-        notifyViewInfo(viewIds);
+        if (viewCount > 0)
+        {
+            // Get the list of view ids from the core
+            std::vector<int> viewIds(viewCount);
+            _loKitDocument->getViewIds(viewIds.data(), viewCount);
+
+            lockLokDoc.unlock();
+
+            // Broadcast updated view info
+            notifyViewInfo(viewIds);
+        }
     }
 
     std::map<int, UserInfo> getViewInfo() override
@@ -1389,9 +1401,9 @@ private:
 
                     if (!isFound)
                     {
-                        LOG_WRN("Document::ViewCallback. The message [" << viewId <<
-                                "] [" << LOKitHelper::kitCallbackTypeToString(type) <<
-                                "] [" << payload << "] is not sent to Master Session.");
+                        LOG_WRN("Document::ViewCallback. Session [" << viewId <<
+                                "] is no longer active to process [" << LOKitHelper::kitCallbackTypeToString(type) <<
+                                "] [" << payload << "] message to Master Session.");
                     }
                 }
                 else
