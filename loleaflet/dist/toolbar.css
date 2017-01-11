@@ -59,11 +59,10 @@
     width: 800px;
 }
 #tb_toolbar-up_item_close {
-    position: absolute;
-    padding-right: 6px;
-    margin-top: -25px;
+    position: fixed;
     z-index: 1050;
     right: 0;
+    top: 0;
 }
 #tb_toolbar-up_item_right {
     width: 100%;
