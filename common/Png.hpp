@@ -127,9 +127,6 @@ bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
         return false;
     }
 
-    // This function seems to be always called with an empty _output_ vector. Make sure we can rely on that.
-    assert(output.size() == 0);
-
     png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB_ALPHA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 
     png_set_write_fn(png_ptr, &output, user_write_fn, user_flush_fn);
