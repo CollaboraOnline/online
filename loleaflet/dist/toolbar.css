@@ -34,14 +34,11 @@
 }
 
 #presentation-toolbar {
-    background: #DFDFDF;
-    left: 0;
+    background-color: #dfdfdf;
     text-align: center;
-    bottom: 33px;
-    width: 203px;
-    padding: 0;
     position: absolute;
     z-index: 500;
+    width: 100%;
 }
 
 /* center the toolbar */

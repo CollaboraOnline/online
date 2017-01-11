@@ -11,8 +11,7 @@ L.Control.PartsPreview = L.Control.extend({
 	onAdd: function (map) {
 		this._previewInitialized = false;
 		this._previewTiles = [];
-		var docContainer = map.options.documentContainer;
-		this._partsPreviewCont = L.DomUtil.create('div', 'parts-preview', docContainer.parentElement);
+		this._partsPreviewCont = L.DomUtil.get('slide-sorter');
 
 		map.on('updateparts', this._updateDisabled, this);
 		map.on('updatepart', this._updatePart, this);
@@ -78,7 +77,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_setPart: function (e) {
-		var part = $('.parts-preview .mCSB_container .preview-frame').index(e.target.parentNode);
+		var part = $('#slide-sorter .mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
 			this._map.setPart(parseInt(part));
 		}
@@ -150,7 +149,7 @@ L.Control.PartsPreview = L.Control.extend({
 			// the scrollbar has to be re-initialized here else it doesn't work
 			// probably a bug from the scrollbar
 			this._previewTiles[e.id].onload = function () {
-				$('.parts-preview').mCustomScrollbar({
+				$('#slide-sorter').mCustomScrollbar({
 					axis: 'y',
 					theme: 'dark-thick',
 					scrollInertia: 0,
@@ -162,7 +161,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_updatePreviewIds: function () {
-		$('.parts-preview').mCustomScrollbar('update');
+		$('#slide-sorter').mCustomScrollbar('update');
 	},
 
 	_insertPreview: function (e) {

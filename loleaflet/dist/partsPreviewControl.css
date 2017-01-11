@@ -2,15 +2,8 @@
 	left: 214px !important;
 }
 
-.parts-preview {
-	background: #DFDFDF;
-	position: absolute;
-	top: 70px;
-	left: 0px;
-	bottom: 33px;
-	max-width: 214px;
-	overflow: hidden;
-	border-top: 1px solid #B6B6B6;
+#slide-sorter {
+	height: 100%
 }
 
 .preview-frame {
