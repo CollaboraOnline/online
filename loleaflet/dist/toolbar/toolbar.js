@@ -36,11 +36,13 @@ var statusbarMobileItems = [
 	'cancelsearch',
 	'left',
 	'right',
-	'modifiedstatuslabel',
-	'modifiedstatuslabelbreak',
+	'userlist',
+	'userlistbreak',
 	'prev',
 	'next'
 ];
+
+var nUsers, oneUser, noUser;
 
 function _mobilify() {
 	var toolbarUp = w2ui['toolbar-up'];
@@ -66,6 +68,11 @@ function _mobilify() {
 			statusbar.hide(id);
 		}
 	}
+
+	nUsers = '%n';
+	oneUser = '1';
+	noUser = '0';
+	updateUserListCount();
 }
 
 function _unmobilify() {
@@ -92,6 +99,11 @@ function _unmobilify() {
 			statusbar.show(id);
 		}
 	}
+
+	nUsers = _('%n users');
+	oneUser = _('1 user');
+	noUser = _('0 user');
+	updateUserListCount();
 }
 
 function resizeToolbar() {
@@ -664,7 +676,7 @@ $(function () {
 			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
 			{type: 'break', id: 'modifiedstatuslabelbreak'},
 			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table></div>' },
-			{type: 'break'},
+			{type: 'break', id: 'userlistbreak'},
 			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
 			{type: 'button',  id: 'next', img: 'next', hint: _('Next page')},
 			{type: 'break', id: 'prevnextbreak'},
@@ -1503,16 +1515,16 @@ function getUserItem(viewId, userName, color) {
 
 	return html;
 }
-var nUsers = _('%n users');
+
 function updateUserListCount() {
 	var userlistItem = w2ui['toolbar-down'].get('userlist');
 	var count = $(userlistItem.html).find('#userlist_table tbody tr').length;
 	if (count > 1) {
 		userlistItem.text = nUsers.replace('%n', count);
 	} else if (count === 1) {
-		userlistItem.text = _('1 user');
+		userlistItem.text = oneUser;
 	} else {
-		userlistItem.text = _('No users');
+		userlistItem.text = noUser;
 	}
 
 	var zoomlevel = $('#zoomlevel').html();
