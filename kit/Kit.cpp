@@ -962,7 +962,10 @@ private:
             _loKitDocument->destroyView(viewId);
         }
 
-         _viewIdToCallbackDescr.erase(viewId);
+        // Since callback messages are processed on idle-timer,
+        // we could recieve callbacks after destroying a view.
+        // Retain the CallbackDescriptor object, which is shared with Core.
+        // _viewIdToCallbackDescr.erase(viewId);
 
         viewCount = _loKitDocument->getViewsCount();
         LOG_INF("Document [" << _url << "] session [" <<
