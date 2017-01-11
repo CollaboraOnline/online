@@ -27,9 +27,23 @@ var toolbarUpMobileItems = [
 	'close'
 ];
 
+var statusbarMobileItems = [
+	'search',
+	'searchprev',
+	'searchnext',
+	'cancelsearch',
+	'left',
+	'right',
+	'modifiedstatuslabel',
+	'modifiedstatuslabelbreak',
+	'prev',
+	'next'
+];
+
 function _mobilify() {
 	var toolbarUp = w2ui['toolbar-up'];
 	var toolbarUpMore = w2ui['toolbar-up-more'];
+	var statusbar = w2ui['toolbar-down'];
 
 	for (var itemIdx in toolbarUp.items) {
 		var id = toolbarUp.items[itemIdx].id;
@@ -43,11 +57,19 @@ function _mobilify() {
 			toolbarUpMore.hide(id);
 		}
 	}
+
+	for (itemIdx in statusbar.items) {
+		id = statusbar.items[itemIdx].id;
+		if (statusbarMobileItems.indexOf(id) === -1 && !statusbar.get(id).hidden) {
+			statusbar.hide(id);
+		}
+	}
 }
 
 function _unmobilify() {
 	var toolbarUp = w2ui['toolbar-up'];
 	var toolbarUpMore = w2ui['toolbar-up-more'];
+	var statusbar = w2ui['toolbar-down'];
 
 	for (var itemIdx in toolbarUp.items) {
 		var id = toolbarUp.items[itemIdx].id;
@@ -59,6 +81,13 @@ function _unmobilify() {
 		id = toolbarUpMore.items[itemIdx].id;
 		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUpMore.get(id) && toolbarUpMore.get(id).hidden) {
 			toolbarUpMore.show(id);
+		}
+	}
+
+	for (itemIdx in statusbar.items) {
+		id = statusbar.items[itemIdx].id;
+		if (statusbarMobileItems.indexOf(id) === -1 && statusbar.get(id).hidden) {
+			statusbar.show(id);
 		}
 	}
 }
@@ -631,7 +660,7 @@ $(function () {
 			{type: 'html',  id: 'left'},
 			{type: 'html',  id: 'right'},
 			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
-			{type: 'break'},
+			{type: 'break', id: 'modifiedstatuslabelbreak'},
 			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table></div>' },
 			{type: 'break'},
 			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
