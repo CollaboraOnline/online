@@ -1,5 +1,5 @@
-.parts-preview-document {
-	left: 214px !important;
+#document-container.parts-preview-document {
+        left: 214px;
 }
 
 #slide-sorter {
