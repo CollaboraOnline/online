@@ -100,7 +100,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 				'tileposy=' + tilePositionsY + ' ' +
 				'tilewidth=' + this._tileWidthTwips + ' ' +
 				'tileheight=' + this._tileHeightTwips + ' ' +
-				'oldhash=' + oldHashes;;
+				'oldhash=' + oldHashes;
 
 			this._map._socket.sendMessage(message, '');
 			if (this._debug) {
