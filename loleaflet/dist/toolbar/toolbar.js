@@ -498,10 +498,6 @@ $(function () {
 			}
 
 			updateCommandValues();
-			if (fontsSelectValue){
-				$('.fontsizes-select').val(fontsizesSelectValue);
-				updateFontSizeList(fontsSelectValue);
-			}
 
 			insertTable();
 		}
@@ -1236,6 +1232,10 @@ function updateCommandValues() {
 		});
 
 		$('.fontsizes-select').on('select2:select', onFontSizeSelect);
+		if (fontsSelectValue) {
+			updateFontSizeList(fontsSelectValue);
+		}
+		$('.fontsizes-select').val(fontsizesSelectValue).trigger('change');
 	}
 }
 
