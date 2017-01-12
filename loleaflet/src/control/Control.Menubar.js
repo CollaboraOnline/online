@@ -2,7 +2,7 @@
 * Control.Menubar
 */
 
-/* global $ _ map title vex revHistoryEnabled */
+/* global $ _ map title vex revHistoryEnabled closebutton */
 L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
@@ -155,7 +155,8 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Help'), type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
-			}
+			},
+			{name: _('Close'), id: 'closedocument', type: 'action'}
 		],
 
 		presentation: [
@@ -213,7 +214,8 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Help'), type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
-			}
+			},
+			{name: _('Close'), id: 'closedocument', type: 'action'}
 		],
 
 		spreadsheet: [
@@ -259,7 +261,8 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Help'), type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
-			}
+			},
+			{name: _('Close'), id: 'closedocument', type: 'action'}
 		],
 
 		commandStates: {},
@@ -462,7 +465,11 @@ L.Control.Menubar = L.Control.extend({
 			// if we are being loaded inside an iframe, ask
 			// our host to show revision history mode
 			map.fire('postMessage', {msgId: 'rev-history'});
-		} else if (id === 'repair') {
+		} else if (id === 'closedocument') {
+			map.fire('postMessage', {msgId: 'UI_Close'});
+			map.remove();
+		}
+		else if (id === 'repair') {
 			map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		} else if (id === 'a4portrait') {
 			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21000"},"AttributePageSize.Height":{"type":"long", "value": "29700"}}');
@@ -513,10 +520,11 @@ L.Control.Menubar = L.Control.extend({
 	_createMenu: function(menu) {
 		var itemList = [];
 		for (var i in menu) {
-			if (menu[i].type === 'action' &&
-			    menu[i].id === 'rev-history' &&
-			    !revHistoryEnabled) {
-				continue;
+			if (menu[i].type === 'action') {
+				if ((menu[i].id === 'rev-history' && !revHistoryEnabled) ||
+				    (menu[i].id === 'closedocument' && !closebutton)) {
+					continue;
+				}
 			}
 
 			if (menu[i].id === 'print' && this._map['wopi'].HidePrintOption)
@@ -538,6 +546,9 @@ L.Control.Menubar = L.Control.extend({
 			}
 
 			var liItem = L.DomUtil.create('li', '');
+			if (menu[i].id) {
+				liItem.id = 'menu-' + menu[i].id;
+			}
 			var aItem = L.DomUtil.create('a', '', liItem);
 			aItem.innerHTML = menu[i].name;
 

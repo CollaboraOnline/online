@@ -228,4 +228,7 @@
 	position: static;
 	width: auto;
     }
+    #menu-closedocument {
+	display: none;
+    }
 }
