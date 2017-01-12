@@ -332,6 +332,10 @@ function onColorPick(e, color) {
 // edit/view mode, state from this object is read and then applied on corresponding buttons
 var formatButtons = {};
 
+var stylesSelectValue;
+var fontsSelectValue;
+var fontsizesSelectValue;
+
 $(function () {
 	$('#toolbar-up-more').w2toolbar({
 		name: 'toolbar-up-more',
@@ -491,6 +495,12 @@ $(function () {
 						formatButtons[w2ui['toolbar-up'].items[itemIdx].id] = true;
 					}
 				}
+			}
+
+			updateCommandValues();
+			if (fontsSelectValue){
+				$('.fontsizes-select').val(fontsizesSelectValue);
+				updateFontSizeList(fontsSelectValue);
 			}
 
 			insertTable();
@@ -952,6 +962,8 @@ map.on('commandstatechanged', function (e) {
 				.append($('<option></option>')
 				.text(state));
 		}
+
+		stylesSelectValue = state;
 		$('.styles-select').val(state).trigger('change');
 	}
 	else if (commandName === '.uno:CharFontName') {
@@ -969,6 +981,7 @@ map.on('commandstatechanged', function (e) {
 				.append($('<option></option>')
 				.text(state));
 		}
+		fontsSelectValue = state;
 		$('.fonts-select').val(state).trigger('change');
 	}
 	else if (commandName === '.uno:FontHeight') {
@@ -987,6 +1000,7 @@ map.on('commandstatechanged', function (e) {
 				.append($('<option></option>')
 				.text(state).val(state));
 		}
+		fontsizesSelectValue = state;
 		$('.fontsizes-select').val(state).trigger('change');
 		sortFontSizes();
 	}
@@ -1129,13 +1143,17 @@ map.on('search', function (e) {
 	}
 });
 
-map.on('updatetoolbarcommandvalues', function (e) {
-	// we need an empty option for the place holder to work
+function updateCommandValues() {
 	var data = [];
-	var styles = [];
-	var topStyles = [];
-	if (e.commandName === '.uno:StyleApply') {
-		var commands = e.commandValues.Commands;
+	// 1) For .uno:StyleApply
+	// we need an empty option for the place holder to work
+	if ($('.styles-select option').length === 0) {
+		var styles = [];
+		var topStyles = [];
+		var commandValues = map.getToolbarCommandValues('.uno:StyleApply');
+		if (typeof commandValues === 'undefined')
+			return;
+		var commands = commandValues.Commands;
 		if (commands && commands.length > 0) {
 			// Inserts a separator element
 			data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
@@ -1146,11 +1164,11 @@ map.on('updatetoolbarcommandvalues', function (e) {
 		}
 
 		if (map.getDocType() === 'text') {
-			styles = e.commandValues.ParagraphStyles.slice(7, 19);
-			topStyles = e.commandValues.ParagraphStyles.slice(0, 7);
+			styles = commandValues.ParagraphStyles.slice(7, 19);
+			topStyles = commandValues.ParagraphStyles.slice(0, 7);
 		}
 		else if (map.getDocType() === 'spreadsheet') {
-			styles = e.commandValues.CellStyles;
+			styles = commandValues.CellStyles;
 		}
 		else if (map.getDocType() === 'presentation') {
 			// styles are not applied for presentation
@@ -1188,27 +1206,38 @@ map.on('updatetoolbarcommandvalues', function (e) {
 			data: data,
 			placeholder: _('Style')
 		});
+		$('.styles-select').val(stylesSelectValue).trigger('change');
 		$('.styles-select').on('select2:select', onStyleSelect);
 	}
-	else if (e.commandName === '.uno:CharFontName') {
+
+	if ($('.fonts-select option').length === 0) {
+		// 2) For .uno:CharFontName
+		commandValues = map.getToolbarCommandValues('.uno:CharFontName');
+		if (typeof commandValues === 'undefined') {
+			return;
+		}
 		// Old browsers like IE11 et al don't like Object.keys with
 		// empty arguments
-		if (typeof e.commandValues === 'object') {
-			data = data.concat(Object.keys(e.commandValues));
+		if (typeof commandValues === 'object') {
+			data = data.concat(Object.keys(commandValues));
 		}
 		$('.fonts-select').select2({
 			data: data,
 			placeholder: _('Font')
 		});
 		$('.fonts-select').on('select2:select', onFontSelect);
+		$('.fonts-select').val(fontsSelectValue).trigger('change');
+	}
 
+	if ($('.fontsizes-select option').length === 0) {
 		$('.fontsizes-select').select2({
 			placeholder: _('Size'),
 			data: []
 		});
+
 		$('.fontsizes-select').on('select2:select', onFontSizeSelect);
 	}
-});
+}
 
 map.on('updatetoolbarcommandvalues', function(e) {
        w2ui['toolbar-up'].refresh();
