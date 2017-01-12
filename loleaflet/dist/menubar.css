@@ -28,6 +28,10 @@
     line-height: 15px;
 }
 
+.lo-menu ul a, .lo-menu ul a:hover, .lo-menu ul a:focus, .lo-menu ul a:active {
+    font-size: 12px;
+}
+
 .lo-menu a.disabled {
     cursor: default;
 }
