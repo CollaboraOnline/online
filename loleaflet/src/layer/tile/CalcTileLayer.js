@@ -44,6 +44,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 		var tilePositionsX = '';
 		var tilePositionsY = '';
+		var oldHashes = '';
 		var needsNewTiles = false;
 
 		for (var key in this._tiles) {
@@ -67,6 +68,15 @@ L.CalcTileLayer = L.TileLayer.extend({
 						tilePositionsY += ',';
 					}
 					tilePositionsY += tileTopLeft.y;
+					if (oldHashes !== '') {
+						oldHashes += ',';
+					}
+					if (this._tiles[key].oldhash === undefined) {
+						oldHashes += '0';
+					}
+					else {
+						oldHashes += this._tiles[key].oldhash;
+					}
 					needsNewTiles = true;
 					if (this._debug) {
 						this._debugAddInvalidationData(this._tiles[key]);
@@ -89,7 +99,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 				'tileposx=' + tilePositionsX + ' ' +
 				'tileposy=' + tilePositionsY + ' ' +
 				'tilewidth=' + this._tileWidthTwips + ' ' +
-				'tileheight=' + this._tileHeightTwips;
+				'tileheight=' + this._tileHeightTwips + ' ' +
+				'oldhash=' + oldHashes;;
 
 			this._map._socket.sendMessage(message, '');
 			if (this._debug) {
