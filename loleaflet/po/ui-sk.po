@@ -1,22 +1,18 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-22 23:12+0100\n"
-"PO-Revision-Date: 2016-12-14 21:17+0000\n"
-"Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
+"POT-Creation-Date: 2017-01-11 09:02+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Pootle 2.7\n"
-"X-POOTLE-MTIME: 1481750266.000000\n"
+"X-Generator: Translate Toolkit 2.0.0b7\n"
+"X-Pootle-Path: /sk/libo_online/loleaflet-ui-sk.po\n"
+"X-Pootle-Revision: 823391\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -75,32 +71,38 @@ msgid "Elapsed time"
 msgstr "Uplynutý čas"
 
 #: admin.strings.js:19
+msgid "Idle time"
+msgstr ""
+
+#: admin.strings.js:20
 msgid "Kill"
 msgstr "Ukončiť"
 
-#: admin.strings.js:20
+#: admin.strings.js:21
 msgid "Graphs"
 msgstr "Grafy"
 
-#: admin.strings.js:21 dist/toolbar/toolbar.js:344
-#: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:163
+#: admin.strings.js:22
+#: dist/toolbar/toolbar.js:364
+#: src/control/Control.Menubar.js:11
+#: src/control/Control.Menubar.js:163
 #: src/control/Control.Menubar.js:221
 msgid "Save"
 msgstr "Uložiť"
 
-#: admin.strings.js:22
+#: admin.strings.js:23
 msgid "Cache size of memory statistics"
 msgstr "Štatistika veľkosti cache pamäte"
 
-#: admin.strings.js:23
+#: admin.strings.js:24
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Časový interval pre štatistiku pamäte (v ms)"
 
-#: admin.strings.js:24
+#: admin.strings.js:25
 msgid "Cache size of CPU statistics"
 msgstr "Štatistika veľkosti cache pamäte procesora"
 
-#: admin.strings.js:25
+#: admin.strings.js:26
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Časový interval pre štatistiku CPU (v ms)"
 
@@ -216,8 +218,8 @@ msgstr ""
 msgid ""
 "This development build is limited to %0 documents, and %1 connections - to "
 "avoid the impression that it is suitable for deployment in large "
-"enterprises. To find out more about deploying and scaling %2 check out: <br/"
-"><a href=\"%3\">%3</a>."
+"enterprises. To find out more about deploying and scaling %2 check out: "
+"<br/><a href=\"%3\">%3</a>."
 msgstr ""
 "Táto vývojová verzia je obmedzená na %0 dokumentov a %1 pripojení a nie je "
 "vhodná na nasadenie vo veľkých podnikoch. Ak sa chcete dozvedieť viac o "
@@ -247,384 +249,439 @@ msgstr ""
 "Nesprávne WOPISrc, použitie: WOPISrc=platné URI alebo cesta, použitie: "
 "cesta=/cesta/k/dokumentu/"
 
-#: dist/toolbar/toolbar.js:150
+#: dist/errormessages.js:7
+msgid ""
+"Your session will expire in %time. Please save your work and refresh the "
+"session (or webpage) to continue."
+msgstr ""
+
+#: dist/errormessages.js:8
+msgid ""
+"Your session has been expired. Further changes to document might not be "
+"saved. Please refresh the session (or webpage) to continue."
+msgstr ""
+
+#: dist/errormessages.js:11
+msgid ""
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server administrator to continue editing."
+msgstr ""
+
+#: dist/errormessages.js:12
+msgid ""
+"Document cannot be saved to storage. Check your permissions or contact the "
+"storage server administrator."
+msgstr ""
+
+#: dist/toolbar/toolbar.js:159
 msgid "Are you sure you want to delete this page?"
 msgstr "Naozaj chcete túto stranu odstrániť?"
 
-#: dist/toolbar/toolbar.js:335
+#: dist/toolbar/toolbar.js:355
 msgid "Textwrap"
 msgstr "Obtekanie textu"
 
-#: dist/toolbar/toolbar.js:336
+#: dist/toolbar/toolbar.js:356
 msgid "No wrap"
 msgstr "Bez obtekania"
 
-#: dist/toolbar/toolbar.js:337
+#: dist/toolbar/toolbar.js:357
 msgid "Page wrap"
 msgstr "Obtekanie strany"
 
-#: dist/toolbar/toolbar.js:338
+#: dist/toolbar/toolbar.js:358
 msgid "Wrap anchor only"
 msgstr "Obtekať len ukotvenie"
 
-#: dist/toolbar/toolbar.js:339
+#: dist/toolbar/toolbar.js:359
 msgid "Ideal wrap"
-msgstr ""
+msgstr "Ideálne obtekanie"
 
-#: dist/toolbar/toolbar.js:340
+#: dist/toolbar/toolbar.js:360
 msgid "Left wrap"
-msgstr ""
+msgstr "Obtekanie vľavo"
 
-#: dist/toolbar/toolbar.js:341
+#: dist/toolbar/toolbar.js:361
 msgid "Right wrap"
-msgstr ""
+msgstr "Obtekanie vpravo"
 
-#: dist/toolbar/toolbar.js:342
+#: dist/toolbar/toolbar.js:362
 msgid "Wrap through"
-msgstr ""
+msgstr "Obtekanie cez"
 
-#: dist/toolbar/toolbar.js:346 src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:173 src/control/Control.Menubar.js:231
+#: dist/toolbar/toolbar.js:366
+#: src/control/Control.Menubar.js:22
+#: src/control/Control.Menubar.js:173
+#: src/control/Control.Menubar.js:231
 msgid "Undo"
 msgstr "Vrátiť"
 
-#: dist/toolbar/toolbar.js:347 src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:174 src/control/Control.Menubar.js:232
+#: dist/toolbar/toolbar.js:367
+#: src/control/Control.Menubar.js:23
+#: src/control/Control.Menubar.js:174
+#: src/control/Control.Menubar.js:232
 msgid "Redo"
 msgstr "Opakovať vrátené"
 
-#: dist/toolbar/toolbar.js:348
+#: dist/toolbar/toolbar.js:368
 msgid "Document repair"
-msgstr ""
+msgstr "Obnoviť dokument"
 
-#: dist/toolbar/toolbar.js:354 src/control/Control.Menubar.js:60
+#: dist/toolbar/toolbar.js:374
+#: src/control/Control.Menubar.js:60
 msgid "Bold"
 msgstr "Tučné"
 
-#: dist/toolbar/toolbar.js:355 src/control/Control.Menubar.js:61
+#: dist/toolbar/toolbar.js:375
+#: src/control/Control.Menubar.js:61
 msgid "Italic"
 msgstr "Šikmé"
 
-#: dist/toolbar/toolbar.js:356 src/control/Control.Menubar.js:62
+#: dist/toolbar/toolbar.js:376
+#: src/control/Control.Menubar.js:62
 msgid "Underline"
 msgstr "Podčiarknuté"
 
-#: dist/toolbar/toolbar.js:357
+#: dist/toolbar/toolbar.js:377
 msgid "Strikeout"
 msgstr "Prečiarknuté"
 
-#: dist/toolbar/toolbar.js:359
+#: dist/toolbar/toolbar.js:379
 msgid "Insert Footnote"
-msgstr ""
+msgstr "Vložiť poznámku pod čiarou"
 
-#: dist/toolbar/toolbar.js:362
+#: dist/toolbar/toolbar.js:382
 msgid "Font color"
 msgstr "Farba písma"
 
-#: dist/toolbar/toolbar.js:364
+#: dist/toolbar/toolbar.js:384
 msgid "Highlighting"
 msgstr "Zvýraznenie"
 
-#: dist/toolbar/toolbar.js:366
+#: dist/toolbar/toolbar.js:386
 msgid "Align left"
 msgstr "Zarovnať doľava"
 
-#: dist/toolbar/toolbar.js:367
+#: dist/toolbar/toolbar.js:387
 msgid "Center horizontally"
 msgstr "Vycentrovať horizontálne"
 
-#: dist/toolbar/toolbar.js:368
+#: dist/toolbar/toolbar.js:388
 msgid "Align right"
 msgstr "Zarovnať doprava"
 
-#: dist/toolbar/toolbar.js:369 src/control/Control.Menubar.js:101
+#: dist/toolbar/toolbar.js:389
+#: src/control/Control.Menubar.js:101
 msgid "Justified"
 msgstr "Zarovnať do bloku"
 
-#: dist/toolbar/toolbar.js:371 src/control/Control.Menubar.js:107
+#: dist/toolbar/toolbar.js:391
+msgid "Wrap Text"
+msgstr "Zalomiť text"
+
+#: dist/toolbar/toolbar.js:392
+msgid "Merge and Center Cells"
+msgstr "Zlúčiť a centrovať bunky"
+
+#: dist/toolbar/toolbar.js:394
+msgid "Format as Currency"
+msgstr "Formátovať ako menu"
+
+#: dist/toolbar/toolbar.js:395
+msgid "Format as Percent"
+msgstr "Formátovať ako percentá"
+
+#: dist/toolbar/toolbar.js:396
+msgid "Format as Number"
+msgstr "Formátovať ako číslo"
+
+#: dist/toolbar/toolbar.js:397
+msgid "Format as Date"
+msgstr "Formátovať ako dátum"
+
+#: dist/toolbar/toolbar.js:398
+msgid "Add Decimal Place"
+msgstr "Pridať desatinné miesto"
+
+#: dist/toolbar/toolbar.js:399
+msgid "Delete Decimal Place"
+msgstr "Zmazať desatinné miesto"
+
+#: dist/toolbar/toolbar.js:401
+msgid "Sort Ascending"
+msgstr "Zoradiť vzostupne"
+
+#: dist/toolbar/toolbar.js:402
+msgid "Sort Descending"
+msgstr "Zoradiť zostupne"
+
+#: dist/toolbar/toolbar.js:404
+#: src/control/Control.Menubar.js:107
 msgid "Bullets on/off"
 msgstr "Odrážky zap./vyp."
 
-#: dist/toolbar/toolbar.js:372 src/control/Control.Menubar.js:108
+#: dist/toolbar/toolbar.js:405
+#: src/control/Control.Menubar.js:108
 msgid "Numbering on/off"
 msgstr "Číslovanie zap./vyp."
 
-#: dist/toolbar/toolbar.js:374 src/control/Control.Menubar.js:95
+#: dist/toolbar/toolbar.js:407
+#: src/control/Control.Menubar.js:95
 msgid "Increase indent"
 msgstr "Zväčšiť odsadenie"
 
-#: dist/toolbar/toolbar.js:375 src/control/Control.Menubar.js:96
+#: dist/toolbar/toolbar.js:408
+#: src/control/Control.Menubar.js:96
 msgid "Decrease indent"
 msgstr "Zmenšiť odsadenie"
 
-#: dist/toolbar/toolbar.js:378
+#: dist/toolbar/toolbar.js:411
 msgid "Insert table"
 msgstr "Vložiť tabuľku"
 
-#: dist/toolbar/toolbar.js:379
+#: dist/toolbar/toolbar.js:412
 msgid "Insert comment"
 msgstr "Vložiť poznámku"
 
-#: dist/toolbar/toolbar.js:380
+#: dist/toolbar/toolbar.js:413
 msgid "Insert graphic"
 msgstr "Vložiť grafiku"
 
-#: dist/toolbar/toolbar.js:381
+#: dist/toolbar/toolbar.js:414
 msgid "Special Character"
-msgstr ""
+msgstr "Špeciálny znak"
 
-#: dist/toolbar/toolbar.js:383
+#: dist/toolbar/toolbar.js:416
 msgid "More"
 msgstr "Viac"
 
-#: dist/toolbar/toolbar.js:384
+#: dist/toolbar/toolbar.js:417
 msgid "Close document"
 msgstr "Zavrieť dokument"
 
-#: dist/toolbar/toolbar.js:414 dist/toolbar/toolbar.js:795
+#: dist/toolbar/toolbar.js:496
+msgid "Layout"
+msgstr "Rozloženie"
+
+#: dist/toolbar/toolbar.js:519
+#: dist/toolbar/toolbar.js:851
 msgid "Sum"
 msgstr "Súčet"
 
-#: dist/toolbar/toolbar.js:415
+#: dist/toolbar/toolbar.js:520
 msgid "Function"
 msgstr "Funkcia"
 
-#: dist/toolbar/toolbar.js:416 src/control/Control.CharacterMap.js:389
+#: dist/toolbar/toolbar.js:521
+#: src/control/Control.CharacterMap.js:428
 msgid "Cancel"
 msgstr "Zrušiť"
 
-#: dist/toolbar/toolbar.js:417
+#: dist/toolbar/toolbar.js:522
 msgid "Accept"
 msgstr "Prijať"
 
-#: dist/toolbar/toolbar.js:428
+#: dist/toolbar/toolbar.js:533
 msgid "First sheet"
 msgstr "Prvý hárok"
 
-#: dist/toolbar/toolbar.js:429
+#: dist/toolbar/toolbar.js:534
 msgid "Previous sheet"
 msgstr "Predchádzajúci hárok"
 
-#: dist/toolbar/toolbar.js:430
+#: dist/toolbar/toolbar.js:535
 msgid "Next sheet"
 msgstr "Nasledujúci hárok"
 
-#: dist/toolbar/toolbar.js:431
+#: dist/toolbar/toolbar.js:536
 msgid "Last sheet"
 msgstr "Posledný hárok"
 
-#: dist/toolbar/toolbar.js:441 src/control/Control.Menubar.js:211
+#: dist/toolbar/toolbar.js:546
+#: src/control/Control.Menubar.js:211
 msgid "Fullscreen presentation"
 msgstr "Prezentácia na celú obrazovku"
 
-#: dist/toolbar/toolbar.js:443
+#: dist/toolbar/toolbar.js:548
 msgid "Insert slide"
 msgstr "Vložiť snímku"
 
-#: dist/toolbar/toolbar.js:444 src/control/Control.Menubar.js:208
+#: dist/toolbar/toolbar.js:549
+#: src/control/Control.Menubar.js:208
 msgid "Duplicate slide"
 msgstr "Duplikovať snímku"
 
-#: dist/toolbar/toolbar.js:445 src/control/Control.Menubar.js:209
+#: dist/toolbar/toolbar.js:550
+#: src/control/Control.Menubar.js:209
 msgid "Delete slide"
 msgstr "Odstrániť snímku"
 
-#: dist/toolbar/toolbar.js:458
+#: dist/toolbar/toolbar.js:563
 msgid "Search:"
 msgstr "Vyhľadať:"
 
-#: dist/toolbar/toolbar.js:463
+#: dist/toolbar/toolbar.js:568
 msgid "Search backwards"
 msgstr "Vyhľadať pospiatky"
 
-#: dist/toolbar/toolbar.js:464
+#: dist/toolbar/toolbar.js:569
 msgid "Search forward"
 msgstr "Vyhľadať dopredu"
 
-#: dist/toolbar/toolbar.js:465
+#: dist/toolbar/toolbar.js:570
 msgid "Cancel the search"
 msgstr "Zrušiť vyhľadávanie"
 
-#: dist/toolbar/toolbar.js:470 dist/toolbar/toolbar.js:1366
+#: dist/toolbar/toolbar.js:575
+#: dist/toolbar/toolbar.js:1404
 msgid "No users"
-msgstr ""
+msgstr "Žiadni používatelia"
 
-#: dist/toolbar/toolbar.js:472
+#: dist/toolbar/toolbar.js:577
 msgid "Previous page"
 msgstr "Predchádzajúca strana"
 
-#: dist/toolbar/toolbar.js:473
+#: dist/toolbar/toolbar.js:578
 msgid "Next page"
 msgstr "Nasledujúca strana"
 
-#: dist/toolbar/toolbar.js:475 src/control/Control.Menubar.js:36
+#: dist/toolbar/toolbar.js:580
+#: src/control/Control.Menubar.js:36
 #: src/control/Control.Menubar.js:187
 msgid "Reset zoom"
 msgstr "Resetovať zväčšenie"
 
-#: dist/toolbar/toolbar.js:476 src/control/Control.Menubar.js:35
+#: dist/toolbar/toolbar.js:581
+#: src/control/Control.Menubar.js:35
 #: src/control/Control.Menubar.js:186
 msgid "Zoom out"
 msgstr "Zmenšiť"
 
-#: dist/toolbar/toolbar.js:478 src/control/Control.Menubar.js:34
+#: dist/toolbar/toolbar.js:583
+#: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:185
 msgid "Zoom in"
 msgstr "Zväčšiť"
 
-#: dist/toolbar/toolbar.js:503
+#: dist/toolbar/toolbar.js:597
 msgid "%user has joined"
-msgstr ""
+msgstr "%user sa pripojil"
 
-#: dist/toolbar/toolbar.js:504
+#: dist/toolbar/toolbar.js:598
 msgid "%user has left"
-msgstr ""
+msgstr "%user sa odpojil"
 
-#: dist/toolbar/toolbar.js:634 dist/toolbar/toolbar.js:1134
+#: dist/toolbar/toolbar.js:700
+#: dist/toolbar/toolbar.js:1187
 msgid "Size"
 msgstr "Veľkosť"
 
-#: dist/toolbar/toolbar.js:776
+#: dist/toolbar/toolbar.js:832
 msgid "Number of Sheets"
 msgstr "Počet hárkov"
 
-#: dist/toolbar/toolbar.js:779
+#: dist/toolbar/toolbar.js:835
 msgid "Selected range of cells"
 msgstr "Vybraná oblasť buniek"
 
-#: dist/toolbar/toolbar.js:782 dist/toolbar/toolbar.js:828
+#: dist/toolbar/toolbar.js:838
+#: dist/toolbar/toolbar.js:869
 msgid "Entering text mode"
 msgstr "Prepínanie do textového režimu"
 
-#: dist/toolbar/toolbar.js:785 dist/toolbar/toolbar.js:831
+#: dist/toolbar/toolbar.js:841
+#: dist/toolbar/toolbar.js:872
 msgid "Selection Mode"
 msgstr "Režim výberu"
 
-#: dist/toolbar/toolbar.js:788
+#: dist/toolbar/toolbar.js:844
 msgid "Choice of functions"
 msgstr "Voľba funkcií"
 
-#: dist/toolbar/toolbar.js:790
+#: dist/toolbar/toolbar.js:846
 msgid "Average"
 msgstr "Priemer"
 
-#: dist/toolbar/toolbar.js:791
+#: dist/toolbar/toolbar.js:847
 msgid "CountA"
 msgstr "Počet hodnôt"
 
-#: dist/toolbar/toolbar.js:792
+#: dist/toolbar/toolbar.js:848
 msgid "Count"
 msgstr "Počet"
 
-#: dist/toolbar/toolbar.js:793
+#: dist/toolbar/toolbar.js:849
 msgid "Maximum"
 msgstr "Maximum"
 
-#: dist/toolbar/toolbar.js:794
+#: dist/toolbar/toolbar.js:850
 msgid "Minimum"
 msgstr "Minimum"
 
-#: dist/toolbar/toolbar.js:796
+#: dist/toolbar/toolbar.js:852
 msgid "Selection count"
 msgstr "Počet vybraných"
 
-#: dist/toolbar/toolbar.js:797 src/control/Control.CharacterMap.js:11
+#: dist/toolbar/toolbar.js:853
+#: src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr "Žiadne"
 
-#: dist/toolbar/toolbar.js:802
-msgid "Wrap Text"
-msgstr "Zalomiť text"
-
-#: dist/toolbar/toolbar.js:803
-msgid "Merge and Center Cells"
-msgstr "Zlúčiť a centrovať bunky"
-
-#: dist/toolbar/toolbar.js:805
-msgid "Format as Currency"
-msgstr "Formátovať ako menu"
-
-#: dist/toolbar/toolbar.js:806
-msgid "Format as Percent"
-msgstr "Formátovať ako percentá"
-
-#: dist/toolbar/toolbar.js:807
-msgid "Format as Number"
-msgstr "Formátovať ako číslo"
-
-#: dist/toolbar/toolbar.js:808
-msgid "Format as Date"
-msgstr "Formátovať ako dátum"
-
-#: dist/toolbar/toolbar.js:809
-msgid "Add Decimal Place"
-msgstr "Pridať desatinné miesto"
-
-#: dist/toolbar/toolbar.js:810
-msgid "Delete Decimal Place"
-msgstr "Zmazať desatinné miesto"
-
-#: dist/toolbar/toolbar.js:812
-msgid "Sort Ascending"
-msgstr "Zoradiť vzostupne"
-
-#: dist/toolbar/toolbar.js:813
-msgid "Sort Descending"
-msgstr "Zoradiť zostupne"
-
-#: dist/toolbar/toolbar.js:822
+#: dist/toolbar/toolbar.js:863
 msgid "Number of Pages"
 msgstr "Počet strán"
 
-#: dist/toolbar/toolbar.js:825
+#: dist/toolbar/toolbar.js:866
 msgid "Word Counter"
 msgstr "Počet slov"
 
-#: dist/toolbar/toolbar.js:839
+#: dist/toolbar/toolbar.js:883
 msgid "Number of Slides"
 msgstr "Počet snímok"
 
-#: dist/toolbar/toolbar.js:958
+#: dist/toolbar/toolbar.js:1011
 msgid "Document saved"
 msgstr "Dokument uložený"
 
-#: dist/toolbar/toolbar.js:1117
+#: dist/toolbar/toolbar.js:1170
 msgid "Style"
 msgstr "Štýl"
 
-#: dist/toolbar/toolbar.js:1129
+#: dist/toolbar/toolbar.js:1182
 msgid "Font"
 msgstr "Písmo"
 
-#: dist/toolbar/toolbar.js:1153
+#: dist/toolbar/toolbar.js:1206
 msgid "Previous slide"
 msgstr "Predchádzajúca snímka"
 
-#: dist/toolbar/toolbar.js:1154
+#: dist/toolbar/toolbar.js:1207
 msgid "Next slide"
 msgstr "Nasledujúca snímka"
 
-#: dist/toolbar/toolbar.js:1322
-msgid "Layout"
-msgstr "Rozloženie"
+#: dist/toolbar/toolbar.js:1265
+msgid ""
+"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:1357
+#: dist/toolbar/toolbar.js:1395
 msgid "%n users"
-msgstr ""
+msgstr "%n používateľov"
 
-#: dist/toolbar/toolbar.js:1364
+#: dist/toolbar/toolbar.js:1402
 msgid "1 user"
-msgstr ""
+msgstr "1 používateľ"
 
-#: dist/toolbar/toolbar.js:1391 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1429
+#: src/control/Control.DocumentRepair.js:87
 msgid "You"
-msgstr ""
+msgstr "Vy"
 
 #: src/admin/AdminSocketBase.js:45
 msgid "Connection error"
 msgstr "Chyba spojenia"
 
-#: src/admin/AdminSocketOverview.js:61
+#: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
 msgstr "Naozaj chcete túto reláciu ukončiť?"
 
@@ -644,1090 +701,1092 @@ msgstr "GB"
 msgid "TB"
 msgstr "TB"
 
-#: src/admin/Util.js:41
+#: src/admin/Util.js:42
+#: src/admin/Util.js:44
 msgid " hrs"
 msgstr " hod"
 
-#: src/admin/Util.js:43
+#: src/admin/Util.js:48
+#: src/admin/Util.js:50
 msgid " mins"
 msgstr " min"
 
-#: src/admin/Util.js:45
+#: src/admin/Util.js:53
 msgid " s"
 msgstr " s"
 
 #: src/control/Control.CharacterMap.js:12
 msgid "Basic Latin"
-msgstr ""
+msgstr "Základná latinka"
 
 #: src/control/Control.CharacterMap.js:13
 msgid "Latin-1"
-msgstr ""
+msgstr "Latin-1"
 
 #: src/control/Control.CharacterMap.js:14
 msgid "Latin Extended-A"
-msgstr ""
+msgstr "Latinka rozšírené-A"
 
 #: src/control/Control.CharacterMap.js:15
 msgid "Latin Extended-B"
-msgstr ""
+msgstr "Latinka rozšírené-B"
 
 #: src/control/Control.CharacterMap.js:16
 msgid "IPA Extensions"
-msgstr ""
+msgstr "Rozšírenia IPA"
 
 #: src/control/Control.CharacterMap.js:17
 msgid "Spacing Modifier Letters"
-msgstr ""
+msgstr "Pomocné fonetické znaky"
 
 #: src/control/Control.CharacterMap.js:18
 msgid "Combining Diacritical Marks"
-msgstr ""
+msgstr "Kombinujúce diakritické značky"
 
 #: src/control/Control.CharacterMap.js:19
 msgid "Basic Greek"
-msgstr ""
+msgstr "Grécke (základná)"
 
 #: src/control/Control.CharacterMap.js:20
 msgid "Cyrillic"
-msgstr ""
+msgstr "Cyrilika"
 
 #: src/control/Control.CharacterMap.js:21
 msgid "Armenian"
-msgstr ""
+msgstr "Arménske"
 
 #: src/control/Control.CharacterMap.js:22
 msgid "Basic Hebrew"
-msgstr ""
+msgstr "Hebrejské (základné)"
 
 #: src/control/Control.CharacterMap.js:23
 msgid "Basic Arabic"
-msgstr ""
+msgstr "Arabské (základné)"
 
 #: src/control/Control.CharacterMap.js:24
 msgid "Syriac"
-msgstr ""
+msgstr "Sýrske"
 
 #: src/control/Control.CharacterMap.js:25
 msgid "Thaana"
-msgstr ""
+msgstr "Thaana"
 
 #: src/control/Control.CharacterMap.js:26
 msgid "Devanagari"
-msgstr ""
+msgstr "Devanagari"
 
 #: src/control/Control.CharacterMap.js:27
 msgid "Bengali"
-msgstr ""
+msgstr "Bengálske"
 
 #: src/control/Control.CharacterMap.js:28
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhi"
 
 #: src/control/Control.CharacterMap.js:29
 msgid "Gujarati"
-msgstr ""
+msgstr "gudžaratské"
 
 #: src/control/Control.CharacterMap.js:30
 msgid "Odia"
-msgstr ""
+msgstr "Odia"
 
 #: src/control/Control.CharacterMap.js:31
 msgid "Tamil"
-msgstr ""
+msgstr "tamilské"
 
 #: src/control/Control.CharacterMap.js:32
 msgid "Telugu"
-msgstr ""
+msgstr "telugské"
 
 #: src/control/Control.CharacterMap.js:33
 msgid "Kannada"
-msgstr ""
+msgstr "kannadské"
 
 #: src/control/Control.CharacterMap.js:34
 msgid "Malayalam"
-msgstr ""
+msgstr "malajálamske"
 
 #: src/control/Control.CharacterMap.js:35
 msgid "Sinhala"
-msgstr ""
+msgstr "Sinhálske"
 
 #: src/control/Control.CharacterMap.js:36
 msgid "Thai"
-msgstr ""
+msgstr "thajské"
 
 #: src/control/Control.CharacterMap.js:37
 msgid "Lao"
-msgstr ""
+msgstr "laoské"
 
 #: src/control/Control.CharacterMap.js:38
 msgid "Tibetan"
-msgstr ""
+msgstr "tibetské"
 
 #: src/control/Control.CharacterMap.js:39
 msgid "Myanmar"
-msgstr ""
+msgstr "mjanmarské"
 
 #: src/control/Control.CharacterMap.js:40
 msgid "Basic Georgian"
-msgstr ""
+msgstr "gruzínske (základné)"
 
 #: src/control/Control.CharacterMap.js:41
 msgid "Hangul Jamo"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:42
-msgid "Ethiopic"
-msgstr ""
+msgstr "Hangul Jamo"
 
 #: src/control/Control.CharacterMap.js:43
-msgid "Cherokee"
-msgstr ""
+msgid "Ethiopic"
+msgstr "Etiópske"
 
 #: src/control/Control.CharacterMap.js:44
-msgid "Canadian Aboriginal Syllables"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:45
-msgid "Ogham"
-msgstr ""
+msgid "Cherokee"
+msgstr "Cherokee"
 
 #: src/control/Control.CharacterMap.js:46
-msgid "Runic"
-msgstr ""
+msgid "Canadian Aboriginal Syllables"
+msgstr "Kanadské domorodé slabikové"
 
 #: src/control/Control.CharacterMap.js:47
-msgid "Khmer"
-msgstr ""
+msgid "Ogham"
+msgstr "Ogham"
 
 #: src/control/Control.CharacterMap.js:48
-msgid "Mongolian"
-msgstr ""
+msgid "Runic"
+msgstr "rúnové"
 
 #: src/control/Control.CharacterMap.js:49
-msgid "Latin Extended Additional"
-msgstr ""
+msgid "Khmer"
+msgstr "khmérske"
 
 #: src/control/Control.CharacterMap.js:50
-msgid "Greek Extended"
-msgstr ""
+msgid "Mongolian"
+msgstr "mongolské"
 
 #: src/control/Control.CharacterMap.js:51
-msgid "General Punctuation"
-msgstr ""
+msgid "Latin Extended Additional"
+msgstr "Latinka rozšírené doplnkové"
 
 #: src/control/Control.CharacterMap.js:52
-msgid "Superscripts and Subscripts"
-msgstr ""
+msgid "Greek Extended"
+msgstr "grécke (rozšírené)"
 
 #: src/control/Control.CharacterMap.js:53
-msgid "Currency Symbols"
-msgstr ""
+msgid "General Punctuation"
+msgstr "Všeobecná interpunkcia"
 
 #: src/control/Control.CharacterMap.js:54
-msgid "Combining Diacritical Symbols"
-msgstr ""
+msgid "Superscripts and Subscripts"
+msgstr "Horné a dolné indexy"
 
 #: src/control/Control.CharacterMap.js:55
-msgid "Letterlike Symbols"
-msgstr ""
+msgid "Currency Symbols"
+msgstr "Symboly meny"
 
 #: src/control/Control.CharacterMap.js:56
-msgid "Number Forms"
-msgstr ""
+msgid "Combining Diacritical Symbols"
+msgstr "Kombinujúce diakritické značky"
 
 #: src/control/Control.CharacterMap.js:57
-msgid "Arrows"
-msgstr ""
+msgid "Letterlike Symbols"
+msgstr "Symboly podobné písmenám"
 
 #: src/control/Control.CharacterMap.js:58
-msgid "Mathematical Operators"
-msgstr ""
+msgid "Number Forms"
+msgstr "Číselné znaky"
 
 #: src/control/Control.CharacterMap.js:59
-msgid "Miscellaneous Technical"
-msgstr ""
+msgid "Arrows"
+msgstr "Šípky"
 
 #: src/control/Control.CharacterMap.js:60
-msgid "Control Pictures"
-msgstr ""
+msgid "Mathematical Operators"
+msgstr "Matematické operátory"
 
 #: src/control/Control.CharacterMap.js:61
-msgid "Optical Character Recognition"
-msgstr ""
+msgid "Miscellaneous Technical"
+msgstr "Rôzne technické symboly"
 
 #: src/control/Control.CharacterMap.js:62
-msgid "Enclosed Alphanumerics"
-msgstr ""
+msgid "Control Pictures"
+msgstr "Riadiace znaky"
 
 #: src/control/Control.CharacterMap.js:63
-msgid "Box Drawing"
-msgstr ""
+msgid "Optical Character Recognition"
+msgstr "Strojovo čitateľné znaky"
 
 #: src/control/Control.CharacterMap.js:64
-msgid "Block Elements"
-msgstr ""
+msgid "Enclosed Alphanumerics"
+msgstr "Vložené alfanumerické"
 
 #: src/control/Control.CharacterMap.js:65
-msgid "Geometric Shapes"
-msgstr ""
+msgid "Box Drawing"
+msgstr "Kreslenie rámčekov"
 
 #: src/control/Control.CharacterMap.js:66
-msgid "Miscellaneous Symbols"
-msgstr ""
+msgid "Block Elements"
+msgstr "Blokové prvky"
 
 #: src/control/Control.CharacterMap.js:67
-msgid "Dingbats"
-msgstr ""
+msgid "Geometric Shapes"
+msgstr "Geometrické útvary"
 
 #: src/control/Control.CharacterMap.js:68
-msgid "Braille Patterns"
-msgstr ""
+msgid "Miscellaneous Symbols"
+msgstr "Rôzne symboly"
 
 #: src/control/Control.CharacterMap.js:69
-msgid "CJK Radicals Supplement"
-msgstr ""
+msgid "Dingbats"
+msgstr "Ornamenty"
 
 #: src/control/Control.CharacterMap.js:70
-msgid "Kangxi Radicals"
-msgstr ""
+msgid "Braille Patterns"
+msgstr "Braillove znaky"
 
 #: src/control/Control.CharacterMap.js:71
-msgid "Ideographic Description Characters"
-msgstr ""
+msgid "CJK Radicals Supplement"
+msgstr "CJK radikály doplnkové"
 
 #: src/control/Control.CharacterMap.js:72
-msgid "CJK Symbols and Punctuation"
-msgstr ""
+msgid "Kangxi Radicals"
+msgstr "Kandži radikály"
 
 #: src/control/Control.CharacterMap.js:73
-msgid "Hiragana"
-msgstr ""
+msgid "Ideographic Description Characters"
+msgstr "Ideografické popisné znaky"
 
 #: src/control/Control.CharacterMap.js:74
-msgid "Katakana"
-msgstr ""
+msgid "CJK Symbols and Punctuation"
+msgstr "CJK symboly a interpunkcia"
 
 #: src/control/Control.CharacterMap.js:75
-msgid "Bopomofo"
-msgstr ""
+msgid "Hiragana"
+msgstr "Hiragana"
 
 #: src/control/Control.CharacterMap.js:76
-msgid "Hangul Compatability Jamo"
-msgstr ""
+msgid "Katakana"
+msgstr "Katakana"
 
 #: src/control/Control.CharacterMap.js:77
-msgid "Kanbun"
-msgstr ""
+msgid "Bopomofo"
+msgstr "Bopomofo"
 
 #: src/control/Control.CharacterMap.js:78
-msgid "Bopomofo Extended"
+msgid "Hangul Compatibility Jamo"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:79
-msgid "Enclosed CJK Letters and Months"
-msgstr ""
+msgid "Kanbun"
+msgstr "Kanbun"
 
 #: src/control/Control.CharacterMap.js:80
-msgid "CJK Compatibility"
-msgstr ""
+msgid "Bopomofo Extended"
+msgstr "Bopomofo rozšírené"
 
 #: src/control/Control.CharacterMap.js:81
-msgid "CJK Unified Ideographs Extension A"
-msgstr ""
+msgid "Enclosed CJK Letters and Months"
+msgstr "Vložené CJK písmená a mesiace"
 
 #: src/control/Control.CharacterMap.js:82
-msgid "CJK Unified Ideographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:83
-msgid "Yi Syllables"
-msgstr ""
+msgid "CJK Compatibility"
+msgstr "CJK kompatibilita"
 
 #: src/control/Control.CharacterMap.js:84
-msgid "Yi Radicals"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:85
-msgid "Hangul"
-msgstr ""
+msgid "CJK Unified Ideographs Extension A"
+msgstr "Unifikované ideografy CJK rozšírenie A"
 
 #: src/control/Control.CharacterMap.js:86
-msgid "High Surrogates"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:87
-msgid "High Private Use Surrogates"
-msgstr ""
+msgid "CJK Unified Ideographs"
+msgstr "CJK (unifikované ideografy)"
 
 #: src/control/Control.CharacterMap.js:88
-msgid "Low Surrogates"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:89
-msgid "Private Use Area"
-msgstr ""
+msgid "Yi Syllables"
+msgstr "Yi slabiky"
 
 #: src/control/Control.CharacterMap.js:90
-msgid "CJK Compatibility Ideographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:91
-msgid "Alphabetic Presentation Forms"
-msgstr ""
+msgid "Yi Radicals"
+msgstr "Yi radikály"
 
 #: src/control/Control.CharacterMap.js:92
-msgid "Arabic Presentation Forms-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:93
-msgid "Combining Half Marks"
-msgstr ""
+msgid "Hangul"
+msgstr "Hangul"
 
 #: src/control/Control.CharacterMap.js:94
-msgid "CJK Compatibility Forms"
-msgstr ""
+msgid "High Surrogates"
+msgstr "Vysoké náhrady"
 
 #: src/control/Control.CharacterMap.js:95
-msgid "Small Form Variants"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:96
-msgid "Arabic Presentation Forms-B"
-msgstr ""
+msgid "High Private Use Surrogates"
+msgstr "Vyššie náhradné pre súkromné použitie"
 
 #: src/control/Control.CharacterMap.js:97
-msgid "Specials"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:98
-msgid "Halfwidth and Fullwidth Forms"
-msgstr ""
+msgid "Low Surrogates"
+msgstr "Nízke náhrady"
 
 #: src/control/Control.CharacterMap.js:99
-msgid "Old Italic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:100
-msgid "Gothic"
-msgstr ""
+msgid "Private Use Area"
+msgstr "Oblasť pre súkromné použitie"
 
 #: src/control/Control.CharacterMap.js:101
-msgid "Deseret"
-msgstr ""
+msgid "CJK Compatibility Ideographs"
+msgstr "CJK kompatibilné znaky"
 
 #: src/control/Control.CharacterMap.js:102
-msgid "Byzantine Musical Symbols"
-msgstr ""
+msgid "Alphabetic Presentation Forms"
+msgstr "Abecedné prezentačné tvary"
 
-#: src/control/Control.CharacterMap.js:103
 #: src/control/Control.CharacterMap.js:104
-msgid "Musical Symbols"
-msgstr ""
+msgid "Arabic Presentation Forms-A"
+msgstr "Arabské prezentačné tvary - A"
 
 #: src/control/Control.CharacterMap.js:105
-msgid "CJK Unified Ideographs Extension B"
-msgstr ""
+msgid "Combining Half Marks"
+msgstr "Kombinované polovičné znaky"
 
 #: src/control/Control.CharacterMap.js:106
-msgid "CJK Compatibility Ideographs Supplement"
-msgstr ""
+msgid "CJK Compatibility Forms"
+msgstr "CJK (kompatibilné formy)"
 
 #: src/control/Control.CharacterMap.js:107
-msgid "Tags"
-msgstr ""
+msgid "Small Form Variants"
+msgstr "Malé varianty foriem"
 
 #: src/control/Control.CharacterMap.js:108
-msgid "Cyrillic Supplement"
-msgstr ""
+msgid "Arabic Presentation Forms-B"
+msgstr "Arabské prezentačné tvary - B"
 
 #: src/control/Control.CharacterMap.js:109
-msgid "Tagalog"
-msgstr ""
+msgid "Specials"
+msgstr "Špeciálne"
 
 #: src/control/Control.CharacterMap.js:110
-msgid "Hanunoo"
-msgstr ""
+msgid "Halfwidth and Fullwidth Forms"
+msgstr "Pološiroké a plnoširoké formy"
 
 #: src/control/Control.CharacterMap.js:111
-msgid "Buhid"
-msgstr ""
+msgid "Old Italic"
+msgstr "Stará italika"
 
 #: src/control/Control.CharacterMap.js:112
-msgid "Tagbanwa"
-msgstr ""
+msgid "Gothic"
+msgstr "Gotické"
 
 #: src/control/Control.CharacterMap.js:113
-msgid "Miscellaneous Mathematical Symbols-A"
-msgstr ""
+msgid "Deseret"
+msgstr "Deseret"
 
 #: src/control/Control.CharacterMap.js:114
-msgid "Supplemental Arrows-A"
-msgstr ""
+msgid "Byzantine Musical Symbols"
+msgstr "Byzantské hudobné symboly"
 
 #: src/control/Control.CharacterMap.js:115
-msgid "Supplemental Arrows-B"
-msgstr ""
-
 #: src/control/Control.CharacterMap.js:116
-msgid "Miscellaneous Mathematical Symbols-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:117
-msgid "Supplemental Mathematical Operators"
-msgstr ""
+msgid "Musical Symbols"
+msgstr "Hudobné symboly"
 
 #: src/control/Control.CharacterMap.js:118
-msgid "Katakana Phonetics Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:119
-msgid "Variation Selectors"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:120
-msgid "Supplementary Private Use Area-A"
-msgstr ""
+msgid "CJK Unified Ideographs Extension B"
+msgstr "CJK zjednotené symboly rozšírenie B"
 
 #: src/control/Control.CharacterMap.js:121
-msgid "Supplementary Private Use Area-B"
-msgstr ""
+msgid "CJK Compatibility Ideographs Supplement"
+msgstr "Dodatočné kompatibilné ideogramy CJK"
 
 #: src/control/Control.CharacterMap.js:122
-msgid "Limbu"
-msgstr ""
+msgid "Tags"
+msgstr "Značky"
 
 #: src/control/Control.CharacterMap.js:123
-msgid "Tai Le"
-msgstr ""
+msgid "Cyrillic Supplement"
+msgstr "Cyrilika doplnkové"
 
 #: src/control/Control.CharacterMap.js:124
-msgid "Khmer Symbols"
-msgstr ""
+msgid "Tagalog"
+msgstr "Tagalog"
 
 #: src/control/Control.CharacterMap.js:125
-msgid "Phonetic Extensions"
-msgstr ""
+msgid "Hanunoo"
+msgstr "Hanunoo"
 
 #: src/control/Control.CharacterMap.js:126
-msgid "Miscellaneous Symbols And Arrows"
-msgstr ""
+msgid "Buhid"
+msgstr "Buhid"
 
 #: src/control/Control.CharacterMap.js:127
-msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgid "Tagbanwa"
+msgstr "Tagbanwa"
 
 #: src/control/Control.CharacterMap.js:128
-msgid "Linear B Syllabary"
-msgstr ""
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr "Rôzne matematické symboly-A"
 
 #: src/control/Control.CharacterMap.js:129
-msgid "Linear B Ideograms"
-msgstr ""
+msgid "Supplemental Arrows-A"
+msgstr "Doplnkové šípky-A"
 
 #: src/control/Control.CharacterMap.js:130
-msgid "Aegean Numbers"
-msgstr ""
+msgid "Supplemental Arrows-B"
+msgstr "Doplňujúce šípky-B"
 
 #: src/control/Control.CharacterMap.js:131
-msgid "Ugaritic"
-msgstr ""
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr "Rôzne matematické symboly-B"
 
 #: src/control/Control.CharacterMap.js:132
-msgid "Shavian"
-msgstr ""
+msgid "Supplemental Mathematical Operators"
+msgstr "Doplňujúce matematické operátory"
 
 #: src/control/Control.CharacterMap.js:133
-msgid "Osmanya"
-msgstr ""
+msgid "Katakana Phonetics Extensions"
+msgstr "Katakana fonetické rozšírenia"
 
 #: src/control/Control.CharacterMap.js:134
-msgid "Cypriot Syllabary"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:135
-msgid "Tai Xuan Jing Symbols"
-msgstr ""
+msgid "Variation Selectors"
+msgstr "Selektory variácií"
 
 #: src/control/Control.CharacterMap.js:136
-msgid "Variation Selectors Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:137
-msgid "Ancient Greek Musical Notation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:138
-msgid "Ancient Greek Numbers"
-msgstr ""
+msgid "Supplementary Private Use Area-A"
+msgstr "Doplnková oblasť na súkromné použitie-A"
 
 #: src/control/Control.CharacterMap.js:139
-msgid "Arabic Supplement"
-msgstr ""
+msgid "Supplementary Private Use Area-B"
+msgstr "Doplnková oblasť na súkromné použitie-B"
 
 #: src/control/Control.CharacterMap.js:140
-msgid "Buginese"
-msgstr ""
+msgid "Limbu"
+msgstr "Limbu"
 
 #: src/control/Control.CharacterMap.js:141
-msgid "CJK Strokes"
-msgstr ""
+msgid "Tai Le"
+msgstr "Tai Le"
 
 #: src/control/Control.CharacterMap.js:142
-msgid "Combining Diacritical Marks Supplement"
-msgstr ""
+msgid "Khmer Symbols"
+msgstr "Kmérske symboly"
 
 #: src/control/Control.CharacterMap.js:143
-msgid "Coptic"
-msgstr ""
+msgid "Phonetic Extensions"
+msgstr "Fonetické rozšírenia"
 
 #: src/control/Control.CharacterMap.js:144
-msgid "Ethiopic Extended"
-msgstr ""
+msgid "Miscellaneous Symbols And Arrows"
+msgstr "Rôzne symboly a šípky"
 
 #: src/control/Control.CharacterMap.js:145
-msgid "Ethiopic Supplement"
-msgstr ""
+msgid "Yijing Hexagram Symbols"
+msgstr "Yijing hexagram symboly"
 
 #: src/control/Control.CharacterMap.js:146
-msgid "Georgian Supplement"
-msgstr ""
+msgid "Linear B Syllabary"
+msgstr "Lineárne B slabikové"
 
 #: src/control/Control.CharacterMap.js:147
-msgid "Glagolitic"
-msgstr ""
+msgid "Linear B Ideograms"
+msgstr "Lineárne B ideogramy"
 
 #: src/control/Control.CharacterMap.js:148
-msgid "Kharoshthi"
-msgstr ""
+msgid "Aegean Numbers"
+msgstr "Egejské číslice"
 
 #: src/control/Control.CharacterMap.js:149
-msgid "Modifier Tone Letters"
-msgstr ""
+msgid "Ugaritic"
+msgstr "Ugaritické"
 
 #: src/control/Control.CharacterMap.js:150
-msgid "\"New Tai Lue"
-msgstr ""
+msgid "Shavian"
+msgstr "Shavian"
 
 #: src/control/Control.CharacterMap.js:151
-msgid "Old Persian"
-msgstr ""
+msgid "Osmanya"
+msgstr "Osmanské"
 
 #: src/control/Control.CharacterMap.js:152
-msgid "Phonetic Extensions Supplement"
-msgstr ""
+msgid "Cypriot Syllabary"
+msgstr "Cyperské slabikové"
 
 #: src/control/Control.CharacterMap.js:153
-msgid "Supplemental Punctuation"
-msgstr ""
+msgid "Tai Xuan Jing Symbols"
+msgstr "Symboly Tai Xuan Jing"
 
 #: src/control/Control.CharacterMap.js:154
-msgid "Syloti Nagri"
-msgstr ""
+msgid "Variation Selectors Supplement"
+msgstr "Selektory variácií doplnkové"
 
 #: src/control/Control.CharacterMap.js:155
-msgid "Tifinagh"
-msgstr ""
+msgid "Ancient Greek Musical Notation"
+msgstr "Starogrécka hudobná notácia"
 
 #: src/control/Control.CharacterMap.js:156
-msgid "Vertical Forms"
-msgstr ""
+msgid "Ancient Greek Numbers"
+msgstr "Starogrécke čísla"
 
 #: src/control/Control.CharacterMap.js:157
-msgid "Nko"
-msgstr ""
+msgid "Arabic Supplement"
+msgstr "Arabské doplnkové"
 
 #: src/control/Control.CharacterMap.js:158
-msgid "Balinese"
-msgstr ""
+msgid "Buginese"
+msgstr "bugiština"
 
 #: src/control/Control.CharacterMap.js:159
-msgid "Latin Extended-C"
-msgstr ""
+msgid "CJK Strokes"
+msgstr "CJK ťahy"
 
 #: src/control/Control.CharacterMap.js:160
-msgid "Latin Extended-D"
-msgstr ""
+msgid "Combining Diacritical Marks Supplement"
+msgstr "Kombinujúce diakritické značky, doplnkové"
 
 #: src/control/Control.CharacterMap.js:161
-msgid "Phags-Pa"
-msgstr ""
+msgid "Coptic"
+msgstr "Koptické"
 
 #: src/control/Control.CharacterMap.js:162
-msgid "Phoenician"
-msgstr ""
+msgid "Ethiopic Extended"
+msgstr "Etiópske rozšírené"
 
 #: src/control/Control.CharacterMap.js:163
-msgid "Cuneiform"
-msgstr ""
+msgid "Ethiopic Supplement"
+msgstr "Etiópske doplnkové"
 
 #: src/control/Control.CharacterMap.js:164
-msgid "Cuneiform Numbers And Punctuation"
-msgstr ""
+msgid "Georgian Supplement"
+msgstr "Gruzínske doplnkové"
 
 #: src/control/Control.CharacterMap.js:165
-msgid "Counting Rod Numerals"
-msgstr ""
+msgid "Glagolitic"
+msgstr "Hlaholika"
 
 #: src/control/Control.CharacterMap.js:166
-msgid "Sundanese"
-msgstr ""
+msgid "Kharoshthi"
+msgstr "Kharóšthí"
 
 #: src/control/Control.CharacterMap.js:167
-msgid "Lepcha"
-msgstr ""
+msgid "Modifier Tone Letters"
+msgstr "Tonálne modifikátory"
 
 #: src/control/Control.CharacterMap.js:168
-msgid "Ol Chiki"
+msgid "New Tai Lue"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:169
-msgid "Cyrillic Extended-A"
-msgstr ""
+msgid "Old Persian"
+msgstr "Staré perzské"
 
 #: src/control/Control.CharacterMap.js:170
-msgid "Vai"
-msgstr ""
+msgid "Phonetic Extensions Supplement"
+msgstr "Fonetické rozšírenia, doplnky"
 
 #: src/control/Control.CharacterMap.js:171
-msgid "Cyrillic Extended-B"
-msgstr ""
+msgid "Supplemental Punctuation"
+msgstr "Doplnková interpunkcia"
 
 #: src/control/Control.CharacterMap.js:172
-msgid "Saurashtra"
-msgstr ""
+msgid "Syloti Nagri"
+msgstr "Syloti Nagri"
 
 #: src/control/Control.CharacterMap.js:173
-msgid "Kayah Li"
-msgstr ""
+msgid "Tifinagh"
+msgstr "Tifinagh"
 
 #: src/control/Control.CharacterMap.js:174
-msgid "Rejang"
-msgstr ""
+msgid "Vertical Forms"
+msgstr "Vertikálne tvary"
 
 #: src/control/Control.CharacterMap.js:175
-msgid "Cham"
-msgstr ""
+msgid "Nko"
+msgstr "Nko"
 
 #: src/control/Control.CharacterMap.js:176
-msgid "Ancient Symbols"
-msgstr ""
+msgid "Balinese"
+msgstr "Balijske"
 
 #: src/control/Control.CharacterMap.js:177
-msgid "Phaistos Disc"
-msgstr ""
+msgid "Latin Extended-C"
+msgstr "Latinka rozšírená-C"
 
 #: src/control/Control.CharacterMap.js:178
-msgid "Lycian"
-msgstr ""
+msgid "Latin Extended-D"
+msgstr "Latinka rozšírená-D"
 
 #: src/control/Control.CharacterMap.js:179
-msgid "Carian"
-msgstr ""
+msgid "Phags-Pa"
+msgstr "Phags Pa"
 
 #: src/control/Control.CharacterMap.js:180
-msgid "Lydian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:181
-msgid "Mahjong Tiles"
-msgstr ""
+msgid "Phoenician"
+msgstr "fénické"
 
 #: src/control/Control.CharacterMap.js:182
-msgid "Domino Tiles"
-msgstr ""
+msgid "Cuneiform"
+msgstr "Klinové písmo"
 
 #: src/control/Control.CharacterMap.js:183
-msgid "Samaritan"
-msgstr ""
+msgid "Cuneiform Numbers And Punctuation"
+msgstr "Čísla a interpunkcia klinového písma"
 
 #: src/control/Control.CharacterMap.js:184
-msgid "Canadian Aboriginal Syllabics Extended"
-msgstr ""
+msgid "Counting Rod Numerals"
+msgstr "Číslice v čínskom paličkovom zápise"
 
 #: src/control/Control.CharacterMap.js:185
-msgid "Tai Tham"
-msgstr ""
+msgid "Sundanese"
+msgstr "Sundské"
 
 #: src/control/Control.CharacterMap.js:186
-msgid "Vedic Extensions"
-msgstr ""
+msgid "Lepcha"
+msgstr "Lepča"
 
 #: src/control/Control.CharacterMap.js:187
-msgid "Lisu"
-msgstr ""
+msgid "Ol Chiki"
+msgstr "Ol Chiki"
 
 #: src/control/Control.CharacterMap.js:188
-msgid "Bamum"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:189
-msgid "Common Indic Number Forms"
-msgstr ""
+msgid "Cyrillic Extended-A"
+msgstr "Cyrilika rozšírená-A"
 
 #: src/control/Control.CharacterMap.js:190
-msgid "Devanagari Extended"
-msgstr ""
+msgid "Vai"
+msgstr "Vai"
 
 #: src/control/Control.CharacterMap.js:191
-msgid "Hangul Jamo Extended-A"
-msgstr ""
+msgid "Cyrillic Extended-B"
+msgstr "Cyrilika rozšírená-B"
 
 #: src/control/Control.CharacterMap.js:192
-msgid "Javanese"
-msgstr ""
+msgid "Saurashtra"
+msgstr "Saurashtra"
 
 #: src/control/Control.CharacterMap.js:193
-msgid "Myanmar Extended-A"
-msgstr ""
+msgid "Kayah Li"
+msgstr "Kayah Li"
 
 #: src/control/Control.CharacterMap.js:194
-msgid "Tai Viet"
-msgstr ""
+msgid "Rejang"
+msgstr "Rejang"
 
 #: src/control/Control.CharacterMap.js:195
-msgid "Meetei Mayek"
-msgstr ""
+msgid "Cham"
+msgstr "Cham"
 
 #: src/control/Control.CharacterMap.js:196
-msgid "Hangul Jamo Extended-B"
-msgstr ""
+msgid "Ancient Symbols"
+msgstr "Staré symboly"
 
 #: src/control/Control.CharacterMap.js:197
-msgid "Imperial Aramaic"
-msgstr ""
+msgid "Phaistos Disc"
+msgstr "Faistský disk"
 
 #: src/control/Control.CharacterMap.js:198
-msgid "Old South Arabian"
-msgstr ""
+msgid "Lycian"
+msgstr "lýcijské"
 
 #: src/control/Control.CharacterMap.js:199
-msgid "Avestan"
-msgstr ""
+msgid "Carian"
+msgstr "karyjské"
 
 #: src/control/Control.CharacterMap.js:200
-msgid "Inscriptional Parthian"
-msgstr ""
+msgid "Lydian"
+msgstr "lýdske"
 
 #: src/control/Control.CharacterMap.js:201
-msgid "Inscriptional Pahlavi"
-msgstr ""
+msgid "Mahjong Tiles"
+msgstr "Mahjong kocky"
 
 #: src/control/Control.CharacterMap.js:202
-msgid "Old Turkic"
-msgstr ""
+msgid "Domino Tiles"
+msgstr "Dominové kocky"
 
 #: src/control/Control.CharacterMap.js:203
-msgid "Rumi Numeral Symbols"
-msgstr ""
+msgid "Samaritan"
+msgstr "Samaritánske"
 
 #: src/control/Control.CharacterMap.js:204
-msgid "Kaithi"
-msgstr ""
+msgid "Canadian Aboriginal Syllabics Extended"
+msgstr "Rozšírené kanadské domorodé slabikové"
 
 #: src/control/Control.CharacterMap.js:205
-msgid "Egyptian Hieroglyphs"
-msgstr ""
+msgid "Tai Tham"
+msgstr "Tai Tam"
 
 #: src/control/Control.CharacterMap.js:206
-msgid "Enclosed Alphanumeric Supplement"
-msgstr ""
+msgid "Vedic Extensions"
+msgstr "Védske rozšírujúce"
 
 #: src/control/Control.CharacterMap.js:207
-msgid "Enclosed Ideographic Supplement"
-msgstr ""
+msgid "Lisu"
+msgstr "Lisu"
 
 #: src/control/Control.CharacterMap.js:208
-msgid "CJK Unified Ideographs Extension C"
-msgstr ""
+msgid "Bamum"
+msgstr "Bamum"
 
 #: src/control/Control.CharacterMap.js:209
-msgid "Mandaic"
-msgstr ""
+msgid "Common Indic Number Forms"
+msgstr "Bežné indické číselné formy"
 
 #: src/control/Control.CharacterMap.js:210
-msgid "Batak"
-msgstr ""
+msgid "Devanagari Extended"
+msgstr "Rozšířené dévanágarí"
 
 #: src/control/Control.CharacterMap.js:211
-msgid "Ethiopic Extended-A"
-msgstr ""
+msgid "Hangul Jamo Extended-A"
+msgstr "Hangul Jamo rozšírené-A"
 
 #: src/control/Control.CharacterMap.js:212
-msgid "Brahmi"
-msgstr ""
+msgid "Javanese"
+msgstr "Jávske"
 
 #: src/control/Control.CharacterMap.js:213
-msgid "Bamum Supplement"
-msgstr ""
+msgid "Myanmar Extended-A"
+msgstr "Barmské rozšírené-A"
 
 #: src/control/Control.CharacterMap.js:214
-msgid "Kana Supplement"
-msgstr ""
+msgid "Tai Viet"
+msgstr "Tai Viet"
 
 #: src/control/Control.CharacterMap.js:215
-msgid "Playing Cards"
-msgstr ""
+msgid "Meetei Mayek"
+msgstr "Meetei Mayek"
 
 #: src/control/Control.CharacterMap.js:216
-msgid "Miscellaneous Symbols And Pictographs"
-msgstr ""
+msgid "Hangul Jamo Extended-B"
+msgstr "Hangul Jamo rozšírené-B"
 
 #: src/control/Control.CharacterMap.js:217
-msgid "Emoticons"
-msgstr ""
+msgid "Imperial Aramaic"
+msgstr "aramejské kráľovské"
 
 #: src/control/Control.CharacterMap.js:218
-msgid "Transport And Map Symbols"
-msgstr ""
+msgid "Old South Arabian"
+msgstr "Južná staroarabčina"
 
 #: src/control/Control.CharacterMap.js:219
-msgid "Alchemical Symbols"
-msgstr ""
+msgid "Avestan"
+msgstr "Avestanské"
 
 #: src/control/Control.CharacterMap.js:220
-msgid "CJK Unified Ideographs Extension D"
-msgstr ""
+msgid "Inscriptional Parthian"
+msgstr "Parthian nápisové"
 
 #: src/control/Control.CharacterMap.js:221
-msgid "Arabic Extended-A"
-msgstr ""
+msgid "Inscriptional Pahlavi"
+msgstr "Pahlavi nápisové"
 
 #: src/control/Control.CharacterMap.js:222
-msgid "Arabic Mathematical Alphabetic Symbols"
-msgstr ""
+msgid "Old Turkic"
+msgstr "staroturecké"
 
 #: src/control/Control.CharacterMap.js:223
-msgid "Chakma"
-msgstr ""
+msgid "Rumi Numeral Symbols"
+msgstr "Rumi číselné symboly"
 
 #: src/control/Control.CharacterMap.js:224
-msgid "Meetei Mayek Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:225
-msgid "Meroitic Cursive"
-msgstr ""
+msgid "Kaithi"
+msgstr "Kaithi"
 
 #: src/control/Control.CharacterMap.js:226
-msgid "Meroitic Hieroglyphs"
-msgstr ""
+msgid "Egyptian Hieroglyphs"
+msgstr "Egyptské hieroglyfy"
 
 #: src/control/Control.CharacterMap.js:227
-msgid "Miao"
-msgstr ""
+msgid "Enclosed Alphanumeric Supplement"
+msgstr "Vložené alfanumerické doplnové"
 
 #: src/control/Control.CharacterMap.js:228
-msgid "Sharada"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:229
-msgid "Sora Sompeng"
-msgstr ""
+msgid "Enclosed Ideographic Supplement"
+msgstr "Etiópske doplnkové ideografy"
 
 #: src/control/Control.CharacterMap.js:230
-msgid "Sundanese Supplement"
-msgstr ""
+msgid "CJK Unified Ideographs Extension C"
+msgstr "Unifikované ideografy CJK rozšírenie C"
 
 #: src/control/Control.CharacterMap.js:231
-msgid "Takri"
-msgstr ""
+msgid "Mandaic"
+msgstr "Mandaic"
 
 #: src/control/Control.CharacterMap.js:232
-msgid "Bassa Vah"
-msgstr ""
+msgid "Batak"
+msgstr "Batak"
 
 #: src/control/Control.CharacterMap.js:233
-msgid "Caucasian Albanian"
-msgstr ""
+msgid "Ethiopic Extended-A"
+msgstr "Etiópske rozšírené-A"
 
 #: src/control/Control.CharacterMap.js:234
-msgid "Coptic Epact Numbers"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:235
-msgid "Combining Diacritical Marks Extended"
-msgstr ""
+msgid "Brahmi"
+msgstr "brahmické"
 
 #: src/control/Control.CharacterMap.js:236
-msgid "Duployan"
-msgstr ""
+msgid "Bamum Supplement"
+msgstr "Bamum doplnkové"
 
 #: src/control/Control.CharacterMap.js:237
-msgid "Elbasan"
-msgstr ""
+msgid "Kana Supplement"
+msgstr "Kana doplnky"
 
 #: src/control/Control.CharacterMap.js:238
-msgid "Geometric Shapes Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:239
-msgid "Grantha"
-msgstr ""
+msgid "Playing Cards"
+msgstr "Hracie karty"
 
 #: src/control/Control.CharacterMap.js:240
-msgid "Khojki"
-msgstr ""
+msgid "Miscellaneous Symbols And Pictographs"
+msgstr "Rôzne symboly a piktogramy"
 
 #: src/control/Control.CharacterMap.js:241
-msgid "Khudawadi"
-msgstr ""
+msgid "Emoticons"
+msgstr "Emotikony"
 
 #: src/control/Control.CharacterMap.js:242
-msgid "Latin Extended-E"
-msgstr ""
+msgid "Transport And Map Symbols"
+msgstr "Dopravné symboly a symboly máp"
 
 #: src/control/Control.CharacterMap.js:243
-msgid "Linear A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:244
-msgid "Mahajani"
-msgstr ""
+msgid "Alchemical Symbols"
+msgstr "Alchymistické symboly"
 
 #: src/control/Control.CharacterMap.js:245
-msgid "Manichaean"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:246
-msgid "Mende Kikakui"
-msgstr ""
+msgid "CJK Unified Ideographs Extension D"
+msgstr "Unifikované ideografy CJK rozšírenie D"
 
 #: src/control/Control.CharacterMap.js:247
-msgid "Modi"
-msgstr ""
+msgid "Arabic Extended-A"
+msgstr "Arabčina rozšírená-A"
 
 #: src/control/Control.CharacterMap.js:248
-msgid "Mro"
-msgstr ""
+msgid "Arabic Mathematical Alphabetic Symbols"
+msgstr "Arabské matematické abecedné symboly"
 
 #: src/control/Control.CharacterMap.js:249
-msgid "Myanmar Extended-B"
-msgstr ""
+msgid "Chakma"
+msgstr "Čakma"
 
 #: src/control/Control.CharacterMap.js:250
-msgid "Nabataean"
-msgstr ""
+msgid "Meetei Mayek Extensions"
+msgstr "Rozšírenia Meetei Mayek"
 
 #: src/control/Control.CharacterMap.js:251
-msgid "Old North Arabian"
-msgstr ""
+msgid "Meroitic Cursive"
+msgstr "Meroitické kurzíva"
 
 #: src/control/Control.CharacterMap.js:252
-msgid "Old Permic"
-msgstr ""
+msgid "Meroitic Hieroglyphs"
+msgstr "Meroitické hieroglyfy"
 
 #: src/control/Control.CharacterMap.js:253
-msgid "Ornamental Dingbats"
-msgstr ""
+msgid "Miao"
+msgstr "Miao"
 
 #: src/control/Control.CharacterMap.js:254
-msgid "Pahawh Hmong"
-msgstr ""
+msgid "Sharada"
+msgstr "Šáradá"
 
 #: src/control/Control.CharacterMap.js:255
-msgid "Palmyrene"
-msgstr ""
+msgid "Sora Sompeng"
+msgstr "Sora Sompeng"
 
 #: src/control/Control.CharacterMap.js:256
-msgid "Pau Cin Hau"
-msgstr ""
+msgid "Sundanese Supplement"
+msgstr "Sundské doplnkové"
 
 #: src/control/Control.CharacterMap.js:257
-msgid "Psalter Pahlavi"
-msgstr ""
+msgid "Takri"
+msgstr "Takri"
 
 #: src/control/Control.CharacterMap.js:258
-msgid "Shorthand Format Controls"
-msgstr ""
+msgid "Bassa Vah"
+msgstr "Bassa Vah"
 
 #: src/control/Control.CharacterMap.js:259
-msgid "Siddham"
-msgstr ""
+msgid "Caucasian Albanian"
+msgstr "Kaukazské albánske"
 
 #: src/control/Control.CharacterMap.js:260
-msgid "Sinhala Archaic Numbers"
-msgstr ""
+msgid "Coptic Epact Numbers"
+msgstr "koptské, číselné znaky"
 
 #: src/control/Control.CharacterMap.js:261
-msgid "Supplemental Arrows-C"
-msgstr ""
+msgid "Combining Diacritical Marks Extended"
+msgstr "Kombinujúce diakritické značky, rozšírené"
 
 #: src/control/Control.CharacterMap.js:262
-msgid "Tirhuta"
-msgstr ""
+msgid "Duployan"
+msgstr "Duployan"
 
 #: src/control/Control.CharacterMap.js:263
-msgid "Warang Citi"
-msgstr ""
+msgid "Elbasan"
+msgstr "Elbasan"
 
 #: src/control/Control.CharacterMap.js:264
-msgid "Ahom"
-msgstr ""
+msgid "Geometric Shapes Extended"
+msgstr "geometrické útvary, rozšírené"
 
 #: src/control/Control.CharacterMap.js:265
-msgid "Anatolian Hieroglyphs"
-msgstr ""
+msgid "Grantha"
+msgstr "Grantha"
 
 #: src/control/Control.CharacterMap.js:266
-msgid "Cherokee Supplement"
-msgstr ""
+msgid "Khojki"
+msgstr "Khojki"
 
 #: src/control/Control.CharacterMap.js:267
-msgid "CJK Unified Ideographs Extension E"
-msgstr ""
+msgid "Khudawadi"
+msgstr "Khudawadi"
 
 #: src/control/Control.CharacterMap.js:268
-msgid "Early Dynastic Cuneiform"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:269
-msgid "Hatran"
-msgstr ""
+msgid "Latin Extended-E"
+msgstr "Latinka rozšírené-E"
 
 #: src/control/Control.CharacterMap.js:270
-msgid "Multani"
-msgstr ""
+msgid "Linear A"
+msgstr "lineárne písmo A"
 
 #: src/control/Control.CharacterMap.js:271
-msgid "Old Hungarian"
-msgstr ""
+msgid "Mahajani"
+msgstr "Mahajani"
 
 #: src/control/Control.CharacterMap.js:272
-msgid "Supplemental Symbols And Pictographs"
-msgstr ""
+msgid "Manichaean"
+msgstr "manichejské"
 
 #: src/control/Control.CharacterMap.js:273
+msgid "Mende Kikakui"
+msgstr "Mende Kikakui"
+
+#: src/control/Control.CharacterMap.js:274
+msgid "Modi"
+msgstr "Modi"
+
+#: src/control/Control.CharacterMap.js:275
+msgid "Mro"
+msgstr "Mro"
+
+#: src/control/Control.CharacterMap.js:276
+msgid "Myanmar Extended-B"
+msgstr "Mjanmarské rozšírené-B"
+
+#: src/control/Control.CharacterMap.js:277
+msgid "Nabataean"
+msgstr "Nabataean"
+
+#: src/control/Control.CharacterMap.js:278
+msgid "Old North Arabian"
+msgstr "severné staroarabské"
+
+#: src/control/Control.CharacterMap.js:279
+msgid "Old Permic"
+msgstr "staré permské"
+
+#: src/control/Control.CharacterMap.js:280
+msgid "Ornamental Dingbats"
+msgstr "Ornamentálne ozdobné"
+
+#: src/control/Control.CharacterMap.js:281
+msgid "Pahawh Hmong"
+msgstr "Pahawh Hmong"
+
+#: src/control/Control.CharacterMap.js:282
+msgid "Palmyrene"
+msgstr "Palmyrene"
+
+#: src/control/Control.CharacterMap.js:283
+msgid "Pau Cin Hau"
+msgstr "Pau Cin Hau"
+
+#: src/control/Control.CharacterMap.js:284
+msgid "Psalter Pahlavi"
+msgstr "Psalter Pahlavi"
+
+#: src/control/Control.CharacterMap.js:285
+msgid "Shorthand Format Controls"
+msgstr "skrátené riadiace znaky"
+
+#: src/control/Control.CharacterMap.js:286
+msgid "Siddham"
+msgstr "Siddham"
+
+#: src/control/Control.CharacterMap.js:287
+msgid "Sinhala Archaic Numbers"
+msgstr "sinhalské archaické číslice"
+
+#: src/control/Control.CharacterMap.js:288
+msgid "Supplemental Arrows-C"
+msgstr "Doplnkové šípky-C"
+
+#: src/control/Control.CharacterMap.js:289
+msgid "Tirhuta"
+msgstr "Tirhuta"
+
+#: src/control/Control.CharacterMap.js:290
+msgid "Warang Citi"
+msgstr "Warang Citi"
+
+#: src/control/Control.CharacterMap.js:291
+msgid "Ahom"
+msgstr "Ahom"
+
+#: src/control/Control.CharacterMap.js:293
+msgid "Anatolian Hieroglyphs"
+msgstr "anatolské hieroglyfy"
+
+#: src/control/Control.CharacterMap.js:294
+msgid "Cherokee Supplement"
+msgstr "Cherokee, doplnky"
+
+#: src/control/Control.CharacterMap.js:295
+#: src/control/Control.CharacterMap.js:296
+msgid "CJK Unified Ideographs Extension E"
+msgstr "Unifikované ideografy CJK rozšírenie E"
+
+#: src/control/Control.CharacterMap.js:298
+msgid "Early Dynastic Cuneiform"
+msgstr "Rané klinové písmo"
+
+#: src/control/Control.CharacterMap.js:299
+msgid "Hatran"
+msgstr "Hatran"
+
+#: src/control/Control.CharacterMap.js:300
+msgid "Multani"
+msgstr "Multani"
+
+#: src/control/Control.CharacterMap.js:301
+msgid "Old Hungarian"
+msgstr "staromaďarské"
+
+#: src/control/Control.CharacterMap.js:302
+msgid "Supplemental Symbols And Pictographs"
+msgstr "doplnkové symboly a piktogramy"
+
+#: src/control/Control.CharacterMap.js:304
 msgid "Sutton Signwriting"
-msgstr ""
+msgstr "sutonské znakové písmo"
 
-#: src/control/Control.CharacterMap.js:348
+#: src/control/Control.CharacterMap.js:390
 msgid "Special Characters"
-msgstr ""
+msgstr "Špeciálne znaky"
 
-#: src/control/Control.CharacterMap.js:353
+#: src/control/Control.CharacterMap.js:395
 msgid "Font Name:"
-msgstr ""
+msgstr "Názov písma:"
 
-#: src/control/Control.CharacterMap.js:360
+#: src/control/Control.CharacterMap.js:402
 msgid "Subset:"
+msgstr "Podmnožina:"
+
+#: src/control/Control.CharacterMap.js:413
+msgid "Selected Character:"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:367
-msgid "Special Characters rendered by the User Agent:"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:374
-msgid "Special Character rendered by Server Side:"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:379
+#: src/control/Control.CharacterMap.js:418
 msgid "Hexadecimal:"
-msgstr ""
+msgstr "Hexadecimálne:"
 
-#: src/control/Control.CharacterMap.js:385 src/control/Control.Menubar.js:38
-#: src/control/Control.Menubar.js:138 src/control/Control.Menubar.js:189
-#: src/control/Control.Menubar.js:195 src/control/Control.Menubar.js:243
+#: src/control/Control.CharacterMap.js:424
+#: src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:138
+#: src/control/Control.Menubar.js:189
+#: src/control/Control.Menubar.js:195
+#: src/control/Control.Menubar.js:243
 msgid "Insert"
 msgstr "Vložiť"
 
@@ -1735,76 +1794,83 @@ msgstr "Vložiť"
 msgid "Insert column before"
 msgstr "Vložiť stĺpec pred"
 
-#: src/control/Control.ColumnHeader.js:48 src/control/Control.Menubar.js:257
+#: src/control/Control.ColumnHeader.js:48
+#: src/control/Control.Menubar.js:257
 msgid "Delete column"
 msgstr "Odstrániť stĺpec"
 
 #: src/control/Control.ColumnHeader.js:55
 msgid "Optimal Width"
-msgstr ""
+msgstr "Optimálna šírka"
 
 #: src/control/Control.ColumnHeader.js:62
 msgid "Hide Columns"
-msgstr ""
+msgstr "Skryť stĺpce"
 
 #: src/control/Control.ColumnHeader.js:69
 msgid "Show Columns"
-msgstr ""
+msgstr "Zobraziť stĺpce"
 
 #: src/control/Control.ColumnHeader.js:84
 msgid "Optimal Column Width"
-msgstr ""
+msgstr "Optimálna šírka stĺpca"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
-msgstr ""
+msgstr "Opraviť dokument"
 
 #: src/control/Control.DocumentRepair.js:40
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: src/control/Control.DocumentRepair.js:42
 msgid "Index"
-msgstr ""
+msgstr "Register"
 
-#: src/control/Control.DocumentRepair.js:44 src/control/Control.Menubar.js:40
+#: src/control/Control.DocumentRepair.js:44
+#: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:245
 msgid "Comment"
 msgstr "Poznámka"
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "User name"
-msgstr ""
+msgstr "Meno používateľa"
 
 #: src/control/Control.DocumentRepair.js:48
 msgid "Timestamp"
-msgstr ""
+msgstr "Časová značka"
 
 #: src/control/Control.DocumentRepair.js:52
 msgid "Jump to state"
-msgstr ""
+msgstr "Prejsť na stav"
 
-#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:162
+#: src/control/Control.Menubar.js:10
+#: src/control/Control.Menubar.js:162
 #: src/control/Control.Menubar.js:220
 msgid "File"
 msgstr "Súbor"
 
-#: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:164
+#: src/control/Control.Menubar.js:12
+#: src/control/Control.Menubar.js:164
 #: src/control/Control.Menubar.js:222
 msgid "Print"
 msgstr "Tlačiť"
 
-#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:165
+#: src/control/Control.Menubar.js:13
+#: src/control/Control.Menubar.js:165
 #: src/control/Control.Menubar.js:223
 msgid "See revision history"
 msgstr "Zobraziť históriu revízií"
 
-#: src/control/Control.Menubar.js:14 src/control/Control.Menubar.js:166
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:224
 msgid "Download as"
 msgstr "Stiahnuť ako"
 
-#: src/control/Control.Menubar.js:15 src/control/Control.Menubar.js:167
+#: src/control/Control.Menubar.js:15
+#: src/control/Control.Menubar.js:167
 #: src/control/Control.Menubar.js:225
 msgid "PDF Document (.pdf)"
 msgstr "PDF dokument (.pdf)"
@@ -1821,346 +1887,368 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:20 src/control/Control.Menubar.js:172
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:172
 #: src/control/Control.Menubar.js:230
 msgid "Edit"
 msgstr "Upraviť"
 
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
-msgstr ""
+msgstr "Opraviť"
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:25
+#: src/control/Control.Menubar.js:176
 #: src/control/Control.Menubar.js:234
 msgid "Cut"
 msgstr "Vystrihnúť"
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:177
+#: src/control/Control.Menubar.js:26
+#: src/control/Control.Menubar.js:177
 #: src/control/Control.Menubar.js:235
 msgid "Copy"
 msgstr "Kopírovať"
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:178
+#: src/control/Control.Menubar.js:27
+#: src/control/Control.Menubar.js:178
 #: src/control/Control.Menubar.js:236
 msgid "Paste"
 msgstr "Vložiť"
 
-#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:180
+#: src/control/Control.Menubar.js:29
+#: src/control/Control.Menubar.js:180
 #: src/control/Control.Menubar.js:238
 msgid "Select all"
 msgstr "Vybrať všetko"
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:182
+#: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:182
 #: src/control/Control.Menubar.js:240
 msgid "View"
 msgstr "Zobraziť"
 
-#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:183
+#: src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:183
 #: src/control/Control.Menubar.js:241
 msgid "Full screen"
 msgstr "Na celú obrazovku"
 
-#: src/control/Control.Menubar.js:39 src/control/Control.Menubar.js:190
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:190
 #: src/control/Control.Menubar.js:244
 msgid "Image"
 msgstr "Obrázok"
 
 #: src/control/Control.Menubar.js:42
 msgid "Footnote"
-msgstr ""
+msgstr "Poznámka pod čiarou"
 
 #: src/control/Control.Menubar.js:43
 msgid "Endnote"
-msgstr ""
+msgstr "Koncová poznámka"
 
 #: src/control/Control.Menubar.js:45
 msgid "Page break"
-msgstr ""
+msgstr "Zalomenie strany"
 
 #: src/control/Control.Menubar.js:46
 msgid "Column break"
-msgstr ""
+msgstr "Zalomenie stĺpca"
 
-#: src/control/Control.Menubar.js:48 src/control/Control.Menubar.js:192
+#: src/control/Control.Menubar.js:48
+#: src/control/Control.Menubar.js:192
 #: src/control/Control.Menubar.js:250
 msgid "Special character..."
-msgstr ""
+msgstr "Špeciálny znak..."
 
 #: src/control/Control.Menubar.js:49
 msgid "Formatting mark"
-msgstr ""
+msgstr "Formátovacia značka"
 
 #: src/control/Control.Menubar.js:50
 msgid "Non-breaking space"
-msgstr ""
+msgstr "Nezalomiteľná medzera"
 
 #: src/control/Control.Menubar.js:51
 msgid "Non-breaking hyphen"
-msgstr ""
+msgstr "Nezalomiteľná pomlčka"
 
 #: src/control/Control.Menubar.js:52
 msgid "Soft hyphen"
-msgstr ""
+msgstr "Mäkký rozdeľovník"
 
 #: src/control/Control.Menubar.js:53
 msgid "No-width optional break"
-msgstr ""
+msgstr "Voliteľné zalomenie bez šírky"
 
 #: src/control/Control.Menubar.js:54
 msgid "No-width no break"
-msgstr ""
+msgstr "Spojovací znak bez šírky"
 
 #: src/control/Control.Menubar.js:55
 msgid "Left-to-right mark"
-msgstr ""
+msgstr "Značka zľava-doprava"
 
 #: src/control/Control.Menubar.js:56
 msgid "Right-to-left mark"
-msgstr ""
+msgstr "Značka sprava-doľava"
 
 #: src/control/Control.Menubar.js:58
 msgid "Format"
-msgstr ""
+msgstr "Formátovať"
 
 #: src/control/Control.Menubar.js:59
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: src/control/Control.Menubar.js:63
 msgid "Double underline"
-msgstr ""
+msgstr "Dvojité podčiarknutie"
 
 #: src/control/Control.Menubar.js:64
 msgid "Strikethrough"
-msgstr ""
+msgstr "Preškrtnuté"
 
 #: src/control/Control.Menubar.js:65
 msgid "Overline"
-msgstr ""
+msgstr "Nadčiarknuté"
 
 #: src/control/Control.Menubar.js:67
 msgid "Superscript"
-msgstr ""
+msgstr "Horný index"
 
 #: src/control/Control.Menubar.js:68
 msgid "Subscript"
-msgstr ""
+msgstr "Dolný index"
 
 #: src/control/Control.Menubar.js:69
 msgid "ꜱᴍᴀʟʟ ᴄᴀᴘꜱ"
-msgstr ""
+msgstr "KAPITÁLKY"
 
 #: src/control/Control.Menubar.js:71
 msgid "Shadow"
-msgstr ""
+msgstr "Tieň"
 
 #: src/control/Control.Menubar.js:72
 msgid "Outline"
-msgstr ""
+msgstr "Obrys"
 
 #: src/control/Control.Menubar.js:74
 msgid "Increase size"
-msgstr ""
+msgstr "Zväčšiť veľkosť textu"
 
 #: src/control/Control.Menubar.js:75
 msgid "Decrease size"
-msgstr ""
+msgstr "Zmenšiť veľkosť textu"
 
 #: src/control/Control.Menubar.js:77
 msgid "UPPERCASE"
-msgstr ""
+msgstr "VEĽKÉ PÍSMENÁ"
 
 #: src/control/Control.Menubar.js:78
 msgid "lowercase"
-msgstr ""
+msgstr "malé písmená"
 
 #: src/control/Control.Menubar.js:79
 msgid "Cycle case"
-msgstr ""
+msgstr "Zmeniť veľkosť"
 
 #: src/control/Control.Menubar.js:81
 msgid "Sentence case"
-msgstr ""
+msgstr "Veľkosť písmen vo vete"
 
 #: src/control/Control.Menubar.js:82
 msgid "Capitalize Every Word"
-msgstr ""
+msgstr "Každé Prvé Písmeno Slova Veľkým"
 
 #: src/control/Control.Menubar.js:83
 msgid "tOGGLE cASE"
-msgstr ""
+msgstr "pREPNÚŤ vEĽKOSŤ"
 
 #: src/control/Control.Menubar.js:84
 msgid "Text orientation"
-msgstr ""
+msgstr "Orientácia textu"
 
 #: src/control/Control.Menubar.js:85
 msgid "Set paragraph left-to-right"
-msgstr ""
+msgstr "Odsek nastaviť na zľava-doprava"
 
 #: src/control/Control.Menubar.js:86
 msgid "Set paragraph right-to-left"
-msgstr ""
+msgstr "Odsek nastaviť na sprava-doľava"
 
 #: src/control/Control.Menubar.js:87
 msgid "Spacing"
-msgstr ""
+msgstr "Rozostupy"
 
 #: src/control/Control.Menubar.js:88
 msgid "Line spacing: 1"
-msgstr ""
+msgstr "Riadkovanie: 1"
 
 #: src/control/Control.Menubar.js:89
 msgid "Line spacing: 1.5"
-msgstr ""
+msgstr "Riadkovanie: 1.5"
 
 #: src/control/Control.Menubar.js:90
 msgid "Line spacing: 2"
-msgstr ""
+msgstr "Riadkovanie: 2"
 
 #: src/control/Control.Menubar.js:92
 msgid "Increase paragraph spacing"
-msgstr ""
+msgstr "Zväčšiť riadkovanie odseku"
 
 #: src/control/Control.Menubar.js:93
 msgid "Decrease paragraph spacing"
-msgstr ""
+msgstr "Zmenšiť riadkovanie odseku"
 
 #: src/control/Control.Menubar.js:97
 msgid "Align"
-msgstr ""
+msgstr "Zarovnať"
 
 #: src/control/Control.Menubar.js:98
 msgid "Left"
-msgstr ""
+msgstr "Vľavo"
 
 #: src/control/Control.Menubar.js:99
 msgid "Centered"
-msgstr ""
+msgstr "Na stred"
 
 #: src/control/Control.Menubar.js:100
 msgid "Right"
-msgstr ""
+msgstr "Vpravo"
 
 #: src/control/Control.Menubar.js:103
 msgid "Top"
-msgstr ""
+msgstr "Hore"
 
 #: src/control/Control.Menubar.js:104
 msgid "Center"
-msgstr ""
+msgstr "V strede"
 
 #: src/control/Control.Menubar.js:105
 msgid "Bottom"
-msgstr ""
+msgstr "Dolu"
 
 #: src/control/Control.Menubar.js:106
 msgid "Lists"
-msgstr ""
+msgstr "Zoznamy"
 
 #: src/control/Control.Menubar.js:110
 msgid "Demote one level"
-msgstr ""
+msgstr "O úroveň nižšie"
 
 #: src/control/Control.Menubar.js:111
 msgid "Promote one level"
-msgstr ""
+msgstr "O úroveň vyššie"
 
 #: src/control/Control.Menubar.js:112
 msgid "Demote one level with subpoints"
-msgstr ""
+msgstr "O úroveň nižšie s podčasťami"
 
 #: src/control/Control.Menubar.js:113
 msgid "Promote one level with subpoints"
-msgstr ""
+msgstr "O úroveň vyššie s podčasťami"
 
 #: src/control/Control.Menubar.js:115
 msgid "Move down"
-msgstr ""
+msgstr "Presunúť nadol"
 
 #: src/control/Control.Menubar.js:116
 msgid "Move up"
-msgstr ""
+msgstr "Presunúť nahor"
 
 #: src/control/Control.Menubar.js:117
 msgid "Move down with subpoints"
-msgstr ""
+msgstr "Presunúť nižšie s podčasťami"
 
 #: src/control/Control.Menubar.js:118
 msgid "Move up with subpoints"
-msgstr ""
+msgstr "Presunúť vyššie s podčasťami"
 
 #: src/control/Control.Menubar.js:120
 msgid "Insert unnumbered entry"
-msgstr ""
+msgstr "Vložiť nečíslovanú položku"
 
 #: src/control/Control.Menubar.js:121
 msgid "Restart numbering"
-msgstr ""
+msgstr "Reštartovať číslovanie"
 
 #: src/control/Control.Menubar.js:123
 msgid "To next paragraph in level"
-msgstr ""
+msgstr "Na nasledujúci odsek v úrovni"
 
 #: src/control/Control.Menubar.js:124
 msgid "To previous paragraph in level"
-msgstr ""
+msgstr "Na predchádzajúci odsek v úrovni"
 
 #: src/control/Control.Menubar.js:125
 msgid "Continue previous numbering"
-msgstr ""
+msgstr "Pokračovať v predchádzajúcom číslovaní"
 
 #: src/control/Control.Menubar.js:126
 msgid "Clear direct formatting"
-msgstr ""
+msgstr "Odstrániť priame formátovanie"
 
 #: src/control/Control.Menubar.js:127
 msgid "Page"
-msgstr ""
+msgstr "Strana"
 
-#: src/control/Control.Menubar.js:128 src/control/Control.Menubar.js:130
-#: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:134
+#: src/control/Control.Menubar.js:128
+#: src/control/Control.Menubar.js:130
+#: src/control/Control.Menubar.js:132
+#: src/control/Control.Menubar.js:134
 msgid "Portrait"
-msgstr ""
+msgstr "Na výšku"
 
-#: src/control/Control.Menubar.js:129 src/control/Control.Menubar.js:131
-#: src/control/Control.Menubar.js:133 src/control/Control.Menubar.js:135
+#: src/control/Control.Menubar.js:129
+#: src/control/Control.Menubar.js:131
+#: src/control/Control.Menubar.js:133
+#: src/control/Control.Menubar.js:135
 msgid "Landscape"
-msgstr ""
+msgstr "Na šírku"
 
-#: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:137
+#: src/control/Control.Menubar.js:194
 msgid "Tables"
 msgstr "Tabuľky"
 
-#: src/control/Control.Menubar.js:139 src/control/Control.Menubar.js:196
+#: src/control/Control.Menubar.js:139
+#: src/control/Control.Menubar.js:196
 msgid "Rows before"
 msgstr "Riadky pred"
 
-#: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:197
+#: src/control/Control.Menubar.js:140
+#: src/control/Control.Menubar.js:197
 msgid "Rows after"
 msgstr "Riadky za"
 
-#: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:199
+#: src/control/Control.Menubar.js:142
+#: src/control/Control.Menubar.js:199
 msgid "Columns left"
 msgstr "Stĺpce vľavo"
 
-#: src/control/Control.Menubar.js:143 src/control/Control.Menubar.js:200
+#: src/control/Control.Menubar.js:143
+#: src/control/Control.Menubar.js:200
 msgid "Columns right"
 msgstr "Stĺpce vpravo"
 
-#: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:201
+#: src/control/Control.Menubar.js:144
+#: src/control/Control.Menubar.js:201
 msgid "Delete"
 msgstr "Odstrániť"
 
-#: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:202
+#: src/control/Control.Menubar.js:145
+#: src/control/Control.Menubar.js:202
 msgid "Rows"
 msgstr "Riadky"
 
-#: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:203
+#: src/control/Control.Menubar.js:146
+#: src/control/Control.Menubar.js:203
 msgid "Columns"
 msgstr "Stĺpce"
 
-#: src/control/Control.Menubar.js:147 src/control/Control.Menubar.js:149
+#: src/control/Control.Menubar.js:147
+#: src/control/Control.Menubar.js:149
 msgid "Table"
 msgstr "Tabuľka"
 
@@ -2168,11 +2256,13 @@ msgstr "Tabuľka"
 msgid "Select"
 msgstr "Vybrať"
 
-#: src/control/Control.Menubar.js:150 src/control/Control.Menubar.js:247
+#: src/control/Control.Menubar.js:150
+#: src/control/Control.Menubar.js:247
 msgid "Row"
 msgstr "Riadok"
 
-#: src/control/Control.Menubar.js:151 src/control/Control.Menubar.js:248
+#: src/control/Control.Menubar.js:151
+#: src/control/Control.Menubar.js:248
 msgid "Column"
 msgstr "Stĺpec"
 
@@ -2180,21 +2270,25 @@ msgstr "Stĺpec"
 msgid "Cell"
 msgstr "Bunka"
 
-#: src/control/Control.Menubar.js:153 src/control/Control.Menubar.js:204
+#: src/control/Control.Menubar.js:153
+#: src/control/Control.Menubar.js:204
 msgid "Merge cells"
 msgstr "Zlúčiť bunky"
 
-#: src/control/Control.Menubar.js:155 src/control/Control.Menubar.js:213
+#: src/control/Control.Menubar.js:155
+#: src/control/Control.Menubar.js:213
 #: src/control/Control.Menubar.js:259
 msgid "Help"
 msgstr "Pomocník"
 
-#: src/control/Control.Menubar.js:156 src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:156
+#: src/control/Control.Menubar.js:214
 #: src/control/Control.Menubar.js:260
 msgid "Keyboard shortcuts"
 msgstr "Klávesové skratky"
 
-#: src/control/Control.Menubar.js:157 src/control/Control.Menubar.js:215
+#: src/control/Control.Menubar.js:157
+#: src/control/Control.Menubar.js:215
 #: src/control/Control.Menubar.js:261
 msgid "About"
 msgstr "O programe"
@@ -2243,7 +2337,8 @@ msgstr "Vložiť riadok"
 msgid "Insert column"
 msgstr "Vložiť stĺpec"
 
-#: src/control/Control.Menubar.js:256 src/control/Control.RowHeader.js:46
+#: src/control/Control.Menubar.js:256
+#: src/control/Control.RowHeader.js:46
 msgid "Delete row"
 msgstr "Odstrániť riadok"
 
@@ -2257,19 +2352,19 @@ msgstr "Vložiť riadok nad"
 
 #: src/control/Control.RowHeader.js:53
 msgid "Optimal Height"
-msgstr ""
+msgstr "Optimálna výška"
 
 #: src/control/Control.RowHeader.js:60
 msgid "Hide Rows"
-msgstr ""
+msgstr "Skryť riadky"
 
 #: src/control/Control.RowHeader.js:67
 msgid "Show Rows"
-msgstr ""
+msgstr "Zobraziť riadky"
 
 #: src/control/Control.RowHeader.js:80
 msgid "Optimal Row Height"
-msgstr ""
+msgstr "Optimálna výška riadka"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -2295,100 +2390,78 @@ msgstr "Premenovať hárok"
 msgid "Enter new sheet name"
 msgstr "Zadajte nový názov hárku"
 
-#: src/control/Toolbar.js:63 src/control/Toolbar.js:72
+#: src/control/Toolbar.js:70
+#: src/control/Toolbar.js:79
 msgid "Downloading..."
 msgstr "Preberá sa…"
 
-#: src/control/Toolbar.js:84 src/map/Map.js:864
+#: src/control/Toolbar.js:91
+#: src/map/Map.js:905
 msgid "Saving..."
 msgstr "Prebieha ukladanie..."
 
-#: src/control/Toolbar.js:230
+#: src/control/Toolbar.js:242
 msgid "This version of %productName is powered by"
 msgstr "Táto verzia of %productName bola vytvorená"
 
-#: src/core/Socket.js:22
+#: src/core/Socket.js:23
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Vyskytol sa problém s pripojenín k LibreOffice Online :"
 
-#: src/core/Socket.js:155
+#: src/core/Socket.js:179
 msgid "Unsupported server version."
 msgstr "Nepodporovaná verzia servera."
 
-#: src/core/Socket.js:193
+#: src/core/Socket.js:217
 msgid "Session terminated by document owner"
+msgstr "Relácia ukončená vlastníkom dokumentu"
+
+#: src/core/Socket.js:220
+msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 
-#: src/core/Socket.js:196
-msgid "Server shutdown for maintenance"
+#: src/core/Socket.js:223
+msgid "Server is recycling and will be available shortly"
 msgstr ""
 
-#: src/core/Socket.js:268
+#: src/core/Socket.js:335
 msgid "Document requires password to view."
 msgstr "Na zobrazenie dokumentu je potrebné heslo."
 
-#: src/core/Socket.js:271
+#: src/core/Socket.js:338
 msgid "Document requires password to modify."
 msgstr "Na úpravu dokumentu je potrebné heslo."
 
-#: src/core/Socket.js:273
+#: src/core/Socket.js:340
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Stlačením Zrušiť otvoriť v režime zobrazenia"
 
-#: src/core/Socket.js:277
+#: src/core/Socket.js:344
 msgid "Wrong password provided. Please try again."
 msgstr "Zadané nesprávne heslo, zopakujte."
 
-#: src/core/Socket.js:326
+#: src/core/Socket.js:393
 msgid "Connecting..."
-msgstr ""
+msgstr "Prebieha pripájanie…"
 
-#: src/core/Socket.js:447
+#: src/core/Socket.js:514
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Nepodarilo sa nadviazať spojenie s dokumentom. Prosím zopakujte."
 
-#: src/map/Map.js:118
+#: src/map/Map.js:121
 msgid "Initializing..."
 msgstr "Prebieha inicializácia..."
 
-#: src/map/Map.js:793
+#: src/map/Map.js:786
 msgid "Inactive document - please click to resume editing"
-msgstr ""
+msgstr "Neaktívny dokument - na pokračovanie kliknite myšou"
 
-#: src/map/Map.js:867
+#: src/map/Map.js:908
 msgid "Loading..."
 msgstr "Načítava sa…"
 
 #: src/map/handler/Map.FileInserter.js:54
-#, fuzzy
 msgid "Uploading..."
 msgstr "Načítava sa…"
-
-#~ msgid "Take edit lock (others can only view)"
-#~ msgstr "Uzamknúť úpravu (ostatní môžu len zobraziť)"
-
-#~ msgid "VIEWING"
-#~ msgstr "PREZERANIE"
-
-#~ msgid "You are viewing now."
-#~ msgstr "Režim zobrazenia"
-
-#~ msgid "Click here to take edit."
-#~ msgstr "Kliknutím prejsť do režimu úpravy."
-
-#~ msgid "You are editing (others can only view)"
-#~ msgstr "Režim úpravy (ostatní môžu len zobraziť)"
-
-#~ msgid "EDITING"
-#~ msgstr "UPRAVOVANIE"
-
-#~ msgid "You are locked in readonly mode"
-#~ msgstr "Nachádzate sa v režime iba na čítanie"
-
-#~ msgid "READONLY"
-#~ msgstr "LEN NA ČÍTANIE"
-
-#~ msgid "We are sorry, this is an unexpected connection error. Please try again."
-#~ msgstr "Vyskytla sa neočakávaná chyba. Prosím zopakujte. "
