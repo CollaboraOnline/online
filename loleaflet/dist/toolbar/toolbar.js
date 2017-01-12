@@ -1240,7 +1240,7 @@ function updateCommandValues() {
 }
 
 map.on('updatetoolbarcommandvalues', function(e) {
-       w2ui['toolbar-up'].refresh();
+	w2ui['toolbar-up'].refresh();
 });
 
 map.on('updateparts pagenumberchanged', function (e) {
