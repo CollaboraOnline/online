@@ -54,6 +54,14 @@
 	border-top: 0px;
 	}
 
+#spreadsheet-row-column-frame {
+        position: absolute;
+	left: 0;
+	right: 0;
+	top: 103px;
+	bottom: 65px;
+}
+
 .spreadsheet-header-corner {
 	border: 1px solid darkgrey;
 	background-color: lightgrey;
@@ -63,7 +71,7 @@
 	padding: 0px;
 	margin: 0px;
 	left: 0px;
-	top: 103px;
+	top: 0;
 	width: 48px;
 	height: 19px;
 	}
@@ -76,7 +84,7 @@
 	display: inline-block;
 	white-space: nowrap;
 	left: 49px;
-	top: 103px;
+	top: 0;
 	right: 0;
 	height: 19px;
 	overflow: hidden;
@@ -123,9 +131,9 @@
 
 	position: absolute;
 	left: 0;
-	top: 123px;
+	top: 20px;
 	width: 48px;
-	bottom: 65px;
+	bottom: 0;
 	overflow: hidden;
 	}
 

@@ -41,8 +41,14 @@ body {
     #document-container.parts-preview-document {
 	left: 0px !important;
     }
+    #document-container.spreadsheet-document {
+	top: 93px !important;
+    }
     #document-container {
 	top: 40px;
+    }
+    #spreadsheet-row-column-frame {
+	top: 73px !important;
     }
 }
 
