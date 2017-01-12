@@ -50,6 +50,10 @@ body {
     #spreadsheet-row-column-frame {
 	top: 73px !important;
     }
+    /* We need to give space for options menu */
+    #tb_toolbar-up_item_rightmenupadding {
+	padding-right: 40px;
+    }
 }
 
 .loleaflet-font {
