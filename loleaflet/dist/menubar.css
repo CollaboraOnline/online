@@ -162,27 +162,6 @@
     left: 0;
 }
 
-
-/* x icon */
-
-#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon {
-    height: 0;
-    background: transparent;
-}
-
-#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon:before {
-    top: 0;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-}
-
-#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon:after {
-    top: 0;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-
-
 /* hide menu state checkbox (keep it visible to screen readers) */
 
 #main-menu-state {
