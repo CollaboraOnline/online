@@ -22,10 +22,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.on('updateselectionheader', this._onUpdateSelection, this);
 		this._map.on('clearselectionheader', this._onClearSelection, this);
 		this._map.on('updatecurrentheader', this._onUpdateCurrentColumn, this);
-		var docContainer = this._map.options.documentContainer;
-		var cornerHeader = L.DomUtil.create('div', 'spreadsheet-header-corner', docContainer.parentElement);
+		var rowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
+		var cornerHeader = L.DomUtil.create('div', 'spreadsheet-header-corner', rowColumnFrame);
 		L.DomEvent.addListener(cornerHeader, 'click', this._onCornerHeaderClick, this);
-		var headersContainer = L.DomUtil.create('div', 'spreadsheet-header-columns-container', docContainer.parentElement);
+		var headersContainer = L.DomUtil.create('div', 'spreadsheet-header-columns-container', rowColumnFrame);
 		this._columns = L.DomUtil.create('div', 'spreadsheet-header-columns', headersContainer);
 
 		this._position = 0;

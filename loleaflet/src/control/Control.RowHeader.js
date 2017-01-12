@@ -22,8 +22,8 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._map.on('updateselectionheader', this._onUpdateSelection, this);
 		this._map.on('clearselectionheader', this._onClearSelection, this);
 		this._map.on('updatecurrentheader', this._onUpdateCurrentRow, this);
-		var docContainer = this._map.options.documentContainer;
-		var headersContainer = L.DomUtil.create('div', 'spreadsheet-header-rows-container', docContainer.parentElement);
+		var rowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
+		var headersContainer = L.DomUtil.create('div', 'spreadsheet-header-rows-container', rowColumnFrame);
 		this._rows = L.DomUtil.create('div', 'spreadsheet-header-rows', headersContainer);
 
 		this._position = 0;
