@@ -26,6 +26,8 @@ var toolbarUpMobileItems = [
 	'centerpara',
 	'rightpara',
 	'justifypara',
+	'right',
+	'rightmenupadding',
 	'close'
 ];
 
@@ -129,10 +131,7 @@ function resizeToolbar() {
 
 	// move items from toolbar-up -> toolbar-up-more
 	while ($('#toolbar-up')[0].scrollWidth > Math.max($(window).width(), parseInt($('body').css('min-width')))) {
-		var itemId = toolbarUp.items[toolbarUp.items.length - 4].id;
-		if ($(window).width() >= mobileWidth && itemId === 'resizebreak') {
-			return;
-		}
+		var itemId = toolbarUp.items[toolbarUp.items.length - 5].id;
 		item = toolbarUp.get(itemId);
 		toolbarUp.remove(itemId);
 		toolbarUpMore.insert(toolbarUpMore.items[0], item);
@@ -463,7 +462,7 @@ $(function () {
 			{type: 'html',   id: 'styles', html: '<select class="styles-select"></select>'},
 			{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>'},
 			{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>'},
-			{type: 'break', id: 'resizebreak'},
+			{type: 'break'},
 			{type: 'button',  id: 'bold',  img: 'bold', hint: _('Bold'), uno: 'Bold'},
 			{type: 'button',  id: 'italic', img: 'italic', hint: _('Italic'), uno: 'Italic'},
 			{type: 'button',  id: 'underline',  img: 'underline', hint: _('Underline'), uno: 'Underline'},
@@ -505,6 +504,7 @@ $(function () {
 			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _('Special Character')},
 			{type: 'html', id: 'right'},
 			{type: 'button',  id: 'more', img: 'more', hint: _('More')},
+			{type: 'html', id: 'rightmenupadding'},
 			{type: 'button',  id: 'close',  img: 'closedoc', hint: _('Close document'), hidden: true}
 		],
 		onClick: function (e) {

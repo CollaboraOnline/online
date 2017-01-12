@@ -18,8 +18,7 @@
 #toolbar-up-more {
     position: absolute;
     right: 10px;
-    width: 200px;
-    top: 65px;
+    top: 40px;
     border: 1px solid darkgrey;
     z-index: 1000;
     display: none;
@@ -55,6 +54,7 @@
     height: 29px;
     width: 800px;
 }
+
 #tb_toolbar-up_item_close {
     position: fixed;
     z-index: 1050;
