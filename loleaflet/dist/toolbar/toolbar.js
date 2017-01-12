@@ -1173,6 +1173,10 @@ map.on('updatetoolbarcommandvalues', function (e) {
 	}
 });
 
+map.on('updatetoolbarcommandvalues', function(e) {
+       w2ui['toolbar-up'].refresh();
+});
+
 map.on('updateparts pagenumberchanged', function (e) {
 	if (e.docType === 'text') {
 		var current = e.currentPage;
