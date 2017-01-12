@@ -50,6 +50,15 @@ body {
     #spreadsheet-row-column-frame {
 	top: 73px !important;
     }
+    /* There seems to be some bug in w2ui library -
+     * when we are in very low screen width, the toolbar-up-more
+     * toolbar's width doesn't adjust according to its children toolbar
+     * items and truncate all items but one. Lets override the width in
+     * mobile mode to prevent that.
+     */
+    #toolbar-up-more {
+	width: auto !important;
+    }
     /* We need to give space for options menu */
     #tb_toolbar-up_item_rightmenupadding {
 	padding-right: 40px;
