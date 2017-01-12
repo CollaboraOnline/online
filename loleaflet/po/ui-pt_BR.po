@@ -1,22 +1,18 @@
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# Olivier Hallot <olivier.hallot@gmail.com>, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-07 13:05+0100\n"
-"PO-Revision-Date: 2016-12-06 15:47-0300\n"
-"Last-Translator: Olivier Hallot <olivier.hallot@gmail.com>\n"
-"Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2017-01-11 09:02+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 2.0\n"
-"X-Pootle-Revision: 650804\n"
+"X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /pt_BR/libo_online/loleaflet-ui-pt_BR.po\n"
+"X-Pootle-Revision: 827496\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -75,32 +71,38 @@ msgid "Elapsed time"
 msgstr "Tempo transcorrido"
 
 #: admin.strings.js:19
+msgid "Idle time"
+msgstr "Tempo de inatividade"
+
+#: admin.strings.js:20
 msgid "Kill"
 msgstr "Finalizar"
 
-#: admin.strings.js:20
+#: admin.strings.js:21
 msgid "Graphs"
 msgstr "Gráficos"
 
-#: admin.strings.js:21 dist/toolbar/toolbar.js:344
-#: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:163
-#: src/control/Control.Menubar.js:219
+#: admin.strings.js:22
+#: dist/toolbar/toolbar.js:364
+#: src/control/Control.Menubar.js:11
+#: src/control/Control.Menubar.js:163
+#: src/control/Control.Menubar.js:221
 msgid "Save"
 msgstr "Salvar"
 
-#: admin.strings.js:22
+#: admin.strings.js:23
 msgid "Cache size of memory statistics"
 msgstr "Tamanho de cache para estatística de memória"
 
-#: admin.strings.js:23
+#: admin.strings.js:24
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Amostragem da estatística de memória (em ms)"
 
-#: admin.strings.js:24
+#: admin.strings.js:25
 msgid "Cache size of CPU statistics"
 msgstr "Tamanho do cache para estatística da CPU"
 
-#: admin.strings.js:25
+#: admin.strings.js:26
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Amostragem da estatística da CPU (em ms)"
 
@@ -216,8 +218,8 @@ msgstr ""
 msgid ""
 "This development build is limited to %0 documents, and %1 connections - to "
 "avoid the impression that it is suitable for deployment in large "
-"enterprises. To find out more about deploying and scaling %2 check out: <br/"
-"><a href=\"%3\">%3</a>."
+"enterprises. To find out more about deploying and scaling %2 check out: "
+"<br/><a href=\"%3\">%3</a>."
 msgstr ""
 "Esta programa de desenvolvimento está restrito a %0 documentos e %1 conexões "
 "- para evitar a impressão que é adequado para grandes instalações em "
@@ -280,383 +282,409 @@ msgstr ""
 "Não foi possível salvar seu documento no armazenamento. Verifique suas "
 "permissões ou contacte o administrador do servidor de armazenamento."
 
-#: dist/toolbar/toolbar.js:150
+#: dist/toolbar/toolbar.js:159
 msgid "Are you sure you want to delete this page?"
 msgstr "Deseja excluir esta página?"
 
-#: dist/toolbar/toolbar.js:335
+#: dist/toolbar/toolbar.js:355
 msgid "Textwrap"
 msgstr "Disposição do texto"
 
-#: dist/toolbar/toolbar.js:336
+#: dist/toolbar/toolbar.js:356
 msgid "No wrap"
 msgstr "Nenhuma"
 
-#: dist/toolbar/toolbar.js:337
+#: dist/toolbar/toolbar.js:357
 msgid "Page wrap"
 msgstr "Página"
 
-#: dist/toolbar/toolbar.js:338
+#: dist/toolbar/toolbar.js:358
 msgid "Wrap anchor only"
 msgstr "Dispor somente a âncora"
 
-#: dist/toolbar/toolbar.js:339
+#: dist/toolbar/toolbar.js:359
 msgid "Ideal wrap"
 msgstr "Página ideal"
 
-#: dist/toolbar/toolbar.js:340
+#: dist/toolbar/toolbar.js:360
 msgid "Left wrap"
 msgstr "Antes"
 
-#: dist/toolbar/toolbar.js:341
+#: dist/toolbar/toolbar.js:361
 msgid "Right wrap"
 msgstr "Depois"
 
-#: dist/toolbar/toolbar.js:342
+#: dist/toolbar/toolbar.js:362
 msgid "Wrap through"
 msgstr "Através"
 
-#: dist/toolbar/toolbar.js:346 src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:173 src/control/Control.Menubar.js:229
+#: dist/toolbar/toolbar.js:366
+#: src/control/Control.Menubar.js:22
+#: src/control/Control.Menubar.js:173
+#: src/control/Control.Menubar.js:231
 msgid "Undo"
 msgstr "Desfazer"
 
-#: dist/toolbar/toolbar.js:347 src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:174 src/control/Control.Menubar.js:230
+#: dist/toolbar/toolbar.js:367
+#: src/control/Control.Menubar.js:23
+#: src/control/Control.Menubar.js:174
+#: src/control/Control.Menubar.js:232
 msgid "Redo"
 msgstr "Refazer"
 
-#: dist/toolbar/toolbar.js:348
+#: dist/toolbar/toolbar.js:368
 msgid "Document repair"
 msgstr "Reparar documento"
 
-#: dist/toolbar/toolbar.js:354 src/control/Control.Menubar.js:60
+#: dist/toolbar/toolbar.js:374
+#: src/control/Control.Menubar.js:60
 msgid "Bold"
 msgstr "Negrito"
 
-#: dist/toolbar/toolbar.js:355 src/control/Control.Menubar.js:61
+#: dist/toolbar/toolbar.js:375
+#: src/control/Control.Menubar.js:61
 msgid "Italic"
 msgstr "Itálico"
 
-#: dist/toolbar/toolbar.js:356 src/control/Control.Menubar.js:62
+#: dist/toolbar/toolbar.js:376
+#: src/control/Control.Menubar.js:62
 msgid "Underline"
 msgstr "Sublinhado"
 
-#: dist/toolbar/toolbar.js:357
+#: dist/toolbar/toolbar.js:377
 msgid "Strikeout"
 msgstr "Tachado"
 
-#: dist/toolbar/toolbar.js:359
+#: dist/toolbar/toolbar.js:379
 msgid "Insert Footnote"
 msgstr "Inserir nota de rodapé"
 
-#: dist/toolbar/toolbar.js:362
+#: dist/toolbar/toolbar.js:382
 msgid "Font color"
 msgstr "Cor da fonte"
 
-#: dist/toolbar/toolbar.js:364
+#: dist/toolbar/toolbar.js:384
 msgid "Highlighting"
 msgstr "Destaque"
 
-#: dist/toolbar/toolbar.js:366
+#: dist/toolbar/toolbar.js:386
 msgid "Align left"
 msgstr "Alinhar à esquerda"
 
-#: dist/toolbar/toolbar.js:367
+#: dist/toolbar/toolbar.js:387
 msgid "Center horizontally"
 msgstr "Centralizar horizontalmente"
 
-#: dist/toolbar/toolbar.js:368
+#: dist/toolbar/toolbar.js:388
 msgid "Align right"
 msgstr "Alinhar à direita"
 
-#: dist/toolbar/toolbar.js:369 src/control/Control.Menubar.js:101
+#: dist/toolbar/toolbar.js:389
+#: src/control/Control.Menubar.js:101
 msgid "Justified"
 msgstr "Justificado"
 
-#: dist/toolbar/toolbar.js:370
+#: dist/toolbar/toolbar.js:391
 msgid "Wrap Text"
 msgstr "Disposição do texto"
 
-#: dist/toolbar/toolbar.js:371
+#: dist/toolbar/toolbar.js:392
 msgid "Merge and Center Cells"
 msgstr "Mesclar e centralizar células"
 
-#: dist/toolbar/toolbar.js:373
+#: dist/toolbar/toolbar.js:394
 msgid "Format as Currency"
 msgstr "Formatar como moeda"
 
-#: dist/toolbar/toolbar.js:374
+#: dist/toolbar/toolbar.js:395
 msgid "Format as Percent"
 msgstr "Formatar como porcentagem"
 
-#: dist/toolbar/toolbar.js:375
+#: dist/toolbar/toolbar.js:396
 msgid "Format as Number"
 msgstr "Formatar como número"
 
-#: dist/toolbar/toolbar.js:376
+#: dist/toolbar/toolbar.js:397
 msgid "Format as Date"
 msgstr "Formatar como data"
 
-#: dist/toolbar/toolbar.js:377
+#: dist/toolbar/toolbar.js:398
 msgid "Add Decimal Place"
 msgstr "Adicionar casa decimal"
 
-#: dist/toolbar/toolbar.js:378
+#: dist/toolbar/toolbar.js:399
 msgid "Delete Decimal Place"
 msgstr "Remover casa decimal"
 
-#: dist/toolbar/toolbar.js:380
+#: dist/toolbar/toolbar.js:401
 msgid "Sort Ascending"
 msgstr "Ordem crescente"
 
-#: dist/toolbar/toolbar.js:381
+#: dist/toolbar/toolbar.js:402
 msgid "Sort Descending"
 msgstr "Ordem decrescente"
 
-#: dist/toolbar/toolbar.js:383 src/control/Control.Menubar.js:107
+#: dist/toolbar/toolbar.js:404
+#: src/control/Control.Menubar.js:107
 msgid "Bullets on/off"
 msgstr "Ativar/Desativar marcadores"
 
-#: dist/toolbar/toolbar.js:384 src/control/Control.Menubar.js:108
+#: dist/toolbar/toolbar.js:405
+#: src/control/Control.Menubar.js:108
 msgid "Numbering on/off"
 msgstr "Ativar / desativar numeração"
 
-#: dist/toolbar/toolbar.js:386 src/control/Control.Menubar.js:95
+#: dist/toolbar/toolbar.js:407
+#: src/control/Control.Menubar.js:95
 msgid "Increase indent"
 msgstr "Aumentar recuo"
 
-#: dist/toolbar/toolbar.js:387 src/control/Control.Menubar.js:96
+#: dist/toolbar/toolbar.js:408
+#: src/control/Control.Menubar.js:96
 msgid "Decrease indent"
 msgstr "Diminuir recuo"
 
-#: dist/toolbar/toolbar.js:390
+#: dist/toolbar/toolbar.js:411
 msgid "Insert table"
 msgstr "Inserir tabela"
 
-#: dist/toolbar/toolbar.js:391
+#: dist/toolbar/toolbar.js:412
 msgid "Insert comment"
 msgstr "Inserir comentário"
 
-#: dist/toolbar/toolbar.js:392
+#: dist/toolbar/toolbar.js:413
 msgid "Insert graphic"
 msgstr "Inserir figura"
 
-#: dist/toolbar/toolbar.js:393
+#: dist/toolbar/toolbar.js:414
 msgid "Special Character"
 msgstr "Caractere especial"
 
-#: dist/toolbar/toolbar.js:395
+#: dist/toolbar/toolbar.js:416
 msgid "More"
 msgstr "Mais"
 
-#: dist/toolbar/toolbar.js:396
+#: dist/toolbar/toolbar.js:417
 msgid "Close document"
 msgstr "Fechar documento"
 
-#: dist/toolbar/toolbar.js:426 dist/toolbar/toolbar.js:790
+#: dist/toolbar/toolbar.js:496
+msgid "Layout"
+msgstr "Layout"
+
+#: dist/toolbar/toolbar.js:519
+#: dist/toolbar/toolbar.js:851
 msgid "Sum"
 msgstr "Soma"
 
-#: dist/toolbar/toolbar.js:427
+#: dist/toolbar/toolbar.js:520
 msgid "Function"
 msgstr "Função"
 
-#: dist/toolbar/toolbar.js:428 src/control/Control.CharacterMap.js:428
+#: dist/toolbar/toolbar.js:521
+#: src/control/Control.CharacterMap.js:428
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: dist/toolbar/toolbar.js:429
+#: dist/toolbar/toolbar.js:522
 msgid "Accept"
 msgstr "Aceitar"
 
-#: dist/toolbar/toolbar.js:440
+#: dist/toolbar/toolbar.js:533
 msgid "First sheet"
 msgstr "Primeira planilha"
 
-#: dist/toolbar/toolbar.js:441
+#: dist/toolbar/toolbar.js:534
 msgid "Previous sheet"
 msgstr "Planilha anterior"
 
-#: dist/toolbar/toolbar.js:442
+#: dist/toolbar/toolbar.js:535
 msgid "Next sheet"
 msgstr "Próxima planilha"
 
-#: dist/toolbar/toolbar.js:443
+#: dist/toolbar/toolbar.js:536
 msgid "Last sheet"
 msgstr "Última planilha"
 
-#: dist/toolbar/toolbar.js:453 src/control/Control.Menubar.js:209
+#: dist/toolbar/toolbar.js:546
+#: src/control/Control.Menubar.js:211
 msgid "Fullscreen presentation"
 msgstr "Apresentação de slide"
 
-#: dist/toolbar/toolbar.js:455
+#: dist/toolbar/toolbar.js:548
 msgid "Insert slide"
 msgstr "Inserir slide"
 
-#: dist/toolbar/toolbar.js:456 src/control/Control.Menubar.js:206
+#: dist/toolbar/toolbar.js:549
+#: src/control/Control.Menubar.js:208
 msgid "Duplicate slide"
 msgstr "Duplicar slide"
 
-#: dist/toolbar/toolbar.js:457 src/control/Control.Menubar.js:207
+#: dist/toolbar/toolbar.js:550
+#: src/control/Control.Menubar.js:209
 msgid "Delete slide"
 msgstr "Excluir slide"
 
-#: dist/toolbar/toolbar.js:470
+#: dist/toolbar/toolbar.js:563
 msgid "Search:"
 msgstr "Pesquisar:"
 
-#: dist/toolbar/toolbar.js:475
+#: dist/toolbar/toolbar.js:568
 msgid "Search backwards"
 msgstr "Pesquisar para trás"
 
-#: dist/toolbar/toolbar.js:476
+#: dist/toolbar/toolbar.js:569
 msgid "Search forward"
 msgstr "Pesquisar para frente"
 
-#: dist/toolbar/toolbar.js:477
+#: dist/toolbar/toolbar.js:570
 msgid "Cancel the search"
 msgstr "Cancelar a pesquisa"
 
-#: dist/toolbar/toolbar.js:482 dist/toolbar/toolbar.js:1350
+#: dist/toolbar/toolbar.js:575
+#: dist/toolbar/toolbar.js:1404
 msgid "No users"
 msgstr "Sem usuários"
 
-#: dist/toolbar/toolbar.js:484
+#: dist/toolbar/toolbar.js:577
 msgid "Previous page"
 msgstr "Página anterior"
 
-#: dist/toolbar/toolbar.js:485
+#: dist/toolbar/toolbar.js:578
 msgid "Next page"
 msgstr "Próxima página"
 
-#: dist/toolbar/toolbar.js:487 src/control/Control.Menubar.js:36
+#: dist/toolbar/toolbar.js:580
+#: src/control/Control.Menubar.js:36
 #: src/control/Control.Menubar.js:187
 msgid "Reset zoom"
 msgstr "Restaurar zoom"
 
-#: dist/toolbar/toolbar.js:488 src/control/Control.Menubar.js:35
+#: dist/toolbar/toolbar.js:581
+#: src/control/Control.Menubar.js:35
 #: src/control/Control.Menubar.js:186
 msgid "Zoom out"
 msgstr "Reduzir"
 
-#: dist/toolbar/toolbar.js:490 src/control/Control.Menubar.js:34
+#: dist/toolbar/toolbar.js:583
+#: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:185
 msgid "Zoom in"
 msgstr "Ampliar"
 
-#: dist/toolbar/toolbar.js:519
+#: dist/toolbar/toolbar.js:597
 msgid "%user has joined"
 msgstr "%user conectou"
 
-#: dist/toolbar/toolbar.js:520
+#: dist/toolbar/toolbar.js:598
 msgid "%user has left"
 msgstr "%user desconectou"
 
-#: dist/toolbar/toolbar.js:650 dist/toolbar/toolbar.js:1113
+#: dist/toolbar/toolbar.js:700
+#: dist/toolbar/toolbar.js:1187
 msgid "Size"
 msgstr "Tamanho"
 
-#: dist/toolbar/toolbar.js:771
+#: dist/toolbar/toolbar.js:832
 msgid "Number of Sheets"
 msgstr "Nº de planilhas"
 
-#: dist/toolbar/toolbar.js:774
+#: dist/toolbar/toolbar.js:835
 msgid "Selected range of cells"
 msgstr "Intervalo de células selecionado"
 
-#: dist/toolbar/toolbar.js:777 dist/toolbar/toolbar.js:808
+#: dist/toolbar/toolbar.js:838
+#: dist/toolbar/toolbar.js:869
 msgid "Entering text mode"
 msgstr "Entrar no modo de texto"
 
-#: dist/toolbar/toolbar.js:780 dist/toolbar/toolbar.js:811
+#: dist/toolbar/toolbar.js:841
+#: dist/toolbar/toolbar.js:872
 msgid "Selection Mode"
 msgstr "Modo de seleção"
 
-#: dist/toolbar/toolbar.js:783
+#: dist/toolbar/toolbar.js:844
 msgid "Choice of functions"
 msgstr "Seleção de funções"
 
-#: dist/toolbar/toolbar.js:785
+#: dist/toolbar/toolbar.js:846
 msgid "Average"
 msgstr "Média"
 
-#: dist/toolbar/toolbar.js:786
+#: dist/toolbar/toolbar.js:847
 msgid "CountA"
 msgstr "ContagemA"
 
-#: dist/toolbar/toolbar.js:787
+#: dist/toolbar/toolbar.js:848
 msgid "Count"
 msgstr "Contagem"
 
-#: dist/toolbar/toolbar.js:788
+#: dist/toolbar/toolbar.js:849
 msgid "Maximum"
 msgstr "Máximo"
 
-#: dist/toolbar/toolbar.js:789
+#: dist/toolbar/toolbar.js:850
 msgid "Minimum"
 msgstr "Mínimo"
 
-#: dist/toolbar/toolbar.js:791
+#: dist/toolbar/toolbar.js:852
 msgid "Selection count"
 msgstr "Contagem da seleção"
 
-#: dist/toolbar/toolbar.js:792 src/control/Control.CharacterMap.js:11
+#: dist/toolbar/toolbar.js:853
+#: src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr "Nenhum"
 
-#: dist/toolbar/toolbar.js:802
+#: dist/toolbar/toolbar.js:863
 msgid "Number of Pages"
 msgstr "Nº de páginas"
 
-#: dist/toolbar/toolbar.js:805
+#: dist/toolbar/toolbar.js:866
 msgid "Word Counter"
 msgstr "Contagem de palavras"
 
-#: dist/toolbar/toolbar.js:822
+#: dist/toolbar/toolbar.js:883
 msgid "Number of Slides"
 msgstr "Nº de slides"
 
-#: dist/toolbar/toolbar.js:949
+#: dist/toolbar/toolbar.js:1011
 msgid "Document saved"
 msgstr "Documento salvo"
 
-#: dist/toolbar/toolbar.js:1096
+#: dist/toolbar/toolbar.js:1170
 msgid "Style"
 msgstr "Estilo"
 
-#: dist/toolbar/toolbar.js:1108
+#: dist/toolbar/toolbar.js:1182
 msgid "Font"
 msgstr "Fonte"
 
-#: dist/toolbar/toolbar.js:1132
+#: dist/toolbar/toolbar.js:1206
 msgid "Previous slide"
 msgstr "Slide anterior"
 
-#: dist/toolbar/toolbar.js:1133
+#: dist/toolbar/toolbar.js:1207
 msgid "Next slide"
 msgstr "Próximo slide"
 
-#: dist/toolbar/toolbar.js:1191
+#: dist/toolbar/toolbar.js:1265
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Ocorreu um conflito ao desfazer ou refazer com múltiplos usuários. Utilize a "
 "reparação de documentos para resolver"
 
-#: dist/toolbar/toolbar.js:1306
-msgid "Layout"
-msgstr "Layout"
-
-#: dist/toolbar/toolbar.js:1341
+#: dist/toolbar/toolbar.js:1395
 msgid "%n users"
 msgstr "%n usuários"
 
-#: dist/toolbar/toolbar.js:1348
+#: dist/toolbar/toolbar.js:1402
 msgid "1 user"
 msgstr "1 usuário"
 
-#: dist/toolbar/toolbar.js:1375 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1429
+#: src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr "Você"
 
@@ -664,7 +692,7 @@ msgstr "Você"
 msgid "Connection error"
 msgstr "Erro de conexão"
 
-#: src/admin/AdminSocketOverview.js:61
+#: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
 msgstr "Encerrar esta sessão?"
 
@@ -684,11 +712,13 @@ msgstr "GB"
 msgid "TB"
 msgstr "TB"
 
-#: src/admin/Util.js:42 src/admin/Util.js:44
+#: src/admin/Util.js:42
+#: src/admin/Util.js:44
 msgid " hrs"
 msgstr " hs"
 
-#: src/admin/Util.js:48 src/admin/Util.js:50
+#: src/admin/Util.js:48
+#: src/admin/Util.js:50
 msgid " mins"
 msgstr " mins"
 
@@ -953,8 +983,8 @@ msgid "Bopomofo"
 msgstr "Bopomofo"
 
 #: src/control/Control.CharacterMap.js:78
-msgid "Hangul Compatability Jamo"
-msgstr "Hangul Compatability Jamo"
+msgid "Hangul Compatibility Jamo"
+msgstr "Hangul com Jamo de compatibilidade"
 
 #: src/control/Control.CharacterMap.js:79
 msgid "Kanbun"
@@ -1246,8 +1276,8 @@ msgid "Modifier Tone Letters"
 msgstr "Letras modificadoras de tom"
 
 #: src/control/Control.CharacterMap.js:168
-msgid "\"New Tai Lue"
-msgstr "New Tai Lue"
+msgid "New Tai Lue"
+msgstr "Tai Lü Novo"
 
 #: src/control/Control.CharacterMap.js:169
 msgid "Old Persian"
@@ -1762,9 +1792,12 @@ msgstr "Caractere selecionado:"
 msgid "Hexadecimal:"
 msgstr "Hexadecimal:"
 
-#: src/control/Control.CharacterMap.js:424 src/control/Control.Menubar.js:38
-#: src/control/Control.Menubar.js:138 src/control/Control.Menubar.js:189
-#: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:241
+#: src/control/Control.CharacterMap.js:424
+#: src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:138
+#: src/control/Control.Menubar.js:189
+#: src/control/Control.Menubar.js:195
+#: src/control/Control.Menubar.js:243
 msgid "Insert"
 msgstr "Inserir"
 
@@ -1772,7 +1805,8 @@ msgstr "Inserir"
 msgid "Insert column before"
 msgstr "Inserir coluna antes"
 
-#: src/control/Control.ColumnHeader.js:48 src/control/Control.Menubar.js:255
+#: src/control/Control.ColumnHeader.js:48
+#: src/control/Control.Menubar.js:257
 msgid "Delete column"
 msgstr "Excluir coluna"
 
@@ -1804,8 +1838,9 @@ msgstr "Tipo"
 msgid "Index"
 msgstr "Índice"
 
-#: src/control/Control.DocumentRepair.js:44 src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:243
+#: src/control/Control.DocumentRepair.js:44
+#: src/control/Control.Menubar.js:40
+#: src/control/Control.Menubar.js:245
 msgid "Comment"
 msgstr "Comentário"
 
@@ -1821,28 +1856,33 @@ msgstr "Carimbo de tempo"
 msgid "Jump to state"
 msgstr "Saltar para o estado"
 
-#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:162
-#: src/control/Control.Menubar.js:218
+#: src/control/Control.Menubar.js:10
+#: src/control/Control.Menubar.js:162
+#: src/control/Control.Menubar.js:220
 msgid "File"
 msgstr "Arquivo"
 
-#: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:164
-#: src/control/Control.Menubar.js:220
+#: src/control/Control.Menubar.js:12
+#: src/control/Control.Menubar.js:164
+#: src/control/Control.Menubar.js:222
 msgid "Print"
 msgstr "Imprimir"
 
-#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:165
-#: src/control/Control.Menubar.js:221
+#: src/control/Control.Menubar.js:13
+#: src/control/Control.Menubar.js:165
+#: src/control/Control.Menubar.js:223
 msgid "See revision history"
 msgstr "Histórico de revisões"
 
-#: src/control/Control.Menubar.js:14 src/control/Control.Menubar.js:166
-#: src/control/Control.Menubar.js:222
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:166
+#: src/control/Control.Menubar.js:224
 msgid "Download as"
 msgstr "Baixar como"
 
-#: src/control/Control.Menubar.js:15 src/control/Control.Menubar.js:167
-#: src/control/Control.Menubar.js:223
+#: src/control/Control.Menubar.js:15
+#: src/control/Control.Menubar.js:167
+#: src/control/Control.Menubar.js:225
 msgid "PDF Document (.pdf)"
 msgstr "Documento PDF (.pdf)"
 
@@ -1858,8 +1898,9 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:20 src/control/Control.Menubar.js:172
-#: src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:172
+#: src/control/Control.Menubar.js:230
 msgid "Edit"
 msgstr "Editar"
 
@@ -1867,38 +1908,45 @@ msgstr "Editar"
 msgid "Repair"
 msgstr "Reparar"
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:176
-#: src/control/Control.Menubar.js:232
+#: src/control/Control.Menubar.js:25
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:234
 msgid "Cut"
 msgstr "Cortar"
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:177
-#: src/control/Control.Menubar.js:233
+#: src/control/Control.Menubar.js:26
+#: src/control/Control.Menubar.js:177
+#: src/control/Control.Menubar.js:235
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:178
-#: src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:27
+#: src/control/Control.Menubar.js:178
+#: src/control/Control.Menubar.js:236
 msgid "Paste"
 msgstr "Colar"
 
-#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:180
-#: src/control/Control.Menubar.js:236
+#: src/control/Control.Menubar.js:29
+#: src/control/Control.Menubar.js:180
+#: src/control/Control.Menubar.js:238
 msgid "Select all"
 msgstr "Selecionar tudo"
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:182
-#: src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:182
+#: src/control/Control.Menubar.js:240
 msgid "View"
 msgstr "Visualizar"
 
-#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:183
-#: src/control/Control.Menubar.js:239
+#: src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:183
+#: src/control/Control.Menubar.js:241
 msgid "Full screen"
 msgstr "Tela cheia"
 
-#: src/control/Control.Menubar.js:39 src/control/Control.Menubar.js:190
-#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:190
+#: src/control/Control.Menubar.js:244
 msgid "Image"
 msgstr "Imagem"
 
@@ -1918,7 +1966,9 @@ msgstr "Quebra de página"
 msgid "Column break"
 msgstr "Quebra de coluna"
 
-#: src/control/Control.Menubar.js:48 src/control/Control.Menubar.js:248
+#: src/control/Control.Menubar.js:48
+#: src/control/Control.Menubar.js:192
+#: src/control/Control.Menubar.js:250
 msgid "Special character..."
 msgstr "Caractere especial..."
 
@@ -2154,49 +2204,62 @@ msgstr "Limpar formatação direta"
 msgid "Page"
 msgstr "Página"
 
-#: src/control/Control.Menubar.js:128 src/control/Control.Menubar.js:130
-#: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:134
+#: src/control/Control.Menubar.js:128
+#: src/control/Control.Menubar.js:130
+#: src/control/Control.Menubar.js:132
+#: src/control/Control.Menubar.js:134
 msgid "Portrait"
 msgstr "Retrato"
 
-#: src/control/Control.Menubar.js:129 src/control/Control.Menubar.js:131
-#: src/control/Control.Menubar.js:133 src/control/Control.Menubar.js:135
+#: src/control/Control.Menubar.js:129
+#: src/control/Control.Menubar.js:131
+#: src/control/Control.Menubar.js:133
+#: src/control/Control.Menubar.js:135
 msgid "Landscape"
 msgstr "Paisagem"
 
-#: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:192
+#: src/control/Control.Menubar.js:137
+#: src/control/Control.Menubar.js:194
 msgid "Tables"
 msgstr "Tabelas"
 
-#: src/control/Control.Menubar.js:139 src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:139
+#: src/control/Control.Menubar.js:196
 msgid "Rows before"
 msgstr "Linhas antes"
 
-#: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:195
+#: src/control/Control.Menubar.js:140
+#: src/control/Control.Menubar.js:197
 msgid "Rows after"
 msgstr "Linhas após"
 
-#: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:197
+#: src/control/Control.Menubar.js:142
+#: src/control/Control.Menubar.js:199
 msgid "Columns left"
 msgstr "Colunas à esquerda"
 
-#: src/control/Control.Menubar.js:143 src/control/Control.Menubar.js:198
+#: src/control/Control.Menubar.js:143
+#: src/control/Control.Menubar.js:200
 msgid "Columns right"
 msgstr "Colunas à direita"
 
-#: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:199
+#: src/control/Control.Menubar.js:144
+#: src/control/Control.Menubar.js:201
 msgid "Delete"
 msgstr "Excluir"
 
-#: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:200
+#: src/control/Control.Menubar.js:145
+#: src/control/Control.Menubar.js:202
 msgid "Rows"
 msgstr "Linhas"
 
-#: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:201
+#: src/control/Control.Menubar.js:146
+#: src/control/Control.Menubar.js:203
 msgid "Columns"
 msgstr "Colunas"
 
-#: src/control/Control.Menubar.js:147 src/control/Control.Menubar.js:149
+#: src/control/Control.Menubar.js:147
+#: src/control/Control.Menubar.js:149
 msgid "Table"
 msgstr "Tabela"
 
@@ -2204,11 +2267,13 @@ msgstr "Tabela"
 msgid "Select"
 msgstr "Selecionar"
 
-#: src/control/Control.Menubar.js:150 src/control/Control.Menubar.js:245
+#: src/control/Control.Menubar.js:150
+#: src/control/Control.Menubar.js:247
 msgid "Row"
 msgstr "Linha"
 
-#: src/control/Control.Menubar.js:151 src/control/Control.Menubar.js:246
+#: src/control/Control.Menubar.js:151
+#: src/control/Control.Menubar.js:248
 msgid "Column"
 msgstr "Coluna"
 
@@ -2216,22 +2281,26 @@ msgstr "Coluna"
 msgid "Cell"
 msgstr "Célula"
 
-#: src/control/Control.Menubar.js:153 src/control/Control.Menubar.js:202
+#: src/control/Control.Menubar.js:153
+#: src/control/Control.Menubar.js:204
 msgid "Merge cells"
 msgstr "Mesclar células"
 
-#: src/control/Control.Menubar.js:155 src/control/Control.Menubar.js:211
-#: src/control/Control.Menubar.js:257
+#: src/control/Control.Menubar.js:155
+#: src/control/Control.Menubar.js:213
+#: src/control/Control.Menubar.js:259
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/control/Control.Menubar.js:156 src/control/Control.Menubar.js:212
-#: src/control/Control.Menubar.js:258
+#: src/control/Control.Menubar.js:156
+#: src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:260
 msgid "Keyboard shortcuts"
 msgstr "Atalhos do teclado"
 
-#: src/control/Control.Menubar.js:157 src/control/Control.Menubar.js:213
-#: src/control/Control.Menubar.js:259
+#: src/control/Control.Menubar.js:157
+#: src/control/Control.Menubar.js:215
+#: src/control/Control.Menubar.js:261
 msgid "About"
 msgstr "Sobre"
 
@@ -2247,43 +2316,44 @@ msgstr "Microsoft Powerpoint 2003 (.ppt)"
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:204
+#: src/control/Control.Menubar.js:206
 msgid "Slide"
 msgstr "Slide"
 
-#: src/control/Control.Menubar.js:205
+#: src/control/Control.Menubar.js:207
 msgid "New slide"
 msgstr "Novo slide"
 
-#: src/control/Control.Menubar.js:224
+#: src/control/Control.Menubar.js:226
 msgid "ODF spreadsheet (.ods)"
 msgstr "Planilha ODF (.ods)"
 
-#: src/control/Control.Menubar.js:225
+#: src/control/Control.Menubar.js:227
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:226
+#: src/control/Control.Menubar.js:228
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:250
+#: src/control/Control.Menubar.js:252
 msgid "Cells"
 msgstr "Células"
 
-#: src/control/Control.Menubar.js:251
+#: src/control/Control.Menubar.js:253
 msgid "Insert row"
 msgstr "Inserir linha"
 
-#: src/control/Control.Menubar.js:252
+#: src/control/Control.Menubar.js:254
 msgid "Insert column"
 msgstr "Inserir coluna"
 
-#: src/control/Control.Menubar.js:254 src/control/Control.RowHeader.js:46
+#: src/control/Control.Menubar.js:256
+#: src/control/Control.RowHeader.js:46
 msgid "Delete row"
 msgstr "Excluir linha"
 
-#: src/control/Control.Menubar.js:432
+#: src/control/Control.Menubar.js:434
 msgid "Are you sure you want to delete this slide?"
 msgstr "Deseja excluir esta página?"
 
@@ -2331,73 +2401,75 @@ msgstr "Renomear planilha"
 msgid "Enter new sheet name"
 msgstr "Digite o nome da nova planilha"
 
-#: src/control/Toolbar.js:63 src/control/Toolbar.js:72
+#: src/control/Toolbar.js:70
+#: src/control/Toolbar.js:79
 msgid "Downloading..."
 msgstr "Baixando..."
 
-#: src/control/Toolbar.js:84 src/map/Map.js:868
+#: src/control/Toolbar.js:91
+#: src/map/Map.js:905
 msgid "Saving..."
 msgstr "Salvando..."
 
-#: src/control/Toolbar.js:230
+#: src/control/Toolbar.js:242
 msgid "This version of %productName is powered by"
 msgstr "Esta versão do %productName é operada com"
 
-#: src/core/Socket.js:22
+#: src/core/Socket.js:23
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Ocorreu um problema ao conectar com o LibreOffice Online: "
 
-#: src/core/Socket.js:178
+#: src/core/Socket.js:179
 msgid "Unsupported server version."
 msgstr "A versão do servidor não é homologada."
 
-#: src/core/Socket.js:216
+#: src/core/Socket.js:217
 msgid "Session terminated by document owner"
 msgstr "Sessão encerrada pelo proprietário do documento"
 
-#: src/core/Socket.js:219
+#: src/core/Socket.js:220
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "O servidor está se desligando para manutenção (auto-salvamento)"
 
-#: src/core/Socket.js:222
+#: src/core/Socket.js:223
 msgid "Server is recycling and will be available shortly"
 msgstr "O servidor está se reciclando e estará disponível em beve"
 
-#: src/core/Socket.js:334
+#: src/core/Socket.js:335
 msgid "Document requires password to view."
 msgstr "O documento exige uma senha de abertura."
 
-#: src/core/Socket.js:337
+#: src/core/Socket.js:338
 msgid "Document requires password to modify."
 msgstr "O documento exige uma senha para modificação."
 
-#: src/core/Socket.js:339
+#: src/core/Socket.js:340
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Pressione Cancelar para abrir no modo de só leitura."
 
-#: src/core/Socket.js:343
+#: src/core/Socket.js:344
 msgid "Wrong password provided. Please try again."
 msgstr "Senha inválida. Tente novamente."
 
-#: src/core/Socket.js:392
+#: src/core/Socket.js:393
 msgid "Connecting..."
 msgstr "Conectando..."
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:514
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Ocorreu um erro de conexão com seu documento. Tente novamente."
 
-#: src/map/Map.js:118
+#: src/map/Map.js:121
 msgid "Initializing..."
 msgstr "Inicializando..."
 
-#: src/map/Map.js:792
+#: src/map/Map.js:786
 msgid "Inactive document - please click to resume editing"
 msgstr "Documento inativo - clique para continuar editando"
 
-#: src/map/Map.js:871
+#: src/map/Map.js:908
 msgid "Loading..."
 msgstr "Carregando..."
 

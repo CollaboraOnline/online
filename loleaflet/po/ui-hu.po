@@ -1,22 +1,18 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-19 19:19+0100\n"
-"PO-Revision-Date: 2016-12-19 19:32+0100\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"POT-Creation-Date: 2017-01-11 09:01+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.5\n"
-"X-POOTLE-MTIME: 1481561130.000000\n"
-"Language-Team: \n"
+"X-Generator: Translate Toolkit 2.0.0b7\n"
+"X-Pootle-Path: /hu/libo_online/loleaflet-ui-hu.po\n"
+"X-Pootle-Revision: 827123\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -76,7 +72,7 @@ msgstr "Eltelt idő"
 
 #: admin.strings.js:19
 msgid "Idle time"
-msgstr "Tétlen idő"
+msgstr "Tétlenség ideje"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -86,8 +82,10 @@ msgstr "Kilövés"
 msgid "Graphs"
 msgstr "Grafikonok"
 
-#: admin.strings.js:22 dist/toolbar/toolbar.js:364
-#: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:163
+#: admin.strings.js:22
+#: dist/toolbar/toolbar.js:364
+#: src/control/Control.Menubar.js:11
+#: src/control/Control.Menubar.js:163
 #: src/control/Control.Menubar.js:221
 msgid "Save"
 msgstr "Mentés"
@@ -217,30 +215,30 @@ msgstr ""
 #: dist/errormessages.js:3
 msgid ""
 "This development build is limited to %0 documents, and %1 connections - to "
-"avoid the impression that it is suitable for deployment in large enterprises. "
-"To find out more about deploying and scaling %2 check out: <br/><a href=\"%3\">"
-"%3</a>."
+"avoid the impression that it is suitable for deployment in large "
+"enterprises. To find out more about deploying and scaling %2 check out: "
+"<br/><a href=\"%3\">%3</a>."
 msgstr ""
 "Ez a fejlesztői kiadás %0 dokumentumra és %1 kapcsolatra van korlátozva – "
-"elkerülendő azt a benyomást, hogy alkalmas nagyvállalati felhasználásra. A %2 "
-"telepítésével és méretezésével kapcsolatban nézze meg ezt: <br/><a href=\"%3\">"
-"%3</a>."
+"elkerülendő azt a benyomást, hogy alkalmas nagyvállalati felhasználásra. A %"
+"2 telepítésével és méretezésével kapcsolatban nézze meg ezt: <br/><a href=\"%"
+"3\">%3</a>."
 
 #: dist/errormessages.js:4
 msgid ""
-"Service is unavailable. Please try again later and report to your administrator "
-"if the issue persists."
+"Service is unavailable. Please try again later and report to your "
+"administrator if the issue persists."
 msgstr ""
 "A szolgáltatás nem érhető el. Próbálja újra később, és jelezze a "
 "rendszergazdának, ha a probléma tartósan fennáll."
 
 #: dist/errormessages.js:5
 msgid ""
-"Unauthorized WOPI host. Please try again later and report to your administrator "
-"if the issue persists."
+"Unauthorized WOPI host. Please try again later and report to your "
+"administrator if the issue persists."
 msgstr ""
-"Jogosulatlan WOPI gép. Próbálja újra később, és jelezze a rendszergazdának, ha "
-"a probléma tartósan fennáll."
+"Jogosulatlan WOPI gép. Próbálja újra később, és jelezze a rendszergazdának, "
+"ha a probléma tartósan fennáll."
 
 #: dist/errormessages.js:6
 msgid ""
@@ -255,28 +253,33 @@ msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
-"A munkamenet lejár: %time. A folytatáshoz mentse a munkáját, és frissítse a "
-"munkamenetet (vagy weboldalt)."
+"A munkamenet %time múlva lejár. Mentse a munkáját, és a folytatáshoz "
+"frissítse a munkamenetet (vagy a weboldalt)."
 
 #: dist/errormessages.js:8
 msgid ""
-"Your session has been expired. Further changes to document might not be saved. "
-"Please refresh the session (or webpage) to continue."
+"Your session has been expired. Further changes to document might not be "
+"saved. Please refresh the session (or webpage) to continue."
 msgstr ""
-"A munkamenet lejárt. A dokumentum további módosításai nem menthetők. A "
+"A munkamenet lejárt. A dokumentum további módosításai nem lesznek mentve. A "
 "folytatáshoz frissítse a munkamenetet (vagy a weboldalt)."
 
 #: dist/errormessages.js:11
 msgid ""
-"Save failed due to no disk space left on storage server. Document will now be "
-"read-only. Please contact the server administrator to continue editing."
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server administrator to continue editing."
 msgstr ""
+"A mentés nem sikerült, mert a tárhelyen betelt a lemez. A dokumentum "
+"mostantól csak olvasható. A szerkesztés folytatásához lépjen kapcsolatba a "
+"rendszergazdával."
 
 #: dist/errormessages.js:12
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server administrator."
 msgstr ""
+"A dokumentumot nem sikerült menteni a tárhelyre. Ellenőrizze a "
+"jogosultságokat vagy lépjen kapcsolatba a rendszergazdával."
 
 #: dist/toolbar/toolbar.js:159
 msgid "Are you sure you want to delete this page?"
@@ -314,13 +317,17 @@ msgstr "Körbefuttatás jobb oldalon"
 msgid "Wrap through"
 msgstr "Keresztülfuttatás"
 
-#: dist/toolbar/toolbar.js:366 src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:173 src/control/Control.Menubar.js:231
+#: dist/toolbar/toolbar.js:366
+#: src/control/Control.Menubar.js:22
+#: src/control/Control.Menubar.js:173
+#: src/control/Control.Menubar.js:231
 msgid "Undo"
 msgstr "Visszavonás"
 
-#: dist/toolbar/toolbar.js:367 src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:174 src/control/Control.Menubar.js:232
+#: dist/toolbar/toolbar.js:367
+#: src/control/Control.Menubar.js:23
+#: src/control/Control.Menubar.js:174
+#: src/control/Control.Menubar.js:232
 msgid "Redo"
 msgstr "Újra"
 
@@ -328,15 +335,18 @@ msgstr "Újra"
 msgid "Document repair"
 msgstr "Dokumentum helyreállítása"
 
-#: dist/toolbar/toolbar.js:374 src/control/Control.Menubar.js:60
+#: dist/toolbar/toolbar.js:374
+#: src/control/Control.Menubar.js:60
 msgid "Bold"
 msgstr "Félkövér"
 
-#: dist/toolbar/toolbar.js:375 src/control/Control.Menubar.js:61
+#: dist/toolbar/toolbar.js:375
+#: src/control/Control.Menubar.js:61
 msgid "Italic"
 msgstr "Dőlt"
 
-#: dist/toolbar/toolbar.js:376 src/control/Control.Menubar.js:62
+#: dist/toolbar/toolbar.js:376
+#: src/control/Control.Menubar.js:62
 msgid "Underline"
 msgstr "Aláhúzott"
 
@@ -368,293 +378,312 @@ msgstr "Középre igazítás"
 msgid "Align right"
 msgstr "Jobbra igazítás"
 
-#: dist/toolbar/toolbar.js:389 src/control/Control.Menubar.js:101
+#: dist/toolbar/toolbar.js:389
+#: src/control/Control.Menubar.js:101
 msgid "Justified"
 msgstr "Sorkizárás"
 
-#: dist/toolbar/toolbar.js:390
+#: dist/toolbar/toolbar.js:391
 msgid "Wrap Text"
 msgstr "Tördelés"
 
-#: dist/toolbar/toolbar.js:391
+#: dist/toolbar/toolbar.js:392
 msgid "Merge and Center Cells"
 msgstr "Cellák egyesítése és középre igazítása"
 
-#: dist/toolbar/toolbar.js:393
+#: dist/toolbar/toolbar.js:394
 msgid "Format as Currency"
 msgstr "Formázás pénznemként"
 
-#: dist/toolbar/toolbar.js:394
+#: dist/toolbar/toolbar.js:395
 msgid "Format as Percent"
 msgstr "Formázás százalékként"
 
-#: dist/toolbar/toolbar.js:395
+#: dist/toolbar/toolbar.js:396
 msgid "Format as Number"
 msgstr "Formázás számként"
 
-#: dist/toolbar/toolbar.js:396
+#: dist/toolbar/toolbar.js:397
 msgid "Format as Date"
 msgstr "Formázás dátumként"
 
-#: dist/toolbar/toolbar.js:397
+#: dist/toolbar/toolbar.js:398
 msgid "Add Decimal Place"
 msgstr "Tizedesjegy hozzáadása"
 
-#: dist/toolbar/toolbar.js:398
+#: dist/toolbar/toolbar.js:399
 msgid "Delete Decimal Place"
 msgstr "Tizedesjegy törlése"
 
-#: dist/toolbar/toolbar.js:400
+#: dist/toolbar/toolbar.js:401
 msgid "Sort Ascending"
 msgstr "Növekvő sorrend"
 
-#: dist/toolbar/toolbar.js:401
+#: dist/toolbar/toolbar.js:402
 msgid "Sort Descending"
 msgstr "Csökkenő sorrend"
 
-#: dist/toolbar/toolbar.js:403 src/control/Control.Menubar.js:107
+#: dist/toolbar/toolbar.js:404
+#: src/control/Control.Menubar.js:107
 msgid "Bullets on/off"
 msgstr "Felsorolás be/ki"
 
-#: dist/toolbar/toolbar.js:404 src/control/Control.Menubar.js:108
+#: dist/toolbar/toolbar.js:405
+#: src/control/Control.Menubar.js:108
 msgid "Numbering on/off"
 msgstr "Számozás be/ki"
 
-#: dist/toolbar/toolbar.js:406 src/control/Control.Menubar.js:95
+#: dist/toolbar/toolbar.js:407
+#: src/control/Control.Menubar.js:95
 msgid "Increase indent"
 msgstr "Behúzás növelése"
 
-#: dist/toolbar/toolbar.js:407 src/control/Control.Menubar.js:96
+#: dist/toolbar/toolbar.js:408
+#: src/control/Control.Menubar.js:96
 msgid "Decrease indent"
 msgstr "Behúzás csökkentése"
 
-#: dist/toolbar/toolbar.js:410
+#: dist/toolbar/toolbar.js:411
 msgid "Insert table"
 msgstr "Táblázat beszúrása"
 
-#: dist/toolbar/toolbar.js:411
+#: dist/toolbar/toolbar.js:412
 msgid "Insert comment"
 msgstr "Megjegyzés beszúrása"
 
-#: dist/toolbar/toolbar.js:412
+#: dist/toolbar/toolbar.js:413
 msgid "Insert graphic"
 msgstr "Kép beszúrása"
 
-#: dist/toolbar/toolbar.js:413
+#: dist/toolbar/toolbar.js:414
 msgid "Special Character"
 msgstr "Különleges karakter"
 
-#: dist/toolbar/toolbar.js:415
+#: dist/toolbar/toolbar.js:416
 msgid "More"
 msgstr "További ikonok"
 
-#: dist/toolbar/toolbar.js:416
+#: dist/toolbar/toolbar.js:417
 msgid "Close document"
 msgstr "Dokumentum bezárása"
 
-#: dist/toolbar/toolbar.js:451
+#: dist/toolbar/toolbar.js:496
 msgid "Layout"
 msgstr "Elrendezés"
 
-#: dist/toolbar/toolbar.js:474 dist/toolbar/toolbar.js:801
+#: dist/toolbar/toolbar.js:519
+#: dist/toolbar/toolbar.js:851
 msgid "Sum"
 msgstr "Összeg"
 
-#: dist/toolbar/toolbar.js:475
+#: dist/toolbar/toolbar.js:520
 msgid "Function"
 msgstr "Függvény"
 
-#: dist/toolbar/toolbar.js:476 src/control/Control.CharacterMap.js:428
+#: dist/toolbar/toolbar.js:521
+#: src/control/Control.CharacterMap.js:428
 msgid "Cancel"
 msgstr "Mégse"
 
-#: dist/toolbar/toolbar.js:477
+#: dist/toolbar/toolbar.js:522
 msgid "Accept"
 msgstr "Elfogadás"
 
-#: dist/toolbar/toolbar.js:488
+#: dist/toolbar/toolbar.js:533
 msgid "First sheet"
 msgstr "Első munkalap"
 
-#: dist/toolbar/toolbar.js:489
+#: dist/toolbar/toolbar.js:534
 msgid "Previous sheet"
 msgstr "Előző munkalap"
 
-#: dist/toolbar/toolbar.js:490
+#: dist/toolbar/toolbar.js:535
 msgid "Next sheet"
 msgstr "Következő munkalap"
 
-#: dist/toolbar/toolbar.js:491
+#: dist/toolbar/toolbar.js:536
 msgid "Last sheet"
 msgstr "Utolsó munkalap"
 
-#: dist/toolbar/toolbar.js:501 src/control/Control.Menubar.js:211
+#: dist/toolbar/toolbar.js:546
+#: src/control/Control.Menubar.js:211
 msgid "Fullscreen presentation"
 msgstr "Teljes képernyős bemutató"
 
-#: dist/toolbar/toolbar.js:503
+#: dist/toolbar/toolbar.js:548
 msgid "Insert slide"
 msgstr "Dia beszúrása"
 
-#: dist/toolbar/toolbar.js:504 src/control/Control.Menubar.js:208
+#: dist/toolbar/toolbar.js:549
+#: src/control/Control.Menubar.js:208
 msgid "Duplicate slide"
 msgstr "Dia megkettőzése"
 
-#: dist/toolbar/toolbar.js:505 src/control/Control.Menubar.js:209
+#: dist/toolbar/toolbar.js:550
+#: src/control/Control.Menubar.js:209
 msgid "Delete slide"
 msgstr "Dia törlése"
 
-#: dist/toolbar/toolbar.js:518
+#: dist/toolbar/toolbar.js:563
 msgid "Search:"
 msgstr "Keresés:"
 
-#: dist/toolbar/toolbar.js:523
+#: dist/toolbar/toolbar.js:568
 msgid "Search backwards"
 msgstr "Keresés visszafelé"
 
-#: dist/toolbar/toolbar.js:524
+#: dist/toolbar/toolbar.js:569
 msgid "Search forward"
 msgstr "Keresés előre"
 
-#: dist/toolbar/toolbar.js:525
+#: dist/toolbar/toolbar.js:570
 msgid "Cancel the search"
 msgstr "Keresés leállítása"
 
-#: dist/toolbar/toolbar.js:530 dist/toolbar/toolbar.js:1344
+#: dist/toolbar/toolbar.js:575
+#: dist/toolbar/toolbar.js:1404
 msgid "No users"
 msgstr "Nincsenek felhasználók"
 
-#: dist/toolbar/toolbar.js:532
+#: dist/toolbar/toolbar.js:577
 msgid "Previous page"
 msgstr "Előző oldal"
 
-#: dist/toolbar/toolbar.js:533
+#: dist/toolbar/toolbar.js:578
 msgid "Next page"
 msgstr "Következő oldal"
 
-#: dist/toolbar/toolbar.js:535 src/control/Control.Menubar.js:36
+#: dist/toolbar/toolbar.js:580
+#: src/control/Control.Menubar.js:36
 #: src/control/Control.Menubar.js:187
 msgid "Reset zoom"
 msgstr "Alaphelyzet"
 
-#: dist/toolbar/toolbar.js:536 src/control/Control.Menubar.js:35
+#: dist/toolbar/toolbar.js:581
+#: src/control/Control.Menubar.js:35
 #: src/control/Control.Menubar.js:186
 msgid "Zoom out"
 msgstr "Kicsinyítés"
 
-#: dist/toolbar/toolbar.js:538 src/control/Control.Menubar.js:34
+#: dist/toolbar/toolbar.js:583
+#: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:185
 msgid "Zoom in"
 msgstr "Nagyítás"
 
-#: dist/toolbar/toolbar.js:552
+#: dist/toolbar/toolbar.js:597
 msgid "%user has joined"
 msgstr "%user csatlakozott"
 
-#: dist/toolbar/toolbar.js:553
+#: dist/toolbar/toolbar.js:598
 msgid "%user has left"
 msgstr "%user kilépett"
 
-#: dist/toolbar/toolbar.js:650 dist/toolbar/toolbar.js:1127
+#: dist/toolbar/toolbar.js:700
+#: dist/toolbar/toolbar.js:1187
 msgid "Size"
 msgstr "Méret"
 
-#: dist/toolbar/toolbar.js:782
+#: dist/toolbar/toolbar.js:832
 msgid "Number of Sheets"
 msgstr "Munkalapok száma"
 
-#: dist/toolbar/toolbar.js:785
+#: dist/toolbar/toolbar.js:835
 msgid "Selected range of cells"
 msgstr "Kijelölt cellatartomány"
 
-#: dist/toolbar/toolbar.js:788 dist/toolbar/toolbar.js:819
+#: dist/toolbar/toolbar.js:838
+#: dist/toolbar/toolbar.js:869
 msgid "Entering text mode"
 msgstr "Belépés szöveges módba"
 
-#: dist/toolbar/toolbar.js:791 dist/toolbar/toolbar.js:822
+#: dist/toolbar/toolbar.js:841
+#: dist/toolbar/toolbar.js:872
 msgid "Selection Mode"
 msgstr "Kijelölési mód"
 
-#: dist/toolbar/toolbar.js:794
+#: dist/toolbar/toolbar.js:844
 msgid "Choice of functions"
 msgstr "Függvények listája"
 
-#: dist/toolbar/toolbar.js:796
+#: dist/toolbar/toolbar.js:846
 msgid "Average"
 msgstr "Átlag"
 
-#: dist/toolbar/toolbar.js:797
+#: dist/toolbar/toolbar.js:847
 msgid "CountA"
 msgstr "Darab2"
 
-#: dist/toolbar/toolbar.js:798
+#: dist/toolbar/toolbar.js:848
 msgid "Count"
 msgstr "Darab"
 
-#: dist/toolbar/toolbar.js:799
+#: dist/toolbar/toolbar.js:849
 msgid "Maximum"
 msgstr "Maximum"
 
-#: dist/toolbar/toolbar.js:800
+#: dist/toolbar/toolbar.js:850
 msgid "Minimum"
 msgstr "Minimum"
 
-#: dist/toolbar/toolbar.js:802
+#: dist/toolbar/toolbar.js:852
 msgid "Selection count"
 msgstr "Kijelöltek száma"
 
-#: dist/toolbar/toolbar.js:803 src/control/Control.CharacterMap.js:11
+#: dist/toolbar/toolbar.js:853
+#: src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr "Nincs"
 
-#: dist/toolbar/toolbar.js:813
+#: dist/toolbar/toolbar.js:863
 msgid "Number of Pages"
 msgstr "Oldalak száma"
 
-#: dist/toolbar/toolbar.js:816
+#: dist/toolbar/toolbar.js:866
 msgid "Word Counter"
 msgstr "Szavak száma"
 
-#: dist/toolbar/toolbar.js:833
+#: dist/toolbar/toolbar.js:883
 msgid "Number of Slides"
 msgstr "Diák száma"
 
-#: dist/toolbar/toolbar.js:960
+#: dist/toolbar/toolbar.js:1011
 msgid "Document saved"
 msgstr "Dokumentum elmentve"
 
-#: dist/toolbar/toolbar.js:1110
+#: dist/toolbar/toolbar.js:1170
 msgid "Style"
 msgstr "Stílus"
 
-#: dist/toolbar/toolbar.js:1122
+#: dist/toolbar/toolbar.js:1182
 msgid "Font"
 msgstr "Betűkészlet"
 
-#: dist/toolbar/toolbar.js:1146
+#: dist/toolbar/toolbar.js:1206
 msgid "Previous slide"
 msgstr "Előző dia"
 
-#: dist/toolbar/toolbar.js:1147
+#: dist/toolbar/toolbar.js:1207
 msgid "Next slide"
 msgstr "Következő dia"
 
-#: dist/toolbar/toolbar.js:1205
+#: dist/toolbar/toolbar.js:1265
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
-"A Visszavonás/Újra alkalmazás ütközéshez vezetett. Használja a dokumentum-"
-"helyreállítót."
+"Feloldhatatlan visszavonási/újraalkalmazási helyzet. A dokumentum korábbi "
+"állapotának helyreállítása a megoldás."
 
-#: dist/toolbar/toolbar.js:1335
+#: dist/toolbar/toolbar.js:1395
 msgid "%n users"
 msgstr "%n felhasználó"
 
-#: dist/toolbar/toolbar.js:1342
+#: dist/toolbar/toolbar.js:1402
 msgid "1 user"
 msgstr "1 felhasználó"
 
-#: dist/toolbar/toolbar.js:1369 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1429
+#: src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr "Ön"
 
@@ -682,11 +711,13 @@ msgstr "GB"
 msgid "TB"
 msgstr "TB"
 
-#: src/admin/Util.js:42 src/admin/Util.js:44
+#: src/admin/Util.js:42
+#: src/admin/Util.js:44
 msgid " hrs"
 msgstr " óra"
 
-#: src/admin/Util.js:48 src/admin/Util.js:50
+#: src/admin/Util.js:48
+#: src/admin/Util.js:50
 msgid " mins"
 msgstr " perc"
 
@@ -1760,9 +1791,12 @@ msgstr "Kiválasztott karakter:"
 msgid "Hexadecimal:"
 msgstr "Hexadecimális:"
 
-#: src/control/Control.CharacterMap.js:424 src/control/Control.Menubar.js:38
-#: src/control/Control.Menubar.js:138 src/control/Control.Menubar.js:189
-#: src/control/Control.Menubar.js:195 src/control/Control.Menubar.js:243
+#: src/control/Control.CharacterMap.js:424
+#: src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:138
+#: src/control/Control.Menubar.js:189
+#: src/control/Control.Menubar.js:195
+#: src/control/Control.Menubar.js:243
 msgid "Insert"
 msgstr "Beszúrás"
 
@@ -1770,7 +1804,8 @@ msgstr "Beszúrás"
 msgid "Insert column before"
 msgstr "Oszlop beszúrása ez elé"
 
-#: src/control/Control.ColumnHeader.js:48 src/control/Control.Menubar.js:257
+#: src/control/Control.ColumnHeader.js:48
+#: src/control/Control.Menubar.js:257
 msgid "Delete column"
 msgstr "Oszlop törlése"
 
@@ -1802,7 +1837,8 @@ msgstr "Típus"
 msgid "Index"
 msgstr "Index"
 
-#: src/control/Control.DocumentRepair.js:44 src/control/Control.Menubar.js:40
+#: src/control/Control.DocumentRepair.js:44
+#: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:245
 msgid "Comment"
 msgstr "Megjegyzés"
@@ -1819,27 +1855,32 @@ msgstr "Időbélyeg"
 msgid "Jump to state"
 msgstr "Ugrás állapotra"
 
-#: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:162
+#: src/control/Control.Menubar.js:10
+#: src/control/Control.Menubar.js:162
 #: src/control/Control.Menubar.js:220
 msgid "File"
 msgstr "Fájl"
 
-#: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:164
+#: src/control/Control.Menubar.js:12
+#: src/control/Control.Menubar.js:164
 #: src/control/Control.Menubar.js:222
 msgid "Print"
 msgstr "Nyomtatás"
 
-#: src/control/Control.Menubar.js:13 src/control/Control.Menubar.js:165
+#: src/control/Control.Menubar.js:13
+#: src/control/Control.Menubar.js:165
 #: src/control/Control.Menubar.js:223
 msgid "See revision history"
 msgstr "Változáselőzmények"
 
-#: src/control/Control.Menubar.js:14 src/control/Control.Menubar.js:166
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:224
 msgid "Download as"
 msgstr "Letöltés másként"
 
-#: src/control/Control.Menubar.js:15 src/control/Control.Menubar.js:167
+#: src/control/Control.Menubar.js:15
+#: src/control/Control.Menubar.js:167
 #: src/control/Control.Menubar.js:225
 msgid "PDF Document (.pdf)"
 msgstr "PDF dokumentum (.pdf)"
@@ -1856,7 +1897,8 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:20 src/control/Control.Menubar.js:172
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:172
 #: src/control/Control.Menubar.js:230
 msgid "Edit"
 msgstr "Szerkesztés"
@@ -1865,37 +1907,44 @@ msgstr "Szerkesztés"
 msgid "Repair"
 msgstr "Helyreállítás"
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:25
+#: src/control/Control.Menubar.js:176
 #: src/control/Control.Menubar.js:234
 msgid "Cut"
 msgstr "Kivágás"
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:177
+#: src/control/Control.Menubar.js:26
+#: src/control/Control.Menubar.js:177
 #: src/control/Control.Menubar.js:235
 msgid "Copy"
 msgstr "Másolás"
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:178
+#: src/control/Control.Menubar.js:27
+#: src/control/Control.Menubar.js:178
 #: src/control/Control.Menubar.js:236
 msgid "Paste"
 msgstr "Beillesztés"
 
-#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:180
+#: src/control/Control.Menubar.js:29
+#: src/control/Control.Menubar.js:180
 #: src/control/Control.Menubar.js:238
 msgid "Select all"
 msgstr "Minden kijelölése"
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:182
+#: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:182
 #: src/control/Control.Menubar.js:240
 msgid "View"
 msgstr "Nézet"
 
-#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:183
+#: src/control/Control.Menubar.js:32
+#: src/control/Control.Menubar.js:183
 #: src/control/Control.Menubar.js:241
 msgid "Full screen"
 msgstr "Teljes képernyő"
 
-#: src/control/Control.Menubar.js:39 src/control/Control.Menubar.js:190
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:190
 #: src/control/Control.Menubar.js:244
 msgid "Image"
 msgstr "Kép"
@@ -1916,7 +1965,8 @@ msgstr "Oldaltörés"
 msgid "Column break"
 msgstr "Hasábtörés"
 
-#: src/control/Control.Menubar.js:48 src/control/Control.Menubar.js:192
+#: src/control/Control.Menubar.js:48
+#: src/control/Control.Menubar.js:192
 #: src/control/Control.Menubar.js:250
 msgid "Special character..."
 msgstr "Különleges karakter..."
@@ -2153,49 +2203,62 @@ msgstr "Közvetlen formázás törlése"
 msgid "Page"
 msgstr "Oldal"
 
-#: src/control/Control.Menubar.js:128 src/control/Control.Menubar.js:130
-#: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:134
+#: src/control/Control.Menubar.js:128
+#: src/control/Control.Menubar.js:130
+#: src/control/Control.Menubar.js:132
+#: src/control/Control.Menubar.js:134
 msgid "Portrait"
 msgstr "Álló"
 
-#: src/control/Control.Menubar.js:129 src/control/Control.Menubar.js:131
-#: src/control/Control.Menubar.js:133 src/control/Control.Menubar.js:135
+#: src/control/Control.Menubar.js:129
+#: src/control/Control.Menubar.js:131
+#: src/control/Control.Menubar.js:133
+#: src/control/Control.Menubar.js:135
 msgid "Landscape"
 msgstr "Fekvő"
 
-#: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:137
+#: src/control/Control.Menubar.js:194
 msgid "Tables"
 msgstr "Táblázat"
 
-#: src/control/Control.Menubar.js:139 src/control/Control.Menubar.js:196
+#: src/control/Control.Menubar.js:139
+#: src/control/Control.Menubar.js:196
 msgid "Rows before"
 msgstr "Sor beszúrása ez elé"
 
-#: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:197
+#: src/control/Control.Menubar.js:140
+#: src/control/Control.Menubar.js:197
 msgid "Rows after"
 msgstr "Sor beszúrása ez után"
 
-#: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:199
+#: src/control/Control.Menubar.js:142
+#: src/control/Control.Menubar.js:199
 msgid "Columns left"
 msgstr "Oszlop beszúrása balra"
 
-#: src/control/Control.Menubar.js:143 src/control/Control.Menubar.js:200
+#: src/control/Control.Menubar.js:143
+#: src/control/Control.Menubar.js:200
 msgid "Columns right"
 msgstr "Oszlop beszúrása jobbra"
 
-#: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:201
+#: src/control/Control.Menubar.js:144
+#: src/control/Control.Menubar.js:201
 msgid "Delete"
 msgstr "Törlés"
 
-#: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:202
+#: src/control/Control.Menubar.js:145
+#: src/control/Control.Menubar.js:202
 msgid "Rows"
 msgstr "Sor"
 
-#: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:203
+#: src/control/Control.Menubar.js:146
+#: src/control/Control.Menubar.js:203
 msgid "Columns"
 msgstr "Oszlop"
 
-#: src/control/Control.Menubar.js:147 src/control/Control.Menubar.js:149
+#: src/control/Control.Menubar.js:147
+#: src/control/Control.Menubar.js:149
 msgid "Table"
 msgstr "Táblázat"
 
@@ -2203,11 +2266,13 @@ msgstr "Táblázat"
 msgid "Select"
 msgstr "Kijelölés"
 
-#: src/control/Control.Menubar.js:150 src/control/Control.Menubar.js:247
+#: src/control/Control.Menubar.js:150
+#: src/control/Control.Menubar.js:247
 msgid "Row"
 msgstr "Sor"
 
-#: src/control/Control.Menubar.js:151 src/control/Control.Menubar.js:248
+#: src/control/Control.Menubar.js:151
+#: src/control/Control.Menubar.js:248
 msgid "Column"
 msgstr "Oszlop"
 
@@ -2215,21 +2280,25 @@ msgstr "Oszlop"
 msgid "Cell"
 msgstr "Cella"
 
-#: src/control/Control.Menubar.js:153 src/control/Control.Menubar.js:204
+#: src/control/Control.Menubar.js:153
+#: src/control/Control.Menubar.js:204
 msgid "Merge cells"
 msgstr "Cellák egyesítése"
 
-#: src/control/Control.Menubar.js:155 src/control/Control.Menubar.js:213
+#: src/control/Control.Menubar.js:155
+#: src/control/Control.Menubar.js:213
 #: src/control/Control.Menubar.js:259
 msgid "Help"
 msgstr "Súgó"
 
-#: src/control/Control.Menubar.js:156 src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:156
+#: src/control/Control.Menubar.js:214
 #: src/control/Control.Menubar.js:260
 msgid "Keyboard shortcuts"
 msgstr "Gyorsbillentyűk"
 
-#: src/control/Control.Menubar.js:157 src/control/Control.Menubar.js:215
+#: src/control/Control.Menubar.js:157
+#: src/control/Control.Menubar.js:215
 #: src/control/Control.Menubar.js:261
 msgid "About"
 msgstr "Verzióinformációk"
@@ -2278,7 +2347,8 @@ msgstr "Sor beszúrása"
 msgid "Insert column"
 msgstr "Oszlop beszúrása"
 
-#: src/control/Control.Menubar.js:256 src/control/Control.RowHeader.js:46
+#: src/control/Control.Menubar.js:256
+#: src/control/Control.RowHeader.js:46
 msgid "Delete row"
 msgstr "Sor törlése"
 
@@ -2330,15 +2400,17 @@ msgstr "Munkalap átnevezése"
 msgid "Enter new sheet name"
 msgstr "Adja meg az munkalapnevet"
 
-#: src/control/Toolbar.js:70 src/control/Toolbar.js:79
+#: src/control/Toolbar.js:70
+#: src/control/Toolbar.js:79
 msgid "Downloading..."
 msgstr "Letöltés…"
 
-#: src/control/Toolbar.js:91 src/map/Map.js:901
+#: src/control/Toolbar.js:91
+#: src/map/Map.js:905
 msgid "Saving..."
 msgstr "Mentés…"
 
-#: src/control/Toolbar.js:237
+#: src/control/Toolbar.js:242
 msgid "This version of %productName is powered by"
 msgstr "%productName verzióinformációk:"
 
@@ -2360,7 +2432,7 @@ msgstr "A kiszolgáló karbantartásra leáll (automatikus mentés)"
 
 #: src/core/Socket.js:223
 msgid "Server is recycling and will be available shortly"
-msgstr "A kiszolgáló újraindul, hamarosan elérhető lesz"
+msgstr "A kiszolgáló éppen újraindul, hamarosan elérhető lesz."
 
 #: src/core/Socket.js:335
 msgid "Document requires password to view."
@@ -2388,56 +2460,21 @@ msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
-"Nagyon sajnáljuk, de nem lehet kapcsolódni a dokumentumhoz. Próbálja meg később."
+"Nagyon sajnáljuk, de nem lehet kapcsolódni a dokumentumhoz. Próbálja meg "
+"később."
 
 #: src/map/Map.js:121
 msgid "Initializing..."
 msgstr "Előkészítés…"
 
-#: src/map/Map.js:782
+#: src/map/Map.js:786
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktív dokumentum – kattintson a szerkesztés folytatásához"
 
-#: src/map/Map.js:904
+#: src/map/Map.js:908
 msgid "Loading..."
 msgstr "Betöltés…"
 
 #: src/map/handler/Map.FileInserter.js:54
 msgid "Uploading..."
 msgstr "Feltöltés…"
-
-#~ msgid "Special Characters rendered by the User Agent:"
-#~ msgstr "A böngésző által megjelenített karakter:"
-
-#~ msgid "Special Character rendered by Server Side:"
-#~ msgstr "A kiszolgáló által megjelenített karakter:"
-
-#~ msgid "Server shutdown for maintenance"
-#~ msgstr "A kiszolgáló karbantartásra leáll"
-
-#~ msgid "Take edit lock (others can only view)"
-#~ msgstr "A szerkesztés átvétele (a többiek csak nézhetik)"
-
-#~ msgid "VIEWING"
-#~ msgstr "FIGYELÉS"
-
-#~ msgid "You are viewing now."
-#~ msgstr "Ön jelenleg csak figyeli a dokumentumot."
-
-#~ msgid "Click here to take edit."
-#~ msgstr "Kattintson ide a szerkesztéshez."
-
-#~ msgid "You are editing (others can only view)"
-#~ msgstr "Szerkesztési mód (a többiek csak nézhetik)"
-
-#~ msgid "EDITING"
-#~ msgstr "SZERKESZTÉS"
-
-#~ msgid "You are locked in readonly mode"
-#~ msgstr "Csak olvasható módban van"
-
-#~ msgid "READONLY"
-#~ msgstr "CSAK OLVASHATÓ"
-
-#~ msgid "We are sorry, this is an unexpected connection error. Please try again."
-#~ msgstr "Sajnáljuk, váratlan hiba lépett fel a kapcsolatban. Próbálja meg újra."
