@@ -7,6 +7,13 @@
 L.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
 
+	getParameterValue: function (s) {
+		var i = s.indexOf('=');
+		if (i === -1)
+			return undefined;
+		return s.substring(i+1);
+	},
+
 	initialize: function (map) {
 		this._map = map;
 		try {
@@ -603,7 +610,7 @@ L.Socket = L.Class.extend({
 				command.rendercount = parseInt(tokens[i].substring(12));
 			}
 			else if (tokens[i].startsWith('hash=')) {
-				command.hash = tokens[i].substring(tokens[i].indexOf('=')+1);
+				command.hash = this.getParameterValue(tokens[i]);
 			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
