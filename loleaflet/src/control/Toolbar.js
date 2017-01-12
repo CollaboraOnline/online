@@ -44,7 +44,11 @@ L.Map.include({
 	},
 
 	getToolbarCommandValues: function (command) {
-		return this._docLayer._toolbarCommandValues[command];
+		if (this._docLayer) {
+			return this._docLayer._toolbarCommandValues[command];
+		}
+
+		return undefined;
 	},
 
 	downloadAs: function (name, format, options, id) {
