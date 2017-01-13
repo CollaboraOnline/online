@@ -596,9 +596,6 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
 {
     Util::assertIsLocked(_mutex);
 
-    const auto id = session->getId();
-    const std::string aMessage = "session " + id + " " + _docKey;
-
     try
     {
         // First load the document, since this can fail.
@@ -626,6 +623,7 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     _lastEditableSession = false;
     _markToDestroy = false;
 
+    const auto id = session->getId();
     if (!_sessions.emplace(id, session).second)
     {
         LOG_WRN("DocumentBroker: Trying to add already existing session.");
@@ -634,6 +632,7 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     const auto count = _sessions.size();
 
     // Request a new session from the child kit.
+    const std::string aMessage = "session " + id + ' ' + _docKey;
     _childProcess->sendTextFrame(aMessage);
 
     // Now we are ready to bridge between the kit and client.
