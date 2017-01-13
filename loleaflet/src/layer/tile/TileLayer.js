@@ -910,12 +910,15 @@ L.TileLayer = L.GridLayer.extend({
 			this._clearSearchResults();
 			this._searchResults = results;
 			this._map.setPart(results[0].part); // go to first result.
+		} else if (count === 1) {
+			this._lastSearchResult = results[0];
 		}
 		this._searchTerm = originalPhrase;
 		this._map.fire('search', {originalPhrase: originalPhrase, count: count, highlightAll: highlightAll, results: results});
 	},
 
 	_clearSearchResults: function() {
+		this._lastSearchResult = null;
 		this._searchResults = null;
 		this._searchTerm = null;
 		this._searchResultsLayer.clearLayers();

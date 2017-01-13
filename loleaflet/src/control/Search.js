@@ -1,5 +1,5 @@
 L.Map.include({
-	search: function (text, backward, all) {
+	search: function (text, backward, all, expand) {
 		if (backward === undefined) {
 			backward = false;
 		}
@@ -28,14 +28,25 @@ L.Map.include({
 				Math.max(viewTopLeftpx.y, docBoundsTopLeft.y)));
 		var topLeftTwips = this._docLayer._latLngToTwips(topLeft);
 
+		var searchStartPointX = topLeftTwips.x;
+		var searchStartPointY = topLeftTwips.y;
+		if (this._docLayer && this._docLayer._lastSearchResult && expand) {
+			var strTwips = this._docLayer._lastSearchResult.twipsRectangles.match(/\d+/g);
+			if (strTwips != null) {
+				searchStartPointX = strTwips[0];
+				searchStartPointY = strTwips[1];
+			}
+			this.resetSelection();
+		}
+
 		searchCmd['SearchItem.SearchString'].value = text;
 		searchCmd['SearchItem.Backward'].value = backward;
 		searchCmd['SearchItem.SearchStartPointX'] = {};
 		searchCmd['SearchItem.SearchStartPointX'].type = 'long';
-		searchCmd['SearchItem.SearchStartPointX'].value = topLeftTwips.x;
+		searchCmd['SearchItem.SearchStartPointX'].value = searchStartPointX;
 		searchCmd['SearchItem.SearchStartPointY'] = {};
 		searchCmd['SearchItem.SearchStartPointY'].type = 'long';
-		searchCmd['SearchItem.SearchStartPointY'].value = topLeftTwips.y;
+		searchCmd['SearchItem.SearchStartPointY'].value = searchStartPointY;
 		searchCmd['SearchItem.Command'] = {};
 		searchCmd['SearchItem.Command'].type = 'long';
 		searchCmd['SearchItem.Command'].value = all;
