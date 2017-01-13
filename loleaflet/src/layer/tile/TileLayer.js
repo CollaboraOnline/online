@@ -885,11 +885,13 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onSearchNotFoundMsg: function (textMsg) {
 		this._clearSearchResults();
+		this._searchRequested = false;
 		var originalPhrase = textMsg.substring(16);
 		this._map.fire('search', {originalPhrase: originalPhrase, count: 0});
 	},
 
 	_onSearchResultSelection: function (textMsg) {
+		this._searchRequested = false;
 		textMsg = textMsg.substring(23);
 		var obj = JSON.parse(textMsg);
 		var originalPhrase = obj.searchString;

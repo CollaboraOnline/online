@@ -50,6 +50,7 @@ L.Map.include({
 		searchCmd['SearchItem.Command'] = {};
 		searchCmd['SearchItem.Command'].type = 'long';
 		searchCmd['SearchItem.Command'].value = all;
+		this._searchRequested = true;
 		this._socket.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
 	},
 
