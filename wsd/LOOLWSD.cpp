@@ -67,8 +67,8 @@
 #include <Poco/Net/HTTPServerParams.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
-#include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/IPAddress.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/MessageHeader.h>
 #include <Poco/Net/NameValueCollection.h>
@@ -140,6 +140,7 @@ using Poco::Net::PartHandler;
 using Poco::Net::SecureServerSocket;
 using Poco::Net::ServerSocket;
 using Poco::Net::SocketAddress;
+using Poco::Net::StreamSocket;
 using Poco::Net::WebSocket;
 using Poco::Path;
 using Poco::Pipe;
@@ -1478,6 +1479,29 @@ inline ServerSocket* getServerSocket(int nPortNumber, bool reuseDetails)
 {
     try
     {
+        // reuseDetails being true means we are not doing UnitWSD::isUnitTesting. In that case make
+        // sure there isn't another loolwsd already listening on the same port, as the way we create
+        // and listen on the socket doesn't prevent it otherwise. Try connecting to the port first,
+        // not expecting to suceed. (Yes, there is a race condition here if multiple loolwsd
+        // processes come here simultaneously. Live with it. Multiple loolwsd processes is a problem
+        // that happens accidentally for developers only anyway, in production systemd takes care of
+        // having just one, I hope.)
+
+        if (reuseDetails)
+        {
+            try
+            {
+                LOG_INF("Trying first to connect to an existing loolwsd at the same port " << nPortNumber);
+                StreamSocket s(SocketAddress(("127.0.0.1:" + std::to_string(nPortNumber)).c_str()));
+                LOG_FTL("Connection succeeded, so we can't continue");
+                return nullptr;
+            }
+            catch (const Exception&)
+            {
+                LOG_INF("Conection failed, so hopefully we are the only loolwsd on this port");
+            }
+        }
+
         ServerSocket* socket = LOOLWSD::isSSLEnabled() ? new SecureServerSocket() : new ServerSocket();
         Poco::Net::IPAddress wildcardAddr;
         SocketAddress address(wildcardAddr, nPortNumber);
