@@ -52,61 +52,58 @@
 
 namespace Util
 {
-namespace rng
-{
-    static std::random_device _rd;
-    static std::mutex _rngMutex;
-    static Poco::RandomBuf _randBuf;
-
-    // Create the prng with a random-device for seed.
-    // If we don't have a hardware random-device, we will get the same seed.
-    // In that case we are better off with an arbitrary, but changing, seed.
-    static std::mt19937_64 _rng = std::mt19937_64(_rd.entropy()
-                                                ? _rd()
-                                                : (clock() + getpid()));
-
-    // A new seed is used to shuffle the sequence.
-    // N.B. Always reseed after getting forked!
-    void reseed()
+    namespace rng
     {
-        _rng.seed(_rd.entropy() ? _rd() : (clock() + getpid()));
+        static std::random_device _rd;
+        static std::mutex _rngMutex;
+        static Poco::RandomBuf _randBuf;
+
+        // Create the prng with a random-device for seed.
+        // If we don't have a hardware random-device, we will get the same seed.
+        // In that case we are better off with an arbitrary, but changing, seed.
+        static std::mt19937_64 _rng = std::mt19937_64(_rd.entropy()
+                                                    ? _rd()
+                                                    : (clock() + getpid()));
+
+        // A new seed is used to shuffle the sequence.
+        // N.B. Always reseed after getting forked!
+        void reseed()
+        {
+            _rng.seed(_rd.entropy() ? _rd() : (clock() + getpid()));
+        }
+
+        // Returns a new random number.
+        unsigned getNext()
+        {
+            std::unique_lock<std::mutex> lock(_rngMutex);
+            return _rng();
+        }
+
+        std::vector<char> getBytes(const size_t length)
+        {
+            std::vector<char> v(length);
+            _randBuf.readFromDevice(v.data(), v.size());
+            return v;
+        }
+
+        /// Generates a random string in Base64.
+        /// Note: May contain '/' characters.
+        std::string getB64String(const size_t length)
+        {
+            std::stringstream ss;
+            Poco::Base64Encoder b64(ss);
+            b64.write(getBytes(length).data(), length);
+            return ss.str().substr(0, length);
+        }
+
+        std::string getFilename(const size_t length)
+        {
+            std::string s = getB64String(length);
+            std::replace(s.begin(), s.end(), '/', '_');
+            return s.substr(0, length);
+        }
     }
 
-    // Returns a new random number.
-    unsigned getNext()
-    {
-        std::unique_lock<std::mutex> lock(_rngMutex);
-        return _rng();
-    }
-
-    std::vector<char> getBytes(const size_t length)
-    {
-        std::vector<char> v(length);
-        _randBuf.readFromDevice(v.data(), v.size());
-        return v;
-    }
-
-    /// Generates a random string in Base64.
-    /// Note: May contain '/' characters.
-    std::string getB64String(const size_t length)
-    {
-        std::stringstream ss;
-        Poco::Base64Encoder b64(ss);
-        b64.write(getBytes(length).data(), length);
-        return ss.str().substr(0, length);
-    }
-
-    std::string getFilename(const size_t length)
-    {
-        std::string s = getB64String(length);
-        std::replace(s.begin(), s.end(), '/', '_');
-        return s.substr(0, length);
-    }
-}
-}
-
-namespace Util
-{
     std::string encodeId(const unsigned number, const int padding)
     {
         std::ostringstream oss;
@@ -128,10 +125,6 @@ namespace Util
         return std::getenv("DISPLAY") != nullptr;
     }
 
-} // namespace Util
-
-namespace Util
-{
     int getMemoryUsage(const Poco::Process::PID pid)
     {
         try
