@@ -491,7 +491,7 @@ void insertUserNames(const std::map<int, UserInfo>& viewInfo, std::string& json)
 bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
 {
     bool success;
-    char* pValues;
+    char* values;
     std::string command;
     if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
     {
@@ -505,25 +505,25 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
 
     if (command == ".uno:DocumentRepair")
     {
-        char* pUndo;
+        char* undo;
         const std::string jsonTemplate("{\"commandName\":\".uno:DocumentRepair\",\"Redo\":%s,\"Undo\":%s}");
-        pValues = getLOKitDocument()->getCommandValues(".uno:Redo");
-        pUndo = getLOKitDocument()->getCommandValues(".uno:Undo");
+        values = getLOKitDocument()->getCommandValues(".uno:Redo");
+        undo = getLOKitDocument()->getCommandValues(".uno:Undo");
         std::string json = Poco::format(jsonTemplate,
-                                        std::string(pValues == nullptr ? "" : pValues),
-                                        std::string(pUndo == nullptr ? "" : pUndo));
+                                        std::string(values == nullptr ? "" : values),
+                                        std::string(undo == nullptr ? "" : undo));
         // json only contains view IDs, insert matching user names.
         std::map<int, UserInfo> viewInfo = _docManager.getViewInfo();
         insertUserNames(viewInfo, json);
         success = sendTextFrame("commandvalues: " + json);
-        std::free(pValues);
-        std::free(pUndo);
+        std::free(values);
+        std::free(undo);
     }
     else
     {
-        pValues = getLOKitDocument()->getCommandValues(command.c_str());
-        success = sendTextFrame("commandvalues: " + std::string(pValues == nullptr ? "" : pValues));
-        std::free(pValues);
+        values = getLOKitDocument()->getCommandValues(command.c_str());
+        success = sendTextFrame("commandvalues: " + std::string(values == nullptr ? "" : values));
+        std::free(values);
     }
 
     return success;
@@ -985,40 +985,40 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokeniz
 /* If the user is inactive we have to remember important events so that when
  * the user becomes active again, we can replay the events.
  */
-void ChildSession::rememberEventsForInactiveUser(const int nType, const std::string& rPayload)
+void ChildSession::rememberEventsForInactiveUser(const int type, const std::string& payload)
 {
-    if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
-        nType == LOK_CALLBACK_CURSOR_VISIBLE ||
-        nType == LOK_CALLBACK_TEXT_SELECTION ||
-        nType == LOK_CALLBACK_TEXT_SELECTION_START ||
-        nType == LOK_CALLBACK_TEXT_SELECTION_END ||
-        nType == LOK_CALLBACK_CELL_FORMULA ||
-        nType == LOK_CALLBACK_CELL_CURSOR ||
-        nType == LOK_CALLBACK_GRAPHIC_SELECTION ||
-        nType == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED)
+    if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+        type == LOK_CALLBACK_CURSOR_VISIBLE ||
+        type == LOK_CALLBACK_TEXT_SELECTION ||
+        type == LOK_CALLBACK_TEXT_SELECTION_START ||
+        type == LOK_CALLBACK_TEXT_SELECTION_END ||
+        type == LOK_CALLBACK_CELL_FORMULA ||
+        type == LOK_CALLBACK_CELL_CURSOR ||
+        type == LOK_CALLBACK_GRAPHIC_SELECTION ||
+        type == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED)
     {
         auto lock(getLock());
-        _stateRecorder.recordEvent(nType, rPayload);
+        _stateRecorder.recordEvent(type, payload);
     }
-    else if (nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
-        nType == LOK_CALLBACK_TEXT_VIEW_SELECTION ||
-        nType == LOK_CALLBACK_CELL_VIEW_CURSOR ||
-        nType == LOK_CALLBACK_GRAPHIC_VIEW_SELECTION ||
-        nType == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
-        nType == LOK_CALLBACK_VIEW_LOCK)
+    else if (type == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
+             type == LOK_CALLBACK_TEXT_VIEW_SELECTION ||
+             type == LOK_CALLBACK_CELL_VIEW_CURSOR ||
+             type == LOK_CALLBACK_GRAPHIC_VIEW_SELECTION ||
+             type == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
+             type == LOK_CALLBACK_VIEW_LOCK)
     {
         auto lock(getLock());
         Poco::JSON::Parser parser;
 
-        auto root = parser.parse(rPayload).extract<Poco::JSON::Object::Ptr>();
+        auto root = parser.parse(payload).extract<Poco::JSON::Object::Ptr>();
         int viewId = root->getValue<int>("viewId");
-        _stateRecorder.recordViewEvent(viewId, nType, rPayload);
+        _stateRecorder.recordViewEvent(viewId, type, payload);
     }
-    else if (nType == LOK_CALLBACK_STATE_CHANGED)
+    else if (type == LOK_CALLBACK_STATE_CHANGED)
     {
         std::string name;
         std::string value;
-        if (LOOLProtocol::parseNameValuePair(rPayload, name, value, '='))
+        if (LOOLProtocol::parseNameValuePair(payload, name, value, '='))
         {
             auto lock(getLock());
             _stateRecorder.recordState(name, value);
@@ -1026,11 +1026,11 @@ void ChildSession::rememberEventsForInactiveUser(const int nType, const std::str
     }
 }
 
-void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
+void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
-    const auto typeName = LOKitHelper::kitCallbackTypeToString(nType);
+    const auto typeName = LOKitHelper::kitCallbackTypeToString(type);
     LOG_TRC("CallbackWorker::callback [" << getName() << "]: " <<
-            typeName << " [" << rPayload << "].");
+            typeName << " [" << payload << "].");
 
     if (isCloseFrame())
     {
@@ -1044,21 +1044,21 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
     }
     else if (!isActive())
     {
-        rememberEventsForInactiveUser(nType, rPayload);
+        rememberEventsForInactiveUser(type, payload);
 
         // Pass save notifications through.
-        if (nType != LOK_CALLBACK_UNO_COMMAND_RESULT || rPayload.find(".uno:Save") == std::string::npos)
+        if (type != LOK_CALLBACK_UNO_COMMAND_RESULT || payload.find(".uno:Save") == std::string::npos)
         {
             LOG_TRC("Skipping callback [" << typeName << "] on inactive session " << getName());
             return;
         }
     }
 
-    switch (nType)
+    switch (type)
     {
     case LOK_CALLBACK_INVALIDATE_TILES:
         {
-            StringTokenizer tokens(rPayload, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            StringTokenizer tokens(payload, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens.count() == 5)
             {
                 int part, x, y, width, height;
@@ -1095,48 +1095,48 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
             }
             else
             {
-                sendTextFrame("invalidatetiles: " + rPayload);
+                sendTextFrame("invalidatetiles: " + payload);
             }
         }
         break;
     case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
-        sendTextFrame("invalidatecursor: " + rPayload);
+        sendTextFrame("invalidatecursor: " + payload);
         break;
     case LOK_CALLBACK_TEXT_SELECTION:
-        sendTextFrame("textselection: " + rPayload);
+        sendTextFrame("textselection: " + payload);
         break;
     case LOK_CALLBACK_TEXT_SELECTION_START:
-        sendTextFrame("textselectionstart: " + rPayload);
+        sendTextFrame("textselectionstart: " + payload);
         break;
     case LOK_CALLBACK_TEXT_SELECTION_END:
-        sendTextFrame("textselectionend: " + rPayload);
+        sendTextFrame("textselectionend: " + payload);
         break;
     case LOK_CALLBACK_CURSOR_VISIBLE:
-        sendTextFrame("cursorvisible: " + rPayload);
+        sendTextFrame("cursorvisible: " + payload);
         break;
     case LOK_CALLBACK_GRAPHIC_SELECTION:
-        sendTextFrame("graphicselection: " + rPayload);
+        sendTextFrame("graphicselection: " + payload);
         break;
     case LOK_CALLBACK_CELL_CURSOR:
-        sendTextFrame("cellcursor: " + rPayload);
+        sendTextFrame("cellcursor: " + payload);
         break;
     case LOK_CALLBACK_CELL_FORMULA:
-        sendTextFrame("cellformula: " + rPayload);
+        sendTextFrame("cellformula: " + payload);
         break;
     case LOK_CALLBACK_MOUSE_POINTER:
-        sendTextFrame("mousepointer: " + rPayload);
+        sendTextFrame("mousepointer: " + payload);
         break;
     case LOK_CALLBACK_HYPERLINK_CLICKED:
-        sendTextFrame("hyperlinkclicked: " + rPayload);
+        sendTextFrame("hyperlinkclicked: " + payload);
         break;
     case LOK_CALLBACK_STATE_CHANGED:
-        sendTextFrame("statechanged: " + rPayload);
+        sendTextFrame("statechanged: " + payload);
         break;
     case LOK_CALLBACK_SEARCH_NOT_FOUND:
-        sendTextFrame("searchnotfound: " + rPayload);
+        sendTextFrame("searchnotfound: " + payload);
         break;
     case LOK_CALLBACK_SEARCH_RESULT_SELECTION:
-        sendTextFrame("searchresultselection: " + rPayload);
+        sendTextFrame("searchresultselection: " + payload);
         break;
     case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
         {
@@ -1161,16 +1161,16 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
         }
         break;
     case LOK_CALLBACK_SET_PART:
-        sendTextFrame("setpart: " + rPayload);
+        sendTextFrame("setpart: " + payload);
         break;
     case LOK_CALLBACK_UNO_COMMAND_RESULT:
-        sendTextFrame("unocommandresult: " + rPayload);
+        sendTextFrame("unocommandresult: " + payload);
         break;
     case LOK_CALLBACK_ERROR:
         {
-            LOG_ERR("CALLBACK_ERROR: " << rPayload);
+            LOG_ERR("CALLBACK_ERROR: " << payload);
             Parser parser;
-            Poco::Dynamic::Var var = parser.parse(rPayload);
+            Poco::Dynamic::Var var = parser.parse(payload);
             Object::Ptr object = var.extract<Object::Ptr>();
 
             sendTextFrame("error: cmd=" + object->get("cmd").toString() +
@@ -1178,43 +1178,43 @@ void ChildSession::loKitCallback(const int nType, const std::string& rPayload)
         }
         break;
     case LOK_CALLBACK_CONTEXT_MENU:
-        sendTextFrame("contextmenu: " + rPayload);
+        sendTextFrame("contextmenu: " + payload);
         break;
     case LOK_CALLBACK_STATUS_INDICATOR_START:
         sendTextFrame("statusindicatorstart:");
         break;
     case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
-        sendTextFrame("statusindicatorsetvalue: " + rPayload);
+        sendTextFrame("statusindicatorsetvalue: " + payload);
         break;
     case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
         sendTextFrame("statusindicatorfinish:");
         break;
     case LOK_CALLBACK_INVALIDATE_VIEW_CURSOR:
-        sendTextFrame("invalidateviewcursor: " + rPayload);
+        sendTextFrame("invalidateviewcursor: " + payload);
         break;
     case LOK_CALLBACK_TEXT_VIEW_SELECTION:
-        sendTextFrame("textviewselection: " + rPayload);
+        sendTextFrame("textviewselection: " + payload);
         break;
     case LOK_CALLBACK_CELL_VIEW_CURSOR:
-        sendTextFrame("cellviewcursor: " + rPayload);
+        sendTextFrame("cellviewcursor: " + payload);
         break;
     case LOK_CALLBACK_GRAPHIC_VIEW_SELECTION:
-        sendTextFrame("graphicviewselection: " + rPayload);
+        sendTextFrame("graphicviewselection: " + payload);
         break;
     case LOK_CALLBACK_VIEW_CURSOR_VISIBLE:
-        sendTextFrame("viewcursorvisible: " + rPayload);
+        sendTextFrame("viewcursorvisible: " + payload);
         break;
     case LOK_CALLBACK_VIEW_LOCK:
-        sendTextFrame("viewlock: " + rPayload);
+        sendTextFrame("viewlock: " + payload);
         break;
     case LOK_CALLBACK_REDLINE_TABLE_SIZE_CHANGED:
-        sendTextFrame("redlinetablechanged: " + rPayload);
+        sendTextFrame("redlinetablechanged: " + payload);
         break;
     case LOK_CALLBACK_REDLINE_TABLE_ENTRY_MODIFIED:
-        sendTextFrame("redlinetablemodified: " + rPayload);
+        sendTextFrame("redlinetablemodified: " + payload);
         break;
     default:
-        LOG_ERR("Unknown callback event (" << nType << "): " << rPayload);
+        LOG_ERR("Unknown callback event (" << type << "): " << payload);
     }
 }
 

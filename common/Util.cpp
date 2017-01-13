@@ -132,12 +132,12 @@ namespace Util
 
 namespace Util
 {
-    int getMemoryUsage(const Poco::Process::PID nPid)
+    int getMemoryUsage(const Poco::Process::PID pid)
     {
         try
         {
             //TODO: Instead of RSS, return PSS
-            const auto cmd = "ps o rss= -p " + std::to_string(nPid);
+            const auto cmd = "ps o rss= -p " + std::to_string(pid);
             FILE* fp = popen(cmd.c_str(), "r");
             if (fp == nullptr)
             {
@@ -156,7 +156,7 @@ namespace Util
         }
         catch (const std::exception&)
         {
-            LOG_WRN("Trying to find memory of invalid/dead PID " << nPid);
+            LOG_WRN("Trying to find memory of invalid/dead PID " << pid);
         }
 
         return -1;

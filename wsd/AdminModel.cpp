@@ -147,27 +147,27 @@ unsigned AdminModel::getTotalMemoryUsage()
     return totalMem;
 }
 
-void AdminModel::subscribe(int nSessionId, std::shared_ptr<LOOLWebSocket>& ws)
+void AdminModel::subscribe(int sessionId, std::shared_ptr<LOOLWebSocket>& ws)
 {
-    const auto ret = _subscribers.emplace(nSessionId, Subscriber(nSessionId, ws));
+    const auto ret = _subscribers.emplace(sessionId, Subscriber(sessionId, ws));
     if (!ret.second)
     {
         Log::warn() << "Subscriber already exists" << Log::end;
     }
 }
 
-void AdminModel::subscribe(int nSessionId, const std::string& command)
+void AdminModel::subscribe(int sessionId, const std::string& command)
 {
-    auto subscriber = _subscribers.find(nSessionId);
+    auto subscriber = _subscribers.find(sessionId);
     if (subscriber != _subscribers.end())
     {
         subscriber->second.subscribe(command);
     }
 }
 
-void AdminModel::unsubscribe(int nSessionId, const std::string& command)
+void AdminModel::unsubscribe(int sessionId, const std::string& command)
 {
-    auto subscriber = _subscribers.find(nSessionId);
+    auto subscriber = _subscribers.find(sessionId);
     if (subscriber != _subscribers.end())
     {
         subscriber->second.unsubscribe(command);
@@ -326,16 +326,16 @@ std::string AdminModel::getCpuStats()
 
 unsigned AdminModel::getTotalActiveViews()
 {
-    unsigned nTotalViews = 0;
+    unsigned numTotalViews = 0;
     for (const auto& it: _documents)
     {
         if (!it.second.isExpired())
         {
-            nTotalViews += it.second.getActiveViews();
+            numTotalViews += it.second.getActiveViews();
         }
     }
 
-    return nTotalViews;
+    return numTotalViews;
 }
 
 std::string AdminModel::getDocuments() const

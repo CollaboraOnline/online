@@ -43,10 +43,10 @@ namespace LOKitHelper
         return documentTypeToString(type);
     }
 
-    inline std::string kitCallbackTypeToString(const int nType)
+    inline std::string kitCallbackTypeToString(const int type)
     {
         // Keep in the same order as in LibreOfficeKitEnums.h
-        switch (nType)
+        switch (type)
         {
         case LOK_CALLBACK_INVALIDATE_TILES:
             return "INVALIDATE_TILES";
@@ -110,7 +110,7 @@ namespace LOKitHelper
             return "VIEW_LOCK";
         }
 
-        return std::to_string(nType);
+        return std::to_string(type);
     }
 
     inline std::string documentStatus(LibreOfficeKitDocument *loKitDocument)

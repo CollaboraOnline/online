@@ -62,11 +62,11 @@ public:
         return LOOLWSD::SSLTermination.get();
     }
 
-    static void dumpEventTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
+    static void dumpEventTrace(const std::string& id, const std::string& sessionId, const std::string& data);
 
-    static void dumpIncomingTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
+    static void dumpIncomingTrace(const std::string& id, const std::string& sessionId, const std::string& data);
 
-    static void dumpOutgoingTrace(const std::string& pId, const std::string& sessionId, const std::string& data);
+    static void dumpOutgoingTrace(const std::string& id, const std::string& sessionId, const std::string& data);
 
 protected:
     void initialize(Poco::Util::Application& self) override;

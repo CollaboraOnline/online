@@ -159,7 +159,7 @@ public:
     virtual bool createStorage(const Poco::URI& /* uri */,
                                const std::string& /* jailRoot */,
                                const std::string& /* jailPath */,
-                               std::unique_ptr<StorageBase>& /*rStorage */)
+                               std::unique_ptr<StorageBase>& /* storage */)
     {
         return false;
     }

@@ -19,7 +19,7 @@ void lokit_main(const std::string& childRoot,
 
 bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
-void documentViewCallback(const int nType, const char* pPayload, void* pData);
+void documentViewCallback(const int type, const char* p, void* data);
 
 class IDocumentManager;
 

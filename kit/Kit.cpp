@@ -95,7 +95,7 @@ using namespace LOOLProtocol;
 // We only host a single document in our lifetime.
 class Document;
 static std::shared_ptr<Document> document;
-static LokHookFunction2* pInit = nullptr;
+static LokHookFunction2* initFunction = nullptr;
 
 namespace
 {
@@ -543,7 +543,7 @@ public:
     }
 
     /// Set Document password for given URL
-    void setDocumentPassword(int nPasswordType)
+    void setDocumentPassword(int passwordType)
     {
         LOG_INF("setDocumentPassword: passwordProtected=" << _isDocPasswordProtected <<
                 " passwordProvided=" << _haveDocPassword <<
@@ -560,9 +560,9 @@ public:
 
         // One thing for sure, this is a password protected document
         _isDocPasswordProtected = true;
-        if (nPasswordType == LOK_CALLBACK_DOCUMENT_PASSWORD)
+        if (passwordType == LOK_CALLBACK_DOCUMENT_PASSWORD)
             _docPasswordType = PasswordType::ToView;
-        else if (nPasswordType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY)
+        else if (passwordType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY)
             _docPasswordType = PasswordType::ToModify;
 
         LOG_INF("Calling _loKit->setDocumentPassword");
@@ -779,50 +779,50 @@ public:
         return false;
     }
 
-    static void GlobalCallback(const int nType, const char* pPayload, void* pData)
+    static void GlobalCallback(const int type, const char* p, void* data)
     {
         if (TerminationFlag)
         {
             return;
         }
 
-        const std::string payload = pPayload ? pPayload : "(nil)";
-        LOG_TRC("Document::GlobalCallback " << LOKitHelper::kitCallbackTypeToString(nType) <<
+        const std::string payload = p ? p : "(nil)";
+        LOG_TRC("Document::GlobalCallback " << LOKitHelper::kitCallbackTypeToString(type) <<
                 " [" << payload << "].");
-        Document* self = static_cast<Document*>(pData);
-        if (nType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY ||
-            nType == LOK_CALLBACK_DOCUMENT_PASSWORD)
+        Document* self = static_cast<Document*>(data);
+        if (type == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY ||
+            type == LOK_CALLBACK_DOCUMENT_PASSWORD)
         {
             // Mark the document password type.
-            self->setDocumentPassword(nType);
+            self->setDocumentPassword(type);
             return;
         }
 
         // Broadcast leftover status indicator callbacks to all clients
-        self->broadcastCallbackToClients(nType, payload);
+        self->broadcastCallbackToClients(type, payload);
     }
 
-    static void ViewCallback(const int nType, const char* pPayload, void* pData)
+    static void ViewCallback(const int type, const char* p, void* data)
     {
         if (TerminationFlag)
         {
             return;
         }
 
-        CallbackDescriptor* pDescr = static_cast<CallbackDescriptor*>(pData);
-        assert(pDescr && "Null callback data.");
-        assert(pDescr->Doc && "Null Document instance.");
+        CallbackDescriptor* descriptor = static_cast<CallbackDescriptor*>(data);
+        assert(descriptor && "Null callback data.");
+        assert(descriptor->Doc && "Null Document instance.");
 
-        auto tileQueue = pDescr->Doc->getTileQueue();
+        auto tileQueue = descriptor->Doc->getTileQueue();
         assert(tileQueue && "Null TileQueue.");
 
-        const std::string payload = pPayload ? pPayload : "(nil)";
-        LOG_TRC("Document::ViewCallback [" << pDescr->ViewId <<
-                "] [" << LOKitHelper::kitCallbackTypeToString(nType) <<
+        const std::string payload = p ? p : "(nil)";
+        LOG_TRC("Document::ViewCallback [" << descriptor->ViewId <<
+                "] [" << LOKitHelper::kitCallbackTypeToString(type) <<
                 "] [" << payload << "].");
 
-        if (nType == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
-            nType == LOK_CALLBACK_CELL_CURSOR)
+        if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+            type == LOK_CALLBACK_CELL_CURSOR)
         {
             Poco::StringTokenizer tokens(payload, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             // Payload may be 'EMPTY'.
@@ -836,8 +836,8 @@ public:
                 tileQueue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
             }
         }
-        else if (nType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
-                 nType == LOK_CALLBACK_CELL_VIEW_CURSOR)
+        else if (type == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
+                 type == LOK_CALLBACK_CELL_VIEW_CURSOR)
         {
             Poco::JSON::Parser parser;
             const auto result = parser.parse(payload);
@@ -858,16 +858,16 @@ public:
             }
         }
 
-        tileQueue->put("callback " + std::to_string(pDescr->ViewId) + ' ' + std::to_string(nType) + ' ' + payload);
+        tileQueue->put("callback " + std::to_string(descriptor->ViewId) + ' ' + std::to_string(type) + ' ' + payload);
     }
 
 private:
 
     /// Helper method to broadcast callback and its payload to all clients
-    void broadcastCallbackToClients(const int nType, const std::string& payload)
+    void broadcastCallbackToClients(const int type, const std::string& payload)
     {
         // "-1" means broadcast
-        _tileQueue->put("callback -1 " + std::to_string(nType) + ' ' + payload);
+        _tileQueue->put("callback -1 " + std::to_string(type) + ' ' + payload);
     }
 
     /// Load a document (or view) and register callbacks.
@@ -1058,9 +1058,9 @@ private:
         {
             std::unique_lock<std::mutex> lock(_documentMutex);
 
-            char* pValues = _loKitDocument->getCommandValues(".uno:TrackedChangeAuthors");
-            colorValues = std::string(pValues == nullptr ? "" : pValues);
-            std::free(pValues);
+            char* values = _loKitDocument->getCommandValues(".uno:TrackedChangeAuthors");
+            colorValues = std::string(values == nullptr ? "" : values);
+            std::free(values);
         }
 
         try
@@ -1455,9 +1455,9 @@ private:
     Poco::Thread _callbackThread;
 };
 
-void documentViewCallback(const int nType, const char* pPayload, void* pData)
+void documentViewCallback(const int type, const char* payload, void* data)
 {
-    Document::ViewCallback(nType, pPayload, pData);
+    Document::ViewCallback(type, payload, data);
 }
 
 #ifndef BUILDING_TESTS
@@ -1619,7 +1619,7 @@ void lokit_main(const std::string& childRoot,
             auto kit = UnitKit::get().lok_init(instdir, userdir);
             if (!kit)
             {
-                kit = (pInit ? pInit(instdir, userdir) : lok_init_2(instdir, userdir));
+                kit = (initFunction ? initFunction(instdir, userdir) : lok_init_2(instdir, userdir));
             }
 
             loKit = std::make_shared<lok::Office>(kit);
@@ -1817,8 +1817,8 @@ bool globalPreinit(const std::string &loTemplate)
         return false;
     }
 
-    pInit = reinterpret_cast<LokHookFunction2 *>(dlsym(handle, "libreofficekit_hook_2"));
-    if (!pInit)
+    initFunction = reinterpret_cast<LokHookFunction2 *>(dlsym(handle, "libreofficekit_hook_2"));
+    if (!initFunction)
     {
         LOG_FTL("No libreofficekit_hook_2 symbol in " << loadedLibrary << ": " << dlerror());
     }

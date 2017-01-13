@@ -72,31 +72,31 @@ public:
         _stream.close();
     }
 
-    void writeEvent(const std::string& pId, const std::string& sessionId, const std::string& data)
+    void writeEvent(const std::string& id, const std::string& sessionId, const std::string& data)
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        writeLocked(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Event));
+        writeLocked(id, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Event));
         flushLocked();
     }
 
-    void writeIncoming(const std::string& pId, const std::string& sessionId, const std::string& data)
+    void writeIncoming(const std::string& id, const std::string& sessionId, const std::string& data)
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
         if (_filter.match(data))
         {
-            writeLocked(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Incoming));
+            writeLocked(id, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Incoming));
         }
     }
 
-    void writeOutgoing(const std::string& pId, const std::string& sessionId, const std::string& data)
+    void writeOutgoing(const std::string& id, const std::string& sessionId, const std::string& data)
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
         if (_recordOutgoing && _filter.match(data))
         {
-            writeLocked(pId, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Outgoing));
+            writeLocked(id, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Outgoing));
         }
     }
 
@@ -109,7 +109,7 @@ private:
         _stream.flush();
     }
 
-    void writeLocked(const std::string& pId, const std::string& sessionId, const std::string& data, const char delim)
+    void writeLocked(const std::string& id, const std::string& sessionId, const std::string& data, const char delim)
     {
         Util::assertIsLocked(_mutex);
 
@@ -119,7 +119,7 @@ private:
             _deflater.write(&delim, 1);
             _deflater << usec;
             _deflater.write(&delim, 1);
-            _deflater << pId;
+            _deflater << id;
             _deflater.write(&delim, 1);
             _deflater << sessionId;
             _deflater.write(&delim, 1);
@@ -131,7 +131,7 @@ private:
             _stream.write(&delim, 1);
             _stream << usec;
             _stream.write(&delim, 1);
-            _stream << pId;
+            _stream << id;
             _stream.write(&delim, 1);
             _stream << sessionId;
             _stream.write(&delim, 1);

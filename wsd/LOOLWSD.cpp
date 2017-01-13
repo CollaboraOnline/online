@@ -1699,8 +1699,8 @@ void LOOLWSD::initialize(Application& self)
             { "trace[@enable]", "false" } };
 
     // Set default values, in case they are missing from the config file.
-    AutoPtr<AppConfigMap> pDefConfig(new AppConfigMap(DefAppConfig));
-    conf.addWriteable(pDefConfig, PRIO_SYSTEM); // Lowest priority
+    AutoPtr<AppConfigMap> defConfig(new AppConfigMap(DefAppConfig));
+    conf.addWriteable(defConfig, PRIO_SYSTEM); // Lowest priority
 
     // Load default configuration files, if present.
     if (loadConfiguration(PRIO_DEFAULT) == 0)
@@ -1711,8 +1711,8 @@ void LOOLWSD::initialize(Application& self)
     }
 
     // Override any settings passed on the command-line.
-    AutoPtr<AppConfigMap> pOverrideConfig(new AppConfigMap(_overrideSettings));
-    conf.addWriteable(pOverrideConfig, PRIO_APPLICATION); // Highest priority
+    AutoPtr<AppConfigMap> overrideConfig(new AppConfigMap(_overrideSettings));
+    conf.addWriteable(overrideConfig, PRIO_APPLICATION); // Highest priority
 
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(config());
@@ -1887,27 +1887,27 @@ void LOOLWSD::initializeSSL()
     Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
 }
 
-void LOOLWSD::dumpEventTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
+void LOOLWSD::dumpEventTrace(const std::string& id, const std::string& sessionId, const std::string& data)
 {
     if (TraceDumper)
     {
-        TraceDumper->writeEvent(pId, sessionId, data);
+        TraceDumper->writeEvent(id, sessionId, data);
     }
 }
 
-void LOOLWSD::dumpIncomingTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
+void LOOLWSD::dumpIncomingTrace(const std::string& id, const std::string& sessionId, const std::string& data)
 {
     if (TraceDumper)
     {
-        TraceDumper->writeIncoming(pId, sessionId, data);
+        TraceDumper->writeIncoming(id, sessionId, data);
     }
 }
 
-void LOOLWSD::dumpOutgoingTrace(const std::string& pId, const std::string& sessionId, const std::string& data)
+void LOOLWSD::dumpOutgoingTrace(const std::string& id, const std::string& sessionId, const std::string& data)
 {
     if (TraceDumper)
     {
-        TraceDumper->writeOutgoing(pId, sessionId, data);
+        TraceDumper->writeOutgoing(id, sessionId, data);
     }
 }
 

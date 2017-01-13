@@ -54,12 +54,12 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
         LOG_ERR("No " << symbol << " symbol in " << unitLibPath);
         return nullptr;
     }
-    UnitBase *pHooks = createHooks();
+    UnitBase *hooks = createHooks();
 
-    if (pHooks)
-        pHooks->setHandle(dlHandle);
+    if (hooks)
+        hooks->setHandle(dlHandle);
 
-    return pHooks;
+    return hooks;
 }
 
 bool UnitBase::init(UnitType type, const std::string &unitLibPath)

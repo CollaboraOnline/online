@@ -118,7 +118,7 @@ public:
     const std::string& getViewUserId() const { return _userId; }
     const std::string& getViewUserName() const { return _userName; }
 
-    void loKitCallback(const int nType, const std::string& rPayload);
+    void loKitCallback(const int type, const std::string& payload);
 
     bool sendTextFrame(const char* buffer, const int length) override
     {
@@ -154,7 +154,7 @@ private:
     bool setClientPart(const char* buffer, int length, Poco::StringTokenizer& tokens);
     bool setPage(const char* buffer, int length, Poco::StringTokenizer& tokens);
 
-    void rememberEventsForInactiveUser(const int nType, const std::string& rPayload);
+    void rememberEventsForInactiveUser(const int type, const std::string& payload);
 
     virtual void disconnect() override;
     virtual bool _handleInput(const char* buffer, int length) override;

@@ -36,10 +36,10 @@ using Poco::Util::Application;
 
 extern "C"
 {
-    static void myCallback(int nType, const char* pPayload, void*)
+    static void myCallback(int type, const char* payload, void*)
     {
         std::cout << "Callback: ";
-        switch ((LibreOfficeKitCallbackType) nType)
+        switch ((LibreOfficeKitCallbackType) type)
         {
 #define CASE(x) case LOK_CALLBACK_##x: std::cout << #x; break
             CASE(INVALIDATE_TILES);
@@ -76,7 +76,7 @@ extern "C"
             CASE(REDLINE_TABLE_ENTRY_MODIFIED);
 #undef CASE
         }
-        std::cout << " payload: " << pPayload << std::endl;
+        std::cout << " payload: " << payload << std::endl;
     }
 }
 

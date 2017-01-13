@@ -82,7 +82,7 @@ namespace Util
         assert(!mtx.try_lock());
     }
 
-    int getMemoryUsage(const Poco::Process::PID nPid);
+    int getMemoryUsage(const Poco::Process::PID pid);
 
     std::string replace(const std::string& s, const std::string& a, const std::string& b);
 

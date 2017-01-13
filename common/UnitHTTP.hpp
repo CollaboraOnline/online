@@ -45,7 +45,7 @@ public:
     }
     virtual void sendFile(const std::string& /* path */,
                           const std::string& /* mediaType */) override {}
-    virtual void sendBuffer(const void* /* pBuffer */,
+    virtual void sendBuffer(const void* /* buffer */,
                             std::size_t /* length */) override {}
     virtual void redirect(const std::string& /* uri */,
                           HTTPStatus /* status = HTTP_FOUND */) override {}

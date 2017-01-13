@@ -181,10 +181,10 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
         hash.Update(pixmap + position, width * 4);
     }
 
-    uint64_t nHash1;
-    uint64_t nHash2;
-    hash.Final(&nHash1, &nHash2);
-    return nHash1;
+    uint64_t hash1;
+    uint64_t hash2;
+    hash.Final(&hash1, &hash2);
+    return hash1;
 }
 
 static
