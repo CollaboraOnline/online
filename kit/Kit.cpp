@@ -608,7 +608,7 @@ public:
             return;
         }
 
-        LOG_TRC("+paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() <<
+        LOG_TRC("paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() <<
                 ") " << "ver: " << tile.getVersion());
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tile.getPart(),
@@ -689,7 +689,7 @@ public:
             return;
         }
 
-        LOG_DBG("+paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
+        LOG_DBG("paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
                 renderArea.getWidth() << ", " << renderArea.getHeight() << ").");
         Timestamp timestamp;
         _loKitDocument->paintPartTile(pixmap.data(), tileCombined.getPart(),
