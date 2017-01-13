@@ -1838,7 +1838,7 @@ void LOOLWSD::initialize(Application& self)
 
     std::string adminURI = getAdminURI(config());
     if (!adminURI.empty())
-        std::cerr << "\nOr for the Admin Console see:: \n\n"
+        std::cerr << "\nOr for the Admin Console:\n\n"
                   << adminURI << '\n' << std::endl;
 #endif
 }
