@@ -78,9 +78,6 @@ namespace LOOLProtocol
     bool getTokenStringFromMessage(const std::string& message, const std::string& name, std::string& value);
     bool getTokenKeywordFromMessage(const std::string& message, const std::string& name, const std::map<std::string, int>& map, int& value);
 
-    // Functions that parse messages. All return false if parsing fails
-    bool parseStatus(const std::string& message, LibreOfficeKitDocumentType& type, int& nParts, int& currentPart, int& width, int& height);
-
     /// Tokenize space-delimited values until we hit new-line or the end.
     inline
     std::vector<std::string> tokenize(const char* data, const size_t size)
