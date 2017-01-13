@@ -1475,7 +1475,7 @@ public:
 namespace
 {
 
-inline ServerSocket* getServerSocket(int nPortNumber, bool reuseDetails)
+inline ServerSocket* getServerSocket(int portNumber, bool reuseDetails)
 {
     try
     {
@@ -1491,8 +1491,8 @@ inline ServerSocket* getServerSocket(int nPortNumber, bool reuseDetails)
         {
             try
             {
-                LOG_INF("Trying first to connect to an existing loolwsd at the same port " << nPortNumber);
-                StreamSocket s(SocketAddress(("127.0.0.1:" + std::to_string(nPortNumber)).c_str()));
+                LOG_INF("Trying first to connect to an existing loolwsd at the same port " << portNumber);
+                StreamSocket s(SocketAddress(("127.0.0.1:" + std::to_string(portNumber)).c_str()));
                 LOG_FTL("Connection succeeded, so we can't continue");
                 return nullptr;
             }
@@ -1504,7 +1504,7 @@ inline ServerSocket* getServerSocket(int nPortNumber, bool reuseDetails)
 
         ServerSocket* socket = LOOLWSD::isSSLEnabled() ? new SecureServerSocket() : new ServerSocket();
         Poco::Net::IPAddress wildcardAddr;
-        SocketAddress address(wildcardAddr, nPortNumber);
+        SocketAddress address(wildcardAddr, portNumber);
         socket->bind(address, reuseDetails);
         // 64 is the default value for the backlog parameter in Poco
         // when creating a ServerSocket, so use it here, too.
@@ -1518,26 +1518,26 @@ inline ServerSocket* getServerSocket(int nPortNumber, bool reuseDetails)
     }
 }
 
-inline ServerSocket* findFreeServerPort(int& nClientPortNumber)
+inline ServerSocket* findFreeServerPort(int& portNumber)
 {
     ServerSocket* socket = nullptr;
     while (!socket)
     {
-        socket = getServerSocket(nClientPortNumber, false);
+        socket = getServerSocket(portNumber, false);
         if (!socket)
         {
-            nClientPortNumber++;
-            LOG_INF("client port busy - trying " << nClientPortNumber);
+            portNumber++;
+            LOG_INF("client port busy - trying " << portNumber);
         }
     }
     return socket;
 }
 
-inline ServerSocket* getMasterSocket(int nMasterPortNumber)
+inline ServerSocket* getMasterSocket(int portNumber)
 {
     try
     {
-        SocketAddress addr2("127.0.0.1", nMasterPortNumber);
+        SocketAddress addr2("127.0.0.1", portNumber);
         return new ServerSocket(addr2);
     }
     catch (const Exception& exc)
@@ -1547,16 +1547,16 @@ inline ServerSocket* getMasterSocket(int nMasterPortNumber)
     }
 }
 
-inline ServerSocket* findFreeMasterPort(int &nMasterPortNumber)
+inline ServerSocket* findFreeMasterPort(int &portNumber)
 {
     ServerSocket* socket = nullptr;
     while (!socket)
     {
-        socket = getServerSocket(nMasterPortNumber, false);
+        socket = getServerSocket(portNumber, false);
         if (!socket)
         {
-            nMasterPortNumber++;
-            LOG_INF("master port busy - trying " << nMasterPortNumber);
+            portNumber++;
+            LOG_INF("master port busy - trying " << portNumber);
         }
     }
     return socket;
