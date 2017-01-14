@@ -357,7 +357,7 @@ static bool cleanupChildren()
 /// Decides how many children need spawning and spanws.
 /// When force is true, no check of elapsed time since last request is done.
 /// Returns true only if at least one child was requested to spawn.
-static bool rebalanceChildren(int balance, const bool force)
+static bool rebalanceChildren(int balance)
 {
     Util::assertIsLocked(DocBrokersMutex);
     Util::assertIsLocked(NewChildrenMutex);
@@ -378,7 +378,7 @@ static bool rebalanceChildren(int balance, const bool force)
     balance -= available;
     balance -= OutstandingForks;
 
-    if (balance > 0 && (force || rebalance || OutstandingForks == 0))
+    if (balance > 0 && (rebalance || OutstandingForks == 0))
     {
         LOG_DBG("prespawnChildren: Have " << available << " spare " <<
                 (available == 1 ? "child" : "children") <<
@@ -398,18 +398,26 @@ static void preForkChildren()
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
     UnitWSD::get().preSpawnCount(numPreSpawn);
 
-    --numPreSpawn; // ForKit always spawns one child at startup.
-    rebalanceChildren(numPreSpawn, true); // Force on startup.
-
     // Wait until we have at least one child.
-    const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_MS);
+    const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_MS * 3);
     NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); });
+
+    // Now spawn more, as needed.
+    rebalanceChildren(numPreSpawn);
+
+    // Make sure we have at least one before moving forward.
+    if (!NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
+    {
+        const auto msg = "Failed to fork child processes.";
+        LOG_FTL(msg);
+        throw std::runtime_error(msg);
+    }
 }
 
 /// Proactively spawn children processes
 /// to load documents with alacrity.
 /// Returns true only if at least one child was requested to spawn.
-static bool prespawnChildren(const bool force)
+static bool prespawnChildren()
 {
     // First remove dead DocBrokers, if possible.
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
@@ -429,7 +437,7 @@ static bool prespawnChildren(const bool force)
     }
 
     const int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
-    return rebalanceChildren(numPreSpawn, force);
+    return rebalanceChildren(numPreSpawn);
 }
 
 static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
@@ -459,7 +467,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
         LOG_DBG("getNewChild: Rebalancing children.");
         int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
         ++numPreSpawn; // Replace the one we'll dispatch just now.
-        rebalanceChildren(numPreSpawn, false);
+        rebalanceChildren(numPreSpawn);
 
         const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_MS);
         if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
@@ -2302,7 +2310,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         else // pid == 0, no children have died
         {
             // Make sure we have sufficient reserves.
-            if (prespawnChildren(false))
+            if (prespawnChildren())
             {
                 // Nothing more to do this round.
             }
