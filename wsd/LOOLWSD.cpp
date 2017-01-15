@@ -393,10 +393,10 @@ static bool rebalanceChildren(int balance)
 }
 
 /// Called on startup only.
-static void preForkChildren()
+static void preForkChildren(std::unique_lock<std::mutex>& lock)
 {
-    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-    std::unique_lock<std::mutex> lock(NewChildrenMutex);
+    Util::assertIsLocked(DocBrokersMutex);
+    Util::assertIsLocked(lock);
 
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
     UnitWSD::get().preSpawnCount(numPreSpawn);
@@ -2102,6 +2102,10 @@ Process::PID LOOLWSD::createForKit()
         args.push_back("--nocaps");
     }
 
+    // If we're recovering forkit, don't allow processing new requests.
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+    std::unique_lock<std::mutex> newChildrenLock(NewChildrenMutex);
+
     LOG_INF("Launching forkit process: " << forKitPath << ' ' <<
             Poco::cat(std::string(" "), args.begin(), args.end()));
 
@@ -2120,7 +2124,7 @@ Process::PID LOOLWSD::createForKit()
     Admin::instance().setForKitPid(forkitPid);
 
     // Spawn some children, if necessary.
-    preForkChildren();
+    preForkChildren(newChildrenLock);
 
     return forkitPid;
 }
