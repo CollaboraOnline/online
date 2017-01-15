@@ -324,11 +324,12 @@ static bool forkChildren(const int number)
 
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
-
-        OutstandingForks += number;
-        IoUtil::writeToPipe(LOOLWSD::ForKitWritePipe, aMessage);
-        LastForkRequestTime = std::chrono::steady_clock::now();
-        return true;
+        if (IoUtil::writeToPipe(LOOLWSD::ForKitWritePipe, aMessage) > 0)
+        {
+            OutstandingForks += number;
+            LastForkRequestTime = std::chrono::steady_clock::now();
+            return true;
+        }
     }
 
     return false;
@@ -367,10 +368,12 @@ static bool rebalanceChildren(int balance)
 
     const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTime);
     const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-    if (durationMs >= CHILD_TIMEOUT_MS)
+    if (OutstandingForks > 0 && durationMs >= CHILD_TIMEOUT_MS)
     {
         // Children taking too long to spawn.
         // Forget we had requested any, and request anew.
+        LOG_WRN("ForKit not responsive for " << durationMs << " ms forking " <<
+                OutstandingForks << " children. Resetting.");
         OutstandingForks = 0;
     }
 
@@ -381,8 +384,8 @@ static bool rebalanceChildren(int balance)
     if (balance > 0 && (rebalance || OutstandingForks == 0))
     {
         LOG_DBG("prespawnChildren: Have " << available << " spare " <<
-                (available == 1 ? "child" : "children") <<
-                ", forking " << balance << " more.");
+                (available == 1 ? "child" : "children") << ", and " <<
+                OutstandingForks << " outstanding, forking " << balance << " more.");
         return forkChildren(balance);
     }
 
