@@ -176,7 +176,7 @@ static std::vector<std::shared_ptr<ChildProcess> > NewChildren;
 static std::mutex NewChildrenMutex;
 static std::condition_variable NewChildrenCV;
 static std::chrono::steady_clock::time_point LastForkRequestTime = std::chrono::steady_clock::now();
-static std::atomic<int> OutstandingForks(1); // Forkit always spawns 1.
+static std::atomic<int> OutstandingForks(0);
 static std::map<std::string, std::shared_ptr<DocumentBroker> > DocBrokers;
 static std::mutex DocBrokersMutex;
 
@@ -2105,6 +2105,10 @@ Process::PID LOOLWSD::createForKit()
     // If we're recovering forkit, don't allow processing new requests.
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
     std::unique_lock<std::mutex> newChildrenLock(NewChildrenMutex);
+
+
+    // ForKit always spawns one.
+    ++OutstandingForks;
 
     LOG_INF("Launching forkit process: " << forKitPath << ' ' <<
             Poco::cat(std::string(" "), args.begin(), args.end()));
