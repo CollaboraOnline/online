@@ -399,13 +399,16 @@ static void preForkChildren()
     UnitWSD::get().preSpawnCount(numPreSpawn);
 
     // Wait until we have at least one child.
-    const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_MS * 3);
+    const auto timeoutMs = CHILD_TIMEOUT_MS * 3;
+    const auto timeout = std::chrono::milliseconds(timeoutMs);
+    LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
     NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); });
 
     // Now spawn more, as needed.
     rebalanceChildren(numPreSpawn);
 
     // Make sure we have at least one before moving forward.
+    LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
     if (!NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
     {
         const auto msg = "Failed to fork child processes.";
@@ -469,6 +472,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
         ++numPreSpawn; // Replace the one we'll dispatch just now.
         rebalanceChildren(numPreSpawn);
 
+        LOG_TRC("Waiting for a new child for a max of " << CHILD_TIMEOUT_MS << " ms.");
         const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_MS);
         if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
         {
@@ -1021,7 +1025,7 @@ private:
         if (!child)
         {
             // Let the client know we can't serve now.
-            LOG_ERR("Failed to get new child. Service Unavailable.");
+            LOG_ERR("Failed to get new child.");
             return nullptr;
         }
 
@@ -1104,6 +1108,9 @@ private:
     {
         LOG_CHECK_RET(docBroker && "Null docBroker instance", );
 
+        const auto docKey = docBroker->getDocKey();
+        LOG_DBG("Removing docBroker [" << docKey << "]" << (id.empty() ? "" : (" and session [" + id + "].")));
+
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
         auto lock = docBroker->getLock();
 
@@ -1114,7 +1121,6 @@ private:
 
         if (docBroker->getSessionsCount() == 0 || !docBroker->isAlive())
         {
-            const auto docKey = docBroker->getDocKey();
             LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
             DocBrokers.erase(docKey);
             docBroker->terminateChild(lock);

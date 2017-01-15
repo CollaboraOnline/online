@@ -206,14 +206,16 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
 ssize_t writeToPipe(int pipe, const char* buffer, ssize_t size)
 {
     ssize_t count = 0;
-    while(true)
+    for (;;)
     {
         LOG_TRC("Writing to pipe. Data: [" << Util::formatLinesForLog(std::string(buffer, size)) << "].");
         const auto bytes = write(pipe, buffer + count, size - count);
         if (bytes < 0)
         {
             if (errno == EINTR || errno == EAGAIN)
+            {
                 continue;
+            }
 
             LOG_SYS("Failed to write to pipe. Data: [" << std::string(buffer, size) << "].");
             count = -1;
