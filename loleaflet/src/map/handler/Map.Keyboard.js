@@ -284,12 +284,28 @@ L.Map.Keyboard = L.Handler.extend({
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
 
+		if (e.type === 'compositionstart' || e.type === 'compositionupdate') {
+			this._isComposing = true; // we are starting composing with IME
+		}
+
 		if (e.type === 'compositionend') {
+			this._isComposing = false; // stop of composing with IME
+			// get the composited char codes
 			var compCharCodes = [];
 			for (var i = 0; i < e.originalEvent.data.length; i++) {
 				compCharCodes.push(e.originalEvent.data[i].charCodeAt());
 			}
+			// clear the input now - best to do this ASAP so the input
+			// is clear for the next word
+			this._map._textArea.value = '';
 		}
+
+		if (!this._isComposing && e.type === 'keyup') {
+			// not compositing and keyup, clear the input so it is ready
+			// for next word (or char only)
+			this._map._textArea.value = '';
+		}
+
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
 
 		if (this.modifier) {
@@ -338,15 +354,30 @@ L.Map.Keyboard = L.Handler.extend({
 				this._bufferedTextInputEvent = e;
 			}
 			else if (e.type === 'keyup') {
-				// Hack for making space work in chrome when IME is enabled
-				// Chrome doesn't fire compositionend event or keypress when
-				// IME is enabled *and* user presses <space>.
-				// However, it sends 'textInput' event in such a case.
-				// Use the buffered textInput event if its the space key and has not been
-				// handled already by 'keypress' or 'compositionend' events above
-				if (!this._keyHandled && this._bufferedTextInputEvent && e.originalEvent.key === this._bufferedTextInputEvent.originalEvent.data) {
+				// Hack for making space and spell-check text insert work
+				// in Chrome (on Andorid) or Chrome with IME.
+				//
+				// Chrome (Android) IME triggers keyup/keydown input with
+				// code 229 when hitting space (as with all composiiton events)
+				// with addition to 'textinput' event, in which we only see that
+				// space was entered. Similar situation is also when inserting
+				// a soft-keyboard spell-check item - it is visible only with
+				// 'textinput' event (no composition event is fired).
+				// To make this work we need to insert textinput.data here..
+				//
+				// TODO: Maybe make sure this is only triggered when keydown has
+				// 229 code. Also we need to detect that composition was overriden
+				// (part or whole word deleted) with the spell-checked word. (for
+				// example: enter 'tar' and with spell-check correct that to 'rat')
+
+				if (!this._keyHandled && this._bufferedTextInputEvent) {
+					var textInputData = this._bufferedTextInputEvent.originalEvent.data;
 					charCode = e.originalEvent.keyCode;
-					docLayer._postKeyboardEvent('input', charCode, 0);
+					var compCharCodes = [];
+					for (var i = 0; i < textInputData.length; i++) {
+						compCharCodes.push(textInputData[i].charCodeAt());
+					}
+					docLayer._postKeyboardEvents('input', compCharCodes, Array.apply(null, Array(compCharCodes.length)).map(Number.prototype.valueOf, 0));
 				}
 				docLayer._postKeyboardEvent('up', charCode, unoKeyCode);
 

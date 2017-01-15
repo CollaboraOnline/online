@@ -594,7 +594,10 @@ L.Map = L.Evented.extend({
 		}
 
 		var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', container.parentElement);
-		this._textArea = L.DomUtil.create('textarea', 'clipboard', textAreaContainer);
+		this._textArea = L.DomUtil.create('input', 'clipboard', textAreaContainer);
+		this._textArea.setAttribute('type', 'text');
+		this._textArea.setAttribute('autocorrect', 'off');
+		this._textArea.setAttribute('autocapitalize', 'off');
 		this._resizeDetector = L.DomUtil.create('iframe', 'resize-detector', container);
 		this._fileDownloader = L.DomUtil.create('iframe', '', container);
 		L.DomUtil.setStyle(this._fileDownloader, 'display', 'none');
