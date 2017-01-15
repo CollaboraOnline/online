@@ -389,7 +389,7 @@ static bool rebalanceChildren(int balance)
         return forkChildren(balance);
     }
 
-    return false;
+    return true;
 }
 
 /// Called on startup only.
@@ -473,7 +473,11 @@ static std::shared_ptr<ChildProcess> getNewChild()
         LOG_DBG("getNewChild: Rebalancing children.");
         int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
         ++numPreSpawn; // Replace the one we'll dispatch just now.
-        rebalanceChildren(numPreSpawn);
+        if (!rebalanceChildren(numPreSpawn))
+        {
+            // Fatal. Let's fail and retry at a higher level.
+            return nullptr;
+        }
 
         LOG_TRC("Waiting for a new child for a max of " << CHILD_TIMEOUT_MS << " ms.");
         const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_MS);
@@ -1673,7 +1677,7 @@ inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
 } // anonymous namespace
 
 std::atomic<unsigned> LOOLWSD::NextSessionId;
-int LOOLWSD::ForKitWritePipe = -1;
+std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
 bool LOOLWSD::NoCapsForKit = false;
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::SysTemplate;
@@ -2073,8 +2077,13 @@ void LOOLWSD::displayHelp()
 
 Process::PID LOOLWSD::createForKit()
 {
-    Process::Args args;
+    LOG_INF("Creating new forkit process.");
 
+    const int oldForKitWritePipe = ForKitWritePipe;
+    ForKitWritePipe = -1;
+    close(oldForKitWritePipe);
+
+    Process::Args args;
     args.push_back("--losubpath=" + std::string(LO_JAIL_SUBPATH));
     args.push_back("--systemplate=" + SysTemplate);
     args.push_back("--lotemplate=" + LoTemplate);
@@ -2271,7 +2280,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                     }
 
                     // Spawn a new forkit and try to dust it off and resume.
-                    close(ForKitWritePipe);
                     forKitPid = createForKit();
                     if (forKitPid < 0)
                     {
@@ -2306,7 +2314,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             {
                 // No child processes.
                 // Spawn a new forkit and try to dust it off and resume.
-                close(ForKitWritePipe);
                 forKitPid = createForKit();
                 if (forKitPid < 0)
                 {
