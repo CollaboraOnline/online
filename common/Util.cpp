@@ -127,6 +127,11 @@ namespace Util
 
     int getMemoryUsage(const Poco::Process::PID pid)
     {
+        if (pid == -1)
+        {
+            return 0;
+        }
+
         try
         {
             //TODO: Instead of RSS, return PSS
@@ -152,7 +157,7 @@ namespace Util
             LOG_WRN("Trying to find memory of invalid/dead PID " << pid);
         }
 
-        return -1;
+        return 0;
     }
 
     std::string replace(const std::string& s, const std::string& a, const std::string& b)

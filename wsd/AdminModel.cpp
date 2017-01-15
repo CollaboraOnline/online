@@ -132,15 +132,11 @@ std::string AdminModel::query(const std::string& command)
 unsigned AdminModel::getTotalMemoryUsage()
 {
     unsigned totalMem = 0;
-    for (auto& it: _documents)
+    for (const auto& it : _documents)
     {
         if (!it.second.isExpired())
         {
-            const int mem = Util::getMemoryUsage(it.second.getPid());
-            if (mem > 0)
-            {
-                totalMem += mem;
-            }
+            totalMem += Util::getMemoryUsage(it.second.getPid());
         }
     }
 
