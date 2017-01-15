@@ -116,7 +116,7 @@ void HTTPWSError::testMaxDocuments()
         assertResponseString(socket, "error:", testname);
 
         std::string message;
-        const auto statusCode = getErrorCode(socket, message);
+        const auto statusCode = getErrorCode(socket, message, testname);
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
 
         socket->shutdown();
@@ -171,7 +171,7 @@ void HTTPWSError::testMaxConnections()
         sendTextFrame(socketN, "load url=" + docURL, testname);
 
         std::string message;
-        const auto statusCode = getErrorCode(socketN, message);
+        const auto statusCode = getErrorCode(socketN, message, testname);
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
 
         socketN->shutdown();

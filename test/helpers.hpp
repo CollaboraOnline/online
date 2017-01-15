@@ -162,7 +162,7 @@ std::string const & getTestServerURI()
 }
 
 inline
-int getErrorCode(LOOLWebSocket& ws, std::string& message)
+int getErrorCode(LOOLWebSocket& ws, std::string& message, const std::string& testname = "")
 {
     int flags = 0;
     int bytes = 0;
@@ -170,13 +170,13 @@ int getErrorCode(LOOLWebSocket& ws, std::string& message)
     Poco::Buffer<char> buffer(READ_BUFFER_SIZE);
 
     message.clear();
-    Poco::Timespan timeout(5000000);
-    ws.setReceiveTimeout(timeout);
+    ws.setReceiveTimeout(Poco::Timespan(5000000));
     do
     {
         bytes = ws.receiveFrame(buffer.begin(), READ_BUFFER_SIZE, flags);
+        std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer.begin(), bytes, flags) << std::endl;
     }
-    while ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+    while (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
     if (bytes > 0)
     {
@@ -189,9 +189,9 @@ int getErrorCode(LOOLWebSocket& ws, std::string& message)
 }
 
 inline
-int getErrorCode(const std::shared_ptr<LOOLWebSocket>& ws, std::string& message)
+int getErrorCode(const std::shared_ptr<LOOLWebSocket>& ws, std::string& message, const std::string& testname = "")
 {
-    return getErrorCode(*ws, message);
+    return getErrorCode(*ws, message, testname);
 }
 
 inline
