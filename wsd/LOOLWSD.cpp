@@ -1678,6 +1678,7 @@ inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
 
 std::atomic<unsigned> LOOLWSD::NextSessionId;
 std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
+std::atomic<int> LOOLWSD::ForKitProcId(-1);
 bool LOOLWSD::NoCapsForKit = false;
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::SysTemplate;
@@ -2075,7 +2076,7 @@ void LOOLWSD::displayHelp()
     helpFormatter.format(std::cout);
 }
 
-Process::PID LOOLWSD::createForKit()
+bool LOOLWSD::createForKit()
 {
     LOG_INF("Creating new forkit process.");
 
@@ -2120,17 +2121,17 @@ Process::PID LOOLWSD::createForKit()
     // The Pipe dtor closes the fd, so dup it.
     ForKitWritePipe = dup(inPipe.writeHandle());
 
-    const auto forkitPid = child.id();
+    ForKitProcId = child.id();
 
-    LOG_INF("Forkit process launched: " << forkitPid);
+    LOG_INF("Forkit process launched: " << ForKitProcId);
 
     // Init the Admin manager
-    Admin::instance().setForKitPid(forkitPid);
+    Admin::instance().setForKitPid(ForKitProcId);
 
     // Spawn some children, if necessary.
     preForkChildren(newChildrenLock);
 
-    return forkitPid;
+    return (ForKitProcId != -1);
 }
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
@@ -2230,8 +2231,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     srv2.start();
 
     // Fire the ForKit process; we are ready to get child connections.
-    Process::PID forKitPid = createForKit();
-    if (forKitPid < 0)
+    if (!createForKit())
     {
         LOG_FTL("Failed to spawn loolforkit.");
         return Application::EXIT_SOFTWARE;
@@ -2268,10 +2268,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             break;
         }
 
-        const pid_t pid = waitpid(forKitPid, &status, WUNTRACED | WNOHANG);
+        const pid_t pid = waitpid(ForKitProcId, &status, WUNTRACED | WNOHANG);
         if (pid > 0)
         {
-            if (forKitPid == pid)
+            if (ForKitProcId == pid)
             {
                 if (WIFEXITED(status) || WIFSIGNALED(status))
                 {
@@ -2288,8 +2288,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                     }
 
                     // Spawn a new forkit and try to dust it off and resume.
-                    forKitPid = createForKit();
-                    if (forKitPid < 0)
+                    if (!createForKit())
                     {
                         LOG_FTL("Failed to spawn forkit instance. Shutting down.");
                         SigUtil::requestShutdown();
@@ -2322,8 +2321,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             {
                 // No child processes.
                 // Spawn a new forkit and try to dust it off and resume.
-                forKitPid = createForKit();
-                if (forKitPid < 0)
+                if (!createForKit())
                 {
                     LOG_FTL("Failed to spawn forkit instance. Shutting down.");
                     SigUtil::requestShutdown();
@@ -2390,8 +2388,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     DocBrokers.clear();
 
     // Terminate child processes
-    LOG_INF("Requesting forkit process " << forKitPid << " to terminate.");
-    SigUtil::killChild(forKitPid);
+    LOG_INF("Requesting forkit process " << ForKitProcId << " to terminate.");
+    SigUtil::killChild(ForKitProcId);
 
     // Terminate child processes
     LOG_INF("Requesting child processes to terminate.");
@@ -2401,7 +2399,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     }
 
     // Wait for forkit process finish.
-    waitpid(forKitPid, &status, WUNTRACED);
+    waitpid(ForKitProcId, &status, WUNTRACED);
     close(ForKitWritePipe);
 
     // In case forkit didn't cleanup properly, don't leave jails behind.

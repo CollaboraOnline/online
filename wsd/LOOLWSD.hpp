@@ -37,6 +37,7 @@ public:
     static unsigned int NumPreSpawnedChildren;
     static bool NoCapsForKit;
     static std::atomic<int> ForKitWritePipe;
+    static std::atomic<int> ForKitProcId;
     static std::string Cache;
     static std::string SysTemplate;
     static std::string LoTemplate;
@@ -68,6 +69,10 @@ public:
 
     static void dumpOutgoingTrace(const std::string& id, const std::string& sessionId, const std::string& data);
 
+    /// Creates a new instance of Forkit.
+    /// Return true when successfull.
+    static bool createForKit();
+
 protected:
     void initialize(Poco::Util::Application& self) override;
     void defineOptions(Poco::Util::OptionSet& options) override;
@@ -80,7 +85,6 @@ private:
 
     void initializeSSL();
     void displayHelp();
-    static Poco::Process::PID createForKit();
 
     class ConfigValueGetter
     {
