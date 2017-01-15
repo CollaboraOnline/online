@@ -140,25 +140,17 @@ void HTTPCrashTest::testCrashKit()
         // Drain the socket.
         getResponseMessage(socket, "", testname, 1000);
 
-        // 5 seconds timeout
-        socket->setReceiveTimeout(5000000);
-
-        // receive close frame handshake
-        int bytes;
-        int flags;
-        char buffer[READ_BUFFER_SIZE];
-        do
-        {
-            bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
-            std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
-        }
-        while ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+        std::string message;
+        const auto statusCode = getErrorCode(socket, message, testname);
+        CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY), statusCode);
 
         // respond close frame
         socket->shutdown();
 
         // no more messages is received.
-        bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
+        int flags;
+        char buffer[READ_BUFFER_SIZE];
+        const int bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
         std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
 
         // While we expect no more messages after shutdown call, apparently
