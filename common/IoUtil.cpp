@@ -203,25 +203,6 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             ", flags: " << std::hex << flags);
 }
 
-void shutdownWebSocket(const std::shared_ptr<LOOLWebSocket>& ws)
-{
-    try
-    {
-        // Calling LOOLWebSocket::shutdown, in case of error, would try to send a 'close' frame
-        // which won't work in case of broken pipe or timeout from peer. Just close the
-        // socket in that case preventing 'close' frame from being sent.
-        if (ws && ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
-            ws->close();
-        else if (ws)
-            ws->shutdown();
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOG_WRN("Util::shutdownWebSocket: Exception: " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
-    }
-}
-
 ssize_t writeToPipe(int pipe, const char* buffer, ssize_t size)
 {
     ssize_t count = 0;

@@ -188,6 +188,39 @@ public:
 
         return result;
     }
+
+    /// Safe shutdown by sending a normal close frame, if socket is not in error,
+    /// or, otherwise, close the socket without sending close frame, if it is.
+    void shutdown()
+    {
+        shutdown(Poco::Net::WebSocket::StatusCodes::WS_NORMAL_CLOSE);
+    }
+
+    /// Safe shutdown by sending a specific close frame, if socket is not in error,
+    /// or, otherwise, close the socket without sending close frame, if it is.
+    void shutdown(Poco::UInt16 statusCode, const std::string& statusMessage = "")
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+        try
+        {
+            // Calling shutdown, in case of error, would try to send a 'close' frame
+            // which won't work in case of broken pipe or timeout from peer. Just close the
+            // socket in that case preventing 'close' frame from being sent.
+            if (Poco::Net::WebSocket::poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
+            {
+                Poco::Net::WebSocket::close();
+            }
+            else
+            {
+                Poco::Net::WebSocket::shutdown(statusCode, statusMessage);
+            }
+        }
+        catch (const Poco::Exception& exc)
+        {
+            LOG_WRN("LOOLWebSocket::shutdown: Exception: " << exc.displayText() <<
+                    (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+        }
+    }
 };
 
 #endif

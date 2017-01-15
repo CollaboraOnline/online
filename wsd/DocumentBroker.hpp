@@ -92,7 +92,12 @@ public:
         {
             LOG_DBG("Closing ChildProcess [" << _pid << "].");
             stop();
-            IoUtil::shutdownWebSocket(_ws);
+
+            if (_ws)
+            {
+                _ws->shutdown();
+            }
+
             if (_thread.joinable())
             {
                 _thread.join();

@@ -176,25 +176,17 @@ void Session::parseDocOptions(const StringTokenizer& tokens, int& part, std::str
 
 void Session::disconnect()
 {
-    try
+    if (!_disconnected)
     {
-        if (!_disconnected)
-        {
-            _disconnected = true;
-            IoUtil::shutdownWebSocket(_ws);
-        }
-    }
-    catch (const IOException& exc)
-    {
-        LOG_ERR("Session::disconnect: Exception: " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+        _disconnected = true;
+        shutdown();
     }
 }
 
 bool Session::handleDisconnect()
 {
     _disconnected = true;
-    IoUtil::shutdownWebSocket(_ws);
+    shutdown();
     return false;
 }
 
@@ -202,16 +194,9 @@ void Session::shutdown(Poco::UInt16 statusCode, const std::string& statusMessage
 {
     if (_ws)
     {
-        try
-        {
-            LOG_TRC("Shutting down WS [" << getName() << "] with statusCode [" << statusCode << "] and reason [" << statusMessage << "].");
-            _ws->shutdown(statusCode, statusMessage);
-        }
-        catch (const Poco::Exception &exc)
-        {
-            LOG_WRN("Session::shutdown LOOLWebSocket: Exception: " <<
-                    exc.displayText() << (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
-        }
+        LOG_TRC("Shutting down WS [" << getName() << "] with statusCode [" <<
+                statusCode << "] and reason [" << statusMessage << "].");
+        _ws->shutdown(statusCode, statusMessage);
     }
 }
 

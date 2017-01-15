@@ -27,10 +27,6 @@ namespace IoUtil
                          const std::function<void()>& closeFrame,
                          const std::function<bool()>& stopPredicate);
 
-    /// Call LOOLWebSocket::shutdown() ignoring Poco::IOException.
-    /// TODO: consider moving this directly to LOOLWebSocket
-    void shutdownWebSocket(const std::shared_ptr<LOOLWebSocket>& ws);
-
     ssize_t writeToPipe(int pipe, const char* buffer, ssize_t size);
     inline ssize_t writeToPipe(int pipe, const std::string& message)
     {
