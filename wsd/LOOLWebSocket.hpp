@@ -126,7 +126,7 @@ public:
             if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
             {
                 // Echo back the ping message.
-                if (Poco::Net::WebSocket::sendFrame(buffer, n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG) != n)
+                if (Poco::Net::WebSocket::sendFrame(buffer, n, static_cast<int>(WebSocket::FRAME_FLAG_FIN) | WebSocket::FRAME_OP_PONG) != n)
                 {
                     LOG_WRN("Sending Pong failed.");
                     return -1;
