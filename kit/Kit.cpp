@@ -148,9 +148,18 @@ namespace
             File(newPath.parent()).createDirectories();
             if (link(fpath, newPath.toString().c_str()) == -1)
             {
-                LOG_SYS("link(\"" << std::string(fpath) << "\",\"" <<
-                        newPath.toString() << "\") failed. Exiting.");
-                std::_Exit(Application::EXIT_SOFTWARE);
+                LOG_SYS("link(\"" << fpath << "\", \"" <<
+                        newPath.toString() << "\") failed. Will copy.");
+                try
+                {
+                    File(fpath).copyTo(newPath.toString());
+                }
+                catch (const std::exception& exc)
+                {
+                    LOG_ERR("Copying of '" << fpath << "' to " << newPath.toString() <<
+                            " failed: " << exc.what() << ". Exiting.");
+                    std::_Exit(Application::EXIT_SOFTWARE);
+                }
             }
             break;
         case FTW_D:
@@ -201,7 +210,9 @@ namespace
             sourceForLinkOrCopy.pop_back();
         destinationForLinkOrCopy = destination;
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL) == -1)
+        {
             LOG_ERR("linkOrCopy: nftw() failed for '" << source << "'");
+        }
     }
 
     void dropCapability(cap_value_t capability)
