@@ -43,7 +43,8 @@ public:
 
         bool isValid() const
         {
-            return !_filename.empty() && _size > 0;
+            // 0-byte files are valid; LO will open them as new docs.
+            return !_filename.empty();
         }
 
         std::string _filename;
