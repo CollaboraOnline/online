@@ -513,7 +513,7 @@ $(function () {
 			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _('Increase indent'), uno: 'IncrementIndent'},
 			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _('Decrease indent'), uno: 'DecrementIndent'},
 			{type: 'break', id: 'incdecindent'},
-			{type: 'html',  id: 'inserttable-html', html: '<div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all" style="position: absolute; display: none;"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div>'},
+			{type: 'html',  id: 'inserttable-html', html: '<div id="inserttable-wrapper"><div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all" style="position: absolute; display: none;"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div></div>'},
 			{type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table')},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _('Insert comment'), uno: 'InsertAnnotation'},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _('Insert graphic')},

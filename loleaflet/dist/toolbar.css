@@ -1,8 +1,9 @@
-#toolbar-up {
+#toolbar-up.w2ui-toolbar {
     left: 0;
     right: 0;
     text-align: center;
     z-index: 1000;
+    overflow: visible !important;
 }
 
 #toolbar-down {
@@ -15,13 +16,14 @@
     z-index: 1000;
 }
 
-#toolbar-up-more {
+#toolbar-up-more,w2ui-toolbar {
     position: absolute;
     right: 10px;
     top: 40px;
     border: 1px solid darkgrey;
     z-index: 1000;
     display: none;
+    overflow: visible !important;
 }
 
 #spreadsheet-toolbar {
@@ -253,6 +255,11 @@ button.leaflet-control-search-next
 .w2ui-icon.selected{ background: url('../images/lc_ok.svg') no-repeat center !important; }
 .w2ui-icon.repair{ background: url('../images/lc_backward.svg') no-repeat center !important; }
 .w2ui-icon.specialcharacter{ background: url('../images/lc_insertsymbol.svg') no-repeat center !important; }
+
+#inserttable-wrapper {
+    position: relative;
+    right: 230px; /* insertable popup has ~230px width, place it to open from its right edge to the left */
+}
 
 .inserttable-pop {
     z-index: 1000;
