@@ -20,7 +20,7 @@ L.Control.Scroll = L.Control.extend({
 		var control = this;
 		$('.scroll-container').mCustomScrollbar({
 			axis: 'yx',
-			theme: 'dark-thick',
+			theme: 'minimal-dark',
 			scrollInertia: 0,
 			callbacks:{
 				onScroll: function() {

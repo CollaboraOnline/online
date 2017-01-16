@@ -11,10 +11,15 @@
 #map {
 	position: absolute;
 	top: 0px;
-	bottom: 16px;
+	bottom: 0px;
 	left: 0px;
-	right: 16px;
+	right: 0px;
 	z-index: 10;
+}
+
+.scroll-container .mCSB_scrollTools.mCSB_1_scrollbar {
+	position: absolute;
+	z-index: 1000;
 }
 
 body {
