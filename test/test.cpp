@@ -56,7 +56,7 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry,
 
 int main(int /*argc*/, char** /*argv*/)
 {
-    Log::initialize("tst");
+    Log::initialize("tst", "trace", true, false, {});
 
     CPPUNIT_NS::TestResult controller;
     CPPUNIT_NS::TestResultCollector result;
