@@ -36,11 +36,13 @@ class HTTPWSError : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(HTTPWSError);
 
+    CPPUNIT_TEST(testBadDocLoadFail);
     CPPUNIT_TEST(testMaxDocuments);
     CPPUNIT_TEST(testMaxConnections);
 
     CPPUNIT_TEST_SUITE_END();
 
+    void testBadDocLoadFail();
     void testMaxDocuments();
     void testMaxConnections();
 
@@ -75,6 +77,38 @@ public:
         testNoExtraLoolKitsLeft();
     }
 };
+
+void HTTPWSError::testBadDocLoadFail()
+{
+    // Load corrupted document and validate error.
+    const auto testname = "docLoadFail ";
+    try
+    {
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("corrupted.odt", documentPath, documentURL);
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        auto socket = connectLOKit(_uri, request, _response);
+
+        // Send a load request with incorrect password
+        sendTextFrame(socket, "load url=" + documentURL);
+
+        const auto response = getResponseString(socket, "error:", testname);
+        Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.count());
+
+        std::string errorCommand;
+        std::string errorKind;
+        LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
+        LOOLProtocol::getTokenString(tokens[2], "kind", errorKind);
+        CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
+        CPPUNIT_ASSERT_EQUAL(std::string("faileddocloading"), errorKind);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
 
 void HTTPWSError::testMaxDocuments()
 {
