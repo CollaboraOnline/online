@@ -349,6 +349,9 @@ L.Socket = L.Class.extend({
 			} else if (errorKind.startsWith('wrongpassword')) {
 				passwordNeeded = true;
 				msg = _('Wrong password provided. Please try again.');
+			} else if (errorKind.startsWith('faileddocloading')) {
+				this._map._fatal = true;
+				this._map.fire('error', {msg: errorMessages.faileddocloading});
 			}
 
 			if (passwordNeeded) {

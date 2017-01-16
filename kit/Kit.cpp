@@ -1426,6 +1426,12 @@ private:
     /// Return access to the lok::Document instance.
     std::shared_ptr<lok::Document> getLOKitDocument() override
     {
+        if (!_loKitDocument)
+        {
+            LOG_ERR("Document [" << _docKey << "] is not loaded.");
+            throw std::runtime_error("Document " + _docKey + " is not loaded.");
+        }
+
         return _loKitDocument;
     }
 
