@@ -275,6 +275,14 @@ button.leaflet-control-search-next
     right: 200px; /* backcolor popup has 200px width, place it to the left from its right edge */
 }
 
+#backcolor-wrapper .evo-pop {
+    z-index: 1000; /* Override default value of 10000 of evo-pop class */
+}
+
+#fontcolor-wrapper .evo-pop {
+    z-index: 1000; /* Override default value of 10000 of evo-pop class */
+}
+
 /* for 10x10 grid 10x20+10*.col.margin */
 .inserttable-grid {
     box-sizing: border-box;
