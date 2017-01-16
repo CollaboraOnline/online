@@ -272,7 +272,7 @@ button.leaflet-control-search-next
 .w2ui-icon.specialcharacter{ background: url('../images/lc_insertsymbol.png') no-repeat center !important; }
 
 .inserttable-pop {
-    z-index: 100000;
+    z-index: 1000;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
