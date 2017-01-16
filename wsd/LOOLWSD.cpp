@@ -330,6 +330,8 @@ static bool forkChildren(const int number)
             LastForkRequestTime = std::chrono::steady_clock::now();
             return true;
         }
+
+        LOG_ERR("No forkit pipe while rebalancing children.");
     }
 
     return false;
@@ -476,6 +478,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
         if (!rebalanceChildren(numPreSpawn))
         {
             // Fatal. Let's fail and retry at a higher level.
+            LOG_DBG("getNewChild: rebalancing of children failed.");
             return nullptr;
         }
 
@@ -869,6 +872,7 @@ private:
                 if (retry > 0)
                 {
                     LOG_WRN("Failed to connect DocBroker and Client Session, retrying.");
+                    LOOLWSD::checkAndRestoreForKit();
                 }
                 else
                 {
@@ -2076,13 +2080,79 @@ void LOOLWSD::displayHelp()
     helpFormatter.format(std::cout);
 }
 
+bool LOOLWSD::checkAndRestoreForKit()
+{
+    int status;
+    const pid_t pid = waitpid(ForKitProcId, &status, WUNTRACED | WNOHANG);
+    if (pid > 0)
+    {
+        if (pid == ForKitProcId)
+        {
+            if (WIFEXITED(status) || WIFSIGNALED(status))
+            {
+                if (WIFEXITED(status))
+                {
+                    LOG_INF("Forkit process [" << pid << "] exited with code: " <<
+                            WEXITSTATUS(status) << ".");
+                }
+                else
+                {
+                    LOG_ERR("Forkit process [" << pid << "] " <<
+                            (WCOREDUMP(status) ? "core-dumped" : "died") <<
+                            " with " << SigUtil::signalName(WTERMSIG(status)));
+                }
+
+                // Spawn a new forkit and try to dust it off and resume.
+                if (!createForKit())
+                {
+                    LOG_FTL("Failed to spawn forkit instance. Shutting down.");
+                    SigUtil::requestShutdown();
+                }
+            }
+            else if (WIFSTOPPED(status))
+            {
+                LOG_INF("Forkit process [" << pid << "] stopped with " <<
+                        SigUtil::signalName(WSTOPSIG(status)));
+            }
+            else if (WIFCONTINUED(status))
+            {
+                LOG_INF("Forkit process [" << pid << "] resumed with SIGCONT.");
+            }
+            else
+            {
+                LOG_WRN("Unknown status returned by waitpid: " << std::hex << status << ".");
+            }
+
+            return true;
+        }
+        else
+        {
+            LOG_ERR("An unknown child process [" << pid << "] died.");
+        }
+    }
+    else if (pid < 0)
+    {
+        LOG_SYS("Forkit waitpid failed.");
+        if (errno == ECHILD)
+        {
+            // No child processes.
+            // Spawn a new forkit and try to dust it off and resume.
+            if (!createForKit())
+            {
+                LOG_FTL("Failed to spawn forkit instance. Shutting down.");
+                SigUtil::requestShutdown();
+            }
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
 bool LOOLWSD::createForKit()
 {
     LOG_INF("Creating new forkit process.");
-
-    const int oldForKitWritePipe = ForKitWritePipe;
-    ForKitWritePipe = -1;
-    close(oldForKitWritePipe);
 
     Process::Args args;
     args.push_back("--losubpath=" + std::string(LO_JAIL_SUBPATH));
@@ -2092,9 +2162,14 @@ bool LOOLWSD::createForKit()
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
     args.push_back("--masterport=" + std::to_string(MasterPortNumber));
     if (UnitWSD::get().hasKitHooks())
+    {
         args.push_back("--unitlib=" + UnitTestLibrary);
+    }
+
     if (DisplayVersion)
+    {
         args.push_back("--version");
+    }
 
     std::string forKitPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
     if (NoCapsForKit)
@@ -2107,6 +2182,15 @@ bool LOOLWSD::createForKit()
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
     std::unique_lock<std::mutex> newChildrenLock(NewChildrenMutex);
 
+    // Always reap first, in case we haven't done so yet.
+    int status;
+    waitpid(ForKitProcId, &status, WUNTRACED | WNOHANG);
+    ForKitProcId = -1;
+    Admin::instance().setForKitPid(ForKitProcId);
+
+    const int oldForKitWritePipe = ForKitWritePipe;
+    ForKitWritePipe = -1;
+    close(oldForKitWritePipe);
 
     // ForKit always spawns one.
     ++OutstandingForks;
@@ -2268,69 +2352,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             break;
         }
 
-        const pid_t pid = waitpid(ForKitProcId, &status, WUNTRACED | WNOHANG);
-        if (pid > 0)
+        if (!checkAndRestoreForKit())
         {
-            if (ForKitProcId == pid)
-            {
-                if (WIFEXITED(status) || WIFSIGNALED(status))
-                {
-                    if (WIFEXITED(status))
-                    {
-                        LOG_INF("Forkit process [" << pid << "] exited with code: " <<
-                                WEXITSTATUS(status) << ".");
-                    }
-                    else
-                    {
-                        LOG_ERR("Forkit process [" << pid << "] " <<
-                                (WCOREDUMP(status) ? "core-dumped" : "died") <<
-                                " with " << SigUtil::signalName(WTERMSIG(status)));
-                    }
-
-                    // Spawn a new forkit and try to dust it off and resume.
-                    if (!createForKit())
-                    {
-                        LOG_FTL("Failed to spawn forkit instance. Shutting down.");
-                        SigUtil::requestShutdown();
-                        break;
-                    }
-                }
-                else if (WIFSTOPPED(status))
-                {
-                    LOG_INF("Forkit process [" << pid << "] stopped with " <<
-                            SigUtil::signalName(WSTOPSIG(status)));
-                }
-                else if (WIFCONTINUED(status))
-                {
-                    LOG_INF("Forkit process [" << pid << "] resumed with SIGCONT.");
-                }
-                else
-                {
-                    LOG_WRN("Unknown status returned by waitpid: " << std::hex << status << ".");
-                }
-            }
-            else
-            {
-                LOG_ERR("An unknown child process [" << pid << "] died.");
-            }
-        }
-        else if (pid < 0)
-        {
-            LOG_SYS("Forkit waitpid failed.");
-            if (errno == ECHILD)
-            {
-                // No child processes.
-                // Spawn a new forkit and try to dust it off and resume.
-                if (!createForKit())
-                {
-                    LOG_FTL("Failed to spawn forkit instance. Shutting down.");
-                    SigUtil::requestShutdown();
-                    break;
-                }
-            }
-        }
-        else // pid == 0, no children have died
-        {
+            // No children have died.
             // Make sure we have sufficient reserves.
             if (prespawnChildren())
             {

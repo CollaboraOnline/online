@@ -69,6 +69,10 @@ public:
 
     static void dumpOutgoingTrace(const std::string& id, const std::string& sessionId, const std::string& data);
 
+    /// Waits on Forkit and reaps if it dies, then restores.
+    /// Return true if wait succeeds.
+    static bool checkAndRestoreForKit();
+
     /// Creates a new instance of Forkit.
     /// Return true when successfull.
     static bool createForKit();
