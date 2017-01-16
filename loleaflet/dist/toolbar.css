@@ -266,6 +266,16 @@ button.leaflet-control-search-next
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
+#fontcolor-wrapper {
+    position: relative;
+    right: 200px; /* fontcolor popup has 200px width, place it to the left from its right edge */
+}
+
+#backcolor-wrapper {
+    position: relative;
+    right: 200px; /* backcolor popup has 200px width, place it to the left from its right edge */
+}
+
 /* for 10x10 grid 10x20+10*.col.margin */
 .inserttable-grid {
     box-sizing: border-box;
