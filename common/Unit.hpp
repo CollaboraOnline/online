@@ -143,7 +143,7 @@ public:
     /// Do we have hooks for the Kit too
     bool hasKitHooks() { return _hasKitHooks; }
     /// set in your unit if you want to be injected into the kit too.
-    void setHasKitHooks(bool hasHooks = true) { _hasKitHooks = hasHooks; }
+    void setHasKitHooks() { _hasKitHooks = true; }
 
     // ---------------- WSD hooks ----------------
 
