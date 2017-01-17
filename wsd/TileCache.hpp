@@ -49,7 +49,10 @@ public:
 
     void saveTileAndNotify(const TileDesc& tile, const char* data, const size_t size);
 
-    std::string getTextFile(const std::string& fileName);
+    /// Get the content of a cache file.
+    /// @param content Valid only when the call returns true.
+    /// @return true when the file actually exists
+    bool getTextFile(const std::string& fileName, std::string& content);
 
     // Save some text into a file in the cache directory
     void saveTextFile(const std::string& text, const std::string& fileName);

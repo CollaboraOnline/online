@@ -293,8 +293,8 @@ bool ClientSession::getCommandValues(const char *buffer, int length, StringToken
         return sendTextFrame("error: cmd=commandvalues kind=syntax");
     }
 
-    const std::string cmdValues = docBroker->tileCache().getTextFile("cmdValues" + command + ".txt");
-    if (cmdValues.size() > 0)
+    std::string cmdValues;
+    if (docBroker->tileCache().getTextFile("cmdValues" + command + ".txt", cmdValues))
     {
         return sendTextFrame(cmdValues);
     }
@@ -305,8 +305,8 @@ bool ClientSession::getCommandValues(const char *buffer, int length, StringToken
 bool ClientSession::getPartPageRectangles(const char *buffer, int length,
                                           const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    const std::string partPageRectangles = docBroker->tileCache().getTextFile("partpagerectangles.txt");
-    if (partPageRectangles.size() > 0)
+    std::string partPageRectangles;
+    if (docBroker->tileCache().getTextFile("partpagerectangles.txt", partPageRectangles))
     {
         return sendTextFrame(partPageRectangles);
     }
