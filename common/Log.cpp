@@ -78,11 +78,6 @@ namespace Log
 
     static void getPrefix(char *buffer, const char* level)
     {
-        // FIXME: If running under systemd it is redundant to output timestamps, as those will be
-        // attached to messages that the systemd journalling mechanism picks up anyway, won't they?
-
-        std::string time = DateTimeFormatter::format(Poco::Timestamp(), "%H:%M:%s");
-
         char procName[32]; // we really need only 16
         if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(procName), 0, 0, 0) != 0)
         {
@@ -92,9 +87,11 @@ namespace Log
         const char* appName = (Source.inited ? Source.id.c_str() : "<shutdown>");
         assert(strlen(appName) + 32 + 28 < 1024 - 1);
 
-        snprintf(buffer, 4095, "%s-%.04lu %s [ %s ] %s  ", appName,
+        Poco::DateTime time;
+        snprintf(buffer, 1023, "%s-%.04lu %.2u:%.2u:%.2u.%.6u [ %s ] %s  ", appName,
                  syscall(SYS_gettid),
-                 time.c_str(),
+                 time.hour(), time.minute(), time.second(),
+                 time.millisecond() * 1000 + time.microsecond(),
                  procName, level);
     }
 
@@ -157,11 +154,6 @@ namespace Log
         if (strftime(buf, sizeof(buf), "%a %F %T%z", std::localtime(&t)) > 0)
         {
             oss << " Local time: " << buf << ".";
-        }
-
-        if (strftime(buf, sizeof(buf), "%a %F %T%z", std::gmtime(&t)) > 0)
-        {
-            oss << " UTC time: " << buf << ".";
         }
 
         oss <<  " Log level is [" << logger.getLevel() << "].";
