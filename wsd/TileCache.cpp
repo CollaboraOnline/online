@@ -57,9 +57,10 @@ TileCache::TileCache(const std::string& docURL,
                 << "] modifiedTime=" << (modifiedTime.raw()/1000000)
                 << " getLastModified()=" << (getLastModified().raw()/1000000) << Log::end;
     File directory(_cacheDir);
+    std::string unsaved;
     if (directory.exists() &&
         (getLastModified() < modifiedTime ||
-         getTextFile("unsaved.txt") != ""))
+         getTextFile("unsaved.txt", unsaved)))
     {
         // Document changed externally or modifications were not saved after all. Cache not useful.
         FileUtil::removeFile(_cacheDir, true);
@@ -229,7 +230,7 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     }
 }
 
-std::string TileCache::getTextFile(const std::string& fileName)
+bool TileCache::getTextFile(const std::string& fileName, std::string& content)
 {
     const std::string fullFileName =  _cacheDir + "/" + fileName;
 
@@ -237,7 +238,7 @@ std::string TileCache::getTextFile(const std::string& fileName)
     if (!textStream.is_open())
     {
         Log::info("Could not open " + fullFileName);
-        return "";
+        return false;
     }
 
     std::vector<char> buffer;
@@ -251,10 +252,10 @@ std::string TileCache::getTextFile(const std::string& fileName)
     if (buffer.size() > 0 && buffer.back() == '\n')
         buffer.pop_back();
 
-    std::string result = std::string(buffer.data(), buffer.size());
-    Log::info("Read '" + LOOLProtocol::getAbbreviatedMessage(result.c_str(), result.size()) + "' from " + fullFileName);
+    content = std::string(buffer.data(), buffer.size());
+    Log::info("Read '" + LOOLProtocol::getAbbreviatedMessage(content.c_str(), content.size()) + "' from " + fullFileName);
 
-    return result;
+    return true;
 }
 
 void TileCache::saveTextFile(const std::string& text, const std::string& fileName)
