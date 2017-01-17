@@ -104,7 +104,7 @@ function _unmobilify() {
 
 	nUsers = _('%n users');
 	oneUser = _('1 user');
-	noUser = _('0 user');
+	noUser = _('0 users');
 	updateUserListCount();
 }
 
