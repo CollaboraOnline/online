@@ -307,7 +307,8 @@ bool cleanupDocBrokers()
 }
 
 /// Forks as many children as requested.
-/// Returns true only if at least one child was requested to spawn.
+/// Returns the number of children requested to spawn,
+/// -1 for error.
 static bool forkChildren(const int number)
 {
     Util::assertIsLocked(DocBrokersMutex);
@@ -328,13 +329,14 @@ static bool forkChildren(const int number)
         {
             OutstandingForks += number;
             LastForkRequestTime = std::chrono::steady_clock::now();
-            return true;
+            return number;
         }
 
         LOG_ERR("No forkit pipe while rebalancing children.");
+        return -1; // Fail.
     }
 
-    return false;
+    return 0;
 }
 
 /// Cleans up dead children.
@@ -359,8 +361,9 @@ static bool cleanupChildren()
 
 /// Decides how many children need spawning and spanws.
 /// When force is true, no check of elapsed time since last request is done.
-/// Returns true only if at least one child was requested to spawn.
-static bool rebalanceChildren(int balance)
+/// Returns the number of children requested to spawn,
+/// -1 for error.
+static int rebalanceChildren(int balance)
 {
     Util::assertIsLocked(DocBrokersMutex);
     Util::assertIsLocked(NewChildrenMutex);
@@ -391,7 +394,7 @@ static bool rebalanceChildren(int balance)
         return forkChildren(balance);
     }
 
-    return true;
+    return 0;
 }
 
 /// Called on startup only.
@@ -445,7 +448,7 @@ static bool prespawnChildren()
     }
 
     const int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
-    return rebalanceChildren(numPreSpawn);
+    return (rebalanceChildren(numPreSpawn) > 0);
 }
 
 static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
@@ -475,7 +478,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
         LOG_DBG("getNewChild: Rebalancing children.");
         int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
         ++numPreSpawn; // Replace the one we'll dispatch just now.
-        if (!rebalanceChildren(numPreSpawn))
+        if (rebalanceChildren(numPreSpawn) < 0)
         {
             // Fatal. Let's fail and retry at a higher level.
             LOG_DBG("getNewChild: rebalancing of children failed.");
