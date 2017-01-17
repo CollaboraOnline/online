@@ -499,16 +499,9 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, Stri
 
 bool ChildSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
 {
-    char* partPage = nullptr;
-    {
-        std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
-
-        getLOKitDocument()->setView(_viewId);
-        partPage = getLOKitDocument()->getPartPageRectangles();
-    }
-
-    sendTextFrame("partpagerectangles: " + std::string(partPage));
-    std::free(partPage);
+    // We don't support partpagerectangles any more, will be removed in the
+    // next version
+    sendTextFrame("partpagerectangles: ");
     return true;
 }
 
