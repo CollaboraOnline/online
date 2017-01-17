@@ -44,7 +44,6 @@
 using namespace LOOLProtocol;
 
 using Poco::Exception;
-using Poco::IOException;
 using Poco::Net::Socket;
 using Poco::Net::WebSocket;
 using Poco::StringTokenizer;
