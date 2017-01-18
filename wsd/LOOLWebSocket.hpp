@@ -109,7 +109,14 @@ public:
         while (poll(waitTime, Poco::Net::Socket::SELECT_READ))
         {
             const int n = Poco::Net::WebSocket::receiveFrame(buffer, length, flags);
-            LOG_TRC("Got frame: " << LOOLProtocol::getAbbreviatedFrameDump(buffer, n, flags));
+            if (n <= 0)
+            {
+                LOG_TRC("Got nothing (" << n << ")");
+            }
+            else
+            {
+                LOG_TRC("Got frame: " << LOOLProtocol::getAbbreviatedFrameDump(buffer, n, flags));
+            }
             if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
             {
                 sendFrame(buffer, n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG);
