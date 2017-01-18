@@ -36,7 +36,8 @@ L.Control.ContextMenu = L.Control.extend({
 				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes'],
 
 			spreadsheet: ['MergeCells', 'SplitCells',
-						  'InsertAnnotation', 'EditAnnotation', 'DeleteNote', 'ShowNote', 'HideNote'],
+						  'InsertAnnotation', 'EditAnnotation', 'DeleteNote', 'ShowNote', 'HideNote',
+						  'RecalcPivotTable'],
 
 			presentation: [],
 			drawing: []
