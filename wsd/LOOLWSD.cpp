@@ -1568,7 +1568,7 @@ inline ServerSocket* getServerSocket(int portNumber, bool reuseDetails)
             try
             {
                 LOG_INF("Trying first to connect to an existing loolwsd at the same port " << portNumber);
-                StreamSocket s(SocketAddress(("127.0.0.1:" + std::to_string(portNumber)).c_str()));
+                StreamSocket s(SocketAddress("127.0.0.1:" + std::to_string(portNumber)));
                 LOG_FTL("Connection succeeded, so we can't continue");
                 return nullptr;
             }
