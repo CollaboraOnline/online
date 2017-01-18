@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-11 09:01+0000\n"
+"POT-Creation-Date: 2017-01-18 14:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /kk/libo_online/loleaflet-ui-kk.po\n"
-"X-Pootle-Revision: 823299\n"
+"X-Pootle-Revision: 847139\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -192,7 +192,7 @@ msgstr ""
 
 #: unocommands.js:16
 msgid "Update Index or Table of Contents"
-msgstr ""
+msgstr "Мазмұнын/нұсқағышты жаңарту"
 
 #: unocommands.js:17
 msgid "Delete Index or Table of Contents"
@@ -419,12 +419,12 @@ msgstr "Нөмiрлеуді іске қосу/сөндіру"
 #: dist/toolbar/toolbar.js:407
 #: src/control/Control.Menubar.js:95
 msgid "Increase indent"
-msgstr "Шегінуді үлкейту"
+msgstr "Шегіністі үлкейту"
 
 #: dist/toolbar/toolbar.js:408
 #: src/control/Control.Menubar.js:96
 msgid "Decrease indent"
-msgstr "Шегінуді кішірейту"
+msgstr "Шегіністі азайту"
 
 #: dist/toolbar/toolbar.js:411
 msgid "Insert table"

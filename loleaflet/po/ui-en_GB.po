@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-11 09:00+0000\n"
+"POT-Creation-Date: 2017-01-18 14:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /en_GB/libo_online/loleaflet-ui-en_GB.po\n"
-"X-Pootle-Revision: 823238\n"
+"X-Pootle-Revision: 830647\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -72,7 +72,7 @@ msgstr "Elapsed time"
 
 #: admin.strings.js:19
 msgid "Idle time"
-msgstr ""
+msgstr "Idle time"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -255,24 +255,32 @@ msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
+"Your session will expire in %time. Please save your work and refresh the "
+"session (or webpage) to continue."
 
 #: dist/errormessages.js:8
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
+"Your session has been expired. Further changes to document might not be "
+"saved. Please refresh the session (or webpage) to continue."
 
 #: dist/errormessages.js:11
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server administrator to continue editing."
 msgstr ""
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server administrator to continue editing."
 
 #: dist/errormessages.js:12
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server administrator."
 msgstr ""
+"Document cannot be saved to storage. Check your permissions or contact the "
+"storage server administrator."
 
 #: dist/toolbar/toolbar.js:159
 msgid "Are you sure you want to delete this page?"
@@ -664,6 +672,7 @@ msgstr "Next slide"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 
 #: dist/toolbar/toolbar.js:1395
 msgid "%n users"
@@ -974,7 +983,7 @@ msgstr "Bopomofo"
 
 #: src/control/Control.CharacterMap.js:78
 msgid "Hangul Compatibility Jamo"
-msgstr ""
+msgstr "Hangul Compatibility Jamo"
 
 #: src/control/Control.CharacterMap.js:79
 msgid "Kanbun"
@@ -1267,7 +1276,7 @@ msgstr "Modifier Tone Letters"
 
 #: src/control/Control.CharacterMap.js:168
 msgid "New Tai Lue"
-msgstr ""
+msgstr "New Tai Lue"
 
 #: src/control/Control.CharacterMap.js:169
 msgid "Old Persian"
@@ -1776,7 +1785,7 @@ msgstr "Subset:"
 
 #: src/control/Control.CharacterMap.js:413
 msgid "Selected Character:"
-msgstr ""
+msgstr "Selected Character:"
 
 #: src/control/Control.CharacterMap.js:418
 msgid "Hexadecimal:"
@@ -2419,11 +2428,11 @@ msgstr "Session terminated by document owner"
 
 #: src/core/Socket.js:220
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "Server is shutting down for maintenance (auto-saving)"
 
 #: src/core/Socket.js:223
 msgid "Server is recycling and will be available shortly"
-msgstr ""
+msgstr "Server is recycling and will be available shortly"
 
 #: src/core/Socket.js:335
 msgid "Document requires password to view."

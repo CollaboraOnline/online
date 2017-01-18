@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 09:00+0000\n"
+"POT-Creation-Date: 2017-01-18 14:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /am/libo_online/loleaflet-ui-am.po\n"
-"X-Pootle-Revision: 823161\n"
+"X-Pootle-Revision: 832419\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -91,9 +91,8 @@ msgid "Save"
 msgstr "ማስቀመጫ"
 
 #: admin.strings.js:23
-#, fuzzy
 msgid "Cache size of memory statistics"
-msgstr "የ መደበቂያ መጠን ለ CPU statistics"
+msgstr "የ መደበቂያ መጠን ለ CPU ስታስትቲክስ"
 
 #: admin.strings.js:24
 msgid "Time interval of memory statistics (in ms)"
@@ -443,7 +442,7 @@ msgstr "ንድፎች ማስገቢያ"
 
 #: dist/toolbar/toolbar.js:414
 msgid "Special Character"
-msgstr ""
+msgstr "የተለዩ ባህሪዎች"
 
 #: dist/toolbar/toolbar.js:416
 msgid "More"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 09:00+0000\n"
+"POT-Creation-Date: 2017-01-18 14:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
-"X-Pootle-Revision: 830244\n"
+"X-Pootle-Revision: 832267\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -272,12 +272,18 @@ msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server administrator to continue editing."
 msgstr ""
+"Η αποθήκευση απέτυχε επειδή δεν υπάρχει χώρος στον δίσκο στον διακομιστή "
+"αποθήκευσης. Το έγγραφο θα είναι τώρα μόνο για ανάγνωση. Παρακαλούμε, "
+"επικοινωνήστε με τον διαχειριστή του διακομιστή για να συνεχίσετε την "
+"επεξεργασία."
 
 #: dist/errormessages.js:12
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server administrator."
 msgstr ""
+"Το έγγραφο δεν μπορεί να καταχωρηθεί για αποθήκευση. Ελέγξτε τα δικαιώματά "
+"σας ή επικοινωνήστε με τον διαχειριστή του διακομιστή αποθήκευσης."
 
 #: dist/toolbar/toolbar.js:159
 msgid "Are you sure you want to delete this page?"
@@ -669,6 +675,8 @@ msgstr "Επόμενη διαφάνεια"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Σύγκρουση αναίρεσης/ακύρωσης αναίρεσης για πολλαπλούς χρήστες. Παρακαλούμε, "
+"χρησιμοποιήστε την επιδιόρθωση του εγγράφου για να το επιλύσετε."
 
 #: dist/toolbar/toolbar.js:1395
 msgid "%n users"
@@ -979,7 +987,7 @@ msgstr "Μποπομόφο"
 
 #: src/control/Control.CharacterMap.js:78
 msgid "Hangul Compatibility Jamo"
-msgstr ""
+msgstr "Χάνγκουλ με συμβατότητα Τζάμο"
 
 #: src/control/Control.CharacterMap.js:79
 msgid "Kanbun"
@@ -1272,7 +1280,7 @@ msgstr "Τροποποιητικά γράμματα επιτονισμού"
 
 #: src/control/Control.CharacterMap.js:168
 msgid "New Tai Lue"
-msgstr ""
+msgstr "Νέα Τάι Λούε"
 
 #: src/control/Control.CharacterMap.js:169
 msgid "Old Persian"
@@ -1781,7 +1789,7 @@ msgstr "Υποσύνολο:"
 
 #: src/control/Control.CharacterMap.js:413
 msgid "Selected Character:"
-msgstr ""
+msgstr "Επιλεγμένος χαρακτήρας:"
 
 #: src/control/Control.CharacterMap.js:418
 msgid "Hexadecimal:"
@@ -2424,11 +2432,11 @@ msgstr "Η συνεδρία τελείωσε από τον κάτοχο του �
 
 #: src/core/Socket.js:220
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "Ο διακομιστής κλείνει για συντήρηση (αυτόματη αποθήκευση)"
 
 #: src/core/Socket.js:223
 msgid "Server is recycling and will be available shortly"
-msgstr ""
+msgstr "Ο διακομιστής επανεκκινεί και θα είναι σύντομα διαθέσιμος."
 
 #: src/core/Socket.js:335
 msgid "Document requires password to view."

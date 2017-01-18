@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 09:00+0000\n"
+"POT-Creation-Date: 2017-01-17 11:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-ui-da.po\n"
-"X-Pootle-Revision: 828178\n"
+"X-Pootle-Revision: 832250\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -262,18 +262,25 @@ msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
+"Din session er udløbet. Yderligere dokumentændringer bliver måske ikke gemt. "
+"Opdater venligst sessionen (eller websiden) for at fortsætte."
 
 #: dist/errormessages.js:11
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server administrator to continue editing."
 msgstr ""
+"Gem mislykkedes fordi der ikke er plads på serveren. Dokumentet bliver nu "
+"kun læseadgang. Kontakt venligst serverens administrator for at fortsætte "
+"redigering."
 
 #: dist/errormessages.js:12
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server administrator."
 msgstr ""
+"Dokumentet kan ikke gemmes på lager. Tjek dine rettigheder eller kontakt "
+"lagerets serveradministrator."
 
 #: dist/toolbar/toolbar.js:159
 msgid "Are you sure you want to delete this page?"
@@ -665,6 +672,8 @@ msgstr "Næste dias"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Konfliktende fortryd/genskab med mange brugere. Brug venligst "
+"dokumentreparation for at løse det"
 
 #: dist/toolbar/toolbar.js:1395
 msgid "%n users"
@@ -1777,7 +1786,7 @@ msgstr "Delmængde:"
 
 #: src/control/Control.CharacterMap.js:413
 msgid "Selected Character:"
-msgstr ""
+msgstr "Valgt tegn:"
 
 #: src/control/Control.CharacterMap.js:418
 msgid "Hexadecimal:"
@@ -2420,11 +2429,11 @@ msgstr "Session afsluttet af dokumentejer"
 
 #: src/core/Socket.js:220
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "Server lukker ned for vedligeholdelse (auto-gem)"
 
 #: src/core/Socket.js:223
 msgid "Server is recycling and will be available shortly"
-msgstr ""
+msgstr "Serveren genstarter og vil snart være til rådighed"
 
 #: src/core/Socket.js:335
 msgid "Document requires password to view."

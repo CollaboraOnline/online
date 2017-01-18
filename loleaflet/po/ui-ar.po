@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 09:32+0000\n"
+"POT-Creation-Date: 2017-01-18 14:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,11 +12,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /ar/libo_online/loleaflet-ui-ar.po\n"
-"X-Pootle-Revision: 823174\n"
+"X-Pootle-Revision: 842411\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
-msgstr ""
+msgstr "معراض المدير"
 
 #: admin.strings.js:6
 msgid "Toggle navigation"
@@ -24,11 +24,11 @@ msgstr ""
 
 #: admin.strings.js:7
 msgid "Settings"
-msgstr ""
+msgstr "الإعدادات"
 
 #: admin.strings.js:8
 msgid "Overview"
-msgstr ""
+msgstr "نظرة عامة"
 
 #: admin.strings.js:9
 msgid "(current)"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "التحليلات"
 
 #: admin.strings.js:11
 msgid "Dashboard"
@@ -44,15 +44,15 @@ msgstr ""
 
 #: admin.strings.js:12
 msgid "Users online"
-msgstr ""
+msgstr "المستخدمون المتصلون"
 
 #: admin.strings.js:13
 msgid "Documents opened"
-msgstr ""
+msgstr "المستندات المفتوحة"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
-msgstr ""
+msgstr "استهلاك الذاكرة"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -60,7 +60,7 @@ msgstr ""
 
 #: admin.strings.js:16
 msgid "Document"
-msgstr ""
+msgstr "المستند"
 
 #: admin.strings.js:17
 msgid "Number of views"
@@ -68,11 +68,11 @@ msgstr ""
 
 #: admin.strings.js:18
 msgid "Elapsed time"
-msgstr ""
+msgstr "الوقت المنقضي"
 
 #: admin.strings.js:19
 msgid "Idle time"
-msgstr ""
+msgstr "وقت الخمول"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -108,27 +108,27 @@ msgstr ""
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "ألوان السمة"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "الألوان القياسية"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "ألوان الوب"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
-msgstr ""
+msgstr "عُد إلى اللوحة"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "التأريخ"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "لا تأريخ بعد."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
@@ -176,7 +176,7 @@ msgstr ""
 
 #: unocommands.js:12
 msgid "No Wrap"
-msgstr ""
+msgstr "بلا لف"
 
 #: unocommands.js:13
 msgid "Wrap Before"
@@ -188,21 +188,21 @@ msgstr ""
 
 #: unocommands.js:15
 msgid "Enable Contour"
-msgstr ""
+msgstr "فعّل الحدود الخارجية"
 
 #: unocommands.js:16
 msgid "Update Index or Table of Contents"
-msgstr ""
+msgstr "حدّث المُدخل أو جدول المحتويات"
 
 #: unocommands.js:17
 msgid "Delete Index or Table of Contents"
-msgstr ""
+msgstr "احذف المُدخل أو جدول المحتويات"
 
 #: dist/errormessages.js:1
 msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
-msgstr ""
+msgstr "لم تبق مساحة في قرص الخادوم، فضلا تواصل مع مدير الخادوم للمتابعة."
 
 #: dist/errormessages.js:2
 msgid ""
@@ -262,7 +262,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:159
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "أمتأكد من حذف هذه الصفحة؟"
 
 #: dist/toolbar/toolbar.js:355
 msgid "Textwrap"
@@ -274,7 +274,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:357
 msgid "Page wrap"
-msgstr ""
+msgstr "لف الصفحة"
 
 #: dist/toolbar/toolbar.js:358
 msgid "Wrap anchor only"
@@ -301,14 +301,14 @@ msgstr ""
 #: src/control/Control.Menubar.js:173
 #: src/control/Control.Menubar.js:231
 msgid "Undo"
-msgstr ""
+msgstr "تراجع"
 
 #: dist/toolbar/toolbar.js:367
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:174
 #: src/control/Control.Menubar.js:232
 msgid "Redo"
-msgstr ""
+msgstr "أعد"
 
 #: dist/toolbar/toolbar.js:368
 msgid "Document repair"
@@ -317,17 +317,17 @@ msgstr ""
 #: dist/toolbar/toolbar.js:374
 #: src/control/Control.Menubar.js:60
 msgid "Bold"
-msgstr ""
+msgstr "ثخين"
 
 #: dist/toolbar/toolbar.js:375
 #: src/control/Control.Menubar.js:61
 msgid "Italic"
-msgstr ""
+msgstr "مائل"
 
 #: dist/toolbar/toolbar.js:376
 #: src/control/Control.Menubar.js:62
 msgid "Underline"
-msgstr ""
+msgstr "مسطر"
 
 #: dist/toolbar/toolbar.js:377
 msgid "Strikeout"
@@ -339,32 +339,32 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:382
 msgid "Font color"
-msgstr ""
+msgstr "لون الخط"
 
 #: dist/toolbar/toolbar.js:384
 msgid "Highlighting"
-msgstr ""
+msgstr "الإبراز"
 
 #: dist/toolbar/toolbar.js:386
 msgid "Align left"
-msgstr ""
+msgstr "حاذ يسارا"
 
 #: dist/toolbar/toolbar.js:387
 msgid "Center horizontally"
-msgstr ""
+msgstr "وسط أفقيا"
 
 #: dist/toolbar/toolbar.js:388
 msgid "Align right"
-msgstr ""
+msgstr "حاذ يمينا"
 
 #: dist/toolbar/toolbar.js:389
 #: src/control/Control.Menubar.js:101
 msgid "Justified"
-msgstr ""
+msgstr "ساوِ"
 
 #: dist/toolbar/toolbar.js:391
 msgid "Wrap Text"
-msgstr ""
+msgstr "لف النص"
 
 #: dist/toolbar/toolbar.js:392
 msgid "Merge and Center Cells"

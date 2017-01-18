@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-11 09:01+0000\n"
+"POT-Creation-Date: 2017-01-18 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-ui-he.po\n"
-"X-Pootle-Revision: 823275\n"
+"X-Pootle-Revision: 847378\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: admin.strings.js:7
 msgid "Settings"
-msgstr ""
+msgstr "הגדרות"
 
 #: admin.strings.js:8
 msgid "Overview"
@@ -32,7 +32,7 @@ msgstr ""
 
 #: admin.strings.js:9
 msgid "(current)"
-msgstr ""
+msgstr "(נוכחי)"
 
 #: admin.strings.js:10
 msgid "Analytics"
@@ -44,11 +44,11 @@ msgstr ""
 
 #: admin.strings.js:12
 msgid "Users online"
-msgstr ""
+msgstr "משתמשים מקוונים"
 
 #: admin.strings.js:13
 msgid "Documents opened"
-msgstr ""
+msgstr "מסמכים שנפתחו"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
@@ -60,11 +60,11 @@ msgstr ""
 
 #: admin.strings.js:16
 msgid "Document"
-msgstr ""
+msgstr "מסמך"
 
 #: admin.strings.js:17
 msgid "Number of views"
-msgstr ""
+msgstr "מספר צפיות"
 
 #: admin.strings.js:18
 msgid "Elapsed time"
@@ -80,7 +80,7 @@ msgstr ""
 
 #: admin.strings.js:21
 msgid "Graphs"
-msgstr ""
+msgstr "תרשימים"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:364
@@ -88,11 +88,11 @@ msgstr ""
 #: src/control/Control.Menubar.js:163
 #: src/control/Control.Menubar.js:221
 msgid "Save"
-msgstr ""
+msgstr "שמירה"
 
 #: admin.strings.js:23
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "גודל מטמון של סטטיסטיקת זכרון"
 
 #: admin.strings.js:24
 msgid "Time interval of memory statistics (in ms)"
@@ -108,7 +108,7 @@ msgstr ""
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "צבעי ערכת נושא"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
@@ -124,7 +124,7 @@ msgstr ""
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "היסטוריה"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -144,7 +144,7 @@ msgstr ""
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "עריכת הערה"
 
 #: unocommands.js:5
 msgid "Insert Comment"

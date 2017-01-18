@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 09:32+0000\n"
+"POT-Creation-Date: 2017-01-18 14:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-ui-eu.po\n"
-"X-Pootle-Revision: 823249\n"
+"X-Pootle-Revision: 831115\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -72,7 +72,7 @@ msgstr "Igarotako denbora"
 
 #: admin.strings.js:19
 msgid "Idle time"
-msgstr ""
+msgstr "Inaktibitate denbora"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -1266,7 +1266,7 @@ msgstr "Doinuera aldatzeko hizkiak"
 
 #: src/control/Control.CharacterMap.js:168
 msgid "New Tai Lue"
-msgstr ""
+msgstr "Tai Lue berria"
 
 #: src/control/Control.CharacterMap.js:169
 msgid "Old Persian"
