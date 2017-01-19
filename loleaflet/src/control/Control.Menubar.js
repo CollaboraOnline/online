@@ -156,7 +156,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
-			{name: _('Close'), id: 'closedocument', type: 'action'}
+			{name: _('Close document'), id: 'closedocument', type: 'action'}
 		],
 
 		presentation: [
@@ -215,7 +215,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
-			{name: _('Close'), id: 'closedocument', type: 'action'}
+			{name: _('Close document'), id: 'closedocument', type: 'action'}
 		],
 
 		spreadsheet: [
@@ -262,7 +262,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
-			{name: _('Close'), id: 'closedocument', type: 'action'}
+			{name: _('Close document'), id: 'closedocument', type: 'action'}
 		],
 
 		commandStates: {},
