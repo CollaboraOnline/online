@@ -84,7 +84,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC(getName() << ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
-    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    const auto tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
     auto docBroker = getDocumentBroker();
     if (!docBroker)
@@ -242,10 +242,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     return false;
 }
 
-bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens,
+bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
+                                 const std::vector<std::string>& tokens,
                                  const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    if (tokens.count() < 2)
+    if (tokens.size() < 2)
     {
         // Failed loading ends connection.
         sendTextFrame("error: cmd=load kind=syntax");
@@ -298,11 +299,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/, StringT
     return false;
 }
 
-bool ClientSession::getCommandValues(const char *buffer, int length, StringTokenizer& tokens,
+bool ClientSession::getCommandValues(const char *buffer, int length, const std::vector<std::string>& tokens,
                                      const std::shared_ptr<DocumentBroker>& docBroker)
 {
     std::string command;
-    if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
+    if (tokens.size() != 2 || !getTokenString(tokens[1], "command", command))
     {
         return sendTextFrame("error: cmd=commandvalues kind=syntax");
     }
@@ -328,11 +329,11 @@ bool ClientSession::getPartPageRectangles(const char *buffer, int length,
     return forwardToChild(std::string(buffer, length), docBroker);
 }
 
-bool ClientSession::sendFontRendering(const char *buffer, int length, StringTokenizer& tokens,
+bool ClientSession::sendFontRendering(const char *buffer, int length, const std::vector<std::string>& tokens,
                                       const std::shared_ptr<DocumentBroker>& docBroker)
 {
     std::string font, text;
-    if (tokens.count() < 2 ||
+    if (tokens.size() < 2 ||
         !getTokenString(tokens[1], "font", font))
     {
         return sendTextFrame("error: cmd=renderfont kind=syntax");
@@ -362,7 +363,7 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, StringToke
     return forwardToChild(std::string(buffer, length), docBroker);
 }
 
-bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens,
+bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const std::vector<std::string>& tokens,
                              const std::shared_ptr<DocumentBroker>& docBroker)
 {
     try
@@ -379,7 +380,7 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, StringToke
     return true;
 }
 
-bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens,
+bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens,
                                       const std::shared_ptr<DocumentBroker>& docBroker)
 {
     try

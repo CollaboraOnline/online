@@ -584,7 +584,7 @@ public:
         LOG_INF("setDocumentPassword returned");
     }
 
-    void renderTile(StringTokenizer& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
+    void renderTile(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
     {
         assert(ws && "Expected a non-null websocket.");
         auto tile = TileDesc::parse(tokens);
@@ -652,7 +652,7 @@ public:
         ws->sendFrame(output.data(), output.size(), WebSocket::FRAME_BINARY);
     }
 
-    void renderCombinedTiles(StringTokenizer& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
+    void renderCombinedTiles(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
     {
         assert(ws && "Expected a non-null websocket.");
         auto tileCombined = TileCombined::parse(tokens);
@@ -1360,8 +1360,7 @@ private:
                     break;
                 }
 
-                const std::string message(input.data(), input.size());
-                StringTokenizer tokens(message, " ");
+                const auto tokens = LOOLProtocol::tokenize(input.data(), input.size());
 
                 if (tokens[0] == "eof")
                 {
@@ -1387,7 +1386,8 @@ private:
                     int type = std::stoi(tokens[2]);
 
                     // payload is the rest of the message
-                    std::string payload(message.substr(tokens[0].length() + tokens[1].length() + tokens[2].length() + 3));
+                    const auto offset = tokens[0].length() + tokens[1].length() + tokens[2].length() + 3; // + delims
+                    const std::string payload(input.data() + offset, input.size() - offset);
 
                     // Forward the callback to the same view, demultiplexing is done by the LibreOffice core.
                     // TODO: replace with a map to be faster.
@@ -1422,7 +1422,7 @@ private:
                 }
                 else
                 {
-                    LOG_ERR("Unexpected tile request: [" << message << "].");
+                    LOG_ERR("Unexpected request: [" << LOOLProtocol::getAbbreviatedMessage(input) << "].");
                 }
             }
         }

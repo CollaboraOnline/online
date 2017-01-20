@@ -132,27 +132,27 @@ public:
     using Session::sendTextFrame;
 
 private:
-    bool loadDocument(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool loadDocument(const char* buffer, int length, const std::vector<std::string>& tokens);
 
-    bool sendFontRendering(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool getCommandValues(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool sendFontRendering(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool getCommandValues(const char* buffer, int length, const std::vector<std::string>& tokens);
 
-    bool clientZoom(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool clientVisibleArea(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool downloadAs(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool clientZoom(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool clientVisibleArea(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool downloadAs(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool getChildId();
-    bool getTextSelection(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool paste(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool insertFile(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool keyEvent(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool mouseEvent(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool unoCommand(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool selectText(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool selectGraphic(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool resetSelection(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool saveAs(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool setClientPart(const char* buffer, int length, Poco::StringTokenizer& tokens);
-    bool setPage(const char* buffer, int length, Poco::StringTokenizer& tokens);
+    bool getTextSelection(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool paste(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool insertFile(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool keyEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool mouseEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool unoCommand(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool selectText(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool selectGraphic(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool resetSelection(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool saveAs(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool setClientPart(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool setPage(const char* buffer, int length, const std::vector<std::string>& tokens);
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);
 

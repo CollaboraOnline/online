@@ -76,7 +76,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC(getName() + ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
-    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    const auto tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
     if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
     {
@@ -84,7 +84,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         updateLastActivityTime();
     }
 
-    if (tokens.count() > 0 && tokens[0] == "useractive" && getLOKitDocument() != nullptr)
+    if (tokens.size() > 0 && tokens[0] == "useractive" && getLOKitDocument() != nullptr)
     {
         LOG_DBG("Handling message after inactivity of " << getInactivityMS() << "ms.");
         setIsActive(true);
@@ -301,10 +301,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     return true;
 }
 
-bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int part = -1;
-    if (tokens.count() < 2)
+    if (tokens.size() < 2)
     {
         sendTextFrame("error: cmd=load kind=syntax");
         return false;
@@ -372,12 +372,12 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, StringT
     return true;
 }
 
-bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     std::string font, text, decodedFont, decodedChar;
     bool bSuccess;
 
-    if (tokens.count() < 3 ||
+    if (tokens.size() < 3 ||
         !getTokenString(tokens[1], "font", font))
     {
         sendTextFrame("error: cmd=renderfont kind=syntax");
@@ -488,12 +488,12 @@ void insertUserNames(const std::map<int, UserInfo>& viewInfo, std::string& json)
 
 }
 
-bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     bool success;
     char* values;
     std::string command;
-    if (tokens.count() != 2 || !getTokenString(tokens[1], "command", command))
+    if (tokens.size() != 2 || !getTokenString(tokens[1], "command", command))
     {
         sendTextFrame("error: cmd=commandvalues kind=syntax");
         return false;
@@ -537,11 +537,11 @@ bool ChildSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
     return true;
 }
 
-bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
 
-    if (tokens.count() != 5 ||
+    if (tokens.size() != 5 ||
         !getTokenInteger(tokens[1], "tilepixelwidth", tilePixelWidth) ||
         !getTokenInteger(tokens[2], "tilepixelheight", tilePixelHeight) ||
         !getTokenInteger(tokens[3], "tiletwipwidth", tileTwipWidth) ||
@@ -559,14 +559,14 @@ bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, StringToke
     return true;
 }
 
-bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int x;
     int y;
     int width;
     int height;
 
-    if (tokens.count() != 5 ||
+    if (tokens.size() != 5 ||
         !getTokenInteger(tokens[1], "x", x) ||
         !getTokenInteger(tokens[2], "y", y) ||
         !getTokenInteger(tokens[3], "width", width) ||
@@ -584,11 +584,11 @@ bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, Str
     return true;
 }
 
-bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     std::string name, id, format, filterOptions;
 
-    if (tokens.count() < 5 ||
+    if (tokens.size() < 5 ||
         !getTokenString(tokens[1], "name", name) ||
         !getTokenString(tokens[2], "id", id))
     {
@@ -600,7 +600,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, StringToke
 
     if (getTokenString(tokens[4], "options", filterOptions))
     {
-        if (tokens.count() > 5)
+        if (tokens.size() > 5)
         {
             filterOptions += Poco::cat(std::string(" "), tokens.begin() + 5, tokens.end());
         }
@@ -632,11 +632,11 @@ bool ChildSession::getChildId()
     return true;
 }
 
-bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     std::string mimeType;
 
-    if (tokens.count() != 2 ||
+    if (tokens.size() != 2 ||
         !getTokenString(tokens[1], "mimetype", mimeType))
     {
         sendTextFrame("error: cmd=gettextselection kind=syntax");
@@ -657,11 +657,11 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, Stri
     return true;
 }
 
-bool ChildSession::paste(const char* buffer, int length, StringTokenizer& tokens)
+bool ChildSession::paste(const char* buffer, int length, const std::vector<std::string>& tokens)
 {
     std::string mimeType;
 
-    if (tokens.count() < 2 || !getTokenString(tokens[1], "mimetype", mimeType))
+    if (tokens.size() < 2 || !getTokenString(tokens[1], "mimetype", mimeType))
     {
         sendTextFrame("error: cmd=paste kind=syntax");
         return false;
@@ -680,10 +680,10 @@ bool ChildSession::paste(const char* buffer, int length, StringTokenizer& tokens
     return true;
 }
 
-bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     std::string name, type;
-    if (tokens.count() != 3 ||
+    if (tokens.size() != 3 ||
         !getTokenString(tokens[1], "name", name) ||
         !getTokenString(tokens[2], "type", type))
     {
@@ -711,10 +711,10 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, StringToke
     return true;
 }
 
-bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int type, charcode, keycode;
-    if (tokens.count() != 4 ||
+    if (tokens.size() != 4 ||
         !getTokenKeyword(tokens[1], "type",
                          {{"input", LOK_KEYEVENT_KEYINPUT}, {"up", LOK_KEYEVENT_KEYUP}},
                          type) ||
@@ -750,7 +750,7 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/, StringTokeni
     return true;
 }
 
-bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int type, x, y, count;
     bool success = true;
@@ -759,7 +759,7 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringToke
     int buttons = 1; // left button
     int modifier = 0;
 
-    if (tokens.count() < 5 ||
+    if (tokens.size() < 5 ||
         !getTokenKeyword(tokens[1], "type",
                          {{"buttondown", LOK_MOUSEEVENT_MOUSEBUTTONDOWN},
                           {"buttonup", LOK_MOUSEEVENT_MOUSEBUTTONUP},
@@ -773,11 +773,11 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringToke
     }
 
     // compatibility with older loleaflets
-    if (success && tokens.count() > 5 && !getTokenInteger(tokens[5], "buttons", buttons))
+    if (success && tokens.size() > 5 && !getTokenInteger(tokens[5], "buttons", buttons))
         success = false;
 
     // compatibility with older loleaflets
-    if (success && tokens.count() > 6 && !getTokenInteger(tokens[6], "modifier", modifier))
+    if (success && tokens.size() > 6 && !getTokenInteger(tokens[6], "modifier", modifier))
         success = false;
 
     if (!success)
@@ -795,9 +795,9 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, StringToke
     return true;
 }
 
-bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
-    if (tokens.count() <= 1)
+    if (tokens.size() <= 1)
     {
         sendTextFrame("error: cmd=uno kind=syntax");
         return false;
@@ -810,11 +810,11 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, StringToke
 
     getLOKitDocument()->setView(_viewId);
 
-    if (tokens.count() == 2 && tokens[1] == ".uno:fakeDiskFull")
+    if (tokens.size() == 2 && tokens[1] == ".uno:fakeDiskFull")
     {
         Util::alertAllUsers("internal", "diskfull");
     }
-    else if (tokens.count() == 2)
+    else if (tokens.size() == 2)
     {
         getLOKitDocument()->postUnoCommand(tokens[1].c_str(), nullptr, bNotify);
     }
@@ -828,10 +828,10 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, StringToke
     return true;
 }
 
-bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int type, x, y;
-    if (tokens.count() != 4 ||
+    if (tokens.size() != 4 ||
         !getTokenKeyword(tokens[1], "type",
                          {{"start", LOK_SETTEXTSELECTION_START},
                           {"end", LOK_SETTEXTSELECTION_END},
@@ -853,10 +853,10 @@ bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, StringToke
     return true;
 }
 
-bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int type, x, y;
-    if (tokens.count() != 4 ||
+    if (tokens.size() != 4 ||
         !getTokenKeyword(tokens[1], "type",
                          {{"start", LOK_SETGRAPHICSELECTION_START},
                           {"end", LOK_SETGRAPHICSELECTION_END}},
@@ -877,9 +877,9 @@ bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, StringT
     return true;
 }
 
-bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
-    if (tokens.count() != 1)
+    if (tokens.size() != 1)
     {
         sendTextFrame("error: cmd=resetselection kind=syntax");
         return false;
@@ -894,11 +894,11 @@ bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, String
     return true;
 }
 
-bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     std::string url, format, filterOptions;
 
-    if (tokens.count() < 4 ||
+    if (tokens.size() < 4 ||
         !getTokenString(tokens[1], "url", url))
     {
         sendTextFrame("error: cmd=saveas kind=syntax");
@@ -909,7 +909,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, StringTokenize
 
     if (getTokenString(tokens[3], "options", filterOptions))
     {
-        if (tokens.count() > 4)
+        if (tokens.size() > 4)
         {
             filterOptions += Poco::cat(std::string(" "), tokens.begin() + 4, tokens.end());
         }
@@ -935,10 +935,10 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, StringTokenize
     return true;
 }
 
-bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int part;
-    if (tokens.count() < 2 ||
+    if (tokens.size() < 2 ||
         !getTokenInteger(tokens[1], "part", part))
     {
         sendTextFrame("error: cmd=setclientpart kind=invalid");
@@ -957,10 +957,10 @@ bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, StringT
     return true;
 }
 
-bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, StringTokenizer& tokens)
+bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int page;
-    if (tokens.count() < 2 ||
+    if (tokens.size() < 2 ||
         !getTokenInteger(tokens[1], "page", page))
     {
         sendTextFrame("error: cmd=setpage kind=invalid");

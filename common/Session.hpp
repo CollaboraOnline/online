@@ -74,7 +74,7 @@ protected:
     virtual ~Session();
 
     /// Parses the options of the "load" command, shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
-    void parseDocOptions(const Poco::StringTokenizer& tokens, int& part, std::string& timestamp);
+    void parseDocOptions(const std::vector<std::string>& tokens, int& part, std::string& timestamp);
 
     void updateLastActivityTime()
     {

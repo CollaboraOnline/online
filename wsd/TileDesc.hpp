@@ -165,7 +165,7 @@ public:
     }
 
     /// Deserialize a TileDesc from a tokenized string.
-    static TileDesc parse(const Poco::StringTokenizer& tokens)
+    static TileDesc parse(const std::vector<std::string>& tokens)
     {
         // We don't expect undocumented fields and
         // assume all values to be int.
@@ -178,7 +178,7 @@ public:
 
         uint64_t oldHash = 0;
         uint64_t hash = 0;
-        for (size_t i = 0; i < tokens.count(); ++i)
+        for (size_t i = 0; i < tokens.size(); ++i)
         {
             if (LOOLProtocol::getTokenUInt64(tokens[i], "oldhash", oldHash))
                 ;
@@ -213,9 +213,7 @@ public:
     /// Deserialize a TileDesc from a string format.
     static TileDesc parse(const std::string& message)
     {
-        Poco::StringTokenizer tokens(message, " ",
-                                     Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        return parse(tokens);
+        return parse(LOOLProtocol::tokenize(message.data(), message.size()));
     }
 
 private:
@@ -400,7 +398,7 @@ public:
     }
 
     /// Deserialize a TileDesc from a tokenized string.
-    static TileCombined parse(const Poco::StringTokenizer& tokens)
+    static TileCombined parse(const std::vector<std::string>& tokens)
     {
         // We don't expect undocumented fields and
         // assume all values to be int.
@@ -415,11 +413,12 @@ public:
         std::string versions;
         std::string oldhashes;
         std::string hashes;
-        for (size_t i = 0; i < tokens.count(); ++i)
+
+        for (const auto& token : tokens)
         {
             std::string name;
             std::string value;
-            if (LOOLProtocol::parseNameValuePair(tokens[i], name, value))
+            if (LOOLProtocol::parseNameValuePair(token, name, value))
             {
                 if (name == "tileposx")
                 {
@@ -466,9 +465,7 @@ public:
     /// Deserialize a TileDesc from a string format.
     static TileCombined parse(const std::string& message)
     {
-        Poco::StringTokenizer tokens(message, " ",
-                                     Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        return parse(tokens);
+        return parse(LOOLProtocol::tokenize(message.data(), message.size()));
     }
 
     static TileCombined create(const std::vector<TileDesc>& tiles)

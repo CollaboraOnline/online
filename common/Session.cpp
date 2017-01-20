@@ -116,17 +116,17 @@ bool Session::sendBinaryFrame(const char *buffer, int length)
     return false;
 }
 
-void Session::parseDocOptions(const StringTokenizer& tokens, int& part, std::string& timestamp)
+void Session::parseDocOptions(const std::vector<std::string>& tokens, int& part, std::string& timestamp)
 {
     // First token is the "load" command itself.
     size_t offset = 1;
-    if (tokens.count() > 2 && tokens[1].find("part=") == 0)
+    if (tokens.size() > 2 && tokens[1].find("part=") == 0)
     {
         getTokenInteger(tokens[1], "part", part);
         ++offset;
     }
 
-    for (size_t i = offset; i < tokens.count(); ++i)
+    for (size_t i = offset; i < tokens.size(); ++i)
     {
         if (tokens[i].find("url=") == 0)
         {
@@ -163,11 +163,11 @@ void Session::parseDocOptions(const StringTokenizer& tokens, int& part, std::str
         }
     }
 
-    if (tokens.count() > offset)
+    if (tokens.size() > offset)
     {
         if (getTokenString(tokens[offset], "options", _docOptions))
         {
-            if (tokens.count() > offset + 1)
+            if (tokens.size() > offset + 1)
                 _docOptions += Poco::cat(std::string(" "), tokens.begin() + offset + 1, tokens.end());
         }
     }

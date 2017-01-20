@@ -73,6 +73,20 @@ namespace LOOLProtocol
     bool getTokenInteger(const Poco::StringTokenizer& tokens, const std::string& name, int& value);
     bool getTokenString(const Poco::StringTokenizer& tokens, const std::string& name, std::string& value);
     bool getTokenKeyword(const Poco::StringTokenizer& tokens, const std::string& name, const std::map<std::string, int>& map, int& value);
+    inline bool getTokenString(const std::vector<std::string>& tokens,
+                               const std::string& name,
+                               std::string& value)
+    {
+        for (const auto& token : tokens)
+        {
+            if (getTokenString(token, name, value))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     bool getTokenIntegerFromMessage(const std::string& message, const std::string& name, int& value);
     bool getTokenStringFromMessage(const std::string& message, const std::string& name, std::string& value);
