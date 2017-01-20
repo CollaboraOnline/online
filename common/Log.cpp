@@ -8,6 +8,8 @@
  */
 
 #include <sys/prctl.h>
+#include <sys/syscall.h>
+#include <unistd.h>
 
 #include <atomic>
 #include <cassert>
@@ -15,9 +17,6 @@
 #include <iomanip>
 #include <sstream>
 #include <string>
-
-#include <sys/syscall.h>
-#include <unistd.h>
 
 #include <Poco/ConsoleChannel.h>
 #include <Poco/DateTimeFormatter.h>
@@ -76,36 +75,28 @@ namespace Log
         }
     }
 
-    static void getPrefix(char *buffer, const char* level)
+    char* prefix(char* buffer, const char* level, const long osTid)
     {
-        char procName[32]; // we really need only 16
+        char procName[32];
         if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(procName), 0, 0, 0) != 0)
         {
             strncpy(procName, "<noid>", sizeof(procName) - 1);
         }
 
-        const char* appName = (Source.inited ? Source.id.c_str() : "<shutdown>");
-        assert(strlen(appName) + 32 + 28 < 1024 - 1);
-
         Poco::DateTime time;
-        snprintf(buffer, 1023, "%s-%.04lu %.2u:%.2u:%.2u.%.6u [ %s ] %s  ", appName,
-                 syscall(SYS_gettid),
-                 time.hour(), time.minute(), time.second(),
-                 time.millisecond() * 1000 + time.microsecond(),
-                 procName, level);
-    }
-
-    std::string prefix(const char* level)
-    {
-        char buffer[1024];
-        getPrefix(buffer, level);
-        return std::string(buffer);
+        snprintf(buffer, 1023, "%s-%.04lu %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
+                    (Source.inited ? Source.id.c_str() : "<shutdown>"),
+                    osTid,
+                    time.hour(), time.minute(), time.second(),
+                    time.millisecond() * 1000 + time.microsecond(),
+                    procName, level);
+        return buffer;
     }
 
     void signalLogPrefix()
     {
         char buffer[1024];
-        getPrefix(buffer, "SIG");
+        prefix(buffer, "SIG", syscall(SYS_gettid));
         signalLog(buffer);
     }
 
@@ -167,42 +158,42 @@ namespace Log
 
     void trace(const std::string& msg)
     {
-        logger().trace(prefix("TRC") + msg);
+        LOG_TRC(msg);
     }
 
     void debug(const std::string& msg)
     {
-        logger().debug(prefix("DBG") + msg);
+        LOG_DBG(msg);
     }
 
     void info(const std::string& msg)
     {
-        logger().information(prefix("INF") + msg);
+        LOG_INF(msg);
     }
 
     void warn(const std::string& msg)
     {
-        logger().warning(prefix("WRN") + msg);
+        LOG_WRN(msg);
     }
 
     void error(const std::string& msg)
     {
-        logger().error(prefix("ERR") + msg);
+        LOG_ERR(msg);
     }
 
     void syserror(const std::string& msg)
     {
-        logger().error(prefix("ERR") + msg + " (errno: " + std::string(std::strerror(errno)) + ")");
+        LOG_SYS(msg);
     }
 
     void fatal(const std::string& msg)
     {
-        logger().fatal(prefix("FTL") + msg);
+        LOG_FTL(msg);
     }
 
     void sysfatal(const std::string& msg)
     {
-        logger().fatal(prefix("FTL") + msg + " (errno: " + std::string(std::strerror(errno)) + ")");
+        LOG_SFL(msg);
     }
 }
 

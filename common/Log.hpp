@@ -10,6 +10,9 @@
 #ifndef INCLUDED_LOG_HPP
 #define INCLUDED_LOG_HPP
 
+#include <sys/syscall.h>
+#include <unistd.h>
+
 #include <functional>
 #include <sstream>
 #include <string>
@@ -24,7 +27,8 @@ namespace Log
                     const bool logToFile,
                     std::map<std::string, std::string> config);
     Poco::Logger& logger();
-    std::string prefix(const char* level);
+
+    char* prefix(char* buffer, const char* level, const long osTid);
 
     void trace(const std::string& msg);
     void debug(const std::string& msg);
@@ -35,12 +39,12 @@ namespace Log
     void fatal(const std::string& msg);
     void sysfatal(const std::string& msg);
 
-    inline bool traceEnabled() { return logger().getLevel() >= Poco::Message::PRIO_TRACE; }
-    inline bool debugEnabled() { return logger().getLevel() >= Poco::Message::PRIO_DEBUG; }
-    inline bool infoEnabled() { return logger().getLevel() >= Poco::Message::PRIO_INFORMATION; }
-    inline bool warnEnabled() { return logger().getLevel() >= Poco::Message::PRIO_WARNING; }
-    inline bool errorEnabled() { return logger().getLevel() >= Poco::Message::PRIO_ERROR; }
-    inline bool fatalEnabled() { return logger().getLevel() >= Poco::Message::PRIO_FATAL; }
+    inline bool traceEnabled() { return logger().trace(); }
+    inline bool debugEnabled() { return logger().debug(); }
+    inline bool infoEnabled() { return logger().information(); }
+    inline bool warnEnabled() { return logger().warning(); }
+    inline bool errorEnabled() { return logger().error(); }
+    inline bool fatalEnabled() { return logger().fatal(); }
 
     /// Signal safe prefix logging
     void signalLogPrefix();
@@ -68,11 +72,12 @@ namespace Log
         {
         }
 
-        StreamLogger(std::function<void(const std::string&)> func, const char* level)
+        StreamLogger(std::function<void(const std::string&)> func, const char*level)
           : _func(std::move(func)),
             _enabled(true)
         {
-            _stream << prefix(level);
+            char buffer[1024];
+            _stream << prefix(buffer, level, syscall(SYS_gettid));
         }
 
         StreamLogger(StreamLogger&& sl) noexcept
@@ -170,15 +175,15 @@ namespace Log
     }
 }
 
-#define LOG_BODY(LVL, X) std::ostringstream oss_; oss_ << Log::prefix(LVL) << std::boolalpha << X << "| " << __FILE__ << ':' << __LINE__
-#define LOG_TRC(X) do { if (Log::traceEnabled()) { LOG_BODY("TRC", X); Log::logger().trace(oss_.str()); } } while (false)
-#define LOG_DBG(X) do { if (Log::debugEnabled()) { LOG_BODY("DBG", X); Log::logger().debug(oss_.str()); } } while (false)
-#define LOG_INF(X) do { if (Log::infoEnabled()) { LOG_BODY("INF", X); Log::logger().information(oss_.str()); } } while (false)
-#define LOG_WRN(X) do { if (Log::warnEnabled()) { LOG_BODY("WRN", X); Log::logger().warning(oss_.str()); } } while (false)
-#define LOG_ERR(X) do { if (Log::errorEnabled()) { LOG_BODY("ERR", X); Log::logger().error(oss_.str()); } } while (false)
-#define LOG_SYS(X) do { if (Log::errorEnabled()) { LOG_BODY("ERR", X << " (errno: " << std::strerror(errno) << ")"); Log::logger().error(oss_.str()); } } while (false)
-#define LOG_FTL(X) do { if (Log::fatalEnabled()) { LOG_BODY("FTL", X); Log::logger().fatal(oss_.str()); } } while (false)
-#define LOG_SFL(X) do { if (Log::errorEnabled()) { LOG_BODY("FTL", X << " (errno: " << std::strerror(errno) << ")"); Log::logger().fatal(oss_.str()); } } while (false)
+#define LOG_BODY_(PRIO, LVL, X) Poco::Message m_(l_.name(), "", Poco::Message::PRIO_##PRIO); char b_[1024]; std::ostringstream oss_(Log::prefix(b_, LVL, m_.getOsTid()), std::ostringstream::ate); oss_ << std::boolalpha << X << "| " << __FILE__ << ':' << __LINE__; m_.setText(oss_.str()); l_.log(m_);
+#define LOG_TRC(X) do { auto& l_ = Log::logger(); if (l_.trace()) { LOG_BODY_(TRACE, "TRC", X); } } while (false)
+#define LOG_DBG(X) do { auto& l_ = Log::logger(); if (l_.debug()) { LOG_BODY_(DEBUG, "DBG", X); } } while (false)
+#define LOG_INF(X) do { auto& l_ = Log::logger(); if (l_.information()) { LOG_BODY_(INFORMATION, "INF", X); } } while (false)
+#define LOG_WRN(X) do { auto& l_ = Log::logger(); if (l_.warning()) { LOG_BODY_(WARNING, "WRN", X); } } while (false)
+#define LOG_ERR(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(ERROR, "ERR", X); } } while (false)
+#define LOG_SYS(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(ERROR, "ERR", X << " (errno: " << std::strerror(errno) << ")"); } } while (false)
+#define LOG_FTL(X) do { auto& l_ = Log::logger(); if (l_.fatal()) { LOG_BODY_(FATAL, "FTL", X); } } while (false)
+#define LOG_SFL(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(FATAL, "FTL", X << " (errno: " << std::strerror(errno) << ")"); } } while (false)
 
 #define LOG_CHECK(X) do { if (!(X)) { LOG_ERR("Check failed. Expected (" #X ")."); } } while (false)
 #define LOG_CHECK_RET(X, RET) do { if (!(X)) { LOG_ERR("Check failed. Expected (" #X ")."); return RET; } } while (false)
