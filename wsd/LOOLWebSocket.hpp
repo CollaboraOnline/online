@@ -223,6 +223,16 @@ public:
         {
             LOG_WRN("LOOLWebSocket::shutdown: Exception: " << exc.displayText() <<
                     (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+
+            // Just close it.
+            try
+            {
+                Poco::Net::WebSocket::close();
+            }
+            catch (const std::exception&)
+            {
+                // Nothing we can do.
+            }
         }
     }
 };

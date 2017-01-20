@@ -194,6 +194,7 @@ namespace
 inline void shutdownLimitReached(LOOLWebSocket& ws)
 {
     const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
+    LOG_INF("Sending client limit-reached message: " << error);
 
     /* loleaflet sends loolclient, load and partrectangles message immediately
        after web socket handshake, so closing web socket fails loading page in
