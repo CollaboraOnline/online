@@ -83,6 +83,11 @@ public:
     std::string getSaveAsUrl(const unsigned timeoutMs)
     {
         const auto payload = _saveAsQueue.get(timeoutMs);
+        if (payload.empty())
+        {
+            throw std::runtime_error("Timed-out while getting save-as URL.");
+        }
+
         return std::string(payload.data(), payload.size());
     }
 

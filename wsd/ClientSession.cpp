@@ -50,9 +50,6 @@ ClientSession::~ClientSession()
 {
     LOG_INF("~ClientSession dtor [" << getName() << "].");
 
-    // Release the save-as queue.
-    _saveAsQueue.put("");
-
     stop();
     if (_senderThread.joinable())
     {

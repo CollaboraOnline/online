@@ -39,6 +39,11 @@ public:
     /// Thread safe insert the message.
     void put(const Payload& value)
     {
+        if (value.empty())
+        {
+            throw std::runtime_error("Cannot queue empty item.");
+        }
+
         std::unique_lock<std::mutex> lock(_mutex);
         put_impl(value);
         lock.unlock();
@@ -52,6 +57,7 @@ public:
 
     /// Thread safe obtaining of the message.
     /// timeoutMs can be 0 to signify infinity.
+    /// Returns an empty payload on timeout.
     Payload get(const unsigned timeoutMs = 0)
     {
         std::unique_lock<std::mutex> lock(_mutex);
@@ -59,9 +65,9 @@ public:
         if (timeoutMs > 0)
         {
             if (!_cv.wait_for(lock, std::chrono::milliseconds(timeoutMs),
-                            [this] { return wait_impl(); }))
+                              [this] { return wait_impl(); }))
             {
-                throw std::runtime_error("Timed out waiting to get queue item.");
+                return Payload();
             }
         }
         else
@@ -71,7 +77,6 @@ public:
 
         return get_impl();
     }
-
 
     /// Thread safe removal of all the pending messages.
     void clear()
@@ -118,7 +123,7 @@ protected:
     std::vector<Payload> _queue;
 
 private:
-    std::mutex _mutex;
+    mutable std::mutex _mutex;
     std::condition_variable _cv;
 
 };
