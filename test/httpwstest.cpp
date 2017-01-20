@@ -360,26 +360,35 @@ void HTTPWSTest::loadDoc(const std::string& documentURL, const std::string& test
 
 void HTTPWSTest::testConnectNoLoad()
 {
+    const auto testname1 = "connectNoLoad-1 ";
+    const auto testname2 = "connectNoLoad-2 ";
+    const auto testname3 = "connectNoLoad-3 ";
+
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL);
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-    auto socket = connectLOKit(_uri, request, _response);
+    std::cerr << testname1 << "Connecting." << std::endl;
+    auto socket = connectLOKit(_uri, request, _response, testname1);
     CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket);
+    std::cerr << testname1 << "Disconnecting." << std::endl;
     socket.reset();
 
     // Connect and load first view.
-    auto socket1 = connectLOKit(_uri, request, _response);
+    std::cerr << testname2 << "Connecting." << std::endl;
+    auto socket1 = connectLOKit(_uri, request, _response, testname2);
     CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket1);
-    sendTextFrame(socket1, "load url=" + documentURL);
+    sendTextFrame(socket1, "load url=" + documentURL, testname2);
     CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket1));
 
     // Connect but don't load second view.
-    auto socket2 = connectLOKit(_uri, request, _response);
+    std::cerr << testname3 << "Connecting." << std::endl;
+    auto socket2 = connectLOKit(_uri, request, _response, testname3);
     CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket2);
+    std::cerr << testname3 << "Disconnecting." << std::endl;
     socket2.reset();
 
-    sendTextFrame(socket1, "status");
+    sendTextFrame(socket1, "status", testname2);
     assertResponseString(socket1, "status:");
 }
 

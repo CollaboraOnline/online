@@ -176,7 +176,7 @@ int getErrorCode(LOOLWebSocket& ws, std::string& message, const std::string& tes
         bytes = ws.receiveFrame(buffer.begin(), READ_BUFFER_SIZE, flags);
         std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer.begin(), bytes, flags) << std::endl;
     }
-    while (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+    while (bytes != 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
     if (bytes > 0)
     {
