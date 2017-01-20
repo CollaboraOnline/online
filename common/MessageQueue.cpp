@@ -11,6 +11,9 @@
 
 #include <algorithm>
 
+#include <Poco/JSON/JSON.h>
+#include <Poco/JSON/Object.h>
+#include <Poco/JSON/Parser.h>
 #include <Poco/StringTokenizer.h>
 
 #include <Protocol.hpp>
@@ -62,7 +65,7 @@ void TileQueue::put_impl(const Payload& value)
         {
             const std::string newMsg = tile.serialize("tile");
 
-            removeDuplicate(newMsg);
+            removeTileDuplicate(newMsg);
 
             MessageQueue::put_impl(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
         }
@@ -70,19 +73,23 @@ void TileQueue::put_impl(const Payload& value)
     }
     else if (firstToken == "tile")
     {
-        removeDuplicate(msg);
+        removeTileDuplicate(msg);
+
+        MessageQueue::put_impl(value);
+        return;
+    }
+    else if (firstToken == "callback")
+    {
+        removeCallbackDuplicate(msg);
 
         MessageQueue::put_impl(value);
         return;
     }
 
-    // TODO probably we could deduplacite the invalidation callbacks (later
-    // one wins) the same way as we do for the tiles - to be tested.
-
     MessageQueue::put_impl(value);
 }
 
-void TileQueue::removeDuplicate(const std::string& tileMsg)
+void TileQueue::removeTileDuplicate(const std::string& tileMsg)
 {
     assert(LOOLProtocol::matchPrefix("tile", tileMsg, /*ignoreWhitespace*/ true));
 
@@ -102,9 +109,90 @@ void TileQueue::removeDuplicate(const std::string& tileMsg)
         if (it.size() > newMsgPos &&
             strncmp(tileMsg.data(), it.data(), newMsgPos) == 0)
         {
-            LOG_TRC("Remove duplicate message: " << std::string(it.data(), it.size()) << " -> " << tileMsg);
+            LOG_TRC("Remove duplicate tile request: " << std::string(it.data(), it.size()) << " -> " << tileMsg);
             _queue.erase(_queue.begin() + i);
             break;
+        }
+    }
+}
+
+namespace {
+
+/// Read the viewId from the tokens.
+std::string extractViewId(const std::string& origMsg, const std::vector<std::string> tokens)
+{
+    size_t nonJson = tokens[0].size() + tokens[1].size() + tokens[2].size() + 3; // including spaces
+    std::string jsonString(origMsg.data() + nonJson, origMsg.size() - nonJson);
+
+    Poco::JSON::Parser parser;
+    const auto result = parser.parse(jsonString);
+    const auto& json = result.extract<Poco::JSON::Object::Ptr>();
+    return json->get("viewId").toString();
+}
+
+}
+
+void TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
+{
+    assert(LOOLProtocol::matchPrefix("callback", callbackMsg, /*ignoreWhitespace*/ true));
+
+    std::vector<std::string> tokens = LOOLProtocol::tokenize(callbackMsg);
+
+    if (tokens.size() < 3)
+        return;
+
+    // TODO probably we could deduplicate the invalidation callbacks (later
+    // one wins) too?
+
+    // the message is "callback <view> <id> ..."
+    const std::string& callbackType = tokens[2];
+    if (callbackType == "1" ||      // the cursor has moved
+            callbackType == "5" ||  // the cursor visibility has changed
+            callbackType == "17" || // the cell cursor has moved
+            callbackType == "24" || // the view cursor has moved
+            callbackType == "26" || // the view cell cursor has moved
+            callbackType == "28")   // the view cursor visibility has changed
+    {
+        bool isViewCallback = (callbackType == "24" || callbackType == "26" || callbackType == "28");
+
+        std::string viewId;
+        if (isViewCallback)
+        {
+            viewId = extractViewId(callbackMsg, tokens);
+        }
+
+        for (size_t i = 0; i < _queue.size(); ++i)
+        {
+            auto& it = _queue[i];
+
+            // skip non-callbacks quickly
+            if (!LOOLProtocol::matchPrefix("callback", it))
+                continue;
+
+            std::vector<std::string> queuedTokens = LOOLProtocol::tokenize(it.data(), it.size());
+            if (queuedTokens.size() < 3)
+                continue;
+
+            if (!isViewCallback && (queuedTokens[1] == tokens[1] && queuedTokens[2] == tokens[2]))
+            {
+                LOG_TRC("Remove obsolete callback: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
+                _queue.erase(_queue.begin() + i);
+                break;
+            }
+            else if (isViewCallback && (queuedTokens[1] == tokens[1] && queuedTokens[2] == tokens[2]))
+            {
+                // we additionally need to ensure that the payload is about
+                // the same viewid (otherwise we'd merge them all views into
+                // one)
+                const std::string queuedViewId = extractViewId(std::string(it.data(), it.size()), queuedTokens);
+
+                if (viewId == queuedViewId)
+                {
+                    LOG_TRC("Remove obsolete view callback: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
+                    _queue.erase(_queue.begin() + i);
+                    break;
+                }
+            }
         }
     }
 }
