@@ -61,7 +61,6 @@ struct _LibreOfficeKitClass
     void (*freeError) (char* pFree);
 
 #if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
-    /// @see lok::Office::registerCallback().
     void (*registerCallback) (LibreOfficeKit* pThis,
                               LibreOfficeKitCallback pCallback,
                               void* pData);
@@ -250,6 +249,16 @@ struct _LibreOfficeKitDocumentClass
     bool (*getViewIds) (LibreOfficeKitDocument* pThis,
                        int* pArray,
                        size_t nSize);
+
+    /// Starts a batch of operations.
+    /// Events are emmitted only after ending the batch.
+    /// @see lok::Document::endBatch();
+    void (*beginBatch) (LibreOfficeKitDocument* pThis);
+
+    /// Ends a batch of operations.
+    /// @see lok::Document::beginBatch();
+    void (*endBatch) (LibreOfficeKitDocument* pThis);
+
 
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
