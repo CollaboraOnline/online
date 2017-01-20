@@ -70,6 +70,7 @@ L.Map = L.Evented.extend({
 		this._active = true;
 		this._fatal = false;
 		this._enabled = true;
+		this._debugAlwaysActive = false; // disables the dimming / document inactivity when true
 
 		vex.dialogID = -1;
 
@@ -773,6 +774,10 @@ L.Map = L.Evented.extend({
 	},
 
 	_dim: function() {
+		if (this._debugAlwaysActive === true) {
+			return;
+		}
+
 		console.debug('_dim:');
 		if (!this._socket.connected()) {
 			return;

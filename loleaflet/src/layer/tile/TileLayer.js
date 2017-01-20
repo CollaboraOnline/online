@@ -1973,18 +1973,22 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			this._debugInfo = new L.LayerGroup();
 			this._debugInfo2 = new L.LayerGroup();
+			this._debugAlwaysActive = new L.LayerGroup();
 			this._debugTyper = new L.LayerGroup();
 			map.addLayer(this._debugInfo);
 			map.addLayer(this._debugInfo2);
 			var overlayMaps = {
 				'Tile overlays': this._debugInfo,
 				'Screen overlays': this._debugInfo2,
+				'Always active': this._debugAlwaysActive,
 				'Typing': this._debugTyper
 			};
 			L.control.layers({}, overlayMaps, {collapsed: false}).addTo(map);
 
 			this._map.on('layeradd', function(e) {
-				if (e.layer === this._debugTyper) {
+				if (e.layer === this._debugAlwaysActive) {
+					map._debugAlwaysActive = true;
+				} else if (e.layer === this._debugTyper) {
 					this._debugTypeTimeout();
 				} else if (e.layer === this._debugInfo2) {
 					for (var i = 0; i < this._debugDataNames.length; i++) {
@@ -1993,7 +1997,9 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}, this);
 			map.on('layerremove', function(e) {
-				if (e.layer === this._debugTyper) {
+				if (e.layer === this._debugAlwaysActive) {
+					map._debugAlwaysActive = false;
+				} else if (e.layer === this._debugTyper) {
 					clearTimeout(this._debugTypeTimeoutId);
 				} else if (e.layer === this._debugInfo2) {
 					for (var i in this._debugData) {
