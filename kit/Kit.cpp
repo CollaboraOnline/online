@@ -1382,42 +1382,49 @@ private:
                 }
                 else if (tokens[0] == "callback")
                 {
-                    int viewId = std::stoi(tokens[1]); // -1 means broadcast
-                    int type = std::stoi(tokens[2]);
-
-                    // payload is the rest of the message
-                    const auto offset = tokens[0].length() + tokens[1].length() + tokens[2].length() + 3; // + delims
-                    const std::string payload(input.data() + offset, input.size() - offset);
-
-                    // Forward the callback to the same view, demultiplexing is done by the LibreOffice core.
-                    // TODO: replace with a map to be faster.
-                    bool isFound = false;
-                    for (auto& it : _sessions)
+                    if (tokens.size() >= 3)
                     {
-                        auto session = it.second;
-                        if (session && ((session->getViewId() == viewId) || (viewId == -1)))
-                        {
-                            if (!it.second->isCloseFrame())
-                            {
-                                isFound = true;
-                                session->loKitCallback(type, payload);
-                            }
-                            else
-                            {
-                                LOG_ERR("Session-thread of session [" << session->getId() << "] for view [" <<
-                                        viewId << "] is not running. Dropping [" << LOKitHelper::kitCallbackTypeToString(type) <<
-                                        "] payload [" << payload << "].");
-                            }
+                        int viewId = std::stoi(tokens[1]); // -1 means broadcast
+                        int type = std::stoi(tokens[2]);
 
-                            break;
+                        // payload is the rest of the message
+                        const auto offset = tokens[0].length() + tokens[1].length() + tokens[2].length() + 3; // + delims
+                        const std::string payload(input.data() + offset, input.size() - offset);
+
+                        // Forward the callback to the same view, demultiplexing is done by the LibreOffice core.
+                        // TODO: replace with a map to be faster.
+                        bool isFound = false;
+                        for (auto& it : _sessions)
+                        {
+                            auto session = it.second;
+                            if (session && ((session->getViewId() == viewId) || (viewId == -1)))
+                            {
+                                if (!it.second->isCloseFrame())
+                                {
+                                    isFound = true;
+                                    session->loKitCallback(type, payload);
+                                }
+                                else
+                                {
+                                    LOG_ERR("Session-thread of session [" << session->getId() << "] for view [" <<
+                                            viewId << "] is not running. Dropping [" << LOKitHelper::kitCallbackTypeToString(type) <<
+                                            "] payload [" << payload << "].");
+                                }
+
+                                break;
+                            }
+                        }
+
+                        if (!isFound)
+                        {
+                            LOG_WRN("Document::ViewCallback. Session [" << viewId <<
+                                    "] is no longer active to process [" << LOKitHelper::kitCallbackTypeToString(type) <<
+                                    "] [" << payload << "] message to Master Session.");
                         }
                     }
-
-                    if (!isFound)
+                    else
                     {
-                        LOG_WRN("Document::ViewCallback. Session [" << viewId <<
-                                "] is no longer active to process [" << LOKitHelper::kitCallbackTypeToString(type) <<
-                                "] [" << payload << "] message to Master Session.");
+                        LOG_ERR("Invalid callback message: [" << LOOLProtocol::getAbbreviatedMessage(input) << "].");
                     }
                 }
                 else
