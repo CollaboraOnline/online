@@ -156,7 +156,7 @@ namespace LOOLProtocol
 
     /// Returns the first token of a message.
     inline
-    std::string getFirstToken(const char *message, const int length, const char delim)
+    std::string getFirstToken(const char *message, const int length, const char delim = ' ')
     {
         return getDelimitedInitialSubstring(message, length, delim);
     }

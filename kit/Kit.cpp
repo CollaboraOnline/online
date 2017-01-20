@@ -1239,7 +1239,7 @@ private:
         return _loKitDocument;
     }
 
-    bool forwardToChild(const std::string& prefix, const std::vector<char>& payload)
+    size_t forwardToChild(const std::string& prefix, const std::vector<char>& payload, size_t batched)
     {
         assert(payload.size() > prefix.size());
 
@@ -1281,14 +1281,46 @@ private:
                     // No longer needed, and allow session dtor to take it.
                     lock.unlock();
                     session.reset();
-                    return true;
+                    return batched;
                 }
 
                 // No longer needed, and allow the handler to take it.
                 lock.unlock();
                 if (session)
                 {
-                    return session->handleInput(data, size);
+                    static std::string last;
+
+                    const auto current = LOOLProtocol::getFirstToken(data, size);
+                    if (batched)
+                    {
+                        if (current != last)
+                        {
+                            LOG_TRC("Ending batch of " << batched << " messages.");
+                            std::unique_lock<std::mutex> lockDocument(_documentMutex);
+                            batched = 0;
+                            getLOKitDocument()->endBatch();
+                        }
+                    }
+
+                    if (!batched)
+                    {
+                        std::unique_lock<std::mutex> lockDocument(_documentMutex);
+                        if (_loKitDocument)
+                        {
+                            ++batched;
+                            last = current;
+                            LOG_TRC("Beginning batch [" << last<< "].");
+                            getLOKitDocument()->beginBatch();
+                        }
+                    }
+                    else
+                    {
+                        ++batched;
+                        LOG_TRC("Processing batch item #" << batched << " [" << current << "].");
+                    }
+
+                    session->handleInput(data, size);
+                    return batched;
                 }
             }
 
@@ -1300,7 +1332,7 @@ private:
             LOG_ERR("Failed to parse prefix of forward-to-child message: " << prefix);
         }
 
-        return false;
+        return batched;
     }
 
     std::string makeRenderParams(const std::string& userName)
@@ -1347,10 +1379,20 @@ private:
 
         LOG_DBG("Thread started.");
 
+        size_t batched = 0;
         try
         {
             while (!_stop && !TerminationFlag)
             {
+                // End if we have no more.
+                if (batched)
+                {
+                    LOG_TRC("Ending batch of " << batched << " messages.");
+                    std::unique_lock<std::mutex> lock(_documentMutex);
+                    batched = 0;
+                    getLOKitDocument()->endBatch();
+                }
+
                 const TileQueue::Payload input = _tileQueue->get();
                 LOG_TRC("Kit Recv " << LOOLProtocol::getAbbreviatedMessage(input));
 
@@ -1368,6 +1410,15 @@ private:
                     break;
                 }
 
+                // Stop batching if not a child message.
+                if (batched && tokens[0].compare(0, 5, "child"))
+                {
+                    LOG_TRC("Ending batch of " << batched << " messages.");
+                    std::unique_lock<std::mutex> lock(_documentMutex);
+                    batched = 0;
+                    getLOKitDocument()->endBatch();
+                }
+
                 if (tokens[0] == "tile")
                 {
                     renderTile(tokens, _ws);
@@ -1378,7 +1429,7 @@ private:
                 }
                 else if (LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
                 {
-                    forwardToChild(tokens[0], input);
+                    batched = forwardToChild(tokens[0], input, batched);
                 }
                 else if (tokens[0] == "callback")
                 {
