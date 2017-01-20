@@ -202,7 +202,13 @@ protected:
 
 private:
     /// Search the queue for a duplicate tile and remove it (if present).
-    void removeDuplicate(const std::string& tileMsg);
+    void removeTileDuplicate(const std::string& tileMsg);
+
+    /// Search the queue for a duplicate callback and remove it (if present).
+    ///
+    /// This removes also callbacks that are made invalid by the current
+    /// message, like the new cursor position invalidates the old one etc.
+    void removeCallbackDuplicate(const std::string& callbackMsg);
 
     /// Find the index of the first non-preview entry.
     /// When preferTiles is false, it'll return index of
