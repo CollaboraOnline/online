@@ -285,7 +285,7 @@ void TileQueueTests::testSenderQueue()
 
     for (const auto& msg : messages)
     {
-        queue.enqueue(std::make_shared<MessagePayload>(msg));
+        queue.enqueue(std::make_shared<MessagePayload>(msg, MessagePayload::Dir::Out));
     }
 
     CPPUNIT_ASSERT_EQUAL(3UL, queue.size());
@@ -324,7 +324,7 @@ void TileQueueTests::testSenderQueueTileDeduplication()
 
     for (const auto& msg : part_messages)
     {
-        queue.enqueue(std::make_shared<MessagePayload>(msg));
+        queue.enqueue(std::make_shared<MessagePayload>(msg, MessagePayload::Dir::Out));
     }
 
     CPPUNIT_ASSERT_EQUAL(3UL, queue.size());
@@ -343,7 +343,7 @@ void TileQueueTests::testSenderQueueTileDeduplication()
 
     for (const auto& msg : dup_messages)
     {
-        queue.enqueue(std::make_shared<MessagePayload>(msg));
+        queue.enqueue(std::make_shared<MessagePayload>(msg, MessagePayload::Dir::Out));
     }
 
     CPPUNIT_ASSERT_EQUAL(1UL, queue.size());
@@ -374,7 +374,7 @@ void TileQueueTests::testInvalidateViewCursorDeduplication()
 
     for (const auto& msg : view_messages)
     {
-        queue.enqueue(std::make_shared<MessagePayload>(msg));
+        queue.enqueue(std::make_shared<MessagePayload>(msg, MessagePayload::Dir::Out));
     }
 
     CPPUNIT_ASSERT_EQUAL(3UL, queue.size());
@@ -402,7 +402,7 @@ void TileQueueTests::testInvalidateViewCursorDeduplication()
 
     for (const auto& msg : dup_messages)
     {
-        queue.enqueue(std::make_shared<MessagePayload>(msg));
+        queue.enqueue(std::make_shared<MessagePayload>(msg, MessagePayload::Dir::Out));
     }
 
     CPPUNIT_ASSERT_EQUAL(1UL, queue.size());

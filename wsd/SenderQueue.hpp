@@ -32,15 +32,18 @@ class MessagePayload
 public:
 
     enum class Type { Text, JSON, Binary };
+    enum class Dir { In, Out };
 
     /// Construct a text message.
     /// message must include the full first-line.
     MessagePayload(const std::string& message,
+                   const enum Dir dir,
                    const enum Type type = Type::Text) :
         _data(message.data(), message.data() + message.size()),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
+        _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
-        _abbreviation(LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
+        _abbreviation(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
         _type(type)
     {
     }
@@ -49,12 +52,14 @@ public:
     /// reserve extra space (total, including message).
     /// message must include the full first-line.
     MessagePayload(const std::string& message,
+                   const enum Dir dir,
                    const enum Type type,
                    const size_t reserve) :
         _data(std::max(reserve, message.size())),
         _tokens(LOOLProtocol::tokenize(message)),
+        _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(message)),
-        _abbreviation(LOOLProtocol::getAbbreviatedMessage(message)),
+        _abbreviation(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(message)),
         _type(type)
     {
         _data.resize(message.size());
@@ -65,11 +70,13 @@ public:
     /// data must be include the full first-line.
     MessagePayload(const char* p,
                    const size_t len,
+                   const enum Dir dir,
                    const enum Type type) :
         _data(p, p + len),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
+        _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
-        _abbreviation(LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
+        _abbreviation(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
         _type(type)
     {
     }
@@ -81,6 +88,7 @@ public:
     const std::string& firstToken() const { return _tokens[0]; }
     const std::string& firstLine() const { return _firstLine; }
     const std::string& abbreviation() const { return _abbreviation; }
+    const std::string& id() const { return _id; }
 
     /// Returns the json part of the message, if any.
     std::string jsonString() const
@@ -106,8 +114,18 @@ public:
     bool isBinary() const { return _type == Type::Binary; }
 
 private:
+
+    /// Constructs a unique ID.
+    static std::string makeId(const enum Dir dir)
+    {
+        static std::atomic<unsigned> Counter;
+        return (dir == Dir::In ? 'i' : 'o') + std::to_string(++Counter);
+    }
+
+private:
     std::vector<char> _data;
     const std::vector<std::string> _tokens;
+    const std::string _id;
     const std::string _firstLine;
     const std::string _abbreviation;
     const Type _type;

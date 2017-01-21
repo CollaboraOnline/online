@@ -51,14 +51,18 @@ public:
 
     bool sendBinaryFrame(const char* buffer, int length) override
     {
-        auto payload = std::make_shared<MessagePayload>(buffer, length, MessagePayload::Type::Binary);
+        auto payload = std::make_shared<MessagePayload>(buffer, length,
+                                                        MessagePayload::Dir::Out,
+                                                        MessagePayload::Type::Binary);
         enqueueSendMessage(payload);
         return true;
     }
 
     bool sendTextFrame(const char* buffer, const int length) override
     {
-        auto payload = std::make_shared<MessagePayload>(buffer, length, MessagePayload::Type::Text);
+        auto payload = std::make_shared<MessagePayload>(buffer, length,
+                                                        MessagePayload::Dir::Out,
+                                                        MessagePayload::Type::Text);
         enqueueSendMessage(payload);
         return true;
     }
