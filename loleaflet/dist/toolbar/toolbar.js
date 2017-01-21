@@ -489,10 +489,10 @@ $(function () {
 			{type: 'html',  id: 'backcolor-html', html: '<div id="backcolor-wrapper"><input id="backColorPicker" style="display:none;"></div>'},
 			{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _('Highlighting')},
 			{type: 'break'},
-			{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _('Align left'), uno: 'LeftPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"1"}}'},
-			{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _('Center horizontally'), uno: 'CenterPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"2"}}'},
-			{type: 'button',  id: 'rightpara',  img: 'alignright', hint: _('Align right'), uno: 'RightPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"3"}}'},
-			{type: 'button',  id: 'justifypara',  img: 'alignblock', hint: _('Justified'), uno: 'JustifyPara', unosheet: 'HorizontalAlignment {"HorizontalAlignment":{"type":"unsigned short", "value":"4"}}'},
+			{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _('Align left'), uno: 'LeftPara', unosheet: 'AlignLeft'},
+			{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _('Center horizontally'), uno: 'CenterPara', unosheet: 'AlignHorizontalCenter'},
+			{type: 'button',  id: 'rightpara',  img: 'alignright', hint: _('Align right'), uno: 'RightPara', unosheet: 'AlignRight'},
+			{type: 'button',  id: 'justifypara',  img: 'alignblock', hint: _('Justified'), uno: 'JustifyPara', unosheet: ''},
 			{type: 'break',  id: 'wraptextseparator'},
 			{type: 'button',  id: 'wraptext',  img: 'wraptext', hint: _('Wrap Text'), uno: 'WrapText'},
 			{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _('Merge and Center Cells'), uno: 'ToggleMergeCells'},
@@ -717,7 +717,23 @@ function toLocalePattern (pattern, regex, text, sub1, sub2) {
 
 function unoCmdToToolbarId(commandname)
 {
-	return commandname.toLowerCase().substr(5);
+	var id = commandname.toLowerCase().substr(5);
+	if (map.getDocType() === 'spreadsheet') {
+		switch (id) {
+		case 'alignleft':
+			id = 'leftpara';
+			break;
+		case 'alignhorizontalcenter':
+			id = 'centerpara';
+			break;
+		case 'alignright':
+			id = 'rightpara';
+			break;
+		default:
+			id = null;
+		}
+	}
+	return id;
 }
 
 function selectItem(item, func)
@@ -931,8 +947,8 @@ map.on('doclayerinit', function () {
 
 	switch (docType) {
 	case 'spreadsheet':
-		toolbarUp.remove('inserttable', 'styles', 'alignblock', 'defaultbullet', 'defaultnumbering', 'break-numbering');
-		toolbarUpMore.remove('inserttable', 'styles', 'alignblock', 'defaultbullet', 'defaultnumbering', 'break-numbering');
+		toolbarUp.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
+		toolbarUpMore.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
 		statusbar.disable('zoomreset', 'zoomout', 'zoomin', 'zoomlevel');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
