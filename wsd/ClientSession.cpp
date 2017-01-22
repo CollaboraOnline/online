@@ -18,7 +18,6 @@
 #include "DocumentBroker.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
-#include "PrisonerSession.hpp"
 #include "Protocol.hpp"
 #include "Session.hpp"
 #include "Util.hpp"

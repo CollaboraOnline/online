@@ -18,7 +18,6 @@
 #include <Poco/URI.h>
 
 class DocumentBroker;
-class PrisonerSession;
 
 /// Represents a session to a LOOL client, in the WSD process.
 class ClientSession final : public Session, public std::enable_shared_from_this<ClientSession>

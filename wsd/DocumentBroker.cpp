@@ -29,7 +29,6 @@
 #include "Protocol.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
-#include "PrisonerSession.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "SenderQueue.hpp"

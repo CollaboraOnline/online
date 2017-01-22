@@ -105,7 +105,6 @@
 #include "FileServer.hpp"
 #include "IoUtil.hpp"
 #include "Log.hpp"
-#include "PrisonerSession.hpp"
 #include "Protocol.hpp"
 #include "QueueHandler.hpp"
 #include "Session.hpp"

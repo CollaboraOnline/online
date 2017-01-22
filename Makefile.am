@@ -52,7 +52,6 @@ loolwsd_SOURCES = wsd/Admin.cpp \
                   wsd/LOOLWSD.cpp \
                   wsd/ClientSession.cpp \
                   wsd/FileServer.cpp \
-                  wsd/PrisonerSession.cpp \
                   wsd/Storage.cpp \
                   wsd/TileCache.cpp \
                   $(shared_sources)
@@ -100,7 +99,6 @@ wsd_headers = wsd/Admin.hpp \
               wsd/FileServer.hpp \
               wsd/LOOLWebSocket.hpp \
               wsd/LOOLWSD.hpp \
-              wsd/PrisonerSession.hpp \
               wsd/QueueHandler.hpp \
               wsd/SenderQueue.hpp \
               wsd/Storage.hpp \
