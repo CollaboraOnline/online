@@ -28,7 +28,8 @@ public:
     /// message must include the full first-line.
     Message(const std::string& message,
             const enum Dir dir) :
-        _data(message.data(), message.data() + message.size()),
+        _forwardToken(getForwardToken(message.data(), message.size())),
+        _data(skipWhitespace(message.data() + _forwardToken.size()), message.data() + message.size()),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
@@ -43,15 +44,17 @@ public:
     Message(const std::string& message,
             const enum Dir dir,
             const size_t reserve) :
+        _forwardToken(getForwardToken(message.data(), message.size())),
         _data(std::max(reserve, message.size())),
-        _tokens(LOOLProtocol::tokenize(message)),
+        _tokens(LOOLProtocol::tokenize(message.data() + _forwardToken.size(), message.size() - _forwardToken.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(message)),
         _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(message)),
         _type(detectType())
     {
         _data.resize(message.size());
-        std::memcpy(_data.data(), message.data(), message.size());
+        const auto offset = skipWhitespace(message.data() + _forwardToken.size());
+        std::memcpy(_data.data(), offset, message.size() - (offset - message.data()));
     }
 
     /// Construct a message from a character array with type.
@@ -59,7 +62,8 @@ public:
     Message(const char* p,
             const size_t len,
             const enum Dir dir) :
-        _data(p, p + len),
+        _forwardToken(getForwardToken(p, len)),
+        _data(skipWhitespace(p + _forwardToken.size()), p + len),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
@@ -72,8 +76,10 @@ public:
     const std::vector<char>& data() const { return _data; }
 
     const std::vector<std::string>& tokens() const { return _tokens; }
+    const std::string& forwardToken() const { return _forwardToken; }
     const std::string& firstToken() const { return _tokens[0]; }
     const std::string& firstLine() const { return _firstLine; }
+    const std::string& operator[](size_t index) const { return _tokens[index]; }
 
     /// Return the abbreviated message for logging purposes.
     const std::string& abbr() const { return _abbr; }
@@ -129,7 +135,24 @@ private:
         return Type::Text;
     }
 
+    std::string getForwardToken(const char* buffer, int length)
+    {
+        auto forward = LOOLProtocol::getFirstToken(buffer, length);
+        return (forward.find('-') != std::string::npos ? forward : std::string());
+    }
+
+    const char* skipWhitespace(const char* p)
+    {
+        while (p && *p == ' ')
+        {
+            ++p;
+        }
+
+        return p;
+    }
+
 private:
+    const std::string _forwardToken;
     std::vector<char> _data;
     const std::vector<std::string> _tokens;
     const std::string _id;
