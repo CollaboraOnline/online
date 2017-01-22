@@ -35,6 +35,9 @@ public:
     void setReadOnly();
     bool isReadOnly() const { return _isReadOnly; }
 
+    /// Returns true if we've got status message.
+    bool gotStatus() const { return _gotStatus; }
+
     bool isLoaded() const;
 
     const std::string getUserId() const { return _userId; }
@@ -140,6 +143,8 @@ private:
     bool forwardToChild(const std::string& message,
                         const std::shared_ptr<DocumentBroker>& docBroker);
 
+    bool forwardToClient(const std::shared_ptr<Message>& payload);
+
     /// Returns true if given message from the client should be allowed or not
     /// Eg. in readonly mode only few messages should be allowed
     bool filterMessage(const std::string& msg) const;
@@ -158,15 +163,13 @@ private:
     /// Whether this session is the owner of currently opened document
     bool _isDocumentOwner;
 
-    /// Our peer that connects us to the child.
-    std::shared_ptr<PrisonerSession> _peer;
-
     /// Store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;
 
     int _loadPart;
 
     bool _isLoadRequested;
+    bool _gotStatus;
 
     /// Wopi FileInfo object
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;
