@@ -68,8 +68,17 @@ public:
 
     void enqueueSendMessage(const std::shared_ptr<Message>& data)
     {
-        LOG_TRC(getName() << " enqueueing client message: " << data->abbr());
-        _senderQueue.enqueue(data);
+        if (isHeadless())
+        {
+            // Fail silently and return as there is no actual websocket
+            // connection in this case.
+            LOG_INF(getName() << ": Headless peer, not forwarding message [" << data->abbr() << "].");
+        }
+        else
+        {
+            LOG_TRC(getName() << " enqueueing client message: " << data->abbr());
+            _senderQueue.enqueue(data);
+        }
     }
 
     bool stopping() const { return _stop || _senderQueue.stopping(); }

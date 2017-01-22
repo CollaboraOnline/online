@@ -275,13 +275,6 @@ bool PrisonerSession::forwardToPeer(const std::shared_ptr<Message>& payload)
         LOG_TRC(getName() << ": peer began the closing handshake. Dropping forward message [" << message << "].");
         return true;
     }
-    else if (_peer.isHeadless())
-    {
-        // Fail silently and return as there is no actual websocket
-        // connection in this case.
-        LOG_INF(getName() << ": Headless peer, not forwarding message [" << message << "].");
-        return true;
-    }
 
     LOG_TRC(getName() << " -> " << _peer.getName() << ": " << message);
     _peer.enqueueSendMessage(payload);
