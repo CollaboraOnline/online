@@ -124,8 +124,8 @@ Poco::URI DocumentBroker::sanitizeURI(const std::string& uri)
             param.second = decodedToken;
         }
     }
-    uriPublic.setQueryParameters(queryParams);
 
+    uriPublic.setQueryParameters(queryParams);
     return uriPublic;
 }
 
@@ -229,9 +229,8 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     bool firstInstance = false;
     if (_storage == nullptr)
     {
-        // TODO: Maybe better to pass docKey to storage here instead of uriPublic here because
-        // uriPublic would be different for each view of the document (due to
-        // different query params like access token etc.)
+        // Pass the public URI to storage as it needs to load using the token
+        // and other storage-specific data provided in the URI.
         LOG_DBG("Creating new storage instance for URI [" << uriPublic.toString() << "].");
         _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString());
         if (_storage == nullptr)
@@ -248,9 +247,11 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     // Call the storage specific fileinfo functions
     std::string userid, username;
     std::chrono::duration<double> getInfoCallDuration(0);
-    if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
+    WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
+    if (wopiStorage != nullptr)
     {
-        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = static_cast<WopiStorage*>(_storage.get())->getWOPIFileInfo(uriPublic);
+        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo =
+                                     wopiStorage->getWOPIFileInfo(uriPublic);
         userid = wopifileinfo->_userid;
         username = wopifileinfo->_username;
 
@@ -296,11 +297,16 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
         // Pass the ownership to client session
         session->setWopiFileInfo(wopifileinfo);
     }
-    else if (dynamic_cast<LocalStorage*>(_storage.get()) != nullptr)
+    else
     {
-        std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo = static_cast<LocalStorage*>(_storage.get())->getLocalFileInfo(uriPublic);
-        userid = localfileinfo->_userid;
-        username = localfileinfo->_username;
+        LocalStorage* localStorage = dynamic_cast<LocalStorage*>(_storage.get());
+        if (localStorage != nullptr)
+        {
+            std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo =
+                                          localStorage->getLocalFileInfo(uriPublic);
+            userid = localfileinfo->_userid;
+            username = localfileinfo->_username;
+        }
     }
 
     LOG_DBG("Setting username [" << username << "] and userId [" << userid << "] for session [" << sessionId << "]");
@@ -335,9 +341,8 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
         }
     }
 
-    // Lets load the document now
-    const bool loaded = _storage->isLoaded();
-    if (!loaded)
+    // Let's load the document now, if not loaded.
+    if (!_storage->isLoaded())
     {
         const auto localPath = _storage->loadStorageFileToLocal();
         _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
@@ -345,14 +350,14 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
 
         // Use the local temp file's timestamp.
         _lastFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
-        _tileCache.reset(new TileCache(_uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
+        _tileCache.reset(new TileCache(uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
     }
 
     // Since document has been loaded, send the stats if its WOPI
-    if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
+    if (wopiStorage != nullptr)
     {
         // Get the time taken to load the file from storage
-        auto callDuration = static_cast<WopiStorage*>(_storage.get())->getWopiLoadDuration();
+        auto callDuration = wopiStorage->getWopiLoadDuration();
         // Add the time taken to check file info
         callDuration += getInfoCallDuration;
         const std::string msg = "stats: wopiloadduration " + std::to_string(callDuration.count());
