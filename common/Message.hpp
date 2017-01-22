@@ -33,7 +33,7 @@ public:
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
-        _abbreviation(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
+        _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
         _type(type)
     {
     }
@@ -49,7 +49,7 @@ public:
         _tokens(LOOLProtocol::tokenize(message)),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(message)),
-        _abbreviation(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(message)),
+        _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(message)),
         _type(type)
     {
         _data.resize(message.size());
@@ -66,7 +66,7 @@ public:
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
-        _abbreviation(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
+        _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
         _type(type)
     {
     }
@@ -77,7 +77,9 @@ public:
     const std::vector<std::string>& tokens() const { return _tokens; }
     const std::string& firstToken() const { return _tokens[0]; }
     const std::string& firstLine() const { return _firstLine; }
-    const std::string& abbreviation() const { return _abbreviation; }
+
+    /// Return the abbreviated message for logging purposes.
+    const std::string& abbr() const { return _abbr; }
     const std::string& id() const { return _id; }
 
     /// Returns the json part of the message, if any.
@@ -117,7 +119,7 @@ private:
     const std::vector<std::string> _tokens;
     const std::string _id;
     const std::string _firstLine;
-    const std::string _abbreviation;
+    const std::string _abbr;
     const Type _type;
 };
 

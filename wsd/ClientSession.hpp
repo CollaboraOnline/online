@@ -69,7 +69,7 @@ public:
 
     void enqueueSendMessage(const std::shared_ptr<Message>& data)
     {
-        LOG_TRC(getName() << " enqueueing client message: " << data->abbreviation());
+        LOG_TRC(getName() << " enqueueing client message: " << data->abbr());
         _senderQueue.enqueue(data);
     }
 
