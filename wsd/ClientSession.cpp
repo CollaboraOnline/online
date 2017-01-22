@@ -43,6 +43,7 @@ ClientSession::ClientSession(const std::string& id,
 {
     LOG_INF("ClientSession ctor [" << getName() << "].");
 
+    _peer = std::make_shared<PrisonerSession>(*this, docBroker);
     _senderThread = std::thread([this]{ senderThread(); });
 }
 
@@ -60,21 +61,6 @@ ClientSession::~ClientSession()
 bool ClientSession::isLoaded() const
 {
     return _isLoadRequested && _peer && _peer->gotStatus();
-}
-
-void ClientSession::bridgePrisonerSession()
-{
-    auto docBroker = getDocumentBroker();
-    if (docBroker)
-    {
-        _peer = std::make_shared<PrisonerSession>(shared_from_this(), docBroker);
-    }
-    else
-    {
-        const std::string msg = "No valid DocBroker while bridging Prisoner Session for " + getName();
-        LOG_ERR(msg);
-        throw std::runtime_error(msg);
-    }
 }
 
 bool ClientSession::_handleInput(const char *buffer, int length)
@@ -493,6 +479,11 @@ void ClientSession::senderThread()
     }
 
     LOG_DBG(getName() << " SenderThread finished");
+}
+
+bool ClientSession::handleKitToClientMessage(const char* data, const int size)
+{
+    return _peer->handleInput(data, size);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

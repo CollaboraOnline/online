@@ -651,9 +651,6 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     const std::string aMessage = "session " + id + ' ' + _docKey;
     _childProcess->sendTextFrame(aMessage);
 
-    // Now we are ready to bridge between the kit and client.
-    session->bridgePrisonerSession();
-
     // Tell the admin console about this new doc
     Admin::instance().addDoc(_docKey, getPid(), getFilename(), id);
 
@@ -1032,15 +1029,7 @@ bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vecto
         const auto it = _sessions.find(sid);
         if (it != _sessions.end())
         {
-            const auto peer = it->second->getPeer();
-            if (peer)
-            {
-                return peer->handleInput(data, size);
-            }
-            else
-            {
-                LOG_WRN("Client session [" << sid << "] has no peer to forward message: " << message);
-            }
+            return it->second->handleKitToClientMessage(data, size);
         }
         else
         {

@@ -18,11 +18,10 @@ class ClientSession;
 /// Represents an internal session to a Kit process, in the WSD process.
 /// This doesn't really have a direct connection to any Kit process, rather
 /// all communication to said Kit process is really handled by DocumentBroker.
-class PrisonerSession final : public Session,
-                              public std::enable_shared_from_this<PrisonerSession>
+class PrisonerSession final : public Session
 {
 public:
-    PrisonerSession(std::shared_ptr<ClientSession> clientSession,
+    PrisonerSession(ClientSession& clientSession,
                     std::shared_ptr<DocumentBroker> docBroker);
 
     virtual ~PrisonerSession();
@@ -34,12 +33,11 @@ private:
     /// Handle messages from the Kit to the client.
     virtual bool _handleInput(const char* buffer, int length) override;
 
-    bool forwardToPeer(const std::shared_ptr<ClientSession>& clientSession,
-                       const std::shared_ptr<Message>& payload);
+    bool forwardToPeer(const std::shared_ptr<Message>& payload);
 
 private:
     std::shared_ptr<DocumentBroker> _docBroker;
-    std::weak_ptr<ClientSession> _peer;
+    ClientSession& _peer;
     int _curPart;
     bool _gotStatus;
 };

@@ -32,9 +32,9 @@ using namespace LOOLProtocol;
 using Poco::Path;
 using Poco::StringTokenizer;
 
-PrisonerSession::PrisonerSession(std::shared_ptr<ClientSession> clientSession,
+PrisonerSession::PrisonerSession(ClientSession& clientSession,
                                  std::shared_ptr<DocumentBroker> docBroker) :
-    Session("ToPrisoner-" + clientSession->getId(), clientSession->getId(), nullptr),
+    Session("ToPrisoner-" + clientSession.getId(), clientSession.getId(), nullptr),
     _docBroker(std::move(docBroker)),
     _peer(clientSession),
     _curPart(0),
@@ -55,12 +55,6 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
     LOOLWSD::dumpOutgoingTrace(_docBroker->getJailId(), getId(), firstLine);
-
-    auto peer = _peer.lock();
-    if (!peer)
-    {
-        throw Poco::ProtocolException("The session has not been assigned a peer.");
-    }
 
     if (tokens[0] == "unocommandresult:")
     {
@@ -111,7 +105,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                     const auto payload = std::make_shared<Message>(buffer, length,
                                                                    Message::Dir::Out,
                                                                    Message::Type::Text);
-                    forwardToPeer(peer, payload);
+                    forwardToPeer(payload);
                     LOG_WRN("Document load failed: " << errorKind);
                     return false;
                 }
@@ -151,7 +145,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             }
         }
 
-        peer->setSaveAsUrl(url);
+        _peer.setSaveAsUrl(url);
         return true;
     }
     else if (tokens.count() == 2 && tokens[0] == "statechanged:")
@@ -181,7 +175,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             const auto payload = std::make_shared<Message>(buffer, length,
                                                            Message::Dir::Out,
                                                            Message::Type::Text);
-            return forwardToPeer(peer, payload);
+            return forwardToPeer(payload);
         }
         else if (tokens[0] == "commandvalues:")
         {
@@ -251,7 +245,7 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             const auto payload = std::make_shared<Message>(buffer, length,
                                                            Message::Dir::Out,
                                                            Message::Type::Binary);
-            return forwardToPeer(peer, payload);
+            return forwardToPeer(payload);
         }
     }
     else
@@ -269,20 +263,19 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                                                    Message::Dir::Out,
                                                    isBinary ? Message::Type::Binary
                                                             : Message::Type::Text);
-    return forwardToPeer(peer, payload);
+    return forwardToPeer(payload);
 }
 
-bool PrisonerSession::forwardToPeer(const std::shared_ptr<ClientSession>& clientSession,
-                                    const std::shared_ptr<Message>& payload)
+bool PrisonerSession::forwardToPeer(const std::shared_ptr<Message>& payload)
 {
     const auto& message = payload->abbr();
 
-    if (clientSession->isCloseFrame())
+    if (_peer.isCloseFrame())
     {
         LOG_TRC(getName() << ": peer began the closing handshake. Dropping forward message [" << message << "].");
         return true;
     }
-    else if (clientSession->isHeadless())
+    else if (_peer.isHeadless())
     {
         // Fail silently and return as there is no actual websocket
         // connection in this case.
@@ -290,8 +283,8 @@ bool PrisonerSession::forwardToPeer(const std::shared_ptr<ClientSession>& client
         return true;
     }
 
-    LOG_TRC(getName() << " -> " << clientSession->getName() << ": " << message);
-    clientSession->enqueueSendMessage(payload);
+    LOG_TRC(getName() << " -> " << _peer.getName() << ": " << message);
+    _peer.enqueueSendMessage(payload);
 
     return true;
 }
