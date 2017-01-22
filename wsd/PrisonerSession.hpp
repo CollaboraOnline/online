@@ -35,7 +35,7 @@ private:
     virtual bool _handleInput(const char* buffer, int length) override;
 
     bool forwardToPeer(const std::shared_ptr<ClientSession>& clientSession,
-                       const char* buffer, int length, const bool binary);
+                       const std::shared_ptr<Message>& payload);
 
 private:
     std::shared_ptr<DocumentBroker> _docBroker;

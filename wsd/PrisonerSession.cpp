@@ -108,7 +108,10 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
                     errorKind == "passwordrequired:to-modify" ||
                     errorKind == "wrongpassword")
                 {
-                    forwardToPeer(peer, buffer, length, false);
+                    const auto payload = std::make_shared<Message>(buffer, length,
+                                                                   Message::Dir::Out,
+                                                                   Message::Type::Text);
+                    forwardToPeer(peer, payload);
                     LOG_WRN("Document load failed: " << errorKind);
                     return false;
                 }
@@ -175,7 +178,10 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             _docBroker->setLoaded();
 
             // Forward the status response to the client.
-            return forwardToPeer(peer, buffer, length, false);
+            const auto payload = std::make_shared<Message>(buffer, length,
+                                                           Message::Dir::Out,
+                                                           Message::Type::Text);
+            return forwardToPeer(peer, payload);
         }
         else if (tokens[0] == "commandvalues:")
         {
@@ -242,8 +248,10 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
             getTokenString(tokens[2], "char", text);
             assert(firstLine.size() < static_cast<std::string::size_type>(length));
             _docBroker->tileCache().saveRendering(font+text, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
-            forwardToPeer(peer, buffer, length, true);
-            return true;
+            const auto payload = std::make_shared<Message>(buffer, length,
+                                                           Message::Dir::Out,
+                                                           Message::Type::Binary);
+            return forwardToPeer(peer, payload);
         }
     }
     else
@@ -257,14 +265,17 @@ bool PrisonerSession::_handleInput(const char *buffer, int length)
     const bool isBinary = buffer[length - 1] != '}' && firstLine.find('{') == std::string::npos;
 
     // Forward everything else.
-    forwardToPeer(peer, buffer, length, isBinary);
-    return true;
+    const auto payload = std::make_shared<Message>(buffer, length,
+                                                   Message::Dir::Out,
+                                                   isBinary ? Message::Type::Binary
+                                                            : Message::Type::Text);
+    return forwardToPeer(peer, payload);
 }
 
 bool PrisonerSession::forwardToPeer(const std::shared_ptr<ClientSession>& clientSession,
-                                    const char* buffer, int length, const bool binary)
+                                    const std::shared_ptr<Message>& payload)
 {
-    const auto message = LOOLProtocol::getAbbreviatedMessage(buffer, length);
+    const auto& message = payload->abbr();
 
     if (clientSession->isCloseFrame())
     {
@@ -280,11 +291,6 @@ bool PrisonerSession::forwardToPeer(const std::shared_ptr<ClientSession>& client
     }
 
     LOG_TRC(getName() << " -> " << clientSession->getName() << ": " << message);
-
-    auto payload = std::make_shared<Message>(buffer, length,
-                                                    Message::Dir::Out,
-                                                    binary ? Message::Type::Binary
-                                                           : Message::Type::Text);
     clientSession->enqueueSendMessage(payload);
 
     return true;
