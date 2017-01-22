@@ -14,8 +14,10 @@
 #include <string>
 #include <vector>
 
+#include "Protocol.hpp"
+
 /// The payload type used to send/receive data.
-class MessagePayload
+class Message
 {
 public:
 
@@ -24,9 +26,9 @@ public:
 
     /// Construct a text message.
     /// message must include the full first-line.
-    MessagePayload(const std::string& message,
-                   const enum Dir dir,
-                   const enum Type type = Type::Text) :
+    Message(const std::string& message,
+            const enum Dir dir,
+            const enum Type type = Type::Text) :
         _data(message.data(), message.data() + message.size()),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
@@ -39,10 +41,10 @@ public:
     /// Construct a message from a string with type and
     /// reserve extra space (total, including message).
     /// message must include the full first-line.
-    MessagePayload(const std::string& message,
-                   const enum Dir dir,
-                   const enum Type type,
-                   const size_t reserve) :
+    Message(const std::string& message,
+            const enum Dir dir,
+            const enum Type type,
+            const size_t reserve) :
         _data(std::max(reserve, message.size())),
         _tokens(LOOLProtocol::tokenize(message)),
         _id(makeId(dir)),
@@ -55,11 +57,11 @@ public:
     }
 
     /// Construct a message from a character array with type.
-    /// data must be include the full first-line.
-    MessagePayload(const char* p,
-                   const size_t len,
-                   const enum Dir dir,
-                   const enum Type type) :
+    /// Note: p must include the full first-line.
+    Message(const char* p,
+            const size_t len,
+            const enum Dir dir,
+            const enum Type type) :
         _data(p, p + len),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),

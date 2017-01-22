@@ -29,7 +29,7 @@
 struct SendItem
 {
     std::weak_ptr<LOOLWebSocket> Socket;
-    std::shared_ptr<MessagePayload> Data;
+    std::shared_ptr<Message> Data;
     std::string Meta;
     std::chrono::steady_clock::time_point BirthTime;
 };

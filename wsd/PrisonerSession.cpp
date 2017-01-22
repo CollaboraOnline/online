@@ -281,10 +281,10 @@ bool PrisonerSession::forwardToPeer(const std::shared_ptr<ClientSession>& client
 
     LOG_TRC(getName() << " -> " << clientSession->getName() << ": " << message);
 
-    auto payload = std::make_shared<MessagePayload>(buffer, length,
-                                                    MessagePayload::Dir::Out,
-                                                    binary ? MessagePayload::Type::Binary
-                                                           : MessagePayload::Type::Text);
+    auto payload = std::make_shared<Message>(buffer, length,
+                                                    Message::Dir::Out,
+                                                    binary ? Message::Type::Binary
+                                                           : Message::Type::Text);
     clientSession->enqueueSendMessage(payload);
 
     return true;

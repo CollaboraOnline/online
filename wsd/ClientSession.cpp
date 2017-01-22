@@ -469,7 +469,7 @@ void ClientSession::senderThread()
 
     while (!stopping())
     {
-        std::shared_ptr<MessagePayload> item;
+        std::shared_ptr<Message> item;
         if (_senderQueue.waitDequeue(item, static_cast<size_t>(COMMAND_TIMEOUT_MS)))
         {
             const std::vector<char>& data = item->data();

@@ -51,23 +51,23 @@ public:
 
     bool sendBinaryFrame(const char* buffer, int length) override
     {
-        auto payload = std::make_shared<MessagePayload>(buffer, length,
-                                                        MessagePayload::Dir::Out,
-                                                        MessagePayload::Type::Binary);
+        auto payload = std::make_shared<Message>(buffer, length,
+                                                        Message::Dir::Out,
+                                                        Message::Type::Binary);
         enqueueSendMessage(payload);
         return true;
     }
 
     bool sendTextFrame(const char* buffer, const int length) override
     {
-        auto payload = std::make_shared<MessagePayload>(buffer, length,
-                                                        MessagePayload::Dir::Out,
-                                                        MessagePayload::Type::Text);
+        auto payload = std::make_shared<Message>(buffer, length,
+                                                        Message::Dir::Out,
+                                                        Message::Type::Text);
         enqueueSendMessage(payload);
         return true;
     }
 
-    void enqueueSendMessage(const std::shared_ptr<MessagePayload>& data)
+    void enqueueSendMessage(const std::shared_ptr<Message>& data)
     {
         LOG_TRC(getName() << " enqueueing client message: " << data->abbreviation());
         _senderQueue.enqueue(data);
@@ -163,7 +163,7 @@ private:
     /// Wopi FileInfo object
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;
 
-    SenderQueue<std::shared_ptr<MessagePayload>> _senderQueue;
+    SenderQueue<std::shared_ptr<Message>> _senderQueue;
     std::thread _senderThread;
     std::atomic<bool> _stop;
 };
