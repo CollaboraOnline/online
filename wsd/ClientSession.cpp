@@ -37,8 +37,6 @@ ClientSession::ClientSession(const std::string& id,
     _uriPublic(uriPublic),
     _isReadOnly(readOnly),
     _isDocumentOwner(false),
-    _loadPart(-1),
-    _isLoadRequested(false),
     _stop(false)
 {
     LOG_INF("ClientSession ctor [" << getName() << "].");
@@ -55,11 +53,6 @@ ClientSession::~ClientSession()
     {
         _senderThread.join();
     }
-}
-
-bool ClientSession::isLoaded() const
-{
-    return _isLoadRequested && gotStatus();
 }
 
 bool ClientSession::_handleInput(const char *buffer, int length)
@@ -239,7 +232,8 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
     try
     {
         std::string timestamp;
-        parseDocOptions(tokens, _loadPart, timestamp);
+        int loadPart = -1;
+        parseDocOptions(tokens, loadPart, timestamp);
 
         std::ostringstream oss;
         oss << "load";
@@ -257,21 +251,22 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " author=" + encodedUserName;
         }
 
-        if (_loadPart >= 0)
-            oss << " part=" + std::to_string(_loadPart);
+        if (loadPart >= 0)
+        {
+            oss << " part=" << loadPart;
+        }
 
         if (_haveDocPassword)
+        {
             oss << " password=" << _docPassword;
+        }
 
         if (!_docOptions.empty())
-            oss << " options=" << _docOptions;
-
-        const auto loadRequest = oss.str();
-        if (forwardToChild(loadRequest, docBroker))
         {
-            _isLoadRequested = true;
-            return true;
+            oss << " options=" << _docOptions;
         }
+
+        return forwardToChild(oss.str(), docBroker);
     }
     catch (const Poco::SyntaxException&)
     {
@@ -607,7 +602,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
         else if (tokens[0] == "status:")
         {
-            _gotStatus = true;
+            _isLoaded = true;
             docBroker->setLoaded();
 
             // Forward the status response to the client.

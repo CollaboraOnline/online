@@ -34,10 +34,8 @@ public:
     void setReadOnly();
     bool isReadOnly() const { return _isReadOnly; }
 
-    /// Returns true if we've got status message.
-    bool gotStatus() const { return _gotStatus; }
-
-    bool isLoaded() const;
+    /// Returns true if a document is loaded (i.e. we got status message).
+    bool isLoaded() const { return _isLoaded; }
 
     const std::string getUserId() const { return _userId; }
     void setUserId(const std::string& userId) { _userId = userId; }
@@ -165,10 +163,7 @@ private:
     /// Store URLs of completed 'save as' documents.
     MessageQueue _saveAsQueue;
 
-    int _loadPart;
-
-    bool _isLoadRequested;
-    bool _gotStatus;
+    bool _isLoaded;
 
     /// Wopi FileInfo object
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;
