@@ -169,9 +169,8 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
 
             // Send to first subscriber as-is (without cache marker).
             auto payload = std::make_shared<Message>(response,
-                                                            Message::Dir::Out,
-                                                            Message::Type::Binary,
-                                                            response.size() + 1 + size);
+                                                     Message::Dir::Out,
+                                                     response.size() + 1 + size);
             payload->append("\n", 1);
             payload->append(data, size);
 
@@ -190,9 +189,8 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
                 // Create a new Payload.
                 payload.reset();
                 payload = std::make_shared<Message>(response,
-                                                           Message::Dir::Out,
-                                                           Message::Type::Binary,
-                                                           response.size() + size);
+                                                    Message::Dir::Out,
+                                                    response.size() + size);
                 payload->append(data, size);
 
                 for (size_t i = 1; i < subscriberCount; ++i)

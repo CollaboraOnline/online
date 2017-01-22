@@ -536,9 +536,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                     errorKind == "passwordrequired:to-modify" ||
                     errorKind == "wrongpassword")
                 {
-                    const auto payload = std::make_shared<Message>(buffer, length,
-                                                                   Message::Dir::Out,
-                                                                   Message::Type::Text);
+                    const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
                     forwardToClient(payload);
                     LOG_WRN("Document load failed: " << errorKind);
                     return false;
@@ -606,9 +604,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             docBroker->setLoaded();
 
             // Forward the status response to the client.
-            const auto payload = std::make_shared<Message>(buffer, length,
-                                                           Message::Dir::Out,
-                                                           Message::Type::Text);
+            const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
             return forwardToClient(payload);
         }
         else if (tokens[0] == "commandvalues:")
@@ -676,9 +672,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             getTokenString(tokens[2], "char", text);
             assert(firstLine.size() < static_cast<std::string::size_type>(length));
             docBroker->tileCache().saveRendering(font+text, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
-            const auto payload = std::make_shared<Message>(buffer, length,
-                                                           Message::Dir::Out,
-                                                           Message::Type::Binary);
+            const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
             return forwardToClient(payload);
         }
     }
@@ -687,16 +681,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         LOG_INF("Ignoring notification on password protected document: " << firstLine);
     }
 
-    // Detect json messages, since we must send those as text even though they are multiline.
-    // If not, the UI will read the first line of a binary payload, assuming that's the only
-    // text part and the rest is binary.
-    const bool isBinary = buffer[length - 1] != '}' && firstLine.find('{') == std::string::npos;
-
     // Forward everything else.
-    const auto payload = std::make_shared<Message>(buffer, length,
-                                                   Message::Dir::Out,
-                                                   isBinary ? Message::Type::Binary
-                                                            : Message::Type::Text);
+    const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
     return forwardToClient(payload);
 }
 

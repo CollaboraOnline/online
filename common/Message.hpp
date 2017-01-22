@@ -27,14 +27,13 @@ public:
     /// Construct a text message.
     /// message must include the full first-line.
     Message(const std::string& message,
-            const enum Dir dir,
-            const enum Type type = Type::Text) :
+            const enum Dir dir) :
         _data(message.data(), message.data() + message.size()),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
         _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
-        _type(type)
+        _type(detectType())
     {
     }
 
@@ -43,14 +42,13 @@ public:
     /// message must include the full first-line.
     Message(const std::string& message,
             const enum Dir dir,
-            const enum Type type,
             const size_t reserve) :
         _data(std::max(reserve, message.size())),
         _tokens(LOOLProtocol::tokenize(message)),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(message)),
         _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(message)),
-        _type(type)
+        _type(detectType())
     {
         _data.resize(message.size());
         std::memcpy(_data.data(), message.data(), message.size());
@@ -60,14 +58,13 @@ public:
     /// Note: p must include the full first-line.
     Message(const char* p,
             const size_t len,
-            const enum Dir dir,
-            const enum Type type) :
+            const enum Dir dir) :
         _data(p, p + len),
         _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
         _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
-        _type(type)
+        _type(detectType())
     {
     }
 
@@ -112,6 +109,24 @@ private:
     {
         static std::atomic<unsigned> Counter;
         return (dir == Dir::In ? 'i' : 'o') + std::to_string(++Counter);
+    }
+
+    Type detectType() const
+    {
+        if (_tokens[0] == "tile:" ||
+            _tokens[0] == "tilecombine:" ||
+            _tokens[0] == "renderfont:")
+        {
+            return Type::Binary;
+        }
+
+        if (_data[_data.size() - 1] == '}')
+        {
+            return Type::JSON;
+        }
+
+        // All others are plain text.
+        return Type::Text;
     }
 
 private:
