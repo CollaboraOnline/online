@@ -26,6 +26,7 @@
 #include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "MessageQueue.hpp"
+#include "Message.hpp"
 #include "TileCache.hpp"
 
 /// Base class of a LOOLWebSocket session.

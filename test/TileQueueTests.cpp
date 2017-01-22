@@ -13,6 +13,7 @@
 
 #include "Common.hpp"
 #include "Protocol.hpp"
+#include "Message.hpp"
 #include "MessageQueue.hpp"
 #include "SenderQueue.hpp"
 #include "Util.hpp"
