@@ -1379,50 +1379,22 @@ private:
 
         LOG_DBG("Thread started.");
 
-        static const unsigned MaxBatchDurationMs = 125;
         size_t batched = 0;
-        std::chrono::steady_clock::time_point timeBeginBatch;
         try
         {
             while (!_stop && !TerminationFlag)
             {
-                unsigned timeoutMs = 0;
+                // End if we have no more.
                 if (batched)
                 {
-                    // Cap the wait so we eventually process the batch.
-                    const auto duration = std::chrono::steady_clock::now() - timeBeginBatch;
-                    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-                    if (durationMs >= MaxBatchDurationMs)
-                    {
-                        LOG_TRC("Ending batch of " << batched << " messages.");
-                        std::unique_lock<std::mutex> lock(_documentMutex);
-                        batched = 0;
-                        getLOKitDocument()->endBatch();
-                        timeoutMs = 0;
-                    }
-                    else
-                    {
-                        timeoutMs = MaxBatchDurationMs - durationMs;
-                    }
+                    LOG_TRC("Ending batch of " << batched << " messages.");
+                    std::unique_lock<std::mutex> lock(_documentMutex);
+                    batched = 0;
+                    getLOKitDocument()->endBatch();
                 }
 
-                LOG_TRC("Kit dequeue with max timeout of " << timeoutMs << " ms. Batched: " << batched);
-                const TileQueue::Payload input = _tileQueue->get(timeoutMs);
-                LOG_TRC("Kit dequeued " << LOOLProtocol::getAbbreviatedMessage(input));
-                if (input.empty())
-                {
-                    // End if we have no more.
-                    if (batched)
-                    {
-                        LOG_TRC("Ending batch of " << batched << " messages.");
-                        std::unique_lock<std::mutex> lock(_documentMutex);
-                        batched = 0;
-                        getLOKitDocument()->endBatch();
-                    }
-
-                    // Nothing to process.
-                    continue;
-                }
+                const TileQueue::Payload input = _tileQueue->get();
+                LOG_TRC("Kit Recv " << LOOLProtocol::getAbbreviatedMessage(input));
 
                 if (_stop || TerminationFlag)
                 {
@@ -1458,11 +1430,6 @@ private:
                 else if (LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
                 {
                     batched = forwardToChild(tokens[0], input, batched);
-                    if (batched == 1)
-                    {
-                        // New batch started.
-                        timeBeginBatch = std::chrono::steady_clock::now();
-                    }
                 }
                 else if (tokens[0] == "callback")
                 {
