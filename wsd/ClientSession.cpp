@@ -477,9 +477,10 @@ void ClientSession::senderThread()
 
 bool ClientSession::handleKitToClientMessage(const char* buffer, const int length)
 {
-    LOG_TRC(getName() + ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
-    const std::string firstLine = getFirstLine(buffer, length);
-    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
+
+    LOG_TRC(getName() + ": handling [" << payload->abbr() << "].");
+    const std::string& firstLine = payload->firstLine();
 
     const auto docBroker = _docBroker.lock();
     if (!docBroker)
@@ -490,6 +491,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
     LOOLWSD::dumpOutgoingTrace(docBroker->getJailId(), getId(), firstLine);
 
+    const auto& tokens = payload->tokens();
     if (tokens[0] == "unocommandresult:")
     {
         const std::string stringMsg(buffer, length);
@@ -536,7 +538,6 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                     errorKind == "passwordrequired:to-modify" ||
                     errorKind == "wrongpassword")
                 {
-                    const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
                     forwardToClient(payload);
                     LOG_WRN("Document load failed: " << errorKind);
                     return false;
@@ -544,13 +545,13 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             }
         }
     }
-    else if (tokens[0] == "curpart:" && tokens.count() == 2)
+    else if (tokens[0] == "curpart:" && tokens.size() == 2)
     {
         //TODO: Should forward to client?
         int curPart;
         return getTokenInteger(tokens[1], "part", curPart);
     }
-    else if (tokens.count() == 2 && tokens[0] == "saveas:")
+    else if (tokens.size() == 2 && tokens[0] == "saveas:")
     {
         std::string url;
         if (!getTokenString(tokens[1], "url", url))
@@ -580,7 +581,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         setSaveAsUrl(url);
         return true;
     }
-    else if (tokens.count() == 2 && tokens[0] == "statechanged:")
+    else if (tokens.size() == 2 && tokens[0] == "statechanged:")
     {
         if (docBroker)
         {
@@ -604,7 +605,6 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             docBroker->setLoaded();
 
             // Forward the status response to the client.
-            const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
             return forwardToClient(payload);
         }
         else if (tokens[0] == "commandvalues:")
@@ -628,7 +628,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
         else if (tokens[0] == "partpagerectangles:")
         {
-            if (tokens.count() > 1 && !tokens[1].empty())
+            if (tokens.size() > 1 && !tokens[1].empty())
             {
                 docBroker->tileCache().saveTextFile(std::string(buffer, length), "partpagerectangles.txt");
             }
@@ -662,7 +662,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         else if (tokens[0] == "renderfont:")
         {
             std::string font, text;
-            if (tokens.count() < 3 ||
+            if (tokens.size() < 3 ||
                 !getTokenString(tokens[1], "font", font))
             {
                 LOG_ERR("Bad syntax for: " << firstLine);
@@ -672,7 +672,6 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             getTokenString(tokens[2], "char", text);
             assert(firstLine.size() < static_cast<std::string::size_type>(length));
             docBroker->tileCache().saveRendering(font+text, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
-            const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
             return forwardToClient(payload);
         }
     }
@@ -682,7 +681,6 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
     }
 
     // Forward everything else.
-    const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
     return forwardToClient(payload);
 }
 
