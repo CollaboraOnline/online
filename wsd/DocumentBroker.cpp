@@ -716,39 +716,42 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 
 bool DocumentBroker::handleInput(const std::vector<char>& payload)
 {
-    const auto msg = LOOLProtocol::getAbbreviatedMessage(payload);
+    auto message = std::make_shared<Message>(payload.data(), payload.size(), Message::Dir::Out);
+    const auto& msg = message->abbr();
     LOG_TRC("DocumentBroker handling child message: [" << msg << "].");
 
     LOOLWSD::dumpOutgoingTrace(getJailId(), "0", msg);
 
-    const auto command = LOOLProtocol::getFirstToken(msg);
-    if (command == "tile:")
+    if (LOOLProtocol::getFirstToken(message->forwardToken(), '-') == "client")
     {
-        handleTileResponse(payload);
-    }
-    else if (command == "tilecombine:")
-    {
-        handleTileCombinedResponse(payload);
-    }
-    else if (LOOLProtocol::getFirstToken(command, '-') == "client")
-    {
-        forwardToClient(command, payload);
-    }
-    else if (command == "errortoall:")
-    {
-        StringTokenizer tokens(msg, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-        assert(tokens.count() == 3);
-        std::string cmd, kind;
-        LOOLProtocol::getTokenString(tokens, "cmd", cmd);
-        assert(cmd != "");
-        LOOLProtocol::getTokenString(tokens, "kind", kind);
-        assert(kind != "");
-        Util::alertAllUsers(cmd, kind);
+        forwardToClient(message);
     }
     else
     {
-        LOG_ERR("Unexpected message: [" << msg << "].");
-        return false;
+        const auto& command = message->firstToken();
+        if (command == "tile:")
+        {
+            handleTileResponse(payload);
+        }
+        else if (command == "tilecombine:")
+        {
+            handleTileCombinedResponse(payload);
+        }
+        else if (command == "errortoall:")
+        {
+            LOG_CHECK_RET(message->tokens().size() == 3, false);
+            std::string cmd, kind;
+            LOOLProtocol::getTokenString((*message)[1], "cmd", cmd);
+            LOG_CHECK_RET(cmd != "", false);
+            LOOLProtocol::getTokenString((*message)[2], "kind", kind);
+            LOG_CHECK_RET(kind != "", false);
+            Util::alertAllUsers(cmd, kind);
+        }
+        else
+        {
+            LOG_ERR("Unexpected message: [" << msg << "].");
+            return false;
+        }
     }
 
     return true;
@@ -1002,37 +1005,24 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
     return false;
 }
 
-bool DocumentBroker::forwardToClient(const std::string& prefix, const std::vector<char>& payload)
+bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
 {
-    assert(payload.size() > prefix.size());
-
-    // Remove the prefix and trim.
-    size_t index = prefix.size();
-    for ( ; index < payload.size(); ++index)
-    {
-        if (payload[index] != ' ')
-        {
-            break;
-        }
-    }
-
-    auto data = payload.data() + index;
-    auto size = payload.size() - index;
-    const auto message = getAbbreviatedMessage(data, size);
-    LOG_TRC("Forwarding payload to " << prefix << ' ' << message);
+    const std::string& msg = payload->abbr();
+    const std::string& prefix = payload->forwardToken();
+    LOG_TRC("Forwarding payload to [" << prefix << "]: " << msg);
 
     std::string name;
     std::string sid;
-    if (LOOLProtocol::parseNameValuePair(prefix, name, sid, '-') && name == "client")
+    if (LOOLProtocol::parseNameValuePair(payload->forwardToken(), name, sid, '-') && name == "client")
     {
         const auto it = _sessions.find(sid);
         if (it != _sessions.end())
         {
-            return it->second->handleKitToClientMessage(data, size);
+            return it->second->handleKitToClientMessage(payload->data().data(), payload->size());
         }
         else
         {
-            LOG_WRN("Client session [" << sid << "] not found to forward message: " << message);
+            LOG_WRN("Client session [" << sid << "] not found to forward message: " << msg);
         }
     }
     else

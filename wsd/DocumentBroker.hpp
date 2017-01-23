@@ -35,6 +35,7 @@
 class DocumentBroker;
 class StorageBase;
 class TileCache;
+class Message;
 
 /// Represents a new LOK child that is read
 /// to host a document.
@@ -313,7 +314,7 @@ private:
     bool saveToStorage();
 
     /// Forward a message from child session to its respective client session.
-    bool forwardToClient(const std::string& prefix, const std::vector<char>& payload);
+    bool forwardToClient(const std::shared_ptr<Message>& payload);
 
 private:
     const Poco::URI _uriPublic;
