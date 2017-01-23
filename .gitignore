@@ -57,3 +57,7 @@ loolstress
 loolforkit-nocaps
 loadtest
 unittest
+
+# make tags
+TAGS
+test/TAGS
