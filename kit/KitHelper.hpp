@@ -108,6 +108,8 @@ namespace LOKitHelper
             return "VIEW_CURSOR_VISIBLE";
         case LOK_CALLBACK_VIEW_LOCK:
             return "VIEW_LOCK";
+        case LOK_CALLBACK_COMMENT:
+            return "COMMENT";
         }
 
         return std::to_string(type);

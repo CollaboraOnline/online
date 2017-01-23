@@ -375,6 +375,11 @@ redlinetablechanged:
     Signals that the redlines table has been modified.
     Redlines are used for tracking changes.
 
+comment:
+
+    Signals that comment has either been added, removed or modified. See
+    LOK_CALLBACK_COMMENT for JSON structure.
+
 stats: <key> <value>
 
     Contains statistical data. Eg: 'stats: wopiloadduration 5' means that

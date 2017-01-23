@@ -1206,6 +1206,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_REDLINE_TABLE_ENTRY_MODIFIED:
         sendTextFrame("redlinetablemodified: " + payload);
         break;
+    case LOK_CALLBACK_COMMENT:
+        sendTextFrame("comment: " + payload);
+        break;
     default:
         LOG_ERR("Unknown callback event (" << type << "): " << payload);
     }
