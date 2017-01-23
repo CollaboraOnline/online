@@ -18,11 +18,14 @@
 #include <Poco/JSON/Object.h>
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
+#include <Poco/DigestStream.h>
+#include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 
 #include "Admin.hpp"
 #include "ClientSession.hpp"
 #include "Exceptions.hpp"
+#include "Message.hpp"
 #include "Protocol.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
@@ -345,6 +348,14 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     if (!_storage->isLoaded())
     {
         const auto localPath = _storage->loadStorageFileToLocal();
+
+        std::ifstream istr(localPath, std::ios::binary);
+        Poco::SHA1Engine sha1;
+        Poco::DigestOutputStream dos(sha1);
+        Poco::StreamCopier::copyStream(istr, dos);
+        dos.close();
+        LOG_INF("SHA1 of [" << localPath << "]: " << Poco::DigestEngine::digestToHex(sha1.digest()));
+
         _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
         _filename = fileInfo._filename;
 
