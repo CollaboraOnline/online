@@ -141,12 +141,27 @@ void TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
     if (tokens.size() < 3)
         return;
 
-    // TODO probably we could deduplicate the invalidation callbacks (later
-    // one wins) too?
-
     // the message is "callback <view> <id> ..."
     const std::string& callbackType = tokens[2];
-    if (callbackType == "1" ||      // the cursor has moved
+
+    if (callbackType == "0")        // invalidation
+    {
+        // TODO later we can consider some more advanced merging of
+        // invalidates (like two close ones merge into a bigger one); but for
+        // the moment remove just the plain duplicates
+        for (size_t i = 0; i < _queue.size(); ++i)
+        {
+            auto& it = _queue[i];
+
+            if (callbackMsg.size() == it.size() && LOOLProtocol::matchPrefix(callbackMsg, it))
+            {
+                LOG_TRC("Remove duplicate invalidation callback: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
+                _queue.erase(_queue.begin() + i);
+                break;
+            }
+        }
+    }
+    else if (callbackType == "1" || // the cursor has moved
             callbackType == "5" ||  // the cursor visibility has changed
             callbackType == "17" || // the cell cursor has moved
             callbackType == "24" || // the view cursor has moved
