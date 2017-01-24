@@ -832,6 +832,9 @@ public:
                 "] [" << LOKitHelper::kitCallbackTypeToString(type) <<
                 "] [" << payload << "].");
 
+        // when we examine the content of the JSON
+        std::string targetViewId;
+
         if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
             type == LOK_CALLBACK_CELL_CURSOR)
         {
@@ -853,7 +856,7 @@ public:
             Poco::JSON::Parser parser;
             const auto result = parser.parse(payload);
             const auto& command = result.extract<Poco::JSON::Object::Ptr>();
-            auto viewId = command->get("viewId").toString();
+            targetViewId = command->get("viewId").toString();
             auto part = command->get("part").toString();
             auto text = command->get("rectangle").toString();
             Poco::StringTokenizer tokens(text, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
@@ -865,12 +868,23 @@ public:
                 auto cursorWidth = std::stoi(tokens[2]);
                 auto cursorHeight = std::stoi(tokens[3]);
 
-                tileQueue->updateCursorPosition(std::stoi(viewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
+                tileQueue->updateCursorPosition(std::stoi(targetViewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
             }
         }
 
+        // merge various callback types together if possible
         if (type == LOK_CALLBACK_INVALIDATE_TILES)
-            tileQueue->put("callback -1 " + std::to_string(type) + ' ' + payload); // no point in handling invalidations per-view
+        {
+            // no point in handling invalidations per-view, all views have to
+            // be in sync
+            tileQueue->put("callback all " + std::to_string(type) + ' ' + payload);
+        }
+        else if (type == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
+                 type == LOK_CALLBACK_CELL_VIEW_CURSOR)
+        {
+            // these should go to all views but the one that that triggered it
+            tileQueue->put("callback except-" + targetViewId + ' ' + std::to_string(type) + ' ' + payload);
+        }
         else
             tileQueue->put("callback " + std::to_string(descriptor->ViewId) + ' ' + std::to_string(type) + ' ' + payload);
     }
@@ -881,7 +895,7 @@ private:
     void broadcastCallbackToClients(const int type, const std::string& payload)
     {
         // "-1" means broadcast
-        _tileQueue->put("callback -1 " + std::to_string(type) + ' ' + payload);
+        _tileQueue->put("callback all " + std::to_string(type) + ' ' + payload);
     }
 
     /// Load a document (or view) and register callbacks.
@@ -1387,7 +1401,21 @@ private:
                 {
                     if (tokens.size() >= 3)
                     {
-                        int viewId = std::stoi(tokens[1]); // -1 means broadcast
+                        bool broadcast = false;
+                        int viewId = -1;
+                        int exceptViewId = -1;
+
+                        const std::string& target = tokens[1];
+                        if (target == "all")
+                            broadcast = true;
+                        else if (LOOLProtocol::matchPrefix("except-", target))
+                        {
+                            exceptViewId = std::stoi(target.substr(7));
+                            broadcast = true;
+                        }
+                        else
+                            viewId = std::stoi(target);
+
                         int type = std::stoi(tokens[2]);
 
                         // payload is the rest of the message
@@ -1400,7 +1428,7 @@ private:
                         for (auto& it : _sessions)
                         {
                             auto session = it.second;
-                            if (session && ((session->getViewId() == viewId) || (viewId == -1)))
+                            if (session && ((broadcast && (session->getViewId() != exceptViewId)) || (!broadcast && (session->getViewId() == viewId))))
                             {
                                 if (!it.second->isCloseFrame())
                                 {
@@ -1414,8 +1442,7 @@ private:
                                             "] payload [" << payload << "].");
                                 }
 
-                                // finish if we are not broadcasting
-                                if (viewId != -1)
+                                if (!broadcast)
                                     break;
                             }
                         }
