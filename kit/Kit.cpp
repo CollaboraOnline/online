@@ -869,7 +869,10 @@ public:
             }
         }
 
-        tileQueue->put("callback " + std::to_string(descriptor->ViewId) + ' ' + std::to_string(type) + ' ' + payload);
+        if (type == LOK_CALLBACK_INVALIDATE_TILES)
+            tileQueue->put("callback -1 " + std::to_string(type) + ' ' + payload); // no point in handling invalidations per-view
+        else
+            tileQueue->put("callback " + std::to_string(descriptor->ViewId) + ' ' + std::to_string(type) + ' ' + payload);
     }
 
 private:
