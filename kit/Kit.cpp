@@ -1414,7 +1414,9 @@ private:
                                             "] payload [" << payload << "].");
                                 }
 
-                                break;
+                                // finish if we are not broadcasting
+                                if (viewId != -1)
+                                    break;
                             }
                         }
 
