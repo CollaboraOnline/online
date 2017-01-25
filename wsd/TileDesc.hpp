@@ -84,12 +84,17 @@ public:
                _broadcast == other._broadcast;
     }
 
+    static bool rectanglesIntersect(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2)
+    {
+        return x1 + w1 >= x2 &&
+               x1 <= x2 + w2 &&
+               y1 + h1 >= y2 &&
+               y1 <= y2 + h2;
+    }
+
     bool intersectsWithRect(int x, int y, int w, int h) const
     {
-        return x + w >= getTilePosX() &&
-               x <= getTilePosX() + getTileWidth() &&
-               y + h >= getTilePosY() &&
-               y <= getTilePosY() + getTileHeight();
+        return rectanglesIntersect(getTilePosX(), getTilePosY(), getTileWidth(), getTileHeight(), x, y, w, h);
     }
 
     bool intersects(const TileDesc& other) const

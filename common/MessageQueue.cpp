@@ -80,9 +80,15 @@ void TileQueue::put_impl(const Payload& value)
     }
     else if (firstToken == "callback")
     {
-        removeCallbackDuplicate(msg);
+        std::string newMsg = removeCallbackDuplicate(msg);
 
-        MessageQueue::put_impl(value);
+        if (newMsg.empty())
+            MessageQueue::put_impl(value);
+        else
+        {
+            MessageQueue::put_impl(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
+        }
+
         return;
     }
 
@@ -143,45 +149,164 @@ std::string extractUnoCommand(const std::string& command)
     return command;
 }
 
+/// Extract rectangle from the invalidation callback
+bool extractRectangle(const std::vector<std::string>& tokens, int& x, int& y, int& w, int& h, int& part)
+{
+    x = 0;
+    y = 0;
+    w = INT_MAX;
+    h = INT_MAX;
+    part = 0;
+
+    if (tokens.size() < 4)
+        return false;
+
+    if (tokens[3] == "EMPTY,")
+    {
+        part = std::atoi(tokens[4].c_str());
+        return true;
+    }
+
+    if (tokens.size() < 8)
+        return false;
+
+    x = std::atoi(tokens[3].c_str());
+    y = std::atoi(tokens[4].c_str());
+    w = std::atoi(tokens[5].c_str());
+    h = std::atoi(tokens[6].c_str());
+    part = std::atoi(tokens[7].c_str());
+
+    return true;
 }
 
-void TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
+}
+
+std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
 {
     assert(LOOLProtocol::matchPrefix("callback", callbackMsg, /*ignoreWhitespace*/ true));
 
     std::vector<std::string> tokens = LOOLProtocol::tokenize(callbackMsg);
 
     if (tokens.size() < 3)
-        return;
+        return std::string();
 
     // the message is "callback <view> <id> ..."
     const std::string& callbackType = tokens[2];
 
     if (callbackType == "0")        // invalidation
     {
-        // TODO later add a more advanced merging of invalidates (like two
-        // close ones merge into a bigger one); but for the moment remove just
-        // the plain duplicates
-        for (size_t i = 0; i < _queue.size(); ++i)
+        int msgX, msgY, msgW, msgH, msgPart;
+
+        if (!extractRectangle(tokens, msgX, msgY, msgW, msgH, msgPart))
+            return std::string();
+
+        bool performedMerge = false;
+
+        // we always travel the entire queue
+        size_t i = 0;
+        while (i < _queue.size())
         {
             auto& it = _queue[i];
 
-            if (callbackMsg.size() == it.size() && LOOLProtocol::matchPrefix(callbackMsg, it))
+            std::vector<std::string> queuedTokens = LOOLProtocol::tokenize(it.data(), it.size());
+            if (queuedTokens.size() < 3)
             {
-                LOG_TRC("Remove duplicate invalidation callback: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
-                _queue.erase(_queue.begin() + i);
-                break;
+                ++i;
+                continue;
             }
+
+            // not a invalidation callback
+            if (queuedTokens[0] != tokens[0] || queuedTokens[1] != tokens[1] || queuedTokens[2] != tokens[2])
+            {
+                ++i;
+                continue;
+            }
+
+            int queuedX, queuedY, queuedW, queuedH, queuedPart;
+
+            if (!extractRectangle(queuedTokens, queuedX, queuedY, queuedW, queuedH, queuedPart))
+            {
+                ++i;
+                continue;
+            }
+
+            if (msgPart != queuedPart)
+            {
+                ++i;
+                continue;
+            }
+
+            // the invalidation in the queue is fully covered by the message,
+            // just remove it
+            if (msgX <= queuedX && queuedX + queuedW <= msgX + msgW && msgY <= queuedY && queuedY + queuedH <= msgY + msgH)
+            {
+                LOG_TRC("Removing smaller invalidation: " << std::string(it.data(), it.size()) << " -> " <<
+                        tokens[0] << " " << tokens[1] << " " << tokens[2] << " " << msgX << " " << msgY << " " << msgW << " " << msgH << " " << msgPart);
+
+                // remove from the queue
+                _queue.erase(_queue.begin() + i);
+                continue;
+            }
+
+            // the invalidation just intersects, join those (if the result is
+            // small)
+            if (TileDesc::rectanglesIntersect(msgX, msgY, msgW, msgH, queuedX, queuedY, queuedW, queuedH))
+            {
+                int joinX = std::min(msgX, queuedX);
+                int joinY = std::min(msgY, queuedY);
+                int joinW = std::max(msgX + msgW, queuedX + queuedW) - joinX;
+                int joinH = std::max(msgY + msgH, queuedY + queuedH) - joinY;
+
+                const int reasonableSizeX = 4*3840; // 4x tile at 100% zoom
+                const int reasonableSizeY = 2*3840; // 2x tile at 100% zoom
+                if (joinW > reasonableSizeX || joinH > reasonableSizeY)
+                {
+                    ++i;
+                    continue;
+                }
+
+                LOG_TRC("Merging invalidations: " << std::string(it.data(), it.size()) << " and " <<
+                        tokens[0] << " " << tokens[1] << " " << tokens[2] << " " << msgX << " " << msgY << " " << msgW << " " << msgH << " " << msgPart << " -> " <<
+                        tokens[0] << " " << tokens[1] << " " << tokens[2] << " " << joinX << " " << joinY << " " << joinW << " " << joinH << " " << msgPart);
+
+                msgX = joinX;
+                msgY = joinY;
+                msgW = joinW;
+                msgH = joinH;
+                performedMerge = true;
+
+                // remove from the queue
+                _queue.erase(_queue.begin() + i);
+                continue;
+            }
+
+            ++i;
+        }
+
+        if (performedMerge)
+        {
+            size_t pre = tokens[0].size() + tokens[1].size() + tokens[2].size() + 3;
+            size_t post = pre + tokens[3].size() + tokens[4].size() + tokens[5].size() + tokens[6].size() + 4;
+
+            std::string result = callbackMsg.substr(0, pre) +
+                std::to_string(msgX) + ", " +
+                std::to_string(msgY) + ", " +
+                std::to_string(msgW) + ", " +
+                std::to_string(msgH) + ", " + callbackMsg.substr(post);
+
+            LOG_TRC("Merge result: " << result);
+
+            return result;
         }
     }
     else if (callbackType == "8")        // state changed
     {
         if (tokens.size() < 4)
-            return;
+            return std::string();
 
         std::string unoCommand = extractUnoCommand(tokens[3]);
-        if (unoCommand.length() == 0)
-            return;
+        if (unoCommand.empty())
+            return std::string();
 
         // remove obsolete states of the same .uno: command
         for (size_t i = 0; i < _queue.size(); ++i)
@@ -192,20 +317,20 @@ void TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             if (queuedTokens.size() < 4)
                 continue;
 
-            if (queuedTokens[0] == tokens[0] && queuedTokens[1] == tokens[1] && queuedTokens[2] == tokens[2])
-            {
-                // callback, the same target, state changed; now check it's
-                // the same .uno: command
-                std::string queuedUnoCommand = extractUnoCommand(queuedTokens[3]);
-                if (queuedUnoCommand.length() == 0)
-                    continue;
+            if (queuedTokens[0] != tokens[0] || queuedTokens[1] != tokens[1] || queuedTokens[2] != tokens[2])
+                continue;
 
-                if (unoCommand == queuedUnoCommand)
-                {
-                    LOG_TRC("Remove obsolete uno command: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
-                    _queue.erase(_queue.begin() + i);
-                    break;
-                }
+            // callback, the same target, state changed; now check it's
+            // the same .uno: command
+            std::string queuedUnoCommand = extractUnoCommand(queuedTokens[3]);
+            if (queuedUnoCommand.empty())
+                continue;
+
+            if (unoCommand == queuedUnoCommand)
+            {
+                LOG_TRC("Remove obsolete uno command: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
+                _queue.erase(_queue.begin() + i);
+                break;
             }
         }
     }
@@ -258,6 +383,8 @@ void TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             }
         }
     }
+
+    return std::string();
 }
 
 int TileQueue::priority(const std::string& tileMsg)

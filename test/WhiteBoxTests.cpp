@@ -16,6 +16,7 @@
 #include <Kit.hpp>
 #include <MessageQueue.hpp>
 #include <Protocol.hpp>
+#include <TileDesc.hpp>
 #include <Util.hpp>
 
 /// WhiteBox unit-tests.
@@ -29,6 +30,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRegexListMatcher);
     CPPUNIT_TEST(testRegexListMatcher_Init);
     CPPUNIT_TEST(testEmptyCellCursor);
+    CPPUNIT_TEST(testRectanglesIntersect);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -38,6 +40,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRegexListMatcher();
     void testRegexListMatcher_Init();
     void testEmptyCellCursor();
+    void testRectanglesIntersect();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -357,6 +360,31 @@ void WhiteBoxTests::testEmptyCellCursor()
     CallbackDescriptor callbackDescriptor{&document, 0};
     // This failed as stoi raised an std::invalid_argument exception.
     documentViewCallback(LOK_CALLBACK_CELL_CURSOR, "EMPTY", &callbackDescriptor);
+}
+
+void WhiteBoxTests::testRectanglesIntersect()
+{
+    // these intersect
+    CPPUNIT_ASSERT(TileDesc::rectanglesIntersect(1000, 1000, 2000, 1000,
+                                                 2000, 1000, 2000, 1000));
+    CPPUNIT_ASSERT(TileDesc::rectanglesIntersect(2000, 1000, 2000, 1000,
+                                                 1000, 1000, 2000, 1000));
+
+    CPPUNIT_ASSERT(TileDesc::rectanglesIntersect(1000, 1000, 2000, 1000,
+                                                 3000, 2000, 1000, 1000));
+    CPPUNIT_ASSERT(TileDesc::rectanglesIntersect(3000, 2000, 1000, 1000,
+                                                 1000, 1000, 2000, 1000));
+
+    // these don't
+    CPPUNIT_ASSERT(!TileDesc::rectanglesIntersect(1000, 1000, 2000, 1000,
+                                                  2000, 3000, 2000, 1000));
+    CPPUNIT_ASSERT(!TileDesc::rectanglesIntersect(2000, 3000, 2000, 1000,
+                                                  1000, 1000, 2000, 1000));
+
+    CPPUNIT_ASSERT(!TileDesc::rectanglesIntersect(1000, 1000, 2000, 1000,
+                                                  2000, 3000, 1000, 1000));
+    CPPUNIT_ASSERT(!TileDesc::rectanglesIntersect(2000, 3000, 1000, 1000,
+                                                  1000, 1000, 2000, 1000));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
