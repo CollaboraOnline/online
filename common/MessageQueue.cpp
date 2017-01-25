@@ -158,7 +158,7 @@ bool extractRectangle(const std::vector<std::string>& tokens, int& x, int& y, in
     h = INT_MAX;
     part = 0;
 
-    if (tokens.size() < 4)
+    if (tokens.size() < 5)
         return false;
 
     if (tokens[3] == "EMPTY,")
