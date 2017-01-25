@@ -49,6 +49,7 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSenderQueue);
     CPPUNIT_TEST(testSenderQueueTileDeduplication);
     CPPUNIT_TEST(testInvalidateViewCursorDeduplication);
+    CPPUNIT_TEST(testCallbackInvalidation);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -60,6 +61,7 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     void testSenderQueue();
     void testSenderQueueTileDeduplication();
     void testInvalidateViewCursorDeduplication();
+    void testCallbackInvalidation();
 };
 
 void TileQueueTests::testTileQueuePriority()
@@ -413,6 +415,33 @@ void TileQueueTests::testInvalidateViewCursorDeduplication()
     CPPUNIT_ASSERT_EQUAL(dup_messages[2], std::string(item->data().data(), item->data().size()));
 
     CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
+}
+
+void TileQueueTests::testCallbackInvalidation()
+{
+    TileQueue queue;
+
+    // join tiles
+    queue.put("callback all 0 284, 1418, 11105, 275, 0");
+    queue.put("callback all 0 4299, 1418, 7090, 275, 0");
+
+    CPPUNIT_ASSERT_EQUAL(1, static_cast<int>(queue._queue.size()));
+
+    CPPUNIT_ASSERT_EQUAL(std::string("callback all 0 284, 1418, 11105, 275, 0"), payloadAsString(queue.get()));
+
+    // invalidate everywhing with EMPTY, but keep the different part intact
+    queue.put("callback all 0 284, 1418, 11105, 275, 0");
+    queue.put("callback all 0 4299, 1418, 7090, 275, 1");
+    queue.put("callback all 0 4299, 10418, 7090, 275, 0");
+    queue.put("callback all 0 4299, 20418, 7090, 275, 0");
+
+    CPPUNIT_ASSERT_EQUAL(4, static_cast<int>(queue._queue.size()));
+
+    queue.put("callback all 0 EMPTY, 0");
+
+    CPPUNIT_ASSERT_EQUAL(2, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(std::string("callback all 0 4299, 1418, 7090, 275, 1"), payloadAsString(queue.get()));
+    CPPUNIT_ASSERT_EQUAL(std::string("callback all 0 EMPTY, 0"), payloadAsString(queue.get()));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileQueueTests);

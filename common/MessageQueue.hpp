@@ -208,7 +208,9 @@ private:
     ///
     /// This removes also callbacks that are made invalid by the current
     /// message, like the new cursor position invalidates the old one etc.
-    void removeCallbackDuplicate(const std::string& callbackMsg);
+    ///
+    /// @return New message to put into the queue.  If empty, use what was in callbackMsg.
+    std::string removeCallbackDuplicate(const std::string& callbackMsg);
 
     /// Find the index of the first non-preview entry.
     /// When preferTiles is false, it'll return index of
