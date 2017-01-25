@@ -332,15 +332,6 @@ $(function () {
 		name: 'toolbar-up',
 		items: [
 			{type: 'html', id: 'left'},
-			{type: 'menu', id: 'writer:menu:wrap', caption: _('Textwrap'), items: [
-				{ text: _('No wrap'), id: 'wrap-WrapOff' },
-				{ text: _('Page wrap'), id: 'wrap-WrapOn' },
-				{ text: _('Wrap anchor only'), id: 'wrap-WrapAnchorOnly' },
-				{ text: _('Ideal wrap'), id: 'wrap-WrapIdeal' },
-				{ text: _('Left wrap'), id: 'wrap-WrapLeft' },
-				{ text: _('Right wrap'), id: 'wrap-WrapRight' },
-				{ text: _('Wrap through'), id: 'wrap-WrapThrough' }
-			]},
 			{type: 'button',  id: 'save', img: 'save', hint: _('Save'), uno: 'Save'},
 			{type: 'break'},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _('Undo'), uno: 'Undo'},
