@@ -147,14 +147,6 @@ private:
     };
 
 public:
-
-    TileQueue() :
-        _lastTileGetTime(std::chrono::steady_clock::now()),
-        _lastGetTime(_lastTileGetTime),
-        _lastGetTile(true)
-    {
-    }
-
     void updateCursorPosition(int viewId, int part, int x, int y, int width, int height)
     {
         const auto cursorPosition = CursorPosition({ part, x, y, width, height });
@@ -212,25 +204,9 @@ private:
     /// @return New message to put into the queue.  If empty, use what was in callbackMsg.
     std::string removeCallbackDuplicate(const std::string& callbackMsg);
 
-    /// Find the index of the first non-preview entry.
-    /// When preferTiles is false, it'll return index of
-    /// the first non-tile, otherwise, the index of the
-    /// first tile is returned.
-    /// Returns -1 if only previews are left.
-    int findFirstNonPreview(bool preferTiles) const;
-
-    /// Returns true if we should try to return
-    /// a tile, otherwise a non-tile.
-    bool shouldPreferTiles() const;
-
-    /// Update the tile/non-tile timestamps to
-    /// track how much time we spend for each.
-    /// isTile marks if the current message
-    /// is a tile or not.
-    void updateTimestamps(const bool isTile);
-
-    /// Given a positive index, move it to the top.
-    void bumpToTop(const size_t index);
+    /// De-prioritize the previews (tiles with 'id') - move them to the end of
+    /// the queue.
+    void deprioritizePreviews();
 
     /// Priority of the given tile message.
     /// -1 means the lowest prio (the tile does not intersect any of the cursors),
@@ -243,13 +219,6 @@ private:
     /// Check the views in the order of how the editing (cursor movement) has
     /// been happening (0 == oldest, size() - 1 == newest).
     std::vector<int> _viewOrder;
-
-    std::chrono::steady_clock::time_point _lastTileGetTime;
-    std::chrono::steady_clock::time_point _lastGetTime;
-    bool _lastGetTile;
-
-    /// For responsiveness, we shouldn't have higher latency.
-    static const int MaxTileSkipDurationMs = 100;
 };
 
 #endif
