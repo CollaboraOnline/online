@@ -130,6 +130,19 @@ std::string extractViewId(const std::string& origMsg, const std::vector<std::str
     return json->get("viewId").toString();
 }
 
+/// Extract the .uno: command ID from the potential command.
+std::string extractUnoCommand(const std::string& command)
+{
+    if (!LOOLProtocol::matchPrefix(".uno:", command))
+        return std::string();
+
+    size_t equalPos = command.find('=');
+    if (equalPos != std::string::npos)
+        return command.substr(0, equalPos);
+
+    return command;
+}
+
 }
 
 void TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
@@ -146,9 +159,9 @@ void TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
 
     if (callbackType == "0")        // invalidation
     {
-        // TODO later we can consider some more advanced merging of
-        // invalidates (like two close ones merge into a bigger one); but for
-        // the moment remove just the plain duplicates
+        // TODO later add a more advanced merging of invalidates (like two
+        // close ones merge into a bigger one); but for the moment remove just
+        // the plain duplicates
         for (size_t i = 0; i < _queue.size(); ++i)
         {
             auto& it = _queue[i];
@@ -158,6 +171,41 @@ void TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                 LOG_TRC("Remove duplicate invalidation callback: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
                 _queue.erase(_queue.begin() + i);
                 break;
+            }
+        }
+    }
+    else if (callbackType == "8")        // state changed
+    {
+        if (tokens.size() < 4)
+            return;
+
+        std::string unoCommand = extractUnoCommand(tokens[3]);
+        if (unoCommand.length() == 0)
+            return;
+
+        // remove obsolete states of the same .uno: command
+        for (size_t i = 0; i < _queue.size(); ++i)
+        {
+            auto& it = _queue[i];
+
+            std::vector<std::string> queuedTokens = LOOLProtocol::tokenize(it.data(), it.size());
+            if (queuedTokens.size() < 4)
+                continue;
+
+            if (queuedTokens[0] == tokens[0] && queuedTokens[1] == tokens[1] && queuedTokens[2] == tokens[2])
+            {
+                // callback, the same target, state changed; now check it's
+                // the same .uno: command
+                std::string queuedUnoCommand = extractUnoCommand(queuedTokens[3]);
+                if (queuedUnoCommand.length() == 0)
+                    continue;
+
+                if (unoCommand == queuedUnoCommand)
+                {
+                    LOG_TRC("Remove obsolete uno command: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
+                    _queue.erase(_queue.begin() + i);
+                    break;
+                }
             }
         }
     }
