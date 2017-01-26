@@ -583,13 +583,10 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
     }
     else if (tokens.size() == 2 && tokens[0] == "statechanged:")
     {
-        if (docBroker)
+        StringTokenizer stateTokens(tokens[1], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        if (stateTokens.count() == 2 && stateTokens[0] == ".uno:ModifiedStatus")
         {
-            StringTokenizer stateTokens(tokens[1], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            if (stateTokens.count() == 2 && stateTokens[0] == ".uno:ModifiedStatus")
-            {
-                docBroker->setModified(stateTokens[1] == "true");
-            }
+            docBroker->setModified(stateTokens[1] == "true");
         }
     }
 
@@ -652,6 +649,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                     stringToInteger(firstLineTokens[3], w);
                     stringToInteger(firstLineTokens[4], h);
                 }
+
                 docBroker->invalidateCursor(x, y, w, h);
             }
             else

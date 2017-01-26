@@ -759,8 +759,6 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
 
 void DocumentBroker::invalidateTiles(const std::string& tiles)
 {
-    std::unique_lock<std::mutex> lock(_mutex);
-
     // Remove from cache.
     _tileCache->invalidateTiles(tiles);
 }
@@ -904,6 +902,9 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
             const auto tile = TileDesc::parse(firstLine);
             const auto buffer = payload.data();
             const auto offset = firstLine.size() + 1;
+
+            std::unique_lock<std::mutex> lock(_mutex);
+
             tileCache().saveTileAndNotify(tile, buffer + offset, length - offset);
         }
         else
@@ -931,6 +932,9 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
             const auto tileCombined = TileCombined::parse(firstLine);
             const auto buffer = payload.data();
             auto offset = firstLine.size() + 1;
+
+            std::unique_lock<std::mutex> lock(_mutex);
+
             for (const auto& tile : tileCombined.getTiles())
             {
                 tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize());
@@ -1015,6 +1019,8 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
     std::string sid;
     if (LOOLProtocol::parseNameValuePair(payload->forwardToken(), name, sid, '-') && name == "client")
     {
+        std::unique_lock<std::mutex> lock(_mutex);
+
         const auto it = _sessions.find(sid);
         if (it != _sessions.end())
         {
