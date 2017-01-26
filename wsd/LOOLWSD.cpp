@@ -503,7 +503,7 @@ private:
         std::string discPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
         if (!File(discPath).exists())
         {
-            discPath = LOOLWSD_DATADIR "/discovery.xml";
+            discPath = LOOLWSD::FileServerRoot + "/discovery.xml";
         }
 
         InputSource input(discPath);
@@ -1068,7 +1068,7 @@ private:
         std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
         if (!File(discoveryPath).exists())
         {
-            discoveryPath = LOOLWSD_DATADIR "/discovery.xml";
+            discoveryPath = LOOLWSD::FileServerRoot + "/discovery.xml";
         }
 
         const std::string mediaType = "text/xml";
@@ -1170,7 +1170,7 @@ public:
                 std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
                 if (!File(faviconPath).exists())
                 {
-                    faviconPath = LOOLWSD_DATADIR "/favicon.ico";
+                    faviconPath = LOOLWSD::FileServerRoot + "/favicon.ico";
                 }
                 response.setContentType(mimeType);
                 response.sendFile(faviconPath, mimeType);
@@ -1489,6 +1489,7 @@ std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::LOKitVersion;
+std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 
@@ -1576,9 +1577,8 @@ void LOOLWSD::initialize(Application& self)
     // Load default configuration files, if present.
     if (loadConfiguration(PRIO_DEFAULT) == 0)
     {
-        // Fallback to the default path.
-        const std::string configPath = LOOLWSD_CONFIGDIR "/loolwsd.xml";
-        loadConfiguration(configPath, PRIO_DEFAULT);
+        // Fallback to the LOOLWSD_CONFIGDIR or --config-file path.
+        loadConfiguration(ConfigFile, PRIO_DEFAULT);
     }
 
     // Override any settings passed on the command-line.
@@ -1655,6 +1655,7 @@ void LOOLWSD::initialize(Application& self)
     LoTemplate = getPathFromConfig("lo_template_path");
     ChildRoot = getPathFromConfig("child_root_path");
     ServerName = config().getString("server_name");
+
     FileServerRoot = getPathFromConfig("file_server_root_path");
     NumPreSpawnedChildren = getConfigValue<unsigned int>(conf, "num_prespawn_children", 1);
 
@@ -1811,6 +1812,11 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(true)
                         .argument("xmlpath"));
 
+    optionSet.addOption(Option("config-file", "", "Override configuration file path.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("path"));
+
 #if ENABLE_DEBUG
     optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
                         .required(false)
@@ -1851,6 +1857,8 @@ void LOOLWSD::handleOption(const std::string& optionName,
         LOOLProtocol::parseNameValuePair(value, optName, optValue);
         _overrideSettings[optName] = optValue;
     }
+    else if (optionName == "config-file")
+        ConfigFile = value;
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;

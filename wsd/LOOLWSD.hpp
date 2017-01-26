@@ -42,6 +42,7 @@ public:
     static bool NoCapsForKit;
     static int ForKitWritePipe;
     static std::string Cache;
+    static std::string ConfigFile;
     static std::string SysTemplate;
     static std::string LoTemplate;
     static std::string ChildRoot;
