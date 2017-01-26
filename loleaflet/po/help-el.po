@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-22 13:07+0000\n"
+"POT-Creation-Date: 2017-01-26 12:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-help-el.po\n"
-"X-Pootle-Revision: 722119\n"
+"X-Pootle-Revision: 830229\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -62,526 +62,553 @@ msgstr "Εκτύπωση (Μεταφόρτωση ως PDF)"
 msgid "Ctrl + P"
 msgstr "Ctrl + P"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A37
-msgctxt "dist/loleaflet-help.html div.div.h2:37"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
+msgid "Display the Keyboard shortcuts help"
+msgstr "Εμφάνιση της βοήθειας για τις συντομεύσεις πληκτρολογίου"
+
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
+msgid "Ctrl + Shift + ?"
+msgstr "Ctrl + Shift + ?"
+
+#: dist%2Floleaflet-help.html+div.div.h2%3A38
+#: dist%2Floleaflet-help.html+div.div.h2%3A160
 msgid "Text formatting"
 msgstr "Μορφοποίηση κειμένου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A39
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:39"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
 msgid "Bold"
 msgstr "Έντονα"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A39
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:39"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
 msgid "Ctrl + B"
 msgstr "Ctrl + B"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:40"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
 msgid "Italic"
 msgstr "Πλάγια"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:40"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
 msgid "Ctrl + I"
 msgstr "Ctrl + I"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:41"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
 msgid "Underline"
 msgstr "Υπογραμμισμένο"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:41"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
 msgid "Ctrl + U"
 msgstr "Ctrl + U"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 msgid "Double Underline"
 msgstr "Διπλή υπογράμμιση"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:42"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Ctrl + D"
 msgstr "Ctrl + D"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:43"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
 msgid "Strikethrough"
-msgstr "Επιγράμμιση"
+msgstr "Διαγράμμιση"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:43"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
 msgid "Ctrl + Alt + 5"
 msgstr "Ctrl + Alt + 5"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:44"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
 msgid "Superscript"
 msgstr "Εκθέτης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:44"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
 msgid "Ctrl + Shift + P"
 msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:45"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Subscript"
 msgstr "Δείκτης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:45"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Ctrl + Shift + B"
 msgstr "Ctrl + Shift + B"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:46"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
 msgid "Remove direct formatting"
 msgstr "Αφαίρεση άμεσης μορφοποίησης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:46"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
 msgid "Ctrl + M"
 msgstr "Ctrl + M"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A48
-msgctxt "dist/loleaflet-help.html div.div.h2:48"
+#: dist%2Floleaflet-help.html+div.div.h2%3A49
+#: dist%2Floleaflet-help.html+div.div.h2%3A170
 msgid "Paragraph formatting"
 msgstr "Μορφοποίηση παραγράφου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A50
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:50"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
 msgid "Align Center"
-msgstr "Κεντραρισμένη στοίχιση"
+msgstr "Στοίχιση στο κέντρο"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A50
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:50"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
 msgid "Ctrl + E"
 msgstr "Ctrl + E"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:51"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
 msgid "Align Left"
 msgstr "Στοίχιση αριστερά"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:51"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
 msgid "Ctrl + L"
 msgstr "Ctrl + L"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:52"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
 msgid "Align Right"
 msgstr "Στοίχιση δεξιά"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:52"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
 msgid "Ctrl + R"
 msgstr "Ctrl + R"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:53"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
 msgid "Justify"
 msgstr "Πλήρης στοίχιση"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:53"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
 msgid "Ctrl + J"
 msgstr "Ctrl + J"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Apply Default paragraph style"
 msgstr "Εφαρμογή προεπιλεγμένης τεχνοτροπίας παραγράφου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Ctrl + 0"
 msgstr "Ctrl + 0"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Apply Heading 1 paragraph style"
 msgstr "Εφαρμογή τεχνοτροπίας παραγράφου επικεφαλίδας 1"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Ctrl + 1"
 msgstr "Ctrl + 1"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Apply Heading 2 paragraph style"
 msgstr "Εφαρμογή τεχνοτροπίας παραγράφου επικεφαλίδας 2"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Ctrl + 2"
 msgstr "Ctrl + 2"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 msgid "Apply Heading 3 paragraph style"
 msgstr "Εφαρμογή τεχνοτροπίας παραγράφου επικεφαλίδας 3"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:57"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
 msgid "Ctrl + 3"
 msgstr "Ctrl + 3"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Apply Heading 4 paragraph style"
 msgstr "Εφαρμογή τεχνοτροπίας παραγράφου επικεφαλίδας 4"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Ctrl + 4"
 msgstr "Ctrl + 4"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Apply Heading 5 paragraph style"
 msgstr "Εφαρμογή τεχνοτροπίας παραγράφου επικεφαλίδας 5"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Ctrl + 5"
 msgstr "Ctrl + 5"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A61
+#: dist%2Floleaflet-help.html+div.div.h2%3A62
 msgid "Text selection and navigation in document"
 msgstr "Επιλογή κειμένου και περιήγηση στο έγγραφο"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A63
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:63"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 msgid "Select All"
 msgstr "Επιλογή όλων"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A63
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:63"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
 msgid "Ctrl + A"
 msgstr "Ctrl + A"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:64"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
 msgid "Move cursor to the left"
 msgstr "Μετακίνηση δρομέα προς τα αριστερά"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:64"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
 msgid "Arrow Left"
 msgstr "Αριστερό βέλος"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:65"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
 msgid "Move cursor with selection to the left"
 msgstr "Μετακίνηση του δρομέα με επιλογή προς τα αριστερά"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:65"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
 msgid "Shift + Arrow Left"
 msgstr "Shift + αριστερό βέλος"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:66"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
 msgid "Go to beginning of a word"
 msgstr "Μετάβαση στην αρχή μιας λέξης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:66"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
 msgid "Ctrl + Arrow Left"
 msgstr "Ctrl + αριστερό βέλος"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:67"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
 msgid "Select to the left word by word"
 msgstr "Επιλογή προς τα αριστερά λέξη-λέξη"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:67"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
 msgid "Ctrl + Shift + Arrow Left"
 msgstr "Ctrl + Shift + αριστερό βέλος"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:68"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
 msgid "Move cursor to the right"
 msgstr "Μετακίνηση δρομέα προς τα δεξιά"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:68"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
 msgid "Arrow Right"
 msgstr "Δεξιό βέλος"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:69"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
 msgid "Move cursor with selection to the right"
 msgstr "Μετακίνηση του δρομέα με επιλογή προς τα δεξιά"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:69"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
 msgid "Shift + Arrow Right"
 msgstr "Shift + δεξιό βέλος"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:70"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
 msgid "Go to start of the next word"
 msgstr "Μετάβαση στην αρχή της επόμενης λέξης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:70"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
 msgid "Ctrl + Arrow Right"
 msgstr "Ctrl + δεξιό βέλος"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:71"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
 msgid "Select to the right word by word"
 msgstr "Επιλογή προς τα δεξιά λέξη-λέξη"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:71"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
 msgid "Ctrl + Shift + Arrow Right"
 msgstr "Ctrl + Shift + δεξιό βέλος"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:72"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
 msgid "Move cursor up one line"
 msgstr "Μετακίνηση του δρομέα κατά μια γραμμή προς τα πάνω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:72"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
 msgid "Arrow Up"
 msgstr "Βέλος προς τα πάνω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:73"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
 msgid "Select lines in upwards direction"
 msgstr "Επιλογή γραμμών με κατεύθυνση προς τα πάνω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:73"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
 msgid "Shift + Arrow Up"
 msgstr "Shift + βέλος προς τα πάνω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:74"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
 msgid "Move cursor to beginning of the previous paragraph"
 msgstr "Μετακίνηση του δρομέα στην αρχή της προηγούμενης παραγράφου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:74"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
 msgid "Ctrl + Arrow Up"
 msgstr "Ctrl + βέλος προς τα πάνω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:75"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
 msgid "Select to beginning of paragraph"
 msgstr "Επιλογή μέχρι την αρχή της παραγράφου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:75"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
 msgid "Ctrl + Shift + Arrow Up"
 msgstr "Ctrl + Shift + βέλος προς τα πάνω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:76"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
 msgid "Move cursor down one line"
 msgstr "Μετακίνηση του δρομέα κατά μια γραμμή προς τα κάτω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:76"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
 msgid "Arrow Down"
 msgstr "Βέλος προς τα κάτω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:77"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
 msgid "Select lines in downwards direction"
 msgstr "Επιλογή γραμμών με κατεύθυνση προς τα κάτω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:77"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
 msgid "Shift + Arrow Down"
 msgstr "Shift + βέλος προς τα κάτω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:78"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
 msgid "Move cursor to beginning of the next paragraph"
 msgstr "Μετακίνηση του δρομέα στην αρχή της επόμενης παραγράφου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:78"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
 msgid "Ctrl + Arrow Down"
 msgstr "Ctrl + βέλος προς τα κάτω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:79"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
 msgid "Select to end of paragraph"
 msgstr "Επιλογή μέχρι το τέλος της παραγράφου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:79"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
 msgid "Ctrl + Shift + Arrow Down"
 msgstr "Ctrl + Shift + βέλος προς τα κάτω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:80"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
 msgid "Go to beginning of line"
 msgstr "Μετάβαση στην αρχή της γραμμής"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:80"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
 msgid "Home"
 msgstr "Home (Αρχή)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:81"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
 msgid "Go and select to the beginning of a line"
 msgstr "Μετάβαση και επιλογή μέχρι την αρχή μιας γραμμής"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:81"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
 msgid "Shift + Home"
 msgstr "Shift + Home"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:82"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
 msgid "Go to start of document"
 msgstr "Μετάβαση στην αρχή του εγγράφου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:82"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
 msgid "Ctrl + Home"
 msgstr "Ctrl + Home"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 msgid "Go and select text to start of document"
 msgstr "Μετάβαση και επιλογή κειμένου μέχρι την αρχή του εγγράφου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:83"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
 msgid "Ctrl + Shift + Home"
 msgstr "Ctrl + Shift + Home"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:84"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
 msgid "Go to end of line"
 msgstr "Μετάβαση στο τέλος της γραμμής"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:84"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
 msgid "End"
 msgstr "End (Τέλος)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:85"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
 msgid "Go and select to the end of a line"
 msgstr "Μετάβαση και επιλογή μέχρι το τέλος μιας γραμμής"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:85"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
 msgid "Shift + End"
 msgstr "Shift + End"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:86"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
 msgid "Go to end of document"
 msgstr "Μετάβαση στο τέλος του εγγράφου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:86"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
 msgid "Ctrl + End"
 msgstr "Ctrl + End"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 msgid "Go and select text to end of document"
 msgstr "Μετάβαση και επιλογή κειμένου μέχρι το τέλος του εγγράφου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:87"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
 msgid "Ctrl + Shift + End"
 msgstr "Ctrl + Shift + End"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
 msgid "Move the view up one page"
 msgstr "Μετακίνηση της προβολής μια σελίδα προς τα πάνω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
 msgid "PageUp"
 msgstr "PageUp"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
 msgid "Switch cursor between text and header"
 msgstr "Εναλλαγή δρομέα μεταξύ κειμένου και κεφαλίδας"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
 msgid "Ctrl + PageUp"
 msgstr "Ctrl + PageUp"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
 msgid "Extend the selection up one page"
 msgstr "Επέκταση της επιλογής κατά μια σελίδα προς τα πάνω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
 msgid "Shift + PageUp"
 msgstr "Shift + PageUp"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
 msgid "Move the view down one page"
 msgstr "Μετακίνηση της προβολής κατά μία σελίδα προς τα κάτω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
 msgid "PageDown"
 msgstr "PageDown"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
 msgid "Switch cursor between text and footer"
 msgstr "Εναλλαγή δρομέα μεταξύ κειμένου και υποσέλιδου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
 msgid "Ctrl + PageDown"
 msgstr "Ctrl + PageDown"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
 msgid "Extend the selection down one page"
 msgstr "Επέκταση της επιλογής κατά μία σελίδα προς τα κάτω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
 msgid "Shift + PageDown"
 msgstr "Shift + PageDown"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
 msgid "Delete to beginning of word"
 msgstr "Διαγραφή μέχρι την αρχή της λέξης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
 msgid "Ctrl + Backspace"
 msgstr "Ctrl + Backspace"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
 msgid "Delete to end of word"
 msgstr "Διαγραφή έως το τέλος της λέξης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
 msgid "Ctrl + Del"
 msgstr "Ctrl + Del"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
 msgid "Delete to beginning of sentence"
 msgstr "Διαγραφή μέχρι την αρχή της πρότασης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
 msgid "Ctrl + Shift + Backspace"
 msgstr "Ctrl + Shift + Backspace"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A98
 msgid "Delete to end of sentence"
 msgstr "Διαγραφή έως το τέλος της πρότασης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A98
 msgid "Ctrl + Shift + Del"
 msgstr "Ctrl + Shift + Del"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A99
+#: dist%2Floleaflet-help.html+div.div.h2%3A100
 msgid "Shortcut Keys for Tables"
 msgstr "Πλήκτρα συντόμευσης για πίνακες"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A101
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:101"
-msgid "Ctrl + A"
-msgstr "Ctrl + A"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A101
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
@@ -590,12 +617,7 @@ msgstr ""
 "επιλέγει τα περιεχόμενα του ενεργού κελιού. Πιέζοντας ξανά επιλέγει ολόκληρο "
 "τον πίνακα."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:102"
-msgid "Ctrl + Home"
-msgstr "Ctrl + Home"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
 msgid ""
 "If the active cell is empty: goes to the beginning of the table. Otherwise: "
 "first press goes to beginning of the active cell, second press goes to "
@@ -606,12 +628,7 @@ msgstr ""
 "πηγαίνει στην αρχή του τρέχοντος πίνακα και με το τρίτο πάτημα πηγαίνει στην "
 "αρχή του εγγράφου."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:103"
-msgid "Ctrl + End"
-msgstr "Ctrl + End"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
 msgid ""
 "If the active cell is empty: goes to the end of the table. Otherwise: first "
 "press goes to the end of the active cell, second press goes to the end of "
@@ -622,11 +639,11 @@ msgstr ""
 "πηγαίνει στο τέλος του τρέχοντος πίνακα και με το τρίτο πάτημα πηγαίνει στο "
 "τέλος του εγγράφου."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
 msgid "Ctrl + Tab"
 msgstr "Ctrl + Tab"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "Alt + Tab may be used instead."
@@ -635,49 +652,44 @@ msgstr ""
 "χρησιμοποιούμενο διαχειριστή παραθύρου, μπορεί να χρησιμοποιηθεί στη θέση "
 "του το Alt + Tab."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
 msgid "Alt + Arrow Keys"
 msgstr "Alt + πλήκτρα βελών"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
 msgstr ""
 "Αυξάνει/μειώνει το μέγεθος της στήλης/γραμμής στα δεξιό/κάτω άκρο του κελιού"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
 msgid "Alt + Shift + Arrow Keys"
 msgstr "Alt + Shift + πλήκτρα βελών"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr ""
 "Αύξηση/μείωση του μεγέθους της στήλης/γραμμής στο αριστερό/πάνω άκρο του "
 "κελιού"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
 msgid "Alt + Ctrl + Arrow Keys"
 msgstr "Alt + Ctrl + πλήκτρα βελών"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:107"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
 msgid "Like Alt, but only the active cell is modified"
 msgstr "Όπως το Alt, αλλά τροποποιείται μόνο το ενεργό κελί"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
 msgid "Ctrl + Alt + Shift + Arrow Keys"
 msgstr "Ctrl + Alt + Shift + πλήκτρα βελών"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:108"
-msgid "Like Alt, but only the active cell is modified"
-msgstr "Όπως το Alt, αλλά τροποποιείται μόνο το ενεργό κελί"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
 msgid "Alt + Insert"
 msgstr "Alt + Insert"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
 "inserts cell"
@@ -685,11 +697,11 @@ msgstr ""
 "Με 3 δευτερόλεπτα στην κατάσταση εισαγωγής, το πλήκτρο βέλους εισάγει γραμμή/"
 "στήλη, ενώ το Ctrl + πλήκτρο βέλους εισάγει κελί"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
 msgid "Alt + Del"
 msgstr "Alt + Del"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
 "merges cell with neighboring cell"
@@ -698,11 +710,11 @@ msgstr ""
 "γραμμή/στήλη, το Ctrl + πλήκτρο βέλους συγχωνεύει το κελί με το γειτονικό "
 "κελί."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A112
 msgid "Shift + Ctrl + Del"
 msgstr "Shift + Ctrl + Del"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A111
+#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A112
 msgid ""
 "If no whole cell is selected, the text from the cursor to the end of the "
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
@@ -713,7 +725,7 @@ msgstr ""
 "στο τέλος ενός κελιού και κανένα ολόκληρο κελί δεν είναι επιλεγμένο, τα "
 "περιεχόμενα του επόμενου κελιού διαγράφονται."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A112
+#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A113
 msgid ""
 "If no whole cell is selected and the cursor is at the end of the table, the "
 "paragraph following the table will be deleted, unless it is the last "
@@ -723,7 +735,7 @@ msgstr ""
 "πίνακα, η παράγραφος που ακολουθεί τον πίνακα θα διαγραφεί, εκτός και είναι "
 "η τελευταία παράγραφος στο έγγραφο."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A113
+#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A114
 msgid ""
 "If one or more cells are selected, the whole rows containing the selection "
 "will be deleted. If all rows are selected completely or partially, the "
@@ -733,97 +745,97 @@ msgstr ""
 "περιέχουν την επιλογή θα διαγραφούν. Εάν όλες οι γραμμές είναι επιλεγμένες "
 "πλήρως ή μερικώς, ολόκληρος ο πίνακας θα διαγραφεί."
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A116
+#: dist%2Floleaflet-help.html+div.div.h2%3A117
 msgid "Word processor functions"
 msgstr "Λειτουργίες επεξεργαστή κειμένου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A118
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
 msgid "Insert footnote"
 msgstr "Εισαγωγή υποσημείωσης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A118
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
 msgid "Ctrl + Alt + F"
 msgstr "Ctrl + Alt + F"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
 msgid "Insert endnote"
 msgstr "Εισαγωγή σημείωσης τέλους"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
 msgid "Ctrl + Alt + D"
 msgstr "Ctrl + Alt + D"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:120"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
 msgid "Insert comment"
 msgstr "Εισαγωγή σχολίου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:120"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
 msgid "Ctrl + Alt + C"
 msgstr "Ctrl + Alt + C"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A122
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
 msgid "Insert soft hyphen"
 msgstr "Εισαγωγή ήπιου ενωτικού"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A122
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
 msgid "Ctrl + -"
 msgstr "Ctrl + -"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
 msgid "Insert non-breaking hyphen"
 msgstr "Εισαγωγή αχώριστου ενωτικού"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
 msgid "Ctrl + Shift + -"
 msgstr "Ctrl + Shift + -"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A125
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Insert non-breaking space"
 msgstr "Εισαγωγή μη-διακοπτόμενου κενού"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A125
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Ctrl + Shift + Space"
 msgstr "Ctrl + Shift + διάστημα"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Insert line break"
 msgstr "Εισαγωγή αλλαγής γραμμής"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Shift + Enter"
 msgstr "Shift + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
 msgid "Manual page break"
 msgstr "Χειροκίνητη αλλαγή σελίδας"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:127"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
 msgid "Ctrl + Enter"
 msgstr "Ctrl + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
 msgid "Column break (in multicolumnar text)"
 msgstr "Αλλαγή στήλης (σε πολύστηλο κείμενο)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
 msgid "Ctrl + Shift + Enter"
 msgstr "Ctrl + Shift + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
 msgstr ""
 "Εισαγωγή νέας παραγράφου αμέσως πριν ή μετά μια ενότητα, ή πριν ένα πίνακα."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:129"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A131
 msgid "Alt + Enter"
 msgstr "Alt + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A131
 msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
@@ -831,598 +843,113 @@ msgstr ""
 "Εισαγωγή νέας παραγράφου χωρίς αρίθμηση μέσα σε κατάλογο. Δεν δουλεύει όταν "
 "ο δρομέας είναι στο τέλος του καταλόγου."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:130"
-msgid "Alt + Enter"
-msgstr "Alt + Enter"
-
-#: dist%2Floleaflet-help.html+div.div.h2%3A134
+#: dist%2Floleaflet-help.html+div.div.h2%3A135
 msgid "Cell formatting"
 msgstr "Μορφοποίηση κελιού"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A136
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:136"
-msgid "Bold"
-msgstr "Έντονα"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A136
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:136"
-msgid "Ctrl + B"
-msgstr "Ctrl + B"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:137"
-msgid "Italic"
-msgstr "Πλάγια"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:137"
-msgid "Ctrl + I"
-msgstr "Ctrl + I"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:138"
-msgid "Underline"
-msgstr "Υπογραμμισμένο"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:138"
-msgid "Ctrl + U"
-msgstr "Ctrl + U"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:139"
-msgid "Strikethrough"
-msgstr "Επιγράμμιση"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:139"
-msgid "Ctrl + Alt + 5"
-msgstr "Ctrl + Alt + 5"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:140"
-msgid "Remove direct formatting"
-msgstr "Αφαίρεση άμεσης μορφοποίησης"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:140"
-msgid "Ctrl + M"
-msgstr "Ctrl + M"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:141"
-msgid "Insert comment"
-msgstr "Εισαγωγή σχολίου"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:141"
-msgid "Ctrl + Alt + C"
-msgstr "Ctrl + Alt + C"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
 msgid "Display comment"
 msgstr "Εμφάνιση σχολίου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
 msgid "Ctrl + F1"
 msgstr "Ctrl + F1"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Fill Down"
 msgstr "Συμπλήρωση προς τα κάτω"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:143"
-msgid "Ctrl + D"
-msgstr "Ctrl + D"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:144"
-msgid "Select All"
-msgstr "Επιλογή όλων"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:144"
-msgid "Ctrl + A"
-msgstr "Ctrl + A"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:145"
-msgid "Align Center"
-msgstr "Κεντραρισμένη στοίχιση"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:145"
-msgid "Ctrl + E"
-msgstr "Ctrl + E"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:146"
-msgid "Align Left"
-msgstr "Στοίχιση αριστερά"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:146"
-msgid "Ctrl + L"
-msgstr "Ctrl + L"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:147"
-msgid "Align Right"
-msgstr "Στοίχιση δεξιά"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:147"
-msgid "Ctrl + R"
-msgstr "Ctrl + R"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:148"
-msgid "Justify"
-msgstr "Πλήρης στοίχιση"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:148"
-msgid "Ctrl + J"
-msgstr "Ctrl + J"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
 msgid "Set Optimal Column Width"
 msgstr "Ορισμός βέλτιστου πλάτους στήλης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:149"
-msgid "Ctrl + 3"
-msgstr "Ctrl + 3"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
 msgid "Two decimal places, thousands separator"
 msgstr "Δύο δεκαδικά ψηφία, διαχωριστικό χιλιάδων"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
 msgid "Ctrl + Shift + 1"
 msgstr "Ctrl + Shift + 1"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
 msgid "Standard exponential format"
 msgstr "Τυπική εκθετική μορφή"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
 msgid "Ctrl + Shift + 2"
 msgstr "Ctrl + Shift + 2"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
 msgid "Standard date format"
 msgstr "Τυπική μορφή ημερομηνίας"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
 msgid "Ctrl + Shift + 3"
 msgstr "Ctrl + Shift + 3"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
 msgid "Standard currency format"
 msgstr "Τυπική μορφή νομίσματος"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
 msgid "Ctrl + Shift + 4"
 msgstr "Ctrl + Shift + 4"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
 msgid "Standard percentage format (two decimal places)"
 msgstr "Τυπική μορφή ποσοστού (δύο δεκαδικά ψηφία)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
 msgid "Ctrl + Shift + 5"
 msgstr "Ctrl + Shift + 5"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
 msgid "Standard format"
 msgstr "Τυπική μορφή"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
 msgid "Ctrl + Shift + 6"
 msgstr "Ctrl + Shift + 6"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A159
-msgctxt "dist/loleaflet-help.html div.div.h2:159"
-msgid "Text formatting"
-msgstr "Μορφοποίηση κειμένου"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A161
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:161"
-msgid "Bold"
-msgstr "Έντονα"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A161
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:161"
-msgid "Ctrl + B"
-msgstr "Ctrl + B"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:162"
-msgid "Italic"
-msgstr "Πλάγια"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:162"
-msgid "Ctrl + I"
-msgstr "Ctrl + I"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:163"
-msgid "Underline"
-msgstr "Υπογράμμιση"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:163"
-msgid "Ctrl + U"
-msgstr "Ctrl + U"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:164"
-msgid "Strikethrough"
-msgstr "Επιγράμμιση"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:164"
-msgid "Ctrl + Alt + 5"
-msgstr "Ctrl + Alt + 5"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:165"
-msgid "Superscript"
-msgstr "Εκθέτης"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:165"
-msgid "Ctrl + Shift + P"
-msgstr "Ctrl + Shift + P"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:166"
-msgid "Subscript"
-msgstr "Δείκτης"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:166"
-msgid "Ctrl + Shift + B"
-msgstr "Ctrl + Shift + B"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:167"
-msgid "Select All"
-msgstr "Επιλογή όλων"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:167"
-msgid "Ctrl + A"
-msgstr "Ctrl + A"
-
-#: dist%2Floleaflet-help.html+div.div.h2%3A169
-msgctxt "dist/loleaflet-help.html div.div.h2:169"
-msgid "Paragraph formatting"
-msgstr "Μορφοποίηση παραγράφου"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A171
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:171"
-msgid "Align Center"
-msgstr "Κεντραρισμένη στοίχιση"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A171
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:171"
-msgid "Ctrl + E"
-msgstr "Ctrl + E"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:172"
-msgid "Align Left"
-msgstr "Στοίχιση αριστερά"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:172"
-msgid "Ctrl + L"
-msgstr "Ctrl + L"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:173"
-msgid "Align Right"
-msgstr "Στοίχιση δεξιά"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:173"
-msgid "Ctrl + R"
-msgstr "Ctrl + R"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:174"
-msgid "Justify"
-msgstr "Πλήρης στοίχιση"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:174"
-msgid "Ctrl + J"
-msgstr "Ctrl + J"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
 msgid "Demote list item (list item has to be selected)"
 msgstr ""
 "Υποβιβασμός αντικειμένου καταλόγου (το αντικείμενο του καταλόγου πρέπει να "
 "είναι επιλεγμένο)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:175"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
 msgid "Tab"
 msgstr "Στηλοθέτης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
 msgid "Promote list item (list item has to be selected)"
 msgstr ""
 "Προβιβασμός αντικειμένου καταλόγου (το αντικείμενο του καταλόγου πρέπει να "
 "είναι επιλεγμένο)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:176"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
 msgid "Shift + Tab"
 msgstr "Shift + Tab"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A178
+#: dist%2Floleaflet-help.html+div.div.h2%3A179
 msgid "Text selection and navigation in a textbox"
 msgstr "Επιλογή κειμένου και περιήγηση σε ένα πλαίσιο κειμένου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A180
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:180"
-msgid "Select All"
-msgstr "Επιλογή όλων"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A180
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:180"
-msgid "Ctrl + A"
-msgstr "Ctrl + A"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:181"
-msgid "Move cursor to the left"
-msgstr "Μετακίνηση δρομέα προς τα αριστερά"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:181"
-msgid "Arrow Left"
-msgstr "Αριστερό βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:182"
-msgid "Move cursor with selection to the left"
-msgstr "Μετακίνηση δρομέα με επιλογή προς τα αριστερά"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:182"
-msgid "Shift + Arrow Left"
-msgstr "Shift + αριστερό βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:183"
-msgid "Go to beginning of a word"
-msgstr "Μετάβαση στην αρχή μιας λέξης"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:183"
-msgid "Ctrl + Arrow Left"
-msgstr "Ctrl + αριστερό βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:184"
-msgid "Select to the left word by word"
-msgstr "Επιλογή προς τα αριστερά λέξη-λέξη"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:184"
-msgid "Ctrl + Shift + Arrow Left"
-msgstr "Ctrl + Shift + αριστερό βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:185"
-msgid "Move cursor to the right"
-msgstr "Μετακίνηση δρομέα προς τα δεξιά"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:185"
-msgid "Arrow Right"
-msgstr "Δεξιό βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:186"
-msgid "Move cursor with selection to the right"
-msgstr "Μετακίνηση δρομέα με επιλογή προς τα δεξιά"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:186"
-msgid "Shift + Arrow Right"
-msgstr "Shift + δεξιό βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:187"
-msgid "Go to start of the next word"
-msgstr "Μετάβαση στην αρχή της επόμενης λέξης"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:187"
-msgid "Ctrl + Arrow Right"
-msgstr "Ctrl + δεξιό βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:188"
-msgid "Select to the right word by word"
-msgstr "Επιλογή προς τα δεξιά λέξη-λέξη"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:188"
-msgid "Ctrl + Shift + Arrow Right"
-msgstr "Ctrl + Shift + δεξιό βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:189"
-msgid "Move cursor up one line"
-msgstr "Μετακίνηση δρομέα κατά μια γραμμή προς τα πάνω"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:189"
-msgid "Arrow Up"
-msgstr "Πάνω βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:190"
-msgid "Select lines in upwards direction"
-msgstr "Επιλογή γραμμών με κατεύθυνση προς τα πάνω"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:190"
-msgid "Shift + Arrow Up"
-msgstr "Shift + πάνω βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:191"
-msgid "Move cursor to beginning of the previous paragraph"
-msgstr "Μετακίνηση δρομέα στην αρχή της προηγούμενης παραγράφου"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:191"
-msgid "Ctrl + Arrow Up"
-msgstr "Ctrl + πάνω βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:192"
-msgid "Select to beginning of paragraph"
-msgstr "Επιλογή μέχρι την αρχή της παραγράφου"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:192"
-msgid "Ctrl + Shift + Arrow Up"
-msgstr "Ctrl + Shift + πάνω βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:193"
-msgid "Move cursor down one line"
-msgstr "Μετακίνηση δρομέα κατά μια γραμμή προς τα κάτω"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:193"
-msgid "Arrow Down"
-msgstr "Κάτω βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:194"
-msgid "Select lines in downwards direction"
-msgstr "Επιλογή γραμμών με κατεύθυνση προς τα κάτω"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:194"
-msgid "Shift + Arrow Down"
-msgstr "Shift + κάτω βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:195"
-msgid "Move cursor to beginning of the next paragraph"
-msgstr "Μετακίνηση του δρομέα στην αρχή της επόμενης παραγράφου"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:195"
-msgid "Ctrl + Arrow Down"
-msgstr "Ctrl + κάτω βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:196"
-msgid "Select to end of paragraph"
-msgstr "Επιλογή μέχρι το τέλος της παραγράφου"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:196"
-msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ctrl + Shift + κάτω βέλος"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:197"
-msgid "Go to beginning of line"
-msgstr "Μετάβαση στην αρχή της γραμμής"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:197"
-msgid "Home"
-msgstr "Home (Αρχή)"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:198"
-msgid "Go and select to the beginning of a line"
-msgstr "Μετάβαση και επιλογή μέχρι την αρχή μιας γραμμής"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:198"
-msgid "Shift + Home"
-msgstr "Shift + Home"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:199"
-msgid "Go to start of document"
-msgstr "Μετάβαση στην αρχή του εγγράφου"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:199"
-msgid "Ctrl + Home"
-msgstr "Ctrl + Home"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
 msgid "Go and select text to start of textbox"
 msgstr "Μετάβαση και επιλογή κειμένου μέχρι την αρχή του πλαισίου κειμένου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:200"
-msgid "Ctrl + Shift + Home"
-msgstr "Ctrl + Shift + Home"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:201"
-msgid "Go to end of line"
-msgstr "Μετάβαση στο τέλος της γραμμής"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:201"
-msgid "End"
-msgstr "End (Τέλος)"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:202"
-msgid "Go and select to the end of a line"
-msgstr "Μετάβαση και επιλογή μέχρι το τέλος μιας γραμμής"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:202"
-msgid "Shift + End"
-msgstr "Shift + End"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:203"
-msgid "Go to end of document"
-msgstr "Μετάβαση στο τέλος του εγγράφου"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:203"
-msgid "Ctrl + End"
-msgstr "Ctrl + End"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
 msgid "Go and select text to end of textbox"
 msgstr "Μετάβαση και επιλογή κειμένου μέχρι το τέλος του πλαισίου κειμένου"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:204"
-msgid "Ctrl + Shift + End"
-msgstr "Ctrl + Shift + End"
-
-#: dist%2Floleaflet-help.html+div.div.h2%3A206
+#: dist%2Floleaflet-help.html+div.div.h2%3A207
 msgid "Slide / draw page keyboard shortcuts"
 msgstr "Συντομεύσεις πληκτρολογίου σελίδας διαφάνειας / σχεδίασης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A208
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
@@ -1431,44 +958,24 @@ msgstr ""
 "επεξεργασίας αλλαγή στην κατάσταση επιλογής αντικειμένου, από την κατάσταση "
 "επιλογής αντικειμένου αλλαγή στην κατάσταση προβολής."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A208
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
 msgid "Esc"
 msgstr "Esc"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
 msgid "Select objects in the order in which they were created"
 msgstr "Επιλογή αντικειμένων με τη σειρά με την οποία δημιουργήθηκαν"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:209"
-msgid "Tab"
-msgstr "Στηλοθέτης"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
 msgid "Select objects in the reverse order in which they were created"
 msgstr ""
 "Επιλογή αντικειμένων με την αντίστροφη σειρά με την οποία δημιουργήθηκαν"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:210"
-msgid "Shift + Tab"
-msgstr "Shift + Tab"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
 msgid "Move to next text object on slide / drawing page"
 msgstr ""
 "Μετάβαση στο επόμενο αντικείμενο κειμένου σε σελίδα διαφάνειας / σχεδίασης"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:211"
-msgid "Ctrl + Enter"
-msgstr "Ctrl + Enter"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
 msgid "Select all in slide / drawing page"
 msgstr "Επιλογή όλων σε σελίδα διαφάνειας / σχεδίασης"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:212"
-msgid "Ctrl + A"
-msgstr "Ctrl + A"

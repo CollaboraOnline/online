@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-22 13:08+0000\n"
+"POT-Creation-Date: 2017-01-25 10:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /gd/libo_online/loleaflet-help-gd.po\n"
-"X-Pootle-Revision: 726197\n"
+"X-Pootle-Revision: 826970\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -62,526 +62,628 @@ msgstr "Clò-bhuail (Luchdaich a-nuas mar PDF)"
 msgid "Ctrl + P"
 msgstr "Ctrl + P"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A37
-msgctxt "dist/loleaflet-help.html div.div.h2:37"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
+msgid "Display the Keyboard shortcuts help"
+msgstr ""
+
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
+#, fuzzy
+msgid "Ctrl + Shift + ?"
+msgstr "Ctrl + Shift + P"
+
+#: dist%2Floleaflet-help.html+div.div.h2%3A38
+#: dist%2Floleaflet-help.html+div.div.h2%3A160
+#, fuzzy
 msgid "Text formatting"
 msgstr "Fòrmatadh an teacsa"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A39
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:39"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
+#, fuzzy
 msgid "Bold"
 msgstr "Trom"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A39
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:39"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
+#, fuzzy
 msgid "Ctrl + B"
 msgstr "Ctrl + B"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:40"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
+#, fuzzy
 msgid "Italic"
 msgstr "Eadailteach"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:40"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
+#, fuzzy
 msgid "Ctrl + I"
 msgstr "Ctrl + I"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:41"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
+#, fuzzy
 msgid "Underline"
 msgstr "Loidhne fodha"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:41"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
+#, fuzzy
 msgid "Ctrl + U"
 msgstr "Ctrl + U"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 msgid "Double Underline"
 msgstr "Loidhne dhùbailte foidhe"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:42"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
+#, fuzzy
 msgid "Ctrl + D"
 msgstr "Ctrl + D"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:43"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
+#, fuzzy
 msgid "Strikethrough"
 msgstr "Loidhne troimhe"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:43"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
+#, fuzzy
 msgid "Ctrl + Alt + 5"
 msgstr "Ctrl + Alt + 5"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:44"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
+#, fuzzy
 msgid "Superscript"
 msgstr "Os-sgrìobhte"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:44"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
+#, fuzzy
 msgid "Ctrl + Shift + P"
 msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:45"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
+#, fuzzy
 msgid "Subscript"
 msgstr "Fo-sgrìobhte"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:45"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
+#, fuzzy
 msgid "Ctrl + Shift + B"
 msgstr "Ctrl + Shift + B"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:46"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
+#, fuzzy
 msgid "Remove direct formatting"
 msgstr "Thoir air falbh am fòrmatadh dìreach"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:46"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
+#, fuzzy
 msgid "Ctrl + M"
 msgstr "Ctrl + M"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A48
-msgctxt "dist/loleaflet-help.html div.div.h2:48"
+#: dist%2Floleaflet-help.html+div.div.h2%3A49
+#: dist%2Floleaflet-help.html+div.div.h2%3A170
+#, fuzzy
 msgid "Paragraph formatting"
 msgstr "Fòrmatadh a’ pharagraf"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A50
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:50"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
+#, fuzzy
 msgid "Align Center"
 msgstr "Co-thaobhaich ris a’ mheadhan"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A50
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:50"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
+#, fuzzy
 msgid "Ctrl + E"
 msgstr "Ctrl + E"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:51"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
+#, fuzzy
 msgid "Align Left"
 msgstr "Co-thaobhaich ris an taobh chlì"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:51"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
+#, fuzzy
 msgid "Ctrl + L"
 msgstr "Ctrl + L"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:52"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
+#, fuzzy
 msgid "Align Right"
 msgstr "Co-thaobhaich ris an taobh deas"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:52"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
+#, fuzzy
 msgid "Ctrl + R"
 msgstr "Ctrl + R"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:53"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
+#, fuzzy
 msgid "Justify"
 msgstr "Blocaich"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:53"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
+#, fuzzy
 msgid "Ctrl + J"
 msgstr "Ctrl + J"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Apply Default paragraph style"
 msgstr "Cuir an sàs stoidhle bhunaiteach a’ pharagraf"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Ctrl + 0"
 msgstr "Ctrl + 0"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Apply Heading 1 paragraph style"
 msgstr "Cuir an sàs an stoidhle paragraf “Ceann-sgrìobhadh 1”"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Ctrl + 1"
 msgstr "Ctrl + 1"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Apply Heading 2 paragraph style"
 msgstr "Cuir an sàs an stoidhle paragraf “Ceann-sgrìobhadh 2”"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Ctrl + 2"
 msgstr "Ctrl + 2"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 msgid "Apply Heading 3 paragraph style"
 msgstr "Cuir an sàs an stoidhle paragraf “Ceann-sgrìobhadh 3”"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:57"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
+#, fuzzy
 msgid "Ctrl + 3"
 msgstr "Ctrl + 3"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Apply Heading 4 paragraph style"
 msgstr "Cuir an sàs an stoidhle paragraf “Ceann-sgrìobhadh 4”"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Ctrl + 4"
 msgstr "Ctrl + 4"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Apply Heading 5 paragraph style"
 msgstr "Cuir an sàs an stoidhle paragraf “Ceann-sgrìobhadh 5”"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Ctrl + 5"
 msgstr "Ctrl + 5"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A61
+#: dist%2Floleaflet-help.html+div.div.h2%3A62
 msgid "Text selection and navigation in document"
 msgstr "Taghadh teacsa is seòladaireachd na sgrìobhainn"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A63
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:63"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
+#, fuzzy
 msgid "Select All"
 msgstr "Tagh na h-uile"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A63
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:63"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
+#, fuzzy
 msgid "Ctrl + A"
 msgstr "Ctrl + A"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:64"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
+#, fuzzy
 msgid "Move cursor to the left"
 msgstr "Gluais an cùrsair gun taobh chlì"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:64"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
+#, fuzzy
 msgid "Arrow Left"
 msgstr "Saighead chlì"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:65"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
+#, fuzzy
 msgid "Move cursor with selection to the left"
 msgstr "Gluais an cùrsair is na thagh thu gun taobh chlì"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:65"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
+#, fuzzy
 msgid "Shift + Arrow Left"
 msgstr "Shift + Saighead chlì"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:66"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
+#, fuzzy
 msgid "Go to beginning of a word"
 msgstr "Rach gu toiseach an fhacail roimhe"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:66"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
+#, fuzzy
 msgid "Ctrl + Arrow Left"
 msgstr "Ctrl + Saighead chlì"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:67"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
+#, fuzzy
 msgid "Select to the left word by word"
 msgstr "Tagh facal an comhair chlì, facal air fhacal"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:67"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
+#, fuzzy
 msgid "Ctrl + Shift + Arrow Left"
 msgstr "Ctrl + Shift + Saighead chlì"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:68"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
+#, fuzzy
 msgid "Move cursor to the right"
 msgstr "Gluais an cùrsair gun taobh deas"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:68"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
+#, fuzzy
 msgid "Arrow Right"
 msgstr "Saighead dheas"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:69"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
+#, fuzzy
 msgid "Move cursor with selection to the right"
 msgstr "Gluais an cùrsair is na thagh thu gun taobh deas"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:69"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
+#, fuzzy
 msgid "Shift + Arrow Right"
 msgstr "Shift + Saighead dheas"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:70"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
+#, fuzzy
 msgid "Go to start of the next word"
 msgstr "Rach gu toiseach an ath-fhacail"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:70"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
+#, fuzzy
 msgid "Ctrl + Arrow Right"
 msgstr "Ctrl + Saighead dheas"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:71"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
+#, fuzzy
 msgid "Select to the right word by word"
 msgstr "Tagh facal an comhair dheas, facal air fhacal"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:71"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
+#, fuzzy
 msgid "Ctrl + Shift + Arrow Right"
 msgstr "Ctrl + Shift + Saighead dheas"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:72"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
+#, fuzzy
 msgid "Move cursor up one line"
 msgstr "Gluais an cùrsair suas aon loidhne"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:72"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
+#, fuzzy
 msgid "Arrow Up"
 msgstr "Saighead suas"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:73"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
+#, fuzzy
 msgid "Select lines in upwards direction"
 msgstr "Tagh loidhnichean a’ dol suas aon air aon"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:73"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
+#, fuzzy
 msgid "Shift + Arrow Up"
 msgstr "Shift + Saighead suas"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:74"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
+#, fuzzy
 msgid "Move cursor to beginning of the previous paragraph"
 msgstr "Gluais an cùrsair gu toiseach a’ pharagraf roimhe"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:74"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
+#, fuzzy
 msgid "Ctrl + Arrow Up"
 msgstr "Ctrl + Saighead suas"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:75"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
+#, fuzzy
 msgid "Select to beginning of paragraph"
 msgstr "Dèan taghadh gu toiseach a’ pharagraf roimhe"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:75"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
+#, fuzzy
 msgid "Ctrl + Shift + Arrow Up"
 msgstr "Ctrl + Shift + Saighead suas"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:76"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
+#, fuzzy
 msgid "Move cursor down one line"
 msgstr "Gluais an cùrsair sìos aon loidhne"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:76"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
+#, fuzzy
 msgid "Arrow Down"
 msgstr "Saighead sìos"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:77"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
+#, fuzzy
 msgid "Select lines in downwards direction"
 msgstr "Tagh loidhnichean a’ dol sìos aon air aon"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:77"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
+#, fuzzy
 msgid "Shift + Arrow Down"
 msgstr "Shift + Saighead sìos"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:78"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
+#, fuzzy
 msgid "Move cursor to beginning of the next paragraph"
 msgstr "Gluais an cùrsair gu toiseach an ath-pharagraf"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:78"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
+#, fuzzy
 msgid "Ctrl + Arrow Down"
 msgstr "Ctrl + Saighead sìos"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:79"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
+#, fuzzy
 msgid "Select to end of paragraph"
 msgstr "Tagh gach rud gu deireadh a’ pharagraf"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:79"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
+#, fuzzy
 msgid "Ctrl + Shift + Arrow Down"
 msgstr "Ctrl + Shift + Saighead sìos"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:80"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
+#, fuzzy
 msgid "Go to beginning of line"
 msgstr "Rach gu toiseach na loidhne"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:80"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
+#, fuzzy
 msgid "Home"
 msgstr "Home"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:81"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
+#, fuzzy
 msgid "Go and select to the beginning of a line"
 msgstr "Tagh gach rud gu toiseach na loidhne is rach ann"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:81"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
+#, fuzzy
 msgid "Shift + Home"
 msgstr "Shift + Home"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:82"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
+#, fuzzy
 msgid "Go to start of document"
 msgstr "Rach gu toiseach sgrìobhainne"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:82"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
+#, fuzzy
 msgid "Ctrl + Home"
 msgstr "Ctrl + Home"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 msgid "Go and select text to start of document"
 msgstr "Tagh an teacsa air fad gu toiseach na sgrìobhainn is rach ann"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:83"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
+#, fuzzy
 msgid "Ctrl + Shift + Home"
 msgstr "Ctrl + Shift + Home"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:84"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
+#, fuzzy
 msgid "Go to end of line"
 msgstr "Rach gu deireadh na loidhne"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:84"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
+#, fuzzy
 msgid "End"
 msgstr "End"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:85"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
+#, fuzzy
 msgid "Go and select to the end of a line"
 msgstr "Tagh gach rud gu deireadh na loidhne is rach ann"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:85"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
+#, fuzzy
 msgid "Shift + End"
 msgstr "Shift + End"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:86"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
+#, fuzzy
 msgid "Go to end of document"
 msgstr "Rach gu deireadh sgrìobhainne"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:86"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
+#, fuzzy
 msgid "Ctrl + End"
 msgstr "Ctrl + End"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 msgid "Go and select text to end of document"
 msgstr "Tagh an teacsa air fad gu deireadh na sgrìobhainn is rach ann"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:87"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
+#, fuzzy
 msgid "Ctrl + Shift + End"
 msgstr "Ctrl + Shift + End"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
 msgid "Move the view up one page"
 msgstr "Gluais an sealladh suas aon duilleag"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
 msgid "PageUp"
 msgstr "PageUp"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
 msgid "Switch cursor between text and header"
 msgstr "Leum eadar an teacsa is am bann-cinn leis a’ chùrsair"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
 msgid "Ctrl + PageUp"
 msgstr "Ctrl + PageUp"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
 msgid "Extend the selection up one page"
 msgstr "Tagh gach rud suas aon duilleag"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
 msgid "Shift + PageUp"
 msgstr "Shift + PageUp"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
 msgid "Move the view down one page"
 msgstr "Gluais an sealladh sìos aon duilleag"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
 msgid "PageDown"
 msgstr "PageDown"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
 msgid "Switch cursor between text and footer"
 msgstr "Leum eadar an teacsa is am bann-coise leis a’ chùrsair"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
 msgid "Ctrl + PageDown"
 msgstr "Ctrl + PageDown"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
 msgid "Extend the selection down one page"
 msgstr "Tagh gach rud sìos aon duilleag"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
 msgid "Shift + PageDown"
 msgstr "Shift + PageDown"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
 msgid "Delete to beginning of word"
 msgstr "Sguab às gach rud gu toiseach an fhacail"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
 msgid "Ctrl + Backspace"
 msgstr "Ctrl + Backspace"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
 msgid "Delete to end of word"
 msgstr "Sguab às gach rud gu deireadh an fhacail"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
 msgid "Ctrl + Del"
 msgstr "Ctrl + Del"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
 msgid "Delete to beginning of sentence"
 msgstr "Sguab às gach rud gu toiseach an t-sentence"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
 msgid "Ctrl + Shift + Backspace"
 msgstr "Ctrl + Shift + Backspace"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A98
 msgid "Delete to end of sentence"
 msgstr "Sguab às gach rud gu deireadh an t-sentence"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A98
 msgid "Ctrl + Shift + Del"
 msgstr "Ctrl + Shift + Del"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A99
+#: dist%2Floleaflet-help.html+div.div.h2%3A100
 msgid "Shortcut Keys for Tables"
 msgstr "Ath-ghoiridean airson tablaidean"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A101
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:101"
-msgid "Ctrl + A"
-msgstr "Ctrl + A"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A101
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
@@ -590,12 +692,7 @@ msgstr ""
 "taghaidh e susbaint a’ chealla ghnìomhaich. Ma nì thu brùthadh a-rithist, "
 "thèid an clàr air fad a thaghadh."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:102"
-msgid "Ctrl + Home"
-msgstr "Ctrl + Home"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
 msgid ""
 "If the active cell is empty: goes to the beginning of the table. Otherwise: "
 "first press goes to beginning of the active cell, second press goes to "
@@ -606,12 +703,7 @@ msgstr ""
 "dàrna brùthadh gu toiseach a’ chiad chlàir agus an treas brùthadh gu "
 "toiseach na sgrìobhainn."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:103"
-msgid "Ctrl + End"
-msgstr "Ctrl + End"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
 msgid ""
 "If the active cell is empty: goes to the end of the table. Otherwise: first "
 "press goes to the end of the active cell, second press goes to the end of "
@@ -622,11 +714,11 @@ msgstr ""
 "dàrna brùthadh gu deireadh a’ chiad chlàir agus an treas brùthadh gu "
 "deireadh na sgrìobhainn."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
 msgid "Ctrl + Tab"
 msgstr "Ctrl + Tab"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "Alt + Tab may be used instead."
@@ -635,48 +727,44 @@ msgstr ""
 "manaidsear nan uinneagan a tha ’ga chleachdadh, dh’fhaoidte gun urrainn dhut "
 "Alt + Tab a chleachdadh."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
 msgid "Alt + Arrow Keys"
 msgstr "Alt + iuchraichean nan saighdean"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
 msgstr ""
 "Lùghdaichidh/meudaichidh seo meud a’ chuilbh/ràigh aig oir deas/shìos a’ "
 "chealla"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
 msgid "Alt + Shift + Arrow Keys"
 msgstr "Alt + Shift + iuchraichean nan saighdean"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr "Lùghdaich/meudaich meud a’ chuilbh/ràigh aig oir clì/shuas a’ chealla"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
 msgid "Alt + Ctrl + Arrow Keys"
 msgstr "Alt + Ctrl + iuchraichean nan saighdean"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:107"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
+#, fuzzy
 msgid "Like Alt, but only the active cell is modified"
 msgstr "Mar Alt ach cha dèid ach an cealla gnìomhach atharrachadh"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
 msgid "Ctrl + Alt + Shift + Arrow Keys"
 msgstr "Ctrl + Alt + Shift + iuchraichean nan saighdean"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:108"
-msgid "Like Alt, but only the active cell is modified"
-msgstr "Mar Alt ach cha dèid ach an cealla gnìomhach atharrachadh"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
 msgid "Alt + Insert"
 msgstr "Alt + Insert"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
 "inserts cell"
@@ -684,11 +772,11 @@ msgstr ""
 "3 diogan sa mhodh ion-chuir, cuiridh iuchair na saighde a-steach ràgh/colbh, "
 "cuiridh Ctrl + iuchair na saighde a-steach cealla"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
 msgid "Alt + Del"
 msgstr "Alt + Del"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
 "merges cell with neighboring cell"
@@ -696,11 +784,11 @@ msgstr ""
 "3 diogan sa mhodh sguabaidh às, sguabaidh iuchair na saighde às ràgh/colbh, "
 "nì Ctrl + saighead co-aonadh a’ chealla leis a’ chealla ri thaobh"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A112
 msgid "Shift + Ctrl + Del"
 msgstr "Shift + Ctrl + Del"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A111
+#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A112
 msgid ""
 "If no whole cell is selected, the text from the cursor to the end of the "
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
@@ -711,7 +799,7 @@ msgstr ""
 "deireadh cealla agus mur eil cealla slàn air a thaghadh, thèid susbaint an "
 "ath-chealla a sguabadh às."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A112
+#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A113
 msgid ""
 "If no whole cell is selected and the cursor is at the end of the table, the "
 "paragraph following the table will be deleted, unless it is the last "
@@ -721,7 +809,7 @@ msgstr ""
 "chlàir, thèid am paragraf an dèidh a’ chlàir a sguabadh às mur e sin am "
 "paragraf mu dheireadh san sgrìobhainn."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A113
+#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A114
 msgid ""
 "If one or more cells are selected, the whole rows containing the selection "
 "will be deleted. If all rows are selected completely or partially, the "
@@ -731,96 +819,100 @@ msgstr ""
 "taghadh a sguabadh às. Ma tha na ràghan air fad air an taghadh, gu tur no gu "
 "ìre, thèid an clàr air fad a sguabadh às."
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A116
+#: dist%2Floleaflet-help.html+div.div.h2%3A117
 msgid "Word processor functions"
 msgstr "Comasan giullachd teacsa"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A118
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
 msgid "Insert footnote"
 msgstr "Cuir a-steach bun-nòta"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A118
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
 msgid "Ctrl + Alt + F"
 msgstr "Ctrl + Alt + F"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
 msgid "Insert endnote"
 msgstr "Cuir a-steach nòta-deiridh"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
 msgid "Ctrl + Alt + D"
 msgstr "Ctrl + Alt + D"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:120"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
+#, fuzzy
 msgid "Insert comment"
 msgstr "Cuir a-steach beachd"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:120"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
+#, fuzzy
 msgid "Ctrl + Alt + C"
 msgstr "Ctrl + Alt + C"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A122
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
 msgid "Insert soft hyphen"
 msgstr "Cuir a-steach tàthan bog"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A122
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
 msgid "Ctrl + -"
 msgstr "Ctrl + -"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
 msgid "Insert non-breaking hyphen"
 msgstr "Cuir a-steach tàthan neo-bhristidh"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
 msgid "Ctrl + Shift + -"
 msgstr "Ctrl + Shift + -"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A125
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Insert non-breaking space"
 msgstr "Cuir a-steach beàrn neo-bhristidh"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A125
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Ctrl + Shift + Space"
 msgstr "Ctrl + Shift + Space"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Insert line break"
 msgstr "Cuir a-steach briseadh-loidhne"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Shift + Enter"
 msgstr "Shift + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
 msgid "Manual page break"
 msgstr "Briseadh duilleige a làimh"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:127"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
+#, fuzzy
 msgid "Ctrl + Enter"
 msgstr "Ctrl + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
 msgid "Column break (in multicolumnar text)"
 msgstr "Briseadh cuilbh (ann an teacsa ioma-cholbhach)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
 msgid "Ctrl + Shift + Enter"
 msgstr "Ctrl + Shift + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
 msgstr "Cuir a-steach paragraf ùr dìreach ro earrann no às a dhèidh no ro chlàr"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:129"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A131
+#, fuzzy
 msgid "Alt + Enter"
 msgstr "Alt + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A131
 msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
@@ -828,594 +920,111 @@ msgstr ""
 "Cuir a-steach paragraf ùr gun àireamhachadh am broinn liosta. Chan obraich "
 "seo ma tha an cùrsair aig deireadh na liosta."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:130"
-msgid "Alt + Enter"
-msgstr "Alt + Enter"
-
-#: dist%2Floleaflet-help.html+div.div.h2%3A134
+#: dist%2Floleaflet-help.html+div.div.h2%3A135
 msgid "Cell formatting"
 msgstr "Fòrmatadh a’ chealla"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A136
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:136"
-msgid "Bold"
-msgstr "Trom"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A136
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:136"
-msgid "Ctrl + B"
-msgstr "Ctrl + B"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:137"
-msgid "Italic"
-msgstr "Eadailteach"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:137"
-msgid "Ctrl + I"
-msgstr "Ctrl + I"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:138"
-msgid "Underline"
-msgstr "Loidhne fodha"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:138"
-msgid "Ctrl + U"
-msgstr "Ctrl + U"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:139"
-msgid "Strikethrough"
-msgstr "Loidhne troimhe"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:139"
-msgid "Ctrl + Alt + 5"
-msgstr "Ctrl + Alt + 5"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:140"
-msgid "Remove direct formatting"
-msgstr "Thoir air falbh am fòrmatadh dìreach"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:140"
-msgid "Ctrl + M"
-msgstr "Ctrl + M"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:141"
-msgid "Insert comment"
-msgstr "Cuir a-steach beachd"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:141"
-msgid "Ctrl + Alt + C"
-msgstr "Ctrl + Alt + C"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
 msgid "Display comment"
 msgstr "Seall am beachd"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
 msgid "Ctrl + F1"
 msgstr "Ctrl + F1"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Fill Down"
 msgstr "Lìon sìos"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:143"
-msgid "Ctrl + D"
-msgstr "Ctrl + D"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:144"
-msgid "Select All"
-msgstr "Tagh na h-uile"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:144"
-msgid "Ctrl + A"
-msgstr "Ctrl + A"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:145"
-msgid "Align Center"
-msgstr "Co-thaobhaich ris a’ mheadhan"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:145"
-msgid "Ctrl + E"
-msgstr "Ctrl + E"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:146"
-msgid "Align Left"
-msgstr "Co-thaobhaich ris an taobh chlì"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:146"
-msgid "Ctrl + L"
-msgstr "Ctrl + L"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:147"
-msgid "Align Right"
-msgstr "Co-thaobhaich ris an taobh deas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:147"
-msgid "Ctrl + R"
-msgstr "Ctrl + R"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:148"
-msgid "Justify"
-msgstr "Blocaich"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:148"
-msgid "Ctrl + J"
-msgstr "Ctrl + J"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
 msgid "Set Optimal Column Width"
 msgstr "Suidhich an leud cuilbh as fhearr"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:149"
-msgid "Ctrl + 3"
-msgstr "Ctrl + 3"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
 msgid "Two decimal places, thousands separator"
 msgstr "Dà àite deicheach, sgaradair nam mìltean"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
 msgid "Ctrl + Shift + 1"
 msgstr "Ctrl + Shift + 1"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
 msgid "Standard exponential format"
 msgstr "Fòrmat easbonantail stannardach"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
 msgid "Ctrl + Shift + 2"
 msgstr "Ctrl + Shift + 2"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
 msgid "Standard date format"
 msgstr "Fòrmat cinn-là stannardach"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
 msgid "Ctrl + Shift + 3"
 msgstr "Ctrl + Shift + 3"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
 msgid "Standard currency format"
 msgstr "Fòrmat airgeadra stannardach"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
 msgid "Ctrl + Shift + 4"
 msgstr "Ctrl + Shift + 4"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
 msgid "Standard percentage format (two decimal places)"
 msgstr "Fòrmat ceudaid stannardach (dà àite deicheach)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
 msgid "Ctrl + Shift + 5"
 msgstr "Ctrl + Shift + 5"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
 msgid "Standard format"
 msgstr "Fòrmat stannardach"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
 msgid "Ctrl + Shift + 6"
 msgstr "Ctrl + Shift + 6"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A159
-msgctxt "dist/loleaflet-help.html div.div.h2:159"
-msgid "Text formatting"
-msgstr "Fòrmatadh an teacsa"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A161
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:161"
-msgid "Bold"
-msgstr "Trom"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A161
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:161"
-msgid "Ctrl + B"
-msgstr "Ctrl + B"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:162"
-msgid "Italic"
-msgstr "Eadailteach"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:162"
-msgid "Ctrl + I"
-msgstr "Ctrl + I"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:163"
-msgid "Underline"
-msgstr "Loidhne fodha"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:163"
-msgid "Ctrl + U"
-msgstr "Ctrl + U"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:164"
-msgid "Strikethrough"
-msgstr "Loidhne troimhe"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:164"
-msgid "Ctrl + Alt + 5"
-msgstr "Ctrl + Alt + 5"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:165"
-msgid "Superscript"
-msgstr "Os-sgrìobhte"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:165"
-msgid "Ctrl + Shift + P"
-msgstr "Ctrl + Shift + P"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:166"
-msgid "Subscript"
-msgstr "Fo-sgrìobhte"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:166"
-msgid "Ctrl + Shift + B"
-msgstr "Ctrl + Shift + B"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:167"
-msgid "Select All"
-msgstr "Tagh na h-uile"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:167"
-msgid "Ctrl + A"
-msgstr "Ctrl + A"
-
-#: dist%2Floleaflet-help.html+div.div.h2%3A169
-msgctxt "dist/loleaflet-help.html div.div.h2:169"
-msgid "Paragraph formatting"
-msgstr "Fòrmatadh a’ pharagraf"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A171
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:171"
-msgid "Align Center"
-msgstr "Co-thaobhaich ris a’ mheadhan"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A171
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:171"
-msgid "Ctrl + E"
-msgstr "Ctrl + E"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:172"
-msgid "Align Left"
-msgstr "Co-thaobhaich ris an taobh chlì"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:172"
-msgid "Ctrl + L"
-msgstr "Ctrl + L"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:173"
-msgid "Align Right"
-msgstr "Co-thaobhaich ris an taobh deas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:173"
-msgid "Ctrl + R"
-msgstr "Ctrl + R"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:174"
-msgid "Justify"
-msgstr "Blocaich"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:174"
-msgid "Ctrl + J"
-msgstr "Ctrl + J"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
 msgid "Demote list item (list item has to be selected)"
 msgstr "Ìslich ball na liosta (feumaidh tu ball san liosta a thaghadh)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:175"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
+#, fuzzy
 msgid "Tab"
 msgstr "Tab"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
 msgid "Promote list item (list item has to be selected)"
 msgstr "Àrdaich ball na liosta (feumaidh tu ball san liosta a thaghadh)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:176"
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
+#, fuzzy
 msgid "Shift + Tab"
 msgstr "Shift + Tab"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A178
+#: dist%2Floleaflet-help.html+div.div.h2%3A179
 msgid "Text selection and navigation in a textbox"
 msgstr "Taghadh teacsa is seòladaireachd ann am bogsa-teacsa"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A180
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:180"
-msgid "Select All"
-msgstr "Tagh na h-uile"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A180
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:180"
-msgid "Ctrl + A"
-msgstr "Ctrl + A"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:181"
-msgid "Move cursor to the left"
-msgstr "Gluais an cùrsair gun taobh chlì"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:181"
-msgid "Arrow Left"
-msgstr "Saighead chlì"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:182"
-msgid "Move cursor with selection to the left"
-msgstr "Gluais an cùrsair is na thagh thu gun taobh chlì"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:182"
-msgid "Shift + Arrow Left"
-msgstr "Shift + Saighead chlì"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:183"
-msgid "Go to beginning of a word"
-msgstr "Rach gu toiseach an fhacail roimhe"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:183"
-msgid "Ctrl + Arrow Left"
-msgstr "Ctrl + Saighead chlì"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:184"
-msgid "Select to the left word by word"
-msgstr "Tagh facal an comhair chlì, facal air fhacal"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:184"
-msgid "Ctrl + Shift + Arrow Left"
-msgstr "Ctrl + Shift + Saighead chlì"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:185"
-msgid "Move cursor to the right"
-msgstr "Gluais an cùrsair gun taobh deas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:185"
-msgid "Arrow Right"
-msgstr "Saighead dheas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:186"
-msgid "Move cursor with selection to the right"
-msgstr "Gluais an cùrsair is na thagh thu gun taobh deas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:186"
-msgid "Shift + Arrow Right"
-msgstr "Shift + Saighead dheas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:187"
-msgid "Go to start of the next word"
-msgstr "Rach gu toiseach an ath-fhacail"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:187"
-msgid "Ctrl + Arrow Right"
-msgstr "Ctrl + Saighead dheas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:188"
-msgid "Select to the right word by word"
-msgstr "Tagh facal an comhair dheas, facal air fhacal"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:188"
-msgid "Ctrl + Shift + Arrow Right"
-msgstr "Ctrl + Shift + Saighead dheas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:189"
-msgid "Move cursor up one line"
-msgstr "Gluais an cùrsair suas aon loidhne"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:189"
-msgid "Arrow Up"
-msgstr "Saighead suas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:190"
-msgid "Select lines in upwards direction"
-msgstr "Tagh loidhnichean a’ dol suas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:190"
-msgid "Shift + Arrow Up"
-msgstr "Shift + Saighead suas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:191"
-msgid "Move cursor to beginning of the previous paragraph"
-msgstr "Gluais an cùrsair gu toiseach a’ pharagraf roimhe"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:191"
-msgid "Ctrl + Arrow Up"
-msgstr "Ctrl + Saighead suas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:192"
-msgid "Select to beginning of paragraph"
-msgstr "Tagh gach rud gu toiseach a’ pharagraf"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:192"
-msgid "Ctrl + Shift + Arrow Up"
-msgstr "Ctrl + Shift + Saighead suas"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:193"
-msgid "Move cursor down one line"
-msgstr "Gluais an cùrsair sìos aon loidhne"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:193"
-msgid "Arrow Down"
-msgstr "Saighead sìos"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:194"
-msgid "Select lines in downwards direction"
-msgstr "Tagh loidhnichean a’ dol sìos"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:194"
-msgid "Shift + Arrow Down"
-msgstr "Shift + Saighead sìos"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:195"
-msgid "Move cursor to beginning of the next paragraph"
-msgstr "Gluais an cùrsair gu toiseach an ath-pharagraf"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:195"
-msgid "Ctrl + Arrow Down"
-msgstr "Ctrl + Saighead sìos"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:196"
-msgid "Select to end of paragraph"
-msgstr "Tagh gach rud gu deireadh a’ pharagraf"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:196"
-msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ctrl + Shift + Saighead sìos"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:197"
-msgid "Go to beginning of line"
-msgstr "Rach gu toiseach na loidhne"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:197"
-msgid "Home"
-msgstr "Home"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:198"
-msgid "Go and select to the beginning of a line"
-msgstr "Tagh gach rud gu toiseach na loidhne is rach ann"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:198"
-msgid "Shift + Home"
-msgstr "Shift + Home"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:199"
-msgid "Go to start of document"
-msgstr "Rach gu toiseach sgrìobhainne"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:199"
-msgid "Ctrl + Home"
-msgstr "Ctrl + Home"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
 msgid "Go and select text to start of textbox"
 msgstr "Tagh an teacsa air fad gu toiseach a’ bhogsa-teacsa is rach ann"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:200"
-msgid "Ctrl + Shift + Home"
-msgstr "Ctrl + Shift + Home"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:201"
-msgid "Go to end of line"
-msgstr "Rach gu deireadh na loidhne"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:201"
-msgid "End"
-msgstr "End"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:202"
-msgid "Go and select to the end of a line"
-msgstr "Tagh gach rud gu deireadh na loidhne is rach ann"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:202"
-msgid "Shift + End"
-msgstr "Shift + End"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:203"
-msgid "Go to end of document"
-msgstr "Rach gu deireadh na sgrìobhainne"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:203"
-msgid "Ctrl + End"
-msgstr "Ctrl + End"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
 msgid "Go and select text to end of textbox"
 msgstr "Tagh an teacsa air fad gu deireadh a’ bhogsa-teacsa is rach ann"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:204"
-msgid "Ctrl + Shift + End"
-msgstr "Ctrl + Shift + End"
-
-#: dist%2Floleaflet-help.html+div.div.h2%3A206
+#: dist%2Floleaflet-help.html+div.div.h2%3A207
 msgid "Slide / draw page keyboard shortcuts"
 msgstr "Ath-ghoiridean meur-chlàir airson na sleamhnaige/duilleige tarraing"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A208
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
@@ -1423,42 +1032,22 @@ msgstr ""
 "Fàg am modh làithreach, m.e. leum on mhodh deasachaidh gu modh taghadh "
 "oibseactan, o mhodh taghadh oibseactan gun mhodh seallaidh."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A208
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
 msgid "Esc"
 msgstr "Esc"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
 msgid "Select objects in the order in which they were created"
 msgstr "Tagh oibseactan san òrdugh anns an deach an cruthachadh"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:209"
-msgid "Tab"
-msgstr "Tab"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
 msgid "Select objects in the reverse order in which they were created"
 msgstr "Tagh oibseactan san òrdugh chontrarra anns an deach an cruthachadh"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:210"
-msgid "Shift + Tab"
-msgstr "Shift + Tab"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
 msgid "Move to next text object on slide / drawing page"
 msgstr "Gluais gun ath-oibseact teacsa air an t-sleamhnag/duilleag tarraing"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:211"
-msgid "Ctrl + Enter"
-msgstr "Ctrl + Enter"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
+#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
 msgid "Select all in slide / drawing page"
 msgstr "Tagh na h-uile air an t-sleamhnag/duilleag tarraing"
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:212"
-msgid "Ctrl + A"
-msgstr "Ctrl + A"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-22 13:08+0000\n"
+"POT-Creation-Date: 2017-01-25 10:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /kok/libo_online/loleaflet-ui-kok.po\n"
-"X-Pootle-Revision: 712113\n"
+"X-Pootle-Revision: 823311\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -71,34 +71,38 @@ msgid "Elapsed time"
 msgstr ""
 
 #: admin.strings.js:19
-msgid "Kill"
+msgid "Idle time"
 msgstr ""
 
 #: admin.strings.js:20
-msgid "Graphs"
+msgid "Kill"
 msgstr ""
 
 #: admin.strings.js:21
-#: dist/toolbar/toolbar.js:344
+msgid "Graphs"
+msgstr ""
+
+#: admin.strings.js:22
+#: dist/toolbar/toolbar.js:364
 #: src/control/Control.Menubar.js:11
 #: src/control/Control.Menubar.js:163
 #: src/control/Control.Menubar.js:221
 msgid "Save"
 msgstr ""
 
-#: admin.strings.js:22
+#: admin.strings.js:23
 msgid "Cache size of memory statistics"
 msgstr ""
 
-#: admin.strings.js:23
+#: admin.strings.js:24
 msgid "Time interval of memory statistics (in ms)"
 msgstr ""
 
-#: admin.strings.js:24
+#: admin.strings.js:25
 msgid "Cache size of CPU statistics"
 msgstr ""
 
-#: admin.strings.js:25
+#: admin.strings.js:26
 msgid "Time interval of CPU statistics (in ms)"
 msgstr ""
 
@@ -232,401 +236,430 @@ msgid ""
 "file_path=/path/to/doc/"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:150
+#: dist/errormessages.js:7
+msgid ""
+"Your session will expire in %time. Please save your work and refresh the "
+"session (or webpage) to continue."
+msgstr ""
+
+#: dist/errormessages.js:8
+msgid ""
+"Your session has been expired. Further changes to document might not be "
+"saved. Please refresh the session (or webpage) to continue."
+msgstr ""
+
+#: dist/errormessages.js:11
+msgid ""
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server administrator to continue editing."
+msgstr ""
+
+#: dist/errormessages.js:12
+msgid ""
+"Document cannot be saved to storage. Check your permissions or contact the "
+"storage server administrator."
+msgstr ""
+
+#: dist/toolbar/toolbar.js:159
 msgid "Are you sure you want to delete this page?"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:335
+#: dist/toolbar/toolbar.js:355
 msgid "Textwrap"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:336
+#: dist/toolbar/toolbar.js:356
 msgid "No wrap"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:337
+#: dist/toolbar/toolbar.js:357
 msgid "Page wrap"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:338
+#: dist/toolbar/toolbar.js:358
 msgid "Wrap anchor only"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:339
+#: dist/toolbar/toolbar.js:359
 msgid "Ideal wrap"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:340
+#: dist/toolbar/toolbar.js:360
 msgid "Left wrap"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:341
+#: dist/toolbar/toolbar.js:361
 msgid "Right wrap"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:342
+#: dist/toolbar/toolbar.js:362
 msgid "Wrap through"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:346
+#: dist/toolbar/toolbar.js:366
 #: src/control/Control.Menubar.js:22
 #: src/control/Control.Menubar.js:173
 #: src/control/Control.Menubar.js:231
 msgid "Undo"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:347
+#: dist/toolbar/toolbar.js:367
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:174
 #: src/control/Control.Menubar.js:232
 msgid "Redo"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:348
+#: dist/toolbar/toolbar.js:368
 msgid "Document repair"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:354
+#: dist/toolbar/toolbar.js:374
 #: src/control/Control.Menubar.js:60
 msgid "Bold"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:355
+#: dist/toolbar/toolbar.js:375
 #: src/control/Control.Menubar.js:61
 msgid "Italic"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:356
+#: dist/toolbar/toolbar.js:376
 #: src/control/Control.Menubar.js:62
 msgid "Underline"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:357
+#: dist/toolbar/toolbar.js:377
 msgid "Strikeout"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:359
+#: dist/toolbar/toolbar.js:379
 msgid "Insert Footnote"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:362
+#: dist/toolbar/toolbar.js:382
 msgid "Font color"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:364
+#: dist/toolbar/toolbar.js:384
 msgid "Highlighting"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:366
+#: dist/toolbar/toolbar.js:386
 msgid "Align left"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:367
+#: dist/toolbar/toolbar.js:387
 msgid "Center horizontally"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:368
+#: dist/toolbar/toolbar.js:388
 msgid "Align right"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:369
+#: dist/toolbar/toolbar.js:389
 #: src/control/Control.Menubar.js:101
 msgid "Justified"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:371
+#: dist/toolbar/toolbar.js:391
+msgid "Wrap Text"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:392
+msgid "Merge and Center Cells"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:394
+msgid "Format as Currency"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:395
+msgid "Format as Percent"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:396
+msgid "Format as Number"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:397
+msgid "Format as Date"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:398
+msgid "Add Decimal Place"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:399
+msgid "Delete Decimal Place"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:401
+msgid "Sort Ascending"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:402
+msgid "Sort Descending"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:404
 #: src/control/Control.Menubar.js:107
 msgid "Bullets on/off"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:372
+#: dist/toolbar/toolbar.js:405
 #: src/control/Control.Menubar.js:108
 msgid "Numbering on/off"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:374
+#: dist/toolbar/toolbar.js:407
 #: src/control/Control.Menubar.js:95
 msgid "Increase indent"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:375
+#: dist/toolbar/toolbar.js:408
 #: src/control/Control.Menubar.js:96
 msgid "Decrease indent"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:378
+#: dist/toolbar/toolbar.js:411
 msgid "Insert table"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:379
+#: dist/toolbar/toolbar.js:412
 msgid "Insert comment"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:380
+#: dist/toolbar/toolbar.js:413
 msgid "Insert graphic"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:381
+#: dist/toolbar/toolbar.js:414
 msgid "Special Character"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:383
+#: dist/toolbar/toolbar.js:416
 msgid "More"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:384
+#: dist/toolbar/toolbar.js:417
 msgid "Close document"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:414
-#: dist/toolbar/toolbar.js:795
+#: dist/toolbar/toolbar.js:496
+msgid "Layout"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:519
+#: dist/toolbar/toolbar.js:851
 msgid "Sum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:415
+#: dist/toolbar/toolbar.js:520
 msgid "Function"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:416
-#: src/control/Control.CharacterMap.js:389
+#: dist/toolbar/toolbar.js:521
+#: src/control/Control.CharacterMap.js:428
 msgid "Cancel"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:417
+#: dist/toolbar/toolbar.js:522
 msgid "Accept"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:428
+#: dist/toolbar/toolbar.js:533
 msgid "First sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:429
+#: dist/toolbar/toolbar.js:534
 msgid "Previous sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:430
+#: dist/toolbar/toolbar.js:535
 msgid "Next sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:431
+#: dist/toolbar/toolbar.js:536
 msgid "Last sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:441
+#: dist/toolbar/toolbar.js:546
 #: src/control/Control.Menubar.js:211
 msgid "Fullscreen presentation"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:443
+#: dist/toolbar/toolbar.js:548
 msgid "Insert slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:444
+#: dist/toolbar/toolbar.js:549
 #: src/control/Control.Menubar.js:208
 msgid "Duplicate slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:445
+#: dist/toolbar/toolbar.js:550
 #: src/control/Control.Menubar.js:209
 msgid "Delete slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:458
+#: dist/toolbar/toolbar.js:563
 msgid "Search:"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:463
+#: dist/toolbar/toolbar.js:568
 msgid "Search backwards"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:464
+#: dist/toolbar/toolbar.js:569
 msgid "Search forward"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:465
+#: dist/toolbar/toolbar.js:570
 msgid "Cancel the search"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:470
-#: dist/toolbar/toolbar.js:1366
+#: dist/toolbar/toolbar.js:575
+#: dist/toolbar/toolbar.js:1404
 msgid "No users"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:472
+#: dist/toolbar/toolbar.js:577
 msgid "Previous page"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:473
+#: dist/toolbar/toolbar.js:578
 msgid "Next page"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:475
+#: dist/toolbar/toolbar.js:580
 #: src/control/Control.Menubar.js:36
 #: src/control/Control.Menubar.js:187
 msgid "Reset zoom"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:476
+#: dist/toolbar/toolbar.js:581
 #: src/control/Control.Menubar.js:35
 #: src/control/Control.Menubar.js:186
 msgid "Zoom out"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:478
+#: dist/toolbar/toolbar.js:583
 #: src/control/Control.Menubar.js:34
 #: src/control/Control.Menubar.js:185
 msgid "Zoom in"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:503
+#: dist/toolbar/toolbar.js:597
 msgid "%user has joined"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:504
+#: dist/toolbar/toolbar.js:598
 msgid "%user has left"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:634
-#: dist/toolbar/toolbar.js:1134
+#: dist/toolbar/toolbar.js:700
+#: dist/toolbar/toolbar.js:1187
 msgid "Size"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:776
+#: dist/toolbar/toolbar.js:832
 msgid "Number of Sheets"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:779
+#: dist/toolbar/toolbar.js:835
 msgid "Selected range of cells"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:782
-#: dist/toolbar/toolbar.js:828
+#: dist/toolbar/toolbar.js:838
+#: dist/toolbar/toolbar.js:869
 msgid "Entering text mode"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:785
-#: dist/toolbar/toolbar.js:831
+#: dist/toolbar/toolbar.js:841
+#: dist/toolbar/toolbar.js:872
 msgid "Selection Mode"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:788
+#: dist/toolbar/toolbar.js:844
 msgid "Choice of functions"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:790
+#: dist/toolbar/toolbar.js:846
 msgid "Average"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:791
+#: dist/toolbar/toolbar.js:847
 msgid "CountA"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:792
+#: dist/toolbar/toolbar.js:848
 msgid "Count"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:793
+#: dist/toolbar/toolbar.js:849
 msgid "Maximum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:794
+#: dist/toolbar/toolbar.js:850
 msgid "Minimum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:796
+#: dist/toolbar/toolbar.js:852
 msgid "Selection count"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:797
+#: dist/toolbar/toolbar.js:853
 #: src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:802
-msgid "Wrap Text"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:803
-msgid "Merge and Center Cells"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:805
-msgid "Format as Currency"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:806
-msgid "Format as Percent"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:807
-msgid "Format as Number"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:808
-msgid "Format as Date"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:809
-msgid "Add Decimal Place"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:810
-msgid "Delete Decimal Place"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:812
-msgid "Sort Ascending"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:813
-msgid "Sort Descending"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:822
+#: dist/toolbar/toolbar.js:863
 msgid "Number of Pages"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:825
+#: dist/toolbar/toolbar.js:866
 msgid "Word Counter"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:839
+#: dist/toolbar/toolbar.js:883
 msgid "Number of Slides"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:958
+#: dist/toolbar/toolbar.js:1011
 msgid "Document saved"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1117
+#: dist/toolbar/toolbar.js:1170
 msgid "Style"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1129
+#: dist/toolbar/toolbar.js:1182
 msgid "Font"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1153
+#: dist/toolbar/toolbar.js:1206
 msgid "Previous slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1154
+#: dist/toolbar/toolbar.js:1207
 msgid "Next slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1322
-msgid "Layout"
+#: dist/toolbar/toolbar.js:1265
+msgid ""
+"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1357
+#: dist/toolbar/toolbar.js:1395
 msgid "%n users"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1364
+#: dist/toolbar/toolbar.js:1402
 msgid "1 user"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1391
+#: dist/toolbar/toolbar.js:1429
 #: src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr ""
@@ -635,7 +668,7 @@ msgstr ""
 msgid "Connection error"
 msgstr ""
 
-#: src/admin/AdminSocketOverview.js:61
+#: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
 msgstr ""
 
@@ -655,15 +688,17 @@ msgstr ""
 msgid "TB"
 msgstr ""
 
-#: src/admin/Util.js:41
+#: src/admin/Util.js:42
+#: src/admin/Util.js:44
 msgid " hrs"
 msgstr ""
 
-#: src/admin/Util.js:43
+#: src/admin/Util.js:48
+#: src/admin/Util.js:50
 msgid " mins"
 msgstr ""
 
-#: src/admin/Util.js:45
+#: src/admin/Util.js:53
 msgid " s"
 msgstr ""
 
@@ -787,956 +822,953 @@ msgstr ""
 msgid "Hangul Jamo"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:42
+#: src/control/Control.CharacterMap.js:43
 msgid "Ethiopic"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:43
+#: src/control/Control.CharacterMap.js:44
 msgid "Cherokee"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:44
+#: src/control/Control.CharacterMap.js:46
 msgid "Canadian Aboriginal Syllables"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:45
+#: src/control/Control.CharacterMap.js:47
 msgid "Ogham"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:46
+#: src/control/Control.CharacterMap.js:48
 msgid "Runic"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:47
+#: src/control/Control.CharacterMap.js:49
 msgid "Khmer"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:48
+#: src/control/Control.CharacterMap.js:50
 msgid "Mongolian"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:49
+#: src/control/Control.CharacterMap.js:51
 msgid "Latin Extended Additional"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:50
+#: src/control/Control.CharacterMap.js:52
 msgid "Greek Extended"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:51
+#: src/control/Control.CharacterMap.js:53
 msgid "General Punctuation"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:52
+#: src/control/Control.CharacterMap.js:54
 msgid "Superscripts and Subscripts"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:53
+#: src/control/Control.CharacterMap.js:55
 msgid "Currency Symbols"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:54
+#: src/control/Control.CharacterMap.js:56
 msgid "Combining Diacritical Symbols"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:55
+#: src/control/Control.CharacterMap.js:57
 msgid "Letterlike Symbols"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:56
+#: src/control/Control.CharacterMap.js:58
 msgid "Number Forms"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:57
+#: src/control/Control.CharacterMap.js:59
 msgid "Arrows"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:58
+#: src/control/Control.CharacterMap.js:60
 msgid "Mathematical Operators"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:59
+#: src/control/Control.CharacterMap.js:61
 msgid "Miscellaneous Technical"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:60
+#: src/control/Control.CharacterMap.js:62
 msgid "Control Pictures"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:61
+#: src/control/Control.CharacterMap.js:63
 msgid "Optical Character Recognition"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:62
+#: src/control/Control.CharacterMap.js:64
 msgid "Enclosed Alphanumerics"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:63
+#: src/control/Control.CharacterMap.js:65
 msgid "Box Drawing"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:64
+#: src/control/Control.CharacterMap.js:66
 msgid "Block Elements"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:65
+#: src/control/Control.CharacterMap.js:67
 msgid "Geometric Shapes"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:66
+#: src/control/Control.CharacterMap.js:68
 msgid "Miscellaneous Symbols"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:67
+#: src/control/Control.CharacterMap.js:69
 msgid "Dingbats"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:68
+#: src/control/Control.CharacterMap.js:70
 msgid "Braille Patterns"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:69
+#: src/control/Control.CharacterMap.js:71
 msgid "CJK Radicals Supplement"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:70
+#: src/control/Control.CharacterMap.js:72
 msgid "Kangxi Radicals"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:71
+#: src/control/Control.CharacterMap.js:73
 msgid "Ideographic Description Characters"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:72
+#: src/control/Control.CharacterMap.js:74
 msgid "CJK Symbols and Punctuation"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:73
+#: src/control/Control.CharacterMap.js:75
 msgid "Hiragana"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:74
+#: src/control/Control.CharacterMap.js:76
 msgid "Katakana"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:75
+#: src/control/Control.CharacterMap.js:77
 msgid "Bopomofo"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:76
-msgid "Hangul Compatability Jamo"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:77
-msgid "Kanbun"
-msgstr ""
-
 #: src/control/Control.CharacterMap.js:78
-msgid "Bopomofo Extended"
+msgid "Hangul Compatibility Jamo"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:79
-msgid "Enclosed CJK Letters and Months"
+msgid "Kanbun"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:80
-msgid "CJK Compatibility"
+msgid "Bopomofo Extended"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:81
-msgid "CJK Unified Ideographs Extension A"
+msgid "Enclosed CJK Letters and Months"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:82
-msgid "CJK Unified Ideographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:83
-msgid "Yi Syllables"
+msgid "CJK Compatibility"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:84
-msgid "Yi Radicals"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:85
-msgid "Hangul"
+msgid "CJK Unified Ideographs Extension A"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:86
-msgid "High Surrogates"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:87
-msgid "High Private Use Surrogates"
+msgid "CJK Unified Ideographs"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:88
-msgid "Low Surrogates"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:89
-msgid "Private Use Area"
+msgid "Yi Syllables"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:90
-msgid "CJK Compatibility Ideographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:91
-msgid "Alphabetic Presentation Forms"
+msgid "Yi Radicals"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:92
-msgid "Arabic Presentation Forms-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:93
-msgid "Combining Half Marks"
+msgid "Hangul"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:94
-msgid "CJK Compatibility Forms"
+msgid "High Surrogates"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:95
-msgid "Small Form Variants"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:96
-msgid "Arabic Presentation Forms-B"
+msgid "High Private Use Surrogates"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:97
-msgid "Specials"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:98
-msgid "Halfwidth and Fullwidth Forms"
+msgid "Low Surrogates"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:99
-msgid "Old Italic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:100
-msgid "Gothic"
+msgid "Private Use Area"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:101
-msgid "Deseret"
+msgid "CJK Compatibility Ideographs"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:102
-msgid "Byzantine Musical Symbols"
+msgid "Alphabetic Presentation Forms"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:103
 #: src/control/Control.CharacterMap.js:104
-msgid "Musical Symbols"
+msgid "Arabic Presentation Forms-A"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:105
-msgid "CJK Unified Ideographs Extension B"
+msgid "Combining Half Marks"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:106
-msgid "CJK Compatibility Ideographs Supplement"
+msgid "CJK Compatibility Forms"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:107
-msgid "Tags"
+msgid "Small Form Variants"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:108
-msgid "Cyrillic Supplement"
+msgid "Arabic Presentation Forms-B"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:109
-msgid "Tagalog"
+msgid "Specials"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:110
-msgid "Hanunoo"
+msgid "Halfwidth and Fullwidth Forms"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:111
-msgid "Buhid"
+msgid "Old Italic"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:112
-msgid "Tagbanwa"
+msgid "Gothic"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:113
-msgid "Miscellaneous Mathematical Symbols-A"
+msgid "Deseret"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:114
-msgid "Supplemental Arrows-A"
+msgid "Byzantine Musical Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:115
-msgid "Supplemental Arrows-B"
-msgstr ""
-
 #: src/control/Control.CharacterMap.js:116
-msgid "Miscellaneous Mathematical Symbols-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:117
-msgid "Supplemental Mathematical Operators"
+msgid "Musical Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:118
-msgid "Katakana Phonetics Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:119
-msgid "Variation Selectors"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:120
-msgid "Supplementary Private Use Area-A"
+msgid "CJK Unified Ideographs Extension B"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:121
-msgid "Supplementary Private Use Area-B"
+msgid "CJK Compatibility Ideographs Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:122
-msgid "Limbu"
+msgid "Tags"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:123
-msgid "Tai Le"
+msgid "Cyrillic Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:124
-msgid "Khmer Symbols"
+msgid "Tagalog"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:125
-msgid "Phonetic Extensions"
+msgid "Hanunoo"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:126
-msgid "Miscellaneous Symbols And Arrows"
+msgid "Buhid"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:127
-msgid "Yijing Hexagram Symbols"
+msgid "Tagbanwa"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:128
-msgid "Linear B Syllabary"
+msgid "Miscellaneous Mathematical Symbols-A"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:129
-msgid "Linear B Ideograms"
+msgid "Supplemental Arrows-A"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:130
-msgid "Aegean Numbers"
+msgid "Supplemental Arrows-B"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:131
-msgid "Ugaritic"
+msgid "Miscellaneous Mathematical Symbols-B"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:132
-msgid "Shavian"
+msgid "Supplemental Mathematical Operators"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:133
-msgid "Osmanya"
+msgid "Katakana Phonetics Extensions"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:134
-msgid "Cypriot Syllabary"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:135
-msgid "Tai Xuan Jing Symbols"
+msgid "Variation Selectors"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:136
-msgid "Variation Selectors Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:137
-msgid "Ancient Greek Musical Notation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:138
-msgid "Ancient Greek Numbers"
+msgid "Supplementary Private Use Area-A"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:139
-msgid "Arabic Supplement"
+msgid "Supplementary Private Use Area-B"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:140
-msgid "Buginese"
+msgid "Limbu"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:141
-msgid "CJK Strokes"
+msgid "Tai Le"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:142
-msgid "Combining Diacritical Marks Supplement"
+msgid "Khmer Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:143
-msgid "Coptic"
+msgid "Phonetic Extensions"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:144
-msgid "Ethiopic Extended"
+msgid "Miscellaneous Symbols And Arrows"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:145
-msgid "Ethiopic Supplement"
+msgid "Yijing Hexagram Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:146
-msgid "Georgian Supplement"
+msgid "Linear B Syllabary"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:147
-msgid "Glagolitic"
+msgid "Linear B Ideograms"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:148
-msgid "Kharoshthi"
+msgid "Aegean Numbers"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:149
-msgid "Modifier Tone Letters"
+msgid "Ugaritic"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:150
-msgid "\"New Tai Lue"
+msgid "Shavian"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:151
-msgid "Old Persian"
+msgid "Osmanya"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:152
-msgid "Phonetic Extensions Supplement"
+msgid "Cypriot Syllabary"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:153
-msgid "Supplemental Punctuation"
+msgid "Tai Xuan Jing Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:154
-msgid "Syloti Nagri"
+msgid "Variation Selectors Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:155
-msgid "Tifinagh"
+msgid "Ancient Greek Musical Notation"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:156
-msgid "Vertical Forms"
+msgid "Ancient Greek Numbers"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:157
-msgid "Nko"
+msgid "Arabic Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:158
-msgid "Balinese"
+msgid "Buginese"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:159
-msgid "Latin Extended-C"
+msgid "CJK Strokes"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:160
-msgid "Latin Extended-D"
+msgid "Combining Diacritical Marks Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:161
-msgid "Phags-Pa"
+msgid "Coptic"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:162
-msgid "Phoenician"
+msgid "Ethiopic Extended"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:163
-msgid "Cuneiform"
+msgid "Ethiopic Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:164
-msgid "Cuneiform Numbers And Punctuation"
+msgid "Georgian Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:165
-msgid "Counting Rod Numerals"
+msgid "Glagolitic"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:166
-msgid "Sundanese"
+msgid "Kharoshthi"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:167
-msgid "Lepcha"
+msgid "Modifier Tone Letters"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:168
-msgid "Ol Chiki"
+msgid "New Tai Lue"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:169
-msgid "Cyrillic Extended-A"
+msgid "Old Persian"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:170
-msgid "Vai"
+msgid "Phonetic Extensions Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:171
-msgid "Cyrillic Extended-B"
+msgid "Supplemental Punctuation"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:172
-msgid "Saurashtra"
+msgid "Syloti Nagri"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:173
-msgid "Kayah Li"
+msgid "Tifinagh"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:174
-msgid "Rejang"
+msgid "Vertical Forms"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:175
-msgid "Cham"
+msgid "Nko"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:176
-msgid "Ancient Symbols"
+msgid "Balinese"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:177
-msgid "Phaistos Disc"
+msgid "Latin Extended-C"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:178
-msgid "Lycian"
+msgid "Latin Extended-D"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:179
-msgid "Carian"
+msgid "Phags-Pa"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:180
-msgid "Lydian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:181
-msgid "Mahjong Tiles"
+msgid "Phoenician"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:182
-msgid "Domino Tiles"
+msgid "Cuneiform"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:183
-msgid "Samaritan"
+msgid "Cuneiform Numbers And Punctuation"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:184
-msgid "Canadian Aboriginal Syllabics Extended"
+msgid "Counting Rod Numerals"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:185
-msgid "Tai Tham"
+msgid "Sundanese"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:186
-msgid "Vedic Extensions"
+msgid "Lepcha"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:187
-msgid "Lisu"
+msgid "Ol Chiki"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:188
-msgid "Bamum"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:189
-msgid "Common Indic Number Forms"
+msgid "Cyrillic Extended-A"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:190
-msgid "Devanagari Extended"
+msgid "Vai"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:191
-msgid "Hangul Jamo Extended-A"
+msgid "Cyrillic Extended-B"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:192
-msgid "Javanese"
+msgid "Saurashtra"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:193
-msgid "Myanmar Extended-A"
+msgid "Kayah Li"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:194
-msgid "Tai Viet"
+msgid "Rejang"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:195
-msgid "Meetei Mayek"
+msgid "Cham"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:196
-msgid "Hangul Jamo Extended-B"
+msgid "Ancient Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:197
-msgid "Imperial Aramaic"
+msgid "Phaistos Disc"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:198
-msgid "Old South Arabian"
+msgid "Lycian"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:199
-msgid "Avestan"
+msgid "Carian"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:200
-msgid "Inscriptional Parthian"
+msgid "Lydian"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:201
-msgid "Inscriptional Pahlavi"
+msgid "Mahjong Tiles"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:202
-msgid "Old Turkic"
+msgid "Domino Tiles"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:203
-msgid "Rumi Numeral Symbols"
+msgid "Samaritan"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:204
-msgid "Kaithi"
+msgid "Canadian Aboriginal Syllabics Extended"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:205
-msgid "Egyptian Hieroglyphs"
+msgid "Tai Tham"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:206
-msgid "Enclosed Alphanumeric Supplement"
+msgid "Vedic Extensions"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:207
-msgid "Enclosed Ideographic Supplement"
+msgid "Lisu"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:208
-msgid "CJK Unified Ideographs Extension C"
+msgid "Bamum"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:209
-msgid "Mandaic"
+msgid "Common Indic Number Forms"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:210
-msgid "Batak"
+msgid "Devanagari Extended"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:211
-msgid "Ethiopic Extended-A"
+msgid "Hangul Jamo Extended-A"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:212
-msgid "Brahmi"
+msgid "Javanese"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:213
-msgid "Bamum Supplement"
+msgid "Myanmar Extended-A"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:214
-msgid "Kana Supplement"
+msgid "Tai Viet"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:215
-msgid "Playing Cards"
+msgid "Meetei Mayek"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:216
-msgid "Miscellaneous Symbols And Pictographs"
+msgid "Hangul Jamo Extended-B"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:217
-msgid "Emoticons"
+msgid "Imperial Aramaic"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:218
-msgid "Transport And Map Symbols"
+msgid "Old South Arabian"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:219
-msgid "Alchemical Symbols"
+msgid "Avestan"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:220
-msgid "CJK Unified Ideographs Extension D"
+msgid "Inscriptional Parthian"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:221
-msgid "Arabic Extended-A"
+msgid "Inscriptional Pahlavi"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:222
-msgid "Arabic Mathematical Alphabetic Symbols"
+msgid "Old Turkic"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:223
-msgid "Chakma"
+msgid "Rumi Numeral Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:224
-msgid "Meetei Mayek Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:225
-msgid "Meroitic Cursive"
+msgid "Kaithi"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:226
-msgid "Meroitic Hieroglyphs"
+msgid "Egyptian Hieroglyphs"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:227
-msgid "Miao"
+msgid "Enclosed Alphanumeric Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:228
-msgid "Sharada"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:229
-msgid "Sora Sompeng"
+msgid "Enclosed Ideographic Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:230
-msgid "Sundanese Supplement"
+msgid "CJK Unified Ideographs Extension C"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:231
-msgid "Takri"
+msgid "Mandaic"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:232
-msgid "Bassa Vah"
+msgid "Batak"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:233
-msgid "Caucasian Albanian"
+msgid "Ethiopic Extended-A"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:234
-msgid "Coptic Epact Numbers"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:235
-msgid "Combining Diacritical Marks Extended"
+msgid "Brahmi"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:236
-msgid "Duployan"
+msgid "Bamum Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:237
-msgid "Elbasan"
+msgid "Kana Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:238
-msgid "Geometric Shapes Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:239
-msgid "Grantha"
+msgid "Playing Cards"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:240
-msgid "Khojki"
+msgid "Miscellaneous Symbols And Pictographs"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:241
-msgid "Khudawadi"
+msgid "Emoticons"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:242
-msgid "Latin Extended-E"
+msgid "Transport And Map Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:243
-msgid "Linear A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:244
-msgid "Mahajani"
+msgid "Alchemical Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:245
-msgid "Manichaean"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:246
-msgid "Mende Kikakui"
+msgid "CJK Unified Ideographs Extension D"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:247
-msgid "Modi"
+msgid "Arabic Extended-A"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:248
-msgid "Mro"
+msgid "Arabic Mathematical Alphabetic Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:249
-msgid "Myanmar Extended-B"
+msgid "Chakma"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:250
-msgid "Nabataean"
+msgid "Meetei Mayek Extensions"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:251
-msgid "Old North Arabian"
+msgid "Meroitic Cursive"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:252
-msgid "Old Permic"
+msgid "Meroitic Hieroglyphs"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:253
-msgid "Ornamental Dingbats"
+msgid "Miao"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:254
-msgid "Pahawh Hmong"
+msgid "Sharada"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:255
-msgid "Palmyrene"
+msgid "Sora Sompeng"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:256
-msgid "Pau Cin Hau"
+msgid "Sundanese Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:257
-msgid "Psalter Pahlavi"
+msgid "Takri"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:258
-msgid "Shorthand Format Controls"
+msgid "Bassa Vah"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:259
-msgid "Siddham"
+msgid "Caucasian Albanian"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:260
-msgid "Sinhala Archaic Numbers"
+msgid "Coptic Epact Numbers"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:261
-msgid "Supplemental Arrows-C"
+msgid "Combining Diacritical Marks Extended"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:262
-msgid "Tirhuta"
+msgid "Duployan"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:263
-msgid "Warang Citi"
+msgid "Elbasan"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:264
-msgid "Ahom"
+msgid "Geometric Shapes Extended"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:265
-msgid "Anatolian Hieroglyphs"
+msgid "Grantha"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:266
-msgid "Cherokee Supplement"
+msgid "Khojki"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:267
-msgid "CJK Unified Ideographs Extension E"
+msgid "Khudawadi"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:268
-msgid "Early Dynastic Cuneiform"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:269
-msgid "Hatran"
+msgid "Latin Extended-E"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:270
-msgid "Multani"
+msgid "Linear A"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:271
-msgid "Old Hungarian"
+msgid "Mahajani"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:272
-msgid "Supplemental Symbols And Pictographs"
+msgid "Manichaean"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:273
+msgid "Mende Kikakui"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:274
+msgid "Modi"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:275
+msgid "Mro"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:276
+msgid "Myanmar Extended-B"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:277
+msgid "Nabataean"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:278
+msgid "Old North Arabian"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:279
+msgid "Old Permic"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:280
+msgid "Ornamental Dingbats"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:281
+msgid "Pahawh Hmong"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:282
+msgid "Palmyrene"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:283
+msgid "Pau Cin Hau"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:284
+msgid "Psalter Pahlavi"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:285
+msgid "Shorthand Format Controls"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:286
+msgid "Siddham"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:287
+msgid "Sinhala Archaic Numbers"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:288
+msgid "Supplemental Arrows-C"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:289
+msgid "Tirhuta"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:290
+msgid "Warang Citi"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:291
+msgid "Ahom"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:293
+msgid "Anatolian Hieroglyphs"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:294
+msgid "Cherokee Supplement"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:295
+#: src/control/Control.CharacterMap.js:296
+msgid "CJK Unified Ideographs Extension E"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:298
+msgid "Early Dynastic Cuneiform"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:299
+msgid "Hatran"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:300
+msgid "Multani"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:301
+msgid "Old Hungarian"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:302
+msgid "Supplemental Symbols And Pictographs"
+msgstr ""
+
+#: src/control/Control.CharacterMap.js:304
 msgid "Sutton Signwriting"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:348
+#: src/control/Control.CharacterMap.js:390
 msgid "Special Characters"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:353
+#: src/control/Control.CharacterMap.js:395
 msgid "Font Name:"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:360
+#: src/control/Control.CharacterMap.js:402
 msgid "Subset:"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:367
-msgid "Special Characters rendered by the User Agent:"
+#: src/control/Control.CharacterMap.js:413
+msgid "Selected Character:"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:374
-msgid "Special Character rendered by Server Side:"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:379
+#: src/control/Control.CharacterMap.js:418
 msgid "Hexadecimal:"
 msgstr ""
 
-#: src/control/Control.CharacterMap.js:385
+#: src/control/Control.CharacterMap.js:424
 #: src/control/Control.Menubar.js:38
 #: src/control/Control.Menubar.js:138
 #: src/control/Control.Menubar.js:189
@@ -2345,71 +2377,75 @@ msgstr ""
 msgid "Enter new sheet name"
 msgstr ""
 
-#: src/control/Toolbar.js:63
-#: src/control/Toolbar.js:72
+#: src/control/Toolbar.js:70
+#: src/control/Toolbar.js:79
 msgid "Downloading..."
 msgstr ""
 
-#: src/control/Toolbar.js:84
-#: src/map/Map.js:864
+#: src/control/Toolbar.js:91
+#: src/map/Map.js:905
 msgid "Saving..."
 msgstr ""
 
-#: src/control/Toolbar.js:230
+#: src/control/Toolbar.js:242
 msgid "This version of %productName is powered by"
 msgstr ""
 
-#: src/core/Socket.js:22
+#: src/core/Socket.js:23
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr ""
 
-#: src/core/Socket.js:155
+#: src/core/Socket.js:179
 msgid "Unsupported server version."
 msgstr ""
 
-#: src/core/Socket.js:193
+#: src/core/Socket.js:217
 msgid "Session terminated by document owner"
 msgstr ""
 
-#: src/core/Socket.js:196
-msgid "Server shutdown for maintenance"
+#: src/core/Socket.js:220
+msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 
-#: src/core/Socket.js:268
+#: src/core/Socket.js:223
+msgid "Server is recycling and will be available shortly"
+msgstr ""
+
+#: src/core/Socket.js:335
 msgid "Document requires password to view."
 msgstr ""
 
-#: src/core/Socket.js:271
+#: src/core/Socket.js:338
 msgid "Document requires password to modify."
 msgstr ""
 
-#: src/core/Socket.js:273
+#: src/core/Socket.js:340
 msgid "Hit Cancel to open in view-only mode."
 msgstr ""
 
-#: src/core/Socket.js:277
+#: src/core/Socket.js:344
 msgid "Wrong password provided. Please try again."
 msgstr ""
 
-#: src/core/Socket.js:326
+#: src/core/Socket.js:393
 msgid "Connecting..."
 msgstr ""
 
-#: src/core/Socket.js:447
+#: src/core/Socket.js:514
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 
-#: src/map/Map.js:118
+#: src/map/Map.js:121
 msgid "Initializing..."
 msgstr ""
 
-#: src/map/Map.js:793
+#: src/map/Map.js:786
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 
-#: src/map/Map.js:867
+#: src/map/Map.js:908
 msgid "Loading..."
 msgstr ""
 
