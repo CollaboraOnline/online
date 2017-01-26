@@ -39,6 +39,7 @@ public:
     static std::atomic<int> ForKitWritePipe;
     static std::atomic<int> ForKitProcId;
     static std::string Cache;
+    static std::string ConfigFile;
     static std::string SysTemplate;
     static std::string LoTemplate;
     static std::string ChildRoot;
