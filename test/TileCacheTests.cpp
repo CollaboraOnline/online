@@ -258,6 +258,9 @@ void TileCacheTests::testCancelTiles()
     {
         std::cerr << "cancelTiles try #" << i << std::endl;
 
+        // Wait to clear previous sessions.
+        countLoolKitProcesses(InitialLoolKitCount);
+
         auto socket = loadDocAndGetSocket("setclientpart.ods", _uri, testName);
 
         // Request a huge tile, and cancel immediately.
@@ -269,9 +272,14 @@ void TileCacheTests::testCancelTiles()
         {
             break;
         }
-        else if (i == repeat)
+        else
         {
-            CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
+            if (i == repeat)
+            {
+                CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
+            }
+
+            std::cerr << "Unexpected: [" << res << "]" << std::endl;
         }
     }
 }
@@ -288,6 +296,9 @@ void TileCacheTests::testCancelTilesMultiView()
     {
         std::cerr << "cancelTilesMultiView try #" << j << std::endl;
 
+        // Wait to clear previous sessions.
+        countLoolKitProcesses(InitialLoolKitCount);
+
         // Request a huge tile, and cancel immediately.
         auto socket1 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-1 ");
         auto socket2 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-2 ", true);
@@ -296,10 +307,16 @@ void TileCacheTests::testCancelTilesMultiView()
         sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
 
         sendTextFrame(socket1, "canceltiles");
-        const auto res1 = getResponseString(socket1, "tile:", "cancelTilesMultiView-1 ", 1000);
-        if (!res1.empty() && j == repeat)
+        const auto res1 = getResponseString(socket1, "tile:", "cancelTilesMultiView-1 ", 500);
+        if (!res1.empty())
         {
-            CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res1 + "].", res1.empty());
+            if (j == repeat)
+            {
+                CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res1 + "].", res1.empty());
+            }
+
+            std::cerr << "Unexpected: [" << res1 << "]" << std::endl;
+            continue;
         }
 
         for (auto i = 0; i < 4; ++i)
@@ -311,10 +328,16 @@ void TileCacheTests::testCancelTilesMultiView()
         // Though in practice we get the rendering result from socket1's request and ours.
         // This happens because we currently always send back tiles even if they are of old version
         // because we want to be responsive, since we've rendered them anyway.
-        const auto res2 = getResponseString(socket2, "tile:", "cancelTilesMultiView-2 ", 1000);
-        if (!res2.empty() && j == repeat)
+        const auto res2 = getResponseString(socket2, "tile:", "cancelTilesMultiView-2 ", 500);
+        if (!res2.empty())
         {
-            CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res2 + "].", res2.empty());
+            if (j == repeat)
+            {
+                CPPUNIT_ASSERT_MESSAGE("Did not expect getting message [" + res2 + "].", res1.empty());
+            }
+
+            std::cerr << "Unexpected: [" << res2 << "]" << std::endl;
+            continue;
         }
 
         if (res1.empty() && res2.empty())
@@ -334,6 +357,9 @@ void TileCacheTests::testDisconnectMultiView()
     {
         std::cerr << "cancelTilesMultiView try #" << j << std::endl;
 
+        // Wait to clear previous sessions.
+        countLoolKitProcesses(InitialLoolKitCount);
+
         // Request a huge tile, and cancel immediately.
         auto socket1 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-1 ");
         auto socket2 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-2 ", true);
@@ -349,7 +375,7 @@ void TileCacheTests::testDisconnectMultiView()
         }
 
         // Should never get more than 4 tiles on socket2.
-        const auto res2 = getResponseString(socket2, "tile:", "cancelTilesMultiView-2 ", 1000);
+        const auto res2 = getResponseString(socket2, "tile:", "cancelTilesMultiView-2 ", 500);
     }
 }
 
