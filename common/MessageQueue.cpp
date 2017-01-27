@@ -423,6 +423,8 @@ void TileQueue::deprioritizePreviews()
 
 TileQueue::Payload TileQueue::get_impl()
 {
+    LOG_TRC("MessageQueue depth: " << _queue.size());
+
     const auto front = _queue.front();
 
     auto msg = std::string(front.data(), front.size());
