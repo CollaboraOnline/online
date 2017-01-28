@@ -1862,9 +1862,14 @@ void LOOLWSD::initialize(Application& self)
     ChildRoot = getPathFromConfig("child_root_path");
     ServerName = config().getString("server_name");
     FileServerRoot = getPathFromConfig("file_server_root_path");
-    NumPreSpawnedChildren = getConfigValue<unsigned int>(conf, "num_prespawn_children", 1);
+    NumPreSpawnedChildren = getConfigValue<int>(conf, "num_prespawn_children", 1);
+    if (NumPreSpawnedChildren < 1)
+    {
+        LOG_WRN("Invalid num_prespawn_children in config (" << NumPreSpawnedChildren << "). Resetting to 1.");
+        NumPreSpawnedChildren = 1;
+    }
 
-    const auto maxConcurrency = getConfigValue<unsigned int>(conf, "per_document.max_concurrency", 4);
+    const auto maxConcurrency = getConfigValue<int>(conf, "per_document.max_concurrency", 4);
     if (maxConcurrency > 0)
     {
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
@@ -2285,20 +2290,32 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         throw IncompatibleOptionsException("port");
 
     // Configure the Server.
-    // Note: TCPServer internally uses a ThreadPool to
-    // dispatch connections (the default if not given).
-    // The capacity of the ThreadPool is increased here to
-    // match MAX_CONNECTIONS. The pool must have sufficient available
-    // threads to dispatch new connections, otherwise will deadlock.
+    // Note: TCPServer internally uses a ThreadPool to dispatch connections
+    // (the default if not given). The capacity of the ThreadPool is increased
+    // here in proportion to MAX_CONNECTIONS. Each client requests ~10
+    // resources (.js, .css, etc) beyond the main one, which are transient.
+    // The pool must have sufficient available threads to dispatch a new
+    // connection, otherwise will deadlock. So we need to have sufficient
+    // threads to serve new clients while those transients are served.
+    // We provision up to half the limit to connect simultaneously
+    // without loss of performance. This cap is to avoid flooding the server.
     static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
-    const auto maxThreadCount = MAX_CONNECTIONS + 1; // Spare for admin.
+    const auto maxThreadCount = MAX_CONNECTIONS * 5;
 
     auto params1 = new HTTPServerParams();
     params1->setMaxThreads(maxThreadCount);
     auto params2 = new HTTPServerParams();
     params2->setMaxThreads(maxThreadCount);
 
-    ThreadPool threadPool(NumPreSpawnedChildren * 6, maxThreadCount * 2);
+    // Twice as many min and max since we share this pool
+    // between both internal and external connections.
+    const auto minThreadCount = std::max<int>(NumPreSpawnedChildren * 3, 3);
+    const auto idleTimeSeconds = 90;
+    const auto stackSizeBytes = 256 * 1024;
+    ThreadPool threadPool(minThreadCount * 2,
+                          maxThreadCount * 2,
+                          idleTimeSeconds,
+                          stackSizeBytes);
 
     // Start internal server for child processes.
     SocketAddress addr2("127.0.0.1", MasterPortNumber);
@@ -2339,7 +2356,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     HTTPServer srv(new ClientRequestHandlerFactory(), threadPool, *psvs, params1);
     LOG_INF("Starting master server listening on " << ClientPortNumber);
     srv.start();
-
 
 #if ENABLE_DEBUG
     time_t startTimeSpan = time(nullptr);
