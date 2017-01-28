@@ -378,14 +378,25 @@ L.Socket = L.Class.extend({
 			textMsg = textMsg.substring(6);
 			if (command.errorKind === 'limitreached') {
 				this._map._fatal = true;
-				textMsg = errorMessages.limitreached;
-				textMsg = textMsg.replace(/%0/g, command.params[0]);
-				textMsg = textMsg.replace(/%1/g, command.params[1]);
-				textMsg = textMsg.replace(/%2/g, (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online'));
-				textMsg = textMsg.replace(/%3/g, (typeof brandProductFAQURL !== 'undefined' ? brandProductFAQURL : 'https://wiki.documentfoundation.org/Development/LibreOffice_Online'));
+				this._map._active = false; // Practically disconnected.
+
+				// Servers configured for more than 50 documents are not demo/development.
+				if (parseInt(command.params[0]) > 50) {
+					textMsg = errorMessages.limitreachedprod;
+					textMsg = textMsg.replace(/%0/g, command.params[0]);
+					textMsg = textMsg.replace(/%1/g, command.params[1]);
+				}
+				else {
+					textMsg = errorMessages.limitreached;
+					textMsg = textMsg.replace(/%0/g, command.params[0]);
+					textMsg = textMsg.replace(/%1/g, command.params[1]);
+					textMsg = textMsg.replace(/%2/g, (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online'));
+					textMsg = textMsg.replace(/%3/g, (typeof brandProductFAQURL !== 'undefined' ? brandProductFAQURL : 'https://wiki.documentfoundation.org/Development/LibreOffice_Online'));
+				}
 			}
 			else if (command.errorKind === 'serviceunavailable') {
 				this._map._fatal = true;
+				this._map._active = false; // Practically disconnected.
 				textMsg = errorMessages.serviceunavailable;
 			}
 			this._map.fire('error', {msg: textMsg});
