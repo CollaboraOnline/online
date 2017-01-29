@@ -146,7 +146,7 @@ AC_DEFINE_UNQUOTED([MAX_CONNECTIONS],[$MAX_CONNECTIONS],[Limit the maximum numbe
 AC_SUBST(MAX_CONNECTIONS)
 
 MAX_DOCUMENTS=10
-AS_IF([test -n "$with_max_documents" -a "$with_max_documents" -gt "0" -a "$with_max_documents" -lt "$MAX_CONNECTIONS"],
+AS_IF([test -n "$with_max_documents" -a "$with_max_documents" -gt "0"],
       [MAX_DOCUMENTS="$with_max_documents"])
 AS_IF([test "$MAX_DOCUMENTS" -gt "$MAX_CONNECTIONS"],
       [MAX_DOCUMENTS="$MAX_CONNECTIONS"])
