@@ -39,12 +39,14 @@ class HTTPWSError : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testBadDocLoadFail);
     CPPUNIT_TEST(testMaxDocuments);
     CPPUNIT_TEST(testMaxConnections);
+    CPPUNIT_TEST(testMaxViews);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testBadDocLoadFail();
     void testMaxDocuments();
     void testMaxConnections();
+    void testMaxViews();
 
 public:
     HTTPWSError()
@@ -209,6 +211,57 @@ void HTTPWSError::testMaxConnections()
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
 
         socketN->shutdown();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSError::testMaxViews()
+{
+    static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
+    const auto testname = "maxViews ";
+
+    if (MAX_CONNECTIONS > 300)
+    {
+        std::cerr << "Skipping " << testname << "test since MAX_CONNECTION (" << MAX_CONNECTIONS
+                  << ") is too high to test. Set to a more sensible number, ideally a dozen or so." << std::endl;
+        return;
+    }
+
+    try
+    {
+        std::cerr << "Opening max number of views: " << MAX_CONNECTIONS << std::endl;
+
+        // Load a document.
+        std::string docPath;
+        std::string docURL;
+
+        getDocumentPathAndURL("empty.odt", docPath, docURL, testname);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
+        auto socket = loadDocAndGetSocket(_uri, docURL, testname);
+        std::cerr << "Opened view #1 of " << MAX_CONNECTIONS << std::endl;
+
+        std::vector<std::shared_ptr<LOOLWebSocket>> views;
+        for (int it = 1; it < MAX_CONNECTIONS; ++it)
+        {
+            views.emplace_back(loadDocAndGetSocket(_uri, docURL, testname));
+            std::cerr << "Opened view #" << (it+1) << " of " << MAX_CONNECTIONS << std::endl;
+        }
+
+        std::cerr << "Opening one more connection beyond the limit." << std::endl;
+
+        // try to connect MAX_CONNECTIONS + 1
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
+        auto socketN = std::make_shared<LOOLWebSocket>(*session, request, _response);
+
+        // Send load request, which will fail.
+        sendTextFrame(socketN, "load url=" + docURL, testname);
+
+        std::string message;
+        const auto statusCode = getErrorCode(socketN, message, testname);
+        CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
     }
     catch (const Poco::Exception& exc)
     {
