@@ -117,7 +117,7 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
     }
     else if (tokens[0] == "total_mem")
     {
-        const auto totalMem = _admin->getTotalMemoryUsage(model);
+        const auto totalMem = _admin->getTotalMemoryUsage();
         sendTextFrame("total_mem " + std::to_string(totalMem));
     }
     else if (tokens[0] == "kill" && tokens.count() == 2)
@@ -290,8 +290,8 @@ Admin::Admin() :
 {
     Log::info("Admin ctor.");
 
-    _memStatsTask = new MemoryStats(this);
-    _memStatsTimer.schedule(_memStatsTask, _memStatsTaskInterval, _memStatsTaskInterval);
+    _memStatsTask.reset(new MemoryStats(this));
+    _memStatsTimer.schedule(_memStatsTask.get(), _memStatsTaskInterval, _memStatsTaskInterval);
 
     _cpuStatsTask = new CpuStats(this);
     _cpuStatsTimer.schedule(_cpuStatsTask, _cpuStatsTaskInterval, _cpuStatsTaskInterval);
@@ -328,7 +328,7 @@ void MemoryStats::run()
 {
     std::unique_lock<std::mutex> modelLock(_admin->getLock());
     AdminModel& model = _admin->getModel();
-    const auto totalMem = _admin->getTotalMemoryUsage(model);
+    const auto totalMem = model.getTotalMemoryUsage();
 
     if (totalMem != _lastTotalMemory)
     {
@@ -350,8 +350,8 @@ void Admin::rescheduleMemTimer(unsigned interval)
 {
     _memStatsTask->cancel();
     _memStatsTaskInterval = interval;
-    _memStatsTask = new MemoryStats(this);
-    _memStatsTimer.schedule(_memStatsTask, _memStatsTaskInterval, _memStatsTaskInterval);
+    _memStatsTask.reset(new MemoryStats(this));
+    _memStatsTimer.schedule(_memStatsTask.get(), _memStatsTaskInterval, _memStatsTaskInterval);
     Log::info("Memory stats interval changed - New interval: " + std::to_string(interval));
 }
 
@@ -364,10 +364,10 @@ void Admin::rescheduleCpuTimer(unsigned interval)
     Log::info("CPU stats interval changed - New interval: " + std::to_string(interval));
 }
 
-unsigned Admin::getTotalMemoryUsage(AdminModel& model)
+unsigned Admin::getTotalMemoryUsage()
 {
     unsigned totalMem = Util::getMemoryUsage(_forKitPid);
-    totalMem += model.getTotalMemoryUsage();
+    totalMem += _memStatsTask->getLastTotalMemory();
     totalMem += Util::getMemoryUsage(Poco::Process::id());
 
     return totalMem;

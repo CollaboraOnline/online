@@ -48,6 +48,8 @@ private:
     bool _isAuthenticated;
 };
 
+class MemoryStats;
+
 /// An admin command processor.
 class Admin
 {
@@ -60,7 +62,7 @@ public:
         return admin;
     }
 
-    unsigned getTotalMemoryUsage(AdminModel&);
+    unsigned getTotalMemoryUsage();
 
     /// Update the Admin Model.
     void update(const std::string& message);
@@ -105,7 +107,7 @@ private:
     int _forKitPid;
 
     Poco::Util::Timer _memStatsTimer;
-    Poco::Util::TimerTask::Ptr _memStatsTask;
+    std::unique_ptr<MemoryStats> _memStatsTask;
     unsigned _memStatsTaskInterval = 5000;
 
     Poco::Util::Timer _cpuStatsTimer;
@@ -128,6 +130,8 @@ public:
     {
         Log::debug("Memory stat dtor");
     }
+
+    long getLastTotalMemory() { return _lastTotalMemory; }
 
     void run() override;
 
