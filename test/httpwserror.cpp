@@ -184,7 +184,7 @@ void HTTPWSError::testMaxConnections()
         getDocumentPathAndURL("empty.odt", docPath, docURL, testname);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
         auto socket = loadDocAndGetSocket(_uri, docURL, testname);
-        std::cerr << "Opened connect #1 of " << MAX_CONNECTIONS << std::endl;
+        std::cerr << "Opened connection #1 of " << MAX_CONNECTIONS << std::endl;
 
         std::vector<std::shared_ptr<LOOLWebSocket>> views;
         for (int it = 1; it < MAX_CONNECTIONS; ++it)
@@ -192,7 +192,7 @@ void HTTPWSError::testMaxConnections()
             std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(_uri));
             auto ws = std::make_shared<LOOLWebSocket>(*session, request, _response);
             views.emplace_back(ws);
-            std::cerr << "Opened connect #" << (it+1) << " of " << MAX_CONNECTIONS << std::endl;
+            std::cerr << "Opened connection #" << (it+1) << " of " << MAX_CONNECTIONS << std::endl;
         }
 
         std::cerr << "Opening one more connection beyond the limit." << std::endl;

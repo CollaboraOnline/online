@@ -80,10 +80,12 @@ void TileQueue::put_impl(const Payload& value)
     }
     else if (firstToken == "callback")
     {
-        std::string newMsg = removeCallbackDuplicate(msg);
+        const std::string newMsg = removeCallbackDuplicate(msg);
 
         if (newMsg.empty())
+        {
             MessageQueue::put_impl(value);
+        }
         else
         {
             MessageQueue::put_impl(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
@@ -341,7 +343,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             callbackType == "26" || // the view cell cursor has moved
             callbackType == "28")   // the view cursor visibility has changed
     {
-        bool isViewCallback = (callbackType == "24" || callbackType == "26" || callbackType == "28");
+        const bool isViewCallback = (callbackType == "24" || callbackType == "26" || callbackType == "28");
 
         std::string viewId;
         if (isViewCallback)

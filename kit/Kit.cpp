@@ -1050,7 +1050,7 @@ private:
         // and create an array of JSON objects containing id and username
         Array::Ptr viewInfoArray = new Array();
         int arrayIndex = 0;
-        for (auto& viewId: viewIds)
+        for (const auto& viewId : viewIds)
         {
             Object::Ptr viewInfoObj = new Object();
             viewInfoObj->set("id", viewId);
@@ -1069,6 +1069,7 @@ private:
                     color = viewColorsMap[viewInfoMap[viewId].username];
                 }
             }
+
             viewInfoObj->set("color", color);
 
             viewInfoArray->set(arrayIndex++, viewInfoObj);
