@@ -100,7 +100,13 @@ static int countLoolKitProcesses(const int expected)
         // Give polls in the lool processes time to time out etc
         std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
 
-        count = getLoolKitProcessCount();
+        const auto newCount = getLoolKitProcessCount();
+        if (count != newCount)
+        {
+            // Allow more time until the number settles.
+            i = 0;
+            count = newCount;
+        }
     }
 
     std::cerr << std::endl;
