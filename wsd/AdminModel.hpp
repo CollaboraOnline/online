@@ -98,12 +98,12 @@ public:
           _ws(ws),
           _start(std::time(nullptr))
     {
-        Log::info("Subscriber ctor.");
+        LOG_INF("Subscriber ctor.");
     }
 
     ~Subscriber()
     {
-        Log::info("Subscriber dtor.");
+        LOG_INF("Subscriber dtor.");
     }
 
     bool notify(const std::string& message);
@@ -135,12 +135,12 @@ class AdminModel
 public:
     AdminModel()
     {
-        Log::info("AdminModel ctor.");
+        LOG_INF("AdminModel ctor.");
     }
 
     ~AdminModel()
     {
-        Log::info("AdminModel dtor.");
+        LOG_INF("AdminModel dtor.");
     }
 
     std::string query(const std::string& command);

@@ -30,7 +30,7 @@ void Document::addView(const std::string& sessionId)
     const auto ret = _views.emplace(sessionId, View(sessionId));
     if (!ret.second)
     {
-        Log::warn() << "View with SessionID [" + sessionId + "] already exists." << Log::end;
+        LOG_WRN("View with SessionID [" << sessionId << "] already exists.");
     }
     else
     {
@@ -74,8 +74,8 @@ bool Subscriber::notify(const std::string& message)
         }
         catch (const std::exception& ex)
         {
-            Log::error() << "Failed to notify Admin subscriber with message ["
-                         << message << "] due to [" << ex.what() << "]." << Log::end;
+            LOG_ERR("Failed to notify Admin subscriber with message [" <<
+                    message << "] due to [" << ex.what() << "].");
         }
     }
 
@@ -147,9 +147,12 @@ unsigned AdminModel::getKitsMemoryUsage()
         }
     }
 
-    LOG_INF("Got total Kits memory of " << totalMem << " bytes in " << ts.elapsed()/1001. << " ms for " <<
-            docs << " docs, avg: " << static_cast<double>(totalMem) / docs << " bytes / doc in " <<
-            ts.elapsed() / 1000. / docs << " ms per doc.");
+    if (docs > 0)
+    {
+        LOG_TRC("Got total Kits memory of " << totalMem << " bytes in " << ts.elapsed()/1001. <<
+                " ms for " << docs << " docs, avg: " << static_cast<double>(totalMem) / docs <<
+                " bytes / doc in " << ts.elapsed() / 1000. / docs << " ms per doc.");
+    }
 
     return totalMem;
 }
@@ -159,7 +162,7 @@ void AdminModel::subscribe(int sessionId, std::shared_ptr<LOOLWebSocket>& ws)
     const auto ret = _subscribers.emplace(sessionId, Subscriber(sessionId, ws));
     if (!ret.second)
     {
-        Log::warn() << "Subscriber already exists" << Log::end;
+        LOG_WRN("Subscriber already exists");
     }
 }
 
@@ -231,7 +234,7 @@ void AdminModel::notify(const std::string& message)
 {
     if (!_subscribers.empty())
     {
-        Log::trace("Message to admin console: " + message);
+        LOG_TRC("Message to admin console: " << message);
         for (auto it = std::begin(_subscribers); it != std::end(_subscribers); )
         {
             if (!it->second.notify(message))
@@ -251,7 +254,7 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
 {
     const auto ret = _documents.emplace(docKey, Document(docKey, pid, filename));
     ret.first->second.addView(sessionId);
-    LOG_DBG("Added admin document [" + docKey + "].");
+    LOG_DBG("Added admin document [" << docKey << "].");
 
     // Notify the subscribers
     const unsigned memUsage = Util::getMemoryUsage(pid);
@@ -304,7 +307,7 @@ void AdminModel::removeDocument(const std::string& docKey)
             notify(msg + pair.first);
         }
 
-        LOG_DBG("Removed admin document [" + docKey + "].");
+        LOG_DBG("Removed admin document [" << docKey << "].");
         _documents.erase(docIt);
     }
 }
