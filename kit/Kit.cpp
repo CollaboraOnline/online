@@ -1033,8 +1033,6 @@ private:
         std::map<int, UserInfo> viewInfoMap = getViewInfo();
         std::map<std::string, int> viewColorsMap = getViewColors();
 
-        std::unique_lock<std::mutex> lock(_mutex);
-
         // Double check if list of viewids from core and our list matches,
         // and create an array of JSON objects containing id and username
         Array::Ptr viewInfoArray = new Array();
@@ -1044,38 +1042,43 @@ private:
             Object::Ptr viewInfoObj = new Object();
             viewInfoObj->set("id", viewId);
             int color = 0;
-            if (viewInfoMap.find(viewId) == viewInfoMap.end())
+            const auto itView = viewInfoMap.find(viewId);
+            if (itView == viewInfoMap.end())
             {
                 LOG_ERR("No username found for viewId [" << viewId << "].");
                 viewInfoObj->set("username", "Unknown");
             }
             else
             {
-                viewInfoObj->set("userid", viewInfoMap[viewId].userid);
-                viewInfoObj->set("username", viewInfoMap[viewId].username);
-                if (viewColorsMap.find(viewInfoMap[viewId].username) != viewColorsMap.end())
+                viewInfoObj->set("userid", itView->second.userid);
+                const auto username = itView->second.username;
+                viewInfoObj->set("username", username);
+                const auto it = viewColorsMap.find(username);
+                if (it != viewColorsMap.end())
                 {
-                    color = viewColorsMap[viewInfoMap[viewId].username];
+                    color = it->second;
                 }
             }
 
             viewInfoObj->set("color", color);
-
             viewInfoArray->set(arrayIndex++, viewInfoObj);
         }
 
         std::ostringstream ossViewInfo;
         viewInfoArray->stringify(ossViewInfo);
+        const auto msg = "viewinfo: " + ossViewInfo.str();
+
+        std::unique_lock<std::mutex> lock(_mutex);
 
         // Broadcast updated viewinfo to all _active_ connections.
         // These are internal sockets, so unless WSD is chocked,
         // no need to send on separate thread.
         for (const auto& pair : _sessions)
         {
-            const auto session = pair.second;
+            const auto& session = pair.second;
             if (!session->isCloseFrame() && session->isActive())
             {
-                session->sendTextFrame("viewinfo: " + ossViewInfo.str());
+                session->sendTextFrame(msg);
             }
         }
     }
