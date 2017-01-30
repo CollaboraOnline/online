@@ -10,6 +10,7 @@
 #include "FileUtil.hpp"
 #include "config.h"
 
+#include <ftw.h>
 #include <sys/stat.h>
 #include <sys/vfs.h>
 
@@ -113,6 +114,44 @@ namespace FileUtil
             }
         }
     }
+
+    static int nftw_cb(const char *fpath, const struct stat*, int type, struct FTW*)
+    {
+        if (type == FTW_DP)
+        {
+            rmdir(fpath);
+        }
+        else if (type == FTW_F || type == FTW_SL)
+        {
+            unlink(fpath);
+        }
+
+        // Always continue even when things go wrong.
+        return 0;
+    }
+
+    void removeFile(const std::string& path, const bool recursive)
+    {
+        try
+        {
+            struct stat sb;
+            if (!recursive || stat(path.c_str(), &sb) == -1 || S_ISREG(sb.st_mode))
+            {
+                // Non-recursive directories, and files.
+                Poco::File(path).remove(recursive);
+            }
+            else
+            {
+                // Directories only.
+                nftw(path.c_str(), nftw_cb, 128, FTW_DEPTH | FTW_PHYS);
+            }
+        }
+        catch (const std::exception&)
+        {
+            // Already removed or we don't care about failures.
+        }
+    }
+
 
 } // namespace FileUtil
 

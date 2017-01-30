@@ -63,17 +63,7 @@ namespace FileUtil
     /// Supresses exception when the file is already removed.
     /// This can happen when there is a race (unavoidable) or when
     /// we don't care to check before we remove (when no race exists).
-    inline void removeFile(const std::string& path, const bool recursive = false)
-    {
-        try
-        {
-            Poco::File(path).remove(recursive);
-        }
-        catch (const std::exception&)
-        {
-            // Already removed or we don't care about failures.
-        }
-    }
+    void removeFile(const std::string& path, const bool recursive = false);
 
     inline void removeFile(const Poco::Path& path, const bool recursive = false)
     {
