@@ -380,8 +380,8 @@ L.Socket = L.Class.extend({
 				this._map._fatal = true;
 				this._map._active = false; // Practically disconnected.
 
-				// Servers configured for more than 50 documents are not demo/development.
-				if (parseInt(command.params[0]) > 50) {
+				// Servers configured for 50 documents are not demo/development.
+				if (parseInt(command.params[0]) >= 50) {
 					textMsg = errorMessages.limitreachedprod;
 					textMsg = textMsg.replace(/%0/g, command.params[0]);
 					textMsg = textMsg.replace(/%1/g, command.params[1]);
