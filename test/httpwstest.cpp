@@ -1427,6 +1427,10 @@ void HTTPWSTest::testInsertAnnotationWriter()
 
     // Close and reopen the same document and test again.
     socket->shutdown();
+
+    // Make sure the document is fully unloaded.
+    testNoExtraLoolKitsLeft();
+
     std::cerr << "Reloading " << std::endl;
     socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
