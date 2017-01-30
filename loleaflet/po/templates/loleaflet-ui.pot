@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-19 11:00+0100\n"
+"POT-Creation-Date: 2017-01-30 15:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -229,47 +229,53 @@ msgstr ""
 
 #: dist/errormessages.js:4
 msgid ""
-"Service is unavailable. Please try again later and report to your "
-"administrator if the issue persists."
+"This service is limited to %0 documents, and %1 connections total by the "
+"admin. This limit has been reached. Please try again later."
 msgstr ""
 
 #: dist/errormessages.js:5
 msgid ""
-"Unauthorized WOPI host. Please try again later and report to your "
+"Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
 
 #: dist/errormessages.js:6
 msgid ""
+"Unauthorized WOPI host. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+
+#: dist/errormessages.js:7
+msgid ""
 "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
 "file_path=/path/to/doc/"
 msgstr ""
 
-#: dist/errormessages.js:7
+#: dist/errormessages.js:8
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
 
-#: dist/errormessages.js:8
+#: dist/errormessages.js:9
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
 
-#: dist/errormessages.js:9
+#: dist/errormessages.js:10
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
 
-#: dist/errormessages.js:12
+#: dist/errormessages.js:13
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server administrator to continue editing."
 msgstr ""
 
-#: dist/errormessages.js:13
+#: dist/errormessages.js:14
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server administrator."
@@ -457,7 +463,8 @@ msgstr ""
 msgid "More"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:524
+#: dist/toolbar/toolbar.js:524 src/control/Control.Menubar.js:159
+#: src/control/Control.Menubar.js:218 src/control/Control.Menubar.js:265
 msgid "Close document"
 msgstr ""
 
@@ -465,7 +472,7 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:628 dist/toolbar/toolbar.js:959
+#: dist/toolbar/toolbar.js:628 dist/toolbar/toolbar.js:975
 msgid "Sum"
 msgstr ""
 
@@ -564,96 +571,96 @@ msgstr ""
 msgid "%user has left"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:808 dist/toolbar/toolbar.js:1333
+#: dist/toolbar/toolbar.js:824 dist/toolbar/toolbar.js:1349
 msgid "Size"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:940
+#: dist/toolbar/toolbar.js:956
 msgid "Number of Sheets"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:943
+#: dist/toolbar/toolbar.js:959
 msgid "Selected range of cells"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:946 dist/toolbar/toolbar.js:981
+#: dist/toolbar/toolbar.js:962 dist/toolbar/toolbar.js:997
 msgid "Entering text mode"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:949 dist/toolbar/toolbar.js:984
+#: dist/toolbar/toolbar.js:965 dist/toolbar/toolbar.js:1000
 msgid "Selection Mode"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:952
+#: dist/toolbar/toolbar.js:968
 msgid "Choice of functions"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:954
+#: dist/toolbar/toolbar.js:970
 msgid "Average"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:955
+#: dist/toolbar/toolbar.js:971
 msgid "CountA"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:956
+#: dist/toolbar/toolbar.js:972
 msgid "Count"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:957
+#: dist/toolbar/toolbar.js:973
 msgid "Maximum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:958
+#: dist/toolbar/toolbar.js:974
 msgid "Minimum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:960
+#: dist/toolbar/toolbar.js:976
 msgid "Selection count"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:961 src/control/Control.CharacterMap.js:11
+#: dist/toolbar/toolbar.js:977 src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:975
+#: dist/toolbar/toolbar.js:991
 msgid "Number of Pages"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:978
+#: dist/toolbar/toolbar.js:994
 msgid "Word Counter"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1001
+#: dist/toolbar/toolbar.js:1017
 msgid "Number of Slides"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1143
+#: dist/toolbar/toolbar.js:1159
 msgid "Document saved"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1306
+#: dist/toolbar/toolbar.js:1322
 msgid "Style"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1325
+#: dist/toolbar/toolbar.js:1341
 msgid "Font"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1361
+#: dist/toolbar/toolbar.js:1377
 msgid "Previous slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1362
+#: dist/toolbar/toolbar.js:1378
 msgid "Next slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1415
+#: dist/toolbar/toolbar.js:1431
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1579 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1595 src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr ""
 
@@ -2233,11 +2240,6 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: src/control/Control.Menubar.js:159 src/control/Control.Menubar.js:218
-#: src/control/Control.Menubar.js:265
-msgid "Close"
-msgstr ""
-
 #: src/control/Control.Menubar.js:169
 msgid "ODF presentation (.odp)"
 msgstr ""
@@ -2338,7 +2340,7 @@ msgstr ""
 msgid "Downloading..."
 msgstr ""
 
-#: src/control/Toolbar.js:95 src/map/Map.js:908
+#: src/control/Toolbar.js:95 src/map/Map.js:913
 msgid "Saving..."
 msgstr ""
 
@@ -2382,25 +2384,25 @@ msgstr ""
 msgid "Wrong password provided. Please try again."
 msgstr ""
 
-#: src/core/Socket.js:403
+#: src/core/Socket.js:414
 msgid "Connecting..."
 msgstr ""
 
-#: src/core/Socket.js:524
+#: src/core/Socket.js:535
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 
-#: src/map/Map.js:121
+#: src/map/Map.js:122
 msgid "Initializing..."
 msgstr ""
 
-#: src/map/Map.js:789
+#: src/map/Map.js:794
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 
-#: src/map/Map.js:911
+#: src/map/Map.js:916
 msgid "Loading..."
 msgstr ""
 
