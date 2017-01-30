@@ -1035,24 +1035,23 @@ private:
 
         // Double check if list of viewids from core and our list matches,
         // and create an array of JSON objects containing id and username
-        Array::Ptr viewInfoArray = new Array();
-        int arrayIndex = 0;
+        std::ostringstream oss;
+        oss << "viewinfo: [";
         for (const auto& viewId : viewIds)
         {
-            Object::Ptr viewInfoObj = new Object();
-            viewInfoObj->set("id", viewId);
+            oss << "{\"id\":" << viewId << ",";
             int color = 0;
             const auto itView = viewInfoMap.find(viewId);
             if (itView == viewInfoMap.end())
             {
                 LOG_ERR("No username found for viewId [" << viewId << "].");
-                viewInfoObj->set("username", "Unknown");
+                oss << "\"username\":\"Unknown\",";
             }
             else
             {
-                viewInfoObj->set("userid", itView->second.userid);
+                oss << "\"userid\":\"" << itView->second.userid << "\",";
                 const auto username = itView->second.username;
-                viewInfoObj->set("username", username);
+                oss << "\"username\":\"" << username << "\",";
                 const auto it = viewColorsMap.find(username);
                 if (it != viewColorsMap.end())
                 {
@@ -1060,13 +1059,12 @@ private:
                 }
             }
 
-            viewInfoObj->set("color", color);
-            viewInfoArray->set(arrayIndex++, viewInfoObj);
+            oss << "\"color\":" << color << "},";
         }
 
-        std::ostringstream ossViewInfo;
-        viewInfoArray->stringify(ossViewInfo);
-        const auto msg = "viewinfo: " + ossViewInfo.str();
+        oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+        oss << "]";
+        const auto msg = oss.str();
 
         std::unique_lock<std::mutex> lock(_mutex);
 
