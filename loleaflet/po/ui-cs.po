@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-26 15:10+0000\n"
+"POT-Creation-Date: 2017-01-30 14:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-ui-cs.po\n"
-"X-Pootle-Revision: 859469\n"
+"X-Pootle-Revision: 862291\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -301,19 +301,19 @@ msgstr "Obtékání stránky"
 
 #: dist/toolbar/toolbar.js:358
 msgid "Wrap anchor only"
-msgstr ""
+msgstr "Obtékat pouze kotvy"
 
 #: dist/toolbar/toolbar.js:359
 msgid "Ideal wrap"
-msgstr ""
+msgstr "Ideální obtékání"
 
 #: dist/toolbar/toolbar.js:360
 msgid "Left wrap"
-msgstr "Obtékat vlevo"
+msgstr "Obtékání vlevo"
 
 #: dist/toolbar/toolbar.js:361
 msgid "Right wrap"
-msgstr "Obtékat vpravo"
+msgstr "Obtékání vpravo"
 
 #: dist/toolbar/toolbar.js:362
 msgid "Wrap through"
@@ -1991,19 +1991,19 @@ msgstr "Volitelné rozdělení"
 
 #: src/control/Control.Menubar.js:53
 msgid "No-width optional break"
-msgstr ""
+msgstr "Nulová mezera, zlomitelná"
 
 #: src/control/Control.Menubar.js:54
 msgid "No-width no break"
-msgstr ""
+msgstr "Nulová mezera, nezlomitelná"
 
 #: src/control/Control.Menubar.js:55
 msgid "Left-to-right mark"
-msgstr ""
+msgstr "Znak zleva doprava"
 
 #: src/control/Control.Menubar.js:56
 msgid "Right-to-left mark"
-msgstr ""
+msgstr "Znak zprava doleva"
 
 #: src/control/Control.Menubar.js:58
 msgid "Format"
@@ -2063,7 +2063,7 @@ msgstr "malá písmena"
 
 #: src/control/Control.Menubar.js:79
 msgid "Cycle case"
-msgstr ""
+msgstr "Měnit velikost"
 
 #: src/control/Control.Menubar.js:81
 msgid "Sentence case"
@@ -2083,141 +2083,141 @@ msgstr "Orientace textu"
 
 #: src/control/Control.Menubar.js:85
 msgid "Set paragraph left-to-right"
-msgstr ""
+msgstr "Nastavit odstavec zleva doprava"
 
 #: src/control/Control.Menubar.js:86
 msgid "Set paragraph right-to-left"
-msgstr ""
+msgstr "Nastavit odstavec zprava doleva"
 
 #: src/control/Control.Menubar.js:87
 msgid "Spacing"
-msgstr ""
+msgstr "Rozestupy"
 
 #: src/control/Control.Menubar.js:88
 msgid "Line spacing: 1"
-msgstr ""
+msgstr "Řádkování: 1"
 
 #: src/control/Control.Menubar.js:89
 msgid "Line spacing: 1.5"
-msgstr ""
+msgstr "Řádkování: 1.5"
 
 #: src/control/Control.Menubar.js:90
 msgid "Line spacing: 2"
-msgstr ""
+msgstr "Řádkování: 2"
 
 #: src/control/Control.Menubar.js:92
 msgid "Increase paragraph spacing"
-msgstr ""
+msgstr "Zvětšit rozestupy mezi odstavci"
 
 #: src/control/Control.Menubar.js:93
 msgid "Decrease paragraph spacing"
-msgstr ""
+msgstr "Zmenšit rozestupy mezi odstavci"
 
 #: src/control/Control.Menubar.js:97
 msgid "Align"
-msgstr ""
+msgstr "Zarovnání"
 
 #: src/control/Control.Menubar.js:98
 msgid "Left"
-msgstr ""
+msgstr "Vlevo"
 
 #: src/control/Control.Menubar.js:99
 msgid "Centered"
-msgstr ""
+msgstr "Na střed"
 
 #: src/control/Control.Menubar.js:100
 msgid "Right"
-msgstr ""
+msgstr "Vpravo"
 
 #: src/control/Control.Menubar.js:103
 msgid "Top"
-msgstr ""
+msgstr "Nahoře"
 
 #: src/control/Control.Menubar.js:104
 msgid "Center"
-msgstr ""
+msgstr "Na střed"
 
 #: src/control/Control.Menubar.js:105
 msgid "Bottom"
-msgstr ""
+msgstr "Dole"
 
 #: src/control/Control.Menubar.js:106
 msgid "Lists"
-msgstr ""
+msgstr "Seznamy"
 
 #: src/control/Control.Menubar.js:110
 msgid "Demote one level"
-msgstr ""
+msgstr "O úroveň níže"
 
 #: src/control/Control.Menubar.js:111
 msgid "Promote one level"
-msgstr ""
+msgstr "O úroveň výše"
 
 #: src/control/Control.Menubar.js:112
 msgid "Demote one level with subpoints"
-msgstr ""
+msgstr "O úroveň níže včetně podčástí"
 
 #: src/control/Control.Menubar.js:113
 msgid "Promote one level with subpoints"
-msgstr ""
+msgstr "O úroveň výše včetně podčástí"
 
 #: src/control/Control.Menubar.js:115
 msgid "Move down"
-msgstr ""
+msgstr "Přesunout dolů"
 
 #: src/control/Control.Menubar.js:116
 msgid "Move up"
-msgstr ""
+msgstr "Přesunout nahoru"
 
 #: src/control/Control.Menubar.js:117
 msgid "Move down with subpoints"
-msgstr ""
+msgstr "Přesunout dolů včetně podčástí"
 
 #: src/control/Control.Menubar.js:118
 msgid "Move up with subpoints"
-msgstr ""
+msgstr "Přesunout nahoru včetně podčástí"
 
 #: src/control/Control.Menubar.js:120
 msgid "Insert unnumbered entry"
-msgstr ""
+msgstr "Vložit nečíslovanou položku"
 
 #: src/control/Control.Menubar.js:121
 msgid "Restart numbering"
-msgstr ""
+msgstr "Restartovat číslování"
 
 #: src/control/Control.Menubar.js:123
 msgid "To next paragraph in level"
-msgstr ""
+msgstr "Na následující odstavec v úrovni"
 
 #: src/control/Control.Menubar.js:124
 msgid "To previous paragraph in level"
-msgstr ""
+msgstr "Na předchozí odstavec v úrovni"
 
 #: src/control/Control.Menubar.js:125
 msgid "Continue previous numbering"
-msgstr ""
+msgstr "Pokračovat v číslování"
 
 #: src/control/Control.Menubar.js:126
 msgid "Clear direct formatting"
-msgstr ""
+msgstr "Vymazat přímé formátování"
 
 #: src/control/Control.Menubar.js:127
 msgid "Page"
-msgstr ""
+msgstr "Stránka"
 
 #: src/control/Control.Menubar.js:128
 #: src/control/Control.Menubar.js:130
 #: src/control/Control.Menubar.js:132
 #: src/control/Control.Menubar.js:134
 msgid "Portrait"
-msgstr ""
+msgstr "Na výšku"
 
 #: src/control/Control.Menubar.js:129
 #: src/control/Control.Menubar.js:131
 #: src/control/Control.Menubar.js:133
 #: src/control/Control.Menubar.js:135
 msgid "Landscape"
-msgstr ""
+msgstr "Na šířku"
 
 #: src/control/Control.Menubar.js:137
 #: src/control/Control.Menubar.js:194
@@ -2368,11 +2368,11 @@ msgstr "Optimální výška"
 
 #: src/control/Control.RowHeader.js:60
 msgid "Hide Rows"
-msgstr ""
+msgstr "Skrýt řádky"
 
 #: src/control/Control.RowHeader.js:67
 msgid "Show Rows"
-msgstr ""
+msgstr "Zobrazit řádky"
 
 #: src/control/Control.RowHeader.js:80
 msgid "Optimal Row Height"
@@ -2426,15 +2426,15 @@ msgstr "Nepodporovaná verze serveru."
 
 #: src/core/Socket.js:217
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "Relace byla ukončena vlastníkem dokumentu"
 
 #: src/core/Socket.js:220
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "Server bude vypnut z důvodu údržby (automatické ukládání)"
 
 #: src/core/Socket.js:223
 msgid "Server is recycling and will be available shortly"
-msgstr ""
+msgstr "Server je obnovován a bude brzy dostupný"
 
 #: src/core/Socket.js:335
 msgid "Document requires password to view."
@@ -2468,7 +2468,7 @@ msgstr "Inicializace..."
 
 #: src/map/Map.js:786
 msgid "Inactive document - please click to resume editing"
-msgstr ""
+msgstr "Dokument je neaktivní - pro pokračování v úpravách klikněte"
 
 #: src/map/Map.js:908
 msgid "Loading..."
