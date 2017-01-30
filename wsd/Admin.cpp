@@ -55,7 +55,7 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
 {
     const std::string firstLine = getFirstLine(payload.data(), payload.size());
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-    Log::trace("Recv: " + firstLine);
+    LOG_TRC("Recv: " << firstLine);
 
     if (tokens.count() < 1)
         return false;
@@ -70,11 +70,11 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
         const auto& config = Application::instance().config();
         const auto sslKeyPath = config.getString("ssl.key_file_path", "");
 
-        Log::info("Verifying JWT token: " + jwtToken);
+        LOG_INF("Verifying JWT token: " << jwtToken);
         JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
         if (authAgent.verify(jwtToken))
         {
-            Log::trace("JWT token is valid");
+            LOG_TRC("JWT token is valid");
             _isAuthenticated = true;
         }
         else
@@ -164,9 +164,8 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
             }
             catch (const std::exception& exc)
             {
-                Log::warn() << "Invalid setting value: "
-                            << setting[1] << " for "
-                            << setting[0] << Log::end;
+                LOG_WRN("Invalid setting value: " << setting[1] <<
+                        " for " << setting[0]);
                 return false;
             }
 
@@ -229,7 +228,7 @@ void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServe
                             []() { },
                             []() { return TerminationFlag.load(); });
 
-    Log::debug() << "Finishing Admin Session " << Util::encodeId(sessionId) << Log::end;
+    LOG_DBG("Finishing Admin Session " << Util::encodeId(sessionId));
 }
 
 AdminRequestHandler::AdminRequestHandler(Admin* adminManager)
@@ -252,7 +251,7 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
 
     Util::setThreadName("admin_ws_" + std::to_string(sessionId));
 
-    Log::debug("Thread started.");
+    LOG_DBG("Thread started.");
 
     try
     {
@@ -266,7 +265,7 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
     }
     catch(const Poco::Net::NotAuthenticatedException& exc)
     {
-        Log::info("Admin::NotAuthenticated");
+        LOG_INF("Admin::NotAuthenticated");
         response.set("WWW-Authenticate", "Basic realm=\"online\"");
         response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
         response.setContentLength(0);
@@ -274,13 +273,13 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
     }
     catch (const std::exception& exc)
     {
-        Log::info(std::string("Admin::handleRequest: Exception: ") + exc.what());
+        LOG_INF("Admin::handleRequest: Exception: " << exc.what());
         response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
         response.setContentLength(0);
         response.send();
     }
 
-    Log::debug("Thread finished.");
+    LOG_DBG("Thread finished.");
 }
 
 /// An admin command processor.
@@ -288,7 +287,7 @@ Admin::Admin() :
     _model(AdminModel()),
     _forKitPid(0)
 {
-    Log::info("Admin ctor.");
+    LOG_INF("Admin ctor.");
 
     _memStatsTask.reset(new MemoryStats(this));
     _memStatsTimer.schedule(_memStatsTask.get(), _memStatsTaskInterval, _memStatsTaskInterval);
@@ -299,7 +298,7 @@ Admin::Admin() :
 
 Admin::~Admin()
 {
-    Log::info("~Admin dtor.");
+    LOG_INF("~Admin dtor.");
 
     _memStatsTask->cancel();
     _cpuStatsTask->cancel();
@@ -320,7 +319,7 @@ void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
 void Admin::rmDoc(const std::string& docKey)
 {
     std::unique_lock<std::mutex> modelLock(_modelMutex);
-    Log::info("Removing complete doc [" + docKey + "] from Admin.");
+    LOG_INF("Removing complete doc [" << docKey << "] from Admin.");
     _model.removeDocument(docKey);
 }
 
@@ -332,7 +331,7 @@ void MemoryStats::run()
 
     if (totalMem != _lastTotalMemory)
     {
-        Log::trace("Total memory used: " + std::to_string(totalMem));
+        LOG_TRC("Total memory used: " << totalMem);
     }
 
     _lastTotalMemory = totalMem;
@@ -352,7 +351,7 @@ void Admin::rescheduleMemTimer(unsigned interval)
     _memStatsTaskInterval = interval;
     _memStatsTask.reset(new MemoryStats(this));
     _memStatsTimer.schedule(_memStatsTask.get(), _memStatsTaskInterval, _memStatsTaskInterval);
-    Log::info("Memory stats interval changed - New interval: " + std::to_string(interval));
+    LOG_INF("Memory stats interval changed - New interval: " << interval);
 }
 
 void Admin::rescheduleCpuTimer(unsigned interval)
@@ -361,7 +360,7 @@ void Admin::rescheduleCpuTimer(unsigned interval)
     _cpuStatsTaskInterval = interval;
     _cpuStatsTask = new CpuStats(this);
     _cpuStatsTimer.schedule(_cpuStatsTask, _cpuStatsTaskInterval, _cpuStatsTaskInterval);
-    Log::info("CPU stats interval changed - New interval: " + std::to_string(interval));
+    LOG_INF("CPU stats interval changed - New interval: " << interval);
 }
 
 unsigned Admin::getTotalMemoryUsage()
