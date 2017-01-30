@@ -1013,18 +1013,7 @@ private:
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        std::map<int, UserInfo> viewInfo;
-        for (const auto& pair : _sessions)
-        {
-            const auto& session = pair.second;
-            const auto viewId = session->getViewId();
-            viewInfo[viewId] = UserInfo({session->getViewUserId(), session->getViewUserName()});
-        }
-
-        // Copy the old sessions to provide disconnected user info.
-        viewInfo.insert(_oldSessionIds.begin(), _oldSessionIds.end());
-
-        return viewInfo;
+        return _sessionUserInfo;
     }
 
     std::mutex& getMutex() override
@@ -1241,6 +1230,7 @@ private:
 
         const int viewId = _loKitDocument->getView();
         session->setViewId(viewId);
+        _sessionUserInfo[viewId] = UserInfo({session->getViewUserId(), session->getViewUserName()});
 
         _viewIdToCallbackDescr.emplace(viewId,
                                        std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
@@ -1287,7 +1277,6 @@ private:
                     strncmp(data, disconnect.data(), disconnect.size()) == 0)
                 {
                     LOG_DBG("Removing ChildSession [" << sessionId << "].");
-                    _oldSessionIds[session->getViewId()] = UserInfo({session->getViewUserId(), session->getViewUserName()});
                     _sessions.erase(it);
                     const auto count = _sessions.size();
                     LOG_DBG("Have " << count << " child" << (count == 1 ? "" : "ren") <<
@@ -1524,7 +1513,7 @@ private:
     std::map<std::string, std::shared_ptr<ChildSession>> _sessions;
 
     /// For showing disconnected user info in the doc repair dialog.
-    std::map<int, UserInfo> _oldSessionIds;
+    std::map<int, UserInfo> _sessionUserInfo;
     Poco::Thread _callbackThread;
 };
 
