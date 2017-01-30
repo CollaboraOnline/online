@@ -146,7 +146,7 @@ public:
     std::string query(const std::string& command);
 
     /// Returns memory consumed by all active loolkit processes
-    unsigned getTotalMemoryUsage();
+    unsigned getKitsMemoryUsage();
 
     void subscribe(int sessionId, std::shared_ptr<LOOLWebSocket>& ws);
     void subscribe(int sessionId, const std::string& command);

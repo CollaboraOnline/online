@@ -328,7 +328,7 @@ void MemoryStats::run()
 {
     std::unique_lock<std::mutex> modelLock(_admin->getLock());
     AdminModel& model = _admin->getModel();
-    const auto totalMem = model.getTotalMemoryUsage();
+    const auto totalMem = model.getKitsMemoryUsage();
 
     if (totalMem != _lastTotalMemory)
     {
