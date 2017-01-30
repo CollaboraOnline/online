@@ -182,20 +182,28 @@ static bool haveCorrectCapabilities()
 /// Check if some previously forked kids have died.
 static void cleanupChildren()
 {
+    std::vector<std::string> jails;
     Process::PID exitedChildPid;
     int status;
     while ((exitedChildPid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
     {
-        if (childJails.find(exitedChildPid) != childJails.end())
+        const auto it = childJails.find(exitedChildPid);
+        if (it != childJails.end())
         {
-            LOG_INF("Child " << exitedChildPid << " has exited, removing its jail '" << childJails[exitedChildPid] << "'");
-            FileUtil::removeFile(childJails[exitedChildPid], true);
-            childJails.erase(exitedChildPid);
+            LOG_INF("Child " << exitedChildPid << " has exited, removing its jail '" << it->second << "'.");
+            jails.emplace_back(it->second);
+            childJails.erase(it);
         }
         else
         {
             LOG_ERR("Unknown child " << exitedChildPid << " has exited");
         }
+    }
+
+    // Now delete the jails.
+    for (const auto& path : jails)
+    {
+        FileUtil::removeFile(path, true);
     }
 }
 
