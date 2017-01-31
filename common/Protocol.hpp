@@ -73,6 +73,9 @@ namespace LOOLProtocol
     bool getTokenInteger(const Poco::StringTokenizer& tokens, const std::string& name, int& value);
     bool getTokenString(const Poco::StringTokenizer& tokens, const std::string& name, std::string& value);
     bool getTokenKeyword(const Poco::StringTokenizer& tokens, const std::string& name, const std::map<std::string, int>& map, int& value);
+
+    bool getTokenInteger(const std::vector<std::string>& tokens, const std::string& name, int& value);
+
     inline bool getTokenString(const std::vector<std::string>& tokens,
                                const std::string& name,
                                std::string& value)
@@ -88,7 +91,6 @@ namespace LOOLProtocol
         return false;
     }
 
-    bool getTokenIntegerFromMessage(const std::string& message, const std::string& name, int& value);
     bool getTokenStringFromMessage(const std::string& message, const std::string& name, std::string& value);
     bool getTokenKeywordFromMessage(const std::string& message, const std::string& name, const std::map<std::string, int>& map, int& value);
 
@@ -133,6 +135,11 @@ namespace LOOLProtocol
     std::vector<std::string> tokenize(const std::string& s)
     {
         return tokenize(s.data(), s.size());
+    }
+
+    inline bool getTokenIntegerFromMessage(const std::string& message, const std::string& name, int& value)
+    {
+        return getTokenInteger(tokenize(message), name, value);
     }
 
     inline size_t getDelimiterPosition(const char* message, const int length, const char delim)

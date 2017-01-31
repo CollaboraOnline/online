@@ -74,85 +74,67 @@ namespace LOOLProtocol
 
     bool getTokenInteger(const std::string& token, const std::string& name, int& value)
     {
-        size_t nextIdx;
-        try
+        if (token.size() > (name.size() + 1) &&
+            token.compare(0, name.size(), name) == 0 &&
+            token[name.size()] == '=')
         {
-            if (token.size() < name.size() + 2 ||
-                token.substr(0, name.size()) != name ||
-                token[name.size()] != '=' ||
-                (value = std::stoi(token.substr(name.size() + 1), &nextIdx), false) ||
-                nextIdx != token.size() - name.size() - 1)
-            {
-                return false;
-            }
-        }
-        catch (std::invalid_argument&)
-        {
-            return false;
+            const char* str = token.data() + name.size() + 1;
+            char* endptr = nullptr;
+            value = strtol(str, &endptr, 10);
+            return (endptr > str);
         }
 
-        return true;
+        return false;
     }
 
     bool getTokenUInt64(const std::string& token, const std::string& name, uint64_t& value)
     {
-        size_t nextIdx;
-        try
+        if (token.size() > (name.size() + 1) &&
+            token.compare(0, name.size(), name) == 0 &&
+            token[name.size()] == '=')
         {
-            if (token.size() < name.size() + 2 ||
-                token.substr(0, name.size()) != name ||
-                token[name.size()] != '=' ||
-                (value = std::stoull(token.substr(name.size() + 1), &nextIdx), false) ||
-                nextIdx != token.size() - name.size() - 1)
-            {
-                return false;
-            }
-        }
-        catch (std::invalid_argument&)
-        {
-            return false;
+            const char* str = token.data() + name.size() + 1;
+            char* endptr = nullptr;
+            value = strtoull(str, &endptr, 10);
+            return (endptr > str);
         }
 
-        return true;
+        return false;
     }
 
     bool getTokenString(const std::string& token, const std::string& name, std::string& value)
     {
-        try
+        if (token.size() > (name.size() + 1) &&
+            token.compare(0, name.size(), name) == 0 &&
+            token[name.size()] == '=')
         {
-            if (token.size() < name.size() + 2 ||
-                token.substr(0, name.size()) != name ||
-                token[name.size()] != '=')
-            {
-                return false;
-            }
-        }
-        catch (std::invalid_argument&)
-        {
-            return false;
+            value = token.substr(name.size() + 1);
+            return true;
         }
 
-        value = token.substr(name.size() + 1);
-        return true;
+        return false;
     }
 
-    bool getTokenKeyword(const std::string& token, const std::string& name, const std::map<std::string, int>& map, int& value)
+    bool getTokenKeyword(const std::string& token, const std::string& name,
+                         const std::map<std::string, int>& map, int& value)
     {
-        if (token.size() < name.size() + 2 ||
-            token.substr(0, name.size()) != name ||
-            token[name.size()] != '=')
-            return false;
+        std::string t;
+        if (getTokenString(token, name, t))
+        {
+            if (t[0] == '\'' && t[t.size() - 1] == '\'')
+            {
+                t = t.substr(1, t.size() - 2);
+            }
 
-        std::string t = token.substr(name.size()+1);
-        if (t[0] == '\'' && t[t.size()-1] == '\'')
-            t = t.substr(1, t.size()-2);
+            const auto p = map.find(t);
+            if (p != map.cend())
+            {
+                value = p->second;
+                return true;
+            }
+        }
 
-        auto p = map.find(t);
-        if (p == map.cend())
-            return false;
-
-        value = p->second;
-        return true;
+        return false;
     }
 
     bool getTokenInteger(const Poco::StringTokenizer& tokens, const std::string& name, int& value)
@@ -185,10 +167,17 @@ namespace LOOLProtocol
         return false;
     }
 
-    bool getTokenIntegerFromMessage(const std::string& message, const std::string& name, int& value)
+    bool getTokenInteger(const std::vector<std::string>& tokens, const std::string& name, int& value)
     {
-        Poco::StringTokenizer tokens(message, " \n", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-        return getTokenInteger(tokens, name, value);
+        for (const auto& pair : tokens)
+        {
+            if (getTokenInteger(pair, name, value))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     bool getTokenStringFromMessage(const std::string& message, const std::string& name, std::string& value)
