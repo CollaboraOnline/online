@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-18 09:00+0000\n"
+"POT-Creation-Date: 2017-01-30 14:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /cy/libo_online/loleaflet-help-cy.po\n"
-"X-Pootle-Revision: 826944\n"
+"X-Pootle-Revision: 849683\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -64,58 +64,50 @@ msgstr "Ctrl + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "Dangos cymorth llwybrau byr y Bysellfwrdd"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
-#, fuzzy
 msgid "Ctrl + Shift + ?"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A38
 #: dist%2Floleaflet-help.html+div.div.h2%3A160
-#, fuzzy
 msgid "Text formatting"
 msgstr "Fformatio testun"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
-#, fuzzy
 msgid "Bold"
 msgstr "Trwm"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
-#, fuzzy
 msgid "Ctrl + B"
 msgstr "Ctrl + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
-#, fuzzy
 msgid "Italic"
 msgstr "Italig"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
-#, fuzzy
 msgid "Ctrl + I"
 msgstr "Ctrl + I"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
-#, fuzzy
 msgid "Underline"
 msgstr "Tanlinellu"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
-#, fuzzy
 msgid "Ctrl + U"
 msgstr "Ctrl + U"
 
@@ -125,119 +117,101 @@ msgstr "Tanlinellu Dwbl"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
-#, fuzzy
 msgid "Ctrl + D"
 msgstr "Ctrl + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
-#, fuzzy
 msgid "Strikethrough"
 msgstr "Llinell Drwodd"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
-#, fuzzy
 msgid "Ctrl + Alt + 5"
 msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
-#, fuzzy
 msgid "Superscript"
 msgstr "Isysgrif"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
-#, fuzzy
 msgid "Ctrl + Shift + P"
 msgstr "Ctrl + Shift + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
-#, fuzzy
 msgid "Subscript"
 msgstr "Uwchysgrif"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
-#, fuzzy
 msgid "Ctrl + Shift + B"
 msgstr "Ctrl + Shift + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
-#, fuzzy
 msgid "Remove direct formatting"
 msgstr "Dileu fformatio uniongyrchol"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
-#, fuzzy
 msgid "Ctrl + M"
 msgstr "Ctrl + M"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A49
 #: dist%2Floleaflet-help.html+div.div.h2%3A170
-#, fuzzy
 msgid "Paragraph formatting"
 msgstr "Fformatio paragraff"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
-#, fuzzy
 msgid "Align Center"
 msgstr "Alinio i'r Canol"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
-#, fuzzy
 msgid "Ctrl + E"
 msgstr "Ctrl + E"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
-#, fuzzy
 msgid "Align Left"
 msgstr "Alinio i'r Chwith"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
-#, fuzzy
 msgid "Ctrl + L"
 msgstr "Ctrl + L"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
-#, fuzzy
 msgid "Align Right"
 msgstr "Alinio i'r Dde"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
-#, fuzzy
 msgid "Ctrl + R"
 msgstr "Ctrl + R"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
-#, fuzzy
 msgid "Justify"
 msgstr "Unioni"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
-#, fuzzy
 msgid "Ctrl + J"
 msgstr "Ctrl + J"
 
@@ -271,7 +245,6 @@ msgstr "Gosod arddull paragraff Pennawd 3"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
-#, fuzzy
 msgid "Ctrl + 3"
 msgstr "Ctrl + 3"
 
@@ -299,9 +272,8 @@ msgstr "Dewis testun a llywio'r ddogfen"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
-#, fuzzy
 msgid "Select All"
-msgstr "Dewis y Cyfan"
+msgstr "Dewis Popeth"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
@@ -309,97 +281,81 @@ msgstr "Dewis y Cyfan"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
-#, fuzzy
 msgid "Ctrl + A"
 msgstr "Ctrl + A"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
-#, fuzzy
 msgid "Move cursor to the left"
 msgstr "Symud y cyrchwr i'r chwith"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
-#, fuzzy
 msgid "Arrow Left"
 msgstr "Saeth i'r Chwith"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
-#, fuzzy
 msgid "Move cursor with selection to the left"
 msgstr "Symud y cyrchwr gyda'r dewis i'r chwith"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
-#, fuzzy
 msgid "Shift + Arrow Left"
 msgstr "Shift + Saeth Chwith"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
-#, fuzzy
 msgid "Go to beginning of a word"
 msgstr "Mynd i ddechrau gair"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
-#, fuzzy
 msgid "Ctrl + Arrow Left"
 msgstr "Ctrl + Saeth Chwith"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
-#, fuzzy
 msgid "Select to the left word by word"
 msgstr "Dewis i'r gair chwith y ôl gair"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
-#, fuzzy
 msgid "Ctrl + Shift + Arrow Left"
 msgstr "Ctrl + Shift + Saeth i'r Chwith"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
-#, fuzzy
 msgid "Move cursor to the right"
 msgstr "Symud cyrchwr i'r dde"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
-#, fuzzy
 msgid "Arrow Right"
 msgstr "Saeth i'r Chwith"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
-#, fuzzy
 msgid "Move cursor with selection to the right"
 msgstr "Symudwch y cyrchwr gyda'r dewis i'r dde"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
-#, fuzzy
 msgid "Shift + Arrow Right"
 msgstr "Shift + Saeth Dde"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
-#, fuzzy
 msgid "Go to start of the next word"
 msgstr "Mynd i ddechrau'r gair nesaf"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
-#, fuzzy
 msgid "Ctrl + Arrow Right"
 msgstr "Ctrl + Saeth Dde"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
-#, fuzzy
 msgid "Select to the right word by word"
 msgstr "Dewis y gair de yn ôl gair"
 

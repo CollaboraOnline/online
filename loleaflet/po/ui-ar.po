@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-18 14:43+0000\n"
+"POT-Creation-Date: 2017-01-30 14:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /ar/libo_online/loleaflet-ui-ar.po\n"
-"X-Pootle-Revision: 842411\n"
+"X-Pootle-Revision: 850722\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -552,11 +552,11 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:597
 msgid "%user has joined"
-msgstr ""
+msgstr "انضمّ %user"
 
 #: dist/toolbar/toolbar.js:598
 msgid "%user has left"
-msgstr ""
+msgstr "غادر %user"
 
 #: dist/toolbar/toolbar.js:700
 #: dist/toolbar/toolbar.js:1187
@@ -579,7 +579,7 @@ msgstr ""
 #: dist/toolbar/toolbar.js:841
 #: dist/toolbar/toolbar.js:872
 msgid "Selection Mode"
-msgstr ""
+msgstr "وضع التحديد"
 
 #: dist/toolbar/toolbar.js:844
 msgid "Choice of functions"
@@ -616,7 +616,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:863
 msgid "Number of Pages"
-msgstr ""
+msgstr "عدد الصفحات"
 
 #: dist/toolbar/toolbar.js:866
 msgid "Word Counter"
@@ -624,11 +624,11 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:883
 msgid "Number of Slides"
-msgstr ""
+msgstr "عدد الشرائح"
 
 #: dist/toolbar/toolbar.js:1011
 msgid "Document saved"
-msgstr ""
+msgstr "حُفظ المستند"
 
 #: dist/toolbar/toolbar.js:1170
 msgid "Style"
@@ -650,6 +650,8 @@ msgstr ""
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"التراجعات والإعادات تضاربت بين المستخدمين. رجاء استخدم «إصلاح المستند» لحل "
+"المشكلة"
 
 #: dist/toolbar/toolbar.js:1395
 msgid "%n users"
@@ -662,31 +664,31 @@ msgstr ""
 #: dist/toolbar/toolbar.js:1429
 #: src/control/Control.DocumentRepair.js:87
 msgid "You"
-msgstr ""
+msgstr "أنت"
 
 #: src/admin/AdminSocketBase.js:45
 msgid "Connection error"
-msgstr ""
+msgstr "عطل في الاتصال"
 
 #: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
-msgstr ""
+msgstr "أمتأكد من إنهاء هذه الجلسة؟"
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr ""
+msgstr "ك.بايت"
 
 #: src/admin/Util.js:13
 msgid "MB"
-msgstr ""
+msgstr "م.بايت"
 
 #: src/admin/Util.js:13
 msgid "GB"
-msgstr ""
+msgstr "غ.بايت"
 
 #: src/admin/Util.js:13
 msgid "TB"
-msgstr ""
+msgstr "ت.بايت"
 
 #: src/admin/Util.js:42
 #: src/admin/Util.js:44
@@ -704,19 +706,19 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:12
 msgid "Basic Latin"
-msgstr ""
+msgstr "لاتينية أساسية"
 
 #: src/control/Control.CharacterMap.js:13
 msgid "Latin-1"
-msgstr ""
+msgstr "لاتينية-١"
 
 #: src/control/Control.CharacterMap.js:14
 msgid "Latin Extended-A"
-msgstr ""
+msgstr "لاتينية ممتدة-أ"
 
 #: src/control/Control.CharacterMap.js:15
 msgid "Latin Extended-B"
-msgstr ""
+msgstr "لاتينية ممتدة-ب"
 
 #: src/control/Control.CharacterMap.js:16
 msgid "IPA Extensions"
@@ -724,7 +726,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:17
 msgid "Spacing Modifier Letters"
-msgstr ""
+msgstr "أحرف معدِّلة للتباعد"
 
 #: src/control/Control.CharacterMap.js:18
 msgid "Combining Diacritical Marks"
@@ -732,7 +734,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:19
 msgid "Basic Greek"
-msgstr ""
+msgstr "يونانية أساسية"
 
 #: src/control/Control.CharacterMap.js:20
 msgid "Cyrillic"
@@ -740,7 +742,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:21
 msgid "Armenian"
-msgstr ""
+msgstr "أرمنية"
 
 #: src/control/Control.CharacterMap.js:22
 msgid "Basic Hebrew"
@@ -1064,12 +1066,12 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:114
 msgid "Byzantine Musical Symbols"
-msgstr ""
+msgstr "رموز موسيقية بيزنطية"
 
 #: src/control/Control.CharacterMap.js:115
 #: src/control/Control.CharacterMap.js:116
 msgid "Musical Symbols"
-msgstr ""
+msgstr "رموز موسيقية"
 
 #: src/control/Control.CharacterMap.js:118
 msgid "CJK Unified Ideographs Extension B"
@@ -1105,19 +1107,19 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:128
 msgid "Miscellaneous Mathematical Symbols-A"
-msgstr ""
+msgstr "رموز رياضية متنوعة-أ"
 
 #: src/control/Control.CharacterMap.js:129
 msgid "Supplemental Arrows-A"
-msgstr ""
+msgstr "أسهم إضافية-أ"
 
 #: src/control/Control.CharacterMap.js:130
 msgid "Supplemental Arrows-B"
-msgstr ""
+msgstr "أسهم إضافية-ب"
 
 #: src/control/Control.CharacterMap.js:131
 msgid "Miscellaneous Mathematical Symbols-B"
-msgstr ""
+msgstr "رموز رياضية متنوعة-ب"
 
 #: src/control/Control.CharacterMap.js:132
 msgid "Supplemental Mathematical Operators"
@@ -1157,7 +1159,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:144
 msgid "Miscellaneous Symbols And Arrows"
-msgstr ""
+msgstr "رموز و أسهم متنوعة"
 
 #: src/control/Control.CharacterMap.js:145
 msgid "Yijing Hexagram Symbols"
@@ -1209,7 +1211,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:157
 msgid "Arabic Supplement"
-msgstr ""
+msgstr "عربية تكميلية"
 
 #: src/control/Control.CharacterMap.js:158
 msgid "Buginese"
@@ -1754,7 +1756,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:395
 msgid "Font Name:"
-msgstr ""
+msgstr "اسم الخط:"
 
 #: src/control/Control.CharacterMap.js:402
 msgid "Subset:"
@@ -1762,7 +1764,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:413
 msgid "Selected Character:"
-msgstr ""
+msgstr "المحرف المنتقى:"
 
 #: src/control/Control.CharacterMap.js:418
 msgid "Hexadecimal:"
@@ -1775,7 +1777,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:195
 #: src/control/Control.Menubar.js:243
 msgid "Insert"
-msgstr ""
+msgstr "أدرج"
 
 #: src/control/Control.ColumnHeader.js:41
 msgid "Insert column before"
@@ -1804,7 +1806,7 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
-msgstr ""
+msgstr "أصلح المستند"
 
 #: src/control/Control.DocumentRepair.js:40
 msgid "Type"
@@ -1868,11 +1870,11 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:17
 msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgstr "مايكروسوفت وورد ٢٠٠٣ (‎.doc)"
 
 #: src/control/Control.Menubar.js:18
 msgid "Microsoft Word (.docx)"
-msgstr ""
+msgstr "مايكروسوفت وورد (‎.docx)"
 
 #: src/control/Control.Menubar.js:20
 #: src/control/Control.Menubar.js:172
@@ -1882,75 +1884,75 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
-msgstr ""
+msgstr "أصلح"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:176
 #: src/control/Control.Menubar.js:234
 msgid "Cut"
-msgstr ""
+msgstr "قص"
 
 #: src/control/Control.Menubar.js:26
 #: src/control/Control.Menubar.js:177
 #: src/control/Control.Menubar.js:235
 msgid "Copy"
-msgstr ""
+msgstr "انسخ"
 
 #: src/control/Control.Menubar.js:27
 #: src/control/Control.Menubar.js:178
 #: src/control/Control.Menubar.js:236
 msgid "Paste"
-msgstr ""
+msgstr "ألصق"
 
 #: src/control/Control.Menubar.js:29
 #: src/control/Control.Menubar.js:180
 #: src/control/Control.Menubar.js:238
 msgid "Select all"
-msgstr ""
+msgstr "حدّد الكل"
 
 #: src/control/Control.Menubar.js:31
 #: src/control/Control.Menubar.js:182
 #: src/control/Control.Menubar.js:240
 msgid "View"
-msgstr ""
+msgstr "منظور"
 
 #: src/control/Control.Menubar.js:32
 #: src/control/Control.Menubar.js:183
 #: src/control/Control.Menubar.js:241
 msgid "Full screen"
-msgstr ""
+msgstr "ملء الشاشة"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:190
 #: src/control/Control.Menubar.js:244
 msgid "Image"
-msgstr ""
+msgstr "صورة"
 
 #: src/control/Control.Menubar.js:42
 msgid "Footnote"
-msgstr ""
+msgstr "حاشية سفلية"
 
 #: src/control/Control.Menubar.js:43
 msgid "Endnote"
-msgstr ""
+msgstr "حاشية ختامية"
 
 #: src/control/Control.Menubar.js:45
 msgid "Page break"
-msgstr ""
+msgstr "فاصل صفحات"
 
 #: src/control/Control.Menubar.js:46
 msgid "Column break"
-msgstr ""
+msgstr "فاصل أعمدة"
 
 #: src/control/Control.Menubar.js:48
 #: src/control/Control.Menubar.js:192
 #: src/control/Control.Menubar.js:250
 msgid "Special character..."
-msgstr ""
+msgstr "محرف خاص..."
 
 #: src/control/Control.Menubar.js:49
 msgid "Formatting mark"
-msgstr ""
+msgstr "علامة تنسيق"
 
 #: src/control/Control.Menubar.js:50
 msgid "Non-breaking space"
@@ -1974,11 +1976,11 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:55
 msgid "Left-to-right mark"
-msgstr ""
+msgstr "علامة يسار إلى يمين"
 
 #: src/control/Control.Menubar.js:56
 msgid "Right-to-left mark"
-msgstr ""
+msgstr "علامة يمين إلى يسار"
 
 #: src/control/Control.Menubar.js:58
 msgid "Format"
@@ -2070,23 +2072,23 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:88
 msgid "Line spacing: 1"
-msgstr ""
+msgstr "تباعد الأسطر: ١"
 
 #: src/control/Control.Menubar.js:89
 msgid "Line spacing: 1.5"
-msgstr ""
+msgstr "تباعد الأسطر: ١.5"
 
 #: src/control/Control.Menubar.js:90
 msgid "Line spacing: 2"
-msgstr ""
+msgstr "تباعد الأسطر: ٢"
 
 #: src/control/Control.Menubar.js:92
 msgid "Increase paragraph spacing"
-msgstr ""
+msgstr "زِد تباعد الفقرة"
 
 #: src/control/Control.Menubar.js:93
 msgid "Decrease paragraph spacing"
-msgstr ""
+msgstr "أنقص تباعد الفقرة"
 
 #: src/control/Control.Menubar.js:97
 msgid "Align"
@@ -2306,11 +2308,11 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:227
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr ""
+msgstr "مايكروسوفت إكسل ٢٠٠٧ (‎.xls)"
 
 #: src/control/Control.Menubar.js:228
 msgid "Microsoft Excel (.xlsx)"
-msgstr ""
+msgstr "مايكروسوفت إكسل (‎*.xlsx)"
 
 #: src/control/Control.Menubar.js:252
 msgid "Cells"
@@ -2421,7 +2423,7 @@ msgstr ""
 
 #: src/core/Socket.js:340
 msgid "Hit Cancel to open in view-only mode."
-msgstr ""
+msgstr "انقر ”ألغِ“ للفتح في وضع العرض فقط."
 
 #: src/core/Socket.js:344
 msgid "Wrong password provided. Please try again."
@@ -2429,13 +2431,13 @@ msgstr ""
 
 #: src/core/Socket.js:393
 msgid "Connecting..."
-msgstr ""
+msgstr "يتصل..."
 
 #: src/core/Socket.js:514
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr ""
+msgstr "هذا محرج. تعذر الاتصال بالمستند. رجاء أعد المحاولة لاحقا."
 
 #: src/map/Map.js:121
 msgid "Initializing..."
@@ -2443,12 +2445,12 @@ msgstr ""
 
 #: src/map/Map.js:786
 msgid "Inactive document - please click to resume editing"
-msgstr ""
+msgstr "المستند غير نشط، رجاء انقر لاستكمال التحرير"
 
 #: src/map/Map.js:908
 msgid "Loading..."
-msgstr ""
+msgstr "يحمّل..."
 
 #: src/map/handler/Map.FileInserter.js:54
 msgid "Uploading..."
-msgstr ""
+msgstr "يرفع..."

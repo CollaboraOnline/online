@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-18 09:00+0000\n"
+"POT-Creation-Date: 2017-01-30 14:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-ui-he.po\n"
-"X-Pootle-Revision: 847378\n"
+"X-Pootle-Revision: 848317\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -152,11 +152,11 @@ msgstr ""
 
 #: unocommands.js:6
 msgid "Merge"
-msgstr ""
+msgstr "מיזוג"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
+msgstr "מיזוג תאים…"
 
 #: unocommands.js:8
 msgid "Bring Forward"
@@ -262,7 +262,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:159
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "למחוק עמוד זה?"
 
 #: dist/toolbar/toolbar.js:355
 msgid "Textwrap"
@@ -301,28 +301,28 @@ msgstr ""
 #: src/control/Control.Menubar.js:173
 #: src/control/Control.Menubar.js:231
 msgid "Undo"
-msgstr ""
+msgstr "ביטול פעולה"
 
 #: dist/toolbar/toolbar.js:367
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:174
 #: src/control/Control.Menubar.js:232
 msgid "Redo"
-msgstr ""
+msgstr "ביצוע שוב"
 
 #: dist/toolbar/toolbar.js:368
 msgid "Document repair"
-msgstr ""
+msgstr "תיקון מסמך"
 
 #: dist/toolbar/toolbar.js:374
 #: src/control/Control.Menubar.js:60
 msgid "Bold"
-msgstr ""
+msgstr "מודגש"
 
 #: dist/toolbar/toolbar.js:375
 #: src/control/Control.Menubar.js:61
 msgid "Italic"
-msgstr ""
+msgstr "נטוי"
 
 #: dist/toolbar/toolbar.js:376
 #: src/control/Control.Menubar.js:62
@@ -339,7 +339,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:382
 msgid "Font color"
-msgstr ""
+msgstr "צבע גופן"
 
 #: dist/toolbar/toolbar.js:384
 msgid "Highlighting"
@@ -347,7 +347,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:386
 msgid "Align left"
-msgstr ""
+msgstr "יישור לשמאל"
 
 #: dist/toolbar/toolbar.js:387
 msgid "Center horizontally"
@@ -355,7 +355,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:388
 msgid "Align right"
-msgstr ""
+msgstr "יישור לימין"
 
 #: dist/toolbar/toolbar.js:389
 #: src/control/Control.Menubar.js:101
@@ -436,15 +436,15 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:414
 msgid "Special Character"
-msgstr ""
+msgstr "תו מיוחד"
 
 #: dist/toolbar/toolbar.js:416
 msgid "More"
-msgstr ""
+msgstr "עוד"
 
 #: dist/toolbar/toolbar.js:417
 msgid "Close document"
-msgstr ""
+msgstr "סגירת המסמך"
 
 #: dist/toolbar/toolbar.js:496
 msgid "Layout"
@@ -462,7 +462,7 @@ msgstr ""
 #: dist/toolbar/toolbar.js:521
 #: src/control/Control.CharacterMap.js:428
 msgid "Cancel"
-msgstr ""
+msgstr "ביטול"
 
 #: dist/toolbar/toolbar.js:522
 msgid "Accept"
@@ -505,7 +505,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:563
 msgid "Search:"
-msgstr ""
+msgstr "חיפוש:"
 
 #: dist/toolbar/toolbar.js:568
 msgid "Search backwards"
@@ -517,26 +517,26 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:570
 msgid "Cancel the search"
-msgstr ""
+msgstr "ביטול החיפוש"
 
 #: dist/toolbar/toolbar.js:575
 #: dist/toolbar/toolbar.js:1404
 msgid "No users"
-msgstr ""
+msgstr "אין משתמשים"
 
 #: dist/toolbar/toolbar.js:577
 msgid "Previous page"
-msgstr ""
+msgstr "העמוד הקודם"
 
 #: dist/toolbar/toolbar.js:578
 msgid "Next page"
-msgstr ""
+msgstr "העמוד הבא"
 
 #: dist/toolbar/toolbar.js:580
 #: src/control/Control.Menubar.js:36
 #: src/control/Control.Menubar.js:187
 msgid "Reset zoom"
-msgstr ""
+msgstr "איפוס מרחק מתצוגה"
 
 #: dist/toolbar/toolbar.js:581
 #: src/control/Control.Menubar.js:35
@@ -561,7 +561,7 @@ msgstr ""
 #: dist/toolbar/toolbar.js:700
 #: dist/toolbar/toolbar.js:1187
 msgid "Size"
-msgstr ""
+msgstr "גודל"
 
 #: dist/toolbar/toolbar.js:832
 msgid "Number of Sheets"
@@ -579,7 +579,7 @@ msgstr ""
 #: dist/toolbar/toolbar.js:841
 #: dist/toolbar/toolbar.js:872
 msgid "Selection Mode"
-msgstr ""
+msgstr "מצב בחירה"
 
 #: dist/toolbar/toolbar.js:844
 msgid "Choice of functions"
@@ -587,7 +587,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:846
 msgid "Average"
-msgstr ""
+msgstr "ממוצע"
 
 #: dist/toolbar/toolbar.js:847
 msgid "CountA"
@@ -636,7 +636,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:1182
 msgid "Font"
-msgstr ""
+msgstr "גופן"
 
 #: dist/toolbar/toolbar.js:1206
 msgid "Previous slide"
@@ -653,11 +653,11 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:1395
 msgid "%n users"
-msgstr ""
+msgstr "%n משתמשים"
 
 #: dist/toolbar/toolbar.js:1402
 msgid "1 user"
-msgstr ""
+msgstr "משתמש אחד"
 
 #: dist/toolbar/toolbar.js:1429
 #: src/control/Control.DocumentRepair.js:87

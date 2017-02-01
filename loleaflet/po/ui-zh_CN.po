@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-18 14:47+0000\n"
+"POT-Creation-Date: 2017-01-30 14:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-ui-zh_CN.po\n"
-"X-Pootle-Revision: 823478\n"
+"X-Pootle-Revision: 848433\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -2368,9 +2368,8 @@ msgid "Delete sheet"
 msgstr "删除工作表"
 
 #: src/control/Control.Tabs.js:52
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr "您确定要删除此工作表吗？"
+msgstr "您确定要删除此工作表 %sheet% 吗？"
 
 #: src/control/Control.Tabs.js:61
 msgid "Rename sheet"

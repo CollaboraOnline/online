@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-18 14:45+0000\n"
+"POT-Creation-Date: 2017-01-30 14:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0b7\n"
 "X-Pootle-Path: /pt/libo_online/loleaflet-ui-pt.po\n"
-"X-Pootle-Revision: 823369\n"
+"X-Pootle-Revision: 855251\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -72,7 +72,7 @@ msgstr "Tempo decorrido"
 
 #: admin.strings.js:19
 msgid "Idle time"
-msgstr ""
+msgstr "Tempo de inatividade"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -215,7 +215,6 @@ msgstr ""
 "configurado. Deve contactar o administrador de sistemas."
 
 #: dist/errormessages.js:3
-#, fuzzy
 msgid ""
 "This development build is limited to %0 documents, and %1 connections - to "
 "avoid the impression that it is suitable for deployment in large "
@@ -223,9 +222,8 @@ msgid ""
 "<br/><a href=\"%3\">%3</a>."
 msgstr ""
 "Esta versão de desenvolvimento está limitada a %0 documentos e %1 ligações, "
-"para que não dê a impressão de que é estável para disponibilização ao "
-"público em geral. Para saber mais sobre como instalar e ajustar %2, aceda a "
-"<br/><a href=\"%3\">%3</a>."
+"para não a impressão de que é estável para grandes empresasl. Para saber "
+"mais sobre como instalar e ajustar o %2, aceda a <br/><a href=\"%3\">%3</a>."
 
 #: dist/errormessages.js:4
 msgid ""
@@ -256,24 +254,33 @@ msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
+"A sua sessão irá expirar em %time. Por favor guarde o seu trabalho e "
+"atualize a sessão (ou página web) para continuar."
 
 #: dist/errormessages.js:8
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
+"A sua sessão expirou. Futuras alterações no documento poderão não ser "
+"guardadas. Por favor atualize a sessão (ou a página web) para continuar."
 
 #: dist/errormessages.js:11
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server administrator to continue editing."
 msgstr ""
+"Não foi possível guardar devido à falta de espaço no disco do servidor. O "
+"documento será apenas de leitura. Por favor contacte o administrador do "
+"servidor para continuar."
 
 #: dist/errormessages.js:12
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server administrator."
 msgstr ""
+"O documento não pode ser guardado. Valide as suas permissões ou contacte o "
+"administrador de espaço do servidor."
 
 #: dist/toolbar/toolbar.js:159
 msgid "Are you sure you want to delete this page?"
@@ -451,7 +458,7 @@ msgstr "Inserir imagem"
 
 #: dist/toolbar/toolbar.js:414
 msgid "Special Character"
-msgstr ""
+msgstr "Carácter especial"
 
 #: dist/toolbar/toolbar.js:416
 msgid "More"
@@ -665,6 +672,8 @@ msgstr "Diapositivo seguinte"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Conflito desfazer/refazer com vários utilizadores. Por favor use a reparação "
+"de documentos para o resolver."
 
 #: dist/toolbar/toolbar.js:1395
 msgid "%n users"
@@ -719,271 +728,271 @@ msgstr " segundos"
 
 #: src/control/Control.CharacterMap.js:12
 msgid "Basic Latin"
-msgstr ""
+msgstr "Latino básico"
 
 #: src/control/Control.CharacterMap.js:13
 msgid "Latin-1"
-msgstr ""
+msgstr "Latino 1"
 
 #: src/control/Control.CharacterMap.js:14
 msgid "Latin Extended-A"
-msgstr ""
+msgstr "Latino expandido A"
 
 #: src/control/Control.CharacterMap.js:15
 msgid "Latin Extended-B"
-msgstr ""
+msgstr "Latino expandido B"
 
 #: src/control/Control.CharacterMap.js:16
 msgid "IPA Extensions"
-msgstr ""
+msgstr "Extensões IPA"
 
 #: src/control/Control.CharacterMap.js:17
 msgid "Spacing Modifier Letters"
-msgstr ""
+msgstr "Letras modificadoras de espaçamento"
 
 #: src/control/Control.CharacterMap.js:18
 msgid "Combining Diacritical Marks"
-msgstr ""
+msgstr "Marcas diacríticas combinadas"
 
 #: src/control/Control.CharacterMap.js:19
 msgid "Basic Greek"
-msgstr ""
+msgstr "Grego básico"
 
 #: src/control/Control.CharacterMap.js:20
 msgid "Cyrillic"
-msgstr ""
+msgstr "Cirílico"
 
 #: src/control/Control.CharacterMap.js:21
 msgid "Armenian"
-msgstr ""
+msgstr "Arménio"
 
 #: src/control/Control.CharacterMap.js:22
 msgid "Basic Hebrew"
-msgstr ""
+msgstr "Hebraico básico"
 
 #: src/control/Control.CharacterMap.js:23
 msgid "Basic Arabic"
-msgstr ""
+msgstr "Árabe básico"
 
 #: src/control/Control.CharacterMap.js:24
 msgid "Syriac"
-msgstr ""
+msgstr "Sírio"
 
 #: src/control/Control.CharacterMap.js:25
 msgid "Thaana"
-msgstr ""
+msgstr "Thaana"
 
 #: src/control/Control.CharacterMap.js:26
 msgid "Devanagari"
-msgstr ""
+msgstr "Devanagari"
 
 #: src/control/Control.CharacterMap.js:27
 msgid "Bengali"
-msgstr ""
+msgstr "Bengalês"
 
 #: src/control/Control.CharacterMap.js:28
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhi"
 
 #: src/control/Control.CharacterMap.js:29
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #: src/control/Control.CharacterMap.js:30
 msgid "Odia"
-msgstr ""
+msgstr "Odia"
 
 #: src/control/Control.CharacterMap.js:31
 msgid "Tamil"
-msgstr ""
+msgstr "Tamil"
 
 #: src/control/Control.CharacterMap.js:32
 msgid "Telugu"
-msgstr ""
+msgstr "Telugu"
 
 #: src/control/Control.CharacterMap.js:33
 msgid "Kannada"
-msgstr ""
+msgstr "Canarês"
 
 #: src/control/Control.CharacterMap.js:34
 msgid "Malayalam"
-msgstr ""
+msgstr "Malaio"
 
 #: src/control/Control.CharacterMap.js:35
 msgid "Sinhala"
-msgstr ""
+msgstr "Cingalês"
 
 #: src/control/Control.CharacterMap.js:36
 msgid "Thai"
-msgstr ""
+msgstr "Tailandês"
 
 #: src/control/Control.CharacterMap.js:37
 msgid "Lao"
-msgstr ""
+msgstr "Laosiano"
 
 #: src/control/Control.CharacterMap.js:38
 msgid "Tibetan"
-msgstr ""
+msgstr "Tibetano"
 
 #: src/control/Control.CharacterMap.js:39
 msgid "Myanmar"
-msgstr ""
+msgstr "Birmanês"
 
 #: src/control/Control.CharacterMap.js:40
 msgid "Basic Georgian"
-msgstr ""
+msgstr "Georgiano básico"
 
 #: src/control/Control.CharacterMap.js:41
 msgid "Hangul Jamo"
-msgstr ""
+msgstr "Hangul Jamo"
 
 #: src/control/Control.CharacterMap.js:43
 msgid "Ethiopic"
-msgstr ""
+msgstr "Etíope"
 
 #: src/control/Control.CharacterMap.js:44
 msgid "Cherokee"
-msgstr ""
+msgstr "Cherokee"
 
 #: src/control/Control.CharacterMap.js:46
 msgid "Canadian Aboriginal Syllables"
-msgstr ""
+msgstr "Sílabas aborígenes canadianas"
 
 #: src/control/Control.CharacterMap.js:47
 msgid "Ogham"
-msgstr ""
+msgstr "Ogham"
 
 #: src/control/Control.CharacterMap.js:48
 msgid "Runic"
-msgstr ""
+msgstr "Rúnico"
 
 #: src/control/Control.CharacterMap.js:49
 msgid "Khmer"
-msgstr ""
+msgstr "Cambojano"
 
 #: src/control/Control.CharacterMap.js:50
 msgid "Mongolian"
-msgstr ""
+msgstr "Mongol"
 
 #: src/control/Control.CharacterMap.js:51
 msgid "Latin Extended Additional"
-msgstr ""
+msgstr "Latino expandido adicional"
 
 #: src/control/Control.CharacterMap.js:52
 msgid "Greek Extended"
-msgstr ""
+msgstr "Grego expandido"
 
 #: src/control/Control.CharacterMap.js:53
 msgid "General Punctuation"
-msgstr ""
+msgstr "Pontuação geral"
 
 #: src/control/Control.CharacterMap.js:54
 msgid "Superscripts and Subscripts"
-msgstr ""
+msgstr "Sobrescrito e subscrito"
 
 #: src/control/Control.CharacterMap.js:55
 msgid "Currency Symbols"
-msgstr ""
+msgstr "Símbolos monetários"
 
 #: src/control/Control.CharacterMap.js:56
 msgid "Combining Diacritical Symbols"
-msgstr ""
+msgstr "Símbolos diacríticos combinados"
 
 #: src/control/Control.CharacterMap.js:57
 msgid "Letterlike Symbols"
-msgstr ""
+msgstr "Símbolos tipográficos"
 
 #: src/control/Control.CharacterMap.js:58
 msgid "Number Forms"
-msgstr ""
+msgstr "Formas numéricas"
 
 #: src/control/Control.CharacterMap.js:59
 msgid "Arrows"
-msgstr ""
+msgstr "Setas"
 
 #: src/control/Control.CharacterMap.js:60
 msgid "Mathematical Operators"
-msgstr ""
+msgstr "Operadores matemáticos"
 
 #: src/control/Control.CharacterMap.js:61
 msgid "Miscellaneous Technical"
-msgstr ""
+msgstr "Técnicos diversos"
 
 #: src/control/Control.CharacterMap.js:62
 msgid "Control Pictures"
-msgstr ""
+msgstr "Imagens de controlo"
 
 #: src/control/Control.CharacterMap.js:63
 msgid "Optical Character Recognition"
-msgstr ""
+msgstr "Reconhecimento ótico de caracteres"
 
 #: src/control/Control.CharacterMap.js:64
 msgid "Enclosed Alphanumerics"
-msgstr ""
+msgstr "Alfanuméricos inclusos"
 
 #: src/control/Control.CharacterMap.js:65
 msgid "Box Drawing"
-msgstr ""
+msgstr "Desenho de caixa"
 
 #: src/control/Control.CharacterMap.js:66
 msgid "Block Elements"
-msgstr ""
+msgstr "Elementos de bloco"
 
 #: src/control/Control.CharacterMap.js:67
 msgid "Geometric Shapes"
-msgstr ""
+msgstr "Formas geométricas"
 
 #: src/control/Control.CharacterMap.js:68
 msgid "Miscellaneous Symbols"
-msgstr ""
+msgstr "Diversos símbolos"
 
 #: src/control/Control.CharacterMap.js:69
 msgid "Dingbats"
-msgstr ""
+msgstr "Ornamentos"
 
 #: src/control/Control.CharacterMap.js:70
 msgid "Braille Patterns"
-msgstr ""
+msgstr "Padrões Braille"
 
 #: src/control/Control.CharacterMap.js:71
 msgid "CJK Radicals Supplement"
-msgstr ""
+msgstr "Suplemento radical CJK"
 
 #: src/control/Control.CharacterMap.js:72
 msgid "Kangxi Radicals"
-msgstr ""
+msgstr "Radicais Kangxi"
 
 #: src/control/Control.CharacterMap.js:73
 msgid "Ideographic Description Characters"
-msgstr ""
+msgstr "Caracteres de descrição ideográfica"
 
 #: src/control/Control.CharacterMap.js:74
 msgid "CJK Symbols and Punctuation"
-msgstr ""
+msgstr "Símbolos e pontuação CJK"
 
 #: src/control/Control.CharacterMap.js:75
 msgid "Hiragana"
-msgstr ""
+msgstr "Hiragana"
 
 #: src/control/Control.CharacterMap.js:76
 msgid "Katakana"
-msgstr ""
+msgstr "Katakana"
 
 #: src/control/Control.CharacterMap.js:77
 msgid "Bopomofo"
-msgstr ""
+msgstr "Bopomofo"
 
 #: src/control/Control.CharacterMap.js:78
 msgid "Hangul Compatibility Jamo"
-msgstr ""
+msgstr "Hangul de compatibilidade com Jamo"
 
 #: src/control/Control.CharacterMap.js:79
 msgid "Kanbun"
-msgstr ""
+msgstr "Kanbun"
 
 #: src/control/Control.CharacterMap.js:80
 msgid "Bopomofo Extended"
-msgstr ""
+msgstr "Bopomofo expandido"
 
 #: src/control/Control.CharacterMap.js:81
 msgid "Enclosed CJK Letters and Months"
@@ -991,7 +1000,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:82
 msgid "CJK Compatibility"
-msgstr ""
+msgstr "Compatibilidade CJK"
 
 #: src/control/Control.CharacterMap.js:84
 msgid "CJK Unified Ideographs Extension A"
@@ -1011,7 +1020,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:92
 msgid "Hangul"
-msgstr ""
+msgstr "Hangul"
 
 #: src/control/Control.CharacterMap.js:94
 msgid "High Surrogates"
@@ -1071,20 +1080,20 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:112
 msgid "Gothic"
-msgstr ""
+msgstr "Gótico"
 
 #: src/control/Control.CharacterMap.js:113
 msgid "Deseret"
-msgstr ""
+msgstr "Deseret"
 
 #: src/control/Control.CharacterMap.js:114
 msgid "Byzantine Musical Symbols"
-msgstr ""
+msgstr "Símbolos musicais bizantinos"
 
 #: src/control/Control.CharacterMap.js:115
 #: src/control/Control.CharacterMap.js:116
 msgid "Musical Symbols"
-msgstr ""
+msgstr "Símbolos musicais"
 
 #: src/control/Control.CharacterMap.js:118
 msgid "CJK Unified Ideographs Extension B"
