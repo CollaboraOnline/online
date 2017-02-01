@@ -389,6 +389,7 @@ AdminModel& Admin::getModel()
 
 void Admin::updateLastActivityTime(const std::string& docKey)
 {
+    std::unique_lock<std::mutex> modelLock(_modelMutex);
     _model.updateLastActivityTime(docKey);
 }
 
