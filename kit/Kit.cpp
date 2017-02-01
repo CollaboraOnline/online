@@ -1395,16 +1395,20 @@ private:
 
                         const std::string& target = tokens[1];
                         if (target == "all")
+                        {
                             broadcast = true;
+                        }
                         else if (LOOLProtocol::matchPrefix("except-", target))
                         {
                             exceptViewId = std::stoi(target.substr(7));
                             broadcast = true;
                         }
                         else
+                        {
                             viewId = std::stoi(target);
+                        }
 
-                        int type = std::stoi(tokens[2]);
+                        const int type = std::stoi(tokens[2]);
 
                         // payload is the rest of the message
                         const auto offset = tokens[0].length() + tokens[1].length() + tokens[2].length() + 3; // + delims
@@ -1431,7 +1435,9 @@ private:
                                 }
 
                                 if (!broadcast)
+                                {
                                     break;
+                                }
                             }
                         }
 
