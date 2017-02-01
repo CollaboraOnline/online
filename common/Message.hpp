@@ -81,6 +81,11 @@ public:
     const std::string& firstLine() const { return _firstLine; }
     const std::string& operator[](size_t index) const { return _tokens[index]; }
 
+    bool getTokenInteger(const std::string& name, int& value)
+    {
+        return LOOLProtocol::getTokenInteger(_tokens, name, value);
+    }
+
     /// Return the abbreviated message for logging purposes.
     const std::string& abbr() const { return _abbr; }
     const std::string& id() const { return _id; }
