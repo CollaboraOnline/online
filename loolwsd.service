@@ -1,5 +1,5 @@
 [Unit]
-Description=LibreOffice On-Line WebSocket Daemon
+Description=LibreOffice Online WebSocket Daemon
 After=network.target
 
 [Service]

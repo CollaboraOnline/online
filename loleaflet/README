@@ -1,7 +1,7 @@
-Leaflet platform for LibreOffice On-Line
+Leaflet platform for LibreOffice Online
 ========================================
 
-This is the client part of LibreOffice On-Line.  For the server part, see the
+This is the client part of LibreOffice Online.  For the server part, see the
 ../loolwsd/README, and install it first.
 
 Build dependencies

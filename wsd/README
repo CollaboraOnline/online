@@ -1,10 +1,10 @@
-LibreOffice On-Line WebSocket server
+LibreOffice Online WebSocket server
 ====================================
 
 Dependencies
 ------------
 
-LibreOffice On-Line WebSocket server has the following dependencies:
+LibreOffice Online WebSocket server has the following dependencies:
 
 * libpng
 * Poco library: http://pocoproject.org/index.html.

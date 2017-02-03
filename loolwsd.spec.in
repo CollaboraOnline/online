@@ -14,7 +14,7 @@ Name:           loolwsd
 Version:        @PACKAGE_VERSION@
 Release:        1%{?dist}
 Vendor:         Collabora
-Summary:        LibreOffice On-Line WebSocket Daemon
+Summary:        LibreOffice Online WebSocket Daemon
 License:        MPL
 Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
 Source1:        loleaflet-@PACKAGE_VERSION@.tar.gz

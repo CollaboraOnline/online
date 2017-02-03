@@ -1,4 +1,4 @@
-LibreOffice On-Line API
+LibreOffice Online API
 =======================
 
 Document conversion:
@@ -14,7 +14,7 @@ integrate LibreOffice Online in them.
 
 Refer to WOPI docs[https://wopi.readthedocs.io/en/latest/] for detailed
 information. This documentation only mentions extensions to upstream WOPI protocol,
-WOPI extensions, that are implemented by LibreOffice-Online backend in addition to
+WOPI extensions, that are implemented by LibreOffice Online backend in addition to
 upstream WOPI protocol.
 
 (Please note that upstream WOPI implementation is also not 100% complete)

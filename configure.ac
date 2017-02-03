@@ -20,7 +20,7 @@ AC_SUBST([LOOLWSD_VERSION_MINOR])
 AC_SUBST([LOOLWSD_VERSION_MICRO])
 AC_SUBST([LOOLWSD_VERSION])
 
-AC_DEFINE_UNQUOTED([LOOLWSD_VERSION],[["$LOOLWSD_VERSION"]],[LibreOffice On-Line WebSocket server version])
+AC_DEFINE_UNQUOTED([LOOLWSD_VERSION],[["$LOOLWSD_VERSION"]],[LibreOffice Online WebSocket server version])
 
 # try to add a git hash for a version if we're developing
 LOOLWSD_VERSION_HASH="$LOOLWSD_VERSION"
@@ -30,7 +30,7 @@ if test "z$git_hash" != "z"; then
 fi
 AC_SUBST([LOOLWSD_VERSION_HASH])
 
-AC_DEFINE_UNQUOTED([LOOLWSD_VERSION_HASH],[["$LOOLWSD_VERSION_HASH"]],[LibreOffice On-Line git hash if present])
+AC_DEFINE_UNQUOTED([LOOLWSD_VERSION_HASH],[["$LOOLWSD_VERSION_HASH"]],[LibreOffice Online git hash if present])
 
 AC_CONFIG_SRCDIR([wsd/LOOLWSD.cpp])
 
