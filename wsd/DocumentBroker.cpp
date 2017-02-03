@@ -747,6 +747,14 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
             LOG_CHECK_RET(kind != "", false);
             Util::alertAllUsers(cmd, kind);
         }
+        else if (command == "procmemstats:")
+        {
+            int pss;
+            if (message->getTokenInteger("pss", pss))
+            {
+                Admin::instance().updateMemoryPss(_docKey, pss);
+            }
+        }
         else
         {
             LOG_ERR("Unexpected message: [" << msg << "].");

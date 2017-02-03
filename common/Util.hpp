@@ -82,7 +82,15 @@ namespace Util
         assert(!mtx.try_lock());
     }
 
-    int getMemoryUsage(const Poco::Process::PID pid);
+    /// Returns the process PSS in KB (works only when we have perms for /proc/pid/smaps).
+    size_t getMemoryUsagePSS(const Poco::Process::PID pid);
+
+    /// Returns the process RSS in KB.
+    size_t getMemoryUsageRSS(const Poco::Process::PID pid);
+
+    /// Returns the RSS and PSS of the current process in KB.
+    /// Example: "procmemstats: pid=123 rss=12400 pss=566"
+    std::string getMemoryStats(FILE* file);
 
     std::string replace(const std::string& s, const std::string& a, const std::string& b);
 

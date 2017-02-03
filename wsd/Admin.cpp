@@ -289,7 +289,12 @@ Admin::Admin() :
 {
     LOG_INF("Admin ctor.");
 
-    _memStatsTask.reset(new MemoryStats(this));
+    std::unique_lock<std::mutex> modelLock(getLock());
+    const auto totalMem = getTotalMemoryUsage();
+    LOG_TRC("Total memory used: " << totalMem);
+    _model.addMemStats(totalMem);
+
+    _memStatsTask.reset(new MemoryStatsTask(this));
     _memStatsTimer.schedule(_memStatsTask.get(), _memStatsTaskInterval, _memStatsTaskInterval);
 
     _cpuStatsTask = new CpuStats(this);
@@ -323,19 +328,18 @@ void Admin::rmDoc(const std::string& docKey)
     _model.removeDocument(docKey);
 }
 
-void MemoryStats::run()
+void MemoryStatsTask::run()
 {
     std::unique_lock<std::mutex> modelLock(_admin->getLock());
-    AdminModel& model = _admin->getModel();
-    const auto totalMem = model.getKitsMemoryUsage();
+    const auto totalMem = _admin->getTotalMemoryUsage();
 
     if (totalMem != _lastTotalMemory)
     {
         LOG_TRC("Total memory used: " << totalMem);
+        _lastTotalMemory = totalMem;
     }
 
-    _lastTotalMemory = totalMem;
-    model.addMemStats(totalMem);
+    _admin->getModel().addMemStats(totalMem);
 }
 
 void CpuStats::run()
@@ -349,7 +353,7 @@ void Admin::rescheduleMemTimer(unsigned interval)
 {
     _memStatsTask->cancel();
     _memStatsTaskInterval = interval;
-    _memStatsTask.reset(new MemoryStats(this));
+    _memStatsTask.reset(new MemoryStatsTask(this));
     _memStatsTimer.schedule(_memStatsTask.get(), _memStatsTaskInterval, _memStatsTaskInterval);
     LOG_INF("Memory stats interval changed - New interval: " << interval);
 }
@@ -365,10 +369,19 @@ void Admin::rescheduleCpuTimer(unsigned interval)
 
 unsigned Admin::getTotalMemoryUsage()
 {
-    unsigned totalMem = Util::getMemoryUsage(_forKitPid);
-    totalMem += _memStatsTask->getLastTotalMemory();
-    totalMem += Util::getMemoryUsage(Poco::Process::id());
+    Util::assertIsLocked(_modelMutex);
 
+    // PSS would be wrong for forkit since we will have one or
+    // more prespawned kits that will share their pages with forkit,
+    // but we don't count the kits unless and until a document is loaded.
+    // So RSS is a decent approximation (albeit slightly on the high side).
+    const size_t forkitRssKb = Util::getMemoryUsageRSS(_forKitPid);
+    const size_t wsdPssKb = Util::getMemoryUsagePSS(Poco::Process::id());
+    const size_t kitsPssKb = _model.getKitsMemoryUsage();
+    const size_t totalMem = wsdPssKb + forkitRssKb + kitsPssKb;
+
+    LOG_TRC("Total mem: " << totalMem << ", wsd pss: " << wsdPssKb <<
+            ", forkit rss: " << forkitRssKb << ", kits pss: " << kitsPssKb);
     return totalMem;
 }
 
@@ -391,6 +404,12 @@ void Admin::updateLastActivityTime(const std::string& docKey)
 {
     std::unique_lock<std::mutex> modelLock(_modelMutex);
     _model.updateLastActivityTime(docKey);
+}
+
+void Admin::updateMemoryPss(const std::string& docKey, int pss)
+{
+    std::unique_lock<std::mutex> modelLock(_modelMutex);
+    _model.updateMemoryPss(docKey, pss);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

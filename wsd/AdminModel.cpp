@@ -131,14 +131,13 @@ std::string AdminModel::query(const std::string& command)
 /// Returns memory consumed by all active loolkit processes
 unsigned AdminModel::getKitsMemoryUsage()
 {
-    Poco::Timestamp ts;
     unsigned totalMem = 0;
     unsigned docs = 0;
     for (const auto& it : _documents)
     {
         if (!it.second.isExpired())
         {
-            const auto bytes = Util::getMemoryUsage(it.second.getPid());
+            const auto bytes = it.second.getMemoryPss();
             if (bytes > 0)
             {
                 totalMem += bytes;
@@ -149,9 +148,8 @@ unsigned AdminModel::getKitsMemoryUsage()
 
     if (docs > 0)
     {
-        LOG_TRC("Got total Kits memory of " << totalMem << " bytes in " << ts.elapsed()/1001. <<
-                " ms for " << docs << " docs, avg: " << static_cast<double>(totalMem) / docs <<
-                " bytes / doc in " << ts.elapsed() / 1000. / docs << " ms per doc.");
+        LOG_TRC("Got total Kits memory of " << totalMem << " bytes for " << docs <<
+                " docs, avg: " << static_cast<double>(totalMem) / docs << " bytes / doc.");
     }
 
     return totalMem;
@@ -256,16 +254,35 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
     ret.first->second.addView(sessionId);
     LOG_DBG("Added admin document [" << docKey << "].");
 
-    // Notify the subscribers
-    const unsigned memUsage = Util::getMemoryUsage(pid);
-    std::ostringstream oss;
     std::string encodedFilename;
     Poco::URI::encode(filename, " ", encodedFilename);
+
+    // Notify the subscribers
+    std::ostringstream oss;
     oss << "adddoc "
         << pid << ' '
         << encodedFilename << ' '
-        << sessionId << ' '
-        << memUsage;
+        << sessionId << ' ';
+
+    // We have to wait until the kit sends us its PSS.
+    // Here we guestimate until we get an update.
+    if (_documents.size() < 2) // If we aren't the only one.
+    {
+        if (_memStats.empty())
+        {
+            oss << 0;
+        }
+        else
+        {
+            // Estimate half as much as wsd+forkit.
+            oss << _memStats.front() / 2;
+        }
+    }
+    else
+    {
+        oss << _documents.begin()->second.getMemoryPss();
+    }
+
     notify(oss.str());
 }
 
@@ -360,7 +377,7 @@ std::string AdminModel::getDocuments() const
             oss << it.second.getPid() << ' '
                 << encodedFilename << ' '
                 << it.second.getActiveViews() << ' '
-                << Util::getMemoryUsage(it.second.getPid()) << ' '
+                << it.second.getMemoryPss() << ' '
                 << it.second.getElapsedTime() << ' '
                 << it.second.getIdleTime() << " \n ";
         }
@@ -379,6 +396,15 @@ void AdminModel::updateLastActivityTime(const std::string& docKey)
             docIt->second.updateLastActivityTime();
             notify("resetidle " + std::to_string(docIt->second.getPid()));
         }
+    }
+}
+
+void AdminModel::updateMemoryPss(const std::string& docKey, int pss)
+{
+    auto docIt = _documents.find(docKey);
+    if (docIt != _documents.end())
+    {
+        docIt->second.updateMemoryPss(pss);
     }
 }
 

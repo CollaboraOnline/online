@@ -48,7 +48,7 @@ private:
     bool _isAuthenticated;
 };
 
-class MemoryStats;
+class MemoryStatsTask;
 
 /// An admin command processor.
 class Admin
@@ -97,6 +97,7 @@ public:
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_modelMutex); }
 
     void updateLastActivityTime(const std::string& docKey);
+    void updateMemoryPss(const std::string& docKey, int pss);
 
 private:
     Admin();
@@ -107,7 +108,7 @@ private:
     int _forKitPid;
 
     Poco::Util::Timer _memStatsTimer;
-    std::unique_ptr<MemoryStats> _memStatsTask;
+    std::unique_ptr<MemoryStatsTask> _memStatsTask;
     unsigned _memStatsTaskInterval = 5000;
 
     Poco::Util::Timer _cpuStatsTimer;
@@ -116,17 +117,17 @@ private:
 };
 
 /// Memory statistics.
-class MemoryStats : public Poco::Util::TimerTask
+class MemoryStatsTask : public Poco::Util::TimerTask
 {
 public:
-    MemoryStats(Admin* admin)
+    MemoryStatsTask(Admin* admin)
         : _admin(admin),
           _lastTotalMemory(0)
     {
         LOG_DBG("Memory stat ctor");
     }
 
-    ~MemoryStats()
+    ~MemoryStatsTask()
     {
         LOG_DBG("Memory stat dtor");
     }

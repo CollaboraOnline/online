@@ -419,6 +419,8 @@ public:
     }
 };
 
+static FILE* ProcSMapsFile = nullptr;
+
 /// A document container.
 /// Owns LOKitDocument instance and connections.
 /// Manages the lifetime of a document.
@@ -1352,11 +1354,29 @@ private:
 
         LOG_DBG("Thread started.");
 
+        // Update memory stats every 5 seconds.
+        const auto memStatsPeriodMs = 5000;
+        auto lastMemStatsTime = std::chrono::steady_clock::now();
+        sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
+
         try
         {
             while (!_stop && !TerminationFlag)
             {
-                const TileQueue::Payload input = _tileQueue->get();
+                const TileQueue::Payload input = _tileQueue->get(POLL_TIMEOUT_MS * 2);
+                if (input.empty())
+                {
+                    const auto duration = (std::chrono::steady_clock::now() - lastMemStatsTime);
+                    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+                    if (durationMs > memStatsPeriodMs)
+                    {
+                        sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
+                        lastMemStatsTime = std::chrono::steady_clock::now();
+                    }
+
+                    continue;
+                }
+
                 LOG_TRC("Kit Recv " << LOOLProtocol::getAbbreviatedMessage(input));
 
                 if (_stop || TerminationFlag)
@@ -1649,11 +1669,18 @@ void lokit_main(const std::string& childRoot,
             {
                 LOG_SYS("mknod(" << jailPath.toString() << "/dev/random) failed.");
             }
+
             if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
                       S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
                       makedev(1, 9)) != 0)
             {
                 LOG_SYS("mknod(" << jailPath.toString() << "/dev/urandom) failed.");
+            }
+
+            ProcSMapsFile = fopen("/proc/self/smaps", "r");
+            if (ProcSMapsFile == nullptr)
+            {
+                LOG_SYS("Failed to symlink /proc/self/smaps. Memory stats will be missing.");
             }
 
             LOG_INF("chroot(\"" << jailPath.toString() << "\")");

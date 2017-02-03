@@ -125,7 +125,76 @@ namespace Util
         return std::getenv("DISPLAY") != nullptr;
     }
 
-    int getMemoryUsage(const Poco::Process::PID pid)
+    static const char *startsWith(const char *line, const char *tag)
+    {
+        int len = strlen(tag);
+        if (!strncmp(line, tag, len))
+        {
+            while (!isdigit(line[len]) && line[len] != '\0')
+                ++len;
+
+            const auto str = std::string(line + len, strlen(line + len) - 1);
+            return line + len;
+        }
+
+        return nullptr;
+    }
+
+    std::pair<size_t, size_t> getPssAndDirtyFromSMaps(FILE* file)
+    {
+        size_t numPSSKb = 0;
+        size_t numDirtyKb = 0;
+        if (file)
+        {
+            rewind(file);
+            char line[4096] = { 0 };
+            while (fgets(line, sizeof (line), file))
+            {
+                const char *value;
+                if ((value = startsWith(line, "Private_Dirty:")) ||
+                    (value = startsWith(line, "Shared_Dirty:")))
+                {
+                    numDirtyKb += atoi(value);
+                }
+                else if ((value = startsWith(line, "Pss:")))
+                {
+                    numPSSKb += atoi(value);
+                }
+            }
+        }
+
+        return std::make_pair(numPSSKb, numDirtyKb);
+    }
+
+    std::string getMemoryStats(FILE* file)
+    {
+        const auto pssAndDirtyKb = getPssAndDirtyFromSMaps(file);
+        std::ostringstream oss;
+        oss << "procmemstats: pid=" << getpid()
+            << " pss=" << pssAndDirtyKb.first
+            << " dirty=" << pssAndDirtyKb.second;
+        LOG_TRC("Collected " << oss.str());
+        return oss.str();
+    }
+
+    size_t getMemoryUsagePSS(const Poco::Process::PID pid)
+    {
+        if (pid > 0)
+        {
+            const auto cmd = "/proc/" + std::to_string(pid) + "/smaps";
+            FILE* fp = fopen(cmd.c_str(), "r");
+            if (fp != nullptr)
+            {
+                const auto pss = getPssAndDirtyFromSMaps(fp).first;
+                fclose(fp);
+                return pss;
+            }
+        }
+
+        return 0;
+    }
+
+    size_t getMemoryUsageRSS(const Poco::Process::PID pid)
     {
         if (pid == -1)
         {
@@ -134,7 +203,6 @@ namespace Util
 
         try
         {
-            //TODO: Instead of RSS, return PSS
             const auto cmd = "ps o rss= -p " + std::to_string(pid);
             FILE* fp = popen(cmd.c_str(), "r");
             if (fp == nullptr)
