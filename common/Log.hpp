@@ -175,7 +175,7 @@ namespace Log
     }
 }
 
-#define LOG_BODY_(PRIO, LVL, X) Poco::Message m_(l_.name(), "", Poco::Message::PRIO_##PRIO); char b_[1024]; std::ostringstream oss_(Log::prefix(b_, LVL, m_.getOsTid()), std::ostringstream::ate); oss_ << std::boolalpha << X << "| " << __FILE__ << ':' << __LINE__; m_.setText(oss_.str()); l_.log(m_);
+#define LOG_BODY_(PRIO, LVL, X) Poco::Message m_(l_.name(), "", Poco::Message::PRIO_##PRIO); char b_[1024]; std::ostringstream oss_(Log::prefix(b_, LVL, syscall(SYS_gettid)), std::ostringstream::ate); oss_ << std::boolalpha << X << "| " << __FILE__ << ':' << __LINE__; m_.setText(oss_.str()); l_.log(m_);
 #define LOG_TRC(X) do { auto& l_ = Log::logger(); if (l_.trace()) { LOG_BODY_(TRACE, "TRC", X); } } while (false)
 #define LOG_DBG(X) do { auto& l_ = Log::logger(); if (l_.debug()) { LOG_BODY_(DEBUG, "DBG", X); } } while (false)
 #define LOG_INF(X) do { auto& l_ = Log::logger(); if (l_.information()) { LOG_BODY_(INFORMATION, "INF", X); } } while (false)
