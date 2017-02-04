@@ -677,14 +677,15 @@ size_t DocumentBroker::removeSession(const std::string& id)
             const auto readonly = (it->second ? it->second->isReadOnly() : false);
             _sessions.erase(it);
 
-            // Let the child know the client has disconnected.
-            const std::string msg("child-" + id + " disconnect");
-            _childProcess->sendTextFrame(msg);
-
             const auto count = _sessions.size();
             LOG_TRC("Removed " << (readonly ? "readonly" : "non-readonly") <<
                     " session [" << id << "] from docKey [" <<
                     _docKey << "] to have " << count << " sessions.");
+
+            // Let the child know the client has disconnected.
+            const std::string msg("child-" + id + " disconnect");
+            _childProcess->sendTextFrame(msg);
+
             return count;
         }
         else

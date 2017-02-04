@@ -59,8 +59,14 @@ public:
 
     ~ChildProcess()
     {
-        LOG_DBG("~ChildProcess dtor [" << _pid << "].");
-        close(true);
+        if (_pid > 0)
+        {
+            LOG_DBG("~ChildProcess dtor [" << _pid << "].");
+            close(true);
+
+            // No need for the socket anymore.
+            _ws.reset();
+        }
     }
 
     void setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker)
@@ -71,13 +77,12 @@ public:
 
     void stop()
     {
-        LOG_DBG("Stopping ChildProcess [" << _pid << "]");
         _stop = true;
-
         try
         {
             if (isAlive())
             {
+                LOG_DBG("Stopping ChildProcess [" << _pid << "]");
                 sendTextFrame("exit");
             }
         }
@@ -89,34 +94,43 @@ public:
 
     void close(const bool rude)
     {
+        if (_pid < 0)
+        {
+            return;
+        }
+
         try
         {
             LOG_DBG("Closing ChildProcess [" << _pid << "].");
+
+            // First mark to stop the thread so it knows it's intentional.
             stop();
 
+            // Shutdown the socket to break the thread if blocked on it.
             if (_ws)
             {
                 _ws->shutdown();
             }
 
+            // Now should be quick to exit the thread; wait.
             if (_thread.joinable())
             {
                 _thread.join();
-            }
-
-            _ws.reset();
-            if (_pid != -1 && rude && kill(_pid, 0) != 0 && errno != ESRCH)
-            {
-                LOG_INF("Killing child [" << _pid << "].");
-                if (SigUtil::killChild(_pid))
-                {
-                    LOG_ERR("Cannot terminate lokit [" << _pid << "]. Abandoning.");
-                }
             }
         }
         catch (const std::exception& ex)
         {
             LOG_ERR("Error while closing child process: " << ex.what());
+        }
+
+        // Kill or abandon the child.
+        if (_pid != -1 && rude && kill(_pid, 0) != 0 && errno != ESRCH)
+        {
+            LOG_INF("Killing child [" << _pid << "].");
+            if (SigUtil::killChild(_pid))
+            {
+                LOG_ERR("Cannot terminate lokit [" << _pid << "]. Abandoning.");
+            }
         }
 
         _pid = -1;
@@ -157,7 +171,7 @@ public:
             return (_pid > 1 && _ws && kill(_pid, 0) == 0 &&
                     !_ws->poll(Poco::Timespan(0), Poco::Net::Socket::SelectMode::SELECT_ERROR));
         }
-        catch (const std::exception& exc)
+        catch (const std::exception&)
         {
         }
 

@@ -281,7 +281,6 @@ namespace SigUtil
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
         }
 
-        LOG_WRN("Cannot terminate PID: " << pid);
         return false;
     }
 }
