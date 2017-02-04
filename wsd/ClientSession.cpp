@@ -171,7 +171,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "partpagerectangles")
     {
-        return getPartPageRectangles(buffer, length, docBroker);
+        // We don't support partpagerectangles any more, will be removed in the
+        // next version
+        sendTextFrame("partpagerectangles: ");
+        return true;
     }
     else if (tokens[0] == "ping")
     {
@@ -289,18 +292,6 @@ bool ClientSession::getCommandValues(const char *buffer, int length, const std::
     if (docBroker->tileCache().getTextFile("cmdValues" + command + ".txt", cmdValues))
     {
         return sendTextFrame(cmdValues);
-    }
-
-    return forwardToChild(std::string(buffer, length), docBroker);
-}
-
-bool ClientSession::getPartPageRectangles(const char *buffer, int length,
-                                          const std::shared_ptr<DocumentBroker>& docBroker)
-{
-    std::string partPageRectangles;
-    if (docBroker->tileCache().getTextFile("partpagerectangles.txt", partPageRectangles))
-    {
-        return sendTextFrame(partPageRectangles);
     }
 
     return forwardToChild(std::string(buffer, length), docBroker);
@@ -621,13 +612,6 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                     // other commands should not be cached
                     docBroker->tileCache().saveTextFile(stringMsg, "cmdValues" + commandName + ".txt");
                 }
-            }
-        }
-        else if (tokens[0] == "partpagerectangles:")
-        {
-            if (tokens.size() > 1 && !tokens[1].empty())
-            {
-                docBroker->tileCache().saveTextFile(std::string(buffer, length), "partpagerectangles.txt");
             }
         }
         else if (tokens[0] == "invalidatetiles:")

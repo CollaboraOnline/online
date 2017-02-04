@@ -122,9 +122,6 @@ private:
                    const std::shared_ptr<DocumentBroker>& docBroker);
     bool getCommandValues(const char* buffer, int length, const std::vector<std::string>& tokens,
                           const std::shared_ptr<DocumentBroker>& docBroker);
-    bool getPartPageRectangles(const char* buffer, int length,
-                               const std::shared_ptr<DocumentBroker>& docBroker);
-
     bool sendTile(const char* buffer, int length, const std::vector<std::string>& tokens,
                   const std::shared_ptr<DocumentBroker>& docBroker);
     bool sendCombinedTiles(const char* buffer, int length, const std::vector<std::string>& tokens,

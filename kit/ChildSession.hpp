@@ -112,7 +112,6 @@ public:
     virtual ~ChildSession();
 
     bool getStatus(const char* buffer, int length);
-    bool getPartPageRectangles(const char* buffer, int length);
     int getViewId() const { return _viewId; }
     void setViewId(const int viewId) { _viewId = viewId; }
     const std::string& getViewUserId() const { return _userId; }

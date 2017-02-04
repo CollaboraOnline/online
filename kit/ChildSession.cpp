@@ -154,10 +154,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         return getCommandValues(buffer, length, tokens);
     }
-    else if (tokens[0] == "partpagerectangles")
-    {
-        return getPartPageRectangles(buffer, length);
-    }
     else if (tokens[0] == "load")
     {
         if (_isDocLoaded)
@@ -527,14 +523,6 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, cons
     }
 
     return success;
-}
-
-bool ChildSession::getPartPageRectangles(const char* /*buffer*/, int /*length*/)
-{
-    // We don't support partpagerectangles any more, will be removed in the
-    // next version
-    sendTextFrame("partpagerectangles: ");
-    return true;
 }
 
 bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
@@ -1150,7 +1138,6 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             lock.unlock();
 
             getStatus("", 0);
-            getPartPageRectangles("", 0);
         }
         break;
     case LOK_CALLBACK_SET_PART:
