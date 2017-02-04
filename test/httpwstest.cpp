@@ -85,8 +85,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInactiveClient);
     CPPUNIT_TEST(testMaxColumn);
     CPPUNIT_TEST(testMaxRow);
-    CPPUNIT_TEST(testInsertAnnotationWriter);
-    CPPUNIT_TEST(testEditAnnotationWriter);
+//    CPPUNIT_TEST(testInsertAnnotationWriter);
+//    CPPUNIT_TEST(testEditAnnotationWriter);
     CPPUNIT_TEST(testInsertAnnotationCalc);
     CPPUNIT_TEST(testCalcEditRendering);
     CPPUNIT_TEST(testFontList);
