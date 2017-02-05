@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 
+#include <Poco/DateTime.h>
+#include <Poco/DateTimeFormatter.h>
 #include <Poco/DeflatingStream.h>
 #include <Poco/InflatingStream.h>
 
@@ -55,7 +57,7 @@ public:
         _recordOutgoing(recordOugoing),
         _compress(compress),
         _filter(true),
-        _stream(path, compress ? std::ios::binary : std::ios::out),
+        _stream(processPath(path), compress ? std::ios::binary : std::ios::out),
         _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP)
     {
         for (const auto& f : filters)
@@ -138,6 +140,20 @@ private:
             _stream.write(data.c_str(), data.size());
             _stream.write("\n", 1);
         }
+    }
+
+    static std::string processPath(const std::string& path)
+    {
+        const auto pos = path.find('%');
+        if (pos == std::string::npos)
+        {
+            return path;
+        }
+
+        std::string res = path.substr(0, pos);
+        res += Poco::DateTimeFormatter::format(Poco::DateTime(), "%Y-%m-%d_%H:%M:%S");
+        res += path.substr(pos + 1);
+        return res;
     }
 
 private:
