@@ -295,6 +295,10 @@ L.Socket = L.Class.extend({
 				this._map.fire('postMessage', {msgId: 'Session_Closed'});
 			}
 
+			if (textMsg === 'idle') {
+				this._map._active = false;
+			}
+
 			if (textMsg === 'ownertermination') {
 				this._map.remove();
 			}

@@ -195,6 +195,10 @@ void Session::shutdown(Poco::UInt16 statusCode, const std::string& statusMessage
     {
         LOG_TRC("Shutting down WS [" << getName() << "] with statusCode [" <<
                 statusCode << "] and reason [" << statusMessage << "].");
+
+        // See protocol.txt for this application-level close frame.
+        const std::string msg = "close: " + statusMessage;
+        _ws->sendFrame(msg.data(), msg.size());
         _ws->shutdown(statusCode, statusMessage);
     }
 }

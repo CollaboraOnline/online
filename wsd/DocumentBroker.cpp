@@ -1063,7 +1063,7 @@ void DocumentBroker::childSocketTerminated()
     {
         try
         {
-            pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY);
+            pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY, "");
         }
         catch (const std::exception& ex)
         {
@@ -1084,8 +1084,6 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
     {
         try
         {
-            // See protocol.txt for this application-level close frame.
-            pair.second->sendTextFrame("close: " + closeReason);
             pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY, closeReason);
         }
         catch (const std::exception& ex)

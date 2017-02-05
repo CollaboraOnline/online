@@ -284,7 +284,7 @@ bool cleanupDocBrokers()
             LOG_INF("Removing " << (idle ? "idle" : "dead") <<
                     " DocumentBroker for docKey [" << it->first << "].");
             it = DocBrokers.erase(it);
-            docBroker->terminateChild(lock);
+            docBroker->terminateChild(lock, idle ? "idle" : "");
         }
         else
         {
@@ -685,7 +685,7 @@ private:
                         // At this point we're done.
                         LOG_DBG("Removing DocumentBroker for docKey [" << docKey << "].");
                         DocBrokers.erase(docKey);
-                        docBroker->terminateChild(docLock);
+                        docBroker->terminateChild(docLock, "");
                         LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing [" << docKey << "].");
                     }
                     else
@@ -1137,7 +1137,7 @@ private:
         {
             LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
             DocBrokers.erase(docKey);
-            docBroker->terminateChild(lock);
+            docBroker->terminateChild(lock, "");
         }
     }
 
