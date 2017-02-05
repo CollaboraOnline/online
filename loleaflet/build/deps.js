@@ -428,7 +428,18 @@ var deps = {
 		src: ['map/ext/Map.Geolocation.js'],
 		desc: 'Adds Map#locate method and related events to make geolocation easier.',
 		heading: 'Misc'
-	}
+	},
+
+	AnnotationManager: {
+		src: ['layer/AnnotationManager.js'],
+		desc: 'Group Annotations to put on the map.'
+	},
+
+	Annotation: {
+		src: ['layer/marker/Annotation.js'],
+		desc: 'Annotation to put on the map.'
+	},
+
 };
 
 if (typeof exports !== 'undefined') {

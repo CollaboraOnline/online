@@ -105,3 +105,23 @@ body {
 .context-menu-icon-lo-checkmark:before {
 	content: '\2713';
 }
+
+.loleaflet-annotation {
+	position: absolute;
+	text-align: center;
+}
+
+.loleaflet-annotation-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 5px;
+	background: #ffffc0;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	color: #333;
+	border: 1px solid #999;
+}
+
+.leaflet-annotation-content {
+	margin: 13px 19px;
+	line-height: 1.4;
+}

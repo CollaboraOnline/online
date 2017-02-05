@@ -171,6 +171,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._levels = {};
 		this._tiles = {};
 		this._tileCache = {};
+		this._annotations = L.annotationManager(map);
+		if (this._docType === 'text') {
+			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
+		}
 
 		map._fadeAnimated = false;
 		this._viewReset();
@@ -430,13 +434,18 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (obj.commandName === '.uno:CellCursor') {
 			this._onCellCursorMsg(obj.commandValues);
-		} else if (this._map.unoToolbarCommands.indexOf(obj.commandName) !== -1) {
+		}
+		else if (this._map.unoToolbarCommands.indexOf(obj.commandName) !== -1) {
 			this._toolbarCommandValues[obj.commandName] = obj.commandValues;
 			this._map.fire('updatetoolbarcommandvalues', {
 				commandName: obj.commandName,
 				commandValues: obj.commandValues
 			});
-		} else {
+		}
+		else if (obj.comments) {
+			this._annotations.fill(obj.comments);
+		}
+		else {
 			this._map.fire('commandvalues', {
 				commandName: obj.commandName,
 				commandValues: obj.commandValues

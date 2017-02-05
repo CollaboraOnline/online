@@ -50,5 +50,10 @@ L.LOUtil = {
 
 	rgbToHex: function(color) {
 		return '#' + ('000000' + color.toString(16)).slice(-6);
+	},
+
+	stringToPoint: function(point) {
+		var numbers = point.match(/\d+/g);
+		return L.point(numbers[0], numbers[1]);
 	}
 };
