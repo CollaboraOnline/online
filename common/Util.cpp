@@ -196,7 +196,7 @@ namespace Util
 
     size_t getMemoryUsageRSS(const Poco::Process::PID pid)
     {
-        if (pid == -1)
+        if (pid <= 0)
         {
             return 0;
         }

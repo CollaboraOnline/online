@@ -285,7 +285,7 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
 /// An admin command processor.
 Admin::Admin() :
     _model(AdminModel()),
-    _forKitPid(0)
+    _forKitPid(-1)
 {
     LOG_INF("Admin ctor.");
 
