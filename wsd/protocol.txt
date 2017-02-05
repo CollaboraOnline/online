@@ -149,10 +149,6 @@ uno <command>
 
     <command> is a line of text.
 
-partpagerectangles
-
-    Invokes lok::Document::getPartPageRectangles().
-
 clientvisiblearea x=<x> y=<y> width=<width> height=<height>
 
     Invokes lok::Document::setClientVisibleArea().
@@ -299,10 +295,6 @@ statechanged: <key>=<value>
 
     Notifies client of state changed events of <key>.
     Eg: 'statechanged: .uno:Undo=enabled'
-
-partpagerectangles: <payload>
-
-    Payload format is the same as LOK_CALLBACK_TEXT_SELECTION.
 
 textselectioncontent: <content>
 

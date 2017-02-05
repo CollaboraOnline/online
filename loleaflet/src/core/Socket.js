@@ -131,7 +131,6 @@ L.Socket = L.Class.extend({
 			msg += ' options=' + JSON.stringify(options);
 		}
 		this._doSend(msg);
-		this._doSend('partpagerectangles');
 		for (var i = 0; i < this._msgQueue.length; i++) {
 			this._doSend(this._msgQueue[i].msg, this._msgQueue[i].coords);
 		}

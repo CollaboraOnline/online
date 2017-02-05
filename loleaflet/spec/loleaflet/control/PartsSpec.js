@@ -145,17 +145,6 @@ describe('Parts and Pages', function () {
 			expect(Math.floor(map.getDocSize().y)).to.be(2946);
 		});
 
-		it('Get page sizes', function () {
-			var pageSizes = map.getPageSizes();
-			expect(pageSizes).to.only.have.keys(['twips', 'pixels']);
-			expect(pageSizes.twips.length).to.be(map.getNumberOfPages());
-			expect(pageSizes.pixels.length).to.be(map.getNumberOfPages());
-			expect(pageSizes.twips[0].min.equals(new L.Point(284, 284))).to.be.ok();
-			expect(pageSizes.twips[0].max.equals(new L.Point(12190, 17122))).to.be.ok();
-			expect(pageSizes.twips[1].min.equals(new L.Point(284, 17406))).to.be.ok();
-			expect(pageSizes.twips[1].max.equals(new L.Point(12190, 34244))).to.be.ok();
-		});
-
 		it('Get document type', function () {
 			expect(map.getDocType()).to.be('text');
 		});

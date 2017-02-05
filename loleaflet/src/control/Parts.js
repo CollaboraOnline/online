@@ -61,14 +61,7 @@ L.Map.include({
 
 		var docLayer = this._docLayer;
 		if (docLayer._docType === 'text') {
-			if (index >= docLayer._partPageRectanglesTwips.length) {
-				return;
-			}
-			var part = 0;
-			var tilePosX = docLayer._partPageRectanglesTwips[index].min.x;
-			var tilePosY = docLayer._partPageRectanglesTwips[index].min.y;
-			var tileWidth = docLayer._partPageRectanglesTwips[index].max.x - tilePosX;
-			var tileHeight = docLayer._partPageRectanglesTwips[index].max.y - tilePosY;
+			return;
 		}
 		else {
 			part = index;
@@ -292,12 +285,6 @@ L.Map.include({
 
 	getDocSize: function () {
 		return this._docLayer._docPixelSize;
-	},
-
-	getPageSizes: function () {
-		return {
-			twips: this._docLayer._partPageRectanglesTwips,
-			pixels: this._docLayer._partPageRectanglesPixels};
 	},
 
 	getDocType: function () {
