@@ -145,10 +145,12 @@ std::string DocumentBroker::getDocKey(const Poco::URI& uri)
     return docKey;
 }
 
-DocumentBroker::DocumentBroker(const Poco::URI& uriPublic,
+DocumentBroker::DocumentBroker(const std::string& uri,
+                               const Poco::URI& uriPublic,
                                const std::string& docKey,
                                const std::string& childRoot,
                                const std::shared_ptr<ChildProcess>& childProcess) :
+    _uriOrig(uri),
     _uriPublic(uriPublic),
     _docKey(docKey),
     _childRoot(childRoot),
@@ -363,7 +365,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
         _lastFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
         _tileCache.reset(new TileCache(uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
 
-        LOOLWSD::dumpNewSessionTrace(getJailId(), sessionId, uriPublic.getPath(), _storage->getRootFilePath());
+        LOOLWSD::dumpNewSessionTrace(getJailId(), sessionId, _uriOrig, _storage->getRootFilePath());
     }
 
     // Since document has been loaded, send the stats if its WOPI
@@ -677,8 +679,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
         auto it = _sessions.find(id);
         if (it != _sessions.end())
         {
-            const Poco::URI& uriPublic = it->second->getPublicUri();
-            LOOLWSD::dumpEndSessionTrace(getJailId(), id, uriPublic.getPath());
+            LOOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 
             const auto readonly = (it->second ? it->second->isReadOnly() : false);
             _sessions.erase(it);

@@ -53,11 +53,15 @@ public:
 class TraceFileWriter
 {
 public:
-    TraceFileWriter(const std::string& path, const bool recordOugoing, const bool compress,
+    TraceFileWriter(const std::string& path,
+                    const bool recordOugoing,
+                    const bool compress,
+                    const bool takeSnapshot,
                     const std::vector<std::string>& filters) :
         _epochStart(Poco::Timestamp().epochMicroseconds()),
         _recordOutgoing(recordOugoing),
         _compress(compress),
+        _takeSnapshot(takeSnapshot),
         _path(Poco::Path(path).parent().toString()),
         _filter(true),
         _stream(processPath(path), compress ? std::ios::binary : std::ios::out),
@@ -81,31 +85,33 @@ public:
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        std::string snapshot;
+        std::string snapshot = uri;
 
-        const auto url = Poco::URI(uri).getPath();
-
-        const auto it = _urlToSnapshot.find(url);
-        if (it != _urlToSnapshot.end())
+        if (_takeSnapshot)
         {
-            snapshot = it->second.Snapshot;
-            it->second.SessionCount++;
-        }
-        else
-        {
-            // Create a snapshot file.
-            const Poco::Path origPath(localPath);
-            std::string filename = origPath.getBaseName();
-            filename += '_' + Poco::DateTimeFormatter::format(Poco::DateTime(), "%Y%m%d_%H~%M~%S");
-            filename += '.' + origPath.getExtension();
-            snapshot = Poco::Path(_path, filename).toString();
+            const auto url = Poco::URI(uri).getPath();
+            const auto it = _urlToSnapshot.find(url);
+            if (it != _urlToSnapshot.end())
+            {
+                snapshot = it->second.Snapshot;
+                it->second.SessionCount++;
+            }
+            else
+            {
+                // Create a snapshot file.
+                const Poco::Path origPath(localPath);
+                std::string filename = origPath.getBaseName();
+                filename += '_' + Poco::DateTimeFormatter::format(Poco::DateTime(), "%Y%m%d_%H~%M~%S");
+                filename += '.' + origPath.getExtension();
+                snapshot = Poco::Path(_path, filename).toString();
 
-            LOG_TRC("TraceFile: Copying local file [" << localPath << "] to snapshot [" << snapshot << "].");
-            Poco::File(localPath).copyTo(snapshot);
-            snapshot = Poco::URI(Poco::URI("file://"), snapshot).toString();
+                LOG_TRC("TraceFile: Copying local file [" << localPath << "] to snapshot [" << snapshot << "].");
+                Poco::File(localPath).copyTo(snapshot);
+                snapshot = Poco::URI(Poco::URI("file://"), snapshot).toString();
 
-            LOG_TRC("TraceFile: Mapped URL " << url << " to " << snapshot);
-            _urlToSnapshot.emplace(url, SnapshotData(snapshot));
+                LOG_TRC("TraceFile: Mapped URL " << url << " to " << snapshot);
+                _urlToSnapshot.emplace(url, SnapshotData(snapshot));
+            }
         }
 
         const auto data = "NewSession: " + snapshot;
@@ -117,10 +123,9 @@ public:
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        std::string snapshot;
+        std::string snapshot = uri;
 
         const auto url = Poco::URI(uri).getPath();
-
         const auto it = _urlToSnapshot.find(url);
         if (it != _urlToSnapshot.end())
         {
@@ -134,11 +139,11 @@ public:
             {
                 it->second.SessionCount--;
             }
-
-            const auto data = "EndSession: " + snapshot;
-            writeLocked(id, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Event));
-            flushLocked();
         }
+
+        const auto data = "EndSession: " + snapshot;
+        writeLocked(id, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Event));
+        flushLocked();
     }
 
     void writeEvent(const std::string& id, const std::string& sessionId, const std::string& data)
@@ -282,6 +287,7 @@ private:
     const Poco::Int64 _epochStart;
     const bool _recordOutgoing;
     const bool _compress;
+    const bool _takeSnapshot;
     const std::string _path;
     Util::RegexListMatcher _filter;
     std::ofstream _stream;

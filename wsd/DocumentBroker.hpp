@@ -207,7 +207,8 @@ public:
     /// Dummy document broker that is marked to destroy.
     DocumentBroker();
 
-    DocumentBroker(const Poco::URI& uriPublic,
+    DocumentBroker(const std::string& uri,
+                   const Poco::URI& uriPublic,
                    const std::string& docKey,
                    const std::string& childRoot,
                    const std::shared_ptr<ChildProcess>& childProcess);
@@ -331,6 +332,7 @@ private:
     bool forwardToClient(const std::shared_ptr<Message>& payload);
 
 private:
+    const std::string _uriOrig;
     const Poco::URI _uriPublic;
     const std::string _docKey;
     const std::string _childRoot;

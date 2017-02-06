@@ -305,7 +305,9 @@ private:
 
                 if (rec.Payload.find(NewSession) == 0)
                 {
-                    const auto& uri = rec.Payload.substr(NewSession.size());
+                    const auto uriOrig = rec.Payload.substr(NewSession.size());
+                    std::string uri;
+                    Poco::URI::decode(uriOrig, uri);
                     auto it = _sessions.find(uri);
                     if (it != _sessions.end())
                     {
@@ -328,7 +330,9 @@ private:
                 }
                 else if (rec.Payload.find(EndSession) == 0)
                 {
-                    const auto& uri = rec.Payload.substr(EndSession.size());
+                    const auto uriOrig = rec.Payload.substr(EndSession.size());
+                    std::string uri;
+                    Poco::URI::decode(uriOrig, uri);
                     auto it = _sessions.find(uri);
                     if (it != _sessions.end())
                     {

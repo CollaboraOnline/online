@@ -619,7 +619,7 @@ private:
                     }
 
                     LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    auto docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
+                    auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot, child);
                     child->setDocumentBroker(docBroker);
 
                     cleanupDocBrokers();
@@ -860,7 +860,7 @@ private:
             int retry = 3;
             while (retry-- > 0)
             {
-                auto docBroker = findOrCreateDocBroker(docKey, ws, id, uriPublic);
+                auto docBroker = findOrCreateDocBroker(uri, docKey, ws, id, uriPublic);
                 if (docBroker)
                 {
                     auto session = createNewClientSession(ws, id, uriPublic, docBroker, isReadOnly);
@@ -909,7 +909,8 @@ private:
     /// Otherwise, creates and adds a new one to DocBrokers.
     /// May return null if terminating or MaxDocuments limit is reached.
     /// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-    static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(const std::string& docKey,
+    static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(const std::string& uri,
+                                                                 const std::string& docKey,
                                                                  std::shared_ptr<LOOLWebSocket>& ws,
                                                                  const std::string& id,
                                                                  const Poco::URI& uriPublic)
@@ -1014,13 +1015,14 @@ private:
 
         if (!docBroker)
         {
-            docBroker = createNewDocBroker(docKey, ws, uriPublic);
+            docBroker = createNewDocBroker(uri, docKey, ws, uriPublic);
         }
 
         return docBroker;
     }
 
-    static std::shared_ptr<DocumentBroker> createNewDocBroker(const std::string& docKey,
+    static std::shared_ptr<DocumentBroker> createNewDocBroker(const std::string& uri,
+                                                              const std::string& docKey,
                                                               std::shared_ptr<LOOLWebSocket>& ws,
                                                               const Poco::URI& uriPublic)
     {
@@ -1045,7 +1047,7 @@ private:
 
         // Set the one we just created.
         LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-        auto docBroker = std::make_shared<DocumentBroker>(uriPublic, docKey, LOOLWSD::ChildRoot, child);
+        auto docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, LOOLWSD::ChildRoot, child);
         child->setDocumentBroker(docBroker);
         DocBrokers.emplace(docKey, docBroker);
         LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
@@ -1903,7 +1905,8 @@ void LOOLWSD::initialize(Application& self)
         }
 
         const auto compress = getConfigValue<bool>(conf, "trace.path[@compress]", false);
-        TraceDumper.reset(new TraceFileWriter(path, recordOutgoing, compress, filters));
+        const auto takeSnapshot = getConfigValue<bool>(conf, "trace.path[@snapshot]", false);
+        TraceDumper.reset(new TraceFileWriter(path, recordOutgoing, compress, takeSnapshot, filters));
         LOG_INF("Command trace dumping enabled to file: " << path);
     }
 
