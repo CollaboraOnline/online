@@ -15,7 +15,6 @@
 #include <memory>
 
 #define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.h>
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 
 #include <Poco/Buffer.h>
