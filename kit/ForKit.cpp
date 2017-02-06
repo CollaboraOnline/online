@@ -53,8 +53,10 @@ static std::atomic<unsigned> ForkCounter( 0 );
 
 static std::map<Process::PID, std::string> childJails;
 
+#ifndef KIT_IN_PROCESS
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
+#endif
 
 /// Dispatcher class to demultiplex requests from
 /// WSD and handles them.
@@ -267,7 +269,11 @@ static void printArgumentHelp()
     std::cout << "" << std::endl;
 }
 
+#ifndef KIT_IN_PROCESS
 int main(int argc, char** argv)
+#else
+int loolforkit_main(int argc, char** argv)
+#endif
 {
     if (!hasCorrectUID("loolforkit"))
     {
@@ -307,7 +313,7 @@ int main(int argc, char** argv)
     std::string sysTemplate;
     std::string loTemplate;
 
-#if ENABLE_DEBUG
+#if ENABLE_DEBUG && !defined(KIT_IN_PROCESS)
     static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
     if (clientPort)
         ClientPortNumber = std::stoi(clientPort);
@@ -340,6 +346,7 @@ int main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             childRoot = std::string(eq+1);
         }
+#ifndef KIT_IN_PROCESS
         else if (std::strstr(cmd, "--clientport=") == cmd)
         {
             eq = std::strchr(cmd, '=');
@@ -350,6 +357,7 @@ int main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             MasterPortNumber = std::stoll(std::string(eq+1));
         }
+#endif
         else if (std::strstr(cmd, "--version") == cmd)
         {
             std::string version, hash;

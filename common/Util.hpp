@@ -46,7 +46,7 @@ namespace Util
 
     bool windowingAvailable();
 
-#ifndef BUILDING_TESTS
+#if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS)
 
     /// Send a message to all clients.
     void alertAllUsers(const std::string& msg);

@@ -2,7 +2,7 @@ SUBDIRS = . test loleaflet
 
 export ENABLE_DEBUG
 
-bin_PROGRAMS = loolwsd loolforkit loolmap loolmount looltool loolstress
+bin_PROGRAMS = loolwsd loolforkit loolwsd_fuzzer loolmap loolmount looltool loolstress
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
@@ -32,6 +32,8 @@ AM_LDFLAGS = -pthread -Wl,-E
 loolforkit_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
 loolmount_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
 
+loolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 $(AM_CPPFLAGS)
+
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
@@ -47,7 +49,7 @@ shared_sources = common/FileUtil.cpp \
                  common/UnitHTTP.cpp \
                  common/Util.cpp
 
-loolwsd_SOURCES = wsd/Admin.cpp \
+loolwsd_sources = wsd/Admin.cpp \
                   wsd/AdminModel.cpp \
                   wsd/Auth.cpp \
                   wsd/DocumentBroker.cpp \
@@ -55,7 +57,9 @@ loolwsd_SOURCES = wsd/Admin.cpp \
                   wsd/ClientSession.cpp \
                   wsd/FileServer.cpp \
                   wsd/Storage.cpp \
-                  wsd/TileCache.cpp \
+                  wsd/TileCache.cpp
+
+loolwsd_SOURCES = $(loolwsd_sources) \
                   $(shared_sources)
 
 noinst_PROGRAMS = connect \
@@ -73,10 +77,16 @@ lokitclient_SOURCES = common/IoUtil.cpp \
                       common/Protocol.cpp \
                       common/Util.cpp
 
-loolforkit_SOURCES = kit/ChildSession.cpp \
+loolforkit_sources = kit/ChildSession.cpp \
                      kit/ForKit.cpp \
-                     kit/Kit.cpp \
+                     kit/Kit.cpp
+
+loolforkit_SOURCES = $(loolforkit_sources) \
                      $(shared_sources)
+
+loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
+                         $(loolforkit_sources) \
+                         $(shared_sources)
 
 # build a binary with no caps to help debugging
 loolforkit_nocaps_SOURCES = $(loolforkit_SOURCES)

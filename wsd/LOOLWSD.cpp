@@ -2541,6 +2541,7 @@ void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request
     }
 }
 
+#if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS)
 namespace Util
 {
 
@@ -2557,6 +2558,7 @@ void alertAllUsers(const std::string& msg)
 }
 
 }
+#endif
 
 POCO_SERVER_MAIN(LOOLWSD)
 

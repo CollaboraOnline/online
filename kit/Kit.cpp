@@ -1930,10 +1930,9 @@ bool globalPreinit(const std::string &loTemplate)
     return true;
 }
 
+#if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS)
 namespace Util
 {
-
-#ifndef BUILDING_TESTS
 
 void alertAllUsers(const std::string& msg)
 {
@@ -1945,8 +1944,7 @@ void alertAllUsers(const std::string& cmd, const std::string& kind)
     alertAllUsers("errortoall: cmd=" + cmd + " kind=" + kind);
 }
 
-#endif
-
 }
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
