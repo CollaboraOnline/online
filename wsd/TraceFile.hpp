@@ -378,22 +378,11 @@ private:
                 break;
             }
 
-            const auto v = split(line, line[0]);
-            if (v.size() == 4)
-            {
-                TraceFileRecord rec;
-                rec.Dir = static_cast<TraceFileRecord::Direction>(line[0]);
-                unsigned index = 0;
-                rec.TimestampNs = std::atoi(v[index++].c_str());
-                rec.Pid = std::atoi(v[index++].c_str());
-                rec.SessionId = v[index++];
-                rec.Payload = v[index++];
+            TraceFileRecord rec;
+            if (extractRecord(line, rec))
                 _records.push_back(rec);
-            }
             else
-            {
                 fprintf(stderr, "Invalid trace file record, expected 4 tokens. [%s]\n", line.c_str());
-            }
         }
 
         if (_records.empty() ||
@@ -411,20 +400,43 @@ private:
         _epochStart = _records[0].TimestampNs;
     }
 
-    static std::vector<std::string> split(const std::string& s, const char delim)
+    static bool extractRecord(const std::string& s, TraceFileRecord& rec)
     {
-        std::stringstream ss(s);
-        std::string item;
-        std::vector<std::string> v;
-        while (std::getline(ss, item, delim))
+        if (s.length() < 1)
+            return false;
+
+        char delimiter = s[0];
+        rec.Dir = static_cast<TraceFileRecord::Direction>(delimiter);
+
+        size_t pos = 1;
+        int record = 0;
+        for (; record < 4 && pos < s.length(); ++record)
         {
-            if (!item.empty())
+            size_t next = s.find(delimiter, pos);
+
+            switch (record)
             {
-                v.push_back(item);
+                case 0:
+                    rec.TimestampNs = std::atoi(s.substr(pos, next - pos).c_str());
+                    break;
+                case 1:
+                    rec.Pid = std::atoi(s.substr(pos, next - pos).c_str());
+                    break;
+                case 2:
+                    rec.SessionId = s.substr(pos, next - pos);
+                    break;
+                case 3:
+                    rec.Payload = s.substr(pos);
+                    return true;
             }
+
+            if (next == std::string::npos)
+                break;
+
+            pos = next + 1;
         }
 
-        return v;
+        return false;
     }
 
     unsigned advance(unsigned index, const TraceFileRecord::Direction dir)
