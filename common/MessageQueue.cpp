@@ -127,7 +127,7 @@ void TileQueue::removeTileDuplicate(const std::string& tileMsg)
 namespace {
 
 /// Read the viewId from the tokens.
-std::string extractViewId(const std::string& origMsg, const std::vector<std::string> tokens)
+std::string extractViewId(const std::string& origMsg, const std::vector<std::string>& tokens)
 {
     size_t nonJson = tokens[0].size() + tokens[1].size() + tokens[2].size() + 3; // including spaces
     std::string jsonString(origMsg.data() + nonJson, origMsg.size() - nonJson);
