@@ -248,7 +248,11 @@ std::string LocalStorage::loadStorageFileToLocal()
 
     _isLoaded = true;
     // Now return the jailed path.
+#ifndef KIT_IN_PROCESS
     return Poco::Path(_jailPath, filename).toString();
+#else
+    return _jailedFilePath;
+#endif
 }
 
 StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Poco::URI& uriPublic)

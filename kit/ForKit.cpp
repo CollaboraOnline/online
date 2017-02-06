@@ -46,7 +46,9 @@ using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::Util::Application;
 
+#ifndef KIT_IN_PROCESS
 static bool NoCapsForKit = false;
+#endif
 static bool DisplayVersion = false;
 static std::string UnitTestLibrary;
 static std::atomic<unsigned> ForkCounter( 0 );
@@ -112,6 +114,7 @@ public:
     }
 };
 
+#ifndef KIT_IN_PROCESS
 static bool haveCapability(cap_value_t capability)
 {
     cap_t caps = cap_get_proc();
@@ -180,6 +183,7 @@ static bool haveCorrectCapabilities()
 
     return result;
 }
+#endif
 
 /// Check if some previously forked kids have died.
 static void cleanupChildren()
@@ -225,7 +229,9 @@ static int createLibreOfficeKit(const std::string& childRoot,
         // Close the pipe from loolwsd
         close(0);
 
+#ifndef KIT_IN_PROCESS
         UnitKit::get().postFork();
+#endif
 
         if (std::getenv("SLEEPKITFORDEBUGGER"))
         {
@@ -239,7 +245,11 @@ static int createLibreOfficeKit(const std::string& childRoot,
             }
         }
 
+#ifndef KIT_IN_PROCESS
         lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, NoCapsForKit, queryVersion, DisplayVersion);
+#else
+        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, true, queryVersion, DisplayVersion);
+#endif
     }
     else
     {
@@ -254,12 +264,48 @@ static int createLibreOfficeKit(const std::string& childRoot,
             childJails[pid] = childRoot + std::to_string(pid);
         }
 
+#ifndef KIT_IN_PROCESS
         UnitKit::get().launchedKit(pid);
+#endif
     }
 
     return pid;
 }
 
+void forkLibreOfficeKit(const std::string& childRoot,
+                        const std::string& sysTemplate,
+                        const std::string& loTemplate,
+                        const std::string& loSubPath,
+                        int limit)
+{
+    // Cleanup first, to reduce disk load.
+    cleanupChildren();
+
+#ifndef KIT_IN_PROCESS
+    (void) limit;
+#else
+    if (limit > 0)
+        ForkCounter = limit;
+#endif
+
+    if (ForkCounter > 0)
+    {
+        // Create as many as requested.
+        const size_t count = ForkCounter;
+        LOG_INF("Spawning " << count << " new child" << (count == 1 ? "." : "ren."));
+        const size_t retry = count * 2;
+        for (size_t i = 0; ForkCounter > 0 && i < retry; ++i)
+        {
+            if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
+            {
+                LOG_ERR("Failed to create a kit process.");
+                ++ForkCounter;
+            }
+        }
+    }
+}
+
+#ifndef KIT_IN_PROCESS
 static void printArgumentHelp()
 {
     std::cout << "Usage: loolforkit [OPTION]..." << std::endl;
@@ -269,11 +315,7 @@ static void printArgumentHelp()
     std::cout << "" << std::endl;
 }
 
-#ifndef KIT_IN_PROCESS
 int main(int argc, char** argv)
-#else
-int loolforkit_main(int argc, char** argv)
-#endif
 {
     if (!hasCorrectUID("loolforkit"))
     {
@@ -313,7 +355,7 @@ int loolforkit_main(int argc, char** argv)
     std::string sysTemplate;
     std::string loTemplate;
 
-#if ENABLE_DEBUG && !defined(KIT_IN_PROCESS)
+#if ENABLE_DEBUG
     static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
     if (clientPort)
         ClientPortNumber = std::stoi(clientPort);
@@ -346,7 +388,6 @@ int loolforkit_main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             childRoot = std::string(eq+1);
         }
-#ifndef KIT_IN_PROCESS
         else if (std::strstr(cmd, "--clientport=") == cmd)
         {
             eq = std::strchr(cmd, '=');
@@ -357,7 +398,6 @@ int loolforkit_main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             MasterPortNumber = std::stoll(std::string(eq+1));
         }
-#endif
         else if (std::strstr(cmd, "--version") == cmd)
         {
             std::string version, hash;
@@ -428,24 +468,7 @@ int loolforkit_main(int argc, char** argv)
             break;
         }
 
-        // Cleanup first, to reduce disk load.
-        cleanupChildren();
-
-        if (ForkCounter > 0)
-        {
-            // Create as many as requested.
-            const size_t count = ForkCounter;
-            LOG_INF("Spawning " << count << " new child" << (count == 1 ? "." : "ren."));
-            const size_t retry = count * 2;
-            for (size_t i = 0; ForkCounter > 0 && i < retry; ++i)
-            {
-                if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
-                {
-                    LOG_ERR("Failed to create a kit process.");
-                    ++ForkCounter;
-                }
-            }
-        }
+        forkLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath);
     }
 
     int returnValue = Application::EXIT_OK;
@@ -459,5 +482,6 @@ int loolforkit_main(int argc, char** argv)
     LOG_INF("ForKit process finished.");
     std::_Exit(returnValue);
 }
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

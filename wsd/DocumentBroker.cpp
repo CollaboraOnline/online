@@ -223,10 +223,12 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     // user/doc/jailId
     const auto jailPath = Poco::Path(JAILED_DOCUMENT_ROOT, jailId);
     std::string jailRoot = getJailRoot();
+#ifndef KIT_IN_PROCESS
     if (LOOLWSD::NoCapsForKit)
     {
         jailRoot = jailPath.toString() + "/" + getJailRoot();
     }
+#endif
 
     LOG_INF("jailPath: " << jailPath.toString() << ", jailRoot: " << jailRoot);
 

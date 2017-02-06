@@ -40,6 +40,14 @@ struct UserInfo
     std::string username;
 };
 
+/// Check the ForkCounter, and if non-zero, fork more of them accordingly.
+/// @param limit If non-zero, set the ForkCounter to this limit.
+void forkLibreOfficeKit(const std::string& childRoot,
+                        const std::string& sysTemplate,
+                        const std::string& loTemplate,
+                        const std::string& loSubPath,
+                        int limit = 0);
+
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

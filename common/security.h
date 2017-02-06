@@ -20,6 +20,7 @@
 
 #define LOOL_USER_ID "lool"
 
+#ifndef KIT_IN_PROCESS
 static int hasCorrectUID(const char *appName)
 {
 #if ENABLE_DEBUG
@@ -36,5 +37,6 @@ static int hasCorrectUID(const char *appName)
     }
 #endif
 }
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

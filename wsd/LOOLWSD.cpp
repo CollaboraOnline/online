@@ -117,6 +117,10 @@
 #include "common/FileUtil.hpp"
 #include <LOOLWebSocket.hpp>
 
+#ifdef KIT_IN_PROCESS
+#include <Kit.hpp>
+#endif
+
 #include "common/SigUtil.hpp"
 
 using namespace LOOLProtocol;
@@ -323,9 +327,13 @@ static bool forkChildren(const int number)
             alertAllUsersInternal("error: cmd=internal kind=diskfull");
         }
 
+#ifdef KIT_IN_PROCESS
+        forkLibreOfficeKit(LOOLWSD::ChildRoot, LOOLWSD::SysTemplate, LOOLWSD::LoTemplate, LO_JAIL_SUBPATH, number);
+#else
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
         if (IoUtil::writeToPipe(LOOLWSD::ForKitWritePipe, aMessage) > 0)
+#endif
         {
             OutstandingForks += number;
             LastForkRequestTime = std::chrono::steady_clock::now();
@@ -1682,9 +1690,11 @@ inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
 } // anonymous namespace
 
 std::atomic<unsigned> LOOLWSD::NextSessionId;
+#ifndef KIT_IN_PROCESS
 std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
 std::atomic<int> LOOLWSD::ForKitProcId(-1);
 bool LOOLWSD::NoCapsForKit = false;
+#endif
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::SysTemplate;
 std::string LOOLWSD::LoTemplate;
@@ -2098,8 +2108,10 @@ void LOOLWSD::handleOption(const std::string& optionName,
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
+#ifndef KIT_IN_PROCESS
     else if (optionName == "nocaps")
         NoCapsForKit = true;
+#endif
     else if (optionName == "careerspan")
         careerSpanSeconds = std::stoi(value);
 
@@ -2124,6 +2136,9 @@ void LOOLWSD::displayHelp()
 
 bool LOOLWSD::checkAndRestoreForKit()
 {
+#ifdef KIT_IN_PROCESS
+    return false;
+#else
     int status;
     const pid_t pid = waitpid(ForKitProcId, &status, WUNTRACED | WNOHANG);
     if (pid > 0)
@@ -2190,10 +2205,14 @@ bool LOOLWSD::checkAndRestoreForKit()
     }
 
     return false;
+#endif
 }
 
 bool LOOLWSD::createForKit()
 {
+#ifdef KIT_IN_PROCESS
+    return true;
+#else
     LOG_INF("Creating new forkit process.");
 
     Process::Args args;
@@ -2258,6 +2277,7 @@ bool LOOLWSD::createForKit()
     preForkChildren(newChildrenLock);
 
     return (ForKitProcId != -1);
+#endif
 }
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
@@ -2396,7 +2416,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #endif
 
     auto last30SecCheckTime = std::chrono::steady_clock::now();
-    int status = 0;
     while (!TerminationFlag && !SigUtil::isShuttingDown())
     {
         UnitWSD::get().invokeTest();
@@ -2464,9 +2483,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     LOG_INF("Cleaning up lingering documents.");
     DocBrokers.clear();
 
+#ifndef KIT_IN_PROCESS
     // Terminate child processes
     LOG_INF("Requesting forkit process " << ForKitProcId << " to terminate.");
     SigUtil::killChild(ForKitProcId);
+#endif
 
     // Terminate child processes
     LOG_INF("Requesting child processes to terminate.");
@@ -2475,9 +2496,12 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         child->close(true);
     }
 
+#ifndef KIT_IN_PROCESS
     // Wait for forkit process finish.
+    int status = 0;
     waitpid(ForKitProcId, &status, WUNTRACED);
     close(ForKitWritePipe);
+#endif
 
     // In case forkit didn't cleanup properly, don't leave jails behind.
     LOG_INF("Cleaning up childroot directory [" << ChildRoot << "].");

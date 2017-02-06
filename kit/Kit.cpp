@@ -1712,7 +1712,11 @@ void lokit_main(const std::string& childRoot,
         {
             const char *instdir = instdir_path.c_str();
             const char *userdir = userdir_url.c_str();
-            auto kit = UnitKit::get().lok_init(instdir, userdir);
+#ifndef KIT_IN_PROCESS
+            LibreOfficeKit* kit = UnitKit::get().lok_init(instdir, userdir);
+#else
+            LibreOfficeKit* kit = nullptr;
+#endif
             if (!kit)
             {
                 kit = (initFunction ? initFunction(instdir, userdir) : lok_init_2(instdir, userdir));
@@ -1758,10 +1762,12 @@ void lokit_main(const std::string& childRoot,
                 {
                     std::string message(data.data(), data.size());
 
+#ifndef KIT_IN_PROCESS
                     if (UnitKit::get().filterKitMessage(ws, message))
                     {
                         return true;
                     }
+#endif
 
                     LOG_DBG(socketName << ": recv [" << LOOLProtocol::getAbbreviatedMessage(message) << "].");
                     StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
