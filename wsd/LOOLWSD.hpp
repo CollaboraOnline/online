@@ -64,6 +64,12 @@ public:
         return LOOLWSD::SSLTermination.get();
     }
 
+    /// Trace a new session and take a snapshot of the file.
+    static void dumpNewSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri, const std::string& path);
+
+    /// Trace the end of a session.
+    static void dumpEndSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri);
+
     static void dumpEventTrace(const std::string& id, const std::string& sessionId, const std::string& data);
 
     static void dumpIncomingTrace(const std::string& id, const std::string& sessionId, const std::string& data);

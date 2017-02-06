@@ -18,6 +18,8 @@
 #include <Poco/DeflatingStream.h>
 #include <Poco/InflatingStream.h>
 
+#include "Protocol.hpp"
+#include "Log.hpp"
 #include "Util.hpp"
 
 /// Dumps commands and notification trace.
@@ -56,6 +58,7 @@ public:
         _epochStart(Poco::Timestamp().epochMicroseconds()),
         _recordOutgoing(recordOugoing),
         _compress(compress),
+        _path(Poco::Path(path).parent().toString()),
         _filter(true),
         _stream(processPath(path), compress ? std::ios::binary : std::ios::out),
         _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP)
@@ -74,6 +77,70 @@ public:
         _stream.close();
     }
 
+    void newSession(const std::string& id, const std::string& sessionId, const std::string& uri, const std::string& localPath)
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        std::string snapshot;
+
+        const auto url = Poco::URI(uri).getPath();
+
+        const auto it = _urlToSnapshot.find(url);
+        if (it != _urlToSnapshot.end())
+        {
+            snapshot = it->second.Snapshot;
+            it->second.SessionCount++;
+        }
+        else
+        {
+            // Create a snapshot file.
+            const Poco::Path origPath(localPath);
+            std::string filename = origPath.getBaseName();
+            filename += '_' + Poco::DateTimeFormatter::format(Poco::DateTime(), "%Y%m%d_%H~%M~%S");
+            filename += '.' + origPath.getExtension();
+            snapshot = Poco::Path(_path, filename).toString();
+
+            LOG_TRC("TraceFile: Copying local file [" << localPath << "] to snapshot [" << snapshot << "].");
+            Poco::File(localPath).copyTo(snapshot);
+            snapshot = Poco::URI(Poco::URI("file://"), snapshot).toString();
+
+            LOG_TRC("TraceFile: Mapped URL " << url << " to " << snapshot);
+            _urlToSnapshot.emplace(url, SnapshotData(snapshot));
+        }
+
+        const auto data = "NewSession: " + snapshot;
+        writeLocked(id, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Event));
+        flushLocked();
+    }
+
+    void endSession(const std::string& id, const std::string& sessionId, const std::string& uri)
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+
+        std::string snapshot;
+
+        const auto url = Poco::URI(uri).getPath();
+
+        const auto it = _urlToSnapshot.find(url);
+        if (it != _urlToSnapshot.end())
+        {
+            snapshot = it->second.Snapshot;
+            if (it->second.SessionCount == 1)
+            {
+                // Last session, remove the mapping.
+                _urlToSnapshot.erase(it);
+            }
+            else
+            {
+                it->second.SessionCount--;
+            }
+
+            const auto data = "EndSession: " + snapshot;
+            writeLocked(id, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Event));
+            flushLocked();
+        }
+    }
+
     void writeEvent(const std::string& id, const std::string& sessionId, const std::string& data)
     {
         std::unique_lock<std::mutex> lock(_mutex);
@@ -88,6 +155,42 @@ public:
 
         if (_filter.match(data))
         {
+            // Remap the URL to the snapshot.
+            if (LOOLProtocol::matchPrefix("load", data))
+            {
+                auto tokens = LOOLProtocol::tokenize(data);
+                if (tokens.size() >= 2)
+                {
+                    std::string url;
+                    if (LOOLProtocol::getTokenString(tokens[1], "url", url))
+                    {
+                        std::string decodedUrl;
+                        Poco::URI::decode(url, decodedUrl);
+                        auto uriPublic = Poco::URI(decodedUrl);
+                        if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
+                        {
+                            uriPublic.normalize();
+                        }
+
+                        url = uriPublic.getPath();
+                        const auto it = _urlToSnapshot.find(url);
+                        if (it != _urlToSnapshot.end())
+                        {
+                            LOG_TRC("TraceFile: Mapped URL: " << url << " to " << it->second.Snapshot);
+                            tokens[1] = "url=" + it->second.Snapshot;
+                            std::string newData;
+                            for (const auto& token : tokens)
+                            {
+                                newData += token + ' ';
+                            }
+
+                            writeLocked(id, sessionId, newData, static_cast<char>(TraceFileRecord::Direction::Incoming));
+                            return;
+                        }
+                    }
+                }
+            }
+
             writeLocked(id, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Incoming));
         }
     }
@@ -151,19 +254,40 @@ private:
         }
 
         std::string res = path.substr(0, pos);
-        res += Poco::DateTimeFormatter::format(Poco::DateTime(), "%Y-%m-%d_%H:%M:%S");
+        res += Poco::DateTimeFormatter::format(Poco::DateTime(), "%Y%m%d_%H~%M~%S");
         res += path.substr(pos + 1);
         return res;
     }
 
 private:
+    struct SnapshotData
+    {
+        SnapshotData(const std::string& snapshot) :
+            Snapshot(snapshot)
+        {
+            SessionCount = 1;
+        }
+
+        SnapshotData(const SnapshotData& other) :
+            Snapshot(other.Snapshot)
+        {
+            SessionCount = other.SessionCount.load();
+        }
+
+        std::string Snapshot;
+        std::atomic<size_t> SessionCount;
+    };
+
+private:
     const Poco::Int64 _epochStart;
     const bool _recordOutgoing;
     const bool _compress;
+    const std::string _path;
     Util::RegexListMatcher _filter;
     std::ofstream _stream;
     Poco::DeflatingOutputStream _deflater;
     std::mutex _mutex;
+    std::map<std::string, SnapshotData> _urlToSnapshot;
 };
 
 /// Trace-file parser class.

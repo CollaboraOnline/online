@@ -353,7 +353,8 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
         Poco::DigestOutputStream dos(sha1);
         Poco::StreamCopier::copyStream(istr, dos);
         dos.close();
-        LOG_INF("SHA1 of [" << localPath << "]: " << Poco::DigestEngine::digestToHex(sha1.digest()));
+        LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << localPath << "]: " <<
+                Poco::DigestEngine::digestToHex(sha1.digest()));
 
         _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
         _filename = fileInfo._filename;
@@ -361,6 +362,8 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
         // Use the local temp file's timestamp.
         _lastFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
         _tileCache.reset(new TileCache(uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
+
+        LOOLWSD::dumpNewSessionTrace(getJailId(), sessionId, uriPublic.getPath(), _storage->getRootFilePath());
     }
 
     // Since document has been loaded, send the stats if its WOPI
@@ -674,6 +677,9 @@ size_t DocumentBroker::removeSession(const std::string& id)
         auto it = _sessions.find(id);
         if (it != _sessions.end())
         {
+            const Poco::URI& uriPublic = it->second->getPublicUri();
+            LOOLWSD::dumpEndSessionTrace(getJailId(), id, uriPublic.getPath());
+
             const auto readonly = (it->second ? it->second->isReadOnly() : false);
             _sessions.erase(it);
 

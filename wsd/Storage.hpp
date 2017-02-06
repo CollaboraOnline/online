@@ -78,6 +78,8 @@ public:
 
     const std::string getUri() const { return _uri.toString(); }
 
+    const std::string& getRootFilePath() const { return _jailedFilePath; };
+
     bool isLoaded() const { return _isLoaded; }
 
     /// Returns the basic information about the file.

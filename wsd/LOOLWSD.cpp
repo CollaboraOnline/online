@@ -863,11 +863,11 @@ private:
                 auto docBroker = findOrCreateDocBroker(docKey, ws, id, uriPublic);
                 if (docBroker)
                 {
-                    auto session = createNewClientSession(uri, ws, id, uriPublic, docBroker, isReadOnly);
+                    auto session = createNewClientSession(ws, id, uriPublic, docBroker, isReadOnly);
                     if (session)
                     {
                         // Process the request in an exception-safe way.
-                        processGetRequest(uri, ws, id, docBroker, session);
+                        processGetRequest(ws, id, docBroker, session);
                         break;
                     }
                 }
@@ -1053,8 +1053,7 @@ private:
         return docBroker;
     }
 
-    static std::shared_ptr<ClientSession> createNewClientSession(const std::string& uri,
-                                                                 std::shared_ptr<LOOLWebSocket>& ws,
+    static std::shared_ptr<ClientSession> createNewClientSession(std::shared_ptr<LOOLWebSocket>& ws,
                                                                  const std::string& id,
                                                                  const Poco::URI& uriPublic,
                                                                  const std::shared_ptr<DocumentBroker>& docBroker,
@@ -1092,7 +1091,6 @@ private:
             // (UserCanWrite param).
             auto session = std::make_shared<ClientSession>(id, ws, docBroker, uriPublic, isReadOnly);
 
-            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "NewSession: " + uri);
             docBroker->addSession(session);
 
             lock.unlock();
@@ -1142,8 +1140,7 @@ private:
     }
 
     /// Process GET requests.
-    static void processGetRequest(const std::string& uri,
-                                  std::shared_ptr<LOOLWebSocket>& ws,
+    static void processGetRequest(std::shared_ptr<LOOLWebSocket>& ws,
                                   const std::string& id,
                                   const std::shared_ptr<DocumentBroker>& docBroker,
                                   const std::shared_ptr<ClientSession>& session)
@@ -1190,7 +1187,6 @@ private:
                 removeDocBrokerSession(docBroker);
             }
 
-            LOOLWSD::dumpEventTrace(docBroker->getJailId(), id, "EndSession: " + uri);
             LOG_INF("Finishing GET request handler for session [" << id << "].");
         }
         catch (const UnauthorizedRequestException& exc)
@@ -1968,6 +1964,33 @@ void LOOLWSD::initializeSSL()
 
     Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
     Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
+}
+
+void LOOLWSD::dumpNewSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri, const std::string& path)
+{
+    if (TraceDumper)
+    {
+        try
+        {
+            TraceDumper->newSession(id, sessionId, uri, path);
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_WRN("Exception in tracer newSession: " << exc.what());
+        }
+    }
+}
+
+void LOOLWSD::dumpEndSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri)
+{
+        try
+        {
+            TraceDumper->endSession(id, sessionId, uri);
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_WRN("Exception in tracer newSession: " << exc.what());
+        }
 }
 
 void LOOLWSD::dumpEventTrace(const std::string& id, const std::string& sessionId, const std::string& data)
