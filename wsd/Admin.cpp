@@ -380,8 +380,6 @@ unsigned Admin::getTotalMemoryUsage()
     const size_t kitsPssKb = _model.getKitsMemoryUsage();
     const size_t totalMem = wsdPssKb + forkitRssKb + kitsPssKb;
 
-    LOG_TRC("Total mem: " << totalMem << ", wsd pss: " << wsdPssKb <<
-            ", forkit rss: " << forkitRssKb << ", kits pss: " << kitsPssKb);
     return totalMem;
 }
 
