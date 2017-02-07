@@ -121,6 +121,10 @@
 #include <Kit.hpp>
 #endif
 
+#ifdef FUZZER
+#include <tools/Replay.hpp>
+#endif
+
 #include "common/SigUtil.hpp"
 
 using namespace LOOLProtocol;
@@ -152,6 +156,7 @@ using Poco::ProcessHandle;
 using Poco::StreamCopier;
 using Poco::StringTokenizer;
 using Poco::TemporaryFile;
+using Poco::Thread;
 using Poco::ThreadPool;
 using Poco::URI;
 using Poco::Util::Application;
@@ -1697,6 +1702,9 @@ std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
 std::atomic<int> LOOLWSD::ForKitProcId(-1);
 bool LOOLWSD::NoCapsForKit = false;
 #endif
+#ifdef FUZZER
+std::string LOOLWSD::FuzzFileName = "";
+#endif
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::SysTemplate;
 std::string LOOLWSD::LoTemplate;
@@ -2049,7 +2057,7 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                                " must not be " + std::to_string(MasterPortNumber) + ".")
                         .required(false)
                         .repeatable(false)
-                        .argument("port number"));
+                        .argument("port_number"));
 
     optionSet.addOption(Option("disable-ssl", "", "Disable SSL security layer.")
                         .required(false)
@@ -2079,6 +2087,13 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false)
                         .argument("seconds"));
+#endif
+
+#ifdef FUZZER
+    optionSet.addOption(Option("fuzz", "", "Read input from the specified file for fuzzing.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("trace_file_name"));
 #endif
 }
 
@@ -2124,6 +2139,11 @@ void LOOLWSD::handleOption(const std::string& optionName,
     static const char* masterPort = std::getenv("LOOL_TEST_MASTER_PORT");
     if (masterPort)
         MasterPortNumber = std::stoi(masterPort);
+#endif
+
+#ifdef FUZZER
+    if (optionName == "fuzz")
+        FuzzFileName = value;
 #endif
 }
 
@@ -2282,6 +2302,10 @@ bool LOOLWSD::createForKit()
 #endif
 }
 
+#ifdef FUZZER
+std::mutex Connection::Mutex;
+#endif
+
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
     SigUtil::setFatalSignals();
@@ -2432,7 +2456,27 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             // Make sure we have sufficient reserves.
             if (prespawnChildren())
             {
-                // Nothing more to do this round.
+                // Nothing more to do this round, unless we are fuzzing
+#if FUZZER
+                if (!FuzzFileName.empty())
+                {
+                    std::unique_ptr<Replay> replay(new Replay(
+#if ENABLE_SSL
+                            "https://127.0.0.1:" + std::to_string(ClientPortNumber),
+#else
+                            "http://127.0.0.1:" + std::to_string(ClientPortNumber),
+#endif
+                            FuzzFileName));
+
+                    std::unique_ptr<Thread> replayThread(new Thread());
+                    replayThread->start(*replay);
+
+                    // block until the replay finishes
+                    replayThread->join();
+
+                    TerminationFlag = true;
+                }
+#endif
             }
             else if (!std::getenv("LOOL_NO_AUTOSAVE") &&
                      std::chrono::duration_cast<std::chrono::seconds>

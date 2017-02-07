@@ -38,6 +38,7 @@ public:
     static bool NoCapsForKit;
     static std::atomic<int> ForKitWritePipe;
     static std::atomic<int> ForKitProcId;
+    static std::string FuzzFileName;
     static std::string Cache;
     static std::string ConfigFile;
     static std::string SysTemplate;

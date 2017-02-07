@@ -32,7 +32,7 @@ AM_LDFLAGS = -pthread -Wl,-E
 loolforkit_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
 loolmount_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
 
-loolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 $(AM_CPPFLAGS)
+loolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 -DFUZZER=1 -DTDOC=\"$(abs_top_srcdir)/test/data\" $(AM_CPPFLAGS)
 
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
