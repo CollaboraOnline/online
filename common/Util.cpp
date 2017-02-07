@@ -152,7 +152,7 @@ namespace Util
             {
                 const char *value;
                 // Shared_Dirty is accounted for by forkit's RSS
-                if (value = startsWith(line, "Private_Dirty:"))
+                if ((value = startsWith(line, "Private_Dirty:")))
                 {
                     numDirtyKb += atoi(value);
                 }
