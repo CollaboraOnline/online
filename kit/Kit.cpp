@@ -1072,19 +1072,8 @@ private:
         oss << "]";
         const auto msg = oss.str();
 
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        // Broadcast updated viewinfo to all _active_ connections.
-        // These are internal sockets, so unless WSD is chocked,
-        // no need to send on separate thread.
-        for (const auto& pair : _sessions)
-        {
-            const auto& session = pair.second;
-            if (!session->isCloseFrame() && session->isActive())
-            {
-                session->sendTextFrame(msg);
-            }
-        }
+        // Broadcast updated viewinfo to all clients.
+        sendTextFrame("client-all " + msg);
     }
 
 private:

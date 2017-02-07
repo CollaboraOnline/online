@@ -72,7 +72,7 @@ public:
         }
         else
         {
-            LOG_TRC(getName() << " enqueueing client message: " << data->abbr());
+            LOG_TRC(getName() << " enqueueing client message " << data->id());
             _senderQueue.enqueue(data);
         }
     }

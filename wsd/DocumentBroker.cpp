@@ -1037,16 +1037,33 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
     std::string sid;
     if (LOOLProtocol::parseNameValuePair(payload->forwardToken(), name, sid, '-') && name == "client")
     {
+        const auto& data = payload->data().data();
+        const auto& size = payload->size();
+
         std::unique_lock<std::mutex> lock(_mutex);
 
-        const auto it = _sessions.find(sid);
-        if (it != _sessions.end())
+        if (sid == "all")
         {
-            return it->second->handleKitToClientMessage(payload->data().data(), payload->size());
+            // Broadcast to all.
+            for (const auto& pair : _sessions)
+            {
+                if (!pair.second->isHeadless() && !pair.second->isCloseFrame())
+                {
+                    pair.second->handleKitToClientMessage(data, size);
+                }
+            }
         }
         else
         {
-            LOG_WRN("Client session [" << sid << "] not found to forward message: " << msg);
+            const auto it = _sessions.find(sid);
+            if (it != _sessions.end())
+            {
+                return it->second->handleKitToClientMessage(data, size);
+            }
+            else
+            {
+                LOG_WRN("Client session [" << sid << "] not found to forward message: " << msg);
+            }
         }
     }
     else

@@ -676,7 +676,6 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
         return true;
     }
 
-    LOG_TRC(getName() << " enqueue to client: " << message);
     enqueueSendMessage(payload);
 
     return true;
