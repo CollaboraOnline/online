@@ -7,6 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#ifndef INCLUDED_TRACEFILE_HPP
+#define INCLUDED_TRACEFILE_HPP
+
 #include <fstream>
 #include <mutex>
 #include <sstream>
@@ -17,6 +20,7 @@
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/DeflatingStream.h>
 #include <Poco/InflatingStream.h>
+#include <Poco/URI.h>
 
 #include "Protocol.hpp"
 #include "Log.hpp"
@@ -462,5 +466,7 @@ private:
     unsigned _indexIn;
     unsigned _indexOut;
 };
+
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

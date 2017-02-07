@@ -27,6 +27,7 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 
+#include "Replay.hpp"
 #include "TraceFile.hpp"
 #include "test/helpers.hpp"
 
@@ -78,68 +79,6 @@ long percentile(std::vector<long>& v, const double percentile)
     return v[k - 1] + d * (v[k] - v[k - 1]);
 }
 
-/// Connection class with WSD.
-class Connection
-{
-public:
-    static
-    std::shared_ptr<Connection> create(const std::string& serverURI, const std::string& documentURL, const std::string& sessionId)
-    {
-        Poco::URI uri(serverURI);
-
-        std::unique_lock<std::mutex> lock(Mutex);
-
-        // Load a document and get its status.
-        std::cout << "NewSession [" << sessionId << "]: " << uri.toString() << "... ";
-
-        std::string encodedUri;
-        Poco::URI::encode(documentURL, ":/?", encodedUri);
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/" + encodedUri + "/ws");
-        Poco::Net::HTTPResponse response;
-        auto ws = helpers::connectLOKit(uri, request, response, sessionId + ' ');
-        std::cout << "Connected.\n";
-        return std::shared_ptr<Connection>(new Connection(documentURL, sessionId, ws));
-    }
-
-    const std::string& getName() const { return _name; }
-    std::shared_ptr<LOOLWebSocket> getWS() const { return _ws; };
-
-    /// Send a command to the server.
-    void send(const std::string& data) const
-    {
-        helpers::sendTextFrame(_ws, data, _name);
-    }
-
-    /// Poll socket until expected prefix is fetched, or timeout.
-    std::vector<char> recv(const std::string& prefix)
-    {
-        return helpers::getResponseMessage(_ws, prefix, _name);
-    }
-
-    /// Request loading the document and wait for completion.
-    bool load()
-    {
-        send("load url=" + _documentURL);
-        return helpers::isDocumentLoaded(_ws, _name);
-    }
-
-private:
-    Connection(const std::string& documentURL, const std::string& sessionId, std::shared_ptr<LOOLWebSocket>& ws) :
-        _documentURL(documentURL),
-        _sessionId(sessionId),
-        _name(sessionId + ' '),
-        _ws(ws)
-    {
-    }
-
-private:
-    const std::string _documentURL;
-    const std::string _sessionId;
-    const std::string _name;
-    std::shared_ptr<LOOLWebSocket> _ws;
-    static std::mutex Mutex;
-};
-
 std::mutex Connection::Mutex;
 
 //static constexpr auto FIRST_ROW_TILES = "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840";
@@ -147,13 +86,11 @@ static constexpr auto FIRST_PAGE_TILES = "tilecombine part=0 width=256 height=25
 static constexpr auto FIRST_PAGE_TILE_COUNT = 16;
 
 /// Main thread class to replay a trace file.
-class Worker: public Runnable
+class Worker: public Replay
 {
 public:
 
-    Worker(Stress& app, const std::string& uri) :
-        _app(app),
-        _uri(uri)
+    Worker(const std::string& serverUri, const std::string& uri) : Replay(serverUri, uri, Stress::NoDelay)
     {
     }
 
@@ -256,7 +193,7 @@ private:
 
         static std::atomic<unsigned> SessionId;
         const auto sessionId = ++SessionId;
-        auto connection = Connection::create(_app._serverURI, _uri, std::to_string(sessionId));
+        auto connection = Connection::create(_serverUri, _uri, std::to_string(sessionId));
 
         connection->load();
 
@@ -268,132 +205,7 @@ private:
         }
     }
 
-    void replay()
-    {
-        TraceFileReader traceFile(_uri);
-
-        auto epochFile(traceFile.getEpoch());
-        auto epochCurrent(std::chrono::steady_clock::now());
-
-        for (;;)
-        {
-            const auto rec = traceFile.getNextRecord();
-            if (rec.Dir == TraceFileRecord::Direction::Invalid)
-            {
-                // End of trace file.
-                break;
-            }
-
-            const auto deltaCurrent = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - epochCurrent).count();
-            const auto deltaFile = rec.TimestampNs - epochFile;
-            const auto delay = (Stress::NoDelay ? 0 : deltaFile - deltaCurrent);
-            if (delay > 0)
-            {
-                if (delay > 1e6)
-                {
-                    std::cout << "Sleeping for " << delay / 1000 << " ms.\n";
-                }
-
-                std::this_thread::sleep_for(std::chrono::microseconds(delay));
-            }
-
-            if (rec.Dir == TraceFileRecord::Direction::Event)
-            {
-                // Meta info about about an event.
-                static const std::string NewSession("NewSession: ");
-                static const std::string EndSession("EndSession: ");
-
-                if (rec.Payload.find(NewSession) == 0)
-                {
-                    const auto uriOrig = rec.Payload.substr(NewSession.size());
-                    std::string uri;
-                    Poco::URI::decode(uriOrig, uri);
-                    auto it = _sessions.find(uri);
-                    if (it != _sessions.end())
-                    {
-                        // Add a new session.
-                        if (it->second.find(rec.SessionId) != it->second.end())
-                        {
-                            std::cout << "ERROR: session [" << rec.SessionId << "] already exists on doc [" << uri << "]\n";
-                        }
-                        else
-                        {
-                            it->second.emplace(rec.SessionId, Connection::create(_app._serverURI, uri, rec.SessionId));
-                        }
-                    }
-                    else
-                    {
-                        std::cout << "New Document: " << uri << "\n";
-                        _childToDoc.emplace(rec.Pid, uri);
-                        _sessions[uri].emplace(rec.SessionId, Connection::create(_app._serverURI, uri, rec.SessionId));
-                    }
-                }
-                else if (rec.Payload.find(EndSession) == 0)
-                {
-                    const auto uriOrig = rec.Payload.substr(EndSession.size());
-                    std::string uri;
-                    Poco::URI::decode(uriOrig, uri);
-                    auto it = _sessions.find(uri);
-                    if (it != _sessions.end())
-                    {
-                        std::cout << "EndSession [" << rec.SessionId << "]: " << uri << "\n";
-
-                        it->second.erase(rec.SessionId);
-                        if (it->second.empty())
-                        {
-                            std::cout << "End Doc [" << uri << "].\n";
-                            _sessions.erase(it);
-                            _childToDoc.erase(rec.Pid);
-                        }
-                    }
-                    else
-                    {
-                        std::cout << "ERROR: Doc [" << uri << "] does not exist.\n";
-                    }
-                }
-            }
-            else if (rec.Dir == TraceFileRecord::Direction::Incoming)
-            {
-                auto docIt = _childToDoc.find(rec.Pid);
-                if (docIt != _childToDoc.end())
-                {
-                    const auto& uri = docIt->second;
-                    auto it = _sessions.find(uri);
-                    if (it != _sessions.end())
-                    {
-                        const auto sessionIt = it->second.find(rec.SessionId);
-                        if (sessionIt != it->second.end())
-                        {
-                            // Send the command.
-                            sessionIt->second->send(rec.Payload);
-                        }
-                    }
-                    else
-                    {
-                        std::cout << "ERROR: Doc [" << uri << "] does not exist.\n";
-                    }
-                }
-                else
-                {
-                    std::cout << "ERROR: Unknown PID [" << rec.Pid << "] maps to no active document.\n";
-                }
-            }
-
-            epochCurrent = std::chrono::steady_clock::now();
-            epochFile = rec.TimestampNs;
-        }
-    }
-
 private:
-    Stress& _app;
-    const std::string _uri;
-
-    /// LOK child process PID to Doc URI map.
-    std::map<unsigned, std::string> _childToDoc;
-
-    /// Doc URI to _sessions map. _sessions are maps of SessionID to Connection.
-    std::map<std::string, std::map<std::string, std::shared_ptr<Connection>>> _sessions;
-
     std::vector<long> _latencyStats;
     std::vector<long> _renderingStats;
     std::vector<long> _cacheStats;
@@ -486,7 +298,7 @@ int Stress::main(const std::vector<std::string>& args)
         std::cout << "Arg: " << args[i] << std::endl;
         for (unsigned j = 0; j < _numClients; ++j, ++index)
         {
-            workers.emplace_back(new Worker(*this, args[i]));
+            workers.emplace_back(new Worker(_serverURI, args[i]));
             clients[index].reset(new Thread());
             clients[index]->start(*workers[workers.size() - 1]);
         }
