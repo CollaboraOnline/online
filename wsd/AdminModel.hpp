@@ -74,7 +74,7 @@ public:
     const std::map<std::string, View>& getViews() const { return _views; }
 
     void updateLastActivityTime() { _lastActivity = std::time(nullptr); }
-    void updateMemoryDirty(int dirty) { _memoryDirty = dirty; }
+    bool updateMemoryDirty(int dirty);
     int getMemoryDirty() const { return _memoryDirty; }
 
 private:

@@ -546,6 +546,12 @@ section). Others are just response messages to some client command.
     <memory consumed> in kilobytes sent from admin -> client after every
     mem_stats_interval (see `set` command for list of settings)
 
+[*] propchange <pid> <property> <new-value>
+
+    Notifies of a property change on a pid's property. Properties can
+    include:
+       "mem" <memory consumed> - in kilobytes of the process.
+
 [*] resetidle <pid>
 
     <pid> process id hosting the document

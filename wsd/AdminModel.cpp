@@ -399,11 +399,23 @@ void AdminModel::updateLastActivityTime(const std::string& docKey)
     }
 }
 
+bool Document::updateMemoryDirty(int dirty)
+{
+    if (_memoryDirty == dirty)
+        return false;
+    _memoryDirty = dirty;
+    return true;
+}
+
 void AdminModel::updateMemoryDirty(const std::string& docKey, int dirty)
 {
     auto docIt = _documents.find(docKey);
-    if (docIt != _documents.end())
-        docIt->second.updateMemoryDirty(dirty);
+    if (docIt != _documents.end() &&
+        docIt->second.updateMemoryDirty(dirty))
+    {
+        notify("propchange " + std::to_string(docIt->second.getPid()) +
+               " mem " + std::to_string(dirty));
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -23,7 +23,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		this.base.call(this);
 
 		this.socket.send('documents');
-		this.socket.send('subscribe adddoc rmdoc resetidle');
+		this.socket.send('subscribe adddoc rmdoc resetidle propchange');
 
 		this._getBasicStats();
 		var socketOverview = this;
@@ -113,7 +113,8 @@ var AdminSocketOverview = AdminSocketBase.extend({
 									    .text(sViews);
 				$rowContainer.append($views);
 
-				$mem = $(document.createElement('td')).text(Util.humanizeMem(parseInt(sMem)));
+				$mem = $(document.createElement('td')).attr('id', 'docmem' + sPid)
+						.text(Util.humanizeMem(parseInt(sMem)));
 				$rowContainer.append($mem);
 
 				$docTime = $(document.createElement('td')).addClass('elapsed_time')
@@ -217,6 +218,20 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				$a = $(document.getElementById('active_users_count'));
 				nTotalViews = parseInt($a.text());
 				$a.text(nTotalViews - 1);
+			}
+		} else if (textMsg.startsWith('propchange')) {
+			textMsg = textMsg.substring('propchange'.length);
+			docProps = textMsg.trim().split(' ');
+			sPid = docProps[0];
+			sProp = docProps[1];
+			sValue = docProps[2];
+
+			$doc = $('#doc' + sPid);
+			if ($doc.length !== 0) {
+				if (sProp == 'mem') {
+					$mem = $('#docmem' + sPid);
+					$mem.text(Util.humanizeMem(parseInt(sValue)));
+				}
 			}
 		}
 	},
