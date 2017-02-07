@@ -97,7 +97,7 @@ public:
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_modelMutex); }
 
     void updateLastActivityTime(const std::string& docKey);
-    void updateMemoryPss(const std::string& docKey, int pss);
+    void updateMemoryDirty(const std::string& docKey, int dirty);
 
 private:
     Admin();

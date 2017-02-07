@@ -371,14 +371,14 @@ unsigned Admin::getTotalMemoryUsage()
 {
     Util::assertIsLocked(_modelMutex);
 
-    // PSS would be wrong for forkit since we will have one or
-    // more prespawned kits that will share their pages with forkit,
-    // but we don't count the kits unless and until a document is loaded.
-    // So RSS is a decent approximation (albeit slightly on the high side).
+    // To simplify and clarify this; since load, link and pre-init all
+    // inside the forkit - we should account all of our fixed cost of
+    // memory to the forkit; and then count only dirty pages in the clients
+    // since we know that they share everything else with the forkit.
     const size_t forkitRssKb = Util::getMemoryUsageRSS(_forKitPid);
     const size_t wsdPssKb = Util::getMemoryUsagePSS(Poco::Process::id());
-    const size_t kitsPssKb = _model.getKitsMemoryUsage();
-    const size_t totalMem = wsdPssKb + forkitRssKb + kitsPssKb;
+    const size_t kitsDirtyKb = _model.getKitsMemoryUsage();
+    const size_t totalMem = wsdPssKb + forkitRssKb + kitsDirtyKb;
 
     return totalMem;
 }
@@ -404,10 +404,10 @@ void Admin::updateLastActivityTime(const std::string& docKey)
     _model.updateLastActivityTime(docKey);
 }
 
-void Admin::updateMemoryPss(const std::string& docKey, int pss)
+void Admin::updateMemoryDirty(const std::string& docKey, int dirty)
 {
     std::unique_lock<std::mutex> modelLock(_modelMutex);
-    _model.updateMemoryPss(docKey, pss);
+    _model.updateMemoryDirty(docKey, dirty);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -759,10 +759,10 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
         }
         else if (command == "procmemstats:")
         {
-            int pss;
-            if (message->getTokenInteger("pss", pss))
+            int dirty;
+            if (message->getTokenInteger("dirty", dirty))
             {
-                Admin::instance().updateMemoryPss(_docKey, pss);
+                Admin::instance().updateMemoryDirty(_docKey, dirty);
             }
         }
         else

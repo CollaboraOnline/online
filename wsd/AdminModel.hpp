@@ -49,7 +49,7 @@ public:
         : _docKey(docKey),
           _pid(pid),
           _filename(filename),
-          _memoryPss(0),
+          _memoryDirty(0),
           _start(std::time(nullptr)),
           _lastActivity(_start)
     {
@@ -74,8 +74,8 @@ public:
     const std::map<std::string, View>& getViews() const { return _views; }
 
     void updateLastActivityTime() { _lastActivity = std::time(nullptr); }
-    void updateMemoryPss(int pss) { _memoryPss = pss; }
-    int getMemoryPss() const { return _memoryPss; }
+    void updateMemoryDirty(int dirty) { _memoryDirty = dirty; }
+    int getMemoryDirty() const { return _memoryDirty; }
 
 private:
     const std::string _docKey;
@@ -86,8 +86,8 @@ private:
     unsigned _activeViews = 0;
     /// Hosted filename
     std::string _filename;
-    /// The PSS of the document's Kit process.
-    int _memoryPss;
+    /// The dirty (ie. un-shared) memory of the document's Kit process.
+    int _memoryDirty;
 
     std::time_t _start;
     std::time_t _lastActivity;
@@ -178,7 +178,7 @@ public:
     void removeDocument(const std::string& docKey);
 
     void updateLastActivityTime(const std::string& docKey);
-    void updateMemoryPss(const std::string& docKey, int pss);
+    void updateMemoryDirty(const std::string& docKey, int dirty);
 
 private:
     std::string getMemStats();
@@ -193,7 +193,7 @@ private:
     std::map<int, Subscriber> _subscribers;
     std::map<std::string, Document> _documents;
 
-    /// The last N total memory PSS.
+    /// The last N total memory Dirty size.
     std::list<unsigned> _memStats;
     unsigned _memStatsSize = 100;
 

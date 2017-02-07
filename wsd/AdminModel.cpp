@@ -137,7 +137,7 @@ unsigned AdminModel::getKitsMemoryUsage()
     {
         if (!it.second.isExpired())
         {
-            const auto bytes = it.second.getMemoryPss();
+            const auto bytes = it.second.getMemoryDirty();
             if (bytes > 0)
             {
                 totalMem += bytes;
@@ -280,7 +280,7 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
     }
     else
     {
-        oss << _documents.begin()->second.getMemoryPss();
+        oss << _documents.begin()->second.getMemoryDirty();
     }
 
     notify(oss.str());
@@ -377,7 +377,7 @@ std::string AdminModel::getDocuments() const
             oss << it.second.getPid() << ' '
                 << encodedFilename << ' '
                 << it.second.getActiveViews() << ' '
-                << it.second.getMemoryPss() << ' '
+                << it.second.getMemoryDirty() << ' '
                 << it.second.getElapsedTime() << ' '
                 << it.second.getIdleTime() << " \n ";
         }
@@ -399,13 +399,11 @@ void AdminModel::updateLastActivityTime(const std::string& docKey)
     }
 }
 
-void AdminModel::updateMemoryPss(const std::string& docKey, int pss)
+void AdminModel::updateMemoryDirty(const std::string& docKey, int dirty)
 {
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end())
-    {
-        docIt->second.updateMemoryPss(pss);
-    }
+        docIt->second.updateMemoryDirty(dirty);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

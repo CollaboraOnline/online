@@ -151,8 +151,8 @@ namespace Util
             while (fgets(line, sizeof (line), file))
             {
                 const char *value;
-                if ((value = startsWith(line, "Private_Dirty:")) ||
-                    (value = startsWith(line, "Shared_Dirty:")))
+                // Shared_Dirty is accounted for by forkit's RSS
+                if (value = startsWith(line, "Private_Dirty:"))
                 {
                     numDirtyKb += atoi(value);
                 }
