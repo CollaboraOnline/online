@@ -1580,7 +1580,7 @@ inline ServerSocket* getServerSocket(int portNumber, bool reuseDetails)
             }
             catch (const Exception&)
             {
-                LOG_INF("Conection failed, so hopefully we are the only loolwsd on this port");
+                LOG_INF("Connection failed, so hopefully we are the only loolwsd on this port");
             }
         }
 
