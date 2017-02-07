@@ -46,7 +46,6 @@ using namespace LOOLProtocol;
 using Poco::Exception;
 using Poco::Net::Socket;
 using Poco::Net::WebSocket;
-using Poco::StringTokenizer;
 
 Session::Session(const std::string& name, const std::string& id, const std::shared_ptr<LOOLWebSocket>& ws) :
     _id(id),
