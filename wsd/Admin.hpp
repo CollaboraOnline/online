@@ -108,7 +108,7 @@ private:
     int _forKitPid;
 
     Poco::Util::Timer _memStatsTimer;
-    std::unique_ptr<MemoryStatsTask> _memStatsTask;
+    Poco::AutoPtr<MemoryStatsTask> _memStatsTask;
     unsigned _memStatsTaskInterval = 5000;
 
     Poco::Util::Timer _cpuStatsTimer;

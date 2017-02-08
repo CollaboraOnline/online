@@ -294,8 +294,8 @@ Admin::Admin() :
     LOG_TRC("Total memory used: " << totalMem);
     _model.addMemStats(totalMem);
 
-    _memStatsTask.reset(new MemoryStatsTask(this));
-    _memStatsTimer.schedule(_memStatsTask.get(), _memStatsTaskInterval, _memStatsTaskInterval);
+    _memStatsTask = new MemoryStatsTask(this);
+    _memStatsTimer.schedule(_memStatsTask, _memStatsTaskInterval, _memStatsTaskInterval);
 
     _cpuStatsTask = new CpuStats(this);
     _cpuStatsTimer.schedule(_cpuStatsTask, _cpuStatsTaskInterval, _cpuStatsTaskInterval);
@@ -353,7 +353,7 @@ void Admin::rescheduleMemTimer(unsigned interval)
 {
     _memStatsTask->cancel();
     _memStatsTaskInterval = interval;
-    _memStatsTask.reset(new MemoryStatsTask(this));
+    _memStatsTask = new MemoryStatsTask(this);
     _memStatsTimer.schedule(_memStatsTask.get(), _memStatsTaskInterval, _memStatsTaskInterval);
     LOG_INF("Memory stats interval changed - New interval: " << interval);
 }
