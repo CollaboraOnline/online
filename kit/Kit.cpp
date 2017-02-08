@@ -1758,7 +1758,7 @@ void lokit_main(const std::string& childRoot,
 
         // Open websocket connection between the child process and WSD.
         HTTPClientSession cs("127.0.0.1", MasterPortNumber);
-        cs.setTimeout(0);
+        cs.setTimeout(Poco::Timespan(10, 0)); // 10 second
         HTTPRequest request(HTTPRequest::HTTP_GET, requestUrl);
         HTTPResponse response;
         auto ws = std::make_shared<LOOLWebSocket>(cs, request, response);
