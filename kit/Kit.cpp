@@ -65,6 +65,10 @@
 
 #include "common/SigUtil.hpp"
 
+#ifdef FUZZER
+#include <kit/DummyLibreOfficeKit.hpp>
+#endif
+
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
 #define LIB_MERGED      "lib" "mergedlo" ".so"
 
@@ -1716,6 +1720,9 @@ void lokit_main(const std::string& childRoot,
             LibreOfficeKit* kit = UnitKit::get().lok_init(instdir, userdir);
 #else
             LibreOfficeKit* kit = nullptr;
+#ifdef FUZZER
+            kit = dummy_lok_init_2(instdir, userdir);
+#endif
 #endif
             if (!kit)
             {

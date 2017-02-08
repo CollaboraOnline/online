@@ -128,7 +128,11 @@ void getDocumentPathAndURL(const std::string& docFilename, std::string& document
 inline
 void sendTextFrame(LOOLWebSocket& socket, const std::string& string, const std::string& name = "")
 {
+#ifndef FUZZER
     std::cerr << name << "Sending " << string.size() << " bytes: " << LOOLProtocol::getAbbreviatedMessage(string) << std::endl;
+#else
+    (void) name;
+#endif
     socket.sendFrame(string.data(), string.size());
 }
 
