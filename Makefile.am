@@ -86,7 +86,8 @@ loolforkit_SOURCES = $(loolforkit_sources) \
 
 loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
                          $(loolforkit_sources) \
-                         $(shared_sources)
+                         $(shared_sources) \
+                         kit/DummyLibreOfficeKit.cpp
 
 # build a binary with no caps to help debugging
 loolforkit_nocaps_SOURCES = $(loolforkit_SOURCES)
@@ -136,8 +137,9 @@ shared_headers = common/Common.hpp \
                  common/SpookyV2.h
 
 kit_headers = kit/ChildSession.hpp \
+              kit/DummyLibreOfficeKit.hpp \
               kit/Kit.hpp \
-	      kit/KitHelper.hpp
+              kit/KitHelper.hpp
 
 noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  bundled/include/LibreOfficeKit/LibreOfficeKit.h \
