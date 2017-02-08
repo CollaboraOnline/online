@@ -2007,6 +2007,8 @@ void LOOLWSD::dumpNewSessionTrace(const std::string& id, const std::string& sess
 
 void LOOLWSD::dumpEndSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri)
 {
+    if (TraceDumper)
+    {
         try
         {
             TraceDumper->endSession(id, sessionId, uri);
@@ -2015,6 +2017,7 @@ void LOOLWSD::dumpEndSessionTrace(const std::string& id, const std::string& sess
         {
             LOG_WRN("Exception in tracer newSession: " << exc.what());
         }
+    }
 }
 
 void LOOLWSD::dumpEventTrace(const std::string& id, const std::string& sessionId, const std::string& data)
