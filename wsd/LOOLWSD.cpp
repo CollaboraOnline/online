@@ -405,6 +405,7 @@ static int rebalanceChildren(int balance)
     return 0;
 }
 
+#ifndef KIT_IN_PROCESS
 /// Called on startup only.
 static void preForkChildren(std::unique_lock<std::mutex>& lock)
 {
@@ -432,6 +433,7 @@ static void preForkChildren(std::unique_lock<std::mutex>& lock)
         throw std::runtime_error(msg);
     }
 }
+#endif
 
 /// Proactively spawn children processes
 /// to load documents with alacrity.
