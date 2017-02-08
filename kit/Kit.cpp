@@ -67,6 +67,7 @@
 
 #ifdef FUZZER
 #include <kit/DummyLibreOfficeKit.hpp>
+#include <wsd/LOOLWSD.hpp>
 #endif
 
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
@@ -1721,7 +1722,8 @@ void lokit_main(const std::string& childRoot,
 #else
             LibreOfficeKit* kit = nullptr;
 #ifdef FUZZER
-            kit = dummy_lok_init_2(instdir, userdir);
+            if (LOOLWSD::DummyLOK)
+                kit = dummy_lok_init_2(instdir, userdir);
 #endif
 #endif
             if (!kit)
@@ -1884,6 +1886,10 @@ void lokit_main(const std::string& childRoot,
 /// Initializes LibreOfficeKit for cross-fork re-use.
 bool globalPreinit(const std::string &loTemplate)
 {
+#ifdef FUZZER
+    if (LOOLWSD::DummyLOK)
+        return true;
+#endif
     const std::string libSofficeapp = loTemplate + "/program/" LIB_SOFFICEAPP;
     const std::string libMerged = loTemplate + "/program/" LIB_MERGED;
 

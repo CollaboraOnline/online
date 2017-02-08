@@ -1703,6 +1703,7 @@ std::atomic<int> LOOLWSD::ForKitProcId(-1);
 bool LOOLWSD::NoCapsForKit = false;
 #endif
 #ifdef FUZZER
+bool LOOLWSD::DummyLOK = false;
 std::string LOOLWSD::FuzzFileName = "";
 #endif
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
@@ -2090,6 +2091,9 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
 #endif
 
 #ifdef FUZZER
+    optionSet.addOption(Option("dummy-lok", "", "Use empty (dummy) LibreOfficeKit implementation instead a real LibreOffice.")
+                        .required(false)
+                        .repeatable(false));
     optionSet.addOption(Option("fuzz", "", "Read input from the specified file for fuzzing.")
                         .required(false)
                         .repeatable(false)
@@ -2142,7 +2146,9 @@ void LOOLWSD::handleOption(const std::string& optionName,
 #endif
 
 #ifdef FUZZER
-    if (optionName == "fuzz")
+    if (optionName == "dummy-lok")
+        DummyLOK = true;
+    else if (optionName == "fuzz")
         FuzzFileName = value;
 #endif
 }
