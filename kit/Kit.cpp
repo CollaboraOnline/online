@@ -40,7 +40,6 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/Socket.h>
-#include <Poco/NotificationQueue.h>
 #include <Poco/Process.h>
 #include <Poco/Runnable.h>
 #include <Poco/StringTokenizer.h>
@@ -1563,8 +1562,10 @@ void lokit_main(const std::string& childRoot,
                 bool queryVersion,
                 bool displayVersion)
 {
+#ifndef FUZZER
     SigUtil::setFatalSignals();
     SigUtil::setTerminationSignals();
+#endif
 
     Util::setThreadName("loolkit");
 

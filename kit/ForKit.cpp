@@ -334,8 +334,10 @@ int main(int argc, char** argv)
         }
     }
 
+#ifndef FUZZER
     SigUtil::setFatalSignals();
     SigUtil::setTerminationSignals();
+#endif
 
     // Initialization
     const bool logToFile = std::getenv("LOOL_LOGFILE");

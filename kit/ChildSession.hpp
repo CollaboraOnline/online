@@ -16,7 +16,6 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
-#include <Poco/NotificationQueue.h>
 #include <Poco/Thread.h>
 
 #include "Common.hpp"

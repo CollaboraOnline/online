@@ -2314,8 +2314,10 @@ std::mutex Connection::Mutex;
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
+#ifndef FUZZER
     SigUtil::setFatalSignals();
     SigUtil::setTerminationSignals();
+#endif
 
     // down-pay all the forkit linking cost once & early.
     Environment::set("LD_BIND_NOW", "1");
