@@ -49,11 +49,7 @@ protected:
     int  main(const std::vector<std::string>& args) override;
 };
 
-using Poco::Net::HTTPRequest;
-using Poco::Net::HTTPResponse;
-using Poco::Runnable;
 using Poco::Thread;
-using Poco::URI;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
 using Poco::Util::Option;
