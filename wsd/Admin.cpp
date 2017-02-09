@@ -354,7 +354,7 @@ void Admin::rescheduleMemTimer(unsigned interval)
     _memStatsTask->cancel();
     _memStatsTaskInterval = interval;
     _memStatsTask = new MemoryStatsTask(this);
-    _memStatsTimer.schedule(_memStatsTask.get(), _memStatsTaskInterval, _memStatsTaskInterval);
+    _memStatsTimer.schedule(_memStatsTask, _memStatsTaskInterval, _memStatsTaskInterval);
     LOG_INF("Memory stats interval changed - New interval: " << interval);
 }
 

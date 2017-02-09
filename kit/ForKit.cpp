@@ -439,8 +439,10 @@ int main(int argc, char** argv)
     if (!std::getenv("LD_BIND_NOW"))
         LOG_INF("Note: LD_BIND_NOW is not set.");
 
-    if (!haveCorrectCapabilities())
+    if (!NoCapsForKit && !haveCorrectCapabilities())
+    {
         return Application::EXIT_SOFTWARE;
+    }
 
     // Initialize LoKit
     if (!globalPreinit(loTemplate))

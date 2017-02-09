@@ -421,7 +421,8 @@ static void preForkChildren(std::unique_lock<std::mutex>& lock)
     UnitWSD::get().preSpawnCount(numPreSpawn);
 
     // Wait until we have at least one child.
-    const auto timeoutMs = CHILD_TIMEOUT_MS * 3;
+    // With valgrind we need extended time to spawn kits.
+    const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 150 : 3);
     const auto timeout = std::chrono::milliseconds(timeoutMs);
     LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
     NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); });
@@ -500,8 +501,10 @@ static std::shared_ptr<ChildProcess> getNewChild()
             return nullptr;
         }
 
-        LOG_TRC("Waiting for a new child for a max of " << CHILD_TIMEOUT_MS << " ms.");
-        const auto timeout = chrono::milliseconds(CHILD_TIMEOUT_MS);
+        // With valgrind we need extended time to spawn kits.
+        const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 100 : 1);
+        LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
+        const auto timeout = chrono::milliseconds(timeoutMs);
         if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
         {
             auto child = NewChildren.back();
