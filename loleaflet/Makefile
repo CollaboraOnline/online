@@ -13,6 +13,7 @@ MINIFY=false
 
 .PHONY: build
 build:
+	rm -rf node_modules
 	npm install
 	jake lint
 	jake build
