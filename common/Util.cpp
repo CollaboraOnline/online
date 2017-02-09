@@ -196,33 +196,40 @@ namespace Util
 
     size_t getMemoryUsageRSS(const Poco::Process::PID pid)
     {
-        if (pid <= 0)
-        {
-            return 0;
-        }
+        static const auto pageSizeBytes = getpagesize();
 
-        try
+        if (pid > 0)
         {
-            const auto cmd = "ps o rss= -p " + std::to_string(pid);
-            FILE* fp = popen(cmd.c_str(), "r");
-            if (fp == nullptr)
+            const auto cmd = "/proc/" + std::to_string(pid) + "/stat";
+            FILE* fp = fopen(cmd.c_str(), "r");
+            if (fp != nullptr)
             {
-                return 0;
-            }
+                size_t rss = 0;
+                char line[4096] = { 0 };
+                if (fgets(line, sizeof (line), fp))
+                {
+                    const std::string s(line);
+                    int index = 1;
+                    auto pos = s.find(' ');
+                    while (pos != std::string::npos)
+                    {
+                        if (index == 23)
+                        {
+                            // Convert from memory pages to KB.
+                            rss = strtol(&s[pos], nullptr, 10);
+                            rss *= pageSizeBytes;
+                            rss /= 1024;
+                            break;
+                        }
 
-            std::string sResponse;
-            char cmdBuffer[1024];
-            while (fgets(cmdBuffer, sizeof(cmdBuffer) - 1, fp) != nullptr)
-            {
-                sResponse += cmdBuffer;
-            }
-            pclose(fp);
+                        ++index;
+                        pos = s.find(' ', pos + 1);
+                    }
+                }
 
-            return std::stoi(sResponse);
-        }
-        catch (const std::exception&)
-        {
-            LOG_WRN("Trying to find memory of invalid/dead PID " << pid);
+                fclose(fp);
+                return rss;
+            }
         }
 
         return 0;
