@@ -422,7 +422,11 @@ static void preForkChildren(std::unique_lock<std::mutex>& lock)
 
     // Wait until we have at least one child.
     // With valgrind we need extended time to spawn kits.
+#ifdef KIT_IN_PROCESS
+    const auto timeoutMs = CHILD_TIMEOUT_MS * 3;
+#else
     const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 150 : 3);
+#endif
     const auto timeout = std::chrono::milliseconds(timeoutMs);
     LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
     NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); });
@@ -502,7 +506,11 @@ static std::shared_ptr<ChildProcess> getNewChild()
         }
 
         // With valgrind we need extended time to spawn kits.
+#ifdef KIT_IN_PROCESS
+        const auto timeoutMs = CHILD_TIMEOUT_MS;
+#else
         const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 100 : 1);
+#endif
         LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
         const auto timeout = chrono::milliseconds(timeoutMs);
         if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
