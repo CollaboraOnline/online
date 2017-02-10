@@ -243,7 +243,7 @@ void Stress::defineOptions(OptionSet& optionSet)
 }
 
 void Stress::handleOption(const std::string& optionName,
-                        const std::string& value)
+                          const std::string& value)
 {
     Application::handleOption(optionName, value);
 

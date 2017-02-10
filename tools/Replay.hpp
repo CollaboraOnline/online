@@ -45,9 +45,20 @@ public:
     std::shared_ptr<LOOLWebSocket> getWS() const { return _ws; };
 
     /// Send a command to the server.
-    void send(const std::string& data) const
+    bool send(const std::string& data) const
     {
-        helpers::sendTextFrame(_ws, data, _name);
+        try
+        {
+            helpers::sendTextFrame(_ws, data, _name);
+            return true;
+        }
+        catch (const std::exception& exc)
+        {
+            std::cout << "Error in " << _name << " while sending ["
+                      << data << "]: " << exc.what() << std::endl;
+        }
+
+        return false;
     }
 
     /// Poll socket until expected prefix is fetched, or timeout.
@@ -96,7 +107,7 @@ public:
     {
         try
         {
-	    replay();
+            replay();
         }
         catch (const Poco::Exception &e)
         {
