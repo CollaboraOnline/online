@@ -366,9 +366,9 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
         // Use the local temp file's timestamp.
         _lastFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
         _tileCache.reset(new TileCache(uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
-
-        LOOLWSD::dumpNewSessionTrace(getJailId(), sessionId, _uriOrig, _storage->getRootFilePath());
     }
+
+    LOOLWSD::dumpNewSessionTrace(getJailId(), sessionId, _uriOrig, _storage->getRootFilePath());
 
     // Since document has been loaded, send the stats if its WOPI
     if (wopiStorage != nullptr)
