@@ -312,6 +312,7 @@ public:
     Poco::Process::PID getPid() const { return _childProcess->getPid(); }
 
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
+    std::unique_lock<std::mutex> getDeferredLock() { return std::unique_lock<std::mutex>(_mutex, std::defer_lock); }
 
     void updateLastActivityTime();
 

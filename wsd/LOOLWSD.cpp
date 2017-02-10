@@ -281,7 +281,13 @@ bool cleanupDocBrokers()
     for (auto it = DocBrokers.begin(); it != DocBrokers.end(); )
     {
         auto docBroker = it->second;
-        auto lock = docBroker->getLock();
+        auto lock = docBroker->getDeferredLock();
+        if (!lock.try_lock())
+        {
+            // Document busy at the moment, cleanup later.
+            ++it;
+            continue;
+        }
 
         // Remove idle documents after 1 hour.
         const bool idle = (docBroker->getIdleTimeSecs() >= 3600);
