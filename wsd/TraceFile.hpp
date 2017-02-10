@@ -101,7 +101,9 @@ public:
 
         if (_takeSnapshot)
         {
-            const auto url = Poco::URI(uri).getPath();
+            std::string decodedUri;
+            Poco::URI::decode(uri, decodedUri);
+            const auto url = Poco::URI(decodedUri).getPath();
             const auto it = _urlToSnapshot.find(url);
             if (it != _urlToSnapshot.end())
             {
