@@ -239,7 +239,14 @@ protected:
                         if (sessionIt != it->second.end())
                         {
                             // Send the command.
-                            sessionIt->second->send(rec.Payload);
+                            if (!sessionIt->second->send(rec.Payload))
+                            {
+                                it->second.erase(sessionIt);
+                            }
+                        }
+                        else
+                        {
+                            std::cout << "ERROR: Session [" << rec.SessionId << "] does not exist.\n";
                         }
                     }
                     else
@@ -251,6 +258,10 @@ protected:
                 {
                     std::cout << "ERROR: Unknown PID [" << rec.Pid << "] maps to no active document.\n";
                 }
+            }
+            else
+            {
+                std::cout << "ERROR: Unknown trace file direction [" << static_cast<char>(rec.Dir) << "].\n";
             }
 
             epochCurrent = std::chrono::steady_clock::now();
