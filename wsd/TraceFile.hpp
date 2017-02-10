@@ -45,6 +45,14 @@ public:
     {
     }
 
+    std::string toString() const
+    {
+        std::ostringstream oss;
+        oss << static_cast<char>(Dir) << Pid << static_cast<char>(Dir)
+            << SessionId << static_cast<char>(Dir) << Payload;
+        return oss.str();
+    }
+
     Direction Dir;
     unsigned TimestampNs;
     unsigned Pid;
@@ -308,6 +316,7 @@ public:
     TraceFileReader(const std::string& path) :
         _compressed(path.size() > 2 && path.substr(path.size() - 2) == "gz"),
         _epochStart(0),
+        _epochEnd(0),
         _stream(path, _compressed ? std::ios::binary : std::ios::in),
         _inflater(_stream, Poco::InflatingStreamBuf::STREAM_GZIP),
         _index(0),
@@ -322,7 +331,8 @@ public:
         _stream.close();
     }
 
-    Poco::Int64 getEpoch() const { return _epochStart; }
+    Poco::Int64 getEpochStart() const { return _epochStart; }
+    Poco::Int64 getEpochEnd() const { return _epochEnd; }
 
     TraceFileRecord getNextRecord()
     {
@@ -402,6 +412,7 @@ private:
         _indexOut = advance(-1, TraceFileRecord::Direction::Outgoing);
 
         _epochStart = _records[0].TimestampNs;
+        _epochEnd = _records[_records.size() - 1].TimestampNs;
     }
 
     static bool extractRecord(const std::string& s, TraceFileRecord& rec)
@@ -459,6 +470,7 @@ private:
 private:
     const bool _compressed;
     Poco::Int64 _epochStart;
+    Poco::Int64 _epochEnd;
     std::ifstream _stream;
     Poco::InflatingInputStream _inflater;
     std::vector<TraceFileRecord> _records;

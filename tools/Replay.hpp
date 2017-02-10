@@ -114,8 +114,11 @@ protected:
     {
         TraceFileReader traceFile(_uri);
 
-        auto epochFile(traceFile.getEpoch());
+        auto epochFile(traceFile.getEpochStart());
         auto epochCurrent(std::chrono::steady_clock::now());
+
+        const auto replayDuration = (traceFile.getEpochEnd() - epochFile);
+        std::cout << "Replaying file [" << _uri << "] of " << replayDuration / 1000000. << " second length." << std::endl;
 
         for (;;)
         {
@@ -138,6 +141,8 @@ protected:
 
                 std::this_thread::sleep_for(std::chrono::microseconds(delay));
             }
+
+            std::cout << rec.toString() << std::endl;
 
             if (rec.Dir == TraceFileRecord::Direction::Event)
             {
