@@ -156,7 +156,9 @@ using Poco::ProcessHandle;
 using Poco::StreamCopier;
 using Poco::StringTokenizer;
 using Poco::TemporaryFile;
+#if FUZZER
 using Poco::Thread;
+#endif
 using Poco::ThreadPool;
 using Poco::URI;
 using Poco::Util::Application;

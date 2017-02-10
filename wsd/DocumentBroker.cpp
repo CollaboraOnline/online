@@ -37,7 +37,6 @@
 using namespace LOOLProtocol;
 
 using Poco::JSON::Object;
-using Poco::StringTokenizer;
 
 void ChildProcess::socketProcessor()
 {
