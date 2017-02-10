@@ -72,6 +72,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testReloadWhileDisconnecting);
     CPPUNIT_TEST(testExcelLoad);
     CPPUNIT_TEST(testPaste);
+    CPPUNIT_TEST(testPasteBlank);
     CPPUNIT_TEST(testLargePaste);
     CPPUNIT_TEST(testRenderingOptions);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithoutPassword);
@@ -124,6 +125,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testReloadWhileDisconnecting();
     void testExcelLoad();
     void testPaste();
+    void testPasteBlank();
     void testLargePaste();
     void testRenderingOptions();
     void testPasswordProtectedDocumentWithoutPassword();
@@ -765,6 +767,32 @@ void HTTPWSTest::testPaste()
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
         const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testPasteBlank()
+{
+    const auto testname = "pasteBlank ";
+    try
+    {
+        // Load a document and make it empty, then paste nothing into it.
+        auto socket = loadDocAndGetSocket("hello.odt", _uri, testname);
+
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "uno .uno:Delete", testname);
+
+        // Paste nothing into it.
+        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8", testname);
+
+        // Check if the document contains the pasted text.
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
+        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: "), selection);
     }
     catch (const Poco::Exception& exc)
     {

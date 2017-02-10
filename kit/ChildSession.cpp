@@ -648,8 +648,8 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
 bool ChildSession::paste(const char* buffer, int length, const std::vector<std::string>& tokens)
 {
     std::string mimeType;
-
-    if (tokens.size() < 2 || !getTokenString(tokens[1], "mimetype", mimeType))
+    if (tokens.size() < 2 || !getTokenString(tokens[1], "mimetype", mimeType) ||
+        mimeType.empty())
     {
         sendTextFrame("error: cmd=paste kind=syntax");
         return false;
@@ -657,13 +657,15 @@ bool ChildSession::paste(const char* buffer, int length, const std::vector<std::
 
     const std::string firstLine = getFirstLine(buffer, length);
     const char* data = buffer + firstLine.size() + 1;
-    const size_t size = length - firstLine.size() - 1;
+    const int size = length - firstLine.size() - 1;
+    if (size > 0)
+    {
+        std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
 
-    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+        getLOKitDocument()->setView(_viewId);
 
-    getLOKitDocument()->setView(_viewId);
-
-    getLOKitDocument()->paste(mimeType.c_str(), data, size);
+        getLOKitDocument()->paste(mimeType.c_str(), data, size);
+    }
 
     return true;
 }
