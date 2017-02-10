@@ -25,20 +25,28 @@ public:
     static
     std::shared_ptr<Connection> create(const std::string& serverURI, const std::string& documentURL, const std::string& sessionId)
     {
-        Poco::URI uri(serverURI);
+        try
+        {
+            Poco::URI uri(serverURI);
 
-        std::unique_lock<std::mutex> lock(Mutex);
+            std::unique_lock<std::mutex> lock(Mutex);
 
-        // Load a document and get its status.
-        std::cout << "NewSession [" << sessionId << "]: " << uri.toString() << "... ";
+            // Load a document and get its status.
+            std::cout << "NewSession [" << sessionId << "]: " << uri.toString() << "... ";
 
-        std::string encodedUri;
-        Poco::URI::encode(documentURL, ":/?", encodedUri);
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/" + encodedUri + "/ws");
-        Poco::Net::HTTPResponse response;
-        auto ws = helpers::connectLOKit(uri, request, response, sessionId + ' ');
-        std::cout << "Connected.\n";
-        return std::shared_ptr<Connection>(new Connection(documentURL, sessionId, ws));
+            std::string encodedUri;
+            Poco::URI::encode(documentURL, ":/?", encodedUri);
+            Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/" + encodedUri + "/ws");
+            Poco::Net::HTTPResponse response;
+            auto ws = helpers::connectLOKit(uri, request, response, sessionId + ' ');
+            std::cout << "Connected to " << serverURI << ".\n";
+            return std::shared_ptr<Connection>(new Connection(documentURL, sessionId, ws));
+        }
+        catch (const std::exception& exc)
+        {
+            std::cout << "ERROR while connecting to [" << serverURI << "]: " << exc.what() << std::endl;
+            return nullptr;
+        }
     }
 
     const std::string& getName() const { return _name; }
@@ -176,14 +184,22 @@ protected:
                         }
                         else
                         {
-                            it->second.emplace(rec.SessionId, Connection::create(_serverUri, uri, rec.SessionId));
+                            auto connection = Connection::create(_serverUri, uri, rec.SessionId);
+                            if (connection)
+                            {
+                                it->second.emplace(rec.SessionId, connection);
+                            }
                         }
                     }
                     else
                     {
                         std::cout << "New Document: " << uri << "\n";
                         _childToDoc.emplace(rec.Pid, uri);
-                        _sessions[uri].emplace(rec.SessionId, Connection::create(_serverUri, uri, rec.SessionId));
+                        auto connection = Connection::create(_serverUri, uri, rec.SessionId);
+                        if (connection)
+                        {
+                            _sessions[uri].emplace(rec.SessionId, connection);
+                        }
                     }
                 }
                 else if (rec.Payload.find(EndSession) == 0)
