@@ -244,10 +244,20 @@ public:
     }
 
     /// Send data to our peer.
-    int send(const void* buf, size_t len)
+    /// Returns the number of bytes sent, -1 on error.
+    int send(const void* buf, const size_t len)
     {
         // Don't SIGPIPE when the other end closes.
         const int rc = ::send(_fd, buf, len, MSG_NOSIGNAL);
+        return rc;
+    }
+
+    /// Receive data from our peer.
+    /// Returns the number of bytes received, -1 on error,
+    /// and 0 when the peer has performed an orderly shutdown.
+    int recv(void* buf, const size_t len)
+    {
+        const int rc = ::recv(_fd, buf, len, 0);
         return rc;
     }
 
@@ -264,9 +274,37 @@ private:
     int _fd;
 };
 
-int main()
+int main(int argc, const char**)
 {
     SocketAddress addr("127.0.0.1", PortNumber);
+
+    if (argc > 1)
+    {
+        // Client.
+        Socket client;
+        if (!client.connect(addr))
+        {
+            const std::string msg = "Failed to connect. (errno: ";
+            throw std::runtime_error(msg + std::strerror(errno) + ")");
+        }
+
+        std::cout << "Connected" << std::endl;
+
+        char buf[1024];
+        const int recv = client.recv(buf, sizeof(buf));
+
+        std::cout << "Received " << recv << " bytes" << std::endl;
+        if (recv <= 0)
+        {
+            perror("send");
+        }
+        else
+        {
+            std::cout << std::string(buf, recv);
+        }
+
+        return 0;
+    }
 
     // Start server.
     Socket server;
@@ -294,7 +332,7 @@ int main()
     const std::string msg = "Hello from non-blocking server!\nBye\n";
     const int sent = clientSocket->send(msg.data(), msg.size());
 
-    std::cout << "Send " << sent << " bytes of " << msg.size() << std::endl;
+    std::cout << "Sent " << sent << " bytes of " << msg.size() << std::endl;
     if (sent != (int)msg.size())
     {
         perror("send");
