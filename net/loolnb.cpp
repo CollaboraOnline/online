@@ -212,6 +212,13 @@ public:
     /// Returns true on success only.
     bool bind(const SocketAddress& address)
     {
+        // Enable address reuse to avoid stalling after
+        // recycling, when previous socket is TIME_WAIT.
+        //TODO: Might be worth refactoring out.
+        const int reuseAddress = 1;
+        constexpr unsigned int len = sizeof(reuseAddress);
+        ::setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len);
+
         const int rc = ::bind(_fd, address.addr(), address.length());
         return rc == 0;
     }
