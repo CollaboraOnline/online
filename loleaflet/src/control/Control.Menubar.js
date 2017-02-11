@@ -37,7 +37,7 @@ L.Control.Menubar = L.Control.extend({
 			},
 			{name: _('Insert'), type: 'menu', menu: [
 				{name: _('Image'), id: 'insertgraphic', type: 'action'},
-				{name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
+				{name: _('Comment...'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
 				{name: _('Footnote'), type: 'unocommand', uno: '.uno:InsertFootnote'},
 				{name: _('Endnote'), type: 'unocommand', uno: '.uno:InsertEndnote'},
@@ -411,6 +411,8 @@ L.Control.Menubar = L.Control.extend({
 			// check if it is empty
 			fileName = fileName === '' ? 'document' : fileName;
 			map.downloadAs(fileName + '.' + format, format);
+		} else if (id === 'insertcomment') {
+			map.insertComment();
 		} else if (id === 'insertgraphic') {
 			L.DomUtil.get('insertgraphic').click();
 		} else if (id === 'specialcharacter') {
@@ -514,7 +516,9 @@ L.Control.Menubar = L.Control.extend({
 			var id = $(item).data('id');
 			self._executeAction(id);
 		}
-		map.focus();
+
+		if (id !== 'insertcomment')
+			map.focus();
 	},
 
 	_createMenu: function(menu) {

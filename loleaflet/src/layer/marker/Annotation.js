@@ -30,7 +30,7 @@ L.Annotation = L.Layer.extend({
 	},
 
 	onRemove: function (map) {
-		map._panes.makerPane.removeChild(this._container);
+		map._panes.markerPane.removeChild(this._container);
 		this._map = null;
 	},
 
@@ -57,6 +57,23 @@ L.Annotation = L.Layer.extend({
 
 	show: function () {
 		this._container.style.visibility = '';
+		this._contentNode.style.display = '';
+		this._editNode.style.display = 'none';
+	},
+
+	edit: function () {
+		this._container.style.visibility = '';
+		this._contentNode.style.display = 'none';
+		this._editNode.style.display = '';
+		return this;
+	},
+
+	updateEdit: function () {
+		this._contentText.innerHTML = this._editText.value;
+	},
+
+	focus: function () {
+		this._editText.focus();
 	},
 
 	_initLayout: function () {
@@ -65,38 +82,48 @@ L.Annotation = L.Layer.extend({
 		var wrapper = this._wrapper =
 			L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper', container);
 
+		L.DomEvent.disableScrollPropagation(this._container);
 		this._contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content', wrapper);
-		L.DomEvent.disableScrollPropagation(this._contentNode);
+		this._editNode = L.DomUtil.create('div', 'loleaflet-annotation-content', wrapper);
 
-		this._text = document.createElement('span');
-		this._author = document.createElement('span');
-		this._dateTime = document.createElement('span');
-		this._contentNode.appendChild(this._text);
-		this._contentNode.appendChild(document.createElement('br'));
-		this._contentNode.appendChild(document.createElement('br'));
-		this._contentNode.appendChild(this._author);
-		this._contentNode.appendChild(document.createElement('br'));
-		this._contentNode.appendChild(this._dateTime);
+		this._contentText = L.DomUtil.create('div', '', this._contentNode);
+		this._contentAuthor = L.DomUtil.create('div', '', this._contentNode);
+		this._contentDate = L.DomUtil.create('div', '', this._contentNode);
+
+		this._editText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this._editNode);
+		this._editAuthor = L.DomUtil.create('div', '', this._editNode);
+		this._editDate = L.DomUtil.create('div', '', this._editNode);
+
+		var buttons = L.DomUtil.create('div', '', this._editNode);
+		var button = L.DomUtil.create('input', 'loleaflet-controls', buttons);
+		button.type = 'button';
+		button.value = _(' Save ');
+		L.DomEvent.on(button, 'click', this._onSaveClick, this);
+		button = L.DomUtil.create('input', 'loleaflet-controls', buttons);
+		button.type = 'button';
+		button.value = _('Cancel');
+		L.DomEvent.on(button, 'click', this._onCancelClick, this);
+
 		this._container.style.visibility = 'hidden';
+		this._editNode.style.display = 'none';
 
-		var events = ['dblclick', 'mousedown', 'mouseover', 'mouseout', 'contextmenu'];
+		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'contextmenu'];
 		L.DomEvent.on(container, 'click', this._onMouseClick, this);
-
 		for (var it = 0; it < events.length; it++) {
-			L.DomEvent.on(container, events[it], this._stopMouseEvent, this);
+			L.DomEvent.on(container, events[it], L.DomEvent.stopPropagation, this);
 		}
+	},
+
+	_onCancelClick: function (e) {
+		this._map.fire('AnnotationCancel', {id: this._data.id});
+	},
+
+	_onSaveClick: function (e) {
+		this._map.fire('AnnotationSave', {id: this._data.id});
 	},
 
 	_onMouseClick: function (e) {
 		this._map.fire('AnnotationClick', {id: this._data.id});
-	},
-
-	_stopMouseEvent: function (e) {
-		if (e.type !== 'mousedown') {
-			L.DomEvent.stopPropagation(e);
-		} else {
-			L.DomEvent.preventDefault(e);
-		}
 	},
 
 	_updateLayout: function () {
@@ -110,9 +137,9 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_updateContent: function () {
-		this._text.innerHTML = this._data.text;
-		this._author.innerHTML = this._data.author;
-		this._dateTime.innerHTML = this._data.dateTime;
+		this._contentText.innerHTML = this._editText.innerHTML = this._data.text;
+		this._contentAuthor.innerHTML = this._editAuthor.innerHTML = this._data.author;
+		this._contentDate.innerHTML = this._editDate.innerHTML = this._data.dateTime;
 	},
 
 	_updatePosition: function () {
