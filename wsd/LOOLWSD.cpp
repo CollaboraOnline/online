@@ -1595,6 +1595,26 @@ inline ServerSocket* getServerSocket(int portNumber, bool reuseDetails)
         // that happens accidentally for developers only anyway, in production systemd takes care of
         // having just one, I hope.)
 
+        // Note: We really should _not_ need to do this at all. The reason we do is that,
+        // if we don't, when an instance of loolwsd is already running, a second instance
+        // would not fail to listen to the _same_ port, and start stealing connections.
+        // This would have the undesirable side-effect of bifurcating documents (meaning,
+        // clients loading a document that is already loaded in the first instance of
+        // wsd, if their socket is accepted by the second instance of wsd, will not
+        // be able to collaborate with their peers, who are in the first instance of wsd).
+        // This situation arises because Poco's Socket::bind() (when reuseAddress,
+        // the second arg, is true) enables reuse for both address _and_ port.
+        // The latter is damaging (and the root of this bug). It's designed (on Linux)
+        // to load-balance requests on a given port to all server instances.
+        // But this only works if requests are independent (as in web-page serving)
+        // and fail miserably for our purposes here (collaborative editing).
+
+        // The correct solution is to explicitly enable only address reuse
+        // before bind and pass reuseAddress=false (second arg) to bind.
+        // Reusing the address is fine, since that eliminates the wait
+        // when we recycle and the socket from the earlier run is still
+        // in TIME_WAIT.
+
         if (reuseDetails)
         {
             try
