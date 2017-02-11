@@ -147,56 +147,55 @@ public:
         close(_fd);
     }
 
+    // Returns the OS native socket fd.
     int fd() const { return _fd; }
 
-    void setSendBufferSize(const int size)
+    /// Sets the send buffer in size bytes.
+    /// Must be called before accept or connect.
+    /// Note: TCP will allocate twice this size for admin purposes,
+    /// so a subsequent call to getSendBufferSize will return
+    /// the larger (actual) buffer size, if this succeeds.
+    /// Note: the upper limit is set via /proc/sys/net/core/wmem_max,
+    /// and there is an unconfigurable lower limit as well.
+    /// Returns true on success only.
+    bool setSendBufferSize(const int size)
     {
         constexpr unsigned int len = sizeof(size);
         const int rc = ::setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, len);
-        if (rc == -1)
-        {
-            const std::string msg = "Failed to get socket send buffer size. (errno: ";
-            throw std::runtime_error(msg + std::strerror(errno) + ")");
-        }
+        return (rc == 0);
     }
 
+    /// Gets the actual send buffer size in bytes, -1 for failure.
     int getSendBufferSize() const
     {
         int size;
         unsigned int len = sizeof(size);
         const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, &len);
-        if (rc == -1)
-        {
-            const std::string msg = "Failed to get socket send buffer size. (errno: ";
-            throw std::runtime_error(msg + std::strerror(errno) + ")");
-        }
-
-        return size;
+        return (rc == 0 ? size : -1);
     }
 
-    void setReceiveBufferSize(const int size)
+    /// Sets the receive buffer size in bytes.
+    /// Must be called before accept or connect.
+    /// Note: TCP will allocate twice this size for admin purposes,
+    /// so a subsequent call to getSendBufferSize will return
+    /// the larger (actual) buffer size, if this succeeds.
+    /// Note: the upper limit is set via /proc/sys/net/core/rmem_max,
+    /// and there is an unconfigurable lower limit as well.
+    /// Returns true on success only.
+    bool setReceiveBufferSize(const int size)
     {
         constexpr unsigned int len = sizeof(size);
         const int rc = ::setsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &size, len);
-        if (rc == -1)
-        {
-            const std::string msg = "Failed to get socket receive buffer size. (errno: ";
-            throw std::runtime_error(msg + std::strerror(errno) + ")");
-        }
+        return (rc == 0);
     }
 
+    /// Gets the actual receive buffer size in bytes, -1 on error.
     int getReceiveBufferSize() const
     {
         int size;
         unsigned int len = sizeof(size);
         const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &size, &len);
-        if (rc == -1)
-        {
-            const std::string msg = "Failed to get socket receive buffer size. (errno: ";
-            throw std::runtime_error(msg + std::strerror(errno) + ")");
-        }
-
-        return size;
+        return (rc == 0 ? size : -1);
     }
 
     /// Connect to a server address.
