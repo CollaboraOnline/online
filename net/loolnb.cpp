@@ -125,11 +125,113 @@ using Poco::XML::InputSource;
 using Poco::XML::NodeList;
 using Poco::XML::Node;
 
-int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
-int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
+constexpr int PortNumber = 9191;
+
+/// A non-blocking, streaming socket.
+class Socket
+{
+public:
+    Socket()
+    {
+        // For now ipv4 only.
+        _fd = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+
+        //FIXME: process must ignore or handle SIGPIPE.
+    }
+
+    ~Socket()
+    {
+        //TODO: Should we shutdown here or up to the client?
+
+        // Doesn't block on sockets; no error handling needed.
+        close(_fd);
+    }
+
+    int fd() const { return _fd; }
+
+    void setSendBufferSize(const int size)
+    {
+        constexpr unsigned int len = sizeof(size);
+        const int rc = ::setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, len);
+        if (rc == -1)
+        {
+            const std::string msg = "Failed to get socket send buffer size. (errno: ";
+            throw std::runtime_error(msg + std::strerror(errno) + ")");
+        }
+    }
+
+    int getSendBufferSize() const
+    {
+        int size;
+        unsigned int len = sizeof(size);
+        const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, &len);
+        if (rc == -1)
+        {
+            const std::string msg = "Failed to get socket send buffer size. (errno: ";
+            throw std::runtime_error(msg + std::strerror(errno) + ")");
+        }
+
+        return size;
+    }
+
+    void setReceiveBufferSize(const int size)
+    {
+        constexpr unsigned int len = sizeof(size);
+        const int rc = ::setsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &size, len);
+        if (rc == -1)
+        {
+            const std::string msg = "Failed to get socket receive buffer size. (errno: ";
+            throw std::runtime_error(msg + std::strerror(errno) + ")");
+        }
+    }
+
+    int getReceiveBufferSize() const
+    {
+        int size;
+        unsigned int len = sizeof(size);
+        const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &size, &len);
+        if (rc == -1)
+        {
+            const std::string msg = "Failed to get socket receive buffer size. (errno: ";
+            throw std::runtime_error(msg + std::strerror(errno) + ")");
+        }
+
+        return size;
+    }
+
+    /// Connect to a server address.
+    /// Does not retry on error.
+    /// Returns true on success only.
+    bool connect(const SocketAddress& address)
+    {
+        const int rc = ::connect(_fd, address.addr(), address.length());
+        return rc != -1;
+    }
+
+    /// Binds to a local address (Servers only).
+    /// Does not retry on error.
+    /// Returns true on success only.
+    bool bind(const SocketAddress& address)
+    {
+        const int rc = ::bind(_fd, address.addr(), address.length());
+        return rc != -1;
+    }
+
+private:
+    int _fd;
+};
 
 int main()
 {
+    SocketAddress addr("127.0.0.1", PortNumber);
+
+    // Start server.
+    Socket server;
+    if (!server.bind(addr))
+    {
+        const std::string msg = "Failed to bind. (errno: ";
+        throw std::runtime_error(msg + std::strerror(errno) + ")");
+    }
 
     return 0;
 }
