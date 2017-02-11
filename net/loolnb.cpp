@@ -205,7 +205,7 @@ public:
     bool connect(const SocketAddress& address)
     {
         const int rc = ::connect(_fd, address.addr(), address.length());
-        return rc != -1;
+        return rc == 0;
     }
 
     /// Binds to a local address (Servers only).
@@ -214,6 +214,24 @@ public:
     bool bind(const SocketAddress& address)
     {
         const int rc = ::bind(_fd, address.addr(), address.length());
+        return rc == 0;
+    }
+
+    /// Listen to incoming connections (Servers only).
+    /// Does not retry on error.
+    /// Returns true on success only.
+    bool listen(const int backlog = 64)
+    {
+        const int rc = ::listen(_fd, backlog);
+        return rc == 0;
+    }
+
+    bool accept()
+    {
+        struct sockaddr_in peer_addr;
+        socklen_t peer_addr_size = sizeof(peer_addr);
+        const int rc = ::accept(_fd, reinterpret_cast<struct sockaddr*>(&peer_addr),
+                                &peer_addr_size); //accept4 nonblock
         return rc != -1;
     }
 
@@ -232,6 +250,20 @@ int main()
         const std::string msg = "Failed to bind. (errno: ";
         throw std::runtime_error(msg + std::strerror(errno) + ")");
     }
+
+    if (!server.listen())
+    {
+        const std::string msg = "Failed to listen. (errno: ";
+        throw std::runtime_error(msg + std::strerror(errno) + ")");
+    }
+
+    if (!server.accept())
+    {
+        const std::string msg = "Failed to accept. (errno: ";
+        throw std::runtime_error(msg + std::strerror(errno) + ")");
+    }
+
+    std::cout << "Accepted." << std::endl;
 
     return 0;
 }
