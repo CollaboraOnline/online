@@ -2518,8 +2518,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                     cleanupDocBrokers();
                     for (auto& pair : DocBrokers)
                     {
-                        auto docLock = pair.second->getLock();
-                        pair.second->autoSave(false, 0, docLock);
+                        auto docLock = pair.second->getDeferredLock();
+                        if (docLock.try_lock())
+                        {
+                            pair.second->autoSave(false, 0, docLock);
+                        }
                     }
                 }
                 catch (const std::exception& exc)
