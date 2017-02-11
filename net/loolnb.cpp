@@ -232,13 +232,32 @@ public:
         return rc == 0;
     }
 
-    bool accept()
+    /// Accepts an incoming connection (Servers only).
+    /// Does not retry on error.
+    /// Returns a valid Socket shared_ptr on success only.
+    std::shared_ptr<Socket> accept()
     {
-        struct sockaddr_in peer_addr;
-        socklen_t peer_addr_size = sizeof(peer_addr);
-        const int rc = ::accept(_fd, reinterpret_cast<struct sockaddr*>(&peer_addr),
-                                &peer_addr_size); //accept4 nonblock
-        return rc != -1;
+        // Accept a connection (if any) and set it to non-blocking.
+        // We don't care about the client's address, so ignored.
+        const int rc = ::accept4(_fd, nullptr, nullptr, SOCK_NONBLOCK);
+        return std::shared_ptr<Socket>(rc != -1 ? new Socket(rc) : nullptr);
+    }
+
+    /// Send data to our peer.
+    int send(const void* buf, size_t len)
+    {
+        // Don't SIGPIPE when the other end closes.
+        const int rc = ::send(_fd, buf, len, MSG_NOSIGNAL);
+        return rc;
+    }
+
+private:
+
+    /// Construct based on an existing socket fd.
+    /// Used by accept() only.
+    Socket(const int fd) :
+        _fd(fd)
+    {
     }
 
 private:
@@ -263,13 +282,23 @@ int main()
         throw std::runtime_error(msg + std::strerror(errno) + ")");
     }
 
-    if (!server.accept())
+    std::shared_ptr<Socket> clientSocket = server.accept();
+    if (!clientSocket)
     {
         const std::string msg = "Failed to accept. (errno: ";
         throw std::runtime_error(msg + std::strerror(errno) + ")");
     }
 
     std::cout << "Accepted." << std::endl;
+
+    const std::string msg = "Hello from non-blocking server!\nBye\n";
+    const int sent = clientSocket->send(msg.data(), msg.size());
+
+    std::cout << "Send " << sent << " bytes of " << msg.size() << std::endl;
+    if (sent != (int)msg.size())
+    {
+        perror("send");
+    }
 
     return 0;
 }
