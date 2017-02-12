@@ -368,7 +368,28 @@ int main(int argc, const char**)
     {
         // Client.
         Socket client;
-        if (!client.connect(addr))
+        if (!client.connect(addr) && errno != EINPROGRESS)
+        {
+            const std::string msg = "Failed to call connect. (errno: ";
+            throw std::runtime_error(msg + std::strerror(errno) + ")");
+        }
+
+        if (errno == EINPROGRESS && !client.pollWrite(5000))
+        {
+            client.getError();
+            const std::string msg = "Failed to poll/connect. (errno: ";
+            throw std::runtime_error(msg + std::strerror(errno) + ")");
+        }
+
+        // Now check if we connected or not.
+        const int rc = client.getError();
+        if (rc == -1)
+        {
+            const std::string msg = "Failed to get socket error. (errno: ";
+            throw std::runtime_error(msg + std::strerror(errno) + ")");
+        }
+
+        if (rc != 0)
         {
             const std::string msg = "Failed to connect. (errno: ";
             throw std::runtime_error(msg + std::strerror(errno) + ")");
@@ -376,17 +397,20 @@ int main(int argc, const char**)
 
         std::cout << "Connected" << std::endl;
 
-        char buf[1024];
-        const int recv = client.recv(buf, sizeof(buf));
+        if (client.pollRead(5000))
+        {
+            char buf[1024];
+            const int recv = client.recv(buf, sizeof(buf));
 
-        std::cout << "Received " << recv << " bytes" << std::endl;
-        if (recv <= 0)
-        {
-            perror("send");
-        }
-        else
-        {
-            std::cout << std::string(buf, recv);
+            std::cout << "Received " << recv << " bytes" << std::endl;
+            if (recv <= 0)
+            {
+                perror("send");
+            }
+            else
+            {
+                std::cout << std::string(buf, recv);
+            }
         }
 
         return 0;
