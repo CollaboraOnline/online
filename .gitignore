@@ -57,6 +57,7 @@ loolstress
 loolforkit-nocaps
 loadtest
 unittest
+loolwsd_fuzzer
 
 # make tags
 TAGS
