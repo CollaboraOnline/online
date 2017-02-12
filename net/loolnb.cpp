@@ -195,6 +195,24 @@ public:
         return (rc == 0 ? size : -1);
     }
 
+    /// Gets the error code.
+    /// Sets errno on success and returns it.
+    /// Returns -1 on failure to get the error code.
+    int getError() const
+    {
+        int error;
+        unsigned int len = sizeof(error);
+        const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_ERROR, &error, &len);
+        if (rc == 0)
+        {
+            // Set errno so client can use strerror etc.
+            errno = error;
+            return error;
+        }
+
+        return rc;
+    }
+
     /// Connect to a server address.
     /// Does not retry on error.
     /// Returns true on success only.
