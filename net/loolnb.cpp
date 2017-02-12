@@ -17,6 +17,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#include <atomic>
 #include <cassert>
 #include <cerrno>
 #include <clocale>
@@ -32,101 +33,11 @@
 #include <sstream>
 #include <thread>
 
-#include <Poco/DOM/AutoPtr.h>
-#include <Poco/DOM/DOMParser.h>
-#include <Poco/DOM/DOMWriter.h>
-#include <Poco/DOM/Document.h>
-#include <Poco/DOM/Element.h>
-#include <Poco/DOM/NodeList.h>
-#include <Poco/Environment.h>
-#include <Poco/Exception.h>
-#include <Poco/File.h>
-#include <Poco/FileStream.h>
-#include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/Net/ConsoleCertificateHandler.h>
-#include <Poco/Net/Context.h>
-#include <Poco/Net/HTMLForm.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPRequestHandler.h>
-#include <Poco/Net/HTTPRequestHandlerFactory.h>
-#include <Poco/Net/HTTPServer.h>
-#include <Poco/Net/HTTPServerParams.h>
-#include <Poco/Net/HTTPServerRequest.h>
-#include <Poco/Net/HTTPServerResponse.h>
-#include <Poco/Net/IPAddress.h>
-#include <Poco/Net/InvalidCertificateHandler.h>
-#include <Poco/Net/KeyConsoleHandler.h>
-#include <Poco/Net/MessageHeader.h>
-#include <Poco/Net/NameValueCollection.h>
-#include <Poco/Net/Net.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/Net/PartHandler.h>
-#include <Poco/Net/PrivateKeyPassphraseHandler.h>
-#include <Poco/Net/SSLManager.h>
-#include <Poco/Net/SecureServerSocket.h>
-#include <Poco/Net/ServerSocket.h>
 #include <Poco/Net/SocketAddress.h>
-#include <Poco/Path.h>
-#include <Poco/Pipe.h>
-#include <Poco/Process.h>
-#include <Poco/SAX/InputSource.h>
-#include <Poco/StreamCopier.h>
-#include <Poco/StringTokenizer.h>
-#include <Poco/TemporaryFile.h>
-#include <Poco/ThreadPool.h>
-#include <Poco/URI.h>
-#include <Poco/Util/HelpFormatter.h>
-#include <Poco/Util/MapConfiguration.h>
-#include <Poco/Util/Option.h>
-#include <Poco/Util/OptionException.h>
-#include <Poco/Util/OptionSet.h>
-#include <Poco/Util/ServerApplication.h>
 
 #include "Common.hpp"
 
-using Poco::Environment;
-using Poco::Exception;
-using Poco::File;
-using Poco::Net::HTMLForm;
-using Poco::Net::HTTPRequest;
-using Poco::Net::HTTPRequestHandler;
-using Poco::Net::HTTPRequestHandlerFactory;
-using Poco::Net::HTTPResponse;
-using Poco::Net::HTTPServer;
-using Poco::Net::HTTPServerParams;
-using Poco::Net::HTTPServerRequest;
-using Poco::Net::HTTPServerResponse;
-using Poco::Net::MessageHeader;
-using Poco::Net::NameValueCollection;
-using Poco::Net::PartHandler;
-using Poco::Net::SecureServerSocket;
-using Poco::Net::ServerSocket;
 using Poco::Net::SocketAddress;
-using Poco::Net::StreamSocket;
-using Poco::Path;
-using Poco::Pipe;
-using Poco::Process;
-using Poco::ProcessHandle;
-using Poco::StreamCopier;
-using Poco::StringTokenizer;
-using Poco::TemporaryFile;
-using Poco::Thread;
-using Poco::ThreadPool;
-using Poco::URI;
-using Poco::Util::Application;
-using Poco::Util::HelpFormatter;
-using Poco::Util::IncompatibleOptionsException;
-using Poco::Util::MissingOptionException;
-using Poco::Util::Option;
-using Poco::Util::OptionSet;
-using Poco::Util::ServerApplication;
-using Poco::XML::AutoPtr;
-using Poco::XML::DOMParser;
-using Poco::XML::DOMWriter;
-using Poco::XML::Element;
-using Poco::XML::InputSource;
-using Poco::XML::NodeList;
-using Poco::XML::Node;
 
 constexpr int PortNumber = 9191;
 
@@ -482,6 +393,40 @@ private:
     std::vector<pollfd> _pollDesc;
 };
 
+/// Generic thread class.
+class Thread
+{
+public:
+    Thread(const std::function<void(std::atomic<bool>&)>& cb) :
+        _cb(cb),
+        _stop(false)
+    {
+        _thread = std::thread([this]() { _cb(_stop); });
+    }
+
+    Thread(Thread&& other) = delete;
+    const Thread& operator=(Thread&& other) = delete;
+
+    ~Thread()
+    {
+        stop();
+        if (_thread.joinable())
+        {
+            _thread.join();
+        }
+    }
+
+    void stop()
+    {
+        _stop = true;
+    }
+
+private:
+    const std::function<void(std::atomic<bool>&)> _cb;
+    std::atomic<bool> _stop;
+    std::thread _thread;
+};
+
 std::shared_ptr<Socket> connectClient(const int timeoutMs)
 {
     SocketAddress addr("127.0.0.1", PortNumber);
@@ -529,6 +474,55 @@ int main(int argc, const char**)
         return 0;
     }
 
+    // Used to poll client sockets.
+    SocketPoll<Socket> poller;
+
+    // Start the client polling thread.
+    Thread threadPoll([&poller](std::atomic<bool>& stop)
+    {
+        while (!stop)
+        {
+            poller.poll([](const std::shared_ptr<Socket>& socket, const int events)
+            {
+                if (events & POLLIN)
+                {
+                    char buf[1024];
+                    const int recv = socket->recv(buf, sizeof(buf));
+                    if (recv <= 0)
+                    {
+                        perror("recv");
+                        return false;
+                    }
+
+                    if (events & POLLOUT)
+                    {
+                        const std::string msg = std::string(buf, recv);
+                        const int num = stoi(msg);
+                        if ((num % (1<<14)) == 1)
+                        {
+                            std::cout << "Client #" << socket->fd() << ": " << msg << std::endl;
+                        }
+                        const std::string new_msg = std::to_string(num + 1);
+                        const int sent = socket->send(new_msg.data(), new_msg.size());
+                        if (sent != static_cast<int>(new_msg.size()))
+                        {
+                            perror("send");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        // Normally we'd buffer the response, but for now...
+                        std::cerr << "Client #" << socket->fd()
+                                << ": ERROR - socket not ready for write." << std::endl;
+                    }
+                }
+
+                return true;
+            });
+        }
+    });
+
     // Start server.
     auto server = std::make_shared<Socket>();
     if (!server->bind(addr))
@@ -544,61 +538,26 @@ int main(int argc, const char**)
     }
 
     std::cout << "Listening." << std::endl;
-    server->pollRead(30000);
-
-    std::shared_ptr<Socket> clientSocket = server->accept();
-    if (!clientSocket)
+    for (;;)
     {
-        const std::string msg = "Failed to accept. (errno: ";
-        throw std::runtime_error(msg + std::strerror(errno) + ")");
+        if (server->pollRead(30000))
+        {
+            std::shared_ptr<Socket> clientSocket = server->accept();
+            if (!clientSocket)
+            {
+                const std::string msg = "Failed to accept. (errno: ";
+                throw std::runtime_error(msg + std::strerror(errno) + ")");
+            }
+
+            std::cout << "Accepted client #" << clientSocket->fd() << std::endl;
+            poller.add(clientSocket);
+        }
     }
 
-    std::cout << "Accepted." << std::endl;
+    std::cout << "Shutting down server." << std::endl;
 
-    SocketPoll<Socket> proc;
-    proc.add(clientSocket);
+    threadPoll.stop();
 
-    while (1)
-    proc.poll([](const std::shared_ptr<Socket>& socket, const int events)
-    {
-        if (events & POLLIN)
-        {
-            char buf[1024];
-            const int recv = socket->recv(buf, sizeof(buf));
-            if (recv <= 0)
-            {
-                perror("recv");
-                return false;
-            }
-
-            if (events & POLLOUT)
-            {
-                const std::string msg = std::string(buf, recv);
-                const int num = stoi(msg);
-                if ((num % (1<<14)) == 1)
-                {
-                    std::cout << "Client #" << socket->fd() << ": " << msg << std::endl;
-                }
-                const std::string new_msg = std::to_string(num + 1);
-                const int sent = socket->send(new_msg.data(), new_msg.size());
-                if (sent != static_cast<int>(new_msg.size()))
-                {
-                    perror("send");
-                    return false;
-                }
-            }
-            else
-            {
-                // Normally we'd buffer the response, but for now...
-                std::cerr << "Client #" << socket->fd()
-                          << ": ERROR - socket not ready for write." << std::endl;
-            }
-        }
-
-        return true;
-    });
-
-    proc.remove(clientSocket);
     return 0;
 }
 
