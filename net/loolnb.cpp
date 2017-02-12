@@ -11,6 +11,8 @@
 
 #include <unistd.h>
 
+#include <poll.h>
+
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -274,6 +276,75 @@ public:
     {
         const int rc = ::recv(_fd, buf, len, 0);
         return rc;
+    }
+
+    /// Poll the socket for either read, write, or both.
+    /// Returns -1 on failure/error (query socket error), 0 for timeout,
+    /// otherwise, depending on events, the respective bits set.
+    int poll(const int timeoutMs, const int events = POLLIN | POLLOUT)
+    {
+        // Use poll(2) as it has lower overhead for up to
+        // a few hundred sockets compared to epoll(2).
+        // Also it has a more intuitive API and portable.
+        pollfd poll;
+        memset(&poll, 0, sizeof(poll));
+
+        poll.fd = _fd;
+        poll.events |= events;
+
+        int rc;
+        do
+        {
+            // Technically, on retrying we should wait
+            // the _remaining_ time, alas simplicity wins.
+            rc = ::poll(&poll, 1, timeoutMs);
+        }
+        while (rc < 0 && errno == EINTR);
+
+        if (rc <= 0)
+        {
+            return rc;
+        }
+
+        int revents = 0;
+        if (rc == 1)
+        {
+            if (poll.revents & (POLLERR|POLLHUP|POLLNVAL))
+            {
+                // Probe socket for error.
+                return -1;
+            }
+
+            if (poll.revents & (POLLIN|POLLPRI))
+            {
+                // Data ready to read.
+                revents |= POLLIN;
+            }
+
+            if (poll.revents & POLLOUT)
+            {
+                // Ready for write.
+                revents |= POLLOUT;
+            }
+        }
+
+        return revents;
+    }
+
+    /// Poll the socket for readability.
+    /// Returns true when there is data to read, otherwise false.
+    bool pollRead(const int timeoutMs)
+    {
+        const int rc = poll(timeoutMs, POLLIN);
+        return (rc > 0 && (rc & POLLIN));
+    }
+
+    /// Poll the socket for writability.
+    /// Returns true when socket is ready for writing, otherwise false.
+    bool pollWrite(const int timeoutMs)
+    {
+        const int rc = poll(timeoutMs, POLLOUT);
+        return (rc > 0 && (rc & POLLOUT));
     }
 
 private:
