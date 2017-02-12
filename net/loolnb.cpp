@@ -402,19 +402,22 @@ int main(int argc, const char**)
     {
         // Client.
         auto client = connectClient(0);
-        if (client->pollRead(5000))
+        int sent = 1;
+        while (sent > 0 && client->pollRead(5000))
         {
             char buf[1024];
             const int recv = client->recv(buf, sizeof(buf));
-
-            std::cout << "Received " << recv << " bytes" << std::endl;
             if (recv <= 0)
             {
-                perror("send");
+                perror("recv");
+                break;
             }
             else
             {
-                std::cout << std::string(buf, recv);
+                const std::string msg = std::string(buf, recv);
+                const int num = stoi(msg);
+                const std::string new_msg = std::to_string(num + 1);
+                sent = client->send(new_msg.data(), new_msg.size());
             }
         }
 
@@ -446,13 +449,28 @@ int main(int argc, const char**)
 
     std::cout << "Accepted." << std::endl;
 
-    const std::string msg = "Hello from non-blocking server!\nBye\n";
-    const int sent = clientSocket->send(msg.data(), msg.size());
-
-    std::cout << "Sent " << sent << " bytes of " << msg.size() << std::endl;
-    if (sent != (int)msg.size())
+    const std::string msg1 = std::to_string(1);
+    int sent = clientSocket->send(msg1.data(), msg1.size());
+    while (sent > 0 && clientSocket->pollRead(5000))
     {
-        perror("send");
+        char buf[1024];
+        const int recv = clientSocket->recv(buf, sizeof(buf));
+        if (recv <= 0)
+        {
+            perror("recv");
+            break;
+        }
+        else
+        {
+            const std::string msg = std::string(buf, recv);
+            const int num = stoi(msg);
+            if ((num % (1<<14)) == 0)
+            {
+                std::cout << "Client #" << clientSocket->fd() << ": " << msg << std::endl;
+            }
+            const std::string new_msg = std::to_string(num + 1);
+            sent = clientSocket->send(new_msg.data(), new_msg.size());
+        }
     }
 
     return 0;
