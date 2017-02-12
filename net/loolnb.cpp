@@ -417,20 +417,22 @@ int main(int argc, const char**)
     }
 
     // Start server.
-    Socket server;
-    if (!server.bind(addr))
+    auto server = std::make_shared<Socket>();
+    if (!server->bind(addr))
     {
         const std::string msg = "Failed to bind. (errno: ";
         throw std::runtime_error(msg + std::strerror(errno) + ")");
     }
 
-    if (!server.listen())
+    if (!server->listen())
     {
         const std::string msg = "Failed to listen. (errno: ";
         throw std::runtime_error(msg + std::strerror(errno) + ")");
     }
 
-    std::shared_ptr<Socket> clientSocket = server.accept();
+    server->pollRead(15000);
+
+    std::shared_ptr<Socket> clientSocket = server->accept();
     if (!clientSocket)
     {
         const std::string msg = "Failed to accept. (errno: ";
