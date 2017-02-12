@@ -131,12 +131,9 @@ constexpr int PortNumber = 9191;
 class Socket
 {
 public:
-    Socket()
+    Socket() :
+        _fd(socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0))
     {
-        // For now ipv4 only.
-        _fd = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
-
-        //FIXME: process must ignore or handle SIGPIPE.
     }
 
     ~Socket()
@@ -204,7 +201,7 @@ public:
     bool connect(const SocketAddress& address)
     {
         const int rc = ::connect(_fd, address.addr(), address.length());
-        return rc == 0;
+        return (rc == 0);
     }
 
     /// Binds to a local address (Servers only).
@@ -220,7 +217,7 @@ public:
         ::setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len);
 
         const int rc = ::bind(_fd, address.addr(), address.length());
-        return rc == 0;
+        return (rc == 0);
     }
 
     /// Listen to incoming connections (Servers only).
@@ -229,7 +226,7 @@ public:
     bool listen(const int backlog = 64)
     {
         const int rc = ::listen(_fd, backlog);
-        return rc == 0;
+        return (rc == 0);
     }
 
     /// Accepts an incoming connection (Servers only).
@@ -271,7 +268,7 @@ private:
     }
 
 private:
-    int _fd;
+    const int _fd;
 };
 
 int main(int argc, const char**)
