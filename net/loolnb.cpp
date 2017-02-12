@@ -25,6 +25,7 @@
 #include <cstring>
 #include <ctime>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <map>
 #include <mutex>
@@ -376,6 +377,109 @@ private:
 
 private:
     const int _fd;
+};
+
+/// Handles non-blocking socket event polling.
+/// Only polls on N-Sockets and invokes callback and
+/// doesn't manage buffers or client data.
+/// Note: uses poll(2) since it has very good performance
+/// compared to epoll up to a few hundred sockets and
+/// doesn't suffer select(2)'s poor API. Since this will
+/// be used per-document we don't expect to have several
+/// hundred users on same document to suffer poll(2)'s
+/// scalability limit. Meanwhile, epoll(2)'s high
+/// overhead to adding/removing sockets is not helpful.
+template <typename T>
+class SocketPoll
+{
+public:
+    SocketPoll()
+    {
+    }
+
+    void add(const std::shared_ptr<T>& socket)
+    {
+        const int fd = socket->fd();
+        pollfd poll;
+        memset(&poll, 0, sizeof(pollfd));
+        poll.fd = fd;
+        poll.events = (POLLIN | POLLOUT);
+
+        std::lock_guard<std::mutex> lock(_mutex);
+
+        _sockets.emplace(fd, socket);
+        _pollDesc.emplace_back(poll);
+    }
+
+    void remove(const std::shared_ptr<T>& socket)
+    {
+        const int fd = socket->fd();
+
+        std::lock_guard<std::mutex> lock(_mutex);
+
+        // Hold reference to socket so it doesn't
+        // close while we are in poll(2).
+        _socketsDead.emplace(fd, socket);
+        _sockets.erase(fd);
+    }
+
+    /// Poll the sockets for available data to read or buffer to write.
+    void poll(const std::function<bool(const std::shared_ptr<T>&, const int)>& handler)
+    {
+        int rc;
+        do
+        {
+            // See note in class doc.
+            rc = ::poll(&_pollDesc[0], _pollDesc.size(), 0);
+        }
+        while (rc < 0 && errno == EINTR);
+
+        for (const pollfd& poll : _pollDesc)
+        {
+            if (poll.revents)
+            {
+                std::lock_guard<std::mutex> lock(_mutex);
+                const auto it = _sockets.find(poll.fd);
+                if (it != _sockets.end() && it->second)
+                {
+                    if (!handler(it->second, poll.revents))
+                    {
+                        std::cout << "Removing: " << poll.fd << std::endl;
+                        _socketsDead.emplace(poll.fd, it->second);
+                        _sockets.erase(poll.fd);
+                    }
+                }
+            }
+        }
+
+        // Now clear the dead sockets to close/free them.
+        std::lock_guard<std::mutex> lock(_mutex);
+
+        // Remove the pollfd of these sockets as well.
+        size_t size = 0;
+        for (size_t i = 0; i < _pollDesc.size(); ++i)
+        {
+            const auto it = _socketsDead.find(_pollDesc[i].fd);
+            if (it != _socketsDead.end())
+            {
+                // Move to the end.
+                std::swap(_pollDesc[i], _pollDesc[_pollDesc.size() - 1]);
+            }
+            else
+            {
+                ++size;
+            }
+        }
+
+        _pollDesc.resize(size);
+        _socketsDead.clear();
+    }
+
+private:
+    std::mutex _mutex;
+    std::map<int, std::shared_ptr<T>> _sockets;
+    std::map<int, std::shared_ptr<T>> _socketsDead;
+    std::vector<pollfd> _pollDesc;
 };
 
 std::shared_ptr<Socket> connectClient(const int timeoutMs)
