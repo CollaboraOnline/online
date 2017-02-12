@@ -506,6 +506,7 @@ int main(int argc, const char**)
     {
         // Client.
         auto client = connectClient(0);
+        client->send("1", 1);
         int sent = 1;
         while (sent > 0 && client->pollRead(5000))
         {
@@ -542,7 +543,8 @@ int main(int argc, const char**)
         throw std::runtime_error(msg + std::strerror(errno) + ")");
     }
 
-    server->pollRead(15000);
+    std::cout << "Listening." << std::endl;
+    server->pollRead(30000);
 
     std::shared_ptr<Socket> clientSocket = server->accept();
     if (!clientSocket)
@@ -553,30 +555,50 @@ int main(int argc, const char**)
 
     std::cout << "Accepted." << std::endl;
 
-    const std::string msg1 = std::to_string(1);
-    int sent = clientSocket->send(msg1.data(), msg1.size());
-    while (sent > 0 && clientSocket->pollRead(5000))
-    {
-        char buf[1024];
-        const int recv = clientSocket->recv(buf, sizeof(buf));
-        if (recv <= 0)
-        {
-            perror("recv");
-            break;
-        }
-        else
-        {
-            const std::string msg = std::string(buf, recv);
-            const int num = stoi(msg);
-            if ((num % (1<<14)) == 0)
-            {
-                std::cout << "Client #" << clientSocket->fd() << ": " << msg << std::endl;
-            }
-            const std::string new_msg = std::to_string(num + 1);
-            sent = clientSocket->send(new_msg.data(), new_msg.size());
-        }
-    }
+    SocketPoll<Socket> proc;
+    proc.add(clientSocket);
 
+    while (1)
+    proc.poll([](const std::shared_ptr<Socket>& socket, const int events)
+    {
+        if (events & POLLIN)
+        {
+            char buf[1024];
+            const int recv = socket->recv(buf, sizeof(buf));
+            if (recv <= 0)
+            {
+                perror("recv");
+                return false;
+            }
+
+            if (events & POLLOUT)
+            {
+                const std::string msg = std::string(buf, recv);
+                const int num = stoi(msg);
+                if ((num % (1<<14)) == 1)
+                {
+                    std::cout << "Client #" << socket->fd() << ": " << msg << std::endl;
+                }
+                const std::string new_msg = std::to_string(num + 1);
+                const int sent = socket->send(new_msg.data(), new_msg.size());
+                if (sent != static_cast<int>(new_msg.size()))
+                {
+                    perror("send");
+                    return false;
+                }
+            }
+            else
+            {
+                // Normally we'd buffer the response, but for now...
+                std::cerr << "Client #" << socket->fd()
+                          << ": ERROR - socket not ready for write." << std::endl;
+            }
+        }
+
+        return true;
+    });
+
+    proc.remove(clientSocket);
     return 0;
 }
 
