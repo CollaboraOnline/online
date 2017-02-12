@@ -217,11 +217,29 @@ public:
 
     /// Connect to a server address.
     /// Does not retry on error.
+    /// timeoutMs can be 0 to avoid waiting, or -1 to wait forever.
     /// Returns true on success only.
-    bool connect(const SocketAddress& address)
+    /// Note: when succceeds, caller must check for
+    /// EINPROGRESS and poll for write, then getError(),
+    /// only when the latter returns 0 we are connected.
+    bool connect(const SocketAddress& address, const int timeoutMs = 0)
     {
         const int rc = ::connect(_fd, address.addr(), address.length());
-        return (rc == 0);
+        if (rc == 0)
+        {
+            return true;
+        }
+
+        if (errno != EINPROGRESS)
+        {
+            return false;
+        }
+
+        // Wait for writable, then check again.
+        pollWrite(timeoutMs);
+
+        // Now check if we connected, not, or not yet.
+        return (getError() == 0 || errno == EINPROGRESS);
     }
 
     /// Binds to a local address (Servers only).
@@ -360,6 +378,22 @@ private:
     const int _fd;
 };
 
+std::shared_ptr<Socket> connectClient(const int timeoutMs)
+{
+    SocketAddress addr("127.0.0.1", PortNumber);
+
+    const auto client = std::make_shared<Socket>();
+    if (!client->connect(addr, timeoutMs) && errno != EINPROGRESS)
+    {
+        const std::string msg = "Failed to call connect. (errno: ";
+        throw std::runtime_error(msg + std::strerror(errno) + ")");
+    }
+
+    std::cout << "Connected " << client->fd() << std::endl;
+
+    return client;
+}
+
 int main(int argc, const char**)
 {
     SocketAddress addr("127.0.0.1", PortNumber);
@@ -367,40 +401,11 @@ int main(int argc, const char**)
     if (argc > 1)
     {
         // Client.
-        Socket client;
-        if (!client.connect(addr) && errno != EINPROGRESS)
-        {
-            const std::string msg = "Failed to call connect. (errno: ";
-            throw std::runtime_error(msg + std::strerror(errno) + ")");
-        }
-
-        if (errno == EINPROGRESS && !client.pollWrite(5000))
-        {
-            client.getError();
-            const std::string msg = "Failed to poll/connect. (errno: ";
-            throw std::runtime_error(msg + std::strerror(errno) + ")");
-        }
-
-        // Now check if we connected or not.
-        const int rc = client.getError();
-        if (rc == -1)
-        {
-            const std::string msg = "Failed to get socket error. (errno: ";
-            throw std::runtime_error(msg + std::strerror(errno) + ")");
-        }
-
-        if (rc != 0)
-        {
-            const std::string msg = "Failed to connect. (errno: ";
-            throw std::runtime_error(msg + std::strerror(errno) + ")");
-        }
-
-        std::cout << "Connected" << std::endl;
-
-        if (client.pollRead(5000))
+        auto client = connectClient(0);
+        if (client->pollRead(5000))
         {
             char buf[1024];
-            const int recv = client.recv(buf, sizeof(buf));
+            const int recv = client->recv(buf, sizeof(buf));
 
             std::cout << "Received " << recv << " bytes" << std::endl;
             if (recv <= 0)
