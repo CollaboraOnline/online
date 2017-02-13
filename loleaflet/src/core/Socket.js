@@ -413,7 +413,7 @@ L.Socket = L.Class.extend({
 			this._map.fire('doclayerinit');
 		} else if (textMsg.startsWith('status:') && this._reconnecting) {
 			// we are reconnecting ...
-			this._reconecting = false;
+			this._reconnecting = false;
 			this._map._docLayer._onMessage('invalidatetiles: EMPTY', null);
 			this._map.fire('statusindicator', {statusType: 'reconnected'});
 			this._map.setPermission(this._map.options.permission);
@@ -460,6 +460,11 @@ L.Socket = L.Class.extend({
 
 		// Reset wopi's app loaded so that reconnecting again informs outerframe about initialization again
 		this._map['wopi'].resetAppLoaded();
+
+		if (!this._reconnecting) {
+			this._reconnecting = true;
+			this._map._activate();
+		}
 	},
 
 	parseServerCmd: function (msg) {
