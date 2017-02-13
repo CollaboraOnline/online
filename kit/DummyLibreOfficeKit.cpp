@@ -276,7 +276,7 @@ static char* doc_getPartName(LibreOfficeKitDocument* pThis, int nPart)
     (void) nPart;
 
     char* pMemory = static_cast<char*>(malloc(11));
-    strcpy(pMemory, "Dummy part");
+    strncpy(pMemory, "Dummy part", 10);
     return pMemory;
 
 }
@@ -399,12 +399,12 @@ static char* doc_getTextSelection(LibreOfficeKitDocument* pThis, const char* pMi
     (void) pUsedMimeType;
 
     char* pMemory = static_cast<char*>(malloc(11));
-    strcpy(pMemory, "Dummy text");
+    strncpy(pMemory, "Dummy text", 10);
 
     if (pUsedMimeType)
     {
         *pUsedMimeType = static_cast<char*>(malloc(25));
-        strcpy(*pUsedMimeType, "text/plain;charset=utf-8");
+        strncpy(*pUsedMimeType, "text/plain;charset=utf-8", 24);
     }
 
     return pMemory;
@@ -439,7 +439,7 @@ static char* doc_getCommandValues(LibreOfficeKitDocument* pThis, const char* pCo
     (void) pCommand;
 
     char* pMemory = static_cast<char*>(malloc(1));
-    strcpy(pMemory, "");
+    strncpy(pMemory, "", 0);
     return pMemory;
 }
 
@@ -515,7 +515,7 @@ static char* lo_getError (LibreOfficeKit *pThis)
     (void) pThis;
 
     char* pMemory = static_cast<char*>(malloc(12));
-    strcpy(pMemory, "Dummy error");
+    strncpy(pMemory, "Dummy error", 11);
     return pMemory;
 }
 
@@ -557,7 +557,7 @@ static char* lo_getVersionInfo(LibreOfficeKit* /*pThis*/)
         "}";
 
     char* pVersion = static_cast<char*>(malloc(sizeof(version)));
-    strcpy(pVersion, version);
+    strncpy(pVersion, version, sizeof(version) - 1);
     return pVersion;
 }
 
