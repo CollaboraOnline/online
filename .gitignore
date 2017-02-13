@@ -58,6 +58,7 @@ loolforkit-nocaps
 loadtest
 unittest
 loolwsd_fuzzer
+loolnb
 
 # make tags
 TAGS
