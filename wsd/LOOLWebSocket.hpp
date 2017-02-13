@@ -31,10 +31,11 @@
 class LOOLWebSocket : public Poco::Net::WebSocket
 {
 private:
-    std::mutex _mutex;
+    std::mutex _mutexRead;
+    std::mutex _mutexWrite;
 
 #if ENABLE_DEBUG
-    std::chrono::milliseconds getWebSocketDelay()
+    static std::chrono::milliseconds getWebSocketDelay()
     {
         unsigned long baseDelay = 0;
         unsigned long jitter = 0;
@@ -108,7 +109,10 @@ public:
 
         while (poll(waitTime, Poco::Net::Socket::SELECT_READ))
         {
+            std::unique_lock<std::mutex> lockRead(_mutexRead);
             const int n = Poco::Net::WebSocket::receiveFrame(buffer, length, flags);
+            lockRead.unlock();
+
             if (n <= 0)
             {
                 LOG_TRC("Got nothing (" << n << ")");
@@ -119,11 +123,17 @@ public:
             }
             if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
             {
-                sendFrame(buffer, n, WebSocket::FRAME_FLAG_FIN | WebSocket::FRAME_OP_PONG);
+                // Echo back the ping message.
+                std::unique_lock<std::mutex> lock(_mutexWrite);
+                if (Poco::Net::WebSocket::sendFrame(buffer, n, static_cast<int>(WebSocket::FRAME_FLAG_FIN) | WebSocket::FRAME_OP_PONG) != n)
+                {
+                    LOG_WRN("Sending Pong failed.");
+                    return -1;
+                }
             }
             else if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PONG)
             {
-                // In case we do send pongs in the future.
+                // In case we do send pings in the future.
             }
             else
             {
@@ -131,6 +141,7 @@ public:
             }
         }
 
+        // Not ready for read.
         return -1;
     }
 
@@ -141,13 +152,22 @@ public:
         // Delay sending the frame
         std::this_thread::sleep_for(getWebSocketDelay());
 #endif
-        std::unique_lock<std::mutex> lock(_mutex);
+        std::unique_lock<std::mutex> lock(_mutexWrite);
 
         if (length >= LARGE_MESSAGE_SIZE)
         {
             const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-            Poco::Net::WebSocket::sendFrame(nextmessage.data(), nextmessage.size());
-            LOG_TRC("Message is long, sent " + nextmessage);
+            const int size = nextmessage.size();
+
+            if (Poco::Net::WebSocket::sendFrame(nextmessage.data(), size) == size)
+            {
+                LOG_TRC("Sent long message preample: " + nextmessage);
+            }
+            else
+            {
+                LOG_WRN("Failed to send long message preample.");
+                return -1;
+            }
         }
 
         const int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
