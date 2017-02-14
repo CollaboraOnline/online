@@ -57,7 +57,8 @@ loolwsd_sources = wsd/Admin.cpp \
 loolwsd_SOURCES = $(loolwsd_sources) \
                   $(shared_sources)
 
-noinst_PROGRAMS = connect \
+noinst_PROGRAMS = clientnb \
+                  connect \
                   lokitclient \
                   loolforkit-nocaps \
                   loolnb \
@@ -87,6 +88,8 @@ loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
                          kit/DummyLibreOfficeKit.cpp
 
 loolnb_SOURCES = net/loolnb.cpp
+
+clientnb_SOURCES = net/clientnb.cpp
 
 # build a binary with no caps to help debugging
 loolforkit_nocaps_SOURCES = $(loolforkit_SOURCES)
