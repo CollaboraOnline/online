@@ -82,7 +82,8 @@ public:
             std::cerr << "try to get response\n";
             std::istream& responseStream = session->receiveResponse(response);
 
-            std::cerr << "Got response '" << responseStream << "'\n";
+            std::string result(std::istreambuf_iterator<char>(responseStream), {});
+            std::cerr << "Got response '" << result << "'\n";
         }
         catch (const Poco::Exception &e)
         {

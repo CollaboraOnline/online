@@ -223,24 +223,50 @@ public:
         // Now check if we connected, not, or not yet.
         return (getError() == 0 || errno == EINPROGRESS);
     }
-
-    /// Send data to our peer.
-    /// Returns the number of bytes sent, -1 on error.
-    int send(const void* buf, const size_t len)
+  protected:
+    std::vector< unsigned char > _inBuffer;
+    std::vector< unsigned char > _outBuffer;
+  public:
+    void readIncomingData()
     {
-        // Don't SIGPIPE when the other end closes.
-        const int rc = ::send(getFD(), buf, len, MSG_NOSIGNAL);
-        return rc;
+        ssize_t len;
+        unsigned char buf[4096];
+        do {
+            len = ::read(getFD(), buf, sizeof(buf));
+        } while (len < 0 && errno == EINTR);
+        if (len > 0)
+        {
+            assert (len < ssize_t(sizeof(buf)));
+            _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
+            handleIncomingMessage();
+        }
+        // else poll will handle errors.
     }
 
-    /// Receive data from our peer.
-    /// Returns the number of bytes received, -1 on error,
-    /// and 0 when the peer has performed an orderly shutdown.
-    int recv(void* buf, const size_t len)
+    void writeOutgoingData()
     {
-        const int rc = ::recv(getFD(), buf, len, 0);
-        return rc;
+        assert (_outBuffer.size() > 0);
+        ssize_t len;
+        do {
+            len = ::write(getFD(), &_outBuffer[0], _outBuffer.size());
+        } while (len < 0 && errno == EINTR);
+        if (len > 0)
+        {
+            _outBuffer.erase(_outBuffer.begin(),
+                             _outBuffer.begin() + len);
+        }
+        // else poll will handle errors
     }
+
+    int getPollEvents()
+    {
+        int pollFor = POLLIN | POLLPRI;
+        if (_outBuffer.size() > 0)
+            pollFor |= POLLOUT;
+        return pollFor;
+    }
+
+    virtual void handleIncomingMessage() = 0;
 
 protected:
     ClientSocket(const int fd) :
@@ -284,12 +310,13 @@ public:
     /// Accepts an incoming connection (Servers only).
     /// Does not retry on error.
     /// Returns a valid Socket shared_ptr on success only.
-    std::shared_ptr<ClientSocket> accept()
+    template <typename T>
+       std::shared_ptr<T> accept()
     {
         // Accept a connection (if any) and set it to non-blocking.
         // We don't care about the client's address, so ignored.
         const int rc = ::accept4(getFD(), nullptr, nullptr, SOCK_NONBLOCK);
-        return std::shared_ptr<ClientSocket>(rc != -1 ? new ClientSocket(rc) : nullptr);
+        return std::shared_ptr<T>(rc != -1 ? new T(rc) : nullptr);
     }
 };
 
