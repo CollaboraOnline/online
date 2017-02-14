@@ -156,6 +156,11 @@ private:
         _newSockets.clear();
     }
 
+    void removeSocketFromPoll(const std::shared_ptr<T>& socket)
+    {
+        _pollSockets.erase(_pollSockets.find(socket));
+    }
+
     /// Initialize the poll fds array with the right events
     void setupPollFds()
     {
@@ -265,18 +270,18 @@ void pollAndComm(SocketPoll<SimpleResponseClient>& poller, std::atomic<bool>& st
     {
         poller.poll(5000, [](const std::shared_ptr<SimpleResponseClient>& socket, const int events)
         {
+            bool closeSocket = false;
+
             if (events & POLLIN)
-                socket->readIncomingData();
+                closeSocket = !socket->readIncomingData();
 
             if (events & POLLOUT)
                 socket->writeOutgoingData();
 
             if (events & (POLLHUP | POLLERR | POLLNVAL))
-            {
-                // FIXME - close and remove the socket ...
-            }
+                closeSocket = true;
 
-            return true;
+            return !closeSocket;
         });
     }
 }
