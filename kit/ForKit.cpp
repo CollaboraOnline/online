@@ -44,7 +44,9 @@
 using Poco::Process;
 using Poco::StringTokenizer;
 using Poco::Thread;
+#ifndef KIT_IN_PROCESS
 using Poco::Util::Application;
+#endif
 
 #ifndef KIT_IN_PROCESS
 static bool NoCapsForKit = false;

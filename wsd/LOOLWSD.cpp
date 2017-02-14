@@ -150,9 +150,13 @@ using Poco::Net::SocketAddress;
 using Poco::Net::StreamSocket;
 using Poco::Net::WebSocket;
 using Poco::Path;
+#ifndef KIT_IN_PROCESS
 using Poco::Pipe;
+#endif
 using Poco::Process;
+#ifndef KIT_IN_PROCESS
 using Poco::ProcessHandle;
+#endif
 using Poco::StreamCopier;
 using Poco::StringTokenizer;
 using Poco::TemporaryFile;
@@ -1743,7 +1747,7 @@ bool LOOLWSD::NoCapsForKit = false;
 #endif
 #ifdef FUZZER
 bool LOOLWSD::DummyLOK = false;
-std::string LOOLWSD::FuzzFileName = "";
+std::string LOOLWSD::FuzzFileName;
 #endif
 std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::SysTemplate;
