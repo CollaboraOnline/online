@@ -126,6 +126,11 @@ body {
 	line-height: 1.4;
 }
 
+.loleaflet-annotation-edit {
+	margin: 3px 3px;
+	line-height: 1.4;
+}
+
 .loleaflet-annotation-textarea {
 	border: 1px solid #c8c8c8;
 	resize: none;

@@ -68,10 +68,6 @@ L.Annotation = L.Layer.extend({
 		return this;
 	},
 
-	updateEdit: function () {
-		this._contentText.innerHTML = this._editText.value;
-	},
-
 	focus: function () {
 		this._editText.focus();
 	},
@@ -84,8 +80,9 @@ L.Annotation = L.Layer.extend({
 
 		L.DomEvent.disableScrollPropagation(this._container);
 		this._contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content', wrapper);
-		this._editNode = L.DomUtil.create('div', 'loleaflet-annotation-content', wrapper);
+		this._editNode = L.DomUtil.create('div', 'loleaflet-annotation-edit', wrapper);
 
+		this._contentNode.setAttribute('id', this._data.id);
 		this._contentText = L.DomUtil.create('div', '', this._contentNode);
 		this._contentAuthor = L.DomUtil.create('div', '', this._contentNode);
 		this._contentDate = L.DomUtil.create('div', '', this._contentNode);
@@ -107,7 +104,7 @@ L.Annotation = L.Layer.extend({
 		this._container.style.visibility = 'hidden';
 		this._editNode.style.display = 'none';
 
-		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'contextmenu'];
+		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup'];
 		L.DomEvent.on(container, 'click', this._onMouseClick, this);
 		for (var it = 0; it < events.length; it++) {
 			L.DomEvent.on(container, events[it], L.DomEvent.stopPropagation, this);
@@ -115,15 +112,19 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_onCancelClick: function (e) {
+		this._editText.value = this._contentText.innerHTML;
+		this.show();
 		this._map.fire('AnnotationCancel', {id: this._data.id});
-	},
-
-	_onSaveClick: function (e) {
-		this._map.fire('AnnotationSave', {id: this._data.id});
 	},
 
 	_onMouseClick: function (e) {
 		this._map.fire('AnnotationClick', {id: this._data.id});
+	},
+
+	_onSaveClick: function (e) {
+		this._contentText.innerHTML = this._editText.value;
+		this.show();
+		this._map.fire('AnnotationSave', {id: this._data.id});
 	},
 
 	_updateLayout: function () {

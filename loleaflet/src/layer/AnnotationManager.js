@@ -18,6 +18,25 @@ L.AnnotationManager = L.Class.extend({
 		this._map.on('AnnotationCancel', this._onAnnotationCancel, this);
 		this._map.on('AnnotationClick', this._onAnnotationClick, this);
 		this._map.on('AnnotationSave', this._onAnnotationSave, this);
+		var that = this;
+		$.contextMenu({
+			selector: '.loleaflet-annotation-content',
+			className: 'loleaflet-font',
+			items: {
+				modify: {
+					name: _('Modify'),
+					callback: function (key, options) {
+						that._onAnnotationModify.call(that, options.$trigger.attr('id'));
+					}
+				},
+				remove: {
+					name: _('Remove'),
+					callback: function (key, options) {
+						that._onAnnotationRemove.call(that, options.$trigger.attr('id'));
+					}
+				}
+			}
+		});
 	},
 
 	clear: function () {
@@ -55,7 +74,7 @@ L.AnnotationManager = L.Class.extend({
 		var topRight = this._map.project(this._map.options.maxBounds.getNorthEast());
 		var annotation = this._items[id];
 		var point0, point1, point2, point3;
-		if (annotation) {
+		if (annotation.id !== id) {
 			this._selected.annotation = annotation;
 			this.layout();
 			point0 = this._map._docLayer._twipsToPixels(annotation._data.anchorPos);
@@ -141,21 +160,17 @@ L.AnnotationManager = L.Class.extend({
 		this._items[comment.id].focus();
 	},
 
-	remove: function (annotation) {
+	remove: function (id) {
+		this._removeAnchor(id);
+		this.unselect();
+		this._map.removeLayer(this._items[id]);
+		delete this._items[id];
+		this._map.focus();
 	},
 
 	_onAnnotationCancel: function (e) {
-		if (e.id === -1) {
-			for (var index in this._anchors) {
-				if (this._anchors[index].id === e.id) {
-					this._anchors.splice(index, 1);
-					break;
-				}
-			}
-			this._map.removeLayer(this._items[e.id]);
-			this.unselect();
-			delete this._items[e.id];
-			this._map.focus();
+		if (e.id === 'new') {
+			this.remove(e.id);
 		}
 	},
 
@@ -163,10 +178,27 @@ L.AnnotationManager = L.Class.extend({
 		this.select(e.id);
 	},
 
+	_onAnnotationModify: function (id) {
+		this._items[id].edit();
+		this.select(id);
+		this._items[id].focus();
+	},
+
+	_onAnnotationRemove: function (id) {
+		this.remove(id);
+	},
+
 	_onAnnotationSave: function (e) {
-		this._items[e.id].updateEdit();
-		this._items[e.id].show();
 		this.layout();
+	},
+
+	_removeAnchor: function (id) {
+		for (var index in this._anchors) {
+			if (this._anchors[index].id === id) {
+				this._anchors.splice(index, 1);
+				break;
+			}
+		}
 	}
 });
 
@@ -178,7 +210,7 @@ L.Map.include({
 			textrange: '',
 			author: _('You'),
 			dateTime: new Date().toDateString(),
-			id: -1,
+			id: 'new',
 			anchorPos:  this._docLayer._latLngToTwips(this._docLayer._visibleCursor.getNorthWest())
 		});
 	}
