@@ -38,7 +38,7 @@ public:
     }
 
     // Returns the OS native socket fd.
-    int fd() const { return _fd; }
+    int getFD() const { return _fd; }
 
     /// Sets the send buffer in size bytes.
     /// Must be called before accept or connect.
@@ -114,18 +114,18 @@ public:
         // Use poll(2) as it has lower overhead for up to
         // a few hundred sockets compared to epoll(2).
         // Also it has a more intuitive API and portable.
-        pollfd poll;
-        memset(&poll, 0, sizeof(poll));
+        pollfd pollfd;
+        memset(&pollfd, 0, sizeof(pollfd));
 
-        poll.fd = fd();
-        poll.events |= events;
+        pollfd.fd = getFD();
+        pollfd.events |= events;
 
         int rc;
         do
         {
             // Technically, on retrying we should wait
             // the _remaining_ time, alas simplicity wins.
-            rc = ::poll(&poll, 1, timeoutMs);
+            rc = ::poll(&pollfd, 1, timeoutMs);
         }
         while (rc < 0 && errno == EINTR);
 
@@ -137,19 +137,19 @@ public:
         int revents = 0;
         if (rc == 1)
         {
-            if (poll.revents & (POLLERR|POLLHUP|POLLNVAL))
+            if (pollfd.revents & (POLLERR|POLLHUP|POLLNVAL))
             {
                 // Probe socket for error.
                 return -1;
             }
 
-            if (poll.revents & (POLLIN|POLLPRI))
+            if (pollfd.revents & (POLLIN|POLLPRI))
             {
                 // Data ready to read.
                 revents |= POLLIN;
             }
 
-            if (poll.revents & POLLOUT)
+            if (pollfd.revents & POLLOUT)
             {
                 // Ready for write.
                 revents |= POLLOUT;
@@ -206,7 +206,7 @@ public:
     /// only when the latter returns 0 we are connected.
     bool connect(const Poco::Net::SocketAddress& address, const int timeoutMs = 0)
     {
-        const int rc = ::connect(fd(), address.addr(), address.length());
+        const int rc = ::connect(getFD(), address.addr(), address.length());
         if (rc == 0)
         {
             return true;
@@ -229,7 +229,7 @@ public:
     int send(const void* buf, const size_t len)
     {
         // Don't SIGPIPE when the other end closes.
-        const int rc = ::send(fd(), buf, len, MSG_NOSIGNAL);
+        const int rc = ::send(getFD(), buf, len, MSG_NOSIGNAL);
         return rc;
     }
 
@@ -238,7 +238,7 @@ public:
     /// and 0 when the peer has performed an orderly shutdown.
     int recv(void* buf, const size_t len)
     {
-        const int rc = ::recv(fd(), buf, len, 0);
+        const int rc = ::recv(getFD(), buf, len, 0);
         return rc;
     }
 
@@ -266,9 +266,9 @@ public:
         //TODO: Might be worth refactoring out.
         const int reuseAddress = 1;
         constexpr unsigned int len = sizeof(reuseAddress);
-        ::setsockopt(fd(), SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len);
+        ::setsockopt(getFD(), SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len);
 
-        const int rc = ::bind(fd(), address.addr(), address.length());
+        const int rc = ::bind(getFD(), address.addr(), address.length());
         return (rc == 0);
     }
 
@@ -277,7 +277,7 @@ public:
     /// Returns true on success only.
     bool listen(const int backlog = 64)
     {
-        const int rc = ::listen(fd(), backlog);
+        const int rc = ::listen(getFD(), backlog);
         return (rc == 0);
     }
 
@@ -288,7 +288,7 @@ public:
     {
         // Accept a connection (if any) and set it to non-blocking.
         // We don't care about the client's address, so ignored.
-        const int rc = ::accept4(fd(), nullptr, nullptr, SOCK_NONBLOCK);
+        const int rc = ::accept4(getFD(), nullptr, nullptr, SOCK_NONBLOCK);
         return std::shared_ptr<ClientSocket>(rc != -1 ? new ClientSocket(rc) : nullptr);
     }
 };

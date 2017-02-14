@@ -16,6 +16,7 @@
 #include <iostream>
 #include <mutex>
 #include <thread>
+#include <assert.h>
 
 #include <Poco/Net/SocketAddress.h>
 
@@ -42,12 +43,11 @@ public:
         // Create the wakeup fd.
         if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)
         {
-            //FIXME: Can't have wakeup pipe, should we exit?
+            // FIXME: Can't have wakeup pipe, should we exit?
+            // FIXME: running out of sockets should be a case we handle elegantly here - and also in our accept / ClientSocket creation I guess.
             _wakeup[0] = -1;
             _wakeup[1] = -1;
         }
-
-        createPollFds();
     }
 
     ~SocketPoll()
@@ -60,6 +60,9 @@ public:
     void poll(const int timeoutMs, const std::function<bool(const std::shared_ptr<T>&, const int)>& handler)
     {
         const size_t size = _pollSockets.size();
+
+        // The events to poll on change each spin of the loop.
+        setupPollFds();
 
         int rc;
         do
@@ -88,19 +91,12 @@ public:
             // Add new sockets first.
             addNewSocketsToPoll();
 
-            // Recreate the poll fds array.
-            createPollFds();
-
             // Clear the data.
             int dump;
-            if (::read(_wakeup[0], &dump, sizeof(4)) == -1)
+            if (::read(_wakeup[0], &dump, sizeof(dump)) == -1)
             {
                 // Nothing to do.
             }
-        }
-        else if (_pollFds.size() != (_pollSockets.size() + 1))
-        {
-            createPollFds();
         }
     }
 
@@ -115,7 +111,8 @@ public:
         // wakeup the main-loop.
         if (::write(_wakeup[1], "w", 1) == -1)
         {
-            // No wake up then.
+            // wakeup pipe is already full.
+            assert(errno == EAGAIN || errno == EWOULDBLOCK);
         }
     }
 
@@ -131,8 +128,8 @@ private:
         _newSockets.clear();
     }
 
-    /// Create the poll fds array.
-    void createPollFds()
+    /// Initialize the poll fds array with the right events
+    void setupPollFds()
     {
         const size_t size = _pollSockets.size();
 
@@ -140,8 +137,9 @@ private:
 
         for (size_t i = 0; i < size; ++i)
         {
-            _pollFds[i].fd = _pollSockets[i]->fd();
-            _pollFds[i].events = POLLIN | POLLOUT; //TODO: Get from the socket.
+            _pollFds[i].fd = _pollSockets[i]->getFD();
+            //TODO: Get from the socket.
+            _pollFds[i].events = POLLIN | POLLOUT;
             _pollFds[i].revents = 0;
         }
 
@@ -208,7 +206,7 @@ void client(const int timeoutMs)
         throw std::runtime_error(msg + std::strerror(errno) + ")");
     }
 
-    std::cout << "Connected " << client->fd() << std::endl;
+    std::cout << "Connected " << client->getFD() << std::endl;
 
     client->send("1", 1);
     int sent = 1;
@@ -259,7 +257,7 @@ void server(SocketPoll<ClientSocket>& poller)
                 throw std::runtime_error(msg + std::strerror(errno) + ")");
             }
 
-            std::cout << "Accepted client #" << clientSocket->fd() << std::endl;
+            std::cout << "Accepted client #" << clientSocket->getFD() << std::endl;
             poller.insertNewSocket(clientSocket);
         }
     }
@@ -288,7 +286,7 @@ void pollAndComm(SocketPoll<ClientSocket>& poller, std::atomic<bool>& stop)
                     const int num = stoi(msg);
                     if ((num % (1<<16)) == 1)
                     {
-                        std::cout << "Client #" << socket->fd() << ": " << msg << std::endl;
+                        std::cout << "Client #" << socket->getFD() << ": " << msg << std::endl;
                     }
                     const std::string new_msg = std::to_string(num + 1);
                     const int sent = socket->send(new_msg.data(), new_msg.size());
@@ -301,7 +299,7 @@ void pollAndComm(SocketPoll<ClientSocket>& poller, std::atomic<bool>& stop)
                 else
                 {
                     // Normally we'd buffer the response, but for now...
-                    std::cerr << "Client #" << socket->fd()
+                    std::cerr << "Client #" << socket->getFD()
                             << ": ERROR - socket not ready for write." << std::endl;
                 }
             }
