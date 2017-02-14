@@ -402,7 +402,6 @@ private:
     void createPollFds()
     {
         const size_t size = _pollSockets.size();
-        std::cout << "creating poll fds " << size << std::endl;
 
         _pollFds.resize(size + 1); // + wakeup pipe
 
@@ -467,7 +466,7 @@ private:
 
 SocketAddress addr("127.0.0.1", PortNumber);
 
-std::shared_ptr<Socket> connectClient(const int timeoutMs)
+void client(const int timeoutMs)
 {
     const auto client = std::make_shared<Socket>();
     if (!client->connect(addr, timeoutMs) && errno != EINPROGRESS)
@@ -478,7 +477,25 @@ std::shared_ptr<Socket> connectClient(const int timeoutMs)
 
     std::cout << "Connected " << client->fd() << std::endl;
 
-    return client;
+    client->send("1", 1);
+    int sent = 1;
+    while (sent > 0 && client->pollRead(5000))
+    {
+        char buf[1024];
+        const int recv = client->recv(buf, sizeof(buf));
+        if (recv <= 0)
+        {
+            perror("recv");
+            break;
+        }
+        else
+        {
+            const std::string msg = std::string(buf, recv);
+            const int num = stoi(msg);
+            const std::string new_msg = std::to_string(num + 1);
+            sent = client->send(new_msg.data(), new_msg.size());
+        }
+    }
 }
 
 void server(SocketPoll<Socket>& poller)
@@ -515,34 +532,58 @@ void server(SocketPoll<Socket>& poller)
     }
 }
 
+/// Poll client sockets and do IO.
+void pollAndComm(SocketPoll<Socket>& poller, std::atomic<bool>& stop)
+{
+    while (!stop)
+    {
+        poller.poll(5000, [](const std::shared_ptr<Socket>& socket, const int events)
+        {
+            if (events & POLLIN)
+            {
+                char buf[1024];
+                const int recv = socket->recv(buf, sizeof(buf));
+                if (recv <= 0)
+                {
+                    perror("recv");
+                    return false;
+                }
+
+                if (events & POLLOUT)
+                {
+                    const std::string msg = std::string(buf, recv);
+                    const int num = stoi(msg);
+                    if ((num % (1<<16)) == 1)
+                    {
+                        std::cout << "Client #" << socket->fd() << ": " << msg << std::endl;
+                    }
+                    const std::string new_msg = std::to_string(num + 1);
+                    const int sent = socket->send(new_msg.data(), new_msg.size());
+                    if (sent != static_cast<int>(new_msg.size()))
+                    {
+                        perror("send");
+                        return false;
+                    }
+                }
+                else
+                {
+                    // Normally we'd buffer the response, but for now...
+                    std::cerr << "Client #" << socket->fd()
+                            << ": ERROR - socket not ready for write." << std::endl;
+                }
+            }
+
+            return true;
+        });
+    }
+}
+
 int main(int argc, const char**)
 {
-    SocketAddress addr("127.0.0.1", PortNumber);
-
     if (argc > 1)
     {
-        // Client.
-        auto client = connectClient(0);
-        client->send("1", 1);
-        int sent = 1;
-        while (sent > 0 && client->pollRead(5000))
-        {
-            char buf[1024];
-            const int recv = client->recv(buf, sizeof(buf));
-            if (recv <= 0)
-            {
-                perror("recv");
-                break;
-            }
-            else
-            {
-                const std::string msg = std::string(buf, recv);
-                const int num = stoi(msg);
-                const std::string new_msg = std::to_string(num + 1);
-                sent = client->send(new_msg.data(), new_msg.size());
-            }
-        }
-
+        // We are now the client application.
+        client(0);
         return 0;
     }
 
@@ -552,49 +593,10 @@ int main(int argc, const char**)
     // Start the client polling thread.
     Thread threadPoll([&poller](std::atomic<bool>& stop)
     {
-        while (!stop)
-        {
-            poller.poll(5000, [](const std::shared_ptr<Socket>& socket, const int events)
-            {
-                if (events & POLLIN)
-                {
-                    char buf[1024];
-                    const int recv = socket->recv(buf, sizeof(buf));
-                    if (recv <= 0)
-                    {
-                        perror("recv");
-                        return false;
-                    }
-
-                    if (events & POLLOUT)
-                    {
-                        const std::string msg = std::string(buf, recv);
-                        const int num = stoi(msg);
-                        if ((num % (1<<16)) == 1)
-                        {
-                            std::cout << "Client #" << socket->fd() << ": " << msg << std::endl;
-                        }
-                        const std::string new_msg = std::to_string(num + 1);
-                        const int sent = socket->send(new_msg.data(), new_msg.size());
-                        if (sent != static_cast<int>(new_msg.size()))
-                        {
-                            perror("send");
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        // Normally we'd buffer the response, but for now...
-                        std::cerr << "Client #" << socket->fd()
-                                << ": ERROR - socket not ready for write." << std::endl;
-                    }
-                }
-
-                return true;
-            });
-        }
+        pollAndComm(poller, stop);
     });
 
+    // Start the server.
     server(poller);
 
     std::cout << "Shutting down server." << std::endl;
