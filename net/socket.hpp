@@ -227,7 +227,7 @@ public:
     std::vector< unsigned char > _inBuffer;
     std::vector< unsigned char > _outBuffer;
   public:
-    void readIncomingData()
+    bool readIncomingData()
     {
         ssize_t len;
         unsigned char buf[4096];
@@ -241,6 +241,8 @@ public:
             handleIncomingMessage();
         }
         // else poll will handle errors.
+
+        return len != 0; // zero is eof / clean socket close.
     }
 
     void writeOutgoingData()
@@ -260,7 +262,7 @@ public:
 
     int getPollEvents()
     {
-        int pollFor = POLLIN | POLLPRI;
+        int pollFor = POLLIN;
         if (_outBuffer.size() > 0)
             pollFor |= POLLOUT;
         return pollFor;
