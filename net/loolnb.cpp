@@ -313,50 +313,50 @@ public:
             _wakeup[0] = -1;
             _wakeup[1] = -1;
         }
+
+        createPollFds();
+    }
+
+    ~SocketPoll()
+    {
+        ::close(_wakeup[0]);
+        ::close(_wakeup[1]);
     }
 
     /// Poll the sockets for available data to read or buffer to write.
     void poll(const int timeoutMs, const std::function<bool(const std::shared_ptr<T>&, const int)>& handler)
     {
         const size_t size = _pollSockets.size();
-        std::vector<pollfd> pollFds(size + 1); // + wakeup fd
-
-        for (size_t i = 0; i < size; ++i)
-        {
-            pollFds[i].fd = _pollSockets[i]->fd();
-            pollFds[i].events = POLLIN | POLLOUT; //TODO: Get from the socket.
-            pollFds[i].revents = 0;
-        }
-
-        // Add the read-end of the wake pipe.
-        pollFds[size].fd = _wakeup[0];
-        pollFds[size].events = POLLIN;
-        pollFds[size].revents = 0;
 
         int rc;
         do
         {
-            rc = ::poll(&pollFds[0], pollFds.size(), timeoutMs);
+            rc = ::poll(&_pollFds[0], size + 1, timeoutMs);
         }
         while (rc < 0 && errno == EINTR);
 
         // Fire the callback and remove dead fds.
         for (int i = static_cast<int>(size) - 1; i >= 0; --i)
         {
-            if (pollFds[i].revents)
+            if (_pollFds[i].revents)
             {
-                if (!handler(_pollSockets[i], pollFds[i].revents))
+                if (!handler(_pollSockets[i], _pollFds[i].revents))
                 {
-                    std::cout << "Removing: " << pollFds[i].fd << std::endl;
+                    std::cout << "Removing: " << _pollFds[i].fd << std::endl;
                     _pollSockets.erase(_pollSockets.begin() + i);
+                    // Don't remove from pollFds; we'll recreate below.
                 }
             }
         }
 
-        if (pollFds[size].revents)
+        // Process the wakeup pipe (always the last entry).
+        if (_pollFds[size].revents)
         {
-            // Process new sockets first.
+            // Add new sockets first.
             addNewSocketsToPoll();
+
+            // Recreate the poll fds array.
+            createPollFds();
 
             // Clear the data.
             int dump;
@@ -364,6 +364,10 @@ public:
             {
                 // Nothing to do.
             }
+        }
+        else if (_pollFds.size() != (_pollSockets.size() + 1))
+        {
+            createPollFds();
         }
     }
 
@@ -394,6 +398,27 @@ private:
         _newSockets.clear();
     }
 
+    /// Create the poll fds array.
+    void createPollFds()
+    {
+        const size_t size = _pollSockets.size();
+        std::cout << "creating poll fds " << size << std::endl;
+
+        _pollFds.resize(size + 1); // + wakeup pipe
+
+        for (size_t i = 0; i < size; ++i)
+        {
+            _pollFds[i].fd = _pollSockets[i]->fd();
+            _pollFds[i].events = POLLIN | POLLOUT; //TODO: Get from the socket.
+            _pollFds[i].revents = 0;
+        }
+
+        // Add the read-end of the wake pipe.
+        _pollFds[size].fd = _wakeup[0];
+        _pollFds[size].events = POLLIN;
+        _pollFds[size].revents = 0;
+    }
+
 private:
     /// main-loop wakeup pipe
     int _wakeup[2];
@@ -402,6 +427,8 @@ private:
     /// Protects _newSockets
     std::mutex _mutex;
     std::vector<std::shared_ptr<Socket>> _newSockets;
+    /// The fds to poll.
+    std::vector<pollfd> _pollFds;
 };
 
 /// Generic thread class.
@@ -509,7 +536,7 @@ int main(int argc, const char**)
                     {
                         const std::string msg = std::string(buf, recv);
                         const int num = stoi(msg);
-                        if ((num % (1<<14)) == 1)
+                        if ((num % (1<<16)) == 1)
                         {
                             std::cout << "Client #" << socket->fd() << ": " << msg << std::endl;
                         }
