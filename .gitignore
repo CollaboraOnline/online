@@ -59,6 +59,7 @@ loadtest
 unittest
 loolwsd_fuzzer
 loolnb
+clientnb
 
 # make tags
 TAGS
