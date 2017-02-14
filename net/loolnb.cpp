@@ -465,10 +465,10 @@ private:
     std::thread _thread;
 };
 
+SocketAddress addr("127.0.0.1", PortNumber);
+
 std::shared_ptr<Socket> connectClient(const int timeoutMs)
 {
-    SocketAddress addr("127.0.0.1", PortNumber);
-
     const auto client = std::make_shared<Socket>();
     if (!client->connect(addr, timeoutMs) && errno != EINPROGRESS)
     {
@@ -479,6 +479,40 @@ std::shared_ptr<Socket> connectClient(const int timeoutMs)
     std::cout << "Connected " << client->fd() << std::endl;
 
     return client;
+}
+
+void server(SocketPoll<Socket>& poller)
+{
+    // Start server.
+    auto server = std::make_shared<Socket>();
+    if (!server->bind(addr))
+    {
+        const std::string msg = "Failed to bind. (errno: ";
+        throw std::runtime_error(msg + std::strerror(errno) + ")");
+    }
+
+    if (!server->listen())
+    {
+        const std::string msg = "Failed to listen. (errno: ";
+        throw std::runtime_error(msg + std::strerror(errno) + ")");
+    }
+
+    std::cout << "Listening." << std::endl;
+    for (;;)
+    {
+        if (server->pollRead(30000))
+        {
+            std::shared_ptr<Socket> clientSocket = server->accept();
+            if (!clientSocket)
+            {
+                const std::string msg = "Failed to accept. (errno: ";
+                throw std::runtime_error(msg + std::strerror(errno) + ")");
+            }
+
+            std::cout << "Accepted client #" << clientSocket->fd() << std::endl;
+            poller.insertNewSocket(clientSocket);
+        }
+    }
 }
 
 int main(int argc, const char**)
@@ -561,36 +595,7 @@ int main(int argc, const char**)
         }
     });
 
-    // Start server.
-    auto server = std::make_shared<Socket>();
-    if (!server->bind(addr))
-    {
-        const std::string msg = "Failed to bind. (errno: ";
-        throw std::runtime_error(msg + std::strerror(errno) + ")");
-    }
-
-    if (!server->listen())
-    {
-        const std::string msg = "Failed to listen. (errno: ";
-        throw std::runtime_error(msg + std::strerror(errno) + ")");
-    }
-
-    std::cout << "Listening." << std::endl;
-    for (;;)
-    {
-        if (server->pollRead(30000))
-        {
-            std::shared_ptr<Socket> clientSocket = server->accept();
-            if (!clientSocket)
-            {
-                const std::string msg = "Failed to accept. (errno: ";
-                throw std::runtime_error(msg + std::strerror(errno) + ")");
-            }
-
-            std::cout << "Accepted client #" << clientSocket->fd() << std::endl;
-            poller.insertNewSocket(clientSocket);
-        }
-    }
+    server(poller);
 
     std::cout << "Shutting down server." << std::endl;
 
