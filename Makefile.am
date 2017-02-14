@@ -2,7 +2,7 @@ SUBDIRS = . test loleaflet
 
 export ENABLE_DEBUG
 
-bin_PROGRAMS = loolwsd loolforkit loolwsd_fuzzer loolmap loolmount looltool loolstress loolnb
+bin_PROGRAMS = loolwsd loolforkit loolwsd_fuzzer loolmap loolmount looltool loolstress loolnb clientnb
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
@@ -90,6 +90,8 @@ loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
                          kit/DummyLibreOfficeKit.cpp
 
 loolnb_SOURCES = net/loolnb.cpp
+
+clientnb_SOURCES = net/clientnb.cpp
 
 # build a binary with no caps to help debugging
 loolforkit_nocaps_SOURCES = $(loolforkit_SOURCES)
