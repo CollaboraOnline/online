@@ -65,7 +65,7 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	unselect: function () {
-		this._selected.annotation = null;
+		this._selected = {};
 		this._map.removeLayer(this._arrow);
 		this.layout();
 	},
@@ -74,7 +74,7 @@ L.AnnotationManager = L.Class.extend({
 		var topRight = this._map.project(this._map.options.maxBounds.getNorthEast());
 		var annotation = this._items[id];
 		var point0, point1, point2, point3;
-		if (annotation.id !== id) {
+		if (!this._selected.annotation || this._selected.annotation._data.id !== annotation._data.id) {
 			this._selected.annotation = annotation;
 			this.layout();
 			point0 = this._map._docLayer._twipsToPixels(annotation._data.anchorPos);
@@ -165,13 +165,44 @@ L.AnnotationManager = L.Class.extend({
 		this.unselect();
 		this._map.removeLayer(this._items[id]);
 		delete this._items[id];
-		this._map.focus();
+	},
+
+	onACKComment: function (textMsg) {
+		textMsg = textMsg.substring('comment:'.length + 1);
+		var obj = JSON.parse(textMsg);
+
+		if (obj.comment.action === 'Add') {
+			if (this._items['new']) {
+				delete obj.comment.action;
+				obj.comment.anchorPos = L.LOUtil.stringToPoint(obj.comment.anchorPos);
+				this._items[obj.comment.id] = this._items['new'];
+				this._items[obj.comment.id]._data = obj.comment;
+				this._items['new'] = null;
+				this._removeAnchor('new');
+				this._anchors.push({anchor: obj.comment.anchorPos, id: obj.comment.id});
+				this._anchors.sort(function(a, b) {
+					return Math.abs(a.anchor.y) - Math.abs(b.anchor.y);
+				});
+				this._items[obj.comment.id]._updateContent();
+				this.layout();
+			}
+
+		} else if (obj.comment.action === 'Remove') {
+			if (this._items[obj.comment.id]) {
+				// something wrong here
+			}
+		} else if (obj.comment.action === 'Modify') {
+			if (this._items[obj.comment.id] && this._items[obj.comment.id].text !== obj.comment.text) {
+				// something wrong here
+			}
+		}
 	},
 
 	_onAnnotationCancel: function (e) {
 		if (e.id === 'new') {
 			this.remove(e.id);
 		}
+		this._map.focus();
 	},
 
 	_onAnnotationClick: function (e) {
@@ -185,11 +216,45 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	_onAnnotationRemove: function (id) {
+		var comment = {
+			Id: {
+				type: 'long',
+				value: id
+			}
+		};
+		this._map.sendUnoCommand('.uno:DeleteComment', comment);
 		this.remove(id);
+		this._map.focus();
 	},
 
 	_onAnnotationSave: function (e) {
-		this.layout();
+		if (e.id === 'new') {
+			var comment = {
+				Text: {
+					type: 'string',
+					value: this._items[e.id]._data.text
+				},
+				Author: {
+					type: 'string',
+					value: this._items[e.id]._data.author
+				}
+			};
+			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
+		} else {
+			var comment = {
+				Id: {
+					type: 'long',
+					value: e.id
+				},
+				Text: {
+					type: 'string',
+					value: this._items[e.id]._data.text
+				}
+			};
+			this._map.sendUnoCommand('.uno:EditAnnotation', comment);
+		}
+		this.unselect();
+		this._map.focus();
 	},
 
 	_removeAnchor: function (id) {

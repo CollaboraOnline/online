@@ -112,17 +112,20 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_onCancelClick: function (e) {
+		L.DomEvent.stopPropagation(e);
 		this._editText.value = this._contentText.innerHTML;
 		this.show();
 		this._map.fire('AnnotationCancel', {id: this._data.id});
 	},
 
 	_onMouseClick: function (e) {
+		L.DomEvent.stopPropagation(e);
 		this._map.fire('AnnotationClick', {id: this._data.id});
 	},
 
 	_onSaveClick: function (e) {
-		this._contentText.innerHTML = this._editText.value;
+		L.DomEvent.stopPropagation(e);
+		this._data.text = this._contentText.innerHTML = this._editText.value;
 		this.show();
 		this._map.fire('AnnotationSave', {id: this._data.id});
 	},
@@ -138,6 +141,7 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_updateContent: function () {
+		this._contentNode.setAttribute('id', this._data.id);
 		this._contentText.innerHTML = this._editText.innerHTML = this._data.text;
 		this._contentAuthor.innerHTML = this._editAuthor.innerHTML = this._data.author;
 		this._contentDate.innerHTML = this._editDate.innerHTML = this._data.dateTime;

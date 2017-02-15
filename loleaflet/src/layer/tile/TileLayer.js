@@ -397,6 +397,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('graphicviewselection:')) {
 			this._onGraphicViewSelectionMsg(textMsg);
 		}
+		else if (textMsg.startsWith('comment:')) {
+			this._annotations.onACKComment(textMsg);
+		}
 	},
 
 	toggleTileDebugMode: function() {
