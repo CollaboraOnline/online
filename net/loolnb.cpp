@@ -52,147 +52,6 @@ public:
     }
 };
 
-/// Handles non-blocking socket event polling.
-/// Only polls on N-Sockets and invokes callback and
-/// doesn't manage buffers or client data.
-/// Note: uses poll(2) since it has very good performance
-/// compared to epoll up to a few hundred sockets and
-/// doesn't suffer select(2)'s poor API. Since this will
-/// be used per-document we don't expect to have several
-/// hundred users on same document to suffer poll(2)'s
-/// scalability limit. Meanwhile, epoll(2)'s high
-/// overhead to adding/removing sockets is not helpful.
-template <typename T>
-class SocketPoll
-{
-public:
-    SocketPoll()
-    {
-        // Create the wakeup fd.
-        if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)
-        {
-            // FIXME: Can't have wakeup pipe, should we exit?
-            // FIXME: running out of sockets should be a case we handle elegantly here - and also in our accept / ClientSocket creation I guess.
-            _wakeup[0] = -1;
-            _wakeup[1] = -1;
-        }
-    }
-
-    ~SocketPoll()
-    {
-        ::close(_wakeup[0]);
-        ::close(_wakeup[1]);
-    }
-
-    /// Poll the sockets for available data to read or buffer to write.
-    void poll(const int timeoutMs, const std::function<bool(const std::shared_ptr<T>&, const int)>& handler)
-    {
-        const size_t size = _pollSockets.size();
-
-        // The events to poll on change each spin of the loop.
-        setupPollFds();
-
-        int rc;
-        do
-        {
-            rc = ::poll(&_pollFds[0], size + 1, timeoutMs);
-        }
-        while (rc < 0 && errno == EINTR);
-
-        // Fire the callback and remove dead fds.
-        for (int i = static_cast<int>(size) - 1; i >= 0; --i)
-        {
-            if (_pollFds[i].revents)
-            {
-                if (!handler(_pollSockets[i], _pollFds[i].revents))
-                {
-                    std::cout << "Removing: " << _pollFds[i].fd << std::endl;
-                    _pollSockets.erase(_pollSockets.begin() + i);
-                    // Don't remove from pollFds; we'll recreate below.
-                }
-            }
-        }
-
-        // Process the wakeup pipe (always the last entry).
-        if (_pollFds[size].revents)
-        {
-            // Add new sockets first.
-            addNewSocketsToPoll();
-
-            // Clear the data.
-            int dump;
-            if (::read(_wakeup[0], &dump, sizeof(dump)) == -1)
-            {
-                // Nothing to do.
-            }
-        }
-    }
-
-    /// Insert a new socket to be polled.
-    /// Sockets are removed only when the handler return false.
-    void insertNewSocket(const std::shared_ptr<T>& newSocket)
-    {
-        std::lock_guard<std::mutex> lock(_mutex);
-
-        _newSockets.emplace_back(newSocket);
-
-        // wakeup the main-loop.
-        if (::write(_wakeup[1], "w", 1) == -1)
-        {
-            // wakeup pipe is already full.
-            assert(errno == EAGAIN || errno == EWOULDBLOCK);
-        }
-    }
-
-private:
-
-    /// Add the new sockets to list of those to poll.
-    void addNewSocketsToPoll()
-    {
-        std::lock_guard<std::mutex> lock(_mutex);
-
-        // Copy the new sockets over and clear.
-        _pollSockets.insert(_pollSockets.end(), _newSockets.begin(), _newSockets.end());
-        _newSockets.clear();
-    }
-
-    void removeSocketFromPoll(const std::shared_ptr<T>& socket)
-    {
-        _pollSockets.erase(_pollSockets.find(socket));
-    }
-
-    /// Initialize the poll fds array with the right events
-    void setupPollFds()
-    {
-        const size_t size = _pollSockets.size();
-
-        _pollFds.resize(size + 1); // + wakeup pipe
-
-        for (size_t i = 0; i < size; ++i)
-        {
-            _pollFds[i].fd = _pollSockets[i]->getFD();
-            _pollFds[i].events = _pollSockets[i]->getPollEvents();
-            _pollFds[i].revents = 0;
-        }
-
-        // Add the read-end of the wake pipe.
-        _pollFds[size].fd = _wakeup[0];
-        _pollFds[size].events = POLLIN;
-        _pollFds[size].revents = 0;
-    }
-
-private:
-    /// main-loop wakeup pipe
-    int _wakeup[2];
-    /// The sockets we're controlling
-    std::vector<std::shared_ptr<T>> _pollSockets;
-    /// Protects _newSockets
-    std::mutex _mutex;
-    std::vector<std::shared_ptr<T>> _newSockets;
-    /// The fds to poll.
-    std::vector<pollfd> _pollFds;
-};
-
 /// Generic thread class.
 class Thread
 {
@@ -229,10 +88,78 @@ private:
 
 Poco::Net::SocketAddress addr("127.0.0.1", PortNumber);
 
-void server(SocketPoll<SimpleResponseClient>& poller)
+/// A non-blocking, streaming socket.
+class ServerSocket : public Socket
+{
+    SocketPoll& _clientPoller;
+public:
+    ServerSocket(SocketPoll& clientPoller)
+        : _clientPoller(clientPoller)
+    {
+    }
+
+    /// Binds to a local address (Servers only).
+    /// Does not retry on error.
+    /// Returns true on success only.
+    bool bind(const Poco::Net::SocketAddress& address)
+    {
+        // Enable address reuse to avoid stalling after
+        // recycling, when previous socket is TIME_WAIT.
+        //TODO: Might be worth refactoring out.
+        const int reuseAddress = 1;
+        constexpr unsigned int len = sizeof(reuseAddress);
+        ::setsockopt(getFD(), SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len);
+
+        const int rc = ::bind(getFD(), address.addr(), address.length());
+        return (rc == 0);
+    }
+
+    /// Listen to incoming connections (Servers only).
+    /// Does not retry on error.
+    /// Returns true on success only.
+    bool listen(const int backlog = 64)
+    {
+        const int rc = ::listen(getFD(), backlog);
+        return (rc == 0);
+    }
+
+    /// Accepts an incoming connection (Servers only).
+    /// Does not retry on error.
+    /// Returns a valid Socket shared_ptr on success only.
+    template <typename T>
+       std::shared_ptr<T> accept()
+    {
+        // Accept a connection (if any) and set it to non-blocking.
+        // We don't care about the client's address, so ignored.
+        const int rc = ::accept4(getFD(), nullptr, nullptr, SOCK_NONBLOCK);
+        return std::shared_ptr<T>(rc != -1 ? new T(rc) : nullptr);
+    }
+
+    int getPollEvents() override
+    {
+        return POLLIN;
+    }
+
+    HandleResult handlePoll( int /* events */ ) override
+    {
+        std::shared_ptr<SimpleResponseClient> clientSocket = accept<SimpleResponseClient>();
+        if (!clientSocket)
+        {
+            const std::string msg = "Failed to accept. (errno: ";
+            throw std::runtime_error(msg + std::strerror(errno) + ")");
+        }
+
+        std::cout << "Accepted client #" << clientSocket->getFD() << std::endl;
+        _clientPoller.insertNewSocket(clientSocket);
+
+        return Socket::HandleResult::CONTINUE;
+    }
+};
+
+void server(SocketPoll& clientPoller)
 {
     // Start server.
-    auto server = std::make_shared<ServerSocket>();
+    auto server = std::make_shared<ServerSocket>(clientPoller);
     if (!server->bind(addr))
     {
         const std::string msg = "Failed to bind. (errno: ";
@@ -245,51 +172,30 @@ void server(SocketPoll<SimpleResponseClient>& poller)
         throw std::runtime_error(msg + std::strerror(errno) + ")");
     }
 
+    SocketPoll serverPoll;
+
+    serverPoll.insertNewSocket(server);
+
     std::cout << "Listening." << std::endl;
     for (;;)
     {
-        if (server->pollRead(30000))
-        {
-            std::shared_ptr<SimpleResponseClient> clientSocket = server->accept<SimpleResponseClient>();
-            if (!clientSocket)
-            {
-                const std::string msg = "Failed to accept. (errno: ";
-                throw std::runtime_error(msg + std::strerror(errno) + ")");
-            }
-
-            std::cout << "Accepted client #" << clientSocket->getFD() << std::endl;
-            poller.insertNewSocket(clientSocket);
-        }
+        serverPoll.poll(30000);
     }
 }
 
 /// Poll client sockets and do IO.
-void pollAndComm(SocketPoll<SimpleResponseClient>& poller, std::atomic<bool>& stop)
+void pollAndComm(SocketPoll& poller, std::atomic<bool>& stop)
 {
     while (!stop)
     {
-        poller.poll(5000, [](const std::shared_ptr<SimpleResponseClient>& socket, const int events)
-        {
-            bool closeSocket = false;
-
-            if (events & POLLIN)
-                closeSocket = !socket->readIncomingData();
-
-            if (events & POLLOUT)
-                socket->writeOutgoingData();
-
-            if (events & (POLLHUP | POLLERR | POLLNVAL))
-                closeSocket = true;
-
-            return !closeSocket;
-        });
+        poller.poll(5000);
     }
 }
 
 int main(int, const char**)
 {
     // Used to poll client sockets.
-    SocketPoll<SimpleResponseClient> poller;
+    SocketPoll poller;
 
     // Start the client polling thread.
     Thread threadPoll([&poller](std::atomic<bool>& stop)
