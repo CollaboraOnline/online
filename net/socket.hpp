@@ -282,8 +282,8 @@ public:
     }
 
   protected:
-    std::vector< unsigned char > _inBuffer;
-    std::vector< unsigned char > _outBuffer;
+    std::vector< char > _inBuffer;
+    std::vector< char > _outBuffer;
   public:
 
     HandleResult handlePoll( int events ) override
@@ -307,7 +307,7 @@ public:
     bool readIncomingData()
     {
         ssize_t len;
-        unsigned char buf[4096];
+        char buf[4096];
         do {
             len = ::read(getFD(), buf, sizeof(buf));
         } while (len < 0 && errno == EINTR);

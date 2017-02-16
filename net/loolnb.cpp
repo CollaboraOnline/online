@@ -18,10 +18,15 @@
 #include <thread>
 #include <assert.h>
 
+#include <Poco/MemoryStream.h>
 #include <Poco/Net/SocketAddress.h>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/StringTokenizer.h>
+
+using Poco::MemoryInputStream;
+using Poco::StringTokenizer;
 
 #include "socket.hpp"
-#include "common.hpp"
 
 constexpr int PortNumber = 9191;
 
@@ -36,17 +41,22 @@ public:
     {
         std::cerr << "message had size " << _inBuffer.size() << "\n";
 
-        HeaderStrings headers;
-        Payload payload;
-        size_t skip;
-        if ((skip = parseHTTP(_inBuffer, headers, payload) > 0))
+        int number = 0;
+        MemoryInputStream message(&_inBuffer[0], _inBuffer.size());
+        Poco::Net::HTTPRequest req;
+        req.read(message);
+
+        StringTokenizer tokens(req.getURI(), "/?");
+        if (tokens.count() == 4)
         {
-            for (auto i = headers.begin(); i != headers.end(); ++i)
-            {
-                std::cerr << "header '" << *i << "'\n";
-            }
+            std::string subpool = tokens[2];
+            number = std::stoi(tokens[3]);
         }
-        // else close socket ? ...
+        else
+            std::cerr << " unknown tokens " << tokens.count() << std::endl;
+
+        // complex algorithmic core:
+        number = number + 1;
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
