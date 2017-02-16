@@ -35,8 +35,6 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 
-#include "common.hpp"
-
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
@@ -104,17 +102,11 @@ struct Session
     }
 };
 
-void testParseHTTP()
-{
-}
-
 struct Client : public Poco::Util::Application
 {
 public:
     int main(const std::vector<std::string>& /* args */) override
     {
-        testParseHTTP();
-
         Session first("init");
         Session second("init");
 
