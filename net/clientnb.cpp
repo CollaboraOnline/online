@@ -91,6 +91,7 @@ struct Session
 
             std::string result(std::istreambuf_iterator<char>(responseStream), {});
             std::cerr << "Got response '" << result << "'\n";
+            number = std::stoi(result);
         }
         catch (const Poco::Exception &e)
         {
@@ -118,7 +119,7 @@ public:
         assert (back == count + 1);
 
         back = second.getResponse();
-        assert (back == count + 1);
+        assert (back == count + 2);
 
         return 0;
     }
