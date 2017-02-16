@@ -210,15 +210,6 @@ void server(SocketPoll& clientPoller)
     }
 }
 
-/// Poll client sockets and do IO.
-void pollAndComm(SocketPoll& poller, std::atomic<bool>& stop)
-{
-    while (!stop)
-    {
-        poller.poll(5000);
-    }
-}
-
 int main(int, const char**)
 {
     // Used to poll client sockets.
@@ -227,7 +218,10 @@ int main(int, const char**)
     // Start the client polling thread.
     Thread threadPoll([&poller](std::atomic<bool>& stop)
     {
-        pollAndComm(poller, stop);
+        while (!stop)
+        {
+            poller.poll(5000);
+        }
     });
 
     // Start the server.
