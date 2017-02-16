@@ -133,14 +133,15 @@ public:
 
         // websocket fun !
         size_t len = _inBuffer.size();
-        const char *p = &_inBuffer[0];
+        char *p = &_inBuffer[0];
+        char *data, *mask;
         if (len < 2) // partial read
             return;
 
         bool fin = *p & 0x80;
         WSOpCode code = static_cast<WSOpCode>(*p & 0x0f);
         p++;
-        bool mask = *p & 0x80;
+        bool hasMask = *p & 0x80;
         size_t payloadLen = *p & 0x7f;
         p++;
 
@@ -149,25 +150,90 @@ public:
             if (len < 2 + 2)
                 return;
             std::cerr << "Implement me 2 byte\n";
+            data = p + 2;
+            len -= 2;
         }
         else if (payloadLen == 127) // 8 byte length
         {
             if (len < 2 + 8)
                 return;
             std::cerr << "Implement me 8 byte\n";
+            data = p + 8;
+            len -= 8;
         }
         else
         {
-            _wsPayload.insert(_wsPayload.end(), p, p + std::min(payloadLen, len));
+            data = p;
         }
+
+        if (hasMask)
+        {
+            mask = data;
+            data += 4;
+            len -= 4;
+            for (size_t i = 0; i < len; ++i)
+                data[i] = data[i] ^ mask[i % 4];
+
+            // FIXME: copy and un-mask at the same time ...
+            _wsPayload.insert(_wsPayload.end(), data, data + std::min(payloadLen, len));
+        } else
+            _wsPayload.insert(_wsPayload.end(), data, data + std::min(payloadLen, len));
         // FIXME: fin, aggregating payloads into _wsPayload etc.
-        handleWSMessage(fin, code, mask, _wsPayload);
+        handleWSMessage(fin, code, _wsPayload);
         _wsPayload.clear();
     }
 
-    virtual void handleWSMessage( bool fin, WSOpCode code, bool mask, std::vector<char> &data)
+    virtual void queueWSMessage(const std::vector<char> &data,
+                                WSOpCode code = WSOpCode::Binary)
     {
-        std::cerr << "Message: fin? " << fin << " code " << code << " mask? " << mask << " data size " << data.size() << "\n";
+        size_t len = data.size();
+        bool fin = false;
+        bool mask = false;
+
+        unsigned char header[2];
+        header[0] = (fin ? 0x80 : 0) | static_cast<unsigned char>(code);
+        header[1] = mask ? 0x80 : 0;
+        _outBuffer.push_back((char)header[0]);
+
+        // no out-bound masking ...
+        if (len < 126)
+        {
+            header[1] |= len;
+            _outBuffer.push_back((char)header[1]);
+        }
+        else if (len <= 0xffff)
+        {
+            header[1] |= 126;
+            _outBuffer.push_back((char)header[1]);
+            std::cerr << "FIXME: length\n";
+        }
+        else
+        {
+            header[1] |= 127;
+            _outBuffer.push_back((char)header[1]);
+            std::cerr << "FIXME: length\n";
+        }
+
+        // FIXME: pick random number and mask in the outbuffer etc.
+        assert (!mask);
+
+        _outBuffer.insert(_outBuffer.end(), data.begin(), data.end());
+    }
+
+    virtual void handleWSMessage( bool fin, WSOpCode code, std::vector<char> &data)
+    {
+        std::cerr << "Message: fin? " << fin << " code " << code << " data size " << data.size() << "\n";
+
+        // ping pong test
+        assert (data.size() >= sizeof(size_t));
+        size_t *countPtr = reinterpret_cast<size_t *>(&data[0]);
+        size_t count = *countPtr;
+        count++;
+        std::cerr << "count is " << count << "\n";
+        std::vector<char> reply;
+        reply.insert(reply.end(), reinterpret_cast<char *>(&count),
+                     reinterpret_cast<char *>(&count) + sizeof(count));
+        queueWSMessage(reply);
     }
 
 };
