@@ -273,7 +273,7 @@ L.Map.include({
 		this._docLayer._annotations.add({
 			text: '',
 			textrange: '',
-			author: _('You'),
+			author: this.getViewName(this._docLayer._viewId),
 			dateTime: new Date().toDateString(),
 			id: 'new',
 			anchorPos:  this._docLayer._latLngToTwips(this._docLayer._visibleCursor.getNorthWest())
