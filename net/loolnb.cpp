@@ -32,22 +32,25 @@ using Poco::StringTokenizer;
 
 constexpr int PortNumber = 9191;
 
+static std::string computeAccept(const std::string &key);
+
 class SimpleResponseClient : public ClientSocket
 {
     int _wsVersion;
     std::string _wsKey;
     std::string _wsProtocol;
+    std::vector<char> _wsPayload;
+    enum { HTTP, WEBSOCKET } _wsState;
 
 public:
     SimpleResponseClient(const int fd) :
         ClientSocket(fd),
-        _wsVersion(0)
+        _wsVersion(0),
+        _wsState(HTTP)
     {
     }
-    virtual void handleIncomingMessage() override
+    virtual void handleHTTP()
     {
-        std::cerr << "message had size " << _inBuffer.size() << "\n";
-
         int number = 0;
         MemoryInputStream message(&_inBuffer[0], _inBuffer.size());
         Poco::Net::HTTPRequest req;
@@ -57,6 +60,7 @@ public:
         size_t consumed = std::min(_inBuffer.size(),
                                    std::max((size_t)message.tellg(), size_t(0)));
         _inBuffer.erase(_inBuffer.begin(), _inBuffer.begin() + consumed);
+        std::cerr << "_inBuffer has " << _inBuffer.size() << " remaining\n";
 
         StringTokenizer tokens(req.getURI(), "/?");
         if (tokens.count() == 4)
@@ -93,14 +97,79 @@ public:
             oss << "HTTP/1.1 101 Switching Protocols\r\n"
                 << "Upgrade: websocket\r\n"
                 << "Connection: Upgrade\r\n"
-                << "Sec-Websocket-Accept: " << _wsKey << "\r\n"
+                << "Sec-Websocket-Accept: " << computeAccept(_wsKey) << "\r\n"
                 << "\r\n";
             std::string str = oss.str();
             _outBuffer.insert(_outBuffer.end(), str.begin(), str.end());
+            _wsState = WEBSOCKET;
         }
         else
             std::cerr << " unknown tokens " << tokens.count() << std::endl;
     }
+
+    enum WSOpCode {
+        Continuation, // 0x0
+        Text,         // 0x1
+        Binary,       // 0x2
+        Reserved1,    // 0x3
+        Reserved2,    // 0x4
+        Reserved3,    // 0x5
+        Reserved4,    // 0x6
+        Reserved5,    // 0x7
+        Close,        // 0x8
+        Ping,         // 0x9
+        Pong          // 0xa
+        // ... reserved
+    };
+
+    virtual void handleIncomingMessage() override
+    {
+        std::cerr << "incoming message with buffer size " << _inBuffer.size() << "\n";
+        if (_wsState == HTTP)
+        {
+            handleHTTP();
+            return;
+        }
+
+        // websocket fun !
+        size_t len = _inBuffer.size();
+        const char *p = &_inBuffer[0];
+        if (len < 2) // partial read
+            return;
+
+        bool fin = *p & 0x80;
+        WSOpCode code = static_cast<WSOpCode>(*p & 0x0f);
+        p++;
+        bool mask = *p & 0x80;
+        size_t payloadLen = *p & 0x7f;
+        p++;
+
+        if (payloadLen == 126) // 2 byte length
+        {
+            if (len < 2 + 2)
+                return;
+            std::cerr << "Implement me 2 byte\n";
+        }
+        else if (payloadLen == 127) // 8 byte length
+        {
+            if (len < 2 + 8)
+                return;
+            std::cerr << "Implement me 8 byte\n";
+        }
+        else
+        {
+            _wsPayload.insert(_wsPayload.end(), p, p + std::min(payloadLen, len));
+        }
+        // FIXME: fin, aggregating payloads into _wsPayload etc.
+        handleWSMessage(fin, code, mask, _wsPayload);
+        _wsPayload.clear();
+    }
+
+    virtual void handleWSMessage( bool fin, WSOpCode code, bool mask, std::vector<char> &data)
+    {
+        std::cerr << "Message: fin? " << fin << " code " << code << " mask? " << mask << " data size " << data.size() << "\n";
+    }
+
 };
 
 // FIXME: use Poco Thread instead (?)
@@ -259,5 +328,25 @@ int main(int, const char**)
 
     return 0;
 }
+
+// Saves writing this ourselves:
+
+#include <Poco/Net/WebSocket.h>
+
+namespace {
+#include <Poco/Net/WebSocket.h>
+    struct Puncture : private Poco::Net::WebSocket {
+        static std::string doComputeAccept(const std::string &key)
+        {
+            return computeAccept(key);
+        }
+    };
+}
+
+static std::string computeAccept(const std::string &key)
+{
+    return Puncture::doComputeAccept(key);
+}
+
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
