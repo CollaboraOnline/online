@@ -34,6 +34,8 @@
 #include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
+#include <Poco/Runnable.h>
+#include <Poco/Thread.h>
 
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
@@ -86,11 +88,11 @@ struct Session
         Poco::Net::HTTPResponse response;
 
         try {
-            std::cerr << "try to get response\n";
+//            std::cerr << "try to get response\n";
             std::istream& responseStream = _session->receiveResponse(response);
 
             std::string result(std::istreambuf_iterator<char>(responseStream), {});
-            std::cerr << "Got response '" << result << "'\n";
+//            std::cerr << "Got response '" << result << "'\n";
             number = std::stoi(result);
         }
         catch (const Poco::Exception &e)
@@ -103,8 +105,35 @@ struct Session
     }
 };
 
+struct ThreadWorker : public Runnable
+{
+    const char *_domain;
+		ThreadWorker (const char *domain)
+            : _domain(domain)
+        {
+        }
+		virtual void run()
+        {
+            for (int i = 0; i < 100; ++i)
+            {
+                Session ping(_domain);
+                ping.sendPing(i);
+                int back = ping.getResponse();
+                assert(back == i + 1);
+            }
+		}
+};
+
 struct Client : public Poco::Util::Application
 {
+    void testLadder()
+    {
+        ThreadWorker ladder("init");
+        Thread thread;
+        thread.start(ladder);
+        thread.join();
+    }
+
 public:
     int main(const std::vector<std::string>& /* args */) override
     {
@@ -120,6 +149,8 @@ public:
 
         back = second.getResponse();
         assert (back == count + 2);
+
+        testLadder();
 
         return 0;
     }
