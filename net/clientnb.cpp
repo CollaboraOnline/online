@@ -28,7 +28,6 @@
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/StreamCopier.h>
-#include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Util/HelpFormatter.h>
@@ -64,6 +63,11 @@ struct Session
         else
             _session = new Poco::Net::HTTPClientSession(HostName, PortNumber);
     }
+    ~Session()
+    {
+        delete _session;
+    }
+
     void sendPing(int i)
     {
         Poco::Net::HTTPRequest request(
@@ -108,7 +112,7 @@ struct Session
 struct ThreadWorker : public Runnable
 {
     const char *_domain;
-		ThreadWorker (const char *domain)
+		ThreadWorker (const char *domain = NULL)
             : _domain(domain)
         {
         }
@@ -116,7 +120,7 @@ struct ThreadWorker : public Runnable
         {
             for (int i = 0; i < 100; ++i)
             {
-                Session ping(_domain);
+                Session ping(_domain ? _domain : "init");
                 ping.sendPing(i);
                 int back = ping.getResponse();
                 assert(back == i + 1);
@@ -128,10 +132,23 @@ struct Client : public Poco::Util::Application
 {
     void testLadder()
     {
-        ThreadWorker ladder("init");
+        ThreadWorker ladder;
         Thread thread;
         thread.start(ladder);
         thread.join();
+    }
+
+    void testParallel()
+    {
+        const int num = 10;
+        Thread snakes[num];
+        ThreadWorker ladders[num];
+
+        for (size_t i = 0; i < num; i++)
+            snakes[i].start(ladders[i]);
+
+        for (int i = 0; i < num; i++)
+            snakes[i].join();
     }
 
 public:
@@ -151,6 +168,7 @@ public:
         assert (back == count + 2);
 
         testLadder();
+        testParallel();
 
         return 0;
     }

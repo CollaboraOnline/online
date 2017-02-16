@@ -22,6 +22,8 @@
 #include <Poco/Net/SocketAddress.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/Runnable.h>
+#include <Poco/Thread.h>
 
 using Poco::MemoryInputStream;
 using Poco::StringTokenizer;
@@ -74,6 +76,8 @@ public:
         _inBuffer.clear();
     }
 };
+
+// FIXME: use Poco Thread instead (?)
 
 /// Generic thread class.
 class Thread
