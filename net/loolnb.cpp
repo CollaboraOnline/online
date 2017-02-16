@@ -34,9 +34,14 @@ constexpr int PortNumber = 9191;
 
 class SimpleResponseClient : public ClientSocket
 {
+    int _wsVersion;
+    std::string _wsKey;
+    std::string _wsProtocol;
+
 public:
     SimpleResponseClient(const int fd) :
-        ClientSocket(fd)
+        ClientSocket(fd),
+        _wsVersion(0)
     {
     }
     virtual void handleIncomingMessage() override
@@ -48,32 +53,53 @@ public:
         Poco::Net::HTTPRequest req;
         req.read(message);
 
+        // if we succeeded - remove that from our input buffer
+        size_t consumed = std::min(_inBuffer.size(),
+                                   std::max((size_t)message.tellg(), size_t(0)));
+        _inBuffer.erase(_inBuffer.begin(), _inBuffer.begin() + consumed);
+
         StringTokenizer tokens(req.getURI(), "/?");
         if (tokens.count() == 4)
         {
             std::string subpool = tokens[2];
             number = std::stoi(tokens[3]);
+
+            // complex algorithmic core:
+            number = number + 1;
+
+            std::string numberString = std::to_string(number);
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+                << "Date: Once, Upon a time GMT\r\n" // Mon, 27 Jul 2009 12:28:53 GMT
+                << "Server: madeup string (Linux)\r\n"
+                << "Content-Length: " << numberString.size() << "\r\n"
+                << "Content-Type: text/plain\r\n"
+                << "Connection: Closed\r\n"
+                << "\r\n"
+                << numberString;
+            ;
+            std::string str = oss.str();
+            _outBuffer.insert(_outBuffer.end(), str.begin(), str.end());
+        }
+        else if (tokens.count() == 2 && tokens[1] == "ws")
+        { // create our websocket goodness ...
+            _wsVersion = std::stoi(req.get("Sec-WebSocket-Version", "13"));
+            _wsKey = req.get("Sec-WebSocket-Key", "");
+            _wsProtocol = req.get("Sec-WebSocket-Protocol", "chat");
+            std::cerr << "version " << _wsVersion << " key '" << _wsKey << "\n";
+            // FIXME: other sanity checks ...
+
+            std::ostringstream oss;
+            oss << "HTTP/1.1 101 Switching Protocols\r\n"
+                << "Upgrade: websocket\r\n"
+                << "Connection: Upgrade\r\n"
+                << "Sec-Websocket-Accept: " << _wsKey << "\r\n"
+                << "\r\n";
+            std::string str = oss.str();
+            _outBuffer.insert(_outBuffer.end(), str.begin(), str.end());
         }
         else
             std::cerr << " unknown tokens " << tokens.count() << std::endl;
-
-        // complex algorithmic core:
-        number = number + 1;
-
-        std::string numberString = std::to_string(number);
-        std::ostringstream oss;
-        oss << "HTTP/1.1 200 OK\r\n"
-            << "Date: Once, Upon a time GMT\r\n" // Mon, 27 Jul 2009 12:28:53 GMT
-            << "Server: madeup string (Linux)\r\n"
-            << "Content-Length: " << numberString.size() << "\r\n"
-            << "Content-Type: text/plain\r\n"
-            << "Connection: Closed\r\n"
-            << "\r\n"
-            << numberString;
-            ;
-        std::string str = oss.str();
-        _outBuffer.insert(_outBuffer.end(), str.begin(), str.end());
-        _inBuffer.clear();
     }
 };
 
