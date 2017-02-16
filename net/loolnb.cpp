@@ -58,20 +58,19 @@ public:
         // complex algorithmic core:
         number = number + 1;
 
+        std::string numberString = std::to_string(number);
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
             << "Date: Once, Upon a time GMT\r\n" // Mon, 27 Jul 2009 12:28:53 GMT
             << "Server: madeup string (Linux)\r\n"
-            << "Content-Length: " << _inBuffer.size() << "\r\n"
+            << "Content-Length: " << numberString.size() << "\r\n"
             << "Content-Type: text/plain\r\n"
             << "Connection: Closed\r\n"
             << "\r\n"
+            << numberString;
             ;
         std::string str = oss.str();
         _outBuffer.insert(_outBuffer.end(), str.begin(), str.end());
-
-        // append the content we got:
-        _outBuffer.insert(_outBuffer.end(), _inBuffer.begin(), _inBuffer.end());
         _inBuffer.clear();
     }
 };
