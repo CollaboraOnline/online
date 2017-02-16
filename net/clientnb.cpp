@@ -25,6 +25,7 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/FilePartSource.h>
 #include <Poco/Net/SSLManager.h>
+#include <Poco/Net/WebSocket.h>
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/StreamCopier.h>
@@ -39,6 +40,7 @@
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
+using Poco::Net::WebSocket;
 using Poco::Runnable;
 using Poco::Thread;
 using Poco::URI;
@@ -107,6 +109,15 @@ struct Session
         }
         return number;
     }
+
+    std::shared_ptr<WebSocket> getWebSocket()
+    {
+        _session->setTimeout(Poco::Timespan(10, 0));
+        HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
+        HTTPResponse response;
+        return std::shared_ptr<WebSocket>(
+            new WebSocket(*_session, request, response));
+    }
 };
 
 struct ThreadWorker : public Runnable
@@ -151,25 +162,44 @@ struct Client : public Poco::Util::Application
             snakes[i].join();
     }
 
+    void testWebsocket()
+    {
+        Session session("ws");
+        std::shared_ptr<WebSocket> ws = session.getWebSocket();
+        for (size_t i = 0; i < 10; i++)
+        {
+            ws->sendFrame(&i, sizeof(i), WebSocket::SendFlags::FRAME_BINARY);
+            size_t back[5];
+            int flags = 0;
+            int recvd = ws->receiveFrame((void *)back, sizeof(back), flags);
+            assert(recvd == sizeof(size_t));
+            assert(back[0] == i + 1);
+        }
+    }
+
 public:
     int main(const std::vector<std::string>& /* args */) override
     {
-        Session first("init");
-        Session second("init");
+        if (getenv("WS"))
+            testWebsocket();
+        else
+        {
+            Session first("init");
+            Session second("init");
 
-        int count = 42, back;
-        first.sendPing(count);
-        second.sendPing(count + 1);
+            int count = 42, back;
+            first.sendPing(count);
+            second.sendPing(count + 1);
 
-        back = first.getResponse();
-        assert (back == count + 1);
+            back = first.getResponse();
+            assert (back == count + 1);
 
-        back = second.getResponse();
-        assert (back == count + 2);
+            back = second.getResponse();
+            assert (back == count + 2);
 
-        testLadder();
-        testParallel();
-
+            testLadder();
+            testParallel();
+        }
         return 0;
     }
 };
