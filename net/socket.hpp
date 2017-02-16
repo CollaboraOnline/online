@@ -290,6 +290,7 @@ public:
     {
         bool closeSocket = false;
 
+        // FIXME: need to close input, but not output (?)
         if (events & POLLIN)
             closeSocket = !readIncomingData();
 

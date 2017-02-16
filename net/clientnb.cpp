@@ -35,6 +35,8 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 
+#include "common.hpp"
+
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
@@ -46,41 +48,48 @@ using Poco::Util::HelpFormatter;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 
+const char *HostName = "127.0.0.1";
 constexpr int PortNumber = 9191;
 
-Poco::Net::SocketAddress addr("127.0.0.1", PortNumber);
-
-struct Client : public Poco::Util::Application
+struct Session
 {
-public:
-    int main(const std::vector<std::string>& /* args */) override
+    std::string _session_name;
+    Poco::Net::HTTPClientSession *_session;
+
+    Session(const char *session_name, bool https = false)
+        : _session_name(session_name)
     {
-        const char *hostname = "127.0.0.1";
-        bool https = false;
-        Poco::Net::HTTPClientSession *session;
         if (https)
-            session = new Poco::Net::HTTPSClientSession(hostname, PortNumber);
+            _session = new Poco::Net::HTTPSClientSession(HostName, PortNumber);
         else
-            session = new Poco::Net::HTTPClientSession(hostname, PortNumber);
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/ping");
+            _session = new Poco::Net::HTTPClientSession(HostName, PortNumber);
+    }
+    void sendPing(int i)
+    {
+        Poco::Net::HTTPRequest request(
+            Poco::Net::HTTPRequest::HTTP_POST,
+            "/ping/" + _session_name + "/" + std::to_string(i));
         try {
             Poco::Net::HTMLForm form;
             form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
             form.prepareSubmit(request);
-            form.write(session->sendRequest(request));
+            form.write(_session->sendRequest(request));
         }
         catch (const Poco::Exception &e)
         {
             std::cerr << "Failed to write data: " << e.name() <<
                   " " << e.message() << "\n";
-            return -1;
+            throw;
         }
-
+    }
+    int getResponse()
+    {
+        int number = 42;
         Poco::Net::HTTPResponse response;
 
         try {
             std::cerr << "try to get response\n";
-            std::istream& responseStream = session->receiveResponse(response);
+            std::istream& responseStream = _session->receiveResponse(response);
 
             std::string result(std::istreambuf_iterator<char>(responseStream), {});
             std::cerr << "Got response '" << result << "'\n";
@@ -89,8 +98,36 @@ public:
         {
             std::cerr << "Exception converting: " << e.name() <<
                   " " << e.message() << "\n";
-            return -1;
+            throw;
         }
+        return number;
+    }
+};
+
+void testParseHTTP()
+{
+}
+
+struct Client : public Poco::Util::Application
+{
+public:
+    int main(const std::vector<std::string>& /* args */) override
+    {
+        testParseHTTP();
+
+        Session first("init");
+        Session second("init");
+
+        int count = 42, back;
+        first.sendPing(count);
+        second.sendPing(count + 1);
+
+        back = first.getResponse();
+        assert (back == count + 1);
+
+        back = second.getResponse();
+        assert (back == count + 1);
+
         return 0;
     }
 };

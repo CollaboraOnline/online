@@ -21,6 +21,7 @@
 #include <Poco/Net/SocketAddress.h>
 
 #include "socket.hpp"
+#include "common.hpp"
 
 constexpr int PortNumber = 9191;
 
@@ -34,6 +35,19 @@ public:
     virtual void handleIncomingMessage() override
     {
         std::cerr << "message had size " << _inBuffer.size() << "\n";
+
+        HeaderStrings headers;
+        Payload payload;
+        size_t skip;
+        if ((skip = parseHTTP(_inBuffer, headers, payload) > 0))
+        {
+            for (auto i = headers.begin(); i != headers.end(); ++i)
+            {
+                std::cerr << "header '" << *i << "'\n";
+            }
+        }
+        // else close socket ? ...
+
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
             << "Date: Once, Upon a time GMT\r\n" // Mon, 27 Jul 2009 12:28:53 GMT
