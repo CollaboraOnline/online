@@ -278,13 +278,11 @@ private:
     std::vector<pollfd> _pollFds;
 };
 
-
-/// A non-blocking, data streaming socket.
-/// Buffers and pumps data based on poll events.
-class StreamSocket : public Socket
+/// Abstract buffering socket.
+class BufferingSocket : public Socket
 {
 public:
-    StreamSocket() :
+    BufferingSocket() :
         Socket()
     {
     }
@@ -312,7 +310,43 @@ public:
                              HandleResult::CONTINUE;
     }
 
-    bool readIncomingData()
+    /// Override to reading data from socket.
+    virtual bool readIncomingData() = 0;
+
+    /// Override to write data out to socket.
+    virtual void writeOutgoingData() = 0;
+
+    int getPollEvents() override
+    {
+        int pollFor = POLLIN;
+        if (_outBuffer.size() > 0)
+            pollFor |= POLLOUT;
+        return pollFor;
+    }
+
+    /// Override to handle read data.
+    /// Called after successful socket reads.
+    virtual void handleIncomingMessage() = 0;
+
+protected:
+    BufferingSocket(const int fd) :
+        Socket(fd)
+    {
+    }
+};
+
+/// A plain, non-blocking, data streaming socket.
+class StreamSocket : public BufferingSocket
+{
+public:
+    StreamSocket() :
+        BufferingSocket()
+    {
+    }
+
+  public:
+
+    bool readIncomingData() override
     {
         ssize_t len;
         char buf[4096];
@@ -330,7 +364,7 @@ public:
         return len != 0; // zero is eof / clean socket close.
     }
 
-    void writeOutgoingData()
+    void writeOutgoingData() override
     {
         assert (_outBuffer.size() > 0);
         ssize_t len;
@@ -345,19 +379,40 @@ public:
         // else poll will handle errors
     }
 
-    int getPollEvents() override
-    {
-        int pollFor = POLLIN;
-        if (_outBuffer.size() > 0)
-            pollFor |= POLLOUT;
-        return pollFor;
-    }
-
-    virtual void handleIncomingMessage() = 0;
-
 protected:
     StreamSocket(const int fd) :
-        Socket(fd)
+        BufferingSocket(fd)
+    {
+    }
+
+    friend class ServerSocket;
+};
+
+/// A SSL/TSL, non-blocking, data streaming socket.
+class SslStreamSocket : public BufferingSocket
+{
+public:
+    SslStreamSocket() :
+        BufferingSocket()
+    {
+    }
+
+  public:
+
+    bool readIncomingData() override
+    {
+        //TODO:
+        return true;
+    }
+
+    void writeOutgoingData() override
+    {
+        //TODO;
+    }
+
+protected:
+    SslStreamSocket(const int fd) :
+        BufferingSocket(fd)
     {
     }
 
