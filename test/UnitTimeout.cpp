@@ -31,7 +31,7 @@ public:
         _timedOut = true;
         UnitBase::timeout();
     }
-	virtual void returnValue(int & retValue) override
+    virtual void returnValue(int & retValue) override
     {
         if (!_timedOut)
         {

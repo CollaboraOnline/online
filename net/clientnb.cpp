@@ -123,20 +123,20 @@ struct Session
 struct ThreadWorker : public Runnable
 {
     const char *_domain;
-		ThreadWorker (const char *domain = NULL)
-            : _domain(domain)
+    ThreadWorker(const char *domain = nullptr)
+        : _domain(domain)
+    {
+    }
+    virtual void run()
+    {
+        for (int i = 0; i < 100; ++i)
         {
+            Session ping(_domain ? _domain : "init");
+            ping.sendPing(i);
+            int back = ping.getResponse();
+            assert(back == i + 1);
         }
-		virtual void run()
-        {
-            for (int i = 0; i < 100; ++i)
-            {
-                Session ping(_domain ? _domain : "init");
-                ping.sendPing(i);
-                int back = ping.getResponse();
-                assert(back == i + 1);
-            }
-		}
+    }
 };
 
 struct Client : public Poco::Util::Application
