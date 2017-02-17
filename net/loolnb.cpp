@@ -34,7 +34,7 @@ constexpr int PortNumber = 9191;
 
 static std::string computeAccept(const std::string &key);
 
-class SimpleResponseClient : public ClientSocket
+class SimpleResponseClient : public StreamSocket
 {
     int _wsVersion;
     std::string _wsKey;
@@ -44,7 +44,7 @@ class SimpleResponseClient : public ClientSocket
 
 public:
     SimpleResponseClient(const int fd) :
-        ClientSocket(fd),
+        StreamSocket(fd),
         _wsVersion(0),
         _wsState(HTTP)
     {
