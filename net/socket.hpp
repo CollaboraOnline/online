@@ -20,6 +20,8 @@
 
 #include <Poco/Net/SocketAddress.h>
 
+#include "ssl.hpp"
+
 /// A non-blocking, streaming socket.
 class Socket
 {
@@ -406,11 +408,34 @@ public:
 
 protected:
     SslStreamSocket(const int fd) :
-        BufferingSocket(fd)
+        BufferingSocket(fd),
+        _ssl(nullptr)
     {
+        BIO* bio = BIO_new(BIO_s_socket());
+        if (bio == nullptr)
+        {
+            throw std::runtime_error("Failed to create SSL BIO.");
+        }
+
+        BIO_set_fd(bio, fd, BIO_NOCLOSE);
+
+        _ssl = SslContext::newSsl();
+        if (!_ssl)
+        {
+            BIO_free(bio);
+            throw std::runtime_error("Failed to create SSL.");
+        }
+
+        SSL_set_bio(_ssl, bio, bio);
+
+        // We are a server-side socket.
+        SSL_set_accept_state(_ssl);
     }
 
     friend class ServerSocket;
+
+private:
+    SSL* _ssl;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
