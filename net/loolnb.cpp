@@ -321,7 +321,7 @@ public:
         // Accept a connection (if any) and set it to non-blocking.
         // We don't care about the client's address, so ignored.
         const int rc = ::accept4(getFD(), nullptr, nullptr, SOCK_NONBLOCK);
-        return std::shared_ptr<T>(rc != -1 ? new T(rc) : nullptr);
+        return (rc != -1 ? std::make_shared<T>(rc) : std::shared_ptr<T>(nullptr));
     }
 
     int getPollEvents() override
