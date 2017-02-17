@@ -383,7 +383,8 @@ protected:
     {
     }
 
-    friend class ServerSocket;
+    // Will construct us upon accept.
+    template<class T> friend class ServerSocket;
 };
 
 /// A SSL/TSL, non-blocking, data streaming socket.
@@ -432,7 +433,8 @@ protected:
         SSL_set_accept_state(_ssl);
     }
 
-    friend class ServerSocket;
+    // Will construct us upon accept.
+    template<class T> friend class ServerSocket;
 
 private:
     SSL* _ssl;
