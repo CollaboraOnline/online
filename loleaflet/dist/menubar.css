@@ -7,6 +7,10 @@
     background-color: transparent;
 }
 
+#main-menu.readonly {
+    top: 30px;
+}
+
 .header-wrapper {
     background: #efefef; /* Fill up white areas with grey */
     min-height: 70px; /* Map starts from 70px onwards in case of writer, calc */
@@ -186,10 +190,11 @@
     display: block;
 }
 
-.toolbar-wrapper {
+#toolbar-wrapper {
     position: relative;
 }
 
+/* desktop mode */
 @media (min-width: 768px) {
     /* hide the button in desktop view */
     .main-menu-btn {
@@ -201,13 +206,23 @@
 	display: block;
     }
     #main-menu {
-	top: 0;
+	top: 0 !important;
     }
     .main-nav {
 	position: static;
 	width: auto;
     }
+    /*
+     * In desktop mode, we already have the close button from the toolbar
+     */
     #menu-closedocument {
 	display: none;
+    }
+    /* In readonly mode, we have no toolbar => no close button,
+     * so only way to close the document is file menu option
+     */
+    #menu-closedocument.readonly {
+	display: block;
+	top: 3px; /* This is not a menu, plain action, but we want it to appear like a menu */
     }
 }

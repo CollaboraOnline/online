@@ -95,11 +95,20 @@ L.Map = L.Evented.extend({
 		};
 		this.initComplete = false;
 
-		this.on('updatepermission', function() {
+		this.on('updatepermission', function(e) {
 			if (!this.initComplete) {
 				this._fireInitComplete('updatepermission');
 			}
-		});
+
+			if (e.perm === 'readonly') {
+				L.DomUtil.addClass(this._container.parentElement, 'readonly');
+				L.DomUtil.addClass(L.DomUtil.get('logo'), 'readonly');
+				L.DomUtil.addClass(L.DomUtil.get('toolbar-wrapper'), 'readonly');
+				L.DomUtil.addClass(L.DomUtil.get('main-menu'), 'readonly');
+				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'readonly');
+				L.DomUtil.addClass(L.DomUtil.get('spreadsheet-row-column-frame'), 'readonly');
+			}
+		}, this);
 		this.on('doclayerinit', function() {
 			if (!this.initComplete) {
 				this._fireInitComplete('doclayerinit');

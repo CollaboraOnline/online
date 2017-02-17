@@ -8,6 +8,19 @@
 	left: 0px;
 }
 
+#document-container.readonly {
+    top: 30px;
+}
+
+#toolbar-wrapper.readonly {
+    display: none;
+}
+
+#logo.readonly {
+    background-size: 100px;
+    top: -5px;
+}
+
 #map {
 	position: absolute;
 	top: 0px;
@@ -32,6 +45,10 @@ body {
     display: block;
 }
 
+#presentation-controls-wrapper.readonly {
+    top: 30px;
+}
+
 @media (max-width: 767px) {
     /* Show slidesorter beyond 768px only */
     #presentation-controls-wrapper {
@@ -44,11 +61,17 @@ body {
     #document-container.spreadsheet-document {
 	top: 93px !important;
     }
+    #document-container.spreadsheet-document.readonly {
+	top: 50px !important;
+    }
     #document-container {
 	top: 40px;
     }
     #spreadsheet-row-column-frame {
 	top: 73px !important;
+    }
+    #spreadsheet-row-column-frame.readonly {
+	top: 30px !important;
     }
     /* There seems to be some bug in w2ui library -
      * when we are in very low screen width, the toolbar-up-more

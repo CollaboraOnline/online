@@ -7,7 +7,7 @@ L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
 		text:  [
-			{name: _('File'), type: 'menu', menu: [
+			{name: _('File'), id: 'file', type: 'menu', menu: [
 				{name: _('Save'), id: 'save', type: 'unocommand', uno: '.uno:Save'},
 				{name: _('Print'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
@@ -28,7 +28,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
-			{name: _('View'), type: 'menu', menu: [
+			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
 				{type: 'separator'},
 				{name: _('Zoom in'), id: 'zoomin', type: 'action'},
@@ -152,7 +152,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Cell'), type: 'unocommand', uno: '.uno:EntireCell'}]},
 					{name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'}]
 			},
-			{name: _('Help'), type: 'menu', menu: [
+			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
@@ -160,7 +160,7 @@ L.Control.Menubar = L.Control.extend({
 		],
 
 		presentation: [
-			{name: _('File'), type: 'menu', menu: [
+			{name: _('File'), id: 'file', type: 'menu', menu: [
 				{name: _('Save'), id: 'save', type: 'unocommand', uno: '.uno:Save'},
 				{name: _('Print'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
@@ -180,7 +180,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
-			{name: _('View'), type: 'menu', menu: [
+			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
 				{type: 'separator'},
 				{name: _('Zoom in'), id: 'zoomin', type: 'action'},
@@ -211,7 +211,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			},
-			{name: _('Help'), type: 'menu', menu: [
+			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
@@ -219,7 +219,7 @@ L.Control.Menubar = L.Control.extend({
 		],
 
 		spreadsheet: [
-			{name: _('File'), type: 'menu', menu: [
+			{name: _('File'), id: 'file', type: 'menu', menu: [
 				{name: _('Save'), id: 'save', type: 'unocommand', uno: '.uno:Save'},
 				{name: _('Print'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
@@ -239,7 +239,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
-			{name: _('View'), type: 'menu', menu: [
+			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'}]
 			},
 			{name: _('Insert'), type: 'menu', menu: [
@@ -258,7 +258,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Delete row'), type: 'unocommand', uno: '.uno:DeleteRows'},
 				{name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
 			},
-			{name: _('Help'), type: 'menu', menu: [
+			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
@@ -267,11 +267,16 @@ L.Control.Menubar = L.Control.extend({
 
 		commandStates: {},
 
-		allowedViewModeActions: ['downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx',
-								 'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx',
-								 'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx',
-								 'fullscreen', 'zoomin', 'zoomout', 'zoomreset',
-								 'about', 'keyboard-shortcuts']
+		// Only these menu options will be visible in readonly mode
+		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'help'],
+
+		allowedViewModeActions: [
+			'downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx', // file menu
+			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', // file menu
+			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', // file menu
+			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', // view menu
+			'about', 'keyboard-shortcuts' // help menu
+		]
 	},
 
 	onAdd: function (map) {
@@ -520,6 +525,18 @@ L.Control.Menubar = L.Control.extend({
 	_createMenu: function(menu) {
 		var itemList = [];
 		for (var i in menu) {
+			if (map._permission === 'readonly' && menu[i].type === 'menu') {
+				var found = false;
+				for (var j in this.options.allowedReadonlyMenus) {
+					if (this.options.allowedReadonlyMenus[j] === menu[i].id) {
+						found = true;
+						break;
+					}
+				}
+				if (!found)
+					continue;
+			}
+
 			if (menu[i].type === 'action') {
 				if ((menu[i].id === 'rev-history' && !revHistoryEnabled) ||
 				    (menu[i].id === 'closedocument' && !closebutton)) {
@@ -548,6 +565,10 @@ L.Control.Menubar = L.Control.extend({
 			var liItem = L.DomUtil.create('li', '');
 			if (menu[i].id) {
 				liItem.id = 'menu-' + menu[i].id;
+				if (menu[i].id === 'closedocument' && map._permission === 'readonly') {
+					// see corresponding css rule for readonly class usage
+					L.DomUtil.addClass(liItem, 'readonly');
+				}
 			}
 			var aItem = L.DomUtil.create('a', '', liItem);
 			aItem.innerHTML = menu[i].name;

@@ -3,7 +3,11 @@
         top: 123px;
         left: 50px;
         bottom: 65px;
-	}
+}
+
+#document-container.spreadsheet-document.readonly {
+        top: 50px;
+}
 
 .spreadsheet-tabs-container {
 	margin: 0;
@@ -60,6 +64,10 @@
 	right: 0;
 	top: 103px;
 	bottom: 65px;
+}
+
+#spreadsheet-row-column-frame.readonly {
+        top: 30px;
 }
 
 .spreadsheet-header-corner {
