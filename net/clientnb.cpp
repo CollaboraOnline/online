@@ -50,7 +50,8 @@ using Poco::Util::Option;
 using Poco::Util::OptionSet;
 
 const char *HostName = "127.0.0.1";
-constexpr int PortNumber = 9191;
+constexpr int HttpPortNumber = 9191;
+constexpr int SslPortNumber = 9193;
 
 struct Session
 {
@@ -61,9 +62,9 @@ struct Session
         : _session_name(session_name)
     {
         if (https)
-            _session = new Poco::Net::HTTPSClientSession(HostName, PortNumber);
+            _session = new Poco::Net::HTTPSClientSession(HostName, SslPortNumber);
         else
-            _session = new Poco::Net::HTTPClientSession(HostName, PortNumber);
+            _session = new Poco::Net::HTTPClientSession(HostName, HttpPortNumber);
     }
     ~Session()
     {
@@ -178,14 +179,17 @@ struct Client : public Poco::Util::Application
     }
 
 public:
-    int main(const std::vector<std::string>& /* args */) override
+    int main(const std::vector<std::string>& args) override
     {
+        const bool https = (args.size() > 0 && args[0] == "ssl");
+        std::cerr << "Starting " << (https ? "HTTPS" : "HTTP") << " client." << std::endl;
+
         if (getenv("WS"))
             testWebsocket();
         else
         {
-            Session first("init");
-            Session second("init");
+            Session first("init", https);
+            Session second("init", https);
 
             int count = 42, back;
             first.sendPing(count);
