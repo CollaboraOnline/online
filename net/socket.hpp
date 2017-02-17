@@ -197,7 +197,7 @@ public:
 
             // Clear the data.
             int dump;
-            if (::read(_wakeup[0], &dump, sizeof(dump)) == -1)
+            while (::read(_wakeup[0], &dump, sizeof(dump)) == -1 && errno == EINTR)
             {
                 // Nothing to do.
             }
@@ -213,9 +213,16 @@ public:
         _newSockets.emplace_back(newSocket);
 
         // wakeup the main-loop.
-        if (::write(_wakeup[1], "w", 1) == -1)
+        int rc;
+        do
         {
             // wakeup pipe is already full.
+            rc = ::write(_wakeup[1], "w", 1);
+        }
+        while (rc == -1 && errno == EINTR);
+
+        if (rc == -1)
+        {
             assert(errno == EAGAIN || errno == EWOULDBLOCK);
         }
     }
