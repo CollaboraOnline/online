@@ -36,7 +36,8 @@ constexpr int SslPortNumber = 9193;
 
 static std::string computeAccept(const std::string &key);
 
-class SimpleResponseClient : public StreamSocket
+template <class T>
+class SimpleResponseClient : public T
 {
     int _wsVersion;
     std::string _wsKey;
@@ -46,7 +47,7 @@ class SimpleResponseClient : public StreamSocket
 
 public:
     SimpleResponseClient(const int fd) :
-        StreamSocket(fd),
+        T(fd),
         _wsVersion(0),
         _wsState(HTTP)
     {
@@ -54,15 +55,15 @@ public:
     virtual void handleHTTP()
     {
         int number = 0;
-        MemoryInputStream message(&_inBuffer[0], _inBuffer.size());
+        MemoryInputStream message(&T::_inBuffer[0], T::_inBuffer.size());
         Poco::Net::HTTPRequest req;
         req.read(message);
 
         // if we succeeded - remove that from our input buffer
-        size_t consumed = std::min(_inBuffer.size(),
+        size_t consumed = std::min(T::_inBuffer.size(),
                                    std::max((size_t)message.tellg(), size_t(0)));
-        _inBuffer.erase(_inBuffer.begin(), _inBuffer.begin() + consumed);
-        std::cerr << "_inBuffer has " << _inBuffer.size() << " remaining\n";
+        T::_inBuffer.erase(T::_inBuffer.begin(), T::_inBuffer.begin() + consumed);
+        std::cerr << "inBuffer has " << T::_inBuffer.size() << " remaining\n";
 
         StringTokenizer tokens(req.getURI(), "/?");
         if (tokens.count() == 4)
@@ -85,7 +86,7 @@ public:
                 << numberString;
             ;
             std::string str = oss.str();
-            _outBuffer.insert(_outBuffer.end(), str.begin(), str.end());
+            T::_outBuffer.insert(T::_outBuffer.end(), str.begin(), str.end());
         }
         else if (tokens.count() == 2 && tokens[1] == "ws")
         { // create our websocket goodness ...
@@ -102,7 +103,7 @@ public:
                 << "Sec-Websocket-Accept: " << computeAccept(_wsKey) << "\r\n"
                 << "\r\n";
             std::string str = oss.str();
-            _outBuffer.insert(_outBuffer.end(), str.begin(), str.end());
+            T::_outBuffer.insert(T::_outBuffer.end(), str.begin(), str.end());
             _wsState = WEBSOCKET;
         }
         else
@@ -126,7 +127,7 @@ public:
 
     virtual void handleIncomingMessage() override
     {
-        std::cerr << "incoming message with buffer size " << _inBuffer.size() << "\n";
+        std::cerr << "incoming message with buffer size " << T::_inBuffer.size() << "\n";
         if (_wsState == HTTP)
         {
             handleHTTP();
@@ -134,8 +135,8 @@ public:
         }
 
         // websocket fun !
-        size_t len = _inBuffer.size();
-        char *p = &_inBuffer[0];
+        size_t len = T::_inBuffer.size();
+        char *p = &T::_inBuffer[0];
         char *data, *mask;
         if (len < 2) // partial read
             return;
@@ -195,31 +196,31 @@ public:
         unsigned char header[2];
         header[0] = (fin ? 0x80 : 0) | static_cast<unsigned char>(code);
         header[1] = mask ? 0x80 : 0;
-        _outBuffer.push_back((char)header[0]);
+        T::_outBuffer.push_back((char)header[0]);
 
         // no out-bound masking ...
         if (len < 126)
         {
             header[1] |= len;
-            _outBuffer.push_back((char)header[1]);
+            T::_outBuffer.push_back((char)header[1]);
         }
         else if (len <= 0xffff)
         {
             header[1] |= 126;
-            _outBuffer.push_back((char)header[1]);
+            T::_outBuffer.push_back((char)header[1]);
             std::cerr << "FIXME: length\n";
         }
         else
         {
             header[1] |= 127;
-            _outBuffer.push_back((char)header[1]);
+            T::_outBuffer.push_back((char)header[1]);
             std::cerr << "FIXME: length\n";
         }
 
         // FIXME: pick random number and mask in the outbuffer etc.
         assert (!mask);
 
-        _outBuffer.insert(_outBuffer.end(), data.begin(), data.end());
+        T::_outBuffer.insert(T::_outBuffer.end(), data.begin(), data.end());
     }
 
     virtual void handleWSMessage( bool fin, WSOpCode code, std::vector<char> &data)
@@ -396,7 +397,7 @@ int main(int, const char**)
     });
 
     // Start the server.
-    server<SimpleResponseClient>(addrHttp, poller);
+    server<SimpleResponseClient<StreamSocket>>(addrHttp, poller);
 
     std::cout << "Shutting down server." << std::endl;
 
