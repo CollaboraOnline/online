@@ -8,6 +8,19 @@
 	left: 0px;
 }
 
+#document-container.readonly {
+    top: 30px;
+}
+
+#toolbar-wrapper.readonly {
+    display: none;
+}
+
+#logo.readonly {
+    background-size: 100px;
+    top: -5px;
+}
+
 #map {
 	position: absolute;
 	top: 0px;
