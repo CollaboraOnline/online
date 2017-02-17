@@ -353,10 +353,6 @@ L.Control.Menubar = L.Control.extend({
 	_beforeShow: function(e, menu) {
 		var self = e.data.self;
 		var items = $(menu).children().children('a').not('.has-submenu');
-		var ua = window.navigator.userAgent;
-		var msie = ua.indexOf('MSIE '); // IE 10 or older
-		var trident = ua.indexOf('Trident/'); // IE 11
-		var edge = ua.indexOf('Edge/'); // Microsoft Edge
 		$(items).each(function() {
 			var aItem = this;
 			var type = $(aItem).data('type');
@@ -370,7 +366,7 @@ L.Control.Menubar = L.Control.extend({
 						$(aItem).removeClass('disabled');
 					}
 				} else if (type === 'action') { // enable all except fullscreen on windows
-					if (id === 'fullscreen' && (msie > 0 || trident > 0 || edge > 0)) { // Full screen works weirdly on IE 11 and on Edge
+					if (id === 'fullscreen' && (L.Browser.ie || L.Browser.edge)) { // Full screen works weirdly on IE 11 and on Edge
 						$(aItem).addClass('disabled');
 						var index = self.options.allowedViewModeActions.indexOf('fullscreen');
 						if (index > 0) {

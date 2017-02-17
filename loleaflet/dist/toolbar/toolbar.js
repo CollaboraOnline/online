@@ -940,6 +940,10 @@ map.on('wopiprops', function(e) {
 });
 
 map.on('doclayerinit', function () {
+	if (map.getPermission() === 'readonly') {
+		return;
+	}
+
 	var toolbarUp = w2ui['toolbar-up'];
 	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var statusbar = w2ui['toolbar-down'];
@@ -1452,6 +1456,17 @@ map.on('hyperlinkclicked', function (e) {
 map.on('updatepermission', function (e) {
 	var toolbar = w2ui['toolbar-up'];
 	var toolbarUpMore = w2ui['toolbar-up-more'];
+
+	if (e.perm === 'readonly') {
+		// if readonly, hide all the items in toolbars except close
+		for (id in w2ui['toolbar-up'].items) {
+			if (w2ui['toolbar-up'].items[id].id !== 'close') {
+				w2ui['toolbar-up'].hide(w2ui['toolbar-up'].items[id].id);
+			}
+		}
+		return;
+	}
+
 	// {En,Dis}able toolbar buttons
 	for (var id in formatButtons) {
 		if (e.perm === 'edit' && formatButtons[id]) {
