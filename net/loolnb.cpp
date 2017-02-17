@@ -28,6 +28,7 @@
 using Poco::MemoryInputStream;
 using Poco::StringTokenizer;
 
+#include "ssl.hpp"
 #include "socket.hpp"
 
 constexpr int PortNumber = 9191;
@@ -373,6 +374,11 @@ void server(SocketPoll& clientPoller)
 
 int main(int, const char**)
 {
+    // TODO: These would normally come from config.
+    SslContext::initialize("/etc/loolwsd/cert.pem",
+                           "/etc/loolwsd/key.pem",
+                           "/etc/loolwsd/ca-chain.cert.pem");
+
     // Used to poll client sockets.
     SocketPoll poller;
 
@@ -392,6 +398,7 @@ int main(int, const char**)
 
     threadPoll.stop();
 
+    SslContext::uninitialize();
     return 0;
 }
 

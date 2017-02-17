@@ -31,6 +31,7 @@ AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' -DLOOLWSD_CONFIGD
 AM_LDFLAGS = -pthread -Wl,-E
 loolforkit_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
 loolmount_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
+loolnb_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib -lssl -lcrypto
 
 loolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 -DFUZZER=1 -DTDOC=\"$(abs_top_srcdir)/test/data\" $(AM_CPPFLAGS)
 
@@ -89,7 +90,8 @@ loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
                          $(shared_sources) \
                          kit/DummyLibreOfficeKit.cpp
 
-loolnb_SOURCES = net/loolnb.cpp
+loolnb_SOURCES = net/loolnb.cpp \
+                 net/ssl.cpp
 
 clientnb_SOURCES = net/clientnb.cpp
 
