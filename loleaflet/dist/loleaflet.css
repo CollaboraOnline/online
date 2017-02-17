@@ -50,6 +50,10 @@ body {
     display: block;
 }
 
+#presentation-controls-wrapper.readonly {
+    top: 30px;
+}
+
 @media (max-width: 767px) {
     /* Show slidesorter beyond 768px only */
     #presentation-controls-wrapper {
