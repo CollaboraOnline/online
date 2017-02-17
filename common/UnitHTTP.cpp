@@ -20,7 +20,7 @@ Poco::Net::HTTPClientSession *UnitHTTP::createSession()
 UnitWebSocket::UnitWebSocket(const std::string &docURL)
 {
     try {
-	    UnitHTTPServerResponse response;
+        UnitHTTPServerResponse response;
         UnitHTTPServerRequest request(response, docURL);
 
         _session = UnitHTTP::createSession();
