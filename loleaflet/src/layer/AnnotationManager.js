@@ -11,8 +11,7 @@ L.AnnotationManager = L.Class.extend({
 
 	initialize: function (map) {
 		this._map = map;
-		this._items = {};
-		this._anchors = [];
+		this._items = [];
 		this._selected = {};
 		this._arrow = L.polyline([], {color: 'darkblue', weight: 1});
 		this._map.on('AnnotationCancel', this._onAnnotationCancel, this);
@@ -26,13 +25,13 @@ L.AnnotationManager = L.Class.extend({
 				modify: {
 					name: _('Modify'),
 					callback: function (key, options) {
-						that._onAnnotationModify.call(that, options.$trigger.attr('id'));
+						that._onAnnotationModify.call(that, options.$trigger.get(0).annotation);
 					}
 				},
 				remove: {
 					name: _('Remove'),
 					callback: function (key, options) {
-						that._onAnnotationRemove.call(that, options.$trigger.attr('id'));
+						that._onAnnotationRemove.call(that, options.$trigger.get(0).annotation._data.id);
 					}
 				}
 			}
@@ -44,8 +43,7 @@ L.AnnotationManager = L.Class.extend({
 			this._map.removeLayer(this._items[key]);
 		}
 		this._map.removeLayer(this._arrow);
-		this._items = {};
-		this._anchors = [];
+		this._items = [];
 		this._selected = {};
 	},
 
@@ -55,12 +53,8 @@ L.AnnotationManager = L.Class.extend({
 		for (var index in comments) {
 			comment = comments[index];
 			comment.anchorPos = L.LOUtil.stringToPoint(comment.anchorPos);
-			this._items[comment.id] = L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map);
-			this._anchors.push({anchor: comment.anchorPos, id: comment.id});
+			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
 		}
-		this._anchors.sort(function(a, b) {
-			return Math.abs(a.anchor.y) - Math.abs(b.anchor.y);
-		});
 		this.layout();
 	},
 
@@ -70,9 +64,29 @@ L.AnnotationManager = L.Class.extend({
 		this.layout();
 	},
 
-	select: function (id) {
+	getItem: function (id) {
+		for (var iterator in this._items) {
+			if (this._items[iterator]._data.id === id) {
+				return this._items[iterator];
+			}
+		}
+		return null;
+	},
+
+	removeItem: function (id) {
+		var annotation;
+		for (var iterator in this._items) {
+			annotation = this._items[iterator];
+			if (annotation._data.id === id) {
+				this._items.splice(iterator, 1);
+				return annotation;
+			}
+		}
+	},
+
+	select: function (obj) {
 		var topRight = this._map.project(this._map.options.maxBounds.getNorthEast());
-		var annotation = this._items[id];
+		var annotation = obj instanceof L.Annotation ? obj : this.getItem(obj);
 		var point0, point1, point2, point3;
 		if (!this._selected.annotation || this._selected.annotation._data.id !== annotation._data.id) {
 			this._selected.annotation = annotation;
@@ -101,8 +115,8 @@ L.AnnotationManager = L.Class.extend({
 			this._selected.bounds = bounds;
 		}
 
-		for (var itAnchor in this._anchors) {
-			annotation = this._items[this._anchors[itAnchor].id];
+		for (var iterator in this._items) {
+			annotation = this._items[iterator];
 			if (annotation === this._selected.annotation) {
 				continue;
 			}
@@ -151,68 +165,65 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	add: function (comment) {
-		this._items[comment.id] = L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map).edit();
-		this._anchors.push({anchor: comment.anchorPos, id: comment.id});
-		this._anchors.sort(function(a, b) {
-			return Math.abs(a.anchor.y) - Math.abs(b.anchor.y);
+		var annotation = L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map).edit();
+		this._items.push(annotation);
+		this._items.sort(function(a, b) {
+			return Math.abs(a._data.anchorPos.y) - Math.abs(b._data.anchorPos.y) ||
+			       Math.abs(a._data.anchorPos.x) - Math.abs(b._data.anchorPos.x);
 		});
-		this.select(comment.id);
-		this._items[comment.id].focus();
+		this.select(annotation);
+		annotation.focus();
 	},
 
 	remove: function (id) {
-		this._removeAnchor(id);
+		this._map.removeLayer(this.removeItem(id));
 		this.unselect();
-		this._map.removeLayer(this._items[id]);
-		delete this._items[id];
 	},
 
 	onACKComment: function (textMsg) {
-		textMsg = textMsg.substring('comment:'.length + 1);
-		var obj = JSON.parse(textMsg);
+		var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
+		obj.comment.anchorPos = L.LOUtil.stringToPoint(obj.comment.anchorPos);
 
 		if (obj.comment.action === 'Add') {
-			if (this._items['new']) {
+			var added = this.getItem('new');
+			if (added) {
 				delete obj.comment.action;
-				obj.comment.anchorPos = L.LOUtil.stringToPoint(obj.comment.anchorPos);
-				this._items[obj.comment.id] = this._items['new'];
-				this._items[obj.comment.id]._data = obj.comment;
-				this._items['new'] = null;
-				this._removeAnchor('new');
-				this._anchors.push({anchor: obj.comment.anchorPos, id: obj.comment.id});
-				this._anchors.sort(function(a, b) {
-					return Math.abs(a.anchor.y) - Math.abs(b.anchor.y);
+				added._data = obj.comment;
+				this._items.sort(function(a, b) {
+					return Math.abs(a._data.anchorPos.y) - Math.abs(b._data.anchorPos.y) ||
+					       Math.abs(a._data.anchorPos.x) - Math.abs(b._data.anchorPos.x);
 				});
-				this._items[obj.comment.id]._updateContent();
+				added._updateContent();
 				this.layout();
 			}
 
 		} else if (obj.comment.action === 'Remove') {
-			if (this._items[obj.comment.id]) {
+			if (this.getItem(obj.comment.id)) {
 				// something wrong here
 			}
 		} else if (obj.comment.action === 'Modify') {
-			if (this._items[obj.comment.id] && this._items[obj.comment.id].text !== obj.comment.text) {
+			var modified = this.getItem(obj.comment.id);
+			if (modified && modified.text !== obj.comment.text) {
 				// something wrong here
 			}
 		}
 	},
 
 	_onAnnotationCancel: function (e) {
-		if (e.id === 'new') {
-			this.remove(e.id);
+		if (e.annotation._data.id === 'new') {
+			this.remove(e.annotation._data.id);
 		}
 		this._map.focus();
 	},
 
 	_onAnnotationClick: function (e) {
-		this.select(e.id);
+		this.select(e.annotation);
 	},
 
-	_onAnnotationModify: function (id) {
-		this._items[id].edit();
-		this.select(id);
-		this._items[id].focus();
+	_onAnnotationModify: function (annotation) {
+		annotation.edit();
+		this.select(annotation);
+		annotation.focus();
 	},
 
 	_onAnnotationRemove: function (id) {
@@ -228,15 +239,15 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	_onAnnotationSave: function (e) {
-		if (e.id === 'new') {
+		if (e.annotation._data.id === 'new') {
 			var comment = {
 				Text: {
 					type: 'string',
-					value: this._items[e.id]._data.text
+					value: e.annotation._data.text
 				},
 				Author: {
 					type: 'string',
-					value: this._items[e.id]._data.author
+					value: e.annotation._data.author
 				}
 			};
 			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
@@ -244,26 +255,17 @@ L.AnnotationManager = L.Class.extend({
 			var comment = {
 				Id: {
 					type: 'long',
-					value: e.id
+					value: e.annotation._data.id
 				},
 				Text: {
 					type: 'string',
-					value: this._items[e.id]._data.text
+					value: e.annotation._data.text
 				}
 			};
 			this._map.sendUnoCommand('.uno:EditAnnotation', comment);
 		}
 		this.unselect();
 		this._map.focus();
-	},
-
-	_removeAnchor: function (id) {
-		for (var index in this._anchors) {
-			if (this._anchors[index].id === id) {
-				this._anchors.splice(index, 1);
-				break;
-			}
-		}
 	}
 });
 

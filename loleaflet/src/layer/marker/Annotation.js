@@ -80,9 +80,9 @@ L.Annotation = L.Layer.extend({
 
 		L.DomEvent.disableScrollPropagation(this._container);
 		this._contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content', wrapper);
+		this._contentNode.annotation = this;
 		this._editNode = L.DomUtil.create('div', 'loleaflet-annotation-edit', wrapper);
 
-		this._contentNode.setAttribute('id', this._data.id);
 		this._contentText = L.DomUtil.create('div', '', this._contentNode);
 		this._contentAuthor = L.DomUtil.create('div', '', this._contentNode);
 		this._contentDate = L.DomUtil.create('div', '', this._contentNode);
@@ -115,19 +115,19 @@ L.Annotation = L.Layer.extend({
 		L.DomEvent.stopPropagation(e);
 		this._editText.value = this._contentText.innerHTML;
 		this.show();
-		this._map.fire('AnnotationCancel', {id: this._data.id});
+		this._map.fire('AnnotationCancel', {annotation: this});
 	},
 
 	_onMouseClick: function (e) {
 		L.DomEvent.stopPropagation(e);
-		this._map.fire('AnnotationClick', {id: this._data.id});
+		this._map.fire('AnnotationClick', {annotation: this});
 	},
 
 	_onSaveClick: function (e) {
 		L.DomEvent.stopPropagation(e);
 		this._data.text = this._contentText.innerHTML = this._editText.value;
 		this.show();
-		this._map.fire('AnnotationSave', {id: this._data.id});
+		this._map.fire('AnnotationSave', {annotation: this});
 	},
 
 	_updateLayout: function () {
@@ -141,7 +141,6 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_updateContent: function () {
-		this._contentNode.setAttribute('id', this._data.id);
 		this._contentText.innerHTML = this._editText.innerHTML = this._data.text;
 		this._contentAuthor.innerHTML = this._editAuthor.innerHTML = this._data.author;
 		this._contentDate.innerHTML = this._editDate.innerHTML = this._data.dateTime;
