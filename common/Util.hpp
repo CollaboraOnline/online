@@ -34,6 +34,9 @@ namespace Util
         void reseed();
         unsigned getNext();
 
+        /// Generate an array of random characters.
+        std::vector<char> getBytes(const size_t length);
+
         /// Generates a random string suitable for
         /// file/directory names.
         std::string getFilename(const size_t length);

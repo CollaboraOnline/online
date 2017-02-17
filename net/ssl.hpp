@@ -12,7 +12,9 @@
 
 #include <atomic>
 #include <memory>
+#include <mutex>
 #include <string>
+#include <vector>
 
 #include <openssl/ssl.h>
 #include <openssl/rand.h>
@@ -21,6 +23,16 @@
 #if OPENSSL_VERSION_NUMBER >= 0x0907000L
 #include <openssl/conf.h>
 #endif
+
+extern "C"
+{
+    // Multithreading support for OpenSSL.
+    // Not needed in recent (1.x?) versions.
+    struct CRYPTO_dynlock_value
+    {
+        std::mutex Mutex;
+    };
+}
 
 class SslContext
 {
@@ -55,9 +67,18 @@ private:
                const std::string& keyFilePath,
                const std::string& caFilePath);
 
+    // Multithreading support for OpenSSL.
+    // Not needed in recent (1.x?) versions.
+    static void lock(int mode, int n, const char* file, int line);
+    static unsigned long id();
+    static struct CRYPTO_dynlock_value* dynlockCreate(const char* file, int line);
+    static void dynlock(int mode, struct CRYPTO_dynlock_value* lock, const char* file, int line);
+    static void dynlockDestroy(struct CRYPTO_dynlock_value* lock, const char* file, int line);
+
 private:
     static std::atomic<int> RefCount;
     static std::unique_ptr<SslContext> Instance;
+    static std::vector<std::unique_ptr<std::mutex>> Mutexes;
 
     SSL_CTX* _ctx;
 };
