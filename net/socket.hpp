@@ -287,11 +287,6 @@ public:
     {
     }
 
-  protected:
-    std::vector< char > _inBuffer;
-    std::vector< char > _outBuffer;
-  public:
-
     HandleResult handlePoll( int events ) override
     {
         bool closeSocket = false;
@@ -333,6 +328,9 @@ protected:
         Socket(fd)
     {
     }
+
+    std::vector< char > _inBuffer;
+    std::vector< char > _outBuffer;
 };
 
 /// A plain, non-blocking, data streaming socket.
@@ -343,8 +341,6 @@ public:
         BufferingSocket()
     {
     }
-
-  public:
 
     bool readIncomingData() override
     {
@@ -396,8 +392,6 @@ public:
         BufferingSocket()
     {
     }
-
-  public:
 
     bool readIncomingData() override
     {
