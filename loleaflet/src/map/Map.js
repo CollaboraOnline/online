@@ -108,6 +108,7 @@ L.Map = L.Evented.extend({
 				L.DomUtil.addClass(L.DomUtil.get('toolbar-wrapper'), 'readonly');
 				L.DomUtil.addClass(L.DomUtil.get('main-menu'), 'readonly');
 				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'readonly');
+				L.DomUtil.addClass(L.DomUtil.get('spreadsheet-row-column-frame'), 'readonly');
 			}
 		}, this);
 		this.on('doclayerinit', function() {
