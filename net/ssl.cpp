@@ -94,7 +94,7 @@ SslContext::SslContext(const std::string& certFilePath,
         SSL_CTX_set_verify(_ctx, SSL_VERIFY_NONE, nullptr /*&verifyServerCallback*/);
         SSL_CTX_set_cipher_list(_ctx, "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH");
         SSL_CTX_set_verify_depth(_ctx, 9);
-        SSL_CTX_set_mode(_ctx, SSL_MODE_AUTO_RETRY);
+        SSL_CTX_set_mode(_ctx, SSL_MODE_ENABLE_PARTIAL_WRITE);
         SSL_CTX_set_session_cache_mode(_ctx, SSL_SESS_CACHE_OFF);
 
         initDH();
@@ -103,6 +103,7 @@ SslContext::SslContext(const std::string& certFilePath,
     catch (...)
     {
         SSL_CTX_free(_ctx);
+        _ctx = nullptr;
         throw;
     }
 }
