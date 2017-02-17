@@ -31,7 +31,8 @@ using Poco::StringTokenizer;
 #include "ssl.hpp"
 #include "socket.hpp"
 
-constexpr int PortNumber = 9191;
+constexpr int HttpPortNumber = 9191;
+constexpr int SslPortNumber = 9193;
 
 static std::string computeAccept(const std::string &key);
 
@@ -275,7 +276,8 @@ private:
     std::thread _thread;
 };
 
-Poco::Net::SocketAddress addr("127.0.0.1", PortNumber);
+Poco::Net::SocketAddress addrHttp("127.0.0.1", HttpPortNumber);
+Poco::Net::SocketAddress addrSsl("127.0.0.1", SslPortNumber);
 
 /// A non-blocking, streaming socket.
 class ServerSocket : public Socket
@@ -345,7 +347,7 @@ public:
     }
 };
 
-void server(SocketPoll& clientPoller)
+void server(const Poco::Net::SocketAddress& addr, SocketPoll& clientPoller)
 {
     // Start server.
     auto server = std::make_shared<ServerSocket>(clientPoller);
@@ -392,7 +394,7 @@ int main(int, const char**)
     });
 
     // Start the server.
-    server(poller);
+    server(addrHttp, poller);
 
     std::cout << "Shutting down server." << std::endl;
 
