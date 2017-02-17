@@ -279,11 +279,12 @@ private:
 };
 
 
-/// A non-blocking, client socket.
-class ClientSocket : public Socket
+/// A non-blocking, data streaming socket.
+/// Buffers and pumps data based on poll events.
+class StreamSocket : public Socket
 {
 public:
-    ClientSocket() :
+    StreamSocket() :
         Socket()
     {
     }
@@ -355,7 +356,7 @@ public:
     virtual void handleIncomingMessage() = 0;
 
 protected:
-    ClientSocket(const int fd) :
+    StreamSocket(const int fd) :
         Socket(fd)
     {
     }
