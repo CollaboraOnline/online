@@ -280,6 +280,8 @@ Poco::Net::SocketAddress addrHttp("127.0.0.1", HttpPortNumber);
 Poco::Net::SocketAddress addrSsl("127.0.0.1", SslPortNumber);
 
 /// A non-blocking, streaming socket.
+/// T is the socket type created by accept.
+template <class T>
 class ServerSocket : public Socket
 {
     SocketPoll& _clientPoller;
@@ -317,8 +319,7 @@ public:
     /// Accepts an incoming connection (Servers only).
     /// Does not retry on error.
     /// Returns a valid Socket shared_ptr on success only.
-    template <typename T>
-       std::shared_ptr<T> accept()
+    std::shared_ptr<Socket> accept()
     {
         // Accept a connection (if any) and set it to non-blocking.
         // We don't care about the client's address, so ignored.
@@ -333,7 +334,7 @@ public:
 
     HandleResult handlePoll( int /* events */ ) override
     {
-        std::shared_ptr<SimpleResponseClient> clientSocket = accept<SimpleResponseClient>();
+        std::shared_ptr<Socket> clientSocket = accept();
         if (!clientSocket)
         {
             const std::string msg = "Failed to accept. (errno: ";
@@ -347,10 +348,11 @@ public:
     }
 };
 
+template <typename T>
 void server(const Poco::Net::SocketAddress& addr, SocketPoll& clientPoller)
 {
     // Start server.
-    auto server = std::make_shared<ServerSocket>(clientPoller);
+    auto server = std::make_shared<ServerSocket<T>>(clientPoller);
     if (!server->bind(addr))
     {
         const std::string msg = "Failed to bind. (errno: ";
@@ -394,7 +396,7 @@ int main(int, const char**)
     });
 
     // Start the server.
-    server(addrHttp, poller);
+    server<SimpleResponseClient>(addrHttp, poller);
 
     std::cout << "Shutting down server." << std::endl;
 
