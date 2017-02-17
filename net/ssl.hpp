@@ -67,6 +67,11 @@ private:
                const std::string& keyFilePath,
                const std::string& caFilePath);
 
+    void initDH();
+    void initECDH();
+
+    std::string getLastErrorMsg();
+
     // Multithreading support for OpenSSL.
     // Not needed in recent (1.x?) versions.
     static void lock(int mode, int n, const char* file, int line);
