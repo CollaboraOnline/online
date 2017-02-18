@@ -167,6 +167,11 @@ struct Client : public Poco::Util::Application
     {
         Session session("ws");
         std::shared_ptr<WebSocket> ws = session.getWebSocket();
+
+        std::string send = "hello there";
+        ws->sendFrame(&send[0], send.length(),
+                      WebSocket::SendFlags::FRAME_TEXT);
+
         for (size_t i = 0; i < 10; i++)
         {
             ws->sendFrame(&i, sizeof(i), WebSocket::SendFlags::FRAME_BINARY);
@@ -184,26 +189,24 @@ public:
         const bool https = (args.size() > 0 && args[0] == "ssl");
         std::cerr << "Starting " << (https ? "HTTPS" : "HTTP") << " client." << std::endl;
 
-        if (getenv("WS"))
-            testWebsocket();
-        else
-        {
-            Session first("init", https);
-            Session second("init", https);
+        testWebsocket();
 
-            int count = 42, back;
-            first.sendPing(count);
-            second.sendPing(count + 1);
+        Session first("init");
+        Session second("init");
 
-            back = first.getResponse();
-            assert (back == count + 1);
+        int count = 42, back;
+        first.sendPing(count);
+        second.sendPing(count + 1);
 
-            back = second.getResponse();
-            assert (back == count + 2);
+        back = first.getResponse();
+        assert (back == count + 1);
 
-            testLadder();
-            testParallel();
-        }
+        back = second.getResponse();
+        assert (back == count + 2);
+
+        testLadder();
+        testParallel();
+
         return 0;
     }
 };
