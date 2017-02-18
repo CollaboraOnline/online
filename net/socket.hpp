@@ -29,6 +29,7 @@ public:
     Socket() :
         _fd(socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0))
     {
+        setNoDelay();
     }
 
     virtual ~Socket()
@@ -49,6 +50,14 @@ public:
     enum HandleResult { CONTINUE, SOCKET_CLOSED };
     virtual HandleResult handlePoll( int events ) = 0;
 
+
+    /// manage latency issues around packet aggregation
+    void setNoDelay(bool noDelay = true)
+    {
+        int val = noDelay ? 1 : 0;
+        setsockopt (_fd, IPPROTO_TCP, TCP_NODELAY,
+                    (char *) &val, sizeof(val));
+    }
 
     /// Sets the send buffer in size bytes.
     /// Must be called before accept or connect.
@@ -123,6 +132,7 @@ protected:
     Socket(const int fd) :
         _fd(fd)
     {
+        setNoDelay();
     }
 
 private:
