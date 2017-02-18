@@ -299,7 +299,14 @@ public:
 
         // FIXME: need to close input, but not output (?)
         if (events & POLLIN)
+        {
+            const size_t oldSize = _inBuffer.size();
             closeSocket = !readIncomingData();
+            if (oldSize != _inBuffer.size())
+            {
+                handleIncomingMessage();
+            }
+        }
 
         if (events & POLLOUT)
             writeOutgoingData();
@@ -323,10 +330,6 @@ public:
         return (_outBuffer.empty() ? POLLIN : POLLIN | POLLOUT);
     }
 
-    /// Override to handle read data.
-    /// Called after successful socket reads.
-    virtual void handleIncomingMessage() = 0;
-
 protected:
     BufferingSocket(const int fd) :
         Socket(fd)
@@ -335,6 +338,11 @@ protected:
 
     std::vector< char > _inBuffer;
     std::vector< char > _outBuffer;
+
+private:
+    /// Override to handle read data.
+    /// Called after successful socket reads.
+    virtual void handleIncomingMessage() = 0;
 };
 
 /// A plain, non-blocking, data streaming socket.
@@ -345,7 +353,6 @@ public:
     {
         ssize_t len;
         char buf[4096];
-        bool gotNewData = false;
         do
         {
             // Drain the read buffer.
@@ -355,20 +362,16 @@ public:
                 len = ::read(getFD(), buf, sizeof(buf));
             }
             while (len < 0 && errno == EINTR);
+
             if (len > 0)
             {
                 assert (len < ssize_t(sizeof(buf)));
                 _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
-                gotNewData = true;
+                continue;
             }
             // else poll will handle errors.
         }
-        while (len > 0);
-
-        if (gotNewData)
-        {
-            handleIncomingMessage();
-        }
+        while (false);
 
         return len != 0; // zero is eof / clean socket close.
     }
@@ -429,19 +432,25 @@ public:
         char buf[4096];
         do
         {
-            len = SSL_read(_ssl, buf, sizeof(buf));
+            // Drain the read buffer.
+            // TODO: Cap the buffer size, lest we grow beyond control.
+            do
+            {
+                len = SSL_read(_ssl, buf, sizeof(buf));
+            }
+            while (len < 0 && errno == EINTR);
+
+            if (len > 0)
+            {
+                assert (len < ssize_t(sizeof(buf)));
+                _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
+                continue;
+            }
+            // else poll will handle errors.
         }
-        while (len < 0 && errno == EINTR);
+        while (false);
 
         len = handleSslState(len);
-        if (len > 0)
-        {
-            // We have more data, let the application consume it, if possible.
-            assert (len < ssize_t(sizeof(buf)));
-            _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
-            handleIncomingMessage();
-        }
-        // else poll will handle errors.
 
         return len != 0; // zero is eof / clean socket close.
     }
@@ -479,14 +488,18 @@ public:
         }
         while (len < 0 && errno == EINTR);
 
-        len = handleSslState(len);
         if (len > 0)
         {
             // We've sent some data, remove from the buffer.
             _outBuffer.erase(_outBuffer.begin(),
                              _outBuffer.begin() + len);
         }
-        // else poll will handle errors
+        else
+        {
+            // Update the SSL state, poll will
+            // handle any fatal socket errors.
+            handleSslState(len);
+        }
     }
 
     int getPollEvents() override
