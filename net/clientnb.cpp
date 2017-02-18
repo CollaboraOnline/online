@@ -53,6 +53,8 @@ const char *HostName = "127.0.0.1";
 constexpr int HttpPortNumber = 9191;
 constexpr int SslPortNumber = 9193;
 
+static bool EnableHttps = false;
+
 struct Session
 {
     std::string _session_name;
@@ -132,7 +134,7 @@ struct ThreadWorker : public Runnable
     {
         for (int i = 0; i < 100; ++i)
         {
-            Session ping(_domain ? _domain : "init");
+            Session ping(_domain ? _domain : "init", EnableHttps);
             ping.sendPing(i);
             int back = ping.getResponse();
             assert(back == i + 1);
@@ -142,8 +144,28 @@ struct ThreadWorker : public Runnable
 
 struct Client : public Poco::Util::Application
 {
+    void testPing()
+    {
+        std::cerr << "testPing\n";
+        Session first("init", EnableHttps);
+        Session second("init", EnableHttps);
+
+        int count = 42, back;
+        first.sendPing(count);
+        second.sendPing(count + 1);
+
+        back = first.getResponse();
+        std::cerr << "testPing: " << back << "\n";
+        assert (back == count + 1);
+
+        back = second.getResponse();
+        std::cerr << "testPing: " << back << "\n";
+        assert (back == count + 2);
+    }
+
     void testLadder()
     {
+        std::cerr << "testLadder\n";
         ThreadWorker ladder;
         Thread thread;
         thread.start(ladder);
@@ -152,6 +174,7 @@ struct Client : public Poco::Util::Application
 
     void testParallel()
     {
+        std::cerr << "testParallel\n";
         const int num = 10;
         Thread snakes[num];
         ThreadWorker ladders[num];
@@ -165,7 +188,7 @@ struct Client : public Poco::Util::Application
 
     void testWebsocket()
     {
-        Session session("ws");
+        Session session("ws", EnableHttps);
         std::shared_ptr<WebSocket> ws = session.getWebSocket();
 
         std::string send = "hello there";
@@ -186,24 +209,12 @@ struct Client : public Poco::Util::Application
 public:
     int main(const std::vector<std::string>& args) override
     {
-        const bool https = (args.size() > 0 && args[0] == "ssl");
-        std::cerr << "Starting " << (https ? "HTTPS" : "HTTP") << " client." << std::endl;
+        EnableHttps = (args.size() > 0 && args[0] == "ssl");
+        std::cerr << "Starting " << (EnableHttps ? "HTTPS" : "HTTP") << " client." << std::endl;
 
         testWebsocket();
 
-        Session first("init");
-        Session second("init");
-
-        int count = 42, back;
-        first.sendPing(count);
-        second.sendPing(count + 1);
-
-        back = first.getResponse();
-        assert (back == count + 1);
-
-        back = second.getResponse();
-        assert (back == count + 2);
-
+        testPing();
         testLadder();
         testParallel();
 
