@@ -212,6 +212,17 @@ public:
         EnableHttps = (args.size() > 0 && args[0] == "ssl");
         std::cerr << "Starting " << (EnableHttps ? "HTTPS" : "HTTP") << " client." << std::endl;
 
+        if (EnableHttps)
+        {
+            Poco::Net::initializeSSL();
+            // Just accept the certificate anyway for testing purposes
+            Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::AcceptCertificateHandler(false);
+
+                Poco::Net::Context::Params sslParams;
+                Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
+                Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
+        }
+
         testWebsocket();
 
         testPing();
