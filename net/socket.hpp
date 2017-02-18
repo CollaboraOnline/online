@@ -438,38 +438,12 @@ public:
             _doHandshake = false;
         }
 
-        ssize_t len;
-        char buf[4096];
-        do
-        {
-            // Drain the read buffer.
-            // TODO: Cap the buffer size, lest we grow beyond control.
-            do
-            {
-                len = SSL_read(_ssl, buf, sizeof(buf));
-            }
-            while (len < 0 && errno == EINTR);
-
-            if (len > 0)
-            {
-                assert (len < ssize_t(sizeof(buf)));
-                _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
-                continue;
-            }
-            // else poll will handle errors.
-        }
-        while (false);
-
-        len = handleSslState(len);
-
-        return len != 0; // zero is eof / clean socket close.
+        // Default implementation.
+        return BufferingSocket::readIncomingData();
     }
 
     void writeOutgoingData() override
     {
-        // Should never call SSL_write with 0 length data.
-        assert (_outBuffer.size() > 0);
-
         if (_doHandshake)
         {
             int rc;
@@ -491,25 +465,19 @@ public:
             _doHandshake = false;
         }
 
-        ssize_t len;
-        do
-        {
-            len = SSL_write(_ssl, &_outBuffer[0], _outBuffer.size());
-        }
-        while (len < 0 && errno == EINTR);
+        // Default implementation.
+        BufferingSocket::writeOutgoingData();
+    }
 
-        if (len > 0)
-        {
-            // We've sent some data, remove from the buffer.
-            _outBuffer.erase(_outBuffer.begin(),
-                             _outBuffer.begin() + len);
-        }
-        else
-        {
-            // Update the SSL state, poll will
-            // handle any fatal socket errors.
-            handleSslState(len);
-        }
+    virtual int readData(char* buf, int len)
+    {
+        return handleSslState(SSL_read(_ssl, buf, len));
+    }
+
+    virtual int writeData(const char* buf, const int len)
+    {
+        assert (len > 0); // Never write 0 bytes.
+        return handleSslState(SSL_write(_ssl, buf, len));
     }
 
     int getPollEvents() override
