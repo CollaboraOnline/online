@@ -417,25 +417,10 @@ class SslStreamSocket : public BufferingSocket
 public:
     bool readIncomingData() override
     {
-        if (_doHandshake)
+        const int rc = doHandshake();
+        if (rc <= 0)
         {
-            int rc;
-            do
-            {
-                rc = SSL_do_handshake(_ssl);
-            }
-            while (rc < 0 && errno == EINTR);
-
-            if (rc <= 0)
-            {
-                rc = handleSslState(rc);
-                if (rc <= 0)
-                {
-                    return (rc != 0);
-                }
-            }
-
-            _doHandshake = false;
+            return (rc != 0);
         }
 
         // Default implementation.
@@ -444,25 +429,10 @@ public:
 
     void writeOutgoingData() override
     {
-        if (_doHandshake)
+        const int rc = doHandshake();
+        if (rc <= 0)
         {
-            int rc;
-            do
-            {
-                rc = SSL_do_handshake(_ssl);
-            }
-            while (rc < 0 && errno == EINTR);
-
-            if (rc <= 0)
-            {
-                rc = handleSslState(rc);
-                if (rc <= 0)
-                {
-                    return;
-                }
-            }
-
-            _doHandshake = false;
+            return;
         }
 
         // Default implementation.
@@ -493,8 +463,8 @@ public:
             return POLLOUT;
         }
 
-        // Do whatever makes sense based on buffer state.
-        return (_outBuffer.empty() ? POLLIN : (POLLIN | POLLOUT));
+        // Do the default.
+        return BufferingSocket::getPollEvents();
     }
 
 protected:
@@ -537,6 +507,33 @@ private:
         Read,
         Write
     };
+
+    int doHandshake()
+    {
+        if (_doHandshake)
+        {
+            int rc;
+            do
+            {
+                rc = SSL_do_handshake(_ssl);
+            }
+            while (rc < 0 && errno == EINTR);
+
+            if (rc <= 0)
+            {
+                rc = handleSslState(rc);
+                if (rc <= 0)
+                {
+                    return (rc != 0);
+                }
+            }
+
+            _doHandshake = false;
+        }
+
+        // Handshake complete.
+        return 1;
+    }
 
     /// Handles the state of SSL after read or write.
     int handleSslState(const int rc)
