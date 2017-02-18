@@ -345,16 +345,30 @@ public:
     {
         ssize_t len;
         char buf[4096];
-        do {
-            len = ::read(getFD(), buf, sizeof(buf));
-        } while (len < 0 && errno == EINTR);
-        if (len > 0)
+        bool gotNewData = false;
+        do
         {
-            assert (len < ssize_t(sizeof(buf)));
-            _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
+            // Drain the read buffer.
+            // TODO: Cap the buffer size, lest we grow beyond control.
+            do
+            {
+                len = ::read(getFD(), buf, sizeof(buf));
+            }
+            while (len < 0 && errno == EINTR);
+            if (len > 0)
+            {
+                assert (len < ssize_t(sizeof(buf)));
+                _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
+                gotNewData = true;
+            }
+            // else poll will handle errors.
+        }
+        while (len > 0);
+
+        if (gotNewData)
+        {
             handleIncomingMessage();
         }
-        // else poll will handle errors.
 
         return len != 0; // zero is eof / clean socket close.
     }
