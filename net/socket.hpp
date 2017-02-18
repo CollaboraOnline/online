@@ -318,11 +318,64 @@ public:
                              HandleResult::CONTINUE;
     }
 
-    /// Override to reading data from socket.
-    virtual bool readIncomingData() = 0;
+    /// Reads data by invoking readData() and buffering.
+    virtual bool readIncomingData()
+    {
+        ssize_t len;
+        char buf[4096];
+        do
+        {
+            // Drain the read buffer.
+            // TODO: Cap the buffer size, lest we grow beyond control.
+            do
+            {
+                len = readData(buf, sizeof(buf));
+            }
+            while (len < 0 && errno == EINTR);
+
+            if (len > 0)
+            {
+                assert (len < ssize_t(sizeof(buf)));
+                _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
+                continue;
+            }
+            // else poll will handle errors.
+        }
+        while (false);
+
+        return len != 0; // zero is eof / clean socket close.
+    }
 
     /// Override to write data out to socket.
-    virtual void writeOutgoingData() = 0;
+    virtual void writeOutgoingData()
+    {
+        assert (_outBuffer.size() > 0);
+        ssize_t len;
+        do
+        {
+            len = writeData(&_outBuffer[0], _outBuffer.size());
+        }
+        while (len < 0 && errno == EINTR);
+
+        if (len > 0)
+        {
+            _outBuffer.erase(_outBuffer.begin(),
+                             _outBuffer.begin() + len);
+        }
+        // else poll will handle errors
+    }
+
+    /// Override to handle reading of socket data differently.
+    virtual int readData(char* buf, int len)
+    {
+        return ::read(getFD(), buf, len);
+    }
+
+    /// Override to handle writing data to socket differently.
+    virtual int writeData(const char* buf, const int len)
+    {
+        return ::write(getFD(), buf, len);
+    }
 
     int getPollEvents() override
     {
@@ -348,49 +401,6 @@ private:
 /// A plain, non-blocking, data streaming socket.
 class StreamSocket : public BufferingSocket
 {
-public:
-    bool readIncomingData() override
-    {
-        ssize_t len;
-        char buf[4096];
-        do
-        {
-            // Drain the read buffer.
-            // TODO: Cap the buffer size, lest we grow beyond control.
-            do
-            {
-                len = ::read(getFD(), buf, sizeof(buf));
-            }
-            while (len < 0 && errno == EINTR);
-
-            if (len > 0)
-            {
-                assert (len < ssize_t(sizeof(buf)));
-                _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
-                continue;
-            }
-            // else poll will handle errors.
-        }
-        while (false);
-
-        return len != 0; // zero is eof / clean socket close.
-    }
-
-    void writeOutgoingData() override
-    {
-        assert (_outBuffer.size() > 0);
-        ssize_t len;
-        do {
-            len = ::write(getFD(), &_outBuffer[0], _outBuffer.size());
-        } while (len < 0 && errno == EINTR);
-        if (len > 0)
-        {
-            _outBuffer.erase(_outBuffer.begin(),
-                             _outBuffer.begin() + len);
-        }
-        // else poll will handle errors
-    }
-
 protected:
     StreamSocket(const int fd) :
         BufferingSocket(fd)
