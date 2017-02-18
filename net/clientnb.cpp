@@ -91,17 +91,23 @@ struct Session
             throw;
         }
     }
-    int getResponse()
+
+    std::string getResponseString()
+    {
+        Poco::Net::HTTPResponse response;
+        std::istream& responseStream = _session->receiveResponse(response);
+        const std::string result(std::istreambuf_iterator<char>(responseStream), {});
+        // std::cerr << "Got response '" << result << "'\n";
+        return result;
+    }
+
+    int getResponseInt()
     {
         int number = 42;
-        Poco::Net::HTTPResponse response;
 
         try {
 //            std::cerr << "try to get response\n";
-            std::istream& responseStream = _session->receiveResponse(response);
-
-            std::string result(std::istreambuf_iterator<char>(responseStream), {});
-//            std::cerr << "Got response '" << result << "'\n";
+            const std::string result = getResponseString();
             number = std::stoi(result);
         }
         catch (const Poco::Exception &e)
@@ -136,7 +142,7 @@ struct ThreadWorker : public Runnable
         {
             Session ping(_domain ? _domain : "init", EnableHttps);
             ping.sendPing(i);
-            int back = ping.getResponse();
+            int back = ping.getResponseInt();
             assert(back == i + 1);
         }
     }
@@ -154,11 +160,11 @@ struct Client : public Poco::Util::Application
         first.sendPing(count);
         second.sendPing(count + 1);
 
-        back = first.getResponse();
+        back = first.getResponseInt();
         std::cerr << "testPing: " << back << "\n";
         assert (back == count + 1);
 
-        back = second.getResponse();
+        back = second.getResponseInt();
         std::cerr << "testPing: " << back << "\n";
         assert (back == count + 2);
     }
