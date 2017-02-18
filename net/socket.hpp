@@ -388,6 +388,27 @@ class SslStreamSocket : public BufferingSocket
 public:
     bool readIncomingData() override
     {
+        if (_doHandshake)
+        {
+            int rc;
+            do
+            {
+                rc = SSL_do_handshake(_ssl);
+            }
+            while (rc < 0 && errno == EINTR);
+
+            if (rc <= 0)
+            {
+                rc = handleSslState(rc);
+                if (rc <= 0)
+                {
+                    return (rc != 0);
+                }
+            }
+
+            _doHandshake = false;
+        }
+
         ssize_t len;
         char buf[4096];
         do
@@ -397,7 +418,6 @@ public:
         while (len < 0 && errno == EINTR);
 
         len = handleSslState(len);
-
         if (len > 0)
         {
             // We have more data, let the application consume it, if possible.
@@ -414,6 +434,28 @@ public:
     {
         // Should never call SSL_write with 0 length data.
         assert (_outBuffer.size() > 0);
+
+        if (_doHandshake)
+        {
+            int rc;
+            do
+            {
+                rc = SSL_do_handshake(_ssl);
+            }
+            while (rc < 0 && errno == EINTR);
+
+            if (rc <= 0)
+            {
+                rc = handleSslState(rc);
+                if (rc <= 0)
+                {
+                    return;
+                }
+            }
+
+            _doHandshake = false;
+        }
+
         ssize_t len;
         do
         {
@@ -422,7 +464,6 @@ public:
         while (len < 0 && errno == EINTR);
 
         len = handleSslState(len);
-
         if (len > 0)
         {
             // We've sent some data, remove from the buffer.
@@ -453,7 +494,8 @@ protected:
     SslStreamSocket(const int fd) :
         BufferingSocket(fd),
         _ssl(nullptr),
-        _sslWantsTo(SslWantsTo::ReadOrWrite)
+        _sslWantsTo(SslWantsTo::ReadOrWrite),
+        _doHandshake(true)
     {
         BIO* bio = BIO_new(BIO_s_socket());
         if (bio == nullptr)
@@ -533,8 +575,8 @@ private:
         default:
             {
                 // The error is comming from BIO. Find out what happened.
-                const long lastError = ERR_get_error();
-                if (lastError == 0)
+                const long bioError = ERR_get_error();
+                if (bioError == 0)
                 {
                     if (rc == 0)
                     {
@@ -553,7 +595,7 @@ private:
                 else
                 {
                     char buf[512];
-                    ERR_error_string_n(lastError, buf, sizeof(buf));
+                    ERR_error_string_n(bioError, buf, sizeof(buf));
                     throw std::runtime_error(buf);
                 }
             }
@@ -565,7 +607,12 @@ private:
 
 private:
     SSL* _ssl;
+    /// During handshake SSL might want to read
+    /// on write, or write on read.
     SslWantsTo _sslWantsTo;
+    /// We must do the handshake during the first
+    /// read or write in non-blocking.
+    bool _doHandshake;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
