@@ -188,6 +188,7 @@ struct Client : public Poco::Util::Application
 
     void testWebsocket()
     {
+        std::cerr << "testwebsocket\n";
         Session session("ws", EnableHttps);
         std::shared_ptr<WebSocket> ws = session.getWebSocket();
 
@@ -218,9 +219,9 @@ public:
             // Just accept the certificate anyway for testing purposes
             Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::AcceptCertificateHandler(false);
 
-                Poco::Net::Context::Params sslParams;
-                Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
-                Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
+            Poco::Net::Context::Params sslParams;
+            Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
+            Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
         }
 
         testWebsocket();

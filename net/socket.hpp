@@ -47,9 +47,8 @@ public:
     virtual int getPollEvents() = 0;
 
     /// Handle results of events returned from poll
-    enum HandleResult { CONTINUE, SOCKET_CLOSED };
+    enum class HandleResult { CONTINUE, SOCKET_CLOSED };
     virtual HandleResult handlePoll( int events ) = 0;
-
 
     /// manage latency issues around packet aggregation
     void setNoDelay(bool noDelay = true)
@@ -294,12 +293,7 @@ private:
 class BufferingSocket : public Socket
 {
 public:
-    BufferingSocket() :
-        Socket()
-    {
-    }
-
-    HandleResult handlePoll( int events ) override
+    HandleResult handlePoll(const int events) override
     {
         bool closeSocket = false;
 
@@ -325,10 +319,8 @@ public:
 
     int getPollEvents() override
     {
-        int pollFor = POLLIN;
-        if (_outBuffer.size() > 0)
-            pollFor |= POLLOUT;
-        return pollFor;
+        // Only poll for read we if we have nothing to write.
+        return (_outBuffer.empty() ? POLLIN : POLLIN | POLLOUT);
     }
 
     /// Override to handle read data.
@@ -392,7 +384,7 @@ protected:
     template<class T> friend class ServerSocket;
 };
 
-/// A SSL/TSL, non-blocking, data streaming socket.
+/// An SSL/TSL, non-blocking, data streaming socket.
 class SslStreamSocket : public BufferingSocket
 {
 public:
@@ -581,7 +573,7 @@ private:
                 return rc;
             }
 
-            // fallthrough
+            // Fallthrough...
         default:
             {
                 // The error is comming from BIO. Find out what happened.
