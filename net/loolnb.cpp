@@ -415,7 +415,7 @@ int main(int, const char**)
     });
 
     // Start the server.
-    server<SimpleResponseClient<StreamSocket>>(addrHttp, poller);
+    server<SimpleResponseClient<SslStreamSocket>>(addrSsl, poller);
 
     std::cout << "Shutting down server." << std::endl;
 
