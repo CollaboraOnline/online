@@ -137,50 +137,59 @@ public:
         // websocket fun !
         size_t len = T::_inBuffer.size();
         char *p = &T::_inBuffer[0];
-        char *data, *mask;
         if (len < 2) // partial read
             return;
 
-        bool fin = *p & 0x80;
-        WSOpCode code = static_cast<WSOpCode>(*p & 0x0f);
-        p++;
-        bool hasMask = *p & 0x80;
-        size_t payloadLen = *p & 0x7f;
-        p++;
+        bool fin = p[0] & 0x80;
+        WSOpCode code = static_cast<WSOpCode>(p[0] & 0x0f);
+        bool hasMask = p[1] & 0x80;
+        size_t payloadLen = p[1] & 0x7f;
+        size_t headerLen = 2;
 
+        // normally - 7 bit length.
         if (payloadLen == 126) // 2 byte length
         {
             if (len < 2 + 2)
                 return;
             std::cerr << "Implement me 2 byte\n";
-            data = p + 2;
-            len -= 2;
+            headerLen += 2;
         }
         else if (payloadLen == 127) // 8 byte length
         {
             if (len < 2 + 8)
                 return;
             std::cerr << "Implement me 8 byte\n";
-            data = p + 8;
-            len -= 8;
+            // FIXME: crop read length to remove top / sign bits.
+            headerLen += 8;
         }
-        else
-        {
-            data = p;
-        }
+
+        char *data, *mask;
 
         if (hasMask)
         {
-            mask = data;
-            data += 4;
-            len -= 4;
+            mask = p + headerLen;
+            headerLen += 4;
+        }
+
+        if (payloadLen + headerLen > len)
+        { // partial read wait for more data.
+            return;
+        }
+
+        data = p + headerLen;
+
+        if (hasMask)
+        {
             for (size_t i = 0; i < len; ++i)
                 data[i] = data[i] ^ mask[i % 4];
 
             // FIXME: copy and un-mask at the same time ...
-            _wsPayload.insert(_wsPayload.end(), data, data + std::min(payloadLen, len));
+            _wsPayload.insert(_wsPayload.end(), data, data + payloadLen);
         } else
-            _wsPayload.insert(_wsPayload.end(), data, data + std::min(payloadLen, len));
+            _wsPayload.insert(_wsPayload.end(), data, data + payloadLen);
+
+        T::_inBuffer.erase(T::_inBuffer.begin(), T::_inBuffer.begin() + headerLen + payloadLen);
+
         // FIXME: fin, aggregating payloads into _wsPayload etc.
         handleWSMessage(fin, code, _wsPayload);
         _wsPayload.clear();
@@ -225,7 +234,16 @@ public:
 
     virtual void handleWSMessage( bool fin, WSOpCode code, std::vector<char> &data)
     {
-        std::cerr << "Message: fin? " << fin << " code " << code << " data size " << data.size() << "\n";
+        std::cerr << "Message: fin? " << fin << " code " << code << " data size " << data.size();
+        if (code == WSOpCode::Text)
+        {
+            std::string text(data.begin(), data.end());
+            std::cerr << " text is '" << text << "'\n";
+
+            return;
+        }
+        else
+            std::cerr << " binary\n";
 
         // ping pong test
         assert (data.size() >= sizeof(size_t));
