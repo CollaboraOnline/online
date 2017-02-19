@@ -62,6 +62,7 @@ public:
         // if we succeeded - remove that from our input buffer
         size_t consumed = std::min(T::_inBuffer.size(),
                                    std::max((size_t)message.tellg(), size_t(0)));
+        assert(consumed <= T::_inBuffer.size());
         T::_inBuffer.erase(T::_inBuffer.begin(), T::_inBuffer.begin() + consumed);
         std::cerr << "inBuffer has " << T::_inBuffer.size() << " remaining\n";
 
@@ -136,10 +137,10 @@ public:
 
         // websocket fun !
         size_t len = T::_inBuffer.size();
-        char *p = &T::_inBuffer[0];
         if (len < 2) // partial read
             return;
 
+        unsigned char *p = reinterpret_cast<unsigned char*>(&T::_inBuffer[0]);
         bool fin = p[0] & 0x80;
         WSOpCode code = static_cast<WSOpCode>(p[0] & 0x0f);
         bool hasMask = p[1] & 0x80;
@@ -151,7 +152,8 @@ public:
         {
             if (len < 2 + 2)
                 return;
-            std::cerr << "Implement me 2 byte\n";
+
+            payloadLen = (((unsigned)p[2]) << 8) | ((unsigned)p[3]);
             headerLen += 2;
         }
         else if (payloadLen == 127) // 8 byte length
@@ -163,7 +165,7 @@ public:
             headerLen += 8;
         }
 
-        char *data, *mask;
+        unsigned char *data, *mask;
 
         if (hasMask)
         {
@@ -217,7 +219,9 @@ public:
         {
             header[1] |= 126;
             T::_outBuffer.push_back((char)header[1]);
-            std::cerr << "FIXME: length\n";
+            char* p = reinterpret_cast<char*>(&len);
+            T::_outBuffer.push_back(p[1]);
+            T::_outBuffer.push_back(p[0]);
         }
         else
         {
