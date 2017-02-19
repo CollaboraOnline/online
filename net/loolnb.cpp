@@ -365,17 +365,20 @@ public:
         return POLLIN;
     }
 
-    HandleResult handlePoll( int /* events */ ) override
+    HandleResult handlePoll( int events ) override
     {
-        std::shared_ptr<Socket> clientSocket = accept();
-        if (!clientSocket)
+        if (events & POLLIN)
         {
-            const std::string msg = "Failed to accept. (errno: ";
-            throw std::runtime_error(msg + std::strerror(errno) + ")");
-        }
+            std::shared_ptr<Socket> clientSocket = accept();
+            if (!clientSocket)
+            {
+                const std::string msg = "Failed to accept. (errno: ";
+                throw std::runtime_error(msg + std::strerror(errno) + ")");
+            }
 
-        std::cout << "Accepted client #" << clientSocket->getFD() << std::endl;
-        _clientPoller.insertNewSocket(clientSocket);
+            std::cout << "Accepted client #" << clientSocket->getFD() << std::endl;
+            _clientPoller.insertNewSocket(clientSocket);
+        }
 
         return Socket::HandleResult::CONTINUE;
     }
