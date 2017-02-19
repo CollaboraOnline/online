@@ -320,6 +320,7 @@ public:
     }
 
     /// Reads data by invoking readData() and buffering.
+    /// Return false iff the socket is closed.
     virtual bool readIncomingData()
     {
         ssize_t len;
@@ -330,7 +331,7 @@ public:
             // TODO: Cap the buffer size, lest we grow beyond control.
             do
             {
-                len = readData(buf, sizeof(buf));
+                len = readData(buf, sizeof(buf) - 1);
             }
             while (len < 0 && errno == EINTR);
 
