@@ -343,7 +343,7 @@ public:
             }
             // else poll will handle errors.
         }
-        while (false);
+        while (len == (sizeof(buf) - 1));
 
         return len != 0; // zero is eof / clean socket close.
     }
