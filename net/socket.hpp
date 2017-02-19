@@ -300,10 +300,11 @@ public:
         // FIXME: need to close input, but not output (?)
         if (events & POLLIN)
         {
-            const size_t oldSize = _inBuffer.size();
+            size_t oldSize = _inBuffer.size();
             closeSocket = !readIncomingData();
-            if (oldSize != _inBuffer.size())
+            while (oldSize != _inBuffer.size())
             {
+                oldSize = _inBuffer.size();
                 handleIncomingMessage();
             }
         }
