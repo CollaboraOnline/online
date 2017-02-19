@@ -95,7 +95,9 @@ loolnb_SOURCES = net/loolnb.cpp \
                  common/Log.cpp \
                  common/Util.cpp
 
-clientnb_SOURCES = net/clientnb.cpp
+clientnb_SOURCES = net/clientnb.cpp \
+                   common/Log.cpp \
+                   common/Util.cpp
 
 # build a binary with no caps to help debugging
 loolforkit_nocaps_SOURCES = $(loolforkit_SOURCES)

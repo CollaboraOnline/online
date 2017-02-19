@@ -249,15 +249,25 @@ public:
         else
             std::cerr << " binary\n";
 
-        // ping pong test
-        assert (data.size() >= sizeof(size_t));
-        size_t *countPtr = reinterpret_cast<size_t *>(&data[0]);
-        size_t count = *countPtr;
-        count++;
-        std::cerr << "count is " << count << "\n";
         std::vector<char> reply;
-        reply.insert(reply.end(), reinterpret_cast<char *>(&count),
-                     reinterpret_cast<char *>(&count) + sizeof(count));
+        if (data.size() == sizeof(size_t))
+        {
+            // ping pong test
+            assert (data.size() >= sizeof(size_t));
+            size_t *countPtr = reinterpret_cast<size_t *>(&data[0]);
+            size_t count = *countPtr;
+            count++;
+            std::cerr << "count is " << count << "\n";
+            reply.insert(reply.end(), reinterpret_cast<char *>(&count),
+                        reinterpret_cast<char *>(&count) + sizeof(count));
+        }
+        else
+        {
+            // echo tests
+            reply.insert(reply.end(), data.begin(), data.end());
+        }
+
+        std::cerr << "reply: " << reply.size() << std::endl;
         queueWSMessage(reply);
     }
 

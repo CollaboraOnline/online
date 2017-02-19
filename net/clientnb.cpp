@@ -37,6 +37,8 @@
 #include <Poco/Runnable.h>
 #include <Poco/Thread.h>
 
+#include "Util.hpp"
+
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
@@ -192,9 +194,9 @@ struct Client : public Poco::Util::Application
             snakes[i].join();
     }
 
-    void testWebsocket()
+    void testWebsocketPingPong()
     {
-        std::cerr << "testwebsocket\n";
+        std::cerr << "testWebsocketPingPong\n";
         Session session("ws", EnableHttps);
         std::shared_ptr<WebSocket> ws = session.getWebSocket();
 
@@ -210,6 +212,36 @@ struct Client : public Poco::Util::Application
             int recvd = ws->receiveFrame((void *)back, sizeof(back), flags);
             assert(recvd == sizeof(size_t));
             assert(back[0] == i + 1);
+        }
+    }
+
+    void testWebsocketEcho()
+    {
+        std::cerr << "testwebsocketEcho\n";
+        Session session("ws", EnableHttps);
+        std::shared_ptr<WebSocket> ws = session.getWebSocket();
+
+        std::vector<char> res;
+        for (size_t i = 1; i < (1 << 14); ++i)
+        {
+            std::cerr << "\n" << i;
+            const std::vector<char> data = Util::rng::getBytes(i);
+            ws->sendFrame(data.data(), data.size(), WebSocket::SendFlags::FRAME_BINARY);
+
+            res.resize(i);
+            int flags;
+            int recvd = ws->receiveFrame(res.data(), res.size(), flags);
+            assert(recvd == static_cast<int>(i));
+
+            if (i == sizeof(size_t))
+            {
+                assert(*reinterpret_cast<const size_t*>(res.data()) ==
+                       *reinterpret_cast<const size_t*>(data.data()) + 1);
+            }
+            else
+            {
+                assert(res == data);
+            }
         }
     }
 
@@ -230,7 +262,8 @@ public:
             Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
         }
 
-        testWebsocket();
+        testWebsocketPingPong();
+        testWebsocketEcho();
 
         testPing();
         testLadder();
