@@ -293,24 +293,31 @@ private:
 class BufferingSocket : public Socket
 {
 public:
+
+    /// Called when a polling event is received.
+    /// @events is the mask of events that triggered the wake.
     HandleResult handlePoll(const int events) override
     {
+        // FIXME: need to close input, but not output (?)
         bool closeSocket = false;
 
-        // FIXME: need to close input, but not output (?)
-        if (events & POLLIN)
+        // Always try to read.
+        closeSocket = !readIncomingData();
+
+        // If we have data, allow the app to consume.
+        size_t oldSize = 0;
+        while (!_inBuffer.empty() && oldSize != _inBuffer.size())
         {
-            size_t oldSize = _inBuffer.size();
-            closeSocket = !readIncomingData();
-            while (oldSize != _inBuffer.size())
-            {
-                oldSize = _inBuffer.size();
-                handleIncomingMessage();
-            }
+            oldSize = _inBuffer.size();
+            handleIncomingMessage();
         }
 
-        if (events & POLLOUT)
+        // SSL might want to do handshake,
+        // even if we have no data to write.
+        if ((events & POLLOUT) || !_outBuffer.empty())
+        {
             writeOutgoingData();
+        }
 
         if (events & (POLLHUP | POLLERR | POLLNVAL))
             closeSocket = true;
