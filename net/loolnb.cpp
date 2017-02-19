@@ -182,7 +182,7 @@ public:
 
         if (hasMask)
         {
-            for (size_t i = 0; i < len; ++i)
+            for (size_t i = 0; i < payloadLen; ++i)
                 data[i] = data[i] ^ mask[i % 4];
 
             // FIXME: copy and un-mask at the same time ...
