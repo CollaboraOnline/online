@@ -351,20 +351,26 @@ public:
     /// Override to write data out to socket.
     virtual void writeOutgoingData()
     {
-        assert (_outBuffer.size() > 0);
-        ssize_t len;
-        do
+        while (!_outBuffer.empty())
         {
-            len = writeData(&_outBuffer[0], _outBuffer.size());
-        }
-        while (len < 0 && errno == EINTR);
+            ssize_t len;
+            do
+            {
+                len = writeData(&_outBuffer[0], _outBuffer.size());
+            }
+            while (len < 0 && errno == EINTR);
 
-        if (len > 0)
-        {
-            _outBuffer.erase(_outBuffer.begin(),
-                             _outBuffer.begin() + len);
+            if (len > 0)
+            {
+                _outBuffer.erase(_outBuffer.begin(),
+                                _outBuffer.begin() + len);
+            }
+            else
+            {
+                // Poll will handle errors.
+                break;
+            }
         }
-        // else poll will handle errors
     }
 
     /// Override to handle reading of socket data differently.
@@ -381,7 +387,7 @@ public:
 
     int getPollEvents() override
     {
-        // Only poll for read we if we have nothing to write.
+        // Only poll for read if we have nothing to write.
         return (_outBuffer.empty() ? POLLIN : POLLIN | POLLOUT);
     }
 
