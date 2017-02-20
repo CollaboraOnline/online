@@ -47,7 +47,8 @@ shared_sources = common/FileUtil.cpp \
                  common/SpookyV2.cpp \
                  common/Unit.cpp \
                  common/UnitHTTP.cpp \
-                 common/Util.cpp
+                 common/Util.cpp \
+                 tools/Replay.hpp
 
 loolwsd_sources = wsd/Admin.cpp \
                   wsd/AdminModel.cpp \
@@ -130,6 +131,7 @@ shared_headers = common/Common.hpp \
                  common/UnitHTTP.hpp \
                  common/Util.hpp \
                  common/MessageQueue.hpp \
+                 common/Message.hpp \
                  common/Png.hpp \
                  common/Rectangle.hpp \
                  common/SigUtil.hpp \
