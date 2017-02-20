@@ -330,8 +330,9 @@ public:
     /// Return false iff the socket is closed.
     virtual bool readIncomingData()
     {
+        // SSL decodes blocks of 16Kb, so for efficiency we use the same.
+        char buf[16 * 1024];
         ssize_t len;
-        char buf[4096];
         do
         {
             // Drain the read buffer.
