@@ -431,6 +431,22 @@ protected:
 class SslStreamSocket : public BufferingSocket
 {
 public:
+    ~SslStreamSocket()
+    {
+        shutdown();
+        SSL_free(_ssl);
+    }
+
+    /// Shutdown the TLS/SSL connection properly.
+    void shutdown()
+    {
+        if (SSL_shutdown(_ssl) == 0)
+        {
+            // Complete the bidirectional shutdown.
+            SSL_shutdown(_ssl);
+        }
+    }
+
     bool readIncomingData() override
     {
         const int rc = doHandshake();
