@@ -158,7 +158,11 @@ public:
         {
             if (len < 2 + 8)
                 return;
-            std::cerr << "Implement me 8 byte\n";
+
+            payloadLen = ((((uint64_t)(p[9])) <<  0) + (((uint64_t)(p[8])) <<  8) +
+                          (((uint64_t)(p[7])) << 16) + (((uint64_t)(p[6])) << 24) +
+                          (((uint64_t)(p[5])) << 32) + (((uint64_t)(p[4])) << 40) +
+                          (((uint64_t)(p[3])) << 48) + (((uint64_t)(p[2])) << 56));
             // FIXME: crop read length to remove top / sign bits.
             headerLen += 8;
         }
@@ -225,7 +229,11 @@ public:
         {
             header[1] |= 127;
             T::_outBuffer.push_back((char)header[1]);
-            std::cerr << "FIXME: length\n";
+            char* p = reinterpret_cast<char*>(&len);
+            for (int i = 7; i >= 0; --i)
+            {
+                T::_outBuffer.push_back(p[i]);
+            }
         }
 
         // FIXME: pick random number and mask in the outbuffer etc.
