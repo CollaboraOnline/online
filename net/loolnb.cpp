@@ -60,11 +60,9 @@ public:
         req.read(message);
 
         // if we succeeded - remove that from our input buffer
-        size_t consumed = std::min(T::_inBuffer.size(),
-                                   std::max((size_t)message.tellg(), size_t(0)));
-        assert(consumed <= T::_inBuffer.size());
-        T::_inBuffer.erase(T::_inBuffer.begin(), T::_inBuffer.begin() + consumed);
-        std::cerr << "inBuffer has " << T::_inBuffer.size() << " remaining\n";
+        // An HTTP request is either parsed completely and successfully, or not.
+        // We can't have partial read, even though Poco seems to not report full read.
+        T::_inBuffer.clear();
 
         StringTokenizer tokens(req.getURI(), "/?");
         if (tokens.count() == 4)
