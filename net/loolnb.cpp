@@ -417,7 +417,7 @@ void server(const Poco::Net::SocketAddress& addr, SocketPoll& clientPoller)
     }
 }
 
-int main(int, const char**)
+int main(int argc, const char**argv)
 {
     // TODO: These would normally come from config.
     SslContext::initialize("/etc/loolwsd/cert.pem",
@@ -437,7 +437,10 @@ int main(int, const char**)
     });
 
     // Start the server.
-    server<SimpleResponseClient<SslStreamSocket>>(addrSsl, poller);
+    if (!strcmp(argv[argc-1], "ssl"))
+        server<SimpleResponseClient<SslStreamSocket>>(addrSsl, poller);
+    else
+        server<SimpleResponseClient<StreamSocket>>(addrHttp, poller);
 
     std::cout << "Shutting down server." << std::endl;
 
