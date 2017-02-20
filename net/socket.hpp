@@ -382,16 +382,10 @@ public:
     }
 
     /// Override to handle reading of socket data differently.
-    virtual int readData(char* buf, int len)
-    {
-        return ::read(getFD(), buf, len);
-    }
+    virtual int readData(char* buf, int len) = 0;
 
     /// Override to handle writing data to socket differently.
-    virtual int writeData(const char* buf, const int len)
-    {
-        return ::write(getFD(), buf, len);
-    }
+    virtual int writeData(const char* buf, const int len) = 0;
 
     int getPollEvents() override
     {
@@ -421,6 +415,18 @@ protected:
     StreamSocket(const int fd) :
         BufferingSocket(fd)
     {
+    }
+
+    /// Override to handle reading of socket data differently.
+    virtual int readData(char* buf, int len)
+    {
+        return ::read(getFD(), buf, len);
+    }
+
+    /// Override to handle writing data to socket differently.
+    virtual int writeData(const char* buf, const int len)
+    {
+        return ::write(getFD(), buf, len);
     }
 
     // Will construct us upon accept.
