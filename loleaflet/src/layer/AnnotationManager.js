@@ -58,12 +58,6 @@ L.AnnotationManager = L.Class.extend({
 		this.layout();
 	},
 
-	unselect: function () {
-		this._selected = {};
-		this._map.removeLayer(this._arrow);
-		this.layout();
-	},
-
 	getItem: function (id) {
 		for (var iterator in this._items) {
 			if (this._items[iterator]._data.id === id) {
@@ -84,20 +78,32 @@ L.AnnotationManager = L.Class.extend({
 		}
 	},
 
+	unselect: function () {
+		this._selected = {};
+		this._map.removeLayer(this._arrow);
+		this.update();
+	},
+
 	select: function (obj) {
-		var topRight = this._map.project(this._map.options.maxBounds.getNorthEast());
 		var annotation = obj instanceof L.Annotation ? obj : this.getItem(obj);
-		var point0, point1, point2, point3;
 		if (!this._selected.annotation || this._selected.annotation._data.id !== annotation._data.id) {
 			this._selected.annotation = annotation;
-			this.layout();
-			point0 = this._map._docLayer._twipsToPixels(annotation._data.anchorPos);
+			this.update();
+		}
+	},
+
+	update: function () {
+		var topRight = this._map.project(this._map.options.maxBounds.getNorthEast());
+		var point0, point1, point2, point3;
+		this.layout();
+		if (this._selected.annotation) {
+			point0 = this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos);
 			point1 = L.point(point0.x, point0.y - this.options.offset);
 			point2 = L.point(topRight.x, point1.y);
 			point3 = L.point(topRight.x, point2.y + this.options.offset);
 			this._arrow.setLatLngs([this._map.unproject(point0), this._map.unproject(point1), this._map.unproject(point2), this._map.unproject(point3)]);
 			this._map.addLayer(this._arrow);
-			annotation.setLatLng(this._map.unproject(point3));
+			this._selected.annotation.setLatLng(this._map.unproject(point3));
 		}
 	},
 
@@ -203,8 +209,9 @@ L.AnnotationManager = L.Class.extend({
 			}
 		} else if (obj.comment.action === 'Modify') {
 			var modified = this.getItem(obj.comment.id);
-			if (modified && modified.text !== obj.comment.text) {
-				// something wrong here
+			if (modified && !modified._data.anchorPos.equals(obj.comment.anchorPos)) {
+				modified._data.anchorPos = obj.comment.anchorPos;
+				this.update();
 			}
 		}
 	},
