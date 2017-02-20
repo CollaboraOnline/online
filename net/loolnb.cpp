@@ -273,7 +273,6 @@ public:
             reply.insert(reply.end(), data.begin(), data.end());
         }
 
-        std::cerr << "reply: " << reply.size() << std::endl;
         queueWSMessage(reply);
     }
 
