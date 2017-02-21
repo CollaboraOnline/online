@@ -2018,6 +2018,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (tile._debugTile) {
 			tile._debugTile.setStyle({fillOpacity: 0.5, fillColor: 'blue'});
 			tile._debugTime.date = +new Date();
+			tile._debugTile.date = +new Date();
 			tile._debugInvalidateCount++;
 			this._debugInvalidateCount++;
 		}
@@ -2049,6 +2050,14 @@ L.TileLayer = L.GridLayer.extend({
 						rect.setStyle({fillOpacity: 0, opacity: 1 - (this._debugId - key) / 7});
 					}
 				} else {
+					rect.setStyle({fillOpacity: opac - 0.04});
+				}
+			}
+			for (var key in this._debugTiles) {
+				var rect = this._debugTiles[key];
+				var col = rect.options.fillColor;
+				var opac = rect.options.fillOpacity;
+				if (col === 'blue' && opac >= 0.04 && rect.date + 1000 < +new Date()) {
 					rect.setStyle({fillOpacity: opac - 0.04});
 				}
 			}
