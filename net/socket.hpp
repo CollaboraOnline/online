@@ -339,19 +339,18 @@ public:
             // TODO: Cap the buffer size, lest we grow beyond control.
             do
             {
-                len = readData(buf, sizeof(buf) - 1);
+                len = readData(buf, sizeof(buf));
             }
             while (len < 0 && errno == EINTR);
 
             if (len > 0)
             {
-                assert (len < ssize_t(sizeof(buf)));
+                assert (len <= ssize_t(sizeof(buf)));
                 _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
-                continue;
             }
             // else poll will handle errors.
         }
-        while (len == (sizeof(buf) - 1));
+        while (len == (sizeof(buf)));
 
         return len != 0; // zero is eof / clean socket close.
     }
