@@ -2011,6 +2011,7 @@ void LOOLWSD::initializeSSL()
     // Don't ask clients for certificate
     sslParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
 
+    // FIXME: ConsoleCertificateHandler will block on stdin upon error!
     Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleHandler = new Poco::Net::KeyConsoleHandler(true);
     Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::ConsoleCertificateHandler(true);
 
