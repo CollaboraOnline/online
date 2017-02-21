@@ -157,10 +157,7 @@ public:
         // Create the wakeup fd.
         if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)
         {
-            // FIXME: Can't have wakeup pipe, should we exit?
-            // FIXME: running out of sockets should be a case we handle elegantly here - and also in our accept / ClientSocket creation I guess.
-            _wakeup[0] = -1;
-            _wakeup[1] = -1;
+            throw std::runtime_error("Failed to allocate pipe for SocketPoll waking.");
         }
     }
 
