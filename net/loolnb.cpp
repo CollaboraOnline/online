@@ -221,19 +221,21 @@ public:
         {
             header[1] |= 126;
             T::_outBuffer.push_back((char)header[1]);
-            char* p = reinterpret_cast<char*>(&len);
-            T::_outBuffer.push_back(p[1]);
-            T::_outBuffer.push_back(p[0]);
+            T::_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
+            T::_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
         }
         else
         {
             header[1] |= 127;
             T::_outBuffer.push_back((char)header[1]);
-            char* p = reinterpret_cast<char*>(&len);
-            for (int i = 7; i >= 0; --i)
-            {
-                T::_outBuffer.push_back(p[i]);
-            }
+            T::_outBuffer.push_back(static_cast<char>((len >> 56) & 0xff));
+            T::_outBuffer.push_back(static_cast<char>((len >> 48) & 0xff));
+            T::_outBuffer.push_back(static_cast<char>((len >> 40) & 0xff));
+            T::_outBuffer.push_back(static_cast<char>((len >> 32) & 0xff));
+            T::_outBuffer.push_back(static_cast<char>((len >> 24) & 0xff));
+            T::_outBuffer.push_back(static_cast<char>((len >> 16) & 0xff));
+            T::_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
+            T::_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
         }
 
         // FIXME: pick random number and mask in the outbuffer etc.
