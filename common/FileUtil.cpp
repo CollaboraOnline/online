@@ -236,8 +236,15 @@ namespace FileUtil
         if (statfs(path.c_str(), &sfs) == -1)
             return true;
 
+        // we should be able to run just OK with 5GB
+        constexpr int64_t ENOUGH_SPACE = int64_t(5)*1024*1024*1024;
+
+        if (static_cast<int64_t>(sfs.f_bavail) * sfs.f_bsize > ENOUGH_SPACE)
+            return true;
+
         if (static_cast<double>(sfs.f_bavail) / sfs.f_blocks <= 0.05)
             return false;
+
         return true;
     }
 
