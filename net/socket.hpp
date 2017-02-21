@@ -359,6 +359,7 @@ public:
     /// Override to write data out to socket.
     virtual void writeOutgoingData()
     {
+        assert(!_outBuffer.empty());
         while (!_outBuffer.empty())
         {
             ssize_t len;
