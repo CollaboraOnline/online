@@ -60,8 +60,11 @@ public:
         req.read(message);
 
         // if we succeeded - remove that from our input buffer
-        // An HTTP request is either parsed completely and successfully, or not.
-        // We can't have partial read, even though Poco seems to not report full read.
+        // FIXME: We should check if this is GET or POST. For GET, we only
+        // can have a single request (headers only). For POST, we can/should
+        // use Poco HTMLForm to parse the post message properly.
+        // Otherwise, we should catch exceptions from the previous read/parse
+        // and assume we don't have sufficient data, so we wait some more.
         T::_inBuffer.clear();
 
         StringTokenizer tokens(req.getURI(), "/?");
