@@ -283,8 +283,8 @@ private:
     std::vector<pollfd> _pollFds;
 };
 
-/// Abstract buffering socket.
-class BufferingSocket : public Socket
+/// A plain, non-blocking, data streaming socket.
+class StreamSocket : public Socket
 {
 public:
 
@@ -376,42 +376,6 @@ public:
     }
 
     /// Override to handle reading of socket data differently.
-    virtual int readData(char* buf, int len) = 0;
-
-    /// Override to handle writing data to socket differently.
-    virtual int writeData(const char* buf, const int len) = 0;
-
-    int getPollEvents() override
-    {
-        // Only poll for read if we have nothing to write.
-        return (_outBuffer.empty() ? POLLIN : POLLIN | POLLOUT);
-    }
-
-protected:
-    BufferingSocket(const int fd) :
-        Socket(fd)
-    {
-    }
-
-    std::vector< char > _inBuffer;
-    std::vector< char > _outBuffer;
-
-private:
-    /// Override to handle read data.
-    /// Called after successful socket reads.
-    virtual void handleIncomingMessage() = 0;
-};
-
-/// A plain, non-blocking, data streaming socket.
-class StreamSocket : public BufferingSocket
-{
-protected:
-    StreamSocket(const int fd) :
-        BufferingSocket(fd)
-    {
-    }
-
-    /// Override to handle reading of socket data differently.
     virtual int readData(char* buf, int len)
     {
         return ::read(getFD(), buf, len);
@@ -423,8 +387,25 @@ protected:
         return ::write(getFD(), buf, len);
     }
 
-    // Will construct us upon accept.
-    friend class ServerSocket;
+    int getPollEvents() override
+    {
+        // Only poll for read if we have nothing to write.
+        return (_outBuffer.empty() ? POLLIN : POLLIN | POLLOUT);
+    }
+
+protected:
+    StreamSocket(const int fd) :
+        Socket(fd)
+    {
+    }
+
+    std::vector< char > _inBuffer;
+    std::vector< char > _outBuffer;
+
+private:
+    /// Override to handle read data.
+    /// Called after successful socket reads.
+    virtual void handleIncomingMessage() = 0;
 };
 
 #endif

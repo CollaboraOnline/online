@@ -18,7 +18,7 @@
 #include "Socket.hpp"
 
 /// An SSL/TSL, non-blocking, data streaming socket.
-class SslStreamSocket : public BufferingSocket
+class SslStreamSocket : public StreamSocket
 {
 public:
     ~SslStreamSocket()
@@ -46,7 +46,7 @@ public:
         }
 
         // Default implementation.
-        return BufferingSocket::readIncomingData();
+        return StreamSocket::readIncomingData();
     }
 
     void writeOutgoingData() override
@@ -58,7 +58,7 @@ public:
         }
 
         // Default implementation.
-        BufferingSocket::writeOutgoingData();
+        StreamSocket::writeOutgoingData();
     }
 
     virtual int readData(char* buf, int len)
@@ -86,12 +86,12 @@ public:
         }
 
         // Do the default.
-        return BufferingSocket::getPollEvents();
+        return StreamSocket::getPollEvents();
     }
 
 protected:
     SslStreamSocket(const int fd) :
-        BufferingSocket(fd),
+        StreamSocket(fd),
         _ssl(nullptr),
         _sslWantsTo(SslWantsTo::ReadOrWrite),
         _doHandshake(true)
