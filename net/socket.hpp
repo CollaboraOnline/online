@@ -352,7 +352,7 @@ public:
     virtual void writeOutgoingData()
     {
         assert(!_outBuffer.empty());
-        while (!_outBuffer.empty())
+        do
         {
             ssize_t len;
             do
@@ -363,8 +363,7 @@ public:
 
             if (len > 0)
             {
-                _outBuffer.erase(_outBuffer.begin(),
-                                _outBuffer.begin() + len);
+                _outBuffer.erase(_outBuffer.begin(), _outBuffer.begin() + len);
             }
             else
             {
@@ -372,6 +371,7 @@ public:
                 break;
             }
         }
+        while (!_outBuffer.empty());
     }
 
     /// Override to handle reading of socket data differently.
