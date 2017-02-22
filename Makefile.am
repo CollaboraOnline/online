@@ -89,7 +89,7 @@ loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
                          kit/DummyLibreOfficeKit.cpp
 
 loolnb_SOURCES = net/loolnb.cpp \
-                 net/ssl.cpp \
+                 net/Ssl.cpp \
                  common/Log.cpp \
                  common/Util.cpp
 

@@ -28,8 +28,8 @@
 using Poco::MemoryInputStream;
 using Poco::StringTokenizer;
 
-#include "ssl.hpp"
-#include "socket.hpp"
+#include "Ssl.hpp"
+#include "Socket.hpp"
 
 constexpr int HttpPortNumber = 9191;
 constexpr int SslPortNumber = 9193;

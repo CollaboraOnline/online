@@ -20,7 +20,7 @@
 
 #include <Poco/Net/SocketAddress.h>
 
-#include "ssl.hpp"
+#include "Ssl.hpp"
 
 /// A non-blocking, streaming socket.
 class Socket
