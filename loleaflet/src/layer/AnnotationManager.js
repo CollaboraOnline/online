@@ -205,7 +205,7 @@ L.AnnotationManager = L.Class.extend({
 
 		} else if (obj.comment.action === 'Remove') {
 			if (this.getItem(obj.comment.id)) {
-				// something wrong here
+				this.remove(obj.comment.id);
 			}
 		} else if (obj.comment.action === 'Modify') {
 			obj.comment.anchorPos = L.LOUtil.stringToPoint(obj.comment.anchorPos);
