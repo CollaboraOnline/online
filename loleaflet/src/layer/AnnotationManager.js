@@ -188,9 +188,9 @@ L.AnnotationManager = L.Class.extend({
 
 	onACKComment: function (textMsg) {
 		var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
-		obj.comment.anchorPos = L.LOUtil.stringToPoint(obj.comment.anchorPos);
 
 		if (obj.comment.action === 'Add') {
+			obj.comment.anchorPos = L.LOUtil.stringToPoint(obj.comment.anchorPos);
 			var added = this.getItem('new');
 			if (added) {
 				delete obj.comment.action;
@@ -208,6 +208,7 @@ L.AnnotationManager = L.Class.extend({
 				// something wrong here
 			}
 		} else if (obj.comment.action === 'Modify') {
+			obj.comment.anchorPos = L.LOUtil.stringToPoint(obj.comment.anchorPos);
 			var modified = this.getItem(obj.comment.id);
 			if (modified) {
 				modified._data = obj.comment;
