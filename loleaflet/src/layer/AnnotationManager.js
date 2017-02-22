@@ -209,8 +209,9 @@ L.AnnotationManager = L.Class.extend({
 			}
 		} else if (obj.comment.action === 'Modify') {
 			var modified = this.getItem(obj.comment.id);
-			if (modified && !modified._data.anchorPos.equals(obj.comment.anchorPos)) {
-				modified._data.anchorPos = obj.comment.anchorPos;
+			if (modified) {
+				modified._data = obj.comment;
+				modified._updateContent();
 				this.update();
 			}
 		}
