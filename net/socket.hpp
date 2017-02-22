@@ -204,11 +204,7 @@ public:
             addNewSocketsToPoll();
 
             // Clear the data.
-            int dump;
-            while (::read(_wakeup[0], &dump, sizeof(dump)) == -1 && errno == EINTR)
-            {
-                // Nothing to do.
-            }
+            int dump = ::read(_wakeup[0], &dump, sizeof(dump));
         }
     }
 
