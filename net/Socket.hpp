@@ -283,10 +283,29 @@ private:
     std::vector<pollfd> _pollFds;
 };
 
+class StreamSocket;
+
+/// Interface that handles the actual incoming message.
+class ResponseClientInterface
+{
+public:
+    /// Set the socket associated with this ResponseClient.
+    virtual void setSocket(StreamSocket* socket) = 0;
+
+    /// Called after successful socket reads.
+    virtual void handleIncomingMessage() = 0;
+};
+
 /// A plain, non-blocking, data streaming socket.
 class StreamSocket : public Socket
 {
 public:
+    StreamSocket(const int fd, ResponseClientInterface* responseClient) :
+        Socket(fd),
+        _responseClient(responseClient)
+    {
+        _responseClient->setSocket(this);
+    }
 
     /// Called when a polling event is received.
     /// @events is the mask of events that triggered the wake.
@@ -303,7 +322,8 @@ public:
         while (!_inBuffer.empty() && oldSize != _inBuffer.size())
         {
             oldSize = _inBuffer.size();
-            handleIncomingMessage();
+            if (_responseClient)
+                _responseClient->handleIncomingMessage();
         }
 
         // SSL might want to do handshake,
@@ -394,18 +414,16 @@ public:
     }
 
 protected:
-    StreamSocket(const int fd) :
-        Socket(fd)
-    {
-    }
+    /// Client handling the actual data.
+    std::unique_ptr<ResponseClientInterface> _responseClient;
 
     std::vector< char > _inBuffer;
     std::vector< char > _outBuffer;
 
-private:
-    /// Override to handle read data.
-    /// Called after successful socket reads.
-    virtual void handleIncomingMessage() = 0;
+    // FIXME temporarily make this friend class; when integrating, we'll see
+    // what methods we need to introduce instead of direct access to the
+    // _inBuffer / _outBuffer.
+    friend class SimpleResponseClient;
 };
 
 #endif

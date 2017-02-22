@@ -21,6 +21,33 @@
 class SslStreamSocket : public StreamSocket
 {
 public:
+    SslStreamSocket(const int fd, ResponseClientInterface* responseClient) :
+        StreamSocket(fd, responseClient),
+        _ssl(nullptr),
+        _sslWantsTo(SslWantsTo::ReadOrWrite),
+        _doHandshake(true)
+    {
+        BIO* bio = BIO_new(BIO_s_socket());
+        if (bio == nullptr)
+        {
+            throw std::runtime_error("Failed to create SSL BIO.");
+        }
+
+        BIO_set_fd(bio, fd, BIO_NOCLOSE);
+
+        _ssl = SslContext::newSsl();
+        if (!_ssl)
+        {
+            BIO_free(bio);
+            throw std::runtime_error("Failed to create SSL.");
+        }
+
+        SSL_set_bio(_ssl, bio, bio);
+
+        // We are a server-side socket.
+        SSL_set_accept_state(_ssl);
+    }
+
     ~SslStreamSocket()
     {
         shutdown();
@@ -88,37 +115,6 @@ public:
         // Do the default.
         return StreamSocket::getPollEvents();
     }
-
-protected:
-    SslStreamSocket(const int fd) :
-        StreamSocket(fd),
-        _ssl(nullptr),
-        _sslWantsTo(SslWantsTo::ReadOrWrite),
-        _doHandshake(true)
-    {
-        BIO* bio = BIO_new(BIO_s_socket());
-        if (bio == nullptr)
-        {
-            throw std::runtime_error("Failed to create SSL BIO.");
-        }
-
-        BIO_set_fd(bio, fd, BIO_NOCLOSE);
-
-        _ssl = SslContext::newSsl();
-        if (!_ssl)
-        {
-            BIO_free(bio);
-            throw std::runtime_error("Failed to create SSL.");
-        }
-
-        SSL_set_bio(_ssl, bio, bio);
-
-        // We are a server-side socket.
-        SSL_set_accept_state(_ssl);
-    }
-
-    // Will construct us upon accept.
-    friend class ServerSocket;
 
 private:
 
