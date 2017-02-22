@@ -236,7 +236,7 @@ L.AnnotationManager = L.Class.extend({
 	_onAnnotationRemove: function (id) {
 		var comment = {
 			Id: {
-				type: 'long',
+				type: 'string',
 				value: id
 			}
 		};
@@ -261,7 +261,7 @@ L.AnnotationManager = L.Class.extend({
 		} else {
 			var comment = {
 				Id: {
-					type: 'long',
+					type: 'string',
 					value: e.annotation._data.id
 				},
 				Text: {
