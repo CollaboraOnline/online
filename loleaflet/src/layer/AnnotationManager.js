@@ -202,6 +202,11 @@ L.AnnotationManager = L.Class.extend({
 				added._updateContent();
 				this.layout();
 			}
+			else { // annotation is added by some other view
+				this._map.insertComment(obj.comment);
+				this.unselect();
+				this._map.focus();
+			}
 
 		} else if (obj.comment.action === 'Remove') {
 			if (this.getItem(obj.comment.id)) {
@@ -248,8 +253,9 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	_onAnnotationSave: function (e) {
+		var comment;
 		if (e.annotation._data.id === 'new') {
-			var comment = {
+			comment = {
 				Text: {
 					type: 'string',
 					value: e.annotation._data.text
@@ -261,7 +267,7 @@ L.AnnotationManager = L.Class.extend({
 			};
 			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
 		} else {
-			var comment = {
+			comment = {
 				Id: {
 					type: 'string',
 					value: e.annotation._data.id
@@ -280,14 +286,15 @@ L.AnnotationManager = L.Class.extend({
 
 
 L.Map.include({
-	insertComment: function() {
+	insertComment: function(comment) {
+		comment = !!comment ? comment : {};
 		this._docLayer._annotations.add({
-			text: '',
-			textrange: '',
-			author: this.getViewName(this._docLayer._viewId),
-			dateTime: new Date().toDateString(),
-			id: 'new',
-			anchorPos:  this._docLayer._latLngToTwips(this._docLayer._visibleCursor.getNorthWest())
+			text: comment.text ? comment.text : '',
+			textrange: comment.textrange ? comment.textrange : '',
+			author: comment.author ? comment.author : this.getViewName(this._docLayer._viewId),
+			dateTime: comment.dateTime ? comment.dateTime : new Date().toDateString(),
+			id: comment.id ? comment.id : 'new', // 'new' only when added by us
+			anchorPos: comment.anchorPos ? comment.anchorPos : this._docLayer._latLngToTwips(this._docLayer._visibleCursor.getNorthWest())
 		});
 	}
 });

@@ -155,4 +155,3 @@ L.Annotation = L.Layer.extend({
 L.annotation = function (latlng, data, options) {
 	return new L.Annotation(latlng, data, options);
 };
-
