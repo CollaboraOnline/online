@@ -33,7 +33,10 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _('Zoom in'), id: 'zoomin', type: 'action'},
 				{name: _('Zoom out'), id: 'zoomout', type: 'action'},
-				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
+				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+				{type: 'separator'},
+				{name: _('Formatting Marks'), type: 'unocommand', uno: '.uno:ControlCodes'},
+			]
 			},
 			{name: _('Insert'), type: 'menu', menu: [
 				{name: _('Image'), id: 'insertgraphic', type: 'action'},
