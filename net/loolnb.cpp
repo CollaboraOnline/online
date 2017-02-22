@@ -37,9 +37,9 @@ constexpr int SslPortNumber = 9193;
 
 static std::string computeAccept(const std::string &key);
 
-template <class T>
-class SimpleResponseClient : public T
+class SimpleResponseClient : public ResponseClientInterface
 {
+    std::unique_ptr<StreamSocket> _socket;
     int _wsVersion;
     std::string _wsKey;
     std::string _wsProtocol;
@@ -47,16 +47,21 @@ class SimpleResponseClient : public T
     enum { HTTP, WEBSOCKET } _wsState;
 
 public:
-    SimpleResponseClient(const int fd) :
-        T(fd),
+    SimpleResponseClient() :
         _wsVersion(0),
         _wsState(HTTP)
     {
     }
-    virtual void handleHTTP()
+
+    virtual void setSocket(StreamSocket* socket) override
+    {
+        _socket.reset(socket);
+    }
+
+    void handleHTTP()
     {
         int number = 0;
-        MemoryInputStream message(&T::_inBuffer[0], T::_inBuffer.size());
+        MemoryInputStream message(&_socket->_inBuffer[0], _socket->_inBuffer.size());
         Poco::Net::HTTPRequest req;
         req.read(message);
 
@@ -66,7 +71,7 @@ public:
         // use Poco HTMLForm to parse the post message properly.
         // Otherwise, we should catch exceptions from the previous read/parse
         // and assume we don't have sufficient data, so we wait some more.
-        T::_inBuffer.clear();
+        _socket->_inBuffer.clear();
 
         StringTokenizer tokens(req.getURI(), "/?");
         if (tokens.count() == 4)
@@ -89,7 +94,7 @@ public:
                 << numberString;
             ;
             std::string str = oss.str();
-            T::_outBuffer.insert(T::_outBuffer.end(), str.begin(), str.end());
+            _socket->_outBuffer.insert(_socket->_outBuffer.end(), str.begin(), str.end());
         }
         else if (tokens.count() == 2 && tokens[1] == "ws")
         { // create our websocket goodness ...
@@ -106,7 +111,7 @@ public:
                 << "Sec-Websocket-Accept: " << computeAccept(_wsKey) << "\r\n"
                 << "\r\n";
             std::string str = oss.str();
-            T::_outBuffer.insert(T::_outBuffer.end(), str.begin(), str.end());
+            _socket->_outBuffer.insert(_socket->_outBuffer.end(), str.begin(), str.end());
             _wsState = WEBSOCKET;
         }
         else
@@ -130,7 +135,7 @@ public:
 
     virtual void handleIncomingMessage() override
     {
-        std::cerr << "incoming message with buffer size " << T::_inBuffer.size() << "\n";
+        std::cerr << "incoming message with buffer size " << _socket->_inBuffer.size() << "\n";
         if (_wsState == HTTP)
         {
             handleHTTP();
@@ -138,11 +143,11 @@ public:
         }
 
         // websocket fun !
-        size_t len = T::_inBuffer.size();
+        size_t len = _socket->_inBuffer.size();
         if (len < 2) // partial read
             return;
 
-        unsigned char *p = reinterpret_cast<unsigned char*>(&T::_inBuffer[0]);
+        unsigned char *p = reinterpret_cast<unsigned char*>(&_socket->_inBuffer[0]);
         bool fin = p[0] & 0x80;
         WSOpCode code = static_cast<WSOpCode>(p[0] & 0x0f);
         bool hasMask = p[1] & 0x80;
@@ -196,15 +201,15 @@ public:
         } else
             _wsPayload.insert(_wsPayload.end(), data, data + payloadLen);
 
-        T::_inBuffer.erase(T::_inBuffer.begin(), T::_inBuffer.begin() + headerLen + payloadLen);
+        _socket->_inBuffer.erase(_socket->_inBuffer.begin(), _socket->_inBuffer.begin() + headerLen + payloadLen);
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
         handleWSMessage(fin, code, _wsPayload);
         _wsPayload.clear();
     }
 
-    virtual void queueWSMessage(const std::vector<char> &data,
-                                WSOpCode code = WSOpCode::Binary)
+    void queueWSMessage(const std::vector<char> &data,
+                        WSOpCode code = WSOpCode::Binary)
     {
         size_t len = data.size();
         bool fin = false;
@@ -213,42 +218,42 @@ public:
         unsigned char header[2];
         header[0] = (fin ? 0x80 : 0) | static_cast<unsigned char>(code);
         header[1] = mask ? 0x80 : 0;
-        T::_outBuffer.push_back((char)header[0]);
+        _socket->_outBuffer.push_back((char)header[0]);
 
         // no out-bound masking ...
         if (len < 126)
         {
             header[1] |= len;
-            T::_outBuffer.push_back((char)header[1]);
+            _socket->_outBuffer.push_back((char)header[1]);
         }
         else if (len <= 0xffff)
         {
             header[1] |= 126;
-            T::_outBuffer.push_back((char)header[1]);
-            T::_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
-            T::_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
+            _socket->_outBuffer.push_back((char)header[1]);
+            _socket->_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
+            _socket->_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
         }
         else
         {
             header[1] |= 127;
-            T::_outBuffer.push_back((char)header[1]);
-            T::_outBuffer.push_back(static_cast<char>((len >> 56) & 0xff));
-            T::_outBuffer.push_back(static_cast<char>((len >> 48) & 0xff));
-            T::_outBuffer.push_back(static_cast<char>((len >> 40) & 0xff));
-            T::_outBuffer.push_back(static_cast<char>((len >> 32) & 0xff));
-            T::_outBuffer.push_back(static_cast<char>((len >> 24) & 0xff));
-            T::_outBuffer.push_back(static_cast<char>((len >> 16) & 0xff));
-            T::_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
-            T::_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
+            _socket->_outBuffer.push_back((char)header[1]);
+            _socket->_outBuffer.push_back(static_cast<char>((len >> 56) & 0xff));
+            _socket->_outBuffer.push_back(static_cast<char>((len >> 48) & 0xff));
+            _socket->_outBuffer.push_back(static_cast<char>((len >> 40) & 0xff));
+            _socket->_outBuffer.push_back(static_cast<char>((len >> 32) & 0xff));
+            _socket->_outBuffer.push_back(static_cast<char>((len >> 24) & 0xff));
+            _socket->_outBuffer.push_back(static_cast<char>((len >> 16) & 0xff));
+            _socket->_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
+            _socket->_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
         }
 
         // FIXME: pick random number and mask in the outbuffer etc.
         assert (!mask);
 
-        T::_outBuffer.insert(T::_outBuffer.end(), data.begin(), data.end());
+        _socket->_outBuffer.insert(_socket->_outBuffer.end(), data.begin(), data.end());
     }
 
-    virtual void handleWSMessage( bool fin, WSOpCode code, std::vector<char> &data)
+    void handleWSMessage(bool fin, WSOpCode code, std::vector<char> &data)
     {
         std::cerr << "Message: fin? " << fin << " code " << code << " data size " << data.size();
         if (code == WSOpCode::Text)
@@ -374,7 +379,7 @@ int main(int argc, const char**argv)
     {
         std::shared_ptr<Socket> create(const int fd) override
         {
-            return std::make_shared<SimpleResponseClient<StreamSocket>>(fd);
+            return std::make_shared<StreamSocket>(fd, new SimpleResponseClient());
         }
     };
 
@@ -382,7 +387,7 @@ int main(int argc, const char**argv)
     {
         std::shared_ptr<Socket> create(const int fd) override
         {
-            return std::make_shared<SimpleResponseClient<SslStreamSocket>>(fd);
+            return std::make_shared<SslStreamSocket>(fd, new SimpleResponseClient());
         }
     };
 
