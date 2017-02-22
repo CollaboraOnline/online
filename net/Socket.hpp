@@ -424,7 +424,7 @@ protected:
     }
 
     // Will construct us upon accept.
-    template<class T> friend class ServerSocket;
+    friend class ServerSocket;
 };
 
 #endif

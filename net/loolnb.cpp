@@ -29,6 +29,7 @@ using Poco::MemoryInputStream;
 using Poco::StringTokenizer;
 
 #include "Socket.hpp"
+#include "ServerSocket.hpp"
 #include "SslSocket.hpp"
 
 constexpr int HttpPortNumber = 9191;
@@ -322,83 +323,11 @@ private:
 Poco::Net::SocketAddress addrHttp("127.0.0.1", HttpPortNumber);
 Poco::Net::SocketAddress addrSsl("127.0.0.1", SslPortNumber);
 
-/// A non-blocking, streaming socket.
-/// T is the socket type created by accept.
-template <class T>
-class ServerSocket : public Socket
-{
-    SocketPoll& _clientPoller;
-public:
-    ServerSocket(SocketPoll& clientPoller)
-        : _clientPoller(clientPoller)
-    {
-    }
-
-    /// Binds to a local address (Servers only).
-    /// Does not retry on error.
-    /// Returns true on success only.
-    bool bind(const Poco::Net::SocketAddress& address)
-    {
-        // Enable address reuse to avoid stalling after
-        // recycling, when previous socket is TIME_WAIT.
-        //TODO: Might be worth refactoring out.
-        const int reuseAddress = 1;
-        constexpr unsigned int len = sizeof(reuseAddress);
-        ::setsockopt(getFD(), SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len);
-
-        const int rc = ::bind(getFD(), address.addr(), address.length());
-        return (rc == 0);
-    }
-
-    /// Listen to incoming connections (Servers only).
-    /// Does not retry on error.
-    /// Returns true on success only.
-    bool listen(const int backlog = 64)
-    {
-        const int rc = ::listen(getFD(), backlog);
-        return (rc == 0);
-    }
-
-    /// Accepts an incoming connection (Servers only).
-    /// Does not retry on error.
-    /// Returns a valid Socket shared_ptr on success only.
-    std::shared_ptr<Socket> accept()
-    {
-        // Accept a connection (if any) and set it to non-blocking.
-        // We don't care about the client's address, so ignored.
-        const int rc = ::accept4(getFD(), nullptr, nullptr, SOCK_NONBLOCK);
-        return (rc != -1 ? std::make_shared<T>(rc) : std::shared_ptr<T>(nullptr));
-    }
-
-    int getPollEvents() override
-    {
-        return POLLIN;
-    }
-
-    HandleResult handlePoll( int events ) override
-    {
-        if (events & POLLIN)
-        {
-            std::shared_ptr<Socket> clientSocket = accept();
-            if (!clientSocket)
-            {
-                const std::string msg = "Failed to accept. (errno: ";
-                throw std::runtime_error(msg + std::strerror(errno) + ")");
-            }
-
-            std::cout << "Accepted client #" << clientSocket->getFD() << std::endl;
-            _clientPoller.insertNewSocket(clientSocket);
-        }
-
-        return Socket::HandleResult::CONTINUE;
-    }
-};
-
-template <typename T>
-void server(const Poco::Net::SocketAddress& addr, SocketPoll& clientPoller)
+void server(const Poco::Net::SocketAddress& addr, SocketPoll& clientPoller,
+            std::unique_ptr<SocketFactory> sockFactory)
 {
     // Start server.
-    auto server = std::make_shared<ServerSocket<T>>(clientPoller);
+    auto server = std::make_shared<ServerSocket>(clientPoller, std::move(sockFactory));
     if (!server->bind(addr))
     {
         const std::string msg = "Failed to bind. (errno: ";
@@ -441,11 +370,28 @@ int main(int argc, const char**argv)
         }
     });
 
+    class PlainSocketFactory : public SocketFactory
+    {
+        std::shared_ptr<Socket> create(const int fd) override
+        {
+            return std::make_shared<SimpleResponseClient<StreamSocket>>(fd);
+        }
+    };
+
+    class SslSocketFactory : public SocketFactory
+    {
+        std::shared_ptr<Socket> create(const int fd) override
+        {
+            return std::make_shared<SimpleResponseClient<SslStreamSocket>>(fd);
+        }
+    };
+
+
     // Start the server.
     if (!strcmp(argv[argc-1], "ssl"))
-        server<SimpleResponseClient<SslStreamSocket>>(addrSsl, poller);
+        server(addrSsl, poller, std::unique_ptr<SocketFactory>{new SslSocketFactory});
     else
-        server<SimpleResponseClient<StreamSocket>>(addrHttp, poller);
+        server(addrHttp, poller, std::unique_ptr<SocketFactory>{new PlainSocketFactory});
 
     std::cout << "Shutting down server." << std::endl;
 
