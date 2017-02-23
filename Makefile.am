@@ -90,6 +90,7 @@ loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
 
 loolnb_SOURCES = net/loolnb.cpp \
                  net/Ssl.cpp \
+                 net/WebSocketHandler.cpp \
                  common/Log.cpp \
                  common/Util.cpp
 
