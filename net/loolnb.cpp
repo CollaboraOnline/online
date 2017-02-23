@@ -37,7 +37,7 @@ constexpr int SslPortNumber = 9193;
 
 static std::string computeAccept(const std::string &key);
 
-class SimpleResponseClient : public ResponseClientInterface
+class WebSocketHandler : public SocketHandlerInterface
 {
     std::unique_ptr<StreamSocket> _socket;
     int _wsVersion;
@@ -47,18 +47,19 @@ class SimpleResponseClient : public ResponseClientInterface
     enum { HTTP, WEBSOCKET } _wsState;
 
 public:
-    SimpleResponseClient() :
+    WebSocketHandler() :
         _wsVersion(0),
         _wsState(HTTP)
     {
     }
 
+    /// Implementation of the SocketHandlerInterface.
     virtual void setSocket(StreamSocket* socket) override
     {
         _socket.reset(socket);
     }
 
-    void handleHTTP()
+    void handleWebsocketUpgrade()
     {
         int number = 0;
         MemoryInputStream message(&_socket->_inBuffer[0], _socket->_inBuffer.size());
@@ -133,12 +134,13 @@ public:
         // ... reserved
     };
 
+    /// Implementation of the SocketHandlerInterface.
     virtual void handleIncomingMessage() override
     {
         std::cerr << "incoming message with buffer size " << _socket->_inBuffer.size() << "\n";
         if (_wsState == HTTP)
         {
-            handleHTTP();
+            handleWebsocketUpgrade();
             return;
         }
 
@@ -204,11 +206,11 @@ public:
         _socket->_inBuffer.erase(_socket->_inBuffer.begin(), _socket->_inBuffer.begin() + headerLen + payloadLen);
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
-        handleWSMessage(fin, code, _wsPayload);
+        handleMessage(fin, code, _wsPayload);
         _wsPayload.clear();
     }
 
-    void queueWSMessage(const std::vector<char> &data,
+    void sendMessage(const std::vector<char> &data,
                         WSOpCode code = WSOpCode::Binary)
     {
         size_t len = data.size();
@@ -253,7 +255,17 @@ public:
         _socket->_outBuffer.insert(_socket->_outBuffer.end(), data.begin(), data.end());
     }
 
-    void handleWSMessage(bool fin, WSOpCode code, std::vector<char> &data)
+    virtual void handleMessage(bool fin, WSOpCode code, std::vector<char> &data) = 0;
+};
+
+class SimpleResponseClient : public WebSocketHandler
+{
+public:
+    SimpleResponseClient() : WebSocketHandler()
+    {
+    }
+
+    virtual void handleMessage(bool fin, WSOpCode code, std::vector<char> &data) override
     {
         std::cerr << "Message: fin? " << fin << " code " << code << " data size " << data.size();
         if (code == WSOpCode::Text)
@@ -284,9 +296,8 @@ public:
             reply.insert(reply.end(), data.begin(), data.end());
         }
 
-        queueWSMessage(reply);
+        sendMessage(reply);
     }
-
 };
 
 // FIXME: use Poco Thread instead (?)
