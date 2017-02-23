@@ -16,9 +16,13 @@
 #include <unistd.h>
 
 #include <atomic>
+#include <cassert>
 #include <cerrno>
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
+#include <memory>
+#include <mutex>
 #include <sstream>
 
 #include <Poco/Net/SocketAddress.h>
