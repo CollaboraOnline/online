@@ -21,7 +21,7 @@
 class SslStreamSocket : public StreamSocket
 {
 public:
-    SslStreamSocket(const int fd, ResponseClientInterface* responseClient) :
+    SslStreamSocket(const int fd, SocketHandlerInterface* responseClient) :
         StreamSocket(fd, responseClient),
         _ssl(nullptr),
         _sslWantsTo(SslWantsTo::ReadOrWrite),

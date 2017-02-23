@@ -286,7 +286,7 @@ private:
 class StreamSocket;
 
 /// Interface that handles the actual incoming message.
-class ResponseClientInterface
+class SocketHandlerInterface
 {
 public:
     /// Set the socket associated with this ResponseClient.
@@ -300,11 +300,11 @@ public:
 class StreamSocket : public Socket
 {
 public:
-    StreamSocket(const int fd, ResponseClientInterface* responseClient) :
+    StreamSocket(const int fd, SocketHandlerInterface* socketHandler) :
         Socket(fd),
-        _responseClient(responseClient)
+        _socketHandler(socketHandler)
     {
-        _responseClient->setSocket(this);
+        _socketHandler->setSocket(this);
     }
 
     /// Called when a polling event is received.
@@ -322,8 +322,8 @@ public:
         while (!_inBuffer.empty() && oldSize != _inBuffer.size())
         {
             oldSize = _inBuffer.size();
-            if (_responseClient)
-                _responseClient->handleIncomingMessage();
+            if (_socketHandler)
+                _socketHandler->handleIncomingMessage();
         }
 
         // SSL might want to do handshake,
@@ -415,15 +415,13 @@ public:
 
 protected:
     /// Client handling the actual data.
-    std::unique_ptr<ResponseClientInterface> _responseClient;
+    std::unique_ptr<SocketHandlerInterface> _socketHandler;
 
     std::vector< char > _inBuffer;
     std::vector< char > _outBuffer;
 
-    // FIXME temporarily make this friend class; when integrating, we'll see
-    // what methods we need to introduce instead of direct access to the
-    // _inBuffer / _outBuffer.
-    friend class SimpleResponseClient;
+    // To be able to access _inBuffer and _outBuffer.
+    friend class WebSocketHandler;
 };
 
 #endif
