@@ -25,6 +25,8 @@
 #include <mutex>
 #include <sstream>
 
+#include <Poco/Timespan.h>
+#include <Poco/Timestamp.h>
 #include <Poco/Net/SocketAddress.h>
 
 #include "Log.hpp"
@@ -47,15 +49,18 @@ public:
         close(_fd);
     }
 
-    // Returns the OS native socket fd.
+    /// Returns the OS native socket fd.
     int getFD() const { return _fd; }
 
     /// Return a mask of events we should be polling for
     virtual int getPollEvents() = 0;
 
+    /// Contract the poll timeout to match our needs
+    virtual void updateTimeout(Poco::Timestamp &/*timeout*/) { /* do nothing */ }
+
     /// Handle results of events returned from poll
     enum class HandleResult { CONTINUE, SOCKET_CLOSED };
-    virtual HandleResult handlePoll( int events ) = 0;
+    virtual HandleResult handlePoll(const Poco::Timestamp &now, int events) = 0;
 
     /// manage latency issues around packet aggregation
     void setNoDelay(bool noDelay = true)
@@ -175,26 +180,31 @@ public:
     }
 
     /// Poll the sockets for available data to read or buffer to write.
-    void poll(const int timeoutMs)
+    void poll(const int timeoutMaxMs)
     {
         const size_t size = _pollSockets.size();
 
+        Poco::Timestamp now;
+        Poco::Timestamp timeout = now;
+        timeout += Poco::Timespan(0 /* s */, timeoutMaxMs * 1000 /* us */);
+
         // The events to poll on change each spin of the loop.
-        setupPollFds();
+        setupPollFds(timeout);
 
         int rc;
         do
         {
-            rc = ::poll(&_pollFds[0], size + 1, timeoutMs);
+            rc = ::poll(&_pollFds[0], size + 1, (timeout - now)/1000);
         }
         while (rc < 0 && errno == EINTR);
 
         // Fire the callback and remove dead fds.
+        Poco::Timestamp newNow;
         for (int i = static_cast<int>(size) - 1; i >= 0; --i)
         {
             if (_pollFds[i].revents)
             {
-                if (_pollSockets[i]->handlePoll(_pollFds[i].revents) ==
+                if (_pollSockets[i]->handlePoll(newNow, _pollFds[i].revents) ==
                     Socket::HandleResult::SOCKET_CLOSED)
                 {
                     std::cout << "Removing client #" << _pollFds[i].fd << std::endl;
@@ -258,7 +268,7 @@ private:
     }
 
     /// Initialize the poll fds array with the right events
-    void setupPollFds()
+    void setupPollFds(Poco::Timestamp &timeout)
     {
         const size_t size = _pollSockets.size();
 
@@ -268,6 +278,7 @@ private:
         {
             _pollFds[i].fd = _pollSockets[i]->getFD();
             _pollFds[i].events = _pollSockets[i]->getPollEvents();
+            _pollSockets[i]->updateTimeout(timeout);
             _pollFds[i].revents = 0;
         }
 
@@ -315,7 +326,8 @@ public:
 
     /// Called when a polling event is received.
     /// @events is the mask of events that triggered the wake.
-    HandleResult handlePoll(const int events) override
+    HandleResult handlePoll(const Poco::Timestamp & /* now */,
+                            const int events) override
     {
         // FIXME: need to close input, but not output (?)
         bool closeSocket = false;
