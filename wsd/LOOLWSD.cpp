@@ -594,6 +594,7 @@ public:
     }
 };
 
+#if 0 // loolnb
 /// Handle a public connection from a client.
 class ClientRequestHandler : public HTTPRequestHandler
 {
@@ -1454,6 +1455,7 @@ public:
         LOG_DBG("Thread finished.");
     }
 };
+#endif
 
 /// Handler of announcements that a new loolkit process was created.
 ///
@@ -1514,6 +1516,7 @@ public:
     }
 };
 
+#if 0 // loolnb
 /// External (client) connection handler factory.
 /// Creates handler objects.
 class ClientRequestHandlerFactory : public HTTPRequestHandlerFactory
@@ -1564,6 +1567,7 @@ public:
         return requestHandler;
     }
 };
+#endif
 
 /// Internal (prisoner) connection handler factory.
 /// Creates handler objects.
@@ -2442,8 +2446,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
     const auto maxThreadCount = MAX_CONNECTIONS * 5;
 
+#if 0 // loolnb
     auto params1 = new HTTPServerParams();
     params1->setMaxThreads(maxThreadCount);
+#endif
     auto params2 = new HTTPServerParams();
     params2->setMaxThreads(maxThreadCount);
 
@@ -2481,6 +2487,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
+#if 0 // loolnb
     // Now we can serve clients; Start listening on the public port.
     std::unique_ptr<ServerSocket> psvs(
         UnitWSD::isUnitTesting() ?
@@ -2496,6 +2503,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     HTTPServer srv(new ClientRequestHandlerFactory(), threadPool, *psvs, params1);
     LOG_INF("Starting master server listening on " << ClientPortNumber);
     srv.start();
+#endif
 
 #if ENABLE_DEBUG
     time_t startTimeSpan = time(nullptr);
@@ -2584,7 +2592,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             SigUtil::isShuttingDown() << ", TerminationFlag: " << TerminationFlag);
 
     // Wait until documents are saved and sessions closed.
+#if 0 // loolnb
     srv.stop();
+#endif
     srv2.stop();
     threadPool.joinAll();
 
@@ -2663,7 +2673,9 @@ void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request
     switch (type)
     {
     case TestRequest::Client:
+#if 0 // loolnb
         ClientRequestHandler::handleClientRequest(request, response, LOOLWSD::GenSessionId());
+#endif
         break;
     case TestRequest::Prisoner:
         PrisonerRequestHandler::handlePrisonerRequest(request, response);
