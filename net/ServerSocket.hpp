@@ -73,7 +73,7 @@ public:
         return POLLIN;
     }
 
-    HandleResult handlePoll(int events) override
+    HandleResult handlePoll(const Poco::Timestamp &/* now */, int events) override
     {
         if (events & POLLIN)
         {
