@@ -13,11 +13,176 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	newAnnotation: function (comment) {
+		var annotation;
+		for (var key in this._annotations) {
+			if (this._cellCursor.contains(this._annotations[key]._annotation._data.cellPos)) {
+				annotation = this._annotations[key];
+				break;
+			}
+		}
+
+		if (annotation) {
+			annotation.editAnnotation();
+		} else {
+			comment.cellPos = this._cellCursor;
+			this.addAnnotation(comment).editAnnotation();
+		}
+	},
+
+	addAnnotation: function (comment) {
+		var annotation = L.divOverlay(comment.cellPos).bindAnnotation(L.annotation(L.latLng(0, 0), comment));
+		annotation.mark = L.marker(comment.cellPos.getNorthEast(), {
+			draggable: false,
+			clickable:false,
+			keyboard: false,
+			icon: L.divIcon({
+				iconSize: L.point(2, 2),
+				iconAnchor: L.point(4, 0),
+				className: 'loleaflet-cell-annotation'
+			})
+		});
+		this._map.addLayer(annotation);
+		this._map.addLayer(annotation.mark);
+		this._annotations[comment.id] = annotation;
+		return annotation;
 	},
 
 	beforeAdd: function (map) {
 		map._addZoomLimit(this);
 		map.on('zoomend', this._onZoomRowColumns, this);
+		map.on('AnnotationCancel', this._onAnnotationCancel, this);
+		map.on('AnnotationSave', this._onAnnotationSave, this);
+	},
+
+	clearAnnotations: function () {
+		for (var key in this._annotations) {
+			this._map.removeLayer(this._annotations[key].mark);
+			this._map.removeLayer(this._annotations[key]);
+		}
+		this._annotations = {};
+	},
+
+	onAdd: function (map) {
+		var that = this;
+		L.TileLayer.prototype.onAdd.call(this, map);
+		this._annotations = {};
+		$.contextMenu({
+			selector: '.loleaflet-annotation-content',
+			className: 'loleaflet-font',
+			items: {
+				modify: {
+					name: _('Modify'),
+					callback: function (key, options) {
+						that._onAnnotationModify.call(that, options.$trigger.get(0).annotation);
+					}
+				},
+				remove: {
+					name: _('Remove'),
+					callback: function (key, options) {
+						that._onAnnotationRemove.call(that, options.$trigger.get(0).annotation._data.id);
+					}
+				}
+			},
+			events: {
+				show: function (options) {
+					options.$trigger.get(0).annotation._contextMenu = true;
+				},
+				hide: function (options) {
+					options.$trigger.get(0).annotation._contextMenu = false;
+				}
+			}
+		});
+	},
+
+	removeAnnotation: function (id) {
+		var annotation = this._annotations[id];
+		this._map.removeLayer(annotation.mark);
+		this._map.removeLayer(annotation);
+		delete this._annotations[id];
+	},
+
+	_onAnnotationCancel: function (e) {
+		if (e.annotation._data.id === 'new') {
+			this.removeAnnotation(e.annotation._data.id);
+		}
+		this._map.focus();
+	},
+
+	_onAnnotationSave: function (e) {
+		var comment;
+		if (e.annotation._data.id === 'new') {
+			comment = {
+				Text: {
+					type: 'string',
+					value: e.annotation._data.text
+				},
+				Author: {
+					type: 'string',
+					value: e.annotation._data.author
+				}
+			};
+			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
+		} else {
+			comment = {
+				Id: {
+					type: 'string',
+					value: e.annotation._data.id
+				},
+				Text: {
+					type: 'string',
+					value: e.annotation._data.text
+				}
+			};
+			this._map.sendUnoCommand('.uno:EditAnnotation', comment);
+		}
+		this._map.focus();
+	},
+
+	_onAnnotationModify: function (annotation) {
+		annotation.edit();
+		annotation.focus();
+	},
+
+	_onAnnotationRemove: function (id) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: id
+			}
+		};
+		this._map.sendUnoCommand('.uno:DeleteComment', comment);
+		this.removeAnnotation(id);
+		this._map.focus();
+	},
+
+	_onMessage: function (textMsg, img) {
+		if (textMsg.startsWith('comment:')) {
+			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
+			obj.comment.cellPos = L.LOUtil.stringToBounds(obj.comment.cellPos);
+			obj.comment.cellPos = L.latLngBounds(this._twipsToLatLng(obj.comment.cellPos.getBottomLeft()),
+				this._twipsToLatLng(obj.comment.cellPos.getTopRight()));
+			if (obj.comment.action === 'Add') {
+				var added = this._annotations['new'];
+				if (added) {
+					added._annotation._data = obj.comment;
+					added.setLatLngBounds(obj.comment.cellPos);
+				} else {
+					this.addAnnotation(obj.comment);
+				}
+			} else if (obj.comment.action === 'Remove') {
+				if (this._annotations[obj.comment.id]) {
+					this.removeAnnotation(obj.comment.id);
+				}
+			} else if (obj.comment.action === 'Modify') {
+				var modified = this._annotations[obj.comment.id];
+				if (modified) {
+					modified._annotation._data = obj.comment;
+					modified.setLatLngBounds(obj.comment.cellPos);
+				}
+			}
+		} else {
+			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
+		}
 	},
 
 	_onInvalidateTilesMsg: function (textMsg) {
@@ -221,15 +386,29 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
-		if (textMsg.match('.uno:ViewRowColumnHeaders')) {
-			var data = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+		var values = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+		if (!values) {
+			return;
+		}
+
+		if (values.commandName === '.uno:ViewRowColumnHeaders') {
 			this._map.fire('viewrowcolumnheaders', {
-				data: data,
+				data: values,
 				converter: this._twipsToPixels,
 				context: this
 			});
 			this._onUpdateCurrentHeader();
 			this._onUpdateSelectionHeader();
+		} else if (values.comments) {
+			var comment;
+			this.clearAnnotations();
+			for (var index in values.comments) {
+				comment = values.comments[index];
+				comment.cellPos = L.LOUtil.stringToBounds(comment.cellPos);
+				comment.cellPos = L.latLngBounds(this._twipsToLatLng(comment.cellPos.getBottomLeft()),
+					this._twipsToLatLng(comment.cellPos.getTopRight()));
+				this.addAnnotation(comment);
+			}
 		}
 		else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);

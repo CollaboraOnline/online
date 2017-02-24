@@ -54,6 +54,13 @@ L.LOUtil = {
 
 	stringToPoint: function(point) {
 		var numbers = point.match(/\d+/g);
-		return L.point(numbers[0], numbers[1]);
+		return L.point(parseInt(numbers[0]), parseInt(numbers[1]));
+	},
+
+	stringToBounds: function(bounds) {
+		var numbers = bounds.match(/\d+/g);
+		var topLeft = L.point(parseInt(numbers[0]), parseInt(numbers[1]));
+		var bottomRight = topLeft.add(L.point(parseInt(numbers[2]), parseInt(numbers[3])));
+		return L.bounds(topLeft, bottomRight);
 	}
 };

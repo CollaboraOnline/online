@@ -247,7 +247,7 @@ L.Control.Menubar = L.Control.extend({
 			},
 			{name: _('Insert'), type: 'menu', menu: [
 				{name: _('Image'), id: 'insertgraphic', type: 'action'},
-				{name: _('Comment'), type: 'unocommand', uno: '.uno:InsertAnnotation'},
+				{name: _('Comment...'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
 				{name: _('Row'), type: 'unocommand', uno: '.uno:InsertRows'},
 				{name: _('Column'), type: 'unocommand', uno: '.uno:InsertColumns'},

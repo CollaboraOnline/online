@@ -68,6 +68,10 @@ L.Annotation = L.Layer.extend({
 		return this;
 	},
 
+	isEdit: function () {
+		return this._editNode && this._editNode.style.display !== 'none';
+	},
+
 	focus: function () {
 		this._editText.focus();
 	},
@@ -106,6 +110,7 @@ L.Annotation = L.Layer.extend({
 
 		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup'];
 		L.DomEvent.on(container, 'click', this._onMouseClick, this);
+		L.DomEvent.on(container, 'mouseleave', this._onMouseLeave, this);
 		for (var it = 0; it < events.length; it++) {
 			L.DomEvent.on(container, events[it], L.DomEvent.stopPropagation, this);
 		}
@@ -121,6 +126,20 @@ L.Annotation = L.Layer.extend({
 	_onMouseClick: function (e) {
 		L.DomEvent.stopPropagation(e);
 		this._map.fire('AnnotationClick', {annotation: this});
+	},
+
+	_onMouseLeave: function (e) {
+		var layerPoint = this._map.mouseEventToLayerPoint(e),
+		    latlng = this._map.layerPointToLatLng(layerPoint);
+		L.DomEvent.stopPropagation(e);
+		if (this._contextMenu || this.isEdit()) {
+			return;
+		}
+		this.fire('AnnotationMouseLeave', {
+			originalEvent: e,
+			latlng: latlng,
+			layerPoint: layerPoint
+		});
 	},
 
 	_onSaveClick: function (e) {

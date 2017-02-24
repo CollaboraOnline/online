@@ -440,6 +440,10 @@ var deps = {
 		desc: 'Annotation to put on the map.'
 	},
 
+	DivOverlay: {
+		src: ['layer/marker/DivOverlay.js'],
+		desc: 'Div overlay to put on the map.'
+	}
 };
 
 if (typeof exports !== 'undefined') {

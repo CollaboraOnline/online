@@ -159,3 +159,15 @@ body {
 	resize: none;
 	background-color: #ffffc0;
 }
+
+.loleaflet-cell-annotation {
+	background: red;
+	border: 1px solid red;
+	pointer-events: none;
+}
+
+.loleaflet-div-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
