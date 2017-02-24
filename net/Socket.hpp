@@ -217,12 +217,37 @@ public:
         // Process the wakeup pipe (always the last entry).
         if (_pollFds[size].revents)
         {
-            // Add new sockets first.
-            addNewSocketsToPoll();
+            std::vector<CallbackFn> invoke;
+            {
+                std::lock_guard<std::mutex> lock(_mutex);
 
-            // Clear the data.
-            int dump = ::read(_wakeup[0], &dump, sizeof(dump));
+                // Clear the data.
+                int dump = ::read(_wakeup[0], &dump, sizeof(dump));
+
+                // Copy the new sockets over and clear.
+                _pollSockets.insert(_pollSockets.end(),
+                                    _newSockets.begin(), _newSockets.end());
+                _newSockets.clear();
+
+                // Extract list of callbacks to process
+                std::swap(_newCallbacks, invoke);
+            }
+
+            for (size_t i = 0; i < invoke.size(); ++i)
+                invoke[i]();
         }
+    }
+
+    /// Wakeup the main polling loop in another thread
+    void wakeup()
+    {
+        // wakeup the main-loop.
+        int rc;
+        do {
+            rc = ::write(_wakeup[1], "w", 1);
+        } while (rc == -1 && errno == EINTR);
+
+        assert (rc != -1 || errno == EAGAIN || errno == EWOULDBLOCK);
     }
 
     /// Insert a new socket to be polled.
@@ -230,35 +255,21 @@ public:
     void insertNewSocket(const std::shared_ptr<Socket>& newSocket)
     {
         std::lock_guard<std::mutex> lock(_mutex);
-
         _newSockets.emplace_back(newSocket);
+        wakeup();
+    }
 
-        // wakeup the main-loop.
-        int rc;
-        do
-        {
-            // wakeup pipe is already full.
-            rc = ::write(_wakeup[1], "w", 1);
-        }
-        while (rc == -1 && errno == EINTR);
+    typedef std::function<void()> CallbackFn;
 
-        if (rc == -1)
-        {
-            assert(errno == EAGAIN || errno == EWOULDBLOCK);
-        }
+    /// Add a callback to be invoked in the polling thread
+    void addCallback(CallbackFn fn)
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _newCallbacks.emplace_back(fn);
+        wakeup();
     }
 
 private:
-
-    /// Add the new sockets to list of those to poll.
-    void addNewSocketsToPoll()
-    {
-        std::lock_guard<std::mutex> lock(_mutex);
-
-        // Copy the new sockets over and clear.
-        _pollSockets.insert(_pollSockets.end(), _newSockets.begin(), _newSockets.end());
-        _newSockets.clear();
-    }
 
     void removeSocketFromPoll(const std::shared_ptr<Socket>& socket)
     {
@@ -296,6 +307,7 @@ private:
     /// Protects _newSockets
     std::mutex _mutex;
     std::vector<std::shared_ptr<Socket>> _newSockets;
+    std::vector<CallbackFn> _newCallbacks;
     /// The fds to poll.
     std::vector<pollfd> _pollFds;
 };
