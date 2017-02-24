@@ -1451,7 +1451,12 @@ public:
     }
 };
 
-/// Handle requests from prisoners (internal).
+/// Handler of announcements that a new loolkit process was created.
+///
+/// loolforkit is creating the loolkit processes.  That happens
+/// completely assynchronously, and from the different process (loolforkit),
+/// so this handler is listening for annoucements that a new loolkit process
+/// has been created.
 class PrisonerRequestHandler : public HTTPRequestHandler
 {
 public:
