@@ -77,7 +77,6 @@ using Poco::File;
 using Poco::JSON::Array;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
-using Poco::Net::Socket;
 using Poco::Net::WebSocket;
 using Poco::Runnable;
 using Poco::StringTokenizer;
@@ -774,7 +773,7 @@ public:
     {
         try
         {
-            if (!_ws || _ws->poll(Poco::Timespan(0), Socket::SelectMode::SELECT_ERROR))
+            if (!_ws || _ws->poll(Poco::Timespan(0), Poco::Net::Socket::SelectMode::SELECT_ERROR))
             {
                 LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(message) << "].");
                 return false;
@@ -1288,7 +1287,12 @@ private:
                 lock.unlock();
                 if (session)
                 {
-                    return session->handleInput(data, size);
+                    std::vector<char> vect(size);
+                    vect.assign(data, data + size);
+
+                    // TODO loolnb - this is probably wrong...
+                    session->handleMessage(/* fin = */ false, WebSocketHandler::WSOpCode::Binary, vect);
+                    return true;
                 }
             }
 
