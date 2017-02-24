@@ -28,9 +28,10 @@
 #include "MessageQueue.hpp"
 #include "Message.hpp"
 #include "TileCache.hpp"
+#include "WebSocketHandler.hpp"
 
 /// Base class of a LOOLWebSocket session.
-class Session
+class Session : public WebSocketHandler
 {
 public:
     const std::string& getId() const { return _id; }
@@ -44,7 +45,7 @@ public:
         return sendTextFrame(text.data(), text.size());
     }
 
-    bool handleInput(const char* buffer, int length);
+    virtual void handleMessage(bool fin, WSOpCode code, std::vector<char> &data) override;
 
     /// Invoked when we want to disconnect a session.
     virtual void disconnect();
@@ -68,10 +69,15 @@ public:
     void closeFrame() { _isCloseFrame = true; };
     bool isCloseFrame() const { return _isCloseFrame; }
 
-    bool isHeadless() const { return _ws == nullptr; }
+    bool isHeadless() const
+    {
+        // TODO loolnb here we should return true when the socket was not
+        // upgraded yet
+        return false;
+    }
 
 protected:
-    Session(const std::string& name, const std::string& id, const std::shared_ptr<LOOLWebSocket>& ws);
+    Session(const std::string& name, const std::string& id);
     virtual ~Session();
 
     /// Parses the options of the "load" command, shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
@@ -97,10 +103,6 @@ private:
 
     /// A readable name that identifies our peer and ID.
     const std::string _name;
-
-    // In the master process, the websocket to the LOOL client or the jailed child process. In a
-    // jailed process, the websocket to the parent.
-    std::shared_ptr<LOOLWebSocket> _ws;
 
     /// True if we have been disconnected.
     std::atomic<bool> _disconnected;

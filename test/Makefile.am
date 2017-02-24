@@ -10,7 +10,7 @@ check_PROGRAMS = test
 noinst_PROGRAMS = test unittest
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(top_srcdir)/test/data\" \
-	-I${top_srcdir}/common -I${top_srcdir}/wsd -I${top_srcdir}/kit
+	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
 
 noinst_LTLIBRARIES = \
         unit-timeout.la unit-prefork.la \
@@ -36,6 +36,7 @@ wsd_sources = \
             ../common/Protocol.cpp \
             ../common/Session.cpp \
             ../common/MessageQueue.cpp \
+            ../net/WebSocketHandler.cpp \
             ../kit/Kit.cpp \
             ../wsd/TileCache.cpp \
             ../common/Unit.cpp \

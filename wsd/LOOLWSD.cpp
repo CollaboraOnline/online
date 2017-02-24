@@ -106,7 +106,7 @@
 #include "IoUtil.hpp"
 #include "Log.hpp"
 #include "Protocol.hpp"
-#include "QueueHandler.hpp"
+#include "ServerSocket.hpp"
 #include "Session.hpp"
 #include "Storage.hpp"
 #include "TraceFile.hpp"
@@ -114,8 +114,8 @@
 #include "UnitHTTP.hpp"
 #include "UserMessages.hpp"
 #include "Util.hpp"
-#include "common/FileUtil.hpp"
-#include <LOOLWebSocket.hpp>
+#include "FileUtil.hpp"
+#include "LOOLWebSocket.hpp"
 
 #ifdef KIT_IN_PROCESS
 #include <Kit.hpp>
@@ -145,9 +145,7 @@ using Poco::Net::MessageHeader;
 using Poco::Net::NameValueCollection;
 using Poco::Net::PartHandler;
 using Poco::Net::SecureServerSocket;
-using Poco::Net::ServerSocket;
 using Poco::Net::SocketAddress;
-using Poco::Net::StreamSocket;
 using Poco::Net::WebSocket;
 using Poco::Path;
 using Poco::Pipe;
@@ -1592,7 +1590,7 @@ public:
 namespace
 {
 
-inline ServerSocket* getServerSocket(int portNumber, bool reuseDetails)
+inline Poco::Net::ServerSocket* getServerSocket(int portNumber, bool reuseDetails)
 {
     try
     {
@@ -1629,7 +1627,7 @@ inline ServerSocket* getServerSocket(int portNumber, bool reuseDetails)
             try
             {
                 LOG_INF("Trying first to connect to an existing loolwsd at the same port " << portNumber);
-                StreamSocket s(SocketAddress("127.0.0.1:" + std::to_string(portNumber)));
+                Poco::Net::StreamSocket s(SocketAddress("127.0.0.1:" + std::to_string(portNumber)));
                 LOG_FTL("Connection succeeded, so we can't continue");
                 return nullptr;
             }
@@ -1639,12 +1637,12 @@ inline ServerSocket* getServerSocket(int portNumber, bool reuseDetails)
             }
         }
 
-        ServerSocket* socket = LOOLWSD::isSSLEnabled() ? new SecureServerSocket() : new ServerSocket();
+        Poco::Net::ServerSocket* socket = LOOLWSD::isSSLEnabled() ? new SecureServerSocket() : new Poco::Net::ServerSocket();
         Poco::Net::IPAddress wildcardAddr;
         SocketAddress address(wildcardAddr, portNumber);
         socket->bind(address, reuseDetails);
         // 64 is the default value for the backlog parameter in Poco
-        // when creating a ServerSocket, so use it here, too.
+        // when creating a Poco::Net::ServerSocket, so use it here, too.
         socket->listen(64);
         return socket;
     }
@@ -1655,9 +1653,9 @@ inline ServerSocket* getServerSocket(int portNumber, bool reuseDetails)
     }
 }
 
-inline ServerSocket* findFreeServerPort(int& portNumber)
+inline Poco::Net::ServerSocket* findFreeServerPort(int& portNumber)
 {
-    ServerSocket* socket = nullptr;
+    Poco::Net::ServerSocket* socket = nullptr;
     while (!socket)
     {
         socket = getServerSocket(portNumber, false);
@@ -1670,12 +1668,12 @@ inline ServerSocket* findFreeServerPort(int& portNumber)
     return socket;
 }
 
-inline ServerSocket* getMasterSocket(int portNumber)
+inline Poco::Net::ServerSocket* getMasterSocket(int portNumber)
 {
     try
     {
         SocketAddress addr2("127.0.0.1", portNumber);
-        return new ServerSocket(addr2);
+        return new Poco::Net::ServerSocket(addr2);
     }
     catch (const Exception& exc)
     {
@@ -1684,9 +1682,9 @@ inline ServerSocket* getMasterSocket(int portNumber)
     }
 }
 
-inline ServerSocket* findFreeMasterPort(int &portNumber)
+inline Poco::Net::ServerSocket* findFreeMasterPort(int &portNumber)
 {
-    ServerSocket* socket = nullptr;
+    Poco::Net::ServerSocket* socket = nullptr;
     while (!socket)
     {
         socket = getServerSocket(portNumber, false);
@@ -2364,6 +2362,129 @@ bool LOOLWSD::createForKit()
 std::mutex Connection::Mutex;
 #endif
 
+// TODO loolnb FIXME
+static const std::string HARDCODED_PATH("file:///local/libreoffice/online/test/data/hello-world.odt");
+
+class PlainSocketFactory : public SocketFactory
+{
+    std::shared_ptr<Socket> create(const int fd) override
+    {
+        // TODO FIXME loolnb - avoid the copy/paste between PlainSocketFactory
+        // and SslSocketFactory
+        // Request a kit process for this doc.
+        auto child = getNewChild();
+        if (!child)
+        {
+            // Let the client know we can't serve now.
+            throw std::runtime_error("Failed to spawn lokit child.");
+        }
+
+        Poco::URI uri(HARDCODED_PATH);
+        std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(HARDCODED_PATH, uri, HARDCODED_PATH, LOOLWSD::ChildRoot, child);
+        return std::make_shared<StreamSocket>(fd, new ClientSession("hardcoded", docBroker, uri));
+    }
+};
+
+class SslSocketFactory : public SocketFactory
+{
+    std::shared_ptr<Socket> create(const int fd) override
+    {
+        // TODO FIXME loolnb - avoid the copy/paste between PlainSocketFactory
+        // and SslSocketFactory
+        // Request a kit process for this doc.
+        auto child = getNewChild();
+        if (!child)
+        {
+            // Let the client know we can't serve now.
+            throw std::runtime_error("Failed to spawn lokit child.");
+        }
+
+        Poco::URI uri(HARDCODED_PATH);
+        std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(HARDCODED_PATH, uri, HARDCODED_PATH, LOOLWSD::ChildRoot, child);
+        return std::make_shared<StreamSocket>(fd, new ClientSession("hardcoded", docBroker, uri));
+    }
+};
+
+/// The main server thread.
+///
+/// Waits for the connections from the loleaflets, and creates the
+/// websockethandlers accordingly.
+class LOOLWSDServer
+{
+    LOOLWSDServer(LOOLWSDServer&& other) = delete;
+    const LOOLWSDServer& operator=(LOOLWSDServer&& other) = delete;
+
+public:
+    LOOLWSDServer()
+        : _stop(false)
+    {
+    }
+
+    ~LOOLWSDServer()
+    {
+        stop();
+        if (_serverThread.joinable())
+            _serverThread.join();
+    }
+
+    void start(const Poco::Net::SocketAddress& addr)
+    {
+        std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(_documentPoll,
+                LOOLWSD::isSSLEnabled()? std::unique_ptr<SocketFactory>{new SslSocketFactory()}:
+                                         std::unique_ptr<SocketFactory>{new PlainSocketFactory()});
+
+        if (!serverSocket->bind(addr))
+        {
+            const std::string msg = "Failed to bind. (errno: ";
+            throw std::runtime_error(msg + std::strerror(errno) + ")");
+        }
+
+        if (!serverSocket->listen())
+        {
+            const std::string msg = "Failed to listen. (errno: ";
+            throw std::runtime_error(msg + std::strerror(errno) + ")");
+        }
+
+        _serverPoll.insertNewSocket(serverSocket);
+
+        _serverThread = std::thread(runServer, std::ref(_stop), std::ref(_serverPoll));
+
+        // TODO loolnb - we need a documentThread per document
+        _documentThread = std::thread(runDocument, std::ref(_stop), std::ref(_documentPoll));
+    }
+
+    void stop()
+    {
+        _stop = true;
+    }
+
+private:
+    std::atomic<bool> _stop;
+
+    SocketPoll _serverPoll;
+    std::thread _serverThread;
+
+    // TODO loolnb - we need a documentThread per document
+    SocketPoll _documentPoll;
+    std::thread _documentThread;
+
+    static void runServer(std::atomic<bool>& stop, SocketPoll& serverPoll) {
+        LOG_INF("Starting master server thread.");
+        while (!stop)
+        {
+            serverPoll.poll(30000);
+        }
+    }
+
+    static void runDocument(std::atomic<bool>& stop, SocketPoll& documentPoll) {
+        LOG_INF("Starting document thread.");
+        while (!stop)
+        {
+            documentPoll.poll(5000);
+        }
+    }
+};
+
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
 #ifndef FUZZER
@@ -2461,7 +2582,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Start internal server for child processes.
     SocketAddress addr2("127.0.0.1", MasterPortNumber);
-    std::unique_ptr<ServerSocket> psvs2(
+    std::unique_ptr<Poco::Net::ServerSocket> psvs2(
         UnitWSD::isUnitTesting() ?
             findFreeMasterPort(MasterPortNumber) :
             getMasterSocket(MasterPortNumber));
@@ -2485,7 +2606,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
 #if 0 // loolnb
     // Now we can serve clients; Start listening on the public port.
-    std::unique_ptr<ServerSocket> psvs(
+    std::unique_ptr<Poco::Net::ServerSocket> psvs(
         UnitWSD::isUnitTesting() ?
             findFreeServerPort(ClientPortNumber) :
             getServerSocket(ClientPortNumber, true));
@@ -2500,6 +2621,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     LOG_INF("Starting master server listening on " << ClientPortNumber);
     srv.start();
 #endif
+
+    LOOLWSDServer srv;
+    // TODO loolnb
+    SocketAddress addr("127.0.0.1", ClientPortNumber);
+    srv.start(addr);
 
 #if ENABLE_DEBUG
     time_t startTimeSpan = time(nullptr);
@@ -2588,9 +2714,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             SigUtil::isShuttingDown() << ", TerminationFlag: " << TerminationFlag);
 
     // Wait until documents are saved and sessions closed.
-#if 0 // loolnb
     srv.stop();
-#endif
     srv2.stop();
     threadPool.joinAll();
 

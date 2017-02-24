@@ -25,7 +25,7 @@ endif
 ACLOCAL_AMFLAGS = -I m4
 
 # quick and easy for now.
-include_paths = -I${top_srcdir}/common -I${top_srcdir}/wsd -I${top_srcdir}/kit
+include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
 
 AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"' ${include_paths}
 AM_LDFLAGS = -pthread -Wl,-E
@@ -48,7 +48,8 @@ shared_sources = common/FileUtil.cpp \
                  common/SpookyV2.cpp \
                  common/Unit.cpp \
                  common/UnitHTTP.cpp \
-                 common/Util.cpp
+                 common/Util.cpp \
+                 net/WebSocketHandler.cpp
 
 loolwsd_sources = wsd/Admin.cpp \
                   wsd/AdminModel.cpp \
