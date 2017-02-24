@@ -21,6 +21,7 @@
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/SocketAddress.h>
 #include <Poco/Net/HTTPRequest.h>
+#include <Poco/Util/ServerApplication.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Runnable.h>
 #include <Poco/Thread.h>
@@ -145,54 +146,66 @@ void server(const Poco::Net::SocketAddress& addr, SocketPoll& clientPoller,
     }
 }
 
-int main(int argc, const char**argv)
+class LOOLNB : public Poco::Util::ServerApplication
 {
-    // TODO: These would normally come from config.
-    SslContext::initialize("/etc/loolwsd/cert.pem",
-                           "/etc/loolwsd/key.pem",
-                           "/etc/loolwsd/ca-chain.cert.pem");
-
-    // Used to poll client sockets.
-    SocketPoll poller;
-
-    // Start the client polling thread.
-    Thread threadPoll([&poller](std::atomic<bool>& stop)
+public:
+    int main(const std::vector<std::string>& args) override
     {
-        while (!stop)
+        const char* logLevel = std::getenv("LOOL_LOGLEVEL");
+        std::map<std::string, std::string> props;
+        if (logLevel)
+            Log::initialize("loolnb", logLevel ? logLevel : "",
+                            false, false, props);
+
+        // TODO: These would normally come from config.
+        SslContext::initialize("/etc/loolwsd/cert.pem",
+                               "/etc/loolwsd/key.pem",
+                               "/etc/loolwsd/ca-chain.cert.pem");
+
+        // Used to poll client sockets.
+        SocketPoll poller;
+
+        // Start the client polling thread.
+        Thread threadPoll([&poller](std::atomic<bool>& stop)
+                          {
+                              while (!stop)
+                              {
+                                  poller.poll(5000);
+                              }
+                          });
+
+        class PlainSocketFactory : public SocketFactory
         {
-            poller.poll(5000);
-        }
-    });
+            std::shared_ptr<Socket> create(const int fd) override
+                {
+                    return std::make_shared<StreamSocket>(fd, new SimpleResponseClient());
+                }
+        };
 
-    class PlainSocketFactory : public SocketFactory
-    {
-        std::shared_ptr<Socket> create(const int fd) override
+        class SslSocketFactory : public SocketFactory
         {
-            return std::make_shared<StreamSocket>(fd, new SimpleResponseClient());
-        }
-    };
-
-    class SslSocketFactory : public SocketFactory
-    {
-        std::shared_ptr<Socket> create(const int fd) override
-        {
-            return std::make_shared<SslStreamSocket>(fd, new SimpleResponseClient());
-        }
-    };
+            std::shared_ptr<Socket> create(const int fd) override
+                {
+                    return std::make_shared<SslStreamSocket>(fd, new SimpleResponseClient());
+                }
+        };
 
 
-    // Start the server.
-    if (!strcmp(argv[argc-1], "ssl"))
-        server(addrSsl, poller, std::unique_ptr<SocketFactory>{new SslSocketFactory});
-    else
-        server(addrHttp, poller, std::unique_ptr<SocketFactory>{new PlainSocketFactory});
+        // Start the server.
+        if (args.back() == "ssl")
+            server(addrSsl, poller, std::unique_ptr<SocketFactory>{new SslSocketFactory});
+        else
+            server(addrHttp, poller, std::unique_ptr<SocketFactory>{new PlainSocketFactory});
 
-    std::cout << "Shutting down server." << std::endl;
+        std::cout << "Shutting down server." << std::endl;
 
-    threadPoll.stop();
+        threadPoll.stop();
 
-    SslContext::uninitialize();
-    return 0;
-}
+        SslContext::uninitialize();
+        return 0;
+    }
+};
+
+POCO_SERVER_MAIN(LOOLNB)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
