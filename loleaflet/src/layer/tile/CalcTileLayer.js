@@ -12,6 +12,9 @@ L.CalcTileLayer = L.TileLayer.extend({
 		return (twips * 127 + 36) / 72;
 	},
 
+	newAnnotation: function (comment) {
+	},
+
 	beforeAdd: function (map) {
 		map._addZoomLimit(this);
 		map.on('zoomend', this._onZoomRowColumns, this);

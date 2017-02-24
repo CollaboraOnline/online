@@ -170,15 +170,18 @@ L.AnnotationManager = L.Class.extend({
 		}
 	},
 
-	add: function (comment) {
-		var annotation = L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map).edit();
+	add: function (comment, edit) {
+		var annotation = L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map);
 		this._items.push(annotation);
 		this._items.sort(function(a, b) {
 			return Math.abs(a._data.anchorPos.y) - Math.abs(b._data.anchorPos.y) ||
 			       Math.abs(a._data.anchorPos.x) - Math.abs(b._data.anchorPos.x);
 		});
-		this.select(annotation);
-		annotation.focus();
+		if (edit) {
+			annotation.edit();
+			this.select(annotation);
+			annotation.focus();
+		}
 	},
 
 	remove: function (id) {
@@ -200,14 +203,12 @@ L.AnnotationManager = L.Class.extend({
 					       Math.abs(a._data.anchorPos.x) - Math.abs(b._data.anchorPos.x);
 				});
 				added._updateContent();
-				this.layout();
 			}
 			else { // annotation is added by some other view
-				this._map.insertComment(obj.comment);
-				this.unselect();
+				this.add(obj.comment, false);
 				this._map.focus();
 			}
-
+			this.layout();
 		} else if (obj.comment.action === 'Remove') {
 			if (this.getItem(obj.comment.id)) {
 				this.remove(obj.comment.id);
@@ -288,13 +289,12 @@ L.AnnotationManager = L.Class.extend({
 L.Map.include({
 	insertComment: function(comment) {
 		comment = !!comment ? comment : {};
-		this._docLayer._annotations.add({
-			text: comment.text ? comment.text : '',
-			textrange: comment.textrange ? comment.textrange : '',
-			author: comment.author ? comment.author : this.getViewName(this._docLayer._viewId),
-			dateTime: comment.dateTime ? comment.dateTime : new Date().toDateString(),
-			id: comment.id ? comment.id : 'new', // 'new' only when added by us
-			anchorPos: comment.anchorPos ? comment.anchorPos : this._docLayer._latLngToTwips(this._docLayer._visibleCursor.getNorthWest())
+		this._docLayer.newAnnotation({
+			text: '',
+			textrange: '',
+			author: this.getViewName(this._docLayer._viewId),
+			dateTime: new Date().toDateString(),
+			id: 'new' // 'new' only when added by us
 		});
 	}
 });

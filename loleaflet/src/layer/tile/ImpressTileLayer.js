@@ -5,6 +5,13 @@
 
 L.ImpressTileLayer = L.TileLayer.extend({
 
+	newAnnotation: function (comment) {
+	},
+
+	onAdd: function (map) {
+		L.TileLayer.prototype.onAdd.call(this, map);
+	},
+
 	_onInvalidateTilesMsg: function (textMsg) {
 		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.x === undefined || command.y === undefined || command.part === undefined) {

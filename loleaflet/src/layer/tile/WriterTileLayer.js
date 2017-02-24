@@ -5,6 +5,39 @@
 
 L.WriterTileLayer = L.TileLayer.extend({
 
+	newAnnotation: function (comment) {
+		if (!comment.anchorPos) {
+			comment.anchorPos = this._latLngToTwips(this._visibleCursor.getNorthWest());
+		}
+		this._annotations.add(comment, true);
+	},
+
+	onAdd: function (map) {
+		L.TileLayer.prototype.onAdd.call(this, map);
+		this._annotations = L.annotationManager(map);
+	},
+
+	_onCommandValuesMsg: function (textMsg) {
+		var values = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+		if (!values) {
+			return;
+		}
+
+		if (values.comments) {
+			this._annotations.fill(values.comments);
+		} else {
+			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
+		}
+	},
+
+	_onMessage: function (textMsg, img) {
+		if (textMsg.startsWith('comment:')) {
+			this._annotations.onACKComment(textMsg);
+		} else {
+			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
+		}
+	},
+
 	_onInvalidateTilesMsg: function (textMsg) {
 		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.x === undefined || command.y === undefined || command.part === undefined) {

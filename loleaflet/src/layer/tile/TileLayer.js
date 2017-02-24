@@ -169,10 +169,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._levels = {};
 		this._tiles = {};
 		this._tileCache = {};
-		this._annotations = L.annotationManager(map);
-		if (this._docType === 'text') {
-			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
-		}
+		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 
 		map._fadeAnimated = false;
 		this._viewReset();
@@ -397,9 +394,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('graphicviewselection:')) {
 			this._onGraphicViewSelectionMsg(textMsg);
 		}
-		else if (textMsg.startsWith('comment:')) {
-			this._annotations.onACKComment(textMsg);
-		}
 	},
 
 	toggleTileDebugMode: function() {
@@ -438,9 +432,6 @@ L.TileLayer = L.GridLayer.extend({
 				commandName: obj.commandName,
 				commandValues: obj.commandValues
 			});
-		}
-		else if (obj.comments) {
-			this._annotations.fill(obj.comments);
 		}
 		else {
 			this._map.fire('commandvalues', {
