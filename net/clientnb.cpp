@@ -222,9 +222,13 @@ struct Client : public Poco::Util::Application
         std::shared_ptr<WebSocket> ws = session.getWebSocket();
 
         std::vector<char> res;
+
+        std::srand(std::time(0));
+
+        std::vector<char> data;
         for (size_t i = 1; i < (1 << 14); ++i)
         {
-            const std::vector<char> data = Util::rng::getBytes(i);
+            data.push_back((char)(std::rand() / (RAND_MAX/256)));
             ws->sendFrame(data.data(), data.size(), WebSocket::SendFlags::FRAME_BINARY);
 
             res.resize(i);
