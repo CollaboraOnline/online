@@ -10,6 +10,7 @@
 #ifndef INCLUDED_WEBSOCKETHANDLER_HPP
 #define INCLUDED_WEBSOCKETHANDLER_HPP
 
+#include "Log.hpp"
 #include "Socket.hpp"
 
 class WebSocketHandler : public SocketHandlerInterface
@@ -55,7 +56,7 @@ public:
     /// Implementation of the SocketHandlerInterface.
     virtual void handleIncomingMessage() override
     {
-        std::cerr << "incoming message with buffer size " << _socket->_inBuffer.size() << "\n";
+        LOG_TRC("incoming WebSocket message");
         if (_wsState == HTTP)
         {
             handleWebsocketUpgrade();
@@ -129,7 +130,7 @@ public:
     }
 
     void sendMessage(const std::vector<char> &data,
-                        WSOpCode code = WSOpCode::Binary)
+                     WSOpCode code = WSOpCode::Binary)
     {
         size_t len = data.size();
         bool fin = false;

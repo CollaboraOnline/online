@@ -27,6 +27,8 @@
 
 #include <Poco/Net/SocketAddress.h>
 
+#include "Log.hpp"
+
 /// A non-blocking, streaming socket.
 class Socket
 {
@@ -321,6 +323,13 @@ public:
         // Always try to read.
         closeSocket = !readIncomingData();
 
+        auto& log = Log::logger();
+        if (log.trace()) {
+            LOG_TRC("Incoming data buffer " << _inBuffer.size() <<
+                    " closeSocket? " << closeSocket << "\n");
+            log.dump("", &_inBuffer[0], _inBuffer.size());
+        }
+
         // If we have data, allow the app to consume.
         size_t oldSize = 0;
         while (!_inBuffer.empty() && oldSize != _inBuffer.size())
@@ -383,6 +392,12 @@ public:
             do
             {
                 len = writeData(&_outBuffer[0], _outBuffer.size());
+
+                auto& log = Log::logger();
+                if (log.trace()) {
+                    LOG_TRC("Wrote outgoing data " << len << " bytes\n");
+                    log.dump("", &_outBuffer[0], len);
+                }
             }
             while (len < 0 && errno == EINTR);
 
