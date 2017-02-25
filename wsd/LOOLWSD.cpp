@@ -2403,6 +2403,121 @@ static std::shared_ptr<DocumentBroker> createDocBroker(const std::string& uri,
     return docBroker;
 }
 
+/// Find the DocumentBroker for the given docKey, if one exists.
+/// Otherwise, creates and adds a new one to DocBrokers.
+/// May return null if terminating or MaxDocuments limit is reached.
+/// After returning a valid instance DocBrokers must be cleaned up after exceptions.
+static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(const std::string& uri,
+                                                             const std::string& docKey,
+                                                             const std::string& id,
+                                                             const Poco::URI& uriPublic)
+{
+    LOG_INF("Find or create DocBroker for docKey [" << docKey <<
+            "] for session [" << id << "] on url [" << uriPublic.toString() << "].");
+
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+
+    cleanupDocBrokers();
+
+    if (TerminationFlag)
+    {
+        LOG_ERR("Termination flag set. No loading new session [" << id << "]");
+        return nullptr;
+    }
+
+    std::shared_ptr<DocumentBroker> docBroker;
+
+    // Lookup this document.
+    auto it = DocBrokers.find(docKey);
+    if (it != DocBrokers.end() && it->second)
+    {
+        // Get the DocumentBroker from the Cache.
+        LOG_DBG("Found DocumentBroker with docKey [" << docKey << "].");
+        docBroker = it->second;
+        if (docBroker->isMarkedToDestroy())
+        {
+            // Let the waiting happen in parallel to new requests.
+            docBrokersLock.unlock();
+
+            // If this document is going out, wait.
+            LOG_DBG("Document [" << docKey << "] is marked to destroy, waiting to reload.");
+
+            bool timedOut = true;
+            for (size_t i = 0; i < COMMAND_TIMEOUT_MS / POLL_TIMEOUT_MS; ++i)
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
+
+                docBrokersLock.lock();
+                it = DocBrokers.find(docKey);
+                if (it == DocBrokers.end())
+                {
+                    // went away successfully
+                    docBroker.reset();
+                    docBrokersLock.unlock();
+                    timedOut = false;
+                    break;
+                }
+                else if (it->second && !it->second->isMarkedToDestroy())
+                {
+                    // was actually replaced by a real document
+                    docBroker = it->second;
+                    docBrokersLock.unlock();
+                    timedOut = false;
+                    break;
+                }
+
+                docBrokersLock.unlock();
+                if (TerminationFlag)
+                {
+                    LOG_ERR("Termination flag set. Not loading new session [" << id << "]");
+                    return nullptr;
+                }
+            }
+
+            if (timedOut)
+            {
+                // Still here, but marked to destroy. Proceed and hope to recover.
+                LOG_ERR("Timed out while waiting for document to unload before loading.");
+            }
+
+            // Retake the lock and recheck if another thread created the DocBroker.
+            docBrokersLock.lock();
+            it = DocBrokers.find(docKey);
+            if (it != DocBrokers.end())
+            {
+                // Get the DocumentBroker from the Cache.
+                LOG_DBG("Found DocumentBroker for docKey [" << docKey << "].");
+                docBroker = it->second;
+                assert(docBroker);
+            }
+        }
+    }
+    else
+    {
+        LOG_DBG("No DocumentBroker with docKey [" << docKey << "] found. New Child and Document.");
+    }
+
+    Util::assertIsLocked(docBrokersLock);
+
+    if (TerminationFlag)
+    {
+        LOG_ERR("Termination flag set. No loading new session [" << id << "]");
+        return nullptr;
+    }
+
+    // Indicate to the client that we're connecting to the docbroker.
+    // const std::string statusConnect = "statusindicator: connect";
+    // LOG_TRC("Sending to Client [" << statusConnect << "].");
+    // ws->sendFrame(statusConnect.data(), statusConnect.size());
+
+    if (!docBroker)
+    {
+        docBroker = createDocBroker(uri, docKey, uriPublic);
+    }
+
+    return docBroker;
+}
+
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher : public SocketHandlerInterface
 {
@@ -2615,16 +2730,13 @@ private:
         LOG_INF("URL [" << url << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
 
         // Request a kit process for this doc.
-        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        std::shared_ptr<DocumentBroker> docBroker = createDocBroker(url, docKey, uriPublic);
-        _handler.reset(new ClientSession("hardcoded", docBroker, uriPublic, isReadOnly));
-
         int retry = 3;
         while (retry-- > 0)
         {
-            // auto docBroker = findOrCreateDocBroker(url, docKey, _id, uriPublic);
-            // if (docBroker)
+            auto docBroker = findOrCreateDocBroker(url, docKey, _id, uriPublic);
+            if (docBroker)
             {
+                _handler.reset(new ClientSession("hardcoded", docBroker, uriPublic, isReadOnly));
                 // auto session = createNewClientSession(_id, uriPublic, docBroker, isReadOnly);
                 // if (session)
                 {
