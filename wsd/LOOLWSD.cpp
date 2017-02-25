@@ -2380,6 +2380,14 @@ private:
     /// Called after successful socket reads.
     void handleIncomingMessage() override
     {
+        if (_handler)
+        {
+            // TODO: might be better to reset the handler in the socket
+            // so we avoid this double-dispatching.
+            _handler->handleIncomingMessage();
+            return;
+        }
+
         try
         {
             Poco::MemoryInputStream message(&_socket->_inBuffer[0], _socket->_inBuffer.size());
@@ -2451,10 +2459,24 @@ private:
     {
         // requestHandler = new ClientRequestHandler();
         LOG_INF("Client request" << request.getURI());
+
+        // Request a kit process for this doc.
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+        auto child = getNewChild();
+        if (!child)
+        {
+            // Let the client know we can't serve now.
+            throw std::runtime_error("Failed to spawn lokit child.");
+        }
+
+        Poco::URI uri(HARDCODED_PATH);
+        std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(HARDCODED_PATH, uri, HARDCODED_PATH, LOOLWSD::ChildRoot, child);
+        _handler.reset(new ClientSession("hardcoded", docBroker, uri));
     }
 
 private:
     std::unique_ptr<StreamSocket> _socket;
+    std::unique_ptr<SocketHandlerInterface> _handler;
 };
 
 
