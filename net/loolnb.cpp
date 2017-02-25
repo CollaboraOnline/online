@@ -177,17 +177,17 @@ public:
         class PlainSocketFactory : public SocketFactory
         {
             std::shared_ptr<Socket> create(const int fd) override
-                {
-                    return std::make_shared<StreamSocket>(fd, new SimpleResponseClient());
-                }
+            {
+                return std::make_shared<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new SimpleResponseClient });
+            }
         };
 
         class SslSocketFactory : public SocketFactory
         {
             std::shared_ptr<Socket> create(const int fd) override
-                {
-                    return std::make_shared<SslStreamSocket>(fd, new SimpleResponseClient());
-                }
+            {
+                return std::make_shared<SslStreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new SimpleResponseClient });
+            }
         };
 
 

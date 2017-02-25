@@ -338,9 +338,9 @@ class StreamSocket : public Socket
 {
 public:
     /// Create a StreamSocket from native FD and take ownership of handler instance.
-    StreamSocket(const int fd, SocketHandlerInterface* socketHandler) :
+    StreamSocket(const int fd, std::unique_ptr<SocketHandlerInterface> socketHandler) :
         Socket(fd),
-        _socketHandler(socketHandler),
+        _socketHandler(std::move(socketHandler)),
         _closed(false)
     {
         // Without a handler we make no sense.

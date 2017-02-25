@@ -2559,7 +2559,7 @@ class PlainSocketFactory : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int fd) override
     {
-        return std::make_shared<StreamSocket>(fd, new ClientRequestDispatcher);
+        return std::make_shared<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
     }
 };
 
@@ -2567,20 +2567,8 @@ class SslSocketFactory : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int fd) override
     {
-        // TODO FIXME loolnb - avoid the copy/paste between PlainSocketFactory
-        // and SslSocketFactory
-        // Request a kit process for this doc.
-        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        auto child = getNewChild();
-        if (!child)
-        {
-            // Let the client know we can't serve now.
-            throw std::runtime_error("Failed to spawn lokit child.");
-        }
-
-        Poco::URI uri(HARDCODED_PATH);
-        std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(HARDCODED_PATH, uri, HARDCODED_PATH, LOOLWSD::ChildRoot, child);
-        return std::make_shared<StreamSocket>(fd, new ClientSession("hardcoded", docBroker, uri));
+        // FIXME: SslStreamSocket it should be, but conflicts with Poco SSL; need to remove that first.
+        return std::make_shared<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
     }
 };
 
