@@ -207,7 +207,7 @@ public:
                 if (_pollSockets[i]->handlePoll(newNow, _pollFds[i].revents) ==
                     Socket::HandleResult::SOCKET_CLOSED)
                 {
-                    std::cout << "Removing client #" << _pollFds[i].fd << std::endl;
+                    LOG_DBG("Removing client #" << _pollFds[i].fd);
                     _pollSockets.erase(_pollSockets.begin() + i);
                     // Don't remove from pollFds; we'll recreate below.
                 }

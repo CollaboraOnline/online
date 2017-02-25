@@ -29,6 +29,8 @@ void WebSocketHandler::handleWebsocketUpgrade()
     // and assume we don't have sufficient data, so we wait some more.
     _socket->_inBuffer.clear();
 
+    LOG_DBG("URI: " << req.getURI());
+
     Poco::StringTokenizer tokens(req.getURI(), "/?");
     if (tokens.count() == 4)
     {
