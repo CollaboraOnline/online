@@ -2435,9 +2435,38 @@ private:
                 handleAdminRequest(request);
             }
             // Client post and websocket connections
+            else if ((request.getMethod() == HTTPRequest::HTTP_GET ||
+                      request.getMethod() == HTTPRequest::HTTP_HEAD) &&
+                     request.getURI() == "/")
+            {
+                handleRootRequest(request);
+            }
+            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/favicon.ico")
+            {
+                handleFaviconRequest(request);
+            }
+            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/hosting/discovery")
+            {
+                handleWopiDiscoveryRequest(request);
+            }
             else
             {
-                handleClientRequest(request);
+                StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
+                    reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
+                {
+                    // All post requests have url prefix 'lool'.
+                    handlePostRequest(request);
+                }
+                else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws")
+                {
+                    handleClientWsRequest(request, reqPathTokens[1]);
+                }
+                else
+                {
+                    LOG_ERR("Unknown resource: " << request.getURI());
+                    // response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
+                }
             }
         }
         catch (const std::exception& exc)
@@ -2455,14 +2484,57 @@ private:
 
     void handleAdminRequest(const Poco::Net::HTTPRequest& request)
     {
-        LOG_ERR("Admin request" << request.getURI());
+        LOG_ERR("Admin request: " << request.getURI());
         // requestHandler = Admin::createRequestHandler();
     }
 
-    void handleClientRequest(const Poco::Net::HTTPRequest& request)
+    void handleRootRequest(const Poco::Net::HTTPRequest& request)
+    {
+        LOG_ERR("HTTP request: " << request.getURI());
+        // std::string mimeType = "text/plain";
+        // std::string responseString = "OK";
+        // response.setContentLength(responseString.length());
+        // response.setContentType(mimeType);
+        // response.setChunkedTransferEncoding(false);
+        // std::ostream& ostr = response.send();
+        // if (request.getMethod() == HTTPRequest::HTTP_GET)
+        // {
+        //     ostr << responseString;
+        // }
+        // responded = true;
+    }
+
+    void handleFaviconRequest(const Poco::Net::HTTPRequest& request)
+    {
+        LOG_ERR("Favicon request: " << request.getURI());
+        // std::string mimeType = "image/vnd.microsoft.icon";
+        // std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
+        // if (!File(faviconPath).exists())
+        // {
+        //     faviconPath = LOOLWSD::FileServerRoot + "/favicon.ico";
+        // }
+        // response.setContentType(mimeType);
+        // response.sendFile(faviconPath, mimeType);
+        // responded = true;
+    }
+
+    void handleWopiDiscoveryRequest(const Poco::Net::HTTPRequest& request)
+    {
+        LOG_ERR("Wopi discovery request: " << request.getURI());
+        // http://server/hosting/discovery
+        // responded = handleGetWOPIDiscovery(request, response);
+    }
+
+    void handlePostRequest(const Poco::Net::HTTPRequest& request)
+    {
+        LOG_ERR("Post request: " << request.getURI());
+        // responded = handlePostRequest(request, response, id);
+    }
+
+    void handleClientWsRequest(const Poco::Net::HTTPRequest& request, const std::string& url)
     {
         // requestHandler = new ClientRequestHandler();
-        LOG_INF("Client request" << request.getURI());
+        LOG_INF("Client request" << request.getURI() << ", url: " << url);
 
         // Request a kit process for this doc.
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
