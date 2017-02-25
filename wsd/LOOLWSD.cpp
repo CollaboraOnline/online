@@ -109,6 +109,7 @@
 #include "Protocol.hpp"
 #include "ServerSocket.hpp"
 #include "Session.hpp"
+//#include "SslSocket.hp" // Conflicts with Poco SSL.
 #include "Storage.hpp"
 #include "TraceFile.hpp"
 #include "Unit.hpp"
@@ -1658,6 +1659,7 @@ inline Poco::Net::ServerSocket* getServerSocket(int portNumber, bool reuseDetail
     }
 }
 
+#if 0
 inline Poco::Net::ServerSocket* findFreeServerPort(int& portNumber)
 {
     Poco::Net::ServerSocket* socket = nullptr;
@@ -1672,6 +1674,7 @@ inline Poco::Net::ServerSocket* findFreeServerPort(int& portNumber)
     }
     return socket;
 }
+#endif
 
 inline Poco::Net::ServerSocket* getMasterSocket(int portNumber)
 {
