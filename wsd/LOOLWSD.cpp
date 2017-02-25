@@ -2559,6 +2559,31 @@ private:
             return;
         }
 
+        LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << url << "].");
+
+        // Indicate to the client that document broker is searching.
+        // const std::string status("statusindicator: find");
+        // LOG_TRC("Sending to Client [" << status << "].");
+        // ws->sendFrame(status.data(), status.size());
+
+        const auto uriPublic = DocumentBroker::sanitizeURI(url);
+        const auto docKey = DocumentBroker::getDocKey(uriPublic);
+        LOG_INF("Sanitized URI [" << url << "] to [" << uriPublic.toString() <<
+                "] and mapped to docKey [" << docKey << "] for session [" << _id << "].");
+
+        // Check if readonly session is required
+        bool isReadOnly = false;
+        for (const auto& param : uriPublic.getQueryParameters())
+        {
+            LOG_DBG("Query param: " << param.first << ", value: " << param.second);
+            if (param.first == "permission" && param.second == "readonly")
+            {
+                isReadOnly = true;
+            }
+        }
+
+        LOG_INF("URL [" << url << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
+
         // Request a kit process for this doc.
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
         auto child = getNewChild();
@@ -2571,6 +2596,46 @@ private:
         Poco::URI uri(HARDCODED_PATH);
         std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(HARDCODED_PATH, uri, HARDCODED_PATH, LOOLWSD::ChildRoot, child);
         _handler.reset(new ClientSession("hardcoded", docBroker, uri));
+
+        int retry = 3;
+        while (retry-- > 0)
+        {
+            // auto docBroker = findOrCreateDocBroker(url, docKey, _id, uriPublic);
+            // if (docBroker)
+            {
+                // auto session = createNewClientSession(_id, uriPublic, docBroker, isReadOnly);
+                // if (session)
+                {
+                    // Process the request in an exception-safe way.
+                    //processGetRequest(_id, docBroker, session);
+                    break;
+                }
+            }
+
+            if (retry > 0)
+            {
+                LOG_WRN("Failed to connect DocBroker and Client Session, retrying.");
+                LOOLWSD::checkAndRestoreForKit();
+            }
+            else
+            {
+                const std::string msg = SERVICE_UNAVAILABLE_INTERNAL_ERROR;
+                LOG_ERR("handleGetRequest: Giving up trying to connect client: " << msg);
+                try
+                {
+                    // FIXME: send error and close.
+                    // ws->sendFrame(msg.data(), msg.size());
+                    // // abnormal close frame handshake
+                    // ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
+                }
+                catch (const std::exception& exc2)
+                {
+                    LOG_ERR("handleGetRequest: exception while sending WS error message [" << msg << "]: " << exc2.what());
+                }
+
+                break;
+            }
+        }
     }
 
 private:
