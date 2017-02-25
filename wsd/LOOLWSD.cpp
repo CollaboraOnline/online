@@ -2833,6 +2833,9 @@ private:
                 _clientSession = createNewClientSession(_id, uriPublic, docBroker, isReadOnly);
                 if (_clientSession)
                 {
+                    _clientSession->onConnect(_socket.get());
+                    _clientSession->upgradeToWebSocket(request);
+
                     break;
                 }
             }
