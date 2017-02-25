@@ -15,6 +15,7 @@
 #include "memory"
 
 #include "Socket.hpp"
+#include "Log.hpp"
 
 class SocketFactory
 {
@@ -84,7 +85,7 @@ public:
                 throw std::runtime_error(msg + std::strerror(errno) + ")");
             }
 
-            std::cout << "Accepted client #" << clientSocket->getFD() << std::endl;
+            LOG_DBG( "Accepted client #" << clientSocket->getFD());
             _clientPoller.insertNewSocket(clientSocket);
         }
 
