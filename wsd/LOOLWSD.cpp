@@ -56,6 +56,7 @@
 #include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
+#include <Poco/MemoryStream.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/ConsoleCertificateHandler.h>
 #include <Poco/Net/Context.h>
@@ -2369,24 +2370,88 @@ std::mutex Connection::Mutex;
 // TODO loolnb FIXME
 static const std::string HARDCODED_PATH("file:///tmp/hello-world.odt");
 
+/// Handles incoming connections and dispatches to the appropriate handler.
+class ClientRequestDispatcher : public SocketHandlerInterface
+{
+private:
+
+    /// Set the socket associated with this ResponseClient.
+    void setSocket(StreamSocket* socket) override
+    {
+        _socket.reset(socket);
+    }
+
+    /// Called after successful socket reads.
+    void handleIncomingMessage() override
+    {
+        try
+        {
+            Poco::MemoryInputStream message(&_socket->_inBuffer[0], _socket->_inBuffer.size());
+            Poco::Net::HTTPRequest request;
+            request.read(message);
+
+            auto logger = Log::info();
+            // logger << "Request from " << request.clientAddress().toString() << ": "
+            logger << "Request : "
+                   << request.getMethod() << " " << request.getURI() << " "
+                   << request.getVersion();
+
+            for (const auto& it : request)
+            {
+                logger << " / " << it.first << ": " << it.second;
+            }
+
+            logger << Log::end;
+
+            // if we succeeded - remove that from our input buffer
+            // FIXME: We should check if this is GET or POST. For GET, we only
+            // can have a single request (headers only). For POST, we can/should
+            // use Poco HTMLForm to parse the post message properly.
+            // Otherwise, we should catch exceptions from the previous read/parse
+            // and assume we don't have sufficient data, so we wait some more.
+            _socket->_inBuffer.clear();
+
+            // Routing
+            Poco::URI requestUri(request.getURI());
+            std::vector<std::string> reqPathSegs;
+            requestUri.getPathSegments(reqPathSegs);
+
+            // File server
+            if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
+            {
+                // requestHandler = FileServer::createRequestHandler();
+                LOG_INF("FileServer request");
+            }
+            // Admin LOOLWebSocket Connections
+            else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
+            {
+                // requestHandler = Admin::createRequestHandler();
+                LOG_INF("Admin request");
+            }
+            // Client post and websocket connections
+            else
+            {
+                // requestHandler = new ClientRequestHandler();
+                LOG_INF("Client request");
+            }
+        }
+        catch (const std::exception& exc)
+        {
+            // Probably don't have enough data just yet.
+            // TODO: Timeout etc.
+        }
+    }
+
+private:
+    std::unique_ptr<StreamSocket> _socket;
+};
+
+
 class PlainSocketFactory : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int fd) override
     {
-        // TODO FIXME loolnb - avoid the copy/paste between PlainSocketFactory
-        // and SslSocketFactory
-        // Request a kit process for this doc.
-        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        auto child = getNewChild();
-        if (!child)
-        {
-            // Let the client know we can't serve now.
-            throw std::runtime_error("Failed to spawn lokit child.");
-        }
-
-        Poco::URI uri(HARDCODED_PATH);
-        std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(HARDCODED_PATH, uri, HARDCODED_PATH, LOOLWSD::ChildRoot, child);
-        return std::make_shared<StreamSocket>(fd, new ClientSession("hardcoded", docBroker, uri));
+        return std::make_shared<StreamSocket>(fd, new ClientRequestDispatcher);
     }
 };
 
