@@ -2522,6 +2522,91 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(const std::string& 
     return docBroker;
 }
 
+/// Remove DocumentBroker session and instance from DocBrokers.
+static void removeDocBrokerSession(const std::shared_ptr<DocumentBroker>& docBroker, const std::string& id = "")
+{
+    LOG_CHECK_RET(docBroker && "Null docBroker instance", );
+
+    const auto docKey = docBroker->getDocKey();
+    LOG_DBG("Removing docBroker [" << docKey << "]" << (id.empty() ? "" : (" and session [" + id + "].")));
+
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+    auto lock = docBroker->getLock();
+
+    if (!id.empty())
+    {
+        docBroker->removeSession(id);
+    }
+
+    if (docBroker->getSessionsCount() == 0 || !docBroker->isAlive())
+    {
+        LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
+        DocBrokers.erase(docKey);
+        docBroker->terminateChild(lock, "");
+    }
+}
+
+static std::shared_ptr<ClientSession> createNewClientSession(const std::string& id,
+                                                             const Poco::URI& uriPublic,
+                                                             const std::shared_ptr<DocumentBroker>& docBroker,
+                                                             const bool isReadOnly)
+{
+    LOG_CHECK_RET(docBroker && "Null docBroker instance", nullptr);
+    try
+    {
+        auto lock = docBroker->getLock();
+
+        // Validate the broker.
+        if (!docBroker->isAlive())
+        {
+            LOG_ERR("DocBroker is invalid or premature termination of child process.");
+            lock.unlock();
+            removeDocBrokerSession(docBroker);
+            return nullptr;
+        }
+
+        if (docBroker->isMarkedToDestroy())
+        {
+            LOG_ERR("DocBroker is marked to destroy, can't add session.");
+            lock.unlock();
+            removeDocBrokerSession(docBroker);
+            return nullptr;
+        }
+
+        // Now we have a DocumentBroker and we're ready to process client commands.
+        // const std::string statusReady = "statusindicator: ready";
+        // LOG_TRC("Sending to Client [" << statusReady << "].");
+        // ws->sendFrame(statusReady.data(), statusReady.size());
+
+        // In case of WOPI, if this session is not set as readonly, it might be set so
+        // later after making a call to WOPI host which tells us the permission on files
+        // (UserCanWrite param).
+        auto session = std::make_shared<ClientSession>(id, docBroker, uriPublic, isReadOnly);
+
+        docBroker->addSession(session);
+
+        lock.unlock();
+
+        const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
+        if (!fs.empty())
+        {
+            LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
+            const std::string diskfullMsg = "error: cmd=internal kind=diskfull";
+            // Alert all other existing sessions also
+            Util::alertAllUsers(diskfullMsg);
+        }
+
+        return session;
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_WRN("Exception while preparing session [" << id << "]: " << exc.what());
+        removeDocBrokerSession(docBroker, id);
+    }
+
+    return nullptr;
+}
+
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher : public SocketHandlerInterface
 {
@@ -2548,11 +2633,11 @@ private:
     /// Called after successful socket reads.
     void handleIncomingMessage() override
     {
-        if (_handler)
+        if (_clientSession)
         {
             // TODO: might be better to reset the handler in the socket
             // so we avoid this double-dispatching.
-            _handler->handleIncomingMessage();
+            _clientSession->handleIncomingMessage();
             return;
         }
 
@@ -2740,12 +2825,9 @@ private:
             auto docBroker = findOrCreateDocBroker(url, docKey, _id, uriPublic);
             if (docBroker)
             {
-                _handler.reset(new ClientSession("hardcoded", docBroker, uriPublic, isReadOnly));
-                // auto session = createNewClientSession(_id, uriPublic, docBroker, isReadOnly);
-                // if (session)
+                _clientSession = createNewClientSession(_id, uriPublic, docBroker, isReadOnly);
+                if (_clientSession)
                 {
-                    // Process the request in an exception-safe way.
-                    //processGetRequest(_id, docBroker, session);
                     break;
                 }
             }
@@ -2778,7 +2860,7 @@ private:
 
 private:
     std::unique_ptr<StreamSocket> _socket;
-    std::unique_ptr<SocketHandlerInterface> _handler;
+    std::shared_ptr<ClientSession> _clientSession;
     std::string _id;
     size_t _connectionNum;
 };
