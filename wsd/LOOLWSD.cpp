@@ -2372,6 +2372,7 @@ class PlainSocketFactory : public SocketFactory
         // TODO FIXME loolnb - avoid the copy/paste between PlainSocketFactory
         // and SslSocketFactory
         // Request a kit process for this doc.
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
         auto child = getNewChild();
         if (!child)
         {
@@ -2392,6 +2393,7 @@ class SslSocketFactory : public SocketFactory
         // TODO FIXME loolnb - avoid the copy/paste between PlainSocketFactory
         // and SslSocketFactory
         // Request a kit process for this doc.
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
         auto child = getNewChild();
         if (!child)
         {
@@ -2674,16 +2676,18 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             {
                 try
                 {
+#if 0
                     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
                     cleanupDocBrokers();
                     for (auto& pair : DocBrokers)
                     {
                         auto docLock = pair.second->getDeferredLock();
-                        if (docLock.try_lock())
+                        if (doclock.try_lock())
                         {
-                            pair.second->autoSave(false, 0, docLock);
+                            pair.second->autosave(false, 0, doclock);
                         }
                     }
+#endif
                 }
                 catch (const std::exception& exc)
                 {
