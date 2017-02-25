@@ -2367,7 +2367,7 @@ std::mutex Connection::Mutex;
 #endif
 
 // TODO loolnb FIXME
-static const std::string HARDCODED_PATH("file:///local/libreoffice/online/test/data/hello-world.odt");
+static const std::string HARDCODED_PATH("file:///tmp/hello-world.odt");
 
 class PlainSocketFactory : public SocketFactory
 {
