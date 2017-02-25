@@ -2381,7 +2381,19 @@ private:
     /// Set the socket associated with this ResponseClient.
     void onConnect(StreamSocket* socket) override
     {
+        _id = LOOLWSD::GenSessionId();
+        _connectionNum = ++LOOLWSD::NumConnections;
+        LOG_TRC("Connected connection #" << _connectionNum << " of " <<
+                MAX_CONNECTIONS << " max as session [" << _id << "].");
+
         _socket.reset(socket);
+    }
+
+    void onDisconnect() override
+    {
+        const size_t curConnections = --LOOLWSD::NumConnections;
+        LOG_TRC("Disconnected connection #" << _connectionNum << " of " <<
+                curConnections << " existing as session [" << _id << "].");
     }
 
     /// Called after successful socket reads.
@@ -2539,6 +2551,14 @@ private:
         // requestHandler = new ClientRequestHandler();
         LOG_INF("Client request" << request.getURI() << ", url: " << url);
 
+        if (_connectionNum > MAX_CONNECTIONS)
+        {
+            LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
+            //FIXME: gracefully reject the connection request.
+            // shutdownLimitReached(ws);
+            return;
+        }
+
         // Request a kit process for this doc.
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
         auto child = getNewChild();
@@ -2556,6 +2576,8 @@ private:
 private:
     std::unique_ptr<StreamSocket> _socket;
     std::unique_ptr<SocketHandlerInterface> _handler;
+    std::string _id;
+    size_t _connectionNum;
 };
 
 
