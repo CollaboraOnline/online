@@ -10,22 +10,16 @@
 #ifndef INCLUDED_WEBSOCKETHANDLER_HPP
 #define INCLUDED_WEBSOCKETHANDLER_HPP
 
-#include <Poco/Net/HTTPRequest.h>
-
 #include "Log.hpp"
 #include "Socket.hpp"
 
 class WebSocketHandler : public SocketHandlerInterface
 {
     std::unique_ptr<StreamSocket> _socket;
-    int _wsVersion;
-    std::string _wsKey;
-    std::string _wsProtocol;
     std::vector<char> _wsPayload;
 
 public:
-    WebSocketHandler() :
-        _wsVersion(0)
+    WebSocketHandler()
     {
     }
 
@@ -34,9 +28,6 @@ public:
     {
         _socket.reset(socket);
     }
-
-    /// Upgrade the http(s) connection to a websocket.
-    void upgradeToWebSocket(const Poco::Net::HTTPRequest& req);
 
     enum WSOpCode {
         Continuation, // 0x0
@@ -171,9 +162,6 @@ public:
 
     /// To me overriden to handle the websocket messages the way you need.
     virtual void handleMessage(bool fin, WSOpCode code, std::vector<char> &data) = 0;
-
-private:
-    static std::string computeAccept(const std::string &key);
 };
 
 #endif
