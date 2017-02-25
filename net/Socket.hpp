@@ -318,22 +318,42 @@ class StreamSocket;
 class SocketHandlerInterface
 {
 public:
-    /// Set the socket associated with this ResponseClient.
-    virtual void setSocket(StreamSocket* socket) = 0;
+    /// Called when the socket is newly created to
+    /// set the socket associated with this ResponseClient.
+    /// Will be called exactly once.
+    virtual void onConnect(StreamSocket* socket) = 0;
 
     /// Called after successful socket reads.
     virtual void handleIncomingMessage() = 0;
+
+    /// Called when the is disconnected and will be destroyed.
+    /// Will be called exactly once.
+    virtual void onDisconnect()
+    {
+    }
 };
 
 /// A plain, non-blocking, data streaming socket.
 class StreamSocket : public Socket
 {
 public:
+    /// Create a StreamSocket from native FD and take ownership of handler instance.
     StreamSocket(const int fd, SocketHandlerInterface* socketHandler) :
         Socket(fd),
-        _socketHandler(socketHandler)
+        _socketHandler(socketHandler),
+        _closed(false)
     {
-        _socketHandler->setSocket(this);
+        // Without a handler we make no sense.
+        if (!_socketHandler)
+            throw std::runtime_error("StreamSocket expects a valid SocketHandler instance.");
+
+        _socketHandler->onConnect(this);
+    }
+
+    ~StreamSocket()
+    {
+        if (!_closed)
+            _socketHandler->onDisconnect();
     }
 
     /// Called when a polling event is received.
@@ -342,15 +362,13 @@ public:
                             const int events) override
     {
         // FIXME: need to close input, but not output (?)
-        bool closeSocket = false;
-
         // Always try to read.
-        closeSocket = !readIncomingData();
+        _closed = !readIncomingData() || _closed;
 
         auto& log = Log::logger();
         if (log.trace()) {
             LOG_TRC("Incoming data buffer " << _inBuffer.size() <<
-                    " closeSocket? " << closeSocket << "\n");
+                    " closeSocket? " << _closed << "\n");
             log.dump("", &_inBuffer[0], _inBuffer.size());
         }
 
@@ -359,8 +377,7 @@ public:
         while (!_inBuffer.empty() && oldSize != _inBuffer.size())
         {
             oldSize = _inBuffer.size();
-            if (_socketHandler)
-                _socketHandler->handleIncomingMessage();
+            _socketHandler->handleIncomingMessage();
         }
 
         // SSL might want to do handshake,
@@ -371,10 +388,13 @@ public:
         }
 
         if (events & (POLLHUP | POLLERR | POLLNVAL))
-            closeSocket = true;
+        {
+            _closed = true;
+            _socketHandler->onDisconnect();
+        }
 
-        return closeSocket ? HandleResult::SOCKET_CLOSED :
-                             HandleResult::CONTINUE;
+        return _closed ? HandleResult::SOCKET_CLOSED :
+                         HandleResult::CONTINUE;
     }
 
     /// Reads data by invoking readData() and buffering.
@@ -459,6 +479,9 @@ public:
 protected:
     /// Client handling the actual data.
     std::unique_ptr<SocketHandlerInterface> _socketHandler;
+
+    /// True if we are already closed.
+    bool _closed;
 
     std::vector< char > _inBuffer;
     std::vector< char > _outBuffer;
