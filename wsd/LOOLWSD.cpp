@@ -2419,20 +2419,17 @@ private:
             // File server
             if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
             {
-                // requestHandler = FileServer::createRequestHandler();
-                LOG_INF("FileServer request");
+                handleFileServerRequest(request);
             }
             // Admin LOOLWebSocket Connections
             else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
             {
-                // requestHandler = Admin::createRequestHandler();
-                LOG_INF("Admin request");
+                handleAdminRequest(request);
             }
             // Client post and websocket connections
             else
             {
-                // requestHandler = new ClientRequestHandler();
-                LOG_INF("Client request");
+                handleClientRequest(request);
             }
         }
         catch (const std::exception& exc)
@@ -2440,6 +2437,24 @@ private:
             // Probably don't have enough data just yet.
             // TODO: Timeout etc.
         }
+    }
+
+    void handleFileServerRequest(const Poco::Net::HTTPRequest& request)
+    {
+        LOG_ERR("FileServer request: " << request.getURI());
+        // requestHandler = FileServer::createRequestHandler();
+    }
+
+    void handleAdminRequest(const Poco::Net::HTTPRequest& request)
+    {
+        LOG_ERR("Admin request" << request.getURI());
+        // requestHandler = Admin::createRequestHandler();
+    }
+
+    void handleClientRequest(const Poco::Net::HTTPRequest& request)
+    {
+        // requestHandler = new ClientRequestHandler();
+        LOG_INF("Client request" << request.getURI());
     }
 
 private:
