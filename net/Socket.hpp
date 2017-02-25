@@ -465,6 +465,7 @@ protected:
 
     // To be able to access _inBuffer and _outBuffer.
     friend class WebSocketHandler;
+    friend class ClientRequestDispatcher;
 };
 
 #endif
