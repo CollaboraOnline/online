@@ -2654,10 +2654,10 @@ private:
             return;
         }
 
+        Poco::MemoryInputStream message(&_socket->_inBuffer[0], _socket->_inBuffer.size());
+        Poco::Net::HTTPRequest request;
         try
         {
-            Poco::MemoryInputStream message(&_socket->_inBuffer[0], _socket->_inBuffer.size());
-            Poco::Net::HTTPRequest request;
             request.read(message);
 
             auto logger = Log::info();
@@ -2680,7 +2680,15 @@ private:
             // Otherwise, we should catch exceptions from the previous read/parse
             // and assume we don't have sufficient data, so we wait some more.
             _socket->_inBuffer.clear();
+        }
+        catch (const std::exception& exc)
+        {
+            // Probably don't have enough data just yet.
+            // TODO: Timeout etc.
+        }
 
+        try
+        {
             // Routing
             Poco::URI requestUri(request.getURI());
             std::vector<std::string> reqPathSegs;
@@ -2733,8 +2741,8 @@ private:
         }
         catch (const std::exception& exc)
         {
-            // Probably don't have enough data just yet.
-            // TODO: Timeout etc.
+            // TODO: Send back failure.
+            // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
         }
     }
 
