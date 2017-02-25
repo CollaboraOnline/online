@@ -2472,7 +2472,7 @@ private:
 
     static void runServer(std::atomic<bool>& stop, SocketPoll& serverPoll) {
         LOG_INF("Starting master server thread.");
-        while (!stop)
+        while (!stop && !TerminationFlag && !SigUtil::isShuttingDown())
         {
             serverPoll.poll(30000);
         }
@@ -2480,7 +2480,7 @@ private:
 
     static void runDocument(std::atomic<bool>& stop, SocketPoll& documentPoll) {
         LOG_INF("Starting document thread.");
-        while (!stop)
+        while (!stop && !TerminationFlag && !SigUtil::isShuttingDown())
         {
             documentPoll.poll(5000);
         }
