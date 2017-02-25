@@ -2621,6 +2621,11 @@ private:
 
     void onDisconnect() override
     {
+        if (_clientSession)
+        {
+            saveDocument();
+        }
+
         const size_t curConnections = --LOOLWSD::NumConnections;
         LOG_TRC("Disconnected connection #" << _connectionNum << " of " <<
                 curConnections << " existing as session [" << _id << "].");
@@ -2851,6 +2856,86 @@ private:
 
                 break;
             }
+        }
+    }
+
+    void saveDocument()
+    {
+        LOG_CHECK_RET(_clientSession && "Null ClientSession instance", );
+        const auto docBroker = _clientSession->getDocumentBroker();
+        LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
+        const auto docKey = docBroker->getDocKey();
+        try
+        {
+            // Connection terminated. Destroy session.
+            LOG_DBG("Client session [" << _id << "] on docKey [" << docKey << "] terminated. Cleaning up.");
+
+            auto docLock = docBroker->getLock();
+
+            // We issue a force-save when last editable (non-readonly) session is going away
+            const bool forceSave = docBroker->startDestroy(_id);
+            if (forceSave)
+            {
+                LOG_INF("Shutdown of the last editable (non-readonly) session, saving the document before tearing down.");
+            }
+
+            // We need to wait until the save notification reaches us
+            // and Storage persists the document.
+            if (!docBroker->autoSave(forceSave, COMMAND_TIMEOUT_MS, docLock))
+            {
+                LOG_ERR("Auto-save before closing failed.");
+            }
+
+            const auto sessionsCount = docBroker->removeSession(_id);
+            docLock.unlock();
+
+            if (sessionsCount == 0)
+            {
+                // We've supposedly destroyed the last session, now cleanup.
+                removeDocBrokerSession(docBroker);
+            }
+
+            LOG_INF("Finishing GET request handler for session [" << _id << "].");
+        }
+        catch (const UnauthorizedRequestException& exc)
+        {
+            LOG_ERR("Error in client request handler: " << exc.toString());
+            // const std::string status = "error: cmd=internal kind=unauthorized";
+            // LOG_TRC("Sending to Client [" << status << "].");
+            // ws->sendFrame(status.data(), status.size());
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Error in client request handler: " << exc.what());
+        }
+
+        try
+        {
+            if (_clientSession->isCloseFrame())
+            {
+                LOG_TRC("Normal close handshake.");
+                // Client initiated close handshake
+                // respond close frame
+                // ws->shutdown();
+            }
+            else if (!SigUtil::isShuttingDown())
+            {
+                // something wrong, with internal exceptions
+                LOG_TRC("Abnormal close handshake.");
+                _clientSession->closeFrame();
+                // ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
+            }
+            else
+            {
+                std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
+                LOG_TRC("Capturing Client WS for [" << _id << "]");
+                // ClientWebSockets.push_back(ws);
+            }
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_WRN("Exception while closing socket for session [" << _id <<
+                    "] of docKey [" << docKey << "]: " << exc.what());
         }
     }
 
