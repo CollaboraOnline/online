@@ -335,7 +335,7 @@ static void preForkChildren()
     forkChildren(numPreSpawn);
 
     // Wait until we have at least one child.
-    const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_MS);
+    const auto timeout = std::chrono::milliseconds(CHILD_TIMEOUT_MS * 3);
     NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); });
 }
 
