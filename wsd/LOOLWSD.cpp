@@ -2373,6 +2373,40 @@ std::mutex Connection::Mutex;
 // TODO loolnb FIXME
 static const std::string HARDCODED_PATH("file:///tmp/hello-world.odt");
 
+static std::shared_ptr<DocumentBroker> createDocBroker(const std::string& uri,
+                                                       const std::string& docKey,
+                                                       const Poco::URI& uriPublic)
+{
+    Util::assertIsLocked(DocBrokersMutex);
+
+    static_assert(MAX_DOCUMENTS > 0, "MAX_DOCUMENTS must be positive");
+    if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
+    {
+        LOG_ERR("Maximum number of open documents reached.");
+        //FIXME: shutdown on limit.
+        // shutdownLimitReached(*ws);
+        return nullptr;
+    }
+
+    // Request a kit process for this doc.
+    auto child = getNewChild();
+    if (!child)
+    {
+        // Let the client know we can't serve now.
+        LOG_ERR("Failed to get new child.");
+        return nullptr;
+    }
+
+    // Set the one we just created.
+    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+    auto docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, LOOLWSD::ChildRoot, child);
+    child->setDocumentBroker(docBroker);
+    DocBrokers.emplace(docKey, docBroker);
+    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+
+    return docBroker;
+}
+
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher : public SocketHandlerInterface
 {
@@ -2586,16 +2620,8 @@ private:
 
         // Request a kit process for this doc.
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        auto child = getNewChild();
-        if (!child)
-        {
-            // Let the client know we can't serve now.
-            throw std::runtime_error("Failed to spawn lokit child.");
-        }
-
-        Poco::URI uri(HARDCODED_PATH);
-        std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(HARDCODED_PATH, uri, HARDCODED_PATH, LOOLWSD::ChildRoot, child);
-        _handler.reset(new ClientSession("hardcoded", docBroker, uri));
+        std::shared_ptr<DocumentBroker> docBroker = createDocBroker(url, docKey, uriPublic);
+        _handler.reset(new ClientSession("hardcoded", docBroker, uriPublic, isReadOnly));
 
         int retry = 3;
         while (retry-- > 0)
