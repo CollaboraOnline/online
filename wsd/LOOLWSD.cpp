@@ -2376,7 +2376,7 @@ class ClientRequestDispatcher : public SocketHandlerInterface
 private:
 
     /// Set the socket associated with this ResponseClient.
-    void setSocket(StreamSocket* socket) override
+    void onConnect(StreamSocket* socket) override
     {
         _socket.reset(socket);
     }

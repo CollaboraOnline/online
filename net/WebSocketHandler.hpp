@@ -30,7 +30,7 @@ public:
     }
 
     /// Implementation of the SocketHandlerInterface.
-    virtual void setSocket(StreamSocket* socket) override
+    virtual void onConnect(StreamSocket* socket) override
     {
         _socket.reset(socket);
     }
