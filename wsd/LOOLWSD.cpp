@@ -2622,7 +2622,7 @@ private:
         LOG_TRC("Connected connection #" << _connectionNum << " of " <<
                 MAX_CONNECTIONS << " max as session [" << _id << "].");
 
-        _socket.reset(socket);
+        _socket = socket;
     }
 
     void onDisconnect() override
@@ -2848,8 +2848,7 @@ private:
                 _clientSession = createNewClientSession(_id, uriPublic, docBroker, isReadOnly);
                 if (_clientSession)
                 {
-                    _clientSession->onConnect(_socket.get());
-
+                    _clientSession->onConnect(_socket);
                     break;
                 }
             }
@@ -2995,7 +2994,8 @@ private:
     };
 
 private:
-    std::unique_ptr<StreamSocket> _socket;
+    // The socket that owns us (we can't own it).
+    StreamSocket* _socket;
     std::shared_ptr<ClientSession> _clientSession;
     std::string _id;
     size_t _connectionNum;
