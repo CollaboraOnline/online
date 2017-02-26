@@ -48,14 +48,14 @@ public:
     /// Implementation of the SocketHandlerInterface.
     virtual void handleIncomingMessage() override
     {
-        LOG_TRC("incoming WebSocket message");
-
         auto socket = _socket.lock();
         if (socket == nullptr)
             return;
 
         // websocket fun !
-        size_t len = socket->_inBuffer.size();
+        const size_t len = socket->_inBuffer.size();
+        LOG_TRC("Incoming WebSocket data of " << len << " bytes to socket #" << socket->getFD());
+
         if (len < 2) // partial read
             return;
 
