@@ -60,7 +60,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testHandshake);
     CPPUNIT_TEST(testCloseAfterClose);
     CPPUNIT_TEST(testConnectNoLoad); // This fails most of the times but occasionally succeeds
-    CPPUNIT_TEST(testLoad);
+    CPPUNIT_TEST(testLoadSimple);
     CPPUNIT_TEST(testLoadTortureODT);
     CPPUNIT_TEST(testLoadTortureODS);
     CPPUNIT_TEST(testLoadTortureODP);
@@ -113,7 +113,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testHandshake();
     void testCloseAfterClose();
     void testConnectNoLoad();
-    void testLoad();
+    void testLoadSimple();
     void testLoadTortureODT();
     void testLoadTortureODS();
     void testLoadTortureODP();
@@ -394,7 +394,7 @@ void HTTPWSTest::testConnectNoLoad()
     assertResponseString(socket1, "status:");
 }
 
-void HTTPWSTest::testLoad()
+void HTTPWSTest::testLoadSimple()
 {
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL);
