@@ -74,7 +74,7 @@ bool Session::sendBinaryFrame(const char *buffer, int length)
     LOG_TRC(getName() << ": Send: " << std::to_string(length) << " bytes.");
     std::vector<char> data(length);
     data.assign(buffer, buffer + length);
-    sendMessage(data);
+    sendMessage(data, WSOpCode::Binary);
     return true;
 }
 

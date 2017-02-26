@@ -116,8 +116,7 @@ public:
         _wsPayload.clear();
     }
 
-    void sendMessage(const std::vector<char> &data,
-                     WSOpCode code = WSOpCode::Binary) const
+    void sendMessage(const std::vector<char> &data, const WSOpCode code) const
     {
         size_t len = data.size();
         bool fin = false;
@@ -175,7 +174,7 @@ public:
 
     void sendFrame(const std::string& msg) const
     {
-        sendMessage(std::vector<char>(msg.data(), msg.data() + msg.size()));
+        sendMessage(std::vector<char>(msg.data(), msg.data() + msg.size()), WSOpCode::Text);
     }
 
 private:
