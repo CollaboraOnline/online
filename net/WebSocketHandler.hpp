@@ -116,9 +116,9 @@ public:
         _wsPayload.clear();
     }
 
-    void sendMessage(const std::vector<char> &data, const WSOpCode code) const
+    void sendMessage(const std::vector<char> &data, const WSOpCode code, const bool flush = true) const
     {
-        size_t len = data.size();
+        const size_t len = data.size();
         bool fin = false;
         bool mask = false;
 
@@ -158,6 +158,8 @@ public:
         assert (!mask);
 
         _socket->_outBuffer.insert(_socket->_outBuffer.end(), data.begin(), data.end());
+        if (flush)
+            _socket->writeOutgoingData();
     }
 
     /// To me overriden to handle the websocket messages the way you need.
