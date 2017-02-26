@@ -71,8 +71,8 @@ public:
 
     bool isHeadless() const
     {
-        // TODO loolnb here we should return true when the socket was not
-        // upgraded yet
+        // TODO loolnb here we should return true when there is no
+        // client socket (i.e. when converting documents).
         return false;
     }
 

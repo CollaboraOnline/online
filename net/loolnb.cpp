@@ -44,7 +44,7 @@ public:
     {
     }
 
-    virtual void handleMessage(bool fin, WSOpCode code, std::vector<char> &data) override
+    virtual void handleMessage(const bool fin, const WSOpCode code, std::vector<char> &data) override
     {
         std::cerr << "Message: fin? " << fin << " code " << code << " data size " << data.size();
         if (code == WSOpCode::Text)
@@ -75,7 +75,7 @@ public:
             reply.insert(reply.end(), data.begin(), data.end());
         }
 
-        sendMessage(reply);
+        sendMessage(reply, code);
     }
 };
 
