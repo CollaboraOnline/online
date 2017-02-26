@@ -15,7 +15,8 @@
 
 class WebSocketHandler : public SocketHandlerInterface
 {
-    std::unique_ptr<StreamSocket> _socket;
+    // The socket that owns us (we can't own it).
+    StreamSocket* _socket;
     std::vector<char> _wsPayload;
 
 public:
@@ -26,7 +27,7 @@ public:
     /// Implementation of the SocketHandlerInterface.
     virtual void onConnect(StreamSocket* socket) override
     {
-        _socket.reset(socket);
+        _socket = socket;
     }
 
     enum WSOpCode {
