@@ -2407,7 +2407,8 @@ static std::shared_ptr<DocumentBroker> createDocBroker(const std::string& uri,
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
 /// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(const std::string& uri,
+static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(const WebSocketSender& ws,
+                                                             const std::string& uri,
                                                              const std::string& docKey,
                                                              const std::string& id,
                                                              const Poco::URI& uriPublic)
@@ -2506,9 +2507,9 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(const std::string& 
     }
 
     // Indicate to the client that we're connecting to the docbroker.
-    // const std::string statusConnect = "statusindicator: connect";
-    // LOG_TRC("Sending to Client [" << statusConnect << "].");
-    // ws->sendFrame(statusConnect.data(), statusConnect.size());
+    const std::string statusConnect = "statusindicator: connect";
+    LOG_TRC("Sending to Client [" << statusConnect << "].");
+    ws.sendFrame(statusConnect);
 
     if (!docBroker)
     {
@@ -2542,7 +2543,8 @@ static void removeDocBrokerSession(const std::shared_ptr<DocumentBroker>& docBro
     }
 }
 
-static std::shared_ptr<ClientSession> createNewClientSession(const std::string& id,
+static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketSender& ws,
+                                                             const std::string& id,
                                                              const Poco::URI& uriPublic,
                                                              const std::shared_ptr<DocumentBroker>& docBroker,
                                                              const bool isReadOnly)
@@ -2570,9 +2572,9 @@ static std::shared_ptr<ClientSession> createNewClientSession(const std::string& 
         }
 
         // Now we have a DocumentBroker and we're ready to process client commands.
-        // const std::string statusReady = "statusindicator: ready";
-        // LOG_TRC("Sending to Client [" << statusReady << "].");
-        // ws->sendFrame(statusReady.data(), statusReady.size());
+        const std::string statusReady = "statusindicator: ready";
+        LOG_TRC("Sending to Client [" << statusReady << "].");
+        ws.sendFrame(statusReady);
 
         // In case of WOPI, if this session is not set as readonly, it might be set so
         // later after making a call to WOPI host which tells us the permission on files
@@ -2803,7 +2805,7 @@ private:
         LOG_INF("Client WS request" << request.getURI() << ", url: " << url);
 
         // First Upgrade.
-        upgradeToWebSocket(request);
+        WebSocketSender ws = upgradeToWebSocket(request);
 
         if (_connectionNum > MAX_CONNECTIONS)
         {
@@ -2816,9 +2818,9 @@ private:
         LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << url << "].");
 
         // Indicate to the client that document broker is searching.
-        // const std::string status("statusindicator: find");
-        // LOG_TRC("Sending to Client [" << status << "].");
-        // ws->sendFrame(status.data(), status.size());
+        const std::string status("statusindicator: find");
+        LOG_TRC("Sending to Client [" << status << "].");
+        ws.sendFrame(status);
 
         const auto uriPublic = DocumentBroker::sanitizeURI(url);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
@@ -2842,10 +2844,10 @@ private:
         int retry = 3;
         while (retry-- > 0)
         {
-            auto docBroker = findOrCreateDocBroker(url, docKey, _id, uriPublic);
+            auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
             if (docBroker)
             {
-                _clientSession = createNewClientSession(_id, uriPublic, docBroker, isReadOnly);
+                _clientSession = createNewClientSession(ws, _id, uriPublic, docBroker, isReadOnly);
                 if (_clientSession)
                 {
                     _clientSession->onConnect(_socket);
@@ -2960,7 +2962,7 @@ private:
     }
 
     /// Upgrade the http(s) connection to a websocket.
-    void upgradeToWebSocket(const Poco::Net::HTTPRequest& req)
+    WebSocketSender upgradeToWebSocket(const Poco::Net::HTTPRequest& req)
     {
         LOG_TRC("Upgrading to WebSocket");
         assert(_wsState == WSState::HTTP);
@@ -2981,6 +2983,9 @@ private:
         std::string str = oss.str();
         _socket->_outBuffer.insert(_socket->_outBuffer.end(), str.begin(), str.end());
         _wsState = WSState::WS;
+
+        // Create a WS wrapper to use for sending the client status.
+        return WebSocketSender(_socket);
     }
 
     /// To make the protected 'computeAccept' accessible.

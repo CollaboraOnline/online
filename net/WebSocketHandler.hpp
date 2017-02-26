@@ -117,7 +117,7 @@ public:
     }
 
     void sendMessage(const std::vector<char> &data,
-                     WSOpCode code = WSOpCode::Binary)
+                     WSOpCode code = WSOpCode::Binary) const
     {
         size_t len = data.size();
         bool fin = false;
@@ -163,6 +163,26 @@ public:
 
     /// To me overriden to handle the websocket messages the way you need.
     virtual void handleMessage(bool fin, WSOpCode code, std::vector<char> &data) = 0;
+};
+
+class WebSocketSender : private WebSocketHandler
+{
+public:
+    WebSocketSender(StreamSocket* socket)
+    {
+        onConnect(socket);
+    }
+
+    void sendFrame(const std::string& msg) const
+    {
+        sendMessage(std::vector<char>(msg.data(), msg.data() + msg.size()));
+    }
+
+private:
+    void handleMessage(bool, WSOpCode, std::vector<char>&) override
+    {
+        // We will not read any.
+    }
 };
 
 #endif
