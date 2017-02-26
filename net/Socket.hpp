@@ -368,7 +368,7 @@ public:
         auto& log = Log::logger();
         if (log.trace()) {
             LOG_TRC("Incoming data buffer " << _inBuffer.size() <<
-                    " closeSocket? " << _closed << "\n");
+                    " closeSocket? " << _closed);
             log.dump("", &_inBuffer[0], _inBuffer.size());
         }
 
@@ -439,8 +439,15 @@ public:
 
                 auto& log = Log::logger();
                 if (log.trace()) {
-                    LOG_TRC("Wrote outgoing data " << len << " bytes\n");
-                    log.dump("", &_outBuffer[0], len);
+                    if (len > 0)
+                    {
+                        LOG_TRC("Wrote outgoing data " << len << " bytes");
+                        log.dump("", &_outBuffer[0], len);
+                    }
+                    else
+                    {
+                        LOG_SYS("Wrote outgoing data " << len << " bytes");
+                    }
                 }
             }
             while (len < 0 && errno == EINTR);
