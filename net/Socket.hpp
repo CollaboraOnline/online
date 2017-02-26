@@ -321,7 +321,7 @@ public:
     /// Called when the socket is newly created to
     /// set the socket associated with this ResponseClient.
     /// Will be called exactly once.
-    virtual void onConnect(StreamSocket* socket) = 0;
+    virtual void onConnect(const std::weak_ptr<StreamSocket>& socket) = 0;
 
     /// Called after successful socket reads.
     virtual void handleIncomingMessage() = 0;
@@ -346,8 +346,6 @@ public:
         // Without a handler we make no sense.
         if (!_socketHandler)
             throw std::runtime_error("StreamSocket expects a valid SocketHandler instance.");
-
-        _socketHandler->onConnect(this);
     }
 
     ~StreamSocket()
@@ -481,6 +479,19 @@ public:
     {
         // Only poll for read if we have nothing to write.
         return (_outBuffer.empty() ? POLLIN : POLLIN | POLLOUT);
+    }
+
+    /// Create a socket of type TSocket given an FD and a handler.
+    /// We need this helper since the handler needs a shared_ptr to the socket
+    /// but we can't have a shared_ptr in the ctor.
+    template <typename TSocket>
+    static
+    std::shared_ptr<TSocket> create(const int fd, std::unique_ptr<SocketHandlerInterface> handler)
+    {
+        SocketHandlerInterface* pHandler = handler.get();
+        auto socket = std::make_shared<TSocket>(fd, std::move(handler));
+        pHandler->onConnect(socket);
+        return socket;
     }
 
 protected:
