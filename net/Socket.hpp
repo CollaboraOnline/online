@@ -360,8 +360,10 @@ public:
                             const int events) override
     {
         // FIXME: need to close input, but not output (?)
+        bool closed = (events & (POLLHUP | POLLERR | POLLNVAL));
+
         // Always try to read.
-        _closed = !readIncomingData() || _closed;
+        closed = !readIncomingData() || closed;
 
         auto& log = Log::logger();
         if (log.trace()) {
@@ -383,9 +385,10 @@ public:
         if ((events & POLLOUT) || !_outBuffer.empty())
         {
             writeOutgoingData();
+            closed = closed || (errno == EPIPE);
         }
 
-        if (events & (POLLHUP | POLLERR | POLLNVAL))
+        if (closed)
         {
             _closed = true;
             _socketHandler->onDisconnect();
