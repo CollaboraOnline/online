@@ -16,7 +16,7 @@
 class WebSocketHandler : public SocketHandlerInterface
 {
     // The socket that owns us (we can't own it).
-    StreamSocket* _socket;
+    std::weak_ptr<StreamSocket> _socket;
     std::vector<char> _wsPayload;
 
 public:
@@ -25,7 +25,7 @@ public:
     }
 
     /// Implementation of the SocketHandlerInterface.
-    virtual void onConnect(StreamSocket* socket) override
+    void onConnect(const std::weak_ptr<StreamSocket>& socket) override
     {
         _socket = socket;
     }
@@ -50,12 +50,16 @@ public:
     {
         LOG_TRC("incoming WebSocket message");
 
+        auto socket = _socket.lock();
+        if (socket == nullptr)
+            return;
+
         // websocket fun !
-        size_t len = _socket->_inBuffer.size();
+        size_t len = socket->_inBuffer.size();
         if (len < 2) // partial read
             return;
 
-        unsigned char *p = reinterpret_cast<unsigned char*>(&_socket->_inBuffer[0]);
+        unsigned char *p = reinterpret_cast<unsigned char*>(&socket->_inBuffer[0]);
         bool fin = p[0] & 0x80;
         WSOpCode code = static_cast<WSOpCode>(p[0] & 0x0f);
         bool hasMask = p[1] & 0x80;
@@ -109,15 +113,22 @@ public:
         } else
             _wsPayload.insert(_wsPayload.end(), data, data + payloadLen);
 
-        _socket->_inBuffer.erase(_socket->_inBuffer.begin(), _socket->_inBuffer.begin() + headerLen + payloadLen);
+        socket->_inBuffer.erase(socket->_inBuffer.begin(), socket->_inBuffer.begin() + headerLen + payloadLen);
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
         handleMessage(fin, code, _wsPayload);
         _wsPayload.clear();
     }
 
-    void sendMessage(const std::vector<char> &data, const WSOpCode code, const bool flush = true) const
+    /// Sends a WebSocket message of WPOpCode type.
+    /// Returns the number of bytes written (including frame overhead) on success,
+    /// 0 for closed/invalid socket, and -1 for other errors.
+    int sendMessage(const std::vector<char> &data, const WSOpCode code, const bool flush = true) const
     {
+        auto socket = _socket.lock();
+        if (socket == nullptr)
+            return 0;
+
         const size_t len = data.size();
         bool fin = false;
         bool mask = false;
@@ -125,41 +136,43 @@ public:
         unsigned char header[2];
         header[0] = (fin ? 0x80 : 0) | static_cast<unsigned char>(code);
         header[1] = mask ? 0x80 : 0;
-        _socket->_outBuffer.push_back((char)header[0]);
+        socket->_outBuffer.push_back((char)header[0]);
 
         // no out-bound masking ...
         if (len < 126)
         {
             header[1] |= len;
-            _socket->_outBuffer.push_back((char)header[1]);
+            socket->_outBuffer.push_back((char)header[1]);
         }
         else if (len <= 0xffff)
         {
             header[1] |= 126;
-            _socket->_outBuffer.push_back((char)header[1]);
-            _socket->_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
-            _socket->_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
+            socket->_outBuffer.push_back((char)header[1]);
+            socket->_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
+            socket->_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
         }
         else
         {
             header[1] |= 127;
-            _socket->_outBuffer.push_back((char)header[1]);
-            _socket->_outBuffer.push_back(static_cast<char>((len >> 56) & 0xff));
-            _socket->_outBuffer.push_back(static_cast<char>((len >> 48) & 0xff));
-            _socket->_outBuffer.push_back(static_cast<char>((len >> 40) & 0xff));
-            _socket->_outBuffer.push_back(static_cast<char>((len >> 32) & 0xff));
-            _socket->_outBuffer.push_back(static_cast<char>((len >> 24) & 0xff));
-            _socket->_outBuffer.push_back(static_cast<char>((len >> 16) & 0xff));
-            _socket->_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
-            _socket->_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
+            socket->_outBuffer.push_back((char)header[1]);
+            socket->_outBuffer.push_back(static_cast<char>((len >> 56) & 0xff));
+            socket->_outBuffer.push_back(static_cast<char>((len >> 48) & 0xff));
+            socket->_outBuffer.push_back(static_cast<char>((len >> 40) & 0xff));
+            socket->_outBuffer.push_back(static_cast<char>((len >> 32) & 0xff));
+            socket->_outBuffer.push_back(static_cast<char>((len >> 24) & 0xff));
+            socket->_outBuffer.push_back(static_cast<char>((len >> 16) & 0xff));
+            socket->_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
+            socket->_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
         }
 
         // FIXME: pick random number and mask in the outbuffer etc.
         assert (!mask);
 
-        _socket->_outBuffer.insert(_socket->_outBuffer.end(), data.begin(), data.end());
+        socket->_outBuffer.insert(socket->_outBuffer.end(), data.begin(), data.end());
         if (flush)
-            _socket->writeOutgoingData();
+            socket->writeOutgoingData();
+
+        return len + sizeof(header);
     }
 
     /// To me overriden to handle the websocket messages the way you need.
@@ -169,7 +182,7 @@ public:
 class WebSocketSender : private WebSocketHandler
 {
 public:
-    WebSocketSender(StreamSocket* socket)
+    WebSocketSender(const std::weak_ptr<StreamSocket>& socket)
     {
         onConnect(socket);
     }

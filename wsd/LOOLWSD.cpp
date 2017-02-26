@@ -2617,7 +2617,7 @@ public:
 private:
 
     /// Set the socket associated with this ResponseClient.
-    void onConnect(StreamSocket* socket) override
+    void onConnect(const std::weak_ptr<StreamSocket>& socket) override
     {
         _id = LOOLWSD::GenSessionId();
         _connectionNum = ++LOOLWSD::NumConnections;
@@ -2652,7 +2652,8 @@ private:
             return;
         }
 
-        Poco::MemoryInputStream message(&_socket->_inBuffer[0], _socket->_inBuffer.size());
+        auto socket = _socket.lock();
+        Poco::MemoryInputStream message(&socket->_inBuffer[0], socket->_inBuffer.size());
         Poco::Net::HTTPRequest request;
         try
         {
@@ -2677,7 +2678,7 @@ private:
             // use Poco HTMLForm to parse the post message properly.
             // Otherwise, we should catch exceptions from the previous read/parse
             // and assume we don't have sufficient data, so we wait some more.
-            _socket->_inBuffer.clear();
+            socket->_inBuffer.clear();
         }
         catch (const std::exception& exc)
         {
@@ -2967,6 +2968,10 @@ private:
         LOG_TRC("Upgrading to WebSocket");
         assert(_wsState == WSState::HTTP);
 
+        auto socket = _socket.lock();
+        if (socket == nullptr)
+            throw std::runtime_error("Invalid socket while upgrading to WebSocket. Request: " + req.getURI());
+
         // create our websocket goodness ...
         const int wsVersion = std::stoi(req.get("Sec-WebSocket-Version", "13"));
         const std::string wsKey = req.get("Sec-WebSocket-Key", "");
@@ -2981,11 +2986,11 @@ private:
             << "Sec-Websocket-Accept: " << PublicComputeAccept::doComputeAccept(wsKey) << "\r\n"
             << "\r\n";
         std::string str = oss.str();
-        _socket->_outBuffer.insert(_socket->_outBuffer.end(), str.begin(), str.end());
+        socket->_outBuffer.insert(socket->_outBuffer.end(), str.begin(), str.end());
         _wsState = WSState::WS;
 
         // Create a WS wrapper to use for sending the client status.
-        return WebSocketSender(_socket);
+        return WebSocketSender(socket);
     }
 
     /// To make the protected 'computeAccept' accessible.
@@ -3000,7 +3005,7 @@ private:
 
 private:
     // The socket that owns us (we can't own it).
-    StreamSocket* _socket;
+    std::weak_ptr<StreamSocket> _socket;
     std::shared_ptr<ClientSession> _clientSession;
     std::string _id;
     size_t _connectionNum;
@@ -3012,7 +3017,7 @@ class PlainSocketFactory : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int fd) override
     {
-        return std::make_shared<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
+       return StreamSocket::create<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
     }
 };
 
@@ -3021,7 +3026,7 @@ class SslSocketFactory : public SocketFactory
     std::shared_ptr<Socket> create(const int fd) override
     {
         // FIXME: SslStreamSocket it should be, but conflicts with Poco SSL; need to remove that first.
-        return std::make_shared<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
+       return StreamSocket::create<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
     }
 };
 
