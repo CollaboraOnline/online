@@ -55,6 +55,13 @@ public:
     /// Returns the OS native socket fd.
     int getFD() const { return _fd; }
 
+    /// Shutdown the socket.
+    /// TODO: Support separate read/write shutdown.
+    virtual void shutdown()
+    {
+        ::shutdown(_fd, SHUT_RDWR);
+    }
+
     /// Return a mask of events we should be polling for
     virtual int getPollEvents() = 0;
 
