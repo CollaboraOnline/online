@@ -46,6 +46,7 @@
 #include <sstream>
 #include <thread>
 
+#include <Poco/DateTimeFormatter.h>
 #include <Poco/DOM/AutoPtr.h>
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/DOMWriter.h>
@@ -2803,8 +2804,51 @@ private:
     void handleWopiDiscoveryRequest(const Poco::Net::HTTPRequest& request)
     {
         LOG_ERR("Wopi discovery request: " << request.getURI());
+
         // http://server/hosting/discovery
-        // responded = handleGetWOPIDiscovery(request, response);
+        std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
+        if (!File(discoveryPath).exists())
+        {
+            discoveryPath = LOOLWSD::FileServerRoot + "/discovery.xml";
+        }
+
+        const std::string mediaType = "text/xml";
+        const std::string action = "action";
+        const std::string urlsrc = "urlsrc";
+        const auto& config = Application::instance().config();
+        const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
+        const std::string uriValue = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://")
+                                   + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName)
+                                   + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
+
+        InputSource inputSrc(discoveryPath);
+        DOMParser parser;
+        AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);
+        AutoPtr<NodeList> listNodes = docXML->getElementsByTagName(action);
+
+        for (unsigned long it = 0; it < listNodes->length(); ++it)
+        {
+            static_cast<Element*>(listNodes->item(it))->setAttribute(urlsrc, uriValue);
+        }
+
+        std::ostringstream ostrXML;
+        DOMWriter writer;
+        writer.writeNode(ostrXML, docXML);
+        const std::string xml = ostrXML.str();
+
+        // TODO: Refactor this to some common handler.
+        std::ostringstream oss;
+        oss << "HTTP/1.1 200 OK\r\n"
+            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "Content-Length: " << xml.size() << "\r\n"
+            << "Content-Type: " << mediaType << "\r\n"
+            << "\r\n"
+            << xml;
+
+        auto socket = _socket.lock();
+        socket->send(oss.str());
+        LOG_INF("Sent discovery.xml successfully.");
     }
 
     void handlePostRequest(const Poco::Net::HTTPRequest& request)
