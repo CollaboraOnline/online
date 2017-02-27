@@ -361,6 +361,24 @@ public:
         return (_outBuffer.empty() ? POLLIN : POLLIN | POLLOUT);
     }
 
+    /// Send data to the socket peer.
+    void send(const char* data, const int len, const bool flush = true)
+    {
+        if (data != nullptr && len > 0)
+        {
+            auto lock = getWriteLock();
+            _outBuffer.insert(_outBuffer.end(), data, data + len);
+            if (flush)
+                writeOutgoingData();
+        }
+    }
+
+    /// Send a string to the socket peer.
+    void send(const std::string& str, const bool flush = true)
+    {
+        send(str.data(), str.size(), flush);
+    }
+
     /// Create a socket of type TSocket given an FD and a handler.
     /// We need this helper since the handler needs a shared_ptr to the socket
     /// but we can't have a shared_ptr in the ctor.
