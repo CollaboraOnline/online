@@ -24,8 +24,19 @@ include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -
 AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"' ${include_paths}
 AM_LDFLAGS = -pthread -Wl,-E
 loolforkit_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
+loolforkit_nocaps_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
 loolmount_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
-loolnb_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib -lssl -lcrypto
+loolnb_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
+loolwsd_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
+loolwsd_fuzzer_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
+
+if ENABLE_SSL
+loolforkit_LDFLAGS += -lssl -lcrypto
+loolforkit_nocaps_LDFLAGS += -lssl -lcrypto
+loolnb_LDFLAGS += -lssl -lcrypto
+loolwsd_LDFLAGS += -lssl -lcrypto
+loolwsd_fuzzer_LDFLAGS += -lssl -lcrypto
+endif
 
 loolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 -DFUZZER=1 -DTDOC=\"$(abs_top_srcdir)/test/data\" $(AM_CPPFLAGS)
 
@@ -43,8 +54,11 @@ shared_sources = common/FileUtil.cpp \
                  common/Unit.cpp \
                  common/UnitHTTP.cpp \
                  common/Util.cpp \
-                 tools/Replay.hpp \
-                 net/WebSocketHandler.cpp
+                 tools/Replay.hpp
+
+if ENABLE_SSL
+shared_sources += net/Ssl.cpp
+endif
 
 loolwsd_sources = wsd/Admin.cpp \
                   wsd/AdminModel.cpp \
@@ -90,10 +104,11 @@ loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
                          kit/DummyLibreOfficeKit.cpp
 
 loolnb_SOURCES = net/loolnb.cpp \
-                 net/Ssl.cpp \
-                 net/WebSocketHandler.cpp \
                  common/Log.cpp \
                  common/Util.cpp
+if ENABLE_SSL
+loolnb_SOURCES += net/Ssl.cpp
+endif
 
 clientnb_SOURCES = net/clientnb.cpp \
                    common/Log.cpp \
@@ -145,7 +160,13 @@ shared_headers = common/Common.hpp \
                  common/Rectangle.hpp \
                  common/SigUtil.hpp \
                  common/security.h \
-                 common/SpookyV2.h
+                 common/SpookyV2.h \
+                 net/Socket.hpp \
+                 net/WebSocketHandler.hpp
+if ENABLE_SSL
+shared_headers += net/Ssl.hpp \
+                  net/SslSocket.hpp
+endif
 
 kit_headers = kit/ChildSession.hpp \
               kit/DummyLibreOfficeKit.hpp \
