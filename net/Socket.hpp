@@ -207,8 +207,18 @@ public:
         {
             if (_pollFds[i].revents)
             {
-                if (_pollSockets[i]->handlePoll(newNow, _pollFds[i].revents) ==
-                    Socket::HandleResult::SOCKET_CLOSED)
+                Socket::HandleResult res = Socket::HandleResult::SOCKET_CLOSED;
+                try
+                {
+                    res = _pollSockets[i]->handlePoll(newNow, _pollFds[i].revents);
+                }
+                catch (const std::exception& exc)
+                {
+                    LOG_ERR("Error while handling poll for socket #" <<
+                            _pollFds[i].fd << ": " << exc.what());
+                }
+
+                if (res == Socket::HandleResult::SOCKET_CLOSED)
                 {
                     LOG_DBG("Removing client #" << _pollFds[i].fd);
                     _pollSockets.erase(_pollSockets.begin() + i);
