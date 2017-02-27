@@ -30,6 +30,7 @@
 #include <Poco/Net/SocketAddress.h>
 
 #include "Log.hpp"
+#include "Util.hpp"
 
 /// A non-blocking, streaming socket.
 class Socket
@@ -354,6 +355,27 @@ public:
             _socketHandler->onDisconnect();
     }
 
+    int getPollEvents() override
+    {
+        // Only poll for read if we have nothing to write.
+        return (_outBuffer.empty() ? POLLIN : POLLIN | POLLOUT);
+    }
+
+    /// Create a socket of type TSocket given an FD and a handler.
+    /// We need this helper since the handler needs a shared_ptr to the socket
+    /// but we can't have a shared_ptr in the ctor.
+    template <typename TSocket>
+    static
+    std::shared_ptr<TSocket> create(const int fd, std::unique_ptr<SocketHandlerInterface> handler)
+    {
+        SocketHandlerInterface* pHandler = handler.get();
+        auto socket = std::make_shared<TSocket>(fd, std::move(handler));
+        pHandler->onConnect(socket);
+        return socket;
+    }
+
+protected:
+
     /// Called when a polling event is received.
     /// @events is the mask of events that triggered the wake.
     HandleResult handlePoll(const Poco::Timestamp & /* now */,
@@ -384,7 +406,12 @@ public:
         // even if we have no data to write.
         if ((events & POLLOUT) || !_outBuffer.empty())
         {
-            writeOutgoingData();
+            std::unique_lock<std::mutex> lock(_writeMutex, std::defer_lock);
+
+            // The buffer could have been flushed while we waited for the lock.
+            if (lock.try_lock() && !_outBuffer.empty())
+                writeOutgoingData();
+
             closed = closed || (errno == EPIPE);
         }
 
@@ -430,6 +457,7 @@ public:
     /// Override to write data out to socket.
     virtual void writeOutgoingData()
     {
+        Util::assertIsLocked(_writeMutex);
         assert(!_outBuffer.empty());
         do
         {
@@ -478,24 +506,8 @@ public:
         return ::write(getFD(), buf, len);
     }
 
-    int getPollEvents() override
-    {
-        // Only poll for read if we have nothing to write.
-        return (_outBuffer.empty() ? POLLIN : POLLIN | POLLOUT);
-    }
-
-    /// Create a socket of type TSocket given an FD and a handler.
-    /// We need this helper since the handler needs a shared_ptr to the socket
-    /// but we can't have a shared_ptr in the ctor.
-    template <typename TSocket>
-    static
-    std::shared_ptr<TSocket> create(const int fd, std::unique_ptr<SocketHandlerInterface> handler)
-    {
-        SocketHandlerInterface* pHandler = handler.get();
-        auto socket = std::make_shared<TSocket>(fd, std::move(handler));
-        pHandler->onConnect(socket);
-        return socket;
-    }
+    /// Get the Write Lock.
+    std::unique_lock<std::mutex> getWriteLock() { return std::unique_lock<std::mutex>(_writeMutex); }
 
 protected:
     /// Client handling the actual data.
@@ -506,6 +518,8 @@ protected:
 
     std::vector< char > _inBuffer;
     std::vector< char > _outBuffer;
+
+    std::mutex _writeMutex;
 
     // To be able to access _inBuffer and _outBuffer.
     friend class WebSocketHandler;

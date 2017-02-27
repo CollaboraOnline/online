@@ -133,6 +133,8 @@ public:
         bool fin = false;
         bool mask = false;
 
+        auto lock = socket->getWriteLock();
+
         unsigned char header[2];
         header[0] = (fin ? 0x80 : 0) | static_cast<unsigned char>(code);
         header[1] = mask ? 0x80 : 0;
