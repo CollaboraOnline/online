@@ -196,7 +196,7 @@ public:
         };
 
         // Start the server.
-        if (args.back() == "ssl")
+        if (!args.empty() && args.back() == "ssl")
             server(addrSsl, poller, std::unique_ptr<SocketFactory>{new SslSocketFactory});
         else
 #endif
