@@ -180,7 +180,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, const s
         // Unauthorized.
         std::ostringstream oss;
         oss << "HTTP/1.1 401\r\n"
-            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
             << "User-Agent: LOOLWSD WOPI Agent\r\n"
             << "Content-Length: 0\r\n"
             << "WWW-Authenticate: Basic realm=\"online\"\r\n"
@@ -194,7 +194,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, const s
         // TODO return some 403 page?
         std::ostringstream oss;
         oss << "HTTP/1.1 403\r\n"
-            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
             << "User-Agent: LOOLWSD WOPI Agent\r\n"
             << "Content-Length: 0\r\n"
             << "\r\n";
@@ -207,7 +207,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, const s
         // 404 not found
         std::ostringstream oss;
         oss << "HTTP/1.1 404\r\n"
-            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
             << "User-Agent: LOOLWSD WOPI Agent\r\n"
             << "Content-Length: 0\r\n"
             << "\r\n";
@@ -242,7 +242,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, const 
         // 404 not found
         std::ostringstream oss;
         oss << "HTTP/1.1 404\r\n"
-            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
             << "User-Agent: LOOLWSD WOPI Agent\r\n"
             << "Content-Length: 0\r\n"
             << "\r\n";
@@ -298,6 +298,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, const 
 
     std::ostringstream oss;
     oss << "HTTP/1.1 200 OK\r\n"
+        << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
         << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
         << "User-Agent: LOOLWSD WOPI Agent\r\n"
         << "Content-Length: " << preprocess.size() << "\r\n"
