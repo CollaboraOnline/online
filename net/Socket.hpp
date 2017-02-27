@@ -14,12 +14,14 @@
 
 #include <poll.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 #include <atomic>
 #include <cassert>
 #include <cerrno>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include <mutex>
@@ -542,6 +544,39 @@ protected:
     // To be able to access _inBuffer and _outBuffer.
     friend class WebSocketHandler;
     friend class ClientRequestDispatcher;
+};
+
+namespace HttpHelper
+{
+    inline void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path, const std::string& mediaType)
+    {
+        struct stat st;
+        if (stat(path.c_str(), &st) != 0)
+            return;
+
+        std::ostringstream oss;
+        oss << "HTTP/1.1 200 OK\r\n"
+            //<< "Last-Modified: " << FIXME << "\r\n"
+            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "Content-Length: " << st.st_size << "\r\n"
+            << "Content-Type: " << mediaType << "\r\n"
+            << "\r\n";
+
+        socket->send(oss.str(), false);
+
+        std::ifstream file(path, std::ios::binary);
+        do
+        {
+            char buf[16 * 1024];
+            file.read(buf, sizeof(buf));
+            const int size = file.gcount();
+            if (size > 0)
+                socket->send(buf, size);
+            else
+                break;
+        }
+        while (file);
+    }
 };
 
 #endif
