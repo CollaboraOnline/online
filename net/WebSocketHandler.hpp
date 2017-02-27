@@ -116,6 +116,8 @@ public:
         socket->_inBuffer.erase(socket->_inBuffer.begin(), socket->_inBuffer.begin() + headerLen + payloadLen);
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
+        LOG_TRC("Incoming WebSocket message code " << code << " fin? " << fin << " payload length " << _wsPayload.size());
+
         handleMessage(fin, code, _wsPayload);
         _wsPayload.clear();
     }
@@ -132,7 +134,7 @@ public:
         if (socket == nullptr)
             return 0; // no socket == connection closed.
 
-        bool fin = false;
+        bool fin = true;
         bool mask = false;
 
         auto lock = socket->getWriteLock();
