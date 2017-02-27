@@ -2773,7 +2773,7 @@ private:
 
     void handleRootRequest(const Poco::Net::HTTPRequest& request)
     {
-        LOG_ERR("HTTP request: " << request.getURI());
+        LOG_DBG("HTTP request: " << request.getURI());
         const std::string mimeType = "text/plain";
         const std::string responseString = "OK";
 
@@ -2797,7 +2797,7 @@ private:
 
     void handleFaviconRequest(const Poco::Net::HTTPRequest& request)
     {
-        LOG_ERR("Favicon request: " << request.getURI());
+        LOG_DBG("Favicon request: " << request.getURI());
         std::string mimeType = "image/vnd.microsoft.icon";
         std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
         if (!File(faviconPath).exists())
@@ -2811,7 +2811,7 @@ private:
 
     void handleWopiDiscoveryRequest(const Poco::Net::HTTPRequest& request)
     {
-        LOG_ERR("Wopi discovery request: " << request.getURI());
+        LOG_DBG("Wopi discovery request: " << request.getURI());
 
         // http://server/hosting/discovery
         std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
