@@ -28,7 +28,9 @@
 
 #include "Socket.hpp"
 #include "ServerSocket.hpp"
+#if ENABLE_SSL
 #include "SslSocket.hpp"
+#endif
 #include "WebSocketHandler.hpp"
 
 using Poco::MemoryInputStream;
@@ -157,10 +159,12 @@ public:
             Log::initialize("loolnb", logLevel ? logLevel : "",
                             false, false, props);
 
+#if ENABLE_SSL
         // TODO: These would normally come from config.
         SslContext::initialize("/etc/loolwsd/cert.pem",
                                "/etc/loolwsd/key.pem",
                                "/etc/loolwsd/ca-chain.cert.pem");
+#endif
 
         // Used to poll client sockets.
         SocketPoll poller;
@@ -182,6 +186,7 @@ public:
             }
         };
 
+#if ENABLE_SSL
         class SslSocketFactory : public SocketFactory
         {
             std::shared_ptr<Socket> create(const int fd) override
@@ -190,18 +195,22 @@ public:
             }
         };
 
-
         // Start the server.
         if (args.back() == "ssl")
             server(addrSsl, poller, std::unique_ptr<SocketFactory>{new SslSocketFactory});
         else
+#endif
             server(addrHttp, poller, std::unique_ptr<SocketFactory>{new PlainSocketFactory});
 
         std::cout << "Shutting down server." << std::endl;
 
         threadPoll.stop();
 
+#if ENABLE_SSL
         SslContext::uninitialize();
+#endif
+
+        (void)args;
         return 0;
     }
 };

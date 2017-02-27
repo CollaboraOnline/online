@@ -109,7 +109,9 @@
 #include "Protocol.hpp"
 #include "ServerSocket.hpp"
 #include "Session.hpp"
-//#include "SslSocket.hp" // Conflicts with Poco SSL.
+#if ENABLE_SSL
+#include "SslSocket.hpp"
+#endif
 #include "Storage.hpp"
 #include "TraceFile.hpp"
 #include "Unit.hpp"
@@ -2012,6 +2014,13 @@ void LOOLWSD::initializeSSL()
     const auto ssl_ca_file_path = getPathFromConfig("ssl.ca_file_path");
     LOG_INF("SSL CA file: " << ssl_ca_file_path);
 
+#if ENABLE_SSL
+    // Initialize the non-blocking socket SSL.
+    SslContext::initialize(ssl_cert_file_path,
+                           ssl_key_file_path,
+                           ssl_ca_file_path);
+#endif
+
     Poco::Crypto::initializeCrypto();
 
     Poco::Net::initializeSSL();
@@ -3021,14 +3030,15 @@ class PlainSocketFactory : public SocketFactory
     }
 };
 
+#if ENABLE_SSL
 class SslSocketFactory : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int fd) override
     {
-        // FIXME: SslStreamSocket it should be, but conflicts with Poco SSL; need to remove that first.
-       return StreamSocket::create<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
+       return StreamSocket::create<SslStreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
     }
 };
+#endif
 
 /// The main server thread.
 ///
@@ -3055,8 +3065,10 @@ public:
     void start(const Poco::Net::SocketAddress& addr)
     {
         std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(_documentPoll,
-                LOOLWSD::isSSLEnabled()? std::unique_ptr<SocketFactory>{new SslSocketFactory()}:
-                                         std::unique_ptr<SocketFactory>{new PlainSocketFactory()});
+#if ENABLE_SSL
+                LOOLWSD::isSSLEnabled() ? std::unique_ptr<SocketFactory>{ new SslSocketFactory() } :
+#endif
+                                          std::unique_ptr<SocketFactory>{ new PlainSocketFactory() });
 
         if (!serverSocket->bind(addr))
         {
@@ -3406,6 +3418,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     {
         Poco::Net::uninitializeSSL();
         Poco::Crypto::uninitializeCrypto();
+#if ENABLE_SSL
+        SslContext::uninitialize();
+#endif
     }
 
     int returnValue = Application::EXIT_OK;
