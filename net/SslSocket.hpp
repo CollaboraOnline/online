@@ -55,7 +55,7 @@ public:
     }
 
     /// Shutdown the TLS/SSL connection properly.
-    void shutdown()
+    void shutdown() override
     {
         if (SSL_shutdown(_ssl) == 0)
         {

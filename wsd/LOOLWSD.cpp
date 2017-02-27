@@ -2760,6 +2760,7 @@ private:
         LOG_DBG("FileServer request: " << request.getURI());
         auto socket = _socket.lock();
         FileServerRequestHandler::handleRequest(request, socket);
+        socket->shutdown();
     }
 
     void handleAdminRequest(const Poco::Net::HTTPRequest& request)
@@ -2789,6 +2790,7 @@ private:
 
         auto socket = _socket.lock();
         socket->send(oss.str());
+        socket->shutdown();
         LOG_INF("Sent discovery.xml successfully.");
     }
 
@@ -2804,6 +2806,7 @@ private:
 
         auto socket = _socket.lock();
         HttpHelper::sendFile(socket, faviconPath, mimeType);
+        socket->shutdown();
     }
 
     void handleWopiDiscoveryRequest(const Poco::Net::HTTPRequest& request)
@@ -2853,6 +2856,7 @@ private:
 
         auto socket = _socket.lock();
         socket->send(oss.str());
+        socket->shutdown();
         LOG_INF("Sent discovery.xml successfully.");
     }
 
