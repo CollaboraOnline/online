@@ -2757,7 +2757,7 @@ private:
 
     void handleFileServerRequest(const Poco::Net::HTTPRequest& request)
     {
-        LOG_ERR("FileServer request: " << request.getURI());
+        LOG_DBG("FileServer request: " << request.getURI());
         auto socket = _socket.lock();
         FileServerRequestHandler::handleRequest(request, socket);
     }
