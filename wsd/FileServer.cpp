@@ -176,24 +176,42 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, const s
     catch (const Poco::Net::NotAuthenticatedException& exc)
     {
         LOG_ERR("FileServerRequestHandler::NotAuthenticated: " << exc.displayText());
-        // response.set("WWW-Authenticate", "Basic realm=\"online\"");
-        // response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
-        // response.setContentLength(0);
-        // response.send();
+
+        // Unauthorized.
+        std::ostringstream oss;
+        oss << "HTTP/1.1 401\r\n"
+            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "Content-Length: 0\r\n"
+            << "WWW-Authenticate: Basic realm=\"online\"\r\n"
+            << "\r\n";
+        socket->send(oss.str());
     }
     catch (const Poco::FileAccessDeniedException& exc)
     {
         LOG_ERR("FileServerRequestHandler: " << exc.displayText());
-        // response.setStatusAndReason(HTTPResponse::HTTP_FORBIDDEN);
-        // response.setContentLength(0); // TODO return some 403 page?
-        // response.send();
+
+        // TODO return some 403 page?
+        std::ostringstream oss;
+        oss << "HTTP/1.1 403\r\n"
+            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "Content-Length: 0\r\n"
+            << "\r\n";
+        socket->send(oss.str());
     }
     catch (const Poco::FileNotFoundException& exc)
     {
         LOG_ERR("FileServerRequestHandler: " << exc.displayText());
-        // response.setStatusAndReason(HTTPResponse::HTTP_NOT_FOUND);
-        // response.setContentLength(0); // TODO return some 404 page?
-        // response.send();
+
+        // 404 not found
+        std::ostringstream oss;
+        oss << "HTTP/1.1 404\r\n"
+            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "Content-Length: 0\r\n"
+            << "\r\n";
+        socket->send(oss.str());
     }
 }
 
@@ -220,9 +238,15 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, const 
     if (!Poco::File(path).exists())
     {
         LOG_ERR("File [" << path.toString() << "] does not exist.");
-        // response.setStatusAndReason(HTTPResponse::HTTP_NOT_FOUND);
-        // response.setContentLength(0); // TODO return some 404 page?
-        // response.send();
+
+        // 404 not found
+        std::ostringstream oss;
+        oss << "HTTP/1.1 404\r\n"
+            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "Content-Length: 0\r\n"
+            << "\r\n";
+        socket->send(oss.str());
         return;
     }
 
@@ -231,6 +255,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, const 
     StreamCopier::copyToString(file, preprocess);
     file.close();
 
+    //TODO: FIXME: Is this the correct way to get these values? Used to be done using HTTPForm.
     const std::string& accessToken = request.get("access_token", "");
     const std::string& accessTokenTtl = request.get("access_token_ttl", "");
 
