@@ -2774,17 +2774,25 @@ private:
     void handleRootRequest(const Poco::Net::HTTPRequest& request)
     {
         LOG_ERR("HTTP request: " << request.getURI());
-        // std::string mimeType = "text/plain";
-        // std::string responseString = "OK";
-        // response.setContentLength(responseString.length());
-        // response.setContentType(mimeType);
-        // response.setChunkedTransferEncoding(false);
-        // std::ostream& ostr = response.send();
-        // if (request.getMethod() == HTTPRequest::HTTP_GET)
-        // {
-        //     ostr << responseString;
-        // }
-        // responded = true;
+        const std::string mimeType = "text/plain";
+        const std::string responseString = "OK";
+
+        std::ostringstream oss;
+        oss << "HTTP/1.1 200 OK\r\n"
+            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "Content-Length: " << responseString.size() << "\r\n"
+            << "Content-Type: " << mimeType << "\r\n"
+            << "\r\n";
+
+        if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
+        {
+            oss << responseString;
+        }
+
+        auto socket = _socket.lock();
+        socket->send(oss.str());
+        LOG_INF("Sent discovery.xml successfully.");
     }
 
     void handleFaviconRequest(const Poco::Net::HTTPRequest& request)
