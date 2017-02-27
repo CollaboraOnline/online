@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include <Poco/DateTimeFormat.h>
+#include <Poco/DateTimeFormatter.h>
 #include <Poco/Exception.h>
 #include <Poco/FileStream.h>
 #include <Poco/Net/HTTPCookie.h>
@@ -106,7 +108,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(HTTPServerRequest& request, HTTPS
     return false;
 }
 
-void FileServerRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerResponse& response)
+void FileServerRequestHandler::handleRequest(const HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket)
 {
     try
     {
@@ -126,7 +128,7 @@ void FileServerRequestHandler::handleRequest(HTTPServerRequest& request, HTTPSer
         const std::string endPoint = requestSegments[requestSegments.size() - 1];
         if (endPoint == loleafletHtml)
         {
-            preprocessFile(request, response);
+            preprocessFile(request, socket);
             return;
         }
 
@@ -136,7 +138,8 @@ void FileServerRequestHandler::handleRequest(HTTPServerRequest& request, HTTPSer
                 endPoint == "adminSettings.html" ||
                 endPoint == "adminAnalytics.html")
             {
-                if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
+                // FIXME: support admin console.
+                //if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
                     throw Poco::Net::NotAuthenticatedException("Invalid admin login");
             }
 
@@ -167,35 +170,34 @@ void FileServerRequestHandler::handleRequest(HTTPServerRequest& request, HTTPSer
             else
                 mimeType = "text/plain";
 
-            response.setContentType(mimeType);
-            response.sendFile(filepath, mimeType);
+            HttpHelper::sendFile(socket, filepath, mimeType);
         }
     }
     catch (const Poco::Net::NotAuthenticatedException& exc)
     {
         LOG_ERR("FileServerRequestHandler::NotAuthenticated: " << exc.displayText());
-        response.set("WWW-Authenticate", "Basic realm=\"online\"");
-        response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
-        response.setContentLength(0);
-        response.send();
+        // response.set("WWW-Authenticate", "Basic realm=\"online\"");
+        // response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
+        // response.setContentLength(0);
+        // response.send();
     }
     catch (const Poco::FileAccessDeniedException& exc)
     {
         LOG_ERR("FileServerRequestHandler: " << exc.displayText());
-        response.setStatusAndReason(HTTPResponse::HTTP_FORBIDDEN);
-        response.setContentLength(0); // TODO return some 403 page?
-        response.send();
+        // response.setStatusAndReason(HTTPResponse::HTTP_FORBIDDEN);
+        // response.setContentLength(0); // TODO return some 403 page?
+        // response.send();
     }
     catch (const Poco::FileNotFoundException& exc)
     {
         LOG_ERR("FileServerRequestHandler: " << exc.displayText());
-        response.setStatusAndReason(HTTPResponse::HTTP_NOT_FOUND);
-        response.setContentLength(0); // TODO return some 404 page?
-        response.send();
+        // response.setStatusAndReason(HTTPResponse::HTTP_NOT_FOUND);
+        // response.setContentLength(0); // TODO return some 404 page?
+        // response.send();
     }
 }
 
-std::string FileServerRequestHandler::getRequestPathname(const HTTPServerRequest& request)
+std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& request)
 {
     Poco::URI requestUri(request.getURI());
     // avoid .'s and ..'s
@@ -209,10 +211,8 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPServerRequest
     return path;
 }
 
-void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPServerResponse& response) throw(Poco::FileAccessDeniedException)
+void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket)
 {
-    HTMLForm form(request, request.stream());
-
     const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
     const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
     LOG_DBG("Preprocessing file: " << path.toString());
@@ -220,9 +220,9 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
     if (!Poco::File(path).exists())
     {
         LOG_ERR("File [" << path.toString() << "] does not exist.");
-        response.setStatusAndReason(HTTPResponse::HTTP_NOT_FOUND);
-        response.setContentLength(0); // TODO return some 404 page?
-        response.send();
+        // response.setStatusAndReason(HTTPResponse::HTTP_NOT_FOUND);
+        // response.setContentLength(0); // TODO return some 404 page?
+        // response.send();
         return;
     }
 
@@ -231,8 +231,8 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
     StreamCopier::copyToString(file, preprocess);
     file.close();
 
-    const std::string& accessToken = form.get("access_token", "");
-    const std::string& accessTokenTtl = form.get("access_token_ttl", "");
+    const std::string& accessToken = request.get("access_token", "");
+    const std::string& accessTokenTtl = request.get("access_token_ttl", "");
 
     // Escape bad characters in access token.
     // This is placed directly in javascript in loleaflet.html, we need to make sure
@@ -269,17 +269,19 @@ void FileServerRequestHandler::preprocessFile(HTTPServerRequest& request, HTTPSe
     const auto loleafletLogging = config.getString("loleaflet_logging", "false");
     Poco::replaceInPlace(preprocess, std::string("%LOLEAFLET_LOGGING%"), loleafletLogging);
 
-    response.setContentType("text/html");
-    response.setContentLength(preprocess.length());
-    response.setChunkedTransferEncoding(false);
+    const std::string mimeType = "text/html";
 
-    std::ostream& ostr = response.send();
-    ostr << preprocess;
-}
+    std::ostringstream oss;
+    oss << "HTTP/1.1 200 OK\r\n"
+        << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+        << "User-Agent: LOOLWSD WOPI Agent\r\n"
+        << "Content-Length: " << preprocess.size() << "\r\n"
+        << "Content-Type: " << mimeType << "\r\n"
+        << "\r\n"
+        << preprocess;
 
-FileServer::FileServer()
-{
-    LOG_INF("FileServer ctor.");
+    socket->send(oss.str());
+    LOG_DBG("Sent file: " << path.toString());
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

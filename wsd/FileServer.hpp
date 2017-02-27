@@ -18,40 +18,20 @@
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
 
-/// Handles file requests over HTTP(S).
-class FileServerRequestHandler : public Poco::Net::HTTPRequestHandler
-{
-    static std::string getRequestPathname(const Poco::Net::HTTPServerRequest& request);
+#include "Socket.hpp"
 
-    static void preprocessFile(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) throw(Poco::FileAccessDeniedException);
+/// Handles file requests over HTTP(S).
+class FileServerRequestHandler
+{
+    static std::string getRequestPathname(const Poco::Net::HTTPRequest& request);
+
+    static void preprocessFile(const Poco::Net::HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket);
 
 public:
     /// Evaluate if the cookie exists, and if not, ask for the credentials.
     static bool isAdminLoggedIn(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
 
-    void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) override;
-};
-
-/// Singleton class to serve files over HTTP(S).
-class FileServer
-{
-public:
-    static FileServer& instance()
-    {
-        static FileServer fileServer;
-        return fileServer;
-    }
-
-    static FileServerRequestHandler* createRequestHandler()
-    {
-        return new FileServerRequestHandler();
-    }
-
-    FileServer(FileServer const&) = delete;
-    void operator=(FileServer const&) = delete;
-
-private:
-    FileServer();
+    static void handleRequest(const Poco::Net::HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket);
 };
 
 #endif
