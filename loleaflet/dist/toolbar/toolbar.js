@@ -250,6 +250,9 @@ function onClick(id, item, subItem) {
 	else if (id === 'presentation' && map.getDocType() === 'presentation') {
 		map.fire('fullscreen');
 	}
+	else if (id === 'insertannotation') {
+		map.insertComment();
+	}
 	else if (id === 'insertpage') {
 		map.insertPage();
 	}
@@ -515,7 +518,7 @@ $(function () {
 			{type: 'break', id: 'incdecindent'},
 			{type: 'html',  id: 'inserttable-html', html: '<div id="inserttable-wrapper"><div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all" style="position: absolute; display: none;"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div></div>'},
 			{type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table')},
-			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _('Insert comment'), uno: 'InsertAnnotation'},
+			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _('Insert comment')},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _('Insert graphic')},
 			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _('Special Character')},
 			{type: 'html', id: 'right'},
