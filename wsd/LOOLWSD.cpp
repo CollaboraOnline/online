@@ -2786,15 +2786,15 @@ private:
     void handleFaviconRequest(const Poco::Net::HTTPRequest& request)
     {
         LOG_ERR("Favicon request: " << request.getURI());
-        // std::string mimeType = "image/vnd.microsoft.icon";
-        // std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
-        // if (!File(faviconPath).exists())
-        // {
-        //     faviconPath = LOOLWSD::FileServerRoot + "/favicon.ico";
-        // }
-        // response.setContentType(mimeType);
-        // response.sendFile(faviconPath, mimeType);
-        // responded = true;
+        std::string mimeType = "image/vnd.microsoft.icon";
+        std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
+        if (!File(faviconPath).exists())
+        {
+            faviconPath = LOOLWSD::FileServerRoot + "/favicon.ico";
+        }
+
+        auto socket = _socket.lock();
+        HttpHelper::sendFile(socket, faviconPath, mimeType);
     }
 
     void handleWopiDiscoveryRequest(const Poco::Net::HTTPRequest& request)
