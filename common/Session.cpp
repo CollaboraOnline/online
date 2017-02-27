@@ -63,18 +63,14 @@ Session::~Session()
 bool Session::sendTextFrame(const char* buffer, const int length)
 {
     LOG_TRC(getName() << ": Send: " << getAbbreviatedMessage(buffer, length));
-    std::vector<char> data(length);
-    data.assign(buffer, buffer + length);
-    sendMessage(data, WSOpCode::Text);
+    sendMessage(buffer, length, WSOpCode::Text);
     return true;
 }
 
 bool Session::sendBinaryFrame(const char *buffer, int length)
 {
     LOG_TRC(getName() << ": Send: " << std::to_string(length) << " bytes.");
-    std::vector<char> data(length);
-    data.assign(buffer, buffer + length);
-    sendMessage(data, WSOpCode::Binary);
+    sendMessage(buffer, length, WSOpCode::Binary);
     return true;
 }
 

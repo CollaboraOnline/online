@@ -77,7 +77,7 @@ public:
             reply.insert(reply.end(), data.begin(), data.end());
         }
 
-        sendMessage(reply, code);
+        sendMessage(reply.data(), reply.size(), code);
     }
 };
 

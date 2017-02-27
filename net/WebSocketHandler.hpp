@@ -123,13 +123,15 @@ public:
     /// Sends a WebSocket message of WPOpCode type.
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.
-    int sendMessage(const std::vector<char> &data, const WSOpCode code, const bool flush = true) const
+    int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush = true) const
     {
+        if (data == nullptr || len == 0)
+            return -1;
+
         auto socket = _socket.lock();
         if (socket == nullptr)
-            return 0;
+            return 0; // no socket == connection closed.
 
-        const size_t len = data.size();
         bool fin = false;
         bool mask = false;
 
@@ -170,7 +172,7 @@ public:
         // FIXME: pick random number and mask in the outbuffer etc.
         assert (!mask);
 
-        socket->_outBuffer.insert(socket->_outBuffer.end(), data.begin(), data.end());
+        socket->_outBuffer.insert(socket->_outBuffer.end(), data, data + len);
         if (flush)
             socket->writeOutgoingData();
 
@@ -191,7 +193,7 @@ public:
 
     void sendFrame(const std::string& msg) const
     {
-        sendMessage(std::vector<char>(msg.data(), msg.data() + msg.size()), WSOpCode::Text);
+        sendMessage(msg.data(), msg.size(), WSOpCode::Text);
     }
 
 private:
