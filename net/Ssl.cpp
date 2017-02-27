@@ -14,6 +14,16 @@
 
 #include "Util.hpp"
 
+extern "C"
+{
+    // Multithreading support for OpenSSL.
+    // Not needed in recent (1.x?) versions.
+    struct CRYPTO_dynlock_value
+    {
+        std::mutex Mutex;
+    };
+}
+
 std::atomic<int> SslContext::RefCount(0);
 std::unique_ptr<SslContext> SslContext::Instance;
 std::vector<std::unique_ptr<std::mutex>> SslContext::Mutexes;
