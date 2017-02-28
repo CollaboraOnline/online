@@ -108,7 +108,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(HTTPServerRequest& request, HTTPS
     return false;
 }
 
-void FileServerRequestHandler::handleRequest(const HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket)
+void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
 {
     try
     {
@@ -128,7 +128,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, const s
         const std::string endPoint = requestSegments[requestSegments.size() - 1];
         if (endPoint == loleafletHtml)
         {
-            preprocessFile(request, socket);
+            preprocessFile(request, message, socket);
             return;
         }
 
@@ -229,7 +229,7 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
     return path;
 }
 
-void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket)
+void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
 {
     const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
     const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
@@ -255,9 +255,10 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, const 
     StreamCopier::copyToString(file, preprocess);
     file.close();
 
-    //TODO: FIXME: Is this the correct way to get these values? Used to be done using HTTPForm.
-    const std::string& accessToken = request.get("access_token", "");
-    const std::string& accessTokenTtl = request.get("access_token_ttl", "");
+    HTMLForm form(request, message);
+    const std::string& accessToken = form.get("access_token", "");
+    const std::string& accessTokenTtl = form.get("access_token_ttl", "");
+    LOG_TRC("access_token=" << accessToken << ", access_token_ttl=" << accessTokenTtl);
 
     // Escape bad characters in access token.
     // This is placed directly in javascript in loleaflet.html, we need to make sure
