@@ -10,6 +10,7 @@
 #ifndef INCLUDED_WEBSOCKETHANDLER_HPP
 #define INCLUDED_WEBSOCKETHANDLER_HPP
 
+#include "Common.hpp"
 #include "Log.hpp"
 #include "Socket.hpp"
 
@@ -18,6 +19,12 @@ class WebSocketHandler : public SocketHandlerInterface
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
     std::vector<char> _wsPayload;
+
+    enum class WSFrameMask : unsigned char
+    {
+        Fin = 0x80,
+        Mask = 0x80
+    };
 
 public:
     WebSocketHandler()
@@ -134,47 +141,60 @@ public:
         if (socket == nullptr)
             return 0; // no socket == connection closed.
 
-        bool fin = true;
-        bool mask = false;
+        //TODO: Support fragmented messages.
+        const unsigned char fin = static_cast<unsigned char>(WSFrameMask::Fin);
+        const unsigned char mask = 0; // Server must not mask, only clients.
 
         auto lock = socket->getWriteLock();
+        std::vector<char>& out = socket->_outBuffer;
+
+        // FIXME: need to support fragmented mesages, but for now send prefix message with size.
+        if (len >= LARGE_MESSAGE_SIZE)
+        {
+            const std::string nextmessage = "nextmessage: size=" + std::to_string(len);
+            const unsigned char size = (nextmessage.size() & 0xff);
+            out.push_back(fin | WSOpCode::Text);
+            out.push_back(mask | size);
+            out.insert(out.end(), nextmessage.data(), nextmessage.data() + size);
+            socket->writeOutgoingData();
+        }
 
         unsigned char header[2];
-        header[0] = (fin ? 0x80 : 0) | static_cast<unsigned char>(code);
-        header[1] = mask ? 0x80 : 0;
-        socket->_outBuffer.push_back((char)header[0]);
+        header[0] = fin | static_cast<unsigned char>(code);
+        header[1] = mask;
+        out.push_back((char)header[0]);
 
         // no out-bound masking ...
         if (len < 126)
         {
             header[1] |= len;
-            socket->_outBuffer.push_back((char)header[1]);
+            out.push_back((char)header[1]);
         }
         else if (len <= 0xffff)
         {
             header[1] |= 126;
-            socket->_outBuffer.push_back((char)header[1]);
-            socket->_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
-            socket->_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
+            out.push_back((char)header[1]);
+            out.push_back(static_cast<char>((len >> 8) & 0xff));
+            out.push_back(static_cast<char>((len >> 0) & 0xff));
         }
         else
         {
             header[1] |= 127;
-            socket->_outBuffer.push_back((char)header[1]);
-            socket->_outBuffer.push_back(static_cast<char>((len >> 56) & 0xff));
-            socket->_outBuffer.push_back(static_cast<char>((len >> 48) & 0xff));
-            socket->_outBuffer.push_back(static_cast<char>((len >> 40) & 0xff));
-            socket->_outBuffer.push_back(static_cast<char>((len >> 32) & 0xff));
-            socket->_outBuffer.push_back(static_cast<char>((len >> 24) & 0xff));
-            socket->_outBuffer.push_back(static_cast<char>((len >> 16) & 0xff));
-            socket->_outBuffer.push_back(static_cast<char>((len >> 8) & 0xff));
-            socket->_outBuffer.push_back(static_cast<char>((len >> 0) & 0xff));
+            out.push_back((char)header[1]);
+            out.push_back(static_cast<char>((len >> 56) & 0xff));
+            out.push_back(static_cast<char>((len >> 48) & 0xff));
+            out.push_back(static_cast<char>((len >> 40) & 0xff));
+            out.push_back(static_cast<char>((len >> 32) & 0xff));
+            out.push_back(static_cast<char>((len >> 24) & 0xff));
+            out.push_back(static_cast<char>((len >> 16) & 0xff));
+            out.push_back(static_cast<char>((len >> 8) & 0xff));
+            out.push_back(static_cast<char>((len >> 0) & 0xff));
         }
 
         // FIXME: pick random number and mask in the outbuffer etc.
         assert (!mask);
 
-        socket->_outBuffer.insert(socket->_outBuffer.end(), data, data + len);
+        out.insert(out.end(), data, data + len);
         if (flush)
             socket->writeOutgoingData();
 
