@@ -111,6 +111,7 @@ namespace SigUtil
     static
     void handleTerminationSignal(const int signal)
     {
+        // FIXME: would love a socket in all SocketPolls to handle shutdown
         if (!ShutdownFlag && signal == SIGINT)
         {
             Log::signalLogPrefix();
@@ -119,13 +120,22 @@ namespace SigUtil
             Log::signalLog("\n");
             SigUtil::requestShutdown();
         }
-        else
+        else if (!TerminationFlag)
         {
             Log::signalLogPrefix();
             Log::signalLog(" Forced-Termination signal received: ");
             Log::signalLog(signalName(signal));
             Log::signalLog("\n");
             TerminationFlag = true;
+        }
+        else
+        {
+            Log::signalLogPrefix();
+            Log::signalLog(" ok, ok - hard-termination signal received: ");
+            Log::signalLog(signalName(signal));
+            Log::signalLog("\n");
+            ::signal (signal, SIG_DFL);
+            ::raise (signal);
         }
     }
 
