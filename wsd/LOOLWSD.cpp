@@ -3087,7 +3087,11 @@ class PlainSocketFactory : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int fd) override
     {
-       return StreamSocket::create<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
+        auto socket = StreamSocket::create<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
+
+        // Read the request.
+        socket->readIncomingData();
+        return socket;
     }
 };
 
@@ -3096,7 +3100,11 @@ class SslSocketFactory : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int fd) override
     {
-       return StreamSocket::create<SslStreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
+        auto socket = StreamSocket::create<SslStreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
+
+        // Do the ssl handshake and read the request.
+        socket->readIncomingData();
+        return socket;
     }
 };
 #endif

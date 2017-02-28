@@ -85,7 +85,7 @@ public:
                 throw std::runtime_error(msg + std::strerror(errno) + ")");
             }
 
-            LOG_DBG( "Accepted client #" << clientSocket->getFD());
+            LOG_DBG("Accepted client #" << clientSocket->getFD());
             _clientPoller.insertNewSocket(clientSocket);
         }
 
