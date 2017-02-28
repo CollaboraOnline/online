@@ -274,9 +274,12 @@ public:
     /// Sockets are removed only when the handler return false.
     void insertNewSocket(const std::shared_ptr<Socket>& newSocket)
     {
-        std::lock_guard<std::mutex> lock(_mutex);
-        _newSockets.emplace_back(newSocket);
-        wakeup();
+        if (newSocket)
+        {
+            std::lock_guard<std::mutex> lock(_mutex);
+            _newSockets.emplace_back(newSocket);
+            wakeup();
+        }
     }
 
     typedef std::function<void()> CallbackFn;
@@ -398,6 +401,35 @@ public:
         send(str.data(), str.size(), flush);
     }
 
+    /// Reads data by invoking readData() and buffering.
+    /// Return false iff the socket is closed.
+    virtual bool readIncomingData()
+    {
+        // SSL decodes blocks of 16Kb, so for efficiency we use the same.
+        char buf[16 * 1024];
+        ssize_t len;
+        do
+        {
+            // Drain the read buffer.
+            // TODO: Cap the buffer size, lest we grow beyond control.
+            do
+            {
+                len = readData(buf, sizeof(buf));
+            }
+            while (len < 0 && errno == EINTR);
+
+            if (len > 0)
+            {
+                assert (len <= ssize_t(sizeof(buf)));
+                _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
+            }
+            // else poll will handle errors.
+        }
+        while (len == (sizeof(buf)));
+
+        return len != 0; // zero is eof / clean socket close.
+    }
+
     /// Create a socket of type TSocket given an FD and a handler.
     /// We need this helper since the handler needs a shared_ptr to the socket
     /// but we can't have a shared_ptr in the ctor.
@@ -460,35 +492,6 @@ protected:
 
         return _closed ? HandleResult::SOCKET_CLOSED :
                          HandleResult::CONTINUE;
-    }
-
-    /// Reads data by invoking readData() and buffering.
-    /// Return false iff the socket is closed.
-    virtual bool readIncomingData()
-    {
-        // SSL decodes blocks of 16Kb, so for efficiency we use the same.
-        char buf[16 * 1024];
-        ssize_t len;
-        do
-        {
-            // Drain the read buffer.
-            // TODO: Cap the buffer size, lest we grow beyond control.
-            do
-            {
-                len = readData(buf, sizeof(buf));
-            }
-            while (len < 0 && errno == EINTR);
-
-            if (len > 0)
-            {
-                assert (len <= ssize_t(sizeof(buf)));
-                _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
-            }
-            // else poll will handle errors.
-        }
-        while (len == (sizeof(buf)));
-
-        return len != 0; // zero is eof / clean socket close.
     }
 
     /// Override to write data out to socket.
@@ -582,7 +585,7 @@ namespace HttpHelper
             << "Content-Type: " << mediaType << "\r\n"
             << "\r\n";
 
-        socket->send(oss.str(), false);
+        socket->send(oss.str());
 
         std::ifstream file(path, std::ios::binary);
         do
