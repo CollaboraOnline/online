@@ -3086,8 +3086,8 @@ private:
             << "Connection: Upgrade\r\n"
             << "Sec-Websocket-Accept: " << PublicComputeAccept::doComputeAccept(wsKey) << "\r\n"
             << "\r\n";
-        std::string str = oss.str();
-        socket->_outBuffer.insert(socket->_outBuffer.end(), str.begin(), str.end());
+
+        socket->send(oss.str());
         _wsState = WSState::WS;
 
         // Create a WS wrapper to use for sending the client status.
