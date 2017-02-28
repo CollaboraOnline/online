@@ -307,7 +307,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, const 
         << preprocess;
 
     socket->send(oss.str());
-    LOG_DBG("Sent file: " << path.toString());
+    LOG_DBG("Sent file: " << path.toString() << ": " << preprocess);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
