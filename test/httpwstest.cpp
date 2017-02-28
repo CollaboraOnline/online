@@ -58,7 +58,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testBadRequest);
     CPPUNIT_TEST(testHandshake);
-    // CPPUNIT_TEST(testCloseAfterClose); //FIXME: loolnb
+    CPPUNIT_TEST(testCloseAfterClose);
     CPPUNIT_TEST(testConnectNoLoad); // This fails most of the times but occasionally succeeds
     CPPUNIT_TEST(testLoadSimple);
     CPPUNIT_TEST(testLoadTortureODT);
@@ -326,7 +326,9 @@ void HTTPWSTest::testCloseAfterClose()
         {
             bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
         }
-        while (bytes && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+        while (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+
+        std::cerr << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
 
         // no more messages is received.
         bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
