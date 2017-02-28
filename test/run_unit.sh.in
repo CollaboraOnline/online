@@ -73,6 +73,7 @@ if test "z$tst" == "z"; then
                                  --o:child_root_path="$jails_path" \
                                  --o:storage.filesystem[@allow]=true \
                                  --o:logging.level=trace \
+                                 --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
                                  --o:admin_console.username=admin --o:admin_console.password=admin \
                                  > "$tst_log" 2>&1 &
      echo "  executing test"
@@ -101,6 +102,7 @@ else # newer unit tests.
                                    --o:child_root_path="$jails_path" \
                                    --o:storage.filesystem[@allow]=true \
                                    --o:logging.level=trace \
+                                   --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
                                    --o:admin_console.username=admin --o:admin_console.password=admin \
                                    --unitlib=".libs/$tst.so" > "$tst_log" 2>&1; then
         echo "Test $tst passed."
@@ -113,6 +115,8 @@ else # newer unit tests.
         echo "         --o:lo_template_path=\"$lo_path\" \\"
         echo "         --o:child_root_path=\"$jails_path\" \\"
         echo "         --o:storage.filesystem[@allow]=true \\"
+        echo "         --o:logging.level=trace \\"
+        echo "         --o:ssl.key_file_path=\"${abs_top_builddir}/etc/key.pem\" \\"
         echo "         --o:admin_console.username=admin --o:admin_console.password=admin \\"
         echo "         --unitlib=\".libs/$tst.so\""
         echo "============================================================="
