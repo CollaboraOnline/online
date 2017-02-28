@@ -2667,7 +2667,22 @@ private:
         }
 
         auto socket = _socket.lock();
-        Poco::MemoryInputStream message(&socket->_inBuffer[0], socket->_inBuffer.size());
+        std::vector<char>& in = socket->_inBuffer;
+
+        // Find the end of the header, if any.
+        static const std::string marker("\r\n\r\n");
+        auto itBody = std::search(in.begin(), in.end(),
+                                  marker.begin(), marker.end());
+        if (itBody == in.end())
+        {
+            LOG_TRC("#" << socket->getFD() << " doesn't have enough data yet.");
+            return;
+        }
+
+        // Skip the marker.
+        itBody += marker.size();
+
+        Poco::MemoryInputStream message(&in[0], in.size());
         Poco::Net::HTTPRequest request;
         try
         {
@@ -2686,13 +2701,19 @@ private:
 
             logger << Log::end;
 
-            // if we succeeded - remove that from our input buffer
-            // FIXME: We should check if this is GET or POST. For GET, we only
-            // can have a single request (headers only). For POST, we can/should
-            // use Poco HTMLForm to parse the post message properly.
-            // Otherwise, we should catch exceptions from the previous read/parse
-            // and assume we don't have sufficient data, so we wait some more.
-            socket->_inBuffer.clear();
+            const std::streamsize contentLength = request.getContentLength();
+            const auto offset = itBody - in.begin();
+            const std::streamsize available = in.size() - offset;
+
+            if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH && available < contentLength)
+            {
+                LOG_DBG("Not enough content yet: ContentLength: " << contentLength << ", available: " << available);
+                return;
+            }
+
+            // if we succeeded - remove the request from our input buffer
+            // we expect one request per socket
+            in.clear();
         }
         catch (const std::exception& exc)
         {
@@ -2710,7 +2731,7 @@ private:
             // File server
             if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
             {
-                handleFileServerRequest(request);
+                handleFileServerRequest(request, message);
             }
             // Admin LOOLWebSocket Connections
             else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
@@ -2739,7 +2760,7 @@ private:
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
                 {
                     // All post requests have url prefix 'lool'.
-                    handlePostRequest(request);
+                    handlePostRequest(request, message);
                 }
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws")
                 {
@@ -2759,11 +2780,10 @@ private:
         }
     }
 
-    void handleFileServerRequest(const Poco::Net::HTTPRequest& request)
+    void handleFileServerRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
     {
-        LOG_DBG("FileServer request: " << request.getURI());
         auto socket = _socket.lock();
-        FileServerRequestHandler::handleRequest(request, socket);
+        FileServerRequestHandler::handleRequest(request, message, socket);
         socket->shutdown();
     }
 
@@ -2864,9 +2884,10 @@ private:
         LOG_INF("Sent discovery.xml successfully.");
     }
 
-    void handlePostRequest(const Poco::Net::HTTPRequest& request)
+    void handlePostRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
     {
         LOG_ERR("Post request: " << request.getURI());
+        (void)message;
         // responded = handlePostRequest(request, response, id);
     }
 
