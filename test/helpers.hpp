@@ -115,7 +115,7 @@ std::vector<char> readDataFromFile(std::unique_ptr<std::fstream>& file)
 }
 
 inline
-void getDocumentPathAndURL(const std::string& docFilename, std::string& documentPath, std::string& documentURL, std::string prefix="")
+void getDocumentPathAndURL(const std::string& docFilename, std::string& documentPath, std::string& documentURL, std::string prefix)
 {
     std::replace(prefix.begin(), prefix.end(), ' ', '_');
     documentPath = FileUtil::getTempFilePath(TDOC, docFilename, prefix);
@@ -418,7 +418,7 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const std::string& docFilenam
     try
     {
         std::string documentPath, documentURL;
-        getDocumentPathAndURL(docFilename, documentPath, documentURL);
+        getDocumentPathAndURL(docFilename, documentPath, documentURL, name);
         return loadDocAndGetSocket(uri, documentURL, name, isView);
     }
     catch (const Poco::Exception& exc)

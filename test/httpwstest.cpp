@@ -251,10 +251,11 @@ void HTTPWSTest::testBadRequest()
 
 void HTTPWSTest::testHandshake()
 {
+    const auto testname = "handshake ";
     try
     {
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
         // NOTE: Do not replace with wrappers. This has to be explicit.
         Poco::Net::HTTPResponse response;
@@ -364,7 +365,7 @@ void HTTPWSTest::testConnectNoLoad()
     const auto testname3 = "connectNoLoad-3 ";
 
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, "connectNoLoad ");
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
     std::cerr << testname1 << "Connecting." << std::endl;
@@ -393,8 +394,10 @@ void HTTPWSTest::testConnectNoLoad()
 
 void HTTPWSTest::testLoadSimple()
 {
+    const auto testname = "loadSimple ";
+
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
     loadDoc(documentURL, "load ");
 }
 
@@ -405,7 +408,7 @@ int HTTPWSTest::loadTorture(const std::string& testname,
 {
     // Load same document from many threads together.
     std::string documentPath, documentURL;
-    getDocumentPathAndURL(docName, documentPath, documentURL);
+    getDocumentPathAndURL(docName, documentPath, documentURL, testname);
 
     std::atomic<int> sum_view_ids;
     sum_view_ids = 0;
@@ -556,11 +559,12 @@ void HTTPWSTest::testLoadTorture()
 
 void HTTPWSTest::testBadLoad()
 {
+    const auto testname = "badLoad ";
     try
     {
         // Load a document and get its status.
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         auto socket = connectLOKit(_uri, request, _response);
@@ -582,7 +586,7 @@ void HTTPWSTest::testReload()
     auto const testname = "reload ";
 
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
     for (auto i = 0; i < 3; ++i)
     {
         std::cerr << testname << "loading #" << (i+1) << std::endl;
@@ -596,7 +600,7 @@ void HTTPWSTest::testGetTextSelection()
     try
     {
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
         auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
         auto socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
@@ -620,7 +624,7 @@ void HTTPWSTest::testSaveOnDisconnect()
     std::cerr << "Test string: [" << text << "]." << std::endl;
 
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
     int kitcount = -1;
     try
@@ -686,7 +690,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
     try
     {
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
         auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
@@ -835,11 +839,12 @@ void HTTPWSTest::testLargePaste()
 
 void HTTPWSTest::testRenderingOptions()
 {
+    const auto testname = "renderingOptions ";
     try
     {
         // Load a document and get its size.
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("hide-whitespace.odt", documentPath, documentURL);
+        getDocumentPathAndURL("hide-whitespace.odt", documentPath, documentURL, testname);
 
         const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
 
@@ -873,7 +878,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
     try
     {
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL);
+        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         auto socket = connectLOKit(_uri, request, _response);
@@ -904,7 +909,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
     try
     {
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL);
+        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         auto socket = connectLOKit(_uri, request, _response);
@@ -931,10 +936,11 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
 
 void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
 {
+    const auto testname = "passwordProtectedDocumentWithCorrectPassword ";
     try
     {
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL);
+        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         auto socket = connectLOKit(_uri, request, _response);
@@ -957,10 +963,11 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPasswordAgain()
 
 void HTTPWSTest::testPasswordProtectedOOXMLDocument()
 {
+    const auto testname = "passwordProtectedOOXMLDocument ";
     try
     {
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("password-protected.docx", documentPath, documentURL);
+        getDocumentPathAndURL("password-protected.docx", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         auto socket = connectLOKit(_uri, request, _response);
@@ -978,10 +985,11 @@ void HTTPWSTest::testPasswordProtectedOOXMLDocument()
 
 void HTTPWSTest::testPasswordProtectedBinaryMSOfficeDocument()
 {
+    const auto testname = "passwordProtectedBinaryMSOfficeDocument ";
     try
     {
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("password-protected.doc", documentPath, documentURL);
+        getDocumentPathAndURL("password-protected.doc", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         auto socket = connectLOKit(_uri, request, _response);
@@ -999,6 +1007,7 @@ void HTTPWSTest::testPasswordProtectedBinaryMSOfficeDocument()
 
 void HTTPWSTest::testInsertDelete()
 {
+    const auto testname = "insertDelete ";
     try
     {
         std::vector<std::string> parts;
@@ -1006,7 +1015,7 @@ void HTTPWSTest::testInsertDelete()
 
         // Load a document
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("insert-delete.odp", documentPath, documentURL);
+        getDocumentPathAndURL("insert-delete.odp", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         auto socket = connectLOKit(_uri, request, _response);
@@ -1101,7 +1110,7 @@ void HTTPWSTest::testSlideShow()
         // Load a document
         std::string documentPath, documentURL;
         std::string response;
-        getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL);
+        getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         auto socket = connectLOKit(_uri, request, _response);
@@ -1147,10 +1156,11 @@ void HTTPWSTest::testSlideShow()
 
 void HTTPWSTest::testInactiveClient()
 {
+    const auto testname = "inactiveClient ";
     try
     {
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+        getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
         auto socket1 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-1 ");
 
@@ -1401,7 +1411,7 @@ void HTTPWSTest::testInsertAnnotationWriter()
     const auto testname = "insertAnnotationWriter ";
 
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL);
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
     auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
@@ -1490,7 +1500,7 @@ void HTTPWSTest::testEditAnnotationWriter()
     const auto testname = "editAnnotationWriter ";
 
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("with_comment.odt", documentPath, documentURL);
+    getDocumentPathAndURL("with_comment.odt", documentPath, documentURL, testname);
 
     auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
@@ -1940,7 +1950,7 @@ void HTTPWSTest::testColumnRowResize()
         std::string documentPath, documentURL;
         double oldHeight, oldWidth;
 
-        getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL);
+        getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, testname);
         auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
         const std::string commandValues = "commandvalues command=.uno:ViewRowColumnHeaders";
@@ -2038,7 +2048,7 @@ void HTTPWSTest::testOptimalResize()
         objModifier.set("value", 0);
 
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("empty.ods", documentPath, documentURL);
+        getDocumentPathAndURL("empty.ods", documentPath, documentURL, testname);
         auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
         const std::string commandValues = "commandvalues command=.uno:ViewRowColumnHeaders";
@@ -2133,7 +2143,7 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type,
     {
         // Load a document
         std::string documentPath, documentURL;
-        getDocumentPathAndURL(doc, documentPath, documentURL);
+        getDocumentPathAndURL(doc, documentPath, documentURL, testname);
 
         int itView = 0;
         auto socket = loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView));
@@ -2251,7 +2261,7 @@ void HTTPWSTest::testCursorPosition()
         std::string docURL;
         std::string response;
 
-        getDocumentPathAndURL("Example.odt", docPath, docURL);
+        getDocumentPathAndURL("Example.odt", docPath, docURL, testname);
         auto socket0 = loadDocAndGetSocket(_uri, docURL, testname);
 
         // receive cursor position
@@ -2296,8 +2306,8 @@ void HTTPWSTest::testAlertAllUsers()
         std::string docPath[2];
         std::string docURL[2];
 
-        getDocumentPathAndURL("Example.odt", docPath[0], docURL[0]);
-        getDocumentPathAndURL("hello.odt", docPath[1], docURL[1]);
+        getDocumentPathAndURL("Example.odt", docPath[0], docURL[0], testname);
+        getDocumentPathAndURL("hello.odt", docPath[1], docURL[1], testname);
 
         Poco::Net::HTTPRequest* request[2];
 
@@ -2341,7 +2351,7 @@ void HTTPWSTest::testViewInfoMsg()
     const std::string testname = "testViewInfoMsg-";
     std::string docPath;
     std::string docURL;
-    getDocumentPathAndURL("hello.odt", docPath, docURL);
+    getDocumentPathAndURL("hello.odt", docPath, docURL, testname);
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
     auto socket0 = connectLOKit(_uri, request, _response);

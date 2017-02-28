@@ -48,7 +48,7 @@ public:
     {
         std::string docPath;
         std::string docURL;
-        getDocumentPathAndURL("empty.odt", docPath, docURL);
+        getDocumentPathAndURL("empty.odt", docPath, docURL, "unitStorage ");
         _ws = std::unique_ptr<UnitWebSocket>(new UnitWebSocket(docURL));
         assert(_ws.get());
     }
