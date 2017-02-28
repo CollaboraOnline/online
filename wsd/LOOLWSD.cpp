@@ -2791,7 +2791,7 @@ private:
         auto socket = _socket.lock();
         socket->send(oss.str());
         socket->shutdown();
-        LOG_INF("Sent discovery.xml successfully.");
+        LOG_INF("Sent / response successfully.");
     }
 
     void handleFaviconRequest(const Poco::Net::HTTPRequest& request)

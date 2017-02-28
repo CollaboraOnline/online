@@ -426,8 +426,8 @@ protected:
 
         auto& log = Log::logger();
         if (log.trace()) {
-            LOG_TRC("Incoming data buffer " << _inBuffer.size() <<
-                    " closeSocket? " << _closed);
+            LOG_TRC("#" << getFD() << ": Incoming data buffer " << _inBuffer.size() <<
+                    " bytes, closeSocket? " << closed);
             log.dump("", &_inBuffer[0], _inBuffer.size());
         }
 
@@ -507,12 +507,12 @@ protected:
                 if (log.trace()) {
                     if (len > 0)
                     {
-                        LOG_TRC("Wrote outgoing data " << len << " bytes");
+                        LOG_TRC("#" << getFD() << ": Wrote outgoing data " << len << " bytes");
                         log.dump("", &_outBuffer[0], len);
                     }
                     else
                     {
-                        LOG_SYS("Wrote outgoing data " << len << " bytes");
+                        LOG_SYS("#" << getFD() << ": Wrote outgoing data " << len << " bytes");
                     }
                 }
             }
@@ -569,7 +569,10 @@ namespace HttpHelper
     {
         struct stat st;
         if (stat(path.c_str(), &st) != 0)
+        {
+            LOG_WRN("Failed to stat [" << path << "]. File will not be sent.");
             return;
+        }
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
