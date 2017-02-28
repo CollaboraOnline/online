@@ -2,7 +2,7 @@ SUBDIRS = . test loleaflet
 
 export ENABLE_DEBUG
 
-bin_PROGRAMS = loolwsd loolforkit loolwsd_fuzzer loolmap loolmount looltool loolstress
+bin_PROGRAMS = loolwsd loolforkit loolmap loolmount looltool loolstress
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
@@ -65,7 +65,8 @@ loolwsd_SOURCES = $(loolwsd_sources) \
 
 noinst_PROGRAMS = connect \
                   lokitclient \
-                  loolforkit-nocaps
+                  loolforkit-nocaps \
+                  loolwsd_fuzzer
 
 connect_SOURCES = tools/Connect.cpp \
                   common/Log.cpp \
