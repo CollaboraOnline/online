@@ -14,13 +14,7 @@ loolwsddata_DATA = discovery.xml \
 
 loolwsdconfigdir = @LOOLWSD_CONFIGDIR@
 
-loolwsdconfig_DATA = loolwsd.xml \
-                     etc/key.pem
-
-if ENABLE_SSL
-loolwsdconfig_DATA += etc/cert.pem \
-                      etc/ca-chain.cert.pem
-endif
+loolwsdconfig_DATA = loolwsd.xml
 
 ACLOCAL_AMFLAGS = -I m4
 
@@ -184,6 +178,9 @@ run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo
 	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
+			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
+			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			  --o:admin_console.username=admin --o:admin_console.password=admin
 
 run-valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
@@ -191,6 +188,9 @@ run-valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
 		./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
+			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
+			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			  --o:admin_console.username=admin --o:admin_console.password=admin
 
 run-callgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
@@ -198,6 +198,9 @@ run-callgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	valgrind --tool=callgrind --simulate-cache=yes --dump-instr=yes --num-callers=50 --error-limit=no \
 		./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
+			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
+			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			  --o:admin_console.username=admin --o:admin_console.password=admin
 else
 
