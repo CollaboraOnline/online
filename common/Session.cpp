@@ -169,8 +169,8 @@ void Session::handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &
             return;
         }
 
-        _handleInput(&data[0], data.size());
-        return;
+        if (!data.empty())
+            _handleInput(&data[0], data.size());
     }
     catch (const Exception& exc)
     {
@@ -184,8 +184,6 @@ void Session::handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &
         LOG_ERR("Session::handleInput: Exception while handling [" <<
                 getAbbreviatedMessage(data) << "]: " << exc.what());
     }
-
-    return;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
