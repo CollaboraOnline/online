@@ -226,15 +226,12 @@ void HTTPWSTest::testBadRequest()
 {
     try
     {
-        // Try to load a fake document and get its status.
-        const std::string documentURL = "/lool/file%3A%2F%2F%2Ffake.doc/ws";
+        // Try to load a bogus url.
+        const std::string documentURL = "/lol/file%3A%2F%2F%2Ffake.doc";
 
         Poco::Net::HTTPResponse response;
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-        // This should result in Bad Request, but results in:
-        // WebSocket Exception: Missing Sec-WebSocket-Key in handshake request
-        // So Service Unavailable is returned.
 
         request.set("Connection", "Upgrade");
         request.set("Upgrade", "websocket");
@@ -244,7 +241,7 @@ void HTTPWSTest::testBadRequest()
         session->setKeepAlive(true);
         session->sendRequest(request);
         session->receiveResponse(response);
-        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTPResponse::HTTP_SERVICE_UNAVAILABLE, response.getStatus());
+        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTPResponse::HTTP_BAD_REQUEST, response.getStatus());
     }
     catch (const Poco::Exception& exc)
     {

@@ -2769,7 +2769,16 @@ private:
                 else
                 {
                     LOG_ERR("Unknown resource: " << request.getURI());
-                    // response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
+
+                    // Bad request.
+                    std::ostringstream oss;
+                    oss << "HTTP/1.1 400\r\n"
+                        << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                        << "User-Agent: LOOLWSD WOPI Agent\r\n"
+                        << "Content-Length: 0\r\n"
+                        << "\r\n";
+                    socket->send(oss.str());
+                    socket->shutdown();
                 }
             }
         }
