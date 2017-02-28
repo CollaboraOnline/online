@@ -2714,7 +2714,8 @@ private:
         catch (const std::exception& exc)
         {
             // Probably don't have enough data just yet.
-            // TODO: Timeout etc.
+            // TODO: timeout if we never get enough.
+            return;
         }
 
         try
