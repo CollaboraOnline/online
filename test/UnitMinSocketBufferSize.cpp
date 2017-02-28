@@ -36,7 +36,7 @@ public:
         {
         case Phase::Load:
         {
-            getDocumentPathAndURL("Example.odt", _docPath, _docURL);
+            getDocumentPathAndURL("Example.odt", _docPath, _docURL, "unitMinSocketBufferSize ");
             _ws = std::unique_ptr<UnitWebSocket>(new UnitWebSocket(_docURL));
             assert(_ws.get());
 

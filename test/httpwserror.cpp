@@ -87,7 +87,7 @@ void HTTPWSError::testBadDocLoadFail()
     try
     {
         std::string documentPath, documentURL;
-        getDocumentPathAndURL("corrupted.odt", documentPath, documentURL);
+        getDocumentPathAndURL("corrupted.odt", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         auto socket = connectLOKit(_uri, request, _response);

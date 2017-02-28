@@ -206,7 +206,7 @@ private:
         Poco::Thread::sleep(250);
 
         std::string documentPath1, documentURL1;
-        helpers::getDocumentPathAndURL("hello.odt", documentPath1, documentURL1);
+        helpers::getDocumentPathAndURL("hello.odt", documentPath1, documentURL1, "unitAdmin-hello.odt ");
         HTTPRequest request1(HTTPRequest::HTTP_GET, documentURL1);
         HTTPResponse response1;
         const Poco::URI docUri1(helpers::getTestServerURI());
@@ -270,7 +270,7 @@ private:
 
         // Open another document (different)
         std::string documentPath2, documentURL2;
-        helpers::getDocumentPathAndURL("insert-delete.odp", documentPath2, documentURL2);
+        helpers::getDocumentPathAndURL("insert-delete.odp", documentPath2, documentURL2, "unitAdmin-insert-delete.odp ");
         HTTPRequest request2(HTTPRequest::HTTP_GET, documentURL2);
         HTTPResponse response2;
         const Poco::URI docUri2(helpers::getTestServerURI());
