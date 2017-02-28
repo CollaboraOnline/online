@@ -17,7 +17,6 @@ Vendor:         Collabora
 Summary:        LibreOffice Online WebSocket Daemon
 License:        MPL
 Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
-Source1:        loleaflet-@PACKAGE_VERSION@.tar.gz
 BuildRequires:  libcap-devel libpng-devel poco-devel >= 1.7.5
 %if 0%{?fedora} || 0%{?rhel} >= 7
 BuildRequires:  libpcap
@@ -60,14 +59,10 @@ Obsoletes:      loleaflet <= 1.5.8
 %endif
 %prep
 %setup -n loolwsd-@PACKAGE_VERSION@
-%setup -n loolwsd-@PACKAGE_VERSION@ -T -D -a 1
 
 %build
 %configure \
 	--with-lokit-path=bundled/include \
-%if %{ssl_support} == "NO"
-	--disable-ssl \
-%endif
 %if 0%{?config_options:1}
 	%{config_options}
 %endif
@@ -79,9 +74,6 @@ env BUILDING_FROM_RPMBUILD=yes make %{?_smp_mflags}
 
 %install
 env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
-%if %{default_admin} == "YES"
-sed -i "s|ExecStart=/usr/bin/loolwsd --version --o:sys_template_path=/opt/lool/systemplate --o:lo_template_path=/opt/collaboraoffice5.1 --o:child_root_path=/opt/lool/child-roots --o:file_server_root_path=/usr/share/loolwsd|ExecStart=/usr/bin/loolwsd --version --o:sys_template_path=/opt/lool/systemplate --o:lo_template_path=/opt/collaboraoffice5.1 --o:child_root_path=/opt/lool/child-roots --o:file_server_root_path=/usr/share/loolwsd --o:admin_console.username=admin --o:admin_console.password=admin|" loolwsd.service
-%endif
 %__install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -d -m 755 %{buildroot}/var/adm/fillup-templates
 %if 0%{?fedora} || 0%{?rhel} >= 7
@@ -94,9 +86,6 @@ install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
 mkdir -p %{buildroot}/etc/cron.d
 echo "#Remove old tiles once every 10 days at midnight" > %{buildroot}/etc/cron.d/loolwsd.cron
 echo "0 0 */1 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -exec rm {} \;" >> %{buildroot}/etc/cron.d/loolwsd.cron
-cd loleaflet-@PACKAGE_VERSION@
-mkdir -p %{buildroot}/usr/share/loolwsd/loleaflet
-tar cf - . | (cd %{buildroot}/usr/share/loolwsd/loleaflet && tar xf -)
 
 %files
 /usr/bin/loolwsd
@@ -121,11 +110,6 @@ tar cf - . | (cd %{buildroot}/usr/share/loolwsd/loleaflet && tar xf -)
 
 %config(noreplace) /etc/cron.d/loolwsd.cron
 %config(noreplace) /etc/loolwsd/loolwsd.xml
-%config(noreplace) %attr(400, lool, lool) /etc/loolwsd/key.pem
-%if %{ssl_support} == "YES"
-%config(noreplace) /etc/loolwsd/cert.pem
-%config(noreplace) /etc/loolwsd/ca-chain.cert.pem
-%endif
 
 %doc README
 
