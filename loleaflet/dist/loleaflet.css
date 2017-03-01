@@ -135,18 +135,27 @@ body {
 }
 
 .loleaflet-annotation-content-wrapper {
-	padding: 1px;
+	padding: 8px;
+	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
+	font-size: 13px;
 	text-align: left;
 	border-radius: 5px;
-	background: #ffffc0;
-	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	background-color: #f5f5f5;
+	box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
 	color: #333;
-	border: 1px solid #999;
+	border: none;
+	border-radius: 2px;
 }
 
 .loleaflet-annotation-content {
 	margin: 3px 3px;
 	line-height: 1.4;
+}
+
+.loleaflet-annotation-content-author {
+	margin: 0;
+	margin-top: 2px;
+	height: 18px;
 }
 
 .loleaflet-annotation-edit {
@@ -155,9 +164,14 @@ body {
 }
 
 .loleaflet-annotation-textarea {
+	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
+	font-size: 13px;
 	border: 1px solid #c8c8c8;
 	resize: none;
-	background-color: #ffffc0;
+	background-color: white;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	width: 95%;
 }
 
 .loleaflet-cell-annotation {
@@ -170,4 +184,47 @@ body {
 	position: absolute;
 	left: 0;
 	top: 0;
+}
+
+.loleaflet-annotation-table {
+	border-spacing: 0;
+	border-collapse: separate;
+	white-space: nowrap;
+	width: 100%;
+}
+
+.loleaflet-annotation-img {
+	max-width: 32px;
+	display: inline-block;
+}
+
+.loleaflet-annotation-author {
+	padding-left: 10px;
+	vertical-align: top;
+	display: table-cell;
+}
+
+.loleaflet-annotation-date {
+	font-size: 11px;
+}
+
+.loleaflet-annotation-userline {
+	background-color: darkblue;
+	width: 32px;
+	height: 6px;
+}
+
+.loleaflet-annotation-menu {
+	background: url(../images/submenu.png) no-repeat;
+	margin: 0;
+	padding: 0;
+	min-width: 15px;
+	height: 21px;
+	text-align: right;
+	border: 1px solid transparent;
+	display: inline-block;
+}
+
+.loleaflet-annotation-menu:hover {
+	border: 1px solid darkgrey;
 }

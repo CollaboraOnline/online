@@ -4,7 +4,7 @@
 
 L.Annotation = L.Layer.extend({
 	options: {
-		minWidth: 200,
+		minWidth: 240,
 		maxHeight: 50
 	},
 
@@ -81,19 +81,23 @@ L.Annotation = L.Layer.extend({
 			L.DomUtil.create('div', 'loleaflet-annotation');
 		var wrapper = this._wrapper =
 			L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper', container);
-
-		L.DomEvent.disableScrollPropagation(this._container);
+		var table = L.DomUtil.create('table', 'loleaflet-annotation-table', wrapper);
+		var tbody = L.DomUtil.create('tbody', '', table);
+		var tr = L.DomUtil.create('tr', '', tbody);
+		var tdImg = L.DomUtil.create('td', 'loleaflet-annotation-img', tr);
+		var tdAuthor = L.DomUtil.create('td', 'loleaflet-annotation-author', tr);
+		var tdMenu = L.DomUtil.create('td', '', tr);
+		var imgAuthor = L.DomUtil.create('img', '', tdImg);
+		imgAuthor.src = L.Icon.Default.imagePath + '/user.png';
+		L.DomUtil.create('div', 'loleaflet-annotation-userline', tdImg);
+		this._contentAuthor = L.DomUtil.create('div', 'loleaflet-annotation-content-author', tdAuthor);
+		this._contentDate = L.DomUtil.create('div', 'loleaflet-annotation-date', tdAuthor);
+		L.DomUtil.create('div', 'loleaflet-annotation-menu', tdMenu);
 		this._contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content', wrapper);
 		this._contentNode.annotation = this;
 		this._editNode = L.DomUtil.create('div', 'loleaflet-annotation-edit', wrapper);
-
 		this._contentText = L.DomUtil.create('div', '', this._contentNode);
-		this._contentAuthor = L.DomUtil.create('div', '', this._contentNode);
-		this._contentDate = L.DomUtil.create('div', '', this._contentNode);
-
 		this._editText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this._editNode);
-		this._editAuthor = L.DomUtil.create('div', '', this._editNode);
-		this._editDate = L.DomUtil.create('div', '', this._editNode);
 
 		var buttons = L.DomUtil.create('div', '', this._editNode);
 		var button = L.DomUtil.create('input', 'loleaflet-controls', buttons);
@@ -104,6 +108,7 @@ L.Annotation = L.Layer.extend({
 		button.type = 'button';
 		button.value = _('Cancel');
 		L.DomEvent.on(button, 'click', this._onCancelClick, this);
+		L.DomEvent.disableScrollPropagation(this._container);
 
 		this._container.style.visibility = 'hidden';
 		this._editNode.style.display = 'none';
@@ -150,19 +155,17 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_updateLayout: function () {
-		var style = this._contentNode.style;
-		var width = Math.max(this._contentNode.offsetWidth, this.options.minWidth);
-		var height = Math.max(this._contentNode.offsetHeight, this.options.maxHeight);
+		var style = this._wrapper.style;
+		var width = Math.min(this._wrapper.offsetWidth, this.options.minWidth);
 
 		style.width = (width + 1) + 'px';
 		style.whiteSpace = '';
-		style.height = height + 'px';
 	},
 
 	_updateContent: function () {
 		this._contentText.innerHTML = this._editText.innerHTML = this._data.text;
-		this._contentAuthor.innerHTML = this._editAuthor.innerHTML = this._data.author;
-		this._contentDate.innerHTML = this._editDate.innerHTML = this._data.dateTime;
+		this._contentAuthor.innerHTML = this._data.author;
+		this._contentDate.innerHTML = this._data.dateTime;
 	},
 
 	_updatePosition: function () {
