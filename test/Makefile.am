@@ -36,7 +36,6 @@ wsd_sources = \
             ../common/Protocol.cpp \
             ../common/Session.cpp \
             ../common/MessageQueue.cpp \
-            ../net/WebSocketHandler.cpp \
             ../kit/Kit.cpp \
             ../wsd/TileCache.cpp \
             ../common/Unit.cpp \
