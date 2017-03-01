@@ -403,6 +403,15 @@ public:
         send(str.data(), str.size(), flush);
     }
 
+    void send(Poco::Net::HTTPResponse& response)
+    {
+        response.set("User-Agent", HTTP_AGENT_STRING);
+        std::ostringstream oss;
+        response.write(oss);
+        LOG_INF(oss.str());
+        send(oss.str());
+    }
+
     /// Reads data by invoking readData() and buffering.
     /// Return false iff the socket is closed.
     virtual bool readIncomingData()
