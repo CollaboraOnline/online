@@ -1091,7 +1091,7 @@ void DocumentBroker::childSocketTerminated()
     {
         try
         {
-            pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY, "");
+            pair.second->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, "");
         }
         catch (const std::exception& ex)
         {
@@ -1112,7 +1112,7 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
     {
         try
         {
-            pair.second->shutdown(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY, closeReason);
+            pair.second->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, closeReason);
         }
         catch (const std::exception& ex)
         {

@@ -79,8 +79,8 @@ public:
 
         const size_t len = statusMessage.size();
         std::vector<char> buf(2 + len);
-        buf[0] = (((int)statusCode >> 8) & 0xff);
-        buf[1] = (((int)statusCode >> 0) & 0xff);
+        buf[0] = ((((int)statusCode) >> 8) & 0xff);
+        buf[1] = ((((int)statusCode) >> 0) & 0xff);
         std::copy(statusMessage.begin(), statusMessage.end(), buf.end());
         const unsigned char flags = static_cast<unsigned char>(WSFrameMask::Fin) | static_cast<char>(WSOpCode::Close);
 
@@ -123,10 +123,10 @@ public:
             if (len < 2 + 8)
                 return;
 
-            payloadLen = ((((uint64_t)(p[9])) <<  0) + (((uint64_t)(p[8])) <<  8) +
-                          (((uint64_t)(p[7])) << 16) + (((uint64_t)(p[6])) << 24) +
-                          (((uint64_t)(p[5])) << 32) + (((uint64_t)(p[4])) << 40) +
-                          (((uint64_t)(p[3])) << 48) + (((uint64_t)(p[2])) << 56));
+            payloadLen = ((((uint64_t)p[9]) <<  0) + (((uint64_t)p[8]) <<  8) +
+                          (((uint64_t)p[7]) << 16) + (((uint64_t)p[6]) << 24) +
+                          (((uint64_t)p[5]) << 32) + (((uint64_t)p[4]) << 40) +
+                          (((uint64_t)p[3]) << 48) + (((uint64_t)p[2]) << 56));
             // FIXME: crop read length to remove top / sign bits.
             headerLen += 8;
         }
