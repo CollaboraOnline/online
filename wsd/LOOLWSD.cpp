@@ -3040,7 +3040,9 @@ private:
                     File(dirPath).createDirectories();
                     std::string fileName = dirPath + "/" + form.get("name");
                     File(tmpPath).moveTo(fileName);
-                    return; // FIXME send response
+                    response.setContentLength(0);
+                    socket->send(response);
+                    return;
                 }
             }
         }
