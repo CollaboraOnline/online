@@ -208,58 +208,22 @@ static int careerSpanSeconds = 0;
 namespace
 {
 
-inline void shutdownLimitReached(LOOLWebSocket& ws)
+inline void shutdownLimitReached(WebSocketSender& ws)
 {
     const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
     LOG_INF("Sending client limit-reached message: " << error);
 
-    /* loleaflet sends loolclient, load and partrectangles message immediately
-       after web socket handshake, so closing web socket fails loading page in
-       some sensible browsers. Ignore handshake messages and gracefully
-       close in order to send error messages.
-    */
     try
     {
-        int flags = 0;
-        int retries = 7;
-        std::vector<char> buffer(READ_BUFFER_SIZE * 100);
+        // Let the client know we are shutting down.
+        ws.sendFrame(error);
 
-        const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000 / retries);
-        do
-        {
-            if (ws.poll(Poco::Timespan(0), Poco::Net::Socket::SelectMode::SELECT_ERROR))
-            {
-                // Already disconnected, can't send 'close' frame.
-                ws.close();
-                return;
-            }
-
-            // Let the client know we are shutting down.
-            ws.sendFrame(error.data(), error.size());
-
-            // Ignore incoming messages.
-            if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
-            {
-                ws.receiveFrame(buffer.data(), buffer.capacity(), flags);
-            }
-
-            // Shutdown.
-            ws.shutdown(WebSocket::WS_POLICY_VIOLATION);
-        }
-        while (--retries > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+        // Shutdown.
+        ws.shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION);
     }
     catch (const std::exception& ex)
     {
         LOG_ERR("Error while shuting down socket on reaching limit: " << ex.what());
-        try
-        {
-            // Persist, in case it was unrelated error.
-            ws.shutdown(WebSocket::WS_POLICY_VIOLATION);
-        }
-        catch (const std::exception&)
-        {
-            // Nothing to do.
-        }
     }
 }
 
@@ -2380,10 +2344,8 @@ bool LOOLWSD::createForKit()
 std::mutex Connection::Mutex;
 #endif
 
-// TODO loolnb FIXME
-static const std::string HARDCODED_PATH("file:///tmp/hello-world.odt");
-
-static std::shared_ptr<DocumentBroker> createDocBroker(const std::string& uri,
+static std::shared_ptr<DocumentBroker> createDocBroker(WebSocketSender& ws,
+                                                       const std::string& uri,
                                                        const std::string& docKey,
                                                        const Poco::URI& uriPublic)
 {
@@ -2393,8 +2355,7 @@ static std::shared_ptr<DocumentBroker> createDocBroker(const std::string& uri,
     if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
     {
         LOG_ERR("Maximum number of open documents reached.");
-        //FIXME: shutdown on limit.
-        // shutdownLimitReached(*ws);
+        shutdownLimitReached(ws);
         return nullptr;
     }
 
@@ -2421,7 +2382,7 @@ static std::shared_ptr<DocumentBroker> createDocBroker(const std::string& uri,
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
 /// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(const WebSocketSender& ws,
+static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketSender& ws,
                                                              const std::string& uri,
                                                              const std::string& docKey,
                                                              const std::string& id,
@@ -2527,7 +2488,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(const WebSocketSend
 
     if (!docBroker)
     {
-        docBroker = createDocBroker(uri, docKey, uriPublic);
+        docBroker = createDocBroker(ws, uri, docKey, uriPublic);
     }
 
     return docBroker;
@@ -3171,8 +3132,7 @@ private:
         if (_connectionNum > MAX_CONNECTIONS)
         {
             LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
-            //FIXME: gracefully reject the connection request.
-            // shutdownLimitReached(ws);
+            shutdownLimitReached(ws);
             return;
         }
 
