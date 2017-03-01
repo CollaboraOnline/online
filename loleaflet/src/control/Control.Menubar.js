@@ -26,8 +26,16 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{type: 'separator'},
-				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
-			},
+				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
+				{type: 'separator'},
+				{name: _('Track Changes'), type: 'menu', menu: [
+					{name: _('Record'), type: 'unocommand', uno: '.uno:TrackChanges'},
+					{name: _('Show'), type: 'unocommand', uno: '.uno:ShowTrackedChanges'},
+					{type: 'separator'},
+					{name: _('Previous'), type: 'unocommand', uno: '.uno:PreviousTrackedChange'},
+					{name: _('Next'), type: 'unocommand', uno: '.uno:NextTrackedChange'}
+				]}
+			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
 				{type: 'separator'},
