@@ -3223,10 +3223,9 @@ private:
                 LOG_ERR("handleGetRequest: Giving up trying to connect client: " << msg);
                 try
                 {
-                    // FIXME: send error and close.
-                    // ws->sendFrame(msg.data(), msg.size());
-                    // // abnormal close frame handshake
-                    // ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
+                    ws.sendFrame(msg);
+                    // abnormal close frame handshake
+                    ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
                 }
                 catch (const std::exception& exc2)
                 {
@@ -3244,6 +3243,8 @@ private:
         const auto docBroker = _clientSession->getDocumentBroker();
         LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
         const auto docKey = docBroker->getDocKey();
+
+        WebSocketSender ws(_socket);
         try
         {
             // Connection terminated. Destroy session.
@@ -3279,9 +3280,9 @@ private:
         catch (const UnauthorizedRequestException& exc)
         {
             LOG_ERR("Error in client request handler: " << exc.toString());
-            // const std::string status = "error: cmd=internal kind=unauthorized";
-            // LOG_TRC("Sending to Client [" << status << "].");
-            // ws->sendFrame(status.data(), status.size());
+            const std::string status = "error: cmd=internal kind=unauthorized";
+            LOG_TRC("Sending to Client [" << status << "].");
+            ws.sendFrame(status);
         }
         catch (const std::exception& exc)
         {
@@ -3294,21 +3295,21 @@ private:
             {
                 LOG_TRC("Normal close handshake.");
                 // Client initiated close handshake
-                // respond close frame
-                // ws->shutdown();
+                // respond with close frame
+                ws.shutdown();
             }
             else if (!SigUtil::isShuttingDown())
             {
                 // something wrong, with internal exceptions
                 LOG_TRC("Abnormal close handshake.");
                 _clientSession->closeFrame();
-                // ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
+                ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
             }
             else
             {
                 std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
                 LOG_TRC("Capturing Client WS for [" << _id << "]");
-                // ClientWebSockets.push_back(ws);
+                // ClientWebSockets.push_back(ws); //FIXME
             }
         }
         catch (const std::exception& exc)

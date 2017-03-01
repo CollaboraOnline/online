@@ -53,7 +53,7 @@ public:
     /// Called to handle disconnection command from socket.
     virtual bool handleDisconnect();
 
-    void shutdown(Poco::UInt16 statusCode = Poco::Net::WebSocket::StatusCodes::WS_NORMAL_CLOSE,
+    void shutdown(const WebSocketHandler::StatusCodes statusCode = WebSocketHandler::StatusCodes::NORMAL_CLOSE,
                   const std::string& statusMessage = "");
 
     bool isActive() const { return _isActive; }

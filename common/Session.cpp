@@ -147,15 +147,16 @@ bool Session::handleDisconnect()
     return false;
 }
 
-void Session::shutdown(Poco::UInt16 statusCode, const std::string& statusMessage)
+void Session::shutdown(const WebSocketHandler::StatusCodes statusCode, const std::string& statusMessage)
 {
     LOG_TRC("Shutting down WS [" << getName() << "] with statusCode [" <<
-            statusCode << "] and reason [" << statusMessage << "].");
+            static_cast<unsigned>(statusCode) << "] and reason [" << statusMessage << "].");
 
     // See protocol.txt for this application-level close frame.
     const std::string msg = "close: " + statusMessage;
     sendTextFrame(msg.data(), msg.size());
-    // TODO loolnb anything needed here? _ws->shutdown(statusCode, statusMessage);
+
+    WebSocketHandler::shutdown(statusCode, statusMessage);
 }
 
 void Session::handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &data)
