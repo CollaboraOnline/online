@@ -2894,11 +2894,270 @@ private:
         LOG_INF("Sent discovery.xml successfully.");
     }
 
+    static std::string getContentType(const std::string& fileName)
+    {
+        const std::string nodePath = Poco::format("//[@ext='%s']", Poco::Path(fileName).getExtension());
+        std::string discPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
+        if (!File(discPath).exists())
+        {
+            discPath = LOOLWSD::FileServerRoot + "/discovery.xml";
+        }
+
+        InputSource input(discPath);
+        DOMParser domParser;
+        AutoPtr<Poco::XML::Document> doc = domParser.parse(&input);
+        // TODO. discovery.xml missing application/pdf
+        Node* node = doc->getNodeByPath(nodePath);
+        if (node && (node = node->parentNode()) && node->hasAttributes())
+        {
+            return dynamic_cast<Element*>(node)->getAttribute("name");
+        }
+
+        return "application/octet-stream";
+    }
+
     void handlePostRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
     {
-        LOG_ERR("Post request: " << request.getURI());
-        (void)message;
-        // responded = handlePostRequest(request, response, id);
+        LOG_INF("Post request: [" << request.getURI() << "]");
+
+        Poco::Net::HTTPResponse response;
+        auto socket = _socket.lock();
+
+        StringTokenizer tokens(request.getURI(), "/?");
+        if (tokens.count() >= 3 && tokens[2] == "convert-to")
+        {
+            std::string fromPath;
+            ConvertToPartHandler handler(fromPath);
+            HTMLForm form(request, message, handler);
+            const std::string format = (form.has("format") ? form.get("format") : "");
+
+            bool sent = false;
+            if (!fromPath.empty())
+            {
+                if (!format.empty())
+                {
+                    LOG_INF("Conversion request for URI [" << fromPath << "].");
+
+                    auto uriPublic = DocumentBroker::sanitizeURI(fromPath);
+                    const auto docKey = DocumentBroker::getDocKey(uriPublic);
+
+                    // This lock could become a bottleneck.
+                    // In that case, we can use a pool and index by publicPath.
+                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+
+                    // Request a kit process for this doc.
+                    auto child = getNewChild();
+                    if (!child)
+                    {
+                        // Let the client know we can't serve now.
+                        throw std::runtime_error("Failed to spawn lokit child.");
+                    }
+
+                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                    auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot, child);
+                    child->setDocumentBroker(docBroker);
+
+                    cleanupDocBrokers();
+
+                    // FIXME: What if the same document is already open? Need a fake dockey here?
+                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                    DocBrokers.emplace(docKey, docBroker);
+                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+
+                    // Load the document.
+                    auto session = std::make_shared<ClientSession>(_id, docBroker, uriPublic);
+
+                    auto lock = docBroker->getLock();
+                    auto sessionsCount = docBroker->addSession(session);
+                    lock.unlock();
+                    LOG_TRC(docKey << ", ws_sessions++: " << sessionsCount);
+
+                    docBrokersLock.unlock();
+
+                    std::string encodedFrom;
+                    URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
+                    const std::string load = "load url=" + encodedFrom;
+                    std::vector<char> loadRequest(load.begin(), load.end());
+                    session->handleMessage(true, WebSocketHandler::WSOpCode::Text, loadRequest);
+
+                    // FIXME: Check for security violations.
+                    Path toPath(docBroker->getPublicUri().getPath());
+                    toPath.setExtension(format);
+                    const std::string toJailURL = "file://" + std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
+                    std::string encodedTo;
+                    URI::encode(toJailURL, "", encodedTo);
+
+                    // Convert it to the requested format.
+                    const auto saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
+                    std::vector<char> saveasRequest(saveas.begin(), saveas.end());
+                    session->handleMessage(true, WebSocketHandler::WSOpCode::Text, saveasRequest);
+
+                    // Send it back to the client.
+                    try
+                    {
+                        Poco::URI resultURL(session->getSaveAsUrl(COMMAND_TIMEOUT_MS));
+                        LOG_TRC("Save-as URL: " << resultURL.toString());
+
+                        if (!resultURL.getPath().empty())
+                        {
+                            const std::string mimeType = "application/octet-stream";
+                            std::string encodedFilePath;
+                            URI::encode(resultURL.getPath(), "", encodedFilePath);
+                            LOG_TRC("Sending file: " << encodedFilePath);
+                            HttpHelper::sendFile(socket, encodedFilePath, mimeType);
+                            sent = true;
+                        }
+                    }
+                    catch (const std::exception& ex)
+                    {
+                        LOG_ERR("Failed to get save-as url: " << ex.what());
+                    }
+
+                    docBrokersLock.lock();
+                    auto docLock = docBroker->getLock();
+                    sessionsCount = docBroker->removeSession(_id);
+                    if (sessionsCount == 0)
+                    {
+                        // At this point we're done.
+                        LOG_DBG("Removing DocumentBroker for docKey [" << docKey << "].");
+                        DocBrokers.erase(docKey);
+                        docBroker->terminateChild(docLock, "");
+                        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing [" << docKey << "].");
+                    }
+                    else
+                    {
+                        LOG_ERR("Multiple sessions during conversion. " << sessionsCount << " sessions remain.");
+                    }
+                }
+
+                // Clean up the temporary directory the HTMLForm ctor created.
+                Path tempDirectory(fromPath);
+                tempDirectory.setFileName("");
+                FileUtil::removeFile(tempDirectory, /*recursive=*/true);
+            }
+
+            if (!sent)
+            {
+                // TODO: We should differentiate between bad request and failed conversion.
+                throw BadRequestException("Failed to convert and send file.");
+            }
+
+            return;
+        }
+        else if (tokens.count() >= 4 && tokens[3] == "insertfile")
+        {
+            LOG_INF("Insert file request.");
+            response.set("Access-Control-Allow-Origin", "*");
+            response.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            response.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+            std::string tmpPath;
+            ConvertToPartHandler handler(tmpPath);
+            HTMLForm form(request, message, handler);
+
+            if (form.has("childid") && form.has("name"))
+            {
+                const std::string formChildid(form.get("childid"));
+                const std::string formName(form.get("name"));
+
+                // Validate the docKey
+                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+                std::string decodedUri;
+                URI::decode(tokens[2], decodedUri);
+                const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+                auto docBrokerIt = DocBrokers.find(docKey);
+
+                // Maybe just free the client from sending childid in form ?
+                if (docBrokerIt == DocBrokers.end() || docBrokerIt->second->getJailId() != formChildid)
+                {
+                    throw BadRequestException("DocKey [" + docKey + "] or childid [" + formChildid + "] is invalid.");
+                }
+                docBrokersLock.unlock();
+
+                // protect against attempts to inject something funny here
+                if (formChildid.find('/') == std::string::npos && formName.find('/') == std::string::npos)
+                {
+                    LOG_INF("Perform insertfile: " << formChildid << ", " << formName);
+                    const std::string dirPath = LOOLWSD::ChildRoot + formChildid
+                                              + JAILED_DOCUMENT_ROOT + "insertfile";
+                    File(dirPath).createDirectories();
+                    std::string fileName = dirPath + "/" + form.get("name");
+                    File(tmpPath).moveTo(fileName);
+                    return; // FIXME send response
+                }
+            }
+        }
+        else if (tokens.count() >= 6)
+        {
+            LOG_INF("File download request.");
+            // TODO: Check that the user in question has access to this file!
+
+            // 1. Validate the dockey
+            std::string decodedUri;
+            URI::decode(tokens[2], decodedUri);
+            const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+            auto docBrokerIt = DocBrokers.find(docKey);
+            if (docBrokerIt == DocBrokers.end())
+            {
+                throw BadRequestException("DocKey [" + docKey + "] is invalid.");
+            }
+
+            // 2. Cross-check if received child id is correct
+            if (docBrokerIt->second->getJailId() != tokens[3])
+            {
+                throw BadRequestException("ChildId does not correspond to docKey");
+            }
+
+            // 3. Don't let user download the file in main doc directory containing
+            // the document being edited otherwise we will end up deleting main directory
+            // after download finishes
+            if (docBrokerIt->second->getJailId() == tokens[4])
+            {
+                throw BadRequestException("RandomDir cannot be equal to ChildId");
+            }
+            docBrokersLock.unlock();
+
+            std::string fileName;
+            bool responded = false;
+            URI::decode(tokens[5], fileName);
+            const Path filePath(LOOLWSD::ChildRoot + tokens[3]
+                                + JAILED_DOCUMENT_ROOT + tokens[4] + "/" + fileName);
+            LOG_INF("HTTP request for: " << filePath.toString());
+            if (filePath.isAbsolute() && File(filePath).exists())
+            {
+                std::string contentType = getContentType(fileName);
+                response.set("Access-Control-Allow-Origin", "*");
+                if (Poco::Path(fileName).getExtension() == "pdf")
+                {
+                    contentType = "application/pdf";
+                    response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                }
+
+                try
+                {
+                    response.setContentType(contentType);
+                    HttpHelper::sendFile(socket, filePath.toString(), response);
+                    responded = true;
+                }
+                catch (const Exception& exc)
+                {
+                    LOG_ERR("Error sending file to client: " << exc.displayText() <<
+                            (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+                }
+
+                FileUtil::removeFile(File(filePath.parent()).path(), true);
+            }
+            else
+            {
+                LOG_ERR("Download file [" << filePath.toString() << "] not found.");
+            }
+
+            (void)responded;
+            return; // responded;
+        }
+
+        throw BadRequestException("Invalid or unknown request.");
     }
 
     void handleClientWsRequest(const Poco::Net::HTTPRequest& request, const std::string& url)

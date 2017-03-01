@@ -82,7 +82,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPasswordProtectedOOXMLDocument);
     CPPUNIT_TEST(testPasswordProtectedBinaryMSOfficeDocument);
     CPPUNIT_TEST(testInsertDelete);
-    // CPPUNIT_TEST(testSlideShow); //FIXME: loolnb
+    CPPUNIT_TEST(testSlideShow);
     CPPUNIT_TEST(testInactiveClient);
     CPPUNIT_TEST(testMaxColumn);
     CPPUNIT_TEST(testMaxRow);
@@ -1147,6 +1147,7 @@ void HTTPWSTest::testSlideShow()
         session->receiveResponse(responseSVG);
         CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseSVG.getStatus());
         CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
+        CPPUNIT_ASSERT_EQUAL(std::streamsize(451329), responseSVG.getContentLength());
     }
     catch (const Poco::Exception& exc)
     {
