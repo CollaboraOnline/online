@@ -30,7 +30,9 @@
 #include <Poco/Timespan.h>
 #include <Poco/Timestamp.h>
 #include <Poco/Net/SocketAddress.h>
+#include <Poco/Net/HTTPResponse.h>
 
+#include "Common.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
 
@@ -568,7 +570,8 @@ protected:
 
 namespace HttpHelper
 {
-    inline void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path, const std::string& mediaType)
+    inline void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+                         Poco::Net::HTTPResponse& response)
     {
         struct stat st;
         if (stat(path.c_str(), &st) != 0)
@@ -577,14 +580,11 @@ namespace HttpHelper
             return;
         }
 
+        response.setContentLength(st.st_size);
+        response.set("User-Agent", HTTP_AGENT_STRING);
         std::ostringstream oss;
-        oss << "HTTP/1.1 200 OK\r\n"
-            //<< "Last-Modified: " << FIXME << "\r\n"
-            << "User-Agent: LOOLWSD WOPI Agent\r\n"
-            << "Content-Length: " << st.st_size << "\r\n"
-            << "Content-Type: " << mediaType << "\r\n"
-            << "\r\n";
-
+        response.write(oss);
+        LOG_INF(oss.str());
         socket->send(oss.str());
 
         std::ifstream file(path, std::ios::binary);
@@ -599,6 +599,14 @@ namespace HttpHelper
                 break;
         }
         while (file);
+    }
+
+    inline void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+                         const std::string& mediaType)
+    {
+        Poco::Net::HTTPResponse response;
+        response.setContentType(mediaType);
+        sendFile(socket, path, response);
     }
 };
 
