@@ -139,14 +139,13 @@ public:
 
         auto socket = _socket.lock();
         if (socket == nullptr)
-            return 0; // no socket == connection closed.
-
-        //TODO: Support fragmented messages.
-        const unsigned char fin = static_cast<unsigned char>(WSFrameMask::Fin);
-        const unsigned char mask = 0; // Server must not mask, only clients.
+            return -1; // no socket == error.
 
         auto lock = socket->getWriteLock();
         std::vector<char>& out = socket->_outBuffer;
+
+        //TODO: Support fragmented messages.
+        const unsigned char fin = static_cast<unsigned char>(WSFrameMask::Fin);
 
         // FIXME: need to support fragmented mesages, but for now send prefix message with size.
         if (len >= LARGE_MESSAGE_SIZE)
@@ -154,33 +153,43 @@ public:
             const std::string nextmessage = "nextmessage: size=" + std::to_string(len);
             const unsigned char size = (nextmessage.size() & 0xff);
             out.push_back(fin | WSOpCode::Text);
-            out.push_back(mask | size);
+            out.push_back(size);
             out.insert(out.end(), nextmessage.data(), nextmessage.data() + size);
             socket->writeOutgoingData();
         }
 
-        unsigned char header[2];
-        header[0] = fin | static_cast<unsigned char>(code);
-        header[1] = mask;
-        out.push_back((char)header[0]);
+        return sendFrame(socket, data, len, static_cast<unsigned char>(fin | code), flush);
+    }
 
-        // no out-bound masking ...
+protected:
+
+    /// Sends a WebSocket frame given the data, length, and flags.
+    /// Returns the number of bytes written (including frame overhead) on success,
+    /// 0 for closed/invalid socket, and -1 for other errors.
+    static int sendFrame(const std::shared_ptr<StreamSocket>& socket,
+                         const char* data, const size_t len,
+                         const unsigned char flags, const bool flush = true)
+    {
+        if (!socket || data == nullptr || len == 0)
+            return -1;
+
+        std::vector<char>& out = socket->_outBuffer;
+
+        out.push_back(flags);
+
         if (len < 126)
         {
-            header[1] |= len;
-            out.push_back((char)header[1]);
+            out.push_back((char)len);
         }
         else if (len <= 0xffff)
         {
-            header[1] |= 126;
-            out.push_back((char)header[1]);
+            out.push_back((char)126);
             out.push_back(static_cast<char>((len >> 8) & 0xff));
             out.push_back(static_cast<char>((len >> 0) & 0xff));
         }
         else
         {
-            header[1] |= 127;
-            out.push_back((char)header[1]);
+            out.push_back((char)127);
             out.push_back(static_cast<char>((len >> 56) & 0xff));
             out.push_back(static_cast<char>((len >> 48) & 0xff));
             out.push_back(static_cast<char>((len >> 40) & 0xff));
@@ -191,14 +200,14 @@ public:
             out.push_back(static_cast<char>((len >> 0) & 0xff));
         }
 
-        // FIXME: pick random number and mask in the outbuffer etc.
-        assert (!mask);
-
+        // Copy the data.
         out.insert(out.end(), data, data + len);
+
         if (flush)
             socket->writeOutgoingData();
 
-        return len + sizeof(header);
+        // Data + header.
+        return len + 2;
     }
 
     /// To me overriden to handle the websocket messages the way you need.
