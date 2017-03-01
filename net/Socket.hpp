@@ -586,6 +586,7 @@ namespace HttpHelper
         if (stat(path.c_str(), &st) != 0)
         {
             LOG_WRN("Failed to stat [" << path << "]. File will not be sent.");
+            throw Poco::FileNotFoundException("Failed to stat [" + path + "]. File will not be sent.");
             return;
         }
 
