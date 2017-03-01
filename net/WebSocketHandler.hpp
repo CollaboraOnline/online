@@ -33,6 +33,12 @@ public:
     {
     }
 
+    WebSocketHandler(const std::weak_ptr<StreamSocket>& socket) :
+        _shuttingDown(false)
+    {
+        onConnect(socket);
+    }
+
     /// Implementation of the SocketHandlerInterface.
     void onConnect(const std::weak_ptr<StreamSocket>& socket) override
     {
@@ -193,6 +199,11 @@ public:
         _wsPayload.clear();
     }
 
+    void sendFrame(const std::string& msg) const
+    {
+        sendMessage(msg.data(), msg.size(), WSOpCode::Text);
+    }
+
     /// Sends a WebSocket message of WPOpCode type.
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.
@@ -274,29 +285,9 @@ protected:
         return len + 2;
     }
 
-    /// To me overriden to handle the websocket messages the way you need.
-    virtual void handleMessage(bool fin, WSOpCode code, std::vector<char> &data) = 0;
-};
-
-class WebSocketSender : private WebSocketHandler
-{
-public:
-    WebSocketSender(const std::weak_ptr<StreamSocket>& socket)
+    /// To be overriden to handle the websocket messages the way you need.
+    virtual void handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &/*data*/)
     {
-        onConnect(socket);
-    }
-
-    void sendFrame(const std::string& msg) const
-    {
-        sendMessage(msg.data(), msg.size(), WSOpCode::Text);
-    }
-
-    using WebSocketHandler::shutdown;
-
-private:
-    void handleMessage(bool, WSOpCode, std::vector<char>&) override
-    {
-        // We will not read any.
     }
 };
 

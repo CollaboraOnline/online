@@ -204,7 +204,7 @@ static int careerSpanSeconds = 0;
 namespace
 {
 
-inline void shutdownLimitReached(WebSocketSender& ws)
+inline void shutdownLimitReached(WebSocketHandler& ws)
 {
     const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
     LOG_INF("Sending client limit-reached message: " << error);
@@ -2340,7 +2340,7 @@ bool LOOLWSD::createForKit()
 std::mutex Connection::Mutex;
 #endif
 
-static std::shared_ptr<DocumentBroker> createDocBroker(WebSocketSender& ws,
+static std::shared_ptr<DocumentBroker> createDocBroker(WebSocketHandler& ws,
                                                        const std::string& uri,
                                                        const std::string& docKey,
                                                        const Poco::URI& uriPublic)
@@ -2378,7 +2378,7 @@ static std::shared_ptr<DocumentBroker> createDocBroker(WebSocketSender& ws,
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
 /// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketSender& ws,
+static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& ws,
                                                              const std::string& uri,
                                                              const std::string& docKey,
                                                              const std::string& id,
@@ -2514,7 +2514,7 @@ static void removeDocBrokerSession(const std::shared_ptr<DocumentBroker>& docBro
     }
 }
 
-static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketSender& ws,
+static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHandler& ws,
                                                              const std::string& id,
                                                              const Poco::URI& uriPublic,
                                                              const std::shared_ptr<DocumentBroker>& docBroker,
@@ -3125,7 +3125,7 @@ private:
         LOG_INF("Client WS request" << request.getURI() << ", url: " << url);
 
         // First Upgrade.
-        WebSocketSender ws = upgradeToWebSocket(request);
+        WebSocketHandler ws = upgradeToWebSocket(request);
 
         if (_connectionNum > MAX_CONNECTIONS)
         {
@@ -3206,7 +3206,7 @@ private:
         LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
         const auto docKey = docBroker->getDocKey();
 
-        WebSocketSender ws(_socket);
+        WebSocketHandler ws(_socket);
         try
         {
             // Connection terminated. Destroy session.
@@ -3282,7 +3282,7 @@ private:
     }
 
     /// Upgrade the http(s) connection to a websocket.
-    WebSocketSender upgradeToWebSocket(const Poco::Net::HTTPRequest& req)
+    WebSocketHandler upgradeToWebSocket(const Poco::Net::HTTPRequest& req)
     {
         LOG_TRC("Upgrading to WebSocket");
         assert(_wsState == WSState::HTTP);
@@ -3309,7 +3309,7 @@ private:
         _wsState = WSState::WS;
 
         // Create a WS wrapper to use for sending the client status.
-        return WebSocketSender(socket);
+        return WebSocketHandler(socket);
     }
 
     /// To make the protected 'computeAccept' accessible.
