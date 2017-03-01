@@ -130,6 +130,8 @@ void HTTPCrashTest::testCrashKit()
     {
         auto socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
+        std::cerr << "Killing loolkit instances." << std::endl;
+
         killLoKitProcesses("(loolkit)");
         countLoolKitProcesses(0);
 
@@ -145,7 +147,10 @@ void HTTPCrashTest::testCrashKit()
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY), statusCode);
 
         // respond close frame
+        std::cerr << "Shutting down socket." << std::endl;
         socket->shutdown();
+
+        std::cerr << "Reading after shutdown." << std::endl;
 
         // no more messages is received.
         int flags;
