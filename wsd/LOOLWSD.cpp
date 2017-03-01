@@ -2706,10 +2706,6 @@ private:
                 LOG_DBG("Not enough content yet: ContentLength: " << contentLength << ", available: " << available);
                 return;
             }
-
-            // if we succeeded - remove the request from our input buffer
-            // we expect one request per socket
-            in.clear();
         }
         catch (const std::exception& exc)
         {
@@ -2778,6 +2774,10 @@ private:
                     socket->shutdown();
                 }
             }
+
+            // if we succeeded - remove the request from our input buffer
+            // we expect one request per socket
+            in.clear();
         }
         catch (const std::exception& exc)
         {
