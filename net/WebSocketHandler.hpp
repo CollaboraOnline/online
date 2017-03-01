@@ -52,6 +52,42 @@ public:
         // ... reserved
     };
 
+    /// Status codes sent to peer on shutdown.
+    enum class StatusCodes : unsigned short
+    {
+        NORMAL_CLOSE            = 1000,
+        ENDPOINT_GOING_AWAY     = 1001,
+        PROTOCOL_ERROR          = 1002,
+        PAYLOAD_NOT_ACCEPTABLE  = 1003,
+        RESERVED                = 1004,
+        RESERVED_NO_STATUS_CODE = 1005,
+        RESERVED_ABNORMAL_CLOSE = 1006,
+        MALFORMED_PAYLOAD       = 1007,
+        POLICY_VIOLATION        = 1008,
+        PAYLOAD_TOO_BIG         = 1009,
+        EXTENSION_REQUIRED      = 1010,
+        UNEXPECTED_CONDITION    = 1011,
+        RESERVED_TLS_FAILURE    = 1015
+    };
+
+    /// Sends WS shutdown message to the peer.
+    void shutdown(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE, const std::string& statusMessage = "")
+    {
+        auto socket = _socket.lock();
+        if (socket == nullptr)
+            return;
+
+        const size_t len = statusMessage.size();
+        std::vector<char> buf(2 + len);
+        buf[0] = (((int)statusCode >> 8) & 0xff);
+        buf[1] = (((int)statusCode >> 0) & 0xff);
+        std::copy(statusMessage.begin(), statusMessage.end(), buf.end());
+        const unsigned char flags = static_cast<unsigned char>(WSFrameMask::Fin) | static_cast<char>(WSOpCode::Close);
+
+        auto lock = socket->getWriteLock();
+        sendFrame(socket, buf.data(), buf.size(), flags);
+    }
+
     /// Implementation of the SocketHandlerInterface.
     virtual void handleIncomingMessage() override
     {
@@ -226,6 +262,8 @@ public:
     {
         sendMessage(msg.data(), msg.size(), WSOpCode::Text);
     }
+
+    using WebSocketHandler::shutdown;
 
 private:
     void handleMessage(bool, WSOpCode, std::vector<char>&) override
