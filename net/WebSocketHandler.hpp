@@ -19,6 +19,7 @@ class WebSocketHandler : public SocketHandlerInterface
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
     std::vector<char> _wsPayload;
+    bool _shuttingDown;
 
     enum class WSFrameMask : unsigned char
     {
@@ -27,7 +28,8 @@ class WebSocketHandler : public SocketHandlerInterface
     };
 
 public:
-    WebSocketHandler()
+    WebSocketHandler() :
+        _shuttingDown(false)
     {
     }
 
@@ -86,6 +88,7 @@ public:
 
         auto lock = socket->getWriteLock();
         sendFrame(socket, buf.data(), buf.size(), flags);
+        _shuttingDown = true;
     }
 
     /// Implementation of the SocketHandlerInterface.
@@ -161,7 +164,32 @@ public:
         // FIXME: fin, aggregating payloads into _wsPayload etc.
         LOG_TRC("Incoming WebSocket message code " << code << " fin? " << fin << " payload length " << _wsPayload.size());
 
-        handleMessage(fin, code, _wsPayload);
+        if (code & WSOpCode::Close)
+        {
+            if (!_shuttingDown)
+            {
+                // Peer-initiated shutdown must be echoed.
+                // Otherwise, this is the echo to _out_ shutdown message.
+                const StatusCodes statusCode = static_cast<StatusCodes>((static_cast<unsigned>(_wsPayload[0]) << 8) | _wsPayload[1]);
+                if (_wsPayload.size() > 2)
+                {
+                    const std::string message(&_wsPayload[2], &_wsPayload[2] + _wsPayload.size() - 2);
+                    shutdown(statusCode, message);
+                }
+                else
+                {
+                    shutdown(statusCode);
+                }
+            }
+
+            // TCP Close.
+            socket->shutdown();
+        }
+        else
+        {
+            handleMessage(fin, code, _wsPayload);
+        }
+
         _wsPayload.clear();
     }
 
