@@ -3205,8 +3205,6 @@ private:
         LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
         const auto docKey = docBroker->getDocKey();
 
-        WebSocketHandler ws;
-        ws.onConnect(_socket);
         try
         {
             // Connection terminated. Destroy session.
@@ -3244,7 +3242,7 @@ private:
             LOG_ERR("Error in client request handler: " << exc.toString());
             const std::string status = "error: cmd=internal kind=unauthorized";
             LOG_TRC("Sending to Client [" << status << "].");
-            ws.sendFrame(status);
+            _clientSession->sendFrame(status);
         }
         catch (const std::exception& exc)
         {
@@ -3258,14 +3256,14 @@ private:
                 LOG_TRC("Normal close handshake.");
                 // Client initiated close handshake
                 // respond with close frame
-                ws.shutdown();
+                _clientSession->shutdown();
             }
             else if (!SigUtil::isShuttingDown())
             {
                 // something wrong, with internal exceptions
                 LOG_TRC("Abnormal close handshake.");
                 _clientSession->closeFrame();
-                ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
+                _clientSession->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
             }
             else
             {
