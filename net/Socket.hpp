@@ -569,8 +569,11 @@ protected:
     std::mutex _writeMutex;
 
     // To be able to access _inBuffer and _outBuffer.
+    // TODO we probably need accessors to the _inBuffer & _outBuffer
+    // instead of this many friends...
     friend class WebSocketHandler;
     friend class ClientRequestDispatcher;
+    friend class SimpleResponseClient;
 };
 
 namespace HttpHelper

@@ -14,12 +14,18 @@
 #include "Log.hpp"
 #include "Socket.hpp"
 
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/WebSocket.h>
+
 class WebSocketHandler : public SocketHandlerInterface
 {
+protected:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
+
     std::vector<char> _wsPayload;
     bool _shuttingDown;
+    enum class WSState { HTTP, WS } _wsState;
 
     enum class WSFrameMask : unsigned char
     {
@@ -27,16 +33,21 @@ class WebSocketHandler : public SocketHandlerInterface
         Mask = 0x80
     };
 
+
 public:
     WebSocketHandler() :
-        _shuttingDown(false)
+        _shuttingDown(false),
+        _wsState(WSState::HTTP)
     {
     }
 
-    WebSocketHandler(const std::weak_ptr<StreamSocket>& socket) :
-        _shuttingDown(false)
+    /// Upgrades itself to a websocket directly.
+    WebSocketHandler(const std::weak_ptr<StreamSocket>& socket, const Poco::Net::HTTPRequest& request) :
+        _socket(socket),
+        _shuttingDown(false),
+        _wsState(WSState::HTTP)
     {
-        onConnect(socket);
+        upgradeToWebSocket(request);
     }
 
     /// Implementation of the SocketHandlerInterface.
@@ -288,6 +299,46 @@ protected:
     /// To be overriden to handle the websocket messages the way you need.
     virtual void handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &/*data*/)
     {
+    }
+
+private:
+    /// To make the protected 'computeAccept' accessible.
+    class PublicComputeAccept : public Poco::Net::WebSocket
+    {
+    public:
+        static std::string doComputeAccept(const std::string &key)
+        {
+            return computeAccept(key);
+        }
+    };
+
+protected:
+    /// Upgrade the http(s) connection to a websocket.
+    void upgradeToWebSocket(const Poco::Net::HTTPRequest& req)
+    {
+        LOG_TRC("Upgrading to WebSocket");
+        assert(_wsState == WSState::HTTP);
+
+        auto socket = _socket.lock();
+        if (socket == nullptr)
+            throw std::runtime_error("Invalid socket while upgrading to WebSocket. Request: " + req.getURI());
+
+        // create our websocket goodness ...
+        const int wsVersion = std::stoi(req.get("Sec-WebSocket-Version", "13"));
+        const std::string wsKey = req.get("Sec-WebSocket-Key", "");
+        const std::string wsProtocol = req.get("Sec-WebSocket-Protocol", "chat");
+        // FIXME: other sanity checks ...
+        LOG_INF("WebSocket version " << wsVersion << " key '" << wsKey << "'.");
+
+        std::ostringstream oss;
+        oss << "HTTP/1.1 101 Switching Protocols\r\n"
+            << "Upgrade: websocket\r\n"
+            << "Connection: Upgrade\r\n"
+            << "Sec-Websocket-Accept: " << PublicComputeAccept::doComputeAccept(wsKey) << "\r\n"
+            << "\r\n";
+
+        socket->send(oss.str());
+        _wsState = WSState::WS;
     }
 };
 

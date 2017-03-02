@@ -20,7 +20,6 @@
 
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/SocketAddress.h>
-#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/Runnable.h>
@@ -44,6 +43,63 @@ class SimpleResponseClient : public WebSocketHandler
 public:
     SimpleResponseClient() : WebSocketHandler()
     {
+    }
+
+    virtual void handleIncomingMessage() override
+    {
+        LOG_TRC("incoming WebSocket message");
+        if (_wsState == WSState::HTTP)
+        {
+            auto socket = _socket.lock();
+
+            int number = 0;
+            Poco::MemoryInputStream message(&socket->_inBuffer[0], socket->_inBuffer.size());
+            Poco::Net::HTTPRequest req;
+            req.read(message);
+
+            // if we succeeded - remove that from our input buffer
+            // FIXME: We should check if this is GET or POST. For GET, we only
+            // can have a single request (headers only). For POST, we can/should
+            // use Poco HTMLForm to parse the post message properly.
+            // Otherwise, we should catch exceptions from the previous read/parse
+            // and assume we don't have sufficient data, so we wait some more.
+            socket->_inBuffer.clear();
+
+            LOG_DBG("URI: " << req.getURI());
+
+            Poco::StringTokenizer tokens(req.getURI(), "/?");
+            if (tokens.count() == 4)
+            {
+                std::string subpool = tokens[2];
+                number = std::stoi(tokens[3]);
+
+                // complex algorithmic core:
+                number = number + 1;
+
+                std::string numberString = std::to_string(number);
+                std::ostringstream oss;
+                oss << "HTTP/1.1 200 OK\r\n"
+                    << "Date: Once, Upon a time GMT\r\n" // Mon, 27 Jul 2009 12:28:53 GMT
+                    << "Server: madeup string (Linux)\r\n"
+                    << "Content-Length: " << numberString.size() << "\r\n"
+                    << "Content-Type: text/plain\r\n"
+                    << "Connection: Closed\r\n"
+                    << "\r\n"
+                    << numberString;
+                ;
+                std::string str = oss.str();
+                socket->_outBuffer.insert(socket->_outBuffer.end(), str.begin(), str.end());
+                return;
+            }
+            else if (tokens.count() == 2 && tokens[1] == "ws")
+            {
+
+                upgradeToWebSocket(req);
+                return;
+            }
+        }
+
+        WebSocketHandler::handleIncomingMessage();
     }
 
     virtual void handleMessage(const bool fin, const WSOpCode code, std::vector<char> &data) override
@@ -182,7 +238,7 @@ public:
         {
             std::shared_ptr<Socket> create(const int fd) override
             {
-                return std::make_shared<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new SimpleResponseClient });
+                return StreamSocket::create<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new SimpleResponseClient });
             }
         };
 
@@ -191,7 +247,7 @@ public:
         {
             std::shared_ptr<Socket> create(const int fd) override
             {
-                return std::make_shared<SslStreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new SimpleResponseClient });
+                return StreamSocket::create<SslStreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new SimpleResponseClient });
             }
         };
 
