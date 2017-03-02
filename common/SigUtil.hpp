@@ -25,6 +25,8 @@ namespace SigUtil
     /// Returns the name of the signal.
     const char* signalName(int signo);
 
+    /// Register a wakeup function when changing
+
     /// Trap signals to cleanup and exit the process gracefully.
     void setTerminationSignals();
 

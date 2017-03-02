@@ -39,7 +39,8 @@ wsd_sources = \
             ../kit/Kit.cpp \
             ../wsd/TileCache.cpp \
             ../common/Unit.cpp \
-            ../common/Util.cpp
+            ../common/Util.cpp \
+            ../net/Socket.cpp
 
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
 unittest_SOURCES = TileQueueTests.cpp WhiteBoxTests.cpp test.cpp $(wsd_sources)
