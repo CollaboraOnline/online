@@ -471,7 +471,7 @@ protected:
         if (log.trace()) {
             LOG_TRC("#" << getFD() << ": Incoming data buffer " << _inBuffer.size() <<
                     " bytes, closeSocket? " << closed);
-            log.dump("", &_inBuffer[0], _inBuffer.size());
+            // log.dump("", &_inBuffer[0], _inBuffer.size());
         }
 
         // If we have data, allow the app to consume.
@@ -518,17 +518,13 @@ protected:
                 len = writeData(&_outBuffer[0], _outBuffer.size());
 
                 auto& log = Log::logger();
-                if (log.trace()) {
-                    if (len > 0)
-                    {
-                        LOG_TRC("#" << getFD() << ": Wrote outgoing data " << len << " bytes");
-                        log.dump("", &_outBuffer[0], len);
-                    }
-                    else
-                    {
-                        LOG_SYS("#" << getFD() << ": Wrote outgoing data " << len << " bytes");
-                    }
+                if (log.trace() && len > 0) {
+                    LOG_TRC("#" << getFD() << ": Wrote outgoing data " << len << " bytes");
+                    // log.dump("", &_outBuffer[0], len);
                 }
+
+                if (len <= 0)
+                    LOG_SYS("#" << getFD() << ": Wrote outgoing data " << len << " bytes");
             }
             while (len < 0 && errno == EINTR);
 
