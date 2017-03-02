@@ -288,8 +288,7 @@ L.AnnotationManager = L.Class.extend({
 
 
 L.Map.include({
-	insertComment: function(comment) {
-		comment = !!comment ? comment : {};
+	insertComment: function() {
 		this._docLayer.newAnnotation({
 			text: '',
 			textrange: '',
