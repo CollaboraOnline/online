@@ -92,9 +92,9 @@ L.Annotation = L.Layer.extend({
 		L.DomUtil.create('div', 'loleaflet-annotation-userline', tdImg);
 		this._contentAuthor = L.DomUtil.create('div', 'loleaflet-annotation-content-author', tdAuthor);
 		this._contentDate = L.DomUtil.create('div', 'loleaflet-annotation-date', tdAuthor);
-		L.DomUtil.create('div', 'loleaflet-annotation-menu', tdMenu);
+		var divMenu = L.DomUtil.create('div', 'loleaflet-annotation-menu', tdMenu);
+		divMenu.annotation = this;
 		this._contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content', wrapper);
-		this._contentNode.annotation = this;
 		this._editNode = L.DomUtil.create('div', 'loleaflet-annotation-edit', wrapper);
 		this._contentText = L.DomUtil.create('div', '', this._contentNode);
 		this._editText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this._editNode);
@@ -129,6 +129,12 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_onMouseClick: function (e) {
+		var target = e.target || e.srcElement;
+		L.DomEvent.stopPropagation(e);
+		if (L.DomUtil.hasClass(target, 'loleaflet-annotation-menu')) {
+			$(target).contextMenu();
+			return;
+		}
 		L.DomEvent.stopPropagation(e);
 		this._map.fire('AnnotationClick', {annotation: this});
 	},

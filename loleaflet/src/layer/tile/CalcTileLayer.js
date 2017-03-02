@@ -67,7 +67,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = {};
 		$.contextMenu({
-			selector: '.loleaflet-annotation-content',
+			selector: '.loleaflet-annotation-menu',
+			trigger: 'none',
 			className: 'loleaflet-font',
 			items: {
 				modify: {

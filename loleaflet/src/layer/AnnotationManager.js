@@ -19,7 +19,8 @@ L.AnnotationManager = L.Class.extend({
 		this._map.on('AnnotationSave', this._onAnnotationSave, this);
 		var that = this;
 		$.contextMenu({
-			selector: '.loleaflet-annotation-content',
+			selector: '.loleaflet-annotation-menu',
+			trigger: 'none',
 			className: 'loleaflet-font',
 			items: {
 				modify: {
