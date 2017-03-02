@@ -334,7 +334,7 @@ protected:
         oss << "HTTP/1.1 101 Switching Protocols\r\n"
             << "Upgrade: websocket\r\n"
             << "Connection: Upgrade\r\n"
-            << "Sec-Websocket-Accept: " << PublicComputeAccept::doComputeAccept(wsKey) << "\r\n"
+            << "Sec-WebSocket-Accept: " << PublicComputeAccept::doComputeAccept(wsKey) << "\r\n"
             << "\r\n";
 
         socket->send(oss.str());
