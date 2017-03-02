@@ -59,7 +59,8 @@ shared_sources = common/FileUtil.cpp \
                  common/SpookyV2.cpp \
                  common/Unit.cpp \
                  common/UnitHTTP.cpp \
-                 common/Util.cpp
+                 common/Util.cpp \
+		 net/Socket.cpp
 if ENABLE_SSL
 shared_sources += net/Ssl.cpp
 endif
@@ -105,6 +106,7 @@ loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
                          kit/DummyLibreOfficeKit.cpp
 
 loolnb_SOURCES = net/loolnb.cpp \
+		 net/Socket.cpp \
                  common/Log.cpp \
                  common/Util.cpp
 if ENABLE_SSL

@@ -33,6 +33,7 @@
 #include <string>
 #include <thread>
 
+#include "Socket.hpp"
 #include "Common.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
@@ -119,6 +120,7 @@ namespace SigUtil
             Log::signalLog(signalName(signal));
             Log::signalLog("\n");
             SigUtil::requestShutdown();
+            SocketPoll::wakeupWorld();
         }
         else if (!TerminationFlag)
         {
@@ -127,6 +129,7 @@ namespace SigUtil
             Log::signalLog(signalName(signal));
             Log::signalLog("\n");
             TerminationFlag = true;
+            SocketPoll::wakeupWorld();
         }
         else
         {

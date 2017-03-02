@@ -175,21 +175,13 @@ private:
 /// overhead to adding/removing sockets is not helpful.
 class SocketPoll
 {
-public:
-    SocketPoll()
-    {
-        // Create the wakeup fd.
-        if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)
-        {
-            throw std::runtime_error("Failed to allocate pipe for SocketPoll waking.");
-        }
-    }
+    static std::mutex _pollWakeupsMutex;
+    static std::vector<int> _pollWakeups;
 
-    ~SocketPoll()
-    {
-        ::close(_wakeup[0]);
-        ::close(_wakeup[1]);
-    }
+public:
+    /// Create a socket poll, called rather infrequently.
+    SocketPoll();
+    ~SocketPoll();
 
     /// Poll the sockets for available data to read or buffer to write.
     void poll(const int timeoutMaxMs)
@@ -260,16 +252,29 @@ public:
         }
     }
 
-    /// Wakeup the main polling loop in another thread
-    void wakeup()
+    /// Write to a wakeup descriptor
+    static void wakeup (int fd)
     {
         // wakeup the main-loop.
         int rc;
         do {
-            rc = ::write(_wakeup[1], "w", 1);
+            rc = ::write(fd, "w", 1);
         } while (rc == -1 && errno == EINTR);
 
         assert (rc != -1 || errno == EAGAIN || errno == EWOULDBLOCK);
+    }
+
+    /// Wakeup the main polling loop in another thread
+    void wakeup()
+    {
+        wakeup(_wakeup[1]);
+    }
+
+    /// Global wakeup - signal safe: wakeup all socket polls.
+    static void wakeupWorld()
+    {
+        for (const auto& fd : _pollWakeups)
+            wakeup(fd);
     }
 
     /// Insert a new socket to be polled.
