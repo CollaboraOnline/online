@@ -2584,8 +2584,7 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
 class ClientRequestDispatcher : public SocketHandlerInterface
 {
 public:
-    ClientRequestDispatcher() :
-        _wsState(WSState::HTTP)
+    ClientRequestDispatcher()
     {
     }
 
@@ -3129,7 +3128,7 @@ private:
         LOG_INF("Client WS request" << request.getURI() << ", url: " << url);
 
         // First Upgrade.
-        WebSocketHandler ws = upgradeToWebSocket(request);
+        WebSocketHandler ws(_socket, request);
 
         if (_connectionNum > MAX_CONNECTIONS)
         {
@@ -3210,7 +3209,8 @@ private:
         LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
         const auto docKey = docBroker->getDocKey();
 
-        WebSocketHandler ws(_socket);
+        WebSocketHandler ws;
+        ws.onConnect(_socket);
         try
         {
             // Connection terminated. Destroy session.
@@ -3285,54 +3285,12 @@ private:
         }
     }
 
-    /// Upgrade the http(s) connection to a websocket.
-    WebSocketHandler upgradeToWebSocket(const Poco::Net::HTTPRequest& req)
-    {
-        LOG_TRC("Upgrading to WebSocket");
-        assert(_wsState == WSState::HTTP);
-
-        auto socket = _socket.lock();
-        if (socket == nullptr)
-            throw std::runtime_error("Invalid socket while upgrading to WebSocket. Request: " + req.getURI());
-
-        // create our websocket goodness ...
-        const int wsVersion = std::stoi(req.get("Sec-WebSocket-Version", "13"));
-        const std::string wsKey = req.get("Sec-WebSocket-Key", "");
-        const std::string wsProtocol = req.get("Sec-WebSocket-Protocol", "chat");
-        // FIXME: other sanity checks ...
-        LOG_INF("WebSocket version " << wsVersion << " key '" << wsKey << "'.");
-
-        std::ostringstream oss;
-        oss << "HTTP/1.1 101 Switching Protocols\r\n"
-            << "Upgrade: websocket\r\n"
-            << "Connection: Upgrade\r\n"
-            << "Sec-Websocket-Accept: " << PublicComputeAccept::doComputeAccept(wsKey) << "\r\n"
-            << "\r\n";
-
-        socket->send(oss.str());
-        _wsState = WSState::WS;
-
-        // Create a WS wrapper to use for sending the client status.
-        return WebSocketHandler(socket);
-    }
-
-    /// To make the protected 'computeAccept' accessible.
-    class PublicComputeAccept : public Poco::Net::WebSocket
-    {
-    public:
-        static std::string doComputeAccept(const std::string &key)
-        {
-            return computeAccept(key);
-        }
-    };
-
 private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
     std::shared_ptr<ClientSession> _clientSession;
     std::string _id;
     size_t _connectionNum;
-    enum class WSState { HTTP, WS } _wsState;
 };
 
 
