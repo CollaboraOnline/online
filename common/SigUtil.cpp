@@ -39,6 +39,7 @@
 #include "Util.hpp"
 
 std::atomic<bool> TerminationFlag(false);
+std::atomic<bool> DumpGlobalState(false);
 std::mutex SigHandlerTrap;
 
 /// Flag to shutdown the server.
@@ -246,6 +247,32 @@ namespace SigUtil
         assert (sizeof (FatalGdbString) > strlen(streamStr.c_str()) + 1);
         strncpy(FatalGdbString, streamStr.c_str(), sizeof(FatalGdbString));
     }
+
+    static
+    void handleUserSignal(const int signal)
+    {
+        Log::signalLogPrefix();
+        Log::signalLog(" User signal received: ");
+        Log::signalLog(signalName(signal));
+        Log::signalLog("\n");
+        if (signal == SIGUSR1)
+        {
+            DumpGlobalState = true;
+            SocketPoll::wakeupWorld();
+        }
+    }
+
+    void setUserSignals()
+    {
+        struct sigaction action;
+
+        sigemptyset(&action.sa_mask);
+        action.sa_flags = 0;
+        action.sa_handler = handleUserSignal;
+
+        sigaction(SIGUSR1, &action, nullptr);
+    }
+
 
     void requestShutdown()
     {

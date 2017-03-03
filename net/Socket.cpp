@@ -54,4 +54,13 @@ void SocketPoll::wakeupWorld()
         wakeup(fd);
 }
 
+void SocketPoll::dumpState()
+{
+    std::cerr << " Poll [" << _pollSockets.size() << "] - wakeup r: "
+              << _wakeup[0] << " w: " << _wakeup[1] << "\n";
+    std::cerr << "\tfd\tevents\trsize\twsize\n";
+    for (auto &i : _pollSockets)
+        i->dumpState();
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

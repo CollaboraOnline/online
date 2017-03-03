@@ -16,6 +16,9 @@
 /// Flag to stop pump loops.
 extern std::atomic<bool> TerminationFlag;
 
+/// Flag to dump internal state
+extern std::atomic<bool> DumpGlobalState;
+
 /// Mutex to trap signal handler, if any,
 /// and prevent _Exit while collecting backtrace.
 extern std::mutex SigHandlerTrap;
@@ -32,6 +35,9 @@ namespace SigUtil
 
     /// Trap all fatal signals to assist debugging.
     void setFatalSignals();
+
+    /// Trap generally useful signals
+    void setUserSignals();
 
     /// Requests the server to initiate graceful shutdown.
     /// Shutting down is a multi-stage process, because
