@@ -203,7 +203,7 @@ L.AnnotationManager = L.Class.extend({
 					return Math.abs(a._data.anchorPos.y) - Math.abs(b._data.anchorPos.y) ||
 					       Math.abs(a._data.anchorPos.x) - Math.abs(b._data.anchorPos.x);
 				});
-				added._updateContent();
+				added.update();
 			}
 			else { // annotation is added by some other view
 				this.add(obj.comment, false);
@@ -219,7 +219,7 @@ L.AnnotationManager = L.Class.extend({
 			var modified = this.getItem(obj.comment.id);
 			if (modified) {
 				modified._data = obj.comment;
-				modified._updateContent();
+				modified.update();
 				this.update();
 			}
 		}

@@ -81,8 +81,8 @@ L.Annotation = L.Layer.extend({
 			L.DomUtil.create('div', 'loleaflet-annotation');
 		var wrapper = this._wrapper =
 			L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper', container);
-		var table = L.DomUtil.create('table', 'loleaflet-annotation-table', wrapper);
-		var tbody = L.DomUtil.create('tbody', '', table);
+		this._tableAuthor = L.DomUtil.create('table', 'loleaflet-annotation-table', wrapper);
+		var tbody = L.DomUtil.create('tbody', '', this._tableAuthor);
 		var tr = L.DomUtil.create('tr', '', tbody);
 		var tdImg = L.DomUtil.create('td', 'loleaflet-annotation-img', tr);
 		var tdAuthor = L.DomUtil.create('td', 'loleaflet-annotation-author', tr);
@@ -162,8 +162,10 @@ L.Annotation = L.Layer.extend({
 
 	_updateLayout: function () {
 		var style = this._wrapper.style;
-		var width = Math.min(this._wrapper.offsetWidth, this.options.minWidth);
+		style.width = '';
+		style.whiteSpace = 'nowrap';
 
+		var width = Math.min(Math.max(this._tableAuthor.offsetWidth, this._contentText.offsetWidth), this.options.minWidth);
 		style.width = (width + 1) + 'px';
 		style.whiteSpace = '';
 	},
