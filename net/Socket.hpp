@@ -175,9 +175,6 @@ private:
 /// overhead to adding/removing sockets is not helpful.
 class SocketPoll
 {
-    static std::mutex _pollWakeupsMutex;
-    static std::vector<int> _pollWakeups;
-
 public:
     /// Create a socket poll, called rather infrequently.
     SocketPoll();
@@ -271,11 +268,7 @@ public:
     }
 
     /// Global wakeup - signal safe: wakeup all socket polls.
-    static void wakeupWorld()
-    {
-        for (const auto& fd : _pollWakeups)
-            wakeup(fd);
-    }
+    static void wakeupWorld();
 
     /// Insert a new socket to be polled.
     /// Sockets are removed only when the handler return false.

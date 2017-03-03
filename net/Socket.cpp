@@ -9,8 +9,19 @@
 
 #include "Socket.hpp"
 
-std::mutex SocketPoll::_pollWakeupsMutex;
-std::vector<int> SocketPoll::_pollWakeups;
+// help with initialization order
+namespace {
+    std::vector<int> &getWakeupsArray()
+    {
+        static std::vector<int> pollWakeups;
+        return pollWakeups;
+    }
+    std::mutex &getPollWakeupsMutex()
+    {
+        static std::mutex pollWakeupsMutex;
+        return pollWakeupsMutex;
+    }
+}
 
 SocketPoll::SocketPoll()
 {
@@ -19,8 +30,8 @@ SocketPoll::SocketPoll()
     {
         throw std::runtime_error("Failed to allocate pipe for SocketPoll waking.");
     }
-    std::lock_guard<std::mutex> lock(_pollWakeupsMutex);
-    _pollWakeups.push_back(_wakeup[1]);
+    std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
+    getWakeupsArray().push_back(_wakeup[1]);
 }
 
 SocketPoll::~SocketPoll()
@@ -28,12 +39,19 @@ SocketPoll::~SocketPoll()
     ::close(_wakeup[0]);
     ::close(_wakeup[1]);
 
-    std::lock_guard<std::mutex> lock(_pollWakeupsMutex);
-    auto it = std::find(_pollWakeups.begin(),
-                        _pollWakeups.end(),
+    std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
+    auto it = std::find(getWakeupsArray().begin(),
+                        getWakeupsArray().end(),
                         _wakeup[1]);
-    if (it != _pollWakeups.end())
-        _pollWakeups.erase(it);
+
+    if (it != getWakeupsArray().end())
+        getWakeupsArray().erase(it);
+}
+
+void SocketPoll::wakeupWorld()
+{
+    for (const auto& fd : getWakeupsArray())
+        wakeup(fd);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
