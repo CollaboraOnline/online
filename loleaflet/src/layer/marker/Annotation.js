@@ -20,7 +20,7 @@ L.Annotation = L.Layer.extend({
 			this._initLayout();
 		}
 
-		map._panes.markerPane.appendChild(this._container);
+		map._panes.popupPane.appendChild(this._container);
 		this.update();
 	},
 
@@ -30,7 +30,7 @@ L.Annotation = L.Layer.extend({
 	},
 
 	onRemove: function (map) {
-		map._panes.markerPane.removeChild(this._container);
+		map._panes.popupPane.removeChild(this._container);
 		this._map = null;
 	},
 
