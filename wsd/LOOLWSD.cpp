@@ -3339,25 +3339,9 @@ public:
             _documentThread.join();
     }
 
-    void start(const Poco::Net::SocketAddress& addr)
+    void start(const int port)
     {
-        std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(_documentPoll,
-#if ENABLE_SSL
-                LOOLWSD::isSSLEnabled() ? std::unique_ptr<SocketFactory>{ new SslSocketFactory() } :
-#endif
-                                          std::unique_ptr<SocketFactory>{ new PlainSocketFactory() });
-
-        if (!serverSocket->bind(addr))
-        {
-            const std::string msg = "Failed to bind. (errno: ";
-            throw std::runtime_error(msg + std::strerror(errno) + ")");
-        }
-
-        if (!serverSocket->listen())
-        {
-            const std::string msg = "Failed to listen. (errno: ";
-            throw std::runtime_error(msg + std::strerror(errno) + ")");
-        }
+        std::shared_ptr<ServerSocket> serverSocket = findServerPort(port);
 
         _serverPoll.insertNewSocket(serverSocket);
 
@@ -3415,6 +3399,38 @@ private:
         {
             documentPoll.poll(5000);
         }
+    }
+
+    std::shared_ptr<ServerSocket> getServerSocket(const Poco::Net::SocketAddress& addr)
+    {
+        std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(_documentPoll,
+#if ENABLE_SSL
+        LOOLWSD::isSSLEnabled() ? std::unique_ptr<SocketFactory>{ new SslSocketFactory() } :
+#endif
+                                  std::unique_ptr<SocketFactory>{ new PlainSocketFactory() });
+
+        if (serverSocket->bind(addr) &&
+            serverSocket->listen())
+        {
+            return serverSocket;
+        }
+
+        return nullptr;
+    }
+
+    std::shared_ptr<ServerSocket> findServerPort(int port)
+    {
+        LOG_INF("Trying to listen on client port " << port << ".");
+        std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress("127.0.0.1", port));
+        while (!socket)
+        {
+            ++port;
+            LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << ".");
+            socket = getServerSocket(SocketAddress("127.0.0.1", port));
+        }
+
+        LOG_INF("Listening to client connections on port " << port);
+        return socket;
     }
 };
 
@@ -3559,8 +3575,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #endif
 
     // TODO loolnb
-    SocketAddress addr("127.0.0.1", ClientPortNumber);
-    srv.start(addr);
+    srv.start(ClientPortNumber);
 
 #if ENABLE_DEBUG
     time_t startTimeSpan = time(nullptr);
