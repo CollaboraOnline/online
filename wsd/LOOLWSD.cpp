@@ -197,6 +197,8 @@ static std::mutex DocBrokersMutex;
 static std::vector<std::shared_ptr<LOOLWebSocket> > ClientWebSockets;
 static std::mutex ClientWebSocketsMutex;
 
+extern "C" { void dump_state(void); /* easy for gdb */ }
+
 #if ENABLE_DEBUG
 static int careerSpanSeconds = 0;
 #endif
@@ -3322,7 +3324,6 @@ class LOOLWSDServer
 {
     LOOLWSDServer(LOOLWSDServer&& other) = delete;
     const LOOLWSDServer& operator=(LOOLWSDServer&& other) = delete;
-
 public:
     LOOLWSDServer()
         : _stop(false)
@@ -3369,6 +3370,20 @@ public:
         _stop = true;
     }
 
+    void dumpState()
+    {
+        std::cerr << "LOOLWSDServer:\n"
+                  << "  stop: " << _stop << "\n"
+                  << "  TerminationFlag: " << TerminationFlag << "\n"
+                  << "  isShuttingDown: " << SigUtil::isShuttingDown() << "\n";
+
+        std::cerr << "Server poll:\n";
+        _serverPoll.dumpState();
+
+        std::cerr << "Document poll:\n";
+        _documentPoll.dumpState();
+    }
+
 private:
     std::atomic<bool> _stop;
 
@@ -3383,6 +3398,11 @@ private:
         LOG_INF("Starting master server thread.");
         while (!stop && !TerminationFlag && !SigUtil::isShuttingDown())
         {
+            if (DumpGlobalState)
+            {
+                dump_state();
+                DumpGlobalState = false;
+            }
             serverPoll.poll(30000);
         }
     }
@@ -3396,9 +3416,12 @@ private:
     }
 };
 
+LOOLWSDServer srv;
+
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
 #ifndef FUZZER
+    SigUtil::setUserSignals();
     SigUtil::setFatalSignals();
     SigUtil::setTerminationSignals();
 #endif
@@ -3533,7 +3556,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     srv.start();
 #endif
 
-    LOOLWSDServer srv;
     // TODO loolnb
     SocketAddress addr("127.0.0.1", ClientPortNumber);
     srv.start(addr);
@@ -3740,6 +3762,11 @@ void alertAllUsers(const std::string& msg)
 
 }
 #endif
+
+void dump_state()
+{
+    srv.dumpState();
+}
 
 POCO_SERVER_MAIN(LOOLWSD)
 

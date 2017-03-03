@@ -148,6 +148,8 @@ public:
         return rc;
     }
 
+    virtual void dumpState() {}
+
 protected:
 
     /// Construct based on an existing socket fd.
@@ -291,6 +293,8 @@ public:
         _newCallbacks.emplace_back(fn);
         wakeup();
     }
+
+    void dumpState();
 
 private:
 
@@ -549,6 +553,14 @@ protected:
     virtual int writeData(const char* buf, const int len)
     {
         return ::write(getFD(), buf, len);
+    }
+
+    void dumpState() override
+    {
+        std::cerr << "\t" << getFD() << "\t" << getPollEvents() << "\t"
+            << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
+            << "\n";
+        // FIXME: hex dump buffer contents if we have them.
     }
 
     /// Get the Write Lock.
