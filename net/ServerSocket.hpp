@@ -66,7 +66,17 @@ public:
         // Accept a connection (if any) and set it to non-blocking.
         // We don't care about the client's address, so ignored.
         const int rc = ::accept4(getFD(), nullptr, nullptr, SOCK_NONBLOCK);
-        return (rc != -1 ? _sockFactory->create(rc) : std::shared_ptr<Socket>(nullptr));
+        LOG_DBG("Accepted socket #" << rc << ", creating socket object.");
+        try
+        {
+            return (rc != -1 ? _sockFactory->create(rc) : std::shared_ptr<Socket>(nullptr));
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_SYS("Failed to create client socket #" << rc << ". Error: " << ex.what());
+        }
+
+        return nullptr;
     }
 
     int getPollEvents() override
