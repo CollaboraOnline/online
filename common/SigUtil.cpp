@@ -36,17 +36,15 @@
 #include "Socket.hpp"
 #include "Common.hpp"
 #include "Log.hpp"
-#include "Util.hpp"
 
+/// Flag to request hard termination.
 std::atomic<bool> TerminationFlag(false);
+/// Flag to request dumping of all internal state
 std::atomic<bool> DumpGlobalState(false);
-std::mutex SigHandlerTrap;
-
-/// Flag to shutdown the server.
-std::atomic<bool> ShutdownFlag;
-
 /// Flag to request WSD to notify clients and shutdown.
-static std::atomic<bool> ShutdownRequestFlag(false);
+std::atomic<bool> ShutdownRequestFlag(false);
+
+std::mutex SigHandlerTrap;
 
 namespace SigUtil
 {
@@ -113,34 +111,41 @@ namespace SigUtil
     static
     void handleTerminationSignal(const int signal)
     {
-        // FIXME: would love a socket in all SocketPolls to handle shutdown
-        if (!ShutdownFlag && signal == SIGINT)
+        bool hardExit = false;
+        const char *domain;
+        if (!ShutdownRequestFlag && signal == SIGINT)
         {
-            Log::signalLogPrefix();
-            Log::signalLog(" Shutdown signal received: ");
-            Log::signalLog(signalName(signal));
-            Log::signalLog("\n");
-            SigUtil::requestShutdown();
-            SocketPoll::wakeupWorld();
+            domain = " Shutdown signal received: ";
+            ShutdownRequestFlag = true;
         }
         else if (!TerminationFlag)
         {
-            Log::signalLogPrefix();
-            Log::signalLog(" Forced-Termination signal received: ");
-            Log::signalLog(signalName(signal));
-            Log::signalLog("\n");
+            domain = " Forced-Termination signal received: ";
             TerminationFlag = true;
-            SocketPoll::wakeupWorld();
         }
         else
         {
-            Log::signalLogPrefix();
-            Log::signalLog(" ok, ok - hard-termination signal received: ");
-            Log::signalLog(signalName(signal));
-            Log::signalLog("\n");
+            domain = " ok, ok - hard-termination signal received: ";
+            hardExit = true;
+        }
+        Log::signalLogPrefix();
+        Log::signalLog(domain);
+        Log::signalLog(signalName(signal));
+        Log::signalLog("\n");
+
+        if (!hardExit)
+            SocketPoll::wakeupWorld();
+        else
+        {
             ::signal (signal, SIG_DFL);
             ::raise (signal);
         }
+    }
+
+    void requestShutdown()
+    {
+        ShutdownRequestFlag = true;
+        SocketPoll::wakeupWorld();
     }
 
     void setTerminationSignals()
@@ -271,30 +276,6 @@ namespace SigUtil
         action.sa_handler = handleUserSignal;
 
         sigaction(SIGUSR1, &action, nullptr);
-    }
-
-
-    void requestShutdown()
-    {
-        ShutdownRequestFlag = true;
-    }
-
-    bool handleShutdownRequest()
-    {
-        if (ShutdownRequestFlag)
-        {
-            LOG_INF("Shutdown requested. Initiating WSD shutdown.");
-            Util::alertAllUsers("close: shuttingdown");
-            ShutdownFlag = true;
-            return true;
-        }
-
-        return false;
-    }
-
-    bool isShuttingDown()
-    {
-        return ShutdownFlag;
     }
 
     bool killChild(const int pid)

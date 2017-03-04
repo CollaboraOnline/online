@@ -51,6 +51,16 @@ public:
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
 
+    /// Flag to shutdown the server.
+    std::atomic<bool> ShutdownFlag;
+
+    bool isShuttingDown()
+    {
+        return ShutdownFlag;
+    }
+
+    bool handleShutdownRequest();
+
     static std::string GenSessionId()
     {
         return Util::encodeId(++NextSessionId, 4);
