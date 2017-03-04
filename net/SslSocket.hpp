@@ -24,7 +24,7 @@ public:
     SslStreamSocket(const int fd, std::unique_ptr<SocketHandlerInterface> responseClient) :
         StreamSocket(fd, std::move(responseClient)),
         _ssl(nullptr),
-        _sslWantsTo(SslWantsTo::ReadOrWrite),
+        _sslWantsTo(SslWantsTo::Neither),
         _doHandshake(true)
     {
         LOG_DBG("SslStreamSocket ctor #" << fd);
@@ -125,7 +125,7 @@ private:
     /// The possible next I/O operation that SSL want to do.
     enum class SslWantsTo
     {
-        ReadOrWrite,
+        Neither,
         Read,
         Write
     };
@@ -163,7 +163,7 @@ private:
         if (rc > 0)
         {
             // Success: Reset so we can do either.
-            _sslWantsTo = SslWantsTo::ReadOrWrite;
+            _sslWantsTo = SslWantsTo::Neither;
             return rc;
         }
 
