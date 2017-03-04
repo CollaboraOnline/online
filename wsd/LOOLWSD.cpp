@@ -1771,7 +1771,7 @@ private:
                 }
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws")
                 {
-                    handleClientWsRequest(request, reqPathTokens[1]);
+                    handleClientWsUpgrade(request, reqPathTokens[1]);
                 }
                 else
                 {
@@ -2163,7 +2163,7 @@ private:
         throw BadRequestException("Invalid or unknown request.");
     }
 
-    void handleClientWsRequest(const Poco::Net::HTTPRequest& request, const std::string& url)
+    void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url)
     {
         // requestHandler = new ClientRequestHandler();
         LOG_INF("Client WS request" << request.getURI() << ", url: " << url);
@@ -2209,7 +2209,9 @@ private:
         {
             _clientSession = createNewClientSession(ws, _id, uriPublic, docBroker, isReadOnly);
             if (_clientSession)
+            {
                 _clientSession->onConnect(_socket);
+            }
         }
         if (!docBroker || !_clientSession)
             LOG_WRN("Failed to connect DocBroker and Client Session.");
@@ -2348,22 +2350,22 @@ public:
     ~LOOLWSDServer()
     {
         stop();
-        if (_serverThread.joinable())
-            _serverThread.join();
-        if (_documentThread.joinable())
-            _documentThread.join();
+        if (_acceptThread.joinable())
+            _acceptThread.join();
+        if (_webServerThread.joinable())
+            _webServerThread.join();
     }
 
     void start(const int port)
     {
         std::shared_ptr<ServerSocket> serverSocket = findServerPort(port);
 
-        _serverPoll.insertNewSocket(serverSocket);
+        _acceptPoll.insertNewSocket(serverSocket);
 
-        _serverThread = std::thread(runServer, std::ref(_stop), std::ref(_serverPoll));
+        _acceptThread = std::thread(runServer, std::ref(_stop), std::ref(_acceptPoll));
 
         // TODO loolnb - we need a documentThread per document
-        _documentThread = std::thread(runDocument, std::ref(_stop), std::ref(_documentPoll));
+        _webServerThread = std::thread(runDocument, std::ref(_stop), std::ref(_webServerPoll));
     }
 
     void stop()
@@ -2379,21 +2381,24 @@ public:
                   << "  isShuttingDown: " << ShutdownRequestFlag << "\n";
 
         std::cerr << "Server poll:\n";
-        _serverPoll.dumpState();
+        _acceptPoll.dumpState();
 
         std::cerr << "Document poll:\n";
-        _documentPoll.dumpState();
+        _webServerPoll.dumpState();
     }
 
 private:
     std::atomic<bool> _stop;
 
-    SocketPoll _serverPoll;
-    std::thread _serverThread;
+    /// This thread & poll accepts incoming connections.
+    SocketPoll _acceptPoll;
+    std::thread _acceptThread;
 
-    // TODO loolnb - we need a documentThread per document
-    SocketPoll _documentPoll;
-    std::thread _documentThread;
+    /// This thread polls basic web serving, and handling of
+    /// websockets before upgrade: when upgraded they go to the
+    /// relevant DocumentBroker poll instead.
+    SocketPoll _webServerPoll;
+    std::thread _webServerThread;
 
     static void runServer(std::atomic<bool>& stop, SocketPoll& serverPoll) {
         LOG_INF("Starting master server thread.");
@@ -2418,7 +2423,7 @@ private:
 
     std::shared_ptr<ServerSocket> getServerSocket(const Poco::Net::SocketAddress& addr)
     {
-        std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(_documentPoll,
+        std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(_webServerPoll,
 #if ENABLE_SSL
         LOOLWSD::isSSLEnabled() ? std::unique_ptr<SocketFactory>{ new SslSocketFactory() } :
 #endif
