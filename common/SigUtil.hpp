@@ -13,6 +13,9 @@
 #include <atomic>
 #include <mutex>
 
+/// Flag to commence clean shutdown
+extern std::atomic<bool> ShutdownRequestFlag;
+
 /// Flag to stop pump loops.
 extern std::atomic<bool> TerminationFlag;
 
@@ -47,15 +50,6 @@ namespace SigUtil
     /// This flags the server to notify clients first
     /// then flags for shutdown.
     void requestShutdown();
-
-    /// Checks for shutdown request and,
-    /// after notifying clients, flags for
-    /// shutting down.
-    /// Returns true if shutdown is requested.
-    bool handleShutdownRequest();
-
-    /// Returns true if Shutdown is in progress.
-    bool isShuttingDown();
 
     /// Kills a child process and returns true when
     /// child pid is removed from the process table

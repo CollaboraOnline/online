@@ -1163,7 +1163,7 @@ private:
                     return session->handleInput(payload.data(), payload.size());
                 },
                 [&session]() { session->closeFrame(); },
-                []() { return TerminationFlag || SigUtil::isShuttingDown(); });
+                []() { return TerminationFlag || isShuttingDown(); });
 
             // Connection terminated. Destroy session.
             LOG_DBG("Client session [" << id << "] on docKey [" << docKey << "] terminated. Cleaning up.");
@@ -1216,7 +1216,7 @@ private:
                 // respond close frame
                 ws->shutdown();
             }
-            else if (!SigUtil::isShuttingDown())
+            else if (!isShuttingDown())
             {
                 // something wrong, with internal exceptions
                 LOG_TRC("Abnormal close handshake.");
@@ -3260,7 +3260,7 @@ private:
                 // respond with close frame
                 _clientSession->shutdown();
             }
-            else if (!SigUtil::isShuttingDown())
+            else if (!ShutdownRequestFlag)
             {
                 // something wrong, with internal exceptions
                 LOG_TRC("Abnormal close handshake.");
@@ -3361,7 +3361,7 @@ public:
         std::cerr << "LOOLWSDServer:\n"
                   << "  stop: " << _stop << "\n"
                   << "  TerminationFlag: " << TerminationFlag << "\n"
-                  << "  isShuttingDown: " << SigUtil::isShuttingDown() << "\n";
+                  << "  isShuttingDown: " << ShutdownRequestFlag << "\n";
 
         std::cerr << "Server poll:\n";
         _serverPoll.dumpState();
@@ -3382,7 +3382,7 @@ private:
 
     static void runServer(std::atomic<bool>& stop, SocketPoll& serverPoll) {
         LOG_INF("Starting master server thread.");
-        while (!stop && !TerminationFlag && !SigUtil::isShuttingDown())
+        while (!stop && !TerminationFlag && !ShutdownRequestFlag)
         {
             if (DumpGlobalState)
             {
@@ -3395,7 +3395,7 @@ private:
 
     static void runDocument(std::atomic<bool>& stop, SocketPoll& documentPoll) {
         LOG_INF("Starting document thread.");
-        while (!stop && !TerminationFlag && !SigUtil::isShuttingDown())
+        while (!stop && !TerminationFlag && !ShutdownRequestFlag)
         {
             documentPoll.poll(5000);
         }
@@ -3435,6 +3435,19 @@ private:
 };
 
 LOOLWSDServer srv;
+
+bool LOOLWSD::handleShutdownRequest()
+{
+    if (ShutdownRequestFlag)
+    {
+        LOG_INF("Shutdown requested. Initiating WSD shutdown.");
+        Util::alertAllUsers("close: shuttingdown");
+        ShutdownFlag = true;
+        return true;
+    }
+
+    return false;
+}
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
@@ -3582,10 +3595,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #endif
 
     auto last30SecCheckTime = std::chrono::steady_clock::now();
-    while (!TerminationFlag && !SigUtil::isShuttingDown())
+    while (!TerminationFlag && !ShutdownRequestFlag)
     {
         UnitWSD::get().invokeTest();
-        if (TerminationFlag || SigUtil::handleShutdownRequest())
+        if (TerminationFlag || handleShutdownRequest())
         {
             break;
         }
@@ -3663,7 +3676,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // Stop the listening to new connections
     // and wait until sockets close.
     LOG_INF("Stopping server socket listening. ShutdownFlag: " <<
-            SigUtil::isShuttingDown() << ", TerminationFlag: " << TerminationFlag);
+            ShutdownRequestFlag << ", TerminationFlag: " << TerminationFlag);
 
     // Wait until documents are saved and sessions closed.
     srv.stop();
@@ -3705,7 +3718,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         FileUtil::removeFile(path, true);
     }
 
-    if (SigUtil::isShuttingDown())
+    if (isShuttingDown())
     {
         // At this point there should be no other thread, but...
         std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
