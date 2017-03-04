@@ -28,6 +28,7 @@
 #include "LOOLWebSocket.hpp"
 #include "TileDesc.hpp"
 #include "Util.hpp"
+#include "net/Socket.hpp"
 
 #include "common/SigUtil.hpp"
 
@@ -207,11 +208,18 @@ public:
     /// Dummy document broker that is marked to destroy.
     DocumentBroker();
 
+    /// Use create - not this constructor ...
+    /// FIXME: friend with make_shared etc.
     DocumentBroker(const std::string& uri,
                    const Poco::URI& uriPublic,
                    const std::string& docKey,
-                   const std::string& childRoot,
-                   const std::shared_ptr<ChildProcess>& childProcess);
+                   const std::string& childRoot);
+public:
+    static std::shared_ptr<DocumentBroker> create(
+                   const std::string& uri,
+                   const Poco::URI& uriPublic,
+                   const std::string& docKey,
+                   const std::string& childRoot);
 
     ~DocumentBroker();
 
@@ -240,7 +248,7 @@ public:
     const std::string& getDocKey() const { return _docKey; }
     const std::string& getFilename() const { return _filename; };
     TileCache& tileCache() { return *_tileCache; }
-    bool isAlive() const { return _childProcess && _childProcess->isAlive(); }
+    bool isAlive() const;
     size_t getSessionsCount() const
     {
         Util::assertIsLocked(_mutex);
@@ -332,6 +340,10 @@ private:
     /// Forward a message from child session to its respective client session.
     bool forwardToClient(const std::shared_ptr<Message>& payload);
 
+    /// The thread function that all of the I/O for all sessions
+    /// associated with this document.
+    static void pollThread(std::shared_ptr<DocumentBroker> docBroker);
+
 private:
     const std::string _uriOrig;
     const Poco::URI _uriPublic;
@@ -366,6 +378,9 @@ private:
     mutable std::mutex _mutex;
     std::condition_variable _saveCV;
     std::mutex _saveMutex;
+    SocketPoll _poll;
+    std::thread _thread;
+    std::atomic<bool> _stop;
 
     /// Versioning is used to prevent races between
     /// painting and invalidation.

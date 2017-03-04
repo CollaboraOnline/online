@@ -21,7 +21,10 @@
 
 #include "Util.hpp"
 
+class ChildProcess;
 class TraceFileWriter;
+
+std::shared_ptr<ChildProcess> getNewChild_Blocks();
 
 /// The Server class which is responsible for all
 /// external interactions.
