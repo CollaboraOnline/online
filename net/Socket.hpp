@@ -370,13 +370,17 @@ public:
         _socketHandler(std::move(socketHandler)),
         _closed(false)
     {
-        // Without a handler we make no sense.
+        LOG_DBG("StreamSocket ctor #" << fd);
+
+        // Without a handler we make no sense object.
         if (!_socketHandler)
             throw std::runtime_error("StreamSocket expects a valid SocketHandler instance.");
     }
 
     ~StreamSocket()
     {
+        LOG_DBG("StreamSocket dtor #" << getFD());
+
         if (!_closed)
             _socketHandler->onDisconnect();
     }

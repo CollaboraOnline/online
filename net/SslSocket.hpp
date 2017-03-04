@@ -27,6 +27,8 @@ public:
         _sslWantsTo(SslWantsTo::ReadOrWrite),
         _doHandshake(true)
     {
+        LOG_DBG("SslStreamSocket ctor #" << fd);
+
         BIO* bio = BIO_new(BIO_s_socket());
         if (bio == nullptr)
         {
@@ -50,6 +52,8 @@ public:
 
     ~SslStreamSocket()
     {
+        LOG_DBG("SslStreamSocket dtor #" << getFD());
+
         shutdown();
         SSL_free(_ssl);
     }
@@ -166,6 +170,7 @@ private:
         // Last operation failed. Find out if SSL was trying
         // to do something different that failed, or not.
         const int sslError = SSL_get_error(_ssl, rc);
+        LOG_TRC("SSL error: " << sslError);
         switch (sslError)
         {
         case SSL_ERROR_ZERO_RETURN:
@@ -198,6 +203,7 @@ private:
             {
                 // The error is comming from BIO. Find out what happened.
                 const long bioError = ERR_get_error();
+                LOG_TRC("BIO error: " << bioError);
                 if (bioError == 0)
                 {
                     if (rc == 0)
