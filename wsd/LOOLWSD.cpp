@@ -467,7 +467,7 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     return count;
 }
 
-static std::shared_ptr<ChildProcess> getNewChild()
+static std::shared_ptr<ChildProcess> getNewChild_Blocks()
 {
     Util::assertIsLocked(DocBrokersMutex);
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
@@ -494,6 +494,7 @@ static std::shared_ptr<ChildProcess> getNewChild()
 #endif
         LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
         const auto timeout = chrono::milliseconds(timeoutMs);
+        // FIXME: blocks ...
         if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
         {
             auto child = NewChildren.back();
@@ -593,7 +594,7 @@ private:
     /// Handle POST requests.
     /// Always throw on error, do not set response status here.
     /// Returns true if a response has been sent.
-    static bool handlePostRequest(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
+    static bool handlePostRequest_Blocks(HTTPServerRequest& request, HTTPServerResponse& response, const std::string& id)
     {
         LOG_INF("Post request: [" << request.getURI() << "]");
         StringTokenizer tokens(request.getURI(), "/?");
@@ -619,7 +620,7 @@ private:
                     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                     // Request a kit process for this doc.
-                    auto child = getNewChild();
+                    auto child = getNewChild_Blocks();
                     if (!child)
                     {
                         // Let the client know we can't serve now.
@@ -831,7 +832,7 @@ private:
     }
 
     /// Handle GET requests.
-    static void handleGetRequest(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id)
+    static void handleGetRequest_Blocks(const std::string& uri, std::shared_ptr<LOOLWebSocket>& ws, const std::string& id)
     {
         LOG_INF("Starting GET request handler for session [" << id << "] on url [" << uri << "].");
         try
@@ -868,7 +869,7 @@ private:
             int retry = 3;
             while (retry-- > 0)
             {
-                auto docBroker = findOrCreateDocBroker(uri, docKey, ws, id, uriPublic);
+                auto docBroker = findOrCreateDocBroker_Blocks(uri, docKey, ws, id, uriPublic);
                 if (docBroker)
                 {
                     auto session = createNewClientSession(ws, id, uriPublic, docBroker, isReadOnly);
@@ -917,11 +918,11 @@ private:
     /// Otherwise, creates and adds a new one to DocBrokers.
     /// May return null if terminating or MaxDocuments limit is reached.
     /// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-    static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(const std::string& uri,
-                                                                 const std::string& docKey,
-                                                                 std::shared_ptr<LOOLWebSocket>& ws,
-                                                                 const std::string& id,
-                                                                 const Poco::URI& uriPublic)
+    static std::shared_ptr<DocumentBroker> findOrCreateDocBroker_Blocks(const std::string& uri,
+                                                                        const std::string& docKey,
+                                                                        std::shared_ptr<LOOLWebSocket>& ws,
+                                                                        const std::string& id,
+                                                                        const Poco::URI& uriPublic)
     {
         LOG_INF("Find or create DocBroker for docKey [" << docKey <<
                 "] for session [" << id << "] on url [" << uriPublic.toString() << "].");
@@ -1029,10 +1030,10 @@ private:
         return docBroker;
     }
 
-    static std::shared_ptr<DocumentBroker> createNewDocBroker(const std::string& uri,
-                                                              const std::string& docKey,
-                                                              std::shared_ptr<LOOLWebSocket>& ws,
-                                                              const Poco::URI& uriPublic)
+    static std::shared_ptr<DocumentBroker> createNewDocBroker_Blocks(const std::string& uri,
+                                                                     const std::string& docKey,
+                                                                     std::shared_ptr<LOOLWebSocket>& ws,
+                                                                     const Poco::URI& uriPublic)
     {
         Util::assertIsLocked(DocBrokersMutex);
 
@@ -1045,7 +1046,8 @@ private:
         }
 
         // Request a kit process for this doc.
-        auto child = getNewChild();
+        // FIXME: Blocks !
+        auto child = getNewChild_Blocks();
         if (!child)
         {
             // Let the client know we can't serve now.
@@ -1372,13 +1374,13 @@ public:
                      reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
             {
                 // All post requests have url prefix 'lool'.
-                responded = handlePostRequest(request, response, id);
+                responded = handlePostRequest_Blocks(request, response, id);
             }
             else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws")
             {
                 auto ws = std::make_shared<LOOLWebSocket>(request, response);
                 responded = true; // After upgrading to WS we should not set HTTP response.
-                handleGetRequest(reqPathTokens[1], ws, id);
+                handleGetRequest_Blocks(reqPathTokens[1], ws, id);
             }
             else
             {
@@ -2346,10 +2348,10 @@ bool LOOLWSD::createForKit()
 std::mutex Connection::Mutex;
 #endif
 
-static std::shared_ptr<DocumentBroker> createDocBroker(WebSocketHandler& ws,
-                                                       const std::string& uri,
-                                                       const std::string& docKey,
-                                                       const Poco::URI& uriPublic)
+static std::shared_ptr<DocumentBroker> createDocBroker_Blocks(WebSocketHandler& ws,
+                                                              const std::string& uri,
+                                                              const std::string& docKey,
+                                                              const Poco::URI& uriPublic)
 {
     Util::assertIsLocked(DocBrokersMutex);
 
@@ -2362,7 +2364,9 @@ static std::shared_ptr<DocumentBroker> createDocBroker(WebSocketHandler& ws,
     }
 
     // Request a kit process for this doc.
-    auto child = getNewChild();
+
+    // FIXME: blocks !
+    auto child = getNewChild_Blocks();
     if (!child)
     {
         // Let the client know we can't serve now.
@@ -2384,11 +2388,11 @@ static std::shared_ptr<DocumentBroker> createDocBroker(WebSocketHandler& ws,
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
 /// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& ws,
-                                                             const std::string& uri,
-                                                             const std::string& docKey,
-                                                             const std::string& id,
-                                                             const Poco::URI& uriPublic)
+static std::shared_ptr<DocumentBroker> findOrCreateDocBroker_Blocks(WebSocketHandler& ws,
+                                                                    const std::string& uri,
+                                                                    const std::string& docKey,
+                                                                    const std::string& id,
+                                                                    const Poco::URI& uriPublic)
 {
     LOG_INF("Find or create DocBroker for docKey [" << docKey <<
             "] for session [" << id << "] on url [" << uriPublic.toString() << "].");
@@ -2423,6 +2427,8 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
             bool timedOut = true;
             for (size_t i = 0; i < COMMAND_TIMEOUT_MS / POLL_TIMEOUT_MS; ++i)
             {
+
+                // FIXME: blocks !
                 std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
 
                 docBrokersLock.lock();
@@ -2490,7 +2496,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
 
     if (!docBroker)
     {
-        docBroker = createDocBroker(ws, uri, docKey, uriPublic);
+        docBroker = createDocBroker_Blocks(ws, uri, docKey, uriPublic);
     }
 
     return docBroker;
@@ -2719,11 +2725,11 @@ private:
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
                 {
                     // All post requests have url prefix 'lool'.
-                    handlePostRequest(request, message);
+                    handlePostRequest_Blocks(request, message);
                 }
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws")
                 {
-                    handleClientWsRequest(request, reqPathTokens[1]);
+                    handleClientWsRequest_Blocks(request, reqPathTokens[1]);
                 }
                 else
                 {
@@ -2878,7 +2884,7 @@ private:
         return "application/octet-stream";
     }
 
-    void handlePostRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
+    void handlePostRequest_Blocks(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
     {
         LOG_INF("Post request: [" << request.getURI() << "]");
 
@@ -2908,7 +2914,7 @@ private:
                     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                     // Request a kit process for this doc.
-                    auto child = getNewChild();
+                    auto child = getNewChild_Blocks();
                     if (!child)
                     {
                         // Let the client know we can't serve now.
@@ -3124,7 +3130,7 @@ private:
         throw BadRequestException("Invalid or unknown request.");
     }
 
-    void handleClientWsRequest(const Poco::Net::HTTPRequest& request, const std::string& url)
+    void handleClientWsRequest_Blocks(const Poco::Net::HTTPRequest& request, const std::string& url)
     {
         // requestHandler = new ClientRequestHandler();
         LOG_INF("Client WS request" << request.getURI() << ", url: " << url);
@@ -3164,11 +3170,13 @@ private:
 
         LOG_INF("URL [" << url << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
 
+        // FIXME: we need to push this all out into its own thread - to not block.
+
         // Request a kit process for this doc.
         int retry = 3;
         while (retry-- > 0)
         {
-            auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
+            auto docBroker = findOrCreateDocBroker_Blocks(ws, url, docKey, _id, uriPublic);
             if (docBroker)
             {
                 _clientSession = createNewClientSession(ws, _id, uriPublic, docBroker, isReadOnly);
