@@ -3339,6 +3339,8 @@ public:
         stop();
         if (_serverThread.joinable())
             _serverThread.join();
+        if (_documentThread.joinable())
+            _documentThread.join();
     }
 
     void start(const Poco::Net::SocketAddress& addr)
