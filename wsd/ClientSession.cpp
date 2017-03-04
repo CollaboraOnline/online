@@ -40,6 +40,7 @@ ClientSession::ClientSession(const std::string& id,
 {
     LOG_INF("ClientSession ctor [" << getName() << "].");
 
+    // FIXME: one thread per client session [!?].
     _senderThread = std::thread([this]{ senderThread(); });
 }
 

@@ -147,14 +147,12 @@ std::string DocumentBroker::getDocKey(const Poco::URI& uri)
 DocumentBroker::DocumentBroker(const std::string& uri,
                                const Poco::URI& uriPublic,
                                const std::string& docKey,
-                               const std::string& childRoot,
-                               const std::shared_ptr<ChildProcess>& childProcess) :
+                               const std::string& childRoot) :
     _uriOrig(uri),
     _uriPublic(uriPublic),
     _docKey(docKey),
     _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
-    _childProcess(childProcess),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _markToDestroy(false),
     _lastEditableSession(false),
@@ -171,6 +169,57 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     assert(!_childRoot.empty());
 
     LOG_INF("DocumentBroker [" << _uriPublic.toString() << "] created. DocKey: [" << _docKey << "]");
+
+    _stop = false;
+}
+
+std::shared_ptr<DocumentBroker> DocumentBroker::create(
+    const std::string& uri,
+    const Poco::URI& uriPublic,
+    const std::string& docKey,
+    const std::string& childRoot)
+{
+    std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, childRoot);
+    docBroker->_thread = std::thread(pollThread, docBroker);
+    return docBroker;
+}
+
+void DocumentBroker::pollThread(std::shared_ptr<DocumentBroker> docBroker)
+{
+    // Request a kit process for this doc.
+    docBroker->_childProcess = getNewChild_Blocks();
+    if (!docBroker->_childProcess)
+    {
+        // Let the client know we can't serve now.
+        LOG_ERR("Failed to get new child.");
+
+        // FIXME: need to notify all clients and shut this down ...
+#if 0
+        const std::string msg = SERVICE_UNAVAILABLE_INTERNAL_ERROR;
+        ws.sendFrame(msg);
+        // abnormal close frame handshake
+        ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
+#endif
+        // FIXME: return something good down the websocket ...
+        docBroker->_stop = true;
+    }
+    docBroker->_childProcess->setDocumentBroker(docBroker);
+
+    // Main polling loop goodness.
+    while (!docBroker->_stop && !TerminationFlag && !ShutdownRequestFlag)
+    {
+        docBroker->_poll.poll(5000);
+    }
+}
+
+bool DocumentBroker::isAlive() const
+{
+    if (!_childProcess)
+        return true; // waiting to get a child.
+    if (_stop) // we're dead.
+        return false;
+
+    return _childProcess->isAlive();
 }
 
 DocumentBroker::~DocumentBroker()
@@ -188,6 +237,9 @@ DocumentBroker::~DocumentBroker()
     // Need to first make sure the child exited, socket closed,
     // and thread finished before we are destroyed.
     _childProcess.reset();
+
+    if (_thread.joinable())
+        _thread.join();
 }
 
 bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::string& jailId)
