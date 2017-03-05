@@ -6,10 +6,12 @@
 L.WriterTileLayer = L.TileLayer.extend({
 
 	newAnnotation: function (comment) {
-		if (!comment.anchorPos) {
+		if (!comment.anchorPos && this._isCursorVisible) {
 			comment.anchorPos = this._latLngToTwips(this._visibleCursor.getNorthWest());
 		}
-		this._annotations.add(comment, true);
+		if (comment.anchorPos) {
+			this._annotations.add(comment, true);
+		}
 	},
 
 	onAdd: function (map) {

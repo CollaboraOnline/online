@@ -200,6 +200,7 @@ L.Control.Menubar = L.Control.extend({
 			},
 			{name: _('Insert'), type: 'menu', menu: [
 				{name: _('Image'), id: 'insertgraphic', type: 'action'},
+				{name: _('Comment...'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
 				{name: _('Special character...'), id: 'specialcharacter', type: 'action'}]
 			},

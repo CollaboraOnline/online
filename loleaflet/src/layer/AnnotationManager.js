@@ -53,6 +53,9 @@ L.AnnotationManager = L.Class.extend({
 		this.clear();
 		for (var index in comments) {
 			comment = comments[index];
+			if (!comment.anchorPos) {
+				continue;
+			}
 			comment.anchorPos = L.LOUtil.stringToPoint(comment.anchorPos);
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
 		}
@@ -194,10 +197,11 @@ L.AnnotationManager = L.Class.extend({
 		var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
 
 		if (obj.comment.action === 'Add') {
-			obj.comment.anchorPos = L.LOUtil.stringToPoint(obj.comment.anchorPos);
 			var added = this.getItem('new');
 			if (added) {
 				delete obj.comment.action;
+				obj.comment.anchorPos = obj.comment.anchorPos ? L.LOUtil.stringToPoint(obj.comment.anchorPos) :
+					added._data.anchorPos;
 				added._data = obj.comment;
 				this._items.sort(function(a, b) {
 					return Math.abs(a._data.anchorPos.y) - Math.abs(b._data.anchorPos.y) ||
@@ -215,9 +219,10 @@ L.AnnotationManager = L.Class.extend({
 				this.remove(obj.comment.id);
 			}
 		} else if (obj.comment.action === 'Modify') {
-			obj.comment.anchorPos = L.LOUtil.stringToPoint(obj.comment.anchorPos);
 			var modified = this.getItem(obj.comment.id);
 			if (modified) {
+				obj.comment.anchorPos = obj.comment.anchorPos ? L.LOUtil.stringToPoint(obj.comment.anchorPos) :
+					modified._data.anchorPos;
 				modified._data = obj.comment;
 				modified.update();
 				this.update();
