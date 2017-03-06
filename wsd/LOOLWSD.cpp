@@ -560,6 +560,7 @@ public:
     }
 };
 
+#if 0
 /// Handler of announcements that a new loolkit process was created.
 ///
 /// loolforkit is creating the loolkit processes.  That happens
@@ -582,40 +583,6 @@ public:
 
     static void handlePrisonerRequest(HTTPServerRequest& request, HTTPServerResponse& response)
     {
-        LOG_TRC("Child connection with URI [" << request.getURI() << "].");
-        assert(request.serverAddress().port() == MasterPortNumber);
-        if (request.getURI().find(NEW_CHILD_URI) != 0)
-        {
-            LOG_ERR("Invalid incoming URI.");
-            return;
-        }
-
-        // New Child is spawned.
-        const auto params = Poco::URI(request.getURI()).getQueryParameters();
-        Poco::Process::PID pid = -1;
-        for (const auto& param : params)
-        {
-            if (param.first == "pid")
-            {
-                pid = std::stoi(param.second);
-            }
-            else if (param.first == "version")
-            {
-                LOOLWSD::LOKitVersion = param.second;
-            }
-        }
-
-        if (pid <= 0)
-        {
-            LOG_ERR("Invalid PID in child URI [" << request.getURI() << "].");
-            return;
-        }
-
-        LOG_INF("New child [" << pid << "].");
-        auto ws = std::make_shared<LOOLWebSocket>(request, response);
-        UnitWSD::get().newChild(ws);
-
-        addNewChild(std::make_shared<ChildProcess>(pid, ws));
     }
 };
 
@@ -642,6 +609,7 @@ public:
         return new PrisonerRequestHandler();
     }
 };
+#endif
 
 namespace
 {
@@ -1630,6 +1598,170 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
     return nullptr;
 }
 
+class PrisonerRequestDispatcher : public WebSocketHandler
+{
+    std::weak_ptr<ChildProcess> _childProcess;
+public:
+    PrisonerRequestDispatcher()
+    {
+    }
+    ~PrisonerRequestDispatcher()
+    {
+        // Notify the broker that we're done.
+        auto child = _childProcess.lock();
+        auto docBroker = child ? child->_docBroker.lock() : nullptr;
+        if (docBroker)
+        {
+            // FIXME: No need to notify if asked to stop.
+            docBroker->childSocketTerminated();
+        }
+    }
+
+private:
+    /// Keep our socket around ...
+    void onConnect(const std::weak_ptr<StreamSocket>& socket) override
+    {
+        LOG_TRC("Prisoner - new socket\n");
+        _socket = socket;
+        LOG_TRC("Prisoner connection disconnected\n");
+    }
+
+    void onDisconnect() override
+    {
+        LOG_TRC("Prisoner connection disconnected\n");
+    }
+
+    /// Called after successful socket reads.
+    void handleIncomingMessage() override
+    {
+        if (_childProcess.lock())
+        {
+            // FIXME: inelegant etc. - derogate to websocket code
+            WebSocketHandler::handleIncomingMessage();
+            return;
+        }
+
+        auto socket = _socket.lock();
+        std::vector<char>& in = socket->_inBuffer;
+
+        // Find the end of the header, if any.
+        static const std::string marker("\r\n\r\n");
+        auto itBody = std::search(in.begin(), in.end(),
+                                  marker.begin(), marker.end());
+        if (itBody == in.end())
+        {
+            LOG_TRC("#" << socket->getFD() << " doesn't have enough data yet.");
+            return;
+        }
+
+        // Skip the marker.
+        itBody += marker.size();
+
+        Poco::MemoryInputStream message(&in[0], in.size());
+        Poco::Net::HTTPRequest request;
+        try
+        {
+            request.read(message);
+
+            auto logger = Log::info();
+            // logger << "Request from " << request.clientAddress().toString() << ": "
+            logger << "Prisoner request : "
+                   << request.getMethod() << " " << request.getURI() << " "
+                   << request.getVersion();
+
+            for (const auto& it : request)
+            {
+                logger << " / " << it.first << ": " << it.second;
+            }
+
+            logger << Log::end;
+
+            LOG_TRC("Child connection with URI [" << request.getURI() << "].");
+            if (request.getURI().find(NEW_CHILD_URI) != 0)
+            {
+                LOG_ERR("Invalid incoming URI.");
+                return;
+            }
+
+            // New Child is spawned.
+            const auto params = Poco::URI(request.getURI()).getQueryParameters();
+            Poco::Process::PID pid = -1;
+            for (const auto& param : params)
+            {
+                if (param.first == "pid")
+                {
+                    pid = std::stoi(param.second);
+                }
+                else if (param.first == "version")
+                {
+                    LOOLWSD::LOKitVersion = param.second;
+                }
+            }
+
+            if (pid <= 0)
+            {
+                LOG_ERR("Invalid PID in child URI [" << request.getURI() << "].");
+                return;
+            }
+
+            LOG_INF("New child [" << pid << "].");
+
+            // FIXME:
+            /* if (UnitWSD::get().filterHandleRequest(
+               UnitWSD::TestRequest::Prisoner,
+               request, response))
+               return; */
+
+            auto child = std::make_shared<ChildProcess>(pid, _socket.lock(), request);
+            _childProcess = child; // weak
+            addNewChild(child);
+
+            in.clear();
+        }
+        catch (const std::exception& exc)
+        {
+            // Probably don't have enough data just yet.
+            // TODO: timeout if we never get enough.
+            return;
+        }
+    }
+
+    /// Prisoner websocket fun ... (for now)
+    virtual void handleMessage(bool /*fin*/, WSOpCode /* code */, std::vector<char> &data)
+    {
+        if (UnitWSD::get().filterChildMessage(data))
+            return;
+
+        LOG_TRC("Prisoner message [" << getAbbreviatedMessage(&data[0], data.size()) << "].");
+
+        auto child = _childProcess.lock();
+        auto docBroker = child ? child->_docBroker.lock() : nullptr;
+        if (docBroker)
+        {
+            // We should never destroy the broker, since
+            // it owns us and will wait on this thread.
+            // FIXME: loolnb - check that comment !
+            assert(docBroker.use_count() > 1);
+            docBroker->handleInput(data);
+            return;
+        }
+
+        LOG_WRN("Child " << child->_pid <<
+                " has no DocumentBroker to handle message: [" <<
+                LOOLProtocol::getAbbreviatedMessage(data) << "].");
+    }
+
+    bool hasQueuedWrites() const override
+    {
+        LOG_TRC("PrisonerRequestDispatcher - asked for queued writes");
+        return false;
+    }
+
+    void performWrites() override
+    {
+    }
+};
+
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher : public SocketHandlerInterface
 {
@@ -2348,6 +2480,14 @@ class SslSocketFactory : public SocketFactory
 };
 #endif
 
+class PrisonerSocketFactory : public SocketFactory
+{
+    std::shared_ptr<Socket> create(const int fd) override
+    {
+        return StreamSocket::create<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new PrisonerRequestDispatcher });
+    }
+};
+
 /// The main server thread.
 ///
 /// Waits for the connections from the loleaflets, and creates the
@@ -2367,25 +2507,30 @@ public:
         stop();
         if (_acceptThread.joinable())
             _acceptThread.join();
+        if (_prisonerThread.joinable())
+            _prisonerThread.join();
         if (_webServerThread.joinable())
             _webServerThread.join();
     }
 
+    void startPrisoners(const int port)
+    {
+        _prisonerPoll.insertNewSocket(findPrisonerServerPort(port));
+        _prisonerThread = std::thread(runPrisonerManager, std::ref(_stop), std::ref(_prisonerPoll));
+    }
+
     void start(const int port)
     {
-        std::shared_ptr<ServerSocket> serverSocket = findServerPort(port);
-
-        _acceptPoll.insertNewSocket(serverSocket);
-
+        _acceptPoll.insertNewSocket(findServerPort(port));
         _acceptThread = std::thread(runServer, std::ref(_stop), std::ref(_acceptPoll));
 
-        // TODO loolnb - we need a documentThread per document
-        _webServerThread = std::thread(runDocument, std::ref(_stop), std::ref(_webServerPoll));
+        _webServerThread = std::thread(runWebServer, std::ref(_stop), std::ref(_webServerPoll));
     }
 
     void stop()
     {
         _stop = true;
+        SocketPoll::wakeupWorld();
     }
 
     void dumpState()
@@ -2400,6 +2545,9 @@ public:
 
         std::cerr << "Web Server poll:\n";
         _webServerPoll.dumpState();
+
+        std::cerr << "Prisoner poll:\n";
+        _prisonerPoll.dumpState();
 
         std::cerr << "Document Broker polls:\n";
         for (auto &i : DocBrokers)
@@ -2419,6 +2567,10 @@ private:
     SocketPoll _webServerPoll;
     std::thread _webServerThread;
 
+    /// This thread listens for and accepts prisoner kit processes
+    SocketPoll _prisonerPoll;
+    std::thread _prisonerThread;
+
     static void runServer(std::atomic<bool>& stop, SocketPoll& serverPoll) {
         LOG_INF("Starting master server thread.");
         while (!stop && !TerminationFlag && !ShutdownRequestFlag)
@@ -2432,40 +2584,78 @@ private:
         }
     }
 
-    static void runDocument(std::atomic<bool>& stop, SocketPoll& documentPoll) {
-        LOG_INF("Starting document thread.");
+    static void runWebServer(std::atomic<bool>& stop, SocketPoll& documentPoll) {
+        LOG_INF("Starting web server thread.");
         while (!stop && !TerminationFlag && !ShutdownRequestFlag)
         {
             documentPoll.poll(5000);
         }
     }
 
-    std::shared_ptr<ServerSocket> getServerSocket(const Poco::Net::SocketAddress& addr)
+    static void runPrisonerManager(std::atomic<bool>& stop, SocketPoll& prisonerPoll) {
+        LOG_INF("Starting document thread.");
+        while (!stop && !TerminationFlag && !ShutdownRequestFlag)
+        {
+            prisonerPoll.poll(5000);
+        }
+    }
+
+    std::shared_ptr<ServerSocket> getServerSocket(const Poco::Net::SocketAddress& addr,
+                                                  SocketPoll &poll,
+                                                  std::shared_ptr<SocketFactory> factory)
     {
-        std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(_webServerPoll,
-#if ENABLE_SSL
-        LOOLWSD::isSSLEnabled() ? std::unique_ptr<SocketFactory>{ new SslSocketFactory() } :
-#endif
-                                  std::unique_ptr<SocketFactory>{ new PlainSocketFactory() });
+        std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(poll, factory);
 
         if (serverSocket->bind(addr) &&
             serverSocket->listen())
-        {
             return serverSocket;
-        }
 
         return nullptr;
+    }
+
+    std::shared_ptr<ServerSocket> findPrisonerServerPort(int port)
+    {
+        std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
+        std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress("127.0.0.1", port),
+                                                               _prisonerPoll, factory);
+
+        if (!UnitWSD::isUnitTesting() && !socket)
+        {
+            LOG_FTL("Failed to listen on Prisoner master port (" <<
+                    MasterPortNumber << "). Exiting.");
+            _exit(Application::EXIT_SOFTWARE);
+        }
+
+        while (!socket)
+        {
+            ++port;
+            LOG_INF("Prisoner port " << (port - 1) << " is busy, trying " << port << ".");
+            socket = getServerSocket(SocketAddress("127.0.0.1", port),
+                                     _prisonerPoll, factory);
+        }
+
+        return socket;
     }
 
     std::shared_ptr<ServerSocket> findServerPort(int port)
     {
         LOG_INF("Trying to listen on client port " << port << ".");
-        std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress("127.0.0.1", port));
+        std::shared_ptr<SocketFactory> factory;
+#if ENABLE_SSL
+        if (LOOLWSD::isSSLEnabled())
+            factory = std::make_shared<SslSocketFactory>();
+        else
+            factory = std::make_shared<PlainSocketFactory>();
+#endif
+
+        std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress("127.0.0.1", port),
+                                                               _webServerPoll, factory);
         while (!socket)
         {
             ++port;
             LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << ".");
-            socket = getServerSocket(SocketAddress("127.0.0.1", port));
+            socket = getServerSocket(SocketAddress("127.0.0.1", port),
+                                     _webServerPoll, factory);
         }
 
         LOG_INF("Listening to client connections on port " << port);
@@ -2565,6 +2755,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // We provision up to half the limit to connect simultaneously
     // without loss of performance. This cap is to avoid flooding the server.
     static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
+
+#if 0 // loolnb
     const auto maxThreadCount = MAX_CONNECTIONS * 5;
 
     auto params2 = new HTTPServerParams();
@@ -2575,6 +2767,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     const auto minThreadCount = std::max<int>(NumPreSpawnedChildren * 3, 3);
     const auto idleTimeSeconds = 90;
     const auto stackSizeBytes = 256 * 1024;
+
     ThreadPool threadPool(minThreadCount * 2,
                           maxThreadCount * 2,
                           idleTimeSeconds,
@@ -2596,6 +2789,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     HTTPServer srv2(new PrisonerRequestHandlerFactory(), threadPool, *psvs2, params2);
     LOG_INF("Starting prisoner server listening on " << MasterPortNumber);
     srv2.start();
+#endif
+
+    srv.startPrisoners(MasterPortNumber);
 
     // Fire the ForKit process; we are ready to get child connections.
     if (!createForKit())
@@ -2604,7 +2800,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         return Application::EXIT_SOFTWARE;
     }
 
-    // TODO loolnb
     srv.start(ClientPortNumber);
 
 #if ENABLE_DEBUG
@@ -2697,8 +2892,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Wait until documents are saved and sessions closed.
     srv.stop();
+#if 0 // loolnb
     srv2.stop();
     threadPool.joinAll();
+#endif
 
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Cleaning up lingering documents.");
@@ -2773,17 +2970,17 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     return returnValue;
 }
 
-void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& request, UnitHTTPServerResponse& response)
+void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& /* request */, UnitHTTPServerResponse& /* response */)
 {
     switch (type)
     {
     case TestRequest::Client:
 #if 0 // loolnb
         ClientRequestHandler::handleClientRequest(request, response, LOOLWSD::GenSessionId());
-#endif
         break;
     case TestRequest::Prisoner:
         PrisonerRequestHandler::handlePrisonerRequest(request, response);
+#endif
         break;
     default:
         assert(false);
