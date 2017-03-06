@@ -2316,11 +2316,7 @@ class PlainSocketFactory : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int fd) override
     {
-        auto socket = StreamSocket::create<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
-
-        // Read the request.
-        socket->readIncomingData();
-        return socket;
+        return StreamSocket::create<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
     }
 };
 
@@ -2332,6 +2328,8 @@ class SslSocketFactory : public SocketFactory
         auto socket = StreamSocket::create<SslStreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
 
         // Do the ssl handshake and read the request.
+        // TODO is this really necessary?  This goes against how the polling &
+        // buffering is done in the generic / non-ssl case...
         socket->readIncomingData();
         return socket;
     }
