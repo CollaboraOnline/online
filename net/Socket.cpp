@@ -7,6 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <stdio.h>
+#include <ctype.h>
+
 #include "Socket.hpp"
 #include "ServerSocket.hpp"
 
@@ -60,12 +63,46 @@ void ServerSocket::dumpState()
     std::cerr << "\t" << getFD() << "\t<accept>\n";
 }
 
+namespace {
+
+void dump_hex (const char *legend, const char *prefix, std::vector<char> buffer)
+{
+    unsigned int i, j;
+    fprintf (stderr, "%s", legend);
+    for (j = 0; j < buffer.size() + 15; j += 16)
+    {
+        fprintf (stderr, "%s0x%.4x  ", prefix, j);
+        for (i = 0; i < 16; i++)
+        {
+            if ((j + i) < buffer.size())
+                fprintf (stderr, "%.2x ", (unsigned char)buffer[j+i]);
+            else
+                fprintf (stderr, "   ");
+            if (i == 8)
+                fprintf (stderr, " ");
+        }
+        fprintf (stderr, " | ");
+
+        for (i = 0; i < 16; i++)
+            if ((j + i) < buffer.size() && ::isprint(buffer[j+i]))
+                fprintf (stderr, "%c", buffer[j+i]);
+            else
+                fprintf (stderr, ".");
+        fprintf (stderr, "\n");
+    }
+}
+
+} // namespace
+
 void StreamSocket::dumpState()
 {
     std::cerr << "\t" << getFD() << "\t" << getPollEvents() << "\t"
               << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
               << "\n";
-    // FIXME: hex dump buffer contents if we have them.
+    if (_inBuffer.size() > 0)
+        dump_hex("\t\tinBuffer:\n", "\t\t", _inBuffer);
+    if (_outBuffer.size() > 0)
+        dump_hex("\t\toutBuffer:\n", "\t\t", _inBuffer);
 }
 
 void SocketPoll::dumpState()
