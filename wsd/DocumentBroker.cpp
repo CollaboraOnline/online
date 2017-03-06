@@ -208,6 +208,18 @@ void DocumentBroker::pollThread(std::shared_ptr<DocumentBroker> docBroker)
     // Main polling loop goodness.
     while (!docBroker->_stop && !TerminationFlag && !ShutdownRequestFlag)
     {
+        while (true)
+        {
+            std::unique_lock<std::mutex> lock(docBroker->_mutex);
+            if (docBroker->_newSessions.empty())
+                break;
+
+            std::shared_ptr<ClientSession> session = docBroker->_newSessions.front();
+            docBroker->_newSessions.pop_front();
+
+            docBroker->addSession(session);
+        }
+
         docBroker->_poll.poll(5000);
     }
 }
@@ -663,6 +675,15 @@ std::string DocumentBroker::getJailRoot() const
 {
     assert(!_jailId.empty());
     return Poco::Path(_childRoot, _jailId).toString();
+}
+
+size_t DocumentBroker::queueSession(std::shared_ptr<ClientSession>& session)
+{
+    Util::assertIsLocked(_mutex);
+
+    _newSessions.push_back(session);
+
+    return _sessions.size() + _newSessions.size();
 }
 
 size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
