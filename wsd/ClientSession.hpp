@@ -112,6 +112,9 @@ public:
     /// Set WOPI fileinfo object
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
 
+    bool hasQueuedWrites() const override;
+    void performWrites() override;
+
 private:
     virtual bool _handleInput(const char* buffer, int length) override;
 
@@ -137,8 +140,6 @@ private:
     /// Returns true if given message from the client should be allowed or not
     /// Eg. in readonly mode only few messages should be allowed
     bool filterMessage(const std::string& msg) const;
-
-    void senderThread();
 
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
