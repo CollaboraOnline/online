@@ -2207,6 +2207,7 @@ private:
         auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
         if (docBroker)
         {
+            sleep(1); // FIXME: horror hack - wait for the kit process ...
             _clientSession = createNewClientSession(ws, _id, uriPublic, docBroker, isReadOnly);
             if (_clientSession)
             {
