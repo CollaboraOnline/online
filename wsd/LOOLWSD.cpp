@@ -1610,7 +1610,7 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
         // (UserCanWrite param).
         auto session = std::make_shared<ClientSession>(id, docBroker, uriPublic, isReadOnly);
 
-        docBroker->addSession(session);
+        docBroker->queueSession(session);
 
         lock.unlock();
 
@@ -1992,7 +1992,7 @@ private:
                     auto session = std::make_shared<ClientSession>(_id, docBroker, uriPublic);
 
                     auto lock = docBroker->getLock();
-                    auto sessionsCount = docBroker->addSession(session);
+                    size_t sessionsCount = docBroker->queueSession(session);
                     lock.unlock();
                     LOG_TRC(docKey << ", ws_sessions++: " << sessionsCount);
 
@@ -2232,9 +2232,7 @@ private:
         {
             _clientSession = createNewClientSession(ws, _id, uriPublic, docBroker, isReadOnly);
             if (_clientSession)
-            {
                 _clientSession->onConnect(_socket);
-            }
         }
         if (!docBroker || !_clientSession)
             LOG_WRN("Failed to connect DocBroker and Client Session.");

@@ -15,6 +15,7 @@
 #include <atomic>
 #include <chrono>
 #include <condition_variable>
+#include <deque>
 #include <map>
 #include <memory>
 #include <mutex>
@@ -259,8 +260,11 @@ public:
 
     std::string getJailRoot() const;
 
-    /// Add a new session. Returns the new number of sessions.
-    size_t addSession(std::shared_ptr<ClientSession>& session);
+    /// Queue a new session to be added asynchronously.
+    /// @return amount of session we have after all the queued ones will be
+    /// created.
+    size_t queueSession(std::shared_ptr<ClientSession>& session);
+
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id);
 
@@ -342,6 +346,9 @@ private:
     /// Forward a message from child session to its respective client session.
     bool forwardToClient(const std::shared_ptr<Message>& payload);
 
+    /// Add a new session. Returns the new number of sessions.
+    size_t addSession(std::shared_ptr<ClientSession>& session);
+
     /// The thread function that all of the I/O for all sessions
     /// associated with this document.
     static void pollThread(std::shared_ptr<DocumentBroker> docBroker);
@@ -367,6 +374,7 @@ private:
     /// The jailed file last-modified time.
     Poco::Timestamp _lastFileModifiedTime;
     std::map<std::string, std::shared_ptr<ClientSession> > _sessions;
+    std::deque<std::shared_ptr<ClientSession> > _newSessions;
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _markToDestroy;
