@@ -8,6 +8,7 @@
  */
 
 #include "Socket.hpp"
+#include "ServerSocket.hpp"
 
 // help with initialization order
 namespace {
@@ -52,6 +53,19 @@ void SocketPoll::wakeupWorld()
 {
     for (const auto& fd : getWakeupsArray())
         wakeup(fd);
+}
+
+void ServerSocket::dumpState()
+{
+    std::cerr << "\t" << getFD() << "\t<accept>\n";
+}
+
+void StreamSocket::dumpState()
+{
+    std::cerr << "\t" << getFD() << "\t" << getPollEvents() << "\t"
+              << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
+              << "\n";
+    // FIXME: hex dump buffer contents if we have them.
 }
 
 void SocketPoll::dumpState()

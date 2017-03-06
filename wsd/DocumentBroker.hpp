@@ -255,6 +255,8 @@ public:
         return _sessions.size();
     }
 
+    void dumpState();
+
     std::string getJailRoot() const;
 
     /// Add a new session. Returns the new number of sessions.

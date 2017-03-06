@@ -559,13 +559,7 @@ protected:
         return ::write(getFD(), buf, len);
     }
 
-    void dumpState() override
-    {
-        std::cerr << "\t" << getFD() << "\t" << getPollEvents() << "\t"
-            << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
-            << "\n";
-        // FIXME: hex dump buffer contents if we have them.
-    }
+    void dumpState() override;
 
     /// Get the Write Lock.
     std::unique_lock<std::mutex> getWriteLock() { return std::unique_lock<std::mutex>(_writeMutex); }

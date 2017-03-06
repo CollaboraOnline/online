@@ -1195,4 +1195,18 @@ void DocumentBroker::updateLastActivityTime()
     Admin::instance().updateLastActivityTime(_docKey);
 }
 
+void DocumentBroker::dumpState()
+{
+    std::unique_lock<std::mutex> lock(_mutex);
+
+    std::cerr << " Broker: " << _filename << "\n";
+    std::cerr << "  jail id: " << _jailId << "\n";
+    std::cerr << "  public uri: " << _uriPublic.toString() << "\n";
+    std::cerr << "  jailed uri: " << _uriJailed.toString() << "\n";
+    std::cerr << "  doc key: " << _docKey << "\n";
+    std::cerr << "  num sessions: " << getSessionsCount() << "\n";
+
+    _poll.dumpState();
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
