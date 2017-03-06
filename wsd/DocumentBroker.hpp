@@ -48,7 +48,7 @@ class ChildProcess
     friend class PrisonerRequestDispatcher;
 public:
     /// @param pid is the process ID of the child.
-    /// @param ws is the control LOOLWebSocket to the child.
+    /// @param socket is the underlying Sockeet to the child.
     ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<StreamSocket>& socket, const Poco::Net::HTTPRequest &request) :
 
         _pid(pid),

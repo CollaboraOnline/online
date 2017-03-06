@@ -120,7 +120,6 @@
 #include "UserMessages.hpp"
 #include "Util.hpp"
 #include "FileUtil.hpp"
-#include "LOOLWebSocket.hpp"
 
 #ifdef KIT_IN_PROCESS
 #include <Kit.hpp>
@@ -197,9 +196,11 @@ static std::atomic<int> OutstandingForks(0);
 static std::map<std::string, std::shared_ptr<DocumentBroker> > DocBrokers;
 static std::mutex DocBrokersMutex;
 
+#if 0 // loolnb
 /// Used when shutting down to notify them all that the server is recycling.
 static std::vector<std::shared_ptr<LOOLWebSocket> > ClientWebSockets;
 static std::mutex ClientWebSocketsMutex;
+#endif
 
 extern "C" { void dump_state(void); /* easy for gdb */ }
 
@@ -563,57 +564,6 @@ public:
         fileStream.close();
     }
 };
-
-#if 0
-/// Handler of announcements that a new loolkit process was created.
-///
-/// loolforkit is creating the loolkit processes.  That happens
-/// completely assynchronously, and from the different process (loolforkit),
-/// so this handler is listening for annoucements that a new loolkit process
-/// has been created.
-class PrisonerRequestHandler : public HTTPRequestHandler
-{
-public:
-
-    void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) override
-    {
-        if (UnitWSD::get().filterHandleRequest(
-                UnitWSD::TestRequest::Prisoner,
-                request, response))
-            return;
-
-        handlePrisonerRequest(request, response);
-    }
-
-    static void handlePrisonerRequest(HTTPServerRequest& request, HTTPServerResponse& response)
-    {
-    }
-};
-
-/// Internal (prisoner) connection handler factory.
-/// Creates handler objects.
-class PrisonerRequestHandlerFactory : public HTTPRequestHandlerFactory
-{
-public:
-    HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request) override
-    {
-        Util::setThreadName("prsnr_req_hdl");
-
-        auto logger = Log::info();
-        logger << "Request from " << request.clientAddress().toString() << ": "
-               << request.getMethod() << " " << request.getURI() << " "
-               << request.getVersion();
-
-        for (const auto& it : request)
-        {
-            logger << " / " << it.first << ": " << it.second;
-        }
-
-        logger << Log::end;
-        return new PrisonerRequestHandler();
-    }
-};
-#endif
 
 namespace
 {
@@ -1876,7 +1826,7 @@ private:
             {
                 handleFileServerRequest(request, message);
             }
-            // Admin LOOLWebSocket Connections
+            // Admin connections
             else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
             {
                 handleAdminRequest(request);
@@ -2439,9 +2389,11 @@ private:
             }
             else
             {
+#if 0 // loolnb
                 std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
                 LOG_TRC("Capturing Client WS for [" << _id << "]");
                 // ClientWebSockets.push_back(ws); //FIXME
+#endif
             }
         }
         catch (const std::exception& exc)
@@ -2760,41 +2712,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     // without loss of performance. This cap is to avoid flooding the server.
     static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
 
-#if 0 // loolnb
-    const auto maxThreadCount = MAX_CONNECTIONS * 5;
-
-    auto params2 = new HTTPServerParams();
-    params2->setMaxThreads(maxThreadCount);
-
-    // Twice as many min and max since we share this pool
-    // between both internal and external connections.
-    const auto minThreadCount = std::max<int>(NumPreSpawnedChildren * 3, 3);
-    const auto idleTimeSeconds = 90;
-    const auto stackSizeBytes = 256 * 1024;
-
-    ThreadPool threadPool(minThreadCount * 2,
-                          maxThreadCount * 2,
-                          idleTimeSeconds,
-                          stackSizeBytes);
-
-    // Start internal server for child processes.
-    SocketAddress addr2("127.0.0.1", MasterPortNumber);
-    std::unique_ptr<Poco::Net::ServerSocket> psvs2(
-        UnitWSD::isUnitTesting() ?
-            findFreeMasterPort(MasterPortNumber) :
-            getMasterSocket(MasterPortNumber));
-    if (!psvs2)
-    {
-        LOG_FTL("Failed to listen on master port (" <<
-                MasterPortNumber << ") or find a free port. Exiting.");
-        return Application::EXIT_SOFTWARE;
-    }
-
-    HTTPServer srv2(new PrisonerRequestHandlerFactory(), threadPool, *psvs2, params2);
-    LOG_INF("Starting prisoner server listening on " << MasterPortNumber);
-    srv2.start();
-#endif
-
     srv.startPrisoners(MasterPortNumber);
 
     // Fire the ForKit process; we are ready to get child connections.
@@ -2896,10 +2813,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Wait until documents are saved and sessions closed.
     srv.stop();
-#if 0 // loolnb
-    srv2.stop();
-    threadPool.joinAll();
-#endif
 
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Cleaning up lingering documents.");
@@ -2938,6 +2851,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (isShuttingDown())
     {
+#if 0 // loolnb
         // At this point there should be no other thread, but...
         std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
 
@@ -2955,6 +2869,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
                 LOG_ERR("Error while notifying client of recycle: " << ex.what());
             }
         }
+#endif
     }
 
     // Finally, we no longer need SSL.
