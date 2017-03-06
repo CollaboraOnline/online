@@ -170,6 +170,34 @@ L.TileLayer = L.GridLayer.extend({
 		this._tiles = {};
 		this._tileCache = {};
 		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
+		var that = this;
+		$.contextMenu({
+			selector: '.loleaflet-annotation-menu',
+			trigger: 'none',
+			className: 'loleaflet-font',
+			items: {
+				modify: {
+					name: _('Modify'),
+					callback: function (key, options) {
+						that.onAnnotationModify.call(that, options.$trigger.get(0).annotation);
+					}
+				},
+				remove: {
+					name: _('Remove'),
+					callback: function (key, options) {
+						that.onAnnotationRemove.call(that, options.$trigger.get(0).annotation._data.id);
+					}
+				}
+			},
+			events: {
+				show: function (options) {
+					options.$trigger.get(0).annotation._contextMenu = true;
+				},
+				hide: function (options) {
+					options.$trigger.get(0).annotation._contextMenu = false;
+				}
+			}
+		});
 
 		map._fadeAnimated = false;
 		this._viewReset();

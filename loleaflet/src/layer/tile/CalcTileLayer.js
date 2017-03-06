@@ -63,36 +63,25 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	onAdd: function (map) {
-		var that = this;
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = {};
-		$.contextMenu({
-			selector: '.loleaflet-annotation-menu',
-			trigger: 'none',
-			className: 'loleaflet-font',
-			items: {
-				modify: {
-					name: _('Modify'),
-					callback: function (key, options) {
-						that._onAnnotationModify.call(that, options.$trigger.get(0).annotation);
-					}
-				},
-				remove: {
-					name: _('Remove'),
-					callback: function (key, options) {
-						that._onAnnotationRemove.call(that, options.$trigger.get(0).annotation._data.id);
-					}
-				}
-			},
-			events: {
-				show: function (options) {
-					options.$trigger.get(0).annotation._contextMenu = true;
-				},
-				hide: function (options) {
-					options.$trigger.get(0).annotation._contextMenu = false;
-				}
+	},
+
+	onAnnotationModify: function (annotation) {
+		annotation.edit();
+		annotation.focus();
+	},
+
+	onAnnotationRemove: function (id) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: id
 			}
-		});
+		};
+		this._map.sendUnoCommand('.uno:DeleteComment', comment);
+		this.removeAnnotation(id);
+		this._map.focus();
 	},
 
 	removeAnnotation: function (id) {
@@ -136,23 +125,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 			};
 			this._map.sendUnoCommand('.uno:EditAnnotation', comment);
 		}
-		this._map.focus();
-	},
-
-	_onAnnotationModify: function (annotation) {
-		annotation.edit();
-		annotation.focus();
-	},
-
-	_onAnnotationRemove: function (id) {
-		var comment = {
-			Id: {
-				type: 'string',
-				value: id
-			}
-		};
-		this._map.sendUnoCommand('.uno:DeleteComment', comment);
-		this.removeAnnotation(id);
 		this._map.focus();
 	},
 

@@ -17,26 +17,6 @@ L.AnnotationManager = L.Class.extend({
 		this._map.on('AnnotationCancel', this._onAnnotationCancel, this);
 		this._map.on('AnnotationClick', this._onAnnotationClick, this);
 		this._map.on('AnnotationSave', this._onAnnotationSave, this);
-		var that = this;
-		$.contextMenu({
-			selector: '.loleaflet-annotation-menu',
-			trigger: 'none',
-			className: 'loleaflet-font',
-			items: {
-				modify: {
-					name: _('Modify'),
-					callback: function (key, options) {
-						that._onAnnotationModify.call(that, options.$trigger.get(0).annotation);
-					}
-				},
-				remove: {
-					name: _('Remove'),
-					callback: function (key, options) {
-						that._onAnnotationRemove.call(that, options.$trigger.get(0).annotation._data.id);
-					}
-				}
-			}
-		});
 	},
 
 	clear: function () {
@@ -188,9 +168,23 @@ L.AnnotationManager = L.Class.extend({
 		}
 	},
 
+	modify: function (annotation) {
+		annotation.edit();
+		this.select(annotation);
+		annotation.focus();
+	},
+
 	remove: function (id) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: id
+			}
+		};
+		this._map.sendUnoCommand('.uno:DeleteComment', comment);
 		this._map.removeLayer(this.removeItem(id));
 		this.unselect();
+		this._map.focus();
 	},
 
 	onACKComment: function (textMsg) {
@@ -216,7 +210,8 @@ L.AnnotationManager = L.Class.extend({
 			this.layout();
 		} else if (obj.comment.action === 'Remove') {
 			if (this.getItem(obj.comment.id)) {
-				this.remove(obj.comment.id);
+				this._map.removeLayer(this.removeItem(id));
+				this.unselect();
 			}
 		} else if (obj.comment.action === 'Modify') {
 			var modified = this.getItem(obj.comment.id);
@@ -239,24 +234,6 @@ L.AnnotationManager = L.Class.extend({
 
 	_onAnnotationClick: function (e) {
 		this.select(e.annotation);
-	},
-
-	_onAnnotationModify: function (annotation) {
-		annotation.edit();
-		this.select(annotation);
-		annotation.focus();
-	},
-
-	_onAnnotationRemove: function (id) {
-		var comment = {
-			Id: {
-				type: 'string',
-				value: id
-			}
-		};
-		this._map.sendUnoCommand('.uno:DeleteComment', comment);
-		this.remove(id);
-		this._map.focus();
 	},
 
 	_onAnnotationSave: function (e) {

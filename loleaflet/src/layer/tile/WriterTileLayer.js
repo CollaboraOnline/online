@@ -19,6 +19,14 @@ L.WriterTileLayer = L.TileLayer.extend({
 		this._annotations = L.annotationManager(map);
 	},
 
+	onAnnotationModify: function (annotation) {
+		this._annotations.modify(annotation);
+	},
+
+	onAnnotationRemove: function (id) {
+		this._annotations.remove(id);
+	},
+
 	_onCommandValuesMsg: function (textMsg) {
 		var values = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 		if (!values) {
