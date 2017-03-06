@@ -13,9 +13,9 @@
    height="24"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.48.4 r9939"
    viewBox="0 0 24 24"
-   sodipodi:docname="lc_accepttrackedchanges.svg">
+   sodipodi:docname="lc_showtrackedchanges.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -25,26 +25,25 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="17.788374"
-     inkscape:cx="12.426612"
-     inkscape:cy="12.841403"
+     inkscape:zoom="35.576748"
+     inkscape:cx="15.447886"
+     inkscape:cy="12.487296"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:showpageshadow="false"
      units="px"
-     inkscape:window-width="1920"
-     inkscape:window-height="1021"
-     inkscape:window-x="-4"
-     inkscape:window-y="0"
+     inkscape:window-width="1868"
+     inkscape:window-height="1060"
+     inkscape:window-x="50"
+     inkscape:window-y="-3"
      inkscape:window-maximized="1"
      showguides="true"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:snap-bbox="true"
-     inkscape:object-nodes="false">
+     inkscape:snap-bbox="true">
     <inkscape:grid
        type="xygrid"
        id="grid4120"
@@ -108,15 +107,38 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(1,-1029.3623)">
-    <path
-       inkscape:connector-curvature="0"
-       style="fill:#4d4d4d;fill-opacity:1;stroke:none"
-       d="m 11,1033.3622 c -4.432,0 -8,3.568 -8,8 0,4.432 3.568,8 8,8 4.432,0 8,-3.568 8,-8 0,-4.432 -3.568,-8 -8,-8 z m 0,1 c 3.878,0 7,3.122 7,7 0,3.878 -3.122,7 -7,7 -3.878,0 -7,-3.122 -7,-7 0,-3.878 3.122,-7 7,-7 z"
-       id="rect3356" />
-    <path
-       style="fill:#2ecc71;fill-opacity:1;stroke:none;stroke-opacity:1"
-       d="m 15.285715,1037.8623 -5.7142861,5.6 -2.8571432,-2.8 -0.7142857,0.7 2.8571427,2.7999 0.7142862,0.7001 0.7142861,-0.7001 5.714285,-5.5998 -0.714285,-0.7001 z"
-       id="rect4176"
-       inkscape:connector-curvature="0" />
+    <g
+       transform="translate(0,-4.4833253e-6)"
+       id="layer1-2"
+       inkscape:label="Capa 1">
+      <rect
+         y="1033.3622"
+         x="3"
+         height="14.000017"
+         width="14"
+         id="rect4146"
+         style="fill:#4d4d4d;fill-opacity:1;stroke:none" />
+      <rect
+         y="1048.3622"
+         x="3"
+         height="0.9999826"
+         width="16"
+         id="rect4148"
+         style="fill:#4d4d4d;fill-opacity:1;stroke:none" />
+      <rect
+         y="1033.3622"
+         x="18"
+         height="16.000017"
+         width="1"
+         id="rect4150"
+         style="fill:#4d4d4d;fill-opacity:1;stroke:none" />
+      <rect
+         y="1034.3622"
+         x="4"
+         height="12"
+         width="12"
+         id="rect4152"
+         style="fill:#4d4d4d;fill-opacity:1;stroke:none" />
+    </g>
   </g>
 </svg>
