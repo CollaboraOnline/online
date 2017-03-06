@@ -38,49 +38,6 @@ using namespace LOOLProtocol;
 
 using Poco::JSON::Object;
 
-#if 0
-void ChildProcess::socketProcessor()
-{
-    const auto name = "docbrk_ws_" + std::to_string(_pid);
-    Util::setThreadName(name);
-
-    IoUtil::SocketProcessor(_ws, name,
-        [this](const std::vector<char>& payload)
-        {
-            if (UnitWSD::get().filterChildMessage(payload))
-            {
-                return true;
-            }
-
-            auto docBroker = this->_docBroker.lock();
-            if (docBroker)
-            {
-                // We should never destroy the broker, since
-                // it owns us and will wait on this thread.
-                assert(docBroker.use_count() > 1);
-                return docBroker->handleInput(payload);
-            }
-
-            LOG_WRN("Child " << this->_pid <<
-                    " has no DocumentBroker to handle message: [" <<
-                    LOOLProtocol::getAbbreviatedMessage(payload) << "].");
-            return true;
-        },
-        []() { },
-        [this]() { return TerminationFlag || this->_stop; });
-
-    LOG_DBG("Child [" << getPid() << "] WS terminated. Notifying DocBroker.");
-
-    // Notify the broker that we're done.
-    auto docBroker = _docBroker.lock();
-    if (docBroker && !_stop)
-    {
-        // No need to notify if asked to stop.
-        docBroker->childSocketTerminated();
-    }
-}
-#endif
-
 namespace
 {
 

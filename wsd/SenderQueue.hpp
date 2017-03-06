@@ -14,6 +14,7 @@
 #include <deque>
 #include <memory>
 #include <mutex>
+#include <thread>
 #include <vector>
 
 #include <Poco/Dynamic/Var.h>
@@ -22,7 +23,6 @@
 #include <Poco/JSON/Parser.h>
 
 #include "common/SigUtil.hpp"
-#include "LOOLWebSocket.hpp"
 #include "Log.hpp"
 #include "TileDesc.hpp"
 
@@ -30,7 +30,6 @@
 
 struct SendItem
 {
-    std::weak_ptr<LOOLWebSocket> Socket;
     std::shared_ptr<Message> Data;
     std::string Meta;
     std::chrono::steady_clock::time_point BirthTime;
