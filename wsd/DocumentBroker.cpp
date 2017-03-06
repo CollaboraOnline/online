@@ -748,6 +748,10 @@ size_t DocumentBroker::removeSession(const std::string& id)
         LOG_INF("Removing session [" << id << "] on docKey [" << _docKey <<
                 "]. Have " << _sessions.size() << " sessions.");
 
+        // remove also from the _newSessions
+        _newSessions.erase(std::remove_if(_newSessions.begin(), _newSessions.end(), [&id](std::shared_ptr<ClientSession>& session) { return session->getId() == id; }),
+                           _newSessions.end());
+
         Admin::instance().rmDoc(_docKey, id);
 
         auto it = _sessions.find(id);
