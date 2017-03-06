@@ -42,7 +42,8 @@ public:
     }
 
     /// Upgrades itself to a websocket directly.
-    WebSocketHandler(const std::weak_ptr<StreamSocket>& socket, const Poco::Net::HTTPRequest& request) :
+    WebSocketHandler(const std::weak_ptr<StreamSocket>& socket,
+                     const Poco::Net::HTTPRequest& request) :
         _socket(socket),
         _shuttingDown(false),
         _wsState(WSState::HTTP)

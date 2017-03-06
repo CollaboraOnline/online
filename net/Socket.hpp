@@ -593,6 +593,7 @@ protected:
     // instead of this many friends...
     friend class WebSocketHandler;
     friend class ClientRequestDispatcher;
+    friend class PrisonerRequestDispatcher;
     friend class SimpleResponseClient;
 };
 

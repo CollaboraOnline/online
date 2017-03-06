@@ -136,7 +136,6 @@ wsd_headers = wsd/Admin.hpp \
               wsd/DocumentBroker.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
-              wsd/LOOLWebSocket.hpp \
               wsd/LOOLWSD.hpp \
               wsd/QueueHandler.hpp \
               wsd/SenderQueue.hpp \

@@ -38,6 +38,7 @@ using namespace LOOLProtocol;
 
 using Poco::JSON::Object;
 
+#if 0
 void ChildProcess::socketProcessor()
 {
     const auto name = "docbrk_ws_" + std::to_string(_pid);
@@ -78,6 +79,7 @@ void ChildProcess::socketProcessor()
         docBroker->childSocketTerminated();
     }
 }
+#endif
 
 namespace
 {
@@ -807,6 +809,7 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
     }
 }
 
+/// Handles input from the prisoner / child kit process
 bool DocumentBroker::handleInput(const std::vector<char>& payload)
 {
     auto message = std::make_shared<Message>(payload.data(), payload.size(), Message::Dir::Out);

@@ -26,14 +26,15 @@
 
 #include "IoUtil.hpp"
 #include "Log.hpp"
-#include "LOOLWebSocket.hpp"
 #include "TileDesc.hpp"
 #include "Util.hpp"
 #include "net/Socket.hpp"
+#include "net/WebSocketHandler.hpp"
 
 #include "common/SigUtil.hpp"
 
 // Forwards.
+class PrisonerRequestDispatcher;
 class DocumentBroker;
 class StorageBase;
 class TileCache;
@@ -43,15 +44,17 @@ class Message;
 /// to host a document.
 class ChildProcess
 {
+    // FIXME: urk ...
+    friend class PrisonerRequestDispatcher;
 public:
     /// @param pid is the process ID of the child.
     /// @param ws is the control LOOLWebSocket to the child.
-    ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<LOOLWebSocket>& ws) :
+    ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<StreamSocket>& socket, const Poco::Net::HTTPRequest &request) :
+
         _pid(pid),
-        _ws(ws),
-        _stop(false)
+        _ws(std::make_shared<WebSocketHandler>(socket, request)),
+        _socket(socket)
     {
-        _thread = std::thread([this]() { this->socketProcessor(); });
         LOG_INF("ChildProcess ctor [" << _pid << "].");
     }
 
@@ -68,6 +71,7 @@ public:
 
             // No need for the socket anymore.
             _ws.reset();
+            _socket.reset();
         }
     }
 
@@ -79,7 +83,8 @@ public:
 
     void stop()
     {
-        _stop = true;
+        // FIXME: stop !?
+        LOG_ERR("What do we do for stop?");
         try
         {
             if (isAlive())
@@ -97,9 +102,7 @@ public:
     void close(const bool rude)
     {
         if (_pid < 0)
-        {
             return;
-        }
 
         try
         {
@@ -110,15 +113,7 @@ public:
 
             // Shutdown the socket to break the thread if blocked on it.
             if (_ws)
-            {
                 _ws->shutdown();
-            }
-
-            // Now should be quick to exit the thread; wait.
-            if (_thread.joinable())
-            {
-                _thread.join();
-            }
         }
         catch (const std::exception& ex)
         {
@@ -148,7 +143,7 @@ public:
             if (_ws)
             {
                 LOG_TRC("DocBroker to Child: " << data);
-                _ws->sendFrame(data.data(), data.size());
+                _ws->sendFrame(data);
                 return true;
             }
         }
@@ -170,8 +165,8 @@ public:
     {
         try
         {
-            return (_pid > 1 && _ws && kill(_pid, 0) == 0 &&
-                    !_ws->poll(Poco::Timespan(0), Poco::Net::Socket::SelectMode::SELECT_ERROR));
+            return _pid > 1 && _ws && kill(_pid, 0) == 0;
+// FIXME:                    !_ws->poll(Poco::Timespan(0), Poco::Net::Socket::SelectMode::SELECT_ERROR));
         }
         catch (const std::exception&)
         {
@@ -185,10 +180,9 @@ private:
 
 private:
     Poco::Process::PID _pid;
-    std::shared_ptr<LOOLWebSocket> _ws;
+    std::shared_ptr<WebSocketHandler> _ws;
+    std::shared_ptr<Socket> _socket;
     std::weak_ptr<DocumentBroker> _docBroker;
-    std::thread _thread;
-    std::atomic<bool> _stop;
 };
 
 class ClientSession;

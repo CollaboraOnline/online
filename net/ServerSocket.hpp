@@ -27,7 +27,7 @@ public:
 class ServerSocket : public Socket
 {
 public:
-    ServerSocket(SocketPoll& clientPoller, std::unique_ptr<SocketFactory> sockFactory) :
+    ServerSocket(SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory) :
         _clientPoller(clientPoller),
         _sockFactory(std::move(sockFactory))
     {
@@ -106,7 +106,7 @@ public:
 
 private:
     SocketPoll& _clientPoller;
-    std::unique_ptr<SocketFactory> _sockFactory;
+    std::shared_ptr<SocketFactory> _sockFactory;
 };
 
 #endif
