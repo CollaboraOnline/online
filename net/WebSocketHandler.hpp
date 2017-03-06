@@ -210,6 +210,17 @@ public:
         _wsPayload.clear();
     }
 
+    bool hasQueuedWrites() const override
+    {
+        LOG_TRC("WebSocket - asked for queued writes");
+        return false;
+    }
+
+    void performWrites() override
+    {
+        assert(false);
+    }
+
     void sendFrame(const std::string& msg) const
     {
         sendMessage(msg.data(), msg.size(), WSOpCode::Text);

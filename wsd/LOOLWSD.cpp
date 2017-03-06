@@ -1800,6 +1800,25 @@ private:
         }
     }
 
+    bool hasQueuedWrites() const override
+    {
+        // FIXME: - the session should be owning the fd in DocumentBroker's _poll
+        if (_clientSession)
+            return _clientSession->hasQueuedWrites();
+
+        LOG_TRC("ClientRequestDispatcher - asked for queued writes");
+        return false;
+    }
+
+    void performWrites() override
+    {
+        // FIXME: - the session should be owning the fd in DocumentBroker's _poll
+        if (_clientSession)
+            return _clientSession->performWrites();
+
+        assert (false);
+    }
+
     void handleFileServerRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
     {
         auto socket = _socket.lock();

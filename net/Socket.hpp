@@ -354,10 +354,10 @@ public:
     virtual void handleIncomingMessage() = 0;
 
     /// Is there queued up data that we want to write ?
-    virtual bool hasQueuedWrites() const { return false; }
+    virtual bool hasQueuedWrites() const = 0;
 
     /// Do some of the queued writing.
-    virtual void performWrites() {}
+    virtual void performWrites() = 0;
 
     /// Called when the is disconnected and will be destroyed.
     /// Will be called exactly once.
@@ -393,7 +393,6 @@ public:
 
     int getPollEvents() override
     {
-        std::cerr << "empty ? " << _outBuffer.empty() << " has queued write " << _socketHandler->hasQueuedWrites() << "\n";
         if (!_outBuffer.empty() || _socketHandler->hasQueuedWrites())
             return POLLIN | POLLOUT;
         else

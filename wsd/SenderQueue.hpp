@@ -26,6 +26,8 @@
 #include "Log.hpp"
 #include "TileDesc.hpp"
 
+#include "Socket.hpp" // FIXME: hack for wakeup-world ...
+
 struct SendItem
 {
     std::weak_ptr<LOOLWebSocket> Socket;
@@ -55,6 +57,7 @@ public:
     size_t enqueue(const Item& item)
     {
         std::unique_lock<std::mutex> lock(_mutex);
+        bool wasEmpty = _queue.empty();
         if (!stopping())
         {
             if (deduplicate(item))
@@ -67,6 +70,11 @@ public:
         lock.unlock();
 
         _cv.notify_one();
+        if (wasEmpty)
+        {
+            // FIXME: Horrible hack - we need to wakeup just our own poll ...
+            SocketPoll::wakeupWorld();
+        }
         return queuesize;
     }
 

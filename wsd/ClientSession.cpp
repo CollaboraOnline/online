@@ -39,9 +39,6 @@ ClientSession::ClientSession(const std::string& id,
     _stop(false)
 {
     LOG_INF("ClientSession ctor [" << getName() << "].");
-
-    // FIXME: one thread per client session [!?].
-    _senderThread = std::thread([this]{ senderThread(); });
 }
 
 ClientSession::~ClientSession()
@@ -49,10 +46,6 @@ ClientSession::~ClientSession()
     LOG_INF("~ClientSession dtor [" << getName() << "].");
 
     stop();
-    if (_senderThread.joinable())
-    {
-        _senderThread.join();
-    }
 }
 
 bool ClientSession::_handleInput(const char *buffer, int length)
@@ -434,36 +427,40 @@ void ClientSession::setReadOnly()
     sendTextFrame("perm: readonly");
 }
 
-void ClientSession::senderThread()
+bool ClientSession::hasQueuedWrites() const
 {
-    LOG_DBG(getName() << " SenderThread started");
+    LOG_DBG(getName() << " ClientSession: has queued writes? "
+            << _senderQueue.size());
+    return _senderQueue.size() > 0;
+}
 
-    while (!stopping())
+void ClientSession::performWrites()
+{
+    LOG_DBG(getName() << " ClientSession: performing writes");
+
+    std::shared_ptr<Message> item;
+    if (_senderQueue.waitDequeue(item, 0 /* ms - don't block */))
     {
-        std::shared_ptr<Message> item;
-        if (_senderQueue.waitDequeue(item, static_cast<size_t>(COMMAND_TIMEOUT_MS)))
+        const std::vector<char>& data = item->data();
+        try
         {
-            const std::vector<char>& data = item->data();
-            try
+            if (item->isBinary())
             {
-                if (item->isBinary())
-                {
-                    Session::sendBinaryFrame(data.data(), data.size());
-                }
-                else
-                {
-                    Session::sendTextFrame(data.data(), data.size());
-                }
+                Session::sendBinaryFrame(data.data(), data.size());
             }
-            catch (const std::exception& ex)
+            else
             {
-                LOG_ERR("Failed to send message [" << LOOLProtocol::getAbbreviatedMessage(data) <<
-                        "] to " << getName() << ": " << ex.what());
+                Session::sendTextFrame(data.data(), data.size());
             }
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Failed to send message [" << LOOLProtocol::getAbbreviatedMessage(data) <<
+                    "] to " << getName() << ": " << ex.what());
         }
     }
 
-    LOG_DBG(getName() << " SenderThread finished");
+    LOG_DBG(getName() << " ClientSession: performed write");
 }
 
 bool ClientSession::handleKitToClientMessage(const char* buffer, const int length)
