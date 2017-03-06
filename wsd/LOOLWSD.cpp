@@ -2386,8 +2386,12 @@ public:
         std::cerr << "Server poll:\n";
         _acceptPoll.dumpState();
 
-        std::cerr << "Document poll:\n";
+        std::cerr << "Web Server poll:\n";
         _webServerPoll.dumpState();
+
+        std::cerr << "Document Broker polls:\n";
+        for (auto &i : DocBrokers)
+            i.second->dumpState();
     }
 
 private:
