@@ -353,6 +353,12 @@ public:
     /// Called after successful socket reads.
     virtual void handleIncomingMessage() = 0;
 
+    /// Is there queued up data that we want to write ?
+    virtual bool hasQueuedWrites() const { return false; }
+
+    /// Do some of the queued writing.
+    virtual void performWrites() {}
+
     /// Called when the is disconnected and will be destroyed.
     /// Will be called exactly once.
     virtual void onDisconnect()
@@ -387,8 +393,11 @@ public:
 
     int getPollEvents() override
     {
-        // Only poll for read if we have nothing to write.
-        return (_outBuffer.empty() ? POLLIN : POLLIN | POLLOUT);
+        std::cerr << "empty ? " << _outBuffer.empty() << " has queued write " << _socketHandler->hasQueuedWrites() << "\n";
+        if (!_outBuffer.empty() || _socketHandler->hasQueuedWrites())
+            return POLLIN | POLLOUT;
+        else
+            return POLLIN;
     }
 
     /// Send data to the socket peer.
@@ -487,6 +496,10 @@ protected:
             oldSize = _inBuffer.size();
             _socketHandler->handleIncomingMessage();
         }
+
+        // If we have space for writing and that was requested
+        if ((events & POLLOUT) && _outBuffer.empty())
+            _socketHandler->performWrites();
 
         // SSL might want to do handshake,
         // even if we have no data to write.
