@@ -76,7 +76,7 @@ check-local:
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
 # disable for now that one too.
-TESTS = unit-tilecache.la unit-storage.la unit-timeout.la unit-prefork.la unit-admin.la unit-minsocketbuffersize.la
+TESTS = # unit-tilecache.la unit-storage.la unit-timeout.la unit-prefork.la unit-admin.la unit-minsocketbuffersize.la
 else
 TESTS = ${top_builddir}/test/test
 endif
