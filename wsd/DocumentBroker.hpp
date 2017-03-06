@@ -374,7 +374,22 @@ private:
     /// The jailed file last-modified time.
     Poco::Timestamp _lastFileModifiedTime;
     std::map<std::string, std::shared_ptr<ClientSession> > _sessions;
-    std::deque<std::shared_ptr<ClientSession> > _newSessions;
+
+    /// Private class to remember what sessions we have to create, and what
+    /// messages to send to them after they are really created.
+    class NewSession {
+    public:
+        NewSession(const std::shared_ptr<ClientSession>& session) : _session(session)
+        {
+        }
+
+        std::shared_ptr<ClientSession> _session;
+        std::deque<std::string> _messages;
+    };
+
+    /// Sessions that are queued for addition.
+    std::deque<NewSession> _newSessions;
+
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _markToDestroy;

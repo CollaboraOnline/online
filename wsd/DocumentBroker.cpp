@@ -214,10 +214,17 @@ void DocumentBroker::pollThread(std::shared_ptr<DocumentBroker> docBroker)
             if (docBroker->_newSessions.empty())
                 break;
 
-            std::shared_ptr<ClientSession> session = docBroker->_newSessions.front();
-            docBroker->_newSessions.pop_front();
+            NewSession& newSession = docBroker->_newSessions.front();
+            docBroker->addSession(newSession._session);
 
-            docBroker->addSession(session);
+            // now send the queued messages
+            for (const auto& message : newSession._messages)
+            {
+                LOG_DBG("Sending a queued message: " + message);
+                docBroker->_childProcess->sendTextFrame(message);
+            }
+
+            docBroker->_newSessions.pop_front();
         }
 
         docBroker->_poll.poll(5000);
@@ -681,7 +688,7 @@ size_t DocumentBroker::queueSession(std::shared_ptr<ClientSession>& session)
 {
     Util::assertIsLocked(_mutex);
 
-    _newSessions.push_back(session);
+    _newSessions.push_back(NewSession(session));
 
     return _sessions.size() + _newSessions.size();
 }
@@ -749,7 +756,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
                 "]. Have " << _sessions.size() << " sessions.");
 
         // remove also from the _newSessions
-        _newSessions.erase(std::remove_if(_newSessions.begin(), _newSessions.end(), [&id](std::shared_ptr<ClientSession>& session) { return session->getId() == id; }),
+        _newSessions.erase(std::remove_if(_newSessions.begin(), _newSessions.end(), [&id](NewSession& newSession) { return newSession._session->getId() == id; }),
                            _newSessions.end());
 
         Admin::instance().rmDoc(_docKey, id);
@@ -1089,15 +1096,20 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << message);
 
     const auto it = _sessions.find(viewId);
+    const auto msg = "child-" + viewId + ' ' + message;
     if (it != _sessions.end())
     {
-        const auto msg = "child-" + viewId + ' ' + message;
         _childProcess->sendTextFrame(msg);
         return true;
     }
     else
     {
-        LOG_WRN("Client session [" << viewId << "] not found to forward message: " << message);
+        // try the not yet created sessions
+        const auto n = std::find_if(_newSessions.begin(), _newSessions.end(), [&viewId](NewSession& newSession) { return newSession._session->getId() == viewId; });
+        if (n != _newSessions.end())
+            n->_messages.push_back(msg);
+        else
+            LOG_WRN("Child session [" << viewId << "] not found to forward message: " << message);
     }
 
     return false;
