@@ -178,8 +178,14 @@ void DocumentBroker::pollThread(std::shared_ptr<DocumentBroker> docBroker)
             docBroker->addSession(newSession._session);
 
             // now send the queued messages
-            for (const auto& message : newSession._messages)
+            for (std::string message : newSession._messages)
             {
+                // provide the jailed document path to the 'load' message
+                assert(!docBroker->_uriJailed.empty());
+                std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
+                if (tokens.size() > 1 && tokens[1] == "load")
+                    message += std::string(" jail=") + docBroker->_uriJailed.toString();
+
                 LOG_DBG("Sending a queued message: " + message);
                 docBroker->_childProcess->sendTextFrame(message);
             }
@@ -1058,10 +1064,15 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
 {
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << message);
 
+    std::string msg = "child-" + viewId + ' ' + message;
+
     const auto it = _sessions.find(viewId);
-    const auto msg = "child-" + viewId + ' ' + message;
     if (it != _sessions.end())
     {
+        assert(!_uriJailed.empty());
+        if (LOOLProtocol::getFirstToken(message) == "load")
+            msg += " jail=" + _uriJailed.toString();
+
         _childProcess->sendTextFrame(msg);
         return true;
     }

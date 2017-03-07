@@ -234,7 +234,6 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         std::ostringstream oss;
         oss << "load";
         oss << " url=" << docBroker->getPublicUri().toString();
-        oss << " jail=" << docBroker->getJailedUri().toString();
 
         if (!_userId.empty() && !_userName.empty())
         {
