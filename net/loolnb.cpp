@@ -193,15 +193,13 @@ void server(const Poco::Net::SocketAddress& addr, SocketPoll& clientPoller,
         throw std::runtime_error(msg + std::strerror(errno) + ")");
     }
 
-    SocketPoll serverPoll;
+    SocketPoll serverPoll("srv_poll");
 
     serverPoll.insertNewSocket(server);
 
     std::cout << "Listening." << std::endl;
-    for (;;)
-    {
-        serverPoll.poll(30000);
-    }
+    while (true)
+        sleep(1);
 }
 
 class LOOLNB : public Poco::Util::ServerApplication
@@ -223,16 +221,7 @@ public:
 #endif
 
         // Used to poll client sockets.
-        SocketPoll poller;
-
-        // Start the client polling thread.
-        Thread threadPoll([&poller](std::atomic<bool>& stop)
-                          {
-                              while (!stop)
-                              {
-                                  poller.poll(5000);
-                              }
-                          });
+        SocketPoll poller("client_poll");
 
         class PlainSocketFactory : public SocketFactory
         {
@@ -260,7 +249,7 @@ public:
 
         std::cout << "Shutting down server." << std::endl;
 
-        threadPoll.stop();
+        poller.stop();
 
 #if ENABLE_SSL
         SslContext::uninitialize();

@@ -121,6 +121,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _cursorPosY(0),
     _cursorWidth(0),
     _cursorHeight(0),
+    _poll("docbrk_poll"),
     _tileVersion(0),
     _debugRenderedTileCount(0)
 {
