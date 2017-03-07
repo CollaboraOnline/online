@@ -640,6 +640,11 @@ unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 std::atomic<unsigned> LOOLWSD::NumConnections;
 std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
 
+/// This thread polls basic web serving, and handling of
+/// websockets before upgrade: when upgraded they go to the
+/// relevant DocumentBroker poll instead.
+SocketPoll WebServerPoll("websrv_poll");
+
 /// Helper class to hold default configuration entries.
 class AppConfigMap final : public Poco::Util::MapConfiguration
 {
@@ -2220,9 +2225,19 @@ private:
         auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
         if (docBroker)
         {
+            // TODO: Move to DocumentBroker.
             _clientSession = createNewClientSession(ws, _id, uriPublic, docBroker, isReadOnly);
             if (_clientSession)
-                _clientSession->onConnect(_socket);
+            {
+                // Transfer the socket to the DocumentBroker.
+                auto socket = _socket.lock();
+                if (socket)
+                {
+                    WebServerPoll.releaseSocket(socket);
+                    _clientSession->onConnect(socket);
+                    docBroker->addSocketToPoll(socket);
+                }
+            }
         }
         if (!docBroker || !_clientSession)
             LOG_WRN("Failed to connect DocBroker and Client Session.");
@@ -2364,7 +2379,6 @@ public:
     LOOLWSDServer() :
         _stop(false),
         _acceptPoll("accept_poll"),
-        _webServerPoll("websrv_poll"),
         _prisonerPoll("prison_poll")
     {
     }
@@ -2389,7 +2403,6 @@ public:
         _stop = true;
         _acceptPoll.stop();
         _prisonerPoll.stop();
-        _webServerPoll.stop();
         SocketPoll::wakeupWorld();
     }
 
@@ -2404,7 +2417,7 @@ public:
         _acceptPoll.dumpState();
 
         std::cerr << "Web Server poll:\n";
-        _webServerPoll.dumpState();
+        WebServerPoll.dumpState();
 
         std::cerr << "Prisoner poll:\n";
         _prisonerPoll.dumpState();
@@ -2509,13 +2522,13 @@ private:
             factory = std::make_shared<PlainSocketFactory>();
 
         std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress("127.0.0.1", port),
-                                                               _webServerPoll, factory);
+                                                               WebServerPoll, factory);
         while (!socket)
         {
             ++port;
             LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << ".");
             socket = getServerSocket(SocketAddress("127.0.0.1", port),
-                                     _webServerPoll, factory);
+                                     WebServerPoll, factory);
         }
 
         LOG_INF("Listening to client connections on port " << port);
@@ -2717,6 +2730,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     // Wait until documents are saved and sessions closed.
     srv.stop();
+    WebServerPoll.stop();
 
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Cleaning up lingering documents.");
