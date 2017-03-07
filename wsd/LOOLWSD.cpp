@@ -2401,8 +2401,6 @@ public:
     void stop()
     {
         _stop = true;
-        _acceptPoll.stop();
-        _prisonerPoll.stop();
         SocketPoll::wakeupWorld();
     }
 
@@ -2432,46 +2430,9 @@ private:
 
     /// This thread & poll accepts incoming connections.
     SocketPoll _acceptPoll;
-    std::thread _acceptThread;
-
-    /// This thread polls basic web serving, and handling of
-    /// websockets before upgrade: when upgraded they go to the
-    /// relevant DocumentBroker poll instead.
-    SocketPoll _webServerPoll;
-    std::thread _webServerThread;
 
     /// This thread listens for and accepts prisoner kit processes
     SocketPoll _prisonerPoll;
-    std::thread _prisonerThread;
-
-    static void runServer(std::atomic<bool>& stop, SocketPoll& serverPoll) {
-        LOG_INF("Starting master server thread.");
-        while (!stop && !TerminationFlag && !ShutdownRequestFlag)
-        {
-            if (DumpGlobalState)
-            {
-                dump_state();
-                DumpGlobalState = false;
-            }
-            serverPoll.poll(30000);
-        }
-    }
-
-    static void runWebServer(std::atomic<bool>& stop, SocketPoll& documentPoll) {
-        LOG_INF("Starting web server thread.");
-        while (!stop && !TerminationFlag && !ShutdownRequestFlag)
-        {
-            documentPoll.poll(5000);
-        }
-    }
-
-    static void runPrisonerManager(std::atomic<bool>& stop, SocketPoll& prisonerPoll) {
-        LOG_INF("Starting document thread.");
-        while (!stop && !TerminationFlag && !ShutdownRequestFlag)
-        {
-            prisonerPoll.poll(5000);
-        }
-    }
 
     std::shared_ptr<ServerSocket> getServerSocket(const Poco::Net::SocketAddress& addr,
                                                   SocketPoll &poll,
