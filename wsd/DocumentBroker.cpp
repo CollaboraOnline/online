@@ -103,6 +103,35 @@ std::string DocumentBroker::getDocKey(const Poco::URI& uri)
     return docKey;
 }
 
+/// The Document Broker Poll - one of these in a thread per document
+class DocumentBroker::DocumentBrokerPoll : public TerminatingPoll
+{
+    std::mutex _lock;
+    std::condition_variable _start_cv;
+    std::shared_ptr<DocumentBroker> _docBroker;
+public:
+    DocumentBrokerPoll(const std::string &threadName)
+        : TerminatingPoll(threadName)
+    {
+    }
+    void setDocumentBroker(const std::shared_ptr<DocumentBroker> &docBroker)
+    {
+        std::unique_lock<std::mutex> lk(_lock);
+        _docBroker = docBroker;
+        _start_cv.notify_all();
+    }
+
+    virtual void pollingThread()
+    {
+        std::unique_lock<std::mutex> lk(_lock);
+        while (!_docBroker && !_stop)
+            _start_cv.wait(lk);
+        if (_docBroker)
+            // FIXME: make this a normal member function
+            DocumentBroker::pollThread(_docBroker);
+    }
+};
+
 DocumentBroker::DocumentBroker(const std::string& uri,
                                const Poco::URI& uriPublic,
                                const std::string& docKey,
@@ -121,7 +150,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _cursorPosY(0),
     _cursorWidth(0),
     _cursorHeight(0),
-    _poll("docbrk_poll"),
+    _poll(new DocumentBrokerPoll("docbrk_poll")),
     _tileVersion(0),
     _debugRenderedTileCount(0)
 {
@@ -140,11 +169,13 @@ std::shared_ptr<DocumentBroker> DocumentBroker::create(
     const std::string& childRoot)
 {
     std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, childRoot);
-    docBroker->_thread = std::thread(pollThread, docBroker);
+
+    docBroker->_poll->setDocumentBroker(docBroker);
+
     return docBroker;
 }
 
-void DocumentBroker::pollThread(std::shared_ptr<DocumentBroker> docBroker)
+void DocumentBroker::pollThread(const std::shared_ptr<DocumentBroker> &docBroker)
 {
     // Request a kit process for this doc.
     docBroker->_childProcess = getNewChild_Blocks();
@@ -193,9 +224,7 @@ void DocumentBroker::pollThread(std::shared_ptr<DocumentBroker> docBroker)
             docBroker->_newSessions.pop_front();
         }
 
-        // FIXME: SocketPoll has own thread.
-        // FIXME: This is causing a race with the poll thread! Must merge them.
-        docBroker->_poll.poll(5000);
+        docBroker->_poll->poll(5000);
     }
 }
 
@@ -224,9 +253,6 @@ DocumentBroker::~DocumentBroker()
     // Need to first make sure the child exited, socket closed,
     // and thread finished before we are destroyed.
     _childProcess.reset();
-
-    if (_thread.joinable())
-        _thread.join();
 }
 
 bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::string& jailId)
@@ -762,6 +788,11 @@ size_t DocumentBroker::removeSession(const std::string& id)
     return _sessions.size();
 }
 
+void DocumentBroker::addSocketToPoll(const std::shared_ptr<Socket>& socket)
+{
+    _poll->insertNewSocket(socket);
+}
+
 void DocumentBroker::alertAllUsers(const std::string& msg)
 {
     Util::assertIsLocked(_mutex);
@@ -1217,7 +1248,7 @@ void DocumentBroker::dumpState()
     std::cerr << "  doc key: " << _docKey << "\n";
     std::cerr << "  num sessions: " << getSessionsCount() << "\n";
 
-    _poll.dumpState();
+    _poll->dumpState();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

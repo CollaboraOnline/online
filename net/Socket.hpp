@@ -198,6 +198,17 @@ public:
     /// Executed inside the poll in case of a wakeup
     virtual void wakeupHook() {}
 
+    /// The default implementation of our polling thread
+    virtual void pollingThread()
+    {
+        LOG_INF("Starting polling thread [" << _name << "].");
+        while (continuePolling())
+        {
+            poll(5000);
+        }
+    }
+
+public:
     /// Poll the sockets for available data to read or buffer to write.
     void poll(const int timeoutMaxMs)
     {
@@ -339,8 +350,6 @@ public:
 
 private:
 
-    void pollingThread();
-
     /// Initialize the poll fds array with the right events
     void setupPollFds(Poco::Timestamp &timeout)
     {
@@ -390,6 +399,7 @@ private:
     /// The fds to poll.
     std::vector<pollfd> _pollFds;
 
+protected:
     /// Flag the thread to stop.
     std::atomic<bool> _stop;
     /// The polling thread.
