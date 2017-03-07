@@ -180,7 +180,7 @@ class SocketPoll
 {
 public:
     /// Create a socket poll, called rather infrequently.
-    SocketPoll(const std::string& name);
+    SocketPoll(const std::string& threadName);
     ~SocketPoll();
 
     /// Stop the polling thread.
@@ -188,6 +188,15 @@ public:
     {
         _stop = true;
     }
+
+    /// Check if we should continue polling
+    virtual bool continuePolling()
+    {
+        return !_stop;
+    }
+
+    /// Executed inside the poll in case of a wakeup
+    virtual void wakeupHook() {}
 
     /// Poll the sockets for available data to read or buffer to write.
     void poll(const int timeoutMaxMs)
@@ -263,6 +272,8 @@ public:
 
             for (size_t i = 0; i < invoke.size(); ++i)
                 invoke[i]();
+
+            wakeupHook();
         }
     }
 
