@@ -26,6 +26,7 @@
 #include <memory>
 #include <mutex>
 #include <sstream>
+#include <thread>
 
 #include <Poco/Timespan.h>
 #include <Poco/Timestamp.h>
@@ -179,8 +180,14 @@ class SocketPoll
 {
 public:
     /// Create a socket poll, called rather infrequently.
-    SocketPoll();
+    SocketPoll(const std::string& name);
     ~SocketPoll();
+
+    /// Stop the polling thread.
+    void stop()
+    {
+        _stop = true;
+    }
 
     /// Poll the sockets for available data to read or buffer to write.
     void poll(const int timeoutMaxMs)
@@ -298,6 +305,8 @@ public:
 
 private:
 
+    void pollingThread();
+
     void removeSocketFromPoll(const std::shared_ptr<Socket>& socket)
     {
         auto it = std::find(_pollSockets.begin(), _pollSockets.end(), socket);
@@ -327,6 +336,9 @@ private:
     }
 
 private:
+    /// Debug name used for logging.
+    const std::string _name;
+
     /// main-loop wakeup pipe
     int _wakeup[2];
     /// The sockets we're controlling
@@ -337,6 +349,11 @@ private:
     std::vector<CallbackFn> _newCallbacks;
     /// The fds to poll.
     std::vector<pollfd> _pollFds;
+
+    /// Flag the thread to stop.
+    std::atomic<bool> _stop;
+    /// The polling thread.
+    std::thread _thread;
 };
 
 class StreamSocket;

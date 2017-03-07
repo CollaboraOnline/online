@@ -2453,39 +2453,35 @@ class LOOLWSDServer
     LOOLWSDServer(LOOLWSDServer&& other) = delete;
     const LOOLWSDServer& operator=(LOOLWSDServer&& other) = delete;
 public:
-    LOOLWSDServer()
-        : _stop(false)
+    LOOLWSDServer() :
+        _stop(false),
+        _acceptPoll("accept_poll"),
+        _webServerPoll("websrv_poll"),
+        _prisonerPoll("prison_poll")
     {
     }
 
     ~LOOLWSDServer()
     {
         stop();
-        if (_acceptThread.joinable())
-            _acceptThread.join();
-        if (_prisonerThread.joinable())
-            _prisonerThread.join();
-        if (_webServerThread.joinable())
-            _webServerThread.join();
     }
 
     void startPrisoners(const int port)
     {
         _prisonerPoll.insertNewSocket(findPrisonerServerPort(port));
-        _prisonerThread = std::thread(runPrisonerManager, std::ref(_stop), std::ref(_prisonerPoll));
     }
 
     void start(const int port)
     {
         _acceptPoll.insertNewSocket(findServerPort(port));
-        _acceptThread = std::thread(runServer, std::ref(_stop), std::ref(_acceptPoll));
-
-        _webServerThread = std::thread(runWebServer, std::ref(_stop), std::ref(_webServerPoll));
     }
 
     void stop()
     {
         _stop = true;
+        _acceptPoll.stop();
+        _prisonerPoll.stop();
+        _webServerPoll.stop();
         SocketPoll::wakeupWorld();
     }
 

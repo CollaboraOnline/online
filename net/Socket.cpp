@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#include "SigUtil.hpp"
 #include "Socket.hpp"
 #include "ServerSocket.hpp"
 
@@ -27,19 +28,32 @@ namespace {
     }
 }
 
-SocketPoll::SocketPoll()
+SocketPoll::SocketPoll(const std::string& name) :
+    _name(name),
+    _stop(false)
 {
     // Create the wakeup fd.
     if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)
     {
         throw std::runtime_error("Failed to allocate pipe for SocketPoll waking.");
     }
-    std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
-    getWakeupsArray().push_back(_wakeup[1]);
+
+    {
+        std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
+        getWakeupsArray().push_back(_wakeup[1]);
+    }
+
+    _thread = std::thread(&SocketPoll::pollingThread, this);
 }
 
 SocketPoll::~SocketPoll()
 {
+    stop();
+    if (_thread.joinable())
+    {
+        _thread.join();
+    }
+
     ::close(_wakeup[0]);
     ::close(_wakeup[1]);
 
@@ -50,6 +64,15 @@ SocketPoll::~SocketPoll()
 
     if (it != getWakeupsArray().end())
         getWakeupsArray().erase(it);
+}
+
+void SocketPoll::pollingThread()
+{
+    LOG_INF("Starting polling thread [" << _name << "].");
+    while (!_stop && !TerminationFlag && !ShutdownRequestFlag)
+    {
+        poll(5000);
+    }
 }
 
 void SocketPoll::wakeupWorld()

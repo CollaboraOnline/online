@@ -104,8 +104,9 @@ loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
                          kit/DummyLibreOfficeKit.cpp
 
 loolnb_SOURCES = net/loolnb.cpp \
-		 net/Socket.cpp \
+                 net/Socket.cpp \
                  common/Log.cpp \
+                 common/SigUtil.cpp \
                  common/Util.cpp
 if ENABLE_SSL
 loolnb_SOURCES += net/Ssl.cpp
