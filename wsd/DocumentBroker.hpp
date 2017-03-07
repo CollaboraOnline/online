@@ -262,6 +262,11 @@ public:
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id);
 
+    void addSocketToPoll(const std::shared_ptr<Socket>& socket)
+    {
+        _poll.insertNewSocket(socket);
+    }
+
     void alertAllUsers(const std::string& msg);
 
     void alertAllUsers(const std::string& cmd, const std::string& kind)

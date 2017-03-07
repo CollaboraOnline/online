@@ -69,6 +69,7 @@ public:
         LOG_DBG("Accepted socket #" << rc << ", creating socket object.");
         try
         {
+            // Create a socket object using the factory.
             return (rc != -1 ? _sockFactory->create(rc) : std::shared_ptr<Socket>(nullptr));
         }
         catch (const std::exception& ex)

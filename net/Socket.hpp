@@ -212,7 +212,16 @@ public:
         Poco::Timestamp newNow;
         for (int i = static_cast<int>(size) - 1; i >= 0; --i)
         {
-            if (_pollFds[i].revents)
+            // First check if this is a removed socket.
+            // Polling from multiple threads is fine, but not invoking handlePoll.
+            auto it = std::find(_relSockets.begin(), _relSockets.end(), _pollSockets[i]);
+            if (it != _relSockets.end())
+            {
+                LOG_DBG("Releasing socket #" << _pollFds[i].fd);
+                _pollSockets.erase(_pollSockets.begin() + i);
+                _relSockets.erase(it);
+            }
+            else if (_pollFds[i].revents)
             {
                 Socket::HandleResult res = Socket::HandleResult::SOCKET_CLOSED;
                 try
@@ -227,9 +236,8 @@ public:
 
                 if (res == Socket::HandleResult::SOCKET_CLOSED)
                 {
-                    LOG_DBG("Removing client #" << _pollFds[i].fd);
+                    LOG_DBG("Removing socket #" << _pollFds[i].fd);
                     _pollSockets.erase(_pollSockets.begin() + i);
-                    // Don't remove from pollFds; we'll recreate below.
                 }
             }
         }
@@ -286,6 +294,7 @@ public:
         if (newSocket)
         {
             std::lock_guard<std::mutex> lock(_mutex);
+            LOG_DBG("Inserting socket #" << newSocket->getFD() << " into " << _name);
             _newSockets.emplace_back(newSocket);
             wakeup();
         }
@@ -303,20 +312,39 @@ public:
 
     void dumpState();
 
+    /// Removes a socket from this poller.
+    void releaseSocket(const std::shared_ptr<Socket>& socket)
+    {
+        if (socket)
+        {
+            std::lock_guard<std::mutex> lock(_mutex);
+            LOG_TRC("Releasing socket #" << socket->getFD() << " from " << _name);
+            _relSockets.emplace_back(socket);
+            wakeup();
+        }
+    }
+
+    const std::string& name() const { return _name; }
+
 private:
 
     void pollingThread();
 
-    void removeSocketFromPoll(const std::shared_ptr<Socket>& socket)
-    {
-        auto it = std::find(_pollSockets.begin(), _pollSockets.end(), socket);
-        assert (it != _pollSockets.end());
-        _pollSockets.erase(it);
-    }
-
     /// Initialize the poll fds array with the right events
     void setupPollFds(Poco::Timestamp &timeout)
     {
+        for (int i = static_cast<int>(_relSockets.size()) - 1; i >= 0; --i)
+        {
+            auto it = std::find(_pollSockets.begin(), _pollSockets.end(), _relSockets[i]);
+            if (it != _pollSockets.end())
+            {
+                LOG_DBG("Releasing socket #" << (*it)->getFD() << " from " << _name);
+                _pollSockets.erase(it);
+            }
+        }
+
+        _relSockets.clear();
+
         const size_t size = _pollSockets.size();
 
         _pollFds.resize(size + 1); // + wakeup pipe
@@ -346,6 +374,7 @@ private:
     /// Protects _newSockets
     std::mutex _mutex;
     std::vector<std::shared_ptr<Socket>> _newSockets;
+    std::vector<std::shared_ptr<Socket>> _relSockets;
     std::vector<CallbackFn> _newCallbacks;
     /// The fds to poll.
     std::vector<pollfd> _pollFds;

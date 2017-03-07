@@ -187,6 +187,7 @@ void DocumentBroker::pollThread(std::shared_ptr<DocumentBroker> docBroker)
             docBroker->_newSessions.pop_front();
         }
 
+        // FIXME: SocketPoll has own thread.
         docBroker->_poll.poll(5000);
     }
 }
