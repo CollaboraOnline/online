@@ -643,7 +643,7 @@ std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
 /// This thread polls basic web serving, and handling of
 /// websockets before upgrade: when upgraded they go to the
 /// relevant DocumentBroker poll instead.
-SocketPoll WebServerPoll("websrv_poll");
+TerminatingPoll WebServerPoll("websrv_poll");
 
 /// Helper class to hold default configuration entries.
 class AppConfigMap final : public Poco::Util::MapConfiguration
@@ -2428,11 +2428,25 @@ public:
 private:
     std::atomic<bool> _stop;
 
+    class AcceptPoll : public TerminatingPoll {
+    public:
+        AcceptPoll(const std::string &threadName) :
+            TerminatingPoll(threadName) {}
+
+        void wakeupHook() override
+        {
+            if (DumpGlobalState)
+            {
+                dump_state();
+                DumpGlobalState = false;
+            }
+        }
+    };
     /// This thread & poll accepts incoming connections.
-    SocketPoll _acceptPoll;
+    AcceptPoll _acceptPoll;
 
     /// This thread listens for and accepts prisoner kit processes
-    SocketPoll _prisonerPoll;
+    TerminatingPoll _prisonerPoll;
 
     std::shared_ptr<ServerSocket> getServerSocket(const Poco::Net::SocketAddress& addr,
                                                   SocketPoll &poll,

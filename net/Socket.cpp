@@ -28,8 +28,8 @@ namespace {
     }
 }
 
-SocketPoll::SocketPoll(const std::string& name) :
-    _name(name),
+SocketPoll::SocketPoll(const std::string& threadName) :
+    _name(threadName),
     _stop(false)
 {
     // Create the wakeup fd.
@@ -69,7 +69,7 @@ SocketPoll::~SocketPoll()
 void SocketPoll::pollingThread()
 {
     LOG_INF("Starting polling thread [" << _name << "].");
-    while (!_stop && !TerminationFlag && !ShutdownRequestFlag)
+    while (continuePolling())
     {
         poll(5000);
     }

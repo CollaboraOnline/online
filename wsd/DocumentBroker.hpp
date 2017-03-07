@@ -40,6 +40,19 @@ class StorageBase;
 class TileCache;
 class Message;
 
+class TerminatingPoll : public SocketPoll
+{
+public:
+    TerminatingPoll(const std::string &threadName) :
+        SocketPoll(threadName) {}
+
+    bool continuePolling() override
+    {
+        return SocketPoll::continuePolling()
+            && !TerminationFlag && !ShutdownRequestFlag;
+    }
+};
+
 /// Represents a new LOK child that is read
 /// to host a document.
 class ChildProcess
