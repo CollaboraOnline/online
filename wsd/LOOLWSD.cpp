@@ -2597,8 +2597,8 @@ private:
         if (LOOLWSD::isSSLEnabled())
             factory = std::make_shared<SslSocketFactory>();
         else
-            factory = std::make_shared<PlainSocketFactory>();
 #endif
+            factory = std::make_shared<PlainSocketFactory>();
 
         std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress("127.0.0.1", port),
                                                                _webServerPoll, factory);
