@@ -66,15 +66,6 @@ SocketPoll::~SocketPoll()
         getWakeupsArray().erase(it);
 }
 
-void SocketPoll::pollingThread()
-{
-    LOG_INF("Starting polling thread [" << _name << "].");
-    while (continuePolling())
-    {
-        poll(5000);
-    }
-}
-
 void SocketPoll::wakeupWorld()
 {
     for (const auto& fd : getWakeupsArray())

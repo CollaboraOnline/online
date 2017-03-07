@@ -206,6 +206,7 @@ class ClientSession;
 /// Contains URI, physical path, etc.
 class DocumentBroker : public std::enable_shared_from_this<DocumentBroker>
 {
+    class DocumentBrokerPoll;
 public:
     static Poco::URI sanitizeURI(const std::string& uri);
 
@@ -275,10 +276,7 @@ public:
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id);
 
-    void addSocketToPoll(const std::shared_ptr<Socket>& socket)
-    {
-        _poll.insertNewSocket(socket);
-    }
+    void addSocketToPoll(const std::shared_ptr<Socket>& socket);
 
     void alertAllUsers(const std::string& msg);
 
@@ -363,7 +361,7 @@ private:
 
     /// The thread function that all of the I/O for all sessions
     /// associated with this document.
-    static void pollThread(std::shared_ptr<DocumentBroker> docBroker);
+    static void pollThread(const std::shared_ptr<DocumentBroker> &docBroker);
 
 private:
     const std::string _uriOrig;
@@ -415,8 +413,7 @@ private:
     mutable std::mutex _mutex;
     std::condition_variable _saveCV;
     std::mutex _saveMutex;
-    SocketPoll _poll;
-    std::thread _thread;
+    std::unique_ptr<DocumentBrokerPoll> _poll;
     std::atomic<bool> _stop;
 
     /// Versioning is used to prevent races between
