@@ -188,6 +188,7 @@ void DocumentBroker::pollThread(std::shared_ptr<DocumentBroker> docBroker)
         }
 
         // FIXME: SocketPoll has own thread.
+        // FIXME: This is causing a race with the poll thread! Must merge them.
         docBroker->_poll.poll(5000);
     }
 }
