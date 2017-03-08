@@ -212,14 +212,13 @@ public:
     /// Poll the sockets for available data to read or buffer to write.
     void poll(const int timeoutMaxMs)
     {
-        const size_t size = _pollSockets.size();
-
         Poco::Timestamp now;
         Poco::Timestamp timeout = now;
         timeout += Poco::Timespan(0 /* s */, timeoutMaxMs * 1000 /* us */);
 
         // The events to poll on change each spin of the loop.
         setupPollFds(timeout);
+        const size_t size = _pollSockets.size();
 
         int rc;
         do
