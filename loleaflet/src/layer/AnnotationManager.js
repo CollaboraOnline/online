@@ -277,6 +277,19 @@ L.AnnotationManager = L.Class.extend({
 				}
 			};
 			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
+		}
+		else if (e.annotation._data.trackchange) {
+			comment = {
+				ChangeTrackingId: {
+					type: 'long',
+					value: e.annotation._data.index
+				},
+				Text: {
+					type: 'string',
+					value: e.annotation._data.text
+				}
+			};
+			this._map.sendUnoCommand('.uno:CommentChangeTracking', comment);
 		} else {
 			comment = {
 				Id: {
