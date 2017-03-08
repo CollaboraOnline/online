@@ -641,6 +641,9 @@ std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
 /// relevant DocumentBroker poll instead.
 TerminatingPoll WebServerPoll("websrv_poll");
 
+/// This thread listens for and accepts prisoner kit processes.
+TerminatingPoll PrisonerPoll("prison_poll");
+
 /// Helper class to hold default configuration entries.
 class AppConfigMap final : public Poco::Util::MapConfiguration
 {
@@ -1486,7 +1489,6 @@ private:
     {
         LOG_TRC("Prisoner - new socket\n");
         _socket = socket;
-        LOG_TRC("Prisoner connection disconnected\n");
     }
 
     void onDisconnect() override
@@ -1575,9 +1577,14 @@ private:
                request, response))
                return; */
 
-            auto child = std::make_shared<ChildProcess>(pid, _socket.lock(), request);
+            auto child = std::make_shared<ChildProcess>(pid, socket, request);
             _childProcess = child; // weak
             addNewChild(child);
+
+            // Remove from prisoner poll since there is no activity
+            // until we attach the childProcess (with this socket)
+            // to a docBroker, which will do the polling.
+            PrisonerPoll.releaseSocket(socket);
 
             in.clear();
         }
@@ -2374,8 +2381,7 @@ class LOOLWSDServer
 public:
     LOOLWSDServer() :
         _stop(false),
-        _acceptPoll("accept_poll"),
-        _prisonerPoll("prison_poll")
+        _acceptPoll("accept_poll")
     {
     }
 
@@ -2386,7 +2392,7 @@ public:
 
     void startPrisoners(const int port)
     {
-        _prisonerPoll.insertNewSocket(findPrisonerServerPort(port));
+        PrisonerPoll.insertNewSocket(findPrisonerServerPort(port));
     }
 
     void start(const int port)
@@ -2414,7 +2420,7 @@ public:
         WebServerPoll.dumpState();
 
         std::cerr << "Prisoner poll:\n";
-        _prisonerPoll.dumpState();
+        PrisonerPoll.dumpState();
 
         std::cerr << "Document Broker polls:\n";
         for (auto &i : DocBrokers)
@@ -2441,9 +2447,6 @@ private:
     /// This thread & poll accepts incoming connections.
     AcceptPoll _acceptPoll;
 
-    /// This thread listens for and accepts prisoner kit processes
-    TerminatingPoll _prisonerPoll;
-
     std::shared_ptr<ServerSocket> getServerSocket(const Poco::Net::SocketAddress& addr,
                                                   SocketPoll &poll,
                                                   std::shared_ptr<SocketFactory> factory)
@@ -2461,7 +2464,7 @@ private:
     {
         std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
         std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress("127.0.0.1", port),
-                                                               _prisonerPoll, factory);
+                                                               PrisonerPoll, factory);
 
         if (!UnitWSD::isUnitTesting() && !socket)
         {
@@ -2475,7 +2478,7 @@ private:
             ++port;
             LOG_INF("Prisoner port " << (port - 1) << " is busy, trying " << port << ".");
             socket = getServerSocket(SocketAddress("127.0.0.1", port),
-                                     _prisonerPoll, factory);
+                                     PrisonerPoll, factory);
         }
 
         return socket;

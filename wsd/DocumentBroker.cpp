@@ -38,6 +38,15 @@ using namespace LOOLProtocol;
 
 using Poco::JSON::Object;
 
+void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker)
+{
+    assert(docBroker && "Invalid DocumentBroker instance.");
+    _docBroker = docBroker;
+
+    // Add the prisoner socket to the docBroker poll.
+    docBroker->addSocketToPoll(_socket);
+}
+
 namespace
 {
 
@@ -192,6 +201,7 @@ void DocumentBroker::pollThread()
 #endif
         // FIXME: return something good down the websocket ...
         _stop = true;
+        return;
     }
 
     _childProcess->setDocumentBroker(shared_from_this());
