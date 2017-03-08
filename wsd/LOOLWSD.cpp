@@ -189,9 +189,12 @@ int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 /// New LOK child processes ready to host documents.
 //TODO: Move to a more sensible namespace.
 static bool DisplayVersion = false;
-static std::vector<std::shared_ptr<ChildProcess> > NewChildren;
+
+// Tracks the set of prisoners / children waiting to be used.
 static std::mutex NewChildrenMutex;
 static std::condition_variable NewChildrenCV;
+static std::vector<std::shared_ptr<ChildProcess> > NewChildren;
+
 static std::chrono::steady_clock::time_point LastForkRequestTime = std::chrono::steady_clock::now();
 static std::atomic<int> OutstandingForks(0);
 static std::map<std::string, std::shared_ptr<DocumentBroker> > DocBrokers;
@@ -347,6 +350,7 @@ static bool cleanupChildren()
         if (!NewChildren[i]->isAlive())
         {
             LOG_WRN("Removing dead spare child [" << NewChildren[i]->getPid() << "].");
+
             NewChildren.erase(NewChildren.begin() + i);
             removed = true;
         }
@@ -393,46 +397,12 @@ static int rebalanceChildren(int balance)
     return 0;
 }
 
-#ifndef KIT_IN_PROCESS
-/// Called on startup only.
-static void preForkChildren(std::unique_lock<std::mutex>& lock)
-{
-    Util::assertIsLocked(DocBrokersMutex);
-    Util::assertIsLocked(lock);
-
-    int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
-    UnitWSD::get().preSpawnCount(numPreSpawn);
-
-    // Wait until we have at least one child.
-    // With valgrind we need extended time to spawn kits.
-#ifdef KIT_IN_PROCESS
-    const auto timeoutMs = CHILD_TIMEOUT_MS * 3;
-#else
-    const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 150 : 3);
-#endif
-    const auto timeout = std::chrono::milliseconds(timeoutMs);
-    LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
-    NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); });
-
-    // Now spawn more, as needed.
-    rebalanceChildren(numPreSpawn);
-
-    // Make sure we have at least one before moving forward.
-    LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
-    if (!NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
-    {
-        const auto msg = "Failed to fork child processes.";
-        LOG_FTL(msg);
-        throw std::runtime_error(msg);
-    }
-}
-#endif
-
 /// Proactively spawn children processes
 /// to load documents with alacrity.
 /// Returns true only if at least one child was requested to spawn.
 static bool prespawnChildren()
 {
+#if 1 // FIXME: why re-balance DockBrokers here ? ...
     // First remove dead DocBrokers, if possible.
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
     if (!docBrokersLock.try_lock())
@@ -442,6 +412,7 @@ static bool prespawnChildren()
     }
 
     cleanupDocBrokers();
+#endif
 
     std::unique_lock<std::mutex> lock(NewChildrenMutex, std::defer_lock);
     if (!lock.try_lock())
@@ -646,8 +617,17 @@ std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
 /// relevant DocumentBroker poll instead.
 TerminatingPoll WebServerPoll("websrv_poll");
 
+class PrisonerPoll : public TerminatingPoll {
+public:
+    PrisonerPoll() : TerminatingPoll("prisoner_poll") {}
+
+    /// Check prisoners are still alive and balaned.
+    void wakeupHook() override;
+};
+
 /// This thread listens for and accepts prisoner kit processes.
-TerminatingPoll PrisonerPoll("prison_poll");
+/// And also cleans up and balances the correct number of childen.
+PrisonerPoll PrisonerPoll;
 
 /// Helper class to hold default configuration entries.
 class AppConfigMap final : public Poco::Util::MapConfiguration
@@ -1173,6 +1153,43 @@ bool LOOLWSD::checkAndRestoreForKit()
 #endif
 }
 
+void PrisonerPoll::wakeupHook()
+{
+    /// FIXME: we should do this less frequently
+    /// currently the prisoner poll wakes up quite
+    /// a lot.
+    if (!LOOLWSD::checkAndRestoreForKit())
+    {
+        // No children have died.
+        // Make sure we have sufficient reserves.
+        if (prespawnChildren())
+        {
+            // Nothing more to do this round, unless we are fuzzing
+#if FUZZER
+            if (!LOOLWSD::FuzzFileName.empty())
+            {
+                std::unique_ptr<Replay> replay(new Replay(
+#if ENABLE_SSL
+                        "https://127.0.0.1:" + std::to_string(ClientPortNumber),
+#else
+                        "http://127.0.0.1:" + std::to_string(ClientPortNumber),
+#endif
+                        LOOLWSD::FuzzFileName));
+
+                std::unique_ptr<Thread> replayThread(new Thread());
+                replayThread->start(*replay);
+
+                // block until the replay finishes
+                replayThread->join();
+
+                TerminationFlag = true;
+            }
+#endif
+        }
+    }
+}
+
+
 bool LOOLWSD::createForKit()
 {
 #ifdef KIT_IN_PROCESS
@@ -1238,8 +1255,9 @@ bool LOOLWSD::createForKit()
     // Init the Admin manager
     Admin::instance().setForKitPid(ForKitProcId);
 
-    // Spawn some children, if necessary.
-    preForkChildren(newChildrenLock);
+    // Wake the prisoner poll to spawn some children, if necessary.
+    PrisonerPoll.wakeup();
+    // FIXME: horrors with try_lock in prespawnChildren ...
 
     return (ForKitProcId != -1);
 #endif
@@ -2614,6 +2632,26 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     srv.startPrisoners(MasterPortNumber);
 
+#ifndef KIT_IN_PROCESS
+    {
+        std::unique_lock<std::mutex> lock(NewChildrenMutex);
+
+        const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 150 : 3);
+        const auto timeout = std::chrono::milliseconds(timeoutMs);
+        // Make sure we have at least one before moving forward.
+        LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
+        if (!NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
+        {
+            const auto msg = "Failed to fork child processes.";
+            LOG_FTL(msg);
+            throw std::runtime_error(msg);
+        }
+
+        // Check we have at least one
+        assert(NewChildren.size() > 0);
+    }
+#endif
+
     // Fire the ForKit process; we are ready to get child connections.
     if (!createForKit())
     {
@@ -2627,6 +2665,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     time_t startTimeSpan = time(nullptr);
 #endif
 
+    // FIXME: all of this needs cleaning up and putting in the
+    // relevant polls.
+
     auto last30SecCheckTime = std::chrono::steady_clock::now();
     while (!TerminationFlag && !ShutdownRequestFlag)
     {
@@ -2636,65 +2677,36 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             break;
         }
 
-        if (!checkAndRestoreForKit())
+        if (!std::getenv("LOOL_NO_AUTOSAVE") &&
+            std::chrono::duration_cast<std::chrono::seconds>
+            (std::chrono::steady_clock::now() - last30SecCheckTime).count() >= 30)
         {
-            // No children have died.
-            // Make sure we have sufficient reserves.
-            if (prespawnChildren())
+            try
             {
-                // Nothing more to do this round, unless we are fuzzing
-#if FUZZER
-                if (!FuzzFileName.empty())
-                {
-                    std::unique_ptr<Replay> replay(new Replay(
-#if ENABLE_SSL
-                            "https://127.0.0.1:" + std::to_string(ClientPortNumber),
-#else
-                            "http://127.0.0.1:" + std::to_string(ClientPortNumber),
-#endif
-                            FuzzFileName));
-
-                    std::unique_ptr<Thread> replayThread(new Thread());
-                    replayThread->start(*replay);
-
-                    // block until the replay finishes
-                    replayThread->join();
-
-                    TerminationFlag = true;
-                }
-#endif
-            }
-            else if (!std::getenv("LOOL_NO_AUTOSAVE") &&
-                     std::chrono::duration_cast<std::chrono::seconds>
-                        (std::chrono::steady_clock::now() - last30SecCheckTime).count() >= 30)
-            {
-                try
-                {
 #if 0
-                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-                    cleanupDocBrokers();
-                    for (auto& pair : DocBrokers)
-                    {
-                        auto docLock = pair.second->getDeferredLock();
-                        if (doclock.try_lock())
-                        {
-                            pair.second->autosave(false, 0, doclock);
-                        }
-                    }
-#endif
-                }
-                catch (const std::exception& exc)
+                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+                cleanupDocBrokers();
+                for (auto& pair : DocBrokers)
                 {
-                    LOG_ERR("Exception: " << exc.what());
+                    auto docLock = pair.second->getDeferredLock();
+                    if (doclock.try_lock())
+                    {
+                        pair.second->autosave(false, 0, doclock);
+                    }
                 }
-
-                last30SecCheckTime = std::chrono::steady_clock::now();
+#endif
             }
-            else
+            catch (const std::exception& exc)
             {
-                // Wait if we had done no work.
-                std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS));
+                LOG_ERR("Exception: " << exc.what());
             }
+
+            last30SecCheckTime = std::chrono::steady_clock::now();
+        }
+        else
+        {
+            // Wait if we had done no work.
+            std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS));
         }
 
 #if ENABLE_DEBUG
