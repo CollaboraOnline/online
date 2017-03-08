@@ -237,7 +237,7 @@ L.AnnotationManager = L.Class.extend({
 			this.layout();
 		} else if (obj.comment.action === 'Remove') {
 			if (this.getItem(obj.comment.id)) {
-				this._map.removeLayer(this.removeItem(id));
+				this._map.removeLayer(this.removeItem(obj.comment.id));
 				this.unselect();
 			}
 		} else if (obj.comment.action === 'Modify') {
