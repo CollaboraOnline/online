@@ -2449,8 +2449,10 @@ private:
     /// This thread & poll accepts incoming connections.
     AcceptPoll _acceptPoll;
 
+    /// Create a new server socket - accepted sockets will be added
+    /// to the @clientSockets' poll when created with @factory.
     std::shared_ptr<ServerSocket> getServerSocket(const Poco::Net::SocketAddress& addr,
-                                                  SocketPoll &poll,
+                                                  SocketPoll &clientSocket,
                                                   std::shared_ptr<SocketFactory> factory)
     {
         std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(poll, factory);
