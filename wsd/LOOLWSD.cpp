@@ -1655,7 +1655,7 @@ private:
 
         const size_t curConnections = --LOOLWSD::NumConnections;
         LOG_TRC("Disconnected connection #" << _connectionNum << " of " <<
-                curConnections << " existing as session [" << _id << "].");
+                (curConnections + 1) << " existing as session [" << _id << "].");
     }
 
     /// Called after successful socket reads.

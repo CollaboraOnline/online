@@ -236,8 +236,8 @@ public:
             auto it = std::find(_relSockets.begin(), _relSockets.end(), _pollSockets[i]);
             if (it != _relSockets.end())
             {
-                LOG_DBG("Releasing ocket #" << _pollFds[i].fd << " (of " <<
-                        _pollSockets.size() << ") from [" << _name << "]");
+                LOG_DBG("Releasing socket #" << _pollFds[i].fd << " (of " <<
+                        _pollSockets.size() << ") from " << _name);
                 _pollSockets.erase(_pollSockets.begin() + i);
                 _relSockets.erase(it);
             }
@@ -251,13 +251,13 @@ public:
                 catch (const std::exception& exc)
                 {
                     LOG_ERR("Error while handling poll for socket #" <<
-                            _pollFds[i].fd << " in [" << _name << "]: " << exc.what());
+                            _pollFds[i].fd << " in " << _name << ": " << exc.what());
                 }
 
                 if (res == Socket::HandleResult::SOCKET_CLOSED)
                 {
                     LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
-                            _pollSockets.size() << ") from [" << _name << "]");
+                            _pollSockets.size() << ") from " << _name);
                     _pollSockets.erase(_pollSockets.begin() + i);
                 }
             }
@@ -341,7 +341,7 @@ public:
         if (socket)
         {
             std::lock_guard<std::mutex> lock(_mutex);
-            LOG_TRC("Releasing socket #" << socket->getFD() << " from " << _name);
+            LOG_TRC("Queuing to release socket #" << socket->getFD() << " from " << _name);
             _relSockets.emplace_back(socket);
             wakeup();
         }
@@ -359,7 +359,8 @@ private:
             auto it = std::find(_pollSockets.begin(), _pollSockets.end(), _relSockets[i]);
             if (it != _pollSockets.end())
             {
-                LOG_DBG("Releasing socket #" << (*it)->getFD() << " from " << _name);
+                LOG_DBG("Releasing socket #" << (*it)->getFD() << " (of " <<
+                        _pollSockets.size() << ") from " << _name);
                 _pollSockets.erase(it);
             }
         }
