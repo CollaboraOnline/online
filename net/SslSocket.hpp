@@ -68,6 +68,8 @@ public:
 
     bool readIncomingData() override
     {
+        assert(isCorrectThread());
+
         const int rc = doHandshake();
         if (rc <= 0)
         {
@@ -80,6 +82,8 @@ public:
 
     void writeOutgoingData() override
     {
+        assert(isCorrectThread());
+
         const int rc = doHandshake();
         if (rc <= 0)
         {
@@ -92,11 +96,15 @@ public:
 
     virtual int readData(char* buf, int len)
     {
+        assert(isCorrectThread());
+
         return handleSslState(SSL_read(_ssl, buf, len));
     }
 
     virtual int writeData(const char* buf, const int len)
     {
+        assert(isCorrectThread());
+
         assert (len > 0); // Never write 0 bytes.
         return handleSslState(SSL_write(_ssl, buf, len));
     }
@@ -130,6 +138,8 @@ private:
 
     int doHandshake()
     {
+        assert(isCorrectThread());
+
         if (_doHandshake)
         {
             int rc;
@@ -158,6 +168,8 @@ private:
     /// Handles the state of SSL after read or write.
     int handleSslState(const int rc)
     {
+        assert(isCorrectThread());
+
         if (rc > 0)
         {
             // Success: Reset so we can do either.
