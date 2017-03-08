@@ -1204,7 +1204,7 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
     Util::assertIsLocked(_mutex);
     Util::assertIsLocked(lock);
 
-    LOG_INF("Terminating child [" << getPid() << "] of doc [" << _docKey << "].");
+    LOG_INF("Terminating doc [" << _docKey << "].");
 
     // Close all running sessions
     for (const auto& pair : _sessions)
@@ -1219,14 +1219,19 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
         }
     }
 
-    // First flag to stop as it might be waiting on our lock
-    // to process some incoming message.
-    _childProcess->stop();
+    if (_childProcess)
+    {
+        LOG_INF("Terminating child [" << getPid() << "] of doc [" << _docKey << "].");
 
-    // Release the lock and wait for the thread to finish.
-    lock.unlock();
+        // First flag to stop as it might be waiting on our lock
+        // to process some incoming message.
+        _childProcess->stop();
 
-    _childProcess->close(false);
+        // Release the lock and wait for the thread to finish.
+        lock.unlock();
+
+        _childProcess->close(false);
+    }
 }
 
 void DocumentBroker::closeDocument(const std::string& reason)
