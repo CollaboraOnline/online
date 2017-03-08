@@ -19,15 +19,28 @@ L.AnnotationManager = L.Class.extend({
 		this._map.on('AnnotationSave', this._onAnnotationSave, this);
 	},
 
+	// Remove only text comments from the document (excluding change tracking comments)
 	clear: function () {
 		for (var key in this._items) {
-			this._map.removeLayer(this._items[key]);
+			if (!this._items[key].trackchange) {
+				this._map.removeLayer(this._items[key]);
+			}
 		}
 		this._map.removeLayer(this._arrow);
 		this._items = [];
 		this._selected = {};
 	},
 
+	// Remove only change tracking comments from the document
+	clearChanges: function() {
+		for (var key in this._items) {
+			if (this._items[key].trackchange) {
+				this._map.removeLayer(this._items[key]);
+			}
+		}
+	},
+
+	// Fill normal comments in the documents
 	fill: function (comments) {
 		var comment;
 		this.clear();
@@ -37,7 +50,21 @@ L.AnnotationManager = L.Class.extend({
 				continue;
 			}
 			comment.anchorPos = L.LOUtil.stringToPoint(comment.anchorPos);
+			comment.trackchange = false;
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
+		}
+		this.layout();
+	},
+
+	fillChanges: function(redlines) {
+		var changecomment;
+		this.clearChanges();
+		for (var idx in redlines) {
+			changecomment = redlines[idx];
+			changecomment.anchorPos = L.LOUtil.stringToPoint(changecomment.textRange);
+			changecomment.trackchange = true;
+			changecomment.text = changecomment.comment;
+			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), changecomment).addTo(this._map));
 		}
 		this.layout();
 	},

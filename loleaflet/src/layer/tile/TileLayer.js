@@ -198,6 +198,7 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 		});
+		this._map._socket.sendMessage('commandvalues command=.uno:AcceptTrackedChanges');
 
 		map._fadeAnimated = false;
 		this._viewReset();

@@ -35,7 +35,11 @@ L.WriterTileLayer = L.TileLayer.extend({
 
 		if (values.comments) {
 			this._annotations.fill(values.comments);
-		} else {
+		}
+		else if (values.redlines) {
+			this._annotations.fillChanges(values.redlines);
+		}
+		else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
