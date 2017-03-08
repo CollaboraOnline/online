@@ -237,7 +237,8 @@ public:
             auto it = std::find(_relSockets.begin(), _relSockets.end(), _pollSockets[i]);
             if (it != _relSockets.end())
             {
-                LOG_DBG("Releasing socket #" << _pollFds[i].fd);
+                LOG_DBG("Releasing ocket #" << _pollFds[i].fd << " (of " <<
+                        _pollSockets.size() << ") from [" << _name << "]");
                 _pollSockets.erase(_pollSockets.begin() + i);
                 _relSockets.erase(it);
             }
@@ -251,12 +252,13 @@ public:
                 catch (const std::exception& exc)
                 {
                     LOG_ERR("Error while handling poll for socket #" <<
-                            _pollFds[i].fd << ": " << exc.what());
+                            _pollFds[i].fd << " in [" << _name << "]: " << exc.what());
                 }
 
                 if (res == Socket::HandleResult::SOCKET_CLOSED)
                 {
-                    LOG_DBG("Removing socket #" << _pollFds[i].fd);
+                    LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
+                            _pollSockets.size() << ") from [" << _name << "]");
                     _pollSockets.erase(_pollSockets.begin() + i);
                 }
             }
