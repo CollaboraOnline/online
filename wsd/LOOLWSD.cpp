@@ -2455,7 +2455,7 @@ private:
                                                   SocketPoll &clientSocket,
                                                   std::shared_ptr<SocketFactory> factory)
     {
-        std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(poll, factory);
+        std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(clientSocket, factory);
 
         if (serverSocket->bind(addr) &&
             serverSocket->listen())
