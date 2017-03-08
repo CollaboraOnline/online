@@ -1363,8 +1363,6 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
         LOG_DBG("No DocumentBroker with docKey [" << docKey << "] found. New Child and Document.");
     }
 
-    Util::assertIsLocked(docBrokersLock);
-
     if (TerminationFlag)
     {
         LOG_ERR("Termination flag set. No loading new session [" << id << "]");
