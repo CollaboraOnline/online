@@ -10,8 +10,6 @@
 #ifndef INCLUDED_LOOLWEBSOCKET_HPP
 #define INCLUDED_LOOLWEBSOCKET_HPP
 
-#include "config.h"
-
 #include <cstdlib>
 #include <mutex>
 #include <thread>

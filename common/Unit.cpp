@@ -7,9 +7,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "config.h"
+
 #include <iostream>
 #include "Unit.hpp"
-#include "config.h"
 
 #include <cassert>
 #include <dlfcn.h>

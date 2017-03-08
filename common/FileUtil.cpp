@@ -7,8 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "FileUtil.hpp"
 #include "config.h"
+
+#include "FileUtil.hpp"
 
 #include <ftw.h>
 #include <sys/stat.h>

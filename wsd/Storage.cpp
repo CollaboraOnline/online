@@ -7,8 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "Storage.hpp"
 #include "config.h"
+
+#include "Storage.hpp"
 
 #include <algorithm>
 #include <cassert>

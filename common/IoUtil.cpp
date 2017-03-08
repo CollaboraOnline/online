@@ -7,8 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "IoUtil.hpp"
 #include "config.h"
+
+#include "IoUtil.hpp"
 
 #include <sys/poll.h>
 

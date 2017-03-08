@@ -7,8 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "ChildSession.hpp"
 #include "config.h"
+
+#include "ChildSession.hpp"
 
 #include <sstream>
 

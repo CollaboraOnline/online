@@ -10,8 +10,6 @@
 #ifndef INCLUDED_TEST_HELPERS_HPP
 #define INCLUDED_TEST_HELPERS_HPP
 
-#include "config.h"
-
 #include <algorithm>
 #include <condition_variable>
 #include <cstdlib>
