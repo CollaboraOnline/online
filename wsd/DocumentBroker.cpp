@@ -206,19 +206,26 @@ void DocumentBroker::pollThread()
                 break;
 
             NewSession& newSession = _newSessions.front();
-            addSession(newSession._session);
-
-            // now send the queued messages
-            for (std::string message : newSession._messages)
+            try
             {
-                // provide the jailed document path to the 'load' message
-                assert(!_uriJailed.empty());
-                std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
-                if (tokens.size() > 1 && tokens[1] == "load")
-                    message += std::string(" jail=") + _uriJailed.toString();
+                addSession(newSession._session);
 
-                LOG_DBG("Sending a queued message: " + message);
-                _childProcess->sendTextFrame(message);
+                // now send the queued messages
+                for (std::string message : newSession._messages)
+                {
+                    // provide the jailed document path to the 'load' message
+                    assert(!_uriJailed.empty());
+                    std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
+                    if (tokens.size() > 1 && tokens[1] == "load")
+                        message += std::string(" jail=") + _uriJailed.toString();
+
+                    LOG_DBG("Sending a queued message: " + message);
+                    _childProcess->sendTextFrame(message);
+                }
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_ERR("Error while adding new session to doc [" << _docKey << "]: " << exc.what());
             }
 
             _newSessions.pop_front();
