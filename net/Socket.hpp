@@ -10,8 +10,6 @@
 #ifndef INCLUDED_SOCKET_HPP
 #define INCLUDED_SOCKET_HPP
 
-#include "config.h"
-
 #include <poll.h>
 #include <unistd.h>
 #include <sys/stat.h>

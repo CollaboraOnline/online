@@ -7,8 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "Session.hpp"
 #include "config.h"
+
+#include "Session.hpp"
 
 #include <sys/stat.h>
 #include <sys/types.h>

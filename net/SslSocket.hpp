@@ -10,8 +10,6 @@
 #ifndef INCLUDED_SSLSOCKET_HPP
 #define INCLUDED_SSLSOCKET_HPP
 
-#include "config.h"
-
 #include <cerrno>
 
 #include "Ssl.hpp"

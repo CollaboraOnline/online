@@ -7,8 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "DocumentBroker.hpp"
 #include "config.h"
+
+#include "DocumentBroker.hpp"
 
 #include <cassert>
 #include <ctime>

@@ -7,8 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "Auth.hpp"
 #include "config.h"
+
+#include "Auth.hpp"
 
 #include <cstdlib>
 #include <string>

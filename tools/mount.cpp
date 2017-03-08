@@ -10,6 +10,8 @@
  * This is a very tiny helper to allow overlay mounting.
  */
 
+#include "config.h"
+
 #include <sys/mount.h>
 
 #include "security.h"

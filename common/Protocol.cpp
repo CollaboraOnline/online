@@ -7,8 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "Protocol.hpp"
 #include "config.h"
+
+#include "Protocol.hpp"
 
 #include <cassert>
 #include <cstring>

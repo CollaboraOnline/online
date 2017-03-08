@@ -11,6 +11,8 @@
  * a document editing session.
  */
 
+#include "config.h"
+
 #include <dlfcn.h>
 #include <ftw.h>
 #include <malloc.h>

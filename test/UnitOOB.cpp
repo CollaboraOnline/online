@@ -12,6 +12,8 @@
  * UnitFuzz.
  */
 
+#include "config.h"
+
 #include "Common.hpp"
 #include "IoUtil.hpp"
 #include "Protocol.hpp"

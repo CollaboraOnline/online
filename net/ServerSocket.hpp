@@ -10,8 +10,6 @@
 #ifndef INCLUDED_SERVERSOCKET_HPP
 #define INCLUDED_SERVERSOCKET_HPP
 
-#include "config.h"
-
 #include "memory"
 
 #include "Socket.hpp"

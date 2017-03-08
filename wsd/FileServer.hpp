@@ -10,8 +10,6 @@
 #ifndef INCLUDED_FILESERVER_HPP
 #define INCLUDED_FILESERVER_HPP
 
-#include "config.h"
-
 #include <string>
 
 #include <Poco/MemoryStream.h>
