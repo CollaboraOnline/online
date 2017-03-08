@@ -1059,7 +1059,12 @@ bool DocumentBroker::startDestroy(const std::string& id)
     Util::assertIsLocked(_mutex);
 
     const auto currentSession = _sessions.find(id);
-    assert(currentSession != _sessions.end());
+    if (currentSession == _sessions.end())
+    {
+        // We could be called before adding any sessions.
+        // For example when a socket disconnects before loading.
+        return false;
+    }
 
     // Check if the session being destroyed is the last non-readonly session or not.
     _lastEditableSession = !currentSession->second->isReadOnly();
