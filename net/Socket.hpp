@@ -34,6 +34,7 @@
 #include "Common.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
+#include "SigUtil.hpp"
 
 /// A non-blocking, streaming socket.
 class Socket
@@ -42,7 +43,7 @@ public:
     Socket() :
         _fd(socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0))
     {
-        setNoDelay();
+        init();
     }
 
     virtual ~Socket()
@@ -149,6 +150,25 @@ public:
 
     virtual void dumpState() {}
 
+    /// Set the thread-id we're bound to
+    void setThreadOwner(const std::thread::id &id)
+    {
+#if ENABLE_DEBUG
+       _owner = id;
+#else
+       (void)id;
+#endif
+    }
+
+    virtual bool isCorrectThread()
+    {
+#if ENABLE_DEBUG
+        return std::this_thread::get_id() == _owner;
+#else
+        return true;
+#endif
+    }
+
 protected:
 
     /// Construct based on an existing socket fd.
@@ -156,11 +176,21 @@ protected:
     Socket(const int fd) :
         _fd(fd)
     {
+        init();
+    }
+
+    void init()
+    {
         setNoDelay();
+#if ENABLE_DEBUG
+        _owner = std::this_thread::get_id();
+#endif
     }
 
 private:
     const int _fd;
+    // always enabled to avoid ABI change in debug mode ...
+    std::thread::id _owner;
 };
 
 
@@ -185,6 +215,7 @@ public:
     void stop()
     {
         _stop = true;
+        wakeup();
     }
 
     /// Check if we should continue polling
@@ -206,10 +237,18 @@ public:
         }
     }
 
+    /// Are we running in either shutdown, or the polling thread.
+    bool isCorrectThread()
+    {
+        return _stop || std::this_thread::get_id() == _thread.get_id();
+    }
+
 public:
     /// Poll the sockets for available data to read or buffer to write.
     void poll(const int timeoutMaxMs)
     {
+        assert(isCorrectThread());
+
         Poco::Timestamp now;
         Poco::Timestamp timeout = now;
         timeout += Poco::Timespan(0 /* s */, timeoutMaxMs * 1000 /* us */);
@@ -315,6 +354,7 @@ public:
         if (newSocket)
         {
             std::lock_guard<std::mutex> lock(_mutex);
+            newSocket->setThreadOwner(_thread.get_id());
             LOG_DBG("Inserting socket #" << newSocket->getFD() << " into " << _name);
             _newSockets.emplace_back(newSocket);
             wakeup();
@@ -336,6 +376,7 @@ public:
     /// Removes a socket from this poller.
     void releaseSocket(const std::shared_ptr<Socket>& socket)
     {
+        // assert(isCorrectThread());
         if (socket)
         {
             std::lock_guard<std::mutex> lock(_mutex);
@@ -469,6 +510,7 @@ public:
     /// Send data to the socket peer.
     void send(const char* data, const int len, const bool flush = true)
     {
+        assert(isCorrectThread());
         if (data != nullptr && len > 0)
         {
             auto lock = getWriteLock();
@@ -497,6 +539,8 @@ public:
     /// Return false iff the socket is closed.
     virtual bool readIncomingData()
     {
+        assert(isCorrectThread());
+
         // SSL decodes blocks of 16Kb, so for efficiency we use the same.
         char buf[16 * 1024];
         ssize_t len;
@@ -542,6 +586,8 @@ protected:
     HandleResult handlePoll(const Poco::Timestamp & /* now */,
                             const int events) override
     {
+        assert(isCorrectThread());
+
         // FIXME: need to close input, but not output (?)
         bool closed = (events & (POLLHUP | POLLERR | POLLNVAL));
 
@@ -593,6 +639,8 @@ protected:
     /// Override to write data out to socket.
     virtual void writeOutgoingData()
     {
+        assert(isCorrectThread());
+
         Util::assertIsLocked(_writeMutex);
         assert(!_outBuffer.empty());
         do
@@ -629,12 +677,14 @@ protected:
     /// Override to handle reading of socket data differently.
     virtual int readData(char* buf, int len)
     {
+        assert(isCorrectThread());
         return ::read(getFD(), buf, len);
     }
 
     /// Override to handle writing data to socket differently.
     virtual int writeData(const char* buf, const int len)
     {
+        assert(isCorrectThread());
         return ::write(getFD(), buf, len);
     }
 
