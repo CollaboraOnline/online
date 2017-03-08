@@ -127,8 +127,7 @@ public:
         while (!_docBroker && !_stop)
             _start_cv.wait(lk);
         if (_docBroker)
-            // FIXME: make this a normal member function
-            DocumentBroker::pollThread(_docBroker);
+            _docBroker->pollThread();
     }
 };
 
@@ -175,11 +174,11 @@ std::shared_ptr<DocumentBroker> DocumentBroker::create(
     return docBroker;
 }
 
-void DocumentBroker::pollThread(const std::shared_ptr<DocumentBroker> &docBroker)
+void DocumentBroker::pollThread()
 {
     // Request a kit process for this doc.
-    docBroker->_childProcess = getNewChild_Blocks();
-    if (!docBroker->_childProcess)
+    _childProcess = getNewChild_Blocks();
+    if (!_childProcess)
     {
         // Let the client know we can't serve now.
         LOG_ERR("Failed to get new child.");
@@ -192,39 +191,40 @@ void DocumentBroker::pollThread(const std::shared_ptr<DocumentBroker> &docBroker
         ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
 #endif
         // FIXME: return something good down the websocket ...
-        docBroker->_stop = true;
+        _stop = true;
     }
-    docBroker->_childProcess->setDocumentBroker(docBroker);
+
+    _childProcess->setDocumentBroker(shared_from_this());
 
     // Main polling loop goodness.
-    while (!docBroker->_stop && !TerminationFlag && !ShutdownRequestFlag)
+    while (!_stop && !TerminationFlag && !ShutdownRequestFlag)
     {
         while (true)
         {
-            std::unique_lock<std::mutex> lock(docBroker->_mutex);
-            if (docBroker->_newSessions.empty())
+            std::unique_lock<std::mutex> lock(_mutex);
+            if (_newSessions.empty())
                 break;
 
-            NewSession& newSession = docBroker->_newSessions.front();
-            docBroker->addSession(newSession._session);
+            NewSession& newSession = _newSessions.front();
+            addSession(newSession._session);
 
             // now send the queued messages
             for (std::string message : newSession._messages)
             {
                 // provide the jailed document path to the 'load' message
-                assert(!docBroker->_uriJailed.empty());
+                assert(!_uriJailed.empty());
                 std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
                 if (tokens.size() > 1 && tokens[1] == "load")
-                    message += std::string(" jail=") + docBroker->_uriJailed.toString();
+                    message += std::string(" jail=") + _uriJailed.toString();
 
                 LOG_DBG("Sending a queued message: " + message);
-                docBroker->_childProcess->sendTextFrame(message);
+                _childProcess->sendTextFrame(message);
             }
 
-            docBroker->_newSessions.pop_front();
+            _newSessions.pop_front();
         }
 
-        docBroker->_poll->poll(5000);
+        _poll->poll(5000);
     }
 }
 

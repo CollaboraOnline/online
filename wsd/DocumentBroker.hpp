@@ -361,7 +361,7 @@ private:
 
     /// The thread function that all of the I/O for all sessions
     /// associated with this document.
-    static void pollThread(const std::shared_ptr<DocumentBroker> &docBroker);
+    void pollThread();
 
 private:
     const std::string _uriOrig;
