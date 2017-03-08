@@ -2453,10 +2453,16 @@ private:
     {
         std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(clientSocket, factory);
 
-        if (serverSocket->bind(addr) &&
-            serverSocket->listen())
+        if (!serverSocket->bind(addr))
+        {
+            LOG_ERR("Failed to bind to: " << addr.toString());
+            return nullptr;
+        }
+
+        if (serverSocket->listen())
             return serverSocket;
 
+        LOG_ERR("Failed to listen on: " << addr.toString());
         return nullptr;
     }
 
@@ -2495,13 +2501,13 @@ private:
 #endif
             factory = std::make_shared<PlainSocketFactory>();
 
-        std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress("127.0.0.1", port),
+        std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress(port),
                                                                WebServerPoll, factory);
         while (!socket)
         {
             ++port;
             LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << ".");
-            socket = getServerSocket(SocketAddress("127.0.0.1", port),
+            socket = getServerSocket(SocketAddress(port),
                                      WebServerPoll, factory);
         }
 
