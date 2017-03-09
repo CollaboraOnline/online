@@ -198,6 +198,39 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 		});
+		$.contextMenu({
+			selector: '.loleaflet-annotation-menu-redline',
+			trigger: 'none',
+			className: 'loleaflet-font',
+			items: {
+				modify: {
+					name: _('Comment'),
+					callback: function (key, options) {
+						that.onAnnotationModify.call(that, options.$trigger.get(0).annotation);
+					}
+				},
+				accept: {
+					name: _('Accept'),
+					callback: function (key, options) {
+						that.onChangeAccept.call(that, options.$trigger.get(0).annotation._data.id);
+					}
+				},
+				reject: {
+					name: _('Reject'),
+					callback: function (key, options) {
+						that.onChangeReject.call(that, options.$tigger.get(0).annotation._data.id);
+					}
+				}
+			},
+			events: {
+				show: function (options) {
+					options.$trigger.get(0).annotation._contextMenu = true;
+				},
+				hide: function (options) {
+					options.$trigger.get(0).annotation._contextMenu = false;
+				}
+			}
+		});
 		this._map._socket.sendMessage('commandvalues command=.uno:AcceptTrackedChanges');
 
 		map._fadeAnimated = false;

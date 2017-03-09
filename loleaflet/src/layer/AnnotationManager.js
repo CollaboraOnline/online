@@ -215,6 +215,32 @@ L.AnnotationManager = L.Class.extend({
 		this._map.focus();
 	},
 
+	acceptChange: function(id) {
+		var command = {
+			AcceptTrackedChange: {
+				type: 'unsigned short',
+				value: id.substring('change-'.length)
+			}
+		};
+		this._map.sendUnoCommand('.uno:AcceptTrackedChange', command);
+		this._map.removeLayer(this.removeItem(id));
+		this.unselect();
+		this._map.focus();
+	},
+
+	rejectChange: function(id) {
+		var command = {
+			RejectTrackedChange: {
+				type: 'unsigned short',
+				value: id.substring('change-'.length)
+			}
+		};
+		this._map.sendUnoCommand('.uno:RejectTrackedChange', command);
+		this._map.removeLayer(this.removeItem(id));
+		this.unselect();
+		this._map.focus();
+	},
+
 	onACKComment: function (obj) {
 		var changetrack = obj.redline ? true : false;
 		var action = changetrack ? obj.redline.action : obj.comment.action;
@@ -224,6 +250,7 @@ L.AnnotationManager = L.Class.extend({
 				// transform change tracking index into an id
 				obj.redline.id = 'change-' + obj.redline.index;
 				obj.redline.anchorPos = L.LOUtil.stringToPoint(obj.redline.textRange);
+				obj.redline.trackchange = true;
 				obj.redline.text = obj.redline.comment;
 				this.add(obj.redline, false);
 				this._map.focus();
@@ -253,7 +280,6 @@ L.AnnotationManager = L.Class.extend({
 				this.unselect();
 			}
 		} else if (action === 'Modify') {
-			console.log(action);
 			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
 			var modified = this.getItem(id);
 			if (modified) {
@@ -261,6 +287,7 @@ L.AnnotationManager = L.Class.extend({
 				if (changetrack) {
 					obj.redline.anchorPos = obj.redline.anchorPos ? L.LOUtil.stringToPoing(obj.redline.anchorPos) : modified._data.anchorPos;
 					obj.redline.text = obj.redline.comment;
+					obj.redline.id = id;
 					modifiedObj = obj.redline;
 				} else {
 					obj.comment.anchorPos = obj.comment.anchorPos ? L.LOUtil.stringToPoint(obj.comment.anchorPos) :

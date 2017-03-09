@@ -228,3 +228,18 @@ body {
 .loleaflet-annotation-menu:hover {
 	border: 1px solid darkgrey;
 }
+
+.loleaflet-annotation-menu-redline {
+	background: url(../images/submenu.png) no-repeat;
+	margin: 0;
+	padding: 0;
+	min-width: 15px;
+	height: 21px;
+	text-align: right;
+	border: 1px solid transparent;
+	display: inline-block;
+}
+
+.loleaflet-annotation-menu-redline:hover {
+	border: 1px solid darkgrey;
+}
