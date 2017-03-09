@@ -46,8 +46,18 @@ L.WriterTileLayer = L.TileLayer.extend({
 
 	_onMessage: function (textMsg, img) {
 		if (textMsg.startsWith('comment:')) {
-			this._annotations.onACKComment(textMsg);
-		} else {
+			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
+			this._annotations.onACKComment(obj);
+		}
+		else if (textMsg.startsWith('redlinetablemodified:')) {
+			obj = JSON.parse(textMsg.substring('redlinetablemodified:'.length + 1));
+			this._annotations.onACKComment(obj);
+		}
+		else if (textMsg.startsWith('redlinetablechanged:')) {
+			obj = JSON.parse(textMsg.substring('redlinetablechanged:'.length + 1));
+			this._annotations.onACKComment(obj);
+		}
+		else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
 		}
 	},

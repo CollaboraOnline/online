@@ -61,6 +61,7 @@ L.AnnotationManager = L.Class.extend({
 		this.clearChanges();
 		for (var idx in redlines) {
 			changecomment = redlines[idx];
+			changecomment.id = 'change-' + changecomment.index;
 			changecomment.anchorPos = L.LOUtil.stringToPoint(changecomment.textRange);
 			changecomment.trackchange = true;
 			changecomment.text = changecomment.comment;
@@ -214,38 +215,59 @@ L.AnnotationManager = L.Class.extend({
 		this._map.focus();
 	},
 
-	onACKComment: function (textMsg) {
-		var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
-
-		if (obj.comment.action === 'Add') {
-			var added = this.getItem('new');
-			if (added) {
-				delete obj.comment.action;
-				obj.comment.anchorPos = obj.comment.anchorPos ? L.LOUtil.stringToPoint(obj.comment.anchorPos) :
-					added._data.anchorPos;
-				added._data = obj.comment;
-				this._items.sort(function(a, b) {
-					return Math.abs(a._data.anchorPos.y) - Math.abs(b._data.anchorPos.y) ||
-					       Math.abs(a._data.anchorPos.x) - Math.abs(b._data.anchorPos.x);
-				});
-				added.update();
-			}
-			else { // annotation is added by some other view
-				this.add(obj.comment, false);
+	onACKComment: function (obj) {
+		var changetrack = obj.redline ? true : false;
+		var action = changetrack ? obj.redline.action : obj.comment.action;
+		console.log(obj);
+		if (action === 'Add') {
+			if (changetrack) {
+				// transform change tracking index into an id
+				obj.redline.id = 'change-' + obj.redline.index;
+				obj.redline.anchorPos = L.LOUtil.stringToPoint(obj.redline.textRange);
+				obj.redline.text = obj.redline.comment;
+				this.add(obj.redline, false);
 				this._map.focus();
+			} else {
+				var added = this.getItem('new');
+				if (added) {
+					delete obj.comment.action;
+					obj.comment.anchorPos = obj.comment.anchorPos ? L.LOUtil.stringToPoint(obj.comment.anchorPos) :
+						added._data.anchorPos;
+					added._data = obj.comment;
+					this._items.sort(function(a, b) {
+						return Math.abs(a._data.anchorPos.y) - Math.abs(b._data.anchorPos.y) ||
+							Math.abs(a._data.anchorPos.x) - Math.abs(b._data.anchorPos.x);
+					});
+					added.update();
+				}
+				else { // annotation is added by some other view
+					this.add(obj.comment, false);
+					this._map.focus();
+				}
 			}
 			this.layout();
-		} else if (obj.comment.action === 'Remove') {
-			if (this.getItem(obj.comment.id)) {
-				this._map.removeLayer(this.removeItem(obj.comment.id));
+		} else if (action === 'Remove') {
+			var id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
+			if (this.getItem(id)) {
+				this._map.removeLayer(this.removeItem(id));
 				this.unselect();
 			}
-		} else if (obj.comment.action === 'Modify') {
-			var modified = this.getItem(obj.comment.id);
+		} else if (action === 'Modify') {
+			console.log(action);
+			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
+			var modified = this.getItem(id);
 			if (modified) {
-				obj.comment.anchorPos = obj.comment.anchorPos ? L.LOUtil.stringToPoint(obj.comment.anchorPos) :
-					modified._data.anchorPos;
-				modified._data = obj.comment;
+				var modifiedObj;
+				if (changetrack) {
+					obj.redline.anchorPos = obj.redline.anchorPos ? L.LOUtil.stringToPoing(obj.redline.anchorPos) : modified._data.anchorPos;
+					obj.redline.text = obj.redline.comment;
+					modifiedObj = obj.redline;
+				} else {
+					obj.comment.anchorPos = obj.comment.anchorPos ? L.LOUtil.stringToPoint(obj.comment.anchorPos) :
+						modified._data.anchorPos;
+					modifiedObj = obj.comment;
+				}
+				modified._data = modifiedObj;
 				modified.update();
 				this.update();
 			}
