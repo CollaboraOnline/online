@@ -233,19 +233,17 @@ public:
     bool isLoaded() const { return _isLoaded; }
     void setLoaded() { _isLoaded = true; }
 
-    /// Save the document to Storage if needs persisting.
-    bool save(const std::string& sesionId, bool success, const std::string& result = "");
+    /// Save the document to Storage if it needs persisting.
+    bool saveToStorage(const std::string& sesionId, bool success, const std::string& result = "");
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
 
     /// Save the document if the document is modified.
     /// @param force when true, will force saving if there
     /// has been any recent activity after the last save.
-    /// @param waitTimeoutMs when >0 will wait for the save to
-    /// complete before returning, or timeout.
     /// @return true if attempts to save or it also waits
     /// and receives save notification. Otherwise, false.
-    bool autoSave(const bool force, const size_t waitTimeoutMs, std::unique_lock<std::mutex>& lock);
+    bool autoSave(const bool force);
 
     Poco::URI getPublicUri() const { return _uriPublic; }
     Poco::URI getJailedUri() const { return _uriJailed; }
@@ -270,7 +268,7 @@ public:
     size_t queueSession(std::shared_ptr<ClientSession>& session);
 
     /// Removes a session by ID. Returns the new number of sessions.
-    size_t removeSession(const std::string& id);
+    size_t removeSession(const std::string& id, bool destroyIfLast = false);
 
     void addSocketToPoll(const std::shared_ptr<Socket>& socket);
 
@@ -299,11 +297,7 @@ public:
     void handleTileResponse(const std::vector<char>& payload);
     void handleTileCombinedResponse(const std::vector<char>& payload);
 
-    /// Called before destroying any session.
-    /// This method calculates and sets important states of
-    /// session being destroyed. Returns true if session id
-    /// is the last editable session.
-    bool startDestroy(const std::string& id);
+    void destroyIfLastEditor(const std::string& id);
     bool isMarkedToDestroy() const { return _markToDestroy; }
 
     bool handleInput(const std::vector<char>& payload);
@@ -407,8 +401,6 @@ private:
     int _cursorWidth;
     int _cursorHeight;
     mutable std::mutex _mutex;
-    std::condition_variable _saveCV;
-    std::mutex _saveMutex;
     std::unique_ptr<DocumentBrokerPoll> _poll;
     std::atomic<bool> _stop;
 

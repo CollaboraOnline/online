@@ -1407,9 +1407,7 @@ static void removeDocBrokerSession(const std::shared_ptr<DocumentBroker>& docBro
     auto lock = docBroker->getLock();
 
     if (!id.empty())
-    {
         docBroker->removeSession(id);
-    }
 
     if (docBroker->getSessionsCount() == 0 || !docBroker->isAlive())
     {
@@ -1673,9 +1671,7 @@ private:
     void onDisconnect() override
     {
         if (_clientSession)
-        {
-            saveDocument();
-        }
+            disposeSession();
 
         const size_t curConnections = --LOOLWSD::NumConnections;
         LOG_TRC("Disconnected connection #" << _connectionNum << " of " <<
@@ -2261,7 +2257,8 @@ private:
             LOG_WRN("Failed to connect DocBroker and Client Session.");
     }
 
-    void saveDocument()
+    // this session went away - cleanup now.
+    void disposeSession()
     {
         LOG_CHECK_RET(_clientSession && "Null ClientSession instance", );
         const auto docBroker = _clientSession->getDocumentBroker();
@@ -2273,25 +2270,9 @@ private:
             // Connection terminated. Destroy session.
             LOG_DBG("Client session [" << _id << "] on docKey [" << docKey << "] terminated. Cleaning up.");
 
-            auto docLock = docBroker->getLock();
 
             // We issue a force-save when last editable (non-readonly) session is going away
-            const bool forceSave = docBroker->startDestroy(_id);
-            if (forceSave)
-            {
-                LOG_INF("Shutdown of the last editable (non-readonly) session, saving the document before tearing down.");
-            }
-
-            // We need to wait until the save notification reaches us
-            // and Storage persists the document.
-            if (!docBroker->autoSave(forceSave, COMMAND_TIMEOUT_MS, docLock))
-            {
-                LOG_ERR("Auto-save before closing failed.");
-            }
-
-            const auto sessionsCount = docBroker->removeSession(_id);
-            docLock.unlock();
-
+            const auto sessionsCount = docBroker->removeSession(_id, true);
             if (sessionsCount == 0)
             {
                 // We've supposedly destroyed the last session, now cleanup.
@@ -2424,9 +2405,13 @@ public:
     void dumpState()
     {
         std::cerr << "LOOLWSDServer:\n"
+                  << "   Ports: server " << ClientPortNumber
+                  <<          " prisoner " << MasterPortNumber << "\n"
                   << "  stop: " << _stop << "\n"
                   << "  TerminationFlag: " << TerminationFlag << "\n"
-                  << "  isShuttingDown: " << ShutdownRequestFlag << "\n";
+                  << "  isShuttingDown: " << ShutdownRequestFlag << "\n"
+                  << "  NewChildren: " << NewChildren.size() << "\n"
+                  << "  OutstandingForks: " << OutstandingForks << "\n";
 
         std::cerr << "Server poll:\n";
         _acceptPoll.dumpState();
@@ -2437,7 +2422,8 @@ public:
         std::cerr << "Prisoner poll:\n";
         PrisonerPoll.dumpState();
 
-        std::cerr << "Document Broker polls:\n";
+        std::cerr << "Document Broker polls "
+                  << "[ " << DocBrokers.size() << " ]:\n";
         for (auto &i : DocBrokers)
             i.second->dumpState();
     }
@@ -2661,49 +2647,16 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     time_t startTimeSpan = time(nullptr);
 #endif
 
-    // FIXME: all of this needs cleaning up and putting in the
-    // relevant polls.
-
-    auto last30SecCheckTime = std::chrono::steady_clock::now();
+    /// Something of a hack to get woken up on exit.
+    SocketPoll mainWait("main", false);
     while (!TerminationFlag && !ShutdownRequestFlag)
     {
         UnitWSD::get().invokeTest();
-        if (TerminationFlag || handleShutdownRequest())
-        {
-            break;
-        }
 
-        if (!std::getenv("LOOL_NO_AUTOSAVE") &&
-            std::chrono::duration_cast<std::chrono::seconds>
-            (std::chrono::steady_clock::now() - last30SecCheckTime).count() >= 30)
-        {
-            try
-            {
-#if 0
-                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-                cleanupDocBrokers();
-                for (auto& pair : DocBrokers)
-                {
-                    auto docLock = pair.second->getDeferredLock();
-                    if (doclock.try_lock())
-                    {
-                        pair.second->autosave(false, 0, doclock);
-                    }
-                }
-#endif
-            }
-            catch (const std::exception& exc)
-            {
-                LOG_ERR("Exception: " << exc.what());
-            }
+        mainWait.poll(30 * 1000 /* ms */);
 
-            last30SecCheckTime = std::chrono::steady_clock::now();
-        }
-        else
-        {
-            // Wait if we had done no work.
-            std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS));
-        }
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+        cleanupDocBrokers();
 
 #if ENABLE_DEBUG
         if (careerSpanSeconds > 0 && time(nullptr) > startTimeSpan + careerSpanSeconds)

@@ -213,7 +213,7 @@ class SocketPoll
 {
 public:
     /// Create a socket poll, called rather infrequently.
-    SocketPoll(const std::string& threadName);
+    SocketPoll(const std::string& threadName, bool withThread = true);
     ~SocketPoll();
 
     /// Stop the polling thread.
@@ -245,7 +245,7 @@ public:
     /// Are we running in either shutdown, or the polling thread.
     bool isCorrectThread()
     {
-        return _stop || std::this_thread::get_id() == _thread.get_id();
+        return _stop || std::this_thread::get_id() == _owner;
     }
 
 public:
@@ -450,6 +450,7 @@ protected:
     std::atomic<bool> _stop;
     /// The polling thread.
     std::thread _thread;
+    std::thread::id _owner;
 };
 
 class StreamSocket;

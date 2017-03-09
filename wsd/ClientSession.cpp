@@ -504,7 +504,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 }
 
                 // Save to Storage and log result.
-                docBroker->save(getId(), success, result);
+                docBroker->saveToStorage(getId(), success, result);
                 return true;
             }
         }
