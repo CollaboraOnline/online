@@ -288,6 +288,7 @@ L.AnnotationManager = L.Class.extend({
 					obj.redline.anchorPos = obj.redline.anchorPos ? L.LOUtil.stringToPoing(obj.redline.anchorPos) : modified._data.anchorPos;
 					obj.redline.text = obj.redline.comment;
 					obj.redline.id = id;
+					obj.redline.trackchange = true;
 					modifiedObj = obj.redline;
 				} else {
 					obj.comment.anchorPos = obj.comment.anchorPos ? L.LOUtil.stringToPoint(obj.comment.anchorPos) :
