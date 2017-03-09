@@ -2662,7 +2662,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     {
         UnitWSD::get().invokeTest();
 
-        mainWait.poll(30 * 1000 /* ms */);
+        mainWait.poll(SocketPoll::DefaultPollTimeoutMs * 10);
 
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
         cleanupDocBrokers();

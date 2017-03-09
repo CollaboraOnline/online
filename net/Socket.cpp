@@ -16,6 +16,8 @@
 #include "Socket.hpp"
 #include "ServerSocket.hpp"
 
+int SocketPoll::DefaultPollTimeoutMs = 5000;
+
 // help with initialization order
 namespace {
     std::vector<int> &getWakeupsArray()
