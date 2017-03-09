@@ -30,7 +30,8 @@ namespace {
     }
 }
 
-SocketPoll::SocketPoll(const std::string& threadName) :
+SocketPoll::SocketPoll(const std::string& threadName,
+                       bool withThread) :
     _name(threadName),
     _stop(false)
 {
@@ -45,16 +46,20 @@ SocketPoll::SocketPoll(const std::string& threadName) :
         getWakeupsArray().push_back(_wakeup[1]);
     }
 
-    _thread = std::thread(&SocketPoll::pollingThread, this);
+    if (withThread)
+    {
+        _thread = std::thread(&SocketPoll::pollingThread, this);
+        _owner = _thread.get_id();
+    }
+    else
+        _owner = std::this_thread::get_id();
 }
 
 SocketPoll::~SocketPoll()
 {
     stop();
     if (_thread.joinable())
-    {
         _thread.join();
-    }
 
     ::close(_wakeup[0]);
     ::close(_wakeup[1]);

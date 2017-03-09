@@ -133,9 +133,11 @@ public:
 
     virtual void pollingThread()
     {
-        std::unique_lock<std::mutex> lk(_lock);
-        while (!_docBroker && !_stop)
-            _start_cv.wait(lk);
+        {
+            std::unique_lock<std::mutex> lk(_lock);
+            while (!_docBroker && !_stop)
+                _start_cv.wait(lk);
+        }
         if (_docBroker)
             _docBroker->pollThread();
     }
@@ -184,6 +186,7 @@ std::shared_ptr<DocumentBroker> DocumentBroker::create(
     return docBroker;
 }
 
+// The inner heart of the DocumentBroker - our poll loop.
 void DocumentBroker::pollThread()
 {
     // Request a kit process for this doc.
@@ -206,6 +209,8 @@ void DocumentBroker::pollThread()
     }
 
     _childProcess->setDocumentBroker(shared_from_this());
+
+    auto last30SecCheckTime = std::chrono::steady_clock::now();
 
     // Main polling loop goodness.
     while (!_stop && !TerminationFlag && !ShutdownRequestFlag)
@@ -242,6 +247,32 @@ void DocumentBroker::pollThread()
             _newSessions.pop_front();
         }
 
+        _poll->poll(5000);
+
+        if (!std::getenv("LOOL_NO_AUTOSAVE") &&
+            std::chrono::duration_cast<std::chrono::seconds>
+            (std::chrono::steady_clock::now() - last30SecCheckTime).count() >= 30)
+        {
+            LOG_TRC("Trigger an autosave ...");
+            autoSave(false);
+            last30SecCheckTime = std::chrono::steady_clock::now();
+        }
+    }
+
+    // FIXME: probably we should stop listening on
+    // incoming sockets here if we have any.
+
+    auto lastSaveTime = _lastSaveTime;
+    auto saveTimeoutStart = std::chrono::steady_clock::now();
+
+    // Save before exit.
+    autoSave(true);
+
+    // wait 20 seconds for a save notification and quit.
+    while (lastSaveTime < saveTimeoutStart &&
+           std::chrono::duration_cast<std::chrono::seconds>
+           (std::chrono::steady_clock::now() - saveTimeoutStart).count() >= 20)
+    {
         _poll->poll(5000);
     }
 }
@@ -467,9 +498,10 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     return true;
 }
 
-bool DocumentBroker::save(const std::string& sessionId, bool success, const std::string& result)
+bool DocumentBroker::saveToStorage(const std::string& sessionId,
+                                   bool success, const std::string& result)
 {
-    std::unique_lock<std::mutex> lock(_saveMutex);
+    assert(_poll->isCorrectThread());
 
     // If save requested, but core didn't save because document was unmodified
     // notify the waiting thread, if any.
@@ -477,8 +509,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     {
         LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
         _lastSaveTime = std::chrono::steady_clock::now();
-        lock.unlock();
-        _saveCV.notify_all();
+        _poll->wakeup();
         return true;
     }
 
@@ -486,8 +517,6 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     if (it == _sessions.end())
     {
         LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving docKey [" << _docKey << "].");
-        lock.unlock();
-        _saveCV.notify_all();
         return false;
     }
 
@@ -503,8 +532,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         LOG_DBG("Skipping unnecessary saving to URI [" << uri << "] with docKey [" << _docKey <<
                 "]. File last modified " << _lastFileModifiedTime.elapsed() / 1000000 << " seconds ago.");
         _lastSaveTime = std::chrono::steady_clock::now();
-        lock.unlock();
-        _saveCV.notify_all();
+        _poll->wakeup();
         return true;
     }
 
@@ -522,6 +550,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         _lastFileModifiedTime = newFileModifiedTime;
         _tileCache->saveLastModified(_lastFileModifiedTime);
         _lastSaveTime = std::chrono::steady_clock::now();
+        _poll->wakeup();
 
         // Calling getWOPIFileInfo() or getLocalFileInfo() has the side-effect of updating
         // StorageBase::_fileInfo. Get the timestamp of the document as persisted in its storage
@@ -542,8 +571,6 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         LOG_DBG("Saved docKey [" << _docKey << "] to URI [" << uri << "] and updated tile cache. Document modified timestamp: " <<
                 Poco::DateTimeFormatter::format(Poco::DateTime(_documentLastModifiedTime),
                                                                Poco::DateTimeFormat::ISO8601_FORMAT));
-        lock.unlock();
-        _saveCV.notify_all();
         return true;
     }
     else if (storageSaveResult == StorageBase::SaveResult::DISKFULL)
@@ -565,15 +592,11 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
     }
 
-    lock.unlock();
-    _saveCV.notify_all();
     return false;
 }
 
-bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs, std::unique_lock<std::mutex>& lock)
+bool DocumentBroker::autoSave(const bool force)
 {
-    Util::assertIsLocked(lock);
-
     if (_sessions.empty() || _storage == nullptr || !_isLoaded ||
         !_childProcess->isAlive() || (!_isModified && !force))
     {
@@ -582,8 +605,7 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs, std:
         return true;
     }
 
-    // Remeber the last save time, since this is the predicate.
-    const auto lastSaveTime = _lastSaveTime;
+    // Remember the last save time, since this is the predicate.
     LOG_TRC("Checking to autosave [" << _docKey << "].");
 
     bool sent = false;
@@ -609,26 +631,12 @@ bool DocumentBroker::autoSave(const bool force, const size_t waitTimeoutMs, std:
         }
     }
 
-    if (sent && waitTimeoutMs > 0)
-    {
-        LOG_TRC("Waiting for save event for [" << _docKey << "].");
-        _saveCV.wait_for(lock, std::chrono::milliseconds(waitTimeoutMs));
-        if (lastSaveTime != _lastSaveTime)
-        {
-            LOG_DBG("Successfully persisted document [" << _docKey << "] or document was not modified.");
-            return true;
-        }
-
-        return false;
-    }
-
     return sent;
 }
 
 bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
 {
     LOG_INF("Autosave triggered for doc [" << _docKey << "].");
-    Util::assertIsLocked(_mutex);
 
     std::shared_ptr<ClientSession> savingSession;
     for (auto& sessionIt : _sessions)
@@ -758,9 +766,12 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     return count;
 }
 
-size_t DocumentBroker::removeSession(const std::string& id)
+size_t DocumentBroker::removeSession(const std::string& id, bool destroyIfLast)
 {
-    Util::assertIsLocked(_mutex);
+    auto guard = getLock();
+
+    if (destroyIfLast)
+        destroyIfLastEditor(id);
 
     try
     {
@@ -1072,7 +1083,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
     }
 }
 
-bool DocumentBroker::startDestroy(const std::string& id)
+void DocumentBroker::destroyIfLastEditor(const std::string& id)
 {
     Util::assertIsLocked(_mutex);
 
@@ -1081,7 +1092,7 @@ bool DocumentBroker::startDestroy(const std::string& id)
     {
         // We could be called before adding any sessions.
         // For example when a socket disconnects before loading.
-        return false;
+        return;
     }
 
     // Check if the session being destroyed is the last non-readonly session or not.
@@ -1103,9 +1114,9 @@ bool DocumentBroker::startDestroy(const std::string& id)
 
     // Last view going away, can destroy.
     _markToDestroy = (_sessions.size() <= 1);
+    _stop = true;
     LOG_DBG("startDestroy on session [" << id << "] on docKey [" << _docKey <<
             "], markToDestroy: " << _markToDestroy << ", lastEditableSession: " << _lastEditableSession);
-    return _lastEditableSession;
 }
 
 void DocumentBroker::setModified(const bool value)
