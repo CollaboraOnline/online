@@ -95,7 +95,7 @@ L.Annotation = L.Layer.extend({
 		var divMenu = L.DomUtil.create('div', this._data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
 		divMenu.annotation = this;
 		if (this._data.trackchange) {
-			this._captionNode = L.DomUtil.create('div', 'lolefalet-annotation-caption', wrapper);
+			this._captionNode = L.DomUtil.create('div', 'loleaflet-annotation-caption', wrapper);
 			this._captionText = L.DomUtil.create('div', '', this._captionNode);
 		}
 		this._contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content', wrapper);

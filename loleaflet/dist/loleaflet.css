@@ -243,3 +243,7 @@ body {
 .loleaflet-annotation-menu-redline:hover {
 	border: 1px solid darkgrey;
 }
+
+.loleaflet-annotation-caption {
+        font-weight: bold;
+}
