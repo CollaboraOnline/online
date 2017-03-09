@@ -162,7 +162,6 @@ private:
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;
 
     SenderQueue<std::shared_ptr<Message>> _senderQueue;
-    std::thread _senderThread;
     std::atomic<bool> _stop;
 };
 
