@@ -2393,11 +2393,14 @@ public:
     void startPrisoners(const int port)
     {
         PrisonerPoll.insertNewSocket(findPrisonerServerPort(port));
+        PrisonerPoll.startThread();
     }
 
     void start(const int port)
     {
         _acceptPoll.insertNewSocket(findServerPort(port));
+        _acceptPoll.startThread();
+        WebServerPoll.startThread();
     }
 
     void stop()
@@ -2652,7 +2655,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 #endif
 
     /// Something of a hack to get woken up on exit.
-    SocketPoll mainWait("main", false);
+
+    SocketPoll mainWait("main");
     while (!TerminationFlag && !ShutdownRequestFlag)
     {
         UnitWSD::get().invokeTest();

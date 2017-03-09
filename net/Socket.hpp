@@ -213,8 +213,11 @@ class SocketPoll
 {
 public:
     /// Create a socket poll, called rather infrequently.
-    SocketPoll(const std::string& threadName, bool withThread = true);
+    SocketPoll(const std::string& threadName);
     ~SocketPoll();
+
+    /// Start the polling thread (if desired)
+    void startThread();
 
     /// Stop the polling thread.
     void stop()
