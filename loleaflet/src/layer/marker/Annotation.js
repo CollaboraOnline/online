@@ -94,6 +94,10 @@ L.Annotation = L.Layer.extend({
 		this._contentDate = L.DomUtil.create('div', 'loleaflet-annotation-date', tdAuthor);
 		var divMenu = L.DomUtil.create('div', this._data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
 		divMenu.annotation = this;
+		if (this._data.trackchange) {
+			this._captionNode = L.DomUtil.create('div', 'lolefalet-annotation-caption', wrapper);
+			this._captionText = L.DomUtil.create('div', '', this._captionNode);
+		}
 		this._contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content', wrapper);
 		this._editNode = L.DomUtil.create('div', 'loleaflet-annotation-edit', wrapper);
 		this._contentText = L.DomUtil.create('div', '', this._contentNode);
@@ -174,6 +178,9 @@ L.Annotation = L.Layer.extend({
 		this._contentText.innerHTML = this._editText.innerHTML = this._data.text;
 		this._contentAuthor.innerHTML = this._data.author;
 		this._contentDate.innerHTML = this._data.dateTime;
+		if (this._data.trackchange) {
+			this._captionText.innerHTML = this._data.description;
+		}
 	},
 
 	_updatePosition: function () {
