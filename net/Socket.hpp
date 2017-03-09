@@ -216,6 +216,9 @@ public:
     SocketPoll(const std::string& threadName);
     ~SocketPoll();
 
+    /// Default poll time - useful to increase for debugging.
+    static int DefaultPollTimeoutMs;
+
     /// Start the polling thread (if desired)
     void startThread();
 
@@ -241,7 +244,7 @@ public:
         LOG_INF("Starting polling thread [" << _name << "].");
         while (continuePolling())
         {
-            poll(5000);
+            poll(DefaultPollTimeoutMs);
         }
     }
 

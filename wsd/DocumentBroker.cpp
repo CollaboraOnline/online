@@ -243,7 +243,7 @@ void DocumentBroker::pollThread()
             _newSessions.pop_front();
         }
 
-        _poll->poll(5000);
+        _poll->poll(SocketPoll::DefaultPollTimeoutMs);
 
         if (!std::getenv("LOOL_NO_AUTOSAVE") &&
             std::chrono::duration_cast<std::chrono::seconds>
@@ -269,7 +269,7 @@ void DocumentBroker::pollThread()
            std::chrono::duration_cast<std::chrono::seconds>
            (std::chrono::steady_clock::now() - saveTimeoutStart).count() >= 20)
     {
-        _poll->poll(5000);
+        _poll->poll(SocketPoll::DefaultPollTimeoutMs);
     }
 }
 
