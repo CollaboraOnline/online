@@ -1820,8 +1820,6 @@ private:
         // FIXME: - the session should be owning the fd in DocumentBroker's _poll
         if (_clientSession)
             return _clientSession->performWrites();
-
-        assert (false && "performWrites doesn't have client session");
     }
 
     void handleFileServerRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)

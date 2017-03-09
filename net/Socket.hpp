@@ -487,7 +487,8 @@ public:
     StreamSocket(const int fd, std::unique_ptr<SocketHandlerInterface> socketHandler) :
         Socket(fd),
         _socketHandler(std::move(socketHandler)),
-        _closed(false)
+        _closed(false),
+        _shutdownSignalled(false)
     {
         LOG_DBG("StreamSocket ctor #" << fd);
 
@@ -502,11 +503,29 @@ public:
 
         if (!_closed)
             _socketHandler->onDisconnect();
+
+        if (!_shutdownSignalled)
+        {
+            _shutdownSignalled = true;
+            closeConnection();
+        }
+    }
+
+    /// Just trigger the async shutdown.
+    virtual void shutdown()
+    {
+        _shutdownSignalled = true;
+    }
+
+    /// Perform the real shutdown.
+    virtual void closeConnection()
+    {
+        Socket::shutdown();
     }
 
     int getPollEvents() override
     {
-        if (!_outBuffer.empty() || _socketHandler->hasQueuedWrites())
+        if (!_outBuffer.empty() || _socketHandler->hasQueuedWrites() || _shutdownSignalled)
             return POLLIN | POLLOUT;
         else
             return POLLIN;
@@ -531,29 +550,20 @@ public:
         send(str.data(), str.size(), flush);
     }
 
-    /// Sends synchronous response data.
+    /// Sends HTTP response data.
     void sendHttpResponse(const char* data, const int len)
     {
-        // Set to blocking.
-        int opts;
-        opts = fcntl(getFD(), F_GETFL);
-        if (opts != -1)
-        {
-            opts = (opts & ~O_NONBLOCK);
-            opts = fcntl(getFD(), F_SETFL, opts);
-        }
-
         // Send the data and flush.
         send(data, len, true);
     }
 
-    /// Sends synchronous HTTP response string.
+    /// Sends HTTP response string.
     void sendHttpResponse(const std::string& str)
     {
         sendHttpResponse(str.data(), str.size());
     }
 
-    /// Sends synchronous HTTP response.
+    /// Sends HTTP response.
     void sendHttpResponse(Poco::Net::HTTPResponse& response)
     {
         response.set("User-Agent", HTTP_AGENT_STRING);
@@ -639,6 +649,10 @@ protected:
         // If we have space for writing and that was requested
         if ((events & POLLOUT) && _outBuffer.empty())
             _socketHandler->performWrites();
+
+        // perform the shutdown if we have sent everything.
+        if (_shutdownSignalled && _outBuffer.empty())
+            closeConnection();
 
         // SSL might want to do handshake,
         // even if we have no data to write.
@@ -727,6 +741,9 @@ protected:
 
     /// True if we are already closed.
     bool _closed;
+
+    /// True when shutdown was requested via shutdown().
+    bool _shutdownSignalled;
 
     std::vector< char > _inBuffer;
     std::vector< char > _outBuffer;

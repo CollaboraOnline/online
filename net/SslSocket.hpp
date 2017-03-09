@@ -52,13 +52,19 @@ public:
     {
         LOG_DBG("SslStreamSocket dtor #" << getFD());
 
-        shutdown();
+        if (!_shutdownSignalled)
+        {
+            _shutdownSignalled = true;
+            closeConnection();
+        }
+
         SSL_free(_ssl);
     }
 
     /// Shutdown the TLS/SSL connection properly.
-    void shutdown() override
+    void closeConnection() override
     {
+        LOG_DBG("SslStreamSocket::performShutdown() #" << getFD());
         if (SSL_shutdown(_ssl) == 0)
         {
             // Complete the bidirectional shutdown.
