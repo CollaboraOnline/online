@@ -523,7 +523,6 @@ $(function () {
 			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _('Special Character')},
 			{type: 'break', id: 'reviewbreak'},
 			{type: 'button',  id: 'trackchanges',  img: 'trackchanges', hint: _('Record Changes'), uno: 'TrackChanges'},
-			{type: 'button',  id: 'commentchangetracking',  img: 'commentchangetracking', hint: _('Comment On Change'), uno: 'CommentChangeTracking'},
 			{type: 'button',  id: 'showtrackedchanges',  img: 'showtrackedchanges', hint: _('Show Changes'), uno: 'ShowTrackedChanges'},
 			{type: 'html', id: 'right'},
 			{type: 'button',  id: 'more', img: 'more', hint: _('More')},
