@@ -163,7 +163,7 @@ public:
     virtual bool isCorrectThread()
     {
 #if ENABLE_DEBUG
-        return std::this_thread::get_id() == _owner;
+        return !getenv("LOOL_CHECK_THREADS") || std::this_thread::get_id() == _owner;
 #else
         return true;
 #endif
