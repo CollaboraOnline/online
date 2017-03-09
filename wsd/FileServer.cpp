@@ -185,7 +185,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             << "Content-Length: 0\r\n"
             << "WWW-Authenticate: Basic realm=\"online\"\r\n"
             << "\r\n";
-        socket->send(oss.str());
+        socket->sendHttpResponse(oss.str());
     }
     catch (const Poco::FileAccessDeniedException& exc)
     {
@@ -198,7 +198,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             << "User-Agent: LOOLWSD WOPI Agent\r\n"
             << "Content-Length: 0\r\n"
             << "\r\n";
-        socket->send(oss.str());
+        socket->sendHttpResponse(oss.str());
     }
     catch (const Poco::FileNotFoundException& exc)
     {
@@ -211,7 +211,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             << "User-Agent: LOOLWSD WOPI Agent\r\n"
             << "Content-Length: 0\r\n"
             << "\r\n";
-        socket->send(oss.str());
+        socket->sendHttpResponse(oss.str());
     }
 }
 
@@ -246,7 +246,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
             << "User-Agent: LOOLWSD WOPI Agent\r\n"
             << "Content-Length: 0\r\n"
             << "\r\n";
-        socket->send(oss.str());
+        socket->sendHttpResponse(oss.str());
         return;
     }
 
@@ -307,7 +307,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         << "\r\n"
         << preprocess;
 
-    socket->send(oss.str());
+    socket->sendHttpResponse(oss.str());
     LOG_DBG("Sent file: " << path.toString() << ": " << preprocess);
 }
 

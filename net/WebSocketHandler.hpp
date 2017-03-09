@@ -219,7 +219,7 @@ public:
 
     void performWrites() override
     {
-        assert(false);
+        assert(false && "performWrites not implemented");
     }
 
     void sendFrame(const std::string& msg) const

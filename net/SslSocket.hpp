@@ -213,7 +213,6 @@ private:
             {
                 // The error is comming from BIO. Find out what happened.
                 const long bioError = ERR_get_error();
-                LOG_TRC("BIO error: " << bioError);
                 if (bioError == 0)
                 {
                     if (rc == 0)
@@ -234,6 +233,7 @@ private:
                 {
                     char buf[512];
                     ERR_error_string_n(bioError, buf, sizeof(buf));
+                    LOG_ERR("BIO error: " << buf);
                     throw std::runtime_error(buf);
                 }
             }

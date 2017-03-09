@@ -1785,7 +1785,7 @@ private:
                         << "User-Agent: LOOLWSD WOPI Agent\r\n"
                         << "Content-Length: 0\r\n"
                         << "\r\n";
-                    socket->send(oss.str());
+                    socket->sendHttpResponse(oss.str());
                     socket->shutdown();
                 }
             }
@@ -1817,7 +1817,7 @@ private:
         if (_clientSession)
             return _clientSession->performWrites();
 
-        assert (false);
+        assert (false && "performWrites doesn't have client session");
     }
 
     void handleFileServerRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
@@ -1830,7 +1830,7 @@ private:
     void handleAdminRequest(const Poco::Net::HTTPRequest& request)
     {
         LOG_ERR("Admin request: " << request.getURI());
-        // requestHandler = Admin::createRequestHandler();
+        // FIXME: implement admin support.
     }
 
     void handleRootRequest(const Poco::Net::HTTPRequest& request)
@@ -1853,7 +1853,7 @@ private:
         }
 
         auto socket = _socket.lock();
-        socket->send(oss.str());
+        socket->sendHttpResponse(oss.str());
         socket->shutdown();
         LOG_INF("Sent / response successfully.");
     }
@@ -1919,7 +1919,7 @@ private:
             << xml;
 
         auto socket = _socket.lock();
-        socket->send(oss.str());
+        socket->sendHttpResponse(oss.str());
         socket->shutdown();
         LOG_INF("Sent discovery.xml successfully.");
     }
@@ -2105,7 +2105,7 @@ private:
                     std::string fileName = dirPath + "/" + form.get("name");
                     File(tmpPath).moveTo(fileName);
                     response.setContentLength(0);
-                    socket->send(response);
+                    socket->sendHttpResponse(response);
                     return;
                 }
             }

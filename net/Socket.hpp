@@ -43,7 +43,7 @@ public:
     Socket() :
         _fd(socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0))
     {
-        init();
+        setNoDelay();
     }
 
     virtual ~Socket()
@@ -184,7 +184,12 @@ protected:
         setNoDelay();
 #if ENABLE_DEBUG
         _owner = std::this_thread::get_id();
+
+        const int oldSize = getSendBufferSize();
+        setSendBufferSize(0);
+        LOG_TRC("Socket #" << _fd << " buffer size: " << getSendBufferSize() << " (was " << oldSize << ")");
 #endif
+
     }
 
 private:
@@ -526,13 +531,35 @@ public:
         send(str.data(), str.size(), flush);
     }
 
-    void send(Poco::Net::HTTPResponse& response)
+    /// Sends synchronous response data.
+    void sendHttpResponse(const char* data, const int len)
+    {
+        // Set to blocking.
+        int opts;
+        opts = fcntl(getFD(), F_GETFL);
+        if (opts != -1)
+        {
+            opts = (opts & ~O_NONBLOCK);
+            opts = fcntl(getFD(), F_SETFL, opts);
+        }
+
+        // Send the data and flush.
+        send(data, len, true);
+    }
+
+    /// Sends synchronous HTTP response string.
+    void sendHttpResponse(const std::string& str)
+    {
+        sendHttpResponse(str.data(), str.size());
+    }
+
+    /// Sends synchronous HTTP response.
+    void sendHttpResponse(Poco::Net::HTTPResponse& response)
     {
         response.set("User-Agent", HTTP_AGENT_STRING);
         std::ostringstream oss;
         response.write(oss);
-        LOG_INF(oss.str());
-        send(oss.str());
+        sendHttpResponse(oss.str());
     }
 
     /// Reads data by invoking readData() and buffering.
@@ -628,6 +655,7 @@ protected:
 
         if (closed)
         {
+            LOG_TRC("#" << getFD() << ": closed.");
             _closed = true;
             _socketHandler->onDisconnect();
         }
@@ -731,8 +759,9 @@ namespace HttpHelper
         response.set("User-Agent", HTTP_AGENT_STRING);
         std::ostringstream oss;
         response.write(oss);
-        LOG_INF(oss.str());
-        socket->send(oss.str());
+        const std::string header = oss.str();
+        LOG_TRC("Sending file [" << path << "]: " << header);
+        socket->sendHttpResponse(header);
 
         std::ifstream file(path, std::ios::binary);
         do
