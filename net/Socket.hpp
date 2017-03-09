@@ -780,6 +780,10 @@ namespace HttpHelper
             return;
         }
 
+        const int socketBufferSize = 16 * 1024;
+        if (st.st_size >= socketBufferSize)
+            socket->setSendBufferSize(socketBufferSize);
+
         response.setContentLength(st.st_size);
         response.set("User-Agent", HTTP_AGENT_STRING);
         std::ostringstream oss;
@@ -789,15 +793,17 @@ namespace HttpHelper
         socket->sendHttpResponse(header);
 
         std::ifstream file(path, std::ios::binary);
+        bool flush = true;
         do
         {
-            char buf[16 * 1024];
+            char buf[socketBufferSize];
             file.read(buf, sizeof(buf));
             const int size = file.gcount();
             if (size > 0)
-                socket->send(buf, size);
+                socket->send(buf, size, flush);
             else
                 break;
+            flush = false;
         }
         while (file);
     }
