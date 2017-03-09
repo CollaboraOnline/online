@@ -30,10 +30,9 @@ namespace {
     }
 }
 
-SocketPoll::SocketPoll(const std::string& threadName,
-                       bool withThread) :
-    _name(threadName),
-    _stop(false)
+SocketPoll::SocketPoll(const std::string& threadName)
+    : _name(threadName),
+      _stop(false)
 {
     // Create the wakeup fd.
     if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)
@@ -46,13 +45,7 @@ SocketPoll::SocketPoll(const std::string& threadName,
         getWakeupsArray().push_back(_wakeup[1]);
     }
 
-    if (withThread)
-    {
-        _thread = std::thread(&SocketPoll::pollingThread, this);
-        _owner = _thread.get_id();
-    }
-    else
-        _owner = std::this_thread::get_id();
+    _owner = std::this_thread::get_id();
 }
 
 SocketPoll::~SocketPoll()
@@ -71,6 +64,12 @@ SocketPoll::~SocketPoll()
 
     if (it != getWakeupsArray().end())
         getWakeupsArray().erase(it);
+}
+
+void SocketPoll::startThread()
+{
+    _thread = std::thread(&SocketPoll::pollingThread, this);
+    _owner = _thread.get_id();
 }
 
 void SocketPoll::wakeupWorld()

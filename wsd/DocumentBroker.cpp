@@ -116,8 +116,6 @@ std::string DocumentBroker::getDocKey(const Poco::URI& uri)
 /// The Document Broker Poll - one of these in a thread per document
 class DocumentBroker::DocumentBrokerPoll : public TerminatingPoll
 {
-    std::mutex _lock;
-    std::condition_variable _start_cv;
     std::shared_ptr<DocumentBroker> _docBroker;
 public:
     DocumentBrokerPoll(const std::string &threadName)
@@ -126,20 +124,13 @@ public:
     }
     void setDocumentBroker(const std::shared_ptr<DocumentBroker> &docBroker)
     {
-        std::unique_lock<std::mutex> lk(_lock);
         _docBroker = docBroker;
-        _start_cv.notify_all();
     }
 
     virtual void pollingThread()
     {
-        {
-            std::unique_lock<std::mutex> lk(_lock);
-            while (!_docBroker && !_stop)
-                _start_cv.wait(lk);
-        }
-        if (_docBroker)
-            _docBroker->pollThread();
+        assert (_docBroker);
+        _docBroker->pollThread();
     }
 };
 
@@ -182,6 +173,7 @@ std::shared_ptr<DocumentBroker> DocumentBroker::create(
     std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, childRoot);
 
     docBroker->_poll->setDocumentBroker(docBroker);
+    docBroker->_poll->startThread();
 
     return docBroker;
 }
