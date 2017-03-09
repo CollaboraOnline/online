@@ -2255,6 +2255,7 @@ private:
                     _clientSession->onConnect(socket);
                     docBroker->addSocketToPoll(socket);
                 }
+                docBroker->startThread();
             }
         }
         if (!docBroker || !_clientSession)

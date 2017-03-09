@@ -32,7 +32,8 @@ namespace {
 
 SocketPoll::SocketPoll(const std::string& threadName)
     : _name(threadName),
-      _stop(false)
+      _stop(false),
+      _threadStarted(false)
 {
     // Create the wakeup fd.
     if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)
@@ -51,7 +52,7 @@ SocketPoll::SocketPoll(const std::string& threadName)
 SocketPoll::~SocketPoll()
 {
     stop();
-    if (_thread.joinable())
+    if (_threadStarted && _thread.joinable())
         _thread.join();
 
     ::close(_wakeup[0]);
@@ -68,8 +69,12 @@ SocketPoll::~SocketPoll()
 
 void SocketPoll::startThread()
 {
-    _thread = std::thread(&SocketPoll::pollingThread, this);
-    _owner = _thread.get_id();
+    if (!_threadStarted)
+    {
+        _threadStarted = true;
+        _thread = std::thread(&SocketPoll::pollingThread, this);
+        _owner = _thread.get_id();
+    }
 }
 
 void SocketPoll::wakeupWorld()

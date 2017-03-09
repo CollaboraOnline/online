@@ -173,9 +173,13 @@ std::shared_ptr<DocumentBroker> DocumentBroker::create(
     std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, childRoot);
 
     docBroker->_poll->setDocumentBroker(docBroker);
-    docBroker->_poll->startThread();
 
     return docBroker;
+}
+
+void DocumentBroker::startThread()
+{
+    _poll->startThread();
 }
 
 // The inner heart of the DocumentBroker - our poll loop.
