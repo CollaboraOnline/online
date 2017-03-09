@@ -453,6 +453,7 @@ protected:
     std::atomic<bool> _stop;
     /// The polling thread.
     std::thread _thread;
+    std::atomic<bool> _threadStarted;
     std::thread::id _owner;
 };
 
