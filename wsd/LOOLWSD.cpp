@@ -801,6 +801,7 @@ void LOOLWSD::initialize(Application& self)
     setenv("SAL_DISABLE_OPENCL", "true", 1);
 
     // Log the connection and document limits.
+    static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
     static_assert(MAX_DOCUMENTS > 0 && MAX_DOCUMENTS <= MAX_CONNECTIONS, "MAX_DOCUMENTS must be positive and no more than MAX_CONNECTIONS");
     LOG_INF("Maximum concurrent open Documents limit: " << MAX_DOCUMENTS);
     LOG_INF("Maximum concurrent client Connections limit: " << MAX_CONNECTIONS);
@@ -2603,18 +2604,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     if (ClientPortNumber == MasterPortNumber)
         throw IncompatibleOptionsException("port");
-
-    // Configure the Server.
-    // Note: TCPServer internally uses a ThreadPool to dispatch connections
-    // (the default if not given). The capacity of the ThreadPool is increased
-    // here in proportion to MAX_CONNECTIONS. Each client requests ~10
-    // resources (.js, .css, etc) beyond the main one, which are transient.
-    // The pool must have sufficient available threads to dispatch a new
-    // connection, otherwise will deadlock. So we need to have sufficient
-    // threads to serve new clients while those transients are served.
-    // We provision up to half the limit to connect simultaneously
-    // without loss of performance. This cap is to avoid flooding the server.
-    static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
 
     srv.startPrisoners(MasterPortNumber);
 
