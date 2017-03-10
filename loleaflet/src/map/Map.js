@@ -783,7 +783,7 @@ L.Map = L.Evented.extend({
 	},
 
 	_dim: function() {
-		if (this._debugAlwaysActive === true) {
+		if (this.options.alwaysActive || this._debugAlwaysActive === true) {
 			return;
 		}
 
