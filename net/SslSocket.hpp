@@ -186,7 +186,7 @@ private:
         // Last operation failed. Find out if SSL was trying
         // to do something different that failed, or not.
         const int sslError = SSL_get_error(_ssl, rc);
-        LOG_TRC("SSL error: " << sslError);
+        LOG_TRC("Socket #" << getFD() << " SSL error: " << sslError);
         switch (sslError)
         {
         case SSL_ERROR_ZERO_RETURN:
@@ -239,7 +239,7 @@ private:
                 {
                     char buf[512];
                     ERR_error_string_n(bioError, buf, sizeof(buf));
-                    LOG_ERR("BIO error: " << buf);
+                    LOG_ERR("Socket #" << getFD() << " BIO error: " << buf);
                     throw std::runtime_error(buf);
                 }
             }
