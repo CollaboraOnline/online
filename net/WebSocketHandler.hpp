@@ -118,6 +118,10 @@ public:
 
         // websocket fun !
         const size_t len = socket->_inBuffer.size();
+
+        if (len == 0)
+            return false; // avoid logging.
+
         LOG_TRC("Incoming WebSocket data of " << len << " bytes to socket #" << socket->getFD());
 
         if (len < 2) // partial read
@@ -216,7 +220,7 @@ public:
     /// Implementation of the SocketHandlerInterface.
     virtual void handleIncomingMessage() override
     {
-        while (handleOneIncomingMessage() && _inBuffer.size() > 0)
+        while (handleOneIncomingMessage())
             ; // can have multiple msgs in one recv'd packet.
     }
 
