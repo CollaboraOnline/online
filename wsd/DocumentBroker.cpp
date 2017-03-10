@@ -1263,6 +1263,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
 {
     auto lock = getLock();
 
+    LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
     terminateChild(lock, reason);
 }
 
