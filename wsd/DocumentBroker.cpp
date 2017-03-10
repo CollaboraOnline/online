@@ -185,6 +185,11 @@ void DocumentBroker::startThread()
 // The inner heart of the DocumentBroker - our poll loop.
 void DocumentBroker::pollThread()
 {
+    static std::atomic<unsigned> DocBrokerId(1);
+    Util::setThreadName("docbroker_" + Util::encodeId(DocBrokerId++, 3));
+
+    LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << "].");
+
     // Request a kit process for this doc.
     _childProcess = getNewChild_Blocks();
     if (!_childProcess)
@@ -255,22 +260,7 @@ void DocumentBroker::pollThread()
         }
     }
 
-    // FIXME: probably we should stop listening on
-    // incoming sockets here if we have any.
-
-    auto lastSaveTime = _lastSaveTime;
-    auto saveTimeoutStart = std::chrono::steady_clock::now();
-
-    // Save before exit.
-    autoSave(true);
-
-    // wait 20 seconds for a save notification and quit.
-    while (lastSaveTime < saveTimeoutStart &&
-           std::chrono::duration_cast<std::chrono::seconds>
-           (std::chrono::steady_clock::now() - saveTimeoutStart).count() <= 20)
-    {
-        _poll->poll(SocketPoll::DefaultPollTimeoutMs);
-    }
+    LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
 }
 
 bool DocumentBroker::isAlive() const
@@ -496,6 +486,28 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
 
 bool DocumentBroker::saveToStorage(const std::string& sessionId,
                                    bool success, const std::string& result)
+{
+    const bool res = saveToStorageInternal(sessionId, success, result);
+
+    // If marked to destroy, then this was the last session.
+    // FIXME: If during that last save another client connects
+    // to this doc, the _markToDestroy will be reset and we
+    // will leak the last session. Need to mark the session as
+    // dead and cleanup somehow.
+    if (_markToDestroy)
+    {
+        // We've saved and can safely destroy.
+        removeSessionInternal(sessionId);
+
+        // Stop so we get cleaned up and removed.
+        _stop = true;
+    }
+
+    return res;
+}
+
+bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
+                                           bool success, const std::string& result)
 {
     assert(_poll->isCorrectThread());
 
@@ -774,6 +786,23 @@ size_t DocumentBroker::removeSession(const std::string& id, bool destroyIfLast)
         LOG_INF("Removing session [" << id << "] on docKey [" << _docKey <<
                 "]. Have " << _sessions.size() << " sessions.");
 
+        if (_lastEditableSession)
+            autoSave(true);
+        else
+            return removeSessionInternal(id);
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Error while removing session [" << id << "]: " << ex.what());
+    }
+
+    return _sessions.size();
+}
+
+size_t DocumentBroker::removeSessionInternal(const std::string& id)
+{
+    try
+    {
         // remove also from the _newSessions
         _newSessions.erase(std::remove_if(_newSessions.begin(), _newSessions.end(), [&id](NewSession& newSession) { return newSession._session->getId() == id; }),
                            _newSessions.end());
@@ -1110,7 +1139,6 @@ void DocumentBroker::destroyIfLastEditor(const std::string& id)
 
     // Last view going away, can destroy.
     _markToDestroy = (_sessions.size() <= 1);
-    _stop = true;
     LOG_DBG("startDestroy on session [" << id << "] on docKey [" << _docKey <<
             "], markToDestroy: " << _markToDestroy << ", lastEditableSession: " << _lastEditableSession);
 }
