@@ -250,7 +250,7 @@ public:
         {
             const std::string nextmessage = "nextmessage: size=" + std::to_string(len);
             const unsigned char size = (nextmessage.size() & 0xff);
-            out.push_back(fin | WSOpCode::Text);
+            out.push_back(static_cast<char>(fin | WSOpCode::Text));
             out.push_back(size);
             out.insert(out.end(), nextmessage.data(), nextmessage.data() + size);
             socket->writeOutgoingData();
