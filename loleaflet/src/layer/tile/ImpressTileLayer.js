@@ -6,25 +6,124 @@
 L.ImpressTileLayer = L.TileLayer.extend({
 
 	newAnnotation: function (comment) {
-		if (!comment.anchorPos && this._isCursorVisible) {
-			comment.anchorPos = this._latLngToTwips(this._visibleCursor.getNorthWest());
+		var annotation = L.annotation(this._map.getCenter(), comment).addTo(this._map);
+		annotation.edit();
+		annotation.focus();
+	},
+
+	beforeAdd: function (map) {
+		map.on('AnnotationCancel', this.onAnnotationCancel, this);
+		map.on('AnnotationSave', this.onAnnotationSave, this);
+		map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
+		map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
+	},
+
+	getAnnotation: function (id) {
+		for (var index in this._annotations) {
+			if (this._annotations[index]._data.id === id) {
+				return this._annotations[index];
+			}
 		}
-		if (comment.anchorPos) {
-			this._annotations.add(comment, true);
-		}
+		return null;
 	},
 
 	onAdd: function (map) {
 		L.TileLayer.prototype.onAdd.call(this, map);
-		this._annotations = L.annotationManager(map);
+		this._annotations = [];
+	},
+
+	onAnnotationCancel: function (e) {
+		this._map.removeLayer(e.annotation);
+		this._map.focus();
 	},
 
 	onAnnotationModify: function (annotation) {
-		this._annotations.modify(annotation);
+		var draft = L.annotation(this._map.getCenter(), annotation._data).addTo(this._map);
+		draft.edit();
+		draft.focus();
 	},
 
 	onAnnotationRemove: function (id) {
-		this._annotations.remove(id);
+		var comment = {
+			Id: {
+				type: 'string',
+				value: id
+			}
+		};
+		this._map.sendUnoCommand('.uno:DeleteAnnotation', comment);
+		this._map.focus();
+	},
+
+	onAnnotationSave: function (e) {
+		var comment;
+		if (e.annotation._data.id === 'new') {
+			comment = {
+				Text: {
+					type: 'string',
+					value: e.annotation._data.text
+				}
+			};
+			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
+		} else {
+			comment = {
+				Id: {
+					type: 'string',
+					value: e.annotation._data.id
+				},
+				Text: {
+					type: 'string',
+					value: e.annotation._data.text
+				}
+			};
+			this._map.sendUnoCommand('.uno:EditAnnotation', comment);
+		}
+		this._map.removeLayer(e.annotation);
+		this._map.focus();
+	},
+
+	onAnnotationScrollDown: function (e) {
+		this._topAnnotation = Math.min(++this._topAnnotation, this._annotations.length - 1);
+		this.layoutAnnotations();
+	},
+
+	onAnnotationScrollUp: function (e) {
+		this._topAnnotation = Math.max(--this._topAnnotation, 0);
+		this.layoutAnnotations();
+	},
+
+	removeAnnotation: function (id) {
+		for (var index in this._annotations) {
+			if (this._annotations[index]._data.id == id) {
+				this._map.removeLayer(this._annotations[index]);
+				this._annotations.splice(index, 1);
+				break;
+			}
+		}
+	},
+
+	layoutAnnotations: function () {
+		var topRight = this._map.latLngToLayerPoint(this._map.options.maxBounds.getNorthEast()).add(L.point(this.options.marginX, this.options.marginY));
+		var bounds, annotation;
+		for (var index in this._annotations) {
+			annotation = this._annotations[index];
+			if (index >= this._topAnnotation) {
+				annotation.setLatLng(bounds ? this._map.layerPointToLatLng(bounds.getBottomLeft()) : this._map.layerPointToLatLng(topRight));
+				bounds = annotation.getBounds();
+				bounds.extend(L.point(bounds.max.x, bounds.max.y + this.options.marginY));
+				annotation.show();
+			} else {
+				annotation.hide();
+			}
+		}
+		if (bounds) {
+			if (!this._scrollAnnotation) {
+				this._scrollAnnotation = L.control.scroll.annotation();
+				this._scrollAnnotation.addTo(this._map);
+			}
+		} else if (this._scrollAnnotation) {
+			this._map.removeControl(this._scrollAnnotation);
+			this._scrollAnnotation = null;
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -34,7 +133,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		}
 
 		if (values.comments) {
-			this._annotations.fill(values.comments);
+			for (var index in values.comments) {
+				comment = values.comments[index];
+				this._annotations.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
+			}
+			this._topAnnotation = 0;
+			this.layoutAnnotations();
 		} else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
@@ -42,7 +146,22 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 	_onMessage: function (textMsg, img) {
 		if (textMsg.startsWith('comment:')) {
-			this._annotations.onACKComment(textMsg);
+			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
+			if (obj.comment.action === 'Add') {
+				this._annotations.push(L.annotation(this._map.options.maxBounds.getSouthEast(), obj.comment).addTo(this._map));
+				this._topAnnotation = Math.min(this._topAnnotation, this._annotations.length - 1);
+				this.layoutAnnotations();
+			} else if (obj.comment.action === 'Remove') {
+				this.removeAnnotation(obj.comment.id);
+				this._topAnnotation = Math.min(this._topAnnotation, this._annotations.length - 1);
+				this.layoutAnnotations();
+			} else if (obj.comment.action === 'Modify') {
+				var modified = this.getAnnotation(obj.comment.id);
+				if (modified) {
+					modified._data = obj.comment;
+					modified.update();
+				}
+			}
 		} else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
 		}

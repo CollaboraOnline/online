@@ -435,6 +435,12 @@ var deps = {
 		desc: 'Group Annotations to put on the map.'
 	},
 
+	AnnotationScroll: {
+		src: ['control/Control.js',
+		      'control/Control.Scroll.Annotation.js'],
+		desc: 'Basic scroll control'
+	},
+
 	Annotation: {
 		src: ['layer/marker/Annotation.js'],
 		desc: 'Annotation to put on the map.'

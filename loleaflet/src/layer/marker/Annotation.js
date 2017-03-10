@@ -61,6 +61,11 @@ L.Annotation = L.Layer.extend({
 		this._editNode.style.display = 'none';
 	},
 
+	hide: function () {
+		this._container.style.visibility = 'hidden';
+		this._editNode.style.display = 'none';
+	},
+
 	edit: function () {
 		this._container.style.visibility = '';
 		this._contentNode.style.display = 'none';
