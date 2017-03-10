@@ -2283,14 +2283,9 @@ private:
             // Connection terminated. Destroy session.
             LOG_DBG("Client session [" << _id << "] on docKey [" << docKey << "] terminated. Cleaning up.");
 
-
             // We issue a force-save when last editable (non-readonly) session is going away
-            const auto sessionsCount = docBroker->removeSession(_id, true);
-            if (sessionsCount == 0)
-            {
-                // We've supposedly destroyed the last session, now cleanup.
-                removeDocBrokerSession(docBroker);
-            }
+            // and defer destroying the last session and the docBroker.
+            docBroker->removeSession(_id, true);
 
             LOG_INF("Finishing GET request handler for session [" << _id << "].");
         }

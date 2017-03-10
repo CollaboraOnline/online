@@ -344,8 +344,11 @@ private:
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const bool dontSaveIfUnmodified);
 
-    /// Saves the document to Storage (assuming LO Core saved to local copy).
-    bool saveToStorage();
+    /// Saves the doc to the storage.
+    bool saveToStorageInternal(const std::string& sesionId, bool success, const std::string& result = "");
+
+    /// Removes a session by ID. Returns the new number of sessions.
+    size_t removeSessionInternal(const std::string& id);
 
     /// Forward a message from child session to its respective client session.
     bool forwardToClient(const std::shared_ptr<Message>& payload);
