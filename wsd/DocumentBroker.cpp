@@ -717,6 +717,7 @@ size_t DocumentBroker::queueSession(std::shared_ptr<ClientSession>& session)
     Util::assertIsLocked(_mutex);
 
     _newSessions.push_back(NewSession(session));
+    _poll->wakeup();
 
     return _sessions.size() + _newSessions.size();
 }
