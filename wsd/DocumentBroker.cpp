@@ -250,7 +250,7 @@ void DocumentBroker::pollThread()
 
         _poll->poll(SocketPoll::DefaultPollTimeoutMs);
 
-        if (!std::getenv("LOOL_NO_AUTOSAVE") &&
+        if (!std::getenv("LOOL_NO_AUTOSAVE") && !_stop &&
             std::chrono::duration_cast<std::chrono::seconds>
             (std::chrono::steady_clock::now() - last30SecCheckTime).count() >= 30)
         {

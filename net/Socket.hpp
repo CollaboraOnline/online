@@ -415,7 +415,7 @@ public:
     /// Removes a socket from this poller.
     void releaseSocket(const std::shared_ptr<Socket>& socket)
     {
-        // assert(isCorrectThread());
+//        assert(isCorrectThread());
         if (socket)
         {
             std::lock_guard<std::mutex> lock(_mutex);
