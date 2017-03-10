@@ -100,14 +100,14 @@ public:
         StreamSocket::writeOutgoingData();
     }
 
-    virtual int readData(char* buf, int len)
+    virtual int readData(char* buf, int len) override
     {
         assert(isCorrectThread());
 
         return handleSslState(SSL_read(_ssl, buf, len));
     }
 
-    virtual int writeData(const char* buf, const int len)
+    virtual int writeData(const char* buf, const int len) override
     {
         assert(isCorrectThread());
 
