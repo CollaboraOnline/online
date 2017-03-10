@@ -63,6 +63,8 @@ var timestamp = getParameterByName('timestamp');
 var closebutton = getParameterByName('closebutton');
 // Shows revision history file menu option
 var revHistoryEnabled = getParameterByName('revisionhistory');
+// Should the document go inactive or not
+var alwaysActive = getParameterByName('alwaysactive');
 // Loleaflet Debug mode
 var debugMode = getParameterByName('debug');
 if (wopiSrc === '' && filePath === '') {
@@ -98,7 +100,8 @@ var map = L.map('map', {
     timestamp: timestamp,
     documentContainer: 'document-container',
     debug: debugMode,
-	wopi: isWopi
+	wopi: isWopi,
+	alwaysActive: alwaysActive
 });
 // toolbar.js (loaded in <script> tag accesses map as global variable,
 // so expose it

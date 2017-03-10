@@ -782,7 +782,7 @@ L.Map = L.Evented.extend({
 
 	_dim: function() {
 		// console.log('_dim:');
-		if (window.devtools.open || !map._socket.connected()) {
+		if (window.devtools.open || !map._socket.connected() || this.options.alwaysActive) {
 			return;
 		}
 
