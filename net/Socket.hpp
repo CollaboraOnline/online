@@ -39,11 +39,16 @@
 /// A non-blocking, streaming socket.
 class Socket
 {
+    // Guestimates; verify, or read from the kernel ?
+    static const int MaximumSendBufferSize = 128 * 1024;
+    static const int DefaultSendBufferSize = 16 * 1024;
+    static const int MinimumSendBufferSize = 4 * 1024;
 public:
     Socket() :
-        _fd(socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0))
+        _fd(socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0)),
+        _sendBufferSize(DefaultSendBufferSize)
     {
-        setNoDelay();
+        init();
     }
 
     virtual ~Socket()
@@ -92,17 +97,23 @@ public:
     /// Returns true on success only.
     bool setSendBufferSize(const int size)
     {
-        constexpr unsigned int len = sizeof(size);
-        const int rc = ::setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, len);
-        return (rc == 0);
+        int rc = ::setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, size, sizeof(size));
+        bool success = (rc == 0);
+
+        _sendBufferSize = std::min(std::max(size, MinimumSendBufferSize), // old guess.
+                                   MaximumSendBufferSize);
+        int readSize = _sendBufferSize;
+        const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &readSize, sizeof(size));
+        if (rc == 0)
+            _sendBufferSize = readSize;
+
+        return success && rc == 0;
     }
 
     /// Gets the actual send buffer size in bytes, -1 for failure.
     int getSendBufferSize() const
     {
-        int size;
-        unsigned int len = sizeof(size);
-        const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, &len);
+        return _sendBufferSize;
         return (rc == 0 ? size : -1);
     }
 
@@ -194,6 +205,7 @@ protected:
 
 private:
     const int _fd;
+    int _sendBufferSize;
     // always enabled to avoid ABI change in debug mode ...
     std::thread::id _owner;
 };
@@ -699,7 +711,8 @@ protected:
             ssize_t len;
             do
             {
-                len = writeData(&_outBuffer[0], _outBuffer.size());
+                len = writeData(&_outBuffer[0], std::max((int)_outBuffer.size(),
+                                                         _sendBufferSize));
 
                 auto& log = Log::logger();
                 if (log.trace() && len > 0) {
