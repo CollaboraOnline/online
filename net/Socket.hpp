@@ -241,6 +241,7 @@ public:
     /// The default implementation of our polling thread
     virtual void pollingThread()
     {
+        Util::setThreadName(_name);
         LOG_INF("Starting polling thread [" << _name << "].");
         while (continuePolling())
         {
