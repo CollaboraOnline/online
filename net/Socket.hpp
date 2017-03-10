@@ -818,6 +818,10 @@ namespace HttpHelper
 
         response.setContentLength(st.st_size);
         response.set("User-Agent", HTTP_AGENT_STRING);
+        // 60 * 60 * 24 * 128 (days) = 11059200
+        response.set("Cache-Control", "max-age=11059200");
+        response.set("ETag", LOOLWSD_VERSION_HASH);
+
         std::ostringstream oss;
         response.write(oss);
         const std::string header = oss.str();
