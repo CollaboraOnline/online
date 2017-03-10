@@ -354,6 +354,11 @@ public:
                 // Copy the new sockets over and clear.
                 _pollSockets.insert(_pollSockets.end(),
                                     _newSockets.begin(), _newSockets.end());
+
+                // Update thread ownership.
+                for (auto &i : _newSockets)
+                    i->setThreadOwner(std::this_thread::get_id());
+
                 _newSockets.clear();
 
                 // Extract list of callbacks to process
@@ -395,6 +400,7 @@ public:
         if (newSocket)
         {
             std::lock_guard<std::mutex> lock(_mutex);
+            // Beware - _thread may not be created & started yet.
             newSocket->setThreadOwner(_thread.get_id());
             LOG_DBG("Inserting socket #" << newSocket->getFD() << " into " << _name);
             _newSockets.emplace_back(newSocket);
