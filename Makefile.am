@@ -54,8 +54,7 @@ shared_sources = common/FileUtil.cpp \
                  common/Unit.cpp \
                  common/UnitHTTP.cpp \
                  common/Util.cpp \
-                 net/Socket.cpp \
-                 tools/Replay.hpp
+                 net/Socket.cpp
 if ENABLE_SSL
 shared_sources += net/Ssl.cpp
 endif
@@ -163,7 +162,8 @@ shared_headers = common/Common.hpp \
                  common/security.h \
                  common/SpookyV2.h \
                  net/Socket.hpp \
-                 net/WebSocketHandler.hpp
+                 net/WebSocketHandler.hpp \
+                 tools/Replay.hpp
 if ENABLE_SSL
 shared_headers += net/Ssl.hpp \
                   net/SslSocket.hpp
