@@ -98,7 +98,13 @@ L.Map.WOPI = L.Handler.extend({
 		}
 
 		var msg = JSON.parse(e.data);
-		if (msg.MessageId === 'Get_Views') {
+		if (msg.MessageId === 'Set_Settings') {
+			if (msg.Values) {
+				var alwaysActive = msg.Values.AlwaysActive;
+				this._map.options.alwaysActive = !!alwaysActive;
+			}
+		}
+		else if (msg.MessageId === 'Get_Views') {
 			var getMembersRespVal = [];
 			for (var viewInfoIdx in this._map._viewInfo) {
 				getMembersRespVal.push({
