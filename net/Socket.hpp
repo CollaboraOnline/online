@@ -521,7 +521,7 @@ public:
     }
 
     /// Just trigger the async shutdown.
-    virtual void shutdown()
+    virtual void shutdown() override
     {
         _shutdownSignalled = true;
     }
