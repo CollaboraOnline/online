@@ -300,6 +300,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
         << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
         << "User-Agent: LOOLWSD WOPI Agent\r\n"
+        << "Cache-Control:max-age=11059200\r\n"
+        << "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
         << "Content-Length: " << preprocess.size() << "\r\n"
         << "Content-Type: " << mimeType << "\r\n"
         << "\r\n"
