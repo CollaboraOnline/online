@@ -1318,6 +1318,7 @@ void DocumentBroker::dumpState()
     std::cerr << "  jailed uri: " << _uriJailed.toString() << "\n";
     std::cerr << "  doc key: " << _docKey << "\n";
     std::cerr << "  num sessions: " << getSessionsCount() << "\n";
+    std::cerr << "  new sessions: " << _newSessions.size() << "\n";
     std::cerr << "  last editable?: " << _lastEditableSession << "\n";
     std::cerr << "  cursor " << _cursorPosX << ", " << _cursorPosY
               << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
