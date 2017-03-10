@@ -187,10 +187,14 @@ public:
 #endif
     }
 
-    virtual bool isCorrectThread()
+    virtual bool isCorrectThread(bool hard = false)
     {
 #if ENABLE_DEBUG
-        return !getenv("LOOL_CHECK_THREADS") || std::this_thread::get_id() == _owner;
+        bool sameThread = std::this_thread::get_id() == _owner;
+        if (hard)
+            return sameThread;
+        else
+            return !getenv("LOOL_CHECK_THREADS") || sameThread;
 #else
         return true;
 #endif
