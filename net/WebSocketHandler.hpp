@@ -110,18 +110,18 @@ public:
     }
 
     /// Implementation of the SocketHandlerInterface.
-    virtual void handleIncomingMessage() override
+    virtual bool handleOneIncomingMessage()
     {
         auto socket = _socket.lock();
         if (socket == nullptr)
-            return;
+            return false;
 
         // websocket fun !
         const size_t len = socket->_inBuffer.size();
         LOG_TRC("Incoming WebSocket data of " << len << " bytes to socket #" << socket->getFD());
 
         if (len < 2) // partial read
-            return;
+            return false;
 
         unsigned char *p = reinterpret_cast<unsigned char*>(&socket->_inBuffer[0]);
         bool fin = p[0] & 0x80;
@@ -134,7 +134,7 @@ public:
         if (payloadLen == 126) // 2 byte length
         {
             if (len < 2 + 2)
-                return;
+                return false;
 
             payloadLen = (((unsigned)p[2]) << 8) | ((unsigned)p[3]);
             headerLen += 2;
@@ -142,7 +142,7 @@ public:
         else if (payloadLen == 127) // 8 byte length
         {
             if (len < 2 + 8)
-                return;
+                return false;
 
             payloadLen = ((((uint64_t)p[9]) <<  0) + (((uint64_t)p[8]) <<  8) +
                           (((uint64_t)p[7]) << 16) + (((uint64_t)p[6]) << 24) +
@@ -162,7 +162,7 @@ public:
 
         if (payloadLen + headerLen > len)
         { // partial read wait for more data.
-            return;
+            return false;
         }
 
         data = p + headerLen;
@@ -209,7 +209,17 @@ public:
         }
 
         _wsPayload.clear();
+
+        return true;
     }
+
+    /// Implementation of the SocketHandlerInterface.
+    virtual void handleIncomingMessage() override
+    {
+        while (handleOneIncomingMessage() && _inBuffer.size() > 0)
+            ; // can have multiple msgs in one recv'd packet.
+    }
+
 
     bool hasQueuedWrites() const override
     {
