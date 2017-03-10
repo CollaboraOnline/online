@@ -207,6 +207,7 @@ protected:
     void init()
     {
         setNoDelay();
+        _sendBufferSize = DefaultSendBufferSize;
 #if ENABLE_DEBUG
         _owner = std::this_thread::get_id();
 
