@@ -175,7 +175,6 @@ public:
         try
         {
             return _pid > 1 && _ws && kill(_pid, 0) == 0;
-// FIXME:                    !_ws->poll(Poco::Timespan(0), Poco::Net::Socket::SelectMode::SELECT_ERROR));
         }
         catch (const std::exception&)
         {

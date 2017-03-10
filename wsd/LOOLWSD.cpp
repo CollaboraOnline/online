@@ -1335,59 +1335,12 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
         // Get the DocumentBroker from the Cache.
         LOG_DBG("Found DocumentBroker with docKey [" << docKey << "].");
         docBroker = it->second;
+
+        // Avoid notifying the client - either we catch and stop the
+        // destruction when we add the session, -or- the client
+        // re-connects.
         if (docBroker->isMarkedToDestroy())
-        {
-            // Let the waiting happen in parallel to new requests.
-            docBrokersLock.unlock();
-
-            // If this document is going out, wait.
-            LOG_DBG("Document [" << docKey << "] is marked to destroy, waiting to reload.");
-
-            // FIXME: - easiest to send a fast message to the
-            //          client to wait & retry in a bit ...
-
-#if 0 // loolnb
-            bool timedOut = true;
-            for (size_t i = 0; i < COMMAND_TIMEOUT_MS / POLL_TIMEOUT_MS; ++i)
-            {
-
-                // FIXME: blocks !
-                std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
-
-                docBrokersLock.lock();
-                it = DocBrokers.find(docKey);
-                if (it == DocBrokers.end())
-                {
-                    // went away successfully
-                    docBroker.reset();
-                    docBrokersLock.unlock();
-                    timedOut = false;
-                    break;
-                }
-                else if (it->second && !it->second->isMarkedToDestroy())
-                {
-                    // was actually replaced by a real document
-                    docBroker = it->second;
-                    docBrokersLock.unlock();
-                    timedOut = false;
-                    break;
-                }
-
-                docBrokersLock.unlock();
-                if (TerminationFlag)
-                {
-                    LOG_ERR("Termination flag set. Not loading new session [" << id << "]");
-                    return nullptr;
-                }
-            }
-
-            if (timedOut)
-            {
-                // Still here, but marked to destroy. Proceed and hope to recover.
-                LOG_ERR("Timed out while waiting for document to unload before loading.");
-            }
-#endif
-        }
+            LOG_WRN("Associating with Document Broker with docKey [" << docKey << "] that is marked to be destroyed!");
     }
     else
     {
@@ -1454,12 +1407,7 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
         }
 
         if (docBroker->isMarkedToDestroy())
-        {
-            LOG_ERR("DocBroker is marked to destroy, can't add session.");
-            lock.unlock();
-            removeDocBrokerSession(docBroker);
-            return nullptr;
-        }
+            LOG_WRN("DocBroker is marked to destroy, attempting to add session anyway.");
 
         // Now we have a DocumentBroker and we're ready to process client commands.
         const std::string statusReady = "statusindicator: ready";

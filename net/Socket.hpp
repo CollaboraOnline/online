@@ -52,7 +52,9 @@ public:
 
     virtual ~Socket()
     {
-        //TODO: Should we shutdown here or up to the client?
+        // TODO: Should we shutdown here or up to the client?
+
+        LOG_TRC("#" << getFD() << " close socket.");
 
         // Doesn't block on sockets; no error handling needed.
         close(_fd);
@@ -551,6 +553,7 @@ public:
     virtual void shutdown() override
     {
         _shutdownSignalled = true;
+        LOG_TRC("#" << getFD() << ": shutdown signalled");
     }
 
     /// Perform the real shutdown.

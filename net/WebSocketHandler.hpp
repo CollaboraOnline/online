@@ -97,6 +97,8 @@ public:
         if (socket == nullptr)
             return;
 
+        LOG_TRC("#" << socket->getFD() << " shutdown websocket.");
+
         const size_t len = statusMessage.size();
         std::vector<char> buf(2 + len);
         buf[0] = ((((int)statusCode) >> 8) & 0xff);

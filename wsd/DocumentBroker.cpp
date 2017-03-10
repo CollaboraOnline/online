@@ -751,6 +751,7 @@ size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
     // document). It is safe to reset their values to their defaults whenever a new session is added.
     _lastEditableSession = false;
     _markToDestroy = false;
+    _stop = false;
 
     const auto id = session->getId();
     if (!_sessions.emplace(id, session).second)
