@@ -220,7 +220,7 @@ L.TileLayer = L.GridLayer.extend({
 				reject: {
 					name: _('Reject'),
 					callback: function (key, options) {
-						that.onChangeReject.call(that, options.$tigger.get(0).annotation._data.id);
+						that.onChangeReject.call(that, options.$trigger.get(0).annotation._data.id);
 					}
 				}
 			},
