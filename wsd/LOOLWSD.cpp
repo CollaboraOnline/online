@@ -1085,6 +1085,18 @@ bool LOOLWSD::checkAndRestoreForKit()
 #ifdef KIT_IN_PROCESS
     return false;
 #else
+
+    if (ForKitProcId == -1)
+    {
+        // Fire the ForKit process for the first time.
+        if (!createForKit())
+        {
+            // Should never fail.
+            LOG_FTL("Failed to spawn loolforkit.");
+            return Application::EXIT_SOFTWARE;
+        }
+    }
+
     int status;
     const pid_t pid = waitpid(ForKitProcId, &status, WUNTRACED | WNOHANG);
     if (pid > 0)
@@ -1189,7 +1201,6 @@ void PrisonerPoll::wakeupHook()
         }
     }
 }
-
 
 bool LOOLWSD::createForKit()
 {
@@ -2609,6 +2620,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     if (ClientPortNumber == MasterPortNumber)
         throw IncompatibleOptionsException("port");
 
+    // Start the internal prisoner server and spawn forkit,
+    // which in turn forks first child.
     srv.startPrisoners(MasterPortNumber);
 
 #ifndef KIT_IN_PROCESS
@@ -2626,18 +2639,13 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
             throw std::runtime_error(msg);
         }
 
-        // Check we have at least one
+        // Check we have at least one.
+        LOG_TRC("Have " << NewChildren.size() << " new children.");
         assert(NewChildren.size() > 0);
     }
 #endif
 
-    // Fire the ForKit process; we are ready to get child connections.
-    if (!createForKit())
-    {
-        LOG_FTL("Failed to spawn loolforkit.");
-        return Application::EXIT_SOFTWARE;
-    }
-
+    // Start the server.
     srv.start(ClientPortNumber);
 
 #if ENABLE_DEBUG
