@@ -34,8 +34,6 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
-#include <Poco/Util/ServerApplication.h>
-#include <Poco/Util/Timer.h>
 
 #include "Auth.hpp"
 #include "Common.hpp"

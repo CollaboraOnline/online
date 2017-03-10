@@ -2259,7 +2259,7 @@ private:
             _clientSession = createNewClientSession(ws, _id, uriPublic, docBroker, isReadOnly);
             if (_clientSession)
             {
-                // Transfer the socket to the DocumentBroker.
+                // Transfer the client socket to the DocumentBroker.
                 auto socket = _socket.lock();
                 if (socket)
                 {

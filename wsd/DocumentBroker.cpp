@@ -1305,12 +1305,21 @@ void DocumentBroker::dumpState()
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    std::cerr << " Broker: " << _filename << "\n";
+    std::cerr << " Broker: " << _filename;
+    if (_markToDestroy)
+        std::cerr << " *** Marked to destroy ***\n";
+    else
+        std::cerr << " has live sessions\n";
+    std::cerr << "  loaded?: " << _isLoaded << "\n";
+    std::cerr << "  modified?: " << _isModified << "\n";
     std::cerr << "  jail id: " << _jailId << "\n";
     std::cerr << "  public uri: " << _uriPublic.toString() << "\n";
     std::cerr << "  jailed uri: " << _uriJailed.toString() << "\n";
     std::cerr << "  doc key: " << _docKey << "\n";
     std::cerr << "  num sessions: " << getSessionsCount() << "\n";
+    std::cerr << "  last editable?: " << _lastEditableSession << "\n";
+    std::cerr << "  cursor " << _cursorPosX << ", " << _cursorPosY
+              << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
 
     _poll->dumpState();
 }
