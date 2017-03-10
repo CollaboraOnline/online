@@ -40,10 +40,14 @@
 class Socket
 {
 public:
+    static const int DefaultSendBufferSize = 16 * 1024;
+    static const int MaximumSendBufferSize = 128 * 1024;
+
     Socket() :
-        _fd(socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0))
+        _fd(socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0)),
+        _sendBufferSize(DefaultSendBufferSize)
     {
-        setNoDelay();
+        init();
     }
 
     virtual ~Socket()
@@ -82,23 +86,39 @@ public:
                     (char *) &val, sizeof(val));
     }
 
-    /// Sets the send buffer in size bytes.
-    /// Must be called before accept or connect.
+    /// Sets the kernel socket send buffer in size bytes.
     /// Note: TCP will allocate twice this size for admin purposes,
     /// so a subsequent call to getSendBufferSize will return
     /// the larger (actual) buffer size, if this succeeds.
     /// Note: the upper limit is set via /proc/sys/net/core/wmem_max,
     /// and there is an unconfigurable lower limit as well.
     /// Returns true on success only.
-    bool setSendBufferSize(const int size)
+    bool setSocketBufferSize(const int size)
     {
-        constexpr unsigned int len = sizeof(size);
-        const int rc = ::setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, len);
-        return (rc == 0);
+        int rc = ::setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, sizeof(size));
+
+        _sendBufferSize = getSocketBufferSize();
+        if (rc != 0 || _sendBufferSize < 0 )
+        {
+            LOG_ERR("Error getting socket buffer size " << errno);
+            _sendBufferSize = DefaultSendBufferSize;
+            return false;
+        }
+        else
+        {
+            if (_sendBufferSize > MaximumSendBufferSize * 2)
+            {
+                LOG_TRC("Clamped send buffer size to " << MaximumSendBufferSize << " from " << _sendBufferSize);
+                _sendBufferSize = MaximumSendBufferSize;
+            }
+            else
+                LOG_TRC("Set socket buffer size to " << _sendBufferSize);
+            return true;
+        }
     }
 
     /// Gets the actual send buffer size in bytes, -1 for failure.
-    int getSendBufferSize() const
+    int getSocketBufferSize() const
     {
         int size;
         unsigned int len = sizeof(size);
@@ -106,10 +126,15 @@ public:
         return (rc == 0 ? size : -1);
     }
 
+    /// Gets our fast cache of the socket buffer size
+    int getSendBufferSize() const
+    {
+        return _sendBufferSize;
+    }
+
     /// Sets the receive buffer size in bytes.
-    /// Must be called before accept or connect.
     /// Note: TCP will allocate twice this size for admin purposes,
-    /// so a subsequent call to getSendBufferSize will return
+    /// so a subsequent call to getReceieveBufferSize will return
     /// the larger (actual) buffer size, if this succeeds.
     /// Note: the upper limit is set via /proc/sys/net/core/rmem_max,
     /// and there is an unconfigurable lower limit as well.
@@ -185,8 +210,8 @@ protected:
 #if ENABLE_DEBUG
         _owner = std::this_thread::get_id();
 
-        const int oldSize = getSendBufferSize();
-        setSendBufferSize(0);
+        const int oldSize = getSocketBufferSize();
+        setSocketBufferSize(0);
         LOG_TRC("Socket #" << _fd << " buffer size: " << getSendBufferSize() << " (was " << oldSize << ")");
 #endif
 
@@ -194,6 +219,7 @@ protected:
 
 private:
     const int _fd;
+    int _sendBufferSize;
     // always enabled to avoid ABI change in debug mode ...
     std::thread::id _owner;
 };
@@ -699,7 +725,9 @@ protected:
             ssize_t len;
             do
             {
-                len = writeData(&_outBuffer[0], _outBuffer.size());
+                // Writing more than we can absorb in the kernel causes SSL wasteage.
+                len = writeData(&_outBuffer[0], std::min((int)_outBuffer.size(),
+                                                         getSendBufferSize()));
 
                 auto& log = Log::logger();
                 if (log.trace() && len > 0) {
@@ -781,9 +809,12 @@ namespace HttpHelper
             return;
         }
 
-        const int socketBufferSize = 16 * 1024;
-        if (st.st_size >= socketBufferSize)
-            socket->setSendBufferSize(socketBufferSize);
+        int bufferSize = std::min(st.st_size, (off_t)Socket::MaximumSendBufferSize);
+        if (st.st_size >= socket->getSendBufferSize())
+        {
+            socket->setSocketBufferSize(bufferSize);
+            bufferSize = socket->getSendBufferSize();
+        }
 
         response.setContentLength(st.st_size);
         response.set("User-Agent", HTTP_AGENT_STRING);
@@ -797,7 +828,7 @@ namespace HttpHelper
         bool flush = true;
         do
         {
-            char buf[socketBufferSize];
+            char buf[bufferSize];
             file.read(buf, sizeof(buf));
             const int size = file.gcount();
             if (size > 0)
