@@ -267,7 +267,7 @@ void DocumentBroker::pollThread()
     // wait 20 seconds for a save notification and quit.
     while (lastSaveTime < saveTimeoutStart &&
            std::chrono::duration_cast<std::chrono::seconds>
-           (std::chrono::steady_clock::now() - saveTimeoutStart).count() >= 20)
+           (std::chrono::steady_clock::now() - saveTimeoutStart).count() <= 20)
     {
         _poll->poll(SocketPoll::DefaultPollTimeoutMs);
     }
