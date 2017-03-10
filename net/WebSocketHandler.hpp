@@ -351,7 +351,7 @@ protected:
 
         // Want very low latency sockets.
         socket->setNoDelay();
-        socket->setSendBufferSize(0);
+        socket->setSocketBufferSize(0);
 
         socket->send(oss.str());
         _wsState = WSState::WS;
