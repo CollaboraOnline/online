@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include <Poco/DateTime.h>
 #include <Poco/DateTimeFormat.h>
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/Exception.h>
@@ -167,6 +168,31 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                 mimeType = "image/svg+xml";
             else
                 mimeType = "text/plain";
+
+            auto it = request.find("If-None-Match");
+            if (it != request.end())
+            {
+                // if ETags match avoid re-sending the file.
+                if (!it->second.compare("\"" LOOLWSD_VERSION_HASH "\""))
+                {
+                    // TESTME: harder ... - do we even want ETag support ?
+                    std::ostringstream oss;
+                    Poco::Timestamp nowTs;
+                    Poco::DateTime now(nowTs);
+                    Poco::DateTime later(now.utcTime(), int64_t(1000)*1000 * 60 * 60 * 24 * 128);
+                    oss << "HTTP/1.1 304 Not Modified\r\n"
+                        << "Date: " << Poco::DateTimeFormatter::format(
+                            now, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                        << "Expires: " << Poco::DateTimeFormatter::format(
+                            later, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                        << "User-Agent: LOOLWSD WOPI Agent\r\n"
+                        << "Cache-Control: max-age=11059200\r\n"
+                        << "\r\n";
+                    socket->sendHttpResponse(oss.str());
+                    socket->shutdown();
+                    return;
+                }
+            }
 
             HttpHelper::sendFile(socket, filepath, mimeType);
         }
