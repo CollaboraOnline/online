@@ -234,7 +234,7 @@ public:
     /// Loads a document from the public URI into the jail.
     bool load(std::shared_ptr<ClientSession>& session, const std::string& jailId);
     bool isLoaded() const { return _isLoaded; }
-    void setLoaded() { _isLoaded = true; }
+    void setLoaded();
 
     /// Save the document to Storage if it needs persisting.
     bool saveToStorage(const std::string& sesionId, bool success, const std::string& result = "");
@@ -417,6 +417,8 @@ private:
     int _debugRenderedTileCount;
 
     std::chrono::steady_clock::time_point _lastActivityTime;
+    std::chrono::steady_clock::time_point _threadStart;
+    std::chrono::milliseconds _loadDuration;
 
     static constexpr auto IdleSaveDurationMs = 30 * 1000;
     static constexpr auto AutoSaveDurationMs = 300 * 1000;

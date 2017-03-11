@@ -190,6 +190,8 @@ void DocumentBroker::pollThread()
 
     LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << "].");
 
+    _threadStart = std::chrono::steady_clock::now();
+
     // Request a kit process for this doc.
     _childProcess = getNewChild_Blocks();
     if (!_childProcess)
@@ -601,6 +603,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     }
 
     return false;
+}
+
+void DocumentBroker::setLoaded()
+{
+    _isLoaded = true;
+    _loadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now() - _threadStart);
+    LOG_TRC("Document loaded in " << _loadDuration.count() << "ms");
 }
 
 bool DocumentBroker::autoSave(const bool force)
@@ -1311,7 +1321,10 @@ void DocumentBroker::dumpState()
         std::cerr << " *** Marked to destroy ***\n";
     else
         std::cerr << " has live sessions\n";
-    std::cerr << "  loaded?: " << _isLoaded << "\n";
+    if (_isLoaded)
+        std::cerr << "  loaded in: " << _loadDuration.count() << "ms\n";
+    else
+        std::cerr << "  still loading...\n";
     std::cerr << "  modified?: " << _isModified << "\n";
     std::cerr << "  jail id: " << _jailId << "\n";
     std::cerr << "  public uri: " << _uriPublic.toString() << "\n";
