@@ -43,7 +43,7 @@ public:
     std::string corruptString(const std::string &str)
     {
         std::string ret;
-        for ( auto it = str.begin(); it != str.end(); ++it)
+        for (auto it = str.begin(); it != str.end(); ++it)
         {
             int op = _dist(_mt);
             if (op < 10) {

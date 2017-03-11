@@ -1229,7 +1229,7 @@ void HTTPWSTest::testMaxColumn()
                 CPPUNIT_ASSERT(docHeight >= 0);
 
                 const std::string text = "key type=input char=0 key=1027";
-                while ( cursorX <= docWidth )
+                while (cursorX <= docWidth)
                 {
                     sendTextFrame(socket, text);
                     cursorX += cursorWidth;
@@ -1268,7 +1268,7 @@ void HTTPWSTest::testMaxRow()
                 CPPUNIT_ASSERT(docHeight >= 0);
 
                 const std::string text = "key type=input char=0 key=1024";
-                while ( cursorY <= docHeight )
+                while (cursorY <= docHeight)
                 {
                     sendTextFrame(socket, text);
                     cursorY += cursorHeight;

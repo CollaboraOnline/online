@@ -53,7 +53,7 @@ static bool NoCapsForKit = false;
 #endif
 static bool DisplayVersion = false;
 static std::string UnitTestLibrary;
-static std::atomic<unsigned> ForkCounter( 0 );
+static std::atomic<unsigned> ForkCounter(0);
 
 static std::map<Process::PID, std::string> childJails;
 

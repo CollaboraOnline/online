@@ -48,18 +48,18 @@ const std::string JWTAuth::getAccessToken()
     // trim '=' from end of encoded payload
     encodedPayload.erase(std::find_if(encodedPayload.rbegin(), encodedPayload.rend(),
                                       [](char& ch)->bool { return ch != '='; }).base(), encodedPayload.end());
-    Log::info("Encoded JWT header: " + encodedHeader);
-    Log::info("Encoded JWT payload: " + encodedPayload);
+    LOG_INF("Encoded JWT header: " << encodedHeader);
+    LOG_INF("Encoded JWT payload: " << encodedPayload);
 
     // Convert to a URL and filename safe variant:
     // Replace '+' with '-' && '/' with '_'
-    std::replace(encodedHeader.begin(), encodedHeader.end(), '+','-');
-    std::replace(encodedHeader.begin(), encodedHeader.end(), '/','_');
+    std::replace(encodedHeader.begin(), encodedHeader.end(), '+', '-');
+    std::replace(encodedHeader.begin(), encodedHeader.end(), '/', '_');
 
-    std::replace(encodedPayload.begin(), encodedPayload.end(), '+','-');
-    std::replace(encodedPayload.begin(), encodedPayload.end(), '/','_');
+    std::replace(encodedPayload.begin(), encodedPayload.end(), '+', '-');
+    std::replace(encodedPayload.begin(), encodedPayload.end(), '/', '_');
 
-    std::string encodedBody = encodedHeader  + "." +  encodedPayload;
+    const std::string encodedBody = encodedHeader + '.' +  encodedPayload;
 
     // sign the encoded body
     _digestEngine.update(encodedBody.c_str(), static_cast<unsigned>(encodedBody.length()));
@@ -79,13 +79,13 @@ const std::string JWTAuth::getAccessToken()
                                   [](char& ch)->bool { return ch != '='; }).base(), encodedSig.end());
 
     // Be URL and filename safe
-    std::replace(encodedSig.begin(), encodedSig.end(), '+','-');
-    std::replace(encodedSig.begin(), encodedSig.end(), '/','_');
+    std::replace(encodedSig.begin(), encodedSig.end(), '+', '-');
+    std::replace(encodedSig.begin(), encodedSig.end(), '/', '_');
 
-    Log::info("Sig generated is : " + encodedSig);
+    LOG_INF("Sig generated is : " << encodedSig);
 
-    const std::string jwtToken = encodedBody + "." + encodedSig;
-    Log::info("JWT token generated: " + jwtToken);
+    const std::string jwtToken = encodedBody + '.' + encodedSig;
+    LOG_INF("JWT token generated: " << jwtToken);
 
     return jwtToken;
 }
@@ -96,7 +96,7 @@ bool JWTAuth::verify(const std::string& accessToken)
 
     try
     {
-        std::string encodedBody = tokens[0] + "." + tokens[1];
+        const std::string encodedBody = tokens[0] + '.' + tokens[1];
         _digestEngine.update(encodedBody.c_str(), static_cast<unsigned>(encodedBody.length()));
         Poco::Crypto::DigestEngine::Digest digest = _digestEngine.signature();
 
@@ -118,7 +118,7 @@ bool JWTAuth::verify(const std::string& accessToken)
 
         if (encodedSig != tokens[2])
         {
-            Log::info("JWTAuth: verification failed; Expected: " + encodedSig + ", Received: " + tokens[2]);
+            LOG_INF("JWTAuth: verification failed; Expected: " << encodedSig << ", Received: " << tokens[2]);
             return false;
         }
 
@@ -127,7 +127,7 @@ bool JWTAuth::verify(const std::string& accessToken)
         Base64Decoder decoder(istr);
         decoder >> decodedPayload;
 
-        Log::info("JWTAuth:verify: decoded payload: " + decodedPayload);
+        LOG_INF("JWTAuth:verify: decoded payload: " << decodedPayload);
 
         // Verify if the token is not already expired
         Poco::JSON::Parser parser;
@@ -138,13 +138,13 @@ bool JWTAuth::verify(const std::string& accessToken)
         std::time_t curtime = Poco::Timestamp().epochTime();
         if (curtime > decodedExptime)
         {
-            Log::info("JWTAuth:verify: JWT expired; curtime:" + std::to_string(curtime) + ", exp:" + std::to_string(decodedExptime));
+            LOG_INF("JWTAuth:verify: JWT expired; curtime:" << curtime << ", exp:" << decodedExptime);
             return false;
         }
     }
     catch(Poco::Exception& exc)
     {
-        Log::warn("JWTAuth:verify: Exception: " + exc.displayText());
+        LOG_WRN("JWTAuth:verify: Exception: " << exc.displayText());
         return false;
     }
 
@@ -154,9 +154,9 @@ bool JWTAuth::verify(const std::string& accessToken)
 const std::string JWTAuth::createHeader()
 {
     // TODO: Some sane code to represent JSON objects
-    std::string header = "{\"alg\":\""+_alg+"\",\"typ\":\""+_typ+"\"}";
+    const std::string header = "{\"alg\":\"" + _alg + "\",\"typ\":\"" + _typ + "\"}";
 
-    Log::info("JWT Header: " + header);
+    LOG_INF("JWT Header: " << header);
     std::ostringstream ostr;
     OutputLineEndingConverter lineEndingConv(ostr, "");
     Base64Encoder encoder(lineEndingConv);
@@ -168,13 +168,15 @@ const std::string JWTAuth::createHeader()
 
 const std::string JWTAuth::createPayload()
 {
-    std::time_t curtime = Poco::Timestamp().epochTime();
-    std::string exptime = std::to_string(curtime + 1800);
+    const std::time_t curtime = Poco::Timestamp().epochTime();
+    const std::string exptime = std::to_string(curtime + 1800);
 
     // TODO: Some sane code to represent JSON objects
-    std::string payload = "{\"iss\":\""+_iss+"\",\"sub\":\""+_sub+"\",\"aud\":\""+_aud+"\",\"nme\":\""+_name+"\",\"exp\":\""+exptime+"\"}";
+    const std::string payload = "{\"iss\":\"" + _iss + "\",\"sub\":\"" + _sub
+                              + "\",\"aud\":\"" + _aud + "\",\"nme\":\"" + _name
+                              + "\",\"exp\":\"" + exptime + "\"}";
 
-    Log::info("JWT Payload: " + payload);
+    LOG_INF("JWT Payload: " << payload);
     std::ostringstream ostr;
     OutputLineEndingConverter lineEndingConv(ostr, "");
     Base64Encoder encoder(lineEndingConv);
@@ -187,22 +189,24 @@ const std::string JWTAuth::createPayload()
 //TODO: This MUST be done over TLS to protect the token.
 const std::string OAuth::getAccessToken()
 {
-    std::string url = _tokenEndPoint
-        + "?client_id=" + _clientId
-        + "&client_secret=" + _clientSecret
-        + "&grant_type=authorization_code"
-        + "&code=" + _authorizationCode;
-    // + "&redirect_uri="
+    const std::string url = _tokenEndPoint
+                          + "?client_id=" + _clientId
+                          + "&client_secret=" + _clientSecret
+                          + "&grant_type=authorization_code"
+                          + "&code=" + _authorizationCode;
+                        // + "&redirect_uri="
 
     Poco::URI uri(url);
     Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, url, Poco::Net::HTTPMessage::HTTP_1_1);
     Poco::Net::HTTPResponse response;
     session.sendRequest(request);
+
     std::istream& rs = session.receiveResponse(response);
-    Log::info() << "Status: " <<  response.getStatus() << " " << response.getReason() << Log::end;
-    std::string reply(std::istreambuf_iterator<char>(rs), {});
-    Log::info("Response: " + reply);
+    LOG_INF("Status: " <<  response.getStatus() << ' ' << response.getReason());
+
+    const std::string reply(std::istreambuf_iterator<char>(rs), {});
+    LOG_INF("Response: " << reply);
     //TODO: Parse the token.
 
     return std::string();
@@ -211,16 +215,18 @@ const std::string OAuth::getAccessToken()
 bool OAuth::verify(const std::string& token)
 {
     const std::string url = _authVerifyUrl + token;
-    Log::debug("Verifying authorization token from: " + url);
+    LOG_DBG("Verifying authorization token from: " << url);
     Poco::URI uri(url);
     Poco::Net::HTTPClientSession session(uri.getHost(), uri.getPort());
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, url, Poco::Net::HTTPMessage::HTTP_1_1);
     Poco::Net::HTTPResponse response;
     session.sendRequest(request);
+
     std::istream& rs = session.receiveResponse(response);
-    Log::info() << "Status: " <<  response.getStatus() << " " << response.getReason() << Log::end;
-    std::string reply(std::istreambuf_iterator<char>(rs), {});
-    Log::info("Response: " + reply);
+    LOG_INF("Status: " <<  response.getStatus() << ' ' << response.getReason());
+
+    const std::string reply(std::istreambuf_iterator<char>(rs), {});
+    LOG_INF("Response: " << reply);
 
     //TODO: Parse the response.
     /*
