@@ -185,6 +185,8 @@ namespace Log
 #define LOG_FTL(X) do { auto& l_ = Log::logger(); if (l_.fatal()) { LOG_BODY_(FATAL, "FTL", X); } } while (false)
 #define LOG_SFL(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(FATAL, "FTL", X << " (errno: " << std::strerror(errno) << ")"); } } while (false)
 
+#define LOG_END(l) do { l << __FILE__ << ':' << __LINE__; l.flush(); } while (false)
+
 #define LOG_CHECK(X) do { if (!(X)) { LOG_ERR("Check failed. Expected (" #X ")."); } } while (false)
 #define LOG_CHECK_RET(X, RET) do { if (!(X)) { LOG_ERR("Check failed. Expected (" #X ")."); return RET; } } while (false)
 

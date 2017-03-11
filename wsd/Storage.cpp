@@ -379,16 +379,16 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Po
         std::istream& rs = psession->receiveResponse(response);
         callDuration = (std::chrono::steady_clock::now() - startTime);
 
-        if (Log::traceEnabled())
+        auto logger = Log::trace();
+        if (logger.enabled())
         {
-            auto logger = Log::trace();
             logger << "WOPI::CheckFileInfo header for URI [" << uriPublic.toString() << "]:\n";
             for (const auto& pair : response)
             {
                 logger << '\t' << pair.first << ": " << pair.second << " / ";
             }
 
-            logger << Log::end;
+            LOG_END(logger);
         }
 
         Poco::StreamCopier::copyToString(rs, resMsg);
@@ -496,16 +496,16 @@ std::string WopiStorage::loadStorageFileToLocal()
         const std::chrono::duration<double> diff = (std::chrono::steady_clock::now() - startTime);
         _wopiLoadDuration += diff;
 
-        if (Log::traceEnabled())
+        auto logger = Log::trace();
+        if (logger.enabled())
         {
-            auto logger = Log::trace();
             logger << "WOPI::GetFile header for URI [" << uriObject.toString() << "]:\n";
             for (const auto& pair : response)
             {
                 logger << '\t' << pair.first << ": " << pair.second << " / ";
             }
 
-            logger << Log::end;
+            LOG_END(logger);
         }
 
         _jailedFilePath = Poco::Path(getLocalRootPath(), _fileInfo._filename).toString();

@@ -1508,17 +1508,20 @@ private:
             request.read(message);
 
             auto logger = Log::info();
-            // logger << "Request from " << request.clientAddress().toString() << ": "
-            logger << "Prisoner request : "
-                   << request.getMethod() << " " << request.getURI() << " "
-                   << request.getVersion();
-
-            for (const auto& it : request)
+            if (logger.enabled())
             {
-                logger << " / " << it.first << ": " << it.second;
-            }
+                logger << "Prisoner HTTP Request: "
+                       << request.getMethod() << ' '
+                       << request.getURI() << ' '
+                       << request.getVersion();
 
-            logger << Log::end;
+                for (const auto& it : request)
+                {
+                    logger << " / " << it.first << ": " << it.second;
+                }
+
+                LOG_END(logger);
+            }
 
             LOG_TRC("Child connection with URI [" << request.getURI() << "].");
             if (request.getURI().find(NEW_CHILD_URI) != 0)
@@ -1678,17 +1681,20 @@ private:
             request.read(message);
 
             auto logger = Log::info();
-            // logger << "Request from " << request.clientAddress().toString() << ": "
-            logger << "Request : "
-                   << request.getMethod() << " " << request.getURI() << " "
-                   << request.getVersion();
-
-            for (const auto& it : request)
+            if (logger.enabled())
             {
-                logger << " / " << it.first << ": " << it.second;
-            }
+                logger << "Client HTTP Request: "
+                       << request.getMethod() << ' '
+                       << request.getURI() << ' '
+                       << request.getVersion();
 
-            logger << Log::end;
+                for (const auto& it : request)
+                {
+                    logger << " / " << it.first << ": " << it.second;
+                }
+
+                LOG_END(logger);
+            }
 
             const std::streamsize contentLength = request.getContentLength();
             const auto offset = itBody - in.begin();
