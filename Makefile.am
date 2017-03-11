@@ -14,14 +14,18 @@ loolwsddata_DATA = discovery.xml \
 
 loolwsdconfigdir = @LOOLWSD_CONFIGDIR@
 
-loolwsdconfig_DATA = loolwsd.xml
+loolwsdconfig_DATA = loolwsd.xml \
+		     loolkitconfig.xcu
 
 ACLOCAL_AMFLAGS = -I m4
 
 # quick and easy for now.
 include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
 
-AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"' ${include_paths}
+AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' \
+	      -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"' \
+	      -DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
+	      ${include_paths}
 AM_LDFLAGS = -pthread -Wl,-E
 loolforkit_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
 loolforkit_nocaps_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
