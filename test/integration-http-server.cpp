@@ -229,7 +229,7 @@ void HTTPServerTest::testScriptsAndLinksPost()
 
 void HTTPServerTest::testConvertTo()
 {
-    const auto srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt");
+    const auto srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", "convertTo_");
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
     session->setTimeout(Poco::Timespan(2, 0)); // 2 seconds.
 
