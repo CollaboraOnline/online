@@ -114,23 +114,22 @@ std::string DocumentBroker::getDocKey(const Poco::URI& uri)
 }
 
 /// The Document Broker Poll - one of these in a thread per document
-class DocumentBroker::DocumentBrokerPoll : public TerminatingPoll
+class DocumentBroker::DocumentBrokerPoll final : public TerminatingPoll
 {
-    std::shared_ptr<DocumentBroker> _docBroker;
+    /// The DocumentBroker owning us.
+    DocumentBroker& _docBroker;
+
 public:
-    DocumentBrokerPoll(const std::string &threadName)
-        : TerminatingPoll(threadName)
+    DocumentBrokerPoll(const std::string &threadName, DocumentBroker& docBroker) :
+        TerminatingPoll(threadName),
+        _docBroker(docBroker)
     {
-    }
-    void setDocumentBroker(const std::shared_ptr<DocumentBroker> &docBroker)
-    {
-        _docBroker = docBroker;
     }
 
     virtual void pollingThread()
     {
-        assert (_docBroker);
-        _docBroker->pollThread();
+        // Delegate to the docBroker.
+        _docBroker.pollThread();
     }
 };
 
@@ -152,7 +151,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _cursorPosY(0),
     _cursorWidth(0),
     _cursorHeight(0),
-    _poll(new DocumentBrokerPoll("docbrk_poll")),
+    _poll(new DocumentBrokerPoll("docbrk_poll", *this)),
     _tileVersion(0),
     _debugRenderedTileCount(0)
 {
@@ -162,19 +161,6 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     LOG_INF("DocumentBroker [" << _uriPublic.toString() << "] created. DocKey: [" << _docKey << "]");
 
     _stop = false;
-}
-
-std::shared_ptr<DocumentBroker> DocumentBroker::create(
-    const std::string& uri,
-    const Poco::URI& uriPublic,
-    const std::string& docKey,
-    const std::string& childRoot)
-{
-    std::shared_ptr<DocumentBroker> docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, childRoot);
-
-    docBroker->_poll->setDocumentBroker(docBroker);
-
-    return docBroker;
 }
 
 void DocumentBroker::startThread()

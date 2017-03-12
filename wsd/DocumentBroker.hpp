@@ -212,19 +212,11 @@ public:
     /// Dummy document broker that is marked to destroy.
     DocumentBroker();
 
-    /// Use create - not this constructor ...
-    /// FIXME: friend with make_shared etc.
+    /// Construct DocumentBroker with URI, docKey, and root path.
     DocumentBroker(const std::string& uri,
                    const Poco::URI& uriPublic,
                    const std::string& docKey,
                    const std::string& childRoot);
-public:
-    static std::shared_ptr<DocumentBroker> create(
-                   const std::string& uri,
-                   const Poco::URI& uriPublic,
-                   const std::string& docKey,
-                   const std::string& childRoot);
-
 
     ~DocumentBroker();
 

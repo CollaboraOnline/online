@@ -1296,7 +1296,7 @@ static std::shared_ptr<DocumentBroker> createDocBroker(WebSocketHandler& ws,
 
     // Set the one we just created.
     LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-    auto docBroker = DocumentBroker::create(uri, uriPublic, docKey, LOOLWSD::ChildRoot);
+    auto docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, LOOLWSD::ChildRoot);
     DocBrokers.emplace(docKey, docBroker);
     LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
 
@@ -1958,7 +1958,7 @@ private:
                     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                     LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    auto docBroker = DocumentBroker::create(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
+                    auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
 
                     cleanupDocBrokers();
 
