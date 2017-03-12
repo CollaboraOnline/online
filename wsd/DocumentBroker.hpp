@@ -60,8 +60,6 @@ public:
 /// to host a document.
 class ChildProcess
 {
-    // FIXME: urk ...
-    friend class PrisonerRequestDispatcher;
 public:
     /// @param pid is the process ID of the child.
     /// @param socket is the underlying Sockeet to the child.
@@ -92,11 +90,11 @@ public:
     }
 
     void setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker);
+    std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }
 
     void stop()
     {
-        // FIXME: stop !?
-        LOG_ERR("What do we do for stop?");
+        // Request the child to exit.
         try
         {
             if (isAlive())

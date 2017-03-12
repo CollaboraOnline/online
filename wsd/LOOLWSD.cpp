@@ -1454,7 +1454,7 @@ public:
     {
         // Notify the broker that we're done.
         auto child = _childProcess.lock();
-        auto docBroker = child ? child->_docBroker.lock() : nullptr;
+        auto docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
         {
             // FIXME: No need to notify if asked to stop.
@@ -1587,7 +1587,7 @@ private:
         LOG_TRC("Prisoner message [" << getAbbreviatedMessage(&data[0], data.size()) << "].");
 
         auto child = _childProcess.lock();
-        auto docBroker = child ? child->_docBroker.lock() : nullptr;
+        auto docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
         {
             // We should never destroy the broker, since
@@ -1598,7 +1598,7 @@ private:
             return;
         }
 
-        LOG_WRN("Child " << child->_pid <<
+        LOG_WRN("Child " << child->getPid() <<
                 " has no DocumentBroker to handle message: [" <<
                 LOOLProtocol::getAbbreviatedMessage(data) << "].");
     }
