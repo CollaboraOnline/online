@@ -86,7 +86,7 @@ public:
                     << "Connection: Closed\r\n"
                     << "\r\n"
                     << numberString;
-                ;
+
                 std::string str = oss.str();
                 socket->_outBuffer.insert(socket->_outBuffer.end(), str.begin(), str.end());
                 return;

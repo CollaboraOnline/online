@@ -427,9 +427,9 @@ public:
         auto it = std::find(_pollSockets.begin(), _pollSockets.end(), socket);
         assert(it != _pollSockets.end());
 
-        LOG_TRC("Release socket #" << socket->getFD() << " from " << _name);
-
         _pollSockets.erase(it);
+        LOG_TRC("Release socket #" << socket->getFD() << " from " << _name <<
+                " leaving " << _pollSockets.size());
     }
 
     const std::string& name() const { return _name; }

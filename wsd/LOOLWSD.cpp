@@ -1466,13 +1466,13 @@ private:
     /// Keep our socket around ...
     void onConnect(const std::weak_ptr<StreamSocket>& socket) override
     {
-        LOG_TRC("Prisoner - new socket\n");
+        LOG_TRC("Prisoner - new socket");
         _socket = socket;
     }
 
     void onDisconnect() override
     {
-        LOG_TRC("Prisoner connection disconnected\n");
+        LOG_TRC("Prisoner connection disconnected");
     }
 
     /// Called after successful socket reads.
@@ -1510,7 +1510,7 @@ private:
             auto logger = Log::info();
             if (logger.enabled())
             {
-                logger << "Prisoner HTTP Request: "
+                logger << "Prisoner HTTP Request from #" << socket->getFD() << ": "
                        << request.getMethod() << ' '
                        << request.getURI() << ' '
                        << request.getVersion();
@@ -1641,8 +1641,8 @@ private:
             disposeSession();
 
         const size_t curConnections = --LOOLWSD::NumConnections;
-        LOG_TRC("Disconnected connection #" << _connectionNum << " of " <<
-                (curConnections + 1) << " existing as session [" << _id << "].");
+        LOG_TRC("Disconnected connection #" << _connectionNum << " (of " <<
+                (curConnections + 1) << ") as session [" << _id << "].");
     }
 
     /// Called after successful socket reads.
@@ -1683,7 +1683,7 @@ private:
             auto logger = Log::info();
             if (logger.enabled())
             {
-                logger << "Client HTTP Request: "
+                logger << "Client HTTP Request: #" << socket->getFD() << ": "
                        << request.getMethod() << ' '
                        << request.getURI() << ' '
                        << request.getVersion();
