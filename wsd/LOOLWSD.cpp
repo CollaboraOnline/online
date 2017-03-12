@@ -2167,7 +2167,6 @@ private:
 
     void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url)
     {
-        // requestHandler = new ClientRequestHandler();
         LOG_INF("Client WS request" << request.getURI() << ", url: " << url);
 
         // First Upgrade.
@@ -2221,9 +2220,9 @@ private:
                     _clientSession->onConnect(socket);
                     docBroker->addSocketToPoll(socket);
                 }
-                docBroker->startThread();
             }
         }
+
         if (!docBroker || !_clientSession)
             LOG_WRN("Failed to connect DocBroker and Client Session.");
     }
@@ -2349,14 +2348,11 @@ public:
     void startPrisoners(const int port)
     {
         PrisonerPoll.insertNewSocket(findPrisonerServerPort(port));
-        PrisonerPoll.startThread();
     }
 
     void start(const int port)
     {
         _acceptPoll.insertNewSocket(findServerPort(port));
-        _acceptPoll.startThread();
-        WebServerPoll.startThread();
     }
 
     void stop()

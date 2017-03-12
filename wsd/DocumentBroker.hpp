@@ -44,7 +44,10 @@ class TerminatingPoll : public SocketPoll
 {
 public:
     TerminatingPoll(const std::string &threadName) :
-        SocketPoll(threadName) {}
+        SocketPoll(threadName)
+    {
+        startThread();
+    }
 
     bool continuePolling() override
     {
@@ -219,9 +222,6 @@ public:
                    const std::string& childRoot);
 
     ~DocumentBroker();
-
-    /// Start processing events
-    void startThread();
 
     /// Loads a document from the public URI into the jail.
     bool load(std::shared_ptr<ClientSession>& session, const std::string& jailId);

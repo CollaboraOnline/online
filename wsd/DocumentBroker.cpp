@@ -163,11 +163,6 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _stop = false;
 }
 
-void DocumentBroker::startThread()
-{
-    _poll->startThread();
-}
-
 // The inner heart of the DocumentBroker - our poll loop.
 void DocumentBroker::pollThread()
 {
