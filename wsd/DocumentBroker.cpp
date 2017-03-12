@@ -601,7 +601,7 @@ bool DocumentBroker::autoSave(const bool force)
     {
         // Nothing to do.
         LOG_TRC("Nothing to autosave [" << _docKey << "].");
-        return true;
+        return false;
     }
 
     // Remember the last save time, since this is the predicate.
@@ -779,9 +779,7 @@ size_t DocumentBroker::removeSession(const std::string& id, bool destroyIfLast)
         LOG_INF("Removing session [" << id << "] on docKey [" << _docKey <<
                 "]. Have " << _sessions.size() << " sessions.");
 
-        if (_lastEditableSession)
-            autoSave(true);
-        else
+        if (!_lastEditableSession || !autoSave(true))
             return removeSessionInternal(id);
     }
     catch (const std::exception& ex)
@@ -797,7 +795,8 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
     try
     {
         // remove also from the _newSessions
-        _newSessions.erase(std::remove_if(_newSessions.begin(), _newSessions.end(), [&id](NewSession& newSession) { return newSession._session->getId() == id; }),
+        _newSessions.erase(std::remove_if(_newSessions.begin(), _newSessions.end(),
+                                          [&id](NewSession& newSession) { return newSession._session->getId() == id; }),
                            _newSessions.end());
 
         Admin::instance().rmDoc(_docKey, id);
