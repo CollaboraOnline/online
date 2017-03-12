@@ -267,14 +267,17 @@ void HTTPWSTest::testHandshake()
         int flags = 0;
         char buffer[1024] = {0};
         int bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
         CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: find"), std::string(buffer, bytes));
 
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+        std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
         if (bytes > 0 && !std::strstr(buffer, "error:"))
         {
             CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: connect"), std::string(buffer, bytes));
 
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
             if (!std::strstr(buffer, "error:"))
             {
                 CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: ready"), std::string(buffer, bytes));
@@ -286,6 +289,7 @@ void HTTPWSTest::testHandshake()
 
                 // close frame message
                 bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+                std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
                 CPPUNIT_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE);
             }
         }
@@ -296,6 +300,7 @@ void HTTPWSTest::testHandshake()
 
             // close frame message
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
+            std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
             CPPUNIT_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE);
         }
     }
