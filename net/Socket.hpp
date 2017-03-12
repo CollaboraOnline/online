@@ -555,6 +555,7 @@ public:
 
     int getPollEvents() override
     {
+        assert(isCorrectThread());
         if (!_outBuffer.empty() || _socketHandler->hasQueuedWrites() || _shutdownSignalled)
             return POLLIN | POLLOUT;
         else

@@ -255,6 +255,7 @@ public:
         if (socket == nullptr)
             return -1; // no socket == error.
 
+        assert(socket->isCorrectThread());
         auto lock = socket->getWriteLock();
         std::vector<char>& out = socket->_outBuffer;
 
@@ -287,6 +288,7 @@ protected:
         if (!socket || data == nullptr || len == 0)
             return -1;
 
+        assert(socket->isCorrectThread());
         std::vector<char>& out = socket->_outBuffer;
 
         out.push_back(flags);
