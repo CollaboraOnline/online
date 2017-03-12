@@ -186,24 +186,33 @@ private:
         // Last operation failed. Find out if SSL was trying
         // to do something different that failed, or not.
         const int sslError = SSL_get_error(_ssl, rc);
-        LOG_TRC("Socket #" << getFD() << " SSL error: " << sslError);
         switch (sslError)
         {
         case SSL_ERROR_ZERO_RETURN:
             // Shutdown complete, we're disconnected.
+            LOG_TRC("Socket #" << getFD() << " SSL error: ZERO_RETURN (" << sslError << ").");
             return 0;
 
         case SSL_ERROR_WANT_READ:
+            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_READ (" << sslError << ").");
             _sslWantsTo = SslWantsTo::Read;
             return rc;
 
         case SSL_ERROR_WANT_WRITE:
+            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_WRITE (" << sslError << ").");
             _sslWantsTo = SslWantsTo::Write;
             return rc;
 
         case SSL_ERROR_WANT_CONNECT:
+            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_CONNECT (" << sslError << ").");
+            return rc;
+
         case SSL_ERROR_WANT_ACCEPT:
+            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_ACCEPT (" << sslError << ").");
+            return rc;
+
         case SSL_ERROR_WANT_X509_LOOKUP:
+            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_X509_LOOKUP (" << sslError << ").");
             // Unexpected.
             return rc;
 
@@ -211,12 +220,24 @@ private:
             if (errno != 0)
             {
                 // Posix API error, let the caller handle.
+                LOG_SYS("Socket #" << getFD() << " SSL error: SYSCALL (" << sslError << ").");
                 return rc;
             }
 
             // Fallthrough...
         default:
             {
+                if (sslError == SSL_ERROR_SSL)
+                    LOG_TRC("Socket #" << getFD() << " SSL error: SSL (" << sslError << ").");
+#if 0 // Recent OpenSSL only
+                else if (sslError == SSL_ERROR_WANT_ASYNC)
+                    LOG_TRC("Socket #" << getFD() << " SSL error: WANT_ASYNC (" << sslError << ").");
+                else if (sslError == SSL_ERROR_WANT_ASYNC_JOB)
+                    LOG_TRC("Socket #" << getFD() << " SSL error: WANT_ASYNC_JOB (" << sslError << ").");
+#endif
+                else
+                    LOG_TRC("Socket #" << getFD() << " SSL error: UKNOWN (" << sslError << ").");
+
                 // The error is comming from BIO. Find out what happened.
                 const long bioError = ERR_get_error();
                 if (bioError == 0)
@@ -224,14 +245,17 @@ private:
                     if (rc == 0)
                     {
                         // Socket closed.
+                        LOG_ERR("Socket #" << getFD() << " SSL BIO error: closed (0).");
                         return 0;
                     }
                     else if (rc == -1)
                     {
+                        LOG_SYS("Socket #" << getFD() << " SSL BIO error: closed unexpectedly (-1).");
                         throw std::runtime_error("SSL Socket closed unexpectedly.");
                     }
                     else
                     {
+                        LOG_SYS("Socket #" << getFD() << " SSL BIO error: unknown (" << rc << ").");
                         throw std::runtime_error("SSL BIO reported error [" + std::to_string(rc) + "].");
                     }
                 }
@@ -239,7 +263,7 @@ private:
                 {
                     char buf[512];
                     ERR_error_string_n(bioError, buf, sizeof(buf));
-                    LOG_ERR("Socket #" << getFD() << " BIO error: " << buf);
+                    LOG_SYS("Socket #" << getFD() << " SSL BIO error: " << buf);
                     throw std::runtime_error(buf);
                 }
             }
