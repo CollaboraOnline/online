@@ -1292,31 +1292,31 @@ void DocumentBroker::updateLastActivityTime()
     Admin::instance().updateLastActivityTime(_docKey);
 }
 
-void DocumentBroker::dumpState()
+void DocumentBroker::dumpState(std::ostream& os)
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    std::cerr << " Broker: " << _filename;
+    os << " Broker: " << _filename;
     if (_markToDestroy)
-        std::cerr << " *** Marked to destroy ***\n";
+        os << " *** Marked to destroy ***";
     else
-        std::cerr << " has live sessions\n";
+        os << " has live sessions";
     if (_isLoaded)
-        std::cerr << "  loaded in: " << _loadDuration.count() << "ms\n";
+        os << "\n  loaded in: " << _loadDuration.count() << "ms";
     else
-        std::cerr << "  still loading...\n";
-    std::cerr << "  modified?: " << _isModified << "\n";
-    std::cerr << "  jail id: " << _jailId << "\n";
-    std::cerr << "  public uri: " << _uriPublic.toString() << "\n";
-    std::cerr << "  jailed uri: " << _uriJailed.toString() << "\n";
-    std::cerr << "  doc key: " << _docKey << "\n";
-    std::cerr << "  num sessions: " << getSessionsCount() << "\n";
-    std::cerr << "  new sessions: " << _newSessions.size() << "\n";
-    std::cerr << "  last editable?: " << _lastEditableSession << "\n";
-    std::cerr << "  cursor " << _cursorPosX << ", " << _cursorPosY
-              << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
+        os << "\n  still loading...";
+    os << "\n  modified?: " << _isModified;
+    os << "\n  jail id: " << _jailId;
+    os << "\n  public uri: " << _uriPublic.toString();
+    os << "\n  jailed uri: " << _uriJailed.toString();
+    os << "\n  doc key: " << _docKey;
+    os << "\n  num sessions: " << getSessionsCount();
+    os << "\n  new sessions: " << _newSessions.size();
+    os << "\n  last editable?: " << _lastEditableSession;
+    os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
+      << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
 
-    _poll->dumpState();
+    _poll->dumpState(os);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -85,9 +85,9 @@ void SocketPoll::wakeupWorld()
         wakeup(fd);
 }
 
-void ServerSocket::dumpState()
+void ServerSocket::dumpState(std::ostream& os)
 {
-    std::cerr << "\t" << getFD() << "\t<accept>\n";
+    os << "\t" << getFD() << "\t<accept>\n";
 }
 
 namespace {
@@ -121,24 +121,25 @@ void dump_hex (const char *legend, const char *prefix, std::vector<char> buffer)
 
 } // namespace
 
-void StreamSocket::dumpState()
+void StreamSocket::dumpState(std::ostream& os)
 {
-    std::cerr << "\t" << getFD() << "\t" << getPollEvents() << "\t"
-              << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
-              << "\n";
+    os << "\t" << getFD() << "\t" << getPollEvents() << "\t"
+       << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
+       << "\n";
     if (_inBuffer.size() > 0)
         dump_hex("\t\tinBuffer:\n", "\t\t", _inBuffer);
     if (_outBuffer.size() > 0)
         dump_hex("\t\toutBuffer:\n", "\t\t", _inBuffer);
 }
 
-void SocketPoll::dumpState()
+void SocketPoll::dumpState(std::ostream& os)
 {
-    std::cerr << " Poll [" << _pollSockets.size() << "] - wakeup r: "
-              << _wakeup[0] << " w: " << _wakeup[1] << "\n";
-    std::cerr << "\tfd\tevents\trsize\twsize\n";
+    // FIXME: NOT thread-safe! _pollSockets is modified from the polling thread!
+    os << " Poll [" << _pollSockets.size() << "] - wakeup r: "
+       << _wakeup[0] << " w: " << _wakeup[1] << "\n";
+    os << "\tfd\tevents\trsize\twsize\n";
     for (auto &i : _pollSockets)
-        i->dumpState();
+        i->dumpState(os);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -83,7 +83,7 @@ public:
         return POLLIN;
     }
 
-    void dumpState() override;
+    void dumpState(std::ostream& os) override;
 
     HandleResult handlePoll(const Poco::Timestamp &/* now */, int events) override
     {

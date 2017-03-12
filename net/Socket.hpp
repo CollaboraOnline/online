@@ -175,7 +175,7 @@ public:
         return rc;
     }
 
-    virtual void dumpState() {}
+    virtual void dumpState(std::ostream&) {}
 
     /// Set the thread-id we're bound to
     void setThreadOwner(const std::thread::id &id)
@@ -414,7 +414,7 @@ public:
         wakeup();
     }
 
-    void dumpState();
+    void dumpState(std::ostream& os);
 
     /// Removes a socket from this poller.
     /// NB. this must be called from the socket poll that
@@ -762,7 +762,7 @@ protected:
         return ::write(getFD(), buf, len);
     }
 
-    void dumpState() override;
+    void dumpState(std::ostream& os) override;
 
     /// Get the Write Lock.
     std::unique_lock<std::mutex> getWriteLock() { return std::unique_lock<std::mutex>(_writeMutex); }

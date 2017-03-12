@@ -253,7 +253,7 @@ public:
         return _sessions.size();
     }
 
-    void dumpState();
+    void dumpState(std::ostream& os);
 
     std::string getJailRoot() const;
 

@@ -2361,30 +2361,30 @@ public:
         SocketPoll::wakeupWorld();
     }
 
-    void dumpState()
+    void dumpState(std::ostream& os)
     {
-        std::cerr << "LOOLWSDServer:\n"
-                  << "   Ports: server " << ClientPortNumber
-                  <<          " prisoner " << MasterPortNumber << "\n"
-                  << "  stop: " << _stop << "\n"
-                  << "  TerminationFlag: " << TerminationFlag << "\n"
-                  << "  isShuttingDown: " << ShutdownRequestFlag << "\n"
-                  << "  NewChildren: " << NewChildren.size() << "\n"
-                  << "  OutstandingForks: " << OutstandingForks << "\n";
+        os << "LOOLWSDServer:\n"
+           << "   Ports: server " << ClientPortNumber
+           <<          " prisoner " << MasterPortNumber << "\n"
+           << "  stop: " << _stop << "\n"
+           << "  TerminationFlag: " << TerminationFlag << "\n"
+           << "  isShuttingDown: " << ShutdownRequestFlag << "\n"
+           << "  NewChildren: " << NewChildren.size() << "\n"
+           << "  OutstandingForks: " << OutstandingForks << "\n";
 
         std::cerr << "Server poll:\n";
-        _acceptPoll.dumpState();
+        _acceptPoll.dumpState(os);
 
         std::cerr << "Web Server poll:\n";
-        WebServerPoll.dumpState();
+        WebServerPoll.dumpState(os);
 
         std::cerr << "Prisoner poll:\n";
-        PrisonerPoll.dumpState();
+        PrisonerPoll.dumpState(os);
 
         std::cerr << "Document Broker polls "
                   << "[ " << DocBrokers.size() << " ]:\n";
         for (auto &i : DocBrokers)
-            i.second->dumpState();
+            i.second->dumpState(os);
     }
 
 private:
@@ -2735,7 +2735,12 @@ void alertAllUsers(const std::string& msg)
 
 void dump_state()
 {
-    srv.dumpState();
+    std::ostringstream oss;
+    srv.dumpState(oss);
+
+    const std::string msg = oss.str();
+    std::cerr << msg << std::endl;
+    LOG_TRC(msg);
 }
 
 POCO_SERVER_MAIN(LOOLWSD)
