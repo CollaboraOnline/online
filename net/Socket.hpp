@@ -196,6 +196,7 @@ public:
         else
             return !getenv("LOOL_CHECK_THREADS") || sameThread;
 #else
+        (void)hard;
         return true;
 #endif
     }
