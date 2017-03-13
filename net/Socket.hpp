@@ -290,7 +290,6 @@ public:
         return _stop || std::this_thread::get_id() == _owner;
     }
 
-public:
     /// Poll the sockets for available data to read or buffer to write.
     void poll(const int timeoutMaxMs)
     {
@@ -586,26 +585,13 @@ public:
         send(str.data(), str.size(), flush);
     }
 
-    /// Sends HTTP response data.
-    void sendHttpResponse(const char* data, const int len)
-    {
-        // Send the data and flush.
-        send(data, len, true);
-    }
-
-    /// Sends HTTP response string.
-    void sendHttpResponse(const std::string& str)
-    {
-        sendHttpResponse(str.data(), str.size());
-    }
-
     /// Sends HTTP response.
-    void sendHttpResponse(Poco::Net::HTTPResponse& response)
+    void send(Poco::Net::HTTPResponse& response)
     {
         response.set("User-Agent", HTTP_AGENT_STRING);
         std::ostringstream oss;
         response.write(oss);
-        sendHttpResponse(oss.str());
+        send(oss.str());
     }
 
     /// Reads data by invoking readData() and buffering.
@@ -836,7 +822,7 @@ namespace HttpHelper
         response.write(oss);
         const std::string header = oss.str();
         LOG_TRC("Sending file [" << path << "]: " << header);
-        socket->sendHttpResponse(header);
+        socket->send(header);
 
         std::ifstream file(path, std::ios::binary);
         bool flush = true;

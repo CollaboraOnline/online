@@ -1779,7 +1779,7 @@ private:
                         << "User-Agent: LOOLWSD WOPI Agent\r\n"
                         << "Content-Length: 0\r\n"
                         << "\r\n";
-                    socket->sendHttpResponse(oss.str());
+                    socket->send(oss.str());
                     socket->shutdown();
                 }
             }
@@ -1845,7 +1845,7 @@ private:
         }
 
         auto socket = _socket.lock();
-        socket->sendHttpResponse(oss.str());
+        socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent / response successfully.");
     }
@@ -1911,7 +1911,7 @@ private:
             << xml;
 
         auto socket = _socket.lock();
-        socket->sendHttpResponse(oss.str());
+        socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent discovery.xml successfully.");
     }
@@ -2097,7 +2097,7 @@ private:
                     std::string fileName = dirPath + "/" + form.get("name");
                     File(tmpPath).moveTo(fileName);
                     response.setContentLength(0);
-                    socket->sendHttpResponse(response);
+                    socket->send(response);
                     return;
                 }
             }
