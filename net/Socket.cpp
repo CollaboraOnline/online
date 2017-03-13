@@ -56,7 +56,12 @@ SocketPoll::~SocketPoll()
 {
     stop();
     if (_threadStarted && _thread.joinable())
-        _thread.join();
+    {
+        if (_thread.get_id() == std::this_thread::get_id())
+            LOG_ERR("DEADLOCK PREVENTED: joining own thread!");
+        else
+            _thread.join();
+    }
 
     ::close(_wakeup[0]);
     ::close(_wakeup[1]);
