@@ -35,7 +35,8 @@ namespace {
 SocketPoll::SocketPoll(const std::string& threadName)
     : _name(threadName),
       _stop(false),
-      _threadStarted(false)
+      _threadStarted(false),
+      _threadFinished(false)
 {
     // Create the wakeup fd.
     if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)

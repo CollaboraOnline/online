@@ -152,6 +152,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _cursorWidth(0),
     _cursorHeight(0),
     _poll(new DocumentBrokerPoll("docbrk_poll", *this)),
+    _stop(false),
     _tileVersion(0),
     _debugRenderedTileCount(0)
 {
@@ -159,8 +160,6 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     assert(!_childRoot.empty());
 
     LOG_INF("DocumentBroker [" << _uriPublic.toString() << "] created. DocKey: [" << _docKey << "]");
-
-    _stop = false;
 }
 
 // The inner heart of the DocumentBroker - our poll loop.
@@ -248,12 +247,11 @@ void DocumentBroker::pollThread()
 
 bool DocumentBroker::isAlive() const
 {
-    if (!_childProcess)
-        return true; // waiting to get a child.
-    if (_stop) // we're dead.
-        return false;
+    if (_poll->isAlive())
+        return true; // Polling thread still running.
 
-    return _childProcess->isAlive();
+    // Shouldn't have live child process outside of the polling thread.
+    return _childProcess && _childProcess->isAlive();
 }
 
 DocumentBroker::~DocumentBroker()

@@ -262,6 +262,8 @@ public:
         wakeup();
     }
 
+    bool isAlive() const { return _threadStarted && !_threadFinished; }
+
     /// Check if we should continue polling
     virtual bool continuePolling()
     {
@@ -280,6 +282,8 @@ public:
         {
             poll(DefaultPollTimeoutMs);
         }
+
+        _threadFinished = true;
     }
 
     /// Are we running in either shutdown, or the polling thread.
@@ -478,6 +482,7 @@ protected:
     /// The polling thread.
     std::thread _thread;
     std::atomic<bool> _threadStarted;
+    std::atomic<bool> _threadFinished;
     std::thread::id _owner;
 };
 
