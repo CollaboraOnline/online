@@ -682,26 +682,35 @@ protected:
             _socketHandler->handleIncomingMessage();
         }
 
-        // If we have space for writing and that was requested
-        if ((events & POLLOUT) && _outBuffer.empty())
-            _socketHandler->performWrites();
-
-        // perform the shutdown if we have sent everything.
-        if (_shutdownSignalled && _outBuffer.empty())
-            closeConnection();
-
-        // SSL might want to do handshake,
-        // even if we have no data to write.
-        if ((events & POLLOUT) || !_outBuffer.empty())
+        do
         {
-            std::unique_lock<std::mutex> lock(_writeMutex, std::defer_lock);
+            // If we have space for writing and that was requested
+            if ((events & POLLOUT) && _outBuffer.empty())
+                _socketHandler->performWrites();
 
-            // The buffer could have been flushed while we waited for the lock.
-            if (lock.try_lock() && !_outBuffer.empty())
-                writeOutgoingData();
+            // perform the shutdown if we have sent everything.
+            if (_shutdownSignalled && _outBuffer.empty())
+            {
+                closeConnection();
+                closed = true;
+                break;
+            }
 
-            closed = closed || (errno == EPIPE);
+            oldSize = _outBuffer.size();
+
+            // Write if we can and have data to write.
+            if ((events & POLLOUT) || !_outBuffer.empty())
+            {
+                std::unique_lock<std::mutex> lock(_writeMutex, std::defer_lock);
+
+                // The buffer could have been flushed while we waited for the lock.
+                if (lock.try_lock() && !_outBuffer.empty())
+                    writeOutgoingData();
+
+                closed = closed || (errno == EPIPE);
+            }
         }
+        while (oldSize != _outBuffer.size());
 
         if (closed)
         {
