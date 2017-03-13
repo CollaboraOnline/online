@@ -261,38 +261,48 @@ bool cleanupDocBrokers()
     for (auto it = DocBrokers.begin(); it != DocBrokers.end(); )
     {
         auto docBroker = it->second;
+
+        // If document busy at the moment, cleanup later.
         auto lock = docBroker->getDeferredLock();
-        if (!lock.try_lock())
+        if (lock.try_lock())
         {
-            // Document busy at the moment, cleanup later.
-            ++it;
-            continue;
+            // Remove idle documents after 1 hour.
+            const bool idle = (docBroker->getIdleTimeSecs() >= 3600);
+
+            // Cleanup used and dead entries.
+            if ((docBroker->isLoaded() || docBroker->isMarkedToDestroy()) &&
+                (docBroker->getSessionsCount() == 0 || !docBroker->isAlive() || idle))
+            {
+                LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
+                        " DocumentBroker for docKey [" << it->first << "].");
+                docBroker->terminateChild(lock, idle ? "idle" : "");
+
+                // Remove only when not alive.
+                if (!docBroker->isAlive())
+                {
+                    LOG_INF("Removing " << (idle ? "idle" : "dead") <<
+                            " DocumentBroker for docKey [" << it->first << "].");
+                    it = DocBrokers.erase(it);
+                    continue;
+                }
+            }
         }
 
-        // Remove idle documents after 1 hour.
-        const bool idle = (docBroker->getIdleTimeSecs() >= 3600);
-
-        // Cleanup used and dead entries.
-        if (docBroker->isLoaded() &&
-            (docBroker->getSessionsCount() == 0 || !docBroker->isAlive() || idle))
-        {
-            LOG_INF("Removing " << (idle ? "idle" : "dead") <<
-                    " DocumentBroker for docKey [" << it->first << "].");
-            it = DocBrokers.erase(it);
-            docBroker->terminateChild(lock, idle ? "idle" : "");
-        }
-        else
-        {
-            ++it;
-        }
+        ++it;
     }
 
     if (count != DocBrokers.size())
     {
-        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after cleanup.");
-        for (auto& pair : DocBrokers)
+        auto logger = Log::trace();
+        if (logger.enabled())
         {
-            LOG_TRC("DocumentBroker [" << pair.first << "].");
+            logger << "Have " << DocBrokers.size() << " DocBrokers after cleanup.\n";
+            for (auto& pair : DocBrokers)
+            {
+                logger << "DocumentBroker [" << pair.first << "].\n";
+            }
+
+            LOG_END(logger);
         }
 
         return true;
