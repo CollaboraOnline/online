@@ -162,6 +162,11 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     LOG_INF("DocumentBroker [" << _uriPublic.toString() << "] created. DocKey: [" << _docKey << "]");
 }
 
+void DocumentBroker::startThread()
+{
+    _poll->startThread();
+}
+
 // The inner heart of the DocumentBroker - our poll loop.
 void DocumentBroker::pollThread()
 {

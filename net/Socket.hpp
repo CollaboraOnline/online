@@ -435,7 +435,6 @@ public:
 
     const std::string& name() const { return _name; }
 
-protected:
     /// Start the polling thread (if desired)
     void startThread();
 
