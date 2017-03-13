@@ -22,10 +22,6 @@
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
-#include <Poco/Net/HTTPServer.h>
-#include <Poco/Net/HTTPServerParams.h>
-#include <Poco/Net/HTTPServerRequest.h>
-#include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/SecureServerSocket.h>
@@ -53,7 +49,8 @@ using Poco::Net::HTTPBasicCredentials;
 using Poco::StreamCopier;
 using Poco::Util::Application;
 
-bool FileServerRequestHandler::isAdminLoggedIn(HTTPServerRequest& request, HTTPServerResponse& response)
+bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
+                                               HTTPResponse &response)
 {
     const auto& config = Application::instance().config();
     const auto sslKeyPath = config.getString("ssl.key_file_path", "");
@@ -95,6 +92,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(HTTPServerRequest& request, HTTPS
         // generate and set the cookie
         JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
         const std::string jwtToken = authAgent.getAccessToken();
+
         Poco::Net::HTTPCookie cookie("jwt", jwtToken);
         cookie.setPath("/loleaflet/dist/admin/");
         cookie.setSecure(true);
@@ -107,10 +105,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(HTTPServerRequest& request, HTTPS
     return false;
 }
 
-void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
+void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::MemoryInputStream& message,
+                                             const std::shared_ptr<StreamSocket>& socket)
 {
     try
     {
+        bool noCache = false;
+        Poco::Net::HTTPResponse response;
         Poco::URI requestUri(request.getURI());
         LOG_TRC("Fileserver request: " << requestUri.toString());
         requestUri.normalize(); // avoid .'s and ..'s
@@ -137,8 +138,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                 endPoint == "adminSettings.html" ||
                 endPoint == "adminAnalytics.html")
             {
-                // FIXME: support admin console.
-                //if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
+                noCache = true;
+
+                if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
                     throw Poco::Net::NotAuthenticatedException("Invalid admin login");
             }
 
@@ -173,7 +175,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             if (it != request.end())
             {
                 // if ETags match avoid re-sending the file.
-                if (!it->second.compare("\"" LOOLWSD_VERSION_HASH "\""))
+                if (!noCache && !it->second.compare("\"" LOOLWSD_VERSION_HASH "\""))
                 {
                     // TESTME: harder ... - do we even want ETag support ?
                     std::ostringstream oss;
@@ -194,7 +196,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                 }
             }
 
-            HttpHelper::sendFile(socket, filepath, mimeType);
+            response.setContentType(mimeType);
+            HttpHelper::sendFile(socket, filepath, response);
         }
     }
     catch (const Poco::Net::NotAuthenticatedException& exc)
