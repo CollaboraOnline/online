@@ -1822,7 +1822,7 @@ private:
     void handleAdminRequest(const Poco::Net::HTTPRequest& request)
     {
         LOG_ERR("Admin request: " << request.getURI());
-        // FIXME: implement admin support.
+        // requestHandler = Admin::createRequestHandler();
     }
 
     void handleRootRequest(const Poco::Net::HTTPRequest& request)

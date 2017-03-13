@@ -311,7 +311,7 @@ public:
         }
         while (rc < 0 && errno == EINTR);
         LOG_TRC("Poll completed with " << rc << " live polls "
-                << ((rc==0) ? "timeout" : ""));
+                << ((rc==0) ? "(timeout)" : ""));
 
         // Fire the callback and remove dead fds.
         Poco::Timestamp newNow;
