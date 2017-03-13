@@ -252,9 +252,6 @@ public:
     /// Default poll time - useful to increase for debugging.
     static int DefaultPollTimeoutMs;
 
-    /// Start the polling thread (if desired)
-    void startThread();
-
     /// Stop the polling thread.
     void stop()
     {
@@ -438,8 +435,11 @@ public:
 
     const std::string& name() const { return _name; }
 
-private:
+protected:
+    /// Start the polling thread (if desired)
+    void startThread();
 
+private:
     /// Initialize the poll fds array with the right events
     void setupPollFds(Poco::Timestamp &timeout)
     {
