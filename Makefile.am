@@ -141,6 +141,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
               wsd/LOOLWSD.hpp \
+              wsd/LOOLWebSocket.hpp \
               wsd/QueueHandler.hpp \
               wsd/SenderQueue.hpp \
               wsd/Storage.hpp \
