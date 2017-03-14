@@ -4,8 +4,9 @@
 
 L.Annotation = L.Layer.extend({
 	options: {
-		minWidth: 240,
-		maxHeight: 50
+		minWidth: 160,
+		maxHeight: 50,
+		imgSize: L.point([32, 32])
 	},
 
 	initialize: function (latlng, data, options) {
@@ -93,7 +94,9 @@ L.Annotation = L.Layer.extend({
 		var tdAuthor = L.DomUtil.create('td', 'loleaflet-annotation-author', tr);
 		var tdMenu = L.DomUtil.create('td', '', tr);
 		var imgAuthor = L.DomUtil.create('img', '', tdImg);
-		imgAuthor.src = L.Icon.Default.imagePath + '/user.png';
+		imgAuthor.setAttribute('src', L.Icon.Default.imagePath + '/user.png');
+		imgAuthor.setAttribute('width', this.options.imgSize.x);
+		imgAuthor.setAttribute('height', this.options.imgSize.y);
 		L.DomUtil.create('div', 'loleaflet-annotation-userline', tdImg);
 		this._contentAuthor = L.DomUtil.create('div', 'loleaflet-annotation-content-author', tdAuthor);
 		this._contentDate = L.DomUtil.create('div', 'loleaflet-annotation-date', tdAuthor);
