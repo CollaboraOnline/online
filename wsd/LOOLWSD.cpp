@@ -1407,15 +1407,6 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
     {
         auto lock = docBroker->getLock();
 
-        // Validate the broker.
-        if (!docBroker->isAlive())
-        {
-            LOG_ERR("DocBroker is invalid or premature termination of child process.");
-            lock.unlock();
-            removeDocBrokerSession(docBroker);
-            return nullptr;
-        }
-
         if (docBroker->isMarkedToDestroy())
             LOG_WRN("DocBroker is marked to destroy, attempting to add session anyway.");
 
