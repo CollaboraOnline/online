@@ -476,6 +476,12 @@ subscribe <space seperated list of commands>
     Where list of commands are the ones that client wants to get notified
     about. For eg. 'subscribe adddoc rmdoc'
 
+version
+
+    Queries the server for current version of lokit and loolserver. See
+    'lokitversion' and 'loolserver' in admin -> client for the format of
+    response message.
+
 documents
 
     Queries the server for list of opened documents. See `documents` command
@@ -594,3 +600,23 @@ mem_stats <comma separated list of memory consumed values>
 
      The length of the list is equal to the value of setting
      mem_stats_size`
+
+loolserver <JSON string>
+
+    The returned JSON string contains information in the following format:
+    {Version: <>, Hash: <>}
+
+    Eg: {"Version": "master..",
+         "Hash": "4897710"}
+
+lokitversion <JSON string>
+
+    JSON string contains version information in format:
+    {ProductName: <>, ProductVersion: <>, ProductExtension: <>, BuildId: <>}
+
+    Eg: {"ProductName": "LibreOffice",
+         "ProductVersion": "5.3",
+         "ProductExtension": ".0.0.alpha0",
+         "BuildId": "<full 40 char git hash>"}
+
+

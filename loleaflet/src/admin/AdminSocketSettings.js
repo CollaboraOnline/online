@@ -41,9 +41,9 @@ var AdminSocketSettings = AdminSocketBase.extend({
 	onSocketOpen: function() {
 		// Base class' onSocketOpen handles authentication
 		this.base.call(this);
-
 		this.socket.send('subscribe settings');
 		this.socket.send('settings');
+		this.socket.send('version');
 	},
 
 	onSocketMessage: function(e) {
@@ -64,6 +64,28 @@ var AdminSocketSettings = AdminSocketBase.extend({
 				var settingVal = setting[1];
 				document.getElementById(settingKey).value = settingVal;
 			}
+		}
+		else if (textMsg.startsWith('loolserver ')) {
+			// This must be the first message, unless we reconnect.
+			var loolwsdVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			var h = loolwsdVersionObj.Hash;
+			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
+				h = '<a target="_blank" href="https://gerrit.libreoffice.org/gitweb?p=online.git;a=log;h=' + h + '">' + h + '</a>';
+				$('#loolwsd-version').html(loolwsdVersionObj.Version + ' (git hash: ' + h + ')');
+			}
+			else {
+				$('#loolwsd-version').text(loolwsdVersionObj.Version);
+			}
+		}
+		else if (textMsg.startsWith('lokitversion ')) {
+			var lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			var h = lokitVersionObj.BuildId.substring(0, 7);
+			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
+				h = '<a target="_blank" href="https://gerrit.libreoffice.org/gitweb?p=core.git;a=log;h=' + h + '">' + h + '</a>';
+			}
+			$('#lokit-version').html(lokitVersionObj.ProductName + ' ' +
+			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension.replace('.10.','-') +
+			                         ' (git hash: ' + h + ')');
 		}
 	},
 
