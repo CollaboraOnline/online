@@ -2386,16 +2386,16 @@ public:
            << "  NewChildren: " << NewChildren.size() << "\n"
            << "  OutstandingForks: " << OutstandingForks << "\n";
 
-        std::cerr << "Server poll:\n";
+        os << "Server poll:\n";
         _acceptPoll.dumpState(os);
 
-        std::cerr << "Web Server poll:\n";
+        os << "Web Server poll:\n";
         WebServerPoll.dumpState(os);
 
-        std::cerr << "Prisoner poll:\n";
+        os << "Prisoner poll:\n";
         PrisonerPoll.dumpState(os);
 
-        std::cerr << "Document Broker polls "
+        os << "Document Broker polls "
                   << "[ " << DocBrokers.size() << " ]:\n";
         for (auto &i : DocBrokers)
             i.second->dumpState(os);
