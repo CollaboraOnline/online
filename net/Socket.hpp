@@ -513,7 +513,7 @@ public:
 };
 
 /// A plain, non-blocking, data streaming socket.
-class StreamSocket : public Socket
+class StreamSocket : public Socket, public std::enable_shared_from_this<StreamSocket>
 {
 public:
     /// Create a StreamSocket from native FD and take ownership of handler instance.
@@ -623,6 +623,13 @@ public:
         while (len == (sizeof(buf)));
 
         return len != 0; // zero is eof / clean socket close.
+    }
+
+    /// Replace the existing SocketHandler with a new one.
+    void setHandler(std::unique_ptr<SocketHandlerInterface> handler)
+    {
+        _socketHandler = std::move(handler);
+        _socketHandler->onConnect(shared_from_this());
     }
 
     /// Create a socket of type TSocket given an FD and a handler.
