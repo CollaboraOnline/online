@@ -2178,7 +2178,7 @@ private:
     void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url)
     {
         // requestHandler = new ClientRequestHandler();
-        LOG_INF("Client WS request" << request.getURI() << ", url: " << url);
+        LOG_INF("Client WS request: " << request.getURI() << ", url: " << url);
 
         // First Upgrade.
         WebSocketHandler ws(_socket, request);
