@@ -166,6 +166,7 @@ shared_headers = common/Common.hpp \
                  common/SigUtil.hpp \
                  common/security.h \
                  common/SpookyV2.h \
+                 net/ServerSocket.hpp \
                  net/Socket.hpp \
                  net/WebSocketHandler.hpp \
                  tools/Replay.hpp
