@@ -179,12 +179,6 @@ static std::atomic<int> OutstandingForks(0);
 static std::map<std::string, std::shared_ptr<DocumentBroker> > DocBrokers;
 static std::mutex DocBrokersMutex;
 
-#if 0 // loolnb
-/// Used when shutting down to notify them all that the server is recycling.
-static std::vector<std::shared_ptr<LOOLWebSocket> > ClientWebSockets;
-static std::mutex ClientWebSocketsMutex;
-#endif
-
 extern "C" { void dump_state(void); /* easy for gdb */ }
 
 #if ENABLE_DEBUG
@@ -2587,29 +2581,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         const auto path = ChildRoot + jail;
         LOG_INF("Removing jail [" << path << "].");
         FileUtil::removeFile(path, true);
-    }
-
-    if (isShuttingDown())
-    {
-#if 0 // loolnb
-        // At this point there should be no other thread, but...
-        std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
-
-        LOG_INF("Notifying clients that we are recycling.");
-        static const std::string msg("close: recycling");
-        for (auto& ws : ClientWebSockets)
-        {
-            try
-            {
-                ws->sendFrame(msg.data(), msg.size());
-                ws->shutdown(WebSocket::WS_ENDPOINT_GOING_AWAY);
-            }
-            catch (const std::exception& ex)
-            {
-                LOG_ERR("Error while notifying client of recycle: " << ex.what());
-            }
-        }
-#endif
     }
 
     // Finally, we no longer need SSL.

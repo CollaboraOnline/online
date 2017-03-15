@@ -736,11 +736,9 @@ void ClientSession::onDisconnect()
         }
         else
         {
-#if 0 // loolnb
-            std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
-            LOG_TRC("Capturing Client WS for [" << _id << "]");
-            // ClientWebSockets.push_back(ws); //FIXME
-#endif
+            static const std::string msg("close: recycling");
+            sendFrame(msg);
+            shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
         }
     }
     catch (const std::exception& exc)
