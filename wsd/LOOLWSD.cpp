@@ -1618,6 +1618,92 @@ private:
     }
 };
 
+/// Handles dispatching socket traffic to the ClientSession.
+class ConvertToHandler : public SocketHandlerInterface
+{
+public:
+    ConvertToHandler(const std::shared_ptr<ClientSession>& clientSession) :
+        _clientSession(clientSession)
+    {
+    }
+
+private:
+
+    /// Set the socket associated with this ResponseClient.
+    void onConnect(const std::weak_ptr<StreamSocket>& socket) override
+    {
+        LOG_ERR("onConnect");
+        _socket = socket;
+    }
+
+    void onDisconnect() override
+    {
+        LOG_ERR("onDisconnect");
+    }
+
+    void handleIncomingMessage() override
+    {
+        LOG_ERR("handleIncomingMessage");
+    }
+
+    bool hasQueuedWrites() const override
+    {
+        LOG_ERR("hasQueuedWrites");
+        return true;
+    }
+
+    void performWrites() override
+    {
+        LOG_ERR("performWrites");
+        auto socket = _socket.lock();
+
+        // Send it back to the client.
+        try
+        {
+            Poco::URI resultURL(_clientSession->getSaveAsUrl(COMMAND_TIMEOUT_MS));
+            LOG_TRC("Save-as URL: " << resultURL.toString());
+
+            if (!resultURL.getPath().empty())
+            {
+                const std::string mimeType = "application/octet-stream";
+                std::string encodedFilePath;
+                URI::encode(resultURL.getPath(), "", encodedFilePath);
+                LOG_TRC("Sending file: " << encodedFilePath);
+                HttpHelper::sendFile(socket, encodedFilePath, mimeType);
+            }
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Failed to get save-as url: " << ex.what());
+        }
+
+        // auto docLock = docBroker->getLock();
+        // sessionsCount = docBroker->removeSession(_id);
+        // if (sessionsCount == 0)
+        // {
+        //     // At this point we're done.
+        //     LOG_DBG("Removing DocumentBroker for docKey [" << docKey << "].");
+        //     DocBrokers.erase(docKey);
+        //     docBroker->terminateChild(docLock, "");
+        //     LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing [" << docKey << "].");
+        // }
+        // else
+        // {
+        //     LOG_ERR("Multiple sessions during conversion. " << sessionsCount << " sessions remain.");
+        // }
+
+        // Clean up the temporary directory the HTMLForm ctor created.
+        // Path tempDirectory(fromPath);
+        // tempDirectory.setFileName("");
+        // FileUtil::removeFile(tempDirectory, /*recursive=*/true);
+    }
+
+private:
+    // The socket that owns us (we can't own it).
+    std::weak_ptr<StreamSocket> _socket;
+    std::shared_ptr<ClientSession> _clientSession;
+};
+
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher : public SocketHandlerInterface
 {
@@ -1954,75 +2040,45 @@ private:
                     LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
 
                     // Load the document.
-                    auto session = std::make_shared<ClientSession>(_id, docBroker, uriPublic);
-
-                    auto lock = docBroker->getLock();
-                    size_t sessionsCount = docBroker->queueSession(session);
-                    lock.unlock();
-                    LOG_TRC(docKey << ", ws_sessions++: " << sessionsCount);
-
-                    docBrokersLock.unlock();
-
-                    std::string encodedFrom;
-                    URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
-                    const std::string load = "load url=" + encodedFrom;
-                    std::vector<char> loadRequest(load.begin(), load.end());
-                    session->handleMessage(true, WebSocketHandler::WSOpCode::Text, loadRequest);
-
-                    // FIXME: Check for security violations.
-                    Path toPath(docBroker->getPublicUri().getPath());
-                    toPath.setExtension(format);
-                    const std::string toJailURL = "file://" + std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
-                    std::string encodedTo;
-                    URI::encode(toJailURL, "", encodedTo);
-
-                    // Convert it to the requested format.
-                    const auto saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
-                    std::vector<char> saveasRequest(saveas.begin(), saveas.end());
-                    session->handleMessage(true, WebSocketHandler::WSOpCode::Text, saveasRequest);
-
-                    // Send it back to the client.
-                    try
+                    // TODO: Move to DocumentBroker.
+                    const bool isReadOnly = true;
+                    auto clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker, isReadOnly);
+                    if (clientSession)
                     {
-                        Poco::URI resultURL(session->getSaveAsUrl(COMMAND_TIMEOUT_MS));
-                        LOG_TRC("Save-as URL: " << resultURL.toString());
+                        // Transfer the client socket to the DocumentBroker.
+                        // Move the socket into DocBroker.
+                        WebServerPoll.releaseSocket(socket);
+                        docBroker->addSocketToPoll(socket);
 
-                        if (!resultURL.getPath().empty())
-                        {
-                            const std::string mimeType = "application/octet-stream";
-                            std::string encodedFilePath;
-                            URI::encode(resultURL.getPath(), "", encodedFilePath);
-                            LOG_TRC("Sending file: " << encodedFilePath);
-                            HttpHelper::sendFile(socket, encodedFilePath, mimeType);
-                            sent = true;
-                        }
-                    }
-                    catch (const std::exception& ex)
-                    {
-                        LOG_ERR("Failed to get save-as url: " << ex.what());
-                    }
+                        auto convertToHandler = std::make_shared<ConvertToHandler>(clientSession);
 
-                    docBrokersLock.lock();
-                    auto docLock = docBroker->getLock();
-                    sessionsCount = docBroker->removeSession(_id);
-                    if (sessionsCount == 0)
-                    {
-                        // At this point we're done.
-                        LOG_DBG("Removing DocumentBroker for docKey [" << docKey << "].");
-                        DocBrokers.erase(docKey);
-                        docBroker->terminateChild(docLock, "");
-                        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing [" << docKey << "].");
+                        // Set the ConvertToHandler to handle Socket events.
+                        socket->setHandler(convertToHandler);
+                        docBroker->startThread();
+
+                        std::string encodedFrom;
+                        URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
+                        const std::string load = "load url=" + encodedFrom;
+                        std::vector<char> loadRequest(load.begin(), load.end());
+                        clientSession->handleMessage(true, WebSocketHandler::WSOpCode::Text, loadRequest);
+
+                        // FIXME: Check for security violations.
+                        Path toPath(docBroker->getPublicUri().getPath());
+                        toPath.setExtension(format);
+                        const std::string toJailURL = "file://" + std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
+                        std::string encodedTo;
+                        URI::encode(toJailURL, "", encodedTo);
+
+                        // Convert it to the requested format.
+                        const auto saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
+                        std::vector<char> saveasRequest(saveas.begin(), saveas.end());
+                        clientSession->handleMessage(true, WebSocketHandler::WSOpCode::Text, saveasRequest);
+
+                        sent = true;
                     }
                     else
-                    {
-                        LOG_ERR("Multiple sessions during conversion. " << sessionsCount << " sessions remain.");
-                    }
+                        LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
                 }
-
-                // Clean up the temporary directory the HTMLForm ctor created.
-                Path tempDirectory(fromPath);
-                tempDirectory.setFileName("");
-                FileUtil::removeFile(tempDirectory, /*recursive=*/true);
             }
 
             if (!sent)
