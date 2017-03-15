@@ -229,6 +229,8 @@ private:
             {
                 if (sslError == SSL_ERROR_SSL)
                     LOG_TRC("Socket #" << getFD() << " SSL error: SSL (" << sslError << ").");
+                else if (sslError == SSL_ERROR_SYSCALL)
+                    LOG_TRC("Socket #" << getFD() << " SSL error: SYSCALL (" << sslError << ").");
 #if 0 // Recent OpenSSL only
                 else if (sslError == SSL_ERROR_WANT_ASYNC)
                     LOG_TRC("Socket #" << getFD() << " SSL error: WANT_ASYNC (" << sslError << ").");
@@ -236,7 +238,7 @@ private:
                     LOG_TRC("Socket #" << getFD() << " SSL error: WANT_ASYNC_JOB (" << sslError << ").");
 #endif
                 else
-                    LOG_TRC("Socket #" << getFD() << " SSL error: UKNOWN (" << sslError << ").");
+                    LOG_TRC("Socket #" << getFD() << " SSL error: UNKNOWN (" << sslError << ").");
 
                 // The error is comming from BIO. Find out what happened.
                 const long bioError = ERR_get_error();

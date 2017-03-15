@@ -33,7 +33,6 @@ protected:
         Mask = 0x80
     };
 
-
 public:
     WebSocketHandler() :
         _shuttingDown(false),
@@ -226,7 +225,6 @@ public:
             ; // can have multiple msgs in one recv'd packet.
     }
 
-
     bool hasQueuedWrites() const override
     {
         LOG_TRC("WebSocket - asked for queued writes");
@@ -238,6 +236,7 @@ public:
         assert(false && "performWrites not implemented");
     }
 
+    /// Sends a WebSocket Text message.
     void sendFrame(const std::string& msg) const
     {
         sendMessage(msg.data(), msg.size(), WSOpCode::Text);
