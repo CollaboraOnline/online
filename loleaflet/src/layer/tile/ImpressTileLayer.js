@@ -12,6 +12,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	beforeAdd: function (map) {
+		map.on('updateparts', this.onUpdateParts, this);
 		map.on('AnnotationCancel', this.onAnnotationCancel, this);
 		map.on('AnnotationSave', this.onAnnotationSave, this);
 		map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
@@ -19,17 +20,25 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	getAnnotation: function (id) {
-		for (var index in this._annotations) {
-			if (this._annotations[index]._data.id === id) {
-				return this._annotations[index];
+		var annotations = this._annotations[this._partHashes[this._selectedPart]];
+		for (var index in annotations) {
+			if (annotations[index]._data.id === id) {
+				return annotations[index];
 			}
 		}
 		return null;
 	},
 
+	hideAnnotations: function (part) {
+		var annotations = this._annotations[this._partHashes[part]];
+		for (var index in annotations) {
+			annotations[index].hide();
+		}
+	},
+
 	onAdd: function (map) {
 		L.TileLayer.prototype.onAdd.call(this, map);
-		this._annotations = [];
+		this._annotations = {};
 	},
 
 	onAnnotationCancel: function (e) {
@@ -82,7 +91,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	onAnnotationScrollDown: function (e) {
-		this._topAnnotation = Math.min(++this._topAnnotation, this._annotations.length - 1);
+		this._topAnnotation = Math.min(++this._topAnnotation, this._annotations[this._partHashes[this._selectedPart]].length - 1);
 		this.layoutAnnotations();
 	},
 
@@ -91,21 +100,30 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		this.layoutAnnotations();
 	},
 
+	onUpdateParts: function (e) {
+		if (typeof this._prevSelectedPart === 'number') {
+			this.hideAnnotations(this._prevSelectedPart);
+			this.layoutAnnotations();
+		}
+	},
+
 	removeAnnotation: function (id) {
-		for (var index in this._annotations) {
-			if (this._annotations[index]._data.id == id) {
-				this._map.removeLayer(this._annotations[index]);
-				this._annotations.splice(index, 1);
+		var annotations = this._annotations[this._partHashes[this._selectedPart]];
+		for (var index in annotations) {
+			if (annotations[index]._data.id == id) {
+				this._map.removeLayer(annotations[index]);
+				annotations.splice(index, 1);
 				break;
 			}
 		}
 	},
 
 	layoutAnnotations: function () {
+		var annotations = this._annotations[this._partHashes[this._selectedPart]];
 		var topRight = this._map.latLngToLayerPoint(this._map.options.maxBounds.getNorthEast()).add(L.point(this.options.marginX, this.options.marginY));
 		var bounds, annotation;
-		for (var index in this._annotations) {
-			annotation = this._annotations[index];
+		for (var index in annotations) {
+			annotation = annotations[index];
 			if (index >= this._topAnnotation) {
 				annotation.setLatLng(bounds ? this._map.layerPointToLatLng(bounds.getBottomLeft()) : this._map.layerPointToLatLng(topRight));
 				bounds = annotation.getBounds();
@@ -133,9 +151,13 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		}
 
 		if (values.comments) {
+			this._annotations = {};
 			for (var index in values.comments) {
 				comment = values.comments[index];
-				this._annotations.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
+				if (!this._annotations[comment.parthash]) {
+					this._annotations[comment.parthash] = [];
+				}
+				this._annotations[comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
 			}
 			this._topAnnotation = 0;
 			this.layoutAnnotations();
@@ -148,12 +170,15 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
 			if (obj.comment.action === 'Add') {
-				this._annotations.push(L.annotation(this._map.options.maxBounds.getSouthEast(), obj.comment).addTo(this._map));
-				this._topAnnotation = Math.min(this._topAnnotation, this._annotations.length - 1);
+				if (!this._annotations[obj.comment.parthash]) {
+					this._annotations[obj.comment.parthash] = [];
+				}
+				this._annotations[obj.comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), obj.comment).addTo(this._map));
+				this._topAnnotation = Math.min(this._topAnnotation, this._annotations[this._partHashes[this._selectedPart]].length - 1);
 				this.layoutAnnotations();
 			} else if (obj.comment.action === 'Remove') {
 				this.removeAnnotation(obj.comment.id);
-				this._topAnnotation = Math.min(this._topAnnotation, this._annotations.length - 1);
+				this._topAnnotation = Math.min(this._topAnnotation, this._annotations[this._partHashes[this._selectedPart]].length - 1);
 				this.layoutAnnotations();
 			} else if (obj.comment.action === 'Modify') {
 				var modified = this.getAnnotation(obj.comment.id);
@@ -313,13 +338,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			}
 			var partMatch = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
-			var partHashes = partMatch.slice(partMatch.length - this._parts);
-			// var partNames = partMatch.slice(partMatch.length - 2 * this._parts, partMatch.length - this._parts - 1);
+			this._partHashes = partMatch.slice(partMatch.length - this._parts);
 			this._map.fire('updateparts', {
 				selectedPart: this._selectedPart,
 				parts: this._parts,
 				docType: this._docType,
-				partNames: partHashes
+				partNames: this._partHashes
 			});
 		}
 	}
