@@ -439,7 +439,7 @@ void ClientSession::performWrites()
     LOG_DBG(getName() << " ClientSession: performing writes");
 
     std::shared_ptr<Message> item;
-    if (_senderQueue.waitDequeue(item, 0 /* ms - don't block */))
+    if (_senderQueue.dequeue(item))
     {
         const std::vector<char>& data = item->data();
         try

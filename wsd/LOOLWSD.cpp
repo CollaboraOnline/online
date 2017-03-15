@@ -770,7 +770,7 @@ void LOOLWSD::initialize(Application& self)
 
     Log::initialize("wsd", logLevel, withColor, logToFile, logProperties);
 
-#if ENABLE_SSL
+#if 0 // ENABLE_SSL SAL_DEBUG
     LOOLWSD::SSLEnabled.set(getConfigValue<bool>(conf, "ssl.enable", true));
 #else
     LOOLWSD::SSLEnabled.set(false);

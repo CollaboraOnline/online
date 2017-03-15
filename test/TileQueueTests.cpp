@@ -276,7 +276,7 @@ void TileQueueTests::testSenderQueue()
     std::shared_ptr<Message> item;
 
     // Empty queue
-    CPPUNIT_ASSERT_EQUAL(false, queue.waitDequeue(item, 10));
+    CPPUNIT_ASSERT_EQUAL(false, queue.dequeue(item));
     CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
 
     const std::vector<std::string> messages =
@@ -293,15 +293,15 @@ void TileQueueTests::testSenderQueue()
 
     CPPUNIT_ASSERT_EQUAL(3UL, queue.size());
 
-    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(true, queue.dequeue(item));
     CPPUNIT_ASSERT_EQUAL(2UL, queue.size());
     CPPUNIT_ASSERT_EQUAL(messages[0], std::string(item->data().data(), item->data().size()));
 
-    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(true, queue.dequeue(item));
     CPPUNIT_ASSERT_EQUAL(1UL, queue.size());
     CPPUNIT_ASSERT_EQUAL(messages[1], std::string(item->data().data(), item->data().size()));
 
-    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(true, queue.dequeue(item));
     CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
     CPPUNIT_ASSERT_EQUAL(messages[2], std::string(item->data().data(), item->data().size()));
 
@@ -315,7 +315,7 @@ void TileQueueTests::testSenderQueueTileDeduplication()
     std::shared_ptr<Message> item;
 
     // Empty queue
-    CPPUNIT_ASSERT_EQUAL(false, queue.waitDequeue(item, 10));
+    CPPUNIT_ASSERT_EQUAL(false, queue.dequeue(item));
     CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
 
     const std::vector<std::string> part_messages =
@@ -331,9 +331,9 @@ void TileQueueTests::testSenderQueueTileDeduplication()
     }
 
     CPPUNIT_ASSERT_EQUAL(3UL, queue.size());
-    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 10));
-    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 10));
-    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 10));
+    CPPUNIT_ASSERT_EQUAL(true, queue.dequeue(item));
+    CPPUNIT_ASSERT_EQUAL(true, queue.dequeue(item));
+    CPPUNIT_ASSERT_EQUAL(true, queue.dequeue(item));
 
     CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
 
@@ -350,7 +350,7 @@ void TileQueueTests::testSenderQueueTileDeduplication()
     }
 
     CPPUNIT_ASSERT_EQUAL(1UL, queue.size());
-    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 10));
+    CPPUNIT_ASSERT_EQUAL(true, queue.dequeue(item));
 
     // The last one should persist.
     CPPUNIT_ASSERT_EQUAL(dup_messages[2], std::string(item->data().data(), item->data().size()));
@@ -365,7 +365,7 @@ void TileQueueTests::testInvalidateViewCursorDeduplication()
     std::shared_ptr<Message> item;
 
     // Empty queue
-    CPPUNIT_ASSERT_EQUAL(false, queue.waitDequeue(item, 10));
+    CPPUNIT_ASSERT_EQUAL(false, queue.dequeue(item));
     CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
 
     const std::vector<std::string> view_messages =
@@ -382,15 +382,15 @@ void TileQueueTests::testInvalidateViewCursorDeduplication()
 
     CPPUNIT_ASSERT_EQUAL(3UL, queue.size());
 
-    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(true, queue.dequeue(item));
     CPPUNIT_ASSERT_EQUAL(2UL, queue.size());
     CPPUNIT_ASSERT_EQUAL(view_messages[0], std::string(item->data().data(), item->data().size()));
 
-    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(true, queue.dequeue(item));
     CPPUNIT_ASSERT_EQUAL(1UL, queue.size());
     CPPUNIT_ASSERT_EQUAL(view_messages[1], std::string(item->data().data(), item->data().size()));
 
-    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(true, queue.dequeue(item));
     CPPUNIT_ASSERT_EQUAL(0UL, queue.size());
     CPPUNIT_ASSERT_EQUAL(view_messages[2], std::string(item->data().data(), item->data().size()));
 
@@ -409,7 +409,7 @@ void TileQueueTests::testInvalidateViewCursorDeduplication()
     }
 
     CPPUNIT_ASSERT_EQUAL(1UL, queue.size());
-    CPPUNIT_ASSERT_EQUAL(true, queue.waitDequeue(item, 0));
+    CPPUNIT_ASSERT_EQUAL(true, queue.dequeue(item));
 
     // The last one should persist.
     CPPUNIT_ASSERT_EQUAL(dup_messages[2], std::string(item->data().data(), item->data().size()));

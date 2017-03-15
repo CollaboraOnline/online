@@ -50,7 +50,6 @@ public:
     void stop()
     {
         _stop = true;
-        _cv.notify_all();
     }
 
     size_t enqueue(const Item& item)
@@ -68,7 +67,6 @@ public:
         const size_t queuesize = _queue.size();
         lock.unlock();
 
-        _cv.notify_one();
         if (wasEmpty)
         {
             // FIXME: Horrible hack - we need to wakeup just our own poll ...
@@ -77,28 +75,23 @@ public:
         return queuesize;
     }
 
-    bool waitDequeue(Item& item,
-                     const size_t timeoutMs = std::numeric_limits<size_t>::max())
+    /// Dequeue an item if we have one - @returns true if we do, else false.
+    bool dequeue(Item& item)
     {
-        const auto timeToWait = std::chrono::milliseconds(timeoutMs);
-
         std::unique_lock<std::mutex> lock(_mutex);
 
-        if (!_queue.empty() ||
-            _cv.wait_for(lock, timeToWait, [this](){ return !_queue.empty() || stopping(); }))
+        if (!_queue.empty() && !stopping())
         {
-            if (!stopping())
-            {
-                item = _queue.front();
-                _queue.pop_front();
-                return true;
-            }
-
-            LOG_DBG("SenderQueue: stopping");
+            item = _queue.front();
+            _queue.pop_front();
+            return true;
+        }
+        else
+        {
+            if (stopping())
+                LOG_DBG("SenderQueue: stopping");
             return false;
         }
-
-        return false;
     }
 
     size_t size() const
@@ -172,9 +165,7 @@ private:
                 });
 
             if (pos != _queue.end())
-            {
                 _queue.erase(pos);
-            }
         }
 
         return true;
@@ -182,7 +173,6 @@ private:
 
 private:
     mutable std::mutex _mutex;
-    std::condition_variable _cv;
     std::deque<Item> _queue;
     typedef typename std::deque<Item>::value_type queue_item_t;
     std::atomic<bool> _stop;
