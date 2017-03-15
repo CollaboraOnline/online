@@ -232,7 +232,7 @@ void AdminRequestHandler::sendTextFrame(const std::string& message)
     sendFrame(message);
 }
 
-void AdminRequestHandler::handleInitialRequest(const std::weak_ptr<StreamSocket> &socketWeak,
+bool AdminRequestHandler::handleInitialRequest(const std::weak_ptr<StreamSocket> &socketWeak,
                                                const Poco::Net::HTTPRequest& request)
 {
     HTTPResponse response;
@@ -257,6 +257,7 @@ void AdminRequestHandler::handleInitialRequest(const std::weak_ptr<StreamSocket>
             handler->_sessionId = sessionId;
             model.subscribe(sessionId, handler);
         }
+        return true;
     }
 
 // FIXME: ... should we move ourselves to an Admin poll [!?] ...
@@ -281,10 +282,12 @@ void AdminRequestHandler::handleInitialRequest(const std::weak_ptr<StreamSocket>
         socket->send(response);
     }
 #endif
+    return false;
 }
 
 /// An admin command processor.
 Admin::Admin() :
+    SocketPoll("admin"),
     _model(AdminModel()),
     _forKitPid(-1)
 {
@@ -409,6 +412,12 @@ void Admin::updateMemoryDirty(const std::string& docKey, int dirty)
 {
     std::unique_lock<std::mutex> modelLock(_modelMutex);
     _model.updateMemoryDirty(docKey, dirty);
+}
+
+void Admin::dumpState(std::ostream& os)
+{
+    // FIXME: be more helpful ...
+    SocketPoll::dumpState(os);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

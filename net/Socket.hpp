@@ -412,7 +412,7 @@ public:
         wakeup();
     }
 
-    void dumpState(std::ostream& os);
+    virtual void dumpState(std::ostream& os);
 
     /// Removes a socket from this poller.
     /// NB. this must be called from the socket poll that

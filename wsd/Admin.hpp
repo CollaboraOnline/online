@@ -36,7 +36,9 @@ public:
                         const std::weak_ptr<StreamSocket>& socket,
                         const Poco::Net::HTTPRequest& request);
 
-    static void handleInitialRequest(const std::weak_ptr<StreamSocket> &socket,
+    /// Handle the initial Admin WS upgrade request.
+    /// @returns true if we should give this socket to the Admin poll.
+    static bool handleInitialRequest(const std::weak_ptr<StreamSocket> &socket,
                                      const Poco::Net::HTTPRequest& request);
 
 private:
@@ -57,7 +59,7 @@ private:
 class MemoryStatsTask;
 
 /// An admin command processor.
-class Admin
+class Admin : public SocketPoll
 {
     Admin();
 public:
@@ -67,6 +69,12 @@ public:
     {
         static Admin admin;
         return admin;
+    }
+
+    void start()
+    {
+        // FIXME: not if admin console is not enabled ?
+        startThread();
     }
 
     unsigned getTotalMemoryUsage();
@@ -100,6 +108,8 @@ public:
 
     void updateLastActivityTime(const std::string& docKey);
     void updateMemoryDirty(const std::string& docKey, int dirty);
+
+    void dumpState(std::ostream& os) override;
 
 private:
     AdminModel _model;

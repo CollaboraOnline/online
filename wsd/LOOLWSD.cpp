@@ -1808,8 +1808,12 @@ private:
             else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
             {
                 LOG_ERR("Admin request: " << request.getURI());
-                AdminRequestHandler::handleInitialRequest(_socket, request);
-
+                if (AdminRequestHandler::handleInitialRequest(_socket, request))
+                {
+                    // Hand the socket over to the Admin poll.
+                    WebServerPoll.releaseSocket(socket);
+                    Admin::instance().insertNewSocket(socket);
+                }
             }
             // Client post and websocket connections
             else if ((request.getMethod() == HTTPRequest::HTTP_GET ||
@@ -2336,6 +2340,7 @@ public:
         _acceptPoll.insertNewSocket(findServerPort(port));
         _acceptPoll.startThread();
         WebServerPoll.startThread();
+        Admin::instance().start();
     }
 
     void stop()
@@ -2363,6 +2368,9 @@ public:
 
         os << "Prisoner poll:\n";
         PrisonerPoll.dumpState(os);
+
+        os << "Admin poll:\n";
+        Admin::instance().dumpState(os);
 
         os << "Document Broker polls "
                   << "[ " << DocBrokers.size() << " ]:\n";
