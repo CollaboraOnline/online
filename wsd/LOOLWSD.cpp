@@ -1638,9 +1638,8 @@ private:
 
     void onDisconnect() override
     {
-        if (_clientSession)
-            disposeSession();
-
+        // FIXME: Move to ClientSession (ideally, wrap in ConnectionCounter object
+        // to wrap this global NumConnections).
         const size_t curConnections = --LOOLWSD::NumConnections;
         LOG_TRC("Disconnected connection #" << _connectionNum << " (of " <<
                 (curConnections + 1) << ") as session [" << _id << "].");
@@ -1649,16 +1648,6 @@ private:
     /// Called after successful socket reads.
     void handleIncomingMessage() override
     {
-        if (_clientSession)
-        {
-            LOG_INF("Forwarding incoming message to client [" << _id << "]");
-
-            // TODO: might be better to reset the handler in the socket
-            // so we avoid this double-dispatching.
-            _clientSession->handleIncomingMessage();
-            return;
-        }
-
         auto socket = _socket.lock();
         std::vector<char>& in = socket->_inBuffer;
 
@@ -1788,19 +1777,12 @@ private:
 
     bool hasQueuedWrites() const override
     {
-        // FIXME: - the session should be owning the fd in DocumentBroker's _poll
-        if (_clientSession)
-            return _clientSession->hasQueuedWrites();
-
         LOG_TRC("ClientRequestDispatcher - asked for queued writes");
         return false;
     }
 
     void performWrites() override
     {
-        // FIXME: - the session should be owning the fd in DocumentBroker's _poll
-        if (_clientSession)
-            return _clientSession->performWrites();
     }
 
     void handleFileServerRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
@@ -2211,91 +2193,32 @@ private:
         if (docBroker)
         {
             // TODO: Move to DocumentBroker.
-            _clientSession = createNewClientSession(ws, _id, uriPublic, docBroker, isReadOnly);
-            if (_clientSession)
+            auto clientSession = createNewClientSession(ws, _id, uriPublic, docBroker, isReadOnly);
+            if (clientSession)
             {
                 // Transfer the client socket to the DocumentBroker.
                 auto socket = _socket.lock();
                 if (socket)
                 {
+                    // Move the socket into DocBroker.
                     WebServerPoll.releaseSocket(socket);
-                    _clientSession->onConnect(socket);
                     docBroker->addSocketToPoll(socket);
+
+                    // Set the ClientSession to handle Socket events.
+                    socket->setHandler(clientSession);
                 }
                 docBroker->startThread();
             }
-        }
-        if (!docBroker || !_clientSession)
-            LOG_WRN("Failed to connect DocBroker and Client Session.");
-    }
-
-    // this session went away - cleanup now.
-    void disposeSession()
-    {
-        LOG_CHECK_RET(_clientSession && "Null ClientSession instance", );
-        const auto docBroker = _clientSession->getDocumentBroker();
-        LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
-        const auto docKey = docBroker->getDocKey();
-
-        try
-        {
-            // Connection terminated. Destroy session.
-            LOG_DBG("Client session [" << _id << "] on docKey [" << docKey << "] terminated. Cleaning up.");
-
-            // We issue a force-save when last editable (non-readonly) session is going away
-            // and defer destroying the last session and the docBroker.
-            docBroker->removeSession(_id, true);
-
-            LOG_INF("Finishing GET request handler for session [" << _id << "].");
-        }
-        catch (const UnauthorizedRequestException& exc)
-        {
-            LOG_ERR("Error in client request handler: " << exc.toString());
-            const std::string status = "error: cmd=internal kind=unauthorized";
-            LOG_TRC("Sending to Client [" << status << "].");
-            _clientSession->sendFrame(status);
-        }
-        catch (const std::exception& exc)
-        {
-            LOG_ERR("Error in client request handler: " << exc.what());
-        }
-
-        try
-        {
-            if (_clientSession->isCloseFrame())
-            {
-                LOG_TRC("Normal close handshake.");
-                // Client initiated close handshake
-                // respond with close frame
-                _clientSession->shutdown();
-            }
-            else if (!ShutdownRequestFlag)
-            {
-                // something wrong, with internal exceptions
-                LOG_TRC("Abnormal close handshake.");
-                _clientSession->closeFrame();
-                _clientSession->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
-            }
             else
-            {
-#if 0 // loolnb
-                std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
-                LOG_TRC("Capturing Client WS for [" << _id << "]");
-                // ClientWebSockets.push_back(ws); //FIXME
-#endif
-            }
+                LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
         }
-        catch (const std::exception& exc)
-        {
-            LOG_WRN("Exception while closing socket for session [" << _id <<
-                    "] of docKey [" << docKey << "]: " << exc.what());
-        }
+        else
+            LOG_WRN("Failed to create DocBroker with docKey [" << docKey << "].");
     }
 
 private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
-    std::shared_ptr<ClientSession> _clientSession;
     std::string _id;
     size_t _connectionNum;
 };

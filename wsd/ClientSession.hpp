@@ -112,10 +112,15 @@ public:
     /// Set WOPI fileinfo object
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
 
+private:
+
+    /// SocketHandler: disconnection event.
+    void onDisconnect() override;
+    /// SocketHandler: have data to write.
     bool hasQueuedWrites() const override;
+    /// SocketHandler: write to socket.
     void performWrites() override;
 
-private:
     virtual bool _handleInput(const char* buffer, int length) override;
 
     bool loadDocument(const char* buffer, int length, const std::vector<std::string>& tokens,

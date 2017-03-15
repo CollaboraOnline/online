@@ -678,4 +678,64 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
     return true;
 }
 
+void ClientSession::onDisconnect()
+{
+    LOG_INF(getName() << " Disconnected.");
+
+    const auto docBroker = getDocumentBroker();
+    LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
+    const auto docKey = docBroker->getDocKey();
+
+    try
+    {
+        // Connection terminated. Destroy session.
+        LOG_DBG(getName() << " on docKey [" << docKey << "] terminated. Cleaning up.");
+
+        // We issue a force-save when last editable (non-readonly) session is going away
+        // and defer destroying the last session and the docBroker.
+        docBroker->removeSession(getId(), true);
+    }
+    catch (const UnauthorizedRequestException& exc)
+    {
+        LOG_ERR("Error in client request handler: " << exc.toString());
+        const std::string status = "error: cmd=internal kind=unauthorized";
+        LOG_TRC("Sending to Client [" << status << "].");
+        sendFrame(status);
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_ERR("Error in client request handler: " << exc.what());
+    }
+
+    try
+    {
+        if (isCloseFrame())
+        {
+            LOG_TRC("Normal close handshake.");
+            // Client initiated close handshake
+            // respond with close frame
+            shutdown();
+        }
+        else if (!ShutdownRequestFlag)
+        {
+            // something wrong, with internal exceptions
+            LOG_TRC("Abnormal close handshake.");
+            closeFrame();
+            shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
+        }
+        else
+        {
+#if 0 // loolnb
+            std::lock_guard<std::mutex> lock(ClientWebSocketsMutex);
+            LOG_TRC("Capturing Client WS for [" << _id << "]");
+            // ClientWebSockets.push_back(ws); //FIXME
+#endif
+        }
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_WRN(getName() << ": Exception while closing socket for docKey [" << docKey << "]: " << exc.what());
+    }
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
