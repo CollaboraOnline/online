@@ -24,14 +24,17 @@
 #include "Log.hpp"
 #include <LOOLWebSocket.hpp>
 
-class Admin;
-class StreamSocket;
+#include "net/WebSocketHandler.hpp"
 
-/// Admin requests over HTTP(S) handler.
-class AdminRequestHandler /// public Poco::Net::HTTPRequestHandler
+class Admin;
+
+/// Handle admin client's Websocket requests & replies.
+class AdminRequestHandler : public WebSocketHandler
 {
 public:
-    AdminRequestHandler(Admin* adminManager);
+    AdminRequestHandler(Admin* adminManager,
+                        const std::weak_ptr<StreamSocket>& socket,
+                        const Poco::Net::HTTPRequest& request);
 
     static void handleInitialRequest(const std::weak_ptr<StreamSocket> &socket,
                                      const Poco::Net::HTTPRequest& request);
@@ -41,11 +44,12 @@ private:
 
     void sendTextFrame(const std::string& message);
 
-    bool adminCommandHandler(const std::vector<char>& payload);
+    /// Process incoming websocket messages
+    void handleMessage(bool fin, WSOpCode code, std::vector<char> &data);
 
 private:
     Admin* _admin;
-    std::shared_ptr<LOOLWebSocket> _adminWs;
+//    std::shared_ptr<LOOLWebSocket> _adminWs; FIXME - this is us now !
     int _sessionId;
     bool _isAuthenticated;
 };
@@ -55,6 +59,7 @@ class MemoryStatsTask;
 /// An admin command processor.
 class Admin
 {
+    Admin();
 public:
     virtual ~Admin();
 
@@ -91,18 +96,10 @@ public:
 
     void rescheduleCpuTimer(unsigned interval);
 
-    static AdminRequestHandler* createRequestHandler()
-    {
-        return new AdminRequestHandler(&instance());
-    }
-
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_modelMutex); }
 
     void updateLastActivityTime(const std::string& docKey);
     void updateMemoryDirty(const std::string& docKey, int dirty);
-
-private:
-    Admin();
 
 private:
     AdminModel _model;

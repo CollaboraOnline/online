@@ -21,7 +21,7 @@
 #include <Poco/URI.h>
 
 #include "Protocol.hpp"
-#include <LOOLWebSocket.hpp>
+#include "net/WebSocketHandler.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
@@ -70,7 +70,7 @@ bool Subscriber::notify(const std::string& message)
         try
         {
             UnitWSD::get().onAdminNotifyMessage(message);
-            webSocket->sendFrame(message.data(), message.length());
+            webSocket->sendFrame(message);
             return true;
         }
         catch (const std::exception& ex)
@@ -156,7 +156,7 @@ unsigned AdminModel::getKitsMemoryUsage()
     return totalMem;
 }
 
-void AdminModel::subscribe(int sessionId, std::shared_ptr<LOOLWebSocket>& ws)
+void AdminModel::subscribe(int sessionId, const std::weak_ptr<WebSocketHandler>& ws)
 {
     const auto ret = _subscribers.emplace(sessionId, Subscriber(sessionId, ws));
     if (!ret.second)

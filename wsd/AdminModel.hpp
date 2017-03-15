@@ -17,7 +17,7 @@
 #include <Poco/Process.h>
 
 #include "Log.hpp"
-#include <LOOLWebSocket.hpp>
+#include "net/WebSocketHandler.hpp"
 #include "Util.hpp"
 
 /// A client view in Admin controller.
@@ -98,7 +98,7 @@ private:
 class Subscriber
 {
 public:
-    Subscriber(int sessionId, std::shared_ptr<LOOLWebSocket>& ws)
+    Subscriber(int sessionId, const std::weak_ptr<WebSocketHandler>& ws)
         : _sessionId(sessionId),
           _ws(ws),
           _start(std::time(nullptr))
@@ -125,8 +125,8 @@ private:
     /// Admin session Id
     int _sessionId;
 
-    /// LOOLWebSocket to use to send messages to session
-    std::weak_ptr<LOOLWebSocket> _ws;
+    /// The underlying AdminRequestHandler
+    std::weak_ptr<WebSocketHandler> _ws;
 
     std::set<std::string> _subscriptions;
 
@@ -153,7 +153,7 @@ public:
     /// Returns memory consumed by all active loolkit processes
     unsigned getKitsMemoryUsage();
 
-    void subscribe(int sessionId, std::shared_ptr<LOOLWebSocket>& ws);
+    void subscribe(int sessionId, const std::weak_ptr<WebSocketHandler>& ws);
     void subscribe(int sessionId, const std::string& command);
 
     void unsubscribe(int sessionId, const std::string& command);

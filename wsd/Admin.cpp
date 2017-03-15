@@ -54,14 +54,19 @@ using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
 using Poco::Util::Application;
 
-bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
+    /// Process incoming websocket messages
+void AdminRequestHandler::handleMessage(bool /* fin */, WSOpCode /* code */, std::vector<char> &payload)
 {
+    // FIXME: check fin, code etc.
     const std::string firstLine = getFirstLine(payload.data(), payload.size());
     StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-    LOG_TRC("Recv: " << firstLine);
+    LOG_TRC("Recv: " << firstLine << " tokens " << tokens.count());
 
     if (tokens.count() < 1)
-        return false;
+    {
+        LOG_TRC("too few tokens");
+        return;
+    }
 
     std::unique_lock<std::mutex> modelLock(_admin->getLock());
     AdminModel& model = _admin->getModel();
@@ -83,14 +88,16 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
         else
         {
             sendTextFrame("InvalidAuthToken");
-            return false;
+            LOG_TRC("Invalid auth token");
+            return;
         }
     }
 
     if (!_isAuthenticated)
     {
         sendTextFrame("NotAuthenticated");
-        return false;
+        LOG_TRC("Not authenticated");
+        return;
     }
     else if (tokens[0] == "documents" ||
              tokens[0] == "active_users_count" ||
@@ -154,7 +161,7 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
         LOG_INF("Shutdown requested by admin.");
         ShutdownRequestFlag = true;
         SocketPoll::wakeupWorld();
-        return false;
+        return;
     }
     else if (tokens[0] == "set" && tokens.count() > 1)
     {
@@ -170,7 +177,7 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
             {
                 LOG_WRN("Invalid setting value: " << setting[1] <<
                         " for " << setting[0]);
-                return false;
+                return;
             }
 
             if (setting[0] == "mem_stats_size")
@@ -207,36 +214,13 @@ bool AdminRequestHandler::adminCommandHandler(const std::vector<char>& payload)
             }
         }
     }
-
-    return true;
 }
 
-/// Handle admin requests.
-void AdminRequestHandler::handleWSRequests(HTTPServerRequest& request, HTTPServerResponse& response, int sessionId)
-{
-    _adminWs = std::make_shared<LOOLWebSocket>(request, response);
-
-    {
-        std::unique_lock<std::mutex> modelLock(_admin->getLock());
-        // Subscribe the websocket of any AdminModel updates
-        AdminModel& model = _admin->getModel();
-        _sessionId = sessionId;
-        model.subscribe(_sessionId, _adminWs);
-    }
-
-    IoUtil::SocketProcessor(_adminWs, "admin",
-                            [this](const std::vector<char>& payload)
-                            {
-                                return adminCommandHandler(payload);
-                            },
-                            []() { },
-                            []() { return TerminationFlag.load(); });
-
-    LOG_DBG("Finishing Admin Session " << Util::encodeId(sessionId));
-}
-
-AdminRequestHandler::AdminRequestHandler(Admin* adminManager)
-    : _admin(adminManager),
+AdminRequestHandler::AdminRequestHandler(Admin* adminManager,
+                                         const std::weak_ptr<StreamSocket>& socket,
+                                         const Poco::Net::HTTPRequest& request)
+    : WebSocketHandler(socket, request),
+      _admin(adminManager),
       _sessionId(0),
       _isAuthenticated(false)
 {
@@ -245,7 +229,7 @@ AdminRequestHandler::AdminRequestHandler(Admin* adminManager)
 void AdminRequestHandler::sendTextFrame(const std::string& message)
 {
     UnitWSD::get().onAdminQueryMessage(message);
-    _adminWs->sendFrame(message.data(), message.size());
+    sendFrame(message);
 }
 
 void AdminRequestHandler::handleInitialRequest(const std::weak_ptr<StreamSocket> &socketWeak,
@@ -255,21 +239,32 @@ void AdminRequestHandler::handleInitialRequest(const std::weak_ptr<StreamSocket>
     auto socket = socketWeak.lock();
 
     // Different session id pool for admin sessions (?)
-//    const auto sessionId = Util::decodeId(LOOLWSD::GenSessionId());
+    const auto sessionId = Util::decodeId(LOOLWSD::GenSessionId());
 
-    try
+    std::string requestURI = request.getURI();
+    StringTokenizer pathTokens(requestURI, "/", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+    if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
     {
-        std::string requestURI = request.getURI();
-        StringTokenizer pathTokens(requestURI, "/", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        Admin &admin = Admin::instance();
+        auto handler = std::make_shared<AdminRequestHandler>(&admin, socketWeak, request);
+        socket->setHandler(handler);
 
-        if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
-        {
-            // First Upgrade.
-            WebSocketHandler ws(socketWeak, request);
-
-//            handleWSRequests(request, response, sessionId);
+        { // FIXME: weird locking around subscribe ...
+            std::unique_lock<std::mutex> modelLock(admin.getLock());
+            // Subscribe the websocket of any AdminModel updates
+            AdminModel& model = admin.getModel();
+            handler->_sessionId = sessionId;
+            model.subscribe(sessionId, handler);
         }
     }
+
+// FIXME: ... should we move ourselves to an Admin poll [!?] ...
+//  Probably [!] ... and use this termination thing ? ...
+//  Perhaps that should be the 'Admin' instance / sub-class etc.
+//  FIXME: have name 'admin' etc.
+//                            []() { return TerminationFlag.load(); });
+#if 0
     catch(const Poco::Net::NotAuthenticatedException& exc)
     {
         LOG_INF("Admin::NotAuthenticated");
@@ -285,6 +280,7 @@ void AdminRequestHandler::handleInitialRequest(const std::weak_ptr<StreamSocket>
         response.setContentLength(0);
         socket->send(response);
     }
+#endif
 }
 
 /// An admin command processor.
