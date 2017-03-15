@@ -275,14 +275,10 @@ public:
     /// The default implementation of our polling thread
     virtual void pollingThread()
     {
-        Util::setThreadName(_name);
-        LOG_INF("Starting polling thread [" << _name << "].");
         while (continuePolling())
         {
             poll(DefaultPollTimeoutMs);
         }
-
-        _threadFinished = true;
     }
 
     /// Are we running in either shutdown, or the polling thread.
@@ -459,6 +455,28 @@ private:
         _pollFds[size].fd = _wakeup[0];
         _pollFds[size].events = POLLIN;
         _pollFds[size].revents = 0;
+    }
+
+    /// The polling thread entry.
+    /// Used to set the thread name and mark the thread as stopped when done.
+    void pollingThreadEntry()
+    {
+        _threadStarted = true;
+
+        try
+        {
+            Util::setThreadName(_name);
+            LOG_INF("Starting polling thread [" << _name << "].");
+
+            // Invoke the virtual implementation.
+            pollingThread();
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Exception in polling thread [" << _name << "]: " << exc.what());
+        }
+
+        _threadFinished = true;
     }
 
 private:

@@ -79,8 +79,7 @@ void SocketPoll::startThread()
 {
     if (!_threadStarted)
     {
-        _threadStarted = true;
-        _thread = std::thread(&SocketPoll::pollingThread, this);
+        _thread = std::thread(&SocketPoll::pollingThreadEntry, this);
         _owner = _thread.get_id();
     }
 }
