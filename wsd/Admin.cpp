@@ -232,10 +232,10 @@ void AdminRequestHandler::sendTextFrame(const std::string& message)
     sendFrame(message);
 }
 
-bool AdminRequestHandler::handleInitialRequest(const std::weak_ptr<StreamSocket> &socketWeak,
-                                               const Poco::Net::HTTPRequest& request)
+bool AdminRequestHandler::handleInitialRequest(
+    const std::weak_ptr<StreamSocket> &socketWeak,
+    const Poco::Net::HTTPRequest& request)
 {
-    HTTPResponse response;
     auto socket = socketWeak.lock();
 
     // Different session id pool for admin sessions (?)
@@ -260,28 +260,12 @@ bool AdminRequestHandler::handleInitialRequest(const std::weak_ptr<StreamSocket>
         return true;
     }
 
-// FIXME: ... should we move ourselves to an Admin poll [!?] ...
-//  Probably [!] ... and use this termination thing ? ...
-//  Perhaps that should be the 'Admin' instance / sub-class etc.
-//  FIXME: have name 'admin' etc.
-//                            []() { return TerminationFlag.load(); });
-#if 0
-    catch(const Poco::Net::NotAuthenticatedException& exc)
-    {
-        LOG_INF("Admin::NotAuthenticated");
-        response.set("WWW-Authenticate", "Basic realm=\"online\"");
-        response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
-        response.setContentLength(0);
-        socket->send(response);
-    }
-    catch (const std::exception& exc)
-    {
-        LOG_INF("Admin::handleRequest: Exception: " << exc.what());
-        response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
-        response.setContentLength(0);
-        socket->send(response);
-    }
-#endif
+    HTTPResponse response;
+    response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
+    response.setContentLength(0);
+    LOG_INF("Admin::handleInitialRequest bad request");
+    socket->send(response);
+
     return false;
 }
 

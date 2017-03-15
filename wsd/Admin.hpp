@@ -51,7 +51,6 @@ private:
 
 private:
     Admin* _admin;
-//    std::shared_ptr<LOOLWebSocket> _adminWs; FIXME - this is us now !
     int _sessionId;
     bool _isAuthenticated;
 };
