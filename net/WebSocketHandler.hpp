@@ -96,7 +96,7 @@ public:
         if (socket == nullptr)
             return;
 
-        LOG_TRC("#" << socket->getFD() << " shutdown websocket.");
+        LOG_TRC("#" << socket->getFD() << ": Shutdown websocket.");
 
         const size_t len = statusMessage.size();
         std::vector<char> buf(2 + len);
@@ -123,7 +123,7 @@ public:
         if (len == 0)
             return false; // avoid logging.
 
-        LOG_TRC("Incoming WebSocket data of " << len << " bytes to socket #" << socket->getFD());
+        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes.");
 
         if (len < 2) // partial read
             return false;
@@ -185,7 +185,7 @@ public:
         socket->_inBuffer.erase(socket->_inBuffer.begin(), socket->_inBuffer.begin() + headerLen + payloadLen);
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
-        LOG_TRC("Incoming WebSocket message code " << code << " fin? " << fin << " payload length " << _wsPayload.size());
+        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << code << " fin? " << fin << " payload length " << _wsPayload.size());
 
         if (code & WSOpCode::Close)
         {
@@ -227,7 +227,9 @@ public:
 
     bool hasQueuedWrites() const override
     {
-        LOG_TRC("WebSocket - asked for queued writes");
+        auto socket = _socket.lock();
+        if (socket != nullptr)
+            LOG_TRC("#" << socket->getFD() << ": WebSocket - asked for queued writes");
         return false;
     }
 
@@ -345,19 +347,19 @@ protected:
     /// Upgrade the http(s) connection to a websocket.
     void upgradeToWebSocket(const Poco::Net::HTTPRequest& req)
     {
-        LOG_TRC("Upgrading to WebSocket");
-        assert(_wsState == WSState::HTTP);
-
         auto socket = _socket.lock();
         if (socket == nullptr)
             throw std::runtime_error("Invalid socket while upgrading to WebSocket. Request: " + req.getURI());
+
+        LOG_TRC("#" << socket->getFD() << ": Upgrading to WebSocket.");
+        assert(_wsState == WSState::HTTP);
 
         // create our websocket goodness ...
         const int wsVersion = std::stoi(req.get("Sec-WebSocket-Version", "13"));
         const std::string wsKey = req.get("Sec-WebSocket-Key", "");
         const std::string wsProtocol = req.get("Sec-WebSocket-Protocol", "chat");
         // FIXME: other sanity checks ...
-        LOG_INF("WebSocket version " << wsVersion << " key '" << wsKey << "'.");
+        LOG_INF("#" << socket->getFD() << ": WebSocket version " << wsVersion << " key '" << wsKey << "'.");
 
         std::ostringstream oss;
         oss << "HTTP/1.1 101 Switching Protocols\r\n"

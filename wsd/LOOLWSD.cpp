@@ -1511,7 +1511,7 @@ private:
             auto logger = Log::info();
             if (logger.enabled())
             {
-                logger << "Prisoner HTTP Request from #" << socket->getFD() << ": "
+                logger << "#" << socket->getFD() << ": Prisoner HTTP Request: "
                        << request.getMethod() << ' '
                        << request.getURI() << ' '
                        << request.getVersion();
@@ -1684,7 +1684,7 @@ private:
             auto logger = Log::info();
             if (logger.enabled())
             {
-                logger << "Client HTTP Request: #" << socket->getFD() << ": "
+                logger << "#" << socket->getFD() << ": Client HTTP Request: "
                        << request.getMethod() << ' '
                        << request.getURI() << ' '
                        << request.getVersion();

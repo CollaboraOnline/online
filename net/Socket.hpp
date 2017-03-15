@@ -54,7 +54,7 @@ public:
     {
         // TODO: Should we shutdown here or up to the client?
 
-        LOG_TRC("#" << getFD() << " close socket.");
+        LOG_TRC("#" << getFD() << " Socket dtor.");
 
         // Doesn't block on sockets; no error handling needed.
         close(_fd);
@@ -102,7 +102,7 @@ public:
         _sendBufferSize = getSocketBufferSize();
         if (rc != 0 || _sendBufferSize < 0 )
         {
-            LOG_ERR("Error getting socket buffer size " << errno);
+            LOG_ERR("#" << _fd << ": Error getting socket buffer size " << errno);
             _sendBufferSize = DefaultSendBufferSize;
             return false;
         }
@@ -110,11 +110,12 @@ public:
         {
             if (_sendBufferSize > MaximumSendBufferSize * 2)
             {
-                LOG_TRC("Clamped send buffer size to " << MaximumSendBufferSize << " from " << _sendBufferSize);
+                LOG_TRC("#" << _fd << ": Clamped send buffer size to " <<
+                        MaximumSendBufferSize << " from " << _sendBufferSize);
                 _sendBufferSize = MaximumSendBufferSize;
             }
             else
-                LOG_TRC("Set socket buffer size to " << _sendBufferSize);
+                LOG_TRC("#" << _fd << ": Set socket buffer size to " << _sendBufferSize);
             return true;
         }
     }
@@ -220,7 +221,7 @@ protected:
 
         const int oldSize = getSocketBufferSize();
         setSocketBufferSize(0);
-        LOG_TRC("Socket #" << _fd << " buffer size: " << getSendBufferSize() << " (was " << oldSize << ")");
+        LOG_TRC("#" << _fd << ": Buffer size: " << getSendBufferSize() << " (was " << oldSize << ")");
 #endif
 
     }
@@ -548,7 +549,7 @@ public:
     virtual void shutdown() override
     {
         _shutdownSignalled = true;
-        LOG_TRC("#" << getFD() << ": shutdown signalled");
+        LOG_TRC("#" << getFD() << ": Async shutdown requested.");
     }
 
     /// Perform the real shutdown.
@@ -707,7 +708,7 @@ protected:
 
         if (closed)
         {
-            LOG_TRC("#" << getFD() << ": closed.");
+            LOG_TRC("#" << getFD() << ": Closed. Firing onDisconnect.");
             _closed = true;
             _socketHandler->onDisconnect();
         }
@@ -734,12 +735,12 @@ protected:
 
                 auto& log = Log::logger();
                 if (log.trace() && len > 0) {
-                    LOG_TRC("#" << getFD() << ": Wrote outgoing data " << len << " bytes");
+                    LOG_TRC("#" << getFD() << ": Wrote outgoing data " << len << " bytes.");
                     // log.dump("", &_outBuffer[0], len);
                 }
 
                 if (len <= 0)
-                    LOG_SYS("#" << getFD() << ": Wrote outgoing data " << len << " bytes");
+                    LOG_SYS("#" << getFD() << ": Wrote outgoing data " << len << " bytes.");
             }
             while (len < 0 && errno == EINTR);
 
@@ -807,7 +808,7 @@ namespace HttpHelper
         struct stat st;
         if (stat(path.c_str(), &st) != 0)
         {
-            LOG_WRN("Failed to stat [" << path << "]. File will not be sent.");
+            LOG_WRN("#" << socket->getFD() << ": Failed to stat [" << path << "]. File will not be sent.");
             throw Poco::FileNotFoundException("Failed to stat [" + path + "]. File will not be sent.");
             return;
         }
@@ -828,7 +829,7 @@ namespace HttpHelper
         std::ostringstream oss;
         response.write(oss);
         const std::string header = oss.str();
-        LOG_TRC("Sending file [" << path << "]: " << header);
+        LOG_TRC("#" << socket->getFD() << ": Sending file [" << path << "]: " << header);
         socket->send(header);
 
         std::ifstream file(path, std::ios::binary);
