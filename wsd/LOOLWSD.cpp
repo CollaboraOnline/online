@@ -1396,7 +1396,7 @@ static void removeDocBrokerSession(const std::shared_ptr<DocumentBroker>& docBro
     }
 }
 
-static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHandler& ws,
+static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHandler* ws,
                                                              const std::string& id,
                                                              const Poco::URI& uriPublic,
                                                              const std::shared_ptr<DocumentBroker>& docBroker,
@@ -1411,9 +1411,12 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
             LOG_WRN("DocBroker is marked to destroy, attempting to add session anyway.");
 
         // Now we have a DocumentBroker and we're ready to process client commands.
-        const std::string statusReady = "statusindicator: ready";
-        LOG_TRC("Sending to Client [" << statusReady << "].");
-        ws.sendFrame(statusReady);
+        if (ws)
+        {
+            const std::string statusReady = "statusindicator: ready";
+            LOG_TRC("Sending to Client [" << statusReady << "].");
+            ws->sendFrame(statusReady);
+        }
 
         // In case of WOPI, if this session is not set as readonly, it might be set so
         // later after making a call to WOPI host which tells us the permission on files
@@ -2193,7 +2196,7 @@ private:
         if (docBroker)
         {
             // TODO: Move to DocumentBroker.
-            auto clientSession = createNewClientSession(ws, _id, uriPublic, docBroker, isReadOnly);
+            auto clientSession = createNewClientSession(&ws, _id, uriPublic, docBroker, isReadOnly);
             if (clientSession)
             {
                 // Transfer the client socket to the DocumentBroker.
