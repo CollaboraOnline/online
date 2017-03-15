@@ -22,7 +22,6 @@
 
 #include "AdminModel.hpp"
 #include "Log.hpp"
-#include <LOOLWebSocket.hpp>
 
 #include "net/WebSocketHandler.hpp"
 
@@ -76,6 +75,9 @@ public:
         startThread();
     }
 
+    /// Custom poll thread function
+    void pollingThread() override;
+
     unsigned getTotalMemoryUsage();
 
     /// Update the Admin Model.
@@ -114,58 +116,10 @@ private:
     AdminModel _model;
     std::mutex _modelMutex;
     int _forKitPid;
-
-    Poco::Util::Timer _memStatsTimer;
-    Poco::AutoPtr<MemoryStatsTask> _memStatsTask;
-    unsigned _memStatsTaskInterval = 5000;
-
-    Poco::Util::Timer _cpuStatsTimer;
-    Poco::Util::TimerTask::Ptr _cpuStatsTask;
-    unsigned _cpuStatsTaskInterval = 5000;
-};
-
-/// Memory statistics.
-class MemoryStatsTask : public Poco::Util::TimerTask
-{
-public:
-    MemoryStatsTask(Admin* admin)
-        : _admin(admin),
-          _lastTotalMemory(0)
-    {
-        LOG_DBG("Memory stat ctor");
-    }
-
-    ~MemoryStatsTask()
-    {
-        LOG_DBG("Memory stat dtor");
-    }
-
-    long getLastTotalMemory() { return _lastTotalMemory; }
-
-    void run() override;
-
-private:
-    Admin* _admin;
     long _lastTotalMemory;
-};
 
-/// CPU statistics.
-class CpuStats : public Poco::Util::TimerTask
-{
-public:
-    CpuStats(Admin* /*admin*/)
-    {
-        LOG_DBG("Cpu stat ctor");
-    }
-
-    ~CpuStats()
-    {
-        LOG_DBG("Cpu stat dtor");
-    }
-
-    void run() override;
-
-private:
+    std::atomic<int> _memStatsTaskIntervalMs;
+    std::atomic<int> _cpuStatsTaskIntervalMs;
 };
 
 #endif

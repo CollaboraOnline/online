@@ -58,15 +58,6 @@ public:
     using LoolException::LoolException;
 };
 
-/// An generic error-message exception meant to
-/// propagate via a valid LOOLWebSocket to the client.
-/// The contents of what() will be displayed on screen.
-class WebSocketErrorMessageException : public LoolException
-{
-public:
-    using LoolException::LoolException;
-};
-
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

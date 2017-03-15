@@ -32,7 +32,6 @@
 #include "FileServer.hpp"
 #include "IoUtil.hpp"
 #include "Protocol.hpp"
-#include "LOOLWebSocket.hpp" // FIXME: remove.
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "Storage.hpp"
@@ -87,16 +86,18 @@ void AdminRequestHandler::handleMessage(bool /* fin */, WSOpCode /* code */, std
         }
         else
         {
-            sendTextFrame("InvalidAuthToken");
+            sendFrame("InvalidAuthToken");
             LOG_TRC("Invalid auth token");
+            shutdown();
             return;
         }
     }
 
     if (!_isAuthenticated)
     {
-        sendTextFrame("NotAuthenticated");
+        sendFrame("NotAuthenticated");
         LOG_TRC("Not authenticated");
+        shutdown();
         return;
     }
     else if (tokens[0] == "documents" ||
@@ -229,7 +230,11 @@ AdminRequestHandler::AdminRequestHandler(Admin* adminManager,
 void AdminRequestHandler::sendTextFrame(const std::string& message)
 {
     UnitWSD::get().onAdminQueryMessage(message);
-    sendFrame(message);
+    std::cerr << "Admin: send text frame '" << message << "'\n";
+    if (_isAuthenticated)
+        sendFrame(message);
+    else
+        LOG_TRC("Skip sending message to non-authenticated client: '" << message << "'");
 }
 
 bool AdminRequestHandler::handleInitialRequest(
@@ -273,7 +278,10 @@ bool AdminRequestHandler::handleInitialRequest(
 Admin::Admin() :
     SocketPoll("admin"),
     _model(AdminModel()),
-    _forKitPid(-1)
+    _forKitPid(-1),
+    _lastTotalMemory(0),
+    _memStatsTaskIntervalMs(5000),
+    _cpuStatsTaskIntervalMs(5000)
 {
     LOG_INF("Admin ctor.");
 
@@ -281,20 +289,54 @@ Admin::Admin() :
     const auto totalMem = getTotalMemoryUsage();
     LOG_TRC("Total memory used: " << totalMem);
     _model.addMemStats(totalMem);
-
-    _memStatsTask = new MemoryStatsTask(this);
-    _memStatsTimer.schedule(_memStatsTask, _memStatsTaskInterval, _memStatsTaskInterval);
-
-    _cpuStatsTask = new CpuStats(this);
-    _cpuStatsTimer.schedule(_cpuStatsTask, _cpuStatsTaskInterval, _cpuStatsTaskInterval);
 }
 
 Admin::~Admin()
 {
     LOG_INF("~Admin dtor.");
+}
 
-    _memStatsTask->cancel();
-    _cpuStatsTask->cancel();
+void Admin::pollingThread()
+{
+    std::chrono::steady_clock::time_point lastCPU, lastMem;
+
+    lastCPU = std::chrono::steady_clock::now();
+    lastMem = lastCPU;
+
+    while (!_stop && !TerminationFlag && !ShutdownRequestFlag)
+    {
+        std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+        int cpuWait = _cpuStatsTaskIntervalMs -
+            std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCPU).count();
+        if (cpuWait < 0)
+        {
+            // TODO: implement me ...
+            lastCPU = now;
+            cpuWait += _cpuStatsTaskIntervalMs;
+        }
+        int memWait = _memStatsTaskIntervalMs -
+            std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCPU).count();
+        if (memWait < 0)
+        {
+            std::unique_lock<std::mutex> modelLock(getLock());
+            const auto totalMem = getTotalMemoryUsage();
+            if (totalMem != _lastTotalMemory)
+            {
+                LOG_TRC("Total memory used: " << totalMem);
+                _lastTotalMemory = totalMem;
+            }
+
+            _model.addMemStats(totalMem);
+
+            lastMem = now;
+            memWait += _memStatsTaskIntervalMs;
+        }
+
+        // Handle websockets & other work.
+        int timeout = std::min(cpuWait, memWait);
+        LOG_TRC("Admin poll for " << timeout << "ms");
+        poll(timeout);
+    }
 }
 
 void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId)
@@ -316,43 +358,18 @@ void Admin::rmDoc(const std::string& docKey)
     _model.removeDocument(docKey);
 }
 
-void MemoryStatsTask::run()
-{
-    std::unique_lock<std::mutex> modelLock(_admin->getLock());
-    const auto totalMem = _admin->getTotalMemoryUsage();
-
-    if (totalMem != _lastTotalMemory)
-    {
-        LOG_TRC("Total memory used: " << totalMem);
-        _lastTotalMemory = totalMem;
-    }
-
-    _admin->getModel().addMemStats(totalMem);
-}
-
-void CpuStats::run()
-{
-    //TODO: Implement me
-    //std::unique_lock<std::mutex> modelLock(_admin->getLock());
-    //model.addCpuStats(totalMem);
-}
-
 void Admin::rescheduleMemTimer(unsigned interval)
 {
-    _memStatsTask->cancel();
-    _memStatsTaskInterval = interval;
-    _memStatsTask = new MemoryStatsTask(this);
-    _memStatsTimer.schedule(_memStatsTask, _memStatsTaskInterval, _memStatsTaskInterval);
+    _memStatsTaskIntervalMs = interval;
     LOG_INF("Memory stats interval changed - New interval: " << interval);
+    wakeup();
 }
 
 void Admin::rescheduleCpuTimer(unsigned interval)
 {
-    _cpuStatsTask->cancel();
-    _cpuStatsTaskInterval = interval;
-    _cpuStatsTask = new CpuStats(this);
-    _cpuStatsTimer.schedule(_cpuStatsTask, _cpuStatsTaskInterval, _cpuStatsTaskInterval);
+    _cpuStatsTaskIntervalMs = interval;
     LOG_INF("CPU stats interval changed - New interval: " << interval);
+    wakeup();
 }
 
 unsigned Admin::getTotalMemoryUsage()
@@ -373,12 +390,12 @@ unsigned Admin::getTotalMemoryUsage()
 
 unsigned Admin::getMemStatsInterval()
 {
-    return _memStatsTaskInterval;
+    return _memStatsTaskIntervalMs;
 }
 
 unsigned Admin::getCpuStatsInterval()
 {
-    return _cpuStatsTaskInterval;
+    return _cpuStatsTaskIntervalMs;
 }
 
 AdminModel& Admin::getModel()
