@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#include <Poco/DateTime.h>
+#include <Poco/DateTimeFormat.h>
+#include <Poco/DateTimeFormatter.h>
+
 #include "SigUtil.hpp"
 #include "Socket.hpp"
 #include "ServerSocket.hpp"
@@ -145,6 +149,59 @@ void SocketPoll::dumpState(std::ostream& os)
     os << "\tfd\tevents\trsize\twsize\n";
     for (auto &i : _pollSockets)
         i->dumpState(os);
+}
+
+namespace HttpHelper
+{
+    void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+                  Poco::Net::HTTPResponse& response, bool noCache)
+    {
+        struct stat st;
+        if (stat(path.c_str(), &st) != 0)
+        {
+            LOG_WRN("#" << socket->getFD() << ": Failed to stat [" << path << "]. File will not be sent.");
+            throw Poco::FileNotFoundException("Failed to stat [" + path + "]. File will not be sent.");
+            return;
+        }
+
+        int bufferSize = std::min(st.st_size, (off_t)Socket::MaximumSendBufferSize);
+        if (st.st_size >= socket->getSendBufferSize())
+        {
+            socket->setSocketBufferSize(bufferSize);
+            bufferSize = socket->getSendBufferSize();
+        }
+
+        response.setContentLength(st.st_size);
+        response.set("User-Agent", HTTP_AGENT_STRING);
+        response.set("Date", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
+        if (!noCache)
+        {
+            // 60 * 60 * 24 * 128 (days) = 11059200
+            response.set("Cache-Control", "max-age=11059200");
+            response.set("ETag", "\"" LOOLWSD_VERSION_HASH "\"");
+        }
+
+        std::ostringstream oss;
+        response.write(oss);
+        const std::string header = oss.str();
+        LOG_TRC("#" << socket->getFD() << ": Sending file [" << path << "]: " << header);
+        socket->send(header);
+
+        std::ifstream file(path, std::ios::binary);
+        bool flush = true;
+        do
+        {
+            char buf[bufferSize];
+            file.read(buf, sizeof(buf));
+            const int size = file.gcount();
+            if (size > 0)
+                socket->send(buf, size, flush);
+            else
+                break;
+            flush = false;
+        }
+        while (file);
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

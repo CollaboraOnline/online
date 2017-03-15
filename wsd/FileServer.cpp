@@ -197,7 +197,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             }
 
             response.setContentType(mimeType);
-            HttpHelper::sendFile(socket, filepath, response);
+            HttpHelper::sendFile(socket, filepath, response, noCache);
         }
     }
     catch (const Poco::Net::NotAuthenticatedException& exc)

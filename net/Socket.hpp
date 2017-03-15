@@ -820,58 +820,15 @@ protected:
 
 namespace HttpHelper
 {
-    inline void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-                         Poco::Net::HTTPResponse& response)
-    {
-        struct stat st;
-        if (stat(path.c_str(), &st) != 0)
-        {
-            LOG_WRN("#" << socket->getFD() << ": Failed to stat [" << path << "]. File will not be sent.");
-            throw Poco::FileNotFoundException("Failed to stat [" + path + "]. File will not be sent.");
-            return;
-        }
-
-        int bufferSize = std::min(st.st_size, (off_t)Socket::MaximumSendBufferSize);
-        if (st.st_size >= socket->getSendBufferSize())
-        {
-            socket->setSocketBufferSize(bufferSize);
-            bufferSize = socket->getSendBufferSize();
-        }
-
-        response.setContentLength(st.st_size);
-        response.set("User-Agent", HTTP_AGENT_STRING);
-        // 60 * 60 * 24 * 128 (days) = 11059200
-        response.set("Cache-Control", "max-age=11059200");
-        response.set("ETag", "\"" LOOLWSD_VERSION_HASH "\"");
-
-        std::ostringstream oss;
-        response.write(oss);
-        const std::string header = oss.str();
-        LOG_TRC("#" << socket->getFD() << ": Sending file [" << path << "]: " << header);
-        socket->send(header);
-
-        std::ifstream file(path, std::ios::binary);
-        bool flush = true;
-        do
-        {
-            char buf[bufferSize];
-            file.read(buf, sizeof(buf));
-            const int size = file.gcount();
-            if (size > 0)
-                socket->send(buf, size, flush);
-            else
-                break;
-            flush = false;
-        }
-        while (file);
-    }
+    void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+                  Poco::Net::HTTPResponse& response, bool noCache = false);
 
     inline void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-                         const std::string& mediaType)
+                         const std::string& mediaType, bool noCache = false)
     {
         Poco::Net::HTTPResponse response;
         response.setContentType(mediaType);
-        sendFile(socket, path, response);
+        sendFile(socket, path, response, noCache);
     }
 };
 
