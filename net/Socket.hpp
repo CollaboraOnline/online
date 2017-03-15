@@ -517,7 +517,7 @@ class StreamSocket : public Socket, public std::enable_shared_from_this<StreamSo
 {
 public:
     /// Create a StreamSocket from native FD and take ownership of handler instance.
-    StreamSocket(const int fd, std::unique_ptr<SocketHandlerInterface> socketHandler) :
+    StreamSocket(const int fd, std::shared_ptr<SocketHandlerInterface> socketHandler) :
         Socket(fd),
         _socketHandler(std::move(socketHandler)),
         _closed(false),
@@ -626,7 +626,7 @@ public:
     }
 
     /// Replace the existing SocketHandler with a new one.
-    void setHandler(std::unique_ptr<SocketHandlerInterface> handler)
+    void setHandler(std::shared_ptr<SocketHandlerInterface> handler)
     {
         _socketHandler = std::move(handler);
         _socketHandler->onConnect(shared_from_this());
@@ -637,7 +637,7 @@ public:
     /// but we can't have a shared_ptr in the ctor.
     template <typename TSocket>
     static
-    std::shared_ptr<TSocket> create(const int fd, std::unique_ptr<SocketHandlerInterface> handler)
+    std::shared_ptr<TSocket> create(const int fd, std::shared_ptr<SocketHandlerInterface> handler)
     {
         SocketHandlerInterface* pHandler = handler.get();
         auto socket = std::make_shared<TSocket>(fd, std::move(handler));
@@ -777,7 +777,7 @@ protected:
 
 protected:
     /// Client handling the actual data.
-    std::unique_ptr<SocketHandlerInterface> _socketHandler;
+    std::shared_ptr<SocketHandlerInterface> _socketHandler;
 
     /// True if we are already closed.
     bool _closed;

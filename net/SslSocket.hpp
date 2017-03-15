@@ -19,7 +19,7 @@
 class SslStreamSocket : public StreamSocket
 {
 public:
-    SslStreamSocket(const int fd, std::unique_ptr<SocketHandlerInterface> responseClient) :
+    SslStreamSocket(const int fd, std::shared_ptr<SocketHandlerInterface> responseClient) :
         StreamSocket(fd, std::move(responseClient)),
         _ssl(nullptr),
         _sslWantsTo(SslWantsTo::Neither),
