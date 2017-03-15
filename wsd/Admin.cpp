@@ -32,13 +32,16 @@
 #include "FileServer.hpp"
 #include "IoUtil.hpp"
 #include "Protocol.hpp"
-#include "LOOLWebSocket.hpp"
+#include "LOOLWebSocket.hpp" // FIXME: remove.
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
+
+#include "net/Socket.hpp"
+#include "net/WebSocketHandler.hpp"
 
 #include "common/SigUtil.hpp"
 
@@ -245,14 +248,14 @@ void AdminRequestHandler::sendTextFrame(const std::string& message)
     _adminWs->sendFrame(message.data(), message.size());
 }
 
-void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerResponse& response)
+void AdminRequestHandler::handleInitialRequest(const std::weak_ptr<StreamSocket> &socketWeak,
+                                               const Poco::Net::HTTPRequest& request)
 {
+    HTTPResponse response;
+    auto socket = socketWeak.lock();
+
     // Different session id pool for admin sessions (?)
-    const auto sessionId = Util::decodeId(LOOLWSD::GenSessionId());
-
-    Util::setThreadName("admin_ws_" + std::to_string(sessionId));
-
-    LOG_DBG("Thread started.");
+//    const auto sessionId = Util::decodeId(LOOLWSD::GenSessionId());
 
     try
     {
@@ -261,7 +264,10 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
 
         if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
         {
-            handleWSRequests(request, response, sessionId);
+            // First Upgrade.
+            WebSocketHandler ws(socketWeak, request);
+
+//            handleWSRequests(request, response, sessionId);
         }
     }
     catch(const Poco::Net::NotAuthenticatedException& exc)
@@ -270,17 +276,15 @@ void AdminRequestHandler::handleRequest(HTTPServerRequest& request, HTTPServerRe
         response.set("WWW-Authenticate", "Basic realm=\"online\"");
         response.setStatusAndReason(HTTPResponse::HTTP_UNAUTHORIZED);
         response.setContentLength(0);
-        response.send();
+        socket->send(response);
     }
     catch (const std::exception& exc)
     {
         LOG_INF("Admin::handleRequest: Exception: " << exc.what());
         response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
         response.setContentLength(0);
-        response.send();
+        socket->send(response);
     }
-
-    LOG_DBG("Thread finished.");
 }
 
 /// An admin command processor.

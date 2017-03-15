@@ -1807,7 +1807,9 @@ private:
             // Admin connections
             else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
             {
-                handleAdminRequest(request);
+                LOG_ERR("Admin request: " << request.getURI());
+                AdminRequestHandler::handleInitialRequest(_socket, request);
+
             }
             // Client post and websocket connections
             else if ((request.getMethod() == HTTPRequest::HTTP_GET ||
@@ -1879,12 +1881,6 @@ private:
         auto socket = _socket.lock();
         FileServerRequestHandler::handleRequest(request, message, socket);
         socket->shutdown();
-    }
-
-    void handleAdminRequest(const Poco::Net::HTTPRequest& request)
-    {
-        LOG_ERR("Admin request: " << request.getURI());
-        // requestHandler = Admin::createRequestHandler();
     }
 
     void handleRootRequest(const Poco::Net::HTTPRequest& request)

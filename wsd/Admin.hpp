@@ -25,14 +25,16 @@
 #include <LOOLWebSocket.hpp>
 
 class Admin;
+class StreamSocket;
 
 /// Admin requests over HTTP(S) handler.
-class AdminRequestHandler : public Poco::Net::HTTPRequestHandler
+class AdminRequestHandler /// public Poco::Net::HTTPRequestHandler
 {
 public:
     AdminRequestHandler(Admin* adminManager);
 
-    void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) override;
+    static void handleInitialRequest(const std::weak_ptr<StreamSocket> &socket,
+                                     const Poco::Net::HTTPRequest& request);
 
 private:
     void handleWSRequests(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response, int sessionId);
