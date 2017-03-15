@@ -251,6 +251,10 @@ public:
         return _sessions.size();
     }
 
+    /// Are we running in either shutdown, or the polling thread.
+    bool isCorrectThread();
+
+    /// Pretty print internal state to a stream.
     void dumpState(std::ostream& os);
 
     std::string getJailRoot() const;

@@ -55,24 +55,11 @@ public:
     size_t enqueue(const Item& item)
     {
         std::unique_lock<std::mutex> lock(_mutex);
-        bool wasEmpty = _queue.empty();
-        if (!stopping())
-        {
-            if (deduplicate(item))
-            {
-                _queue.push_back(item);
-            }
-        }
 
-        const size_t queuesize = _queue.size();
-        lock.unlock();
+        if (!stopping() && deduplicate(item))
+            _queue.push_back(item);
 
-        if (wasEmpty)
-        {
-            // FIXME: Horrible hack - we need to wakeup just our own poll ...
-            SocketPoll::wakeupWorld();
-        }
-        return queuesize;
+        return _queue.size();
     }
 
     /// Dequeue an item if we have one - @returns true if we do, else false.

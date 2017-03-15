@@ -178,9 +178,7 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
             auto& firstSubscriber = tileBeingRendered->_subscribers[0];
             auto firstSession = firstSubscriber.lock();
             if (firstSession)
-            {
                 firstSession->enqueueSendMessage(payload);
-            }
 
             if (subscriberCount > 1)
             {

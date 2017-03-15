@@ -38,6 +38,7 @@ wsd_sources = \
             ../common/MessageQueue.cpp \
             ../kit/Kit.cpp \
             ../wsd/TileCache.cpp \
+            ../wsd/TestStubs.cpp \
             ../common/Unit.cpp \
             ../common/Util.cpp \
             ../net/Socket.cpp

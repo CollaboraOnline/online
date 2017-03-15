@@ -167,6 +167,11 @@ void DocumentBroker::startThread()
     _poll->startThread();
 }
 
+bool DocumentBroker::isCorrectThread()
+{
+    return _poll->isCorrectThread();
+}
+
 // The inner heart of the DocumentBroker - our poll loop.
 void DocumentBroker::pollThread()
 {

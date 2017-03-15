@@ -14,7 +14,7 @@
 #include "Storage.hpp"
 #include "MessageQueue.hpp"
 #include "SenderQueue.hpp"
-
+#include "DocumentBroker.hpp"
 #include <Poco/URI.h>
 
 class DocumentBroker;
@@ -63,6 +63,10 @@ public:
 
     void enqueueSendMessage(const std::shared_ptr<Message>& data)
     {
+        const auto docBroker = _docBroker.lock();
+        // If in the correct thread - no need for wakeups.
+        assert (!docBroker || docBroker->isCorrectThread());
+
         if (isHeadless())
         {
             // Fail silently and return as there is no actual websocket
