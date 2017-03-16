@@ -157,8 +157,6 @@ public:
     virtual void configure(Poco::Util::LayeredConfiguration& /* config */);
     /// Main-loop reached, time for testing
     virtual void invokeTest() {}
-    /// Tweak the count of pre-spawned kits.
-    virtual void preSpawnCount(int& /* numPrefork */) {}
     /// When a new child kit process reports
     virtual void newChild(WebSocketHandler &/* socket */) {}
     /// Intercept createStorage

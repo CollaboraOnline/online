@@ -410,8 +410,7 @@ static bool prespawnChildren()
         return false;
     }
 
-    const int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
-    return (rebalanceChildren(numPreSpawn) > 0);
+    return rebalanceChildren(LOOLWSD::NumPreSpawnedChildren) > 0;
 }
 
 static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)

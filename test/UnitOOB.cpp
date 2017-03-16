@@ -31,7 +31,6 @@ class UnitOOB : public UnitWSD
 public:
     UnitOOB()
     {
-        setHasKitHooks();
     }
 
     virtual void invokeTest() override
