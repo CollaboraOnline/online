@@ -1396,6 +1396,7 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
     return nullptr;
 }
 
+/// Handles the socket that the prisoner kit connected to WSD on.
 class PrisonerRequestDispatcher : public WebSocketHandler
 {
     std::weak_ptr<ChildProcess> _childProcess;
@@ -1431,6 +1432,10 @@ private:
     /// Called after successful socket reads.
     void handleIncomingMessage() override
     {
+        if (UnitWSD::get().filterHandleRequest(
+                UnitWSD::TestRequest::Prisoner, *this))
+            return;
+
         if (_childProcess.lock())
         {
             // FIXME: inelegant etc. - derogate to websocket code
@@ -1506,11 +1511,7 @@ private:
 
             LOG_INF("New child [" << pid << "].");
 
-            // FIXME:
-            /* if (UnitWSD::get().filterHandleRequest(
-               UnitWSD::TestRequest::Prisoner,
-               request, response))
-               return; */
+            UnitWSD::get().newChild(*this);
 
             auto child = std::make_shared<ChildProcess>(pid, socket, request);
             _childProcess = child; // weak

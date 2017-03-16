@@ -16,7 +16,6 @@
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/Util/Timer.h>
 
 #include "Admin.hpp"
 #include "AdminModel.hpp"

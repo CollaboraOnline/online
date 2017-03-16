@@ -15,6 +15,7 @@
 #include <string>
 
 #include <LOOLWebSocket.hpp>
+#include "net/WebSocketHandler.hpp"
 
 class UnitBase;
 class UnitWSD;
@@ -154,7 +155,7 @@ public:
     /// Tweak the count of pre-spawned kits.
     virtual void preSpawnCount(int& /* numPrefork */) {}
     /// When a new child kit process reports
-    virtual void newChild(const std::shared_ptr<LOOLWebSocket>& /* socket */) {}
+    virtual void newChild(WebSocketHandler &/* socket */) {}
     /// Intercept createStorage
     virtual bool createStorage(const Poco::URI& /* uri */,
                                const std::string& /* jailRoot */,
@@ -166,8 +167,7 @@ public:
     /// Intercept incoming requests, so unit tests can silently communicate
     virtual bool filterHandleRequest(
         TestRequest /* type */,
-        Poco::Net::HTTPServerRequest& /* request */,
-        Poco::Net::HTTPServerResponse& /* response */)
+        WebSocketHandler & /* handler */)
     {
         return false;
     }

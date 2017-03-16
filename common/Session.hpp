@@ -23,14 +23,13 @@
 #include <Poco/Types.h>
 
 #include "Protocol.hpp"
-#include <LOOLWebSocket.hpp>
 #include "Log.hpp"
 #include "MessageQueue.hpp"
 #include "Message.hpp"
 #include "TileCache.hpp"
 #include "WebSocketHandler.hpp"
 
-/// Base class of a LOOLWebSocket session.
+/// Base class of a WebSocket session.
 class Session : public WebSocketHandler
 {
 public:

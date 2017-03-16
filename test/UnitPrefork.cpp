@@ -32,6 +32,7 @@
 #include "Unit.hpp"
 #include "Util.hpp"
 
+#if 0
 const int NumToPrefork = 20;
 
 // Inside the WSD process
@@ -81,7 +82,7 @@ public:
         return true;
     }
 
-    virtual void newChild(const std::shared_ptr<LOOLWebSocket> &socket) override
+    virtual void newChild(const WebSocketHandler &socket) override
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
@@ -324,5 +325,6 @@ UnitBase *unit_create_kit(void)
 {
     return new UnitKitPrefork();
 }
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

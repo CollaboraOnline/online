@@ -12,12 +12,6 @@
 
 #include <mutex>
 
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Runnable.h>
-#include <Poco/Types.h>
-#include <Poco/Util/Timer.h>
-#include <Poco/Util/TimerTask.h>
-
 #include "AdminModel.hpp"
 #include "Log.hpp"
 

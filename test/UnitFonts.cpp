@@ -91,6 +91,7 @@ public:
         }
     }
 
+#if 0 // loolnb - not such a useful test.
     virtual void newChild(const std::shared_ptr<LOOLWebSocket> &socket) override
     {
         Log::info("Fetching font list from kit");
@@ -101,9 +102,9 @@ public:
     }
 
     virtual bool filterHandleRequest(
-                     TestRequest type,
-                     Poco::Net::HTTPServerRequest& request,
-                     Poco::Net::HTTPServerResponse& response) override
+        TestRequest type,
+        Poco::Net::HTTPServerRequest& request,
+        Poco::Net::HTTPServerResponse& response) override
     {
         if (type == UnitWSD::TestRequest::Prisoner &&
             request.getURI().find(UNIT_URI) == 0)
@@ -116,6 +117,7 @@ public:
 
         return false;
     }
+#endif
 };
 
 // Inside the forkit & kit processes

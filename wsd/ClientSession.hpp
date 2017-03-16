@@ -30,6 +30,8 @@ public:
 
     virtual ~ClientSession();
 
+    void handleIncomingMessage() override;
+
     void setReadOnly();
     bool isReadOnly() const { return _isReadOnly; }
 

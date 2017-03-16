@@ -22,6 +22,7 @@
 #include "Protocol.hpp"
 #include "Session.hpp"
 #include "Util.hpp"
+#include "Unit.hpp"
 
 using namespace LOOLProtocol;
 
@@ -48,6 +49,14 @@ ClientSession::~ClientSession()
     LOG_INF("~ClientSession dtor [" << getName() << "].");
 
     stop();
+}
+
+void ClientSession::handleIncomingMessage()
+{
+    if (UnitWSD::get().filterHandleRequest(
+            UnitWSD::TestRequest::Client, *this))
+        return;
+    Session::handleIncomingMessage();
 }
 
 bool ClientSession::_handleInput(const char *buffer, int length)
