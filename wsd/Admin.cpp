@@ -239,7 +239,6 @@ AdminRequestHandler::AdminRequestHandler(Admin* adminManager,
 void AdminRequestHandler::sendTextFrame(const std::string& message)
 {
     UnitWSD::get().onAdminQueryMessage(message);
-    std::cerr << "Admin: send text frame '" << message << "'\n";
     if (_isAuthenticated)
         sendFrame(message);
     else
