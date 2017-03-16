@@ -28,12 +28,12 @@
 class Admin;
 
 /// Handle admin client's Websocket requests & replies.
-class AdminRequestHandler : public WebSocketHandler
+class AdminSocketHandler : public WebSocketHandler
 {
 public:
-    AdminRequestHandler(Admin* adminManager,
-                        const std::weak_ptr<StreamSocket>& socket,
-                        const Poco::Net::HTTPRequest& request);
+    AdminSocketHandler(Admin* adminManager,
+                       const std::weak_ptr<StreamSocket>& socket,
+                       const Poco::Net::HTTPRequest& request);
 
     /// Handle the initial Admin WS upgrade request.
     /// @returns true if we should give this socket to the Admin poll.

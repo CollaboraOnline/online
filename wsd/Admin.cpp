@@ -53,8 +53,9 @@ using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
 using Poco::Util::Application;
 
-    /// Process incoming websocket messages
-void AdminRequestHandler::handleMessage(bool /* fin */, WSOpCode /* code */, std::vector<char> &payload)
+/// Process incoming websocket messages
+void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
+                                       std::vector<char> &payload)
 {
     // FIXME: check fin, code etc.
     const std::string firstLine = getFirstLine(payload.data(), payload.size());
@@ -226,9 +227,9 @@ void AdminRequestHandler::handleMessage(bool /* fin */, WSOpCode /* code */, std
     }
 }
 
-AdminRequestHandler::AdminRequestHandler(Admin* adminManager,
-                                         const std::weak_ptr<StreamSocket>& socket,
-                                         const Poco::Net::HTTPRequest& request)
+AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
+                                       const std::weak_ptr<StreamSocket>& socket,
+                                       const Poco::Net::HTTPRequest& request)
     : WebSocketHandler(socket, request),
       _admin(adminManager),
       _sessionId(0),
@@ -236,7 +237,7 @@ AdminRequestHandler::AdminRequestHandler(Admin* adminManager,
 {
 }
 
-void AdminRequestHandler::sendTextFrame(const std::string& message)
+void AdminSocketHandler::sendTextFrame(const std::string& message)
 {
     UnitWSD::get().onAdminQueryMessage(message);
     if (_isAuthenticated)
@@ -245,7 +246,7 @@ void AdminRequestHandler::sendTextFrame(const std::string& message)
         LOG_TRC("Skip sending message to non-authenticated client: '" << message << "'");
 }
 
-bool AdminRequestHandler::handleInitialRequest(
+bool AdminSocketHandler::handleInitialRequest(
     const std::weak_ptr<StreamSocket> &socketWeak,
     const Poco::Net::HTTPRequest& request)
 {
@@ -260,7 +261,7 @@ bool AdminRequestHandler::handleInitialRequest(
     if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
     {
         Admin &admin = Admin::instance();
-        auto handler = std::make_shared<AdminRequestHandler>(&admin, socketWeak, request);
+        auto handler = std::make_shared<AdminSocketHandler>(&admin, socketWeak, request);
         socket->setHandler(handler);
 
         { // FIXME: weird locking around subscribe ...

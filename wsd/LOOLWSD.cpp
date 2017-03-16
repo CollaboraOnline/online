@@ -1795,7 +1795,7 @@ private:
             else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
             {
                 LOG_ERR("Admin request: " << request.getURI());
-                if (AdminRequestHandler::handleInitialRequest(_socket, request))
+                if (AdminSocketHandler::handleInitialRequest(_socket, request))
                 {
                     // Hand the socket over to the Admin poll.
                     WebServerPoll.releaseSocket(socket);
