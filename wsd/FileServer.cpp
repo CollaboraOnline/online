@@ -21,11 +21,8 @@
 #include <Poco/Net/HTTPBasicCredentials.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
-#include <Poco/Net/SecureServerSocket.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/Runnable.h>
 #include <Poco/StreamCopier.h>
@@ -42,8 +39,6 @@ using Poco::FileInputStream;
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
-using Poco::Net::HTTPServerRequest;
-using Poco::Net::HTTPServerResponse;
 using Poco::Net::NameValueCollection;
 using Poco::Net::HTTPBasicCredentials;
 using Poco::StreamCopier;

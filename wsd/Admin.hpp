@@ -13,8 +13,6 @@
 #include <mutex>
 
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPRequestHandler.h>
-#include <Poco/Net/HTTPServer.h>
 #include <Poco/Runnable.h>
 #include <Poco/Types.h>
 #include <Poco/Util/Timer.h>
@@ -41,8 +39,7 @@ public:
                                      const Poco::Net::HTTPRequest& request);
 
 private:
-    void handleWSRequests(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response, int sessionId);
-
+    /// Sends text frames simply to authenticated clients.
     void sendTextFrame(const std::string& message);
 
     /// Process incoming websocket messages

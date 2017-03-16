@@ -13,6 +13,10 @@
 #include <poll.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/tcp.h>
 
 #include <atomic>
 #include <cassert>
@@ -28,7 +32,6 @@
 
 #include <Poco/Timespan.h>
 #include <Poco/Timestamp.h>
-#include <Poco/Net/SocketAddress.h>
 #include <Poco/Net/HTTPResponse.h>
 
 #include "Common.hpp"

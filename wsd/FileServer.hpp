@@ -11,13 +11,9 @@
 #define INCLUDED_FILESERVER_HPP
 
 #include <string>
+#include "Socket.hpp"
 
 #include <Poco/MemoryStream.h>
-#include <Poco/Net/HTTPRequestHandler.h>
-#include <Poco/Net/HTTPServerRequest.h>
-#include <Poco/Net/HTTPServerResponse.h>
-
-#include "Socket.hpp"
 
 /// Handles file requests over HTTP(S).
 class FileServerRequestHandler

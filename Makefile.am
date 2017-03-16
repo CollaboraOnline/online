@@ -141,7 +141,6 @@ wsd_headers = wsd/Admin.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
               wsd/LOOLWSD.hpp \
-              wsd/LOOLWebSocket.hpp \
               wsd/QueueHandler.hpp \
               wsd/SenderQueue.hpp \
               wsd/Storage.hpp \
@@ -154,6 +153,7 @@ shared_headers = common/Common.hpp \
                  common/IoUtil.hpp \
                  common/FileUtil.hpp \
                  common/Log.hpp \
+	         common/LOOLWebSocket.hpp \
                  common/Protocol.hpp \
                  common/Session.hpp \
                  common/Unit.hpp \

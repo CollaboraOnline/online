@@ -15,14 +15,7 @@
 
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPRequestHandler.h>
-#include <Poco/Net/HTTPServerParams.h>
-#include <Poco/Net/HTTPServerRequest.h>
-#include <Poco/Net/HTTPServerResponse.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/Net/SecureServerSocket.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/Util/ServerApplication.h>
 #include <Poco/Util/Timer.h>
 
 #include "Admin.hpp"
@@ -47,10 +40,7 @@
 using namespace LOOLProtocol;
 
 using Poco::StringTokenizer;
-using Poco::Net::HTTPRequestHandler;
 using Poco::Net::HTTPResponse;
-using Poco::Net::HTTPServerRequest;
-using Poco::Net::HTTPServerResponse;
 using Poco::Util::Application;
 
 /// Process incoming websocket messages
@@ -118,9 +108,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     {
         const std::string result = model.query(tokens[0]);
         if (!result.empty())
-        {
             sendTextFrame(tokens[0] + ' ' + result);
-        }
     }
     else if (tokens[0] == "subscribe" && tokens.count() > 1)
     {

@@ -59,29 +59,15 @@
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
 #include <Poco/MemoryStream.h>
-#include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/Net/ConsoleCertificateHandler.h>
 #include <Poco/Net/Context.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPRequestHandler.h>
-#include <Poco/Net/HTTPRequestHandlerFactory.h>
-#include <Poco/Net/HTTPServer.h>
-#include <Poco/Net/HTTPServerParams.h>
-#include <Poco/Net/HTTPServerRequest.h>
-#include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/IPAddress.h>
-#include <Poco/Net/InvalidCertificateHandler.h>
-#include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/MessageHeader.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/Net.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
-#include <Poco/Net/PrivateKeyPassphraseHandler.h>
-#include <Poco/Net/SSLManager.h>
-#include <Poco/Net/SecureServerSocket.h>
-#include <Poco/Net/ServerSocket.h>
 #include <Poco/Net/SocketAddress.h>
 #include <Poco/Path.h>
 #include <Poco/Pipe.h>
@@ -112,7 +98,7 @@
 #include "ServerSocket.hpp"
 #include "Session.hpp"
 #if ENABLE_SSL
-#include "SslSocket.hpp"
+#  include "SslSocket.hpp"
 #endif
 #include "Storage.hpp"
 #include "TraceFile.hpp"
@@ -123,11 +109,11 @@
 #include "FileUtil.hpp"
 
 #ifdef KIT_IN_PROCESS
-#include <Kit.hpp>
+#  include <Kit.hpp>
 #endif
 
 #ifdef FUZZER
-#include <tools/Replay.hpp>
+#  include <tools/Replay.hpp>
 #endif
 
 #include "common/SigUtil.hpp"
@@ -139,17 +125,10 @@ using Poco::Exception;
 using Poco::File;
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPRequest;
-using Poco::Net::HTTPRequestHandler;
-using Poco::Net::HTTPRequestHandlerFactory;
 using Poco::Net::HTTPResponse;
-using Poco::Net::HTTPServer;
-using Poco::Net::HTTPServerParams;
-using Poco::Net::HTTPServerRequest;
-using Poco::Net::HTTPServerResponse;
 using Poco::Net::MessageHeader;
 using Poco::Net::NameValueCollection;
 using Poco::Net::PartHandler;
-using Poco::Net::SecureServerSocket;
 using Poco::Net::SocketAddress;
 using Poco::Net::WebSocket;
 using Poco::Path;
@@ -866,9 +845,7 @@ void LOOLWSD::initialize(Application& self)
 void LOOLWSD::initializeSSL()
 {
     if (!LOOLWSD::isSSLEnabled())
-    {
         return;
-    }
 
     const auto ssl_cert_file_path = getPathFromConfig("ssl.cert_file_path");
     LOG_INF("SSL Cert file: " << ssl_cert_file_path);
@@ -885,34 +862,6 @@ void LOOLWSD::initializeSSL()
                            ssl_key_file_path,
                            ssl_ca_file_path);
 #endif
-
-    Poco::Crypto::initializeCrypto();
-
-    Poco::Net::initializeSSL();
-    Poco::Net::Context::Params sslParams;
-    sslParams.certificateFile = ssl_cert_file_path;
-    sslParams.privateKeyFile = ssl_key_file_path;
-    sslParams.caLocation = ssl_ca_file_path;
-    // Don't ask clients for certificate
-    sslParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
-
-    // FIXME: ConsoleCertificateHandler will block on stdin upon error!
-    Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleHandler = new Poco::Net::KeyConsoleHandler(true);
-    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::ConsoleCertificateHandler(true);
-
-    Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::SERVER_USE, sslParams);
-    Poco::Net::SSLManager::instance().initializeServer(consoleHandler, invalidCertHandler, sslContext);
-
-    // Init client
-    Poco::Net::Context::Params sslClientParams;
-    // TODO: Be more strict and setup SSL key/certs for owncloud server and us
-    sslClientParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
-
-    Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleClientHandler = new Poco::Net::KeyConsoleHandler(false);
-    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidClientCertHandler = new Poco::Net::AcceptCertificateHandler(false);
-
-    Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
-    Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
 }
 
 void LOOLWSD::dumpNewSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri, const std::string& path)
