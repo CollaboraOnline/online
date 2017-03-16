@@ -1718,20 +1718,7 @@ private:
     void onConnect(const std::weak_ptr<StreamSocket>& socket) override
     {
         _id = LOOLWSD::GenSessionId();
-        _connectionNum = ++LOOLWSD::NumConnections;
-        LOG_TRC("Connected connection #" << _connectionNum << " of " <<
-                MAX_CONNECTIONS << " max as session [" << _id << "].");
-
         _socket = socket;
-    }
-
-    void onDisconnect() override
-    {
-        // FIXME: Move to ClientSession (ideally, wrap in ConnectionCounter object
-        // to wrap this global NumConnections).
-        const size_t curConnections = --LOOLWSD::NumConnections;
-        LOG_TRC("Disconnected connection #" << _connectionNum << " (of " <<
-                (curConnections + 1) << ") as session [" << _id << "].");
     }
 
     /// Called after successful socket reads.
@@ -2215,7 +2202,7 @@ private:
         // First Upgrade.
         WebSocketHandler ws(_socket, request);
 
-        if (_connectionNum > MAX_CONNECTIONS)
+        if (LOOLWSD::NumConnections >= MAX_CONNECTIONS)
         {
             LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
             shutdownLimitReached(ws);
@@ -2279,7 +2266,6 @@ private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
     std::string _id;
-    size_t _connectionNum;
 };
 
 
