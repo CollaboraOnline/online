@@ -19,7 +19,6 @@ L.DivOverlay = L.Layer.extend({
 
 	onRemove: function (map) {
 		map.removeLayer(this._annotation);
-		this.unbindAnnotation();
 		map._panes.overlayPane.removeChild(this._container);
 	},
 
@@ -56,6 +55,13 @@ L.DivOverlay = L.Layer.extend({
 			this._map.addLayer(this._annotation);
 			this._annotation.edit();
 			this._annotation.focus();
+		}
+	},
+
+	closePopup: function () {
+		if (this._map && this._annotation) {
+			this._annotation.show();
+			this._map.removeLayer(this._annotation);
 		}
 	},
 
