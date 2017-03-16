@@ -27,7 +27,8 @@ var AdminSocketBase = Base.extend({
 
 	onSocketOpen: function() {
 		// Authenticate
-		this.socket.send('auth ' + Util.getCookie('jwt'));
+		cookie = Util.getCookie('jwt');
+		this.socket.send('auth ' + cookie);
 	},
 
 	onSocketMessage: function() {

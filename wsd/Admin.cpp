@@ -70,8 +70,15 @@ void AdminRequestHandler::handleMessage(bool /* fin */, WSOpCode /* code */, std
     std::unique_lock<std::mutex> modelLock(_admin->getLock());
     AdminModel& model = _admin->getModel();
 
-    if (tokens.count() > 1 && tokens[0] == "auth")
+    if (tokens[0] == "auth")
     {
+        if (tokens.count() < 2)
+        {
+            sendFrame("InvalidAuthToken");
+            LOG_TRC("Auth command without any token");
+            shutdown();
+            return;
+        }
         std::string jwtToken;
         LOOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
         const auto& config = Application::instance().config();
@@ -83,6 +90,7 @@ void AdminRequestHandler::handleMessage(bool /* fin */, WSOpCode /* code */, std
         {
             LOG_TRC("JWT token is valid");
             _isAuthenticated = true;
+            return;
         }
         else
         {
@@ -96,8 +104,9 @@ void AdminRequestHandler::handleMessage(bool /* fin */, WSOpCode /* code */, std
     if (!_isAuthenticated)
     {
         sendFrame("NotAuthenticated");
-        LOG_TRC("Not authenticated");
         shutdown();
+        LOG_TRC("Not authenticated - message is '" << firstLine << "' "
+                << tokens.count() << " first: '" << tokens[0] << "'");
         return;
     }
     else if (tokens[0] == "documents" ||

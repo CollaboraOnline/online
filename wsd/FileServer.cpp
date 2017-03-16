@@ -94,8 +94,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
         const std::string jwtToken = authAgent.getAccessToken();
 
         Poco::Net::HTTPCookie cookie("jwt", jwtToken);
-        cookie.setPath("/loleaflet/dist/admin/");
-        cookie.setSecure(true);
+        // bundlify appears to add an extra /dist -> dist/dist/admin
+        cookie.setPath("/loleaflet/dist/");
+        cookie.setSecure(LOOLWSD::isSSLEnabled() ||
+                         LOOLWSD::isSSLTermination());
         response.addCookie(cookie);
 
         return true;
