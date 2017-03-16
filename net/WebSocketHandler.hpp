@@ -225,6 +225,7 @@ public:
             ; // can have multiple msgs in one recv'd packet.
     }
 
+    /// By default rely on the socket buffer.
     bool hasQueuedWrites() const override
     {
         auto socket = _socket.lock();
@@ -233,10 +234,8 @@ public:
         return false;
     }
 
-    void performWrites() override
-    {
-        assert(false && "performWrites not implemented");
-    }
+    /// By default rely on the socket buffer.
+    void performWrites() override {}
 
     /// Sends a WebSocket Text message.
     void sendFrame(const std::string& msg) const
