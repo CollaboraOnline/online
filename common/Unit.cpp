@@ -69,7 +69,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
     if (!unitLibPath.empty())
     {
         Global = linkAndCreateUnit(type, unitLibPath);
-        if (Global)
+        if (Global && type == UnitType::Kit)
         {
             TimeoutThread.startFunc([](){
                     Poco::Thread::trySleep(Global->_timeoutMilliSeconds);
@@ -184,6 +184,7 @@ void UnitBase::exitTest(TestResult result)
         Poco::Util::Application::EXIT_OK :
         Poco::Util::Application::EXIT_SOFTWARE;
     TerminationFlag = true;
+    SocketPoll::wakeupWorld();
 }
 
 void UnitBase::timeout()

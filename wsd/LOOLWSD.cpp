@@ -2518,14 +2518,21 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     time_t startTimeSpan = time(nullptr);
 #endif
 
-    /// Something of a hack to get woken up on exit.
+    auto startStamp = std::chrono::steady_clock::now();
 
+    /// The main-poll does next to nothing:
     SocketPoll mainWait("main");
     while (!TerminationFlag && !ShutdownRequestFlag)
     {
         UnitWSD::get().invokeTest();
 
-        mainWait.poll(SocketPoll::DefaultPollTimeoutMs * 10);
+        mainWait.poll(SocketPoll::DefaultPollTimeoutMs * 2);
+
+        // Unit test timeout
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now() - startStamp).count() <
+            UnitWSD::get().getTimeoutMilliSeconds())
+            UnitWSD::get().timeout();
 
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
         cleanupDocBrokers();

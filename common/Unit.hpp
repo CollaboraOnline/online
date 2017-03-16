@@ -59,9 +59,6 @@ protected:
     /// After this time we invoke 'timeout' default 30 seconds
     void setTimeout(int timeoutMilliSeconds);
 
-    /// If the test times out this gets invoked, the default just exits.
-    virtual void timeout();
-
     enum class TestResult
     {
         Failed,
@@ -96,6 +93,14 @@ public:
                                     std::unique_ptr< std::vector<char> > & /* replace */)
     {
         return false;
+    }
+
+    /// If the test times out this gets invoked, the default just exits.
+    virtual void timeout();
+
+    int getTimeoutMilliSeconds() const
+    {
+        return _timeoutMilliSeconds;
     }
 
     static UnitBase& get()
