@@ -89,24 +89,24 @@ public:
         _senderQueue.stop();
     }
 
-    /**
-     * Return the URL of the saved-as document when it's ready. If called
-     * before it's ready, the call blocks till then.
-     */
-    std::string getSaveAsUrl(const unsigned timeoutMs)
+    void setSaveAsSocket(const std::shared_ptr<StreamSocket>& socket)
     {
-        const auto payload = _saveAsQueue.get(timeoutMs);
-        if (payload.empty())
-        {
-            throw std::runtime_error("Timed-out while getting save-as URL.");
-        }
-
-        return std::string(payload.data(), payload.size());
+        _saveAsSocket = socket;
     }
 
     void setSaveAsUrl(const std::string& url)
     {
-        _saveAsQueue.put(url);
+        Poco::URI resultURL(url);
+        LOG_TRC("Save-as URL: " << resultURL.toString());
+
+        if (!resultURL.getPath().empty())
+        {
+            const std::string mimeType = "application/octet-stream";
+            std::string encodedFilePath;
+            Poco::URI::encode(resultURL.getPath(), "", encodedFilePath);
+            LOG_TRC("Sending file: " << encodedFilePath);
+            HttpHelper::sendFile(_saveAsSocket, encodedFilePath, mimeType);
+        }
     }
 
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }
@@ -164,8 +164,8 @@ private:
     /// Whether this session is the owner of currently opened document
     bool _isDocumentOwner;
 
-    /// Store URLs of completed 'save as' documents.
-    MessageQueue _saveAsQueue;
+    /// The socket to which the converted (saveas) doc is sent.
+    std::shared_ptr<StreamSocket> _saveAsSocket;
 
     bool _isLoaded;
 

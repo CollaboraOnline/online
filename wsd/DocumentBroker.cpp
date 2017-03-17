@@ -478,6 +478,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
 bool DocumentBroker::saveToStorage(const std::string& sessionId,
                                    bool success, const std::string& result)
 {
+    LOG_TRC("Saving to storage docKey [" << _docKey << "] for session [" << sessionId << "]: " << result);
     const bool res = saveToStorageInternal(sessionId, success, result);
 
     // If marked to destroy, then this was the last session.

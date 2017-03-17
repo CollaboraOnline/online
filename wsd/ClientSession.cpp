@@ -414,7 +414,7 @@ bool ClientSession::filterMessage(const std::string& message) const
     {
         // By default, don't allow anything
         allowed = false;
-        if (tokens[0] == "userinactive" || tokens[0] == "useractive")
+        if (tokens[0] == "userinactive" || tokens[0] == "useractive" || tokens[0] == "saveas")
         {
             allowed = true;
         }
@@ -503,7 +503,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             const auto& object = parsedJSON.extract<Poco::JSON::Object::Ptr>();
             if (object->get("commandName").toString() == ".uno:Save")
             {
-                bool success = object->get("success").toString() == "true";
+                const bool success = object->get("success").toString() == "true";
                 std::string result;
                 if (object->has("result"))
                 {

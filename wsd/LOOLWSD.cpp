@@ -1598,47 +1598,6 @@ private:
     void performWrites() override
     {
         LOG_ERR("performWrites");
-        auto socket = _socket.lock();
-
-        // Send it back to the client.
-        try
-        {
-            Poco::URI resultURL(_clientSession->getSaveAsUrl(COMMAND_TIMEOUT_MS));
-            LOG_TRC("Save-as URL: " << resultURL.toString());
-
-            if (!resultURL.getPath().empty())
-            {
-                const std::string mimeType = "application/octet-stream";
-                std::string encodedFilePath;
-                URI::encode(resultURL.getPath(), "", encodedFilePath);
-                LOG_TRC("Sending file: " << encodedFilePath);
-                HttpHelper::sendFile(socket, encodedFilePath, mimeType);
-            }
-        }
-        catch (const std::exception& ex)
-        {
-            LOG_ERR("Failed to get save-as url: " << ex.what());
-        }
-
-        // auto docLock = docBroker->getLock();
-        // sessionsCount = docBroker->removeSession(_id);
-        // if (sessionsCount == 0)
-        // {
-        //     // At this point we're done.
-        //     LOG_DBG("Removing DocumentBroker for docKey [" << docKey << "].");
-        //     DocBrokers.erase(docKey);
-        //     docBroker->terminateChild(docLock, "");
-        //     LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after removing [" << docKey << "].");
-        // }
-        // else
-        // {
-        //     LOG_ERR("Multiple sessions during conversion. " << sessionsCount << " sessions remain.");
-        // }
-
-        // Clean up the temporary directory the HTMLForm ctor created.
-        // Path tempDirectory(fromPath);
-        // tempDirectory.setFileName("");
-        // FileUtil::removeFile(tempDirectory, /*recursive=*/true);
     }
 
 private:
@@ -1980,12 +1939,11 @@ private:
                         WebServerPoll.releaseSocket(socket);
                         docBroker->addSocketToPoll(socket);
 
-                        auto convertToHandler = std::make_shared<ConvertToHandler>(clientSession);
+                        clientSession->setSaveAsSocket(socket);
 
-                        // Set the ConvertToHandler to handle Socket events.
-                        socket->setHandler(convertToHandler);
                         docBroker->startThread();
 
+                        // Load the document manually and request saving in the target format.
                         std::string encodedFrom;
                         URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
                         const std::string load = "load url=" + encodedFrom;
