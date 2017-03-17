@@ -316,25 +316,22 @@ public:
         Poco::Timestamp newNow;
         for (int i = static_cast<int>(size) - 1; i >= 0; --i)
         {
-            if (_pollFds[i].revents)
+            Socket::HandleResult res = Socket::HandleResult::SOCKET_CLOSED;
+            try
             {
-                Socket::HandleResult res = Socket::HandleResult::SOCKET_CLOSED;
-                try
-                {
-                    res = _pollSockets[i]->handlePoll(newNow, _pollFds[i].revents);
-                }
-                catch (const std::exception& exc)
-                {
-                    LOG_ERR("Error while handling poll for socket #" <<
-                            _pollFds[i].fd << " in " << _name << ": " << exc.what());
-                }
+                res = _pollSockets[i]->handlePoll(newNow, _pollFds[i].revents);
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_ERR("Error while handling poll for socket #" <<
+                        _pollFds[i].fd << " in " << _name << ": " << exc.what());
+            }
 
-                if (res == Socket::HandleResult::SOCKET_CLOSED)
-                {
-                    LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
-                            _pollSockets.size() << ") from " << _name);
-                    _pollSockets.erase(_pollSockets.begin() + i);
-                }
+            if (res == Socket::HandleResult::SOCKET_CLOSED)
+            {
+                LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
+                        _pollSockets.size() << ") from " << _name);
+                _pollSockets.erase(_pollSockets.begin() + i);
             }
         }
 
@@ -378,7 +375,8 @@ public:
             rc = ::write(fd, "w", 1);
         } while (rc == -1 && errno == EINTR);
 
-        assert (rc != -1 || errno == EAGAIN || errno == EWOULDBLOCK);
+        if (rc != -1 || errno == EAGAIN || errno == EWOULDBLOCK)
+            LOG_WRN("wakeup socket #" << fd << " is closd at wakeup? error: " << errno);
     }
 
     /// Wakeup the main polling loop in another thread
@@ -675,6 +673,9 @@ protected:
                             const int events) override
     {
         assert(isCorrectThread());
+
+        if (!events)
+            return Socket::HandleResult::CONTINUE;
 
         // FIXME: need to close input, but not output (?)
         bool closed = (events & (POLLHUP | POLLERR | POLLNVAL));

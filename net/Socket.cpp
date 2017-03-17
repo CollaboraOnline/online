@@ -67,16 +67,20 @@ SocketPoll::~SocketPoll()
             _thread.join();
     }
 
+    {
+        std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
+        auto it = std::find(getWakeupsArray().begin(),
+                            getWakeupsArray().end(),
+                            _wakeup[1]);
+
+        if (it != getWakeupsArray().end())
+            getWakeupsArray().erase(it);
+    }
+
     ::close(_wakeup[0]);
     ::close(_wakeup[1]);
-
-    std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
-    auto it = std::find(getWakeupsArray().begin(),
-                        getWakeupsArray().end(),
-                        _wakeup[1]);
-
-    if (it != getWakeupsArray().end())
-        getWakeupsArray().erase(it);
+    _wakeup[0] = -1;
+    _wakeup[1] = -1;
 }
 
 void SocketPoll::startThread()
