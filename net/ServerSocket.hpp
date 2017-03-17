@@ -87,7 +87,8 @@ public:
 
     void dumpState(std::ostream& os) override;
 
-    HandleResult handlePoll(const Poco::Timestamp &/* now */, int events) override
+    HandleResult handlePoll(std::chrono::steady_clock::time_point /* now */,
+                            int events) override
     {
         if (events & POLLIN)
         {

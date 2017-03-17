@@ -29,9 +29,8 @@
 #include <mutex>
 #include <sstream>
 #include <thread>
+#include <chrono>
 
-#include <Poco/Timespan.h>
-#include <Poco/Timestamp.h>
 #include <Poco/Net/HTTPResponse.h>
 
 #include "Common.hpp"
@@ -77,11 +76,12 @@ public:
     virtual int getPollEvents() = 0;
 
     /// Contract the poll timeout to match our needs
-    virtual void updateTimeout(Poco::Timestamp &/*timeout*/) { /* do nothing */ }
+    virtual void updateTimeout(std::chrono::steady_clock::time_point /* now */,
+                               int & /* timeoutMaxMs */) { /* do nothing */ }
 
     /// Handle results of events returned from poll
     enum class HandleResult { CONTINUE, SOCKET_CLOSED };
-    virtual HandleResult handlePoll(const Poco::Timestamp &now, int events) = 0;
+    virtual HandleResult handlePoll(std::chrono::steady_clock::time_point now, int events) = 0;
 
     /// manage latency issues around packet aggregation
     void setNoDelay(bool noDelay = true)
@@ -291,29 +291,29 @@ public:
     }
 
     /// Poll the sockets for available data to read or buffer to write.
-    void poll(const int timeoutMaxMs)
+    void poll(int timeoutMaxMs)
     {
         assert(isCorrectThread());
 
-        Poco::Timestamp now;
-        Poco::Timestamp timeout = now;
-        timeout += Poco::Timespan(0 /* s */, timeoutMaxMs * 1000 /* us */);
+        std::chrono::steady_clock::time_point now =
+            std::chrono::steady_clock::now();
 
         // The events to poll on change each spin of the loop.
-        setupPollFds(timeout);
+        setupPollFds(now, timeoutMaxMs);
         const size_t size = _pollSockets.size();
 
         int rc;
         do
         {
-            rc = ::poll(&_pollFds[0], size + 1, (timeout - now)/1000);
+            rc = ::poll(&_pollFds[0], size + 1, timeoutMaxMs);
         }
         while (rc < 0 && errno == EINTR);
-        LOG_TRC("Poll completed with " << rc << " live polls "
-                << ((rc==0) ? "(timeout)" : ""));
+        LOG_TRC("Poll completed with " << rc << " live polls max (" << timeoutMaxMs << "ms)"
+                << ((rc==0) ? "(timedout)" : ""));
 
         // Fire the callback and remove dead fds.
-        Poco::Timestamp newNow;
+        std::chrono::steady_clock::time_point newNow =
+            std::chrono::steady_clock::now();
         for (int i = static_cast<int>(size) - 1; i >= 0; --i)
         {
             Socket::HandleResult res = Socket::HandleResult::SOCKET_CLOSED;
@@ -438,7 +438,8 @@ public:
 
 private:
     /// Initialize the poll fds array with the right events
-    void setupPollFds(Poco::Timestamp &timeout)
+    void setupPollFds(std::chrono::steady_clock::time_point now,
+                      int &timeoutMaxMs)
     {
         const size_t size = _pollSockets.size();
 
@@ -448,7 +449,7 @@ private:
         {
             _pollFds[i].fd = _pollSockets[i]->getFD();
             _pollFds[i].events = _pollSockets[i]->getPollEvents();
-            _pollSockets[i]->updateTimeout(timeout);
+            _pollSockets[i]->updateTimeout(now, timeoutMaxMs);
             _pollFds[i].revents = 0;
         }
 
@@ -669,7 +670,7 @@ protected:
 
     /// Called when a polling event is received.
     /// @events is the mask of events that triggered the wake.
-    HandleResult handlePoll(const Poco::Timestamp & /* now */,
+    HandleResult handlePoll(std::chrono::steady_clock::time_point /* now */,
                             const int events) override
     {
         assert(isCorrectThread());
