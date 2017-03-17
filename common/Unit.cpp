@@ -189,8 +189,11 @@ void UnitBase::exitTest(TestResult result)
 
 void UnitBase::timeout()
 {
-    LOG_ERR("Timed out waiting for unit test to complete");
-    exitTest(TestResult::TimedOut);
+    if (isUnitTesting())
+    {
+        LOG_ERR("Timed out waiting for unit test to complete");
+        exitTest(TestResult::TimedOut);
+    }
 }
 
 void UnitBase::returnValue(int &retValue)
