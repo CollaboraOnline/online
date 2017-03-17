@@ -23,6 +23,10 @@ protected:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
 
+    const int PingFrequencyMs = 18 * 1000;
+    std::chrono::steady_clock::time_point _pingSent;
+    int _pingTimeUs;
+
     std::vector<char> _wsPayload;
     bool _shuttingDown;
     enum class WSState { HTTP, WS } _wsState;
@@ -35,6 +39,8 @@ protected:
 
 public:
     WebSocketHandler() :
+        _pingSent(std::chrono::steady_clock::now()),
+        _pingTimeUs(0),
         _shuttingDown(false),
         _wsState(WSState::HTTP)
     {
@@ -44,6 +50,8 @@ public:
     WebSocketHandler(const std::weak_ptr<StreamSocket>& socket,
                      const Poco::Net::HTTPRequest& request) :
         _socket(socket),
+        _pingSent(std::chrono::steady_clock::now()),
+        _pingTimeUs(0),
         _shuttingDown(false),
         _wsState(WSState::HTTP)
     {
@@ -187,8 +195,16 @@ public:
         // FIXME: fin, aggregating payloads into _wsPayload etc.
         LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << code << " fin? " << fin << " payload length " << _wsPayload.size());
 
-        if (code & WSOpCode::Close)
+        switch (code)
         {
+        case WSOpCode::Pong:
+            _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _pingSent).count();
+            LOG_TRC("Pong received: " << _pingTimeUs << " microseconds");
+            break;
+        case WSOpCode::Ping:
+            LOG_ERR("Clients should not send pings, only servers");
+            // drop through
+        case WSOpCode::Close:
             if (!_shuttingDown)
             {
                 // Peer-initiated shutdown must be echoed.
@@ -207,10 +223,10 @@ public:
 
             // TCP Close.
             socket->shutdown();
-        }
-        else
-        {
+            break;
+        default:
             handleMessage(fin, code, _wsPayload);
+            break;
         }
 
         _wsPayload.clear();
@@ -225,10 +241,27 @@ public:
             ; // can have multiple msgs in one recv'd packet.
     }
 
-    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
-                      int & /* timeoutMaxMs */) override
+    int getPollEvents(std::chrono::steady_clock::time_point now,
+                      int & timeoutMaxMs) override
     {
+        int timeSincePingMs =
+            std::chrono::duration_cast<std::chrono::milliseconds>(now - _pingSent).count();
+        timeoutMaxMs = std::min(timeoutMaxMs, PingFrequencyMs - timeSincePingMs);
         return POLLIN;
+    }
+
+    /// Do we need to handle a timeout ?
+    void checkTimeout(std::chrono::steady_clock::time_point now) override
+    {
+        int timeSincePingMs =
+            std::chrono::duration_cast<std::chrono::milliseconds>(now - _pingSent).count();
+        if (timeSincePingMs >= PingFrequencyMs)
+        {
+            LOG_TRC("Send ping message");
+            // FIXME: allow an empty payload.
+            sendMessage("", 1, WSOpCode::Ping, false);
+            _pingSent = now;
+        }
     }
 
     /// By default rely on the socket buffer.

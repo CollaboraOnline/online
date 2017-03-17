@@ -316,7 +316,7 @@ void Admin::pollingThread()
         std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         int cpuWait = _cpuStatsTaskIntervalMs -
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCPU).count();
-        if (cpuWait < 0)
+        if (cpuWait <= 0)
         {
             // TODO: implement me ...
             lastCPU = now;
@@ -324,7 +324,7 @@ void Admin::pollingThread()
         }
         int memWait = _memStatsTaskIntervalMs -
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCPU).count();
-        if (memWait < 0)
+        if (memWait <= 0)
         {
             std::unique_lock<std::mutex> modelLock(getLock());
             const auto totalMem = getTotalMemoryUsage();

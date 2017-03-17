@@ -304,7 +304,7 @@ public:
         int rc;
         do
         {
-            rc = ::poll(&_pollFds[0], size + 1, timeoutMaxMs);
+            rc = ::poll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
         }
         while (rc < 0 && errno == EINTR);
         LOG_TRC("Poll completed with " << rc << " live polls max (" << timeoutMaxMs << "ms)"
@@ -524,6 +524,9 @@ public:
     virtual int getPollEvents(std::chrono::steady_clock::time_point now,
                               int &timeoutMaxMs) = 0;
 
+    /// Do we need to handle a timeout ?
+    virtual void checkTimeout(std::chrono::steady_clock::time_point /* now */) {}
+
     /// Do some of the queued writing.
     virtual void performWrites() = 0;
 
@@ -673,10 +676,12 @@ protected:
 
     /// Called when a polling event is received.
     /// @events is the mask of events that triggered the wake.
-    HandleResult handlePoll(std::chrono::steady_clock::time_point /* now */,
+    HandleResult handlePoll(std::chrono::steady_clock::time_point now,
                             const int events) override
     {
         assert(isCorrectThread());
+
+        _socketHandler->checkTimeout(now);
 
         if (!events)
             return Socket::HandleResult::CONTINUE;
