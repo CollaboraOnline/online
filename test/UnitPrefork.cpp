@@ -27,7 +27,7 @@ public:
         setTimeout(60 * 1000);
     }
 
-    virtual void configure(Poco::Util::LayeredConfiguration& /* config */)
+    virtual void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
         LOOLWSD::NumPreSpawnedChildren = NumToPrefork;
     }
