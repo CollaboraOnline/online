@@ -13,7 +13,6 @@ L.AnnotationManager = L.Class.extend({
 		this._map = map;
 		this._items = [];
 		this._selected = {};
-		this._arrow = L.polyline([], {color: 'darkblue', weight: 1});
 		this._map.on('AnnotationCancel', this._onAnnotationCancel, this);
 		this._map.on('AnnotationClick', this._onAnnotationClick, this);
 		this._map.on('AnnotationSave', this._onAnnotationSave, this);
@@ -26,7 +25,6 @@ L.AnnotationManager = L.Class.extend({
 				this._map.removeLayer(this._items[key]);
 			}
 		}
-		this._map.removeLayer(this._arrow);
 		this._items = [];
 		this._selected = {};
 	},
@@ -89,7 +87,7 @@ L.AnnotationManager = L.Class.extend({
 
 	unselect: function () {
 		this._selected = {};
-		this._map.removeLayer(this._arrow);
+		this._map._docLayer._selections.clearLayers();
 		this.update();
 	},
 
@@ -103,16 +101,21 @@ L.AnnotationManager = L.Class.extend({
 
 	update: function () {
 		var topRight = this._map.project(this._map.options.maxBounds.getNorthEast());
-		var point0, point1, point2, point3;
+		var point, bounds;
 		this.layout();
 		if (this._selected.annotation) {
-			point0 = this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos.min);
-			point1 = L.point(point0.x, point0.y - this.options.offset);
-			point2 = L.point(topRight.x, point1.y);
-			point3 = L.point(topRight.x, point2.y + this.options.offset);
-			this._arrow.setLatLngs([this._map.unproject(point0), this._map.unproject(point1), this._map.unproject(point2), this._map.unproject(point3)]);
-			this._map.addLayer(this._arrow);
-			this._selected.annotation.setLatLng(this._map.unproject(point3));
+			point = this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos.min);
+			bounds = L.latLngBounds(this._map._docLayer._twipsToLatLng(this._selected.annotation._data.anchorPos.getBottomLeft()),
+				this._map._docLayer._twipsToLatLng(this._selected.annotation._data.anchorPos.getTopRight()));
+			this._map._docLayer._selections.clearLayers();
+			this._map._docLayer._selections.addLayer(L.rectangle(bounds,{
+				pointerEvents: 'none',
+				fillColor: '#43ACE8',
+				fillOpacity: 0.25,
+				weight: 2,
+				opacity: 0.25
+			}));
+			this._selected.annotation.setLatLng(this._map.unproject(L.point(topRight.x, point.y)));
 		}
 	},
 
