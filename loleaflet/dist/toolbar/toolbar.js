@@ -340,7 +340,7 @@ function onClick(id, item, subItem) {
 		resizeToolbar();
 	}
 	else if (id === 'close') {
-		map.fire('postMessage', {msgId: 'UI_Close'});
+		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
 		map.remove();
 	}
 	else if (id === 'specialcharacter') {
@@ -1041,6 +1041,7 @@ map.on('doclayerinit', function () {
 	statusbar.refresh();
 	resizeToolbar();
 });
+
 
 map.on('commandstatechanged', function (e) {
 	var toolbar = w2ui['toolbar-up'];
