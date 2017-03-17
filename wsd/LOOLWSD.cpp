@@ -1550,10 +1550,10 @@ private:
                 LOOLProtocol::getAbbreviatedMessage(data) << "].");
     }
 
-    bool hasQueuedWrites() const override
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int & /* timeoutMaxMs */) override
     {
-        LOG_TRC("PrisonerRequestDispatcher - asked for queued writes");
-        return false;
+        return POLLIN;
     }
 
     void performWrites() override
@@ -1589,10 +1589,10 @@ private:
         LOG_ERR("handleIncomingMessage");
     }
 
-    bool hasQueuedWrites() const override
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int & /* timeoutMaxMs */) override
     {
-        LOG_ERR("hasQueuedWrites");
-        return true;
+        return POLLIN;
     }
 
     void performWrites() override
@@ -1759,10 +1759,10 @@ private:
         }
     }
 
-    bool hasQueuedWrites() const override
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int & /* timeoutMaxMs */)
     {
-        LOG_TRC("ClientRequestDispatcher - asked for queued writes");
-        return false;
+        return POLLIN;
     }
 
     void performWrites() override

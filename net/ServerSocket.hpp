@@ -80,7 +80,8 @@ public:
         return nullptr;
     }
 
-    int getPollEvents() override
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int & /* timeoutMaxMs */) override
     {
         return POLLIN;
     }

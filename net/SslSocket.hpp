@@ -115,8 +115,12 @@ public:
         return handleSslState(SSL_write(_ssl, buf, len));
     }
 
-    int getPollEvents() override
+    int getPollEvents(std::chrono::steady_clock::time_point now,
+                      int & timeoutMaxMs) override
     {
+        assert(isCorrectThread());
+        int events = _socketHandler->getPollEvents(now, timeoutMaxMs);
+
         if (_sslWantsTo == SslWantsTo::Read)
         {
             // Must read next before attempting to write.
@@ -128,8 +132,10 @@ public:
             return POLLOUT;
         }
 
-        // Do the default.
-        return StreamSocket::getPollEvents();
+        if (!_outBuffer.empty() || _shutdownSignalled)
+            events |= POLLOUT;
+
+        return events;
     }
 
 private:

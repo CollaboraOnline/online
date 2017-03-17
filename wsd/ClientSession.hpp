@@ -122,8 +122,9 @@ private:
 
     /// SocketHandler: disconnection event.
     void onDisconnect() override;
-    /// SocketHandler: have data to write.
-    bool hasQueuedWrites() const override;
+    /// Does SocketHandler: have data or timeouts to setup.
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int & /* timeoutMaxMs */) override;
     /// SocketHandler: write to socket.
     void performWrites() override;
 

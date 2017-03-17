@@ -136,7 +136,9 @@ void dump_hex (const char *legend, const char *prefix, std::vector<char> buffer)
 
 void StreamSocket::dumpState(std::ostream& os)
 {
-    os << "\t" << getFD() << "\t" << getPollEvents() << "\t"
+    int timeoutMaxMs = SocketPoll::DefaultPollTimeoutMs;
+    int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMs);
+    os << "\t" << getFD() << "\t" << events << "\t"
        << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
        << "\n";
     if (_inBuffer.size() > 0)

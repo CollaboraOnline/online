@@ -225,13 +225,10 @@ public:
             ; // can have multiple msgs in one recv'd packet.
     }
 
-    /// By default rely on the socket buffer.
-    bool hasQueuedWrites() const override
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int & /* timeoutMaxMs */) override
     {
-        auto socket = _socket.lock();
-        if (socket != nullptr)
-            LOG_TRC("#" << socket->getFD() << ": WebSocket - asked for queued writes");
-        return false;
+        return POLLIN;
     }
 
     /// By default rely on the socket buffer.

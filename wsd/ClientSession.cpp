@@ -437,11 +437,16 @@ void ClientSession::setReadOnly()
     sendTextFrame("perm: readonly");
 }
 
-bool ClientSession::hasQueuedWrites() const
+
+int ClientSession::getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                                 int & /* timeoutMaxMs */)
 {
-    LOG_DBG(getName() << " ClientSession: has queued writes? "
+    LOG_TRC(getName() << " ClientSession: has queued writes? "
             << _senderQueue.size());
-    return _senderQueue.size() > 0;
+    int events = POLLIN;
+    if (_senderQueue.size())
+        events |= POLLOUT;
+    return events;
 }
 
 void ClientSession::performWrites()

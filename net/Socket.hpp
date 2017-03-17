@@ -72,12 +72,11 @@ public:
         ::shutdown(_fd, SHUT_RDWR);
     }
 
-    /// Return a mask of events we should be polling for
-    virtual int getPollEvents() = 0;
-
-    /// Contract the poll timeout to match our needs
-    virtual void updateTimeout(std::chrono::steady_clock::time_point /* now */,
-                               int & /* timeoutMaxMs */) { /* do nothing */ }
+    /// Prepare our poll record; adjust @timeoutMaxMs downwards
+    /// for timeouts, based on current time @now.
+    /// @returns POLLIN and POLLOUT if output is expected.
+    virtual int getPollEvents(std::chrono::steady_clock::time_point now,
+                              int &timeoutMaxMs) = 0;
 
     /// Handle results of events returned from poll
     enum class HandleResult { CONTINUE, SOCKET_CLOSED };
@@ -448,8 +447,7 @@ private:
         for (size_t i = 0; i < size; ++i)
         {
             _pollFds[i].fd = _pollSockets[i]->getFD();
-            _pollFds[i].events = _pollSockets[i]->getPollEvents();
-            _pollSockets[i]->updateTimeout(now, timeoutMaxMs);
+            _pollFds[i].events = _pollSockets[i]->getPollEvents(now, timeoutMaxMs);
             _pollFds[i].revents = 0;
         }
 
@@ -520,8 +518,11 @@ public:
     /// Called after successful socket reads.
     virtual void handleIncomingMessage() = 0;
 
-    /// Is there queued up data that we want to write ?
-    virtual bool hasQueuedWrites() const = 0;
+    /// Prepare our poll record; adjust @timeoutMaxMs downwards
+    /// for timeouts, based on current time @now.
+    /// @returns POLLIN and POLLOUT if output is expected.
+    virtual int getPollEvents(std::chrono::steady_clock::time_point now,
+                              int &timeoutMaxMs) = 0;
 
     /// Do some of the queued writing.
     virtual void performWrites() = 0;
@@ -578,13 +579,15 @@ public:
         Socket::shutdown();
     }
 
-    int getPollEvents() override
+    int getPollEvents(std::chrono::steady_clock::time_point now,
+                      int &timeoutMaxMs) override
     {
+        // cf. SslSocket::getPollEvents
         assert(isCorrectThread());
-        if (!_outBuffer.empty() || _socketHandler->hasQueuedWrites() || _shutdownSignalled)
-            return POLLIN | POLLOUT;
-        else
-            return POLLIN;
+        int events = _socketHandler->getPollEvents(now, timeoutMaxMs);
+        if (!_outBuffer.empty() || _shutdownSignalled)
+            events |= POLLOUT;
+        return events;
     }
 
     /// Send data to the socket peer.
