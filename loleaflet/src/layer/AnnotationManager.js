@@ -46,10 +46,7 @@ L.AnnotationManager = L.Class.extend({
 		this.clear();
 		for (var index in comments) {
 			comment = comments[index];
-			if (!comment.anchorPos) {
-				continue;
-			}
-			comment.anchorPos = L.LOUtil.stringToPoint(comment.anchorPos);
+			comment.anchorPos = L.LOUtil.stringToBounds(comment.anchorPos);
 			comment.trackchange = false;
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
 		}
@@ -62,7 +59,7 @@ L.AnnotationManager = L.Class.extend({
 		for (var idx in redlines) {
 			changecomment = redlines[idx];
 			changecomment.id = 'change-' + changecomment.index;
-			changecomment.anchorPos = L.LOUtil.stringToPoint(changecomment.textRange);
+			changecomment.anchorPos = L.LOUtil.stringToBounds(changecomment.textRange);
 			changecomment.trackchange = true;
 			changecomment.text = changecomment.comment;
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), changecomment).addTo(this._map));
@@ -109,7 +106,7 @@ L.AnnotationManager = L.Class.extend({
 		var point0, point1, point2, point3;
 		this.layout();
 		if (this._selected.annotation) {
-			point0 = this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos);
+			point0 = this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos.min);
 			point1 = L.point(point0.x, point0.y - this.options.offset);
 			point2 = L.point(topRight.x, point1.y);
 			point3 = L.point(topRight.x, point2.y + this.options.offset);
@@ -125,7 +122,7 @@ L.AnnotationManager = L.Class.extend({
 		var layouts = [];
 
 		if (this._selected.annotation) {
-			point = L.point(topRight.x, this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos).y);
+			point = L.point(topRight.x, this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos.min).y);
 			this._selected.annotation.setLatLng(this._map.unproject(point));
 			bounds = this._selected.annotation.getBounds();
 			bounds.extend(bounds.min.subtract([0, this.options.marginY]));
@@ -138,7 +135,7 @@ L.AnnotationManager = L.Class.extend({
 			if (annotation === this._selected.annotation) {
 				continue;
 			}
-			point = L.point(topRight.x, this._map._docLayer._twipsToPixels(annotation._data.anchorPos).y);
+			point = L.point(topRight.x, this._map._docLayer._twipsToPixels(annotation._data.anchorPos.min).y);
 			latlng = this._map.unproject(point);
 			annotation.setLatLng(latlng);
 			bounds = annotation.getBounds();
@@ -186,8 +183,8 @@ L.AnnotationManager = L.Class.extend({
 		var annotation = L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map);
 		this._items.push(annotation);
 		this._items.sort(function(a, b) {
-			return Math.abs(a._data.anchorPos.y) - Math.abs(b._data.anchorPos.y) ||
-			       Math.abs(a._data.anchorPos.x) - Math.abs(b._data.anchorPos.x);
+			return Math.abs(a._data.anchorPos.min.y) - Math.abs(b._data.anchorPos.min.y) ||
+			       Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
 		});
 		if (edit) {
 			annotation.edit();
@@ -244,12 +241,11 @@ L.AnnotationManager = L.Class.extend({
 	onACKComment: function (obj) {
 		var changetrack = obj.redline ? true : false;
 		var action = changetrack ? obj.redline.action : obj.comment.action;
-		console.log(obj);
 		if (action === 'Add') {
 			if (changetrack) {
 				// transform change tracking index into an id
 				obj.redline.id = 'change-' + obj.redline.index;
-				obj.redline.anchorPos = L.LOUtil.stringToPoint(obj.redline.textRange);
+				obj.redline.anchorPos = L.LOUtil.stringToBounds(obj.redline.textRange);
 				obj.redline.trackchange = true;
 				obj.redline.text = obj.redline.comment;
 				this.add(obj.redline, false);
@@ -258,12 +254,11 @@ L.AnnotationManager = L.Class.extend({
 				var added = this.getItem('new');
 				if (added) {
 					delete obj.comment.action;
-					obj.comment.anchorPos = obj.comment.anchorPos ? L.LOUtil.stringToPoint(obj.comment.anchorPos) :
-						added._data.anchorPos;
+					obj.comment.anchorPos = L.LOUtil.stringToBounds(obj.comment.anchorPos);
 					added._data = obj.comment;
 					this._items.sort(function(a, b) {
-						return Math.abs(a._data.anchorPos.y) - Math.abs(b._data.anchorPos.y) ||
-							Math.abs(a._data.anchorPos.x) - Math.abs(b._data.anchorPos.x);
+						return Math.abs(a._data.anchorPos.min.y) - Math.abs(b._data.anchorPos.min.y) ||
+						       Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
 					});
 					added.update();
 				}
@@ -285,14 +280,13 @@ L.AnnotationManager = L.Class.extend({
 			if (modified) {
 				var modifiedObj;
 				if (changetrack) {
-					obj.redline.anchorPos = obj.redline.anchorPos ? L.LOUtil.stringToPoing(obj.redline.anchorPos) : modified._data.anchorPos;
+					obj.redline.anchorPos = L.LOUtil.stringToBounds(obj.redline.anchorPos);
 					obj.redline.text = obj.redline.comment;
 					obj.redline.id = id;
 					obj.redline.trackchange = true;
 					modifiedObj = obj.redline;
 				} else {
-					obj.comment.anchorPos = obj.comment.anchorPos ? L.LOUtil.stringToPoint(obj.comment.anchorPos) :
-						modified._data.anchorPos;
+					obj.comment.anchorPos = L.LOUtil.stringToBounds(obj.comment.anchorPos);
 					modifiedObj = obj.comment;
 				}
 				modified._data = modifiedObj;
