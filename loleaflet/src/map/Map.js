@@ -134,6 +134,14 @@ L.Map = L.Evented.extend({
 
 		// View color map
 		this._viewColors = {};
+
+		// This becomes true if document was ever modified by the user
+		this._everModified = false;
+
+		this.on('commandstatechanged', function(e) {
+			if (e.commandName === '.uno:ModifiedStatus')
+				this._everModified = this._everModified || (e.state === 'true');
+		}, this);
 	},
 
 	// public methods that modify map state

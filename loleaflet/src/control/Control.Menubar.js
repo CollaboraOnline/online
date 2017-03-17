@@ -471,7 +471,7 @@ L.Control.Menubar = L.Control.extend({
 			// our host to show revision history mode
 			map.fire('postMessage', {msgId: 'rev-history'});
 		} else if (id === 'closedocument') {
-			map.fire('postMessage', {msgId: 'UI_Close'});
+			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
 			map.remove();
 		}
 		else if (id === 'repair') {
