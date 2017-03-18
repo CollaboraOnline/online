@@ -581,7 +581,32 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             }
         }
 
-        setSaveAsUrl(url);
+        if (_saveAsSocket)
+        {
+            Poco::URI resultURL(url);
+            LOG_TRC("Save-as URL: " << resultURL.toString());
+
+            // TODO: Send back error when there is no output.
+            if (!resultURL.getPath().empty())
+            {
+                const std::string mimeType = "application/octet-stream";
+                std::string encodedFilePath;
+                Poco::URI::encode(resultURL.getPath(), "", encodedFilePath);
+                LOG_TRC("Sending file: " << encodedFilePath);
+                HttpHelper::sendFile(_saveAsSocket, encodedFilePath, mimeType);
+            }
+
+            // Conversion is done, cleanup this fake session.
+            LOG_TRC("Removing save-as ClientSession after conversion.");
+
+            // Remove us.
+            docBroker->removeSession(getId());
+
+            // Now terminate.
+            auto lock = docBroker->getLock();
+            docBroker->terminateChild(lock, "");
+        }
+
         return true;
     }
     else if (tokens.size() == 2 && tokens[0] == "statechanged:")

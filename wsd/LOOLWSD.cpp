@@ -1539,7 +1539,8 @@ private:
         {
             // We should never destroy the broker, since
             // it owns us and will wait on this thread.
-            // FIXME: loolnb - check that comment !
+            // This is true with non-blocking since this is
+            // called from DocumentBroker::pollThread.
             assert(docBroker.use_count() > 1);
             docBroker->handleInput(data);
             return;

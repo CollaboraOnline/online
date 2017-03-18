@@ -89,24 +89,10 @@ public:
         _senderQueue.stop();
     }
 
+    /// Set the save-as socket which is used to send convert-to results.
     void setSaveAsSocket(const std::shared_ptr<StreamSocket>& socket)
     {
         _saveAsSocket = socket;
-    }
-
-    void setSaveAsUrl(const std::string& url)
-    {
-        Poco::URI resultURL(url);
-        LOG_TRC("Save-as URL: " << resultURL.toString());
-
-        if (!resultURL.getPath().empty())
-        {
-            const std::string mimeType = "application/octet-stream";
-            std::string encodedFilePath;
-            Poco::URI::encode(resultURL.getPath(), "", encodedFilePath);
-            LOG_TRC("Sending file: " << encodedFilePath);
-            HttpHelper::sendFile(_saveAsSocket, encodedFilePath, mimeType);
-        }
     }
 
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }

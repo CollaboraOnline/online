@@ -1191,7 +1191,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
         const auto& data = payload->data().data();
         const auto& size = payload->size();
 
-        std::unique_lock<std::mutex> lock(_mutex);
+        // std::unique_lock<std::mutex> lock(_mutex);
 
         if (sid == "all")
         {
