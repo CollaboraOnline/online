@@ -374,7 +374,7 @@ public:
             rc = ::write(fd, "w", 1);
         } while (rc == -1 && errno == EINTR);
 
-        if (rc != -1 || errno == EAGAIN || errno == EWOULDBLOCK)
+        if (rc == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
             LOG_WRN("wakeup socket #" << fd << " is closd at wakeup? error: " << errno);
     }
 
