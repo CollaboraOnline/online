@@ -532,9 +532,10 @@ public:
 
     /// Called when the is disconnected and will be destroyed.
     /// Will be called exactly once.
-    virtual void onDisconnect()
-    {
-    }
+    virtual void onDisconnect() {}
+
+    /// Append pretty printed internal state to a line
+    virtual void dumpState(std::ostream& os) { os << "\n"; }
 };
 
 /// A plain, non-blocking, data streaming socket.

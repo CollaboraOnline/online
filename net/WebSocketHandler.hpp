@@ -374,6 +374,8 @@ protected:
     {
     }
 
+    void dumpState(std::ostream& os) override;
+
 private:
     /// To make the protected 'computeAccept' accessible.
     class PublicComputeAccept : public Poco::Net::WebSocket

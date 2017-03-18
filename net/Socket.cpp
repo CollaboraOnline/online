@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include <iomanip>
 
 #include <Poco/DateTime.h>
 #include <Poco/DateTimeFormat.h>
@@ -19,6 +20,7 @@
 #include "SigUtil.hpp"
 #include "Socket.hpp"
 #include "ServerSocket.hpp"
+#include "WebSocketHandler.hpp"
 
 int SocketPoll::DefaultPollTimeoutMs = 5000;
 
@@ -134,13 +136,21 @@ void dump_hex (const char *legend, const char *prefix, std::vector<char> buffer)
 
 } // namespace
 
+void WebSocketHandler::dumpState(std::ostream& os)
+{
+    os << (_shuttingDown ? "shutd " : "alive ")
+       << std::setw(5) << 1.0*_pingTimeUs/1000 << "ms ";
+    if (_wsPayload.size() > 0)
+        dump_hex("\t\tws queued payload:\n", "\t\t", _wsPayload);
+}
+
 void StreamSocket::dumpState(std::ostream& os)
 {
     int timeoutMaxMs = SocketPoll::DefaultPollTimeoutMs;
     int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMs);
     os << "\t" << getFD() << "\t" << events << "\t"
-       << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
-       << "\n";
+       << _inBuffer.size() << "\t" << _outBuffer.size() << "\t";
+    _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
         dump_hex("\t\tinBuffer:\n", "\t\t", _inBuffer);
     if (_outBuffer.size() > 0)

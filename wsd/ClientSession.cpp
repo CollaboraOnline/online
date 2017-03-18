@@ -752,4 +752,16 @@ void ClientSession::onDisconnect()
     }
 }
 
+void ClientSession::dumpState(std::ostream& os)
+{
+    Session::dumpState(os);
+
+    os << "\t\tisReadOnly: " << _isReadOnly
+       << "\n\t\tisDocumentOwner: " << _isDocumentOwner
+       << "\n\t\tisLoaded: " << _isLoaded
+       << "\n\t\tstop: " <<_stop
+       << "\n";
+}
+
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

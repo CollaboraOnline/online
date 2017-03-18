@@ -153,6 +153,8 @@ private:
     /// Eg. in readonly mode only few messages should be allowed
     bool filterMessage(const std::string& msg) const;
 
+    void dumpState(std::ostream& os) override;
+
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 

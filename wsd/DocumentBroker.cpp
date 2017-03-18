@@ -1308,7 +1308,7 @@ void DocumentBroker::dumpState(std::ostream& os)
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    os << " Broker: " << _filename;
+    os << " Broker: " << _filename << " pid: " << getPid();
     if (_markToDestroy)
         os << " *** Marked to destroy ***";
     else
@@ -1319,12 +1319,17 @@ void DocumentBroker::dumpState(std::ostream& os)
         os << "\n  still loading...";
     os << "\n  modified?: " << _isModified;
     os << "\n  jail id: " << _jailId;
+    os << "\n  filename: " << _filename;
     os << "\n  public uri: " << _uriPublic.toString();
     os << "\n  jailed uri: " << _uriJailed.toString();
     os << "\n  doc key: " << _docKey;
     os << "\n  num sessions: " << getSessionsCount();
     os << "\n  new sessions: " << _newSessions.size();
     os << "\n  last editable?: " << _lastEditableSession;
+    std::time_t t = std::chrono::system_clock::to_time_t(
+        std::chrono::system_clock::now()
+        + (_lastSaveTime - std::chrono::steady_clock::now()));
+    os << "\n  last saved: " << std::ctime(&t);
     os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
       << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
 
