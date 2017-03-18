@@ -23,6 +23,7 @@ protected:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
 
+    const int InitialPingDelayMs = 25;
     const int PingFrequencyMs = 18 * 1000;
     std::chrono::steady_clock::time_point _pingSent;
     int _pingTimeUs;
@@ -50,7 +51,9 @@ public:
     WebSocketHandler(const std::weak_ptr<StreamSocket>& socket,
                      const Poco::Net::HTTPRequest& request) :
         _socket(socket),
-        _pingSent(std::chrono::steady_clock::now()),
+        _pingSent(std::chrono::steady_clock::now() -
+                  std::chrono::milliseconds(PingFrequencyMs) -
+                  std::chrono::milliseconds(InitialPingDelayMs)),
         _pingTimeUs(0),
         _shuttingDown(false),
         _wsState(WSState::HTTP)
@@ -250,18 +253,28 @@ public:
         return POLLIN;
     }
 
+    /// Send a ping message
+    void sendPing(std::chrono::steady_clock::time_point now)
+    {
+        // Must not send this before we're upgraded.
+        if (_wsState == WSState::WS)
+        {
+            LOG_WRN("Attempted ping on non-upgraded websocket!");
+            return;
+        }
+        LOG_TRC("Send ping message");
+        // FIXME: allow an empty payload.
+        sendMessage("", 1, WSOpCode::Ping, false);
+        _pingSent = now;
+    }
+
     /// Do we need to handle a timeout ?
     void checkTimeout(std::chrono::steady_clock::time_point now) override
     {
         int timeSincePingMs =
             std::chrono::duration_cast<std::chrono::milliseconds>(now - _pingSent).count();
         if (timeSincePingMs >= PingFrequencyMs)
-        {
-            LOG_TRC("Send ping message");
-            // FIXME: allow an empty payload.
-            sendMessage("", 1, WSOpCode::Ping, false);
-            _pingSent = now;
-        }
+            sendPing(now);
     }
 
     /// By default rely on the socket buffer.
@@ -403,6 +416,7 @@ protected:
 
         socket->send(oss.str());
         _wsState = WSState::WS;
+        sendPing(std::chrono::steady_clock::now());
     }
 };
 
