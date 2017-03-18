@@ -5,8 +5,7 @@
 L.AnnotationManager = L.Class.extend({
 	options: {
 		marginX: 50,
-		marginY: 10,
-		offset: 5
+		marginY: 10
 	},
 
 	initialize: function (map) {
@@ -182,18 +181,19 @@ L.AnnotationManager = L.Class.extend({
 		}
 	},
 
-	add: function (comment, edit) {
+	add: function (comment) {
 		var annotation = L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map);
 		this._items.push(annotation);
 		this._items.sort(function(a, b) {
 			return Math.abs(a._data.anchorPos.min.y) - Math.abs(b._data.anchorPos.min.y) ||
 			       Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
 		});
-		if (edit) {
-			annotation.edit();
-			this.select(annotation);
-			annotation.focus();
-		}
+	},
+
+	edit: function (comment) {
+		var annotation = L.annotation(this._map._docLayer._twipsToLatLng(comment.anchorPos.getTopRight()), comment).addTo(this._map);
+		annotation.edit();
+		annotation.focus();
 	},
 
 	modify: function (annotation) {
@@ -210,7 +210,6 @@ L.AnnotationManager = L.Class.extend({
 			}
 		};
 		this._map.sendUnoCommand('.uno:DeleteComment', comment);
-		this._map.removeLayer(this.removeItem(id));
 		this.unselect();
 		this._map.focus();
 	},
@@ -223,7 +222,6 @@ L.AnnotationManager = L.Class.extend({
 			}
 		};
 		this._map.sendUnoCommand('.uno:AcceptTrackedChange', command);
-		this._map.removeLayer(this.removeItem(id));
 		this.unselect();
 		this._map.focus();
 	},
@@ -236,7 +234,6 @@ L.AnnotationManager = L.Class.extend({
 			}
 		};
 		this._map.sendUnoCommand('.uno:RejectTrackedChange', command);
-		this._map.removeLayer(this.removeItem(id));
 		this.unselect();
 		this._map.focus();
 	},
@@ -251,24 +248,12 @@ L.AnnotationManager = L.Class.extend({
 				obj.redline.anchorPos = L.LOUtil.stringToBounds(obj.redline.textRange);
 				obj.redline.trackchange = true;
 				obj.redline.text = obj.redline.comment;
-				this.add(obj.redline, false);
+				this.add(obj.redline);
 				this._map.focus();
 			} else {
-				var added = this.getItem('new');
-				if (added) {
-					delete obj.comment.action;
-					obj.comment.anchorPos = L.LOUtil.stringToBounds(obj.comment.anchorPos);
-					added._data = obj.comment;
-					this._items.sort(function(a, b) {
-						return Math.abs(a._data.anchorPos.min.y) - Math.abs(b._data.anchorPos.min.y) ||
-						       Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
-					});
-					added.update();
-				}
-				else { // annotation is added by some other view
-					this.add(obj.comment, false);
-					this._map.focus();
-				}
+				obj.comment.anchorPos = L.LOUtil.stringToBounds(obj.comment.anchorPos);
+				this.add(obj.comment);
+				this._map.focus();
 			}
 			this.layout();
 		} else if (action === 'Remove') {
@@ -301,7 +286,9 @@ L.AnnotationManager = L.Class.extend({
 
 	_onAnnotationCancel: function (e) {
 		if (e.annotation._data.id === 'new') {
-			this.remove(e.annotation._data.id);
+			this._map.removeLayer(e.annotation);
+		} else {
+			this.layout();
 		}
 		this._map.focus();
 	},
@@ -324,6 +311,7 @@ L.AnnotationManager = L.Class.extend({
 				}
 			};
 			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
+			this._map.removeLayer(e.annotation);
 		}
 		else if (e.annotation._data.trackchange) {
 			comment = {

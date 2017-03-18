@@ -11,7 +11,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 				this._latLngToTwips(this._visibleCursor.getNorthEast()));
 		}
 		if (comment.anchorPos) {
-			this._annotations.add(comment, true);
+			this._annotations.edit(comment);
 		}
 	},
 
