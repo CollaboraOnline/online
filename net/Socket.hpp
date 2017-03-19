@@ -79,7 +79,7 @@ public:
                               int &timeoutMaxMs) = 0;
 
     /// Handle results of events returned from poll
-    enum class HandleResult { CONTINUE, SOCKET_CLOSED };
+    enum class HandleResult { CONTINUE, SOCKET_CLOSED, MOVED };
     virtual HandleResult handlePoll(std::chrono::steady_clock::time_point now, int events) = 0;
 
     /// manage latency issues around packet aggregation
@@ -518,8 +518,14 @@ public:
     /// Will be called exactly once.
     virtual void onConnect(const std::weak_ptr<StreamSocket>& socket) = 0;
 
+    enum class SocketOwnership
+    {
+        UNCHANGED,  //< Same socket poll, business as usual.
+        MOVED       //< The socket poll is now different.
+    };
+
     /// Called after successful socket reads.
-    virtual void handleIncomingMessage() = 0;
+    virtual SocketHandlerInterface::SocketOwnership handleIncomingMessage() = 0;
 
     /// Prepare our poll record; adjust @timeoutMaxMs downwards
     /// for timeouts, based on current time @now.
@@ -708,7 +714,8 @@ protected:
         while (!_inBuffer.empty() && oldSize != _inBuffer.size())
         {
             oldSize = _inBuffer.size();
-            _socketHandler->handleIncomingMessage();
+            if (_socketHandler->handleIncomingMessage() == SocketHandlerInterface::SocketOwnership::MOVED)
+                return Socket::HandleResult::MOVED;
         }
 
         do

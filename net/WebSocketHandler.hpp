@@ -238,10 +238,12 @@ public:
     }
 
     /// Implementation of the SocketHandlerInterface.
-    virtual void handleIncomingMessage() override
+    virtual SocketHandlerInterface::SocketOwnership handleIncomingMessage() override
     {
         while (handleOneIncomingMessage())
             ; // can have multiple msgs in one recv'd packet.
+
+        return SocketHandlerInterface::SocketOwnership::UNCHANGED;
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point now,

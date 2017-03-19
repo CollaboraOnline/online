@@ -1424,17 +1424,16 @@ private:
     }
 
     /// Called after successful socket reads.
-    void handleIncomingMessage() override
+    SocketHandlerInterface::SocketOwnership handleIncomingMessage() override
     {
         if (UnitWSD::get().filterHandleRequest(
                 UnitWSD::TestRequest::Prisoner, *this))
-            return;
+            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
 
         if (_childProcess.lock())
         {
             // FIXME: inelegant etc. - derogate to websocket code
-            WebSocketHandler::handleIncomingMessage();
-            return;
+            return WebSocketHandler::handleIncomingMessage();
         }
 
         auto socket = _socket.lock();
@@ -1447,7 +1446,7 @@ private:
         if (itBody == in.end())
         {
             LOG_TRC("#" << socket->getFD() << " doesn't have enough data yet.");
-            return;
+            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
         }
 
         // Skip the marker.
@@ -1479,7 +1478,7 @@ private:
             if (request.getURI().find(NEW_CHILD_URI) != 0)
             {
                 LOG_ERR("Invalid incoming URI.");
-                return;
+                return SocketHandlerInterface::SocketOwnership::UNCHANGED;
             }
 
             // New Child is spawned.
@@ -1500,7 +1499,7 @@ private:
             if (pid <= 0)
             {
                 LOG_ERR("Invalid PID in child URI [" << request.getURI() << "].");
-                return;
+                return SocketHandlerInterface::SocketOwnership::UNCHANGED;
             }
 
             LOG_INF("New child [" << pid << "].");
@@ -1522,8 +1521,9 @@ private:
         {
             // Probably don't have enough data just yet.
             // TODO: timeout if we never get enough.
-            return;
         }
+
+        return SocketHandlerInterface::SocketOwnership::UNCHANGED;
     }
 
     /// Prisoner websocket fun ... (for now)
@@ -1586,9 +1586,10 @@ private:
         LOG_ERR("onDisconnect");
     }
 
-    void handleIncomingMessage() override
+    SocketHandlerInterface::SocketOwnership handleIncomingMessage() override
     {
         LOG_ERR("handleIncomingMessage");
+        return SocketHandlerInterface::SocketOwnership::UNCHANGED;
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
@@ -1626,7 +1627,7 @@ private:
     }
 
     /// Called after successful socket reads.
-    void handleIncomingMessage() override
+    SocketHandlerInterface::SocketOwnership handleIncomingMessage() override
     {
         auto socket = _socket.lock();
         std::vector<char>& in = socket->_inBuffer;
@@ -1638,7 +1639,7 @@ private:
         if (itBody == in.end())
         {
             LOG_TRC("#" << socket->getFD() << " doesn't have enough data yet.");
-            return;
+            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
         }
 
         // Skip the marker.
@@ -1673,16 +1674,17 @@ private:
             if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH && available < contentLength)
             {
                 LOG_DBG("Not enough content yet: ContentLength: " << contentLength << ", available: " << available);
-                return;
+                return SocketHandlerInterface::SocketOwnership::UNCHANGED;
             }
         }
         catch (const std::exception& exc)
         {
             // Probably don't have enough data just yet.
             // TODO: timeout if we never get enough.
-            return;
+            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
         }
 
+        SocketHandlerInterface::SocketOwnership socketOwnership = SocketHandlerInterface::SocketOwnership::UNCHANGED;
         try
         {
             // Routing
@@ -1732,7 +1734,7 @@ private:
                 }
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws")
                 {
-                    handleClientWsUpgrade(request, reqPathTokens[1]);
+                    socketOwnership = handleClientWsUpgrade(request, reqPathTokens[1]);
                 }
                 else
                 {
@@ -1759,6 +1761,8 @@ private:
             // TODO: Send back failure.
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
         }
+
+        return socketOwnership;
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
@@ -2097,7 +2101,7 @@ private:
         throw BadRequestException("Invalid or unknown request.");
     }
 
-    void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url)
+    SocketHandlerInterface::SocketOwnership handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url)
     {
         // requestHandler = new ClientRequestHandler();
         LOG_INF("Client WS request: " << request.getURI() << ", url: " << url);
@@ -2109,7 +2113,7 @@ private:
         {
             LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
             shutdownLimitReached(ws);
-            return;
+            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
         }
 
         LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << url << "].");
@@ -2137,6 +2141,8 @@ private:
 
         LOG_INF("URL [" << url << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
 
+        SocketHandlerInterface::SocketOwnership socketOwnership = SocketHandlerInterface::SocketOwnership::UNCHANGED;
+
         // Request a kit process for this doc.
         auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
         if (docBroker)
@@ -2149,12 +2155,13 @@ private:
                 auto socket = _socket.lock();
                 if (socket)
                 {
+                    // Set the ClientSession to handle Socket events.
+                    socket->setHandler(clientSession);
+
                     // Move the socket into DocBroker.
                     WebServerPoll.releaseSocket(socket);
                     docBroker->addSocketToPoll(socket);
-
-                    // Set the ClientSession to handle Socket events.
-                    socket->setHandler(clientSession);
+                    socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
                 }
                 docBroker->startThread();
             }
@@ -2163,6 +2170,8 @@ private:
         }
         else
             LOG_WRN("Failed to create DocBroker with docKey [" << docKey << "].");
+
+        return socketOwnership;
     }
 
 private:

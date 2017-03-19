@@ -51,12 +51,13 @@ ClientSession::~ClientSession()
     stop();
 }
 
-void ClientSession::handleIncomingMessage()
+SocketHandlerInterface::SocketOwnership ClientSession::handleIncomingMessage()
 {
     if (UnitWSD::get().filterHandleRequest(
             UnitWSD::TestRequest::Client, *this))
-        return;
-    Session::handleIncomingMessage();
+        return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+
+    return Session::handleIncomingMessage();
 }
 
 bool ClientSession::_handleInput(const char *buffer, int length)

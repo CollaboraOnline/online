@@ -45,7 +45,7 @@ public:
     {
     }
 
-    virtual void handleIncomingMessage() override
+    virtual SocketHandlerInterface::SocketOwnership handleIncomingMessage() override
     {
         LOG_TRC("incoming WebSocket message");
         if (_wsState == WSState::HTTP)
@@ -89,17 +89,16 @@ public:
 
                 std::string str = oss.str();
                 socket->_outBuffer.insert(socket->_outBuffer.end(), str.begin(), str.end());
-                return;
+                return SocketHandlerInterface::SocketOwnership::UNCHANGED;
             }
             else if (tokens.count() == 2 && tokens[1] == "ws")
             {
-
                 upgradeToWebSocket(req);
-                return;
+                return SocketHandlerInterface::SocketOwnership::UNCHANGED;
             }
         }
 
-        WebSocketHandler::handleIncomingMessage();
+        return WebSocketHandler::handleIncomingMessage();
     }
 
     virtual void handleMessage(const bool fin, const WSOpCode code, std::vector<char> &data) override
