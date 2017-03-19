@@ -12,7 +12,8 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <iomanip>
-
+#include <zlib.h>
+ 
 #include <Poco/DateTime.h>
 #include <Poco/DateTimeFormat.h>
 #include <Poco/DateTimeFormatter.h>
@@ -181,7 +182,7 @@ void SocketPoll::dumpState(std::ostream& os)
 namespace HttpHelper
 {
     void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-                  Poco::Net::HTTPResponse& response, bool noCache)
+                  Poco::Net::HTTPResponse& response, bool noCache, bool deflate)
     {
         struct stat st;
         if (stat(path.c_str(), &st) != 0)
@@ -191,14 +192,6 @@ namespace HttpHelper
             return;
         }
 
-        int bufferSize = std::min(st.st_size, (off_t)Socket::MaximumSendBufferSize);
-        if (st.st_size >= socket->getSendBufferSize())
-        {
-            socket->setSocketBufferSize(bufferSize);
-            bufferSize = socket->getSendBufferSize();
-        }
-
-        response.setContentLength(st.st_size);
         response.set("User-Agent", HTTP_AGENT_STRING);
         response.set("Date", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
         if (!noCache)
@@ -208,26 +201,67 @@ namespace HttpHelper
             response.set("ETag", "\"" LOOLWSD_VERSION_HASH "\"");
         }
 
-        std::ostringstream oss;
-        response.write(oss);
-        const std::string header = oss.str();
-        LOG_TRC("#" << socket->getFD() << ": Sending file [" << path << "]: " << header);
-        socket->send(header);
-
-        std::ifstream file(path, std::ios::binary);
-        bool flush = true;
-        do
+        if(!deflate)
         {
-            char buf[bufferSize];
-            file.read(buf, sizeof(buf));
-            const int size = file.gcount();
-            if (size > 0)
-                socket->send(buf, size, flush);
-            else
-                break;
-            flush = false;
+            int bufferSize = std::min(st.st_size, (off_t)Socket::MaximumSendBufferSize);
+            if (st.st_size >= socket->getSendBufferSize())
+            {
+                socket->setSocketBufferSize(bufferSize);
+                bufferSize = socket->getSendBufferSize();
+            }
+
+            response.setContentLength(st.st_size);
+            std::ostringstream oss;
+            response.write(oss);
+            const std::string header = oss.str();
+            LOG_TRC("#" << socket->getFD() << ": Sending file [" << path << "]: " << header);
+            socket->send(header);
+
+            std::ifstream file(path, std::ios::binary);
+            bool flush = true;
+            do
+            {
+                char buf[bufferSize];
+                file.read(buf, sizeof(buf));
+                const int size = file.gcount();
+                if (size > 0)
+                    socket->send(buf, size, flush);
+                else
+                    break;
+                flush = false;
+            }
+            while (file);
         }
-        while (file);
+        else
+        {
+            response.set("Content-Encoding", "deflate");
+            std::ostringstream oss;
+            response.write(oss);
+            const std::string header = oss.str();
+            LOG_TRC("#" << socket->getFD() << ": Sending file [" << path << "]: " << header);
+            socket->send(header);
+
+            std::ifstream file(path, std::ios::binary);
+            uLong bufferSize;
+            bufferSize = st.st_size;
+            char buf[bufferSize];
+            bool flush = true;
+            do
+            {
+                unsigned int a = 9;
+                file.read(buf, sizeof(buf));
+                long unsigned int size = file.gcount();
+                long unsigned int compSize = compressBound(size);
+                char cbuf[compSize];
+                compress2((Bytef *)&cbuf, &compSize, (Bytef *)&buf, size, a) ;
+                if (size > 0)
+                    socket->send(cbuf, compSize, flush);
+                else
+                    break;
+                flush = false;
+            }
+            while(file);
+        }
     }
 }
 
