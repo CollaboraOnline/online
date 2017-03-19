@@ -290,7 +290,6 @@ bool cleanupDocBrokers()
 /// -1 for error.
 static bool forkChildren(const int number)
 {
-    Util::assertIsLocked(DocBrokersMutex);
     Util::assertIsLocked(NewChildrenMutex);
 
     if (number > 0)
@@ -328,19 +327,17 @@ static bool cleanupChildren()
 {
     Util::assertIsLocked(NewChildrenMutex);
 
-    bool removed = false;
-    for (int i = NewChildren.size() - 1; i >= 0; --i)
+    const int count = NewChildren.size();
+    for (int i = count - 1; i >= 0; --i)
     {
         if (!NewChildren[i]->isAlive())
         {
             LOG_WRN("Removing dead spare child [" << NewChildren[i]->getPid() << "].");
-
             NewChildren.erase(NewChildren.begin() + i);
-            removed = true;
         }
     }
 
-    return removed;
+    return static_cast<int>(NewChildren.size()) != count;
 }
 
 /// Decides how many children need spawning and spanws.
@@ -349,7 +346,6 @@ static bool cleanupChildren()
 /// -1 for error.
 static int rebalanceChildren(int balance)
 {
-    Util::assertIsLocked(DocBrokersMutex);
     Util::assertIsLocked(NewChildrenMutex);
 
     // Do the cleanup first.
@@ -386,26 +382,9 @@ static int rebalanceChildren(int balance)
 /// Returns true only if at least one child was requested to spawn.
 static bool prespawnChildren()
 {
-#if 1 // FIXME: why re-balance DockBrokers here ? ...
-    // First remove dead DocBrokers, if possible.
-    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
-    if (!docBrokersLock.try_lock())
-    {
-        // Busy, try again later.
-        return false;
-    }
-
-    cleanupDocBrokers();
-#endif
-
+    // Rebalance if not forking already.
     std::unique_lock<std::mutex> lock(NewChildrenMutex, std::defer_lock);
-    if (!lock.try_lock())
-    {
-        // We are forking already? Try later.
-        return false;
-    }
-
-    return rebalanceChildren(LOOLWSD::NumPreSpawnedChildren) > 0;
+    return lock.try_lock() && (rebalanceChildren(LOOLWSD::NumPreSpawnedChildren) > 0);
 }
 
 static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
@@ -1219,10 +1198,6 @@ bool LOOLWSD::createForKit()
 
     // Init the Admin manager
     Admin::instance().setForKitPid(ForKitProcId);
-
-    // Wake the prisoner poll to spawn some children, if necessary.
-    PrisonerPoll.wakeup();
-    // FIXME: horrors with try_lock in prespawnChildren ...
 
     return (ForKitProcId != -1);
 #endif
@@ -2482,14 +2457,20 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
         mainWait.poll(SocketPoll::DefaultPollTimeoutMs * 2);
 
+        // Wake the prisoner poll to spawn some children, if necessary.
+        PrisonerPoll.wakeup();
+
         // Unit test timeout
         if (std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now() - startStamp).count() <
             UnitWSD::get().getTimeoutMilliSeconds())
             UnitWSD::get().timeout();
 
-        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        cleanupDocBrokers();
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
+        if (docBrokersLock.try_lock())
+        {
+            cleanupDocBrokers();
+        }
 
 #if ENABLE_DEBUG
         if (careerSpanSeconds > 0 && time(nullptr) > startTimeSpan + careerSpanSeconds)
