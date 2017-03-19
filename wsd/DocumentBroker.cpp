@@ -1252,7 +1252,7 @@ void DocumentBroker::childSocketTerminated()
     }
 }
 
-void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const std::string& closeReason)
+void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const std::string& closeReason, const bool rude)
 {
     Util::assertIsLocked(_mutex);
     Util::assertIsLocked(lock);
@@ -1260,15 +1260,18 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
     LOG_INF("Terminating doc [" << _docKey << "].");
 
     // Close all running sessions
-    for (const auto& pair : _sessions)
+    if (!rude)
     {
-        try
+        for (const auto& pair : _sessions)
         {
-            pair.second->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, closeReason);
-        }
-        catch (const std::exception& ex)
-        {
-            LOG_ERR("Error while terminating client connection [" << pair.first << "]: " << ex.what());
+            try
+            {
+                pair.second->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, closeReason);
+            }
+            catch (const std::exception& ex)
+            {
+                LOG_ERR("Error while terminating client connection [" << pair.first << "]: " << ex.what());
+            }
         }
     }
 
@@ -1278,12 +1281,15 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
 
         // First flag to stop as it might be waiting on our lock
         // to process some incoming message.
-        _childProcess->stop();
+        if (!rude)
+        {
+            _childProcess->stop();
+        }
 
         // Release the lock and wait for the thread to finish.
         lock.unlock();
 
-        _childProcess->close(false);
+        _childProcess->close(rude);
     }
 
     // Stop the polling thread.
@@ -1295,7 +1301,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
     auto lock = getLock();
 
     LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
-    terminateChild(lock, reason);
+    terminateChild(lock, reason, true);
 }
 
 void DocumentBroker::updateLastActivityTime()

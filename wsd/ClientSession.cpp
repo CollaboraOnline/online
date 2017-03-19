@@ -605,7 +605,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
             // Now terminate.
             auto lock = docBroker->getLock();
-            docBroker->terminateChild(lock, "");
+            docBroker->terminateChild(lock, "", true);
         }
 
         return true;

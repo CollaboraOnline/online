@@ -249,7 +249,7 @@ bool cleanupDocBrokers()
             {
                 LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
                         " DocumentBroker for docKey [" << it->first << "].");
-                docBroker->terminateChild(lock, idle ? "idle" : "");
+                docBroker->terminateChild(lock, idle ? "idle" : "", true);
 
                 // Remove only when not alive.
                 if (!docBroker->isAlive())
@@ -1335,7 +1335,7 @@ static void removeDocBrokerSession(const std::shared_ptr<DocumentBroker>& docBro
     {
         LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
         DocBrokers.erase(docKey);
-        docBroker->terminateChild(lock, "");
+        docBroker->terminateChild(lock, "", true);
     }
 }
 
