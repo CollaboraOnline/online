@@ -252,8 +252,18 @@ void DocumentBroker::pollThread()
             autoSave(false);
             last30SecCheckTime = std::chrono::steady_clock::now();
         }
+
+        // If all sessions have been removed, no reason to linger.
+        if (_sessions.empty())
+        {
+            LOG_INF("No more sessions in doc [" << _docKey << "]. Terminating.");
+            _stop = true;
+        }
     }
 
+    // Terminate properly while we can.
+    auto lock = getLock();
+    terminateChild(lock, "", false);
     LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
 }
 
