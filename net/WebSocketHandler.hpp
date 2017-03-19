@@ -225,7 +225,7 @@ public:
             }
 
             // TCP Close.
-            socket->shutdown();
+            socket->closeConnection();
             break;
         default:
             handleMessage(fin, code, _wsPayload);

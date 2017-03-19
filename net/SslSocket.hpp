@@ -70,6 +70,9 @@ public:
             // Complete the bidirectional shutdown.
             SSL_shutdown(_ssl);
         }
+
+        // Close the TCP Socket.
+        Socket::shutdown();
     }
 
     bool readIncomingData() override
