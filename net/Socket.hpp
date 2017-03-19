@@ -464,8 +464,6 @@ private:
     /// Used to set the thread name and mark the thread as stopped when done.
     void pollingThreadEntry()
     {
-        _threadStarted = true;
-
         try
         {
             Util::setThreadName(_name);

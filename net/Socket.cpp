@@ -89,8 +89,17 @@ void SocketPoll::startThread()
 {
     if (!_threadStarted)
     {
-        _thread = std::thread(&SocketPoll::pollingThreadEntry, this);
-        _owner = _thread.get_id();
+        _threadStarted = true;
+        try
+        {
+            _thread = std::thread(&SocketPoll::pollingThreadEntry, this);
+            _owner = _thread.get_id();
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Failed to start poll thread: " << exc.what());
+            _threadStarted = false;
+        }
     }
 }
 
