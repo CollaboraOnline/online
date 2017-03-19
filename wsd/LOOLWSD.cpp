@@ -1232,30 +1232,6 @@ bool LOOLWSD::createForKit()
 std::mutex Connection::Mutex;
 #endif
 
-static std::shared_ptr<DocumentBroker> createDocBroker(WebSocketHandler& ws,
-                                                       const std::string& uri,
-                                                       const std::string& docKey,
-                                                       const Poco::URI& uriPublic)
-{
-    Util::assertIsLocked(DocBrokersMutex);
-
-    static_assert(MAX_DOCUMENTS > 0, "MAX_DOCUMENTS must be positive");
-    if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
-    {
-        LOG_ERR("Maximum number of open documents reached.");
-        shutdownLimitReached(ws);
-        return nullptr;
-    }
-
-    // Set the one we just created.
-    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-    auto docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, LOOLWSD::ChildRoot);
-    DocBrokers.emplace(docKey, docBroker);
-    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
-
-    return docBroker;
-}
-
 /// Find the DocumentBroker for the given docKey, if one exists.
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
@@ -1312,7 +1288,23 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
     ws.sendFrame(statusConnect);
 
     if (!docBroker)
-        docBroker = createDocBroker(ws, uri, docKey, uriPublic);
+    {
+        Util::assertIsLocked(DocBrokersMutex);
+
+        static_assert(MAX_DOCUMENTS > 0, "MAX_DOCUMENTS must be positive");
+        if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
+        {
+            LOG_ERR("Maximum number of open documents reached.");
+            shutdownLimitReached(ws);
+            return nullptr;
+        }
+
+        // Set the one we just created.
+        LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+        docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, LOOLWSD::ChildRoot);
+        DocBrokers.emplace(docKey, docBroker);
+        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+    }
 
     return docBroker;
 }

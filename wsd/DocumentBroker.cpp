@@ -159,7 +159,8 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
 
-    LOG_INF("DocumentBroker [" << _uriPublic.toString() << "] created. DocKey: [" << _docKey << "]");
+    LOG_INF("DocumentBroker [" << _uriPublic.toString() <<
+            "] created with docKey [" << _docKey << "] and root [" << _childRoot << "]");
 }
 
 void DocumentBroker::startThread()
@@ -202,6 +203,7 @@ void DocumentBroker::pollThread()
     }
 
     _childProcess->setDocumentBroker(shared_from_this());
+    LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
 
     auto last30SecCheckTime = std::chrono::steady_clock::now();
 
