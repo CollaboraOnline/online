@@ -215,10 +215,11 @@ void alertAllUsersInternal(const std::string& msg)
 
     LOG_INF("Alerting all users: [" << msg << "]");
 
-    for (auto& brokerIt : DocBrokers)
+    //FIXME loolnb: due to thread-affinity of sockets we can't send from here.
+    // for (auto& brokerIt : DocBrokers)
     {
-        auto lock = brokerIt.second->getLock();
-        brokerIt.second->alertAllUsers(msg);
+        // auto lock = brokerIt.second->getLock();
+        // brokerIt.second->alertAllUsers(msg);
     }
 }
 }
