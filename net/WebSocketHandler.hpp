@@ -185,11 +185,11 @@ public:
 
         if (hasMask)
         {
+            const size_t end = _wsPayload.size();
+            _wsPayload.resize(end + payloadLen);
+            char* wsData = &_wsPayload[end];
             for (size_t i = 0; i < payloadLen; ++i)
-                data[i] = data[i] ^ mask[i % 4];
-
-            // FIXME: copy and un-mask at the same time ...
-            _wsPayload.insert(_wsPayload.end(), data, data + payloadLen);
+                *wsData++ = data[i] ^ mask[i % 4];
         } else
             _wsPayload.insert(_wsPayload.end(), data, data + payloadLen);
 
