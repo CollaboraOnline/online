@@ -193,7 +193,10 @@ public:
     virtual bool isCorrectThread(bool hard = false)
     {
 #if ENABLE_DEBUG
-        bool sameThread = std::this_thread::get_id() == _owner;
+        const bool sameThread = std::this_thread::get_id() == _owner;
+        if (!sameThread)
+            LOG_WRN("#" << _fd << " invoked from foreign thread. Expected: " <<
+                    std::hex << _owner << std::dec);
         if (hard)
             return sameThread;
         else

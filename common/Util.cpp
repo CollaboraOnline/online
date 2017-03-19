@@ -264,6 +264,10 @@ namespace Util
         {
             LOG_SYS("Cannot set thread name to " << s << ".");
         }
+        else
+        {
+            LOG_INF("Thread " << std::hex << std::this_thread::get_id() << std::dec << " is now called " << s);
+        }
     }
 
     void getVersionInfo(std::string& version, std::string& hash)
