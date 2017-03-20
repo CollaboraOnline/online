@@ -28,7 +28,7 @@ L.Control.PartsPreview = L.Control.extend({
 			return;
 		}
 
-		if (docType === 'presentation') {
+		if (docType === 'presentation' || docType === 'drawing') {
 			if (!this._previewInitialized)
 			{
 				// make room for the preview
@@ -145,7 +145,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_updatePreview: function (e) {
-		if (this._map.getDocType() === 'presentation') {
+		if (this._map.getDocType() === 'presentation' || this._map.getDocType() === 'drawing') {
 			// the scrollbar has to be re-initialized here else it doesn't work
 			// probably a bug from the scrollbar
 			this._previewTiles[e.id].onload = function () {

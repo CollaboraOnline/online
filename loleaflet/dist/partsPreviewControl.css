@@ -19,6 +19,8 @@
 	}
 
 .preview-img {
+	/* In draw docs, the width of previews are small, but we want a min of 180px to align it with document's left edge */
+        min-width: 180px;
 	vertical-align: middle;
 	max-width: 184px;
 	cursor: pointer;

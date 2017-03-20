@@ -45,6 +45,10 @@ body {
     display: block;
 }
 
+#presentation-controls-wrapper.drawing {
+    bottom: 34px; /* Hide the presentation toolbar (insert slide etc.) for doctype = drawing */
+}
+
 #presentation-controls-wrapper.readonly {
     top: 30px;
 }

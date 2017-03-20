@@ -126,6 +126,9 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
 			this._docType = command.type;
+			if (this._docType === 'drawing') {
+				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'drawing');
+			}
 			this._updateMaxBounds(true);
 			this._documentInfo = textMsg;
 			this._parts = command.parts;
