@@ -63,6 +63,7 @@ Obsoletes:      loleaflet <= 1.5.8
 %build
 %configure \
 	--with-lokit-path=bundled/include \
+	--with-lo-path=%{loroot} \
 %if 0%{?config_options:1}
 	%{config_options}
 %endif
@@ -131,7 +132,7 @@ rm -rf /var/cache/loolwsd/*
 
 # Figure out where LO is installed, let's hope it is not a mount point
 # Create a directory for loolwsd on the same file system
-loroot=`rpm -ql collaboraoffice5.3 | grep '/soffice$' | sed -e 's-/program/soffice--'`
+loroot=%{loroot}
 loolparent=`cd ${loroot} && cd .. && /bin/pwd`
 
 rm -rf ${loolparent}/lool
