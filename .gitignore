@@ -31,6 +31,7 @@ ltmain.sh
 missing
 stamp-h1
 m4
+debian/loolwsd.postinst
 
 # Test stuff
 systemplate

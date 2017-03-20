@@ -197,6 +197,15 @@ EXTRA_DIST = discovery.xml \
              loolwsd.service \
              robots.txt \
              sysconfig.loolwsd \
+             debian/compat \
+             debian/copyright \
+             debian/loolwsd.cron.d \
+             debian/loolwsd.preinst \
+             debian/rules \
+             debian/source/format \
+             debian/changelog \
+             debian/control \
+             debian/loolwsd.postinst \
              etc/key.pem \
              etc/cert.pem \
              etc/ca-chain.cert.pem
