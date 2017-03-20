@@ -62,5 +62,21 @@ L.LOUtil = {
 		var topLeft = L.point(parseInt(numbers[0]), parseInt(numbers[1]));
 		var bottomRight = topLeft.add(L.point(parseInt(numbers[2]), parseInt(numbers[3])));
 		return L.bounds(topLeft, bottomRight);
+	},
+
+	stringToRectangles: function(strRect) {
+		var matches = strRect.match(/\d+/g);
+		var rectangles = [];
+		if (matches !== null) {
+			for (var itMatch = 0; itMatch < matches.length; itMatch += 4) {
+				var topLeft = L.point(parseInt(matches[itMatch]), parseInt(matches[itMatch + 1]));
+				var size = L.point(parseInt(matches[itMatch + 2]), parseInt(matches[itMatch + 3]));
+				var topRight = topLeft.add(L.point(size.x, 0));
+				var bottomLeft = topLeft.add(L.point(0, size.y));
+				var bottomRight = topLeft.add(size);
+				rectangles.push([bottomLeft, bottomRight, topLeft, topRight]);
+			}
+		}
+		return rectangles;
 	}
 };

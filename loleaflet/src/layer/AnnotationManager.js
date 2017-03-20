@@ -101,20 +101,21 @@ L.AnnotationManager = L.Class.extend({
 
 	update: function () {
 		var topRight = this._map.project(this._map.options.maxBounds.getNorthEast());
-		var point, bounds;
+		var point, rectangles;
 		this.layout();
 		if (this._selected.annotation) {
 			point = this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos.min);
-			bounds = L.latLngBounds(this._map._docLayer._twipsToLatLng(this._selected.annotation._data.anchorPos.getBottomLeft()),
-				this._map._docLayer._twipsToLatLng(this._selected.annotation._data.anchorPos.getTopRight()));
 			this._map._docLayer._selections.clearLayers();
-			this._map._docLayer._selections.addLayer(L.rectangle(bounds,{
-				pointerEvents: 'none',
-				fillColor: '#43ACE8',
-				fillOpacity: 0.25,
-				weight: 2,
-				opacity: 0.25
-			}));
+			rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(this._selected.annotation._data.textRange), this._map._docLayer);
+			if (rectangles.length > 0) {
+				this._map._docLayer._selections.addLayer(L.polygon(rectangles, {
+					pointerEvents: 'none',
+					fillColor: '#43ACE8',
+					fillOpacity: 0.25,
+					weight: 2,
+					opacity: 0.25
+				}));
+			}
 			this._selected.annotation.setLatLng(this._map.unproject(L.point(topRight.x, point.y)));
 		}
 	},
