@@ -1746,7 +1746,7 @@ private:
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
-                      int & /* timeoutMaxMs */)
+                      int & /* timeoutMaxMs */) override
     {
         return POLLIN;
     }
