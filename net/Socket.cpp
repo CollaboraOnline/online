@@ -171,6 +171,8 @@ void SocketPoll::dumpState(std::ostream& os)
     // FIXME: NOT thread-safe! _pollSockets is modified from the polling thread!
     os << " Poll [" << _pollSockets.size() << "] - wakeup r: "
        << _wakeup[0] << " w: " << _wakeup[1] << "\n";
+    if (_newCallbacks.size() > 0)
+        os << "\tcallbacks: " << _newCallbacks.size() << "\n";
     os << "\tfd\tevents\trsize\twsize\n";
     for (auto &i : _pollSockets)
         i->dumpState(os);

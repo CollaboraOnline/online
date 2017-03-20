@@ -863,6 +863,12 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
     return _sessions.size();
 }
 
+
+void DocumentBroker::addCallback(SocketPoll::CallbackFn fn)
+{
+    _poll->addCallback(fn);
+}
+
 void DocumentBroker::addSocketToPoll(const std::shared_ptr<Socket>& socket)
 {
     _poll->insertNewSocket(socket);
@@ -870,7 +876,7 @@ void DocumentBroker::addSocketToPoll(const std::shared_ptr<Socket>& socket)
 
 void DocumentBroker::alertAllUsers(const std::string& msg)
 {
-    Util::assertIsLocked(_mutex);
+    assert(isCorrectThread());
 
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
 

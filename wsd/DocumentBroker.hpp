@@ -270,6 +270,10 @@ public:
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id, bool destroyIfLast = false);
 
+    /// Add a callback to be invoked in our polling thread.
+    void addCallback(SocketPoll::CallbackFn fn);
+
+    /// Transfer this socket into our polling thread / loop.
     void addSocketToPoll(const std::shared_ptr<Socket>& socket);
 
     void alertAllUsers(const std::string& msg);
