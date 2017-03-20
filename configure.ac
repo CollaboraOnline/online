@@ -166,31 +166,30 @@ AS_IF([test -n "$with_lokit_path"],
       [CPPFLAGS="$CPPFLAGS -I${with_lokit_path}"])
 lokit_msg="$with_lokit_path"
 
-dnl
-dnl lo_path is not required; but useful for testing.
-dnl
-LO_PATH=
+LO_PATH="/usr/lib64/libreoffice"
 JAIL_PATH=not-set
 SYSTEMPLATE_PATH=not-set
 have_lo_path=false
 AC_MSG_CHECKING([whether to run tests against a LibreOffice])
 if test -n "$with_lo_path"; then
+   LO_PATH="$with_lo_path"
    version_file="$with_lo_path/program/versionrc"
    if test -f $version_file; then
-     LO_PATH="$with_lo_path"
      JAILS_PATH="\${abs_top_builddir}/jails"
      SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
      have_lo_path=true
      lo_msg="test against $LO_PATH"
      AC_MSG_RESULT([yes])
    else
-     AC_MSG_ERROR([LibreOffice install looks dodgy, missing $version_file])
+     lo_msg="no integration tests"
+     AC_MSG_RESULT([no])
    fi
 else
    lo_msg="no integration tests"
    AC_MSG_RESULT([no])
 fi
 AC_SUBST(LO_PATH)
+AC_DEFINE_UNQUOTED([LO_PATH],["$LO_PATH"],[Path to LibreOffice installation])
 AC_SUBST(JAILS_PATH)
 AC_SUBST(SYSTEMPLATE_PATH)
 AM_CONDITIONAL(HAVE_LO_PATH,[test "$have_lo_path" = "true"])
@@ -326,6 +325,7 @@ AC_LANG_POP
 echo "
 Configuration:
     LOKit path              ${lokit_msg}
+    LO path                 $LO_PATH
     LO integration tests    ${lo_msg}
     SSL support             $ssl_msg
     Debug & low security    $debug_msg

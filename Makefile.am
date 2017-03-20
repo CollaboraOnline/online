@@ -153,7 +153,7 @@ shared_headers = common/Common.hpp \
                  common/IoUtil.hpp \
                  common/FileUtil.hpp \
                  common/Log.hpp \
-	         common/LOOLWebSocket.hpp \
+                 common/LOOLWebSocket.hpp \
                  common/Protocol.hpp \
                  common/Session.hpp \
                  common/Unit.hpp \
