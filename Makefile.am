@@ -192,6 +192,7 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
 EXTRA_DIST = discovery.xml \
              favicon.ico \
              loolkitconfig.xcu \
+             loolwsd.spec \
              loolwsd.xml.in \
              loolwsd.service \
              robots.txt \
