@@ -13,7 +13,7 @@ Name:           loolwsd
 %endif
 Version:        @PACKAGE_VERSION@
 Release:        1%{?dist}
-Vendor:         Collabora
+Vendor:         %{vendor}
 Summary:        LibreOffice Online WebSocket Daemon
 License:        MPL
 Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
