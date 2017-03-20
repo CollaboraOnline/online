@@ -26,7 +26,7 @@ BuildRequires:  libcap-progs systemd-rpm-macros
 %endif
 %endif
 
-Requires:       collaboraoffice5.3 collaboraoffice5.3-en-US collaboraoffice5.3-ure collaboraofficebasis5.3-core collaboraofficebasis5.3-writer collaboraofficebasis5.3-impress collaboraofficebasis5.3-graphicfilter collaboraofficebasis5.3-en-US collaboraofficebasis5.3-calc collaboraofficebasis5.3-en-US-res collaboraofficebasis5.3-en-US-calc collaboraofficebasis5.3-ooofonts collaboraofficebasis5.3-images collaboraofficebasis5.3-filter-data collaboraofficebasis5.3-draw collaboraofficebasis5.3-base collaboraofficebasis5.3-en-US-writer collaboraofficebasis5.3-en-US-math collaboraofficebasis5.3-en-US-base
+Requires:       %{lo_rpm_list}
 Requires:       systemd
 Requires(post): coreutils grep sed
 %if 0%{?fedora} || 0%{?rhel} >= 7
