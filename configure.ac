@@ -314,8 +314,7 @@ AC_CONFIG_FILES([Makefile
                  test/Makefile
                  loleaflet/Makefile
                  loolwsd.spec
-                 loolwsd.xml
-                 maketarballfordeb.sh])
+                 loolwsd.xml])
 AC_CONFIG_FILES([test/run_unit.sh],[chmod +x test/run_unit.sh])
 
 AC_OUTPUT
