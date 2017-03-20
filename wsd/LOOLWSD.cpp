@@ -288,7 +288,7 @@ bool cleanupDocBrokers()
 /// Forks as many children as requested.
 /// Returns the number of children requested to spawn,
 /// -1 for error.
-static bool forkChildren(const int number)
+static int forkChildren(const int number)
 {
     Util::assertIsLocked(NewChildrenMutex);
 
@@ -417,7 +417,20 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks()
         if (rebalanceChildren(numPreSpawn) < 0)
         {
             // Fatal. Let's fail and retry at a higher level.
-            LOG_DBG("getNewChild: rebalancing of children failed.");
+            LOG_DBG("getNewChild: rebalancing of children failed. Checking and restoring forkit.");
+
+            lockb.unlock();
+            locka.unlock();
+            LOOLWSD::checkAndRestoreForKit();
+            if (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() <
+                CHILD_TIMEOUT_MS * 4)
+            {
+                // Try again.
+                locka.lock();
+                lockb.lock();
+                continue;
+            }
+
             return nullptr;
         }
 
@@ -1025,7 +1038,7 @@ bool LOOLWSD::checkAndRestoreForKit()
         {
             // Should never fail.
             LOG_FTL("Failed to spawn loolforkit.");
-            return Application::EXIT_SOFTWARE;
+            SigUtil::requestShutdown();
         }
     }
 
