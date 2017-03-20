@@ -262,6 +262,7 @@ public:
         if (_wsState == WSState::WS)
         {
             LOG_WRN("Attempted ping on non-upgraded websocket!");
+            _pingSent = now; // Pretend we sent it to avoid timing out immediately.
             return;
         }
         LOG_TRC("Send ping message");

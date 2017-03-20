@@ -64,8 +64,8 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     {
         if (tokens.count() < 2)
         {
+            LOG_DBG("Auth command without any token");
             sendFrame("InvalidAuthToken");
-            LOG_TRC("Auth command without any token");
             shutdown();
             return;
         }
@@ -84,8 +84,8 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         }
         else
         {
+            LOG_DBG("Invalid auth token");
             sendFrame("InvalidAuthToken");
-            LOG_TRC("Invalid auth token");
             shutdown();
             return;
         }
@@ -93,10 +93,10 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
 
     if (!_isAuthenticated)
     {
+        LOG_DBG("Not authenticated - message is '" << firstLine << "' " <<
+                tokens.count() << " first: '" << tokens[0] << "'");
         sendFrame("NotAuthenticated");
         shutdown();
-        LOG_TRC("Not authenticated - message is '" << firstLine << "' "
-                << tokens.count() << " first: '" << tokens[0] << "'");
         return;
     }
     else if (tokens[0] == "documents" ||
