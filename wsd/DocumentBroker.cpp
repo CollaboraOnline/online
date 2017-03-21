@@ -228,7 +228,12 @@ void DocumentBroker::pollThread()
                     assert(!_uriJailed.empty());
                     std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
                     if (tokens.size() > 1 && tokens[1] == "load")
-                        message += std::string(" jail=") + _uriJailed.toString();
+                    {
+                        // The json options must come last.
+                        message = tokens[0] + ' ' + tokens[1] + ' ' + tokens[2];
+                        message += " jail=" + _uriJailed.toString() + ' ';
+                        message += Poco::cat(std::string(" "), tokens.begin() + 3, tokens.end());
+                    }
 
                     LOG_DBG("Sending a queued message: " + message);
                     _childProcess->sendTextFrame(message);
@@ -1171,8 +1176,15 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
     if (it != _sessions.end())
     {
         assert(!_uriJailed.empty());
-        if (LOOLProtocol::getFirstToken(message) == "load")
-            msg += " jail=" + _uriJailed.toString();
+
+        std::vector<std::string> tokens = LOOLProtocol::tokenize(msg);
+        if (tokens.size() > 1 && tokens[1] == "load")
+        {
+            // The json options must come last.
+            msg = tokens[0] + ' ' + tokens[1] + ' ' + tokens[2];
+            msg += " jail=" + _uriJailed.toString() + ' ';
+            msg += Poco::cat(std::string(" "), tokens.begin() + 3, tokens.end());
+        }
 
         _childProcess->sendTextFrame(msg);
         return true;
