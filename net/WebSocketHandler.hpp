@@ -113,8 +113,9 @@ public:
         std::vector<char> buf(2 + len);
         buf[0] = ((((int)statusCode) >> 8) & 0xff);
         buf[1] = ((((int)statusCode) >> 0) & 0xff);
-        std::copy(statusMessage.begin(), statusMessage.end(), buf.end());
-        const unsigned char flags = static_cast<unsigned char>(WSFrameMask::Fin) | static_cast<char>(WSOpCode::Close);
+        std::copy(statusMessage.begin(), statusMessage.end(), buf.begin() + 2);
+        const unsigned char flags = static_cast<unsigned char>(WSFrameMask::Fin)
+                                  | static_cast<char>(WSOpCode::Close);
 
         auto lock = socket->getWriteLock();
         sendFrame(socket, buf.data(), buf.size(), flags);
