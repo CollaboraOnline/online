@@ -143,6 +143,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
     _lastSaveTime(std::chrono::steady_clock::now()),
+    _lastSaveRequestTime(std::chrono::steady_clock::now()),
     _markToDestroy(false),
     _lastEditableSession(false),
     _isLoaded(false),
@@ -259,7 +260,8 @@ void DocumentBroker::pollThread()
         }
 
         // If all sessions have been removed, no reason to linger.
-        if (_sessions.empty())
+        if (_sessions.empty() && std::chrono::duration_cast<std::chrono::milliseconds>
+            (std::chrono::steady_clock::now() - _lastSaveRequestTime).count() > COMMAND_TIMEOUT_MS)
         {
             LOG_INF("No more sessions in doc [" << _docKey << "]. Terminating.");
             _stop = true;
@@ -716,6 +718,7 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
         LOG_TRC(".uno:Save arguments: " << saveArgs);
         const auto command = "uno .uno:Save " + saveArgs;
         forwardToChild(savingSession->getId(), command);
+        _lastSaveRequestTime = std::chrono::steady_clock::now();
         return true;
     }
 

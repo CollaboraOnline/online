@@ -371,6 +371,9 @@ private:
     /// document was modified and saved or not.
     std::chrono::steady_clock::time_point _lastSaveTime;
 
+    /// The last time we sent a save request.
+    std::chrono::steady_clock::time_point _lastSaveRequestTime;
+
     /// The document's last-modified time on storage.
     Poco::Timestamp _documentLastModifiedTime;
 
