@@ -57,12 +57,14 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testBarren);
     CPPUNIT_TEST(testCrashKit);
+    CPPUNIT_TEST(testRecoverAfterKitCrash);
     CPPUNIT_TEST(testCrashForkit);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testBarren();
     void testCrashKit();
+    void testRecoverAfterKitCrash();
     void testCrashForkit();
 
     static
@@ -165,6 +167,31 @@ void HTTPCrashTest::testCrashKit()
         // This is an oddity of Poco and is not something we need to validate here.
         //CPPUNIT_ASSERT_MESSAGE("Expected no more data", bytes <= 2); // The 2-byte marker is ok.
         //CPPUNIT_ASSERT_EQUAL(0x88, flags);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPCrashTest::testRecoverAfterKitCrash()
+{
+    const auto testname = "recoverAfterKitCrash ";
+    try
+    {
+        auto socket = loadDocAndGetSocket("empty.odt", _uri, testname);
+
+        std::cerr << "Killing loolkit instances." << std::endl;
+
+        killLoKitProcesses("(loolkit)");
+        countLoolKitProcesses(0);
+
+        // We expect the client connection to close.
+        std::cerr << "Reconnect after kill." << std::endl;
+
+        auto socket2 = loadDocAndGetSocket("empty.odt", _uri, testname);
+        sendTextFrame(socket2, "status", testname);
+        assertResponseString(socket2, "status:", testname);
     }
     catch (const Poco::Exception& exc)
     {
