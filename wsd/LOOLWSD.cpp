@@ -1386,7 +1386,8 @@ public:
         if (docBroker)
         {
             // FIXME: No need to notify if asked to stop.
-            docBroker->childSocketTerminated();
+            auto lock = docBroker->getLock();
+            docBroker->terminateChild(lock, "Service unavailable", true);
         }
     }
 
@@ -1401,6 +1402,15 @@ private:
     void onDisconnect() override
     {
         LOG_TRC("Prisoner connection disconnected");
+
+        // Notify the broker that we're done.
+        auto child = _childProcess.lock();
+        auto docBroker = child ? child->getDocumentBroker() : nullptr;
+        if (docBroker)
+        {
+            auto lock = docBroker->getLock();
+            docBroker->terminateChild(lock, "Service unavailable", false);
+        }
     }
 
     /// Called after successful socket reads.
