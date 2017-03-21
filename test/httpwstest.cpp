@@ -2335,7 +2335,7 @@ void HTTPWSTest::testAlertAllUsers()
 
         for (int i = 0; i < 2; i++)
         {
-            std::string response = getResponseString(socket[i], "error:", testname);
+            const std::string response = assertResponseString(socket[i], "error:", testname);
             Poco::StringTokenizer tokens(response.substr(6), " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             std::string cmd;
             LOOLProtocol::getTokenString(tokens, "cmd", cmd);
