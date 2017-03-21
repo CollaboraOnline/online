@@ -329,7 +329,8 @@ public:
                         _pollFds[i].fd << " in " << _name << ": " << exc.what());
             }
 
-            if (res == Socket::HandleResult::SOCKET_CLOSED)
+            if (res == Socket::HandleResult::SOCKET_CLOSED ||
+                res == Socket::HandleResult::MOVED)
             {
                 LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
                         _pollSockets.size() << ") from " << _name);

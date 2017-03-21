@@ -1694,8 +1694,8 @@ private:
                 if (AdminSocketHandler::handleInitialRequest(_socket, request))
                 {
                     // Hand the socket over to the Admin poll.
-                    WebServerPoll.releaseSocket(socket);
                     Admin::instance().insertNewSocket(socket);
+                    socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
                 }
             }
             // Client post and websocket connections
@@ -1720,7 +1720,7 @@ private:
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
                 {
                     // All post requests have url prefix 'lool'.
-                    handlePostRequest_Blocks(request, message);
+                    socketOwnership = handlePostRequest_Blocks(request, message);
                 }
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws")
                 {
@@ -1885,13 +1885,14 @@ private:
         return "application/octet-stream";
     }
 
-    void handlePostRequest_Blocks(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
+    SocketHandlerInterface::SocketOwnership handlePostRequest_Blocks(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
     {
         LOG_INF("Post request: [" << request.getURI() << "]");
 
         Poco::Net::HTTPResponse response;
         auto socket = _socket.lock();
 
+        SocketHandlerInterface::SocketOwnership socketOwnership = SocketHandlerInterface::SocketOwnership::UNCHANGED;
         StringTokenizer tokens(request.getURI(), "/?");
         if (tokens.count() >= 3 && tokens[2] == "convert-to")
         {
@@ -1932,8 +1933,8 @@ private:
                     {
                         // Transfer the client socket to the DocumentBroker.
                         // Move the socket into DocBroker.
-                        WebServerPoll.releaseSocket(socket);
                         docBroker->addSocketToPoll(socket);
+                        socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
 
                         clientSession->setSaveAsSocket(socket);
 
@@ -1971,7 +1972,7 @@ private:
                 throw BadRequestException("Failed to convert and send file.");
             }
 
-            return;
+            return socketOwnership;
         }
         else if (tokens.count() >= 4 && tokens[3] == "insertfile")
         {
@@ -2014,7 +2015,7 @@ private:
                     File(tmpPath).moveTo(fileName);
                     response.setContentLength(0);
                     socket->send(response);
-                    return;
+                    return socketOwnership;
                 }
             }
         }
@@ -2085,7 +2086,7 @@ private:
             }
 
             (void)responded;
-            return; // responded;
+            return socketOwnership;
         }
 
         throw BadRequestException("Invalid or unknown request.");
@@ -2149,7 +2150,6 @@ private:
                     socket->setHandler(clientSession);
 
                     // Move the socket into DocBroker.
-                    WebServerPoll.releaseSocket(socket);
                     docBroker->addSocketToPoll(socket);
                     socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
                 }
