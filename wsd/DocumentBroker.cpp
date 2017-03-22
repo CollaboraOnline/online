@@ -324,7 +324,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
         _filename = fileInfo._filename;
 
         // Use the local temp file's timestamp.
-        _lastFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
+        _lastFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
         _tileCache.reset(new TileCache(_uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
     }
 
@@ -359,6 +359,8 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
 
     // If save requested, but core didn't save because document was unmodified
     // notify the waiting thread, if any.
+    LOG_TRC("Saving to storage docKey [" << _docKey << "] for session [" << sessionId <<
+            "]. Success: " << success << ", result: " << result);
     if (!success && result == "unmodified")
     {
         LOG_DBG("Save skipped as document was not modified");
@@ -368,7 +370,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
 
     // If we aren't destroying the last editable session just yet, and the file
     // timestamp hasn't changed, skip saving.
-    const auto newFileModifiedTime = Poco::File(_storage->getLocalRootPath()).getLastModified();
+    const auto newFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
     if (!_lastEditableSession && newFileModifiedTime == _lastFileModifiedTime)
     {
         // Nothing to do.

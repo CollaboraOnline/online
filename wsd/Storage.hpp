@@ -73,9 +73,10 @@ public:
         Log::debug("Storage ctor: " + uri.toString());
     }
 
-    std::string getLocalRootPath() const;
-
     const std::string getUri() const { return _uri.toString(); }
+
+    /// Returns the root path to the jailed file.
+    const std::string& getRootFilePath() const { return _jailedFilePath; };
 
     bool isLoaded() const { return _isLoaded; }
 
@@ -98,6 +99,10 @@ public:
     static std::unique_ptr<StorageBase> create(const Poco::URI& uri,
                                                const std::string& jailRoot,
                                                const std::string& jailPath);
+protected:
+
+    /// Returns the root path of the jail directory of docs.
+    std::string getLocalRootPath() const;
 
 protected:
     const Poco::URI _uri;

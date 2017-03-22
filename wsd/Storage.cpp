@@ -207,11 +207,9 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo(cons
 
 std::string LocalStorage::loadStorageFileToLocal()
 {
-    const auto rootPath = getLocalRootPath();
-
     // /chroot/jailId/user/doc/childId/file.ext
     const auto filename = Poco::Path(_uri.getPath()).getFileName();
-    _jailedFilePath = Poco::Path(rootPath, filename).toString();
+    _jailedFilePath = Poco::Path(getLocalRootPath(), filename).toString();
     LOG_INF("Public URI [" << _uri.getPath() <<
             "] jailed to [" + _jailedFilePath + "].");
 
