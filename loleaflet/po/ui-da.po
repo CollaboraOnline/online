@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-27 08:27+0000\n"
+"POT-Creation-Date: 2017-03-22 09:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-ui-da.po\n"
-"X-Pootle-Revision: 862717\n"
+"X-Pootle-Revision: 2356645\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -200,11 +200,11 @@ msgstr "Slet stikordsregister eller indholdsfortegnelse"
 
 #: unocommands.js:18
 msgid "Reply"
-msgstr ""
+msgstr "Svar"
 
 #: unocommands.js:19
 msgid "Refresh"
-msgstr ""
+msgstr "Opdater"
 
 #: dist/errormessages.js:1
 msgid ""
@@ -238,6 +238,8 @@ msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
+"Denne service er begrænset af admin, til %0 dokumenter og %1 forbindelser i "
+"alt. Denne begrænsning er nået. Prøv venligst senere."
 
 #: dist/errormessages.js:5
 msgid ""
@@ -284,6 +286,8 @@ msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
+"Kunne ikke indlæse dokumentet. Kontroller venligst at filtypen er "
+"understøttet og ubeskadiget, og prøv igen."
 
 #: dist/errormessages.js:13
 msgid ""
@@ -311,9 +315,8 @@ msgid "1 user"
 msgstr "1 bruger"
 
 #: dist/toolbar/toolbar.js:107
-#, fuzzy
 msgid "0 users"
-msgstr "Ingen brugere"
+msgstr "0 brugere"
 
 #: dist/toolbar/toolbar.js:261
 msgid "Are you sure you want to delete this page?"

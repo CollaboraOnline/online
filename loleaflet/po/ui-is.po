@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-27 08:27+0000\n"
+"POT-Creation-Date: 2017-03-22 09:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-ui-is.po\n"
-"X-Pootle-Revision: 862765\n"
+"X-Pootle-Revision: 2357056\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -72,7 +72,7 @@ msgstr "Liðinn tími"
 
 #: admin.strings.js:19
 msgid "Idle time"
-msgstr ""
+msgstr "Ónýttur tími"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -200,11 +200,11 @@ msgstr "Eyða efnisyfirliti eða atriðaskrá"
 
 #: unocommands.js:18
 msgid "Reply"
-msgstr ""
+msgstr "Svara"
 
 #: unocommands.js:19
 msgid "Refresh"
-msgstr ""
+msgstr "Endurlesa"
 
 #: dist/errormessages.js:1
 msgid ""
@@ -239,6 +239,8 @@ msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
+"Þessi þjónusta er takmörkuð við %0 skjöl og %1 tengingar, takmörk sem eru "
+"sett af kerfisstjóra. Takmörkunum hefur verið náð. Reyndu aftur síðar."
 
 #: dist/errormessages.js:5
 msgid ""
@@ -269,30 +271,40 @@ msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
+"Setan þín rennur út eftir %time. Vistaðu skjölin þín og endurlestu setuna ("
+"eða vefsíðuna) til að halda áfram."
 
 #: dist/errormessages.js:9
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
+"Setan þín er útrunnin. Frekari breytingar á skjalinu verða ekki endilega "
+"vistaðar. Endurlestu setuna (eða vefsíðuna) til að halda áfram."
 
 #: dist/errormessages.js:10
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
+"Gat ekki hlaðið inn skjalinu. Gættu að hvort tegund skjals sé studd og að "
+"það sé ekki skemmt, og reyndu síðan aftur."
 
 #: dist/errormessages.js:13
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server administrator to continue editing."
 msgstr ""
+"Vistun misfórst því ekkert diskpláss er eftir á geymsluþjóni. Skjalið verður "
+"núna einungis lesanlegt. Hafðu samband við kerfisstjórann til að halda áfram."
 
 #: dist/errormessages.js:14
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server administrator."
 msgstr ""
+"Ekki var hægt að vista skjalið á geymsluþjón. Athugaðu heimildirnar þínar "
+"eða hafðu samband við kerfisstjórann."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -303,9 +315,8 @@ msgid "1 user"
 msgstr "1 notandi"
 
 #: dist/toolbar/toolbar.js:107
-#, fuzzy
 msgid "0 users"
-msgstr "Engir notendur"
+msgstr "0 notendur"
 
 #: dist/toolbar/toolbar.js:261
 msgid "Are you sure you want to delete this page?"
@@ -699,6 +710,8 @@ msgstr "Næsta skyggna"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Árekstur vegna Afturkalla/Endurtaka við aðra notendur. Notaðu viðgerð á "
+"skjali til að leysa þetta"
 
 #: dist/toolbar/toolbar.js:1595
 #: src/control/Control.DocumentRepair.js:87
@@ -769,7 +782,7 @@ msgstr "Bilbreytistafir"
 
 #: src/control/Control.CharacterMap.js:18
 msgid "Combining Diacritical Marks"
-msgstr "Samsetning broddmerkja"
+msgstr "Samsett broddstafamerki"
 
 #: src/control/Control.CharacterMap.js:19
 msgid "Basic Greek"
@@ -857,7 +870,7 @@ msgstr "Mjanmar"
 
 #: src/control/Control.CharacterMap.js:40
 msgid "Basic Georgian"
-msgstr "Grunn-georgísk"
+msgstr "Grunn-georgíska"
 
 #: src/control/Control.CharacterMap.js:41
 msgid "Hangul Jamo"
@@ -865,7 +878,7 @@ msgstr "Hangúl Jamó"
 
 #: src/control/Control.CharacterMap.js:43
 msgid "Ethiopic"
-msgstr "Eþíópískt"
+msgstr "Eþíópíska"
 
 #: src/control/Control.CharacterMap.js:44
 msgid "Cherokee"
@@ -1000,7 +1013,6 @@ msgid "Bopomofo"
 msgstr "Bopomofo"
 
 #: src/control/Control.CharacterMap.js:78
-#, fuzzy
 msgid "Hangul Compatibility Jamo"
 msgstr "Hangúl-samhæft Jamó"
 
@@ -1294,7 +1306,6 @@ msgid "Modifier Tone Letters"
 msgstr "Tónbreytar"
 
 #: src/control/Control.CharacterMap.js:168
-#, fuzzy
 msgid "New Tai Lue"
 msgstr "Nýja Tai Lue"
 
@@ -1805,7 +1816,7 @@ msgstr "Hlutmengi:"
 
 #: src/control/Control.CharacterMap.js:413
 msgid "Selected Character:"
-msgstr ""
+msgstr "Valinn stafur:"
 
 #: src/control/Control.CharacterMap.js:418
 msgid "Hexadecimal:"
@@ -2093,7 +2104,7 @@ msgstr "Öll Orð Með Hástöfum"
 
 #: src/control/Control.Menubar.js:83
 msgid "tOGGLE cASE"
-msgstr "vÍXLA sTAFSETRI"
+msgstr "vÍXLA sTAFSTÖÐU"
 
 #: src/control/Control.Menubar.js:84
 msgid "Text orientation"
@@ -2448,11 +2459,11 @@ msgstr "Setu er lokað af eiganda skjals"
 
 #: src/core/Socket.js:227
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "Slökkt verður á kerfi vegna viðhalds (sjálfvirk vistun)"
 
 #: src/core/Socket.js:230
 msgid "Server is recycling and will be available shortly"
-msgstr ""
+msgstr "Þjónninn er að keyra sig upp og verður tiltækur innan skamms"
 
 #: src/core/Socket.js:342
 msgid "Document requires password to view."
@@ -2480,7 +2491,7 @@ msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
-"Jæja, þetta er skammarlegt; við náum ekki að tengjast skjalinu þínu. Reyndu "
+"Jæja, þetta er vandræðalegt; við náum ekki að tengjast skjalinu þínu. Reyndu "
 "aftur síðar."
 
 #: src/map/Map.js:122

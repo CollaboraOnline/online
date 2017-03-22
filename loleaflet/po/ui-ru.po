@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-27 08:28+0000\n"
+"POT-Creation-Date: 2017-03-22 09:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /ru/libo_online/loleaflet-ui-ru.po\n"
-"X-Pootle-Revision: 863050\n"
+"X-Pootle-Revision: 2348997\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -65,7 +65,7 @@ msgstr "Документ"
 
 #: admin.strings.js:17
 msgid "Number of views"
-msgstr ""
+msgstr "Количество просмотров"
 
 #: admin.strings.js:18
 msgid "Elapsed time"
@@ -250,6 +250,8 @@ msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"Неавторизованный хост WOPI. Попробуйте позже, в случае неудачи сообщите "
+"администратору."
 
 #: dist/errormessages.js:7
 msgid ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-27 08:27+0000\n"
+"POT-Creation-Date: 2017-03-22 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-ui-eu.po\n"
-"X-Pootle-Revision: 2344862\n"
+"X-Pootle-Revision: 2354613\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -1013,7 +1013,6 @@ msgid "Bopomofo"
 msgstr "Bopomofoa"
 
 #: src/control/Control.CharacterMap.js:78
-#, fuzzy
 msgid "Hangul Compatibility Jamo"
 msgstr "Hangul-Jamo bateragarritasuna"
 
@@ -1368,7 +1367,7 @@ msgstr "Zenbaki eta puntuazio kuneiformeak"
 
 #: src/control/Control.CharacterMap.js:184
 msgid "Counting Rod Numerals"
-msgstr ""
+msgstr "Rod, zenbatzeko ziriak"
 
 #: src/control/Control.CharacterMap.js:185
 msgid "Sundanese"
