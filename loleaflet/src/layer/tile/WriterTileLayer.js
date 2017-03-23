@@ -28,6 +28,10 @@ L.WriterTileLayer = L.TileLayer.extend({
 		this._annotations.remove(id);
 	},
 
+	onAnnotationReply: function (annotation) {
+		this._annotations.reply(annotation);
+	},
+
 	onChangeAccept: function(id) {
 		this._annotations.acceptChange(id);
 	},
