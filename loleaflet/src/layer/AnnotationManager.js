@@ -16,6 +16,8 @@ L.AnnotationManager = L.Class.extend({
 		this._map.on('AnnotationClick', this._onAnnotationClick, this);
 		this._map.on('AnnotationReply', this._onAnnotationReply, this);
 		this._map.on('AnnotationSave', this._onAnnotationSave, this);
+		this._map.on('RedlineAccept', this._onRedlineAccept, this);
+		this._map.on('RedlineReject', this._onRedlineReject, this);
 	},
 
 	// Remove only text comments from the document (excluding change tracking comments)
@@ -223,11 +225,11 @@ L.AnnotationManager = L.Class.extend({
 		this._map.focus();
 	},
 
-	acceptChange: function(id) {
+	_onRedlineAccept: function(e) {
 		var command = {
 			AcceptTrackedChange: {
 				type: 'unsigned short',
-				value: id.substring('change-'.length)
+				value: e.id.substring('change-'.length)
 			}
 		};
 		this._map.sendUnoCommand('.uno:AcceptTrackedChange', command);
@@ -235,11 +237,11 @@ L.AnnotationManager = L.Class.extend({
 		this._map.focus();
 	},
 
-	rejectChange: function(id) {
+	_onRedlineReject: function(e) {
 		var command = {
 			RejectTrackedChange: {
 				type: 'unsigned short',
-				value: id.substring('change-'.length)
+				value: e.id.substring('change-'.length)
 			}
 		};
 		this._map.sendUnoCommand('.uno:RejectTrackedChange', command);

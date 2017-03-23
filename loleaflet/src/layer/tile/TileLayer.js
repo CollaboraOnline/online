@@ -216,18 +216,6 @@ L.TileLayer = L.GridLayer.extend({
 					callback: function (key, options) {
 						that.onAnnotationModify.call(that, options.$trigger.get(0).annotation);
 					}
-				},
-				accept: {
-					name: _('Accept'),
-					callback: function (key, options) {
-						that.onChangeAccept.call(that, options.$trigger.get(0).annotation._data.id);
-					}
-				},
-				reject: {
-					name: _('Reject'),
-					callback: function (key, options) {
-						that.onChangeReject.call(that, options.$trigger.get(0).annotation._data.id);
-					}
 				}
 			},
 			events: {

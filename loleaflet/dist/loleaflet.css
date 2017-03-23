@@ -208,6 +208,25 @@ body {
 	display: table-cell;
 }
 
+.loleaflet-redline-accept-button, .loleaflet-redline-reject-button {
+        padding: 0;
+        border: 0;
+        height: 25px;
+        width: 21px;
+}
+
+.loleaflet-redline-accept-button {
+        background: url('../images/lc_accepttrackedchanges.svg');
+}
+
+.loleaflet-redline-reject-button {
+        background: url('../images/lc_rejecttrackedchange.svg');
+}
+
+.loleaflet-redline-accept-button:hover, .loleaflet-redline-reject-button:hover {
+        background-color: #dcdcdc;
+}
+
 .loleaflet-annotation-date {
 	font-size: 11px;
 }
