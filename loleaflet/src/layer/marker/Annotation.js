@@ -215,8 +215,6 @@ L.Annotation = L.Layer.extend({
 		style.width = '';
 		style.whiteSpace = 'nowrap';
 
-		var width = Math.min(Math.max(this._author.offsetWidth, this._contentText.offsetWidth), this.options.minWidth);
-		style.width = (width + 1) + 'px';
 		style.whiteSpace = '';
 	},
 
