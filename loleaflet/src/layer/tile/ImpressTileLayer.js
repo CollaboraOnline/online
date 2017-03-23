@@ -126,9 +126,9 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			annotation = annotations[index];
 			if (index >= this._topAnnotation) {
 				annotation.setLatLng(bounds ? this._map.layerPointToLatLng(bounds.getBottomLeft()) : this._map.layerPointToLatLng(topRight));
+				annotation.show();
 				bounds = annotation.getBounds();
 				bounds.extend(L.point(bounds.max.x, bounds.max.y + this.options.marginY));
-				annotation.show();
 			} else {
 				annotation.hide();
 			}

@@ -129,6 +129,7 @@ L.AnnotationManager = L.Class.extend({
 		if (this._selected.annotation) {
 			point = L.point(topRight.x, this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos.min).y);
 			this._selected.annotation.setLatLng(this._map.unproject(point));
+			this._selected.annotation.show();
 			bounds = this._selected.annotation.getBounds();
 			bounds.extend(bounds.min.subtract([0, this.options.marginY]));
 			bounds.extend(bounds.getBottomLeft().add([0, this.options.marginY]));
@@ -143,6 +144,7 @@ L.AnnotationManager = L.Class.extend({
 			point = L.point(topRight.x, this._map._docLayer._twipsToPixels(annotation._data.anchorPos.min).y);
 			latlng = this._map.unproject(point);
 			annotation.setLatLng(latlng);
+			annotation.show();
 			bounds = annotation.getBounds();
 			foundBounds = null;
 			for (var itBounds in layouts) {
@@ -180,7 +182,6 @@ L.AnnotationManager = L.Class.extend({
 			}
 
 			annotation.setLatLng(latlng);
-			annotation.show();
 		}
 	},
 
