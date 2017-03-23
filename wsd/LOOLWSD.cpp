@@ -100,6 +100,7 @@
 #if ENABLE_SSL
 #  include "SslSocket.hpp"
 #endif
+#include "DelaySocket.hpp"
 #include "Storage.hpp"
 #include "TraceFile.hpp"
 #include "Unit.hpp"
@@ -166,6 +167,9 @@ int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 /// New LOK child processes ready to host documents.
 //TODO: Move to a more sensible namespace.
 static bool DisplayVersion = false;
+
+/// Funky latency simulation basic delay (ms)
+static int SimulatedLatencyMs = 150;
 
 // Tracks the set of prisoners / children waiting to be used.
 static std::mutex NewChildrenMutex;
@@ -2113,17 +2117,32 @@ private:
 
 class PlainSocketFactory : public SocketFactory
 {
-    std::shared_ptr<Socket> create(const int fd) override
+    std::shared_ptr<Socket> create(const int physicalFd) override
     {
-        return StreamSocket::create<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
+        int fd = physicalFd;
+
+        if (SimulatedLatencyMs > 0)
+            fd = Delay::create(SimulatedLatencyMs, physicalFd);
+
+        std::shared_ptr<Socket> socket =
+            StreamSocket::create<StreamSocket>(
+                fd, std::unique_ptr<SocketHandlerInterface>{
+                    new ClientRequestDispatcher });
+
+        return socket;
     }
 };
 
 #if ENABLE_SSL
 class SslSocketFactory : public SocketFactory
 {
-    std::shared_ptr<Socket> create(const int fd) override
+    std::shared_ptr<Socket> create(const int physicalFd) override
     {
+        int fd = physicalFd;
+
+        if (SimulatedLatencyMs > 0)
+            fd = Delay::create(SimulatedLatencyMs, physicalFd);
+
         return StreamSocket::create<SslStreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
     }
 };
@@ -2133,6 +2152,7 @@ class PrisonerSocketFactory : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int fd) override
     {
+        // No local delay.
         return StreamSocket::create<StreamSocket>(fd, std::unique_ptr<SocketHandlerInterface>{ new PrisonerRequestDispatcher });
     }
 };
@@ -2206,6 +2226,9 @@ public:
 
         os << "Admin poll:\n";
         Admin::instance().dumpState(os);
+
+        // If we have any delaying work going on.
+        Delay::dumpState(os);
 
         os << "Document Broker polls "
                   << "[ " << DocBrokers.size() << " ]:\n";

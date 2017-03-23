@@ -84,7 +84,7 @@ public:
     virtual HandleResult handlePoll(std::chrono::steady_clock::time_point now, int events) = 0;
 
     /// manage latency issues around packet aggregation
-    void setNoDelay()
+    virtual void setNoDelay()
     {
         const int val = 1;
         setsockopt (_fd, IPPROTO_TCP, TCP_NODELAY,
@@ -182,7 +182,7 @@ public:
     virtual void dumpState(std::ostream&) {}
 
     /// Set the thread-id we're bound to
-    void setThreadOwner(const std::thread::id &id)
+    virtual void setThreadOwner(const std::thread::id &id)
     {
         if (id != _owner)
         {
@@ -518,8 +518,17 @@ private:
 
         for (size_t i = 0; i < size; ++i)
         {
-            _pollFds[i].fd = _pollSockets[i]->getFD();
-            _pollFds[i].events = _pollSockets[i]->getPollEvents(now, timeoutMaxMs);
+            int events = _pollSockets[i]->getPollEvents(now, timeoutMaxMs);
+            if (events < 0) // timeout on dead socket
+            {
+                _pollFds[i].fd = _wakeup[0];
+                _pollFds[i].events = 0;
+            }
+            else
+            {
+                _pollFds[i].fd = _pollSockets[i]->getFD();
+                _pollFds[i].events = events;
+            }
             _pollFds[i].revents = 0;
         }
 
