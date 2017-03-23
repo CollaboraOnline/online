@@ -94,7 +94,7 @@ L.AnnotationManager = L.Class.extend({
 
 	select: function (obj) {
 		var annotation = obj instanceof L.Annotation ? obj : this.getItem(obj);
-		if (!this._selected.annotation || this._selected.annotation._data.id !== annotation._data.id) {
+		if (annotation) {
 			this._selected.annotation = annotation;
 			this.update();
 		}
@@ -103,8 +103,8 @@ L.AnnotationManager = L.Class.extend({
 	update: function () {
 		var topRight = this._map.project(this._map.options.maxBounds.getNorthEast());
 		var point, rectangles;
-		this.layout();
 		if (this._selected.annotation) {
+			this.layout();
 			point = this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos.min);
 			this._map._docLayer._selections.clearLayers();
 			rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(this._selected.annotation._data.textRange), this._map._docLayer);
