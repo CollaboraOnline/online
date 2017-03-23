@@ -59,74 +59,104 @@ L.Annotation = L.Layer.extend({
 	show: function () {
 		this._container.style.visibility = '';
 		this._contentNode.style.display = '';
-		this._editNode.style.display = 'none';
+		this._nodeModify.style.display = 'none';
+		this._nodeReply.style.display = 'none';
 	},
 
 	hide: function () {
 		this._container.style.visibility = 'hidden';
-		this._editNode.style.display = 'none';
+		this._contentNode.style.display = 'none';
+		this._nodeModify.style.display = 'none';
+		this._nodeReply.style.display = 'none';
 	},
 
 	edit: function () {
 		this._container.style.visibility = '';
 		this._contentNode.style.display = 'none';
-		this._editNode.style.display = '';
+		this._nodeModify.style.display = '';
+		this._nodeReply.style.display = 'none';
+		return this;
+	},
+
+	reply: function () {
+		this._container.style.visibility = '';
+		this._contentNode.style.display = '';
+		this._nodeModify.style.display = 'none';
+		this._nodeReply.style.display = '';
 		return this;
 	},
 
 	isEdit: function () {
-		return this._editNode && this._editNode.style.display !== 'none';
+		return (this._nodeModify && this._nodeModify.style.display !== 'none') ||
+		       (this._nodeReply && this._nodeReply.style.display !== 'none');
 	},
 
 	focus: function () {
-		this._editText.focus();
+		this._nodeModifyText.focus();
+		this._nodeReplyText.focus();
+	},
+
+	_createButton: function(container, value, handler) {
+		var button = L.DomUtil.create('input', 'loleaflet-controls', container);
+		button.type = 'button';
+		button.value = value;
+		L.DomEvent.on(button, 'click', handler, this);
 	},
 
 	_initLayout: function () {
+		var buttons,
+		    tagTd = 'td',
+		    tagDiv = 'div',
+		    empty = '',
+		    click = 'click',
+		    tagTextArea = 'textarea',
+		    cancel = _('Cancel'),
+		    classTextArea = 'loleaflet-annotation-textarea',
+		    classEdit = 'loleaflet-annotation-edit';
 		var container = this._container =
-			L.DomUtil.create('div', 'loleaflet-annotation');
+			L.DomUtil.create(tagDiv, 'loleaflet-annotation');
 		var wrapper = this._wrapper =
-			L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper', container);
-		this._tableAuthor = L.DomUtil.create('table', 'loleaflet-annotation-table', wrapper);
-		var tbody = L.DomUtil.create('tbody', '', this._tableAuthor);
-		var tr = L.DomUtil.create('tr', '', tbody);
-		var tdImg = L.DomUtil.create('td', 'loleaflet-annotation-img', tr);
-		var tdAuthor = L.DomUtil.create('td', 'loleaflet-annotation-author', tr);
-		var tdMenu = L.DomUtil.create('td', '', tr);
-		var imgAuthor = L.DomUtil.create('img', '', tdImg);
+			L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-wrapper', container);
+		this._author = L.DomUtil.create('table', 'loleaflet-annotation-table', wrapper);
+		var tbody = L.DomUtil.create('tbody', empty, this._author);
+		var tr = L.DomUtil.create('tr', empty, tbody);
+		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
+		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
+		var tdMenu = L.DomUtil.create(tagTd, empty, tr);
+		var imgAuthor = L.DomUtil.create('img', empty, tdImg);
 		imgAuthor.setAttribute('src', L.Icon.Default.imagePath + '/user.png');
 		imgAuthor.setAttribute('width', this.options.imgSize.x);
 		imgAuthor.setAttribute('height', this.options.imgSize.y);
-		L.DomUtil.create('div', 'loleaflet-annotation-userline', tdImg);
-		this._contentAuthor = L.DomUtil.create('div', 'loleaflet-annotation-content-author', tdAuthor);
-		this._contentDate = L.DomUtil.create('div', 'loleaflet-annotation-date', tdAuthor);
-		var divMenu = L.DomUtil.create('div', this._data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
+		L.DomUtil.create(tagDiv, 'loleaflet-annotation-userline', tdImg);
+		this._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
+		this._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
+		var divMenu = L.DomUtil.create(tagDiv, this._data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
 		divMenu.annotation = this;
 		if (this._data.trackchange) {
-			this._captionNode = L.DomUtil.create('div', 'loleaflet-annotation-caption', wrapper);
-			this._captionText = L.DomUtil.create('div', '', this._captionNode);
+			this._captionNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-caption', wrapper);
+			this._captionText = L.DomUtil.create(tagDiv, empty, this._captionNode);
 		}
-		this._contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content', wrapper);
-		this._editNode = L.DomUtil.create('div', 'loleaflet-annotation-edit', wrapper);
-		this._contentText = L.DomUtil.create('div', '', this._contentNode);
-		this._editText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this._editNode);
+		this._contentNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content', wrapper);
+		this._nodeModify = L.DomUtil.create(tagDiv, classEdit, wrapper);
+		this._nodeModifyText = L.DomUtil.create(tagTextArea, classTextArea, this._nodeModify);
+		this._contentText = L.DomUtil.create(tagDiv, empty, this._contentNode);
+		this._nodeReply = L.DomUtil.create(tagDiv, classEdit, wrapper);
+		this._nodeReplyText = L.DomUtil.create(tagTextArea, classTextArea, this._nodeReply);
 
-		var buttons = L.DomUtil.create('div', '', this._editNode);
-		var button = L.DomUtil.create('input', 'loleaflet-controls', buttons);
-		button.type = 'button';
-		button.value = _(' Save ');
-		L.DomEvent.on(button, 'click', this._onSaveClick, this);
-		button = L.DomUtil.create('input', 'loleaflet-controls', buttons);
-		button.type = 'button';
-		button.value = _('Cancel');
-		L.DomEvent.on(button, 'click', this._onCancelClick, this);
+		buttons = L.DomUtil.create(tagDiv, empty, this._nodeModify);
+		this._createButton(buttons, _(' Save '), this._onSaveClick);
+		this._createButton(buttons, cancel, this._onCancelClick);
+		buttons = L.DomUtil.create(tagDiv, empty, this._nodeReply);
+		this._createButton(buttons, _('Reply'), this._onReplyClick);
+		this._createButton(buttons, cancel, this._onCancelClick);
 		L.DomEvent.disableScrollPropagation(this._container);
 
 		this._container.style.visibility = 'hidden';
-		this._editNode.style.display = 'none';
+		this._nodeModify.style.display = 'none';
+		this._nodeReply.style.display = 'none';
 
-		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup'];
-		L.DomEvent.on(container, 'click', this._onMouseClick, this);
+		var events = [click, 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup'];
+		L.DomEvent.on(container, click, this._onMouseClick, this);
 		L.DomEvent.on(container, 'mouseleave', this._onMouseLeave, this);
 		for (var it = 0; it < events.length; it++) {
 			L.DomEvent.on(container, events[it], L.DomEvent.stopPropagation, this);
@@ -135,7 +165,7 @@ L.Annotation = L.Layer.extend({
 
 	_onCancelClick: function (e) {
 		L.DomEvent.stopPropagation(e);
-		this._editText.value = this._contentText.innerHTML;
+		this._nodeModifyText.value = this._contentText.innerHTML;
 		this.show();
 		this._map.fire('AnnotationCancel', {annotation: this});
 	},
@@ -165,9 +195,17 @@ L.Annotation = L.Layer.extend({
 		});
 	},
 
+	_onReplyClick: function (e) {
+		L.DomEvent.stopPropagation(e);
+		this._data.reply = this._nodeReplyText.value;
+		this._nodeReplyText.value = null;
+		this.show();
+		this._map.fire('AnnotationReply', {annotation: this});
+	},
+
 	_onSaveClick: function (e) {
 		L.DomEvent.stopPropagation(e);
-		this._data.text = this._contentText.innerHTML = this._editText.value;
+		this._data.text = this._contentText.innerHTML = this._nodeModifyText.value;
 		this.show();
 		this._map.fire('AnnotationSave', {annotation: this});
 	},
@@ -177,13 +215,13 @@ L.Annotation = L.Layer.extend({
 		style.width = '';
 		style.whiteSpace = 'nowrap';
 
-		var width = Math.min(Math.max(this._tableAuthor.offsetWidth, this._contentText.offsetWidth), this.options.minWidth);
+		var width = Math.min(Math.max(this._author.offsetWidth, this._contentText.offsetWidth), this.options.minWidth);
 		style.width = (width + 1) + 'px';
 		style.whiteSpace = '';
 	},
 
 	_updateContent: function () {
-		this._contentText.innerHTML = this._editText.innerHTML = this._data.text;
+		this._contentText.innerHTML = this._nodeModifyText.innerHTML = this._data.text;
 		this._contentAuthor.innerHTML = this._data.author;
 		this._contentDate.innerHTML = this._data.dateTime;
 		if (this._data.trackchange) {
