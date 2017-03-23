@@ -280,7 +280,7 @@ L.AnnotationManager = L.Class.extend({
 			if (modified) {
 				var modifiedObj;
 				if (changetrack) {
-					obj.redline.anchorPos = L.LOUtil.stringToBounds(obj.redline.anchorPos);
+					obj.redline.anchorPos = L.LOUtil.stringToBounds(obj.redline.textRange);
 					obj.redline.text = obj.redline.comment;
 					obj.redline.id = id;
 					obj.redline.trackchange = true;
