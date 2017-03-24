@@ -116,6 +116,9 @@ L.Socket = L.Class.extend({
 		if (this._map._docPassword) {
 			msg += ' password=' + this._map._docPassword;
 		}
+		if (String.locale) {
+			msg += ' lang=' + String.locale;
+		}
 		if (this._map.options.renderingOptions) {
 			var options = {
 				'rendering': this._map.options.renderingOptions

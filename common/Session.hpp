@@ -161,19 +161,19 @@ private:
     std::mutex _mutex;
 
 protected:
-    // The actual URL, also in the child, even if the child never accesses that.
+    /// The actual URL, also in the child, even if the child never accesses that.
     std::string _docURL;
 
-    // The Jailed document path.
+    /// The Jailed document path.
     std::string _jailedFilePath;
 
-    // Password provided, if any, to open the document
+    /// Password provided, if any, to open the document
     std::string _docPassword;
 
-    // If password is provided or not
+    /// If password is provided or not
     bool _haveDocPassword;
 
-    // Whether document is password protected
+    /// Whether document is password protected
     bool _isDocPasswordProtected;
 
     /// Document options: a JSON string, containing options (rendering, also possibly load in the future).
@@ -184,6 +184,9 @@ protected:
 
     /// Name of the user to whom the session belongs to
     std::string _userName;
+
+    /// Language for the document based on what the user has in the UI.
+    std::string _lang;
 };
 
 template <typename charT, typename traits>

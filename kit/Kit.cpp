@@ -904,7 +904,8 @@ private:
                 const std::string& userName,
                 const std::string& docPassword,
                 const std::string& renderOpts,
-                const bool haveDocPassword) override
+                const bool haveDocPassword,
+                const std::string& lang) override
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
@@ -922,7 +923,7 @@ private:
 
         try
         {
-            load(sessionId, uri, userName, docPassword, renderOpts, haveDocPassword);
+            load(sessionId, uri, userName, docPassword, renderOpts, haveDocPassword, lang);
             if (!_loKitDocument || !_loKitDocument->get())
             {
                 return false;
@@ -1107,7 +1108,8 @@ private:
                                         const std::string& userName,
                                         const std::string& docPassword,
                                         const std::string& renderOpts,
-                                        const bool haveDocPassword)
+                                        const bool haveDocPassword,
+                                        const std::string& lang)
     {
         const auto it = _sessions.find(sessionId);
         if (it == _sessions.end() || !it->second)
@@ -1138,8 +1140,12 @@ private:
             _jailedUrl = uri;
             _isDocPasswordProtected = false;
 
-            LOG_DBG("Calling lokit::documentLoad.");
-            _loKitDocument.reset(_loKit->documentLoad(uri.c_str()));
+            std::string options;
+            if (!lang.empty())
+                options = "Language=" + lang;
+
+            LOG_DBG("Calling lokit::documentLoad(" << uri << ", \"" << options << "\").");
+            _loKitDocument.reset(_loKit->documentLoad(uri.c_str(), options.c_str()));
             LOG_DBG("Returned lokit::documentLoad.");
             std::unique_lock<std::mutex> l(_documentMutex);
             lockLokDoc.swap(l);

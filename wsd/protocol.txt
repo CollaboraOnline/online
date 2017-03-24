@@ -65,12 +65,15 @@ load <pathname>
 
     Deprecated.
 
-load [part=<partNumber>] url=<url> [timestamp=<time>] [options=<options>]
+load [part=<partNumber>] url=<url> [timestamp=<time>] [lang=<locale>] [options=<options>]
 
     part is an optional parameter. <partNumber> is a number.
 
     timestamp is an optional parameter.  <time> is provided in microseconds
     since the Unix epoch - midnight, January 1, 1970.
+
+    lang specifies the locale to which we should switch before loading the
+    document
 
     options are the whole rest of the line, not URL-encoded, and must be valid JSON.
 
