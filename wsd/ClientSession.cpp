@@ -268,6 +268,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " password=" << _docPassword;
         }
 
+        if (!_lang.empty())
+        {
+            oss << " lang=" << _lang;
+        }
+
         if (!_docOptions.empty())
         {
             oss << " options=" << _docOptions;

@@ -87,6 +87,7 @@ void Session::parseDocOptions(const std::vector<std::string>& tokens, int& part,
 
     for (size_t i = offset; i < tokens.size(); ++i)
     {
+        // FIXME use any kind of startsWith() instead of find(...) == 0
         if (tokens[i].find("url=") == 0)
         {
             _docURL = tokens[i].substr(strlen("url="));
@@ -118,6 +119,11 @@ void Session::parseDocOptions(const std::vector<std::string>& tokens, int& part,
         {
             _docPassword = tokens[i].substr(strlen("password="));
             _haveDocPassword = true;
+            ++offset;
+        }
+        else if (tokens[i].find("lang=") == 0)
+        {
+            _lang = tokens[i].substr(strlen("lang="));
             ++offset;
         }
     }

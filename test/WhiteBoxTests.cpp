@@ -310,7 +310,8 @@ public:
                 const std::string& /*userName*/,
                 const std::string& /*docPassword*/,
                 const std::string& /*renderOpts*/,
-                const bool /*haveDocPassword*/) override
+                const bool /*haveDocPassword*/,
+                const std::string& /*lang*/) override
     {
         return false;
     }
