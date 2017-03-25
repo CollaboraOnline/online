@@ -617,10 +617,13 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
 void DocumentBroker::setLoaded()
 {
-    _isLoaded = true;
-    _loadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
-        std::chrono::steady_clock::now() - _threadStart);
-    LOG_TRC("Document loaded in " << _loadDuration.count() << "ms");
+    if (!_isLoaded)
+    {
+        _isLoaded = true;
+        _loadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
+                                std::chrono::steady_clock::now() - _threadStart);
+        LOG_TRC("Document loaded in " << _loadDuration.count() << "ms");
+    }
 }
 
 bool DocumentBroker::autoSave(const bool force)
