@@ -374,29 +374,34 @@ void HTTPWSTest::testConnectNoLoad()
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, "connectNoLoad ");
 
+    // Connect and disconnect without loading.
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-    std::cerr << testname1 << "Connecting." << std::endl;
+    std::cerr << testname1 << "Connecting first to disconnect without loading." << std::endl;
     auto socket = connectLOKit(_uri, request, _response, testname1);
     CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket);
-    std::cerr << testname1 << "Disconnecting." << std::endl;
+    std::cerr << testname1 << "Disconnecting first." << std::endl;
     socket.reset();
 
     // Connect and load first view.
-    std::cerr << testname2 << "Connecting." << std::endl;
+    std::cerr << testname2 << "Connecting second to load first view." << std::endl;
     auto socket1 = connectLOKit(_uri, request, _response, testname2);
     CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket1);
     sendTextFrame(socket1, "load url=" + documentURL, testname2);
     CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket1));
 
     // Connect but don't load second view.
-    std::cerr << testname3 << "Connecting." << std::endl;
+    std::cerr << testname3 << "Connecting third to disconnect without loading." << std::endl;
     auto socket2 = connectLOKit(_uri, request, _response, testname3);
     CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket2);
-    std::cerr << testname3 << "Disconnecting." << std::endl;
+    std::cerr << testname3 << "Disconnecting third." << std::endl;
     socket2.reset();
 
+    std::cerr << testname2 << "Getting status from first view." << std::endl;
     sendTextFrame(socket1, "status", testname2);
     assertResponseString(socket1, "status:");
+
+    std::cerr << testname2 << "Disconnecting second." << std::endl;
+    socket1.reset();
 }
 
 void HTTPWSTest::testLoadSimple()
@@ -2198,6 +2203,10 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type,
     catch (const Poco::Exception& exc)
     {
         CPPUNIT_FAIL(exc.displayText());
+    }
+    catch (const std::exception& exc)
+    {
+        CPPUNIT_FAIL(exc.what());
     }
 }
 
