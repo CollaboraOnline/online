@@ -37,6 +37,7 @@ public:
 
     /// Returns true if a document is loaded (i.e. we got status message).
     bool isLoaded() const { return _isLoaded; }
+    void setLoaded() { _isLoaded = true; }
 
     const std::string getUserId() const { return _userId; }
     void setUserId(const std::string& userId) { _userId = userId; }

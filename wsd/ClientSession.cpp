@@ -38,6 +38,7 @@ ClientSession::ClientSession(const std::string& id,
     _uriPublic(uriPublic),
     _isReadOnly(readOnly),
     _isDocumentOwner(false),
+    _isLoaded(false),
     _stop(false)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
@@ -632,7 +633,6 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
         else if (tokens[0] == "status:")
         {
-            _isLoaded = true;
             docBroker->setLoaded();
 
             // Forward the status response to the client.

@@ -211,41 +211,20 @@ void DocumentBroker::pollThread()
     // Main polling loop goodness.
     while (!_stop && !TerminationFlag && !ShutdownRequestFlag)
     {
-        while (true)
+        // First, load new sessions.
+        for (const auto& pair : _sessions)
         {
-            std::unique_lock<std::mutex> lock(_mutex);
-            if (_newSessions.empty())
-                break;
-
-            NewSession& newSession = _newSessions.front();
             try
             {
-                addSession(newSession._session);
-
-                // now send the queued messages
-                for (std::string message : newSession._messages)
-                {
-                    // provide the jailed document path to the 'load' message
-                    assert(!_uriJailed.empty());
-                    std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
-                    if (tokens.size() > 1 && tokens[1] == "load")
-                    {
-                        // The json options must come last.
-                        message = tokens[0] + ' ' + tokens[1] + ' ' + tokens[2];
-                        message += " jail=" + _uriJailed.toString() + ' ';
-                        message += Poco::cat(std::string(" "), tokens.begin() + 3, tokens.end());
-                    }
-
-                    LOG_DBG("Sending a queued message: " + message);
-                    _childProcess->sendTextFrame(message);
-                }
+                auto& session = pair.second;
+                if (!session->isLoaded())
+                    addSession(session);
             }
             catch (const std::exception& exc)
             {
                 LOG_ERR("Error while adding new session to doc [" << _docKey << "]: " << exc.what());
+                //TODO: Send failure to client and remove session.
             }
-
-            _newSessions.pop_front();
         }
 
         _poll->poll(SocketPoll::DefaultPollTimeoutMs);
@@ -740,10 +719,10 @@ size_t DocumentBroker::queueSession(std::shared_ptr<ClientSession>& session)
 {
     Util::assertIsLocked(_mutex);
 
-    _newSessions.push_back(NewSession(session));
+    _sessions.emplace(session->getId(), session);
     _poll->wakeup();
 
-    return _sessions.size() + _newSessions.size();
+    return _sessions.size();
 }
 
 size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
@@ -778,12 +757,9 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     _markToDestroy = false;
     _stop = false;
 
-    const auto id = session->getId();
-    if (!_sessions.emplace(id, session).second)
-    {
-        LOG_WRN("DocumentBroker: Trying to add already existing session.");
-    }
+    session->setLoaded();
 
+    const auto id = session->getId();
     const auto count = _sessions.size();
 
     // Request a new session from the child kit.
@@ -827,11 +803,6 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
 {
     try
     {
-        // remove also from the _newSessions
-        _newSessions.erase(std::remove_if(_newSessions.begin(), _newSessions.end(),
-                                          [&id](NewSession& newSession) { return newSession._session->getId() == id; }),
-                           _newSessions.end());
-
         Admin::instance().rmDoc(_docKey, id);
 
         auto it = _sessions.find(id);
@@ -1202,15 +1173,9 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
         _childProcess->sendTextFrame(msg);
         return true;
     }
-    else
-    {
-        // try the not yet created sessions
-        const auto n = std::find_if(_newSessions.begin(), _newSessions.end(), [&viewId](NewSession& newSession) { return newSession._session->getId() == viewId; });
-        if (n != _newSessions.end())
-            n->_messages.push_back(msg);
-        else
-            LOG_WRN("Child session [" << viewId << "] not found to forward message: " << message);
-    }
+
+    // try the not yet created sessions
+    LOG_WRN("Child session [" << viewId << "] not found to forward message: " << message);
 
     return false;
 }
@@ -1367,7 +1332,6 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  jailed uri: " << _uriJailed.toString();
     os << "\n  doc key: " << _docKey;
     os << "\n  num sessions: " << getSessionsCount();
-    os << "\n  new sessions: " << _newSessions.size();
     os << "\n  last editable?: " << _lastEditableSession;
     std::time_t t = std::chrono::system_clock::to_time_t(
         std::chrono::system_clock::now()
