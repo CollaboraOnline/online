@@ -302,7 +302,7 @@ DocumentBroker::~DocumentBroker()
 
 bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const std::string& jailId)
 {
-    Util::assertIsLocked(_mutex);
+    assert(isCorrectThread());
 
     const std::string sessionId = session->getId();
 
@@ -519,7 +519,7 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId,
 bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
                                            bool success, const std::string& result)
 {
-    assert(_poll->isCorrectThread());
+    assert(isCorrectThread());
 
     // If save requested, but core didn't save because document was unmodified
     // notify the waiting thread, if any.
@@ -745,7 +745,7 @@ size_t DocumentBroker::queueSession(std::shared_ptr<ClientSession>& session)
 
 size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
 {
-    Util::assertIsLocked(_mutex);
+    assert(isCorrectThread());
 
     try
     {
@@ -948,6 +948,7 @@ void DocumentBroker::invalidateTiles(const std::string& tiles)
 void DocumentBroker::handleTileRequest(TileDesc& tile,
                                        const std::shared_ptr<ClientSession>& session)
 {
+    assert(isCorrectThread());
     std::unique_lock<std::mutex> lock(_mutex);
 
     tile.setVersion(++_tileVersion);
@@ -1213,6 +1214,8 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
 
 bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
 {
+    assert(isCorrectThread());
+
     const std::string& msg = payload->abbr();
     const std::string& prefix = payload->forwardToken();
     LOG_TRC("Forwarding payload to [" << prefix << "]: " << msg);
@@ -1223,8 +1226,6 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
     {
         const auto& data = payload->data().data();
         const auto& size = payload->size();
-
-        // std::unique_lock<std::mutex> lock(_mutex);
 
         if (sid == "all")
         {
