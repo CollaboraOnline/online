@@ -225,7 +225,7 @@ public:
     void startThread();
 
     /// Loads a document from the public URI into the jail.
-    bool load(std::shared_ptr<ClientSession>& session, const std::string& jailId);
+    bool load(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
     bool isLoaded() const { return _isLoaded; }
     void setLoaded();
 
@@ -354,7 +354,7 @@ private:
     bool forwardToClient(const std::shared_ptr<Message>& payload);
 
     /// Add a new session. Returns the new number of sessions.
-    size_t addSession(std::shared_ptr<ClientSession>& session);
+    size_t addSession(const std::shared_ptr<ClientSession>& session);
 
     /// The thread function that all of the I/O for all sessions
     /// associated with this document.

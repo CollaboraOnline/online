@@ -300,7 +300,7 @@ DocumentBroker::~DocumentBroker()
     _childProcess.reset();
 }
 
-bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::string& jailId)
+bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const std::string& jailId)
 {
     Util::assertIsLocked(_mutex);
 
@@ -743,7 +743,7 @@ size_t DocumentBroker::queueSession(std::shared_ptr<ClientSession>& session)
     return _sessions.size() + _newSessions.size();
 }
 
-size_t DocumentBroker::addSession(std::shared_ptr<ClientSession>& session)
+size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
 {
     Util::assertIsLocked(_mutex);
 
@@ -863,7 +863,6 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
 
     return _sessions.size();
 }
-
 
 void DocumentBroker::addCallback(SocketPoll::CallbackFn fn)
 {
