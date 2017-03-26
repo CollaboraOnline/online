@@ -1256,7 +1256,11 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
         // destruction when we add the session, -or- the client
         // re-connects.
         if (docBroker->isMarkedToDestroy())
-            LOG_WRN("Associating with Document Broker with docKey [" << docKey << "] that is marked to be destroyed!");
+        {
+            LOG_WRN("DocBroker with docKey [" << docKey << "] that is marked to be destroyed. Rejecting client request.");
+            ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, "error: cmd=load kind=docunloading");
+            return false;
+        }
     }
     else
     {
