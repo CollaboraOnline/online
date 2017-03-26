@@ -44,7 +44,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLoleafletPost);
     CPPUNIT_TEST(testScriptsAndLinksGet);
     CPPUNIT_TEST(testScriptsAndLinksPost);
-    // CPPUNIT_TEST(testConvertTo);
+    CPPUNIT_TEST(testConvertTo);
 
     CPPUNIT_TEST_SUITE_END();
 

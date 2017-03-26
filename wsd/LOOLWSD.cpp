@@ -1943,24 +1943,27 @@ private:
 
                         docBroker->startThread();
 
-                        // Load the document manually and request saving in the target format.
-                        std::string encodedFrom;
-                        URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
-                        const std::string load = "load url=" + encodedFrom;
-                        std::vector<char> loadRequest(load.begin(), load.end());
-                        clientSession->handleMessage(true, WebSocketHandler::WSOpCode::Text, loadRequest);
+                        docBroker->addCallback([&]()
+                        {
+                            // Load the document manually and request saving in the target format.
+                            std::string encodedFrom;
+                            URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
+                            const std::string load = "load url=" + encodedFrom;
+                            std::vector<char> loadRequest(load.begin(), load.end());
+                            clientSession->handleMessage(true, WebSocketHandler::WSOpCode::Text, loadRequest);
 
-                        // FIXME: Check for security violations.
-                        Path toPath(docBroker->getPublicUri().getPath());
-                        toPath.setExtension(format);
-                        const std::string toJailURL = "file://" + std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
-                        std::string encodedTo;
-                        URI::encode(toJailURL, "", encodedTo);
+                            // FIXME: Check for security violations.
+                            Path toPath(docBroker->getPublicUri().getPath());
+                            toPath.setExtension(format);
+                            const std::string toJailURL = "file://" + std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
+                            std::string encodedTo;
+                            URI::encode(toJailURL, "", encodedTo);
 
-                        // Convert it to the requested format.
-                        const auto saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
-                        std::vector<char> saveasRequest(saveas.begin(), saveas.end());
-                        clientSession->handleMessage(true, WebSocketHandler::WSOpCode::Text, saveasRequest);
+                            // Convert it to the requested format.
+                            const auto saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
+                            std::vector<char> saveasRequest(saveas.begin(), saveas.end());
+                            clientSession->handleMessage(true, WebSocketHandler::WSOpCode::Text, saveasRequest);
+                        });
 
                         sent = true;
                     }
