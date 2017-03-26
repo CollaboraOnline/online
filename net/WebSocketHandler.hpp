@@ -213,8 +213,10 @@ public:
             if (!_shuttingDown)
             {
                 // Peer-initiated shutdown must be echoed.
-                // Otherwise, this is the echo to _out_ shutdown message.
-                const StatusCodes statusCode = static_cast<StatusCodes>((static_cast<unsigned>(_wsPayload[0]) << 8) | _wsPayload[1]);
+                // Otherwise, this is the echo to _our_ shutdown message, which we should ignore.
+                const StatusCodes statusCode = static_cast<StatusCodes>((((uint64_t)(unsigned char)_wsPayload[0]) << 8) +
+                                                                        (((uint64_t)(unsigned char)_wsPayload[1]) << 0));
+                LOG_TRC("#" << socket->getFD() << ": Client initiated socket shutdown. Code: " << static_cast<int>(statusCode));
                 if (_wsPayload.size() > 2)
                 {
                     const std::string message(&_wsPayload[2], &_wsPayload[2] + _wsPayload.size() - 2);
