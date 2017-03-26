@@ -1285,7 +1285,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
         static_assert(MAX_DOCUMENTS > 0, "MAX_DOCUMENTS must be positive");
         if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
         {
-            LOG_ERR("Maximum number of open documents reached.");
+            LOG_ERR("Maximum number of open documents of " << MAX_DOCUMENTS << " reached.");
             shutdownLimitReached(ws);
             return nullptr;
         }

@@ -47,7 +47,8 @@ ClientSession::ClientSession(const std::string& id,
 
 ClientSession::~ClientSession()
 {
-    LOG_INF("~ClientSession dtor [" << getName() << "].");
+    const size_t curConnections = --LOOLWSD::NumConnections;
+    LOG_INF("~ClientSession dtor [" << getName() << "], current number of connections: " << curConnections);
 
     stop();
 }
@@ -726,8 +727,7 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
 
 void ClientSession::onDisconnect()
 {
-    const size_t curConnections = --LOOLWSD::NumConnections;
-    LOG_INF(getName() << " Disconnected, current # of connections: " << curConnections);
+    LOG_INF(getName() << " Disconnected, current number of connections: " << LOOLWSD::NumConnections);
 
     const auto docBroker = getDocumentBroker();
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
