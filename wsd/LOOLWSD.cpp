@@ -2481,7 +2481,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     {
         UnitWSD::get().invokeTest();
 
-        mainWait.poll(SocketPoll::DefaultPollTimeoutMs * 2);
+        // This timeout affects the recovery time of prespawned children.
+        mainWait.poll(SocketPoll::DefaultPollTimeoutMs);
 
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll.wakeup();
