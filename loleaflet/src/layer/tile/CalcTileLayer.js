@@ -51,6 +51,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		map.on('zoomend', this._onZoomRowColumns, this);
 		map.on('updateparts', this._onUpdateParts, this);
 		map.on('AnnotationCancel', this._onAnnotationCancel, this);
+		map.on('AnnotationReply', this._onAnnotationReply, this);
 		map.on('AnnotationSave', this._onAnnotationSave, this);
 	},
 
@@ -86,6 +87,11 @@ L.CalcTileLayer = L.TileLayer.extend({
 		this._map.focus();
 	},
 
+	onAnnotationReply: function (annotation) {
+		annotation.reply();
+		annotation.focus();
+	},
+
 	showAnnotation: function (annotation) {
 		this._map.addLayer(annotation.mark);
 		this._map.addLayer(annotation);
@@ -116,6 +122,21 @@ L.CalcTileLayer = L.TileLayer.extend({
 		} else {
 			this._annotations[e.annotation._data.tab][e.annotation._data.id].closePopup();
 		}
+		this._map.focus();
+	},
+
+	_onAnnotationReply: function (e) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: e.annotation._data.id
+			},
+			Text: {
+				type: 'string',
+				value: e.annotation._data.reply
+			}
+		};
+		this._map.sendUnoCommand('.uno:ReplyComment', comment);
 		this._map.focus();
 	},
 
