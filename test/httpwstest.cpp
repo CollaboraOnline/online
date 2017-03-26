@@ -315,9 +315,11 @@ void HTTPWSTest::testCloseAfterClose()
     const auto testname = "closeAfterClose ";
     try
     {
+        std::cerr << testname << "Connecting and loading." << std::endl;
         auto socket = loadDocAndGetSocket("hello.odt", _uri, testname);
 
         // send normal socket shutdown
+        std::cerr << testname << "Disconnecting." << std::endl;
         socket->shutdown();
 
         // 5 seconds timeout
@@ -330,16 +332,28 @@ void HTTPWSTest::testCloseAfterClose()
         do
         {
             bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
+            std::cerr << testname << "Received [" << std::string(buffer, bytes) << "], flags: "<< std::hex << flags << std::dec << std::endl;
         }
         while (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
-        std::cerr << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
+        std::cerr << testname << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
 
-        // no more messages is received.
-        bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
-        std::cerr << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
-        CPPUNIT_ASSERT_EQUAL(0, bytes);
-        CPPUNIT_ASSERT_EQUAL(0, flags);
+        try
+        {
+            // no more messages is received.
+            bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
+            std::cerr << testname << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
+            CPPUNIT_ASSERT_EQUAL(0, bytes);
+            CPPUNIT_ASSERT_EQUAL(0, flags);
+        }
+        catch (const Poco::Exception& exc)
+        {
+            // This is not unexpected, since WSD will close the socket after
+            // echoing back the shutdown status code. However, if it doesn't
+            // we assert above that it doesn't send any more data.
+            std::cerr << testname << "Error: " << exc.displayText() << std::endl;
+
+        }
     }
     catch (const Poco::Exception& exc)
     {
