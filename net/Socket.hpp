@@ -69,6 +69,7 @@ public:
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
     {
+        LOG_TRC("#" << _fd << ": socket shutdown RDWR.");
         ::shutdown(_fd, SHUT_RDWR);
     }
 

@@ -64,7 +64,7 @@ public:
     /// Shutdown the TLS/SSL connection properly.
     void closeConnection() override
     {
-        LOG_DBG("SslStreamSocket::performShutdown() #" << getFD());
+        LOG_DBG("SslStreamSocket::closeConnection() #" << getFD());
         if (SSL_shutdown(_ssl) == 0)
         {
             // Complete the bidirectional shutdown.

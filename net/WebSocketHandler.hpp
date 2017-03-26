@@ -107,7 +107,9 @@ public:
         if (socket == nullptr)
             return;
 
-        LOG_TRC("#" << socket->getFD() << ": Shutdown websocket.");
+        LOG_TRC("#" << socket->getFD() << ": Shutdown websocket, code: " <<
+                static_cast<unsigned>(statusCode) << ", message: " << statusMessage);
+        _shuttingDown = true;
 
         const size_t len = statusMessage.size();
         std::vector<char> buf(2 + len);
@@ -119,7 +121,6 @@ public:
 
         auto lock = socket->getWriteLock();
         sendFrame(socket, buf.data(), buf.size(), flags);
-        _shuttingDown = true;
     }
 
     /// Implementation of the SocketHandlerInterface.
@@ -197,16 +198,16 @@ public:
         socket->_inBuffer.erase(socket->_inBuffer.begin(), socket->_inBuffer.begin() + headerLen + payloadLen);
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
-        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << code << " fin? " << fin << " payload length " << _wsPayload.size());
+        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << code << " fin? " << fin << ", payload length: " << _wsPayload.size());
 
         switch (code)
         {
         case WSOpCode::Pong:
             _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _pingSent).count();
-            LOG_TRC("Pong received: " << _pingTimeUs << " microseconds");
+            LOG_TRC("#" << socket->getFD() << ": Pong received: " << _pingTimeUs << " microseconds");
             break;
         case WSOpCode::Ping:
-            LOG_ERR("Clients should not send pings, only servers");
+            LOG_ERR("#" << socket->getFD() << ": Clients should not send pings, only servers");
             // drop through
         case WSOpCode::Close:
             if (!_shuttingDown)
@@ -223,6 +224,10 @@ public:
                 {
                     shutdown(statusCode);
                 }
+            }
+            else
+            {
+                LOG_TRC("#" << socket->getFD() << ": Client responded to our shutdown.");
             }
 
             // TCP Close.
