@@ -14,6 +14,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	beforeAdd: function (map) {
 		map.on('updateparts', this.onUpdateParts, this);
 		map.on('AnnotationCancel', this.onAnnotationCancel, this);
+		map.on('AnnotationReply', this.onReplyClick, this);
 		map.on('AnnotationSave', this.onAnnotationSave, this);
 		map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
 		map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
@@ -52,6 +53,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		draft.focus();
 	},
 
+	onAnnotationReply: function (annotation) {
+		var draft = L.annotation(this._map.getCenter(), annotation._data).addTo(this._map);
+		draft.reply();
+		draft.focus();
+	},
+
 	onAnnotationRemove: function (id) {
 		var comment = {
 			Id: {
@@ -86,6 +93,22 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			};
 			this._map.sendUnoCommand('.uno:EditAnnotation', comment);
 		}
+		this._map.removeLayer(e.annotation);
+		this._map.focus();
+	},
+
+	onReplyClick: function (e) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: e.annotation._data.id
+			},
+			Text: {
+				type: 'string',
+				value: e.annotation._data.reply
+			}
+		};
+		this._map.sendUnoCommand('.uno:ReplyToAnnotation', comment);
 		this._map.removeLayer(e.annotation);
 		this._map.focus();
 	},
