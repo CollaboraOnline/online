@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "Protocol.hpp"
+#include "Log.hpp"
 
 /// The payload type used to send/receive data.
 class Message
@@ -36,6 +37,7 @@ public:
         _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
         _type(detectType())
     {
+        LOG_TRC("Message " << _abbr);
     }
 
     /// Construct a message from a string with type and
@@ -55,6 +57,7 @@ public:
         _data.resize(message.size());
         const auto offset = skipWhitespace(message.data() + _forwardToken.size());
         std::memcpy(_data.data(), offset, message.size() - (offset - message.data()));
+        LOG_TRC("Message " << _abbr);
     }
 
     /// Construct a message from a character array with type.
@@ -70,6 +73,7 @@ public:
         _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
         _type(detectType())
     {
+        LOG_TRC("Message " << _abbr);
     }
 
     size_t size() const { return _data.size(); }
