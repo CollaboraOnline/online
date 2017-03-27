@@ -62,9 +62,10 @@ public:
     }
 
     /// Implementation of the SocketHandlerInterface.
-    void onConnect(const std::weak_ptr<StreamSocket>& socket) override
+    void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         _socket = socket;
+        LOG_TRC("#" << socket->getFD() << " Connected to WS Handler 0x" << std::hex << this << std::dec);
     }
 
     enum WSOpCode {
@@ -105,7 +106,10 @@ public:
     {
         auto socket = _socket.lock();
         if (socket == nullptr)
+        {
+            LOG_ERR("No socket associated with WebSocketHandler 0x" << std::hex << this << std::dec);
             return;
+        }
 
         LOG_TRC("#" << socket->getFD() << ": Shutdown websocket, code: " <<
                 static_cast<unsigned>(statusCode) << ", message: " << statusMessage);
@@ -128,7 +132,10 @@ public:
     {
         auto socket = _socket.lock();
         if (socket == nullptr)
+        {
+            LOG_ERR("No socket associated with WebSocketHandler 0x" << std::hex << this << std::dec);
             return false;
+        }
 
         // websocket fun !
         const size_t len = socket->_inBuffer.size();

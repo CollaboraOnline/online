@@ -1396,15 +1396,19 @@ public:
 
 private:
     /// Keep our socket around ...
-    void onConnect(const std::weak_ptr<StreamSocket>& socket) override
+    void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
-        LOG_TRC("Prisoner - new socket");
         _socket = socket;
+        LOG_TRC("#" << socket->getFD() << " Prisoner connected.");
     }
 
     void onDisconnect() override
     {
-        LOG_TRC("Prisoner connection disconnected");
+        auto socket = _socket.lock();
+        if (socket)
+            LOG_TRC("#" << socket->getFD() << " Prisoner connection disconnected.");
+        else
+            LOG_WRN("Prisoner connection disconnected but without valid socket.");
 
         // Notify the broker that we're done.
         auto child = _childProcess.lock();
@@ -1525,7 +1529,11 @@ private:
         if (UnitWSD::get().filterChildMessage(data))
             return;
 
-        LOG_TRC("Prisoner message [" << getAbbreviatedMessage(&data[0], data.size()) << "].");
+        auto socket = _socket.lock();
+        if (socket)
+            LOG_TRC("#" << socket->getFD() << " Prisoner message [" << getAbbreviatedMessage(&data[0], data.size()) << "].");
+        else
+            LOG_WRN("Message handler called but without valid socket.");
 
         auto child = _childProcess.lock();
         auto docBroker = child ? child->getDocumentBroker() : nullptr;
@@ -1567,10 +1575,11 @@ public:
 private:
 
     /// Set the socket associated with this ResponseClient.
-    void onConnect(const std::weak_ptr<StreamSocket>& socket) override
+    void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         _id = LOOLWSD::GenSessionId();
         _socket = socket;
+        LOG_TRC("#" << socket->getFD() << " Connected to ClientRequestDispatcher.");
     }
 
     /// Called after successful socket reads.
@@ -2108,6 +2117,7 @@ private:
                 {
                     // Set the ClientSession to handle Socket events.
                     socket->setHandler(clientSession);
+                    LOG_DBG("Socket #" << socket->getFD() << " handler is " << clientSession->getName());
 
                     // Move the socket into DocBroker.
                     docBroker->addSocketToPoll(socket);

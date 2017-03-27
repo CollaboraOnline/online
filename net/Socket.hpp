@@ -516,7 +516,7 @@ public:
     /// Called when the socket is newly created to
     /// set the socket associated with this ResponseClient.
     /// Will be called exactly once.
-    virtual void onConnect(const std::weak_ptr<StreamSocket>& socket) = 0;
+    virtual void onConnect(const std::shared_ptr<StreamSocket>& socket) = 0;
 
     enum class SocketOwnership
     {
