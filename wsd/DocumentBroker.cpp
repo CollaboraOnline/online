@@ -209,7 +209,7 @@ void DocumentBroker::pollThread()
     auto last30SecCheckTime = std::chrono::steady_clock::now();
 
     // Main polling loop goodness.
-    while (!_stop && !TerminationFlag && !ShutdownRequestFlag)
+    while (!_stop && _poll->continuePolling() && !TerminationFlag && !ShutdownRequestFlag)
     {
         // First, load new sessions.
         for (const auto& pair : _sessions)
@@ -1290,6 +1290,7 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
 
     // Stop the polling thread.
     _poll->stop();
+    _stop = true;
 }
 
 void DocumentBroker::closeDocument(const std::string& reason)
