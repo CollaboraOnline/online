@@ -288,7 +288,7 @@ public:
     }
 
     /// Are we running in either shutdown, or the polling thread.
-    bool isCorrectThread()
+    bool isCorrectThread() const
     {
         return _stop || std::this_thread::get_id() == _owner;
     }

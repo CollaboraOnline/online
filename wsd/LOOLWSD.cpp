@@ -1416,6 +1416,7 @@ private:
         if (docBroker)
         {
             auto lock = docBroker->getLock();
+            assert(docBroker->isCorrectThread());
             docBroker->terminateChild(lock, "Service unavailable", false);
         }
     }
