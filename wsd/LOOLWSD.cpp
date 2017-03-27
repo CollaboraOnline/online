@@ -1556,52 +1556,6 @@ private:
     }
 };
 
-/// Handles dispatching socket traffic to the ClientSession.
-class ConvertToHandler : public SocketHandlerInterface
-{
-public:
-    ConvertToHandler(const std::shared_ptr<ClientSession>& clientSession) :
-        _clientSession(clientSession)
-    {
-    }
-
-private:
-
-    /// Set the socket associated with this ResponseClient.
-    void onConnect(const std::weak_ptr<StreamSocket>& socket) override
-    {
-        LOG_ERR("onConnect");
-        _socket = socket;
-    }
-
-    void onDisconnect() override
-    {
-        LOG_ERR("onDisconnect");
-    }
-
-    SocketHandlerInterface::SocketOwnership handleIncomingMessage() override
-    {
-        LOG_ERR("handleIncomingMessage");
-        return SocketHandlerInterface::SocketOwnership::UNCHANGED;
-    }
-
-    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
-                      int & /* timeoutMaxMs */) override
-    {
-        return POLLIN;
-    }
-
-    void performWrites() override
-    {
-        LOG_ERR("performWrites");
-    }
-
-private:
-    // The socket that owns us (we can't own it).
-    std::weak_ptr<StreamSocket> _socket;
-    std::shared_ptr<ClientSession> _clientSession;
-};
-
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher : public SocketHandlerInterface
 {
