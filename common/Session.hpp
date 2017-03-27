@@ -68,13 +68,6 @@ public:
     void closeFrame() { _isCloseFrame = true; };
     bool isCloseFrame() const { return _isCloseFrame; }
 
-    bool isHeadless() const
-    {
-        // TODO loolnb here we should return true when there is no
-        // client socket (i.e. when converting documents).
-        return false;
-    }
-
 protected:
     Session(const std::string& name, const std::string& id);
     virtual ~Session();

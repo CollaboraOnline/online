@@ -1200,13 +1200,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
             // Broadcast to all.
             for (const auto& pair : _sessions)
             {
-#if 0 // loolnb
-                if (!pair.second->isHeadless() && !pair.second->isCloseFrame())
-#endif
-                if (!pair.second->isHeadless())
-                {
-                    pair.second->handleKitToClientMessage(data, size);
-                }
+                pair.second->handleKitToClientMessage(data, size);
             }
         }
         else

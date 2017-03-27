@@ -70,17 +70,8 @@ public:
         // If in the correct thread - no need for wakeups.
         assert (!docBroker || docBroker->isCorrectThread());
 
-        if (isHeadless())
-        {
-            // Fail silently and return as there is no actual websocket
-            // connection in this case.
-            LOG_INF(getName() << ": Headless peer, not forwarding message [" << data->abbr() << "].");
-        }
-        else
-        {
-            LOG_TRC(getName() << " enqueueing client message " << data->id());
-            _senderQueue.enqueue(data);
-        }
+        LOG_TRC(getName() << " enqueueing client message " << data->id());
+        _senderQueue.enqueue(data);
     }
 
     bool stopping() const { return _stop || _senderQueue.stopping(); }
