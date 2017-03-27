@@ -105,7 +105,11 @@ protected:
     void initialize(Poco::Util::Application& self) override;
     void defineOptions(Poco::Util::OptionSet& options) override;
     void handleOption(const std::string& name, const std::string& value) override;
+    int innerMain();
     int main(const std::vector<std::string>& args) override;
+
+    /// Handle various global static destructors.
+    void cleanup();
 
 private:
     static Util::RuntimeConstant<bool> SSLEnabled;

@@ -9,6 +9,7 @@
 
 #include "config.h"
 
+#include <assert.h>
 #include "Ssl.hpp"
 
 #include <sys/syscall.h>
@@ -25,7 +26,6 @@ extern "C"
     };
 }
 
-std::atomic<int> SslContext::RefCount(0);
 std::unique_ptr<SslContext> SslContext::Instance;
 std::vector<std::unique_ptr<std::mutex>> SslContext::Mutexes;
 
@@ -130,6 +130,12 @@ SslContext::~SslContext()
     CRYPTO_set_id_callback(0);
 
     CONF_modules_free();
+}
+
+void SslContext::uninitialize()
+{
+    assert (Instance);
+    Instance.reset();
 }
 
 void SslContext::lock(int mode, int n, const char* /*file*/, int /*line*/)
