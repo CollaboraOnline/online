@@ -247,6 +247,10 @@ void DocumentBroker::pollThread()
         }
     }
 
+    // Flush socket data.
+    for (int i = 0; i < 7 && _poll->getSocketCount() > 0; ++i)
+        _poll->poll(POLL_TIMEOUT_MS / 5);
+
     // Terminate properly while we can.
     auto lock = getLock();
     terminateChild(lock, "", false);

@@ -435,6 +435,12 @@ public:
                 " leaving " << _pollSockets.size());
     }
 
+    size_t getSocketCount() const
+    {
+        assert(isCorrectThread());
+        return _pollSockets.size();
+    }
+
     const std::string& name() const { return _name; }
 
     /// Start the polling thread (if desired)
