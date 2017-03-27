@@ -36,7 +36,7 @@ find etc/passwd etc/group etc/hosts \
      usr/lib/locale/locale_archive \
      usr/share/zoneinfo/* \
      usr/share/liblangtag \
-     usr/lib/libpng* usr/lib64/libpng* \
+     usr/lib/libpng* usr/lib64/libpng* lib/*-linux-gnu/libpng* \
 	 -type f
 
 find etc/fonts \
@@ -44,7 +44,7 @@ find etc/fonts \
      lib/libnss_* lib64/libnss_* lib/*-linux-gnu/libnss*\
      lib/libcap* lib64/libcap* lib/*-linux-gnu/libcap* \
      lib/libattr* lib/*-linux-gnu/libattr* \
-     usr/lib/libpng* usr/lib64/libpng* \
+     usr/lib/libpng* usr/lib64/libpng* lib/*-linux-gnu/libpng* \
 	 -type l
 
 # Go through the LO shared objects and check what system libraries
