@@ -2343,7 +2343,7 @@ bool LOOLWSD::handleShutdownRequest()
     return false;
 }
 
-int LOOLWSD::main(const std::vector<std::string>& /*args*/)
+int LOOLWSD::innerMain()
 {
 #ifndef FUZZER
     SigUtil::setUserSignals();
@@ -2425,6 +2425,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         {
             const auto msg = "Failed to fork child processes.";
             LOG_FTL(msg);
+            std::cerr << msg << std::endl;
             throw std::runtime_error(msg);
         }
 
@@ -2519,7 +2520,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         LOG_INF("Removing jail [" << path << "].");
         FileUtil::removeFile(path, true);
     }
+    return Application::EXIT_OK;
+}
 
+void LOOLWSD::cleanup()
+{
     // Finally, we no longer need SSL.
     if (LOOLWSD::isSSLEnabled())
     {
@@ -2529,13 +2534,27 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         SslContext::uninitialize();
 #endif
     }
+}
 
-    int returnValue = Application::EXIT_OK;
+int LOOLWSD::main(const std::vector<std::string>& /*args*/)
+{
+    int returnValue;
+
+    try {
+        returnValue = innerMain();
+    } catch (...) {
+        cleanup();
+        throw;
+    }
+
+    cleanup();
+
     UnitWSD::get().returnValue(returnValue);
 
     LOG_INF("Process [loolwsd] finished.");
     return returnValue;
 }
+
 
 void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& /* request */, UnitHTTPServerResponse& /* response */)
 {

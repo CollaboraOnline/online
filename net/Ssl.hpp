@@ -31,19 +31,11 @@ public:
                            const std::string& keyFilePath,
                            const std::string& caFilePath)
     {
-        if (++RefCount == 1)
-        {
-            Instance.reset(new SslContext(certFilePath, keyFilePath, caFilePath));
-        }
+        assert (!Instance);
+        Instance.reset(new SslContext(certFilePath, keyFilePath, caFilePath));
     }
 
-    static void uninitialize()
-    {
-        if (--RefCount == 0)
-        {
-            Instance.reset();
-        }
-    }
+    static void uninitialize();
 
     static SSL* newSsl()
     {
@@ -59,6 +51,7 @@ private:
 
     void initDH();
     void initECDH();
+    void shutdown();
 
     std::string getLastErrorMsg();
 
@@ -71,7 +64,6 @@ private:
     static void dynlockDestroy(struct CRYPTO_dynlock_value* lock, const char* file, int line);
 
 private:
-    static std::atomic<int> RefCount;
     static std::unique_ptr<SslContext> Instance;
     static std::vector<std::unique_ptr<std::mutex>> Mutexes;
 
