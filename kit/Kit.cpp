@@ -149,7 +149,7 @@ namespace
         case FTW_F:
         case FTW_SLN:
             File(newPath.parent()).createDirectories();
-            if (link(fpath, newPath.toString().c_str()) == -1 && errno != EEXIST)
+            if (link(fpath, newPath.toString().c_str()) == -1)
             {
                 LOG_SYS("link(\"" << fpath << "\", \"" <<
                         newPath.toString() << "\") failed. Will copy.");
