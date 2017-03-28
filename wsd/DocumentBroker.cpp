@@ -516,6 +516,8 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         return true;
     }
 
+    std::unique_lock<std::mutex> lock(_mutex);
+
     const auto it = _sessions.find(sessionId);
     if (it == _sessions.end())
     {
