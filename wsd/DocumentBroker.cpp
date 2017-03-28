@@ -248,8 +248,17 @@ void DocumentBroker::pollThread()
     }
 
     // Flush socket data.
-    for (int i = 0; i < 7 && _poll->getSocketCount() > 0; ++i)
-        _poll->poll(POLL_TIMEOUT_MS / 5);
+    const int flushTimeoutMs = POLL_TIMEOUT_MS * 2; // ~1000ms
+    const auto flushStartTime = std::chrono::steady_clock::now();
+    while (_poll->getSocketCount())
+    {
+        const auto now = std::chrono::steady_clock::now();
+        const int elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - flushStartTime).count();
+        if (elapsedMs > flushTimeoutMs)
+            break;
+
+        _poll->poll(std::min(flushTimeoutMs - elapsedMs, POLL_TIMEOUT_MS / 5));
+    }
 
     // Terminate properly while we can.
     auto lock = getLock();
