@@ -99,6 +99,8 @@ public:
     /// Return true when successfull.
     static bool createForKit();
 
+    static void triggerChildAndDocHousekeeping();
+
 protected:
     void initialize(Poco::Util::Application& self) override;
     void defineOptions(Poco::Util::OptionSet& options) override;
