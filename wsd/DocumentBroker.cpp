@@ -732,7 +732,7 @@ std::string DocumentBroker::getJailRoot() const
 
 size_t DocumentBroker::queueSession(std::shared_ptr<ClientSession>& session)
 {
-    Util::assertIsLocked(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
 
     _sessions.emplace(session->getId(), session);
     _poll->wakeup();

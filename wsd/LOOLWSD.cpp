@@ -1261,9 +1261,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
         LOG_DBG("Found DocumentBroker with docKey [" << docKey << "].");
         docBroker = it->second;
 
-        // Avoid notifying the client - either we catch and stop the
-        // destruction when we add the session, -or- the client
-        // re-connects.
+        // Destroying the document? Let the client reconnect.
         if (docBroker->isMarkedToDestroy())
         {
             LOG_WRN("DocBroker with docKey [" << docKey << "] that is marked to be destroyed. Rejecting client request.");
@@ -1309,28 +1307,6 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
     return docBroker;
 }
 
-/// Remove DocumentBroker session and instance from DocBrokers.
-static void removeDocBrokerSession(const std::shared_ptr<DocumentBroker>& docBroker, const std::string& id = "")
-{
-    LOG_CHECK_RET(docBroker && "Null docBroker instance", );
-
-    const auto docKey = docBroker->getDocKey();
-    LOG_DBG("Removing docBroker [" << docKey << "]" << (id.empty() ? "" : (" and session [" + id + "].")));
-
-    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-    auto lock = docBroker->getLock();
-
-    if (!id.empty())
-        docBroker->removeSession(id);
-
-    if (docBroker->getSessionsCount() == 0 || !docBroker->isAlive())
-    {
-        LOG_INF("Removing unloaded DocumentBroker for docKey [" << docKey << "].");
-        DocBrokers.erase(docKey);
-        docBroker->terminateChild(lock, "", true);
-    }
-}
-
 static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHandler* ws,
                                                              const std::string& id,
                                                              const Poco::URI& uriPublic,
@@ -1340,10 +1316,14 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
     LOG_CHECK_RET(docBroker && "Null docBroker instance", nullptr);
     try
     {
-        auto lock = docBroker->getLock();
-
-        if (docBroker->isMarkedToDestroy())
-            LOG_WRN("DocBroker is marked to destroy, attempting to add session anyway.");
+        const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
+        if (!fs.empty())
+        {
+            LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
+            const std::string diskfullMsg = "error: cmd=internal kind=diskfull";
+            // Alert all other existing sessions also
+            Util::alertAllUsers(diskfullMsg);
+        }
 
         // Now we have a DocumentBroker and we're ready to process client commands.
         if (ws)
@@ -1360,23 +1340,11 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
 
         docBroker->queueSession(session);
 
-        lock.unlock();
-
-        const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
-        if (!fs.empty())
-        {
-            LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
-            const std::string diskfullMsg = "error: cmd=internal kind=diskfull";
-            // Alert all other existing sessions also
-            Util::alertAllUsers(diskfullMsg);
-        }
-
         return session;
     }
     catch (const std::exception& exc)
     {
         LOG_WRN("Exception while preparing session [" << id << "]: " << exc.what());
-        removeDocBrokerSession(docBroker, id);
     }
 
     return nullptr;
@@ -2117,7 +2085,6 @@ private:
         auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
         if (docBroker)
         {
-            // TODO: Move to DocumentBroker.
             auto clientSession = createNewClientSession(&ws, _id, uriPublic, docBroker, isReadOnly);
             if (clientSession)
             {
@@ -2136,7 +2103,10 @@ private:
                 docBroker->startThread();
             }
             else
+            {
                 LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
+                cleanupDocBrokers();
+            }
         }
         else
             LOG_WRN("Failed to create DocBroker with docKey [" << docKey << "].");

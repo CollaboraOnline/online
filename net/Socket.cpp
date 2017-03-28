@@ -47,7 +47,7 @@ SocketPoll::SocketPoll(const std::string& threadName)
     // Create the wakeup fd.
     if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)
     {
-        throw std::runtime_error("Failed to allocate pipe for SocketPoll waking.");
+        throw std::runtime_error("Failed to allocate pipe for SocketPoll [" + threadName + "] waking.");
     }
 
     {
