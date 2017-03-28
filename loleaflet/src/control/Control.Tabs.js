@@ -70,7 +70,7 @@ L.Control.Tabs = L.Control.extend({
 								});
 							}}
 			},
-			zIndex: 10
+			zIndex: 1000
 		});
 
 		map.on('updateparts', this._updateDisabled, this);
