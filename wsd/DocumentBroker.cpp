@@ -1295,6 +1295,9 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
     // Stop the polling thread.
     _poll->stop();
     _stop = true;
+
+    // Trigger cleanup.
+    LOOLWSD::triggerChildAndDocHousekeeping();
 }
 
 void DocumentBroker::closeDocument(const std::string& reason)
