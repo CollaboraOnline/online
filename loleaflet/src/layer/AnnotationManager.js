@@ -47,6 +47,7 @@ L.AnnotationManager = L.Class.extend({
 		for (var index in comments) {
 			comment = comments[index];
 			comment.anchorPos = L.LOUtil.stringToBounds(comment.anchorPos);
+			comment.anchorPix = this._map._docLayer._twipsToPixels(comment.anchorPos.min);
 			comment.dateTime = new Date(comment.dateTime.replace(/,.*/, 'Z')).toDateString();
 			comment.trackchange = false;
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
@@ -61,6 +62,7 @@ L.AnnotationManager = L.Class.extend({
 			changecomment = redlines[idx];
 			changecomment.id = 'change-' + changecomment.index;
 			changecomment.anchorPos = L.LOUtil.stringToBounds(changecomment.textRange);
+			changecomment.anchorPix = this._map._docLayer._twipsToPixels(changecomment.anchorPos.min);
 			changecomment.trackchange = true;
 			changecomment.text = changecomment.comment;
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), changecomment).addTo(this._map));
@@ -77,6 +79,15 @@ L.AnnotationManager = L.Class.extend({
 		return null;
 	},
 
+	getIndexOf: function (id) {
+		for (var index = 0; index < this._items.length; index++) {
+			if (this._items[index]._data.id === id) {
+				return index;
+			}
+		}
+		return -1;
+	},
+
 	removeItem: function (id) {
 		var annotation;
 		for (var iterator in this._items) {
@@ -89,27 +100,23 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	unselect: function () {
-		this._selected = {};
+		this._selected = -1;
 		this._map._docLayer._selections.clearLayers();
 		this.update();
 	},
 
-	select: function (obj) {
-		var annotation = obj instanceof L.Annotation ? obj : this.getItem(obj);
+	select: function (annotation) {
 		if (annotation) {
-			this._selected.annotation = annotation;
+			this._selected = this.getIndexOf(annotation._data.id);
 			this.update();
 		}
 	},
 
 	update: function () {
-		var topRight = this._map.project(this._map.options.maxBounds.getNorthEast());
-		var point, rectangles;
-		if (this._selected.annotation) {
-			this.layout();
-			point = this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos.min);
-			this._map._docLayer._selections.clearLayers();
-			rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(this._selected.annotation._data.textRange), this._map._docLayer);
+		this.layout();
+		this._map._docLayer._selections.clearLayers();
+		if (this._selected >= 0) {
+			var rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(this._items[this._selected]._data.textRange), this._map._docLayer);
 			if (rectangles.length > 0) {
 				this._map._docLayer._selections.addLayer(L.polygon(rectangles, {
 					pointerEvents: 'none',
@@ -119,70 +126,70 @@ L.AnnotationManager = L.Class.extend({
 					opacity: 0.25
 				}));
 			}
-			this._selected.annotation.setLatLng(this._map.unproject(L.point(topRight.x, point.y)));
 		}
 	},
 
-	layout: function () {
-		var topRight = this._map.project(this._map.options.maxBounds.getNorthEast()).add(L.point(this.options.marginX, this.options.marginY));
-		var annotation, bounds, layoutBounds, foundBounds,point, latlng;
-		var layouts = [];
-
-		if (this._selected.annotation) {
-			point = L.point(topRight.x, this._map._docLayer._twipsToPixels(this._selected.annotation._data.anchorPos.min).y);
-			this._selected.annotation.setLatLng(this._map.unproject(point));
-			bounds = this._selected.annotation.getBounds();
-			bounds.extend(bounds.min.subtract([0, this.options.marginY]));
-			bounds.extend(bounds.getBottomLeft().add([0, this.options.marginY]));
-			this._selected.bounds = bounds;
+	layoutUp: function (annotation, latLng, layoutBounds) {
+		annotation.setLatLng(latLng);
+		var bounds = annotation.getBounds();
+		if (layoutBounds.intersects(bounds)) {
+			layoutBounds.extend(layoutBounds.min.subtract([0, bounds.getSize().y]));
+			latLng = this._map.layerPointToLatLng(layoutBounds.min);
+		} else {
+			latLng = this._map.layerPointToLatLng(bounds.min);
+			layoutBounds.extend(bounds.min);
 		}
+		layoutBounds.extend(layoutBounds.min.subtract([0, this.options.marginY]));
+		annotation.setLatLng(latLng);
+		annotation.show();
+	},
 
-		for (var iterator in this._items) {
-			annotation = this._items[iterator];
-			if (annotation === this._selected.annotation) {
-				continue;
-			}
-			point = L.point(topRight.x, this._map._docLayer._twipsToPixels(annotation._data.anchorPos.min).y);
-			latlng = this._map.unproject(point);
-			annotation.setLatLng(latlng);
-			bounds = annotation.getBounds();
-			foundBounds = null;
-			for (var itBounds in layouts) {
-				layoutBounds = layouts[itBounds];
-				if (layoutBounds.intersects(bounds)) {
-					if (foundBounds) {
-						foundBounds = layoutBounds.max.y > foundBounds.max.y ? layoutBounds : foundBounds;
-					} else {
-						foundBounds = layoutBounds;
-					}
-				}
-			}
+	layoutDown: function (annotation, latLng, layoutBounds) {
+		annotation.setLatLng(latLng);
+		var bounds = annotation.getBounds();
+		if (layoutBounds.intersects(bounds)) {
+			latLng = this._map.layerPointToLatLng(layoutBounds.getBottomLeft());
+			layoutBounds.extend(layoutBounds.max.add([0, bounds.getSize().y]));
+		} else {
+			latLng = this._map.layerPointToLatLng(bounds.min);
+			layoutBounds.extend(bounds.max);
+		}
+		layoutBounds.extend(layoutBounds.max.add([0, this.options.marginY]));
+		annotation.setLatLng(latLng);
+		annotation.show();
+	},
 
-			if (foundBounds) {
-				if (foundBounds.contains(bounds.getTopRight())) {
-					point = foundBounds.getBottomLeft().add([0, bounds.getSize().y + this.options.marginY]);
-					latlng = this._map.layerPointToLatLng(foundBounds.getBottomLeft());
-				} else {
-					point = foundBounds.min.subtract([0, bounds.getSize().y + this.options.marginY]);
-					latlng = this._map.layerPointToLatLng(point);
-				}
-				foundBounds.extend(point);
+	layout: function () {
+		var docRight = this._map.project(this._map.options.maxBounds.getNorthEast());
+		var topRight = docRight.add(L.point(this.options.marginX, this.options.marginY));
+		var annotation, selected, layoutBounds, point, index;
+		if (this._selected >= 0) {
+			selected = this._items[this._selected];
+			selected.setLatLng(this._map.unproject(L.point(topRight.x, selected._data.anchorPix.y)));
+			layoutBounds = selected.getBounds();
+			layoutBounds.extend(layoutBounds.min.subtract([0, this.options.marginY]));
+			layoutBounds.extend(layoutBounds.max.add([0, this.options.marginY]));
+			for (index = this._selected - 1; index >= 0; index--) {
+				annotation = this._items[index];
+				this.layoutUp(annotation, this._map.unproject(L.point(topRight.x, annotation._data.anchorPix.y)), layoutBounds);
+			}
+			for (index = this._selected + 1; index < this._items.length; index++) {
+				annotation = this._items[index];
+				this.layoutDown(annotation, this._map.unproject(L.point(topRight.x, annotation._data.anchorPix.y)), layoutBounds);
+			}
+			if (selected._data.trackchange) {
+				selected.setLatLng(this._map.unproject(L.point(docRight.x, selected._data.anchorPix.y)));
 			} else {
-				foundBounds = L.bounds(bounds.min, bounds.max);
-				foundBounds.extend(L.point(bounds.min.x, bounds.min.y - this.options.marginY));
-				foundBounds.extend(L.point(bounds.min.x, bounds.max.y + this.options.marginY));
-				layouts.push(foundBounds);
+				selected.setLatLng(this._map.unproject(selected._data.anchorPix));
 			}
-
-			if (this._selected.annotation && this._selected.bounds && this._selected.bounds.intersects(foundBounds)) {
-				foundBounds.extend(this._selected.bounds.min);
-				latlng = this._map.layerPointToLatLng(this._selected.bounds.getBottomLeft());
-				foundBounds.extend(this._selected.bounds.getBottomLeft().add([0, bounds.getSize().y + this.options.marginY]));
-				this._selected.bounds = null;
+			selected.show();
+		} else {
+			point = this._map.latLngToLayerPoint(this._map.unproject(topRight));
+			layoutBounds = L.bounds(point, point);
+			for (index in this._items) {
+				annotation = this._items[index];
+				this.layoutDown(annotation, this._map.unproject(L.point(topRight.x, annotation._data.anchorPix.y)), layoutBounds);
 			}
-
-			annotation.setLatLng(latlng);
-			annotation.show();
 		}
 	},
 
@@ -202,14 +209,14 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	modify: function (annotation) {
-		annotation.edit();
 		this.select(annotation);
+		annotation.edit();
 		annotation.focus();
 	},
 
 	reply: function (annotation) {
-		annotation.reply();
 		this.select(annotation);
+		annotation.reply();
 		annotation.focus();
 	},
 
@@ -257,12 +264,14 @@ L.AnnotationManager = L.Class.extend({
 				// transform change tracking index into an id
 				obj.redline.id = 'change-' + obj.redline.index;
 				obj.redline.anchorPos = L.LOUtil.stringToBounds(obj.redline.textRange);
+				obj.redline.anchorPix = this._map._docLayer._twipsToPixels(obj.redline.anchorPos.min);
 				obj.redline.trackchange = true;
 				obj.redline.text = obj.redline.comment;
 				this.add(obj.redline);
 				this._map.focus();
 			} else {
 				obj.comment.anchorPos = L.LOUtil.stringToBounds(obj.comment.anchorPos);
+				obj.comment.anchorPix = this._map._docLayer._twipsToPixels(obj.comment.anchorPos.min);
 				obj.comment.dateTime = new Date(obj.comment.dateTime.replace(/,.*/, 'Z')).toDateString();
 				this.add(obj.comment);
 				this._map.focus();
@@ -281,12 +290,14 @@ L.AnnotationManager = L.Class.extend({
 				var modifiedObj;
 				if (changetrack) {
 					obj.redline.anchorPos = L.LOUtil.stringToBounds(obj.redline.textRange);
+					obj.redline.anchorPix = this._map._docLayer._twipsToPixels(obj.redline.anchorPos.min);
 					obj.redline.text = obj.redline.comment;
 					obj.redline.id = id;
 					obj.redline.trackchange = true;
 					modifiedObj = obj.redline;
 				} else {
 					obj.comment.anchorPos = L.LOUtil.stringToBounds(obj.comment.anchorPos);
+					obj.comment.anchorPix = this._map._docLayer._twipsToPixels(obj.comment.anchorPos.min);
 					obj.comment.dateTime = new Date(obj.comment.dateTime.replace(/,.*/, 'Z')).toDateString();
 					modifiedObj = obj.comment;
 				}
