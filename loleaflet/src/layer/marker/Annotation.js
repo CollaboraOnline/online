@@ -231,9 +231,12 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_updateContent: function () {
+		if (!(this._data.dateTime instanceof Date)) {
+			this._data.dateTime = new Date(this._data.dateTime.replace(/,.*/, 'Z'));
+		}
 		this._contentText.innerHTML = this._nodeModifyText.innerHTML = this._data.text;
 		this._contentAuthor.innerHTML = this._data.author;
-		this._contentDate.innerHTML = this._data.dateTime;
+		this._contentDate.innerHTML = this._data.dateTime.toDateString();
 		if (this._data.trackchange) {
 			this._captionText.innerHTML = this._data.description;
 		}

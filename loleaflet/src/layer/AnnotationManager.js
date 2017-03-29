@@ -48,7 +48,6 @@ L.AnnotationManager = L.Class.extend({
 			comment = comments[index];
 			comment.anchorPos = L.LOUtil.stringToBounds(comment.anchorPos);
 			comment.anchorPix = this._map._docLayer._twipsToPixels(comment.anchorPos.min);
-			comment.dateTime = new Date(comment.dateTime.replace(/,.*/, 'Z')).toDateString();
 			comment.trackchange = false;
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
 		}
@@ -272,7 +271,6 @@ L.AnnotationManager = L.Class.extend({
 			} else {
 				obj.comment.anchorPos = L.LOUtil.stringToBounds(obj.comment.anchorPos);
 				obj.comment.anchorPix = this._map._docLayer._twipsToPixels(obj.comment.anchorPos.min);
-				obj.comment.dateTime = new Date(obj.comment.dateTime.replace(/,.*/, 'Z')).toDateString();
 				this.add(obj.comment);
 				this._map.focus();
 			}
@@ -298,7 +296,6 @@ L.AnnotationManager = L.Class.extend({
 				} else {
 					obj.comment.anchorPos = L.LOUtil.stringToBounds(obj.comment.anchorPos);
 					obj.comment.anchorPix = this._map._docLayer._twipsToPixels(obj.comment.anchorPos.min);
-					obj.comment.dateTime = new Date(obj.comment.dateTime.replace(/,.*/, 'Z')).toDateString();
 					modifiedObj = obj.comment;
 				}
 				modified._data = modifiedObj;
