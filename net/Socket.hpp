@@ -290,6 +290,11 @@ public:
     /// Are we running in either shutdown, or the polling thread.
     bool isCorrectThread() const
     {
+        if (std::this_thread::get_id() != _owner)
+            LOG_WRN("Incorrect thread affinity. Expected: 0x" << std::hex << _owner <<
+                    " but called from " << std::this_thread::get_id() << std::dec <<
+                    ", stop: " << _stop);
+
         return _stop || std::this_thread::get_id() == _owner;
     }
 
