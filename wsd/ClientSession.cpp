@@ -38,7 +38,7 @@ ClientSession::ClientSession(const std::string& id,
     _uriPublic(uriPublic),
     _isReadOnly(readOnly),
     _isDocumentOwner(false),
-    _isLoaded(false),
+    _isAttached(false),
     _stop(false)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
@@ -789,7 +789,7 @@ void ClientSession::dumpState(std::ostream& os)
 
     os << "\t\tisReadOnly: " << _isReadOnly
        << "\n\t\tisDocumentOwner: " << _isDocumentOwner
-       << "\n\t\tisLoaded: " << _isLoaded
+       << "\n\t\tisAttached: " << _isAttached
        << "\n\t\tstop: " <<_stop
        << "\n";
 }

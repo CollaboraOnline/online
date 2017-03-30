@@ -262,7 +262,7 @@ public:
 
     std::string getJailRoot() const;
 
-    /// Queue a new session to be added asynchronously.
+    /// Queue a new session to be attached asynchronously.
     /// @return amount of session we have after all the queued ones will be
     /// created.
     size_t queueSession(std::shared_ptr<ClientSession>& session);

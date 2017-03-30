@@ -36,8 +36,8 @@ public:
     bool isReadOnly() const { return _isReadOnly; }
 
     /// Returns true if a document is loaded (i.e. we got status message).
-    bool isLoaded() const { return _isLoaded; }
-    void setLoaded() { _isLoaded = true; }
+    bool isAttached() const { return _isAttached; }
+    void setAttached() { _isAttached = true; }
 
     const std::string getUserId() const { return _userId; }
     void setUserId(const std::string& userId) { _userId = userId; }
@@ -149,7 +149,7 @@ private:
     /// The socket to which the converted (saveas) doc is sent.
     std::shared_ptr<StreamSocket> _saveAsSocket;
 
-    bool _isLoaded;
+    bool _isAttached;
 
     /// Wopi FileInfo object
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;

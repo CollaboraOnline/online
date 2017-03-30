@@ -217,7 +217,7 @@ void DocumentBroker::pollThread()
             try
             {
                 auto& session = pair.second;
-                if (!session->isLoaded())
+                if (!session->isAttached())
                     addSession(session);
             }
             catch (const std::exception& exc)
@@ -772,7 +772,7 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     _markToDestroy = false;
     _stop = false;
 
-    session->setLoaded();
+    session->setAttached();
 
     const auto id = session->getId();
     const auto count = _sessions.size();
