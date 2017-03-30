@@ -70,7 +70,7 @@ bool Subscriber::notify(const std::string& message)
         try
         {
             UnitWSD::get().onAdminNotifyMessage(message);
-            webSocket->sendFrame(message);
+            webSocket->sendMessage(message);
             return true;
         }
         catch (const std::exception& ex)

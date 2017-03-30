@@ -196,7 +196,7 @@ inline void shutdownLimitReached(WebSocketHandler& ws)
     try
     {
         // Let the client know we are shutting down.
-        ws.sendFrame(error);
+        ws.sendMessage(error);
 
         // Shutdown.
         ws.shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION);
@@ -1283,7 +1283,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
     // Indicate to the client that we're connecting to the docbroker.
     const std::string statusConnect = "statusindicator: connect";
     LOG_TRC("Sending to Client [" << statusConnect << "].");
-    ws.sendFrame(statusConnect);
+    ws.sendMessage(statusConnect);
 
     if (!docBroker)
     {
@@ -1330,7 +1330,7 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
         {
             const std::string statusReady = "statusindicator: ready";
             LOG_TRC("Sending to Client [" << statusReady << "].");
-            ws->sendFrame(statusReady);
+            ws->sendMessage(statusReady);
         }
 
         // In case of WOPI, if this session is not set as readonly, it might be set so
@@ -2059,7 +2059,7 @@ private:
         // Indicate to the client that document broker is searching.
         const std::string status("statusindicator: find");
         LOG_TRC("Sending to Client [" << status << "].");
-        ws.sendFrame(status);
+        ws.sendMessage(status);
 
         const auto uriPublic = DocumentBroker::sanitizeURI(url);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
