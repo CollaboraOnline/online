@@ -224,6 +224,10 @@ public:
     /// Start processing events
     void startThread();
 
+    /// Flag for termination.
+    //TODO: Take reason to broadcast to clients.
+    void stop() { _stop = true; }
+
     /// Loads a document from the public URI into the jail.
     bool load(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
     bool isLoaded() const { return _isLoaded; }
@@ -319,13 +323,6 @@ public:
     /// or upon failing to process an incoming message.
     void childSocketTerminated();
 
-    /// This gracefully terminates the connection
-    /// with the child and cleans up ChildProcess etc.
-    /// We must be called under lock and it must be
-    /// passed to us so we unlock before waiting on
-    /// the ChildProcess thread, which can take our lock.
-    void terminateChild(std::unique_lock<std::mutex>& lock, const std::string& closeReason, const bool rude);
-
     /// Get the PID of the associated child process
     Poco::Process::PID getPid() const { return _childProcess->getPid(); }
 
@@ -341,6 +338,10 @@ public:
     }
 
 private:
+    /// This gracefully terminates the connection
+    /// with the child and cleans up ChildProcess etc.
+    void terminateChild(const std::string& closeReason, const bool rude);
+
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const bool dontSaveIfUnmodified);
 

@@ -248,7 +248,7 @@ bool cleanupDocBrokers()
             {
                 LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
                         " DocumentBroker for docKey [" << it->first << "].");
-                docBroker->terminateChild(lock, idle ? "idle" : "", true);
+                docBroker->stop();
 
                 // Remove only when not alive.
                 if (!docBroker->isAlive())
@@ -1351,8 +1351,7 @@ public:
         if (docBroker)
         {
             // FIXME: No need to notify if asked to stop.
-            auto lock = docBroker->getLock();
-            docBroker->terminateChild(lock, "Service unavailable", true);
+            docBroker->stop();
         }
     }
 
@@ -1379,7 +1378,7 @@ private:
         {
             auto lock = docBroker->getLock();
             assert(docBroker->isCorrectThread());
-            docBroker->terminateChild(lock, "Service unavailable", false);
+            docBroker->stop();
         }
     }
 
