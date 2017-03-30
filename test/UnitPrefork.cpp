@@ -27,9 +27,10 @@ public:
         setTimeout(60 * 1000);
     }
 
-    virtual void configure(Poco::Util::LayeredConfiguration& /* config */) override
+    virtual void configure(Poco::Util::LayeredConfiguration& config) override
     {
-        LOOLWSD::NumPreSpawnedChildren = NumToPrefork;
+        config.setInt("num_prespawn_children", NumToPrefork);
+        UnitWSD::configure(config);
     }
 
     virtual void newChild(WebSocketHandler &) override
