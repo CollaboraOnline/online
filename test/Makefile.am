@@ -41,7 +41,6 @@ wsd_sources = \
             ../wsd/TileCache.cpp \
             ../wsd/TestStubs.cpp \
             ../common/Unit.cpp \
-            ../common/Util.cpp \
             ../net/Socket.cpp
 
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
