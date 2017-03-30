@@ -31,6 +31,7 @@
 #include <Poco/Timestamp.h>
 
 #include "Log.hpp"
+#include "Util.hpp"
 
 static char LogPrefix[256] = { '\0' };
 
@@ -77,12 +78,22 @@ namespace Log
         }
     }
 
-    char* prefix(char* buffer, const char* level, const long osTid)
+    char* prefix(char* buffer, const char* level, bool sigSafe)
     {
+        long osTid;
         char procName[32];
-        if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(procName), 0, 0, 0) != 0)
+        const char *threadName = procName;
+        if (sigSafe)
         {
-            strncpy(procName, "<noid>", sizeof(procName) - 1);
+            osTid = syscall(SYS_gettid);
+
+            if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(procName), 0, 0, 0) != 0)
+                strncpy(procName, "<noid>", sizeof(procName) - 1);
+        }
+        else
+        {
+            osTid = Util::getThreadId();
+            threadName = Util::getThreadName();
         }
 
         Poco::DateTime time;
@@ -91,14 +102,14 @@ namespace Log
                     osTid,
                     time.hour(), time.minute(), time.second(),
                     time.millisecond() * 1000 + time.microsecond(),
-                    procName, level);
+                    threadName, level);
         return buffer;
     }
 
     void signalLogPrefix()
     {
         char buffer[1024];
-        prefix(buffer, "SIG", syscall(SYS_gettid));
+        prefix(buffer, "SIG", true);
         signalLog(buffer);
     }
 

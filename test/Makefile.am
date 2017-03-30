@@ -35,12 +35,12 @@ wsd_sources = \
             ../common/Log.cpp \
             ../common/Protocol.cpp \
             ../common/Session.cpp \
+            ../common/Util.cpp \
             ../common/MessageQueue.cpp \
             ../kit/Kit.cpp \
             ../wsd/TileCache.cpp \
             ../wsd/TestStubs.cpp \
             ../common/Unit.cpp \
-            ../common/Util.cpp \
             ../net/Socket.cpp
 
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS

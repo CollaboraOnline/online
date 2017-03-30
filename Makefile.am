@@ -131,7 +131,8 @@ looltool_SOURCES = tools/Tool.cpp
 loolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" ${include_paths}
 loolstress_SOURCES = tools/Stress.cpp \
                      common/Protocol.cpp \
-                     common/Log.cpp
+                     common/Log.cpp \
+		     common/Util.cpp
 
 wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \
