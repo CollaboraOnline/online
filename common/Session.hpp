@@ -44,6 +44,17 @@ public:
         return sendTextFrame(text.data(), text.size());
     }
 
+    template <std::size_t N>
+    bool sendTextFrame(const char (&buffer)[N])
+    {
+        return (buffer != nullptr && N > 0 ? sendTextFrame(buffer, N) : false);
+    }
+
+    bool sendTextFrame(const char* buffer)
+    {
+        return (buffer != nullptr ? sendTextFrame(buffer, std::strlen(buffer)) : false);
+    }
+
     virtual void handleMessage(bool fin, WSOpCode code, std::vector<char> &data) override;
 
     /// Invoked when we want to disconnect a session.

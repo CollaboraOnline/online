@@ -464,9 +464,9 @@ void ClientSession::performWrites()
     std::shared_ptr<Message> item;
     if (_senderQueue.dequeue(item))
     {
-        const std::vector<char>& data = item->data();
         try
         {
+            const std::vector<char>& data = item->data();
             if (item->isBinary())
             {
                 Session::sendBinaryFrame(data.data(), data.size());
@@ -478,8 +478,8 @@ void ClientSession::performWrites()
         }
         catch (const std::exception& ex)
         {
-            LOG_ERR("Failed to send message [" << LOOLProtocol::getAbbreviatedMessage(data) <<
-                    "] to " << getName() << ": " << ex.what());
+            LOG_ERR("Failed to send message " << item->abbr() <<
+                    " to " << getName() << ": " << ex.what());
         }
     }
 

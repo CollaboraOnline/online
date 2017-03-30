@@ -48,6 +48,7 @@ public:
     /// Handle kit-to-client message.
     bool handleKitToClientMessage(const char* data, const int size);
 
+    // sendTextFrame that takes std::string and string literal.
     using Session::sendTextFrame;
 
     bool sendBinaryFrame(const char* buffer, int length) override

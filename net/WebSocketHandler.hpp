@@ -299,9 +299,9 @@ public:
     void performWrites() override {}
 
     /// Sends a WebSocket Text message.
-    void sendMessage(const std::string& msg) const
+    int sendMessage(const std::string& msg) const
     {
-        sendMessage(msg.data(), msg.size(), WSOpCode::Text);
+        return sendMessage(msg.data(), msg.size(), WSOpCode::Text);
     }
 
     /// Sends a WebSocket message of WPOpCode type.
