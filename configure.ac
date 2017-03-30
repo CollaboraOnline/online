@@ -237,6 +237,8 @@ AS_IF([test `uname -s` = Linux],
                       [],
                       [AC_MSG_ERROR([libcap not available?])])])
 
+PKG_CHECK_MODULES([ZLIB], [zlib])
+
 PKG_CHECK_MODULES([CPPUNIT], [cppunit])
 
 AS_IF([test "$enable_ssl" != "no"],
