@@ -403,69 +403,54 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
 
 std::shared_ptr<ChildProcess> getNewChild_Blocks()
 {
-    std::unique_lock<std::mutex> locka(DocBrokersMutex);
-    std::unique_lock<std::mutex> lockb(NewChildrenMutex);
+    std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
-    namespace chrono = std::chrono;
-    const auto startTime = chrono::steady_clock::now();
-    do
+    const auto startTime = std::chrono::steady_clock::now();
+
+    LOG_DBG("getNewChild: Rebalancing children.");
+    int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
+    ++numPreSpawn; // Replace the one we'll dispatch just now.
+    if (rebalanceChildren(numPreSpawn) < 0)
     {
-        LOG_DBG("getNewChild: Rebalancing children.");
-        int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
-        ++numPreSpawn; // Replace the one we'll dispatch just now.
-        if (rebalanceChildren(numPreSpawn) < 0)
-        {
-            // Fatal. Let's fail and retry at a higher level.
-            LOG_DBG("getNewChild: rebalancing of children failed. Checking and restoring forkit.");
+        LOG_DBG("getNewChild: rebalancing of children failed. Checking and restoring forkit.");
 
-            lockb.unlock();
-            locka.unlock();
-            LOOLWSD::checkAndRestoreForKit();
-            if (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() <
-                CHILD_TIMEOUT_MS * 4)
-            {
-                // Try again.
-                locka.lock();
-                lockb.lock();
-                continue;
-            }
+        LOOLWSD::checkAndRestoreForKit();
 
-            return nullptr;
-        }
-
-        // With valgrind we need extended time to spawn kits.
-#ifdef KIT_IN_PROCESS
-        const auto timeoutMs = CHILD_TIMEOUT_MS;
-#else
-        const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 100 : 1);
-#endif
-        LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
-        const auto timeout = chrono::milliseconds(timeoutMs);
-        // FIXME: blocks ...
-        if (NewChildrenCV.wait_for(lockb, timeout, []() { return !NewChildren.empty(); }))
-        {
-            auto child = NewChildren.back();
-            NewChildren.pop_back();
-            const auto available = NewChildren.size();
-
-            // Validate before returning.
-            if (child && child->isAlive())
-            {
-                LOG_DBG("getNewChild: Have " << available << " spare " <<
-                        (available == 1 ? "child" : "children") <<
-                        " after poping [" << child->getPid() << "] to return.");
-                return child;
-            }
-
-            LOG_WRN("getNewChild: popped dead child, need to find another.");
-        }
-        else
-        {
-            LOG_WRN("getNewChild: No available child. Sending spawn request to forkit and failing.");
-        }
+        // Let the caller retry after a while.
+        return nullptr;
     }
-    while (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - startTime).count() <
-           CHILD_TIMEOUT_MS * 4);
+
+    // With valgrind we need extended time to spawn kits.
+    const size_t timeoutMs = CHILD_TIMEOUT_MS / 2;
+    LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
+    const auto timeout = std::chrono::milliseconds(timeoutMs);
+    // FIXME: blocks ...
+    // Unfortunately we need to wait after spawning children to avoid bombing the system.
+    // If we fail fast and return, the next document will spawn more children without knowing
+    // there are some on the way already. And if the system is slow already, that wouldn't help.
+    if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
+    {
+        auto child = NewChildren.back();
+        NewChildren.pop_back();
+        const auto available = NewChildren.size();
+
+        // Validate before returning.
+        if (child && child->isAlive())
+        {
+            LOG_DBG("getNewChild: Have " << available << " spare " <<
+                    (available == 1 ? "child" : "children") <<
+                    " after poping [" << child->getPid() << "] to return in " <<
+                    std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
+                                                                          startTime).count() << "ms.");
+            return child;
+        }
+
+        LOG_WRN("getNewChild: popped dead child, need to find another.");
+    }
+    else
+    {
+        LOG_WRN("getNewChild: No child available. Sending spawn request to forkit and failing.");
+    }
 
     LOG_DBG("getNewChild: Timed out while waiting for new child.");
     return nullptr;

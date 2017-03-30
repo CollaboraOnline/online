@@ -185,7 +185,17 @@ void DocumentBroker::pollThread()
     _threadStart = std::chrono::steady_clock::now();
 
     // Request a kit process for this doc.
-    _childProcess = getNewChild_Blocks();
+    do
+    {
+        static const int timeoutMs = COMMAND_TIMEOUT_MS * 5;
+        _childProcess = getNewChild_Blocks();
+        if (_childProcess ||
+            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
+                                                                  _threadStart).count() > timeoutMs)
+            break;
+    }
+    while (!_stop && _poll->continuePolling() && !TerminationFlag && !ShutdownRequestFlag);
+
     if (!_childProcess)
     {
         // Let the client know we can't serve now.
@@ -200,6 +210,8 @@ void DocumentBroker::pollThread()
 #endif
         // FIXME: return something good down the websocket ...
         _stop = true;
+
+        LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
         return;
     }
 
