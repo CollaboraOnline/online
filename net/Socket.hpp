@@ -792,7 +792,7 @@ protected:
                     // log.dump("", &_outBuffer[0], len);
                 }
 
-                if (len <= 0)
+                if (len <= 0 && errno != EAGAIN && errno != EWOULDBLOCK)
                     LOG_SYS("#" << getFD() << ": Wrote outgoing data " << len << " bytes.");
             }
             while (len < 0 && errno == EINTR);
