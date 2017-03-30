@@ -153,7 +153,7 @@ public:
             if (_ws)
             {
                 LOG_TRC("DocBroker to Child: " << data);
-                _ws->sendFrame(data);
+                _ws->sendMessage(data);
                 return true;
             }
         }

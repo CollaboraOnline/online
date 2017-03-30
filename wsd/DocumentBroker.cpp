@@ -194,7 +194,7 @@ void DocumentBroker::pollThread()
         // FIXME: need to notify all clients and shut this down ...
 #if 0
         const std::string msg = SERVICE_UNAVAILABLE_INTERNAL_ERROR;
-        ws.sendFrame(msg);
+        ws.sendMessage(msg);
         // abnormal close frame handshake
         ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
 #endif

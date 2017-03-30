@@ -299,7 +299,7 @@ public:
     void performWrites() override {}
 
     /// Sends a WebSocket Text message.
-    void sendFrame(const std::string& msg) const
+    void sendMessage(const std::string& msg) const
     {
         sendMessage(msg.data(), msg.size(), WSOpCode::Text);
     }
@@ -321,7 +321,7 @@ public:
         std::vector<char>& out = socket->_outBuffer;
 
         //TODO: Support fragmented messages.
-        const unsigned char fin = static_cast<unsigned char>(WSFrameMask::Fin);
+        static const unsigned char fin = static_cast<unsigned char>(WSFrameMask::Fin);
 
         // FIXME: need to support fragmented mesages, but for now send prefix message with size.
         if (len >= LARGE_MESSAGE_SIZE)

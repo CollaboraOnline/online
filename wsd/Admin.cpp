@@ -65,7 +65,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         if (tokens.count() < 2)
         {
             LOG_DBG("Auth command without any token");
-            sendFrame("InvalidAuthToken");
+            sendMessage("InvalidAuthToken");
             shutdown();
             return;
         }
@@ -85,7 +85,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         else
         {
             LOG_DBG("Invalid auth token");
-            sendFrame("InvalidAuthToken");
+            sendMessage("InvalidAuthToken");
             shutdown();
             return;
         }
@@ -95,7 +95,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     {
         LOG_DBG("Not authenticated - message is '" << firstLine << "' " <<
                 tokens.count() << " first: '" << tokens[0] << "'");
-        sendFrame("NotAuthenticated");
+        sendMessage("NotAuthenticated");
         shutdown();
         return;
     }
@@ -240,7 +240,7 @@ void AdminSocketHandler::sendTextFrame(const std::string& message)
 {
     UnitWSD::get().onAdminQueryMessage(message);
     if (_isAuthenticated)
-        sendFrame(message);
+        sendMessage(message);
     else
         LOG_TRC("Skip sending message to non-authenticated client: '" << message << "'");
 }

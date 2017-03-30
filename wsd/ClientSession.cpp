@@ -747,7 +747,7 @@ void ClientSession::onDisconnect()
         LOG_ERR("Error in client request handler: " << exc.toString());
         const std::string status = "error: cmd=internal kind=unauthorized";
         LOG_TRC("Sending to Client [" << status << "].");
-        sendFrame(status);
+        sendMessage(status);
     }
     catch (const std::exception& exc)
     {
@@ -773,7 +773,7 @@ void ClientSession::onDisconnect()
         else
         {
             static const std::string msg("close: recycling");
-            sendFrame(msg);
+            sendMessage(msg);
             shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
         }
     }
