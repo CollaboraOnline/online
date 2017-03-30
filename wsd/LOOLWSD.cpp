@@ -347,6 +347,8 @@ static int rebalanceChildren(int balance)
 {
     Util::assertIsLocked(NewChildrenMutex);
 
+    LOG_WRN("rebalance children to " << balance);
+
     // Do the cleanup first.
     const bool rebalance = cleanupChildren();
 
@@ -2177,7 +2179,8 @@ public:
            << "  TerminationFlag: " << TerminationFlag << "\n"
            << "  isShuttingDown: " << ShutdownRequestFlag << "\n"
            << "  NewChildren: " << NewChildren.size() << "\n"
-           << "  OutstandingForks: " << OutstandingForks << "\n";
+           << "  OutstandingForks: " << OutstandingForks << "\n"
+           << "  NumPreSpawnedChildren: " << LOOLWSD::NumPreSpawnedChildren << "\n";
 
         os << "Server poll:\n";
         _acceptPoll.dumpState(os);

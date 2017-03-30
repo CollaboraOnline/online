@@ -341,6 +341,8 @@ int main(int argc, char** argv)
     SigUtil::setTerminationSignals();
 #endif
 
+    Util::setThreadName("forkit");
+
     // Initialization
     const bool logToFile = std::getenv("LOOL_LOGFILE");
     const char* logFilename = std::getenv("LOOL_LOGFILENAME");
