@@ -129,7 +129,7 @@ public:
         int size;
         unsigned int len = sizeof(size);
         const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, &len);
-        return (rc == 0 ? size : -1);
+        return rc == 0 ? size : -1;
     }
 
     /// Gets our fast cache of the socket buffer size
@@ -149,7 +149,7 @@ public:
     {
         constexpr unsigned int len = sizeof(size);
         const int rc = ::setsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &size, len);
-        return (rc == 0);
+        return rc == 0;
     }
 
     /// Gets the actual receive buffer size in bytes, -1 on error.
@@ -158,7 +158,7 @@ public:
         int size;
         unsigned int len = sizeof(size);
         const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &size, &len);
-        return (rc == 0 ? size : -1);
+        return rc == 0 ? size : -1;
     }
 
     /// Gets the error code.

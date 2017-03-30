@@ -58,8 +58,8 @@ std::string getCachePath(const std::string& uri)
 
     digestEngine.update(uri.c_str(), uri.size());
 
-    return (LOOLWSD::Cache + '/' +
-            Poco::DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/"));
+    return LOOLWSD::Cache + '/' +
+        Poco::DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/");
 }
 }
 

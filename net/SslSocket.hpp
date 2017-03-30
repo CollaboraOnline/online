@@ -81,9 +81,7 @@ public:
 
         const int rc = doHandshake();
         if (rc <= 0)
-        {
-            return (rc != 0);
-        }
+            return rc != 0;
 
         // Default implementation.
         return StreamSocket::readIncomingData();
@@ -168,9 +166,7 @@ private:
             {
                 rc = handleSslState(rc);
                 if (rc <= 0)
-                {
-                    return (rc != 0);
-                }
+                    return rc != 0;
             }
 
             _doHandshake = false;
