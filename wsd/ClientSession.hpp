@@ -32,8 +32,7 @@ public:
 
     SocketHandlerInterface::SocketOwnership handleIncomingMessage() override;
 
-    void setReadOnly();
-    bool isReadOnly() const { return _isReadOnly; }
+    void setReadOnly() override;
 
     /// Returns true if a document is loaded (i.e. we got status message).
     bool isAttached() const { return _isAttached; }
@@ -139,9 +138,6 @@ private:
 
     /// URI with which client made request to us
     const Poco::URI _uriPublic;
-
-    /// Whether the session is opened as readonly
-    bool _isReadOnly;
 
     /// Whether this session is the owner of currently opened document
     bool _isDocumentOwner;

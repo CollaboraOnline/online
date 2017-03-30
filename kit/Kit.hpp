@@ -38,6 +38,7 @@ struct UserInfo
 {
     std::string userid;
     std::string username;
+    bool isReadOnly;
 };
 
 /// Check the ForkCounter, and if non-zero, fork more of them accordingly.

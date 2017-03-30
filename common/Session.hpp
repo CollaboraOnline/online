@@ -37,6 +37,9 @@ public:
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
 
+    virtual void setReadOnly() { _isReadOnly = true; }
+    bool isReadOnly() const { return _isReadOnly; }
+
     virtual bool sendBinaryFrame(const char* buffer, int length);
     virtual bool sendTextFrame(const char* buffer, const int length);
     bool sendTextFrame(const std::string& text)
@@ -80,7 +83,7 @@ public:
     bool isCloseFrame() const { return _isCloseFrame; }
 
 protected:
-    Session(const std::string& name, const std::string& id);
+    Session(const std::string& name, const std::string& id, bool readonly);
     virtual ~Session();
 
     /// Parses the options of the "load" command, shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
@@ -118,6 +121,9 @@ private:
     std::atomic<bool> _isCloseFrame;
 
     std::mutex _mutex;
+
+    /// Whether the session is opened as readonly
+    bool _isReadOnly;
 
 protected:
     /// The actual URL, also in the child, even if the child never accesses that.
