@@ -46,7 +46,7 @@ public:
         ::setsockopt(getFD(), SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len);
 
         const int rc = ::bind(getFD(), address.addr(), address.length());
-        return (rc == 0);
+        return rc == 0;
     }
 
     /// Listen to incoming connections (Servers only).
@@ -55,7 +55,7 @@ public:
     bool listen(const int backlog = 64)
     {
         const int rc = ::listen(getFD(), backlog);
-        return (rc == 0);
+        return rc == 0;
     }
 
     /// Accepts an incoming connection (Servers only).
@@ -70,7 +70,7 @@ public:
         try
         {
             // Create a socket object using the factory.
-            return (rc != -1 ? _sockFactory->create(rc) : std::shared_ptr<Socket>(nullptr));
+            return rc != -1 ? _sockFactory->create(rc) : std::shared_ptr<Socket>(nullptr);
         }
         catch (const std::exception& ex)
         {

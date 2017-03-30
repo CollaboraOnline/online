@@ -280,8 +280,10 @@ namespace {
 inline
 Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
 {
-    return (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(), Poco::Net::SSLManager::instance().defaultClientContext())
-                       : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
+    return (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination())
+        ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(),
+                                            Poco::Net::SSLManager::instance().defaultClientContext())
+        : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
 }
 
 int getLevenshteinDist(const std::string& string1, const std::string& string2) {

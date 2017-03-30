@@ -111,7 +111,7 @@ std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(c
     Util::assertIsLocked(_tilesBeingRenderedMutex);
 
     const auto tile = _tilesBeingRendered.find(cachedName);
-    return (tile != _tilesBeingRendered.end() ? tile->second : nullptr);
+    return tile != _tilesBeingRendered.end() ? tile->second : nullptr;
 }
 
 void TileCache::forgetTileBeingRendered(const TileDesc& tile)
@@ -389,7 +389,7 @@ std::string TileCache::cacheFileName(const TileDesc& tile)
 
 bool TileCache::parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight)
 {
-    return (std::sscanf(fileName.c_str(), "%d_%dx%d.%d,%d.%dx%d.png", &part, &width, &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight) == 7);
+    return std::sscanf(fileName.c_str(), "%d_%dx%d.%d,%d.%dx%d.png", &part, &width, &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight) == 7;
 }
 
 bool TileCache::intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height)
@@ -525,7 +525,7 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
     }
 
     const auto canceltiles = oss.str();
-    return (canceltiles.empty() ? canceltiles : "canceltiles " + canceltiles);
+    return canceltiles.empty() ? canceltiles : "canceltiles " + canceltiles;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

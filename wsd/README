@@ -387,3 +387,6 @@ The style is roughly as follows, in rough order of importance:
   CamelCaseWithInitialUpperCase.
 
 - [ No kind of Hungarian prefixes. ]
+
+- return - is not a function; but a statement - it doesn't need extra ()
+

@@ -102,8 +102,8 @@ private:
             const auto& pos = std::find_if(_queue.begin(), _queue.end(),
                 [&newTile](const queue_item_t& cur)
                 {
-                    return (cur->firstToken() == "tile:" &&
-                            newTile == TileDesc::parse(cur->firstLine()));
+                    return cur->firstToken() == "tile:" &&
+                           newTile == TileDesc::parse(cur->firstLine());
                 });
 
             if (pos != _queue.end())
@@ -119,7 +119,7 @@ private:
             const auto& pos = std::find_if(_queue.begin(), _queue.end(),
                 [&command](const queue_item_t& cur)
                 {
-                    return (cur->firstToken() == command);
+                    return cur->firstToken() == command;
                 });
 
             if (pos != _queue.end())
@@ -145,7 +145,7 @@ private:
                         Poco::JSON::Parser parser;
                         const auto result = parser.parse(msg);
                         const auto& json = result.extract<Poco::JSON::Object::Ptr>();
-                        return (viewId == json->get("viewId").toString());
+                        return viewId == json->get("viewId").toString();
                     }
 
                     return false;

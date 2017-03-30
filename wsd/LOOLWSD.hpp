@@ -23,6 +23,7 @@
 
 class ChildProcess;
 class TraceFileWriter;
+class DocumentBroker;
 
 std::shared_ptr<ChildProcess> getNewChild_Blocks();
 

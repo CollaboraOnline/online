@@ -1129,15 +1129,12 @@ void PrisonerPoll::wakeupHook()
 
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
     if (docBrokersLock.try_lock())
-    {
         cleanupDocBrokers();
-    }
 }
 
 void LOOLWSD::triggerChildAndDocHousekeeping()
 {
     PrisonerPoll.wakeup();
-
 }
 
 bool LOOLWSD::createForKit()
@@ -1205,7 +1202,7 @@ bool LOOLWSD::createForKit()
     // Init the Admin manager
     Admin::instance().setForKitPid(ForKitProcId);
 
-    return (ForKitProcId != -1);
+    return ForKitProcId != -1;
 #endif
 }
 
