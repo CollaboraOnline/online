@@ -611,8 +611,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             docBroker->removeSession(getId());
 
             // Now terminate.
-            auto lock = docBroker->getLock();
-            docBroker->terminateChild(lock, "", true);
+            docBroker->stop();
         }
 
         return true;
@@ -731,6 +730,7 @@ void ClientSession::onDisconnect()
 
     const auto docBroker = getDocumentBroker();
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
+    assert(docBroker->isCorrectThread());
     const auto docKey = docBroker->getDocKey();
 
     try

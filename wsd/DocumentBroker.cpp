@@ -259,6 +259,10 @@ void DocumentBroker::pollThread()
         }
     }
 
+    // Terminate properly while we can.
+    //TODO: pass some sensible reason.
+    terminateChild("", false);
+
     // Flush socket data.
     const int flushTimeoutMs = POLL_TIMEOUT_MS * 2; // ~1000ms
     const auto flushStartTime = std::chrono::steady_clock::now();
@@ -272,9 +276,6 @@ void DocumentBroker::pollThread()
         _poll->poll(std::min(flushTimeoutMs - elapsedMs, POLL_TIMEOUT_MS / 5));
     }
 
-    // Terminate properly while we can.
-    auto lock = getLock();
-    terminateChild(lock, "", false);
     LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
 }
 
@@ -501,6 +502,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 bool DocumentBroker::saveToStorage(const std::string& sessionId,
                                    bool success, const std::string& result)
 {
+    assert(isCorrectThread());
+
     const bool res = saveToStorageInternal(sessionId, success, result);
 
     // If marked to destroy, then this was the last session.
@@ -536,8 +539,6 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         _poll->wakeup();
         return true;
     }
-
-    std::unique_lock<std::mutex> lock(_mutex);
 
     const auto it = _sessions.find(sessionId);
     if (it == _sessions.end())
@@ -805,7 +806,7 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
 
 size_t DocumentBroker::removeSession(const std::string& id, bool destroyIfLast)
 {
-    auto guard = getLock();
+    assert(isCorrectThread());
 
     if (destroyIfLast)
         destroyIfLastEditor(id);
@@ -828,6 +829,7 @@ size_t DocumentBroker::removeSession(const std::string& id, bool destroyIfLast)
 
 size_t DocumentBroker::removeSessionInternal(const std::string& id)
 {
+    assert(isCorrectThread());
     try
     {
         Admin::instance().rmDoc(_docKey, id);
@@ -1139,7 +1141,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
 
 void DocumentBroker::destroyIfLastEditor(const std::string& id)
 {
-    Util::assertIsLocked(_mutex);
+    assert(isCorrectThread());
 
     const auto currentSession = _sessions.find(id);
     if (currentSession == _sessions.end())
@@ -1275,10 +1277,9 @@ void DocumentBroker::childSocketTerminated()
     }
 }
 
-void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const std::string& closeReason, const bool rude)
+void DocumentBroker::terminateChild(const std::string& closeReason, const bool rude)
 {
-    Util::assertIsLocked(_mutex);
-    Util::assertIsLocked(lock);
+    assert(isCorrectThread());
 
     LOG_INF("Terminating doc [" << _docKey << "].");
 
@@ -1309,26 +1310,20 @@ void DocumentBroker::terminateChild(std::unique_lock<std::mutex>& lock, const st
             _childProcess->stop();
         }
 
-        // Release the lock and wait for the thread to finish.
-        lock.unlock();
-
         _childProcess->close(rude);
     }
 
     // Stop the polling thread.
     _poll->stop();
     _stop = true;
-
-    // Trigger cleanup.
-    LOOLWSD::triggerChildAndDocHousekeeping();
 }
 
 void DocumentBroker::closeDocument(const std::string& reason)
 {
-    auto lock = getLock();
+    assert(isCorrectThread());
 
     LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
-    terminateChild(lock, reason, true);
+    terminateChild(reason, true);
 }
 
 void DocumentBroker::updateLastActivityTime()
