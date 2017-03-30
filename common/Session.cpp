@@ -44,13 +44,14 @@ using namespace LOOLProtocol;
 
 using Poco::Exception;
 
-Session::Session(const std::string& name, const std::string& id) :
+Session::Session(const std::string& name, const std::string& id, bool readOnly) :
     _id(id),
     _name(name),
     _disconnected(false),
     _isActive(true),
     _lastActivityTime(std::chrono::steady_clock::now()),
     _isCloseFrame(false),
+    _isReadOnly(readOnly),
     _docPassword(""),
     _haveDocPassword(false),
     _isDocPasswordProtected(false)
@@ -106,6 +107,11 @@ void Session::parseDocOptions(const std::vector<std::string>& tokens, int& part,
         {
             std::string userName = tokens[i].substr(strlen("author="));
             Poco::URI::decode(userName, _userName);
+            ++offset;
+        }
+        else if (tokens[i].find("readonly=") == 0)
+        {
+            _isReadOnly = tokens[i].substr(strlen("readonly=")) != "0";
             ++offset;
         }
         else if (tokens[i].find("timestamp=") == 0)

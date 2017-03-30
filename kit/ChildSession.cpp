@@ -38,7 +38,7 @@ std::recursive_mutex ChildSession::Mutex;
 ChildSession::ChildSession(const std::string& id,
                            const std::string& jailId,
                            IDocumentManager& docManager) :
-    Session("ToMaster-" + id, id),
+    Session("ToMaster-" + id, id, false),
     _jailId(jailId),
     _docManager(docManager),
     _viewId(-1),

@@ -33,10 +33,9 @@ ClientSession::ClientSession(const std::string& id,
                              const std::shared_ptr<DocumentBroker>& docBroker,
                              const Poco::URI& uriPublic,
                              const bool readOnly) :
-    Session("ToClient-" + id, id),
+    Session("ToClient-" + id, id, readOnly),
     _docBroker(docBroker),
     _uriPublic(uriPublic),
-    _isReadOnly(readOnly),
     _isDocumentOwner(false),
     _isAttached(false),
     _stop(false)
@@ -260,6 +259,8 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " author=" + encodedUserName;
         }
 
+        oss << " readonly=" << isReadOnly();
+
         if (loadPart >= 0)
         {
             oss << " part=" << loadPart;
@@ -440,11 +441,10 @@ bool ClientSession::filterMessage(const std::string& message) const
 
 void ClientSession::setReadOnly()
 {
-    _isReadOnly = true;
+    Session::setReadOnly();
     // Also inform the client
     sendTextFrame("perm: readonly");
 }
-
 
 int ClientSession::getPollEvents(std::chrono::steady_clock::time_point /* now */,
                                  int & /* timeoutMaxMs */)
@@ -787,7 +787,7 @@ void ClientSession::dumpState(std::ostream& os)
 {
     Session::dumpState(os);
 
-    os << "\t\tisReadOnly: " << _isReadOnly
+    os << "\t\tisReadOnly: " << isReadOnly()
        << "\n\t\tisDocumentOwner: " << _isDocumentOwner
        << "\n\t\tisAttached: " << _isAttached
        << "\n\t\tstop: " <<_stop
