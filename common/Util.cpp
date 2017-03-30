@@ -258,8 +258,12 @@ namespace Util
         return replace(r, "\n", " / ");
     }
 
+    static __thread char ThreadName[32];
+
     void setThreadName(const std::string& s)
     {
+        strncpy(ThreadName, s.c_str(), 31);
+        ThreadName[31] = '\0';
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(s.c_str()), 0, 0, 0) != 0)
         {
             LOG_SYS("Cannot set thread name to " << s << ".");
@@ -269,6 +273,23 @@ namespace Util
             LOG_INF("Thread " << std::hex << std::this_thread::get_id() << std::dec << " is now called " << s);
         }
     }
+
+    const char *getThreadName()
+    {
+        // Avoid so many redundant system calls
+        return ThreadName;
+    }
+
+    static __thread pid_t ThreadTid;
+
+    pid_t getThreadId()
+    {
+        // Avoid so many redundant system calls
+        if (!ThreadTid)
+            ThreadTid = syscall(SYS_gettid);
+        return ThreadTid;
+    }
+
 
     void getVersionInfo(std::string& version, std::string& hash)
     {

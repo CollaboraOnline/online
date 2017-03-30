@@ -101,6 +101,10 @@ namespace Util
 
     void setThreadName(const std::string& s);
 
+    const char *getThreadName();
+
+    pid_t getThreadId();
+
     /// Get version information
     void getVersionInfo(std::string& version, std::string& hash);
 
