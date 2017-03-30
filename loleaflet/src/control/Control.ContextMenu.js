@@ -129,6 +129,21 @@ L.Control.ContextMenu = L.Control.extend({
 					// Lets use the later for simplicity and to leverage the core translations in online
 					itemName = itemName.replace(itemName.substring('Delete All Comments by '.length), 'This Author');
 				}
+
+				if (map['wopi'].DisableCopy) {
+					switch (commandName) {
+					case 'Cut':
+						itemName = _('Internal Cut');
+						break;
+					case 'Copy':
+						itemName = _('Internal Copy');
+						break;
+					case 'Paste':
+						itemName = _('Internal Paste');
+						break;
+					}
+				}
+
 				contextMenu[item.command] = {
 					name: _(itemName)
 				};
@@ -146,6 +161,9 @@ L.Control.ContextMenu = L.Control.extend({
 				isLastItemText = true;
 			} else if (item.type === 'menu') {
 				itemName = item.text.replace('~', '');
+				if (map['wopi'].DisableCopy && itemName === 'Paste Special') {
+					itemName = _('Internal Paste Special');
+				}
 				var submenu = this._createContextMenuStructure(item);
 				// ignore submenus with all items disabled
 				if (Object.keys(submenu).length === 0) {
