@@ -1664,7 +1664,7 @@ private:
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
                 {
                     // All post requests have url prefix 'lool'.
-                    socketOwnership = handlePostRequest_Blocks(request, message);
+                    socketOwnership = handlePostRequest(request, message);
                 }
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws")
                 {
@@ -1829,7 +1829,7 @@ private:
         return "application/octet-stream";
     }
 
-    SocketHandlerInterface::SocketOwnership handlePostRequest_Blocks(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
+    SocketHandlerInterface::SocketOwnership handlePostRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
     {
         LOG_INF("Post request: [" << request.getURI() << "]");
 
