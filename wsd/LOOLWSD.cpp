@@ -2434,7 +2434,7 @@ int LOOLWSD::innerMain()
 
         // Unit test timeout
         if (std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::steady_clock::now() - startStamp).count() <
+                std::chrono::steady_clock::now() - startStamp).count() >
             UnitWSD::get().getTimeoutMilliSeconds())
             UnitWSD::get().timeout();
 
