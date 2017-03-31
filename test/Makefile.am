@@ -20,7 +20,7 @@ noinst_LTLIBRARIES = \
 	unit-minsocketbuffersize.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
-AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION)
+AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS)
 
 # We work around some of the mess of using the same sources both on
 # the server side and here in unit tests with conditional compilation
