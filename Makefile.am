@@ -26,20 +26,11 @@ AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' \
 	      -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"' \
 	      -DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
 	      ${include_paths}
-AM_LDFLAGS = -pthread -Wl,-E $(ZLIB_LIBS)
-loolforkit_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
-loolforkit_nocaps_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
-loolmount_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
-loolnb_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
-loolwsd_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
-loolwsd_fuzzer_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib
+
+AM_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib $(ZLIB_LIBS)
 
 if ENABLE_SSL
-loolforkit_LDFLAGS += -lssl -lcrypto
-loolforkit_nocaps_LDFLAGS += -lssl -lcrypto
-loolnb_LDFLAGS += -lssl -lcrypto
-loolwsd_LDFLAGS += -lssl -lcrypto
-loolwsd_fuzzer_LDFLAGS += -lssl -lcrypto
+AM_LDFLAGS += -lssl -lcrypto
 endif
 
 loolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 -DFUZZER=1 -DTDOC=\"$(abs_top_srcdir)/test/data\" $(AM_CPPFLAGS)
