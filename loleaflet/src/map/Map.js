@@ -929,7 +929,7 @@ L.Map = L.Evented.extend({
 
 	_onUpdateProgress: function (e) {
 		if (e.statusType === 'start') {
-			if (this._socket.readyState === 1) {
+			if (this._socket.socket.readyState === 1) {
 				// auto-save
 				this.showBusy(_('Saving...'), true);
 			}
