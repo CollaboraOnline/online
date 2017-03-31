@@ -61,14 +61,7 @@ SocketPoll::SocketPoll(const std::string& threadName)
 
 SocketPoll::~SocketPoll()
 {
-    stop();
-    if (_threadStarted && _thread.joinable())
-    {
-        if (_thread.get_id() == std::this_thread::get_id())
-            LOG_ERR("DEADLOCK PREVENTED: joining own thread!");
-        else
-            _thread.join();
-    }
+    joinThread();
 
     {
         std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
@@ -99,6 +92,21 @@ void SocketPoll::startThread()
         catch (const std::exception& exc)
         {
             LOG_ERR("Failed to start poll thread: " << exc.what());
+            _threadStarted = false;
+        }
+    }
+}
+
+void SocketPoll::joinThread()
+{
+    stop();
+    if (_threadStarted && _thread.joinable())
+    {
+        if (_thread.get_id() == std::this_thread::get_id())
+            LOG_ERR("DEADLOCK PREVENTED: joining own thread!");
+        else
+        {
+            _thread.join();
             _threadStarted = false;
         }
     }

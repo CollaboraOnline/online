@@ -451,6 +451,9 @@ public:
     /// Start the polling thread (if desired)
     void startThread();
 
+    /// Stop and join the polling thread before returning (if active)
+    void joinThread();
+
 private:
     /// Initialize the poll fds array with the right events
     void setupPollFds(std::chrono::steady_clock::time_point now,
