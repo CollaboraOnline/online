@@ -130,18 +130,16 @@ L.Control.ContextMenu = L.Control.extend({
 					itemName = itemName.replace(itemName.substring('Delete All Comments by '.length), 'This Author');
 				}
 
-				if (map['wopi'].DisableCopy) {
-					switch (commandName) {
-					case 'Cut':
-						itemName = _('Internal Cut');
-						break;
-					case 'Copy':
-						itemName = _('Internal Copy');
-						break;
-					case 'Paste':
-						itemName = _('Internal Paste');
-						break;
-					}
+				switch (commandName) {
+				case 'Cut':
+					itemName = _('Internal Cut');
+					break;
+				case 'Copy':
+					itemName = _('Internal Copy');
+					break;
+				case 'Paste':
+					itemName = _('Internal Paste');
+					break;
 				}
 
 				contextMenu[item.command] = {
@@ -161,7 +159,7 @@ L.Control.ContextMenu = L.Control.extend({
 				isLastItemText = true;
 			} else if (item.type === 'menu') {
 				itemName = item.text.replace('~', '');
-				if (map['wopi'].DisableCopy && itemName === 'Paste Special') {
+				if (itemName === 'Paste Special') {
 					itemName = _('Internal Paste Special');
 				}
 				var submenu = this._createContextMenuStructure(item);
