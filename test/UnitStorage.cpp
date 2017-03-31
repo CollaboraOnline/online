@@ -33,40 +33,62 @@ public:
     {
     }
 
-    virtual bool filterLoad(const std::string &/* sessionId */,
-                            const std::string &/* jailId */,
+    virtual bool filterLoad(const std::string &sessionId,
+                            const std::string &jailId,
                             bool &/* result */)
     {
+        LOG_TRC("FilterLoad: " << sessionId << " jail " << jailId);
         if (_phase == Phase::Filter)
         {
-            _phase = Phase::Reload;
             LOG_INF("Throwing low disk space exception.");
             throw StorageSpaceLowException("test: low disk space");
         }
         return false;
     }
 
-    void loadDocument()
+    void loadDocument(bool bExpectFailure)
     {
         std::string docPath;
         std::string docURL;
         getDocumentPathAndURL("empty.odt", docPath, docURL, "unitStorage ");
         _ws = std::unique_ptr<UnitWebSocket>(new UnitWebSocket(docURL));
         assert(_ws.get());
+        int flags = 0, len;;
+        char reply[4096];
+        while ((len = _ws->getLOOLWebSocket()->receiveFrame(reply, sizeof(reply) - 1, flags)) > 0)
+        {
+            reply[len] = '\0';
+            if (bExpectFailure &&
+                !strcmp(reply, "error: cmd=internal kind=diskfull"))
+            {
+                LOG_TRC("Got expected load failure error");
+                _phase = Phase::Reload;
+                break;
+            }
+            else if (!bExpectFailure &&
+                     !strncmp(reply, "status: ", sizeof("status: ") - 1))
+            {
+                LOG_TRC("Load completed as expected");
+                break;
+            }
+            else
+                std::cerr << "reply '" << reply << "'\n";
+        }
     }
 
     virtual void invokeTest()
     {
+        LOG_TRC("invokeTest: " << (int)_phase);
         switch (_phase)
         {
         case Phase::Load:
             _phase = Phase::Filter;
-            loadDocument();
+            loadDocument(true);
             break;
         case Phase::Filter:
             break;
         case Phase::Reload:
-            loadDocument();
+            loadDocument(false);
             _ws.reset();
             exitTest(TestResult::Ok);
             break;
