@@ -276,6 +276,13 @@ namespace Util
 
     const char *getThreadName()
     {
+        // Main process and/or not set yet.
+        if (ThreadName[0] == '\0')
+        {
+            if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(ThreadName), 0, 0, 0) != 0)
+                ThreadName[0] = '\0';
+        }
+
         // Avoid so many redundant system calls
         return ThreadName;
     }
@@ -289,7 +296,6 @@ namespace Util
             ThreadTid = syscall(SYS_gettid);
         return ThreadTid;
     }
-
 
     void getVersionInfo(std::string& version, std::string& hash)
     {
