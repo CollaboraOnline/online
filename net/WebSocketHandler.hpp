@@ -123,7 +123,6 @@ public:
         const unsigned char flags = static_cast<unsigned char>(WSFrameMask::Fin)
                                   | static_cast<char>(WSOpCode::Close);
 
-        auto lock = socket->getWriteLock();
         sendFrame(socket, buf.data(), buf.size(), flags);
     }
 
@@ -316,8 +315,7 @@ public:
         if (socket == nullptr)
             return -1; // no socket == error.
 
-        assert(socket->isCorrectThread());
-        auto lock = socket->getWriteLock();
+        assert(socket->isCorrectThread(true));
         std::vector<char>& out = socket->_outBuffer;
 
         //TODO: Support fragmented messages.
@@ -349,7 +347,7 @@ protected:
         if (!socket || data == nullptr || len == 0)
             return -1;
 
-        assert(socket->isCorrectThread());
+        assert(socket->isCorrectThread(true));
         std::vector<char>& out = socket->_outBuffer;
 
         out.push_back(flags);
