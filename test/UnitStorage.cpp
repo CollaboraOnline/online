@@ -33,17 +33,11 @@ public:
     {
     }
 
-    virtual bool filterLoad(const std::string &sessionId,
-                            const std::string &jailId,
-                            bool &/* result */)
+    bool filterCheckDiskSpace(const std::string & /* path */,
+                              bool &newResult) override
     {
-        LOG_TRC("FilterLoad: " << sessionId << " jail " << jailId);
-        if (_phase == Phase::Filter)
-        {
-            LOG_INF("Throwing low disk space exception.");
-            throw StorageSpaceLowException("test: low disk space");
-        }
-        return false;
+        newResult = _phase != Phase::Filter;
+        return true;
     }
 
     void loadDocument(bool bExpectFailure)
@@ -76,7 +70,7 @@ public:
         }
     }
 
-    virtual void invokeTest()
+    void invokeTest() override
     {
         LOG_TRC("invokeTest: " << (int)_phase);
         switch (_phase)

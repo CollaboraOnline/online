@@ -95,6 +95,13 @@ public:
         return false;
     }
 
+    /// Hook the disk space check
+    virtual bool filterCheckDiskSpace(const std::string & /* path */,
+                                      bool & /* newResult */)
+    {
+        return false;
+    }
+
     /// If the test times out this gets invoked, the default just exits.
     virtual void timeout();
 
