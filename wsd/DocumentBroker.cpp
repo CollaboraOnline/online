@@ -759,7 +759,7 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
         throw;
     }
 
-    // Below values are recalculated when startDestroy() is called (before destroying the
+    // Below values are recalculated when destroyIfLastEditor() is called (before destroying the
     // document). It is safe to reset their values to their defaults whenever a new session is added.
     _lastEditableSession = false;
     _markToDestroy = false;
