@@ -365,6 +365,11 @@ L.Control.Menubar = L.Control.extend({
 		if ($(menu).hasClass('highlighted')) {
 			$('#main-menu').smartmenus('menuHideAll');
 		}
+
+		var $mainMenuState = $('#main-menu-state');
+		if (!$(menu).hasClass('has-submenu') && $mainMenuState[0].checked) {
+			$mainMenuState[0].click();
+		}
 	},
 
 	_beforeShow: function(e, menu) {
