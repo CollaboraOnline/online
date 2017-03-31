@@ -225,6 +225,9 @@ public:
     //TODO: Take reason to broadcast to clients.
     void stop() { _stop = true; }
 
+    /// Thread safe termination of this broker if it has a lingering thread
+    void joinThread();
+
     /// Loads a document from the public URI into the jail.
     bool load(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
     bool isLoaded() const { return _isLoaded; }

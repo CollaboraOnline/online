@@ -295,6 +295,11 @@ DocumentBroker::~DocumentBroker()
     _childProcess.reset();
 }
 
+void DocumentBroker::joinThread()
+{
+    _poll->joinThread();
+}
+
 bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const std::string& jailId)
 {
     assert(isCorrectThread());
