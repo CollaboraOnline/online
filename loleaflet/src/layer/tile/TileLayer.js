@@ -842,19 +842,19 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateViewCursor(viewId);
 	},
 
-	_addView: function(viewId, userid, username, color) {
-		if (color === 0 && this._map.getDocType() !== 'text') {
-			color = L.LOUtil.getViewIdColor(viewId);
+	_addView: function(viewInfo) {
+		if (viewInfo.color === 0 && this._map.getDocType() !== 'text') {
+			viewInfo.color = L.LOUtil.getViewIdColor(viewInfo.id);
 		}
 
-		this._map.addView(viewId, userid, username, color);
+		this._map.addView(viewInfo);
 
 		//TODO: We can initialize color and other properties here.
-		if (typeof this._viewCursors[viewId] !== 'undefined') {
-			this._viewCursors[viewId] = {};
+		if (typeof this._viewCursors[viewInfo.id] !== 'undefined') {
+			this._viewCursors[viewInfo.id] = {};
 		}
 
-		this._onUpdateViewCursor(viewId);
+		this._onUpdateViewCursor(viewInfo.id);
 	},
 
 	_removeView: function(viewId) {
@@ -888,7 +888,7 @@ L.TileLayer = L.GridLayer.extend({
 		var viewIds = [];
 		for (var viewInfoIdx in viewInfo) {
 			if (!(parseInt(viewInfo[viewInfoIdx].id) in this._map._viewInfo)) {
-				this._addView(viewInfo[viewInfoIdx].id, viewInfo[viewInfoIdx].userid, viewInfo[viewInfoIdx].username, viewInfo[viewInfoIdx].color);
+				this._addView(viewInfo[viewInfoIdx]);
 			}
 			viewIds.push(viewInfo[viewInfoIdx].id);
 		}
@@ -1369,7 +1369,7 @@ L.TileLayer = L.GridLayer.extend({
 		var viewCursorVisible = this._viewCursors[viewId].visible;
 		var viewPart = this._viewCursors[viewId].part;
 
-		if (viewCursorVisible && !this._isEmptyRectangle(this._viewCursors[viewId].bounds) &&
+		if (!this._map.isViewReadOnly(viewId) && viewCursorVisible && !this._isEmptyRectangle(this._viewCursors[viewId].bounds) &&
 		   (this._docType === 'text' || this._selectedPart === viewPart)) {
 			if (!viewCursorMarker) {
 				var viewCursorOptions = {
