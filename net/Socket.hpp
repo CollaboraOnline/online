@@ -617,10 +617,9 @@ public:
     /// Send data to the socket peer.
     void send(const char* data, const int len, const bool flush = true)
     {
-        assert(isCorrectThread());
+        assert(isCorrectThread(true));
         if (data != nullptr && len > 0)
         {
-            auto lock = getWriteLock();
             _outBuffer.insert(_outBuffer.end(), data, data + len);
             if (flush)
                 writeOutgoingData();
@@ -700,7 +699,7 @@ protected:
     HandleResult handlePoll(std::chrono::steady_clock::time_point now,
                             const int events) override
     {
-        assert(isCorrectThread());
+        assert(isCorrectThread(true));
 
         _socketHandler->checkTimeout(now);
 
@@ -746,14 +745,9 @@ protected:
             oldSize = _outBuffer.size();
 
             // Write if we can and have data to write.
-            if ((events & POLLOUT) || !_outBuffer.empty())
+            if ((events & POLLOUT) && !_outBuffer.empty())
             {
-                std::unique_lock<std::mutex> lock(_writeMutex, std::defer_lock);
-
-                // The buffer could have been flushed while we waited for the lock.
-                if (lock.try_lock() && !_outBuffer.empty())
-                    writeOutgoingData();
-
+                writeOutgoingData();
                 closed = closed || (errno == EPIPE);
             }
         }
@@ -773,9 +767,7 @@ protected:
     /// Override to write data out to socket.
     virtual void writeOutgoingData()
     {
-        assert(isCorrectThread());
-
-        Util::assertIsLocked(_writeMutex);
+        assert(isCorrectThread(true));
         assert(!_outBuffer.empty());
         do
         {
@@ -826,9 +818,6 @@ protected:
 
     void dumpState(std::ostream& os) override;
 
-    /// Get the Write Lock.
-    std::unique_lock<std::mutex> getWriteLock() { return std::unique_lock<std::mutex>(_writeMutex); }
-
 protected:
     /// Client handling the actual data.
     std::shared_ptr<SocketHandlerInterface> _socketHandler;
@@ -841,8 +830,6 @@ protected:
 
     std::vector< char > _inBuffer;
     std::vector< char > _outBuffer;
-
-    std::mutex _writeMutex;
 
     // To be able to access _inBuffer and _outBuffer.
     // TODO we probably need accessors to the _inBuffer & _outBuffer
