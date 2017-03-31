@@ -295,6 +295,9 @@ DocumentBroker::~DocumentBroker()
     LOG_INF("~DocumentBroker [" << _uriPublic.toString() <<
             "] destroyed with " << _sessions.size() << " sessions left.");
 
+    // Do this early - to avoid operating on _childProcess from two threads.
+    _poll->joinThread();
+
     if (!_sessions.empty())
     {
         LOG_WRN("DocumentBroker still has unremoved sessions.");
