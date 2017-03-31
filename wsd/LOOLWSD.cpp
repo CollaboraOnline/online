@@ -2419,7 +2419,10 @@ int LOOLWSD::innerMain()
         UnitWSD::get().invokeTest();
 
         // This timeout affects the recovery time of prespawned children.
-        mainWait.poll(SocketPoll::DefaultPollTimeoutMs * 4);
+        int msWait = UnitWSD::isUnitTesting() ?
+            UnitWSD::get().getTimeoutMilliSeconds() / 4 :
+            SocketPoll::DefaultPollTimeoutMs * 4;
+        mainWait.poll(msWait);
 
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll.wakeup();
