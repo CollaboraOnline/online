@@ -1586,6 +1586,12 @@ map.on('addview', function(e) {
 		username = _('You');
 		color = '#000';
 	}
+
+	// Mention readonly sessions in userlist
+	if (e.readonly) {
+		username += ' (' +  _('Readonly') + ')';
+	}
+
 	var userlistItem = w2ui['toolbar-down'].get('userlist');
 	var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username, color)).parent().parent()[0].outerHTML;
 	userlistItem.html = newhtml;
