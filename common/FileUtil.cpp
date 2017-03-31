@@ -27,6 +27,7 @@
 
 #include "Log.hpp"
 #include "Util.hpp"
+#include "Unit.hpp"
 
 namespace
 {
@@ -232,6 +233,10 @@ namespace FileUtil
     bool checkDiskSpace(const std::string& path)
     {
         assert(!path.empty());
+
+        bool hookResult;
+        if (UnitBase::get().filterCheckDiskSpace(path, hookResult))
+            return hookResult;
 
         struct statfs sfs;
         if (statfs(path.c_str(), &sfs) == -1)
