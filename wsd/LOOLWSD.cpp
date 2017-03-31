@@ -2400,6 +2400,9 @@ int LOOLWSD::innerMain()
     }
 #endif
 
+    // Prefork initial children
+    prespawnChildren();
+
     // Start the server.
     srv.start(ClientPortNumber);
 
@@ -2464,6 +2467,7 @@ int LOOLWSD::innerMain()
 
 #ifndef KIT_IN_PROCESS
     // Wait for forkit process finish.
+    LOG_INF("Waiting for forkit process to exit");
     int status = 0;
     waitpid(ForKitProcId, &status, WUNTRACED);
     close(ForKitWritePipe);
