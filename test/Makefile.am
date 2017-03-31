@@ -72,7 +72,7 @@ check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
-TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la # unit-storage.la unit-admin.la
+TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la # unit-storage.la # unit-admin.la
 else
 TESTS = ${top_builddir}/test/test
 endif
