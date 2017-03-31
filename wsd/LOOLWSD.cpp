@@ -2179,6 +2179,8 @@ public:
     {
         _stop = true;
         SocketPoll::wakeupWorld();
+        _acceptPoll.joinThread();
+        WebServerPoll.joinThread();
     }
 
     void dumpState(std::ostream& os)
@@ -2458,10 +2460,11 @@ int LOOLWSD::innerMain()
 
     // Wait until documents are saved and sessions closed.
     srv.stop();
-    WebServerPoll.stop();
 
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Cleaning up lingering documents.");
+    for (auto& docBrokerIt : DocBrokers)
+        docBrokerIt.second->joinThread();
     DocBrokers.clear();
 
 #ifndef KIT_IN_PROCESS
@@ -2469,6 +2472,8 @@ int LOOLWSD::innerMain()
     LOG_INF("Requesting forkit process " << ForKitProcId << " to terminate.");
     SigUtil::killChild(ForKitProcId);
 #endif
+
+    PrisonerPoll.joinThread();
 
     // Terminate child processes
     LOG_INF("Requesting child processes to terminate.");
