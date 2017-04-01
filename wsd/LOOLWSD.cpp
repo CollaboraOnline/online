@@ -1324,8 +1324,6 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
         // (UserCanWrite param).
         auto session = std::make_shared<ClientSession>(id, docBroker, uriPublic, isReadOnly);
 
-        docBroker->queueSession(session);
-
         return session;
     }
     catch (const std::exception& exc)
@@ -1860,17 +1858,18 @@ private:
                     auto clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker, isReadOnly);
                     if (clientSession)
                     {
+                        clientSession->setSaveAsSocket(socket);
+
                         // Transfer the client socket to the DocumentBroker.
                         // Move the socket into DocBroker.
                         docBroker->addSocketToPoll(socket);
                         socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
 
-                        clientSession->setSaveAsSocket(socket);
-
-                        docBroker->startThread();
-
-                        docBroker->addCallback([&]()
+                        docBroker->addCallback([&, clientSession]()
                         {
+                            // First add and load the session.
+                            docBroker->addSession(clientSession);
+
                             // Load the document manually and request saving in the target format.
                             std::string encodedFrom;
                             URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
@@ -1890,6 +1889,8 @@ private:
                             std::vector<char> saveasRequest(saveas.begin(), saveas.end());
                             clientSession->handleMessage(true, WebSocketHandler::WSOpCode::Text, saveasRequest);
                         });
+
+                        docBroker->startThread();
 
                         sent = true;
                     }
@@ -2026,8 +2027,14 @@ private:
 
     SocketHandlerInterface::SocketOwnership handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url)
     {
-        // requestHandler = new ClientRequestHandler();
-        LOG_INF("Client WS request: " << request.getURI() << ", url: " << url);
+        auto socket = _socket.lock();
+        if (!socket)
+        {
+            LOG_WRN("No socket to handle client WS upgrade for request: " << request.getURI() << ", url: " << url);
+            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+        }
+
+        LOG_INF("Client WS request: " << request.getURI() << ", url: " << url << ", socket #" << socket->getFD());
 
         // First Upgrade.
         WebSocketHandler ws(_socket, request);
@@ -2074,17 +2081,21 @@ private:
             if (clientSession)
             {
                 // Transfer the client socket to the DocumentBroker.
-                auto socket = _socket.lock();
-                if (socket)
-                {
-                    // Set the ClientSession to handle Socket events.
-                    socket->setHandler(clientSession);
-                    LOG_DBG("Socket #" << socket->getFD() << " handler is " << clientSession->getName());
 
-                    // Move the socket into DocBroker.
-                    docBroker->addSocketToPoll(socket);
-                    socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
-                }
+                // Set the ClientSession to handle Socket events.
+                socket->setHandler(clientSession);
+                LOG_DBG("Socket #" << socket->getFD() << " handler is " << clientSession->getName());
+
+                // Move the socket into DocBroker.
+                docBroker->addSocketToPoll(socket);
+                socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
+
+                docBroker->addCallback([docBroker, clientSession]()
+                {
+                    // Add and load the session.
+                    docBroker->addSession(clientSession);
+                });
+
                 docBroker->startThread();
             }
             else

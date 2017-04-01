@@ -266,10 +266,8 @@ public:
 
     std::string getJailRoot() const;
 
-    /// Queue a new session to be attached asynchronously.
-    /// @return amount of session we have after all the queued ones will be
-    /// created.
-    size_t queueSession(std::shared_ptr<ClientSession>& session);
+    /// Add a new session. Returns the new number of sessions.
+    size_t addSession(const std::shared_ptr<ClientSession>& session);
 
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSession(const std::string& id, bool destroyIfLast = false);
@@ -353,9 +351,6 @@ private:
 
     /// Forward a message from child session to its respective client session.
     bool forwardToClient(const std::shared_ptr<Message>& payload);
-
-    /// Add a new session. Returns the new number of sessions.
-    size_t addSession(const std::shared_ptr<ClientSession>& session);
 
     /// The thread function that all of the I/O for all sessions
     /// associated with this document.
