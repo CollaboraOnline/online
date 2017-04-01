@@ -223,22 +223,6 @@ void DocumentBroker::pollThread()
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag && !ShutdownRequestFlag)
     {
-        // First, load new sessions.
-        for (const auto& pair : _sessions)
-        {
-            try
-            {
-                auto& session = pair.second;
-                if (!session->isAttached())
-                    addSession(session);
-            }
-            catch (const std::exception& exc)
-            {
-                LOG_ERR("Error while adding new session to doc [" << _docKey << "]: " << exc.what());
-                //TODO: Send failure to client and remove session.
-            }
-        }
-
         _poll->poll(SocketPoll::DefaultPollTimeoutMs);
 
         if (!std::getenv("LOOL_NO_AUTOSAVE") && !_stop &&
@@ -746,16 +730,6 @@ std::string DocumentBroker::getJailRoot() const
     return Poco::Path(_childRoot, _jailId).toString();
 }
 
-size_t DocumentBroker::queueSession(std::shared_ptr<ClientSession>& session)
-{
-    std::unique_lock<std::mutex> lock(_mutex);
-
-    _sessions.emplace(session->getId(), session);
-    _poll->wakeup();
-
-    return _sessions.size();
-}
-
 size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
 {
     assert(isCorrectThread());
@@ -788,6 +762,8 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     _markToDestroy = false;
     _stop = false;
 
+    // Add and attach the session.
+    _sessions.emplace(session->getId(), session);
     session->setAttached();
 
     const auto id = session->getId();
