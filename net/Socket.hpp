@@ -377,9 +377,27 @@ public:
             }
 
             for (size_t i = 0; i < invoke.size(); ++i)
-                invoke[i]();
+            {
+                try
+                {
+                    invoke[i]();
+                }
+                catch (const std::exception& exc)
+                {
+                    LOG_ERR("Exception while invoking poll [" << _name <<
+                            "] callback: " << exc.what());
+                }
+            }
 
-            wakeupHook();
+            try
+            {
+                wakeupHook();
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_ERR("Exception while invoking poll [" << _name <<
+                        "] wakeup hook: " << exc.what());
+            }
         }
     }
 
