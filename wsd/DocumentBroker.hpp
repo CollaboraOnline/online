@@ -359,7 +359,10 @@ private:
 private:
     const std::string _uriOrig;
     const Poco::URI _uriPublic;
+    /// URL-based key. May be repeated during the lifetime of WSD.
     const std::string _docKey;
+    /// Short numerical ID. Unique during the lifetime of WSD.
+    const std::string _docId;
     const std::string _childRoot;
     const std::string _cacheRoot;
     std::shared_ptr<ChildProcess> _childProcess;
@@ -404,6 +407,9 @@ private:
     std::chrono::steady_clock::time_point _lastActivityTime;
     std::chrono::steady_clock::time_point _threadStart;
     std::chrono::milliseconds _loadDuration;
+
+    /// Unique DocBroker ID for tracing and debugging.
+    static std::atomic<unsigned> DocBrokerId;
 
     static constexpr auto IdleSaveDurationMs = 30 * 1000;
     static constexpr auto AutoSaveDurationMs = 300 * 1000;
