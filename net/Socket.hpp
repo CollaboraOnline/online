@@ -47,15 +47,14 @@ public:
 
     Socket() :
         _fd(socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0)),
-        _sendBufferSize(DefaultSendBufferSize)
+        _sendBufferSize(DefaultSendBufferSize),
+        _owner(std::this_thread::get_id())
     {
         init();
     }
 
     virtual ~Socket()
     {
-        // TODO: Should we shutdown here or up to the client?
-
         LOG_TRC("#" << getFD() << " Socket dtor.");
 
         // Doesn't block on sockets; no error handling needed.
@@ -231,11 +230,13 @@ protected:
         _sendBufferSize = DefaultSendBufferSize;
 #if ENABLE_DEBUG
         _owner = std::this_thread::get_id();
-        LOG_DBG("#" << _fd << " Thread affinity set to 0x" << std::hex << _owner << "." << std::dec);
+        LOG_DBG("#" << _fd << " Thread affinity set to 0x" << std::hex <<
+                _owner << "." << std::dec);
 
         const int oldSize = getSocketBufferSize();
         setSocketBufferSize(0);
-        LOG_TRC("#" << _fd << ": Buffer size: " << getSendBufferSize() << " (was " << oldSize << ")");
+        LOG_TRC("#" << _fd << ": Buffer size: " << getSendBufferSize() <<
+                " (was " << oldSize << ")");
 #endif
     }
 
@@ -323,8 +324,8 @@ public:
             rc = ::poll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
         }
         while (rc < 0 && errno == EINTR);
-        LOG_TRC("Poll completed with " << rc << " live polls max (" << timeoutMaxMs << "ms)"
-                << ((rc==0) ? "(timedout)" : ""));
+        LOG_TRC("Poll completed with " << rc << " live polls max (" <<
+                timeoutMaxMs << "ms)" << ((rc==0) ? "(timedout)" : ""));
 
         // Fire the callback and remove dead fds.
         std::chrono::steady_clock::time_point newNow =
