@@ -43,7 +43,8 @@ SocketPoll::SocketPoll(const std::string& threadName)
     : _name(threadName),
       _stop(false),
       _threadStarted(false),
-      _threadFinished(false)
+      _threadFinished(false),
+      _owner(std::this_thread::get_id())
 {
     // Create the wakeup fd.
     if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)
@@ -56,9 +57,11 @@ SocketPoll::SocketPoll(const std::string& threadName)
         getWakeupsArray().push_back(_wakeup[1]);
     }
 
+#if ENABLE_DEBUG
     _owner = std::this_thread::get_id();
     LOG_DBG("Thread affinity of " << _name << " set to 0x" <<
             std::hex << _owner << "." << std::dec);
+#endif
 }
 
 SocketPoll::~SocketPoll()
