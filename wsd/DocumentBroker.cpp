@@ -260,6 +260,9 @@ void DocumentBroker::pollThread()
         _poll->poll(std::min(flushTimeoutMs - elapsedMs, POLL_TIMEOUT_MS / 5));
     }
 
+    // Cleanup.
+    LOOLWSD::doHousekeeping();
+
     LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
 }
 
