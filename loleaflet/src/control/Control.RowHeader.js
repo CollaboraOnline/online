@@ -275,7 +275,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		if (item.height != distance.y) {
 			var command = {
 				Row: {
-					type: 'unsigned short',
+					type: 'long',
 					value: item.parentNode && item.parentNode.nextSibling &&
 					       L.DomUtil.getStyle(item.parentNode.nextSibling, 'display') === 'none' ? item.row + 1 : item.row
 				},
