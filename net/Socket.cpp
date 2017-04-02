@@ -52,16 +52,8 @@ SocketPoll::SocketPoll(const std::string& threadName)
         throw std::runtime_error("Failed to allocate pipe for SocketPoll [" + threadName + "] waking.");
     }
 
-    {
-        std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
-        getWakeupsArray().push_back(_wakeup[1]);
-    }
-
-#if ENABLE_DEBUG
-    _owner = std::this_thread::get_id();
-    LOG_DBG("Thread affinity of " << _name << " set to 0x" <<
-            std::hex << _owner << "." << std::dec);
-#endif
+    std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
+    getWakeupsArray().push_back(_wakeup[1]);
 }
 
 SocketPoll::~SocketPoll()
@@ -92,7 +84,6 @@ void SocketPoll::startThread()
         try
         {
             _thread = std::thread(&SocketPoll::pollingThreadEntry, this);
-            _owner = _thread.get_id();
         }
         catch (const std::exception& exc)
         {

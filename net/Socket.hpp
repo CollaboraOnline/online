@@ -493,6 +493,12 @@ private:
             Util::setThreadName(_name);
             LOG_INF("Starting polling thread [" << _name << "].");
 
+#if ENABLE_DEBUG
+            _owner = std::this_thread::get_id();
+            LOG_DBG("Thread affinity of " << _name << " set to 0x" <<
+                    std::hex << _owner << "." << std::dec);
+#endif
+
             // Invoke the virtual implementation.
             pollingThread();
         }
