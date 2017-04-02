@@ -445,12 +445,14 @@ public:
     Document(const std::shared_ptr<lok::Office>& loKit,
              const std::string& jailId,
              const std::string& docKey,
+             const std::string& docId,
              const std::string& url,
              std::shared_ptr<TileQueue> tileQueue,
              const std::shared_ptr<LOOLWebSocket>& ws)
       : _loKit(loKit),
         _jailId(jailId),
         _docKey(docKey),
+        _docId(docId),
         _url(url),
         _tileQueue(std::move(tileQueue)),
         _ws(ws),
@@ -461,7 +463,9 @@ public:
         _stop(false),
         _isLoading(0)
     {
-        LOG_INF("Document ctor for url [" << _url << "] on child [" << _jailId << "].");
+        LOG_INF("Document ctor for [" << _docKey <<
+                "] url [" << _url << "] on child [" << _jailId <<
+                "] and id [" << _docId << "].");
         assert(_loKit);
 
         _callbackThread.start(*this);
@@ -469,8 +473,10 @@ public:
 
     ~Document()
     {
-        LOG_INF("~Document dtor for url [" << _url << "] on child [" << _jailId <<
-                "]. There are " << _sessions.size() << " views.");
+        LOG_INF("~Document dtor for [" << _docKey <<
+                "] url [" << _url << "] on child [" << _jailId <<
+                "] and id [" << _docId << "]. There are " <<
+                _sessions.size() << " views.");
 
         // Wait for the callback worker to finish.
         _stop = true;
@@ -1357,7 +1363,7 @@ private:
 
     void run() override
     {
-        Util::setThreadName("lok_handler");
+        Util::setThreadName("lokit_" + _docId);
 
         LOG_DBG("Thread started.");
 
@@ -1515,7 +1521,10 @@ private:
 private:
     std::shared_ptr<lok::Office> _loKit;
     const std::string _jailId;
+    /// URL-based key. May be repeated during the lifetime of WSD.
     const std::string _docKey;
+    /// Short numerical ID. Unique during the lifetime of WSD.
+    const std::string _docId;
     const std::string _url;
     std::string _jailedUrl;
     std::string _renderOpts;
@@ -1795,6 +1804,7 @@ void lokit_main(const std::string& childRoot,
                     {
                         const std::string& sessionId = tokens[1];
                         const std::string& docKey = tokens[2];
+                        const std::string& docId = tokens[3];
 
                         std::string url;
                         URI::decode(docKey, url);
@@ -1802,7 +1812,7 @@ void lokit_main(const std::string& childRoot,
 
                         if (!document)
                         {
-                            document = std::make_shared<Document>(loKit, jailId, docKey, url, queue, ws);
+                            document = std::make_shared<Document>(loKit, jailId, docKey, docId, url, queue, ws);
                         }
 
                         // Validate and create session.

@@ -133,6 +133,8 @@ public:
     }
 };
 
+std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
+
 DocumentBroker::DocumentBroker(const std::string& uri,
                                const Poco::URI& uriPublic,
                                const std::string& docKey,
@@ -140,6 +142,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _uriOrig(uri),
     _uriPublic(uriPublic),
     _docKey(docKey),
+    _docId(Util::encodeId(DocBrokerId++, 3)),
     _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
     _lastSaveTime(std::chrono::steady_clock::now()),
@@ -177,8 +180,7 @@ bool DocumentBroker::isCorrectThread()
 // The inner heart of the DocumentBroker - our poll loop.
 void DocumentBroker::pollThread()
 {
-    static std::atomic<unsigned> DocBrokerId(1);
-    Util::setThreadName("docbroker_" + Util::encodeId(DocBrokerId++, 3));
+    Util::setThreadName("docbroker_" + _docId);
 
     LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << "].");
 
@@ -770,7 +772,7 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     const auto count = _sessions.size();
 
     // Request a new session from the child kit.
-    const std::string aMessage = "session " + id + ' ' + _docKey;
+    const std::string aMessage = "session " + id + ' ' + _docKey + ' ' + _docId;
     _childProcess->sendTextFrame(aMessage);
 
     // Tell the admin console about this new doc
