@@ -2334,28 +2334,15 @@ void HTTPWSTest::testAlertAllUsers()
     const auto testname = "alertAllUsers ";
     try
     {
-        std::string docPath[2];
-        std::string docURL[2];
-
-        getDocumentPathAndURL("Example.odt", docPath[0], docURL[0], testname);
-        getDocumentPathAndURL("hello.odt", docPath[1], docURL[1], testname);
-
-        Poco::Net::HTTPRequest* request[2];
-
-        for (int i = 0; i < 2; i++)
-        {
-            request[i] = new Poco::Net::HTTPRequest(Poco::Net::HTTPRequest::HTTP_GET, docURL[i]);
-        }
-
         std::shared_ptr<LOOLWebSocket> socket[4];
-        for (int i = 0; i < 2; i++)
-        {
-            socket[i] = connectLOKit(_uri, *(request[i%2]), _response);
-            sendTextFrame(socket[i], "load url=" + docURL[i%2], testname);
-        }
 
+        socket[0] = loadDocAndGetSocket("hello.odt", _uri, testname);
+        socket[1] = loadDocAndGetSocket("Example.odt", _uri, testname);
+
+        // Simulate disk full.
         sendTextFrame(socket[0], "uno .uno:fakeDiskFull", testname);
 
+        // Assert that both clients get the error.
         for (int i = 0; i < 2; i++)
         {
             const std::string response = assertResponseString(socket[i], "error:", testname);
