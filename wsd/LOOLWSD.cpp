@@ -1101,6 +1101,11 @@ bool LOOLWSD::checkAndRestoreForKit()
 
 void PrisonerPoll::wakeupHook()
 {
+    LOOLWSD::doHousekeeping();
+}
+
+void LOOLWSD::doHousekeeping()
+{
     if (!LOOLWSD::checkAndRestoreForKit())
     {
         // No children have died.
@@ -1134,11 +1139,6 @@ void PrisonerPoll::wakeupHook()
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
     if (docBrokersLock.try_lock())
         cleanupDocBrokers();
-}
-
-void LOOLWSD::triggerChildAndDocHousekeeping()
-{
-    PrisonerPoll.wakeup();
 }
 
 bool LOOLWSD::createForKit()
@@ -2428,9 +2428,9 @@ int LOOLWSD::innerMain()
         UnitWSD::get().invokeTest();
 
         // This timeout affects the recovery time of prespawned children.
-        int msWait = UnitWSD::isUnitTesting() ?
-            UnitWSD::get().getTimeoutMilliSeconds() / 4 :
-            SocketPoll::DefaultPollTimeoutMs * 4;
+        const int msWait = UnitWSD::isUnitTesting() ?
+                           UnitWSD::get().getTimeoutMilliSeconds() / 4 :
+                           SocketPoll::DefaultPollTimeoutMs * 4;
         mainWait.poll(msWait);
 
         // Wake the prisoner poll to spawn some children, if necessary.

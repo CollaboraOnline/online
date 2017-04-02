@@ -100,7 +100,9 @@ public:
     /// Return true when successfull.
     static bool createForKit();
 
-    static void triggerChildAndDocHousekeeping();
+    /// Checks forkit (and respawns), rebalances
+    /// child kit processes and cleans up DocBrokers.
+    static void doHousekeeping();
 
 protected:
     void initialize(Poco::Util::Application& self) override;
