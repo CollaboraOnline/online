@@ -155,7 +155,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _cursorPosY(0),
     _cursorWidth(0),
     _cursorHeight(0),
-    _poll(new DocumentBrokerPoll("docbrk_poll", *this)),
+    _poll(new DocumentBrokerPoll("docbroker_" + _docId, *this)),
     _stop(false),
     _tileVersion(0),
     _debugRenderedTileCount(0)
@@ -180,8 +180,6 @@ bool DocumentBroker::isCorrectThread()
 // The inner heart of the DocumentBroker - our poll loop.
 void DocumentBroker::pollThread()
 {
-    Util::setThreadName("docbroker_" + _docId);
-
     LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << "].");
 
     _threadStart = std::chrono::steady_clock::now();
