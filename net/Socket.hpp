@@ -185,7 +185,12 @@ public:
     void setThreadOwner(const std::thread::id &id)
     {
 #if ENABLE_DEBUG
-       _owner = id;
+        if (id != _owner)
+        {
+            LOG_DBG("#" << _fd << " Thread affinity set to 0x" << std::hex <<
+                    id << " (was 0x" << _owner << ")." << std::dec);
+            _owner = id;
+        }
 #else
        (void)id;
 #endif
@@ -196,8 +201,10 @@ public:
 #if ENABLE_DEBUG
         const bool sameThread = std::this_thread::get_id() == _owner;
         if (!sameThread)
-            LOG_WRN("#" << _fd << " invoked from foreign thread. Expected: " <<
-                    std::hex << _owner << std::dec);
+            LOG_WRN("#" << _fd << " Invoked from foreign thread. Expected: 0x" << std::hex <<
+                    _owner << " but called from 0x" << std::this_thread::get_id() << " (" <<
+                    std::dec << Util::getThreadId() << ").");
+
         if (hard)
             return sameThread;
         else
@@ -224,12 +231,12 @@ protected:
         _sendBufferSize = DefaultSendBufferSize;
 #if ENABLE_DEBUG
         _owner = std::this_thread::get_id();
+        LOG_DBG("#" << _fd << " Thread affinity set to 0x" << std::hex << _owner << "." << std::dec);
 
         const int oldSize = getSocketBufferSize();
         setSocketBufferSize(0);
         LOG_TRC("#" << _fd << ": Buffer size: " << getSendBufferSize() << " (was " << oldSize << ")");
 #endif
-
     }
 
 private:
@@ -291,9 +298,9 @@ public:
     bool isCorrectThread() const
     {
         if (std::this_thread::get_id() != _owner)
-            LOG_WRN("Incorrect thread affinity. Expected: 0x" << std::hex << _owner <<
-                    " but called from " << std::this_thread::get_id() << std::dec <<
-                    ", stop: " << _stop);
+            LOG_WRN("Incorrect thread affinity for " << _name << ". Expected: 0x" << std::hex <<
+                    _owner << " (" << std::dec << Util::getThreadId() << ") but called from 0x" <<
+                    std::hex << std::this_thread::get_id() << std::dec << ", stop: " << _stop);
 
         return _stop || std::this_thread::get_id() == _owner;
     }

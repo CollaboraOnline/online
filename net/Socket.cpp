@@ -57,6 +57,8 @@ SocketPoll::SocketPoll(const std::string& threadName)
     }
 
     _owner = std::this_thread::get_id();
+    LOG_DBG("Thread affinity of " << _name << " set to 0x" <<
+            std::hex << _owner << "." << std::dec);
 }
 
 SocketPoll::~SocketPoll()

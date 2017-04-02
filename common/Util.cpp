@@ -265,13 +265,13 @@ namespace Util
         strncpy(ThreadName, s.c_str(), 31);
         ThreadName[31] = '\0';
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(s.c_str()), 0, 0, 0) != 0)
-        {
-            LOG_SYS("Cannot set thread name to " << s << ".");
-        }
+            LOG_SYS("Cannot set thread name of " << getThreadId() << " (0x" <<
+                    std::hex << std::this_thread::get_id() <<
+                    std::dec << ") to [" << s << "].");
         else
-        {
-            LOG_INF("Thread " << std::hex << std::this_thread::get_id() << std::dec << " is now called " << s);
-        }
+            LOG_INF("Thread " << getThreadId() << " (0x" <<
+                    std::hex << std::this_thread::get_id() <<
+                    std::dec << ") is now called [" << s << "].");
     }
 
     const char *getThreadName()
