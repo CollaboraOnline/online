@@ -126,15 +126,9 @@ public:
         sendFrame(socket, buf.data(), buf.size(), flags);
     }
 
-    /// Implementation of the SocketHandlerInterface.
-    virtual bool handleOneIncomingMessage()
+    bool handleOneIncomingMessage(const std::shared_ptr<StreamSocket>& socket)
     {
-        auto socket = _socket.lock();
-        if (socket == nullptr)
-        {
-            LOG_ERR("No socket associated with WebSocketHandler 0x" << std::hex << this << std::dec);
-            return false;
-        }
+        assert(socket && "Expected a valid socket instance.");
 
         // websocket fun !
         const size_t len = socket->_inBuffer.size();
@@ -148,9 +142,9 @@ public:
             return false;
 
         unsigned char *p = reinterpret_cast<unsigned char*>(&socket->_inBuffer[0]);
-        bool fin = p[0] & 0x80;
-        WSOpCode code = static_cast<WSOpCode>(p[0] & 0x0f);
-        bool hasMask = p[1] & 0x80;
+        const bool fin = p[0] & 0x80;
+        const WSOpCode code = static_cast<WSOpCode>(p[0] & 0x0f);
+        const bool hasMask = p[1] & 0x80;
         size_t payloadLen = p[1] & 0x7f;
         size_t headerLen = 2;
 
@@ -204,7 +198,8 @@ public:
         socket->_inBuffer.erase(socket->_inBuffer.begin(), socket->_inBuffer.begin() + headerLen + payloadLen);
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
-        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << code << " fin? " << fin << ", payload length: " << _wsPayload.size());
+        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << code <<
+                " fin? " << fin << ", mask? " << hasMask << " payload length: " << _wsPayload.size());
 
         switch (code)
         {
@@ -254,8 +249,16 @@ public:
     /// Implementation of the SocketHandlerInterface.
     virtual SocketHandlerInterface::SocketOwnership handleIncomingMessage() override
     {
-        while (handleOneIncomingMessage())
-            ; // can have multiple msgs in one recv'd packet.
+        auto socket = _socket.lock();
+        if (socket == nullptr)
+        {
+            LOG_ERR("No socket associated with WebSocketHandler 0x" << std::hex << this << std::dec);
+        }
+        else
+        {
+            while (handleOneIncomingMessage(socket))
+                ; // can have multiple msgs in one recv'd packet.
+        }
 
         return SocketHandlerInterface::SocketOwnership::UNCHANGED;
     }
