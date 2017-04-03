@@ -222,7 +222,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
                     timedout = false;
                 }
 
-                response.resize(READ_BUFFER_SIZE);
+                response.resize(READ_BUFFER_SIZE * 8);
                 int bytes = ws.receiveFrame(response.data(), response.size(), flags);
                 response.resize(std::max(bytes, 0));
                 std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags) << std::endl;
@@ -232,22 +232,6 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
                     if (LOOLProtocol::matchPrefix(prefix, message))
                     {
                         return response;
-                    }
-                    else if (LOOLProtocol::matchPrefix("nextmessage", message))
-                    {
-                        int size = 0;
-                        if (LOOLProtocol::getTokenIntegerFromMessage(message, "size", size) && size > 0)
-                        {
-                            response.resize(size);
-                            bytes = ws.receiveFrame(response.data(), response.size(), flags);
-                            response.resize(std::max(bytes, 0));
-                            std::cerr << name << "Got " << LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags) << std::endl;
-                            if (bytes > 0 &&
-                                LOOLProtocol::matchPrefix(prefix, LOOLProtocol::getFirstLine(response)))
-                            {
-                                return response;
-                            }
-                        }
                     }
                 }
                 else

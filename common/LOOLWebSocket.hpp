@@ -161,23 +161,7 @@ public:
         static const Poco::Timespan waitZero(0);
         std::unique_lock<std::mutex> lock(_mutexWrite);
 
-        if (length >= LARGE_MESSAGE_SIZE)
-        {
-            const std::string nextmessage = "nextmessage: size=" + std::to_string(length);
-            const int size = nextmessage.size();
-
-            if (Poco::Net::WebSocket::sendFrame(nextmessage.data(), size) == size)
-            {
-                LOG_TRC("Sent long message preample: " + nextmessage);
-            }
-            else
-            {
-                LOG_WRN("Failed to send long message preample.");
-                return -1;
-            }
-        }
-
-        int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
+        const int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
 
         lock.unlock();
 

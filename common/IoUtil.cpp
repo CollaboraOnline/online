@@ -143,27 +143,6 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
                     }
                 }
             }
-            else
-            {
-                int size = 0;
-                Poco::StringTokenizer tokens(firstLine, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-                // Check if it is a "nextmessage:" and in that case read the large
-                // follow-up message separately, and handle that only.
-                if (tokens.count() == 2 && tokens[0] == "nextmessage:" &&
-                    LOOLProtocol::getTokenInteger(tokens[1], "size", size) && size > 0)
-                {
-                    LOG_TRC("SocketProcessor [" << name << "]: Getting large message of " << size << " bytes.");
-                    if (size > MAX_MESSAGE_SIZE)
-                    {
-                        LOG_ERR("SocketProcessor [" << name << "]: Large-message size (" << size << ") over limit or invalid.");
-                    }
-                    else
-                    {
-                        payload.resize(size);
-                        continue;
-                    }
-                }
-            }
 
             LOG_CHECK(n > 0);
 

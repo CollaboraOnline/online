@@ -25,12 +25,6 @@ constexpr int WS_SEND_TIMEOUT_MS = 1000;
 /// which can be 1500 bytes long.
 constexpr long READ_BUFFER_SIZE = 64 * 1024;
 
-/// Size beyond which messages will be sent preceded with
-/// 'nextmessage' frame to let the receiver know in advance
-/// the size of the larger coming message. All messages up to,
-/// but not including, this size are considered small messages.
-constexpr int LARGE_MESSAGE_SIZE = READ_BUFFER_SIZE - 512;
-
 /// Message larger than this will be dropped as invalid
 /// or as intentionally flooding the server.
 constexpr int MAX_MESSAGE_SIZE = 2 * 1024 * READ_BUFFER_SIZE;

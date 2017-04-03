@@ -185,9 +185,6 @@ public:
     }
 
 private:
-    void socketProcessor();
-
-private:
     Poco::Process::PID _pid;
     std::shared_ptr<WebSocketHandler> _ws;
     std::shared_ptr<Socket> _socket;

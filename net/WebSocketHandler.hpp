@@ -311,31 +311,11 @@ public:
     /// 0 for closed/invalid socket, and -1 for other errors.
     int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush = true) const
     {
-        if (data == nullptr || len == 0)
-            return -1;
+        //TODO: Support fragmented messages.
+        static const unsigned char Fin = static_cast<unsigned char>(WSFrameMask::Fin);
 
         auto socket = _socket.lock();
-        if (socket == nullptr)
-            return -1; // no socket == error.
-
-        assert(socket->isCorrectThread(true));
-        std::vector<char>& out = socket->_outBuffer;
-
-        //TODO: Support fragmented messages.
-        static const unsigned char fin = static_cast<unsigned char>(WSFrameMask::Fin);
-
-        // FIXME: need to support fragmented mesages, but for now send prefix message with size.
-        if (len >= LARGE_MESSAGE_SIZE)
-        {
-            const std::string nextmessage = "nextmessage: size=" + std::to_string(len);
-            const unsigned char size = (nextmessage.size() & 0xff);
-            out.push_back(static_cast<char>(fin | WSOpCode::Text));
-            out.push_back(size);
-            out.insert(out.end(), nextmessage.data(), nextmessage.data() + size);
-            socket->writeOutgoingData();
-        }
-
-        return sendFrame(socket, data, len, static_cast<unsigned char>(fin | code), flush);
+        return sendFrame(socket, data, len, static_cast<unsigned char>(Fin | code), flush);
     }
 
 protected:
