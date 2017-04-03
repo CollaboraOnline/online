@@ -327,32 +327,7 @@ public:
         LOG_TRC("Poll completed with " << rc << " live polls max (" <<
                 timeoutMaxMs << "ms)" << ((rc==0) ? "(timedout)" : ""));
 
-        // Fire the callback and remove dead fds.
-        std::chrono::steady_clock::time_point newNow =
-            std::chrono::steady_clock::now();
-        for (int i = static_cast<int>(size) - 1; i >= 0; --i)
-        {
-            Socket::HandleResult res = Socket::HandleResult::SOCKET_CLOSED;
-            try
-            {
-                res = _pollSockets[i]->handlePoll(newNow, _pollFds[i].revents);
-            }
-            catch (const std::exception& exc)
-            {
-                LOG_ERR("Error while handling poll for socket #" <<
-                        _pollFds[i].fd << " in " << _name << ": " << exc.what());
-            }
-
-            if (res == Socket::HandleResult::SOCKET_CLOSED ||
-                res == Socket::HandleResult::MOVED)
-            {
-                LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
-                        _pollSockets.size() << ") from " << _name);
-                _pollSockets.erase(_pollSockets.begin() + i);
-            }
-        }
-
-        // Process the wakeup pipe (always the last entry).
+        // First process the wakeup pipe (always the last entry).
         if (_pollFds[size].revents)
         {
             std::vector<CallbackFn> invoke;
@@ -399,6 +374,31 @@ public:
                         "] wakeup hook: " << exc.what());
             }
         }
+
+        // Fire the poll callbacks and remove dead fds.
+        std::chrono::steady_clock::time_point newNow =
+            std::chrono::steady_clock::now();
+        for (int i = static_cast<int>(size) - 1; i >= 0; --i)
+        {
+            Socket::HandleResult res = Socket::HandleResult::SOCKET_CLOSED;
+            try
+            {
+                res = _pollSockets[i]->handlePoll(newNow, _pollFds[i].revents);
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_ERR("Error while handling poll for socket #" <<
+                        _pollFds[i].fd << " in " << _name << ": " << exc.what());
+            }
+
+            if (res == Socket::HandleResult::SOCKET_CLOSED ||
+                res == Socket::HandleResult::MOVED)
+            {
+                LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
+                        _pollSockets.size() << ") from " << _name);
+                _pollSockets.erase(_pollSockets.begin() + i);
+            }
+        }
     }
 
     /// Write to a wakeup descriptor
@@ -430,8 +430,6 @@ public:
         if (newSocket)
         {
             std::lock_guard<std::mutex> lock(_mutex);
-            // Beware - _thread may not be created & started yet.
-            newSocket->setThreadOwner(_thread.get_id());
             LOG_DBG("Inserting socket #" << newSocket->getFD() << " into " << _name);
             _newSockets.emplace_back(newSocket);
             wakeup();
