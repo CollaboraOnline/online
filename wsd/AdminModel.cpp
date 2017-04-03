@@ -94,8 +94,26 @@ void Subscriber::unsubscribe(const std::string& command)
     _subscriptions.erase(command);
 }
 
+bool AdminModel::isCorrectThread() const
+{
+#if ENABLE_DEBUG
+    // FIXME: share this code [!]
+    const bool sameThread = std::this_thread::get_id() == _owner;
+    if (!sameThread)
+        LOG_WRN("Admin command invoked from foreign thread. Expected: 0x" << std::hex <<
+        _owner << " but called from 0x" << std::this_thread::get_id() << " (" <<
+        std::dec << Util::getThreadId() << ").");
+
+    return sameThread;
+#else
+    return true;
+#endif
+}
+
 std::string AdminModel::query(const std::string& command)
 {
+    assert (isCorrectThread());
+
     const auto token = LOOLProtocol::getFirstToken(command);
     if (token == "documents")
     {
@@ -132,6 +150,8 @@ std::string AdminModel::query(const std::string& command)
 /// Returns memory consumed by all active loolkit processes
 unsigned AdminModel::getKitsMemoryUsage()
 {
+    assert (isCorrectThread());
+
     unsigned totalMem = 0;
     unsigned docs = 0;
     for (const auto& it : _documents)
@@ -158,6 +178,8 @@ unsigned AdminModel::getKitsMemoryUsage()
 
 void AdminModel::subscribe(int sessionId, const std::weak_ptr<WebSocketHandler>& ws)
 {
+    assert (isCorrectThread());
+
     const auto ret = _subscribers.emplace(sessionId, Subscriber(sessionId, ws));
     if (!ret.second)
     {
@@ -167,6 +189,8 @@ void AdminModel::subscribe(int sessionId, const std::weak_ptr<WebSocketHandler>&
 
 void AdminModel::subscribe(int sessionId, const std::string& command)
 {
+    assert (isCorrectThread());
+
     auto subscriber = _subscribers.find(sessionId);
     if (subscriber != _subscribers.end())
     {
@@ -176,37 +200,39 @@ void AdminModel::subscribe(int sessionId, const std::string& command)
 
 void AdminModel::unsubscribe(int sessionId, const std::string& command)
 {
+    assert (isCorrectThread());
+
     auto subscriber = _subscribers.find(sessionId);
     if (subscriber != _subscribers.end())
-    {
         subscriber->second.unsubscribe(command);
-    }
 }
 
 void AdminModel::addMemStats(unsigned memUsage)
 {
+    assert (isCorrectThread());
+
     _memStats.push_back(memUsage);
     if (_memStats.size() > _memStatsSize)
-    {
         _memStats.pop_front();
-    }
 
     notify("mem_stats " + std::to_string(memUsage));
 }
 
 void AdminModel::addCpuStats(unsigned cpuUsage)
 {
+    assert (isCorrectThread());
+
     _cpuStats.push_back(cpuUsage);
     if (_cpuStats.size() > _cpuStatsSize)
-    {
         _cpuStats.pop_front();
-    }
 
     notify("cpu_stats " + std::to_string(cpuUsage));
 }
 
 void AdminModel::setCpuStatsSize(unsigned size)
 {
+    assert (isCorrectThread());
+
     int wasteValuesLen = _cpuStats.size() - size;
     while (wasteValuesLen-- > 0)
     {
@@ -219,6 +245,8 @@ void AdminModel::setCpuStatsSize(unsigned size)
 
 void AdminModel::setMemStatsSize(unsigned size)
 {
+    assert (isCorrectThread());
+
     int wasteValuesLen = _memStats.size() - size;
     while (wasteValuesLen-- > 0)
     {
@@ -231,6 +259,8 @@ void AdminModel::setMemStatsSize(unsigned size)
 
 void AdminModel::notify(const std::string& message)
 {
+    assert (isCorrectThread());
+
     if (!_subscribers.empty())
     {
         LOG_TRC("Message to admin console: " << message);
@@ -251,6 +281,8 @@ void AdminModel::notify(const std::string& message)
 void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
                              const std::string& filename, const std::string& sessionId)
 {
+    assert (isCorrectThread());
+
     const auto ret = _documents.emplace(docKey, Document(docKey, pid, filename));
     ret.first->second.addView(sessionId);
     LOG_DBG("Added admin document [" << docKey << "].");
@@ -289,6 +321,8 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
 
 void AdminModel::removeDocument(const std::string& docKey, const std::string& sessionId)
 {
+    assert (isCorrectThread());
+
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end() && !docIt->second.isExpired())
     {
@@ -311,6 +345,8 @@ void AdminModel::removeDocument(const std::string& docKey, const std::string& se
 
 void AdminModel::removeDocument(const std::string& docKey)
 {
+    assert (isCorrectThread());
+
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end())
     {
@@ -332,6 +368,8 @@ void AdminModel::removeDocument(const std::string& docKey)
 
 std::string AdminModel::getMemStats()
 {
+    assert (isCorrectThread());
+
     std::ostringstream oss;
     for (const auto& i: _memStats)
     {
@@ -343,6 +381,8 @@ std::string AdminModel::getMemStats()
 
 std::string AdminModel::getCpuStats()
 {
+    assert (isCorrectThread());
+
     std::ostringstream oss;
     for (const auto& i: _cpuStats)
     {
@@ -354,6 +394,8 @@ std::string AdminModel::getCpuStats()
 
 unsigned AdminModel::getTotalActiveViews()
 {
+    assert (isCorrectThread());
+
     unsigned numTotalViews = 0;
     for (const auto& it: _documents)
     {
@@ -368,6 +410,8 @@ unsigned AdminModel::getTotalActiveViews()
 
 std::string AdminModel::getDocuments() const
 {
+    assert (isCorrectThread());
+
     std::ostringstream oss;
     for (const auto& it: _documents)
     {
@@ -389,6 +433,8 @@ std::string AdminModel::getDocuments() const
 
 void AdminModel::updateLastActivityTime(const std::string& docKey)
 {
+    assert (isCorrectThread());
+
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end())
     {
@@ -410,6 +456,8 @@ bool Document::updateMemoryDirty(int dirty)
 
 void AdminModel::updateMemoryDirty(const std::string& docKey, int dirty)
 {
+    assert (isCorrectThread());
+
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end() &&
         docIt->second.updateMemoryDirty(dirty))

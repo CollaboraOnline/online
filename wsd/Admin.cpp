@@ -57,7 +57,6 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         return;
     }
 
-    std::unique_lock<std::mutex> modelLock(_admin->getLock());
     AdminModel& model = _admin->getModel();
 
     if (tokens[0] == "auth")
@@ -262,14 +261,13 @@ bool AdminSocketHandler::handleInitialRequest(
         Admin &admin = Admin::instance();
         auto handler = std::make_shared<AdminSocketHandler>(&admin, socketWeak, request);
         socket->setHandler(handler);
-
-        { // FIXME: weird locking around subscribe ...
-            std::unique_lock<std::mutex> modelLock(admin.getLock());
-            // Subscribe the websocket of any AdminModel updates
-            AdminModel& model = admin.getModel();
+        admin.addCallback([handler, sessionId]
+        {
+            Admin &adminIn = Admin::instance();
+            AdminModel& model = adminIn.getModel();
             handler->_sessionId = sessionId;
             model.subscribe(sessionId, handler);
-        }
+        });
         return true;
     }
 
@@ -293,7 +291,6 @@ Admin::Admin() :
 {
     LOG_INF("Admin ctor.");
 
-    std::unique_lock<std::mutex> modelLock(getLock());
     const auto totalMem = getTotalMemoryUsage();
     LOG_TRC("Total memory used: " << totalMem);
     _model.addMemStats(totalMem);
@@ -307,6 +304,8 @@ Admin::~Admin()
 void Admin::pollingThread()
 {
     std::chrono::steady_clock::time_point lastCPU, lastMem;
+
+    _model.setThreadOwner(std::this_thread::get_id());
 
     lastCPU = std::chrono::steady_clock::now();
     lastMem = lastCPU;
@@ -326,7 +325,6 @@ void Admin::pollingThread()
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCPU).count();
         if (memWait <= 0)
         {
-            std::unique_lock<std::mutex> modelLock(getLock());
             const auto totalMem = getTotalMemoryUsage();
             if (totalMem != _lastTotalMemory)
             {
@@ -349,21 +347,20 @@ void Admin::pollingThread()
 
 void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId)
 {
-    std::unique_lock<std::mutex> modelLock(_modelMutex);
-    _model.addDocument(docKey, pid, filename, sessionId);
+    addCallback([this, docKey, pid, filename, sessionId]
+                 { _model.addDocument(docKey, pid, filename, sessionId); });
 }
 
 void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
 {
-    std::unique_lock<std::mutex> modelLock(_modelMutex);
-    _model.removeDocument(docKey, sessionId);
+    addCallback([this, docKey, sessionId]
+                 { _model.removeDocument(docKey, sessionId); });
 }
 
 void Admin::rmDoc(const std::string& docKey)
 {
-    std::unique_lock<std::mutex> modelLock(_modelMutex);
     LOG_INF("Removing complete doc [" << docKey << "] from Admin.");
-    _model.removeDocument(docKey);
+    addCallback([this, docKey]{ _model.removeDocument(docKey); });
 }
 
 void Admin::rescheduleMemTimer(unsigned interval)
@@ -382,8 +379,6 @@ void Admin::rescheduleCpuTimer(unsigned interval)
 
 unsigned Admin::getTotalMemoryUsage()
 {
-    Util::assertIsLocked(_modelMutex);
-
     // To simplify and clarify this; since load, link and pre-init all
     // inside the forkit - we should account all of our fixed cost of
     // memory to the forkit; and then count only dirty pages in the clients
@@ -413,14 +408,13 @@ AdminModel& Admin::getModel()
 
 void Admin::updateLastActivityTime(const std::string& docKey)
 {
-    std::unique_lock<std::mutex> modelLock(_modelMutex);
-    _model.updateLastActivityTime(docKey);
+    addCallback([this, docKey]{ _model.updateLastActivityTime(docKey); });
 }
 
 void Admin::updateMemoryDirty(const std::string& docKey, int dirty)
 {
-    std::unique_lock<std::mutex> modelLock(_modelMutex);
-    _model.updateMemoryDirty(docKey, dirty);
+    addCallback([this, docKey, dirty]
+                 { _model.updateMemoryDirty(docKey, dirty); });
 }
 
 void Admin::dumpState(std::ostream& os)

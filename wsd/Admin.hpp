@@ -96,16 +96,15 @@ public:
 
     void rescheduleCpuTimer(unsigned interval);
 
-    std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_modelMutex); }
-
     void updateLastActivityTime(const std::string& docKey);
     void updateMemoryDirty(const std::string& docKey, int dirty);
 
     void dumpState(std::ostream& os) override;
 
 private:
+    /// The model is accessed only during startup & in
+    /// the Admin Poll thread.
     AdminModel _model;
-    std::mutex _modelMutex;
     int _forKitPid;
     long _lastTotalMemory;
 
