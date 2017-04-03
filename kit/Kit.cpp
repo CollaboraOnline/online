@@ -659,7 +659,7 @@ public:
             return;
         }
 
-        LOG_TRC("Sending render-tile response (" + std::to_string(output.size()) + " bytes) for: " + response);
+        LOG_TRC("Sending render-tile response (" << output.size() << " bytes) for: " << response);
         ws->sendFrame(output.data(), output.size(), WebSocket::FRAME_BINARY);
     }
 
@@ -741,7 +741,8 @@ public:
             if (hash != 0 && tiles[tileIndex].getOldHash() == hash)
             {
                 // The tile content is identical to what the client already has, so skip it
-                LOG_TRC("Match for tile #" << tileIndex << " at (" << positionX << "," << positionY << ") oldhash==hash (" << hash << "), skipping");
+                LOG_TRC("Match for tile #" << tileIndex << " at (" << positionX << "," <<
+                        positionY << ") oldhash==hash (" << hash << "), skipping");
                 tiles.erase(tiles.begin() + tileIndex);
                 continue;
             }
@@ -756,7 +757,8 @@ public:
             }
 
             const auto imgSize = output.size() - oldSize;
-            LOG_TRC("Encoded tile #" << tileIndex << " at (" << positionX << "," << positionY << ") with oldhash=" << tiles[tileIndex].getOldHash() << ", hash=" << hash << " in " << imgSize << " bytes.");
+            LOG_TRC("Encoded tile #" << tileIndex << " at (" << positionX << "," << positionY << ") with oldhash=" <<
+                    tiles[tileIndex].getOldHash() << ", hash=" << hash << " in " << imgSize << " bytes.");
             tiles[tileIndex].setHash(hash);
             tiles[tileIndex].setImgSize(imgSize);
             tileIndex++;

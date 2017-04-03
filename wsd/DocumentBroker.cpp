@@ -1077,7 +1077,7 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
         }
         else
         {
-            LOG_DBG("Render request declined for " << firstLine);
+            LOG_WRN("Dropping empty tile response: " << firstLine);
             // They will get re-issued if we don't forget them.
         }
     }
@@ -1111,7 +1111,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
         }
         else
         {
-            LOG_ERR("Render request declined for " << firstLine);
+            LOG_WRN("Dropping empty tilecombine response: " << firstLine);
             // They will get re-issued if we don't forget them.
         }
     }
