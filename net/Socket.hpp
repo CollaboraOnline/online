@@ -195,7 +195,7 @@ public:
 #endif
     }
 
-    virtual bool isCorrectThread(bool hard = false)
+    virtual bool isCorrectThread()
     {
 #if ENABLE_DEBUG
         const bool sameThread = std::this_thread::get_id() == _owner;
@@ -204,12 +204,8 @@ public:
                     _owner << " but called from 0x" << std::this_thread::get_id() << " (" <<
                     std::dec << Util::getThreadId() << ").");
 
-        if (hard)
-            return sameThread;
-        else
-            return !getenv("LOOL_CHECK_THREADS") || sameThread;
+        return sameThread;
 #else
-        (void)hard;
         return true;
 #endif
     }
@@ -455,7 +451,7 @@ public:
     {
         assert(socket);
         assert(isCorrectThread());
-        assert(socket->isCorrectThread(true));
+        assert(socket->isCorrectThread());
         auto it = std::find(_pollSockets.begin(), _pollSockets.end(), socket);
         assert(it != _pollSockets.end());
 
@@ -650,7 +646,7 @@ public:
     /// Send data to the socket peer.
     void send(const char* data, const int len, const bool flush = true)
     {
-        assert(isCorrectThread(true));
+        assert(isCorrectThread());
         if (data != nullptr && len > 0)
         {
             _outBuffer.insert(_outBuffer.end(), data, data + len);
@@ -732,7 +728,7 @@ protected:
     HandleResult handlePoll(std::chrono::steady_clock::time_point now,
                             const int events) override
     {
-        assert(isCorrectThread(true));
+        assert(isCorrectThread());
 
         _socketHandler->checkTimeout(now);
 
@@ -800,7 +796,7 @@ protected:
     /// Override to write data out to socket.
     virtual void writeOutgoingData()
     {
-        assert(isCorrectThread(true));
+        assert(isCorrectThread());
         assert(!_outBuffer.empty());
         do
         {
