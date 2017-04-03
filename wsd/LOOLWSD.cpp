@@ -2517,6 +2517,9 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     try {
         returnValue = innerMain();
+    } catch (const std::runtime_error& e) {
+        LOG_FTL(e.what());
+        throw;
     } catch (...) {
         cleanup();
         throw;
