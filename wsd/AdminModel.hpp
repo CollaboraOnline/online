@@ -138,7 +138,8 @@ private:
 class AdminModel
 {
 public:
-    AdminModel()
+    AdminModel() :
+        _owner(std::this_thread::get_id())
     {
         LOG_INF("AdminModel ctor.");
     }
@@ -147,6 +148,12 @@ public:
     {
         LOG_INF("AdminModel dtor.");
     }
+
+    /// All methods here must be called from the Admin socket-poll
+    void setThreadOwner(const std::thread::id &id) { _owner = id; }
+
+    /// In debug mode check that code is running in the correct thread.
+    bool isCorrectThread() const;
 
     std::string query(const std::string& command);
 
@@ -199,6 +206,9 @@ private:
 
     std::list<unsigned> _cpuStats;
     unsigned _cpuStatsSize = 100;
+
+    // always enabled to avoid ABI change in debug mode ...
+    std::thread::id _owner;
 };
 
 #endif
