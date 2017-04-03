@@ -13,6 +13,7 @@ enable_debug="@ENABLE_DEBUG@"
 jails_path="@JAILS_PATH@"
 lo_path="@LO_PATH@"
 valgrind_cmd="valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes"
+hide_stderr='2>/dev/null'
 
 # Note that these options are used by commands in the Makefile that
 # Automake generates. Don't be mislead by 'git grep' not showing any
@@ -25,13 +26,14 @@ while test $# -gt 0; do
       --log-file)  tst_log=$2; shift;;
       --trs-file)  test_output=$2; shift;;
       --valgrind)  valgrind=$valgrind_cmd; shift;;
+      --verbose)   hide_stderr="";;
   -*) ;; # ignore
   esac
   shift
 done
 
 echo
-echo "Running $tst"
+echo "Running ${tst}"
 echo "	$cmd_line"
 
 # drop .la suffix
@@ -73,6 +75,7 @@ if test "z$tst" == "z"; then
                                  --o:child_root_path="$jails_path" \
                                  --o:storage.filesystem[@allow]=true \
                                  --o:logging.level=trace \
+	                         --o:logging.file[@enable]=false \
                                  --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
                                  --o:ssl.cert_file_path="${abs_top_builddir}/etc/cert.pem" \
                                  --o:ssl.ca_file_path="${abs_top_builddir}/etc/ca-chain.cert.pem" \
@@ -82,7 +85,7 @@ if test "z$tst" == "z"; then
 
      oldpath=`pwd`
      cd "${abs_top_builddir}/test"
-     if ${valgrind} ./test; then
+     if eval ${valgrind} ./test ${hide_stderr}; then
 	 echo "Test run_test.sh passed."
 	 echo ":test-result: PASS run_test.sh" >> $oldpath/$test_output
 	 retval=0
