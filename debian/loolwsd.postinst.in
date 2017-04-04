@@ -20,6 +20,8 @@ case "$1" in
 	chown lool: /opt/lool
 	chown lool: /opt/lool/child-roots
 
+	fc-cache @LO_PATH@/share/fonts/truetype
+
 	su lool --shell=/bin/sh -c "loolwsd-systemplate-setup /opt/lool/systemplate @LO_PATH@ >/dev/null 2>&1"
 	;;
 
