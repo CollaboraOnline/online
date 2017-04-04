@@ -65,7 +65,8 @@ private:
 
 private:
     static std::unique_ptr<SslContext> Instance;
-    static std::vector<std::unique_ptr<std::mutex>> Mutexes;
+
+    std::vector<std::unique_ptr<std::mutex>> _mutexes;
 
     SSL_CTX* _ctx;
 };

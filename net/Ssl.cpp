@@ -26,14 +26,22 @@ extern "C"
     };
 }
 
-std::unique_ptr<SslContext> SslContext::Instance;
-std::vector<std::unique_ptr<std::mutex>> SslContext::Mutexes;
+std::unique_ptr<SslContext> SslContext::Instance(nullptr);
 
 SslContext::SslContext(const std::string& certFilePath,
                        const std::string& keyFilePath,
                        const std::string& caFilePath) :
     _ctx(nullptr)
 {
+    const std::vector<char> rand = Util::rng::getBytes(512);
+    RAND_seed(&rand[0], rand.size());
+
+    // Initialize multi-threading support.
+    for (int x = 0; x < CRYPTO_num_locks(); ++x)
+    {
+        _mutexes.emplace_back(new std::mutex);
+    }
+
 #if OPENSSL_VERSION_NUMBER >= 0x0907000L
     OPENSSL_config(nullptr);
 #endif
@@ -41,15 +49,6 @@ SslContext::SslContext(const std::string& certFilePath,
     SSL_library_init();
     SSL_load_error_strings();
     OpenSSL_add_all_algorithms();
-
-    const std::vector<char> rand = Util::rng::getBytes(512);
-    RAND_seed(&rand[0], rand.size());
-
-    // Initialize multi-threading support.
-    for (int x = 0; x < CRYPTO_num_locks(); ++x)
-    {
-        Mutexes.emplace_back(new std::mutex);
-    }
 
     CRYPTO_set_locking_callback(&SslContext::lock);
     CRYPTO_set_id_callback(&SslContext::id);
@@ -130,6 +129,8 @@ SslContext::~SslContext()
     CRYPTO_set_id_callback(0);
 
     CONF_modules_free();
+
+    _mutexes.clear();
 }
 
 void SslContext::uninitialize()
@@ -140,13 +141,17 @@ void SslContext::uninitialize()
 
 void SslContext::lock(int mode, int n, const char* /*file*/, int /*line*/)
 {
-    if (mode & CRYPTO_LOCK)
+    assert(n < CRYPTO_num_locks());
+    if (Instance)
     {
-        Mutexes[n]->lock();
-    }
-    else
-    {
-        Mutexes[n]->unlock();
+        if (mode & CRYPTO_LOCK)
+        {
+            Instance->_mutexes[n]->lock();
+        }
+        else
+        {
+            Instance->_mutexes[n]->unlock();
+        }
     }
 }
 
