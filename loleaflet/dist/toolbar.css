@@ -254,9 +254,6 @@ button.leaflet-control-search-next
 .w2ui-icon.selected{ background: url('../images/lc_ok.svg') no-repeat center !important; }
 .w2ui-icon.repair{ background: url('../images/lc_backward.svg') no-repeat center !important; }
 .w2ui-icon.specialcharacter{ background: url('../images/lc_insertsymbol.svg') no-repeat center !important; }
-.w2ui-icon.trackchanges{ background: url('../images/lc_trackchanges.svg') no-repeat center !important; }
-.w2ui-icon.commentchangetracking{ background: url('../images/lc_commentchangetracking.svg') no-repeat center !important; }
-.w2ui-icon.showtrackedchanges{ background: url('../images/lc_showtrackedchanges.svg') no-repeat center !important; }
 
 #inserttable-wrapper {
     position: relative;
