@@ -277,6 +277,8 @@ bool DocumentBroker::isAlive() const
 
 DocumentBroker::~DocumentBroker()
 {
+    assert(isCorrectThread());
+
     Admin::instance().rmDoc(_docKey);
 
     LOG_INF("~DocumentBroker [" << _uriPublic.toString() <<
@@ -630,6 +632,8 @@ void DocumentBroker::setLoaded()
 
 bool DocumentBroker::autoSave(const bool force)
 {
+    assert(isCorrectThread());
+
     if (_sessions.empty() || _storage == nullptr || !_isLoaded ||
         !_childProcess->isAlive() || (!_isModified && !force))
     {
@@ -669,6 +673,8 @@ bool DocumentBroker::autoSave(const bool force)
 
 bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
 {
+    assert(isCorrectThread());
+
     LOG_INF("Autosave triggered for doc [" << _docKey << "].");
 
     std::shared_ptr<ClientSession> savingSession;
@@ -1168,6 +1174,8 @@ void DocumentBroker::setModified(const bool value)
 
 bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string& message)
 {
+    assert(isCorrectThread());
+
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << message);
 
     std::string msg = "child-" + viewId + ' ' + message;
@@ -1242,7 +1250,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
 
 void DocumentBroker::childSocketTerminated()
 {
-    std::lock_guard<std::mutex> lock(_mutex);
+    assert(isCorrectThread());
 
     if (!_childProcess->isAlive())
     {
@@ -1338,6 +1346,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  public uri: " << _uriPublic.toString();
     os << "\n  jailed uri: " << _uriJailed.toString();
     os << "\n  doc key: " << _docKey;
+    os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << getSessionsCount();
     os << "\n  last editable?: " << _lastEditableSession;
     std::time_t t = std::chrono::system_clock::to_time_t(
