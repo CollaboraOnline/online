@@ -634,6 +634,8 @@ L.Map = L.Evented.extend({
 		this._textArea.setAttribute('type', 'text');
 		this._textArea.setAttribute('autocorrect', 'off');
 		this._textArea.setAttribute('autocapitalize', 'off');
+		this._textArea.setAttribute('autocomplete', 'off');
+		this._textArea.setAttribute('spellcheck', 'false');
 		this._resizeDetector = L.DomUtil.create('iframe', 'resize-detector', container);
 		this._fileDownloader = L.DomUtil.create('iframe', '', container);
 		L.DomUtil.setStyle(this._fileDownloader, 'display', 'none');
