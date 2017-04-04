@@ -32,6 +32,9 @@ L.Annotation = L.Layer.extend({
 
 	onRemove: function (map) {
 		map._panes.popupPane.removeChild(this._container);
+		if (this._data.textSelected) {
+			this._map.removeLayer(this._data.textSelected);
+		}
 		this._map = null;
 	},
 
@@ -41,6 +44,13 @@ L.Annotation = L.Layer.extend({
 		this._updateContent();
 		this._updateLayout();
 		this._updatePosition();
+	},
+
+	setData: function (data) {
+		if (this._data.textSelected) {
+			this._map.removeLayer(this._data.textSelected);
+		}
+		this._data = data;
 	},
 
 	setLatLng: function (latlng) {
@@ -61,6 +71,9 @@ L.Annotation = L.Layer.extend({
 		this._contentNode.style.display = '';
 		this._nodeModify.style.display = 'none';
 		this._nodeReply.style.display = 'none';
+		if (this._data.textSelected && !this._map.hasLayer(this._data.textSelected)) {
+			this._map.addLayer(this._data.textSelected);
+		}
 	},
 
 	hide: function () {
@@ -68,6 +81,9 @@ L.Annotation = L.Layer.extend({
 		this._contentNode.style.display = 'none';
 		this._nodeModify.style.display = 'none';
 		this._nodeReply.style.display = 'none';
+		if (this._data.textSelected && this._map.hasLayer(this._data.textSelected)) {
+			this._map.removeLayer(this._data.textSelected);
+		}
 	},
 
 	edit: function () {

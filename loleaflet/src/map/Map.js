@@ -148,6 +148,15 @@ L.Map = L.Evented.extend({
 
 	// public methods that modify map state
 
+	getViewId: function (username) {
+		for (var id in this._viewInfo) {
+			if (this._viewInfo[id].username === username) {
+				return id;
+			}
+		}
+		return -1;
+	},
+
 	addView: function(viewInfo) {
 		this._viewInfo[viewInfo.id] = viewInfo;
 		this.fire('postMessage', {msgId: 'View_Added', args: {ViewId: viewInfo.id, UserId: viewInfo.userid, UserName: viewInfo.username, Color: viewInfo.color, ReadOnly: viewInfo.readonly}});
