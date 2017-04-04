@@ -2080,16 +2080,18 @@ private:
             {
                 // Transfer the client socket to the DocumentBroker.
 
-                // Set the ClientSession to handle Socket events.
-                socket->setHandler(clientSession);
-                LOG_DBG("Socket #" << socket->getFD() << " handler is " << clientSession->getName());
-
-                // Move the socket into DocBroker.
-                docBroker->addSocketToPoll(socket);
+                // Remove from current poll as we're moving ownership.
                 socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
 
-                docBroker->addCallback([docBroker, clientSession]()
+                docBroker->addCallback([docBroker, socket, clientSession]()
                 {
+                    // Set the ClientSession to handle Socket events.
+                    socket->setHandler(clientSession);
+                    LOG_DBG("Socket #" << socket->getFD() << " handler is " << clientSession->getName());
+
+                    // Move the socket into DocBroker.
+                    docBroker->addSocketToPoll(socket);
+
                     // Add and load the session.
                     docBroker->addSession(clientSession);
                 });
