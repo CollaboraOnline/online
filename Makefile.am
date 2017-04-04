@@ -227,7 +227,7 @@ run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
-			  --o:logging.file[@enable]=false --o:logging.level=trace
+			  --o:logging.file[@enable]=true --o:logging.level=trace
 
 run-valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
@@ -251,7 +251,7 @@ run-callgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
-			  --o:logging.file[@enable]=false --o:logging.level=trace
+			  --o:logging.file[@enable]=false --o:logging.level=error
 else
 
 SYSTEM_STAMP =
