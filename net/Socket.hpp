@@ -610,7 +610,12 @@ public:
         LOG_DBG("StreamSocket dtor #" << getFD());
 
         if (!_closed)
-            _socketHandler->onDisconnect();
+        {
+            if (isCorrectThread())
+                _socketHandler->onDisconnect();
+            else
+                LOG_WRN("#" << getFD() << " not properly shutdown. onDisconnect not called.");
+        }
 
         if (!_shutdownSignalled)
         {
