@@ -56,7 +56,7 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(HTTPCrashTest);
 
     CPPUNIT_TEST(testBarren);
-    CPPUNIT_TEST(testCrashKit);
+    // FIXME CPPUNIT_TEST(testCrashKit);
     CPPUNIT_TEST(testRecoverAfterKitCrash);
     CPPUNIT_TEST(testCrashForkit);
 
