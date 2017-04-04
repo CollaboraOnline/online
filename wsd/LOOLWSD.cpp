@@ -347,7 +347,7 @@ static int rebalanceChildren(int balance)
 {
     Util::assertIsLocked(NewChildrenMutex);
 
-    LOG_WRN("rebalance children to " << balance);
+    LOG_TRC("rebalance children to " << balance);
 
     // Do the cleanup first.
     const bool rebalance = cleanupChildren();
@@ -1182,9 +1182,9 @@ bool LOOLWSD::createForKit()
     ForKitProcId = -1;
     Admin::instance().setForKitPid(ForKitProcId);
 
-    const int oldForKitWritePipe = ForKitWritePipe;
+    if (ForKitWritePipe != -1)
+        close(ForKitWritePipe);
     ForKitWritePipe = -1;
-    close(oldForKitWritePipe);
 
     // ForKit always spawns one.
     ++OutstandingForks;
