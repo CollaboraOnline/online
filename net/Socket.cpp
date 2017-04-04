@@ -212,9 +212,8 @@ namespace HttpHelper
             bufferSize = socket->getSendBufferSize();
         }
 
-        // Deflate is done over the full file, which can be too large.
-        // Skip deflating (ironically) if the file is too large.
-        if (!deflate || st.st_size > Socket::MaximumSendBufferSize * 10)
+        // Disable deflate for now - until we can cache deflated data.
+        if (!deflate && true)
         {
             response.setContentLength(st.st_size);
             std::ostringstream oss;
@@ -225,13 +224,13 @@ namespace HttpHelper
 
             std::ifstream file(path, std::ios::binary);
             bool flush = true;
+            std::unique_ptr<char[]> buf(new char[bufferSize]);
             do
             {
-                char buf[bufferSize];
-                file.read(buf, sizeof(buf));
+                file.read(&buf[0], bufferSize);
                 const int size = file.gcount();
                 if (size > 0)
-                    socket->send(buf, size, flush);
+                    socket->send(&buf[0], size, flush);
                 else
                     break;
                 flush = false;
@@ -249,17 +248,22 @@ namespace HttpHelper
 
             std::ifstream file(path, std::ios::binary);
             bool flush = true;
+
+            // FIXME: Should compress once ahead of time
+            // compression of bundle.js takes significant time:
+            //   200's ms for level 9 (468k), 72ms for level 1(587k)
+            //   down from 2Mb.
+            std::unique_ptr<char[]> buf(new char[st.st_size]);
             do
             {
-                static const unsigned int level = 9;
-                char buf[st.st_size]; // FIXME: Should compress in chunks.
-                file.read(buf, st.st_size);
+                static const unsigned int level = 1;
+                file.read(&buf[0], st.st_size);
                 const long unsigned int size = file.gcount();
                 long unsigned int compSize = compressBound(size);
-                char cbuf[compSize];
-                compress2((Bytef *)&cbuf, &compSize, (Bytef *)&buf, size, level);
+                std::unique_ptr<char[]> cbuf(new char[compSize]);
+                compress2((Bytef *)&cbuf[0], &compSize, (Bytef *)&buf[0], size, level);
                 if (size > 0)
-                    socket->send(cbuf, compSize, flush);
+                    socket->send(&cbuf[0], compSize, flush);
                 else
                     break;
                 flush = false;
