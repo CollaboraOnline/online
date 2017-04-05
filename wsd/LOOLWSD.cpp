@@ -2485,6 +2485,10 @@ int LOOLWSD::innerMain()
     LOG_INF("Cleaning up lingering documents.");
     for (auto& docBrokerIt : DocBrokers)
         docBrokerIt.second->joinThread();
+
+    // Disable thread checking - we'll now cleanup lots of things if we can
+    Socket::InhibitThreadChecks = true;
+
     DocBrokers.clear();
 
 #ifndef KIT_IN_PROCESS
