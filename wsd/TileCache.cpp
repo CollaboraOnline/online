@@ -53,7 +53,8 @@ TileCache::TileCache(const std::string& docURL,
     _cacheDir(cacheDir)
 {
     LOG_INF("TileCache ctor for uri [" << _docURL <<
-            "] modifiedTime=" << (modifiedTime.raw()/1000000) <<
+            "], cacheDir: [" << _cacheDir <<
+            "], modifiedTime=" << (modifiedTime.raw()/1000000) <<
             " getLastModified()=" << (getLastModified().raw()/1000000));
     File directory(_cacheDir);
     std::string unsaved;
