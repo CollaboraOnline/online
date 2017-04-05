@@ -407,12 +407,15 @@ public:
         } while (rc == -1 && errno == EINTR);
 
         if (rc == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
-            LOG_WRN("wakeup socket #" << fd << " is closd at wakeup? error: " << errno);
+            LOG_SYS("wakeup socket #" << fd << " is closd at wakeup?");
     }
 
     /// Wakeup the main polling loop in another thread
     void wakeup()
     {
+        if (!isAlive())
+            LOG_WRN("Waking up dead poll thread [" << _name << "]");
+
         wakeup(_wakeup[1]);
     }
 

@@ -2165,14 +2165,14 @@ public:
 
     void startPrisoners(const int port)
     {
-        PrisonerPoll.insertNewSocket(findPrisonerServerPort(port));
         PrisonerPoll.startThread();
+        PrisonerPoll.insertNewSocket(findPrisonerServerPort(port));
     }
 
     void start(const int port)
     {
-        _acceptPoll.insertNewSocket(findServerPort(port));
         _acceptPoll.startThread();
+        _acceptPoll.insertNewSocket(findServerPort(port));
         WebServerPoll.startThread();
         Admin::instance().start();
     }
