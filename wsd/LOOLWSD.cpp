@@ -182,7 +182,7 @@ static std::mutex DocBrokersMutex;
 extern "C" { void dump_state(void); /* easy for gdb */ }
 
 #if ENABLE_DEBUG
-static int careerSpanSeconds = 0;
+static int careerSpanMs = 0;
 #endif
 
 namespace
@@ -985,7 +985,7 @@ void LOOLWSD::handleOption(const std::string& optionName,
         NoCapsForKit = true;
 #endif
     else if (optionName == "careerspan")
-        careerSpanSeconds = std::stoi(value);
+        careerSpanMs = std::stoi(value) * 1000; // Convert second to ms
 
     static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
     if (clientPort)
@@ -2427,14 +2427,11 @@ int LOOLWSD::innerMain()
     // Start the server.
     srv.start(ClientPortNumber);
 
-#if ENABLE_DEBUG
-    time_t startTimeSpan = time(nullptr);
-#endif
-
-    auto startStamp = std::chrono::steady_clock::now();
-
     /// The main-poll does next to nothing:
     SocketPoll mainWait("main");
+
+    const auto startStamp = std::chrono::steady_clock::now();
+
     while (!TerminationFlag && !ShutdownRequestFlag)
     {
         UnitWSD::get().invokeTest();
@@ -2448,16 +2445,17 @@ int LOOLWSD::innerMain()
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll.wakeup();
 
+        const auto timeSinceStartMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+                                            std::chrono::steady_clock::now() - startStamp).count();
+
         // Unit test timeout
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::steady_clock::now() - startStamp).count() >
-            UnitWSD::get().getTimeoutMilliSeconds())
+        if (timeSinceStartMs > UnitWSD::get().getTimeoutMilliSeconds())
             UnitWSD::get().timeout();
 
 #if ENABLE_DEBUG
-        if (careerSpanSeconds > 0 && time(nullptr) > startTimeSpan + careerSpanSeconds)
+        if (careerSpanMs > 0 && timeSinceStartMs > careerSpanMs)
         {
-            LOG_INF((time(nullptr) - startTimeSpan) << " seconds gone, finishing as requested.");
+            LOG_INF(timeSinceStartMs << " milliseconds gone, finishing as requested.");
             break;
         }
 #endif
