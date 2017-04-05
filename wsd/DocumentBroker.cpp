@@ -243,6 +243,10 @@ void DocumentBroker::pollThread()
         }
     }
 
+    LOG_INF("Finished polling doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
+            _poll->continuePolling() << ", TerminationFlag: " << TerminationFlag <<
+            ", ShutdownRequestFlag: " << ShutdownRequestFlag << ".");
+
     // Terminate properly while we can.
     //TODO: pass some sensible reason.
     terminateChild("", false);
@@ -839,6 +843,10 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
             LOG_TRC("Removed " << (readonly ? "readonly" : "non-readonly") <<
                     " session [" << id << "] from docKey [" <<
                     _docKey << "] to have " << count << " sessions.");
+            for (const auto& pair : _sessions)
+            {
+                LOG_TRC("Session: " << pair.second->getName());
+            }
 
             // Let the child know the client has disconnected.
             const std::string msg("child-" + id + " disconnect");
