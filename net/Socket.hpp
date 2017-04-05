@@ -44,6 +44,7 @@ class Socket
 public:
     static const int DefaultSendBufferSize = 16 * 1024;
     static const int MaximumSendBufferSize = 128 * 1024;
+    static std::atomic<bool> InhibitThreadChecks;
 
     Socket() :
         _fd(socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0)),
@@ -194,6 +195,8 @@ public:
     /// Asserts in the debug builds, otherwise just logs.
     virtual void assertCorrectThread()
     {
+        if (InhibitThreadChecks)
+            return;
         // 0 owner means detached and can be invoked by any thread.
         const bool sameThread = (_owner == std::thread::id(0) || std::this_thread::get_id() == _owner);
         if (!sameThread)

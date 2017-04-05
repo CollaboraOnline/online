@@ -2192,8 +2192,11 @@ public:
 
     void dumpState(std::ostream& os)
     {
+        // FIXME: add some stop-world magic before doing the dump(?)
+        Socket::InhibitThreadChecks = true;
+
         os << "LOOLWSDServer:\n"
-           << "   Ports: server " << ClientPortNumber
+           << "  Ports: server " << ClientPortNumber
            <<          " prisoner " << MasterPortNumber << "\n"
            << "  TerminationFlag: " << TerminationFlag << "\n"
            << "  isShuttingDown: " << ShutdownRequestFlag << "\n"
@@ -2217,6 +2220,8 @@ public:
                   << "[ " << DocBrokers.size() << " ]:\n";
         for (auto &i : DocBrokers)
             i.second->dumpState(os);
+
+        Socket::InhibitThreadChecks = false;
     }
 
 private:
