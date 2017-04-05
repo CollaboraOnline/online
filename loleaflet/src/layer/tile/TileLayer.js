@@ -1741,7 +1741,7 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 		var pasteString = L.Compatibility.clipboardGet(e);
-		if (pasteString === 'false' || !!pasteString || pasteString === this._selectionTextHash) {
+		if (pasteString === 'false' || !pasteString || pasteString === this._selectionTextHash) {
 			// If there is nothing to paste in clipboard, no harm in
 			// issuing a .uno:Paste in case there is something internally copied in the document
 			// or if the content of the clipboard did not change, we surely must do a rich paste
