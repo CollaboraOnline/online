@@ -198,7 +198,8 @@ public:
     virtual bool isCorrectThread()
     {
 #if ENABLE_DEBUG
-        const bool sameThread = std::this_thread::get_id() == _owner;
+        // 0 owner means detached and can be invoked by any thread.
+        const bool sameThread = (_owner == std::thread::id(0) || std::this_thread::get_id() == _owner);
         if (!sameThread)
             LOG_WRN("#" << _fd << " Invoked from foreign thread. Expected: 0x" << std::hex <<
                     _owner << " but called from 0x" << std::this_thread::get_id() << " (" <<
@@ -294,12 +295,13 @@ public:
     /// Are we running in either shutdown, or the polling thread.
     bool isCorrectThread() const
     {
-        if (std::this_thread::get_id() != _owner)
+        // 0 owner means detached and can be invoked by any thread.
+        if (_owner != std::thread::id(0) && std::this_thread::get_id() != _owner)
             LOG_WRN("Incorrect thread affinity for " << _name << ". Expected: 0x" << std::hex <<
                     _owner << " (" << std::dec << Util::getThreadId() << ") but called from 0x" <<
                     std::hex << std::this_thread::get_id() << std::dec << ", stop: " << _stop);
 
-        return _stop || std::this_thread::get_id() == _owner;
+        return _stop || _owner == std::thread::id(0) || std::this_thread::get_id() == _owner;
     }
 
     /// Poll the sockets for available data to read or buffer to write.
@@ -392,6 +394,7 @@ public:
             {
                 LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
                         _pollSockets.size() << ") from " << _name);
+                _pollSockets[i]->setThreadOwner(std::thread::id(0));
                 _pollSockets.erase(_pollSockets.begin() + i);
             }
         }
