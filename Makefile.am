@@ -197,6 +197,7 @@ EXTRA_DIST = discovery.xml \
              debian/copyright \
              debian/loolwsd.cron.d \
              debian/loolwsd.preinst \
+             debian/loolwsd.service \
              debian/rules \
              debian/source/format \
              debian/changelog \
