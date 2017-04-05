@@ -1856,15 +1856,19 @@ private:
                     auto clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker, isReadOnly);
                     if (clientSession)
                     {
-                        clientSession->setSaveAsSocket(socket);
-
                         // Transfer the client socket to the DocumentBroker.
-                        // Move the socket into DocBroker.
-                        docBroker->addSocketToPoll(socket);
                         socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
 
-                        docBroker->addCallback([&, clientSession]()
+                        // Make sure the thread is running before adding callback.
+                        docBroker->startThread();
+
+                        docBroker->addCallback([docBroker, socket, clientSession, format]()
                         {
+                            clientSession->setSaveAsSocket(socket);
+
+                            // Move the socket into DocBroker.
+                            docBroker->addSocketToPoll(socket);
+
                             // First add and load the session.
                             docBroker->addSession(clientSession);
 
@@ -1887,8 +1891,6 @@ private:
                             std::vector<char> saveasRequest(saveas.begin(), saveas.end());
                             clientSession->handleMessage(true, WebSocketHandler::WSOpCode::Text, saveasRequest);
                         });
-
-                        docBroker->startThread();
 
                         sent = true;
                     }
@@ -2083,6 +2085,9 @@ private:
                 // Remove from current poll as we're moving ownership.
                 socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
 
+                // Make sure the thread is running before adding callback.
+                docBroker->startThread();
+
                 docBroker->addCallback([docBroker, socket, clientSession]()
                 {
                     // Set the ClientSession to handle Socket events.
@@ -2095,8 +2100,6 @@ private:
                     // Add and load the session.
                     docBroker->addSession(clientSession);
                 });
-
-                docBroker->startThread();
             }
             else
             {
