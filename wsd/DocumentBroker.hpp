@@ -227,6 +227,9 @@ public:
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();
 
+    /// Is our polling thread safely out of the way
+    bool isThreadFinished();
+
     /// Loads a document from the public URI into the jail.
     bool load(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
     bool isLoaded() const { return _isLoaded; }
