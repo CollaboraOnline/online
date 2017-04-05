@@ -183,16 +183,12 @@ public:
     /// Set the thread-id we're bound to
     void setThreadOwner(const std::thread::id &id)
     {
-#if ENABLE_DEBUG
         if (id != _owner)
         {
             LOG_DBG("#" << _fd << " Thread affinity set to 0x" << std::hex <<
                     id << " (was 0x" << _owner << ")." << std::dec);
             _owner = id;
         }
-#else
-       (void)id;
-#endif
     }
 
     /// Asserts in the debug builds, otherwise just logs.
