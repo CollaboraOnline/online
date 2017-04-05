@@ -198,4 +198,26 @@ void Session::handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &
     }
 }
 
+void Session::dumpState(std::ostream& os)
+{
+    WebSocketHandler::dumpState(os);
+
+    os <<   "\t\tid: " << _id
+       << "\n\t\tname: " << _name
+       << "\n\t\tdisconnected: " << _disconnected
+       << "\n\t\tisActive: " << _isActive
+       << "\n\t\tisCloseFrame: " << _isCloseFrame
+       << "\n\t\tisReadOnly: " << _isReadOnly
+       << "\n\t\tdocURL: " << _docURL
+       << "\n\t\tjailedFilePath: " << _jailedFilePath
+       << "\n\t\tdocPwd: " << _docPassword
+       << "\n\t\thaveDocPwd: " << _haveDocPassword
+       << "\n\t\tisDocPwdProtected: " << _isDocPasswordProtected
+       << "\n\t\tDocOptions: " << _docOptions
+       << "\n\t\tuserId: " << _userId
+       << "\n\t\tuserName: " << _userName
+       << "\n\t\tlang: " << _lang
+       << "\n";
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

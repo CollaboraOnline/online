@@ -87,6 +87,17 @@ public:
         return _queue.size();
     }
 
+    void dumpState(std::ostream& os)
+    {
+        os << "\n\t\tqueue size " << _queue.size() << "\n";
+        std::lock_guard<std::mutex> lock(_mutex);
+        for (const Item &item : _queue)
+        {
+            os << "\t\t\ttype: " << (item->isBinary() ? "binary" : "text") << "\n";
+            os << "\t\t\t" << item->abbr() << "\n";
+        }
+    }
+
 private:
     /// Deduplicate messages based on the new one.
     /// Returns true if the new message should be
