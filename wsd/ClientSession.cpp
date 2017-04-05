@@ -37,8 +37,7 @@ ClientSession::ClientSession(const std::string& id,
     _docBroker(docBroker),
     _uriPublic(uriPublic),
     _isDocumentOwner(false),
-    _isAttached(false),
-    _stop(false)
+    _isAttached(false)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
@@ -48,8 +47,6 @@ ClientSession::~ClientSession()
 {
     const size_t curConnections = --LOOLWSD::NumConnections;
     LOG_INF("~ClientSession dtor [" << getName() << "], current number of connections: " << curConnections);
-
-    stop();
 }
 
 SocketHandlerInterface::SocketOwnership ClientSession::handleIncomingMessage()
@@ -790,7 +787,6 @@ void ClientSession::dumpState(std::ostream& os)
     os << "\t\tisReadOnly: " << isReadOnly()
        << "\n\t\tisDocumentOwner: " << _isDocumentOwner
        << "\n\t\tisAttached: " << _isAttached
-       << "\n\t\tstop: " <<_stop
        << "\n";
     _senderQueue.dumpState(os);
 }

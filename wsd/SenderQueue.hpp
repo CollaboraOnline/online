@@ -26,31 +26,17 @@
 #include "Log.hpp"
 #include "TileDesc.hpp"
 
-#include "Socket.hpp" // FIXME: hack for wakeup-world ...
-
-struct SendItem
-{
-    std::shared_ptr<Message> Data;
-    std::string Meta;
-    std::chrono::steady_clock::time_point BirthTime;
-};
-
 /// A queue of data to send to certain Session's WS.
 template <typename Item>
 class SenderQueue final
 {
 public:
 
-    SenderQueue() :
-        _stop(false)
+    SenderQueue()
     {
     }
 
-    bool stopping() const { return _stop || TerminationFlag; }
-    void stop()
-    {
-        _stop = true;
-    }
+    bool stopping() const { return TerminationFlag; }
 
     size_t enqueue(const Item& item)
     {
@@ -173,7 +159,6 @@ private:
     mutable std::mutex _mutex;
     std::deque<Item> _queue;
     typedef typename std::deque<Item>::value_type queue_item_t;
-    std::atomic<bool> _stop;
 };
 
 #endif
