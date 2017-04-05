@@ -224,6 +224,7 @@ clean-local:
 
 run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd"
+	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	@echo
 	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
@@ -236,6 +237,7 @@ run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 
 run-valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
+	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
 		./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
@@ -248,6 +250,7 @@ run-valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 
 run-callgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
+	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	valgrind --tool=callgrind --simulate-cache=yes --dump-instr=yes --num-callers=50 --error-limit=no \
 		./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
