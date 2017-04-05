@@ -730,7 +730,7 @@ void ClientSession::onDisconnect()
 
     const auto docBroker = getDocumentBroker();
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
-    assert(docBroker->isCorrectThread());
+    docBroker->assertCorrectThread();
     const auto docKey = docBroker->getDocKey();
 
     try

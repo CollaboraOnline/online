@@ -195,19 +195,16 @@ public:
 #endif
     }
 
-    virtual bool isCorrectThread()
+    /// Asserts in the debug builds, otherwise just logs.
+    virtual void assertCorrectThread()
     {
-#if ENABLE_DEBUG
         const bool sameThread = std::this_thread::get_id() == _owner;
         if (!sameThread)
-            LOG_WRN("#" << _fd << " Invoked from foreign thread. Expected: 0x" << std::hex <<
+            LOG_ERR("#" << _fd << " Invoked from foreign thread. Expected: 0x" << std::hex <<
                     _owner << " but called from 0x" << std::this_thread::get_id() << " (" <<
                     std::dec << Util::getThreadId() << ").");
 
-        return sameThread;
-#else
-        return true;
-#endif
+        assert(sameThread);
     }
 
 protected:
@@ -292,24 +289,22 @@ public:
     }
 
     /// Are we running in either shutdown, or the polling thread.
-    bool isCorrectThread() const
+    /// Asserts in the debug builds, otherwise just logs.
+    void assertCorrectThread() const
     {
-#if ENABLE_DEBUG
-        if (std::this_thread::get_id() != _owner)
-            LOG_WRN("Incorrect thread affinity for " << _name << ". Expected: 0x" << std::hex <<
+        const bool sameThread = (std::this_thread::get_id() == _owner);
+        if (!sameThread)
+            LOG_ERR("Incorrect thread affinity for " << _name << ". Expected: 0x" << std::hex <<
                     _owner << " (" << std::dec << Util::getThreadId() << ") but called from 0x" <<
                     std::hex << std::this_thread::get_id() << std::dec << ", stop: " << _stop);
 
-        return _stop || std::this_thread::get_id() == _owner;
-#else
-        return true;
-#endif
+        assert(_stop || sameThread);
     }
 
     /// Poll the sockets for available data to read or buffer to write.
     void poll(int timeoutMaxMs)
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
 
         std::chrono::steady_clock::time_point now =
             std::chrono::steady_clock::now();
@@ -454,8 +449,8 @@ public:
     void releaseSocket(const std::shared_ptr<Socket>& socket)
     {
         assert(socket);
-        assert(isCorrectThread());
-        assert(socket->isCorrectThread());
+        assertCorrectThread();
+        socket->assertCorrectThread();
         auto it = std::find(_pollSockets.begin(), _pollSockets.end(), socket);
         assert(it != _pollSockets.end());
 
@@ -466,7 +461,7 @@ public:
 
     size_t getSocketCount() const
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
         return _pollSockets.size();
     }
 
@@ -615,10 +610,8 @@ public:
 
         if (!_closed)
         {
-            if (isCorrectThread())
-                _socketHandler->onDisconnect();
-            else
-                LOG_WRN("#" << getFD() << " not properly shutdown. onDisconnect not called.");
+            assertCorrectThread();
+            _socketHandler->onDisconnect();
         }
 
         if (!_shutdownSignalled)
@@ -645,7 +638,7 @@ public:
                       int &timeoutMaxMs) override
     {
         // cf. SslSocket::getPollEvents
-        assert(isCorrectThread());
+        assertCorrectThread();
         int events = _socketHandler->getPollEvents(now, timeoutMaxMs);
         if (!_outBuffer.empty() || _shutdownSignalled)
             events |= POLLOUT;
@@ -655,7 +648,7 @@ public:
     /// Send data to the socket peer.
     void send(const char* data, const int len, const bool flush = true)
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
         if (data != nullptr && len > 0)
         {
             _outBuffer.insert(_outBuffer.end(), data, data + len);
@@ -683,7 +676,7 @@ public:
     /// Return false iff the socket is closed.
     virtual bool readIncomingData()
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
 
         // SSL decodes blocks of 16Kb, so for efficiency we use the same.
         char buf[16 * 1024];
@@ -737,7 +730,7 @@ protected:
     HandleResult handlePoll(std::chrono::steady_clock::time_point now,
                             const int events) override
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
 
         _socketHandler->checkTimeout(now);
 
@@ -805,7 +798,7 @@ protected:
     /// Override to write data out to socket.
     virtual void writeOutgoingData()
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
         assert(!_outBuffer.empty());
         do
         {
@@ -843,14 +836,14 @@ protected:
     /// Override to handle reading of socket data differently.
     virtual int readData(char* buf, int len)
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
         return ::read(getFD(), buf, len);
     }
 
     /// Override to handle writing data to socket differently.
     virtual int writeData(const char* buf, const int len)
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
         return ::write(getFD(), buf, len);
     }
 

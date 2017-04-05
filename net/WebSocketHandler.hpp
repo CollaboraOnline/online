@@ -330,7 +330,7 @@ protected:
         if (!socket || data == nullptr || len == 0)
             return -1;
 
-        assert(socket->isCorrectThread());
+        socket->assertCorrectThread();
         std::vector<char>& out = socket->_outBuffer;
 
         out.push_back(flags);

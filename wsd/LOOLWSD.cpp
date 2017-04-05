@@ -1374,7 +1374,7 @@ private:
         if (docBroker)
         {
             auto lock = docBroker->getLock();
-            assert(docBroker->isCorrectThread());
+            docBroker->assertCorrectThread();
             docBroker->stop();
         }
     }

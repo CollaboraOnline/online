@@ -153,7 +153,8 @@ public:
     void setThreadOwner(const std::thread::id &id) { _owner = id; }
 
     /// In debug mode check that code is running in the correct thread.
-    bool isCorrectThread() const;
+    /// Asserts in the debug builds, otherwise just logs.
+    void assertCorrectThread() const;
 
     std::string query(const std::string& command);
 

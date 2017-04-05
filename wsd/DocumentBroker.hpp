@@ -259,7 +259,8 @@ public:
     }
 
     /// Are we running in either shutdown, or the polling thread.
-    bool isCorrectThread();
+    /// Asserts in the debug builds, otherwise just logs.
+    void assertCorrectThread();
 
     /// Pretty print internal state to a stream.
     void dumpState(std::ostream& os);
