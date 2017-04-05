@@ -77,12 +77,20 @@ namespace Util
     template <typename T>
     void assertIsLocked(const T& lock)
     {
+#ifdef NDEBUG
+        (void) lock;
+#else
         assert(lock.owns_lock());
+#endif
     }
 
     inline void assertIsLocked(std::mutex& mtx)
     {
+#ifdef NDEBUG
+        (void) mtx;
+#else
         assert(!mtx.try_lock());
+#endif
     }
 
     /// Returns the process PSS in KB (works only when we have perms for /proc/pid/smaps).

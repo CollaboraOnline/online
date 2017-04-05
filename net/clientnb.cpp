@@ -144,7 +144,10 @@ struct ThreadWorker : public Runnable
         {
             Session ping(_domain ? _domain : "init", EnableHttps);
             ping.sendPing(i);
-            int back = ping.getResponseInt();
+#ifndef NDEBUG
+            int back =
+#endif
+                ping.getResponseInt();
             assert(back == i + 1);
         }
     }
@@ -209,7 +212,10 @@ struct Client : public Poco::Util::Application
             ws->sendFrame(&i, sizeof(i), WebSocket::SendFlags::FRAME_BINARY);
             size_t back[5];
             int flags = 0;
-            int recvd = ws->receiveFrame((void *)back, sizeof(back), flags);
+#ifndef NDEBUG
+            int recvd =
+#endif
+                ws->receiveFrame((void *)back, sizeof(back), flags);
             assert(recvd == sizeof(size_t));
             assert(back[0] == i + 1);
         }
@@ -233,7 +239,10 @@ struct Client : public Poco::Util::Application
 
             res.resize(i);
             int flags;
-            int recvd = ws->receiveFrame(res.data(), res.size(), flags);
+#ifndef NDEBUG
+            int recvd =
+#endif
+                ws->receiveFrame(res.data(), res.size(), flags);
             assert(recvd == static_cast<int>(i));
 
             if (i == sizeof(size_t))

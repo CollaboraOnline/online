@@ -27,6 +27,10 @@ AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' \
 	      -DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
 	      ${include_paths}
 
+if !ENABLE_DEBUG
+AM_CPPFLAGS += -DNDEBUG
+endif
+
 AM_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib $(ZLIB_LIBS)
 
 if ENABLE_SSL
