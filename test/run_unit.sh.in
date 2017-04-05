@@ -75,13 +75,14 @@ if test "z$tst" == "z"; then
                                  --o:child_root_path="$jails_path" \
                                  --o:storage.filesystem[@allow]=true \
                                  --o:logging.level=trace \
-	                         --o:logging.file[@enable]=false \
+                                 --o:logging.file[@enable]=false \
                                  --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
                                  --o:ssl.cert_file_path="${abs_top_builddir}/etc/cert.pem" \
                                  --o:ssl.ca_file_path="${abs_top_builddir}/etc/ca-chain.cert.pem" \
                                  --o:admin_console.username=admin --o:admin_console.password=admin \
                                  > "$tst_log" 2>&1 &
      echo "  executing test"
+     sleep 5 # allow for wsd to startup
 
      oldpath=`pwd`
      cd "${abs_top_builddir}/test"
