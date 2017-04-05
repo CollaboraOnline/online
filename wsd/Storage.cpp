@@ -248,7 +248,10 @@ std::string LocalStorage::loadStorageFileToLocal()
     _isLoaded = true;
     // Now return the jailed path.
 #ifndef KIT_IN_PROCESS
-    return Poco::Path(_jailPath, filename).toString();
+    if (LOOLWSD::NoCapsForKit)
+        return _jailedFilePath;
+    else
+        return Poco::Path(_jailPath, filename).toString();
 #else
     return _jailedFilePath;
 #endif
