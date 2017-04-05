@@ -77,7 +77,7 @@ public:
 
     bool readIncomingData() override
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
 
         const int rc = doHandshake();
         if (rc <= 0)
@@ -89,7 +89,7 @@ public:
 
     void writeOutgoingData() override
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
 
         const int rc = doHandshake();
         if (rc <= 0)
@@ -103,14 +103,14 @@ public:
 
     virtual int readData(char* buf, int len) override
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
 
         return handleSslState(SSL_read(_ssl, buf, len));
     }
 
     virtual int writeData(const char* buf, const int len) override
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
 
         assert (len > 0); // Never write 0 bytes.
         return handleSslState(SSL_write(_ssl, buf, len));
@@ -119,7 +119,7 @@ public:
     int getPollEvents(std::chrono::steady_clock::time_point now,
                       int & timeoutMaxMs) override
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
         int events = _socketHandler->getPollEvents(now, timeoutMaxMs);
 
         if (_sslWantsTo == SslWantsTo::Read)
@@ -151,7 +151,7 @@ private:
 
     int doHandshake()
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
 
         if (_doHandshake)
         {
@@ -179,7 +179,7 @@ private:
     /// Handles the state of SSL after read or write.
     int handleSslState(const int rc)
     {
-        assert(isCorrectThread());
+        assertCorrectThread();
 
         if (rc > 0)
         {

@@ -68,7 +68,8 @@ public:
     {
         const auto docBroker = _docBroker.lock();
         // If in the correct thread - no need for wakeups.
-        assert (!docBroker || docBroker->isCorrectThread());
+        if (docBroker)
+            docBroker->assertCorrectThread();
 
         LOG_TRC(getName() << " enqueueing client message " << data->id());
         _senderQueue.enqueue(data);
