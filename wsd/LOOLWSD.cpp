@@ -2410,7 +2410,7 @@ int LOOLWSD::innerMain()
     {
         std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
-        const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 150 : 3);
+        const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 150 : 10);
         const auto timeout = std::chrono::milliseconds(timeoutMs);
         // Make sure we have at least one before moving forward.
         LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
