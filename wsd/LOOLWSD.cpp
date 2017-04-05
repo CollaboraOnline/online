@@ -2163,7 +2163,7 @@ public:
         stop();
     }
 
-    void startPrisoners(const int port)
+    void startPrisoners(int& port)
     {
         PrisonerPoll.startThread();
         PrisonerPoll.insertNewSocket(findPrisonerServerPort(port));
@@ -2253,31 +2253,27 @@ private:
 
         if (!serverSocket->bind(addr))
         {
-            LOG_ERR("Failed to bind to: " << addr.toString());
+            LOG_SYS("Failed to bind to: " << addr.toString());
             return nullptr;
         }
 
         if (serverSocket->listen())
             return serverSocket;
 
-        LOG_ERR("Failed to listen on: " << addr.toString());
+        LOG_SYS("Failed to listen on: " << addr.toString());
         return nullptr;
     }
 
-    std::shared_ptr<ServerSocket> findPrisonerServerPort(int port)
+    std::shared_ptr<ServerSocket> findPrisonerServerPort(int& port)
     {
         std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
+
+        LOG_INF("Trying to listen on prisoner port " << port << ".");
         std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress("127.0.0.1", port),
                                                                PrisonerPoll, factory);
 
-        if (!UnitWSD::isUnitTesting() && !socket)
-        {
-            LOG_FTL("Failed to listen on Prisoner master port (" <<
-                    MasterPortNumber << "). Exiting.");
-            _exit(Application::EXIT_SOFTWARE);
-        }
-
-        while (!socket)
+        // If we fail, try the next 100 ports.
+        for (int i = 0; i < 100 && !socket; ++i)
         {
             ++port;
             LOG_INF("Prisoner port " << (port - 1) << " is busy, trying " << port << ".");
@@ -2285,6 +2281,14 @@ private:
                                      PrisonerPoll, factory);
         }
 
+        if (!UnitWSD::isUnitTesting() && !socket)
+        {
+            LOG_FTL("Failed to listen on Prisoner port (" <<
+                    MasterPortNumber << '-' << port << "). Exiting.");
+            _exit(Application::EXIT_SOFTWARE);
+        }
+
+        LOG_INF("Listening to prisoner connections on port " << port);
         return socket;
     }
 
