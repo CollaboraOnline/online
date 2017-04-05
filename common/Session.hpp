@@ -100,6 +100,8 @@ protected:
         return std::unique_lock<std::mutex>(_mutex);
     }
 
+    void dumpState(std::ostream& os) override;
+
 private:
     virtual bool _handleInput(const char* buffer, int length) = 0;
 

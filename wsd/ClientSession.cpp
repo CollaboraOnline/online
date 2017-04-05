@@ -792,6 +792,7 @@ void ClientSession::dumpState(std::ostream& os)
        << "\n\t\tisAttached: " << _isAttached
        << "\n\t\tstop: " <<_stop
        << "\n";
+    _senderQueue.dumpState(os);
 }
 
 
