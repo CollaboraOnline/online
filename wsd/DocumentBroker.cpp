@@ -264,7 +264,7 @@ void DocumentBroker::pollThread()
         _poll->poll(std::min(flushTimeoutMs - elapsedMs, POLL_TIMEOUT_MS / 5));
     }
 
-    // Cleanup.
+    // Async cleanup.
     LOOLWSD::doHousekeeping();
 
     LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
@@ -304,6 +304,12 @@ DocumentBroker::~DocumentBroker()
 void DocumentBroker::joinThread()
 {
     _poll->joinThread();
+}
+
+void DocumentBroker::stop()
+{
+    _stop = true;
+    _poll->wakeup();
 }
 
 bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const std::string& jailId)
