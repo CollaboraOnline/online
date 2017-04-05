@@ -69,6 +69,7 @@ endif
 
 if HAVE_LO_PATH
 check-local:
+	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
@@ -83,6 +84,7 @@ LA_LOG_DRIVER = ${top_srcdir}/test/run_unit.sh
 EXTRA_DIST = data/hello.odt data/hello.txt $(test_SOURCES) $(unittest_SOURCES) run_unit.sh
 
 check_valgrind: all
+	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	./run_unit.sh --log-file test.log --trs-file test.trs --valgrind
 
 # run unittest during the normal build
@@ -90,4 +92,5 @@ all-local: unittest
 	@echo
 	@echo "Running build-time unit tests.  For more thorough testing, please run 'make check'."
 	@echo
+	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@${top_builddir}/test/unittest 2> unittest.log || { cat unittest.log ; exit 1 ; }
