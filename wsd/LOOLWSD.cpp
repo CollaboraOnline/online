@@ -226,7 +226,7 @@ void alertAllUsersInternal(const std::string& msg)
 /// Remove dead and idle DocBrokers.
 /// The client of idle document should've greyed-out long ago.
 /// Returns true if at least one is removed.
-bool cleanupDocBrokers()
+void cleanupDocBrokers()
 {
     Util::assertIsLocked(DocBrokersMutex);
 
@@ -277,11 +277,7 @@ bool cleanupDocBrokers()
 
             LOG_END(logger);
         }
-
-        return true;
     }
-
-    return false;
 }
 
 /// Forks as many children as requested.
@@ -582,7 +578,7 @@ class PrisonerPoll : public TerminatingPoll {
 public:
     PrisonerPoll() : TerminatingPoll("prisoner_poll") {}
 
-    /// Check prisoners are still alive and balaned.
+    /// Check prisoners are still alive and balanced.
     void wakeupHook() override;
 };
 
@@ -1099,12 +1095,13 @@ bool LOOLWSD::checkAndRestoreForKit()
 #endif
 }
 
-void PrisonerPoll::wakeupHook()
+void LOOLWSD::doHousekeeping()
 {
-    LOOLWSD::doHousekeeping();
+    PrisonerPoll.wakeup();
 }
 
-void LOOLWSD::doHousekeeping()
+/// Really do the house-keeping
+void PrisonerPoll::wakeupHook()
 {
     if (!LOOLWSD::checkAndRestoreForKit())
     {

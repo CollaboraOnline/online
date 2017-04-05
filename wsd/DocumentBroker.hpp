@@ -222,8 +222,7 @@ public:
     void startThread();
 
     /// Flag for termination.
-    //TODO: Take reason to broadcast to clients.
-    void stop() { _stop = true; }
+    void stop();
 
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();
