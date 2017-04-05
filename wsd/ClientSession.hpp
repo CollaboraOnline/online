@@ -75,13 +75,6 @@ public:
         _senderQueue.enqueue(data);
     }
 
-    bool stopping() const { return _stop || _senderQueue.stopping(); }
-    void stop()
-    {
-        _stop = true;
-        _senderQueue.stop();
-    }
-
     /// Set the save-as socket which is used to send convert-to results.
     void setSaveAsSocket(const std::shared_ptr<StreamSocket>& socket)
     {
@@ -152,7 +145,6 @@ private:
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;
 
     SenderQueue<std::shared_ptr<Message>> _senderQueue;
-    std::atomic<bool> _stop;
 };
 
 #endif
