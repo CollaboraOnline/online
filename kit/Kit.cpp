@@ -1956,13 +1956,17 @@ bool globalPreinit(const std::string &loTemplate)
         LOG_FTL("No libreofficekit_hook_2 symbol in " << loadedLibrary << ": " << dlerror());
     }
 
-    LOG_TRC("lok_preinit(" << loTemplate << "/program\", \"file:///user\")");
+    LOG_TRC("Invoking lok_preinit(" << loTemplate << "/program\", \"file:///user\")");
+    const auto start = std::chrono::steady_clock::now();
     if (preInit((loTemplate + "/program").c_str(), "file:///user") != 0)
     {
         LOG_FTL("lok_preinit() in " << loadedLibrary << " failed");
         return false;
     }
 
+    LOG_TRC("Finished lok_preinit(" << loTemplate << "/program\", \"file:///user\") in " <<
+            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() <<
+            " ms.");
     return true;
 }
 
