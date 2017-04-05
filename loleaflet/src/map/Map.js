@@ -149,9 +149,9 @@ L.Map = L.Evented.extend({
 	// public methods that modify map state
 
 	getViewId: function (username) {
-		for (var id in this._viewInfo) {
-			if (this._viewInfo[id].username === username) {
-				return id;
+		for (var idx in this._viewInfo) {
+			if (this._viewInfo[idx].username === username) {
+				return this._viewInfo[idx].id;
 			}
 		}
 		return -1;
