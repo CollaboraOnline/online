@@ -294,12 +294,16 @@ public:
     /// Are we running in either shutdown, or the polling thread.
     bool isCorrectThread() const
     {
+#if ENABLE_DEBUG
         if (std::this_thread::get_id() != _owner)
             LOG_WRN("Incorrect thread affinity for " << _name << ". Expected: 0x" << std::hex <<
                     _owner << " (" << std::dec << Util::getThreadId() << ") but called from 0x" <<
                     std::hex << std::this_thread::get_id() << std::dec << ", stop: " << _stop);
 
         return _stop || std::this_thread::get_id() == _owner;
+#else
+        return true;
+#endif
     }
 
     /// Poll the sockets for available data to read or buffer to write.
