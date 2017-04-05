@@ -2169,6 +2169,12 @@ public:
         PrisonerPoll.insertNewSocket(findPrisonerServerPort(port));
     }
 
+    void stopPrisoners()
+    {
+        PrisonerPoll.stop();
+        PrisonerPoll.joinThread();
+    }
+
     void start(const int port)
     {
         _acceptPoll.startThread();
@@ -2180,7 +2186,9 @@ public:
     void stop()
     {
         _stop = true;
-        SocketPoll::wakeupWorld();
+        _acceptPoll.stop();
+        WebServerPoll.stop();
+        SocketPoll::wakeupWorld(); //TODO: Why?
         _acceptPoll.joinThread();
         WebServerPoll.joinThread();
     }
@@ -2475,7 +2483,7 @@ int LOOLWSD::innerMain()
     SigUtil::killChild(ForKitProcId);
 #endif
 
-    PrisonerPoll.joinThread();
+    srv.stopPrisoners();
 
     // Terminate child processes
     LOG_INF("Requesting child processes to terminate.");
