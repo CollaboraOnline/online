@@ -2156,7 +2156,6 @@ class LOOLWSDServer
     const LOOLWSDServer& operator=(LOOLWSDServer&& other) = delete;
 public:
     LOOLWSDServer() :
-        _stop(false),
         _acceptPoll("accept_poll")
     {
     }
@@ -2174,7 +2173,6 @@ public:
 
     void stopPrisoners()
     {
-        PrisonerPoll.stop();
         PrisonerPoll.joinThread();
     }
 
@@ -2188,10 +2186,6 @@ public:
 
     void stop()
     {
-        _stop = true;
-        _acceptPoll.stop();
-        WebServerPoll.stop();
-        SocketPoll::wakeupWorld(); //TODO: Why?
         _acceptPoll.joinThread();
         WebServerPoll.joinThread();
     }
@@ -2201,7 +2195,6 @@ public:
         os << "LOOLWSDServer:\n"
            << "   Ports: server " << ClientPortNumber
            <<          " prisoner " << MasterPortNumber << "\n"
-           << "  stop: " << _stop << "\n"
            << "  TerminationFlag: " << TerminationFlag << "\n"
            << "  isShuttingDown: " << ShutdownRequestFlag << "\n"
            << "  NewChildren: " << NewChildren.size() << "\n"
@@ -2227,8 +2220,6 @@ public:
     }
 
 private:
-    std::atomic<bool> _stop;
-
     class AcceptPoll : public TerminatingPoll {
     public:
         AcceptPoll(const std::string &threadName) :
