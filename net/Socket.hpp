@@ -194,7 +194,8 @@ public:
     /// Asserts in the debug builds, otherwise just logs.
     virtual void assertCorrectThread()
     {
-        const bool sameThread = std::this_thread::get_id() == _owner;
+        // 0 owner means detached and can be invoked by any thread.
+        const bool sameThread = (_owner == std::thread::id(0) || std::this_thread::get_id() == _owner);
         if (!sameThread)
             LOG_ERR("#" << _fd << " Invoked from foreign thread. Expected: 0x" << std::hex <<
                     _owner << " but called from 0x" << std::this_thread::get_id() << " (" <<
@@ -288,7 +289,8 @@ public:
     /// Asserts in the debug builds, otherwise just logs.
     void assertCorrectThread() const
     {
-        const bool sameThread = (std::this_thread::get_id() == _owner);
+        // 0 owner means detached and can be invoked by any thread.
+        const bool sameThread = (!isAlive() || _owner == std::thread::id(0) || std::this_thread::get_id() == _owner);
         if (!sameThread)
             LOG_ERR("Incorrect thread affinity for " << _name << ". Expected: 0x" << std::hex <<
                     _owner << " (" << std::dec << Util::getThreadId() << ") but called from 0x" <<
@@ -387,6 +389,7 @@ public:
             {
                 LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
                         _pollSockets.size() << ") from " << _name);
+                _pollSockets[i]->setThreadOwner(std::thread::id(0));
                 _pollSockets.erase(_pollSockets.begin() + i);
             }
         }
