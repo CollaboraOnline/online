@@ -1466,6 +1466,9 @@ private:
             _childProcess = child; // weak
             addNewChild(child);
 
+            // We no longer own this thread: FIXME.
+            socket->setThreadOwner(std::thread::id(0));
+
             // Remove from prisoner poll since there is no activity
             // until we attach the childProcess (with this socket)
             // to a docBroker, which will do the polling.
@@ -1862,6 +1865,9 @@ private:
                         // Make sure the thread is running before adding callback.
                         docBroker->startThread();
 
+                        // We no longer own this thread: FIXME.
+                        socket->setThreadOwner(std::thread::id(0));
+
                         docBroker->addCallback([docBroker, socket, clientSession, format]()
                         {
                             clientSession->setSaveAsSocket(socket);
@@ -2087,6 +2093,9 @@ private:
 
                 // Make sure the thread is running before adding callback.
                 docBroker->startThread();
+
+                // We no longer own this thread: FIXME.
+                socket->setThreadOwner(std::thread::id(0));
 
                 docBroker->addCallback([docBroker, socket, clientSession]()
                 {

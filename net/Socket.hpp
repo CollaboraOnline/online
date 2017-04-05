@@ -392,7 +392,6 @@ public:
             {
                 LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
                         _pollSockets.size() << ") from " << _name);
-                _pollSockets[i]->setThreadOwner(std::thread::id(0));
                 _pollSockets.erase(_pollSockets.begin() + i);
             }
         }
