@@ -233,7 +233,7 @@ public:
     void setLoaded();
 
     /// Save the document to Storage if it needs persisting.
-    bool saveToStorage(const std::string& sesionId, bool success, const std::string& result = "");
+    bool saveToStorage(const std::string sesionId, bool success, const std::string& result = "");
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
 
@@ -265,7 +265,7 @@ public:
     size_t addSession(const std::shared_ptr<ClientSession>& session);
 
     /// Removes a session by ID. Returns the new number of sessions.
-    size_t removeSession(const std::string& id, bool destroyIfLast = false);
+    size_t removeSession(const std::string id, bool destroyIfLast = false);
 
     /// Add a callback to be invoked in our polling thread.
     void addCallback(SocketPoll::CallbackFn fn);
@@ -342,7 +342,7 @@ private:
     bool saveToStorageInternal(const std::string& sesionId, bool success, const std::string& result = "");
 
     /// Removes a session by ID. Returns the new number of sessions.
-    size_t removeSessionInternal(const std::string& id);
+    size_t removeSessionInternal(const std::string id);
 
     /// Forward a message from child session to its respective client session.
     bool forwardToClient(const std::shared_ptr<Message>& payload);
