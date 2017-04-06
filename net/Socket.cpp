@@ -212,9 +212,10 @@ namespace HttpHelper
             bufferSize = socket->getSendBufferSize();
         }
 
-        // Deflate is done over the full file, which can be too large.
-        // Skip deflating (ironically) if the file is too large.
-        if (!deflate || st.st_size > Socket::MaximumSendBufferSize * 10)
+        // Disable deflate for now - until we can cache deflated data.
+        // FIXME: IE/Edge doesn't work well with deflate, so check with
+        // IE/Edge before enabling the deflate again
+        if (!deflate || true)
         {
             response.setContentLength(st.st_size);
             std::ostringstream oss;
