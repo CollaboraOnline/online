@@ -632,11 +632,15 @@ $(function () {
 			{type: 'button',  id: 'function',  img: 'equal', hint: _('Function')},
 			{type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _('Cancel')},
 			{type: 'button', hidden: true, id: 'acceptformula',  img: 'accepttrackedchanges', hint: _('Accept')},
-			{type: 'html', id: 'formula', html: '<input id="formulaInput" onkeyup="onFormulaInput(event)"' +
-			 'onblur="onFormulaBarBlur()" onfocus="onFormulaBarFocus()" type=text>'}
+			{type: 'html', id: 'formula', html: '<input id="formulaInput" type="text">'}
 		],
 		onClick: function (e) {
 			onClick(e.target);
+		},
+		onRefresh: function(e) {
+			$('#formulaInput').off('keyup', onFormulaInput).on('keyup', onFormulaInput);
+			$('#formulaInput').off('blur', onFormulaBarBlur).on('blur', onFormulaBarBlur);
+			$('#formulaInput').off('focus', onFormulaBarFocus).on('focus', onFormulaBarFocus);
 		}
 	});
 	$('#spreadsheet-toolbar').w2toolbar({
@@ -673,7 +677,7 @@ $(function () {
 			{type: 'html',  id: 'search',
 			 html: '<div style="padding: 3px 10px;" class="loleaflet-font">' +
 			 ' ' + _('Search:') +
-			 '    <input size="10" id="search-input" oninput="onSearch(event)" onkeypress="onSearchKeyPress(event)" ' +
+			 '    <input size="10" id="search-input"' +
 			 'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
 			 '</div>'
 			},
@@ -702,6 +706,8 @@ $(function () {
 		},
 		onRefresh: function(e) {
 			$('#tb_toolbar-down_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
+			$('#search-input').off('input', onSearch).on('input', onSearch);
+			$('#search-input').off('keypress', onSearchKeyPress).on('keypress', onSearchKeyPress);
 		}
 	});
 });
@@ -1632,4 +1638,7 @@ $(document).ready(function() {
 	if (closebutton) {
 		toolbar.show('close');
 	}
+
+	// Attach insert file action
+	$('#insertgraphic').on('change', onInsertFile);
 });
