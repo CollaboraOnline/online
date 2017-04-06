@@ -235,33 +235,15 @@ void cleanupDocBrokers()
     {
         auto docBroker = it->second;
 
-        // If document busy at the moment, cleanup later.
-        auto lock = docBroker->getDeferredLock();
-        if (lock.try_lock())
+        // Remove only when not alive.
+        if (!docBroker->isAlive())
         {
-            // Remove idle documents after 1 hour.
-            const bool idle = (docBroker->getIdleTimeSecs() >= 3600);
-
-            // Cleanup used and dead entries.
-            if ((docBroker->isLoaded() || docBroker->isMarkedToDestroy()) &&
-                (docBroker->getSessionsCount() == 0 || !docBroker->isAlive() || idle))
-            {
-                LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
-                        " DocumentBroker for docKey [" << it->first << "].");
-                docBroker->stop();
-
-                // Remove only when not alive.
-                if (!docBroker->isAlive())
-                {
-                    LOG_INF("Removing " << (idle ? "idle" : "dead") <<
-                            " DocumentBroker for docKey [" << it->first << "].");
-                    it = DocBrokers.erase(it);
-                    continue;
-                }
-            }
+            LOG_INF("Removing DocumentBroker for docKey [" << it->first << "].");
+            it = DocBrokers.erase(it);
+            continue;
+        } else {
+            ++it;
         }
-
-        ++it;
     }
 
     if (count != DocBrokers.size())
