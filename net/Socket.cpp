@@ -96,6 +96,7 @@ void SocketPoll::startThread()
 
 void SocketPoll::joinThread()
 {
+    addCallback([this](){ removeSockets(); });
     stop();
     if (_threadStarted && _thread.joinable())
     {

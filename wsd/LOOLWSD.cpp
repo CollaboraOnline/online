@@ -2474,9 +2474,6 @@ int LOOLWSD::innerMain()
     LOG_INF("Stopping server socket listening. ShutdownFlag: " <<
             ShutdownRequestFlag << ", TerminationFlag: " << TerminationFlag);
 
-    // Disable thread checking - we'll now cleanup lots of things if we can
-    Socket::InhibitThreadChecks = true;
-
     // Wait until documents are saved and sessions closed.
     srv.stop();
 
@@ -2484,6 +2481,9 @@ int LOOLWSD::innerMain()
     LOG_INF("Cleaning up lingering documents.");
     for (auto& docBrokerIt : DocBrokers)
         docBrokerIt.second->joinThread();
+
+    // Disable thread checking - we'll now cleanup lots of things if we can
+    Socket::InhibitThreadChecks = true;
 
     DocBrokers.clear();
 

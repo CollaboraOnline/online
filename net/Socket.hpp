@@ -264,9 +264,14 @@ public:
     /// Stop the polling thread.
     void stop()
     {
-        LOG_DBG("Stopping " << _name << " and removing all sockets.");
+        LOG_DBG("Stopping " << _name << ".");
         _stop = true;
+        wakeup();
+    }
 
+    void removeSockets()
+    {
+        LOG_DBG("Removing all sockets from " << _name << ".");
         assert(socket);
         assertCorrectThread();
 
@@ -280,8 +285,6 @@ public:
 
             _pollSockets.pop_back();
         }
-
-        wakeup();
     }
 
     bool isAlive() const { return _threadStarted && !_threadFinished; }
