@@ -305,11 +305,6 @@ DocumentBroker::~DocumentBroker()
     _childProcess.reset();
 }
 
-bool DocumentBroker::isThreadFinished()
-{
-    return _poll->isThreadFinished();
-}
-
 void DocumentBroker::joinThread()
 {
     _poll->joinThread();

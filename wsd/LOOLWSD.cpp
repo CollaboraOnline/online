@@ -250,8 +250,8 @@ void cleanupDocBrokers()
                         " DocumentBroker for docKey [" << it->first << "].");
                 docBroker->stop();
 
-                // Remove only on next pass when the thread is finished.
-                if (docBroker->isThreadFinished() && !docBroker->isAlive())
+                // Remove only when not alive.
+                if (!docBroker->isAlive())
                 {
                     LOG_INF("Removing " << (idle ? "idle" : "dead") <<
                             " DocumentBroker for docKey [" << it->first << "].");

@@ -500,9 +500,6 @@ public:
     /// Stop and join the polling thread before returning (if active)
     void joinThread();
 
-    /// Did our thread complete its execution
-    bool isThreadFinished() { return _threadFinished; }
-
 private:
     /// Initialize the poll fds array with the right events
     void setupPollFds(std::chrono::steady_clock::time_point now,
