@@ -774,12 +774,6 @@ function onSearchKeyPress(e) {
 	}
 }
 
-function onSaveAs(e) {
-	if (e !== false) {
-		map.saveAs(e.url, e.format, e.options);
-	}
-}
-
 function sortFontSizes() {
 	var oldVal = $('.fontsizes-select').val();
 	var selectList = $('.fontsizes-select option');
