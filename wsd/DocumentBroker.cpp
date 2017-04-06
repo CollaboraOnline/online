@@ -1319,8 +1319,6 @@ void DocumentBroker::terminateChild(const std::string& closeReason, const bool r
         _childProcess->close(rude);
     }
 
-    // Stop the polling thread.
-    _poll->stop();
     _stop = true;
 }
 
