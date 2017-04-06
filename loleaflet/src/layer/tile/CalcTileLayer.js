@@ -417,7 +417,11 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
-		var values = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+		var jsonIdx = textMsg.indexOf('{');
+		if (jsonIdx === -1)
+			return;
+
+		var values = JSON.parse(textMsg.substring(jsonIdx));
 		if (!values) {
 			return;
 		}
