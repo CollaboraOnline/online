@@ -516,7 +516,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     return true;
 }
 
-bool DocumentBroker::saveToStorage(const std::string& sessionId,
+bool DocumentBroker::saveToStorage(const std::string sessionId,
                                    bool success, const std::string& result)
 {
     assertCorrectThread();
@@ -817,7 +817,7 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     return count;
 }
 
-size_t DocumentBroker::removeSession(const std::string& id, bool destroyIfLast)
+size_t DocumentBroker::removeSession(const std::string id, bool destroyIfLast)
 {
     assertCorrectThread();
 
@@ -840,7 +840,7 @@ size_t DocumentBroker::removeSession(const std::string& id, bool destroyIfLast)
     return _sessions.size();
 }
 
-size_t DocumentBroker::removeSessionInternal(const std::string& id)
+size_t DocumentBroker::removeSessionInternal(const std::string id)
 {
     assertCorrectThread();
     try
@@ -853,6 +853,10 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
             LOOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 
             const auto readonly = (it->second ? it->second->isReadOnly() : false);
+
+            //FIXME: We might be called from the session we are removing,
+            //FIXME: and if this is the last/only reference, we destroy it.
+            //FIXME: Should flag and remove from the poll thread.
             _sessions.erase(it);
 
             const auto count = _sessions.size();
