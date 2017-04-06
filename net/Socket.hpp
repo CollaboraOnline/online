@@ -390,6 +390,10 @@ public:
             }
         }
 
+        // This should only happen when we're stopping.
+        if (_pollSockets.size() != size)
+            return;
+
         // Fire the poll callbacks and remove dead fds.
         std::chrono::steady_clock::time_point newNow =
             std::chrono::steady_clock::now();
