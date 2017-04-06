@@ -249,7 +249,7 @@ run-valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 			  --o:logging.file[@enable]=false --o:logging.level=trace
 
 run-callgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
-	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
+	@echo "Launching loolwsd under valgrind's callgrind"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	valgrind --tool=callgrind --simulate-cache=yes --dump-instr=yes --num-callers=50 --error-limit=no --trace-children=yes \
