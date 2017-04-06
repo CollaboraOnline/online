@@ -1458,6 +1458,8 @@ private:
                 return SocketHandlerInterface::SocketOwnership::UNCHANGED;
             }
 
+            in.clear();
+
             LOG_INF("New child [" << pid << "].");
 
             UnitWSD::get().newChild(*this);
@@ -1466,15 +1468,13 @@ private:
             _childProcess = child; // weak
             addNewChild(child);
 
-            // We no longer own this thread: FIXME.
+            // We no longer own this socket.
             socket->setThreadOwner(std::thread::id(0));
 
             // Remove from prisoner poll since there is no activity
             // until we attach the childProcess (with this socket)
             // to a docBroker, which will do the polling.
-            PrisonerPoll.releaseSocket(socket);
-
-            in.clear();
+            return SocketHandlerInterface::SocketOwnership::MOVED;
         }
         catch (const std::exception& exc)
         {
@@ -1848,7 +1848,6 @@ private:
 
                     cleanupDocBrokers();
 
-                    // FIXME: What if the same document is already open? Need a fake dockey here?
                     LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
                     DocBrokers.emplace(docKey, docBroker);
                     LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
@@ -1865,7 +1864,7 @@ private:
                         // Make sure the thread is running before adding callback.
                         docBroker->startThread();
 
-                        // We no longer own this thread: FIXME.
+                        // We no longer own this socket.
                         socket->setThreadOwner(std::thread::id(0));
 
                         docBroker->addCallback([docBroker, socket, clientSession, format]()
@@ -2094,7 +2093,7 @@ private:
                 // Make sure the thread is running before adding callback.
                 docBroker->startThread();
 
-                // We no longer own this thread: FIXME.
+                // We no longer own this socket.
                 socket->setThreadOwner(std::thread::id(0));
 
                 docBroker->addCallback([docBroker, socket, clientSession]()
