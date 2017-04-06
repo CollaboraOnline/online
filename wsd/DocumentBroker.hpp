@@ -304,7 +304,7 @@ public:
     void handleTileCombinedResponse(const std::vector<char>& payload);
 
     void destroyIfLastEditor(const std::string& id);
-    bool isMarkedToDestroy() const { return _markToDestroy; }
+    bool isMarkedToDestroy() const { return _markToDestroy || _stop; }
 
     bool handleInput(const std::vector<char>& payload);
 

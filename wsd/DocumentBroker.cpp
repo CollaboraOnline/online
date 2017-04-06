@@ -241,6 +241,18 @@ void DocumentBroker::pollThread()
             LOG_INF("No more sessions in doc [" << _docKey << "]. Terminating.");
             _stop = true;
         }
+
+        // Remove idle documents after 1 hour.
+        const bool idle = getIdleTimeSecs() >= 3600;
+
+        // Cleanup used and dead entries.
+        if ((isLoaded() || _markToDestroy) &&
+            (getSessionsCount() == 0 || !isAlive() || idle))
+        {
+            LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
+                    " DocumentBroker for docKey [" << getDocKey() << "].");
+            _stop = true;
+        }
     }
 
     LOG_INF("Finished polling doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
