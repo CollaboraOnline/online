@@ -251,11 +251,6 @@ public:
     const std::string& getFilename() const { return _filename; };
     TileCache& tileCache() { return *_tileCache; }
     bool isAlive() const;
-    size_t getSessionsCount() const
-    {
-        Util::assertIsLocked(_mutex);
-        return _sessions.size();
-    }
 
     /// Are we running in either shutdown, or the polling thread.
     /// Asserts in the debug builds, otherwise just logs.
