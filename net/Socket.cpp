@@ -215,7 +215,9 @@ namespace HttpHelper
         }
 
         // Disable deflate for now - until we can cache deflated data.
-        if (!deflate && true)
+        // FIXME: IE/Edge doesn't work well with deflate, so check with
+        // IE/Edge before enabling the deflate again
+        if (!deflate || true)
         {
             response.setContentLength(st.st_size);
             std::ostringstream oss;
