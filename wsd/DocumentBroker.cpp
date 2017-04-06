@@ -247,7 +247,7 @@ void DocumentBroker::pollThread()
 
         // Cleanup used and dead entries.
         if ((isLoaded() || _markToDestroy) &&
-            (getSessionsCount() == 0 || !isAlive() || idle))
+            (_sessions.empty() || !isAlive() || idle))
         {
             LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
                     " DocumentBroker for docKey [" << getDocKey() << "].");
@@ -1369,7 +1369,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  jailed uri: " << _uriJailed.toString();
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
-    os << "\n  num sessions: " << getSessionsCount();
+    os << "\n  num sessions: " << _sessions.size();
     os << "\n  last editable?: " << _lastEditableSession;
     std::time_t t = std::chrono::system_clock::to_time_t(
         std::chrono::system_clock::now()
