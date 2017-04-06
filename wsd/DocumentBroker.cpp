@@ -264,6 +264,9 @@ void DocumentBroker::pollThread()
         _poll->poll(std::min(flushTimeoutMs - elapsedMs, POLL_TIMEOUT_MS / 5));
     }
 
+    // Stop to mark it done and cleanup.
+    _poll->stop();
+
     // Async cleanup.
     LOOLWSD::doHousekeeping();
 

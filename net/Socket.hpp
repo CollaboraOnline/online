@@ -264,7 +264,23 @@ public:
     /// Stop the polling thread.
     void stop()
     {
+        LOG_DBG("Stopping " << _name << " and removing all sockets.");
         _stop = true;
+
+        assert(socket);
+        assertCorrectThread();
+
+        while (!_pollSockets.empty())
+        {
+            const std::shared_ptr<Socket>& socket = _pollSockets.back();
+
+            LOG_DBG("Removing socket #" << socket->getFD() << " from " << _name);
+            socket->assertCorrectThread();
+            socket->setThreadOwner(std::thread::id(0));
+
+            _pollSockets.pop_back();
+        }
+
         wakeup();
     }
 
@@ -293,7 +309,7 @@ public:
     void assertCorrectThread() const
     {
         // 0 owner means detached and can be invoked by any thread.
-        const bool sameThread = (_owner == std::thread::id(0) || std::this_thread::get_id() == _owner);
+        const bool sameThread = (!isAlive() || _owner == std::thread::id(0) || std::this_thread::get_id() == _owner);
         if (!sameThread)
             LOG_ERR("Incorrect thread affinity for " << _name << ". Expected: 0x" << std::hex <<
                     _owner << " (" << std::dec << Util::getThreadId() << ") but called from 0x" <<
