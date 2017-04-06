@@ -459,8 +459,8 @@ public:
         assert(it != _pollSockets.end());
 
         _pollSockets.erase(it);
-        LOG_TRC("Release socket #" << socket->getFD() << " from " << _name <<
-                " leaving " << _pollSockets.size());
+        LOG_DBG("Removing socket #" << socket->getFD() << " (of " <<
+                _pollSockets.size() << ") from " << _name);
     }
 
     size_t getSocketCount() const
