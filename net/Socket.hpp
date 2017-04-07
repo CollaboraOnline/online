@@ -193,7 +193,7 @@ public:
     }
 
     /// Asserts in the debug builds, otherwise just logs.
-    virtual void assertCorrectThread()
+    void assertCorrectThread()
     {
         if (InhibitThreadChecks)
             return;
