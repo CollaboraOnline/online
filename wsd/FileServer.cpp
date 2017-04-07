@@ -44,8 +44,8 @@ using Poco::Net::HTTPBasicCredentials;
 using Poco::StreamCopier;
 using Poco::Util::Application;
 
-bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
-                                               HTTPResponse &response)
+bool FileServerRequestHandler::tryAdminLogin(const HTTPRequest& request,
+                                             HTTPResponse &response)
 {
     const auto& config = Application::instance().config();
     const auto sslKeyPath = config.getString("ssl.key_file_path", "");
@@ -109,53 +109,40 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
     {
         bool noCache = false;
         Poco::Net::HTTPResponse response;
-        Poco::URI requestUri(request.getURI());
-        LOG_TRC("Fileserver request: " << requestUri.toString());
-        requestUri.normalize(); // avoid .'s and ..'s
+        const auto requestPathname = Poco::Path(getRequestPathname(request));
+        const auto filePath = Poco::Path(LOOLWSD::FileServerRoot, requestPathname);
+        const auto file = Poco::File(filePath);
+        LOG_TRC("Fileserver request: " << requestPathname.toString() << ", " <<
+                "Resolved file path: " << filePath.toString());
 
-        std::vector<std::string> requestSegments;
-        requestUri.getPathSegments(requestSegments);
-        if (requestSegments.size() < 1)
+        if (!file.exists() ||
+            requestPathname[0] != "loleaflet" ||
+            requestPathname[1] != "dist")
         {
-            throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
+            throw Poco::FileNotFoundException("Invalid URI request: [" + filePath.toString() + "].");
         }
 
         const auto& config = Application::instance().config();
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-        const std::string endPoint = requestSegments[requestSegments.size() - 1];
-        if (endPoint == loleafletHtml)
+        if (filePath.getFileName() == loleafletHtml)
         {
-            preprocessFile(request, message, socket);
+            preprocessAndSendLoleafletHtml(request, message, socket);
             return;
         }
 
         if (request.getMethod() == HTTPRequest::HTTP_GET)
         {
-            if (endPoint == "admin.html" ||
-                endPoint == "adminSettings.html" ||
-                endPoint == "adminAnalytics.html")
+            if (filePath.getFileName() == "admin.html" ||
+                filePath.getFileName() == "adminSettings.html" ||
+                filePath.getFileName() == "adminAnalytics.html")
             {
                 noCache = true;
 
-                if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
+                if (!FileServerRequestHandler::tryAdminLogin(request, response))
                     throw Poco::Net::NotAuthenticatedException("Invalid admin login");
             }
 
-            const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
-            const auto filepath = path.absolute().toString();
-            if (filepath.find(LOOLWSD::FileServerRoot) != 0)
-            {
-                // Accessing unauthorized path.
-                throw Poco::FileAccessDeniedException("Invalid or forbidden file path: [" + filepath + "].");
-            }
-
-            const std::size_t extPoint = endPoint.find_last_of('.');
-            if (extPoint == std::string::npos)
-            {
-                throw Poco::FileNotFoundException("Invalid file.");
-            }
-
-            const std::string fileType = endPoint.substr(extPoint + 1);
+            const std::string fileType = filePath.getExtension();
             std::string mimeType;
             if (fileType == "js")
                 mimeType = "application/javascript";
@@ -195,7 +182,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
 
             response.setContentType(mimeType);
             bool deflate = request.hasToken("Accept-Encoding", "deflate");
-            HttpHelper::sendFile(socket, filepath, response, noCache, deflate);
+            HttpHelper::sendFile(socket, filePath.toString(), response, noCache, deflate);
         }
     }
     catch (const Poco::Net::NotAuthenticatedException& exc)
@@ -248,13 +235,17 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
 
     std::string path(requestUri.getPath());
 
-    // Convert version back to a real file name. Remove first foreslash as the root ends in one.
-    Poco::replaceInPlace(path, std::string("/loleaflet/" LOOLWSD_VERSION_HASH "/"), std::string("loleaflet/dist/"));
+    // Remove first foreslash as the root ends in one.
+    if (path[0] == '/')
+        path = path.substr(1);
+
+    // Convert version back to a real file name.
+    Poco::replaceInPlace(path, std::string("loleaflet/" LOOLWSD_VERSION_HASH "/"), std::string("loleaflet/dist/"));
 
     return path;
 }
 
-void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
+void FileServerRequestHandler::preprocessAndSendLoleafletHtml(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
 {
     const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
     const auto params = Poco::URI(request.getURI()).getQueryParameters();
