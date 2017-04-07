@@ -453,6 +453,8 @@ public:
         {
             std::lock_guard<std::mutex> lock(_mutex);
             LOG_DBG("Inserting socket #" << newSocket->getFD() << " into " << _name);
+            // sockets in transit are un-owned.
+            newSocket->setThreadOwner(std::thread::id(0));
             _newSockets.emplace_back(newSocket);
             wakeup();
         }

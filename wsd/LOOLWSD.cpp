@@ -1445,11 +1445,12 @@ private:
             UnitWSD::get().newChild(*this);
 
             auto child = std::make_shared<ChildProcess>(pid, socket, request);
+
+            // Drop pretentions of ownership before adding to the list.
+            socket->setThreadOwner(std::thread::id(0));
+
             _childProcess = child; // weak
             addNewChild(child);
-
-            // We no longer own this socket.
-            socket->setThreadOwner(std::thread::id(0));
 
             // Remove from prisoner poll since there is no activity
             // until we attach the childProcess (with this socket)
