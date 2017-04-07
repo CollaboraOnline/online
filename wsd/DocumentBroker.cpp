@@ -859,7 +859,7 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
     _childProcess->sendTextFrame(aMessage);
 
     // Tell the admin console about this new doc
-    Admin::instance().addDoc(_docKey, getPid(), getFilename(), id);
+    Admin::instance().addDoc(_docKey, getPid(), getFilename(), id, session->getUserName());
 
     // Add and attach the session.
     _sessions.emplace(session->getId(), session);

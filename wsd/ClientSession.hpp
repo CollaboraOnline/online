@@ -43,7 +43,7 @@ public:
     void setViewLoaded() { _isViewLoaded = true; }
 
     const std::string getUserId() const { return _userId; }
-    const std::string getUserName() const { return _userName; }
+    const std::string getUserName() const {return _userName; }
     void setUserId(const std::string& userId) { _userId = userId; }
     void setUserName(const std::string& userName) { _userName = userName; }
     void setUserExtraInfo(const std::string& userExtraInfo) { _userExtraInfo = userExtraInfo; }
