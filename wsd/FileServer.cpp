@@ -257,6 +257,17 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
 {
     const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+    const auto params = Poco::URI(request.getURI()).getQueryParameters();
+    std::string wopiDomain;
+    for (const auto& param : params)
+    {
+        if (param.first == "WOPISrc")
+        {
+            std::string wopiHost;
+            Poco::URI::decode(param.second, wopiHost);
+            wopiDomain = Poco::URI(wopiHost).getScheme() + "://" + Poco::URI(wopiHost).getHost();
+        }
+    }
     const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
     LOG_DBG("Preprocessing file: " << path.toString());
 
@@ -330,8 +341,12 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         << "Cache-Control:max-age=11059200\r\n"
         << "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
         << "Content-Length: " << preprocess.size() << "\r\n"
-        << "Content-Type: " << mimeType << "\r\n"
-        << "\r\n"
+        << "Content-Type: " << mimeType << "\r\n";
+
+    if (!wopiDomain.empty())
+        oss << "Content-Security-Policy: frame-ancestors " << wopiDomain << "\r\n";
+
+    oss << "\r\n"
         << preprocess;
 
     socket->send(oss.str());
