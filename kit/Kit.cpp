@@ -716,7 +716,7 @@ public:
                                       pixmapWidth, pixmapHeight,
                                       renderArea.getLeft(), renderArea.getTop(),
                                       renderArea.getWidth(), renderArea.getHeight());
-        const auto elapsed = timestamp.elapsed();
+        Timestamp::TimeDiff elapsed = timestamp.elapsed();
         LOG_DBG("paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
                 renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
                 " rendered in " << (elapsed/1000.) << " ms (" << area / elapsed << " MP/s).");
@@ -763,6 +763,11 @@ public:
             tiles[tileIndex].setImgSize(imgSize);
             tileIndex++;
         }
+
+        elapsed = timestamp.elapsed();
+        LOG_DBG("renderCombinedTiles at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
+                renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
+                " took " << (elapsed/1000.) << " ms (including the paintTile).");
 
 #if ENABLE_DEBUG
         const auto tileMsg = tileCombined.serialize("tilecombine:") + " renderid=" + Util::UniqueId() + "\n";
