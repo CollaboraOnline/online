@@ -50,6 +50,8 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSenderQueueTileDeduplication);
     CPPUNIT_TEST(testInvalidateViewCursorDeduplication);
     CPPUNIT_TEST(testCallbackInvalidation);
+    CPPUNIT_TEST(testCallbackIndicatorValue);
+    CPPUNIT_TEST(testCallbackPageSize);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -62,6 +64,8 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     void testSenderQueueTileDeduplication();
     void testInvalidateViewCursorDeduplication();
     void testCallbackInvalidation();
+    void testCallbackIndicatorValue();
+    void testCallbackPageSize();
 };
 
 void TileQueueTests::testTileQueuePriority()
@@ -442,6 +446,30 @@ void TileQueueTests::testCallbackInvalidation()
     CPPUNIT_ASSERT_EQUAL(2, static_cast<int>(queue._queue.size()));
     CPPUNIT_ASSERT_EQUAL(std::string("callback all 0 4299, 1418, 7090, 275, 1"), payloadAsString(queue.get()));
     CPPUNIT_ASSERT_EQUAL(std::string("callback all 0 EMPTY, 0"), payloadAsString(queue.get()));
+}
+
+void TileQueueTests::testCallbackIndicatorValue()
+{
+    TileQueue queue;
+
+    // join tiles
+    queue.put("callback all 10 25");
+    queue.put("callback all 10 50");
+
+    CPPUNIT_ASSERT_EQUAL(1, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(std::string("callback all 10 50"), payloadAsString(queue.get()));
+}
+
+void TileQueueTests::testCallbackPageSize()
+{
+    TileQueue queue;
+
+    // join tiles
+    queue.put("callback all 13 12474, 188626");
+    queue.put("callback all 13 12474, 205748");
+
+    CPPUNIT_ASSERT_EQUAL(1, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(std::string("callback all 13 12474, 205748"), payloadAsString(queue.get()));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileQueueTests);
