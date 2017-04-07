@@ -113,3 +113,15 @@ body {
   position: absolute;
   display: none;
 }
+
+.userContainer{
+  display: none;
+  position: absolute;
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: #dddddd;
+}
+tr:hover .userContainer{
+  display: block;
+}

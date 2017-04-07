@@ -345,10 +345,10 @@ void Admin::pollingThread()
     }
 }
 
-void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId)
+void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId, const std::string& userName)
 {
-    addCallback([this, docKey, pid, filename, sessionId]
-                 { _model.addDocument(docKey, pid, filename, sessionId); });
+    addCallback([this, docKey, pid, filename, sessionId, userName]
+                 { _model.addDocument(docKey, pid, filename, sessionId, userName); });
 }
 
 void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
