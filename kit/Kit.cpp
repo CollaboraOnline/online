@@ -373,6 +373,7 @@ class PngCache
         {
             if (hash)
             {
+                newEntry._data->shrink_to_fit();
                 _cache.emplace(hash, newEntry);
                 _cacheSize += newEntry._data->size();
             }
