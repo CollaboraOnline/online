@@ -340,6 +340,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
     }
     else if (callbackType == "1" || // the cursor has moved
             callbackType == "5" ||  // the cursor visibility has changed
+            callbackType == "10" || // setting the indicator value
             callbackType == "17" || // the cell cursor has moved
             callbackType == "24" || // the view cursor has moved
             callbackType == "26" || // the view cell cursor has moved
