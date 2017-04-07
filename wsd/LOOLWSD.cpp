@@ -747,7 +747,8 @@ void LOOLWSD::initialize(Application& self)
 
     // Log the connection and document limits.
     static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
-    static_assert(MAX_DOCUMENTS > 0 && MAX_DOCUMENTS <= MAX_CONNECTIONS, "MAX_DOCUMENTS must be positive and no more than MAX_CONNECTIONS");
+    static_assert(MAX_DOCUMENTS > 0 && MAX_DOCUMENTS <= MAX_CONNECTIONS,
+                  "max_documents must be positive and no more than max_connections");
     LOG_INF("Maximum concurrent open Documents limit: " << MAX_DOCUMENTS);
     LOG_INF("Maximum concurrent client Connections limit: " << MAX_CONNECTIONS);
 

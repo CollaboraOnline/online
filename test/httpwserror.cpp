@@ -117,7 +117,7 @@ void HTTPWSError::testMaxDocuments()
     static_assert(MAX_DOCUMENTS >= 2, "MAX_DOCUMENTS must be at least 2");
     const auto testname = "maxDocuments ";
 
-    if (MAX_DOCUMENTS > 200)
+    if (MAX_DOCUMENTS > 20)
     {
         std::cerr << "Skipping " << testname << "test since MAX_DOCUMENTS (" << MAX_DOCUMENTS
                   << ") is too high to test. Set to a more sensible number, ideally a dozen or so." << std::endl;
@@ -168,7 +168,7 @@ void HTTPWSError::testMaxConnections()
     static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
     const auto testname = "maxConnections ";
 
-    if (MAX_CONNECTIONS > 300)
+    if (MAX_CONNECTIONS > 40)
     {
         std::cerr << "Skipping " << testname << "test since MAX_CONNECTION (" << MAX_CONNECTIONS
                   << ") is too high to test. Set to a more sensible number, ideally a dozen or so." << std::endl;
@@ -223,7 +223,7 @@ void HTTPWSError::testMaxViews()
     static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
     const auto testname = "maxViews ";
 
-    if (MAX_CONNECTIONS > 200)
+    if (MAX_CONNECTIONS > 40)
     {
         std::cerr << "Skipping " << testname << "test since MAX_CONNECTION (" << MAX_CONNECTIONS
                   << ") is too high to test. Set to a more sensible number, ideally a dozen or so." << std::endl;
