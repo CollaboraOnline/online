@@ -26,9 +26,9 @@
 #include "Unit.hpp"
 #include "Util.hpp"
 
-void Document::addView(const std::string& sessionId)
+void Document::addView(const std::string& sessionId, const std::string& userName)
 {
-    const auto ret = _views.emplace(sessionId, View(sessionId));
+    const auto ret = _views.emplace(sessionId, View(sessionId, userName));
     if (!ret.second)
     {
         LOG_WRN("View with SessionID [" << sessionId << "] already exists.");
@@ -374,24 +374,28 @@ void AdminModel::notify(const std::string& message)
 }
 
 void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
-                             const std::string& filename, const std::string& sessionId)
+                             const std::string& filename, const std::string& sessionId,
+                             const std::string& userName)
 {
     assertCorrectThread();
 
     const auto ret = _documents.emplace(docKey, Document(docKey, pid, filename));
-    ret.first->second.addView(sessionId);
     ret.first->second.takeSnapshot();
+    ret.first->second.addView(sessionId, userName);
     LOG_DBG("Added admin document [" << docKey << "].");
 
+    std::string encodedUsername;
     std::string encodedFilename;
     Poco::URI::encode(filename, " ", encodedFilename);
+    Poco::URI::encode(userName, " ", encodedUsername);
 
     // Notify the subscribers
     std::ostringstream oss;
     oss << "adddoc "
         << pid << ' '
         << encodedFilename << ' '
-        << sessionId << ' ';
+        << sessionId << ' '
+        << encodedUsername << ' ';
 
     // We have to wait until the kit sends us its PSS.
     // Here we guestimate until we get an update.
@@ -512,13 +516,40 @@ std::string AdminModel::getDocuments() const
     assertCorrectThread();
 
     std::ostringstream oss;
+    std::map<std::string, View> viewers;
+    oss << '{' << "\"documents\"" << ':' << '[';
+    std::string separator1 = "";
     for (const auto& it: _documents)
     {
         if (!it.second.isExpired())
         {
-            oss << it.second.to_string() << "\n ";
+            std::string encodedFilename;
+            Poco::URI::encode(it.second.getFilename(), " ", encodedFilename);
+            oss << separator1 << '{' << ' '
+                << "\"pid\"" << ':' << it.second.getPid() << ','
+                << "\"fileName\"" << ':' << '"' << encodedFilename << '"' << ','
+                << "\"activeViews\"" << ':' << it.second.getActiveViews() << ','
+                << "\"memory\"" << ':' << it.second.getMemoryDirty() << ','
+                << "\"elapsedTime\"" << ':' << it.second.getElapsedTime() << ','
+                << "\"idleTime\"" << ':' << it.second.getIdleTime() << ','
+                << "\"views\"" << ':' << '[';
+            viewers = it.second.getViews();
+            std::string separator = "";
+            for(const auto& viewIt: viewers)
+            {
+                if(!viewIt.second.isExpired()) {
+                    oss << separator << '{'
+                        << "\"userName\"" << ':' << '"' << viewIt.second.getUserName() << '"' << ','
+                        << "\"sessionid\"" << ':' << '"' << viewIt.second.getSessionId() << '"' << '}';
+                        separator = ',';
+                }
+            }
+            oss << "]"
+                << "}";
+            separator1 = ',';
         }
     }
+    oss << "]" << "}";
 
     return oss.str();
 }

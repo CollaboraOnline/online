@@ -39,6 +39,7 @@ public:
     void setAttached() { _isAttached = true; }
 
     const std::string getUserId() const { return _userId; }
+    const std::string getUserName() const {return _userName; }
     void setUserId(const std::string& userId) { _userId = userId; }
     void setUserName(const std::string& userName) { _userName = userName; }
     void setDocumentOwner(const bool documentOwner) { _isDocumentOwner = documentOwner; }
