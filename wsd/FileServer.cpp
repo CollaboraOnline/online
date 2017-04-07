@@ -341,11 +341,13 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         << "Cache-Control:max-age=11059200\r\n"
         << "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
         << "Content-Length: " << preprocess.size() << "\r\n"
-        << "Content-Type: " << mimeType << "\r\n"
-        << "X-Frame-Options: allow-from " << wopiDomain << "\r\n";
+        << "Content-Type: " << mimeType << "\r\n";
 
     if (!wopiDomain.empty())
-        oss << "Content-Security-Policy: frame-ancestors " << wopiDomain << "\r\n";
+    {
+        oss << "X-Frame-Options: allow-from " << wopiDomain << "\r\n"
+            << "Content-Security-Policy: frame-ancestors " << wopiDomain << "\r\n";
+    }
 
     oss << "\r\n"
         << preprocess;
