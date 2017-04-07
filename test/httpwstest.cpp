@@ -31,6 +31,7 @@
 #include <Poco/Net/Socket.h>
 #include <Poco/Path.h>
 #include <Poco/RegularExpression.h>
+#include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
@@ -82,7 +83,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPasswordProtectedOOXMLDocument);
     CPPUNIT_TEST(testPasswordProtectedBinaryMSOfficeDocument);
     CPPUNIT_TEST(testInsertDelete);
-    // FIXME CPPUNIT_TEST(testSlideShow);
+    CPPUNIT_TEST(testSlideShow);
     CPPUNIT_TEST(testInactiveClient);
     CPPUNIT_TEST(testMaxColumn);
     CPPUNIT_TEST(testMaxRow);
@@ -1170,12 +1171,19 @@ void HTTPWSTest::testSlideShow()
         session->sendRequest(requestSVG);
 
         Poco::Net::HTTPResponse responseSVG;
-        session->receiveResponse(responseSVG);
+        std::istream& rs = session->receiveResponse(responseSVG);
         CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseSVG.getStatus());
         CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
+        std::cerr << "SVG file size: " << responseSVG.getContentLength() << std::endl;
+        // std::ofstream ofs("/tmp/slide.svg");
+        // Poco::StreamCopier::copyStream(rs, ofs);
+        // ofs.close();
+        (void)rs;
         // Some setups render differently; recognize these two valid output sizes for now.
-        CPPUNIT_ASSERT(responseSVG.getContentLength() == std::streamsize(451329) ||
-                       responseSVG.getContentLength() == std::streamsize(467345));
+        // Seems LO generates different svg content, even though visually identical.
+        // Current known sizes: 434748, 451329, 467345.
+        CPPUNIT_ASSERT(responseSVG.getContentLength() >= std::streamsize(434748) &&
+                       responseSVG.getContentLength() <= std::streamsize(467345));
     }
     catch (const Poco::Exception& exc)
     {
