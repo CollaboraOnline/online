@@ -58,7 +58,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(HTTPWSTest);
 
     CPPUNIT_TEST(testBadRequest);
-    // FIXME CPPUNIT_TEST(testHandshake);
+    CPPUNIT_TEST(testHandshake);
     CPPUNIT_TEST(testCloseAfterClose);
     CPPUNIT_TEST(testConnectNoLoad);
     CPPUNIT_TEST(testLoadSimple);
@@ -99,7 +99,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     // FIXME CPPUNIT_TEST(testOptimalResize);
     CPPUNIT_TEST(testInvalidateViewCursor);
     CPPUNIT_TEST(testViewCursorVisible);
-    // FIXME CPPUNIT_TEST(testCellViewCursor);
+    CPPUNIT_TEST(testCellViewCursor);
     CPPUNIT_TEST(testGraphicViewSelectionWriter);
     CPPUNIT_TEST(testGraphicViewSelectionCalc);
     CPPUNIT_TEST(testGraphicViewSelectionImpress);
