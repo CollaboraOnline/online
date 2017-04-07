@@ -234,19 +234,14 @@ void DocumentBroker::pollThread()
             last30SecCheckTime = std::chrono::steady_clock::now();
         }
 
-        // If all sessions have been removed, no reason to linger.
-        if (_sessions.empty() && std::chrono::duration_cast<std::chrono::milliseconds>
-            (std::chrono::steady_clock::now() - _lastSaveRequestTime).count() > COMMAND_TIMEOUT_MS)
-        {
-            LOG_INF("No more sessions in doc [" << _docKey << "]. Terminating.");
-            _stop = true;
-        }
+        const bool notSaving = (std::chrono::duration_cast<std::chrono::milliseconds>
+                                (std::chrono::steady_clock::now() - _lastSaveRequestTime).count() > COMMAND_TIMEOUT_MS);
 
         // Remove idle documents after 1 hour.
-        const bool idle = getIdleTimeSecs() >= 3600;
+        const bool idle = (getIdleTimeSecs() >= 3600);
 
-        // Cleanup used and dead entries.
-        if ((isLoaded() || _markToDestroy) &&
+        // If all sessions have been removed, no reason to linger.
+        if ((isLoaded() || _markToDestroy) && notSaving &&
             (_sessions.empty() || !isAlive() || idle))
         {
             LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
