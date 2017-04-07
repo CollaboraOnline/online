@@ -1896,9 +1896,6 @@ private:
         else if (tokens.count() >= 4 && tokens[3] == "insertfile")
         {
             LOG_INF("Insert file request.");
-            response.set("Access-Control-Allow-Origin", "*");
-            response.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-            response.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
             std::string tmpPath;
             ConvertToPartHandler handler(tmpPath);
