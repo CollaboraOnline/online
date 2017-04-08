@@ -453,6 +453,10 @@ int main(int argc, char** argv)
         "user:*file://" LOOLWSD_CONFIGDIR "/loolkitconfig.xcu "
 #endif
         );
+
+    // No-caps tracing can spawn eg. glxinfo & other oddness.
+    unsetenv("DISPLAY");
+
     ::setenv("CONFIGURATION_LAYERS", layers.c_str(),
              1 /* override */);
 
