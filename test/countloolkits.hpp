@@ -129,6 +129,8 @@ static std::chrono::steady_clock::time_point TestStartTime;
 
 static void testCountHowManyLoolkits()
 {
+    TestStartTime = std::chrono::steady_clock::now();
+
     InitialLoolKitCount = countLoolKitProcesses(InitialLoolKitCount);
     CPPUNIT_ASSERT(InitialLoolKitCount > 0);
 
