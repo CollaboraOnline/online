@@ -340,8 +340,12 @@ void FileServerRequestHandler::preprocessAndSendLoleafletHtml(const HTTPRequest&
 
     if (!wopiDomain.empty())
     {
-        oss << "X-Frame-Options: allow-from " << wopiDomain << "\r\n"
-            << "Content-Security-Policy: frame-ancestors " << wopiDomain << "\r\n";
+        oss << "X-Frame-Options: allow-from " << wopiDomain << "\r\n";
+        oss << "Content-Security-Policy: frame-ancestors " << wopiDomain << "\r\n";
+    }
+    else
+    {
+        oss << "X-Frame-Options: deny\r\n";
     }
 
     oss << "\r\n"
