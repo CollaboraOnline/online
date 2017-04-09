@@ -180,9 +180,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                 }
             }
 
-            response.setContentType(mimeType);
             bool deflate = request.hasToken("Accept-Encoding", "deflate");
-            HttpHelper::sendFile(socket, filePath.toString(), response, noCache, deflate);
+            HttpHelper::sendFile(socket, filePath.toString(), mimeType, response, noCache, deflate);
         }
     }
     catch (const Poco::Net::NotAuthenticatedException& exc)
@@ -332,7 +331,8 @@ void FileServerRequestHandler::preprocessAndSendLoleafletHtml(const HTTPRequest&
         << "Cache-Control:max-age=11059200\r\n"
         << "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
         << "Content-Length: " << preprocess.size() << "\r\n"
-        << "Content-Type: " << mimeType << "\r\n";
+        << "Content-Type: " << mimeType << "\r\n"
+        << "X-Content-Type-Options: nosniff\r\n";
 
     if (!wopiDomain.empty())
     {

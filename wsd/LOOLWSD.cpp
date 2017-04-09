@@ -1763,6 +1763,7 @@ private:
             << "User-Agent: LOOLWSD WOPI Agent\r\n"
             << "Content-Length: " << xml.size() << "\r\n"
             << "Content-Type: " << mediaType << "\r\n"
+            << "X-Content-Type-Options: nosniff\r\n"
             << "\r\n"
             << xml;
 
@@ -1983,8 +1984,7 @@ private:
 
                 try
                 {
-                    response.setContentType(contentType);
-                    HttpHelper::sendFile(socket, filePath.toString(), response);
+                    HttpHelper::sendFile(socket, filePath.toString(), contentType, response);
                     responded = true;
                 }
                 catch (const Exception& exc)
