@@ -769,8 +769,8 @@ void ClientSession::onDisconnect()
         }
         else
         {
-            static const std::string msg("close: recycling");
-            sendMessage(msg);
+            LOG_TRC("Server recycling.");
+            closeFrame();
             shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
         }
     }

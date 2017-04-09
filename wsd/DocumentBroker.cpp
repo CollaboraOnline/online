@@ -254,6 +254,15 @@ void DocumentBroker::pollThread()
             _poll->continuePolling() << ", TerminationFlag: " << TerminationFlag <<
             ", ShutdownRequestFlag: " << ShutdownRequestFlag << ".");
 
+    if (ShutdownRequestFlag)
+    {
+        static const std::string msg("close: recycling");
+        for (const auto& pair : _sessions)
+        {
+            pair.second->sendMessage(msg);
+        }
+    }
+
     // Terminate properly while we can.
     //TODO: pass some sensible reason.
     terminateChild("", false);
