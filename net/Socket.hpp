@@ -643,7 +643,7 @@ public:
         if (!_shutdownSignalled)
         {
             _shutdownSignalled = true;
-            closeConnection();
+            StreamSocket::closeConnection();
         }
     }
 
