@@ -187,7 +187,7 @@ void SocketPoll::dumpState(std::ostream& os)
 
 namespace HttpHelper
 {
-    void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+    void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path, const std::string& mediaType,
                   Poco::Net::HTTPResponse& response, bool noCache, bool deflate)
     {
         struct stat st;
@@ -206,6 +206,9 @@ namespace HttpHelper
             response.set("Cache-Control", "max-age=11059200");
             response.set("ETag", "\"" LOOLWSD_VERSION_HASH "\"");
         }
+
+        response.setContentType(mediaType);
+        response.add("X-Content-Type-Options", "nosniff");
 
         int bufferSize = std::min(st.st_size, (off_t)Socket::MaximumSendBufferSize);
         if (st.st_size >= socket->getSendBufferSize())
