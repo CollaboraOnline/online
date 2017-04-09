@@ -1974,7 +1974,6 @@ private:
             if (filePath.isAbsolute() && File(filePath).exists())
             {
                 std::string contentType = getContentType(fileName);
-                response.set("Access-Control-Allow-Origin", "*");
                 if (Poco::Path(fileName).getExtension() == "pdf")
                 {
                     contentType = "application/pdf";
