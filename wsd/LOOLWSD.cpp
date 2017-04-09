@@ -1472,28 +1472,20 @@ private:
         if (UnitWSD::get().filterChildMessage(data))
             return;
 
+        const std::string abbr = getAbbreviatedMessage(data);
         auto socket = _socket.lock();
         if (socket)
-            LOG_TRC("#" << socket->getFD() << " Prisoner message [" << getAbbreviatedMessage(&data[0], data.size()) << "].");
+            LOG_TRC("#" << socket->getFD() << " Prisoner message [" << abbr << "].");
         else
             LOG_WRN("Message handler called but without valid socket.");
 
         auto child = _childProcess.lock();
         auto docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
-        {
-            // We should never destroy the broker, since
-            // it owns us and will wait on this thread.
-            // This is true with non-blocking since this is
-            // called from DocumentBroker::pollThread.
-            assert(docBroker.use_count() > 1);
             docBroker->handleInput(data);
-            return;
-        }
-
-        LOG_WRN("Child " << child->getPid() <<
-                " has no DocumentBroker to handle message: [" <<
-                LOOLProtocol::getAbbreviatedMessage(data) << "].");
+        else
+            LOG_WRN("Child " << child->getPid() <<
+                    " has no DocumentBroker to handle message: [" << abbr << "].");
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
