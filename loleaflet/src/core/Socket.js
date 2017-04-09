@@ -537,7 +537,8 @@ L.Socket = L.Class.extend({
 			this._map._docLayer.removeAllViews();
 		}
 
-		if (isActive) {
+		if (isActive && this._reconnecting) {
+			// Don't show this before first transparently trying to reconnect.
 			this._map.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
 		}
 
