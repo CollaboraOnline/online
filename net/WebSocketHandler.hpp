@@ -195,11 +195,14 @@ public:
         } else
             _wsPayload.insert(_wsPayload.end(), data, data + payloadLen);
 
+        assert(_wsPayload.size() >= payloadLen);
+
         socket->_inBuffer.erase(socket->_inBuffer.begin(), socket->_inBuffer.begin() + headerLen + payloadLen);
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
         LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << code <<
-                " fin? " << fin << ", mask? " << hasMask << " payload length: " << _wsPayload.size());
+                ", fin? " << fin << ", mask? " << hasMask << ", payload length: " << _wsPayload.size() <<
+                ", residual socket data: " << socket->_inBuffer.size() << " bytes.");
 
         switch (code)
         {
@@ -340,6 +343,7 @@ protected:
 
         socket->assertCorrectThread();
         std::vector<char>& out = socket->_outBuffer;
+        const size_t oldSize = out.size();
 
         out.push_back(flags);
 
@@ -368,12 +372,12 @@ protected:
 
         // Copy the data.
         out.insert(out.end(), data, data + len);
+        const size_t size = out.size() - oldSize;
 
         if (flush)
             socket->writeOutgoingData();
 
-        // Data + header.
-        return len + 2;
+        return size;
     }
 
     /// To be overriden to handle the websocket messages the way you need.
