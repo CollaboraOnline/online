@@ -273,16 +273,20 @@ public:
     }
 
     /// Send a ping message
-    void sendPing(std::chrono::steady_clock::time_point now)
+    void sendPing(std::chrono::steady_clock::time_point now,
+                  const std::shared_ptr<Socket>& socket)
     {
+        assert(socket && "Expected a valid socket instance.");
+
         // Must not send this before we're upgraded.
-        if (_wsState == WSState::WS)
+        if (_wsState != WSState::WS)
         {
             LOG_WRN("Attempted ping on non-upgraded websocket!");
             _pingSent = now; // Pretend we sent it to avoid timing out immediately.
             return;
         }
-        LOG_TRC("Send ping message");
+
+        LOG_TRC("#" << socket->getFD() << ": Sending ping.");
         // FIXME: allow an empty payload.
         sendMessage("", 1, WSOpCode::Ping, false);
         _pingSent = now;
@@ -291,10 +295,14 @@ public:
     /// Do we need to handle a timeout ?
     void checkTimeout(std::chrono::steady_clock::time_point now) override
     {
-        int timeSincePingMs =
+        const int timeSincePingMs =
             std::chrono::duration_cast<std::chrono::milliseconds>(now - _pingSent).count();
         if (timeSincePingMs >= PingFrequencyMs)
-            sendPing(now);
+        {
+            const std::shared_ptr<Socket> socket = _socket.lock();
+            if (socket)
+                sendPing(now, socket);
+        }
     }
 
     /// By default rely on the socket buffer.
@@ -402,7 +410,12 @@ protected:
         const std::string wsKey = req.get("Sec-WebSocket-Key", "");
         const std::string wsProtocol = req.get("Sec-WebSocket-Protocol", "chat");
         // FIXME: other sanity checks ...
-        LOG_INF("#" << socket->getFD() << ": WebSocket version " << wsVersion << " key '" << wsKey << "'.");
+        LOG_INF("#" << socket->getFD() << ": WebSocket version: " << wsVersion <<
+                ", key: [" << wsKey << "], protocol: [" << wsProtocol << "].");
+
+        // Want very low latency sockets.
+        socket->setNoDelay();
+        socket->setSocketBufferSize(0);
 
         std::ostringstream oss;
         oss << "HTTP/1.1 101 Switching Protocols\r\n"
@@ -411,13 +424,15 @@ protected:
             << "Sec-WebSocket-Accept: " << PublicComputeAccept::doComputeAccept(wsKey) << "\r\n"
             << "\r\n";
 
-        // Want very low latency sockets.
-        socket->setNoDelay();
-        socket->setSocketBufferSize(0);
+        const std::string res = oss.str();
+        LOG_TRC("#" << socket->getFD() << ": Sending WS Upgrade response: " << res);
+        socket->send(res);
 
-        socket->send(oss.str());
         _wsState = WSState::WS;
-        sendPing(std::chrono::steady_clock::now());
+
+        // No need to ping right upon connection/upgrade,
+        // but do reset the time to avoid pinging immediately after.
+        _pingSent = std::chrono::steady_clock::now();
     }
 };
 
