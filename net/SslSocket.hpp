@@ -16,7 +16,7 @@
 #include "Socket.hpp"
 
 /// An SSL/TSL, non-blocking, data streaming socket.
-class SslStreamSocket : public StreamSocket
+class SslStreamSocket final : public StreamSocket
 {
 public:
     SslStreamSocket(const int fd, std::shared_ptr<SocketHandlerInterface> responseClient) :
@@ -55,7 +55,7 @@ public:
         if (!_shutdownSignalled)
         {
             _shutdownSignalled = true;
-            closeConnection();
+            SslStreamSocket::closeConnection();
         }
 
         SSL_free(_ssl);
