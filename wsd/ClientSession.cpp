@@ -446,8 +446,7 @@ void ClientSession::setReadOnly()
 int ClientSession::getPollEvents(std::chrono::steady_clock::time_point /* now */,
                                  int & /* timeoutMaxMs */)
 {
-    LOG_TRC(getName() << " ClientSession: has queued writes? "
-            << _senderQueue.size());
+    LOG_TRC(getName() << " ClientSession has " << _senderQueue.size() << " write message(s) queued.");
     int events = POLLIN;
     if (_senderQueue.size())
         events |= POLLOUT;

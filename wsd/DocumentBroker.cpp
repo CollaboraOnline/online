@@ -471,10 +471,12 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     else
     {
         // Check if document has been modified by some external action
-        LOG_DBG("Timestamp now: " << Poco::DateTimeFormatter::format(Poco::DateTime(fileInfo._modifiedTime),
-                                                                     Poco::DateTimeFormat::ISO8601_FORMAT));
-        if (_documentLastModifiedTime != Poco::Timestamp::fromEpochTime(0) &&
-            fileInfo._modifiedTime != Poco::Timestamp::fromEpochTime(0) &&
+        LOG_TRC("Document modified time: " <<
+                Poco::DateTimeFormatter::format(Poco::DateTime(fileInfo._modifiedTime),
+                                                Poco::DateTimeFormat::ISO8601_FORMAT));
+        static const Poco::Timestamp Zero(Poco::Timestamp::fromEpochTime(0));
+        if (_documentLastModifiedTime != Zero &&
+            fileInfo._modifiedTime != Zero &&
             _documentLastModifiedTime != fileInfo._modifiedTime)
         {
             LOG_ERR("Document has been modified behind our back, URI [" << uriPublic.toString() << "].");

@@ -152,7 +152,7 @@ public:
         {
             if (_ws)
             {
-                LOG_TRC("DocBroker to Child: " << data);
+                LOG_TRC("Send DocBroker to Child message: [" << data << "].");
                 _ws->sendMessage(data);
                 return true;
             }
