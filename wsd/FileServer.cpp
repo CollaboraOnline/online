@@ -140,6 +140,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
 
                 if (!FileServerRequestHandler::tryAdminLogin(request, response))
                     throw Poco::Net::NotAuthenticatedException("Invalid admin login");
+
+                // Ask UAs to block if they detect any XSS attempt
+                response.add("X-XSS-Protection", "1; mode=block");
             }
 
             const std::string fileType = filePath.getExtension();
@@ -332,7 +335,8 @@ void FileServerRequestHandler::preprocessAndSendLoleafletHtml(const HTTPRequest&
         << "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
         << "Content-Length: " << preprocess.size() << "\r\n"
         << "Content-Type: " << mimeType << "\r\n"
-        << "X-Content-Type-Options: nosniff\r\n";
+        << "X-Content-Type-Options: nosniff\r\n"
+        << "X-XSS-Protection: 1; mode=block\r\n";
 
     if (!wopiDomain.empty())
     {
