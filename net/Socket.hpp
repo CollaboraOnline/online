@@ -221,11 +221,11 @@ protected:
     {
         setNoDelay();
         _sendBufferSize = DefaultSendBufferSize;
-#if ENABLE_DEBUG
         _owner = std::this_thread::get_id();
         LOG_DBG("#" << _fd << " Thread affinity set to 0x" << std::hex <<
                 _owner << "." << std::dec);
 
+#if ENABLE_DEBUG
         const int oldSize = getSocketBufferSize();
         setSocketBufferSize(0);
         LOG_TRC("#" << _fd << ": Buffer size: " << getSendBufferSize() <<
@@ -236,7 +236,8 @@ protected:
 private:
     const int _fd;
     int _sendBufferSize;
-    // always enabled to avoid ABI change in debug mode ...
+
+    /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;
 };
 
@@ -533,11 +534,9 @@ private:
             Util::setThreadName(_name);
             LOG_INF("Starting polling thread [" << _name << "].");
 
-#if ENABLE_DEBUG
             _owner = std::this_thread::get_id();
             LOG_DBG("Thread affinity of " << _name << " set to 0x" <<
                     std::hex << _owner << "." << std::dec);
-#endif
 
             // Invoke the virtual implementation.
             pollingThread();

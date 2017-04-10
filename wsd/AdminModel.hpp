@@ -208,7 +208,7 @@ private:
     std::list<unsigned> _cpuStats;
     unsigned _cpuStatsSize = 100;
 
-    // always enabled to avoid ABI change in debug mode ...
+    /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;
 };
 
