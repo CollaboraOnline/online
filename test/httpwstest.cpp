@@ -1181,9 +1181,9 @@ void HTTPWSTest::testSlideShow()
         (void)rs;
         // Some setups render differently; recognize these two valid output sizes for now.
         // Seems LO generates different svg content, even though visually identical.
-        // Current known sizes: 434748, 451329, 467345, 468653.
+        // Current known sizes: 434748, 451329, 467345, 468653, 483882.
         CPPUNIT_ASSERT(responseSVG.getContentLength() >= std::streamsize(430000) &&
-                       responseSVG.getContentLength() <= std::streamsize(470000));
+                       responseSVG.getContentLength() <= std::streamsize(490000));
     }
     catch (const Poco::Exception& exc)
     {
