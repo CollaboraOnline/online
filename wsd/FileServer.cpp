@@ -357,6 +357,63 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         oss << "X-Frame-Options: deny\r\n";
     }
 
+    // Setup HTTP Public key pinning
+    if (LOOLWSD::isSSLEnabled() && config.getBool("ssl.hpkp[@enable]", false))
+    {
+        size_t i = 0;
+        std::string pinPath = "ssl.hpkp.pins.pin[" + std::to_string(i) + "]";
+        std::ostringstream hpkpOss;
+        bool keysPinned = false;
+        while (config.has(pinPath))
+        {
+            const auto pin = config.getString(pinPath, "");
+            if (!pin.empty())
+            {
+                hpkpOss << "pin-sha256=\"" << pin << "\"; ";
+                keysPinned = true;
+            }
+            pinPath = "ssl.hpkp.pins.pin[" + std::to_string(++i) + "]";
+        }
+
+        if (keysPinned && config.getBool("ssl.hpkp.max_age[@enable]", false))
+        {
+            int maxAge = 1000; // seconds
+            try
+            {
+                maxAge = config.getInt("ssl.hpkp.max_age", maxAge);
+            }
+            catch (Poco::SyntaxException& exc)
+            {
+                LOG_WRN("Invalid value of HPKP's max-age directive found in config file. Defaulting to "
+                        << maxAge);
+            }
+            hpkpOss << "max-age=" << maxAge << "; ";
+        }
+
+        if (keysPinned && config.getBool("ssl.hpkp.report_uri[@enable]", false))
+        {
+            const std::string reportUri = config.getString("ssl.hpkp.report_uri", "");
+            if (!reportUri.empty())
+            {
+                hpkpOss << "report-uri=" << reportUri << "; ";
+            }
+        }
+
+        if (!hpkpOss.str().empty())
+        {
+            if (config.getBool("ssl.hpkp[@report_only]", false))
+            {
+                // Only send validation failure reports to reportUri while still allowing UAs to
+                // connect to the server
+                oss << "Public-Key-Pins-Report-Only: " << hpkpOss.str() << "\r\n";
+            }
+            else
+            {
+                oss << "Public-Key-Pins: " << hpkpOss.str() << "\r\n";
+            }
+        }
+    }
+
     oss << "\r\n"
         << preprocess;
 
