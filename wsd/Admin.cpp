@@ -253,7 +253,7 @@ bool AdminSocketHandler::handleInitialRequest(
     // Different session id pool for admin sessions (?)
     const auto sessionId = Util::decodeId(LOOLWSD::GenSessionId());
 
-    std::string requestURI = request.getURI();
+    const std::string& requestURI = request.getURI();
     StringTokenizer pathTokens(requestURI, "/", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
     if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
