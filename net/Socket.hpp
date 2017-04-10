@@ -272,12 +272,12 @@ public:
     void removeSockets()
     {
         LOG_DBG("Removing all sockets from " << _name << ".");
-        assert(socket);
         assertCorrectThread();
 
         while (!_pollSockets.empty())
         {
             const std::shared_ptr<Socket>& socket = _pollSockets.back();
+            assert(socket);
 
             LOG_DBG("Removing socket #" << socket->getFD() << " from " << _name);
             socket->assertCorrectThread();
