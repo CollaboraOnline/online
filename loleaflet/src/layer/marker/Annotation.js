@@ -116,6 +116,7 @@ L.Annotation = L.Layer.extend({
 		var button = L.DomUtil.create('input', 'loleaflet-controls', container);
 		button.type = 'button';
 		button.value = value;
+		L.DomEvent.on(button, 'mousedown', L.DomEvent.preventDefault);
 		L.DomEvent.on(button, 'click', handler, this);
 	},
 
@@ -172,7 +173,7 @@ L.Annotation = L.Layer.extend({
 		this._nodeReplyText = L.DomUtil.create(tagTextArea, classTextArea, this._nodeReply);
 
 		buttons = L.DomUtil.create(tagDiv, empty, this._nodeModify);
-		L.DomEvent.on(this._nodeModifyText, 'blur', this._onSaveComment, this);
+		L.DomEvent.on(this._nodeModifyText, 'blur', this._onLostFocus, this);
 		this._createButton(buttons, _(' Save '), this._onSaveComment);
 		this._createButton(buttons, cancel, this._onCancelClick);
 		buttons = L.DomUtil.create(tagDiv, empty, this._nodeReply);
@@ -204,6 +205,12 @@ L.Annotation = L.Layer.extend({
 		this._data.text = this._contentText.innerHTML = this._nodeModifyText.value;
 		this.show();
 		this._map.fire('AnnotationSave', {annotation: this});
+	},
+
+	_onLostFocus: function (e) {
+		if (this._contentText.innerHTML !== this._nodeModifyText.value) {
+			this._onSaveComment(e);
+		}
 	},
 
 	_onMouseClick: function (e) {
