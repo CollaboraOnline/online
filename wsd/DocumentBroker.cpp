@@ -522,7 +522,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     return true;
 }
 
-bool DocumentBroker::saveToStorage(const std::string sessionId,
+bool DocumentBroker::saveToStorage(const std::string& sessionId,
                                    bool success, const std::string& result)
 {
     assertCorrectThread();
@@ -823,7 +823,7 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     return count;
 }
 
-size_t DocumentBroker::removeSession(const std::string id, bool destroyIfLast)
+size_t DocumentBroker::removeSession(const std::string& id, bool destroyIfLast)
 {
     assertCorrectThread();
 
@@ -846,7 +846,7 @@ size_t DocumentBroker::removeSession(const std::string id, bool destroyIfLast)
     return _sessions.size();
 }
 
-size_t DocumentBroker::removeSessionInternal(const std::string id)
+size_t DocumentBroker::removeSessionInternal(const std::string& id)
 {
     assertCorrectThread();
     try
@@ -894,7 +894,7 @@ size_t DocumentBroker::removeSessionInternal(const std::string id)
     return _sessions.size();
 }
 
-void DocumentBroker::addCallback(SocketPoll::CallbackFn fn)
+void DocumentBroker::addCallback(const SocketPoll::CallbackFn& fn)
 {
     _poll->addCallback(fn);
 }
