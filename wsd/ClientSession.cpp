@@ -523,7 +523,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 }
 
                 // Save to Storage and log result.
-                docBroker->saveToStorage(getId(), success, result);
+                std::string id = getId();
+                docBroker->saveToStorage(id, success, result);
                 return true;
             }
         }
@@ -604,7 +605,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             LOG_TRC("Removing save-as ClientSession after conversion.");
 
             // Remove us.
-            docBroker->removeSession(getId());
+            std::string id = getId();
+            docBroker->removeSession(id);
 
             // Now terminate.
             docBroker->stop();
@@ -736,7 +738,8 @@ void ClientSession::onDisconnect()
 
         // We issue a force-save when last editable (non-readonly) session is going away
         // and defer destroying the last session and the docBroker.
-        docBroker->removeSession(getId(), true);
+        std::string id = getId();
+        docBroker->removeSession(id, true);
     }
     catch (const UnauthorizedRequestException& exc)
     {
