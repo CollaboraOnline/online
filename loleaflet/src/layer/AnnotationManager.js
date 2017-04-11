@@ -5,13 +5,15 @@
 L.AnnotationManager = L.Class.extend({
 	options: {
 		marginX: 50,
-		marginY: 10
+		marginY: 10,
+		offset: 5
 	},
 
 	initialize: function (map) {
 		this._map = map;
 		this._items = [];
 		this._selected = null;
+		this._arrow = L.polyline([], {color: 'darkblue', weight: 1});
 		this._map.on('AnnotationCancel', this._onAnnotationCancel, this);
 		this._map.on('AnnotationClick', this._onAnnotationClick, this);
 		this._map.on('AnnotationReply', this._onAnnotationReply, this);
@@ -29,6 +31,7 @@ L.AnnotationManager = L.Class.extend({
 		}
 		this._items = [];
 		this._selected = null;
+		this._map.removeLayer(this._arrow);
 	},
 
 	// Remove only change tracking comments from the document
@@ -146,6 +149,17 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	update: function () {
+		if (this._selected) {
+			var point0, point1, point2;
+			var topRight = this._map.project(this._map.options.maxBounds.getNorthEast());
+			point0 = this._map._docLayer._twipsToPixels(this._selected._data.anchorPos.max);
+			point1 = L.point(point0.x, point0.y + this.options.offset);
+			point2 = L.point(topRight.x, point1.y);
+			this._arrow.setLatLngs([this._map.unproject(point0), this._map.unproject(point1), this._map.unproject(point2)]);
+			this._map.addLayer(this._arrow);
+		} else {
+			this._map.removeLayer(this._arrow);
+		}
 		this.layout();
 	},
 
