@@ -63,8 +63,7 @@ TileCache::TileCache(const std::string& docURL,
          getTextFile("unsaved.txt", unsaved)))
     {
         // Document changed externally or modifications were not saved after all. Cache not useful.
-        FileUtil::removeFile(_cacheDir, true);
-        LOG_INF("Completely cleared tile cache: " << _cacheDir);
+        completeCleanup();
     }
 
     File(_cacheDir).createDirectories();
@@ -75,6 +74,12 @@ TileCache::TileCache(const std::string& docURL,
 TileCache::~TileCache()
 {
     LOG_INF("~TileCache dtor for uri [" << _docURL << "].");
+}
+
+void TileCache::completeCleanup() const
+{
+    FileUtil::removeFile(_cacheDir, true);
+    LOG_INF("Completely cleared tile cache: " << _cacheDir);
 }
 
 /// Tracks the rendering of a given tile

@@ -36,6 +36,9 @@ public:
     TileCache(const std::string& docURL, const Poco::Timestamp& modifiedTime, const std::string& cacheDir);
     ~TileCache();
 
+    /// Remove the entire cache directory.
+    void completeCleanup() const;
+
     TileCache(const TileCache&) = delete;
 
     /// Subscribes if no subscription exists and returns the version number.
