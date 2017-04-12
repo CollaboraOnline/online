@@ -313,7 +313,6 @@ L.Map = L.Evented.extend({
 
 		var oldSize = this.getSize();
 		this._sizeChanged = true;
-		this._initialCenter = null;
 
 		var newSize = this.getSize(),
 		    oldCenter = oldSize.divideBy(2).round(),
@@ -698,7 +697,6 @@ L.Map = L.Evented.extend({
 		}
 
 		this._zoom = zoom;
-		this._initialCenter = center;
 
 		if (!preserveMapOffset) {
 			L.DomUtil.setPosition(this._mapPane, new L.Point(0, 0));
