@@ -204,27 +204,35 @@ body {
 
 .loleaflet-annotation-author {
 	padding-left: 10px;
+	padding-right: 10px;
 	vertical-align: top;
 	display: table-cell;
 }
 
-.loleaflet-redline-accept-button, .loleaflet-redline-reject-button {
+.loleaflet-annotation-menu, .loleaflet-annotation-menu-redline, .loleaflet-redline-accept-button, .loleaflet-redline-reject-button {
+	margin: 0;
         padding: 0;
-        border: 0;
-        height: 25px;
-        width: 21px;
+        width: 24px;
+        height: 24px;
+	vertical-align: top;
+	border: 1px solid transparent;
+	display: inline-block;
 }
 
 .loleaflet-redline-accept-button {
-        background: url('../images/lc_accepttrackedchanges.svg');
+        background: url('../images/lc_accepttrackedchanges.svg') no-repeat center !important;
 }
 
 .loleaflet-redline-reject-button {
-        background: url('../images/lc_rejecttrackedchange.svg');
+        background: url('../images/lc_rejecttrackedchange.svg') no-repeat center !important;
 }
 
-.loleaflet-redline-accept-button:hover, .loleaflet-redline-reject-button:hover {
-        background-color: #dcdcdc;
+.loleaflet-annotation-menu, .loleaflet-annotation-menu-redline {
+	background: url(../images/submenu.svg) no-repeat center !important;
+}
+
+.loleaflet-annotation-menu:hover, .loleaflet-annotation-menu-redline:hover, .loleaflet-redline-accept-button:hover, .loleaflet-redline-reject-button:hover {
+	border: 1px solid darkgrey;
 }
 
 .loleaflet-annotation-date {
@@ -237,34 +245,10 @@ body {
 	height: 6px;
 }
 
-.loleaflet-annotation-menu {
-	background: url(../images/submenu.png) no-repeat;
+.loleaflet-annotation-menubar {
 	margin: 0;
 	padding: 0;
-	min-width: 15px;
-	height: 21px;
-	text-align: right;
-	border: 1px solid transparent;
-	display: inline-block;
-}
-
-.loleaflet-annotation-menu:hover {
-	border: 1px solid darkgrey;
-}
-
-.loleaflet-annotation-menu-redline {
-	background: url(../images/submenu.png) no-repeat;
-	margin: 0;
-	padding: 0;
-	min-width: 15px;
-	height: 21px;
-	text-align: right;
-	border: 1px solid transparent;
-	display: inline-block;
-}
-
-.loleaflet-annotation-menu-redline:hover {
-	border: 1px solid darkgrey;
+	vertical-align: top;
 }
 
 .loleaflet-annotation-caption {
