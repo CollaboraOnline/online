@@ -350,15 +350,28 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         << "X-XSS-Protection: 1; mode=block\r\n"
         << "Referrer-Policy: no-referrer\r\n";
 
+    std::ostringstream cspOss;
+    cspOss << "Content-Security-Policy: default-src 'none'; "
+           << "frame-src 'self' blob:; "
+           << "connect-src 'self' " << host << "; "
+           << "script-src 'unsafe-inline' 'self'; "
+           << "style-src 'self' 'unsafe-inline'; "
+           << "font-src 'self' data:; "
+           << "img-src 'self' data:; ";
     if (!wopiDomain.empty())
     {
+        // Replaced by frame-ancestors in CSP but some oldies don't know about that
         oss << "X-Frame-Options: allow-from " << wopiDomain << "\r\n";
-        oss << "Content-Security-Policy: frame-ancestors " << wopiDomain << "\r\n";
+        cspOss << "frame-ancestors " << wopiDomain;
     }
     else
     {
         oss << "X-Frame-Options: deny\r\n";
     }
+
+    cspOss << "\r\n";
+    // Append CSP to response headers too
+    oss << cspOss.str();
 
     // Setup HTTP Public key pinning
     if (LOOLWSD::isSSLEnabled() && config.getBool("ssl.hpkp[@enable]", false))
