@@ -415,6 +415,12 @@ var deps = {
 		desc: 'Core panning animation support.'
 	},
 
+	AnimationTimer: {
+		src: ['dom/PosAnimation.Timer.js'],
+		deps: ['AnimationPan'],
+		desc: 'Timer-based pan animation fallback for browsers that don\'t support CSS3 transitions.'
+	},
+
 	AnimationZoom: {
 		src: [
 			'map/anim/Map.ZoomAnimation.js',
