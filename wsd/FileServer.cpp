@@ -177,7 +177,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             if (it != request.end())
             {
                 // if ETags match avoid re-sending the file.
-                if (!noCache && !it->second.compare("\"" LOOLWSD_VERSION_HASH "\""))
+                if (!noCache && it->second == "\"" LOOLWSD_VERSION_HASH "\"")
                 {
                     // TESTME: harder ... - do we even want ETag support ?
                     std::ostringstream oss;
