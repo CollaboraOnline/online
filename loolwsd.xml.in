@@ -16,6 +16,8 @@
         <max_concurrency desc="The maximum number of threads to use while processing a document." type="uint" default="4">4</max_concurrency>
     </per_document>
 
+    <clean_cache_on_doc_close desc="We need to remove tiles from cache when the last session editing a document is removed." type="bool" default="false">false</clean_cache_on_doc_close>
+
     <loleaflet_html desc="Allows UI customization by replacing the single endpoint of loleaflet.html" type="string" default="loleaflet.html">loleaflet.html</loleaflet_html>
 
     <logging>

@@ -539,6 +539,12 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId,
         // We've saved and can safely destroy.
         removeSessionInternal(sessionId);
 
+        // Remove all tiles related to this document from the cache.
+        if (LOOLWSD::CleanCacheOnDocClose)
+        {
+            invalidateTiles("invalidatetiles: EMPTY");
+        }
+
         // Stop so we get cleaned up and removed.
         _stop = true;
     }
