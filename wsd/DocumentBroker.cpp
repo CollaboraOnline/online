@@ -539,12 +539,6 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId,
         // We've saved and can safely destroy.
         removeSessionInternal(sessionId);
 
-        // Remove all tiles related to this document from the cache.
-        if (LOOLWSD::CleanCacheOnDocClose)
-        {
-            invalidateTiles("invalidatetiles: EMPTY");
-        }
-
         // Stop so we get cleaned up and removed.
         _stop = true;
     }
@@ -1204,6 +1198,10 @@ void DocumentBroker::destroyIfLastEditor(const std::string& id)
     _markToDestroy = (_sessions.size() <= 1);
     LOG_DBG("startDestroy on session [" << id << "] on docKey [" << _docKey <<
             "], markToDestroy: " << _markToDestroy << ", lastEditableSession: " << _lastEditableSession);
+
+    // Remove all tiles related to this document from the cache.
+    if (_markToDestroy && !LOOLWSD::TileCachePersistent)
+        _tileCache->completeCleanup();
 }
 
 void DocumentBroker::setModified(const bool value)

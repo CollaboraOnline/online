@@ -53,7 +53,7 @@ public:
     static std::string FileServerRoot;
     static std::string LOKitVersion;
     static std::atomic<unsigned> NumConnections;
-    static bool CleanCacheOnDocClose;
+    static bool TileCachePersistent;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
 
     /// Flag to shutdown the server.

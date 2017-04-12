@@ -553,7 +553,7 @@ static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 std::atomic<unsigned> LOOLWSD::NumConnections;
-bool LOOLWSD::CleanCacheOnDocClose = false;
+bool LOOLWSD::TileCachePersistent = true;
 std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
 
 /// This thread polls basic web serving, and handling of
@@ -611,6 +611,7 @@ void LOOLWSD::initialize(Application& self)
     // Add default values of new entries here.
     static const std::map<std::string, std::string> DefAppConfig
         = { { "tile_cache_path", LOOLWSD_CACHEDIR },
+            { "tile_cache_persistent", "true" },
             { "sys_template_path", "systemplate" },
             { "lo_template_path", LO_PATH },
             { "child_root_path", "jails" },
@@ -619,7 +620,6 @@ void LOOLWSD::initialize(Application& self)
             { "file_server_root_path", "loleaflet/.." },
             { "num_prespawn_children", "1" },
             { "per_document.max_concurrency", "4" },
-            { "clean_cache_on_doc_close", "false" },
             { "loleaflet_html", "loleaflet.html" },
             { "logging.color", "true" },
             { "logging.level", "trace" },
@@ -764,7 +764,7 @@ void LOOLWSD::initialize(Application& self)
 
     LOOLWSD::NumConnections = 0;
 
-    CleanCacheOnDocClose = getConfigValue<bool>(conf, "clean_cache_on_doc_close", false);
+    TileCachePersistent = getConfigValue<bool>(conf, "tile_cache_persistent", true);
 
     // Command Tracing.
     if (getConfigValue<bool>(conf, "trace[@enable]", false))

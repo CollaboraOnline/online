@@ -16,8 +16,6 @@
         <max_concurrency desc="The maximum number of threads to use while processing a document." type="uint" default="4">4</max_concurrency>
     </per_document>
 
-    <clean_cache_on_doc_close desc="We need to remove tiles from cache when the last session editing a document is removed." type="bool" default="false">false</clean_cache_on_doc_close>
-
     <loleaflet_html desc="Allows UI customization by replacing the single endpoint of loleaflet.html" type="string" default="loleaflet.html">loleaflet.html</loleaflet_html>
 
     <logging>
@@ -78,6 +76,8 @@
             <host desc="Hostname to allow" allow="false">localhost</host>
         </webdav>
     </storage>
+
+    <tile_cache_persistent desc="Should the tiles persist between two editing sessions of the given document?" type="bool" default="true">true</tile_cache_persistent>
 
     <admin_console desc="Web admin console settings.">
         <username desc="The username of the admin console. Must be set."></username>
