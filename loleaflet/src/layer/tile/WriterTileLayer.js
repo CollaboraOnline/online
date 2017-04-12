@@ -9,9 +9,10 @@ L.WriterTileLayer = L.TileLayer.extend({
 		if (!comment.anchorPos && this._isCursorVisible) {
 			comment.anchorPos = L.bounds(this._latLngToTwips(this._visibleCursor.getSouthWest()),
 				this._latLngToTwips(this._visibleCursor.getNorthEast()));
+			comment.anchorPix = this._twipsToPixels(comment.anchorPos.min);
 		}
 		if (comment.anchorPos) {
-			this._annotations.edit(comment);
+			this._annotations.modify(this._annotations.add(comment));
 		}
 	},
 

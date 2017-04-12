@@ -358,6 +358,7 @@ L.AnnotationManager = L.Class.extend({
 			return Math.abs(a._data.anchorPos.min.y) - Math.abs(b._data.anchorPos.min.y) ||
 				Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
 		});
+		return annotation;
 	},
 
 	edit: function (comment) {
@@ -487,7 +488,10 @@ L.AnnotationManager = L.Class.extend({
 
 	_onAnnotationCancel: function (e) {
 		if (e.annotation._data.id === 'new') {
-			this._map.removeLayer(e.annotation);
+			this._map.removeLayer(this.removeItem(e.annotation._data.id));
+		}
+		if (this._selected === e.annotation) {
+			this.unselect();
 		} else {
 			this.layout();
 		}
@@ -528,9 +532,8 @@ L.AnnotationManager = L.Class.extend({
 				}
 			};
 			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
-			this._map.removeLayer(e.annotation);
-		}
-		else if (e.annotation._data.trackchange) {
+			this._map.removeLayer(this.removeItem(e.annotation._data.id));
+		} else if (e.annotation._data.trackchange) {
 			comment = {
 				ChangeTrackingId: {
 					type: 'long',
