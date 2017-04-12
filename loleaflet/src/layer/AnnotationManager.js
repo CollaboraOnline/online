@@ -13,6 +13,7 @@ L.AnnotationManager = L.Class.extend({
 		this._map = map;
 		this._items = [];
 		this._selected = null;
+		this._animation = new L.PosAnimation();
 		this._arrow = L.polyline([], {color: 'darkblue', weight: 1});
 		this._map.on('AnnotationCancel', this._onAnnotationCancel, this);
 		this._map.on('AnnotationClick', this._onAnnotationClick, this);
@@ -196,10 +197,12 @@ L.AnnotationManager = L.Class.extend({
 	layout: function () {
 		var docRight = this._map.project(this._map.options.maxBounds.getNorthEast());
 		var topRight = docRight.add(L.point(this.options.marginX, this.options.marginY));
-		var annotation, selectIndex, layoutBounds, point, index;
+		var latlng, annotation, selectIndex, layoutBounds, point, index;
 		if (this._selected) {
 			selectIndex = this.getIndexOf(this._selected._data.id);
-			this._selected.setLatLng(this._map.unproject(L.point(docRight.x, this._selected._data.anchorPix.y)));
+			latlng = this._map.unproject(L.point(docRight.x, this._selected._data.anchorPix.y));
+			this._animation.run(this._selected._container, this._map.latLngToLayerPoint(latlng));
+			this._selected.setLatLng(latlng);
 			layoutBounds = this._selected.getBounds();
 			layoutBounds.min = layoutBounds.min.add([this.options.marginX, 0]);
 			layoutBounds.max = layoutBounds.max.add([this.options.marginX, 0]);
