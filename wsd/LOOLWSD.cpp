@@ -332,7 +332,7 @@ static int rebalanceChildren(int balance)
 
     const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTime);
     const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-    if (OutstandingForks > 0 && durationMs >= CHILD_TIMEOUT_MS)
+    if (OutstandingForks != 0 && durationMs >= CHILD_TIMEOUT_MS)
     {
         // Children taking too long to spawn.
         // Forget we had requested any, and request anew.
@@ -371,6 +371,10 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
     --OutstandingForks;
+    // Prevent from going -ve if we have unexpected children.
+    if (OutstandingForks < 0)
+        ++OutstandingForks;
+
     NewChildren.emplace_back(child);
     const auto count = NewChildren.size();
     LOG_INF("Have " << count << " spare " <<
