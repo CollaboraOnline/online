@@ -427,10 +427,6 @@ L.Map = L.Evented.extend({
 
 	getCenter: function () { // (Boolean) -> LatLng
 		this._checkIfLoaded();
-
-		if (this._initialCenter && !this._moved()) {
-			return this._initialCenter;
-		}
 		return this.layerPointToLatLng(this._getCenterLayerPoint());
 	},
 
