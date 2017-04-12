@@ -139,19 +139,6 @@ L.Annotation = L.Layer.extend({
 		var tr = L.DomUtil.create('tr', empty, tbody);
 		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
 		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
-		if (this._data.trackchange) {
-			var tdAccept = L.DomUtil.create(tagTd, '', tr);
-			var acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
-			var tdReject = L.DomUtil.create(tagTd, '', tr);
-			var rejectButton = L.DomUtil.create('button', 'loleaflet-redline-reject-button', tdReject);
-			L.DomEvent.on(acceptButton, click, function() {
-				this._map.fire('RedlineAccept', {id: this._data.id});
-			}, this);
-			L.DomEvent.on(rejectButton, click, function() {
-				this._map.fire('RedlineReject', {id: this._data.id});
-			}, this);
-		}
-		var tdMenu = L.DomUtil.create(tagTd, empty, tr);
 		var imgAuthor = L.DomUtil.create('img', empty, tdImg);
 		imgAuthor.setAttribute('src', L.Icon.Default.imagePath + '/user.png');
 		imgAuthor.setAttribute('width', this.options.imgSize.x);
@@ -159,7 +146,27 @@ L.Annotation = L.Layer.extend({
 		L.DomUtil.create(tagDiv, 'loleaflet-annotation-userline', tdImg);
 		this._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
 		this._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
+
+		if (this._data.trackchange) {
+			var tdAccept = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
+			var acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
+			var tdReject = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
+			var rejectButton = L.DomUtil.create('button', 'loleaflet-redline-reject-button', tdReject);
+
+			acceptButton.title = _('Accept change');
+			L.DomEvent.on(acceptButton, click, function() {
+				this._map.fire('RedlineAccept', {id: this._data.id});
+			}, this);
+
+			rejectButton.title = _('Reject change');
+			L.DomEvent.on(rejectButton, click, function() {
+				this._map.fire('RedlineReject', {id: this._data.id});
+			}, this);
+		}
+
+		var tdMenu = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
 		var divMenu = L.DomUtil.create(tagDiv, this._data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
+		divMenu.title = _('Open menu');
 		divMenu.annotation = this;
 		if (this._data.trackchange) {
 			this._captionNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-caption', wrapper);
