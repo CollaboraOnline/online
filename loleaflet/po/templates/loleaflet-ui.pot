@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-13 13:01+0100\n"
+"POT-Creation-Date: 2017-04-12 22:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -199,7 +199,8 @@ msgstr ""
 msgid "Delete Index or Table of Contents"
 msgstr ""
 
-#: unocommands.js:18
+#: unocommands.js:18 src/layer/marker/Annotation.js:187
+#: src/layer/tile/TileLayer.js:188
 msgid "Reply"
 msgstr ""
 
@@ -460,220 +461,216 @@ msgid "Special Character"
 msgstr ""
 
 #: dist/toolbar/toolbar.js:525
-msgid "Record Changes"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:526
-msgid "Show Changes"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:528
 msgid "More"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:530 src/control/Control.Menubar.js:170
+#: dist/toolbar/toolbar.js:527 src/control/Control.Menubar.js:170
 #: src/control/Control.Menubar.js:230 src/control/Control.Menubar.js:277
 msgid "Close document"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:609
+#: dist/toolbar/toolbar.js:606
 msgid "Layout"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:634 dist/toolbar/toolbar.js:981
+#: dist/toolbar/toolbar.js:631 dist/toolbar/toolbar.js:976
 msgid "Sum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:635
+#: dist/toolbar/toolbar.js:632
 msgid "Function"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:636 src/control/Control.CharacterMap.js:428
-#: src/layer/marker/Annotation.js:118
+#: dist/toolbar/toolbar.js:633 src/control/Control.CharacterMap.js:428
+#: src/layer/marker/Annotation.js:130
 msgid "Cancel"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:637 src/layer/tile/TileLayer.js:215
+#: dist/toolbar/toolbar.js:634
 msgid "Accept"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:648
+#: dist/toolbar/toolbar.js:649
 msgid "First sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:649
+#: dist/toolbar/toolbar.js:650
 msgid "Previous sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:650
+#: dist/toolbar/toolbar.js:651
 msgid "Next sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:651
+#: dist/toolbar/toolbar.js:652
 msgid "Last sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:661 src/control/Control.Menubar.js:224
+#: dist/toolbar/toolbar.js:662 src/control/Control.Menubar.js:224
 msgid "Fullscreen presentation"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:663
+#: dist/toolbar/toolbar.js:664
 msgid "Insert slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:664 src/control/Control.Menubar.js:221
+#: dist/toolbar/toolbar.js:665 src/control/Control.Menubar.js:221
 msgid "Duplicate slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:665 src/control/Control.Menubar.js:222
+#: dist/toolbar/toolbar.js:666 src/control/Control.Menubar.js:222
 msgid "Delete slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:678
+#: dist/toolbar/toolbar.js:679
 msgid "Search:"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:683
+#: dist/toolbar/toolbar.js:684
 msgid "Search backwards"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:684
+#: dist/toolbar/toolbar.js:685
 msgid "Search forward"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:685
+#: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:690
+#: dist/toolbar/toolbar.js:691
 msgid "No users"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:692
+#: dist/toolbar/toolbar.js:693
 msgid "Previous page"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:693
+#: dist/toolbar/toolbar.js:694
 msgid "Next page"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:695 src/control/Control.Menubar.js:44
+#: dist/toolbar/toolbar.js:696 src/control/Control.Menubar.js:44
 #: src/control/Control.Menubar.js:199
 msgid "Reset zoom"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:696 src/control/Control.Menubar.js:43
+#: dist/toolbar/toolbar.js:697 src/control/Control.Menubar.js:43
 #: src/control/Control.Menubar.js:198
 msgid "Zoom out"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:698 src/control/Control.Menubar.js:42
+#: dist/toolbar/toolbar.js:699 src/control/Control.Menubar.js:42
 #: src/control/Control.Menubar.js:197
 msgid "Zoom in"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:712
+#: dist/toolbar/toolbar.js:715
 msgid "%user has joined"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:713
+#: dist/toolbar/toolbar.js:716
 msgid "%user has left"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:830 dist/toolbar/toolbar.js:1355
+#: dist/toolbar/toolbar.js:825 dist/toolbar/toolbar.js:1351
 msgid "Size"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:962
+#: dist/toolbar/toolbar.js:957
 msgid "Number of Sheets"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:965
+#: dist/toolbar/toolbar.js:960
 msgid "Selected range of cells"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:968 dist/toolbar/toolbar.js:1003
+#: dist/toolbar/toolbar.js:963 dist/toolbar/toolbar.js:998
 msgid "Entering text mode"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:971 dist/toolbar/toolbar.js:1006
+#: dist/toolbar/toolbar.js:966 dist/toolbar/toolbar.js:1001
 msgid "Selection Mode"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:974
+#: dist/toolbar/toolbar.js:969
 msgid "Choice of functions"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:976
+#: dist/toolbar/toolbar.js:971
 msgid "Average"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:977
+#: dist/toolbar/toolbar.js:972
 msgid "CountA"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:978
+#: dist/toolbar/toolbar.js:973
 msgid "Count"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:979
+#: dist/toolbar/toolbar.js:974
 msgid "Maximum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:980
+#: dist/toolbar/toolbar.js:975
 msgid "Minimum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:982
+#: dist/toolbar/toolbar.js:977
 msgid "Selection count"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:983 src/control/Control.CharacterMap.js:11
+#: dist/toolbar/toolbar.js:978 src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:997
+#: dist/toolbar/toolbar.js:992
 msgid "Number of Pages"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1000
+#: dist/toolbar/toolbar.js:995
 msgid "Word Counter"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1023
+#: dist/toolbar/toolbar.js:1018
 msgid "Number of Slides"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1165
+#: dist/toolbar/toolbar.js:1161
 msgid "Document saved"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1328
+#: dist/toolbar/toolbar.js:1324
 msgid "Style"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1347
+#: dist/toolbar/toolbar.js:1343
 msgid "Font"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1383
+#: dist/toolbar/toolbar.js:1379
 msgid "Previous slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1384
+#: dist/toolbar/toolbar.js:1380
 msgid "Next slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1437
+#: dist/toolbar/toolbar.js:1433
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1602 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1598 src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr ""
 
-#: src/admin/AdminSocketBase.js:45
+#: dist/toolbar/toolbar.js:1604
+msgid "Readonly"
+msgstr ""
+
+#: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
 msgstr ""
 
@@ -1809,6 +1806,22 @@ msgstr ""
 msgid "Optimal Column Width"
 msgstr ""
 
+#: src/control/Control.ContextMenu.js:135
+msgid "Internal Cut"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:138
+msgid "Internal Copy"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:141
+msgid "Internal Paste"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:163
+msgid "Internal Paste Special"
+msgstr ""
+
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
 msgstr ""
@@ -1821,7 +1834,7 @@ msgstr ""
 msgid "Index"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:44 src/layer/tile/TileLayer.js:209
+#: src/control/Control.DocumentRepair.js:44 src/layer/tile/TileLayer.js:215
 msgid "Comment"
 msgstr ""
 
@@ -2329,7 +2342,7 @@ msgstr ""
 msgid "Delete row"
 msgstr ""
 
-#: src/control/Control.Menubar.js:472
+#: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
 msgstr ""
 
@@ -2405,7 +2418,7 @@ msgstr ""
 msgid "Downloading..."
 msgstr ""
 
-#: src/control/Toolbar.js:95 src/map/Map.js:922
+#: src/control/Toolbar.js:95 src/map/Map.js:939
 msgid "Saving..."
 msgstr ""
 
@@ -2417,49 +2430,61 @@ msgstr ""
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr ""
 
-#: src/core/Socket.js:185
+#: src/core/Socket.js:188
 msgid "Unsupported server version."
 msgstr ""
 
-#: src/core/Socket.js:223
+#: src/core/Socket.js:226
 msgid "Session terminated by document owner"
 msgstr ""
 
-#: src/core/Socket.js:226
+#: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 
-#: src/core/Socket.js:229
+#: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
 msgstr ""
 
-#: src/core/Socket.js:345
+#: src/core/Socket.js:348
 msgid "Document requires password to view."
 msgstr ""
 
-#: src/core/Socket.js:348
+#: src/core/Socket.js:351
 msgid "Document requires password to modify."
 msgstr ""
 
-#: src/core/Socket.js:350
+#: src/core/Socket.js:353
 msgid "Hit Cancel to open in view-only mode."
 msgstr ""
 
-#: src/core/Socket.js:354
+#: src/core/Socket.js:357
 msgid "Wrong password provided. Please try again."
 msgstr ""
 
-#: src/core/Socket.js:417
+#: src/core/Socket.js:420
 msgid "Connecting..."
 msgstr ""
 
-#: src/core/Socket.js:538
+#: src/core/Socket.js:542
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 
-#: src/layer/marker/Annotation.js:114
+#: src/layer/marker/Annotation.js:156
+msgid "Accept change"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:161
+msgid "Reject change"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:169
+msgid "Open menu"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:184
 msgid " Save "
 msgstr ""
 
@@ -2467,23 +2492,19 @@ msgstr ""
 msgid "Modify"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:188
+#: src/layer/tile/TileLayer.js:194
 msgid "Remove"
-msgstr ""
-
-#: src/layer/tile/TileLayer.js:221
-msgid "Reject"
 msgstr ""
 
 #: src/map/Map.js:131
 msgid "Initializing..."
 msgstr ""
 
-#: src/map/Map.js:803
+#: src/map/Map.js:820
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 
-#: src/map/Map.js:925
+#: src/map/Map.js:942
 msgid "Loading..."
 msgstr ""
 
