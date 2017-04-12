@@ -352,8 +352,16 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 
     if (!wopiDomain.empty())
     {
+        // Replaced by frame-ancestors in CSP but some oldies don't know about that
         oss << "X-Frame-Options: allow-from " << wopiDomain << "\r\n";
-        oss << "Content-Security-Policy: frame-ancestors " << wopiDomain << "\r\n";
+        oss << "Content-Security-Policy: default-src 'none'; "
+            << "frame-src 'self' blob:; "
+            << "connect-src 'self' " << host << "; "
+            << "script-src 'unsafe-inline' 'self'; "
+            << "style-src 'self' 'unsafe-inline'; "
+            << "font-src 'self' data:; "
+            << "img-src 'self' data:; "
+            << "frame-ancestors " << wopiDomain << "\r\n";
     }
     else
     {
