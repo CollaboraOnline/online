@@ -130,7 +130,6 @@ using Poco::Net::MessageHeader;
 using Poco::Net::NameValueCollection;
 using Poco::Net::PartHandler;
 using Poco::Net::SocketAddress;
-using Poco::Net::WebSocket;
 using Poco::Path;
 #ifndef KIT_IN_PROCESS
 using Poco::Pipe;
@@ -145,7 +144,6 @@ using Poco::TemporaryFile;
 #if FUZZER
 using Poco::Thread;
 #endif
-using Poco::ThreadPool;
 using Poco::URI;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
