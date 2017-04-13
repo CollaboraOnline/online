@@ -242,7 +242,7 @@ void DocumentBroker::pollThread()
 
         // If all sessions have been removed, no reason to linger.
         if ((isLoaded() || _markToDestroy) && notSaving &&
-            (_sessions.empty() || !isAlive() || idle))
+            (_sessions.empty() || idle))
         {
             LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
                     " DocumentBroker for docKey [" << getDocKey() << "].");
@@ -292,8 +292,8 @@ void DocumentBroker::pollThread()
 
 bool DocumentBroker::isAlive() const
 {
-    if (_poll->isAlive())
-        return true; // Polling thread still running.
+    if (!_stop || _poll->isAlive())
+        return true; // Polling thread not started or still running.
 
     // Shouldn't have live child process outside of the polling thread.
     return _childProcess && _childProcess->isAlive();
