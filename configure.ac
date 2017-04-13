@@ -172,7 +172,8 @@ SYSTEMPLATE_PATH=not-set
 have_lo_path=false
 AC_MSG_CHECKING([whether to run tests against a LibreOffice])
 if test -n "$with_lo_path"; then
-   LO_PATH="$with_lo_path"
+   # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
+   LO_PATH="${with_lo_path%/}"
    version_file="$with_lo_path/program/versionrc"
    if test -f $version_file; then
      JAILS_PATH="\${abs_top_builddir}/jails"
