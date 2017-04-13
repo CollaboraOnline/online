@@ -168,6 +168,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                 mimeType = "text/css";
             else if (fileType == "html")
                 mimeType = "text/html";
+            else if (fileType == "png")
+                mimeType = "image/png";
             else if (fileType == "svg")
                 mimeType = "image/svg+xml";
             else
