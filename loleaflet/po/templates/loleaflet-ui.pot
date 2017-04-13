@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-12 22:27+0200\n"
+"POT-Creation-Date: 2017-04-13 12:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,7 +87,7 @@ msgstr ""
 
 #: admin.strings.js:22 dist/toolbar/toolbar.js:473
 #: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:175
-#: src/control/Control.Menubar.js:235
+#: src/control/Control.Menubar.js:235 src/layer/marker/Annotation.js:184
 msgid "Save"
 msgstr ""
 
@@ -2482,10 +2482,6 @@ msgstr ""
 
 #: src/layer/marker/Annotation.js:169
 msgid "Open menu"
-msgstr ""
-
-#: src/layer/marker/Annotation.js:184
-msgid " Save "
 msgstr ""
 
 #: src/layer/tile/TileLayer.js:182

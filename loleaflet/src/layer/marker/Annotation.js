@@ -181,7 +181,7 @@ L.Annotation = L.Layer.extend({
 
 		buttons = L.DomUtil.create(tagDiv, empty, this._nodeModify);
 		L.DomEvent.on(this._nodeModifyText, 'blur', this._onLostFocus, this);
-		this._createButton(buttons, _(' Save '), this._onSaveComment);
+		this._createButton(buttons, _('Save'), this._onSaveComment);
 		this._createButton(buttons, cancel, this._onCancelClick);
 		buttons = L.DomUtil.create(tagDiv, empty, this._nodeReply);
 		this._createButton(buttons, _('Reply'), this._onReplyClick);
