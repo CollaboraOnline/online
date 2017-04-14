@@ -131,9 +131,12 @@ L.Annotation = L.Layer.extend({
 		    classTextArea = 'loleaflet-annotation-textarea',
 		    classEdit = 'loleaflet-annotation-edit';
 		var container = this._container =
-			L.DomUtil.create(tagDiv, 'loleaflet-annotation');
-		var wrapper = this._wrapper =
-			L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-wrapper', container);
+		    L.DomUtil.create(tagDiv, 'loleaflet-annotation');
+		if (this._data.trackchange) {
+			var wrapper = this._wrapper = L.DomUtil.create(tagDiv, 'loleaflet-annotation-redline-content-wrapper', container);
+		} else {
+			wrapper = this._wrapper = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-wrapper', container);
+		}
 		this._author = L.DomUtil.create('table', 'loleaflet-annotation-table', wrapper);
 		var tbody = L.DomUtil.create('tbody', empty, this._author);
 		var tr = L.DomUtil.create('tr', empty, tbody);
