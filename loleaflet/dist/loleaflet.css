@@ -138,7 +138,7 @@ body {
 	text-align: center;
 }
 
-.loleaflet-annotation-content-wrapper {
+.loleaflet-annotation-content-wrapper, .loleaflet-annotation-redline-content-wrapper {
 	padding: 8px;
 	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
 	font-size: 13px;
@@ -149,6 +149,10 @@ body {
 	color: #222;
 	border: none;
 	border-radius: 2px;
+}
+
+.loleaflet-annotation-content-wrapper {
+        width: 180px;
 }
 
 .loleaflet-annotation-content {
