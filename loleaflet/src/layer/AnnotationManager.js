@@ -15,6 +15,7 @@ L.AnnotationManager = L.Class.extend({
 		this._selected = null;
 		this._animation = new L.PosAnimation();
 		this._arrow = L.polyline([], {color: 'darkblue', weight: 1});
+		this._map.on('zoomend', this._onAnnotationZoom, this);
 		this._map.on('AnnotationCancel', this._onAnnotationCancel, this);
 		this._map.on('AnnotationClick', this._onAnnotationClick, this);
 		this._map.on('AnnotationReply', this._onAnnotationReply, this);
@@ -194,12 +195,15 @@ L.AnnotationManager = L.Class.extend({
 		annotation.show();
 	},
 
-	layout: function () {
+	layout: function (zoom) {
 		var docRight = this._map.project(this._map.options.maxBounds.getNorthEast());
 		var topRight = docRight.add(L.point(this.options.marginX, this.options.marginY));
 		var latlng, annotation, selectIndex, layoutBounds, point, index;
 		if (this._selected) {
 			selectIndex = this.getIndexOf(this._selected._data.id);
+			if (zoom) {
+				this._selected._data.anchorPix = this._map._docLayer._twipsToPixels(this._selected._data.anchorPos.min);
+			}
 			latlng = this._map.unproject(L.point(docRight.x, this._selected._data.anchorPix.y));
 			this._animation.run(this._selected._container, this._map.latLngToLayerPoint(latlng));
 			this._selected.setLatLng(latlng);
@@ -210,10 +214,16 @@ L.AnnotationManager = L.Class.extend({
 			layoutBounds.extend(layoutBounds.max.add([0, this.options.marginY]));
 			for (index = selectIndex - 1; index >= 0; index--) {
 				annotation = this._items[index];
+				if (zoom) {
+					annotation._data.anchorPix = this._map._docLayer._twipsToPixels(annotation._data.anchorPos.min);
+				}
 				this.layoutUp(annotation, this._map.unproject(L.point(topRight.x, annotation._data.anchorPix.y)), layoutBounds);
 			}
 			for (index = selectIndex + 1; index < this._items.length; index++) {
 				annotation = this._items[index];
+				if (zoom) {
+					annotation._data.anchorPix = this._map._docLayer._twipsToPixels(annotation._data.anchorPos.min);
+				}
 				this.layoutDown(annotation, this._map.unproject(L.point(topRight.x, annotation._data.anchorPix.y)), layoutBounds);
 			}
 			if (!this._selected.isEdit()) {
@@ -224,6 +234,9 @@ L.AnnotationManager = L.Class.extend({
 			layoutBounds = L.bounds(point, point);
 			for (index in this._items) {
 				annotation = this._items[index];
+				if (zoom) {
+					annotation._data.anchorPix = this._map._docLayer._twipsToPixels(annotation._data.anchorPos.min);
+				}
 				this.layoutDown(annotation, this._map.unproject(L.point(topRight.x, annotation._data.anchorPix.y)), layoutBounds);
 			}
 		}
@@ -410,6 +423,10 @@ L.AnnotationManager = L.Class.extend({
 		}
 		this.unselect();
 		this._map.focus();
+	},
+
+	_onAnnotationZoom: function (e) {
+		this.layout(true);
 	}
 });
 
