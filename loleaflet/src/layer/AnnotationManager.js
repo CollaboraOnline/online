@@ -349,10 +349,15 @@ L.AnnotationManager = L.Class.extend({
 
 	add: function (comment) {
 		var annotation = L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map);
-		this._items.push(annotation);
+		if (comment.parent && comment.parent > '0') {
+			var parentIdx = this.getIndexOf(comment.parent);
+			this._items.splice(parentIdx + 1, 0, annotation);
+		} else {
+			this._items.push(annotation);
+		}
 		this._items.sort(function(a, b) {
 			return Math.abs(a._data.anchorPos.min.y) - Math.abs(b._data.anchorPos.min.y) ||
-			       Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
+				Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
 		});
 		return annotation;
 	},
@@ -411,6 +416,29 @@ L.AnnotationManager = L.Class.extend({
 		this._map.focus();
 	},
 
+	// Adjust parent-child relationship, if required, after `comment` is added
+	adjustParentAdd: function(comment) {
+		if (comment.parent && comment.parent > '0') {
+			var parentIdx = this.getIndexOf(comment.parent);
+			if (this._items[parentIdx + 1] && this._items[parentIdx + 1]._data.parent === this._items[parentIdx]._data.id) {
+				this._items[parentIdx + 1]._data.parent = comment.id;
+			}
+		}
+	},
+
+	// Adjust parent-child relationship, if required, after `comment` is removed
+	adjustParentRemove: function(comment) {
+		var newId = '0';
+		var parentIdx = this.getIndexOf(comment._data.parent);
+		if (parentIdx >= 0) {
+			newId = this._items[parentIdx]._data.id;
+		}
+		var currentIdx = this.getIndexOf(comment._data.id);
+		if (this._items[currentIdx + 1]) {
+			this._items[currentIdx + 1]._data.parent = newId;
+		}
+	},
+
 	onACKComment: function (obj) {
 		var id;
 		var changetrack = obj.redline ? true : false;
@@ -421,6 +449,7 @@ L.AnnotationManager = L.Class.extend({
 				this.add(obj.redline);
 			} else {
 				this.adjustComment(obj.comment);
+				this.adjustParentAdd(obj.comment);
 				this.add(obj.comment);
 			}
 			if (this._selected && !this._selected.isEdit()) {
@@ -431,6 +460,7 @@ L.AnnotationManager = L.Class.extend({
 			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
 			var removed = this.getItem(id);
 			if (removed) {
+				this.adjustParentRemove(removed);
 				this._map.removeLayer(this.removeItem(id));
 				if (this._selected === removed) {
 					this.unselect();
