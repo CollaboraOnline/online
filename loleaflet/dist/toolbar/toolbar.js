@@ -1115,7 +1115,7 @@ map.on('commandstatechanged', function (e) {
 		else {
 
 			color = color.toString(16);
-			color = '#' + '0'.repeat(6 - color.length) + color;
+			color = '#' + Array(7 - color.length).join('0') + color;
 		}
 		div = L.DomUtil.get('fontcolorindicator');
 		if (div) {
@@ -1130,7 +1130,7 @@ map.on('commandstatechanged', function (e) {
 		}
 		else {
 			color = color.toString(16);
-			color = '#' + '0'.repeat(6 - color.length) + color;
+			color = '#' + Array(7 - color.length).join('0') + color;
 		}
 		div = L.DomUtil.get('backcolorindicator');
 		if (div) {
