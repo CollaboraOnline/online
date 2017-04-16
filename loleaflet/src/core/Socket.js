@@ -15,6 +15,7 @@ L.Socket = L.Class.extend({
 	},
 
 	initialize: function (map) {
+		console.debug('socket.initialize:');
 		this._map = map;
 		try {
 			if (map.options.permission) {
@@ -108,6 +109,7 @@ L.Socket = L.Class.extend({
 	},
 
 	_onSocketOpen: function () {
+		console.debug('_onSocketOpen:');
 		// Always send the protocol version number.
 		// TODO: Move the version number somewhere sensible.
 		this._doSend('loolclient ' + this.ProtocolVersionNumber);
@@ -524,11 +526,13 @@ L.Socket = L.Class.extend({
 	},
 
 	_onSocketError: function () {
+		console.debug('_onSocketError:');
 		this._map.hideBusy();
 		// Let onclose (_onSocketClose) report errors.
 	},
 
 	_onSocketClose: function (e) {
+		console.debug('_onSocketClose:');
 		var isActive = this._map._active;
 		this._map.hideBusy();
 		this._map._active = false;
