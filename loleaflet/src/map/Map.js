@@ -781,7 +781,9 @@ L.Map = L.Evented.extend({
 				console.debug('sending useractive');
 				this._socket.sendMessage('useractive');
 				this._active = true;
-				this._docLayer._onMessage('invalidatetiles: EMPTY', null);
+				if (this._doclayer) {
+					this._docLayer._onMessage('invalidatetiles: EMPTY', null);
+				}
 				if (vex.dialogID > 0) {
 					var id = vex.dialogID;
 					vex.dialogID = -1;
