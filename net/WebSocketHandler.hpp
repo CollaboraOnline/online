@@ -269,7 +269,7 @@ public:
     int getPollEvents(std::chrono::steady_clock::time_point now,
                       int & timeoutMaxMs) override
     {
-        int timeSincePingMs =
+        const int timeSincePingMs =
             std::chrono::duration_cast<std::chrono::milliseconds>(now - _pingSent).count();
         timeoutMaxMs = std::min(timeoutMaxMs, PingFrequencyMs - timeSincePingMs);
         return POLLIN;
