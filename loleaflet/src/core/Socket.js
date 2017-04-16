@@ -6,6 +6,7 @@
 /* global _ vex $ errorMessages */
 L.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
+	ReconnectCount: 0,
 
 	getParameterValue: function (s) {
 		var i = s.indexOf('=');
@@ -360,6 +361,26 @@ L.Socket = L.Class.extend({
 			} else if (errorKind.startsWith('faileddocloading')) {
 				this._map._fatal = true;
 				this._map.fire('error', {msg: errorMessages.faileddocloading});
+			} else if (errorKind.startsWith('docunloading')) {
+				// The document is unloading. Have to wait a bit.
+				this._map._active = false;
+				if (vex.dialogID <= 0 && this.ReconnectCount > 0) {
+					this._map.fire('error', {msg: _('The document is currently unloading. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
+				}
+
+				if (this.ReconnectCount++ >= 10) {
+					clearTimeout(vex.timer);
+					return; // Give up.
+				}
+
+				map = this._map;
+				vex.timer = setInterval(function() {
+					try {
+						// Activate and cancel timer and dialogs.
+						map._activate();
+					} catch (error) {
+					}
+				}, 1000);
 			}
 
 			if (passwordNeeded) {
@@ -420,6 +441,16 @@ L.Socket = L.Class.extend({
 		else if (textMsg.startsWith('statusindicator:')) {
 			//FIXME: We should get statusindicator when saving too, no?
 			this._map.showBusy(_('Connecting...'), false);
+			if (textMsg.startsWith('statusindicator: ready')) {
+				// We're connected: cancel timer and dialog.
+				this.ReconnectCount = 0;
+				clearTimeout(vex.timer);
+				if (vex.dialogID > 0) {
+					var id = vex.dialogID;
+					vex.dialogID = -1;
+					vex.close(id);
+				}
+			}
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {
 			// log the tile msg separately as we need the tile coordinates
