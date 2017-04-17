@@ -12,11 +12,14 @@
 #include <vector>
 #include <string>
 
+#include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/Net/SSLManager.h>
 #include <Poco/URI.h>
 
 #include <cppunit/extensions/HelperMacros.h>
