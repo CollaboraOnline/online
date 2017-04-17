@@ -104,12 +104,11 @@ private:
                 });
 
             if (pos != _queue.end())
-            {
                 _queue.erase(pos);
-            }
         }
         else if (command == "statusindicatorsetvalue:" ||
-                 command == "invalidatecursor:")
+                 command == "invalidatecursor:" ||
+                 command == "setpart:")
         {
             // Remove previous identical enties of this command,
             // if any, and use most recent (incoming).
@@ -120,9 +119,7 @@ private:
                 });
 
             if (pos != _queue.end())
-            {
                 _queue.erase(pos);
-            }
         }
         else if (command == "invalidateviewcursor:")
         {
