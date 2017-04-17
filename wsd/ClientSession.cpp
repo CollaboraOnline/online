@@ -60,7 +60,7 @@ SocketHandlerInterface::SocketOwnership ClientSession::handleIncomingMessage()
 
 bool ClientSession::_handleInput(const char *buffer, int length)
 {
-    LOG_TRC(getName() << ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
+    LOG_TRC(getName() << ": handling incoming [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
     const auto tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
@@ -486,7 +486,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 {
     const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
 
-    LOG_TRC(getName() + ": handling [" << payload->abbr() << "].");
+    LOG_TRC(getName() + ": handling kit-to-client [" << payload->abbr() << "].");
     const std::string& firstLine = payload->firstLine();
 
     const auto docBroker = _docBroker.lock();
