@@ -209,7 +209,7 @@ inline void shutdownLimitReached(WebSocketHandler& ws)
 /// connected to any document.
 void alertAllUsersInternal(const std::string& msg)
 {
-    Util::assertIsLocked(DocBrokersMutex);
+    std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
     LOG_INF("Alerting all users: [" << msg << "]");
 
@@ -2574,8 +2574,6 @@ void alertAllUsers(const std::string& cmd, const std::string& kind)
 
 void alertAllUsers(const std::string& msg)
 {
-    std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
-
     alertAllUsersInternal(msg);
 }
 
