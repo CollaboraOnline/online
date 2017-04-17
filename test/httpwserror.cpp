@@ -40,7 +40,7 @@ class HTTPWSError : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(HTTPWSError);
 
     CPPUNIT_TEST(testBadDocLoadFail);
-    // FIXME CPPUNIT_TEST(testMaxDocuments);
+    CPPUNIT_TEST(testMaxDocuments);
     CPPUNIT_TEST(testMaxConnections);
     CPPUNIT_TEST(testMaxViews);
 

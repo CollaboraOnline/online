@@ -1664,7 +1664,8 @@ private:
         {
             // TODO: Send back failure.
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
-            LOG_ERR("#" << socket->getFD() << " Exception while processing incoming request: [" << LOOLProtocol::getAbbreviatedMessage(in) << "]");
+            LOG_ERR("#" << socket->getFD() << " Exception while processing incoming request: [" <<
+                    LOOLProtocol::getAbbreviatedMessage(in) << "]: " << exc.what());
         }
 
         return socketOwnership;
