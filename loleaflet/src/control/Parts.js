@@ -2,7 +2,7 @@
  * Document parts switching handler
  */
 L.Map.include({
-	setPart: function (part) {
+	setPart: function (part, external) {
 		var docLayer = this._docLayer;
 		docLayer._prevSelectedPart = docLayer._selectedPart;
 		if (part === 'prev') {
@@ -30,7 +30,12 @@ L.Map.include({
 			parts: docLayer._parts,
 			docType: docLayer._docType
 		});
-		this._socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
+
+		// If this wasn't triggered from the server,
+		// then notify the server of the change.
+		if (!external) {
+			this._socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
+		}
 		docLayer.eachView(docLayer._viewCursors, docLayer._onUpdateViewCursor, docLayer);
 		docLayer.eachView(docLayer._cellViewCursors, docLayer._onUpdateCellViewCursor, docLayer);
 		docLayer.eachView(docLayer._graphicViewMarkers, docLayer._onUpdateGraphicViewSelection, docLayer);
@@ -260,7 +265,7 @@ L.Map.include({
 			};
 
 			this._socket.sendMessage('uno .uno:Name ' + JSON.stringify(command));
-			this.setPart(this._docLayer, nPos);
+			this.setPart(this._docLayer);
 		}
 	},
 

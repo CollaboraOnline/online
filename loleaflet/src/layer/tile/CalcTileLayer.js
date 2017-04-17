@@ -334,7 +334,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
 		if (part !== this._selectedPart) {
-			this._map.setPart(part);
+			this._map.setPart(part, true);
 			this._map.fire('setpart', {selectedPart: this._selectedPart});
 			// TODO: test it!
 			this._map.fire('updaterowcolumnheaders');
