@@ -52,6 +52,7 @@ pot:
 		dist/toolbar/toolbar.js \
 		src/admin/AdminSocketBase.js \
 		src/admin/AdminSocketOverview.js \
+		src/admin/AdminSocketHistory.js \
 		src/admin/AdminSocketSettings.js \
 		src/admin/Util.js \
 		src/control/Control.CharacterMap.js \

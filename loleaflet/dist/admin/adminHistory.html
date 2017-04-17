@@ -16,6 +16,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="localizations" href="/loleaflet/dist/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
+
   </head>
   <body>
     <script src="/loleaflet/dist/admin-bundle.js"></script>
@@ -30,10 +31,10 @@
            host = 'ws://' + window.location.host + '/lool/adminws/'
         }
 
-        Admin.Analytics(host)
+        Admin.History(host)
     </script>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -51,25 +52,34 @@
         </div>
       </div>
     </nav>
-
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="admin.html"><script>document.write(l10nstrings.strOverview)</script></a></li>
-            <li class="active"><a href="adminAnalytics.html"><script>document.write(l10nstrings.strAnalytics)</script> <span class="sr-only"><script>document.write(l10nstrings.strCurrent)</script></span></a></li>
-            <li><a href="adminHistory.html"><script>document.write(l10nstrings.strHistory)</script></a></li>
+            <li><a href="adminAnalytics.html"><script>document.write(l10nstrings.strAnalytics)</script></a></li>
+            <li class="active"><a href="adminHistory.html"><script>document.write(l10nstrings.strHistory)</script> <span class="sr-only"><script>document.write(l10nstrings.strCurrent)</script></span></a></li>
           </ul>
         </div>
+
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header"><script>document.write(l10nstrings.strGraphs)</script></h1>
-		        <div class="graph-container">
-		          <div class="jumbotron">
-		            <svg id="visualisation" width="1010" height="510"></svg>
-		          </div>
-		        </div>
-	      </div>
+          <h1 class="page-header"><script>document.write(l10nstrings.strHistory)</script>
+              <button class="pull-right" id="refreshHistory">refresh</button>
+          </h1>
+            <pre id="json-doc">Documents:<br/><textarea rows="10" cols="100"></textarea></pre>
+            <pre id="json-ex-doc">Expired:<br/><textarea rows="10" cols="100"></textarea></pre>
+        </div>
       </div>
     </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../dist/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../../dist/bootstrap/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../dist/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>

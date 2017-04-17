@@ -8,6 +8,7 @@ l10nstrings.strSettings = _('Settings');
 l10nstrings.strOverview = _('Overview');
 l10nstrings.strCurrent = _('(current)');
 l10nstrings.strAnalytics = _('Analytics');
+l10nstrings.strHistory = _('History');
 l10nstrings.strDashboard = _('Dashboard');
 l10nstrings.strUsersOnline = _('Users online');
 l10nstrings.strDocumentsOpened = _('Documents opened');

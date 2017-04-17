@@ -490,6 +490,40 @@ documents
     Queries the server for list of opened documents. See `documents` command
     in admin -> client section for format of the response message
 
+history
+
+    Queries the server for list of opened and expired documents with their
+    snapshots. Returns a json object and it looks like:
+
+    { "History" :
+            {
+                "documents": [
+                    {
+                        "filename":"hello-world.odt",
+                        "start":1492104619,
+                        "end":1492104680,
+                        "pid":12302,
+                        "snapshots": [
+                            {
+                                "creationTime":1492104619,
+                                "memoryDirty":0,
+                                "activeViews":1,
+                                "views":["0008", ...],
+                                "lastActivity":1492104619
+                            },
+                            {
+                            ...
+                            }
+                        ]
+                    },
+                    {
+                    ...
+                    }
+                ],
+                "expiredDocuments" : [...]
+            }
+    }
+
 total_mem
 
     Queries for total memory being consumed by the server in kilobytes.

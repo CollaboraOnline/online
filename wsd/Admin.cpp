@@ -108,6 +108,10 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         if (!result.empty())
             sendTextFrame(tokens[0] + ' ' + result);
     }
+    else if (tokens[0] == "history")
+    {
+        sendTextFrame("{ \"History\": " + model.getAllHistory() + "}");
+    }
     else if (tokens[0] == "version")
     {
         // Send LOOL version information
