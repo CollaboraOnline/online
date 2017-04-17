@@ -82,7 +82,6 @@ if test "z$tst" == "z"; then
                                  --o:admin_console.username=admin --o:admin_console.password=admin \
                                  > "$tst_log" 2>&1 &
      echo "  executing test"
-     sleep 5 # allow for wsd to startup
 
      oldpath=`pwd`
      cd "${abs_top_builddir}/test"
