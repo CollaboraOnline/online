@@ -9,6 +9,10 @@
 
 #include "config.h"
 
+#include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
+#include <Poco/Net/SSLManager.h>
+
 #include <cppunit/extensions/HelperMacros.h>
 
 #include "Common.hpp"
