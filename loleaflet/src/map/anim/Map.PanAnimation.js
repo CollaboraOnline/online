@@ -65,8 +65,8 @@ L.Map.include({
 			this.fire('movestart');
 		}
 
-		// animate pan unless animate: false specified
-		if (options.animate !== false) {
+		// animate pan if animate: true specified
+		if (options.animate === true) {
 			L.DomUtil.addClass(this._mapPane, 'leaflet-pan-anim');
 
 			var newPos = this._getMapPanePos().subtract(offset);
