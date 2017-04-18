@@ -287,6 +287,10 @@ void DocumentBroker::pollThread()
     // Async cleanup.
     LOOLWSD::doHousekeeping();
 
+    // Remove all tiles related to this document from the cache if configured so.
+    if (_tileCache && !LOOLWSD::TileCachePersistent)
+        _tileCache->completeCleanup();
+
     LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
 }
 
@@ -1198,10 +1202,6 @@ void DocumentBroker::destroyIfLastEditor(const std::string& id)
     _markToDestroy = (_sessions.size() <= 1);
     LOG_DBG("startDestroy on session [" << id << "] on docKey [" << _docKey <<
             "], markToDestroy: " << _markToDestroy << ", lastEditableSession: " << _lastEditableSession);
-
-    // Remove all tiles related to this document from the cache.
-    if (_markToDestroy && !LOOLWSD::TileCachePersistent)
-        _tileCache->completeCleanup();
 }
 
 void DocumentBroker::setModified(const bool value)
