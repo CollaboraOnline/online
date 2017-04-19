@@ -29,6 +29,7 @@ L.Control.Scroll = L.Control.extend({
 			axis: 'yx',
 			theme: 'minimal-dark',
 			scrollInertia: 0,
+			advanced:{autoExpandHorizontalScroll: true}, /* weird bug, it should be false */
 			callbacks:{
 				onScroll: function() {
 					control._onScrollEnd(this);

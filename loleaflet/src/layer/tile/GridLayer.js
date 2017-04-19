@@ -363,13 +363,14 @@ L.GridLayer = L.Layer.extend({
 		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
 	},
 
-	_updateMaxBounds: function (sizeChanged) {
+	_updateMaxBounds: function (sizeChanged, extraSize, options) {
 		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
 			return;
 		}
 		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
-										 this._docHeightTwips / this.options.tileHeightTwips);
-		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
+			this._docHeightTwips / this.options.tileHeightTwips);
+		docPixelLimits = extraSize ? docPixelLimits.multiplyBy(this._tileSize).add(extraSize) :
+			docPixelLimits.multiplyBy(this._tileSize);
 
 		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		var topLeft = new L.Point(0, 0);
@@ -379,12 +380,13 @@ L.GridLayer = L.Layer.extend({
 
 		if (this._documentInfo === '' || sizeChanged) {
 			// we just got the first status so we need to center the document
-			this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
+			this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight), options);
 		}
 
 		var scrollPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
-										 this._docHeightTwips / this._tileHeightTwips);
-		scrollPixelLimits = scrollPixelLimits.multiplyBy(this._tileSize);
+			this._docHeightTwips / this._tileHeightTwips);
+		scrollPixelLimits = extraSize ? scrollPixelLimits.multiplyBy(this._tileSize).add(extraSize.multiplyBy(scale)) :
+			scrollPixelLimits.multiplyBy(this._tileSize);
 		this._docPixelSize = {x: scrollPixelLimits.x, y: scrollPixelLimits.y};
 		this._map.fire('docsize', {x: scrollPixelLimits.x, y: scrollPixelLimits.y});
 	},
