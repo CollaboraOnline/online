@@ -438,7 +438,8 @@ public:
     void wakeup()
     {
         if (!isAlive())
-            LOG_WRN("Waking up dead poll thread [" << _name << "]");
+            LOG_WRN("Waking up dead poll thread [" << _name << "], started: " <<
+                    _threadStarted << ", finished: " << _threadFinished);
 
         wakeup(_wakeup[1]);
     }

@@ -12,6 +12,7 @@
 #include "DocumentBroker.hpp"
 
 #include <cassert>
+#include <chrono>
 #include <ctime>
 #include <fstream>
 #include <sstream>
@@ -220,29 +221,66 @@ void DocumentBroker::pollThread()
 
     auto last30SecCheckTime = std::chrono::steady_clock::now();
 
+    static const bool AutoSaveEnabled = !std::getenv("LOOL_NO_AUTOSAVE");
+
     // Main polling loop goodness.
-    while (!_stop && _poll->continuePolling() && !TerminationFlag && !ShutdownRequestFlag)
+    while (!_stop && _poll->continuePolling() && !TerminationFlag)
     {
         _poll->poll(SocketPoll::DefaultPollTimeoutMs);
 
-        if (!std::getenv("LOOL_NO_AUTOSAVE") && !_stop &&
-            std::chrono::duration_cast<std::chrono::seconds>
-            (std::chrono::steady_clock::now() - last30SecCheckTime).count() >= 30)
+        const auto now = std::chrono::steady_clock::now();
+        if (_lastSaveTime < _lastSaveRequestTime &&
+            std::chrono::duration_cast<std::chrono::milliseconds>
+                    (now - _lastSaveRequestTime).count() <= COMMAND_TIMEOUT_MS)
         {
-            LOG_TRC("Trigger an autosave ...");
+            // We are saving, nothing more to do but wait.
+            continue;
+        }
+
+        if (ShutdownRequestFlag)
+        {
+            // Shutting down the server: notify clients, save, and stop.
+            static const std::string msg("close: recycling");
+
+            // First copy into local container, since removeSession
+            // will erase from _sessions, but will leave the last.
+            std::vector<std::shared_ptr<ClientSession>> sessions;
+            for (const auto& pair : _sessions)
+            {
+                sessions.push_back(pair.second);
+            }
+
+            for (const std::shared_ptr<ClientSession>& session : sessions)
+            {
+                try
+                {
+                    // Notify the client and disconnect.
+                    session->sendMessage(msg);
+                    session->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, "recycling");
+
+                    // Remove session, save, and mark to destroy.
+                    removeSession(session->getId(), true);
+                }
+                catch (const std::exception& exc)
+                {
+                    LOG_WRN("Error while shutting down client [" <<
+                            session->getName() << "]: " << exc.what());
+                }
+            }
+        }
+        else if (AutoSaveEnabled && !_stop &&
+                 std::chrono::duration_cast<std::chrono::seconds>(now - last30SecCheckTime).count() >= 30)
+        {
+            LOG_TRC("Triggering an autosave.");
             autoSave(false);
             last30SecCheckTime = std::chrono::steady_clock::now();
         }
-
-        const bool notSaving = (std::chrono::duration_cast<std::chrono::milliseconds>
-                                (std::chrono::steady_clock::now() - _lastSaveRequestTime).count() > COMMAND_TIMEOUT_MS);
 
         // Remove idle documents after 1 hour.
         const bool idle = (getIdleTimeSecs() >= 3600);
 
         // If all sessions have been removed, no reason to linger.
-        if ((isLoaded() || _markToDestroy) && notSaving &&
-            (_sessions.empty() || idle))
+        if ((isLoaded() || _markToDestroy) && (_sessions.empty() || idle))
         {
             LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
                     " DocumentBroker for docKey [" << getDocKey() << "].");
@@ -251,17 +289,8 @@ void DocumentBroker::pollThread()
     }
 
     LOG_INF("Finished polling doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
-            _poll->continuePolling() << ", TerminationFlag: " << TerminationFlag <<
-            ", ShutdownRequestFlag: " << ShutdownRequestFlag << ".");
-
-    if (ShutdownRequestFlag)
-    {
-        static const std::string msg("close: recycling");
-        for (const auto& pair : _sessions)
-        {
-            pair.second->sendMessage(msg);
-        }
-    }
+            _poll->continuePolling() << ", ShutdownRequestFlag: " << ShutdownRequestFlag <<
+            ", TerminationFlag: " << TerminationFlag << ".");
 
     // Terminate properly while we can.
     //TODO: pass some sensible reason.
@@ -309,7 +338,7 @@ DocumentBroker::~DocumentBroker()
 
     Admin::instance().rmDoc(_docKey);
 
-    LOG_INF("~DocumentBroker [" << _uriPublic.toString() <<
+    LOG_INF("~DocumentBroker [" << _docKey <<
             "] destroyed with " << _sessions.size() << " sessions left.");
 
     // Do this early - to avoid operating on _childProcess from two threads.
@@ -317,7 +346,7 @@ DocumentBroker::~DocumentBroker()
 
     if (!_sessions.empty())
     {
-        LOG_WRN("DocumentBroker still has unremoved sessions.");
+        LOG_WRN("DocumentBroker [" << _docKey << "] still has unremoved sessions.");
     }
 
     // Need to first make sure the child exited, socket closed,
