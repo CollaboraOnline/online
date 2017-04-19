@@ -76,6 +76,7 @@ extern "C"
             CASE(REDLINE_TABLE_SIZE_CHANGED);
             CASE(REDLINE_TABLE_ENTRY_MODIFIED);
             CASE(COMMENT);
+            CASE(INVALIDATE_HEADER);
 #undef CASE
         }
         std::cout << " payload: " << payload << std::endl;

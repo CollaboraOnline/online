@@ -109,7 +109,9 @@ namespace LOKitHelper
             return "VIEW_LOCK";
         case LOK_CALLBACK_COMMENT:
             return "COMMENT";
-        }
+        case LOK_CALLBACK_INVALIDATE_HEADER:
+            return "INVALIDATE_HEADER";
+       }
 
         return std::to_string(type);
     }

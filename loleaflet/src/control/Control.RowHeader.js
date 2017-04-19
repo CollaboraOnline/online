@@ -93,7 +93,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this._selectRow(row, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertRows');
-		this._updateRowHeader();
 	},
 
 	deleteRow: function(row) {
@@ -101,7 +100,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this._selectRow(row, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteRows');
-		this._updateRowHeader();
 	},
 
 	hideRow: function(row) {
@@ -109,7 +107,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this._selectRow(row, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideRow');
-		this._updateRowHeader();
 	},
 
 	showRow: function(row) {
@@ -117,7 +114,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this._selectRow(row, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowRow');
-		this._updateRowHeader();
 	},
 
 	setScrollPosition: function (e) {
@@ -286,7 +282,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 			};
 
 			this._map.sendUnoCommand('.uno:RowHeight', command);
-			this._updateRowHeader();
 		}
 
 		this._map.removeLayer(this._horzLine);
