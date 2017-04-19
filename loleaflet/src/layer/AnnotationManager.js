@@ -270,7 +270,7 @@ L.AnnotationManager = L.Class.extend({
 				this._items[selectIndexFirst]._data.anchorPix = this._map._docLayer._twipsToPixels(this._items[selectIndexFirst]._data.anchorPos.min);
 			}
 			latlng = this._map.unproject(L.point(docRight.x, this._items[selectIndexFirst]._data.anchorPix.y));
-			this._animation.run(this._items[selectIndexFirst]._container, this._map.latLngToLayerPoint(latlng));
+			(new L.PosAnimation()).run(this._items[selectIndexFirst]._container, this._map.latLngToLayerPoint(latlng));
 			this._items[selectIndexFirst].setLatLng(latlng);
 			layoutBounds = this._items[selectIndexFirst].getBounds();
 
@@ -281,8 +281,7 @@ L.AnnotationManager = L.Class.extend({
 				}
 
 				latlng = this._map.layerPointToLatLng(layoutBounds.getBottomLeft());
-				// FIXME: Enabling animation of these children misbehaves
-				//this._animation.run(this._items[idx]._container, layoutBounds.getBottomLeft());
+				(new L.PosAnimation()).run(this._items[idx]._container, layoutBounds.getBottomLeft());
 				this._items[idx].setLatLng(latlng);
 
 				var commentBounds = this._items[idx].getBounds();
