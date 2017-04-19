@@ -80,12 +80,13 @@ L.AnnotationManager = L.Class.extend({
 		color = viewId >= 0 ? L.LOUtil.rgbToHex(this._map.getViewColor(viewId)) : '#43ACE8';
 		if (rectangles.length > 0) {
 			redline.textSelected = L.polygon(rectangles, {
-				pointerEvents: 'none',
-				fillColor: color,
-				fillOpacity: 0.25,
-				weight: 2,
-				opacity: 0.25
+				interactive: true,
+				fillOpacity: 0,
+				opacity: 0
 			});
+			redline.textSelected.on('click', function() {
+				this.selectById(redline.id);
+			}, this);
 		}
 	},
 
