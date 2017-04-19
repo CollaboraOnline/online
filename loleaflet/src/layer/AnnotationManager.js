@@ -47,20 +47,23 @@ L.AnnotationManager = L.Class.extend({
 
 	adjustComment: function(comment) {
 		var rectangles, color, viewId;
+		comment.trackchange = false;
+		rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(comment.textRange || comment.anchorPos), this._map._docLayer);
 		comment.anchorPos = L.LOUtil.stringToBounds(comment.anchorPos);
 		comment.anchorPix = this._map._docLayer._twipsToPixels(comment.anchorPos.min);
-		comment.trackchange = false;
-		rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(comment.textRange), this._map._docLayer);
 		viewId = this._map.getViewId(comment.author);
 		color = viewId >= 0 ? L.LOUtil.rgbToHex(this._map.getViewColor(viewId)) : '#43ACE8';
 		if (rectangles.length > 0) {
 			comment.textSelected = L.polygon(rectangles, {
-				pointerEvents: 'none',
+				interactive: true,
 				fillColor: color,
 				fillOpacity: 0.25,
 				weight: 2,
 				opacity: 0.25
 			});
+			comment.textSelected.on('click', function() {
+				this.selectById(comment.id);
+			}, this);
 		}
 	},
 
@@ -176,6 +179,12 @@ L.AnnotationManager = L.Class.extend({
 			this._selected = this._items[idx];
 			this.update();
 		}
+	},
+
+	selectById: function(commentId) {
+		var idx = this.getRootIndexOf(commentId);
+		this._selected = this._items[idx];
+		this.update();
 	},
 
 	update: function () {
