@@ -227,5 +227,11 @@ L.WriterTileLayer = L.TileLayer.extend({
 		});
 		this._resetPreFetching(true);
 		this._update();
+	},
+
+	_updateMaxBounds: function (sizeChanged) {
+		var extraSize = this._annotations && this._annotations._items.length > 0 ?
+			this._annotations.options.extraSize : null;
+		L.GridLayer.prototype._updateMaxBounds.call(this, sizeChanged, extraSize, {panInside: false});
 	}
 });

@@ -278,10 +278,11 @@ L.Map = L.Evented.extend({
 		return this.fire('moveend');
 	},
 
-	setMaxBounds: function (bounds) {
+	setMaxBounds: function (bounds, options) {
 		bounds = L.latLngBounds(bounds);
 
 		this.options.maxBounds = bounds;
+		options = options || {};
 
 		if (!bounds) {
 			return this.off('moveend', this._panInsideMaxBounds);
@@ -289,6 +290,10 @@ L.Map = L.Evented.extend({
 
 		if (this._loaded) {
 			this._panInsideMaxBounds();
+		}
+
+		if (options.panInside === false) {
+			return this.off('moveend', this._panInsideMaxBounds);
 		}
 
 		return this.on('moveend', this._panInsideMaxBounds);

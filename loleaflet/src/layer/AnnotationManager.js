@@ -6,14 +6,16 @@ L.AnnotationManager = L.Class.extend({
 	options: {
 		marginX: 50,
 		marginY: 10,
-		offset: 5
+		offset: 5,
+		extraSize: L.point(250, 0)
 	},
 
-	initialize: function (map) {
+	initialize: function (map, options) {
 		this._map = map;
 		this._items = [];
 		this._selected = null;
 		this._animation = new L.PosAnimation();
+		L.setOptions(this, options);
 		this._arrow = L.polyline([], {color: 'darkblue', weight: 1});
 		this._map.on('zoomend', this._onAnnotationZoom, this);
 		this._map.on('AnnotationCancel', this._onAnnotationCancel, this);
@@ -99,7 +101,10 @@ L.AnnotationManager = L.Class.extend({
 			this.adjustComment(comment);
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
 		}
-		this.layout();
+		if (this._items.length > 0) {
+			this._map._docLayer._updateMaxBounds(true);
+			this.layout();
+		}
 	},
 
 	fillChanges: function(redlines) {
@@ -110,7 +115,10 @@ L.AnnotationManager = L.Class.extend({
 			this.adjustRedLine(changecomment);
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), changecomment).addTo(this._map));
 		}
-		this.layout();
+		if (this._items.length > 0) {
+			this._map._docLayer._upateMaxBounds(true);
+			this.layout();
+		}
 	},
 
 	getItem: function (id) {
@@ -190,12 +198,11 @@ L.AnnotationManager = L.Class.extend({
 
 	update: function () {
 		if (this._selected) {
-			var point0, point1, point2;
-			var topRight = this._map.project(this._map.options.maxBounds.getNorthEast());
-			point0 = this._map._docLayer._twipsToPixels(this._selected._data.anchorPos.max);
-			point1 = L.point(point0.x, point0.y + this.options.offset);
-			point2 = L.point(topRight.x, point1.y);
-			this._arrow.setLatLngs([this._map.unproject(point0), this._map.unproject(point1), this._map.unproject(point2)]);
+			var point;
+			var scale = this._map.getZoomScale(this._map.getZoom(), 10);
+			var docRight = this._map.project(this._map.options.maxBounds.getNorthEast()).subtract(this.options.extraSize.multiplyBy(scale));
+			point = this._map._docLayer._twipsToPixels(this._selected._data.anchorPos.min);
+			this._arrow.setLatLngs([this._map.unproject(point), map.unproject(L.point(docRight.x, point.y))]);
 			this._map.addLayer(this._arrow);
 		} else {
 			this._map.removeLayer(this._arrow);
@@ -270,7 +277,8 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	layout: function (zoom) {
-		var docRight = this._map.project(this._map.options.maxBounds.getNorthEast());
+		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
+		var docRight = this._map.project(this._map.options.maxBounds.getNorthEast()).subtract(this.options.extraSize.multiplyBy(scale));
 		var topRight = docRight.add(L.point(this.options.marginX, this.options.marginY));
 		var latlng, layoutBounds, point, index;
 		if (this._selected) {
@@ -591,6 +599,6 @@ L.Map.include({
 });
 
 
-L.annotationManager = function (map) {
-	return new L.AnnotationManager(map);
+L.annotationManager = function (map, options) {
+	return new L.AnnotationManager(map, options);
 };
