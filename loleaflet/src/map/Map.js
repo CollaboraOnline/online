@@ -979,6 +979,8 @@ L.Map = L.Evented.extend({
 		if (type === 'click' && this._permission === 'edit') {
 			this._textArea.blur();
 			this._textArea.focus();
+			if (this._docLayer && this._docLayer._annotations && this._docLayer._annotations.unselect)
+				this._docLayer._annotations.unselect();
 		}
 
 		// we need to keep track if we have entered/left the map
