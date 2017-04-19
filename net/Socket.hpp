@@ -84,9 +84,9 @@ public:
     virtual HandleResult handlePoll(std::chrono::steady_clock::time_point now, int events) = 0;
 
     /// manage latency issues around packet aggregation
-    void setNoDelay(bool noDelay = true)
+    void setNoDelay()
     {
-        int val = noDelay ? 1 : 0;
+        const int val = 1;
         setsockopt (_fd, IPPROTO_TCP, TCP_NODELAY,
                     (char *) &val, sizeof(val));
     }

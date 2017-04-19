@@ -417,7 +417,6 @@ protected:
         LOG_INF("#" << socket->getFD() << ": WebSocket version: " << wsVersion <<
                 ", key: [" << wsKey << "], protocol: [" << wsProtocol << "].");
 
-        socket->setNoDelay();
 #if ENABLE_DEBUG
         if (std::getenv("LOOL_ZERO_BUFFER_SIZE"))
             socket->setSocketBufferSize(0);
