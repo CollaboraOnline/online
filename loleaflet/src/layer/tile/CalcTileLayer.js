@@ -211,6 +211,10 @@ L.CalcTileLayer = L.TileLayer.extend({
 					modified.setLatLngBounds(obj.comment.cellPos);
 				}
 			}
+		} else if (textMsg.startsWith('invalidateheader: column')) {
+			this._map.fire('updaterowcolumnheaders', {x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
+		} else if (textMsg.startsWith('invalidateheader: row')) {
+			this._map.fire('updaterowcolumnheaders', {x: 0, y: this._map._getTopLeftPoint().y, offset: {x: 0, y: undefined}});
 		} else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
 		}

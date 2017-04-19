@@ -979,7 +979,8 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
         type == LOK_CALLBACK_CELL_FORMULA ||
         type == LOK_CALLBACK_CELL_CURSOR ||
         type == LOK_CALLBACK_GRAPHIC_SELECTION ||
-        type == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED)
+        type == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
+        type == LOK_CALLBACK_INVALIDATE_HEADER)
     {
         auto lock(getLock());
         _stateRecorder.recordEvent(type, payload);
@@ -1198,6 +1199,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_COMMENT:
         sendTextFrame("comment: " + payload);
+        break;
+    case LOK_CALLBACK_INVALIDATE_HEADER:
+        sendTextFrame("invalidateheader: " + payload);
         break;
     default:
         LOG_ERR("Unknown callback event (" << type << "): " << payload);
