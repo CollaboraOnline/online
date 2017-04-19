@@ -145,6 +145,7 @@ body {
 	text-align: left;
 	border-radius: 5px;
 	background-color: #efefef;
+	box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
 	color: #222;
 	border: none;
 	border-radius: 2px;
