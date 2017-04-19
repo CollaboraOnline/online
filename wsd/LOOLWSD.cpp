@@ -2466,8 +2466,29 @@ int LOOLWSD::innerMain()
 
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Cleaning up lingering documents.");
-    for (auto& docBrokerIt : DocBrokers)
-        docBrokerIt.second->joinThread();
+    if (ShutdownRequestFlag || TerminationFlag)
+    {
+        // Don't stop the DocBroker, they will exit.
+        const size_t sleepMs = 300;
+        const size_t count = std::max<size_t>(COMMAND_TIMEOUT_MS, 2000) / sleepMs;
+        for (size_t i = 0; i < count; ++i)
+        {
+            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+            cleanupDocBrokers();
+            if (DocBrokers.empty())
+                break;
+            docBrokersLock.unlock();
+
+            // Give them time to save and cleanup.
+            std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
+        }
+    }
+    else
+    {
+        // Stop and join.
+        for (auto& docBrokerIt : DocBrokers)
+            docBrokerIt.second->joinThread();
+    }
 
     // Disable thread checking - we'll now cleanup lots of things if we can
     Socket::InhibitThreadChecks = true;
