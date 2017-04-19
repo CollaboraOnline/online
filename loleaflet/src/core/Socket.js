@@ -362,9 +362,6 @@ L.Socket = L.Class.extend({
 			} else if (errorKind.startsWith('docunloading')) {
 				// The document is unloading. Have to wait a bit.
 				this._map._active = false;
-				if (vex.dialogID <= 0 && this.ReconnectCount > 0) {
-					this._map.fire('error', {msg: _('The document is currently unloading. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
-				}
 
 				if (this.ReconnectCount++ >= 10) {
 					clearTimeout(vex.timer);
