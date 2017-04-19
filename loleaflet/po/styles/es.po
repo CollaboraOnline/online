@@ -37,7 +37,7 @@ msgctxt ""
 "STR_STYLENAME_HEADLINE\n"
 "string.text"
 msgid "Heading"
-msgstr "Encabezado"
+msgstr "Título"
 
 
 #: globstr.src
@@ -47,7 +47,7 @@ msgctxt ""
 "STR_STYLENAME_HEADLINE1\n"
 "string.text"
 msgid "Heading1"
-msgstr "Encabezado1"
+msgstr "Título1"
 
 
 #: globstr.src
@@ -272,7 +272,7 @@ msgctxt ""
 "STR_POOLCHR_HTML_KEYBOARD\n"
 "string.text"
 msgid "User Entry"
-msgstr "Entrada del usuario"
+msgstr "Entrada de usuario"
 
 
 #: poolfmt.src
@@ -434,7 +434,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADLINE_BASE\n"
 "string.text"
 msgid "Heading"
-msgstr "Encabezado"
+msgstr "Título"
 
 
 #: poolfmt.src
@@ -479,7 +479,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADLINE1\n"
 "string.text"
 msgid "Heading 1"
-msgstr "Encabezado 1"
+msgstr "Título 1"
 
 
 #: poolfmt.src
@@ -488,7 +488,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADLINE2\n"
 "string.text"
 msgid "Heading 2"
-msgstr "Encabezado 2"
+msgstr "Título 2"
 
 
 #: poolfmt.src
@@ -497,7 +497,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADLINE3\n"
 "string.text"
 msgid "Heading 3"
-msgstr "Encabezado 3"
+msgstr "Título 3"
 
 
 #: poolfmt.src
@@ -506,7 +506,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADLINE4\n"
 "string.text"
 msgid "Heading 4"
-msgstr "Encabezado 4"
+msgstr "Título 4"
 
 
 #: poolfmt.src
@@ -515,7 +515,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADLINE5\n"
 "string.text"
 msgid "Heading 5"
-msgstr "Encabezado 5"
+msgstr "Título 5"
 
 
 #: poolfmt.src
@@ -524,7 +524,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADLINE6\n"
 "string.text"
 msgid "Heading 6"
-msgstr "Encabezado 6"
+msgstr "Título 6"
 
 
 #: poolfmt.src
@@ -533,7 +533,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADLINE7\n"
 "string.text"
 msgid "Heading 7"
-msgstr "Encabezado 7"
+msgstr "Título 7"
 
 
 #: poolfmt.src
@@ -542,7 +542,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADLINE8\n"
 "string.text"
 msgid "Heading 8"
-msgstr "Encabezado 8"
+msgstr "Título 8"
 
 
 #: poolfmt.src
@@ -551,7 +551,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADLINE9\n"
 "string.text"
 msgid "Heading 9"
-msgstr "Encabezado 9"
+msgstr "Título 9"
 
 
 #: poolfmt.src
@@ -560,7 +560,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADLINE10\n"
 "string.text"
 msgid "Heading 10"
-msgstr "Encabezado 10"
+msgstr "Título 10"
 
 
 #: poolfmt.src
@@ -749,7 +749,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_LEVEL1S\n"
 "string.text"
 msgid "List 1 Start"
-msgstr "Enumeración 1 inicio"
+msgstr "Lista 1 inicio"
 
 
 #: poolfmt.src
@@ -767,7 +767,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_LEVEL1E\n"
 "string.text"
 msgid "List 1 End"
-msgstr "Enumeración 1 fin"
+msgstr "Lista 1 fin"
 
 
 #: poolfmt.src
@@ -776,7 +776,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_NONUM1\n"
 "string.text"
 msgid "List 1 Cont."
-msgstr "Enumeración 1 continuación"
+msgstr "Lista 1 continuación"
 
 
 #: poolfmt.src
@@ -785,7 +785,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_LEVEL2S\n"
 "string.text"
 msgid "List 2 Start"
-msgstr "Enumeración 2 inicio"
+msgstr "Lista 2 inicio"
 
 
 #: poolfmt.src
@@ -803,7 +803,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_LEVEL2E\n"
 "string.text"
 msgid "List 2 End"
-msgstr "Enumeración 2 fin"
+msgstr "Lista 2 fin"
 
 
 #: poolfmt.src
@@ -812,7 +812,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_NONUM2\n"
 "string.text"
 msgid "List 2 Cont."
-msgstr "Enumeración 2 continuación"
+msgstr "Lista 2 continuación"
 
 
 #: poolfmt.src
@@ -821,7 +821,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_LEVEL3S\n"
 "string.text"
 msgid "List 3 Start"
-msgstr "Enumeración 3 inicio"
+msgstr "Lista 3 inicio"
 
 
 #: poolfmt.src
@@ -839,7 +839,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_LEVEL3E\n"
 "string.text"
 msgid "List 3 End"
-msgstr "Enumeración 3 fin"
+msgstr "Lista 3 fin"
 
 
 #: poolfmt.src
@@ -848,7 +848,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_NONUM3\n"
 "string.text"
 msgid "List 3 Cont."
-msgstr "Enumeración 3 continuación"
+msgstr "Lista 3 continuación"
 
 
 #: poolfmt.src
@@ -857,7 +857,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_LEVEL4S\n"
 "string.text"
 msgid "List 4 Start"
-msgstr "Enumeración 4 inicio"
+msgstr "Lista 4 inicio"
 
 
 #: poolfmt.src
@@ -875,7 +875,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_LEVEL4E\n"
 "string.text"
 msgid "List 4 End"
-msgstr "Enumeración 4 fin"
+msgstr "Lista 4 fin"
 
 
 #: poolfmt.src
@@ -884,7 +884,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_NONUM4\n"
 "string.text"
 msgid "List 4 Cont."
-msgstr "Enumeración 4 continuación"
+msgstr "Lista 4 continuación"
 
 
 #: poolfmt.src
@@ -893,7 +893,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_LEVEL5S\n"
 "string.text"
 msgid "List 5 Start"
-msgstr "Enumeración 5 inicio"
+msgstr "Lista 5 inicio"
 
 
 #: poolfmt.src
@@ -911,7 +911,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_LEVEL5E\n"
 "string.text"
 msgid "List 5 End"
-msgstr "Enumeración 5 fin"
+msgstr "Lista 5 fin"
 
 
 #: poolfmt.src
@@ -920,7 +920,7 @@ msgctxt ""
 "STR_POOLCOLL_BUL_NONUM5\n"
 "string.text"
 msgid "List 5 Cont."
-msgstr "Enumeración 5 continuación"
+msgstr "Lista 5 continuación"
 
 
 #: poolfmt.src
@@ -929,7 +929,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADER\n"
 "string.text"
 msgid "Header"
-msgstr "Encabezamiento"
+msgstr "Cabecera"
 
 
 #: poolfmt.src
@@ -938,7 +938,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADERL\n"
 "string.text"
 msgid "Header Left"
-msgstr "Encabezamiento izquierdo"
+msgstr "Cabecera izquierda"
 
 
 #: poolfmt.src
@@ -947,7 +947,7 @@ msgctxt ""
 "STR_POOLCOLL_HEADERR\n"
 "string.text"
 msgid "Header Right"
-msgstr "Encabezamiento derecho"
+msgstr "Cabecera derecha"
 
 
 #: poolfmt.src
@@ -992,7 +992,7 @@ msgctxt ""
 "STR_POOLCOLL_TABLE_HDLN\n"
 "string.text"
 msgid "Table Heading"
-msgstr "Encabezado de la tabla"
+msgstr "Título de la tabla"
 
 
 #: poolfmt.src
@@ -1091,7 +1091,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_IDXH\n"
 "string.text"
 msgid "Index Heading"
-msgstr "Encabezado del índice alfabético"
+msgstr "Título del índice"
 
 
 #: poolfmt.src
@@ -1100,7 +1100,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_IDX1\n"
 "string.text"
 msgid "Index 1"
-msgstr "Índice afabético 1"
+msgstr "Índice 1"
 
 
 #: poolfmt.src
@@ -1109,7 +1109,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_IDX2\n"
 "string.text"
 msgid "Index 2"
-msgstr "Índice alfabético 2"
+msgstr "Índice 2"
 
 
 #: poolfmt.src
@@ -1118,7 +1118,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_IDX3\n"
 "string.text"
 msgid "Index 3"
-msgstr "Índice alfabético 3"
+msgstr "Índice 3"
 
 
 #: poolfmt.src
@@ -1127,7 +1127,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_IDXBREAK\n"
 "string.text"
 msgid "Index Separator"
-msgstr "Separador del índice alfabético"
+msgstr "Separador del índice"
 
 
 #: poolfmt.src
@@ -1136,7 +1136,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_CNTNTH\n"
 "string.text"
 msgid "Contents Heading"
-msgstr "Encabezado del índice"
+msgstr "Título del sumario"
 
 
 #: poolfmt.src
@@ -1145,7 +1145,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_CNTNT1\n"
 "string.text"
 msgid "Contents 1"
-msgstr "Índice 1"
+msgstr "Sumario 1"
 
 
 #: poolfmt.src
@@ -1154,7 +1154,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_CNTNT2\n"
 "string.text"
 msgid "Contents 2"
-msgstr "Índice 2"
+msgstr "Sumario 2"
 
 
 #: poolfmt.src
@@ -1163,7 +1163,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_CNTNT3\n"
 "string.text"
 msgid "Contents 3"
-msgstr "Índice 3"
+msgstr "Sumario 3"
 
 
 #: poolfmt.src
@@ -1172,7 +1172,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_CNTNT4\n"
 "string.text"
 msgid "Contents 4"
-msgstr "Índice 4"
+msgstr "Sumario 4"
 
 
 #: poolfmt.src
@@ -1181,7 +1181,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_CNTNT5\n"
 "string.text"
 msgid "Contents 5"
-msgstr "Índice 5"
+msgstr "Sumario 5"
 
 
 #: poolfmt.src
@@ -1190,7 +1190,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_CNTNT6\n"
 "string.text"
 msgid "Contents 6"
-msgstr "Índice 6"
+msgstr "Sumario 6"
 
 
 #: poolfmt.src
@@ -1199,7 +1199,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_CNTNT7\n"
 "string.text"
 msgid "Contents 7"
-msgstr "Índice 7"
+msgstr "Sumario 7"
 
 
 #: poolfmt.src
@@ -1208,7 +1208,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_CNTNT8\n"
 "string.text"
 msgid "Contents 8"
-msgstr "Índice 8"
+msgstr "Sumario 8"
 
 
 #: poolfmt.src
@@ -1217,7 +1217,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_CNTNT9\n"
 "string.text"
 msgid "Contents 9"
-msgstr "Índice 9"
+msgstr "Sumario 9"
 
 
 #: poolfmt.src
@@ -1226,7 +1226,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_CNTNT10\n"
 "string.text"
 msgid "Contents 10"
-msgstr "Índice 10"
+msgstr "Sumario 10"
 
 
 #: poolfmt.src
@@ -1235,7 +1235,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_USERH\n"
 "string.text"
 msgid "User Index Heading"
-msgstr "Encabezado del índice del usuario"
+msgstr "Título del índice de usuario"
 
 
 #: poolfmt.src
@@ -1244,7 +1244,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_USER1\n"
 "string.text"
 msgid "User Index 1"
-msgstr "Índice del usuario 1"
+msgstr "Índice de usuario 1"
 
 
 #: poolfmt.src
@@ -1253,7 +1253,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_USER2\n"
 "string.text"
 msgid "User Index 2"
-msgstr "Índice del usuario 2"
+msgstr "Índice de usuario 2"
 
 
 #: poolfmt.src
@@ -1262,7 +1262,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_USER3\n"
 "string.text"
 msgid "User Index 3"
-msgstr "Índice del usuario 3"
+msgstr "Índice de usuario 3"
 
 
 #: poolfmt.src
@@ -1271,7 +1271,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_USER4\n"
 "string.text"
 msgid "User Index 4"
-msgstr "Índice del usuario 4"
+msgstr "Índice de usuario 4"
 
 
 #: poolfmt.src
@@ -1280,7 +1280,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_USER5\n"
 "string.text"
 msgid "User Index 5"
-msgstr "Índice del usuario 5"
+msgstr "Índice de usuario 5"
 
 
 #: poolfmt.src
@@ -1289,7 +1289,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_USER6\n"
 "string.text"
 msgid "User Index 6"
-msgstr "Índice del usuario 6"
+msgstr "Índice de usuario 6"
 
 
 #: poolfmt.src
@@ -1298,7 +1298,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_USER7\n"
 "string.text"
 msgid "User Index 7"
-msgstr "Índice del usuario 7"
+msgstr "Índice de usuario 7"
 
 
 #: poolfmt.src
@@ -1307,7 +1307,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_USER8\n"
 "string.text"
 msgid "User Index 8"
-msgstr "Índice del usuario 8"
+msgstr "Índice de usuario 8"
 
 
 #: poolfmt.src
@@ -1316,7 +1316,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_USER9\n"
 "string.text"
 msgid "User Index 9"
-msgstr "Índice del usuario 9"
+msgstr "Índice de usuario 9"
 
 
 #: poolfmt.src
@@ -1325,7 +1325,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_USER10\n"
 "string.text"
 msgid "User Index 10"
-msgstr "Índice del usuario 10"
+msgstr "Índice de usuario 10"
 
 
 #: poolfmt.src
@@ -1343,7 +1343,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_ILLUSH\n"
 "string.text"
 msgid "Illustration Index Heading"
-msgstr "Encabezado Índice de ilustraciones"
+msgstr "Título del índice de ilustraciones"
 
 
 #: poolfmt.src
@@ -1361,7 +1361,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_OBJECTH\n"
 "string.text"
 msgid "Object Index Heading"
-msgstr "Encabezado del índice de objetos"
+msgstr "Título del índice de objetos"
 
 
 #: poolfmt.src
@@ -1379,7 +1379,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_TABLESH\n"
 "string.text"
 msgid "Table Index Heading"
-msgstr "Encabezado del índice de tablas"
+msgstr "Título del índice de tablas"
 
 
 #: poolfmt.src
@@ -1397,7 +1397,7 @@ msgctxt ""
 "STR_POOLCOLL_TOX_AUTHORITIESH\n"
 "string.text"
 msgid "Bibliography Heading"
-msgstr "Encabezado de bibliografía"
+msgstr "Título de la bibliografía"
 
 
 #: poolfmt.src
@@ -1416,7 +1416,7 @@ msgctxt ""
 "STR_POOLCOLL_DOC_TITEL\n"
 "string.text"
 msgid "Title"
-msgstr "Título"
+msgstr "Titular"
 
 
 #: poolfmt.src
@@ -1470,7 +1470,7 @@ msgctxt ""
 "STR_POOLCOLL_HTML_DT\n"
 "string.text"
 msgid "List Heading"
-msgstr "Encabezado de lista"
+msgstr "Título de lista"
 
 
 #: poolfmt.src
@@ -1784,7 +1784,7 @@ msgctxt ""
 "STR_POOLSHEET_HEADLINE\n"
 "string.text"
 msgid "Heading"
-msgstr "Encabezado"
+msgstr "Título"
 
 
 #: glob.src
@@ -1793,7 +1793,7 @@ msgctxt ""
 "STR_POOLSHEET_HEADLINE1\n"
 "string.text"
 msgid "Heading1"
-msgstr "Encabezado1"
+msgstr "Título1"
 
 
 #: glob.src
@@ -1802,7 +1802,7 @@ msgctxt ""
 "STR_POOLSHEET_HEADLINE2\n"
 "string.text"
 msgid "Heading2"
-msgstr "Encabezado2"
+msgstr "Título2"
 
 
 #: glob.src
@@ -1811,7 +1811,7 @@ msgctxt ""
 "STR_PSEUDOSHEET_TITLE\n"
 "string.text"
 msgid "Title"
-msgstr "Título"
+msgstr "Titular"
 
 
 #: glob.src
@@ -1874,7 +1874,7 @@ msgctxt ""
 "STR_POOLSHEET_HEADER\n"
 "string.text"
 msgid "Header"
-msgstr "Encabezamiento"
+msgstr "Cabecera"
 
 
 #: glob.src
@@ -1925,7 +1925,7 @@ msgstr "Página de título"
 
 #: strings.src
 msgid "Title, Content"
-msgstr "Título, Contenido"
+msgstr "Título, contenido"
 
 #: strings.src
 msgid "Title and 2 Content"
@@ -2107,7 +2107,7 @@ msgstr "Canarés"
 
 #: ucsubset.src
 msgid "Malayalam"
-msgstr "Malasio"
+msgstr "Malabar"
 
 #: ucsubset.src
 msgid "Thai"
@@ -2211,7 +2211,7 @@ msgstr "Jamo compatibles con hangul"
 
 #: ucsubset.src
 msgid "CJK Miscellaneous"
-msgstr "Diversos caracteres CJK"
+msgstr "Caracteres CJK diversos"
 
 #: ucsubset.src
 msgid "Enclosed CJK Letters And Months"
@@ -2243,7 +2243,7 @@ msgstr "Formas de presentación alfabéticas"
 
 #: ucsubset.src
 msgid "Arabic Presentation Forms-A"
-msgstr "Formas A de presentación árabe"
+msgstr "Formas de presentación del árabe, A"
 
 #: ucsubset.src
 msgid "Combining Half Marks"
@@ -2259,7 +2259,7 @@ msgstr "Variantes de pequeñas formas"
 
 #: ucsubset.src
 msgid "Arabic Presentation Forms-B"
-msgstr "Formas B de presentación árabe"
+msgstr "Formas de presentación del árabe, B"
 
 #: ucsubset.src
 msgid "Half-width and Full-width Forms"
