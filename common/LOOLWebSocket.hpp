@@ -51,9 +51,12 @@ private:
 
     void setMinSocketBufferSize()
     {
-        // Lets set it to zero as system will automatically adjust it to minimum
-        setSendBufferSize(0);
-        LOG_INF("Send buffer size for web socket set to minimum: " << getSendBufferSize());
+        if (std::getenv("LOOL_ZERO_BUFFER_SIZE"))
+        {
+            // Lets set it to zero as system will automatically adjust it to minimum
+            setSendBufferSize(0);
+            LOG_INF("Send buffer size for web socket set to minimum: " << getSendBufferSize());
+        }
     }
 #endif
 

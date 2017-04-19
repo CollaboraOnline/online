@@ -226,10 +226,13 @@ protected:
                 _owner << "." << std::dec);
 
 #if ENABLE_DEBUG
-        const int oldSize = getSocketBufferSize();
-        setSocketBufferSize(0);
-        LOG_TRC("#" << _fd << ": Buffer size: " << getSendBufferSize() <<
-                " (was " << oldSize << ")");
+        if (std::getenv("LOOL_ZERO_BUFFER_SIZE"))
+        {
+            const int oldSize = getSocketBufferSize();
+            setSocketBufferSize(0);
+            LOG_TRC("#" << _fd << ": Buffer size: " << getSendBufferSize() <<
+                    " (was " << oldSize << ")");
+        }
 #endif
     }
 
