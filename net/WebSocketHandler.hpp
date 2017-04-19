@@ -417,9 +417,11 @@ protected:
         LOG_INF("#" << socket->getFD() << ": WebSocket version: " << wsVersion <<
                 ", key: [" << wsKey << "], protocol: [" << wsProtocol << "].");
 
-        // Want very low latency sockets.
         socket->setNoDelay();
-        socket->setSocketBufferSize(0);
+#if ENABLE_DEBUG
+        if (std::getenv("LOOL_ZERO_BUFFER_SIZE"))
+            socket->setSocketBufferSize(0);
+#endif
 
         std::ostringstream oss;
         oss << "HTTP/1.1 101 Switching Protocols\r\n"
