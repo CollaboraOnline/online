@@ -34,9 +34,13 @@ public:
 
     void setReadOnly() override;
 
-    /// Returns true if a document is loaded (i.e. we got status message).
+    /// Returns true if this session is added to a DocBroker.
     bool isAttached() const { return _isAttached; }
     void setAttached() { _isAttached = true; }
+
+    /// Returns true if this session has loaded a view (i.e. we got status message).
+    bool isLoaded() const { return _isLoaded; }
+    void setLoaded() { _isLoaded = true; }
 
     const std::string getUserId() const { return _userId; }
     const std::string getUserName() const {return _userName; }
@@ -140,7 +144,11 @@ private:
     /// The socket to which the converted (saveas) doc is sent.
     std::shared_ptr<StreamSocket> _saveAsSocket;
 
+    /// If we are added to a DocBroker.
     bool _isAttached;
+
+    /// If we have loaded a view.
+    bool _isLoaded;
 
     /// Wopi FileInfo object
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;

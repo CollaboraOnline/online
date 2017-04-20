@@ -1218,6 +1218,7 @@ void DocumentBroker::destroyIfLastEditor(const std::string& id)
         for (const auto& it : _sessions)
         {
             if (it.second->getId() != id &&
+                it.second->isLoaded() &&
                 !it.second->isReadOnly())
             {
                 // Found another editable.
