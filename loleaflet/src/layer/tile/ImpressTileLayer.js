@@ -6,7 +6,7 @@
 L.ImpressTileLayer = L.TileLayer.extend({
 
 	newAnnotation: function (comment) {
-		var annotation = L.annotation(this._map.getCenter(), comment).addTo(this._map);
+		var annotation = L.annotation(this._map.getCenter(), comment, {noMenu: true}).addTo(this._map);
 		annotation.edit();
 		annotation.focus();
 	},
