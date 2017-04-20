@@ -116,7 +116,7 @@ L.AnnotationManager = L.Class.extend({
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), changecomment).addTo(this._map));
 		}
 		if (this._items.length > 0) {
-			this._map._docLayer._upateMaxBounds(true);
+			this._map._docLayer._updateMaxBounds(true);
 			this.layout();
 		}
 	},
