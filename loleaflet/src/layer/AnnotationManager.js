@@ -280,7 +280,7 @@ L.AnnotationManager = L.Class.extend({
 		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		var docRight = this._map.project(this._map.options.maxBounds.getNorthEast()).subtract(this.options.extraSize.multiplyBy(scale));
 		var topRight = docRight.add(L.point(this.options.marginX, this.options.marginY));
-		var latlng, layoutBounds, point, index;
+		var latlng, layoutBounds, point, idx;
 		if (this._selected) {
 			var selectIndexFirst = this.getRootIndexOf(this._selected._data.id);
 			var selectIndexLast = this.getLastChildIndexOf(this._selected._data.id);
@@ -293,7 +293,7 @@ L.AnnotationManager = L.Class.extend({
 			layoutBounds = this._items[selectIndexFirst].getBounds();
 
 			// Adjust child comments too, if any
-			for (var idx = selectIndexFirst + 1; idx <= selectIndexLast; idx++) {
+			for (idx = selectIndexFirst + 1; idx <= selectIndexLast; idx++) {
 				if (zoom) {
 					this._items[idx]._data.anchorPix = this._map._docLayer._twipsToPixels(this._items[idx]._data.anchorPos.min);
 				}
@@ -310,9 +310,9 @@ L.AnnotationManager = L.Class.extend({
 			layoutBounds.max = layoutBounds.max.add([this.options.marginX, 0]);
 			layoutBounds.extend(layoutBounds.min.subtract([0, this.options.marginY]));
 			layoutBounds.extend(layoutBounds.max.add([0, this.options.marginY]));
-			for (index = selectIndexFirst - 1; index >= 0;) {
+			for (idx = selectIndexFirst - 1; idx >= 0;) {
 				var commentThread = [];
-				var tmpIdx = index;
+				var tmpIdx = idx;
 				do {
 					if (zoom) {
 						this._items[idx]._data.anchorPix = this._map._docLayer._twipsToPixels(this._items[idx]._data.anchorPos.min);
@@ -324,11 +324,11 @@ L.AnnotationManager = L.Class.extend({
 				commentThread.reverse();
 				// All will have some anchor position
 				this.layoutUp(commentThread, this._map.unproject(L.point(topRight.x, commentThread[0]._data.anchorPix.y)), layoutBounds);
-				index = index - commentThread.length;
+				idx = idx - commentThread.length;
 			}
-			for (index = selectIndexLast + 1; index < this._items.length;) {
+			for (idx = selectIndexLast + 1; idx < this._items.length;) {
 				commentThread = [];
-				tmpIdx = index;
+				tmpIdx = idx;
 				do {
 					if (zoom) {
 						this._items[idx]._data.anchorPix = this._map._docLayer._twipsToPixels(this._items[idx]._data.anchorPos.min);
@@ -339,7 +339,7 @@ L.AnnotationManager = L.Class.extend({
 
 				// All will have some anchor position
 				this.layoutDown(commentThread, this._map.unproject(L.point(topRight.x, commentThread[0]._data.anchorPix.y)), layoutBounds);
-				index = index + commentThread.length;
+				idx = idx + commentThread.length;
 			}
 			if (!this._selected.isEdit()) {
 				this._selected.show();
@@ -347,9 +347,9 @@ L.AnnotationManager = L.Class.extend({
 		} else {
 			point = this._map.latLngToLayerPoint(this._map.unproject(topRight));
 			layoutBounds = L.bounds(point, point);
-			for (index = 0; index < this._items.length;) {
+			for (idx = 0; idx < this._items.length;) {
 				commentThread = [];
-				tmpIdx = index;
+				tmpIdx = idx;
 				do {
 					if (zoom) {
 						this._items[tmpIdx]._data.anchorPix = this._map._docLayer._twipsToPixels(this._items[tmpIdx]._data.anchorPos.min);
@@ -359,7 +359,7 @@ L.AnnotationManager = L.Class.extend({
 				} while (tmpIdx < this._items.length && this._items[tmpIdx]._data.parent === this._items[tmpIdx - 1]._data.id);
 
 				this.layoutDown(commentThread, this._map.unproject(L.point(topRight.x, commentThread[0]._data.anchorPix.y)), layoutBounds);
-				index = index + commentThread.length;
+				idx = idx + commentThread.length;
 			}
 		}
 	},
