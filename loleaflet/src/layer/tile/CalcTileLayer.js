@@ -32,7 +32,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	createAnnotation: function (comment) {
-		var annotation = L.divOverlay(comment.cellPos).bindAnnotation(L.annotation(L.latLng(0, 0), comment));
+		var annotation = L.divOverlay(comment.cellPos).bindAnnotation(L.annotation(L.latLng(0, 0),
+			comment, comment.id === 'new' ? {noMenu: true} : {}));
 		annotation.mark = L.marker(comment.cellPos.getNorthEast(), {
 			draggable: false,
 			clickable: false,

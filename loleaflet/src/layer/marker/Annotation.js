@@ -6,7 +6,8 @@ L.Annotation = L.Layer.extend({
 	options: {
 		minWidth: 160,
 		maxHeight: 50,
-		imgSize: L.point([32, 32])
+		imgSize: L.point([32, 32]),
+		noMenu: false
 	},
 
 	initialize: function (latlng, data, options) {
@@ -167,10 +168,12 @@ L.Annotation = L.Layer.extend({
 			}, this);
 		}
 
-		var tdMenu = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
-		var divMenu = L.DomUtil.create(tagDiv, this._data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
-		divMenu.title = _('Open menu');
-		divMenu.annotation = this;
+		if (this.options.noMenu !== true) {
+			var tdMenu = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
+			var divMenu = L.DomUtil.create(tagDiv, this._data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
+			divMenu.title = _('Open menu');
+			divMenu.annotation = this;
+		}
 		if (this._data.trackchange) {
 			this._captionNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-caption', wrapper);
 			this._captionText = L.DomUtil.create(tagDiv, empty, this._captionNode);

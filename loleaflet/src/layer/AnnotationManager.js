@@ -365,7 +365,8 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	add: function (comment) {
-		var annotation = L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map);
+		var annotation = L.annotation(this._map.options.maxBounds.getSouthEast(), comment,
+			comment.id === 'new' ? {noMenu: true} : {}).addTo(this._map);
 		if (comment.parent && comment.parent > '0') {
 			var parentIdx = this.getIndexOf(comment.parent);
 			this._items.splice(parentIdx + 1, 0, annotation);
