@@ -70,6 +70,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testReload);
     CPPUNIT_TEST(testGetTextSelection);
     CPPUNIT_TEST(testSaveOnDisconnect);
+    CPPUNIT_TEST(testSavePassiveOnDisconnect);
     CPPUNIT_TEST(testReloadWhileDisconnecting);
     CPPUNIT_TEST(testExcelLoad);
     CPPUNIT_TEST(testPaste);
@@ -123,6 +124,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testReload();
     void testGetTextSelection();
     void testSaveOnDisconnect();
+    void testSavePassiveOnDisconnect();
     void testReloadWhileDisconnecting();
     void testExcelLoad();
     void testPaste();
@@ -681,6 +683,74 @@ void HTTPWSTest::testSaveOnDisconnect()
         // Shutdown abruptly.
         std::cerr << "Closing connection after pasting." << std::endl;
         socket->shutdown();
+        socket2->shutdown();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+
+    // Allow time to save and destroy before we connect again.
+    testNoExtraLoolKitsLeft();
+    std::cerr << "Loading again." << std::endl;
+    try
+    {
+        // Load the same document and check that the last changes (pasted text) is saved.
+        auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+        // Should have no new instances.
+        CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
+
+        // Check if the document contains the pasted text.
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
+        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + text, selection);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testSavePassiveOnDisconnect()
+{
+    const auto testname = "saveOnPassiveDisconnect ";
+
+    const auto text = helpers::genRandomString(40);
+    std::cerr << "Test string: [" << text << "]." << std::endl;
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
+
+    int kitcount = -1;
+    try
+    {
+        auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+        auto socket2 = connectLOKit(_uri, request, _response);
+
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "uno .uno:Delete", testname);
+        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
+
+        // Check if the document contains the pasted text.
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
+        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + text, selection);
+
+        // Closing connection too fast might not flush buffers.
+        // Often nothing more than the SelectAll reaches the server before
+        // the socket is closed, when the doc is not even modified yet.
+        getResponseMessage(socket, "statechanged", testname);
+
+        kitcount = getLoolKitProcessCount();
+
+        // Shutdown abruptly.
+        std::cerr << "Closing connection after pasting." << std::endl;
+        socket->shutdown(); // Should trigger saving.
         socket2->shutdown();
     }
     catch (const Poco::Exception& exc)
