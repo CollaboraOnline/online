@@ -58,9 +58,8 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry,
 
 int main(int argc, char** argv)
 {
-    const char* loglevel = "error";
-    if (argc > 0 && std::string("--verbose") == argv[0])
-        loglevel = "trace";
+    const bool verbose = (argc > 1 && std::string("--verbose") == argv[1]);
+    const char* loglevel = verbose ? "trace" : "error";
 
     Log::initialize("tst", loglevel, true, false, {});
 
@@ -96,17 +95,24 @@ int main(int argc, char** argv)
         }
     }
 
-    // redirect std::cerr temporarily
-    std::stringstream errorBuffer;
-    std::streambuf* oldCerr = std::cerr.rdbuf(errorBuffer.rdbuf());
+    if (!verbose)
+    {
+        // redirect std::cerr temporarily
+        std::stringstream errorBuffer;
+        std::streambuf* oldCerr = std::cerr.rdbuf(errorBuffer.rdbuf());
 
-    runner.run(controller);
+        runner.run(controller);
 
-    std::cerr.rdbuf(oldCerr);
+        std::cerr.rdbuf(oldCerr);
 
-    // output the errors we got during the testing
-    if (!result.wasSuccessful())
-        std::cerr << errorBuffer.str() << std::endl;
+        // output the errors we got during the testing
+        if (!result.wasSuccessful())
+            std::cerr << errorBuffer.str() << std::endl;
+    }
+    else
+    {
+        runner.run(controller);
+    }
 
     CPPUNIT_NS::CompilerOutputter outputter(&result, std::cerr);
     outputter.setNoWrap();
