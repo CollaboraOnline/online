@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 09:32+0000\n"
+"POT-Creation-Date: 2017-04-20 07:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0b7\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /cy/libo_online/loleaflet-ui-cy.po\n"
-"X-Pootle-Revision: 824828\n"
+"X-Pootle-Revision: 2438486\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -83,10 +83,11 @@ msgid "Graphs"
 msgstr "Graffiau"
 
 #: admin.strings.js:22
-#: dist/toolbar/toolbar.js:364
+#: dist/toolbar/toolbar.js:473
 #: src/control/Control.Menubar.js:11
-#: src/control/Control.Menubar.js:163
-#: src/control/Control.Menubar.js:221
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:235
+#: src/layer/marker/Annotation.js:184
 msgid "Save"
 msgstr "Cadw"
 
@@ -198,6 +199,16 @@ msgstr "Diweddaru Mynegai neu Dabl Cynnwys"
 msgid "Delete Index or Table of Contents"
 msgstr "Dileu Mynegai neu Dabl Cynnwys"
 
+#: unocommands.js:18
+#: src/layer/marker/Annotation.js:187
+#: src/layer/tile/TileLayer.js:188
+msgid "Reply"
+msgstr "Ateb"
+
+#: unocommands.js:19
+msgid "Refresh"
+msgstr "Adnewyddu"
+
 #: dist/errormessages.js:1
 msgid ""
 "No disk space left on server, please contact the server administrator to "
@@ -227,13 +238,21 @@ msgstr ""
 
 #: dist/errormessages.js:4
 msgid ""
+"This service is limited to %0 documents, and %1 connections total by the "
+"admin. This limit has been reached. Please try again later."
+msgstr ""
+"Mae'r gwasanaeth wedi ei gyfyngu i %0 dogfen a chyfanswm o %1 cysylltiad gan "
+"y gweinyddwr. Mae'r terfyn yna wedi ei gyrraedd. Ceisiwch eto'n hwyrach."
+
+#: dist/errormessages.js:5
+msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
 "Nid yw'r gwasanaeth ar gael. Ceisiwch eto'n hwyrach a dywedwch wrth eich "
 "gweinyddwr os yw problemau'n parhau."
 
-#: dist/errormessages.js:5
+#: dist/errormessages.js:6
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
@@ -241,7 +260,7 @@ msgstr ""
 "Gwesteiwr WOPI heb ei awdurdodi. Ceisiwch eto'n hwyrach a dywedwch wrth eich "
 "gweinyddwr os yw problemau'n parhau."
 
-#: dist/errormessages.js:6
+#: dist/errormessages.js:7
 msgid ""
 "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
 "file_path=/path/to/doc/"
@@ -249,7 +268,7 @@ msgstr ""
 "Defnydd WOPISrc, anghywir: WOPISrc=URI amgodiad cywir, neu ddefnydd "
 "file_path, : file_path=/path/to/doc/"
 
-#: dist/errormessages.js:7
+#: dist/errormessages.js:8
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
@@ -257,7 +276,7 @@ msgstr ""
 "Bydd eich sesiwn yn dod i ben ymhen %time. Cadwch eich gwaith ac adnewyddu'r "
 "sesiwn (neu dudalen gwe) i barhau."
 
-#: dist/errormessages.js:8
+#: dist/errormessages.js:9
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
@@ -265,7 +284,15 @@ msgstr ""
 "Mae eich sesiwn wedi dod i ben. Efallai na fydd newidiadau pellach i'r "
 "ddogfen yn cael eu adw. Adnewyddwch eich sesiwn (neu dudalen gwe) i barhau."
 
-#: dist/errormessages.js:11
+#: dist/errormessages.js:10
+msgid ""
+"Failed to load the document. Please ensure the file type is supported and "
+"not corrupted, and try again."
+msgstr ""
+"Wedi methu llwytho'r ddogfen. Gwnewch yn siŵr fod y math yna o ffeil yn cael "
+"ei gynnal ac nad yw wedi ei llygru a cheisiwch eto."
+
+#: dist/errormessages.js:13
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server administrator to continue editing."
@@ -274,7 +301,7 @@ msgstr ""
 "yn un darllen yn unig, nawr. Cysylltwch â gweinyddwr y gweinydd er mwyn "
 "parhau i olygu."
 
-#: dist/errormessages.js:12
+#: dist/errormessages.js:14
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server administrator."
@@ -282,419 +309,434 @@ msgstr ""
 "Nid oes modd cadw'r ddogfen i'r storfa. Gwiriwch eich caniatâd neu "
 "cysylltwch a gweinyddwr y gweinydd storio."
 
-#: dist/toolbar/toolbar.js:159
+#: dist/toolbar/toolbar.js:105
+msgid "%n users"
+msgstr "%n defnyddiwr"
+
+#: dist/toolbar/toolbar.js:106
+msgid "1 user"
+msgstr "1 defnyddiwr"
+
+#: dist/toolbar/toolbar.js:107
+msgid "0 users"
+msgstr "0 defnyddwyr"
+
+#: dist/toolbar/toolbar.js:264
 msgid "Are you sure you want to delete this page?"
 msgstr "Ydych chi'n siŵr eich bod eisiau dileu'r dudalen hon?"
 
-#: dist/toolbar/toolbar.js:355
+#: dist/toolbar/toolbar.js:464
 msgid "Textwrap"
 msgstr "Amlapio Testun"
 
-#: dist/toolbar/toolbar.js:356
+#: dist/toolbar/toolbar.js:465
 msgid "No wrap"
 msgstr "Dim amlapio"
 
-#: dist/toolbar/toolbar.js:357
+#: dist/toolbar/toolbar.js:466
 msgid "Page wrap"
 msgstr "Amlapio tudalen"
 
-#: dist/toolbar/toolbar.js:358
+#: dist/toolbar/toolbar.js:467
 msgid "Wrap anchor only"
 msgstr "Amlapio angor yn unig"
 
-#: dist/toolbar/toolbar.js:359
+#: dist/toolbar/toolbar.js:468
 msgid "Ideal wrap"
 msgstr "Amlapio delfrydol"
 
-#: dist/toolbar/toolbar.js:360
+#: dist/toolbar/toolbar.js:469
 msgid "Left wrap"
 msgstr "Amlapio i'r chwith"
 
-#: dist/toolbar/toolbar.js:361
+#: dist/toolbar/toolbar.js:470
 msgid "Right wrap"
 msgstr "Amlapio i'r dde"
 
-#: dist/toolbar/toolbar.js:362
+#: dist/toolbar/toolbar.js:471
 msgid "Wrap through"
 msgstr "Amlapio parhaus"
 
-#: dist/toolbar/toolbar.js:366
+#: dist/toolbar/toolbar.js:475
 #: src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:173
-#: src/control/Control.Menubar.js:231
+#: src/control/Control.Menubar.js:185
+#: src/control/Control.Menubar.js:245
 msgid "Undo"
 msgstr "Dadwneud"
 
-#: dist/toolbar/toolbar.js:367
+#: dist/toolbar/toolbar.js:476
 #: src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:174
-#: src/control/Control.Menubar.js:232
+#: src/control/Control.Menubar.js:186
+#: src/control/Control.Menubar.js:246
 msgid "Redo"
 msgstr "Ail-wneud"
 
-#: dist/toolbar/toolbar.js:368
+#: dist/toolbar/toolbar.js:477
 msgid "Document repair"
 msgstr "Trwsio dogfennau"
 
-#: dist/toolbar/toolbar.js:374
-#: src/control/Control.Menubar.js:60
+#: dist/toolbar/toolbar.js:483
+#: src/control/Control.Menubar.js:71
 msgid "Bold"
 msgstr "Trwm"
 
-#: dist/toolbar/toolbar.js:375
-#: src/control/Control.Menubar.js:61
+#: dist/toolbar/toolbar.js:484
+#: src/control/Control.Menubar.js:72
 msgid "Italic"
 msgstr "Italig"
 
-#: dist/toolbar/toolbar.js:376
-#: src/control/Control.Menubar.js:62
+#: dist/toolbar/toolbar.js:485
+#: src/control/Control.Menubar.js:73
 msgid "Underline"
 msgstr "Tanlinellu"
 
-#: dist/toolbar/toolbar.js:377
+#: dist/toolbar/toolbar.js:486
 msgid "Strikeout"
 msgstr "Llinell drwodd"
 
-#: dist/toolbar/toolbar.js:379
+#: dist/toolbar/toolbar.js:488
 msgid "Insert Footnote"
 msgstr "Mewnosod Troednodyn"
 
-#: dist/toolbar/toolbar.js:382
+#: dist/toolbar/toolbar.js:491
 msgid "Font color"
 msgstr "Lliw ffont"
 
-#: dist/toolbar/toolbar.js:384
+#: dist/toolbar/toolbar.js:493
 msgid "Highlighting"
 msgstr "Amlygu"
 
-#: dist/toolbar/toolbar.js:386
+#: dist/toolbar/toolbar.js:495
 msgid "Align left"
 msgstr "Alinio i'r chwith"
 
-#: dist/toolbar/toolbar.js:387
+#: dist/toolbar/toolbar.js:496
 msgid "Center horizontally"
 msgstr "Canoli'n llorweddol"
 
-#: dist/toolbar/toolbar.js:388
+#: dist/toolbar/toolbar.js:497
 msgid "Align right"
 msgstr "Alinio i'r dde"
 
-#: dist/toolbar/toolbar.js:389
-#: src/control/Control.Menubar.js:101
+#: dist/toolbar/toolbar.js:498
+#: src/control/Control.Menubar.js:112
 msgid "Justified"
 msgstr "Unioni"
 
-#: dist/toolbar/toolbar.js:391
+#: dist/toolbar/toolbar.js:500
 msgid "Wrap Text"
 msgstr "Amlapio Testun"
 
-#: dist/toolbar/toolbar.js:392
+#: dist/toolbar/toolbar.js:501
 msgid "Merge and Center Cells"
 msgstr "Uno a Chanoli Celloedd"
 
-#: dist/toolbar/toolbar.js:394
+#: dist/toolbar/toolbar.js:503
 msgid "Format as Currency"
 msgstr "Fformatio fel Arian"
 
-#: dist/toolbar/toolbar.js:395
+#: dist/toolbar/toolbar.js:504
 msgid "Format as Percent"
 msgstr "Fformatio fel Canran"
 
-#: dist/toolbar/toolbar.js:396
+#: dist/toolbar/toolbar.js:505
 msgid "Format as Number"
 msgstr "Fformatio fel Rhif"
 
-#: dist/toolbar/toolbar.js:397
+#: dist/toolbar/toolbar.js:506
 msgid "Format as Date"
 msgstr "Fformatio fel Dyddiad"
 
-#: dist/toolbar/toolbar.js:398
+#: dist/toolbar/toolbar.js:507
 msgid "Add Decimal Place"
 msgstr "Ychwanegu Lle Degol"
 
-#: dist/toolbar/toolbar.js:399
+#: dist/toolbar/toolbar.js:508
 msgid "Delete Decimal Place"
 msgstr "Dileu Lle Degol"
 
-#: dist/toolbar/toolbar.js:401
+#: dist/toolbar/toolbar.js:510
 msgid "Sort Ascending"
 msgstr "Trefnu Esgynnol"
 
-#: dist/toolbar/toolbar.js:402
+#: dist/toolbar/toolbar.js:511
 msgid "Sort Descending"
 msgstr "Trefnu Disgynnol"
 
-#: dist/toolbar/toolbar.js:404
-#: src/control/Control.Menubar.js:107
+#: dist/toolbar/toolbar.js:513
+#: src/control/Control.Menubar.js:118
 msgid "Bullets on/off"
 msgstr "Bwledi ymlaen/diffodd"
 
-#: dist/toolbar/toolbar.js:405
-#: src/control/Control.Menubar.js:108
+#: dist/toolbar/toolbar.js:514
+#: src/control/Control.Menubar.js:119
 msgid "Numbering on/off"
 msgstr "Rhifo ymlaen/diffodd"
 
-#: dist/toolbar/toolbar.js:407
-#: src/control/Control.Menubar.js:95
+#: dist/toolbar/toolbar.js:516
+#: src/control/Control.Menubar.js:106
 msgid "Increase indent"
 msgstr "Cynyddu'r mewnoliad"
 
-#: dist/toolbar/toolbar.js:408
-#: src/control/Control.Menubar.js:96
+#: dist/toolbar/toolbar.js:517
+#: src/control/Control.Menubar.js:107
 msgid "Decrease indent"
 msgstr "Lleihau'r mewnoliad"
 
-#: dist/toolbar/toolbar.js:411
+#: dist/toolbar/toolbar.js:520
 msgid "Insert table"
 msgstr "Mewnosod tudalen"
 
-#: dist/toolbar/toolbar.js:412
+#: dist/toolbar/toolbar.js:521
 msgid "Insert comment"
 msgstr "Mewnosod sylw"
 
-#: dist/toolbar/toolbar.js:413
+#: dist/toolbar/toolbar.js:522
 msgid "Insert graphic"
 msgstr "Mewnosod graffeg"
 
-#: dist/toolbar/toolbar.js:414
+#: dist/toolbar/toolbar.js:523
 msgid "Special Character"
 msgstr "Nod Arbennig"
 
-#: dist/toolbar/toolbar.js:416
+#: dist/toolbar/toolbar.js:525
 msgid "More"
 msgstr "Rhagor"
 
-#: dist/toolbar/toolbar.js:417
+#: dist/toolbar/toolbar.js:527
+#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:277
 msgid "Close document"
 msgstr "Cau dogfen"
 
-#: dist/toolbar/toolbar.js:496
+#: dist/toolbar/toolbar.js:606
 msgid "Layout"
 msgstr "Cynllun"
 
-#: dist/toolbar/toolbar.js:519
-#: dist/toolbar/toolbar.js:851
+#: dist/toolbar/toolbar.js:631
+#: dist/toolbar/toolbar.js:976
 msgid "Sum"
 msgstr "Swm"
 
-#: dist/toolbar/toolbar.js:520
+#: dist/toolbar/toolbar.js:632
 msgid "Function"
 msgstr "Swyddogaeth"
 
-#: dist/toolbar/toolbar.js:521
+#: dist/toolbar/toolbar.js:633
 #: src/control/Control.CharacterMap.js:428
+#: src/layer/marker/Annotation.js:130
 msgid "Cancel"
 msgstr "Diddymu"
 
-#: dist/toolbar/toolbar.js:522
+#: dist/toolbar/toolbar.js:634
 msgid "Accept"
 msgstr "Derbyn"
 
-#: dist/toolbar/toolbar.js:533
+#: dist/toolbar/toolbar.js:649
 msgid "First sheet"
 msgstr "Daflen gyntaf"
 
-#: dist/toolbar/toolbar.js:534
+#: dist/toolbar/toolbar.js:650
 msgid "Previous sheet"
 msgstr "Dalen flaenorol"
 
-#: dist/toolbar/toolbar.js:535
+#: dist/toolbar/toolbar.js:651
 msgid "Next sheet"
 msgstr "Dalen nesaf"
 
-#: dist/toolbar/toolbar.js:536
+#: dist/toolbar/toolbar.js:652
 msgid "Last sheet"
 msgstr "Dalen olaf"
 
-#: dist/toolbar/toolbar.js:546
-#: src/control/Control.Menubar.js:211
+#: dist/toolbar/toolbar.js:662
+#: src/control/Control.Menubar.js:224
 msgid "Fullscreen presentation"
 msgstr "Cyflwyniad sgrin lawn"
 
-#: dist/toolbar/toolbar.js:548
+#: dist/toolbar/toolbar.js:664
 msgid "Insert slide"
 msgstr "Mewnosod sleid"
 
-#: dist/toolbar/toolbar.js:549
-#: src/control/Control.Menubar.js:208
+#: dist/toolbar/toolbar.js:665
+#: src/control/Control.Menubar.js:221
 msgid "Duplicate slide"
 msgstr "Sleid dyblyg"
 
-#: dist/toolbar/toolbar.js:550
-#: src/control/Control.Menubar.js:209
+#: dist/toolbar/toolbar.js:666
+#: src/control/Control.Menubar.js:222
 msgid "Delete slide"
 msgstr "Dileu sleid"
 
-#: dist/toolbar/toolbar.js:563
+#: dist/toolbar/toolbar.js:679
 msgid "Search:"
 msgstr "Chwilio:"
 
-#: dist/toolbar/toolbar.js:568
+#: dist/toolbar/toolbar.js:684
 msgid "Search backwards"
 msgstr "Chwilio nôl"
 
-#: dist/toolbar/toolbar.js:569
+#: dist/toolbar/toolbar.js:685
 msgid "Search forward"
 msgstr "Chwilio ymlaen"
 
-#: dist/toolbar/toolbar.js:570
+#: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
 msgstr "Diddymu'r chwilio"
 
-#: dist/toolbar/toolbar.js:575
-#: dist/toolbar/toolbar.js:1404
+#: dist/toolbar/toolbar.js:691
 msgid "No users"
 msgstr "Dim defnyddwyr"
 
-#: dist/toolbar/toolbar.js:577
+#: dist/toolbar/toolbar.js:693
 msgid "Previous page"
 msgstr "Tudalen flaenorol"
 
-#: dist/toolbar/toolbar.js:578
+#: dist/toolbar/toolbar.js:694
 msgid "Next page"
 msgstr "Tudalen nesaf"
 
-#: dist/toolbar/toolbar.js:580
-#: src/control/Control.Menubar.js:36
-#: src/control/Control.Menubar.js:187
+#: dist/toolbar/toolbar.js:696
+#: src/control/Control.Menubar.js:44
+#: src/control/Control.Menubar.js:199
 msgid "Reset zoom"
 msgstr "Ailosod chwyddo"
 
-#: dist/toolbar/toolbar.js:581
-#: src/control/Control.Menubar.js:35
-#: src/control/Control.Menubar.js:186
+#: dist/toolbar/toolbar.js:697
+#: src/control/Control.Menubar.js:43
+#: src/control/Control.Menubar.js:198
 msgid "Zoom out"
 msgstr "Chwyddo allan"
 
-#: dist/toolbar/toolbar.js:583
-#: src/control/Control.Menubar.js:34
-#: src/control/Control.Menubar.js:185
+#: dist/toolbar/toolbar.js:699
+#: src/control/Control.Menubar.js:42
+#: src/control/Control.Menubar.js:197
 msgid "Zoom in"
 msgstr "Chwyddo i mewn"
 
-#: dist/toolbar/toolbar.js:597
+#: dist/toolbar/toolbar.js:715
 msgid "%user has joined"
 msgstr "Mae %user wedi ymuno"
 
-#: dist/toolbar/toolbar.js:598
+#: dist/toolbar/toolbar.js:716
 msgid "%user has left"
 msgstr "Mae %user wedi gadael"
 
-#: dist/toolbar/toolbar.js:700
-#: dist/toolbar/toolbar.js:1187
+#: dist/toolbar/toolbar.js:825
+#: dist/toolbar/toolbar.js:1351
 msgid "Size"
 msgstr "Maint"
 
-#: dist/toolbar/toolbar.js:832
+#: dist/toolbar/toolbar.js:957
 msgid "Number of Sheets"
 msgstr "Nifer y Dalenni"
 
-#: dist/toolbar/toolbar.js:835
+#: dist/toolbar/toolbar.js:960
 msgid "Selected range of cells"
 msgstr "Ystod y celloedd wedi eu dewis"
 
-#: dist/toolbar/toolbar.js:838
-#: dist/toolbar/toolbar.js:869
+#: dist/toolbar/toolbar.js:963
+#: dist/toolbar/toolbar.js:998
 msgid "Entering text mode"
 msgstr "Mynd i'r modd testun"
 
-#: dist/toolbar/toolbar.js:841
-#: dist/toolbar/toolbar.js:872
+#: dist/toolbar/toolbar.js:966
+#: dist/toolbar/toolbar.js:1001
 msgid "Selection Mode"
 msgstr "Y Modd Dewis"
 
-#: dist/toolbar/toolbar.js:844
+#: dist/toolbar/toolbar.js:969
 msgid "Choice of functions"
 msgstr "Y dewis o swyddogaethau"
 
-#: dist/toolbar/toolbar.js:846
+#: dist/toolbar/toolbar.js:971
 msgid "Average"
 msgstr "Cyfartaledd"
 
-#: dist/toolbar/toolbar.js:847
+#: dist/toolbar/toolbar.js:972
 msgid "CountA"
 msgstr "CyfrifA"
 
-#: dist/toolbar/toolbar.js:848
+#: dist/toolbar/toolbar.js:973
 msgid "Count"
 msgstr "Cyfrif"
 
-#: dist/toolbar/toolbar.js:849
+#: dist/toolbar/toolbar.js:974
 msgid "Maximum"
 msgstr "Uchafswm"
 
-#: dist/toolbar/toolbar.js:850
+#: dist/toolbar/toolbar.js:975
 msgid "Minimum"
 msgstr "Lleiafswm"
 
-#: dist/toolbar/toolbar.js:852
+#: dist/toolbar/toolbar.js:977
 msgid "Selection count"
 msgstr "Cyfrif y dewis"
 
-#: dist/toolbar/toolbar.js:853
+#: dist/toolbar/toolbar.js:978
 #: src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr "Dim"
 
-#: dist/toolbar/toolbar.js:863
+#: dist/toolbar/toolbar.js:992
 msgid "Number of Pages"
 msgstr "Nifer o Dudalennau"
 
-#: dist/toolbar/toolbar.js:866
+#: dist/toolbar/toolbar.js:995
 msgid "Word Counter"
 msgstr "Cyfrifydd Geiriau"
 
-#: dist/toolbar/toolbar.js:883
+#: dist/toolbar/toolbar.js:1018
 msgid "Number of Slides"
 msgstr "Nifer y Sleidiau"
 
-#: dist/toolbar/toolbar.js:1011
+#: dist/toolbar/toolbar.js:1161
 msgid "Document saved"
 msgstr "Dogfen wedi ei chadw"
 
-#: dist/toolbar/toolbar.js:1170
+#: dist/toolbar/toolbar.js:1324
 msgid "Style"
 msgstr "Arddull"
 
-#: dist/toolbar/toolbar.js:1182
+#: dist/toolbar/toolbar.js:1343
 msgid "Font"
 msgstr "Ffont"
 
-#: dist/toolbar/toolbar.js:1206
+#: dist/toolbar/toolbar.js:1379
 msgid "Previous slide"
 msgstr "Sleid flaenorol"
 
-#: dist/toolbar/toolbar.js:1207
+#: dist/toolbar/toolbar.js:1380
 msgid "Next slide"
 msgstr "Sleid nesaf"
 
-#: dist/toolbar/toolbar.js:1265
+#: dist/toolbar/toolbar.js:1433
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Gwrthdaro Dadwneud/Ail-wneud oherwydd defnyddwyr luosog. Defnyddiwch "
 "trwsio'r ddogfen i'w ddatrys."
 
-#: dist/toolbar/toolbar.js:1395
-msgid "%n users"
-msgstr "%n defnyddiwr"
-
-#: dist/toolbar/toolbar.js:1402
-msgid "1 user"
-msgstr "1 defnyddiwr"
-
-#: dist/toolbar/toolbar.js:1429
+#: dist/toolbar/toolbar.js:1598
 #: src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr "Chi"
 
-#: src/admin/AdminSocketBase.js:45
+#: dist/toolbar/toolbar.js:1604
+msgid "Readonly"
+msgstr ""
+
+#: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
 msgstr "Gwall cysylltu"
 
 #: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ydych chi'n siŵr eich bod eisiau dileu'r sesiwn hwn?"
+
+#: src/admin/AdminSocketSettings.js:31
+msgid "Are you sure you want to shutdown the server?"
+msgstr ""
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -1793,38 +1835,54 @@ msgid "Hexadecimal:"
 msgstr "Hecsadegol:"
 
 #: src/control/Control.CharacterMap.js:424
-#: src/control/Control.Menubar.js:38
-#: src/control/Control.Menubar.js:138
-#: src/control/Control.Menubar.js:189
-#: src/control/Control.Menubar.js:195
-#: src/control/Control.Menubar.js:243
+#: src/control/Control.Menubar.js:49
+#: src/control/Control.Menubar.js:149
+#: src/control/Control.Menubar.js:201
+#: src/control/Control.Menubar.js:208
+#: src/control/Control.Menubar.js:257
 msgid "Insert"
 msgstr "Mewnosod"
 
-#: src/control/Control.ColumnHeader.js:41
+#: src/control/Control.ColumnHeader.js:39
 msgid "Insert column before"
 msgstr "Mewnosod colofn cyn"
 
-#: src/control/Control.ColumnHeader.js:48
-#: src/control/Control.Menubar.js:257
+#: src/control/Control.ColumnHeader.js:46
+#: src/control/Control.Menubar.js:271
 msgid "Delete column"
 msgstr "Dileu colofn"
 
-#: src/control/Control.ColumnHeader.js:55
+#: src/control/Control.ColumnHeader.js:53
 msgid "Optimal Width"
 msgstr "Lled Gorau"
 
-#: src/control/Control.ColumnHeader.js:62
+#: src/control/Control.ColumnHeader.js:60
 msgid "Hide Columns"
 msgstr "Cuddio Colofnau"
 
-#: src/control/Control.ColumnHeader.js:69
+#: src/control/Control.ColumnHeader.js:67
 msgid "Show Columns"
 msgstr "Dangos Colofnau"
 
-#: src/control/Control.ColumnHeader.js:84
+#: src/control/Control.ColumnHeader.js:82
 msgid "Optimal Column Width"
 msgstr "Lled Colofn Gorau"
+
+#: src/control/Control.ContextMenu.js:135
+msgid "Internal Cut"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:138
+msgid "Internal Copy"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:141
+msgid "Internal Paste"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:163
+msgid "Internal Paste Special"
+msgstr ""
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
@@ -1839,8 +1897,7 @@ msgid "Index"
 msgstr "Mynegai"
 
 #: src/control/Control.DocumentRepair.js:44
-#: src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:245
+#: src/layer/tile/TileLayer.js:215
 msgid "Comment"
 msgstr "Sylw"
 
@@ -1857,32 +1914,32 @@ msgid "Jump to state"
 msgstr "Symud i'r cyflwr"
 
 #: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:162
-#: src/control/Control.Menubar.js:220
+#: src/control/Control.Menubar.js:174
+#: src/control/Control.Menubar.js:234
 msgid "File"
 msgstr "Ffeil"
 
 #: src/control/Control.Menubar.js:12
-#: src/control/Control.Menubar.js:164
-#: src/control/Control.Menubar.js:222
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:236
 msgid "Print"
 msgstr "Argraffu"
 
 #: src/control/Control.Menubar.js:13
-#: src/control/Control.Menubar.js:165
-#: src/control/Control.Menubar.js:223
+#: src/control/Control.Menubar.js:177
+#: src/control/Control.Menubar.js:237
 msgid "See revision history"
 msgstr "Gweld hanes adolygu"
 
 #: src/control/Control.Menubar.js:14
-#: src/control/Control.Menubar.js:166
-#: src/control/Control.Menubar.js:224
+#: src/control/Control.Menubar.js:178
+#: src/control/Control.Menubar.js:238
 msgid "Download as"
 msgstr "Llwytho i lawr fel"
 
 #: src/control/Control.Menubar.js:15
-#: src/control/Control.Menubar.js:167
-#: src/control/Control.Menubar.js:225
+#: src/control/Control.Menubar.js:179
+#: src/control/Control.Menubar.js:239
 msgid "PDF Document (.pdf)"
 msgstr "Dogfen PDF (.pdf)"
 
@@ -1899,8 +1956,8 @@ msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:172
-#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:184
+#: src/control/Control.Menubar.js:244
 msgid "Edit"
 msgstr "Golygu"
 
@@ -1909,473 +1966,529 @@ msgid "Repair"
 msgstr "Trwsio"
 
 #: src/control/Control.Menubar.js:25
-#: src/control/Control.Menubar.js:176
-#: src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:188
+#: src/control/Control.Menubar.js:248
 msgid "Cut"
 msgstr "Torri"
 
 #: src/control/Control.Menubar.js:26
-#: src/control/Control.Menubar.js:177
-#: src/control/Control.Menubar.js:235
+#: src/control/Control.Menubar.js:189
+#: src/control/Control.Menubar.js:249
 msgid "Copy"
 msgstr "Copïo"
 
 #: src/control/Control.Menubar.js:27
-#: src/control/Control.Menubar.js:178
-#: src/control/Control.Menubar.js:236
+#: src/control/Control.Menubar.js:190
+#: src/control/Control.Menubar.js:250
 msgid "Paste"
 msgstr "Gludo"
 
 #: src/control/Control.Menubar.js:29
-#: src/control/Control.Menubar.js:180
-#: src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:192
+#: src/control/Control.Menubar.js:252
 msgid "Select all"
 msgstr "Dewis popeth"
 
 #: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:182
-#: src/control/Control.Menubar.js:240
+msgid "Track Changes"
+msgstr ""
+
+#: src/control/Control.Menubar.js:32
+msgid "Record"
+msgstr ""
+
+#: src/control/Control.Menubar.js:33
+msgid "Show"
+msgstr ""
+
+#: src/control/Control.Menubar.js:35
+msgid "Previous"
+msgstr ""
+
+#: src/control/Control.Menubar.js:36
+#, fuzzy
+msgid "Next"
+msgstr "Testun"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:254
 msgid "View"
 msgstr "Golwg"
 
-#: src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:183
-#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:40
+#: src/control/Control.Menubar.js:195
+#: src/control/Control.Menubar.js:255
 msgid "Full screen"
 msgstr "Sgrin lawn"
 
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:190
-#: src/control/Control.Menubar.js:244
-msgid "Image"
-msgstr "Delwedd"
-
-#: src/control/Control.Menubar.js:42
-msgid "Footnote"
-msgstr "Troednodyn"
-
-#: src/control/Control.Menubar.js:43
-msgid "Endnote"
-msgstr "Diweddnod"
-
-#: src/control/Control.Menubar.js:45
-msgid "Page break"
-msgstr "Toriad tudalen"
-
 #: src/control/Control.Menubar.js:46
-msgid "Column break"
-msgstr "Toriad colofn"
-
-#: src/control/Control.Menubar.js:48
-#: src/control/Control.Menubar.js:192
-#: src/control/Control.Menubar.js:250
-msgid "Special character..."
-msgstr "Nod arbennig"
-
-#: src/control/Control.Menubar.js:49
-msgid "Formatting mark"
+#, fuzzy
+msgid "Formatting Marks"
 msgstr "Marc fformatio"
 
 #: src/control/Control.Menubar.js:50
+#: src/control/Control.Menubar.js:202
+#: src/control/Control.Menubar.js:258
+msgid "Image"
+msgstr "Delwedd"
+
+#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:203
+#: src/control/Control.Menubar.js:259
+msgid "Comment..."
+msgstr ""
+
+#: src/control/Control.Menubar.js:53
+msgid "Footnote"
+msgstr "Troednodyn"
+
+#: src/control/Control.Menubar.js:54
+msgid "Endnote"
+msgstr "Diweddnod"
+
+#: src/control/Control.Menubar.js:56
+msgid "Page break"
+msgstr "Toriad tudalen"
+
+#: src/control/Control.Menubar.js:57
+msgid "Column break"
+msgstr "Toriad colofn"
+
+#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:205
+#: src/control/Control.Menubar.js:264
+msgid "Special character..."
+msgstr "Nod arbennig"
+
+#: src/control/Control.Menubar.js:60
+msgid "Formatting mark"
+msgstr "Marc fformatio"
+
+#: src/control/Control.Menubar.js:61
 msgid "Non-breaking space"
 msgstr "Bwlch dim toriad"
 
-#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:62
 msgid "Non-breaking hyphen"
 msgstr "Cyplysnod dim toriad"
 
-#: src/control/Control.Menubar.js:52
+#: src/control/Control.Menubar.js:63
 msgid "Soft hyphen"
 msgstr "Cyplysnod meddal"
 
-#: src/control/Control.Menubar.js:53
+#: src/control/Control.Menubar.js:64
 msgid "No-width optional break"
 msgstr "Toriad dewisol dim lled"
 
-#: src/control/Control.Menubar.js:54
+#: src/control/Control.Menubar.js:65
 msgid "No-width no break"
 msgstr "Dim toriad dim led"
 
-#: src/control/Control.Menubar.js:55
+#: src/control/Control.Menubar.js:66
 msgid "Left-to-right mark"
 msgstr "Marc chwith i'r dde"
 
-#: src/control/Control.Menubar.js:56
+#: src/control/Control.Menubar.js:67
 msgid "Right-to-left mark"
 msgstr "Marc de i'r chwith"
 
-#: src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:69
 msgid "Format"
 msgstr "Fformat"
 
-#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:70
 msgid "Text"
 msgstr "Testun"
 
-#: src/control/Control.Menubar.js:63
+#: src/control/Control.Menubar.js:74
 msgid "Double underline"
 msgstr "Tanlinellu dwbl"
 
-#: src/control/Control.Menubar.js:64
+#: src/control/Control.Menubar.js:75
 msgid "Strikethrough"
 msgstr "Taro Drwodd"
 
-#: src/control/Control.Menubar.js:65
+#: src/control/Control.Menubar.js:76
 msgid "Overline"
 msgstr "Troslinell"
 
-#: src/control/Control.Menubar.js:67
+#: src/control/Control.Menubar.js:78
 msgid "Superscript"
 msgstr "Uwchysgrif"
 
-#: src/control/Control.Menubar.js:68
+#: src/control/Control.Menubar.js:79
 msgid "Subscript"
 msgstr "Isysgrif"
 
-#: src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:80
 msgid "ꜱᴍᴀʟʟ ᴄᴀᴘꜱ"
 msgstr "Prif Lythrennau Bach"
 
-#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:82
 msgid "Shadow"
 msgstr "Cysgod"
 
-#: src/control/Control.Menubar.js:72
+#: src/control/Control.Menubar.js:83
 msgid "Outline"
 msgstr "Amlinell"
 
-#: src/control/Control.Menubar.js:74
+#: src/control/Control.Menubar.js:85
 msgid "Increase size"
 msgstr "Cynyddu maint"
 
-#: src/control/Control.Menubar.js:75
+#: src/control/Control.Menubar.js:86
 msgid "Decrease size"
 msgstr "Lleihau maint"
 
-#: src/control/Control.Menubar.js:77
+#: src/control/Control.Menubar.js:88
 msgid "UPPERCASE"
 msgstr "PRIF LYTHRENNAU"
 
-#: src/control/Control.Menubar.js:78
+#: src/control/Control.Menubar.js:89
 msgid "lowercase"
 msgstr "llythrennau bach"
 
-#: src/control/Control.Menubar.js:79
+#: src/control/Control.Menubar.js:90
 msgid "Cycle case"
 msgstr "Maint cylchol"
 
-#: src/control/Control.Menubar.js:81
+#: src/control/Control.Menubar.js:92
 msgid "Sentence case"
 msgstr "Maint brawddeg"
 
-#: src/control/Control.Menubar.js:82
+#: src/control/Control.Menubar.js:93
 msgid "Capitalize Every Word"
 msgstr "Priflythrennu Pob Gair"
 
-#: src/control/Control.Menubar.js:83
+#: src/control/Control.Menubar.js:94
 msgid "tOGGLE cASE"
 msgstr "nEWID mAINT"
 
-#: src/control/Control.Menubar.js:84
+#: src/control/Control.Menubar.js:95
 msgid "Text orientation"
 msgstr "Cyfeiriad testun"
 
-#: src/control/Control.Menubar.js:85
+#: src/control/Control.Menubar.js:96
 msgid "Set paragraph left-to-right"
 msgstr "Gosod paragraff i chwith-de"
 
-#: src/control/Control.Menubar.js:86
+#: src/control/Control.Menubar.js:97
 msgid "Set paragraph right-to-left"
 msgstr "Gosod paragraff de-chwith"
 
-#: src/control/Control.Menubar.js:87
+#: src/control/Control.Menubar.js:98
 msgid "Spacing"
 msgstr "Bylchu"
 
-#: src/control/Control.Menubar.js:88
+#: src/control/Control.Menubar.js:99
 msgid "Line spacing: 1"
 msgstr "Bylchu llinell: 1"
 
-#: src/control/Control.Menubar.js:89
+#: src/control/Control.Menubar.js:100
 msgid "Line spacing: 1.5"
 msgstr "Bylchu llinell: 1.5"
 
-#: src/control/Control.Menubar.js:90
+#: src/control/Control.Menubar.js:101
 msgid "Line spacing: 2"
 msgstr "Bylchu llinell: 2"
 
-#: src/control/Control.Menubar.js:92
+#: src/control/Control.Menubar.js:103
 msgid "Increase paragraph spacing"
 msgstr "Cynyddu bylchu paragraff"
 
-#: src/control/Control.Menubar.js:93
+#: src/control/Control.Menubar.js:104
 msgid "Decrease paragraph spacing"
 msgstr "Lleihau bylchu paragraff"
 
-#: src/control/Control.Menubar.js:97
+#: src/control/Control.Menubar.js:108
 msgid "Align"
 msgstr "Alinio"
 
-#: src/control/Control.Menubar.js:98
+#: src/control/Control.Menubar.js:109
 msgid "Left"
 msgstr "Chwith"
 
-#: src/control/Control.Menubar.js:99
+#: src/control/Control.Menubar.js:110
 msgid "Centered"
 msgstr "Canolwyd"
 
-#: src/control/Control.Menubar.js:100
+#: src/control/Control.Menubar.js:111
 msgid "Right"
 msgstr "De"
 
-#: src/control/Control.Menubar.js:103
+#: src/control/Control.Menubar.js:114
 msgid "Top"
 msgstr "Brig"
 
-#: src/control/Control.Menubar.js:104
+#: src/control/Control.Menubar.js:115
 msgid "Center"
 msgstr "Canoli"
 
-#: src/control/Control.Menubar.js:105
+#: src/control/Control.Menubar.js:116
 msgid "Bottom"
 msgstr "Gwaelod"
 
-#: src/control/Control.Menubar.js:106
+#: src/control/Control.Menubar.js:117
 msgid "Lists"
 msgstr "Rhestrau"
 
-#: src/control/Control.Menubar.js:110
+#: src/control/Control.Menubar.js:121
 msgid "Demote one level"
 msgstr "Darostwng un lefel"
 
-#: src/control/Control.Menubar.js:111
+#: src/control/Control.Menubar.js:122
 msgid "Promote one level"
 msgstr "Dyrchafu un lefel"
 
-#: src/control/Control.Menubar.js:112
+#: src/control/Control.Menubar.js:123
 msgid "Demote one level with subpoints"
 msgstr "Darostwng un lefel gydag isbwyntiau"
 
-#: src/control/Control.Menubar.js:113
+#: src/control/Control.Menubar.js:124
 msgid "Promote one level with subpoints"
 msgstr "Dyrchafu un lefel gydag isbwyntiau"
 
-#: src/control/Control.Menubar.js:115
+#: src/control/Control.Menubar.js:126
 msgid "Move down"
 msgstr "Symud i lawr"
 
-#: src/control/Control.Menubar.js:116
+#: src/control/Control.Menubar.js:127
 msgid "Move up"
 msgstr "Symud i fyny"
 
-#: src/control/Control.Menubar.js:117
+#: src/control/Control.Menubar.js:128
 msgid "Move down with subpoints"
 msgstr "Symud i lawr gydag isbwyntiau"
 
-#: src/control/Control.Menubar.js:118
+#: src/control/Control.Menubar.js:129
 msgid "Move up with subpoints"
 msgstr "Symud i fyny gydag isbwyntiau"
 
-#: src/control/Control.Menubar.js:120
+#: src/control/Control.Menubar.js:131
 msgid "Insert unnumbered entry"
 msgstr "Mewnosod cofnod heb rhif"
 
-#: src/control/Control.Menubar.js:121
+#: src/control/Control.Menubar.js:132
 msgid "Restart numbering"
 msgstr "Ail gychwyn rhifo"
 
-#: src/control/Control.Menubar.js:123
+#: src/control/Control.Menubar.js:134
 msgid "To next paragraph in level"
 msgstr "I'r paragraff nesaf yn y lefel"
 
-#: src/control/Control.Menubar.js:124
+#: src/control/Control.Menubar.js:135
 msgid "To previous paragraph in level"
 msgstr "I baragraff blaenorol yn y lefel"
 
-#: src/control/Control.Menubar.js:125
+#: src/control/Control.Menubar.js:136
 msgid "Continue previous numbering"
 msgstr "Parhau gyda'r rhifo blaenorol"
 
-#: src/control/Control.Menubar.js:126
+#: src/control/Control.Menubar.js:137
 msgid "Clear direct formatting"
 msgstr "Clirio fformatio uniongyrchol"
 
-#: src/control/Control.Menubar.js:127
+#: src/control/Control.Menubar.js:138
 msgid "Page"
 msgstr "Tudalen"
 
-#: src/control/Control.Menubar.js:128
-#: src/control/Control.Menubar.js:130
-#: src/control/Control.Menubar.js:132
-#: src/control/Control.Menubar.js:134
+#: src/control/Control.Menubar.js:139
+#: src/control/Control.Menubar.js:141
+#: src/control/Control.Menubar.js:143
+#: src/control/Control.Menubar.js:145
 msgid "Portrait"
 msgstr "Portread"
 
-#: src/control/Control.Menubar.js:129
-#: src/control/Control.Menubar.js:131
-#: src/control/Control.Menubar.js:133
-#: src/control/Control.Menubar.js:135
+#: src/control/Control.Menubar.js:140
+#: src/control/Control.Menubar.js:142
+#: src/control/Control.Menubar.js:144
+#: src/control/Control.Menubar.js:146
 msgid "Landscape"
 msgstr "Tirwedd"
 
-#: src/control/Control.Menubar.js:137
-#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:148
+#: src/control/Control.Menubar.js:207
 msgid "Tables"
 msgstr "Tablau"
 
-#: src/control/Control.Menubar.js:139
-#: src/control/Control.Menubar.js:196
+#: src/control/Control.Menubar.js:150
+#: src/control/Control.Menubar.js:209
 msgid "Rows before"
 msgstr "Rhesi cyn"
 
-#: src/control/Control.Menubar.js:140
-#: src/control/Control.Menubar.js:197
+#: src/control/Control.Menubar.js:151
+#: src/control/Control.Menubar.js:210
 msgid "Rows after"
 msgstr "Rhesi ar ôl"
 
-#: src/control/Control.Menubar.js:142
-#: src/control/Control.Menubar.js:199
+#: src/control/Control.Menubar.js:153
+#: src/control/Control.Menubar.js:212
 msgid "Columns left"
 msgstr "Colofnau chwith"
 
-#: src/control/Control.Menubar.js:143
-#: src/control/Control.Menubar.js:200
+#: src/control/Control.Menubar.js:154
+#: src/control/Control.Menubar.js:213
 msgid "Columns right"
 msgstr "Colofnau de"
 
-#: src/control/Control.Menubar.js:144
-#: src/control/Control.Menubar.js:201
+#: src/control/Control.Menubar.js:155
+#: src/control/Control.Menubar.js:214
 msgid "Delete"
 msgstr "Dileu"
 
-#: src/control/Control.Menubar.js:145
-#: src/control/Control.Menubar.js:202
+#: src/control/Control.Menubar.js:156
+#: src/control/Control.Menubar.js:215
 msgid "Rows"
 msgstr "Rhesi"
 
-#: src/control/Control.Menubar.js:146
-#: src/control/Control.Menubar.js:203
+#: src/control/Control.Menubar.js:157
+#: src/control/Control.Menubar.js:216
 msgid "Columns"
 msgstr "Colofnau"
 
-#: src/control/Control.Menubar.js:147
-#: src/control/Control.Menubar.js:149
+#: src/control/Control.Menubar.js:158
+#: src/control/Control.Menubar.js:160
 msgid "Table"
 msgstr "Tabl"
 
-#: src/control/Control.Menubar.js:148
+#: src/control/Control.Menubar.js:159
 msgid "Select"
 msgstr "Dewis"
 
-#: src/control/Control.Menubar.js:150
-#: src/control/Control.Menubar.js:247
+#: src/control/Control.Menubar.js:161
+#: src/control/Control.Menubar.js:261
 msgid "Row"
 msgstr "Rhes"
 
-#: src/control/Control.Menubar.js:151
-#: src/control/Control.Menubar.js:248
+#: src/control/Control.Menubar.js:162
+#: src/control/Control.Menubar.js:262
 msgid "Column"
 msgstr "Colofn"
 
-#: src/control/Control.Menubar.js:152
+#: src/control/Control.Menubar.js:163
 msgid "Cell"
 msgstr "Cell"
 
-#: src/control/Control.Menubar.js:153
-#: src/control/Control.Menubar.js:204
+#: src/control/Control.Menubar.js:164
+#: src/control/Control.Menubar.js:217
 msgid "Merge cells"
 msgstr "Cyfuno celloedd"
 
-#: src/control/Control.Menubar.js:155
-#: src/control/Control.Menubar.js:213
-#: src/control/Control.Menubar.js:259
+#: src/control/Control.Menubar.js:166
+#: src/control/Control.Menubar.js:226
+#: src/control/Control.Menubar.js:273
 msgid "Help"
 msgstr "Cymorth"
 
-#: src/control/Control.Menubar.js:156
-#: src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:260
+#: src/control/Control.Menubar.js:167
+#: src/control/Control.Menubar.js:227
+#: src/control/Control.Menubar.js:274
 msgid "Keyboard shortcuts"
 msgstr "Llwybrau byr bysellfwrdd"
 
-#: src/control/Control.Menubar.js:157
-#: src/control/Control.Menubar.js:215
-#: src/control/Control.Menubar.js:261
+#: src/control/Control.Menubar.js:168
+#: src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:275
 msgid "About"
 msgstr "Ynghylch"
 
-#: src/control/Control.Menubar.js:168
+#: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
 msgstr "Cyflwyno ODF (.odp)"
 
-#: src/control/Control.Menubar.js:169
+#: src/control/Control.Menubar.js:181
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:182
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:206
+#: src/control/Control.Menubar.js:219
 msgid "Slide"
 msgstr "Sleid"
 
-#: src/control/Control.Menubar.js:207
+#: src/control/Control.Menubar.js:220
 msgid "New slide"
 msgstr "Sleid nesaf"
 
-#: src/control/Control.Menubar.js:226
+#: src/control/Control.Menubar.js:240
 msgid "ODF spreadsheet (.ods)"
 msgstr "Taenlen ODF (.ods)"
 
-#: src/control/Control.Menubar.js:227
+#: src/control/Control.Menubar.js:241
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:242
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:252
+#: src/control/Control.Menubar.js:266
 msgid "Cells"
 msgstr "Celloedd"
 
-#: src/control/Control.Menubar.js:253
+#: src/control/Control.Menubar.js:267
 msgid "Insert row"
 msgstr "Mewnosod rhes"
 
-#: src/control/Control.Menubar.js:254
+#: src/control/Control.Menubar.js:268
 msgid "Insert column"
 msgstr "Mewnosod colofn"
 
-#: src/control/Control.Menubar.js:256
-#: src/control/Control.RowHeader.js:46
+#: src/control/Control.Menubar.js:270
+#: src/control/Control.RowHeader.js:44
 msgid "Delete row"
 msgstr "Dileu rhes"
 
-#: src/control/Control.Menubar.js:434
+#: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ydych chi'n siŵr eich bod eisiau dileu'r sleid hwn?"
 
-#: src/control/Control.RowHeader.js:39
+#: src/control/Control.MetricInput.js:38
+msgid "(100th/mm)"
+msgstr ""
+
+#: src/control/Control.MetricInput.js:44
+msgid "Add: "
+msgstr ""
+
+#: src/control/Control.MetricInput.js:61
+msgid "Default value"
+msgstr ""
+
+#: src/control/Control.MetricInput.js:68
+msgid "Submit"
+msgstr ""
+
+#: src/control/Control.RowHeader.js:37
 msgid "Insert row above"
 msgstr "Mewnosod rhes uwchlaw"
 
-#: src/control/Control.RowHeader.js:53
+#: src/control/Control.RowHeader.js:51
 msgid "Optimal Height"
 msgstr "Uchder Gorau"
 
-#: src/control/Control.RowHeader.js:60
+#: src/control/Control.RowHeader.js:58
 msgid "Hide Rows"
 msgstr "Cuddio Rhesi"
 
-#: src/control/Control.RowHeader.js:67
+#: src/control/Control.RowHeader.js:65
 msgid "Show Rows"
 msgstr "Dangos Rhesi"
 
-#: src/control/Control.RowHeader.js:80
+#: src/control/Control.RowHeader.js:78
 msgid "Optimal Row Height"
 msgstr "Uchder Rhes Gorau"
+
+#: src/control/Control.Scroll.Annotation.js:9
+msgid "Scroll up annotations"
+msgstr ""
+
+#: src/control/Control.Scroll.Annotation.js:11
+msgid "Scroll down annotations"
+msgstr ""
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -2401,76 +2514,96 @@ msgstr "Ailenwi dalen"
 msgid "Enter new sheet name"
 msgstr "Rhoi enw newydd i'r dalen"
 
-#: src/control/Toolbar.js:70
-#: src/control/Toolbar.js:79
+#: src/control/Toolbar.js:74
+#: src/control/Toolbar.js:83
 msgid "Downloading..."
 msgstr "Wrthi'n Llwytho i Lawr..."
 
-#: src/control/Toolbar.js:91
-#: src/map/Map.js:905
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:939
 msgid "Saving..."
 msgstr "Yn cadw..."
 
-#: src/control/Toolbar.js:242
+#: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "Mae'r fersiwn yma o %productName yn cael ei yrru gan"
 
-#: src/core/Socket.js:23
+#: src/core/Socket.js:30
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Wps, mae anhawster cysylltu â LibreOffice Ar-lein : "
 
-#: src/core/Socket.js:179
+#: src/core/Socket.js:188
 msgid "Unsupported server version."
 msgstr "Fersiwn gweinydd heb gymorth."
 
-#: src/core/Socket.js:217
+#: src/core/Socket.js:226
 msgid "Session terminated by document owner"
 msgstr "Terfynodd perchennog y ddogfen y sesiwn"
 
-#: src/core/Socket.js:220
+#: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Mae'r gweinydd yn cau ar gyfer cynnal a chadw (awto gadw)"
 
-#: src/core/Socket.js:223
+#: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
 msgstr "Mae'r gweinydd yn ailgylchu a bydd ar gael cyn bo hir"
 
-#: src/core/Socket.js:335
+#: src/core/Socket.js:348
 msgid "Document requires password to view."
 msgstr "Mae angen cyfrinair i weld y ddogfen."
 
-#: src/core/Socket.js:338
+#: src/core/Socket.js:351
 msgid "Document requires password to modify."
 msgstr "Mae angen cyfrinair i newid y ddogfen."
 
-#: src/core/Socket.js:340
+#: src/core/Socket.js:353
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Cliciwch Diddymu i agor yn y modd gweld yn unig."
 
-#: src/core/Socket.js:344
+#: src/core/Socket.js:357
 msgid "Wrong password provided. Please try again."
 msgstr "Wedi darparu cyfrinair anghywir. Ceisiwch eto."
 
-#: src/core/Socket.js:393
+#: src/core/Socket.js:420
 msgid "Connecting..."
 msgstr "Cysylltu..."
 
-#: src/core/Socket.js:514
+#: src/core/Socket.js:542
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 "Mae'n ddrwg gennym, nid ydym yn gallu cysylltu â'ch dogfen. Ceisiwch eto."
 
-#: src/map/Map.js:121
+#: src/layer/marker/Annotation.js:156
+msgid "Accept change"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:161
+msgid "Reject change"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:169
+msgid "Open menu"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:182
+msgid "Modify"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:194
+msgid "Remove"
+msgstr ""
+
+#: src/map/Map.js:131
 msgid "Initializing..."
 msgstr "Cychwyn..."
 
-#: src/map/Map.js:786
+#: src/map/Map.js:820
 msgid "Inactive document - please click to resume editing"
 msgstr "Dogfen anweithredol - cliciwch i ailgychwyn golygu"
 
-#: src/map/Map.js:908
+#: src/map/Map.js:942
 msgid "Loading..."
 msgstr "Yn llwytho..."
 

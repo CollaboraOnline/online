@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 09:01+0000\n"
+"POT-Creation-Date: 2017-04-19 08:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0b7\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /lv/libo_online/loleaflet-help-lv.po\n"
-"X-Pootle-Revision: 827051\n"
+"X-Pootle-Revision: 861666\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -67,55 +67,47 @@ msgid "Display the Keyboard shortcuts help"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
-#, fuzzy
 msgid "Ctrl + Shift + ?"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A38
 #: dist%2Floleaflet-help.html+div.div.h2%3A160
-#, fuzzy
 msgid "Text formatting"
 msgstr "Teksta formatēšana"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
-#, fuzzy
 msgid "Bold"
 msgstr "Treknraksts"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
-#, fuzzy
 msgid "Ctrl + B"
 msgstr "Ctrl + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
-#, fuzzy
 msgid "Italic"
 msgstr "Kursīvs"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
-#, fuzzy
 msgid "Ctrl + I"
 msgstr "Ctrl + I"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
-#, fuzzy
 msgid "Underline"
 msgstr "Pasvītrots"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
-#, fuzzy
 msgid "Ctrl + U"
 msgstr "Ctrl + U"
 
@@ -125,63 +117,53 @@ msgstr "Dubulti pasvītrots"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
-#, fuzzy
 msgid "Ctrl + D"
 msgstr "Ctrl + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
-#, fuzzy
 msgid "Strikethrough"
 msgstr "Pārsvītrots"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
-#, fuzzy
 msgid "Ctrl + Alt + 5"
 msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
-#, fuzzy
 msgid "Superscript"
 msgstr "Augšraksts"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
-#, fuzzy
 msgid "Ctrl + Shift + P"
 msgstr "Ctrl + Shift + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
-#, fuzzy
 msgid "Subscript"
 msgstr "Apakšraksts"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
-#, fuzzy
 msgid "Ctrl + Shift + B"
 msgstr "Ctrl + Shift + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
-#, fuzzy
 msgid "Remove direct formatting"
 msgstr "Noņemt tiešo formatēšanu"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
-#, fuzzy
 msgid "Ctrl + M"
 msgstr "Ctrl + M"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A49
 #: dist%2Floleaflet-help.html+div.div.h2%3A170
-#, fuzzy
 msgid "Paragraph formatting"
 msgstr "Rindkopas formatējums"
 
@@ -195,7 +177,6 @@ msgstr "Līdzināt vidū"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
-#, fuzzy
 msgid "Ctrl + E"
 msgstr "Ctrl + E"
 
@@ -209,7 +190,6 @@ msgstr "Izlīdzināt gar kreiso"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
-#, fuzzy
 msgid "Ctrl + L"
 msgstr "Ctrl + L"
 
@@ -223,7 +203,6 @@ msgstr "Līdzināt pa labi"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
-#, fuzzy
 msgid "Ctrl + R"
 msgstr "Ctrl + R"
 
@@ -237,7 +216,6 @@ msgstr "Abpuslīdzināt"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
-#, fuzzy
 msgid "Ctrl + J"
 msgstr "Ctrl + J"
 
@@ -271,7 +249,6 @@ msgstr "Pielietot rindkopas stilu \"Virsraksts 3\""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
-#, fuzzy
 msgid "Ctrl + 3"
 msgstr "Ctrl + 3"
 
@@ -309,7 +286,6 @@ msgstr "Izvēlēties visu"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
-#, fuzzy
 msgid "Ctrl + A"
 msgstr "Ctrl + A"
 
@@ -339,7 +315,6 @@ msgstr "Shift + Bultiņa pa kreisi"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
-#, fuzzy
 msgid "Go to beginning of a word"
 msgstr "Iet uz vārda sākumu"
 
@@ -351,7 +326,6 @@ msgstr "Ctrl + Bultiņa pa kreisi"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
-#, fuzzy
 msgid "Select to the left word by word"
 msgstr "Atlasīt pa kreisi vārdu pa vārdam"
 

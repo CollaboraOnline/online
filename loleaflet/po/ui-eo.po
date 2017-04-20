@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-11 09:00+0000\n"
+"POT-Creation-Date: 2017-04-20 07:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0b7\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-ui-eo.po\n"
-"X-Pootle-Revision: 823243\n"
+"X-Pootle-Revision: 2438492\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -72,7 +72,7 @@ msgstr "Pasinta tempo"
 
 #: admin.strings.js:19
 msgid "Idle time"
-msgstr ""
+msgstr "Senokupa tempo"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -83,10 +83,11 @@ msgid "Graphs"
 msgstr "Diagramoj"
 
 #: admin.strings.js:22
-#: dist/toolbar/toolbar.js:364
+#: dist/toolbar/toolbar.js:473
 #: src/control/Control.Menubar.js:11
-#: src/control/Control.Menubar.js:163
-#: src/control/Control.Menubar.js:221
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:235
+#: src/layer/marker/Annotation.js:184
 msgid "Save"
 msgstr "Konservi"
 
@@ -176,33 +177,45 @@ msgstr "Neformatita teksto"
 
 #: unocommands.js:12
 msgid "No Wrap"
-msgstr ""
+msgstr "Sen ĉirkaŭfluo"
 
 #: unocommands.js:13
 msgid "Wrap Before"
-msgstr ""
+msgstr "Trafluigi antaŭe"
 
 #: unocommands.js:14
 msgid "Wrap After"
-msgstr ""
+msgstr "Trafluigi poste"
 
 #: unocommands.js:15
 msgid "Enable Contour"
-msgstr ""
+msgstr "Enŝalti konturon"
 
 #: unocommands.js:16
 msgid "Update Index or Table of Contents"
-msgstr ""
+msgstr "Ĝisdatigi indekson aŭ enhavoliston"
 
 #: unocommands.js:17
 msgid "Delete Index or Table of Contents"
-msgstr ""
+msgstr "Forigi indekson aŭ enhavoliston"
+
+#: unocommands.js:18
+#: src/layer/marker/Annotation.js:187
+#: src/layer/tile/TileLayer.js:188
+msgid "Reply"
+msgstr "Respondi"
+
+#: unocommands.js:19
+msgid "Refresh"
+msgstr "Aktualigi"
 
 #: dist/errormessages.js:1
 msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
 msgstr ""
+"Mankas spaco en la servilo. Bonvolu kontakti la servilan administranton por "
+"daŭrigi."
 
 #: dist/errormessages.js:2
 msgid ""
@@ -219,20 +232,36 @@ msgid ""
 "enterprises. To find out more about deploying and scaling %2 check out: "
 "<br/><a href=\"%3\">%3</a>."
 msgstr ""
+"Ĉi tiu evoluiga versio estas limigita al %0 dokumentoj, kaj %1 konektoj - "
+"por eviti la impreson ke ĝi taŭgas por uzado en grandaj entreprenoj. Por "
+"eltrovi pli pri kiel disponigi kaj skaligi %2 vidu: <br/><a href=\"%3\""
+">%3</a>."
 
 #: dist/errormessages.js:4
+msgid ""
+"This service is limited to %0 documents, and %1 connections total by the "
+"admin. This limit has been reached. Please try again later."
+msgstr ""
+"Ĉi tiu servo estas limigita de la administranto al %0 dokumentoj, kaj %1 "
+"konektoj. Ĉi tiu limo estas atingita. Bonvolu reprovi poste."
+
+#: dist/errormessages.js:5
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"La servo ne estas disponebla. Bonvolu reprovi poste kaj raporti al via "
+"administranto de la problemo daŭras."
 
-#: dist/errormessages.js:5
+#: dist/errormessages.js:6
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"Nepermesita WOPI-gastiga komputilo. Reprovu poste kaj raporti al via "
+"administranto se la problemo daŭras."
 
-#: dist/errormessages.js:6
+#: dist/errormessages.js:7
 msgid ""
 "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
 "file_path=/path/to/doc/"
@@ -240,441 +269,474 @@ msgstr ""
 "Malĝusta uzo de WOPISrc: WOPISrc=valida enkodita URI, aŭ dosierujo, "
 "uzmaniero: file_path=/vojo/al/dokumento/"
 
-#: dist/errormessages.js:7
+#: dist/errormessages.js:8
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
+"Via seanco senvalidiĝos ene de %time. Bonvolu konservi vian laboraĵon kaj "
+"aktualigi la seancon (aŭ retpaĝon) por daŭrigi."
 
-#: dist/errormessages.js:8
+#: dist/errormessages.js:9
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
+"Via seanco senvalidiĝis. Pluaj ŝanĝoj al la dokumento eble ne konserviĝos. "
+"Bonvolu aktualigi la seancon (aŭ retpaĝon) por daŭrigi."
 
-#: dist/errormessages.js:11
+#: dist/errormessages.js:10
+msgid ""
+"Failed to load the document. Please ensure the file type is supported and "
+"not corrupted, and try again."
+msgstr ""
+"Malsukcesis ŝarĝi la dokumenton. Bonvolu certigi ke la dosiertipo estas "
+"subtenata kaj ne difektita, kaj reprovu."
+
+#: dist/errormessages.js:13
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server administrator to continue editing."
 msgstr ""
+"Malsukcesis konservi ĉar mankas spaco en la konserva servilo. La dokumento "
+"nun estas nurlega. Bonvolu kontakti la administranton por daŭrigi redaktadon."
 
-#: dist/errormessages.js:12
+#: dist/errormessages.js:14
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server administrator."
 msgstr ""
+"Ne povas konservi la dokumenton al la konservilo. Kontrolu viajn permesojn "
+"aŭ kontaktu la administranton de la konserva servilo."
 
-#: dist/toolbar/toolbar.js:159
+#: dist/toolbar/toolbar.js:105
+msgid "%n users"
+msgstr "%n uzantoj"
+
+#: dist/toolbar/toolbar.js:106
+msgid "1 user"
+msgstr "1 uzanto"
+
+#: dist/toolbar/toolbar.js:107
+msgid "0 users"
+msgstr "0 uzantoj"
+
+#: dist/toolbar/toolbar.js:264
 msgid "Are you sure you want to delete this page?"
 msgstr "Ĉu vi certe volas forigi ĉi tiun paĝon?"
 
-#: dist/toolbar/toolbar.js:355
+#: dist/toolbar/toolbar.js:464
 msgid "Textwrap"
-msgstr ""
+msgstr "Teksta ĉirkaŭfluo"
 
-#: dist/toolbar/toolbar.js:356
+#: dist/toolbar/toolbar.js:465
 msgid "No wrap"
-msgstr ""
+msgstr "Sen ĉirkaŭfluo"
 
-#: dist/toolbar/toolbar.js:357
+#: dist/toolbar/toolbar.js:466
 msgid "Page wrap"
-msgstr ""
+msgstr "Paĝa ĉirkaŭfluo"
 
-#: dist/toolbar/toolbar.js:358
+#: dist/toolbar/toolbar.js:467
 msgid "Wrap anchor only"
-msgstr ""
+msgstr "Ĉirkaŭfluigi nur la ankron"
 
-#: dist/toolbar/toolbar.js:359
+#: dist/toolbar/toolbar.js:468
 msgid "Ideal wrap"
-msgstr ""
+msgstr "Ideala ĉirkaŭfluo"
 
-#: dist/toolbar/toolbar.js:360
+#: dist/toolbar/toolbar.js:469
 msgid "Left wrap"
-msgstr ""
+msgstr "Maldekstra ĉirkaŭfluo"
 
-#: dist/toolbar/toolbar.js:361
+#: dist/toolbar/toolbar.js:470
 msgid "Right wrap"
-msgstr ""
+msgstr "Dekstra ĉirkaŭfluo"
 
-#: dist/toolbar/toolbar.js:362
+#: dist/toolbar/toolbar.js:471
 msgid "Wrap through"
-msgstr ""
+msgstr "Trafluo"
 
-#: dist/toolbar/toolbar.js:366
+#: dist/toolbar/toolbar.js:475
 #: src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:173
-#: src/control/Control.Menubar.js:231
+#: src/control/Control.Menubar.js:185
+#: src/control/Control.Menubar.js:245
 msgid "Undo"
 msgstr "Malfari"
 
-#: dist/toolbar/toolbar.js:367
+#: dist/toolbar/toolbar.js:476
 #: src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:174
-#: src/control/Control.Menubar.js:232
+#: src/control/Control.Menubar.js:186
+#: src/control/Control.Menubar.js:246
 msgid "Redo"
 msgstr "Refari"
 
-#: dist/toolbar/toolbar.js:368
+#: dist/toolbar/toolbar.js:477
 msgid "Document repair"
-msgstr ""
+msgstr "Ripari dokumenton"
 
-#: dist/toolbar/toolbar.js:374
-#: src/control/Control.Menubar.js:60
+#: dist/toolbar/toolbar.js:483
+#: src/control/Control.Menubar.js:71
 msgid "Bold"
 msgstr "Dike"
 
-#: dist/toolbar/toolbar.js:375
-#: src/control/Control.Menubar.js:61
+#: dist/toolbar/toolbar.js:484
+#: src/control/Control.Menubar.js:72
 msgid "Italic"
 msgstr "Kursive"
 
-#: dist/toolbar/toolbar.js:376
-#: src/control/Control.Menubar.js:62
+#: dist/toolbar/toolbar.js:485
+#: src/control/Control.Menubar.js:73
 msgid "Underline"
 msgstr "Substrekite"
 
-#: dist/toolbar/toolbar.js:377
+#: dist/toolbar/toolbar.js:486
 msgid "Strikeout"
 msgstr "Trastrekite"
 
-#: dist/toolbar/toolbar.js:379
+#: dist/toolbar/toolbar.js:488
 msgid "Insert Footnote"
-msgstr ""
+msgstr "Enmeti piednoton"
 
-#: dist/toolbar/toolbar.js:382
+#: dist/toolbar/toolbar.js:491
 msgid "Font color"
 msgstr "Tipara koloro"
 
-#: dist/toolbar/toolbar.js:384
+#: dist/toolbar/toolbar.js:493
 msgid "Highlighting"
 msgstr "Emfazado"
 
-#: dist/toolbar/toolbar.js:386
+#: dist/toolbar/toolbar.js:495
 msgid "Align left"
 msgstr "Ĝisrandigi maldekstren"
 
-#: dist/toolbar/toolbar.js:387
+#: dist/toolbar/toolbar.js:496
 msgid "Center horizontally"
 msgstr "Centrigi horizontale"
 
-#: dist/toolbar/toolbar.js:388
+#: dist/toolbar/toolbar.js:497
 msgid "Align right"
 msgstr "Ĝisrandigi dekstren"
 
-#: dist/toolbar/toolbar.js:389
-#: src/control/Control.Menubar.js:101
+#: dist/toolbar/toolbar.js:498
+#: src/control/Control.Menubar.js:112
 msgid "Justified"
 msgstr "Ĝisrandigi ambaŭflanken"
 
-#: dist/toolbar/toolbar.js:391
+#: dist/toolbar/toolbar.js:500
 msgid "Wrap Text"
 msgstr "Faldi tekston"
 
-#: dist/toolbar/toolbar.js:392
+#: dist/toolbar/toolbar.js:501
 msgid "Merge and Center Cells"
 msgstr "Kunfandi kaj centrigi ĉelojn"
 
-#: dist/toolbar/toolbar.js:394
+#: dist/toolbar/toolbar.js:503
 msgid "Format as Currency"
 msgstr "Formato kiel valuto"
 
-#: dist/toolbar/toolbar.js:395
+#: dist/toolbar/toolbar.js:504
 msgid "Format as Percent"
 msgstr "Formato kiel elcento"
 
-#: dist/toolbar/toolbar.js:396
+#: dist/toolbar/toolbar.js:505
 msgid "Format as Number"
 msgstr "Formato kiel numero"
 
-#: dist/toolbar/toolbar.js:397
+#: dist/toolbar/toolbar.js:506
 msgid "Format as Date"
 msgstr "Formato kiel dato"
 
-#: dist/toolbar/toolbar.js:398
+#: dist/toolbar/toolbar.js:507
 msgid "Add Decimal Place"
 msgstr "Enmeti dekuman signon"
 
-#: dist/toolbar/toolbar.js:399
+#: dist/toolbar/toolbar.js:508
 msgid "Delete Decimal Place"
 msgstr "Forigi dekuman signon"
 
-#: dist/toolbar/toolbar.js:401
+#: dist/toolbar/toolbar.js:510
 msgid "Sort Ascending"
 msgstr "Ordigi kreskante"
 
-#: dist/toolbar/toolbar.js:402
+#: dist/toolbar/toolbar.js:511
 msgid "Sort Descending"
 msgstr "Ordigi malkreskante"
 
-#: dist/toolbar/toolbar.js:404
-#: src/control/Control.Menubar.js:107
+#: dist/toolbar/toolbar.js:513
+#: src/control/Control.Menubar.js:118
 msgid "Bullets on/off"
 msgstr "Buloj ek/for"
 
-#: dist/toolbar/toolbar.js:405
-#: src/control/Control.Menubar.js:108
+#: dist/toolbar/toolbar.js:514
+#: src/control/Control.Menubar.js:119
 msgid "Numbering on/off"
 msgstr "Numerado ek/for"
 
-#: dist/toolbar/toolbar.js:407
-#: src/control/Control.Menubar.js:95
+#: dist/toolbar/toolbar.js:516
+#: src/control/Control.Menubar.js:106
 msgid "Increase indent"
 msgstr "Pligrandigi krommarĝenon"
 
-#: dist/toolbar/toolbar.js:408
-#: src/control/Control.Menubar.js:96
+#: dist/toolbar/toolbar.js:517
+#: src/control/Control.Menubar.js:107
 msgid "Decrease indent"
 msgstr "Malpligrandigi krommarĝenon"
 
-#: dist/toolbar/toolbar.js:411
+#: dist/toolbar/toolbar.js:520
 msgid "Insert table"
 msgstr "Enmeti tabelon"
 
-#: dist/toolbar/toolbar.js:412
+#: dist/toolbar/toolbar.js:521
 msgid "Insert comment"
 msgstr "Enmeti komenton"
 
-#: dist/toolbar/toolbar.js:413
+#: dist/toolbar/toolbar.js:522
 msgid "Insert graphic"
 msgstr "Enmeti grafikaĵon"
 
-#: dist/toolbar/toolbar.js:414
+#: dist/toolbar/toolbar.js:523
 msgid "Special Character"
-msgstr ""
+msgstr "Speciala signo"
 
-#: dist/toolbar/toolbar.js:416
+#: dist/toolbar/toolbar.js:525
 msgid "More"
 msgstr "Pli"
 
-#: dist/toolbar/toolbar.js:417
+#: dist/toolbar/toolbar.js:527
+#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:277
 msgid "Close document"
 msgstr "Fermi dokumenton"
 
-#: dist/toolbar/toolbar.js:496
+#: dist/toolbar/toolbar.js:606
 msgid "Layout"
 msgstr "Aranĝo"
 
-#: dist/toolbar/toolbar.js:519
-#: dist/toolbar/toolbar.js:851
+#: dist/toolbar/toolbar.js:631
+#: dist/toolbar/toolbar.js:976
 msgid "Sum"
 msgstr "Sumo"
 
-#: dist/toolbar/toolbar.js:520
+#: dist/toolbar/toolbar.js:632
 msgid "Function"
 msgstr "Funkcio"
 
-#: dist/toolbar/toolbar.js:521
+#: dist/toolbar/toolbar.js:633
 #: src/control/Control.CharacterMap.js:428
+#: src/layer/marker/Annotation.js:130
 msgid "Cancel"
 msgstr "Nuligi"
 
-#: dist/toolbar/toolbar.js:522
+#: dist/toolbar/toolbar.js:634
 msgid "Accept"
 msgstr "Akcepti"
 
-#: dist/toolbar/toolbar.js:533
+#: dist/toolbar/toolbar.js:649
 msgid "First sheet"
 msgstr "Unua folio"
 
-#: dist/toolbar/toolbar.js:534
+#: dist/toolbar/toolbar.js:650
 msgid "Previous sheet"
 msgstr "Antaŭa folio"
 
-#: dist/toolbar/toolbar.js:535
+#: dist/toolbar/toolbar.js:651
 msgid "Next sheet"
 msgstr "Sekva folio"
 
-#: dist/toolbar/toolbar.js:536
+#: dist/toolbar/toolbar.js:652
 msgid "Last sheet"
 msgstr "Lasta folio"
 
-#: dist/toolbar/toolbar.js:546
-#: src/control/Control.Menubar.js:211
+#: dist/toolbar/toolbar.js:662
+#: src/control/Control.Menubar.js:224
 msgid "Fullscreen presentation"
 msgstr "Tutekrana prezentaĵo"
 
-#: dist/toolbar/toolbar.js:548
+#: dist/toolbar/toolbar.js:664
 msgid "Insert slide"
 msgstr "Enmeti lumbildon"
 
-#: dist/toolbar/toolbar.js:549
-#: src/control/Control.Menubar.js:208
+#: dist/toolbar/toolbar.js:665
+#: src/control/Control.Menubar.js:221
 msgid "Duplicate slide"
 msgstr "Duobligi lumbildon"
 
-#: dist/toolbar/toolbar.js:550
-#: src/control/Control.Menubar.js:209
+#: dist/toolbar/toolbar.js:666
+#: src/control/Control.Menubar.js:222
 msgid "Delete slide"
 msgstr "Forigi lumbildon"
 
-#: dist/toolbar/toolbar.js:563
+#: dist/toolbar/toolbar.js:679
 msgid "Search:"
 msgstr "Serĉi:"
 
-#: dist/toolbar/toolbar.js:568
+#: dist/toolbar/toolbar.js:684
 msgid "Search backwards"
 msgstr "Serĉi malantaŭen"
 
-#: dist/toolbar/toolbar.js:569
+#: dist/toolbar/toolbar.js:685
 msgid "Search forward"
 msgstr "Serĉi antaŭen"
 
-#: dist/toolbar/toolbar.js:570
+#: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
 msgstr "Nuligi serĉon"
 
-#: dist/toolbar/toolbar.js:575
-#: dist/toolbar/toolbar.js:1404
+#: dist/toolbar/toolbar.js:691
 msgid "No users"
-msgstr ""
+msgstr "Neniu uzanto"
 
-#: dist/toolbar/toolbar.js:577
+#: dist/toolbar/toolbar.js:693
 msgid "Previous page"
 msgstr "Antaŭa paĝo"
 
-#: dist/toolbar/toolbar.js:578
+#: dist/toolbar/toolbar.js:694
 msgid "Next page"
 msgstr "Sekva paĝo"
 
-#: dist/toolbar/toolbar.js:580
-#: src/control/Control.Menubar.js:36
-#: src/control/Control.Menubar.js:187
+#: dist/toolbar/toolbar.js:696
+#: src/control/Control.Menubar.js:44
+#: src/control/Control.Menubar.js:199
 msgid "Reset zoom"
 msgstr "Reagordi zomon"
 
-#: dist/toolbar/toolbar.js:581
-#: src/control/Control.Menubar.js:35
-#: src/control/Control.Menubar.js:186
+#: dist/toolbar/toolbar.js:697
+#: src/control/Control.Menubar.js:43
+#: src/control/Control.Menubar.js:198
 msgid "Zoom out"
 msgstr "Elzomi"
 
-#: dist/toolbar/toolbar.js:583
-#: src/control/Control.Menubar.js:34
-#: src/control/Control.Menubar.js:185
+#: dist/toolbar/toolbar.js:699
+#: src/control/Control.Menubar.js:42
+#: src/control/Control.Menubar.js:197
 msgid "Zoom in"
 msgstr "Enzomi"
 
-#: dist/toolbar/toolbar.js:597
+#: dist/toolbar/toolbar.js:715
 msgid "%user has joined"
-msgstr ""
+msgstr "%user aliĝis"
 
-#: dist/toolbar/toolbar.js:598
+#: dist/toolbar/toolbar.js:716
 msgid "%user has left"
-msgstr ""
+msgstr "%user foriris"
 
-#: dist/toolbar/toolbar.js:700
-#: dist/toolbar/toolbar.js:1187
+#: dist/toolbar/toolbar.js:825
+#: dist/toolbar/toolbar.js:1351
 msgid "Size"
 msgstr "Grando"
 
-#: dist/toolbar/toolbar.js:832
+#: dist/toolbar/toolbar.js:957
 msgid "Number of Sheets"
 msgstr "Nombro da folioj"
 
-#: dist/toolbar/toolbar.js:835
+#: dist/toolbar/toolbar.js:960
 msgid "Selected range of cells"
 msgstr "Elektita ĉelaro"
 
-#: dist/toolbar/toolbar.js:838
-#: dist/toolbar/toolbar.js:869
+#: dist/toolbar/toolbar.js:963
+#: dist/toolbar/toolbar.js:998
 msgid "Entering text mode"
 msgstr "Eniras en teksta reĝimo."
 
-#: dist/toolbar/toolbar.js:841
-#: dist/toolbar/toolbar.js:872
+#: dist/toolbar/toolbar.js:966
+#: dist/toolbar/toolbar.js:1001
 msgid "Selection Mode"
 msgstr "Elekta reĝimo"
 
-#: dist/toolbar/toolbar.js:844
+#: dist/toolbar/toolbar.js:969
 msgid "Choice of functions"
 msgstr "Elekti funkciojn"
 
-#: dist/toolbar/toolbar.js:846
+#: dist/toolbar/toolbar.js:971
 msgid "Average"
 msgstr "Averaĝo"
 
-#: dist/toolbar/toolbar.js:847
+#: dist/toolbar/toolbar.js:972
 msgid "CountA"
 msgstr "NombroA"
 
-#: dist/toolbar/toolbar.js:848
+#: dist/toolbar/toolbar.js:973
 msgid "Count"
 msgstr "Nombri"
 
-#: dist/toolbar/toolbar.js:849
+#: dist/toolbar/toolbar.js:974
 msgid "Maximum"
 msgstr "Maksimumo"
 
-#: dist/toolbar/toolbar.js:850
+#: dist/toolbar/toolbar.js:975
 msgid "Minimum"
 msgstr "Minimumo"
 
-#: dist/toolbar/toolbar.js:852
+#: dist/toolbar/toolbar.js:977
 msgid "Selection count"
 msgstr "Nombro de la elektaĵo"
 
-#: dist/toolbar/toolbar.js:853
+#: dist/toolbar/toolbar.js:978
 #: src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr "Neniu"
 
-#: dist/toolbar/toolbar.js:863
+#: dist/toolbar/toolbar.js:992
 msgid "Number of Pages"
 msgstr "Nombro da paĝoj"
 
-#: dist/toolbar/toolbar.js:866
+#: dist/toolbar/toolbar.js:995
 msgid "Word Counter"
 msgstr "Vortnombrilo"
 
-#: dist/toolbar/toolbar.js:883
+#: dist/toolbar/toolbar.js:1018
 msgid "Number of Slides"
 msgstr "Nombro da lumbildoj"
 
-#: dist/toolbar/toolbar.js:1011
+#: dist/toolbar/toolbar.js:1161
 msgid "Document saved"
 msgstr "Dokumento konservita"
 
-#: dist/toolbar/toolbar.js:1170
+#: dist/toolbar/toolbar.js:1324
 msgid "Style"
 msgstr "Stilo"
 
-#: dist/toolbar/toolbar.js:1182
+#: dist/toolbar/toolbar.js:1343
 msgid "Font"
 msgstr "Tiparo"
 
-#: dist/toolbar/toolbar.js:1206
+#: dist/toolbar/toolbar.js:1379
 msgid "Previous slide"
 msgstr "Antaŭa lumbildo"
 
-#: dist/toolbar/toolbar.js:1207
+#: dist/toolbar/toolbar.js:1380
 msgid "Next slide"
 msgstr "Sekva lumbildo"
 
-#: dist/toolbar/toolbar.js:1265
+#: dist/toolbar/toolbar.js:1433
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Fari/malfari konfliktas inter pluraj uzantoj. Bonvolu uzi "
+"dokumentanriparadon por solvi"
 
-#: dist/toolbar/toolbar.js:1395
-msgid "%n users"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:1402
-msgid "1 user"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:1429
+#: dist/toolbar/toolbar.js:1598
 #: src/control/Control.DocumentRepair.js:87
 msgid "You"
+msgstr "Vi"
+
+#: dist/toolbar/toolbar.js:1604
+msgid "Readonly"
 msgstr ""
 
-#: src/admin/AdminSocketBase.js:45
+#: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
 msgstr "Konekta eraro"
 
 #: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ĉe vi certe volas fini ĉi tiun seancon?"
+
+#: src/admin/AdminSocketSettings.js:31
+msgid "Are you sure you want to shutdown the server?"
+msgstr ""
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -708,968 +770,968 @@ msgstr " s"
 
 #: src/control/Control.CharacterMap.js:12
 msgid "Basic Latin"
-msgstr ""
+msgstr "Baza latino"
 
 #: src/control/Control.CharacterMap.js:13
 msgid "Latin-1"
-msgstr ""
+msgstr "Latino-1"
 
 #: src/control/Control.CharacterMap.js:14
 msgid "Latin Extended-A"
-msgstr ""
+msgstr "Latino etendita-A"
 
 #: src/control/Control.CharacterMap.js:15
 msgid "Latin Extended-B"
-msgstr ""
+msgstr "Latino etendita-B"
 
 #: src/control/Control.CharacterMap.js:16
 msgid "IPA Extensions"
-msgstr ""
+msgstr "IFA-Aldonaĵoj"
 
 #: src/control/Control.CharacterMap.js:17
 msgid "Spacing Modifier Letters"
-msgstr ""
+msgstr "Literoj, kiuj modifas interspacojn"
 
 #: src/control/Control.CharacterMap.js:18
 msgid "Combining Diacritical Marks"
-msgstr ""
+msgstr "Kunligaj diakritaj signoj"
 
 #: src/control/Control.CharacterMap.js:19
 msgid "Basic Greek"
-msgstr ""
+msgstr "Baza Greka"
 
 #: src/control/Control.CharacterMap.js:20
 msgid "Cyrillic"
-msgstr ""
+msgstr "Cirila"
 
 #: src/control/Control.CharacterMap.js:21
 msgid "Armenian"
-msgstr ""
+msgstr "Armena"
 
 #: src/control/Control.CharacterMap.js:22
 msgid "Basic Hebrew"
-msgstr ""
+msgstr "Baza hebrea"
 
 #: src/control/Control.CharacterMap.js:23
 msgid "Basic Arabic"
-msgstr ""
+msgstr "Baza araba"
 
 #: src/control/Control.CharacterMap.js:24
 msgid "Syriac"
-msgstr ""
+msgstr "Siria"
 
 #: src/control/Control.CharacterMap.js:25
 msgid "Thaana"
-msgstr ""
+msgstr "Maldiva"
 
 #: src/control/Control.CharacterMap.js:26
 msgid "Devanagari"
-msgstr ""
+msgstr "Devanagara"
 
 #: src/control/Control.CharacterMap.js:27
 msgid "Bengali"
-msgstr ""
+msgstr "Bengala"
 
 #: src/control/Control.CharacterMap.js:28
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmuka"
 
 #: src/control/Control.CharacterMap.js:29
 msgid "Gujarati"
-msgstr ""
+msgstr "Guĝarata"
 
 #: src/control/Control.CharacterMap.js:30
 msgid "Odia"
-msgstr ""
+msgstr "Odia"
 
 #: src/control/Control.CharacterMap.js:31
 msgid "Tamil"
-msgstr ""
+msgstr "Tamila"
 
 #: src/control/Control.CharacterMap.js:32
 msgid "Telugu"
-msgstr ""
+msgstr "Telugua"
 
 #: src/control/Control.CharacterMap.js:33
 msgid "Kannada"
-msgstr ""
+msgstr "Kannada"
 
 #: src/control/Control.CharacterMap.js:34
 msgid "Malayalam"
-msgstr ""
+msgstr "Malajalama"
 
 #: src/control/Control.CharacterMap.js:35
 msgid "Sinhala"
-msgstr ""
+msgstr "Sinhala"
 
 #: src/control/Control.CharacterMap.js:36
 msgid "Thai"
-msgstr ""
+msgstr "Taja"
 
 #: src/control/Control.CharacterMap.js:37
 msgid "Lao"
-msgstr ""
+msgstr "Laosa"
 
 #: src/control/Control.CharacterMap.js:38
 msgid "Tibetan"
-msgstr ""
+msgstr "Tibeta"
 
 #: src/control/Control.CharacterMap.js:39
 msgid "Myanmar"
-msgstr ""
+msgstr "Birma"
 
 #: src/control/Control.CharacterMap.js:40
 msgid "Basic Georgian"
-msgstr ""
+msgstr "Baza kartvela"
 
 #: src/control/Control.CharacterMap.js:41
 msgid "Hangul Jamo"
-msgstr ""
+msgstr "Hangula jamo"
 
 #: src/control/Control.CharacterMap.js:43
 msgid "Ethiopic"
-msgstr ""
+msgstr "Etiopia"
 
 #: src/control/Control.CharacterMap.js:44
 msgid "Cherokee"
-msgstr ""
+msgstr "Ĉeroka"
 
 #: src/control/Control.CharacterMap.js:46
 msgid "Canadian Aboriginal Syllables"
-msgstr ""
+msgstr "Silaboj de kanadaj aborigenoj"
 
 #: src/control/Control.CharacterMap.js:47
 msgid "Ogham"
-msgstr ""
+msgstr "Ogama"
 
 #: src/control/Control.CharacterMap.js:48
 msgid "Runic"
-msgstr ""
+msgstr "Runa"
 
 #: src/control/Control.CharacterMap.js:49
 msgid "Khmer"
-msgstr ""
+msgstr "Kmera"
 
 #: src/control/Control.CharacterMap.js:50
 msgid "Mongolian"
-msgstr ""
+msgstr "Mongola"
 
 #: src/control/Control.CharacterMap.js:51
 msgid "Latin Extended Additional"
-msgstr ""
+msgstr "Latino etendita plua"
 
 #: src/control/Control.CharacterMap.js:52
 msgid "Greek Extended"
-msgstr ""
+msgstr "Greka etendita"
 
 #: src/control/Control.CharacterMap.js:53
 msgid "General Punctuation"
-msgstr ""
+msgstr "Ĝenerala interpunkcio"
 
 #: src/control/Control.CharacterMap.js:54
 msgid "Superscripts and Subscripts"
-msgstr ""
+msgstr "Alta kaj malalta skriboj"
 
 #: src/control/Control.CharacterMap.js:55
 msgid "Currency Symbols"
-msgstr ""
+msgstr "Valutsimboloj"
 
 #: src/control/Control.CharacterMap.js:56
 msgid "Combining Diacritical Symbols"
-msgstr ""
+msgstr "Kunligaj diakritaj signoj"
 
 #: src/control/Control.CharacterMap.js:57
 msgid "Letterlike Symbols"
-msgstr ""
+msgstr "Literecaj simboloj"
 
 #: src/control/Control.CharacterMap.js:58
 msgid "Number Forms"
-msgstr ""
+msgstr "Nombroformoj"
 
 #: src/control/Control.CharacterMap.js:59
 msgid "Arrows"
-msgstr ""
+msgstr "Sagoj"
 
 #: src/control/Control.CharacterMap.js:60
 msgid "Mathematical Operators"
-msgstr ""
+msgstr "Matematikaj operacisimboloj"
 
 #: src/control/Control.CharacterMap.js:61
 msgid "Miscellaneous Technical"
-msgstr ""
+msgstr "Diversaj teknikaj"
 
 #: src/control/Control.CharacterMap.js:62
 msgid "Control Pictures"
-msgstr ""
+msgstr "Bildsimboloj de komandoj"
 
 #: src/control/Control.CharacterMap.js:63
 msgid "Optical Character Recognition"
-msgstr ""
+msgstr "Optika signorekono"
 
 #: src/control/Control.CharacterMap.js:64
 msgid "Enclosed Alphanumerics"
-msgstr ""
+msgstr "Enfermitaj literciferoj"
 
 #: src/control/Control.CharacterMap.js:65
 msgid "Box Drawing"
-msgstr ""
+msgstr "Kadreroj"
 
 #: src/control/Control.CharacterMap.js:66
 msgid "Block Elements"
-msgstr ""
+msgstr "Blokecaj elementoj"
 
 #: src/control/Control.CharacterMap.js:67
 msgid "Geometric Shapes"
-msgstr ""
+msgstr "Geometriaj formoj"
 
 #: src/control/Control.CharacterMap.js:68
 msgid "Miscellaneous Symbols"
-msgstr ""
+msgstr "Diversaj simboloj"
 
 #: src/control/Control.CharacterMap.js:69
 msgid "Dingbats"
-msgstr ""
+msgstr "Dingbats"
 
 #: src/control/Control.CharacterMap.js:70
 msgid "Braille Patterns"
-msgstr ""
+msgstr "Brajlaj signoj"
 
 #: src/control/Control.CharacterMap.js:71
 msgid "CJK Radicals Supplement"
-msgstr ""
+msgstr "CJK-radikaloj suplementaj"
 
 #: src/control/Control.CharacterMap.js:72
 msgid "Kangxi Radicals"
-msgstr ""
+msgstr "Kanĝi-radikaloj"
 
 #: src/control/Control.CharacterMap.js:73
 msgid "Ideographic Description Characters"
-msgstr ""
+msgstr "Ideografiaj priskribaj signoj"
 
 #: src/control/Control.CharacterMap.js:74
 msgid "CJK Symbols and Punctuation"
-msgstr ""
+msgstr "CJK-simboloj kaj interpunkcio"
 
 #: src/control/Control.CharacterMap.js:75
 msgid "Hiragana"
-msgstr ""
+msgstr "Hiragana"
 
 #: src/control/Control.CharacterMap.js:76
 msgid "Katakana"
-msgstr ""
+msgstr "Katakana"
 
 #: src/control/Control.CharacterMap.js:77
 msgid "Bopomofo"
-msgstr ""
+msgstr "Bopomofo"
 
 #: src/control/Control.CharacterMap.js:78
 msgid "Hangul Compatibility Jamo"
-msgstr ""
+msgstr "Hangula kongrueca jamo"
 
 #: src/control/Control.CharacterMap.js:79
 msgid "Kanbun"
-msgstr ""
+msgstr "Kanbuna"
 
 #: src/control/Control.CharacterMap.js:80
 msgid "Bopomofo Extended"
-msgstr ""
+msgstr "Bopomofa etendita"
 
 #: src/control/Control.CharacterMap.js:81
 msgid "Enclosed CJK Letters and Months"
-msgstr ""
+msgstr "Enfermitaj CJK-literoj kaj monatoj"
 
 #: src/control/Control.CharacterMap.js:82
 msgid "CJK Compatibility"
-msgstr ""
+msgstr "ĈJK-kongrueco"
 
 #: src/control/Control.CharacterMap.js:84
 msgid "CJK Unified Ideographs Extension A"
-msgstr ""
+msgstr "ĈJK Unuigitaj Ideografiaĵoj, Etendo-A"
 
 #: src/control/Control.CharacterMap.js:86
 msgid "CJK Unified Ideographs"
-msgstr ""
+msgstr "ĈJK unuigitaj ideografiaĵoj"
 
 #: src/control/Control.CharacterMap.js:88
 msgid "Yi Syllables"
-msgstr ""
+msgstr "Yi-silaboj"
 
 #: src/control/Control.CharacterMap.js:90
 msgid "Yi Radicals"
-msgstr ""
+msgstr "Yi-radikaloj"
 
 #: src/control/Control.CharacterMap.js:92
 msgid "Hangul"
-msgstr ""
+msgstr "Hangula"
 
 #: src/control/Control.CharacterMap.js:94
 msgid "High Surrogates"
-msgstr ""
+msgstr "Altaj surogatoj"
 
 #: src/control/Control.CharacterMap.js:95
 msgid "High Private Use Surrogates"
-msgstr ""
+msgstr "Altaj surogatoj de privata interkonsento"
 
 #: src/control/Control.CharacterMap.js:97
 msgid "Low Surrogates"
-msgstr ""
+msgstr "Malaltaj surogatoj"
 
 #: src/control/Control.CharacterMap.js:99
 msgid "Private Use Area"
-msgstr ""
+msgstr "Areo de privata uzo"
 
 #: src/control/Control.CharacterMap.js:101
 msgid "CJK Compatibility Ideographs"
-msgstr ""
+msgstr "ĈJK-kongruecaj ideografiaĵoj"
 
 #: src/control/Control.CharacterMap.js:102
 msgid "Alphabetic Presentation Forms"
-msgstr ""
+msgstr "Alfabetaj prezentadaj formoj"
 
 #: src/control/Control.CharacterMap.js:104
 msgid "Arabic Presentation Forms-A"
-msgstr ""
+msgstr "Arabaj prezentadaj formoj-A"
 
 #: src/control/Control.CharacterMap.js:105
 msgid "Combining Half Marks"
-msgstr ""
+msgstr "Kunligaj Duonsignoj"
 
 #: src/control/Control.CharacterMap.js:106
 msgid "CJK Compatibility Forms"
-msgstr ""
+msgstr "ĈJK-kongruecaj formoj"
 
 #: src/control/Control.CharacterMap.js:107
 msgid "Small Form Variants"
-msgstr ""
+msgstr "Etformaj variantoj"
 
 #: src/control/Control.CharacterMap.js:108
 msgid "Arabic Presentation Forms-B"
-msgstr ""
+msgstr "Arabaj prezentadaj formoj-B"
 
 #: src/control/Control.CharacterMap.js:109
 msgid "Specials"
-msgstr ""
+msgstr "Specialaj simboloj"
 
 #: src/control/Control.CharacterMap.js:110
 msgid "Halfwidth and Fullwidth Forms"
-msgstr ""
+msgstr "Duonlarĝaj kaj plenlarĝaj formoj"
 
 #: src/control/Control.CharacterMap.js:111
 msgid "Old Italic"
-msgstr ""
+msgstr "Antikva kursiva"
 
 #: src/control/Control.CharacterMap.js:112
 msgid "Gothic"
-msgstr ""
+msgstr "Gotika"
 
 #: src/control/Control.CharacterMap.js:113
 msgid "Deseret"
-msgstr ""
+msgstr "Desereta"
 
 #: src/control/Control.CharacterMap.js:114
 msgid "Byzantine Musical Symbols"
-msgstr ""
+msgstr "Bizancaj muzikaj simboloj"
 
 #: src/control/Control.CharacterMap.js:115
 #: src/control/Control.CharacterMap.js:116
 msgid "Musical Symbols"
-msgstr ""
+msgstr "Muzikaj simboloj"
 
 #: src/control/Control.CharacterMap.js:118
 msgid "CJK Unified Ideographs Extension B"
-msgstr ""
+msgstr "ĈJK Unuigitaj Ideografiaĵoj, Etendo-B"
 
 #: src/control/Control.CharacterMap.js:121
 msgid "CJK Compatibility Ideographs Supplement"
-msgstr ""
+msgstr "ĈJK Kongruecaj Ideografiaĵoj, Suplemento"
 
 #: src/control/Control.CharacterMap.js:122
 msgid "Tags"
-msgstr ""
+msgstr "Etikedoj"
 
 #: src/control/Control.CharacterMap.js:123
 msgid "Cyrillic Supplement"
-msgstr ""
+msgstr "Cirila suplemento"
 
 #: src/control/Control.CharacterMap.js:124
 msgid "Tagalog"
-msgstr ""
+msgstr "Tagaloga"
 
 #: src/control/Control.CharacterMap.js:125
 msgid "Hanunoo"
-msgstr ""
+msgstr "Hanunoo"
 
 #: src/control/Control.CharacterMap.js:126
 msgid "Buhid"
-msgstr ""
+msgstr "Buhida"
 
 #: src/control/Control.CharacterMap.js:127
 msgid "Tagbanwa"
-msgstr ""
+msgstr "Tagbanva"
 
 #: src/control/Control.CharacterMap.js:128
 msgid "Miscellaneous Mathematical Symbols-A"
-msgstr ""
+msgstr "Diversaj matematikaj simboloj-A"
 
 #: src/control/Control.CharacterMap.js:129
 msgid "Supplemental Arrows-A"
-msgstr ""
+msgstr "Kromaj sagoj-A"
 
 #: src/control/Control.CharacterMap.js:130
 msgid "Supplemental Arrows-B"
-msgstr ""
+msgstr "Kromaj sagoj-B"
 
 #: src/control/Control.CharacterMap.js:131
 msgid "Miscellaneous Mathematical Symbols-B"
-msgstr ""
+msgstr "Diversaj matematikaj simboloj-B"
 
 #: src/control/Control.CharacterMap.js:132
 msgid "Supplemental Mathematical Operators"
-msgstr ""
+msgstr "Suplementaj matematikaj operacisimboloj"
 
 #: src/control/Control.CharacterMap.js:133
 msgid "Katakana Phonetics Extensions"
-msgstr ""
+msgstr "Katakana fonetikaj etendaĵoj"
 
 #: src/control/Control.CharacterMap.js:134
 msgid "Variation Selectors"
-msgstr ""
+msgstr "Variaĵaj elektiloj"
 
 #: src/control/Control.CharacterMap.js:136
 msgid "Supplementary Private Use Area-A"
-msgstr ""
+msgstr "Suplementa privata interkonsenta aro-A"
 
 #: src/control/Control.CharacterMap.js:139
 msgid "Supplementary Private Use Area-B"
-msgstr ""
+msgstr "Suplementa privata interkonsenta aro-B"
 
 #: src/control/Control.CharacterMap.js:140
 msgid "Limbu"
-msgstr ""
+msgstr "Limbua"
 
 #: src/control/Control.CharacterMap.js:141
 msgid "Tai Le"
-msgstr ""
+msgstr "Taj-Lea"
 
 #: src/control/Control.CharacterMap.js:142
 msgid "Khmer Symbols"
-msgstr ""
+msgstr "Kmeraj simboloj"
 
 #: src/control/Control.CharacterMap.js:143
 msgid "Phonetic Extensions"
-msgstr ""
+msgstr "Fonetikaj etendaĵoj"
 
 #: src/control/Control.CharacterMap.js:144
 msgid "Miscellaneous Symbols And Arrows"
-msgstr ""
+msgstr "Diversaj simboloj kaj sagoj"
 
 #: src/control/Control.CharacterMap.js:145
 msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgstr "Yijing-I Ĉing-simboloj"
 
 #: src/control/Control.CharacterMap.js:146
 msgid "Linear B Syllabary"
-msgstr ""
+msgstr "Lineara-B silabaro"
 
 #: src/control/Control.CharacterMap.js:147
 msgid "Linear B Ideograms"
-msgstr ""
+msgstr "Ideografiaĵoj de lineara-B"
 
 #: src/control/Control.CharacterMap.js:148
 msgid "Aegean Numbers"
-msgstr ""
+msgstr "Egeaj nombroj"
 
 #: src/control/Control.CharacterMap.js:149
 msgid "Ugaritic"
-msgstr ""
+msgstr "Ugarita"
 
 #: src/control/Control.CharacterMap.js:150
 msgid "Shavian"
-msgstr ""
+msgstr "Ŝava alfabeto"
 
 #: src/control/Control.CharacterMap.js:151
 msgid "Osmanya"
-msgstr ""
+msgstr "Somalia skribo"
 
 #: src/control/Control.CharacterMap.js:152
 msgid "Cypriot Syllabary"
-msgstr ""
+msgstr "Kipra silabaro"
 
 #: src/control/Control.CharacterMap.js:153
 msgid "Tai Xuan Jing Symbols"
-msgstr ""
+msgstr "Tai-Xuan-Jing-simboloj"
 
 #: src/control/Control.CharacterMap.js:154
 msgid "Variation Selectors Supplement"
-msgstr ""
+msgstr "Suplemento al variaĵaj elektiloj"
 
 #: src/control/Control.CharacterMap.js:155
 msgid "Ancient Greek Musical Notation"
-msgstr ""
+msgstr "Antikva greka muzika notacio"
 
 #: src/control/Control.CharacterMap.js:156
 msgid "Ancient Greek Numbers"
-msgstr ""
+msgstr "Antikvaj grekaj nombroj"
 
 #: src/control/Control.CharacterMap.js:157
 msgid "Arabic Supplement"
-msgstr ""
+msgstr "Araba suplemento"
 
 #: src/control/Control.CharacterMap.js:158
 msgid "Buginese"
-msgstr ""
+msgstr "Buĝia"
 
 #: src/control/Control.CharacterMap.js:159
 msgid "CJK Strokes"
-msgstr ""
+msgstr "ĈJK-strekoj"
 
 #: src/control/Control.CharacterMap.js:160
 msgid "Combining Diacritical Marks Supplement"
-msgstr ""
+msgstr "Suplemento al kunligaj diakritaĵoj"
 
 #: src/control/Control.CharacterMap.js:161
 msgid "Coptic"
-msgstr ""
+msgstr "Kopta"
 
 #: src/control/Control.CharacterMap.js:162
 msgid "Ethiopic Extended"
-msgstr ""
+msgstr "Etiopa etendita"
 
 #: src/control/Control.CharacterMap.js:163
 msgid "Ethiopic Supplement"
-msgstr ""
+msgstr "Etiopa suplemento"
 
 #: src/control/Control.CharacterMap.js:164
 msgid "Georgian Supplement"
-msgstr ""
+msgstr "Kartvela suplemento"
 
 #: src/control/Control.CharacterMap.js:165
 msgid "Glagolitic"
-msgstr ""
+msgstr "Glagolica"
 
 #: src/control/Control.CharacterMap.js:166
 msgid "Kharoshthi"
-msgstr ""
+msgstr "Karoŝta"
 
 #: src/control/Control.CharacterMap.js:167
 msgid "Modifier Tone Letters"
-msgstr ""
+msgstr "Literoj kiuj modifas tonon"
 
 #: src/control/Control.CharacterMap.js:168
 msgid "New Tai Lue"
-msgstr ""
+msgstr "Nova Tai Lua"
 
 #: src/control/Control.CharacterMap.js:169
 msgid "Old Persian"
-msgstr ""
+msgstr "Antikva persa"
 
 #: src/control/Control.CharacterMap.js:170
 msgid "Phonetic Extensions Supplement"
-msgstr ""
+msgstr "Suplemento al fonetikaj etendaĵoj"
 
 #: src/control/Control.CharacterMap.js:171
 msgid "Supplemental Punctuation"
-msgstr ""
+msgstr "Suplementa interpunkcio"
 
 #: src/control/Control.CharacterMap.js:172
 msgid "Syloti Nagri"
-msgstr ""
+msgstr "Sileta skribo"
 
 #: src/control/Control.CharacterMap.js:173
 msgid "Tifinagh"
-msgstr ""
+msgstr "Tifinaga"
 
 #: src/control/Control.CharacterMap.js:174
 msgid "Vertical Forms"
-msgstr ""
+msgstr "Vertikalaj formoj"
 
 #: src/control/Control.CharacterMap.js:175
 msgid "Nko"
-msgstr ""
+msgstr "Nkoa"
 
 #: src/control/Control.CharacterMap.js:176
 msgid "Balinese"
-msgstr ""
+msgstr "Balia"
 
 #: src/control/Control.CharacterMap.js:177
 msgid "Latin Extended-C"
-msgstr ""
+msgstr "Latina etendita-C"
 
 #: src/control/Control.CharacterMap.js:178
 msgid "Latin Extended-D"
-msgstr ""
+msgstr "Latina etendita-D"
 
 #: src/control/Control.CharacterMap.js:179
 msgid "Phags-Pa"
-msgstr ""
+msgstr "Kvadrata mongola"
 
 #: src/control/Control.CharacterMap.js:180
 msgid "Phoenician"
-msgstr ""
+msgstr "Fenica"
 
 #: src/control/Control.CharacterMap.js:182
 msgid "Cuneiform"
-msgstr ""
+msgstr "Kojnoskribo"
 
 #: src/control/Control.CharacterMap.js:183
 msgid "Cuneiform Numbers And Punctuation"
-msgstr ""
+msgstr "Kojnoskribaj nombroj kaj interpunkcio"
 
 #: src/control/Control.CharacterMap.js:184
 msgid "Counting Rod Numerals"
-msgstr ""
+msgstr "Kalkulbastonaj ciferoj"
 
 #: src/control/Control.CharacterMap.js:185
 msgid "Sundanese"
-msgstr ""
+msgstr "Sunda"
 
 #: src/control/Control.CharacterMap.js:186
 msgid "Lepcha"
-msgstr ""
+msgstr "Lepĉa"
 
 #: src/control/Control.CharacterMap.js:187
 msgid "Ol Chiki"
-msgstr ""
+msgstr "Olĉika"
 
 #: src/control/Control.CharacterMap.js:188
 msgid "Cyrillic Extended-A"
-msgstr ""
+msgstr "Cirila etendita-A"
 
 #: src/control/Control.CharacterMap.js:190
 msgid "Vai"
-msgstr ""
+msgstr "Vaja"
 
 #: src/control/Control.CharacterMap.js:191
 msgid "Cyrillic Extended-B"
-msgstr ""
+msgstr "Cirila etendita-B"
 
 #: src/control/Control.CharacterMap.js:192
 msgid "Saurashtra"
-msgstr ""
+msgstr "Saŭraŝtra"
 
 #: src/control/Control.CharacterMap.js:193
 msgid "Kayah Li"
-msgstr ""
+msgstr "Kajalia"
 
 #: src/control/Control.CharacterMap.js:194
 msgid "Rejang"
-msgstr ""
+msgstr "Reĝanga"
 
 #: src/control/Control.CharacterMap.js:195
 msgid "Cham"
-msgstr ""
+msgstr "Ĉama"
 
 #: src/control/Control.CharacterMap.js:196
 msgid "Ancient Symbols"
-msgstr ""
+msgstr "Historiaj signoj"
 
 #: src/control/Control.CharacterMap.js:197
 msgid "Phaistos Disc"
-msgstr ""
+msgstr "Fajsta disko"
 
 #: src/control/Control.CharacterMap.js:198
 msgid "Lycian"
-msgstr ""
+msgstr "Likia"
 
 #: src/control/Control.CharacterMap.js:199
 msgid "Carian"
-msgstr ""
+msgstr "Karia"
 
 #: src/control/Control.CharacterMap.js:200
 msgid "Lydian"
-msgstr ""
+msgstr "Lidia"
 
 #: src/control/Control.CharacterMap.js:201
 msgid "Mahjong Tiles"
-msgstr ""
+msgstr "Maĝangaj ludpecoj"
 
 #: src/control/Control.CharacterMap.js:202
 msgid "Domino Tiles"
-msgstr ""
+msgstr "Domenaj ludpecoj"
 
 #: src/control/Control.CharacterMap.js:203
 msgid "Samaritan"
-msgstr ""
+msgstr "Samaria"
 
 #: src/control/Control.CharacterMap.js:204
 msgid "Canadian Aboriginal Syllabics Extended"
-msgstr ""
+msgstr "Kanad-Aborigena Silabaro etendita"
 
 #: src/control/Control.CharacterMap.js:205
 msgid "Tai Tham"
-msgstr ""
+msgstr "Taitama"
 
 #: src/control/Control.CharacterMap.js:206
 msgid "Vedic Extensions"
-msgstr ""
+msgstr "Vedaj etendaĵoj"
 
 #: src/control/Control.CharacterMap.js:207
 msgid "Lisu"
-msgstr ""
+msgstr "Lisua"
 
 #: src/control/Control.CharacterMap.js:208
 msgid "Bamum"
-msgstr ""
+msgstr "Bamuma"
 
 #: src/control/Control.CharacterMap.js:209
 msgid "Common Indic Number Forms"
-msgstr ""
+msgstr "Ĝeneralaj hindarjaj nombraj simboloj"
 
 #: src/control/Control.CharacterMap.js:210
 msgid "Devanagari Extended"
-msgstr ""
+msgstr "Nagaria etendita"
 
 #: src/control/Control.CharacterMap.js:211
 msgid "Hangul Jamo Extended-A"
-msgstr ""
+msgstr "Hangula Ĉamo etendita-A"
 
 #: src/control/Control.CharacterMap.js:212
 msgid "Javanese"
-msgstr ""
+msgstr "Java"
 
 #: src/control/Control.CharacterMap.js:213
 msgid "Myanmar Extended-A"
-msgstr ""
+msgstr "Birma etendita-A"
 
 #: src/control/Control.CharacterMap.js:214
 msgid "Tai Viet"
-msgstr ""
+msgstr "Tajvieta"
 
 #: src/control/Control.CharacterMap.js:215
 msgid "Meetei Mayek"
-msgstr ""
+msgstr "Mejteja"
 
 #: src/control/Control.CharacterMap.js:216
 msgid "Hangul Jamo Extended-B"
-msgstr ""
+msgstr "Hangula Ĉamo etendita-B"
 
 #: src/control/Control.CharacterMap.js:217
 msgid "Imperial Aramaic"
-msgstr ""
+msgstr "Imperia aramea"
 
 #: src/control/Control.CharacterMap.js:218
 msgid "Old South Arabian"
-msgstr ""
+msgstr "Malnova sud-araba"
 
 #: src/control/Control.CharacterMap.js:219
 msgid "Avestan"
-msgstr ""
+msgstr "Avesta"
 
 #: src/control/Control.CharacterMap.js:220
 msgid "Inscriptional Parthian"
-msgstr ""
+msgstr "Gravura parta"
 
 #: src/control/Control.CharacterMap.js:221
 msgid "Inscriptional Pahlavi"
-msgstr ""
+msgstr "Gravura mezpersa"
 
 #: src/control/Control.CharacterMap.js:222
 msgid "Old Turkic"
-msgstr ""
+msgstr "Antikva turka"
 
 #: src/control/Control.CharacterMap.js:223
 msgid "Rumi Numeral Symbols"
-msgstr ""
+msgstr "Rumiaj numeralaj simboloj"
 
 #: src/control/Control.CharacterMap.js:224
 msgid "Kaithi"
-msgstr ""
+msgstr "Kajasta"
 
 #: src/control/Control.CharacterMap.js:226
 msgid "Egyptian Hieroglyphs"
-msgstr ""
+msgstr "Egiptaj hieroglifoj"
 
 #: src/control/Control.CharacterMap.js:227
 msgid "Enclosed Alphanumeric Supplement"
-msgstr ""
+msgstr "Ĉirkaŭitaj literciferoj, suplemento"
 
 #: src/control/Control.CharacterMap.js:228
 msgid "Enclosed Ideographic Supplement"
-msgstr ""
+msgstr "Ĉirkaŭitaj ideografiaĵoj, suplemento"
 
 #: src/control/Control.CharacterMap.js:230
 msgid "CJK Unified Ideographs Extension C"
-msgstr ""
+msgstr "ĈJK Unuigitaj Ideografiaĵoj, Etendo-C"
 
 #: src/control/Control.CharacterMap.js:231
 msgid "Mandaic"
-msgstr ""
+msgstr "Mandeia"
 
 #: src/control/Control.CharacterMap.js:232
 msgid "Batak"
-msgstr ""
+msgstr "Bataka"
 
 #: src/control/Control.CharacterMap.js:233
 msgid "Ethiopic Extended-A"
-msgstr ""
+msgstr "Etiopa etendita-A"
 
 #: src/control/Control.CharacterMap.js:234
 msgid "Brahmi"
-msgstr ""
+msgstr "Brama"
 
 #: src/control/Control.CharacterMap.js:236
 msgid "Bamum Supplement"
-msgstr ""
+msgstr "Bamuma suplemento"
 
 #: src/control/Control.CharacterMap.js:237
 msgid "Kana Supplement"
-msgstr ""
+msgstr "Kana suplemento"
 
 #: src/control/Control.CharacterMap.js:238
 msgid "Playing Cards"
-msgstr ""
+msgstr "Ludkartoj"
 
 #: src/control/Control.CharacterMap.js:240
 msgid "Miscellaneous Symbols And Pictographs"
-msgstr ""
+msgstr "Diversaj simboloj kaj piktogramoj"
 
 #: src/control/Control.CharacterMap.js:241
 msgid "Emoticons"
-msgstr ""
+msgstr "Miensimboloj"
 
 #: src/control/Control.CharacterMap.js:242
 msgid "Transport And Map Symbols"
-msgstr ""
+msgstr "Transportaj kaj mapaj simboloj"
 
 #: src/control/Control.CharacterMap.js:243
 msgid "Alchemical Symbols"
-msgstr ""
+msgstr "Alkemiaj simboloj"
 
 #: src/control/Control.CharacterMap.js:245
 msgid "CJK Unified Ideographs Extension D"
-msgstr ""
+msgstr "ĈJK Unuigitaj Ideografiaĵoj, Etendo-D"
 
 #: src/control/Control.CharacterMap.js:247
 msgid "Arabic Extended-A"
-msgstr ""
+msgstr "Araba etendita-A"
 
 #: src/control/Control.CharacterMap.js:248
 msgid "Arabic Mathematical Alphabetic Symbols"
-msgstr ""
+msgstr "Arabaj matematikaj alfabetaj simboloj"
 
 #: src/control/Control.CharacterMap.js:249
 msgid "Chakma"
-msgstr ""
+msgstr "Ĉakma"
 
 #: src/control/Control.CharacterMap.js:250
 msgid "Meetei Mayek Extensions"
-msgstr ""
+msgstr "Etendoj Meetei Mayek"
 
 #: src/control/Control.CharacterMap.js:251
 msgid "Meroitic Cursive"
-msgstr ""
+msgstr "Meroa kursiva"
 
 #: src/control/Control.CharacterMap.js:252
 msgid "Meroitic Hieroglyphs"
-msgstr ""
+msgstr "Meroaj hieroglifoj"
 
 #: src/control/Control.CharacterMap.js:253
 msgid "Miao"
-msgstr ""
+msgstr "mjaa"
 
 #: src/control/Control.CharacterMap.js:254
 msgid "Sharada"
-msgstr ""
+msgstr "Ŝarada"
 
 #: src/control/Control.CharacterMap.js:255
 msgid "Sora Sompeng"
-msgstr ""
+msgstr "Sorasompenga"
 
 #: src/control/Control.CharacterMap.js:256
 msgid "Sundanese Supplement"
-msgstr ""
+msgstr "Sunda suplemento"
 
 #: src/control/Control.CharacterMap.js:257
 msgid "Takri"
-msgstr ""
+msgstr "Takria"
 
 #: src/control/Control.CharacterMap.js:258
 msgid "Bassa Vah"
-msgstr ""
+msgstr "Basa"
 
 #: src/control/Control.CharacterMap.js:259
 msgid "Caucasian Albanian"
-msgstr ""
+msgstr "Kaŭkaza albana"
 
 #: src/control/Control.CharacterMap.js:260
 msgid "Coptic Epact Numbers"
-msgstr ""
+msgstr "Koptaj epaktaj nombroj"
 
 #: src/control/Control.CharacterMap.js:261
 msgid "Combining Diacritical Marks Extended"
-msgstr ""
+msgstr "Suplemento al kunligaj diakritaĵoj"
 
 #: src/control/Control.CharacterMap.js:262
 msgid "Duployan"
-msgstr ""
+msgstr "Duploja"
 
 #: src/control/Control.CharacterMap.js:263
 msgid "Elbasan"
-msgstr ""
+msgstr "Elbasana"
 
 #: src/control/Control.CharacterMap.js:264
 msgid "Geometric Shapes Extended"
-msgstr ""
+msgstr "Suplementaj geometriaj formoj"
 
 #: src/control/Control.CharacterMap.js:265
 msgid "Grantha"
-msgstr ""
+msgstr "Granta"
 
 #: src/control/Control.CharacterMap.js:266
 msgid "Khojki"
-msgstr ""
+msgstr "Kojkia"
 
 #: src/control/Control.CharacterMap.js:267
 msgid "Khudawadi"
-msgstr ""
+msgstr "Kudabadia"
 
 #: src/control/Control.CharacterMap.js:268
 msgid "Latin Extended-E"
-msgstr ""
+msgstr "Latina etendita-E"
 
 #: src/control/Control.CharacterMap.js:270
 msgid "Linear A"
-msgstr ""
+msgstr "Skribo linia A"
 
 #: src/control/Control.CharacterMap.js:271
 msgid "Mahajani"
-msgstr ""
+msgstr "Mahaĝania"
 
 #: src/control/Control.CharacterMap.js:272
 msgid "Manichaean"
-msgstr ""
+msgstr "Maniĥea"
 
 #: src/control/Control.CharacterMap.js:273
 msgid "Mende Kikakui"
-msgstr ""
+msgstr "Mendekikakua"
 
 #: src/control/Control.CharacterMap.js:274
 msgid "Modi"
-msgstr ""
+msgstr "Modia"
 
 #: src/control/Control.CharacterMap.js:275
 msgid "Mro"
-msgstr ""
+msgstr "Mroa"
 
 #: src/control/Control.CharacterMap.js:276
 msgid "Myanmar Extended-B"
-msgstr ""
+msgstr "Birma etendita-B"
 
 #: src/control/Control.CharacterMap.js:277
 msgid "Nabataean"
-msgstr ""
+msgstr "Nabatea"
 
 #: src/control/Control.CharacterMap.js:278
 msgid "Old North Arabian"
-msgstr ""
+msgstr "Antikva nord-araba"
 
 #: src/control/Control.CharacterMap.js:279
 msgid "Old Permic"
-msgstr ""
+msgstr "Antikva perma"
 
 #: src/control/Control.CharacterMap.js:280
 msgid "Ornamental Dingbats"
-msgstr ""
+msgstr "Ornamaj Dingbats"
 
 #: src/control/Control.CharacterMap.js:281
 msgid "Pahawh Hmong"
@@ -1677,7 +1739,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:282
 msgid "Palmyrene"
-msgstr ""
+msgstr "Palmira"
 
 #: src/control/Control.CharacterMap.js:283
 msgid "Pau Cin Hau"
@@ -1685,184 +1747,199 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:284
 msgid "Psalter Pahlavi"
-msgstr ""
+msgstr "Psalma palava"
 
 #: src/control/Control.CharacterMap.js:285
 msgid "Shorthand Format Controls"
-msgstr ""
+msgstr "Stenografaj formataj regiloj"
 
 #: src/control/Control.CharacterMap.js:286
 msgid "Siddham"
-msgstr ""
+msgstr "Sidama"
 
 #: src/control/Control.CharacterMap.js:287
 msgid "Sinhala Archaic Numbers"
-msgstr ""
+msgstr "Sinhalaj antikvaj numeroj"
 
 #: src/control/Control.CharacterMap.js:288
 msgid "Supplemental Arrows-C"
-msgstr ""
+msgstr "Suplementaj sagoj-C"
 
 #: src/control/Control.CharacterMap.js:289
 msgid "Tirhuta"
-msgstr ""
+msgstr "Tirhuta"
 
 #: src/control/Control.CharacterMap.js:290
 msgid "Warang Citi"
-msgstr ""
+msgstr "Varang Citia"
 
 #: src/control/Control.CharacterMap.js:291
 msgid "Ahom"
-msgstr ""
+msgstr "Ahoma"
 
 #: src/control/Control.CharacterMap.js:293
 msgid "Anatolian Hieroglyphs"
-msgstr ""
+msgstr "Anatoliaj hieroglifoj"
 
 #: src/control/Control.CharacterMap.js:294
 msgid "Cherokee Supplement"
-msgstr ""
+msgstr "Ĉeroka suplemento"
 
 #: src/control/Control.CharacterMap.js:295
 #: src/control/Control.CharacterMap.js:296
 msgid "CJK Unified Ideographs Extension E"
-msgstr ""
+msgstr "ĈJK unuigitaj ideografiaĵoj, etendo-A"
 
 #: src/control/Control.CharacterMap.js:298
 msgid "Early Dynastic Cuneiform"
-msgstr ""
+msgstr "Antikva dinastia kojnoskribo"
 
 #: src/control/Control.CharacterMap.js:299
 msgid "Hatran"
-msgstr ""
+msgstr "Hatrana"
 
 #: src/control/Control.CharacterMap.js:300
 msgid "Multani"
-msgstr ""
+msgstr "Multana"
 
 #: src/control/Control.CharacterMap.js:301
 msgid "Old Hungarian"
-msgstr ""
+msgstr "Antikva hungara"
 
 #: src/control/Control.CharacterMap.js:302
 msgid "Supplemental Symbols And Pictographs"
-msgstr ""
+msgstr "Suplementaj simboloj kaj bildsimboloj"
 
 #: src/control/Control.CharacterMap.js:304
 msgid "Sutton Signwriting"
-msgstr ""
+msgstr "Sutton-gestoskribo"
 
 #: src/control/Control.CharacterMap.js:390
 msgid "Special Characters"
-msgstr ""
+msgstr "Specialaj signoj"
 
 #: src/control/Control.CharacterMap.js:395
 msgid "Font Name:"
-msgstr ""
+msgstr "Tipara nomo:"
 
 #: src/control/Control.CharacterMap.js:402
 msgid "Subset:"
-msgstr ""
+msgstr "Subaro:"
 
 #: src/control/Control.CharacterMap.js:413
 msgid "Selected Character:"
-msgstr ""
+msgstr "Elektita signo:"
 
 #: src/control/Control.CharacterMap.js:418
 msgid "Hexadecimal:"
-msgstr ""
+msgstr "Deksesuma:"
 
 #: src/control/Control.CharacterMap.js:424
-#: src/control/Control.Menubar.js:38
-#: src/control/Control.Menubar.js:138
-#: src/control/Control.Menubar.js:189
-#: src/control/Control.Menubar.js:195
-#: src/control/Control.Menubar.js:243
+#: src/control/Control.Menubar.js:49
+#: src/control/Control.Menubar.js:149
+#: src/control/Control.Menubar.js:201
+#: src/control/Control.Menubar.js:208
+#: src/control/Control.Menubar.js:257
 msgid "Insert"
 msgstr "Enmeti"
 
-#: src/control/Control.ColumnHeader.js:41
+#: src/control/Control.ColumnHeader.js:39
 msgid "Insert column before"
 msgstr "Enmeti kolumnan antaŭa"
 
-#: src/control/Control.ColumnHeader.js:48
-#: src/control/Control.Menubar.js:257
+#: src/control/Control.ColumnHeader.js:46
+#: src/control/Control.Menubar.js:271
 msgid "Delete column"
 msgstr "Forigi kolumnon"
 
-#: src/control/Control.ColumnHeader.js:55
+#: src/control/Control.ColumnHeader.js:53
 msgid "Optimal Width"
-msgstr ""
+msgstr "Optimuma larĝo"
 
-#: src/control/Control.ColumnHeader.js:62
+#: src/control/Control.ColumnHeader.js:60
 msgid "Hide Columns"
-msgstr ""
+msgstr "Kaŝi kolumnojn"
 
-#: src/control/Control.ColumnHeader.js:69
+#: src/control/Control.ColumnHeader.js:67
 msgid "Show Columns"
+msgstr "Vidigi kolumnojn"
+
+#: src/control/Control.ColumnHeader.js:82
+msgid "Optimal Column Width"
+msgstr "Optimuma kolumnolarĝo"
+
+#: src/control/Control.ContextMenu.js:135
+msgid "Internal Cut"
 msgstr ""
 
-#: src/control/Control.ColumnHeader.js:84
-msgid "Optimal Column Width"
+#: src/control/Control.ContextMenu.js:138
+msgid "Internal Copy"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:141
+msgid "Internal Paste"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:163
+msgid "Internal Paste Special"
 msgstr ""
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
-msgstr ""
+msgstr "Ripari dokumenton"
 
 #: src/control/Control.DocumentRepair.js:40
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: src/control/Control.DocumentRepair.js:42
 msgid "Index"
-msgstr ""
+msgstr "Indekso"
 
 #: src/control/Control.DocumentRepair.js:44
-#: src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:245
+#: src/layer/tile/TileLayer.js:215
 msgid "Comment"
 msgstr "Komento"
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "User name"
-msgstr ""
+msgstr "Uzantonomo"
 
 #: src/control/Control.DocumentRepair.js:48
 msgid "Timestamp"
-msgstr ""
+msgstr "Tempomarko"
 
 #: src/control/Control.DocumentRepair.js:52
 msgid "Jump to state"
-msgstr ""
+msgstr "Salti al stato"
 
 #: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:162
-#: src/control/Control.Menubar.js:220
+#: src/control/Control.Menubar.js:174
+#: src/control/Control.Menubar.js:234
 msgid "File"
 msgstr "Dosiero"
 
 #: src/control/Control.Menubar.js:12
-#: src/control/Control.Menubar.js:164
-#: src/control/Control.Menubar.js:222
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:236
 msgid "Print"
 msgstr "Presi"
 
 #: src/control/Control.Menubar.js:13
-#: src/control/Control.Menubar.js:165
-#: src/control/Control.Menubar.js:223
+#: src/control/Control.Menubar.js:177
+#: src/control/Control.Menubar.js:237
 msgid "See revision history"
 msgstr "Vidu historion de versioj"
 
 #: src/control/Control.Menubar.js:14
-#: src/control/Control.Menubar.js:166
-#: src/control/Control.Menubar.js:224
+#: src/control/Control.Menubar.js:178
+#: src/control/Control.Menubar.js:238
 msgid "Download as"
 msgstr "Elŝuti kiel"
 
 #: src/control/Control.Menubar.js:15
-#: src/control/Control.Menubar.js:167
-#: src/control/Control.Menubar.js:225
+#: src/control/Control.Menubar.js:179
+#: src/control/Control.Menubar.js:239
 msgid "PDF Document (.pdf)"
 msgstr "PDF-dokumento (.pdf)"
 
@@ -1879,482 +1956,539 @@ msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:172
-#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:184
+#: src/control/Control.Menubar.js:244
 msgid "Edit"
 msgstr "Redakti"
 
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
-msgstr ""
+msgstr "Ripari"
 
 #: src/control/Control.Menubar.js:25
-#: src/control/Control.Menubar.js:176
-#: src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:188
+#: src/control/Control.Menubar.js:248
 msgid "Cut"
 msgstr "Eltondi"
 
 #: src/control/Control.Menubar.js:26
-#: src/control/Control.Menubar.js:177
-#: src/control/Control.Menubar.js:235
+#: src/control/Control.Menubar.js:189
+#: src/control/Control.Menubar.js:249
 msgid "Copy"
 msgstr "Kopii"
 
 #: src/control/Control.Menubar.js:27
-#: src/control/Control.Menubar.js:178
-#: src/control/Control.Menubar.js:236
+#: src/control/Control.Menubar.js:190
+#: src/control/Control.Menubar.js:250
 msgid "Paste"
 msgstr "Alglui"
 
 #: src/control/Control.Menubar.js:29
-#: src/control/Control.Menubar.js:180
-#: src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:192
+#: src/control/Control.Menubar.js:252
 msgid "Select all"
 msgstr "Elekti ĉion"
 
 #: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:182
-#: src/control/Control.Menubar.js:240
+msgid "Track Changes"
+msgstr ""
+
+#: src/control/Control.Menubar.js:32
+msgid "Record"
+msgstr ""
+
+#: src/control/Control.Menubar.js:33
+msgid "Show"
+msgstr ""
+
+#: src/control/Control.Menubar.js:35
+msgid "Previous"
+msgstr ""
+
+#: src/control/Control.Menubar.js:36
+#, fuzzy
+msgid "Next"
+msgstr "Teksto"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:254
 msgid "View"
 msgstr "Vido"
 
-#: src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:183
-#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:40
+#: src/control/Control.Menubar.js:195
+#: src/control/Control.Menubar.js:255
 msgid "Full screen"
 msgstr "Tuta ekrano"
 
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:190
-#: src/control/Control.Menubar.js:244
+#: src/control/Control.Menubar.js:46
+#, fuzzy
+msgid "Formatting Marks"
+msgstr "Formata marko"
+
+#: src/control/Control.Menubar.js:50
+#: src/control/Control.Menubar.js:202
+#: src/control/Control.Menubar.js:258
 msgid "Image"
 msgstr "Bildo"
 
-#: src/control/Control.Menubar.js:42
-msgid "Footnote"
-msgstr ""
-
-#: src/control/Control.Menubar.js:43
-msgid "Endnote"
-msgstr ""
-
-#: src/control/Control.Menubar.js:45
-msgid "Page break"
-msgstr ""
-
-#: src/control/Control.Menubar.js:46
-msgid "Column break"
-msgstr ""
-
-#: src/control/Control.Menubar.js:48
-#: src/control/Control.Menubar.js:192
-#: src/control/Control.Menubar.js:250
-msgid "Special character..."
-msgstr ""
-
-#: src/control/Control.Menubar.js:49
-msgid "Formatting mark"
-msgstr ""
-
-#: src/control/Control.Menubar.js:50
-msgid "Non-breaking space"
-msgstr ""
-
 #: src/control/Control.Menubar.js:51
-msgid "Non-breaking hyphen"
-msgstr ""
-
-#: src/control/Control.Menubar.js:52
-msgid "Soft hyphen"
+#: src/control/Control.Menubar.js:203
+#: src/control/Control.Menubar.js:259
+msgid "Comment..."
 msgstr ""
 
 #: src/control/Control.Menubar.js:53
-msgid "No-width optional break"
-msgstr ""
+msgid "Footnote"
+msgstr "Piednoto"
 
 #: src/control/Control.Menubar.js:54
-msgid "No-width no break"
-msgstr ""
-
-#: src/control/Control.Menubar.js:55
-msgid "Left-to-right mark"
-msgstr ""
+msgid "Endnote"
+msgstr "Finnoto"
 
 #: src/control/Control.Menubar.js:56
-msgid "Right-to-left mark"
-msgstr ""
+msgid "Page break"
+msgstr "Paĝosalto"
 
-#: src/control/Control.Menubar.js:58
-msgid "Format"
-msgstr ""
+#: src/control/Control.Menubar.js:57
+msgid "Column break"
+msgstr "Kolumnosalto"
 
 #: src/control/Control.Menubar.js:59
-msgid "Text"
-msgstr ""
+#: src/control/Control.Menubar.js:205
+#: src/control/Control.Menubar.js:264
+msgid "Special character..."
+msgstr "Speciala signo..."
+
+#: src/control/Control.Menubar.js:60
+msgid "Formatting mark"
+msgstr "Formata marko"
+
+#: src/control/Control.Menubar.js:61
+msgid "Non-breaking space"
+msgstr "Nerompebla spaceto"
+
+#: src/control/Control.Menubar.js:62
+msgid "Non-breaking hyphen"
+msgstr "Nerompebla streketo"
 
 #: src/control/Control.Menubar.js:63
-msgid "Double underline"
-msgstr ""
+msgid "Soft hyphen"
+msgstr "Eventuala streketo"
 
 #: src/control/Control.Menubar.js:64
-msgid "Strikethrough"
-msgstr ""
+msgid "No-width optional break"
+msgstr "Senlarĝa malnepra salto"
 
 #: src/control/Control.Menubar.js:65
-msgid "Overline"
-msgstr ""
+msgid "No-width no break"
+msgstr "Senlarĝa senrompa"
+
+#: src/control/Control.Menubar.js:66
+msgid "Left-to-right mark"
+msgstr "Maldekstre-dekstrena marko"
 
 #: src/control/Control.Menubar.js:67
-msgid "Superscript"
-msgstr ""
-
-#: src/control/Control.Menubar.js:68
-msgid "Subscript"
-msgstr ""
+msgid "Right-to-left mark"
+msgstr "Dekstre-maldekstrena marko"
 
 #: src/control/Control.Menubar.js:69
-msgid "ꜱᴍᴀʟʟ ᴄᴀᴘꜱ"
-msgstr ""
+msgid "Format"
+msgstr "Formato"
 
-#: src/control/Control.Menubar.js:71
-msgid "Shadow"
-msgstr ""
-
-#: src/control/Control.Menubar.js:72
-msgid "Outline"
-msgstr ""
+#: src/control/Control.Menubar.js:70
+msgid "Text"
+msgstr "Teksto"
 
 #: src/control/Control.Menubar.js:74
-msgid "Increase size"
-msgstr ""
+msgid "Double underline"
+msgstr "Duopa substreko"
 
 #: src/control/Control.Menubar.js:75
-msgid "Decrease size"
-msgstr ""
+msgid "Strikethrough"
+msgstr "Trastrekita"
 
-#: src/control/Control.Menubar.js:77
-msgid "UPPERCASE"
-msgstr ""
+#: src/control/Control.Menubar.js:76
+msgid "Overline"
+msgstr "Superstreko"
 
 #: src/control/Control.Menubar.js:78
-msgid "lowercase"
-msgstr ""
+msgid "Superscript"
+msgstr "Alta skribo"
 
 #: src/control/Control.Menubar.js:79
-msgid "Cycle case"
-msgstr ""
+msgid "Subscript"
+msgstr "Malalta skribo"
 
-#: src/control/Control.Menubar.js:81
-msgid "Sentence case"
-msgstr ""
+#: src/control/Control.Menubar.js:80
+msgid "ꜱᴍᴀʟʟ ᴄᴀᴘꜱ"
+msgstr "MAJUSKLETOJ"
 
 #: src/control/Control.Menubar.js:82
-msgid "Capitalize Every Word"
-msgstr ""
+msgid "Shadow"
+msgstr "Ombro"
 
 #: src/control/Control.Menubar.js:83
-msgid "tOGGLE cASE"
-msgstr ""
-
-#: src/control/Control.Menubar.js:84
-msgid "Text orientation"
-msgstr ""
+msgid "Outline"
+msgstr "Skemo"
 
 #: src/control/Control.Menubar.js:85
-msgid "Set paragraph left-to-right"
-msgstr ""
+msgid "Increase size"
+msgstr "Pligrandigi"
 
 #: src/control/Control.Menubar.js:86
-msgid "Set paragraph right-to-left"
-msgstr ""
-
-#: src/control/Control.Menubar.js:87
-msgid "Spacing"
-msgstr ""
+msgid "Decrease size"
+msgstr "Malpligrandigi"
 
 #: src/control/Control.Menubar.js:88
-msgid "Line spacing: 1"
-msgstr ""
+msgid "UPPERCASE"
+msgstr "MAJUSKLA"
 
 #: src/control/Control.Menubar.js:89
-msgid "Line spacing: 1.5"
-msgstr ""
+msgid "lowercase"
+msgstr "minuskla"
 
 #: src/control/Control.Menubar.js:90
-msgid "Line spacing: 2"
-msgstr ""
+msgid "Cycle case"
+msgstr "Cikligi usklecon"
 
 #: src/control/Control.Menubar.js:92
-msgid "Increase paragraph spacing"
-msgstr ""
+msgid "Sentence case"
+msgstr "Kutima uskleco de frazo"
 
 #: src/control/Control.Menubar.js:93
-msgid "Decrease paragraph spacing"
-msgstr ""
+msgid "Capitalize Every Word"
+msgstr "Majuskligi Ĉiun Vorton"
+
+#: src/control/Control.Menubar.js:94
+msgid "tOGGLE cASE"
+msgstr "bASKULIGI uSKLECON"
+
+#: src/control/Control.Menubar.js:95
+msgid "Text orientation"
+msgstr "Orientiĝo de teksto"
+
+#: src/control/Control.Menubar.js:96
+msgid "Set paragraph left-to-right"
+msgstr "Agordi alineon maldekstre-dekstren"
 
 #: src/control/Control.Menubar.js:97
-msgid "Align"
-msgstr ""
+msgid "Set paragraph right-to-left"
+msgstr "Agordi alineon dekstre-maldekstren"
 
 #: src/control/Control.Menubar.js:98
-msgid "Left"
-msgstr ""
+msgid "Spacing"
+msgstr "Interspaco"
 
 #: src/control/Control.Menubar.js:99
-msgid "Centered"
-msgstr ""
+msgid "Line spacing: 1"
+msgstr "Linia interspaco: 1"
 
 #: src/control/Control.Menubar.js:100
-msgid "Right"
-msgstr ""
+msgid "Line spacing: 1.5"
+msgstr "Linia interspaco: 1,5"
+
+#: src/control/Control.Menubar.js:101
+msgid "Line spacing: 2"
+msgstr "Linia interspaco: 2"
 
 #: src/control/Control.Menubar.js:103
-msgid "Top"
-msgstr ""
+msgid "Increase paragraph spacing"
+msgstr "Pliigi la alinean interspacon"
 
 #: src/control/Control.Menubar.js:104
-msgid "Center"
-msgstr ""
+msgid "Decrease paragraph spacing"
+msgstr "Malpliigi la alinean interspacon"
 
-#: src/control/Control.Menubar.js:105
-msgid "Bottom"
-msgstr ""
+#: src/control/Control.Menubar.js:108
+msgid "Align"
+msgstr "Ĝisrandigi"
 
-#: src/control/Control.Menubar.js:106
-msgid "Lists"
-msgstr ""
+#: src/control/Control.Menubar.js:109
+msgid "Left"
+msgstr "Maldekstre"
 
 #: src/control/Control.Menubar.js:110
-msgid "Demote one level"
-msgstr ""
+msgid "Centered"
+msgstr "Centre"
 
 #: src/control/Control.Menubar.js:111
-msgid "Promote one level"
-msgstr ""
+msgid "Right"
+msgstr "Dekstre"
 
-#: src/control/Control.Menubar.js:112
-msgid "Demote one level with subpoints"
-msgstr ""
-
-#: src/control/Control.Menubar.js:113
-msgid "Promote one level with subpoints"
-msgstr ""
+#: src/control/Control.Menubar.js:114
+msgid "Top"
+msgstr "Supre"
 
 #: src/control/Control.Menubar.js:115
-msgid "Move down"
-msgstr ""
+msgid "Center"
+msgstr "Centre"
 
 #: src/control/Control.Menubar.js:116
-msgid "Move up"
-msgstr ""
+msgid "Bottom"
+msgstr "Malsupre"
 
 #: src/control/Control.Menubar.js:117
-msgid "Move down with subpoints"
-msgstr ""
-
-#: src/control/Control.Menubar.js:118
-msgid "Move up with subpoints"
-msgstr ""
-
-#: src/control/Control.Menubar.js:120
-msgid "Insert unnumbered entry"
-msgstr ""
+msgid "Lists"
+msgstr "Listoj"
 
 #: src/control/Control.Menubar.js:121
-msgid "Restart numbering"
-msgstr ""
+msgid "Demote one level"
+msgstr "Unu nivelon malsupren"
+
+#: src/control/Control.Menubar.js:122
+msgid "Promote one level"
+msgstr "Unu nivelon supren"
 
 #: src/control/Control.Menubar.js:123
-msgid "To next paragraph in level"
-msgstr ""
+msgid "Demote one level with subpoints"
+msgstr "Unu nivelon malsupren kun subpunktoj"
 
 #: src/control/Control.Menubar.js:124
-msgid "To previous paragraph in level"
-msgstr ""
-
-#: src/control/Control.Menubar.js:125
-msgid "Continue previous numbering"
-msgstr ""
+msgid "Promote one level with subpoints"
+msgstr "Unu nivelon supren kun subpunktoj"
 
 #: src/control/Control.Menubar.js:126
-msgid "Clear direct formatting"
-msgstr ""
+msgid "Move down"
+msgstr "Movi malsupren"
 
 #: src/control/Control.Menubar.js:127
-msgid "Page"
-msgstr ""
+msgid "Move up"
+msgstr "Movi supren"
 
 #: src/control/Control.Menubar.js:128
-#: src/control/Control.Menubar.js:130
-#: src/control/Control.Menubar.js:132
-#: src/control/Control.Menubar.js:134
-msgid "Portrait"
-msgstr ""
+msgid "Move down with subpoints"
+msgstr "Malsupren kun subpunktoj"
 
 #: src/control/Control.Menubar.js:129
+msgid "Move up with subpoints"
+msgstr "Supren kun subpunktoj"
+
 #: src/control/Control.Menubar.js:131
-#: src/control/Control.Menubar.js:133
+msgid "Insert unnumbered entry"
+msgstr "Enmeti sennumeran elementon"
+
+#: src/control/Control.Menubar.js:132
+msgid "Restart numbering"
+msgstr "Rekomenci numeradon"
+
+#: src/control/Control.Menubar.js:134
+msgid "To next paragraph in level"
+msgstr "Al sekva alineo en la nivelo"
+
 #: src/control/Control.Menubar.js:135
-msgid "Landscape"
-msgstr ""
+msgid "To previous paragraph in level"
+msgstr "Al la antaŭa alineo en la nivelo"
+
+#: src/control/Control.Menubar.js:136
+msgid "Continue previous numbering"
+msgstr "Daŭrigi antaŭan numeradon"
 
 #: src/control/Control.Menubar.js:137
-#: src/control/Control.Menubar.js:194
+msgid "Clear direct formatting"
+msgstr "Vakigi rektan formatadon"
+
+#: src/control/Control.Menubar.js:138
+msgid "Page"
+msgstr "Paĝo"
+
+#: src/control/Control.Menubar.js:139
+#: src/control/Control.Menubar.js:141
+#: src/control/Control.Menubar.js:143
+#: src/control/Control.Menubar.js:145
+msgid "Portrait"
+msgstr "Vertikala"
+
+#: src/control/Control.Menubar.js:140
+#: src/control/Control.Menubar.js:142
+#: src/control/Control.Menubar.js:144
+#: src/control/Control.Menubar.js:146
+msgid "Landscape"
+msgstr "Horizontala"
+
+#: src/control/Control.Menubar.js:148
+#: src/control/Control.Menubar.js:207
 msgid "Tables"
 msgstr "Tabeloj"
 
-#: src/control/Control.Menubar.js:139
-#: src/control/Control.Menubar.js:196
+#: src/control/Control.Menubar.js:150
+#: src/control/Control.Menubar.js:209
 msgid "Rows before"
 msgstr "Vicoj antaŭaj"
 
-#: src/control/Control.Menubar.js:140
-#: src/control/Control.Menubar.js:197
+#: src/control/Control.Menubar.js:151
+#: src/control/Control.Menubar.js:210
 msgid "Rows after"
 msgstr "Vicoj postaj"
 
-#: src/control/Control.Menubar.js:142
-#: src/control/Control.Menubar.js:199
+#: src/control/Control.Menubar.js:153
+#: src/control/Control.Menubar.js:212
 msgid "Columns left"
 msgstr "Kolumnoj maldekstraj"
 
-#: src/control/Control.Menubar.js:143
-#: src/control/Control.Menubar.js:200
+#: src/control/Control.Menubar.js:154
+#: src/control/Control.Menubar.js:213
 msgid "Columns right"
 msgstr "Kolumnoj dekstraj"
 
-#: src/control/Control.Menubar.js:144
-#: src/control/Control.Menubar.js:201
+#: src/control/Control.Menubar.js:155
+#: src/control/Control.Menubar.js:214
 msgid "Delete"
 msgstr "Forigi"
 
-#: src/control/Control.Menubar.js:145
-#: src/control/Control.Menubar.js:202
+#: src/control/Control.Menubar.js:156
+#: src/control/Control.Menubar.js:215
 msgid "Rows"
 msgstr "Vicoj"
 
-#: src/control/Control.Menubar.js:146
-#: src/control/Control.Menubar.js:203
+#: src/control/Control.Menubar.js:157
+#: src/control/Control.Menubar.js:216
 msgid "Columns"
 msgstr "Kolumnoj"
 
-#: src/control/Control.Menubar.js:147
-#: src/control/Control.Menubar.js:149
+#: src/control/Control.Menubar.js:158
+#: src/control/Control.Menubar.js:160
 msgid "Table"
 msgstr "Tabelo"
 
-#: src/control/Control.Menubar.js:148
+#: src/control/Control.Menubar.js:159
 msgid "Select"
 msgstr "Elekti"
 
-#: src/control/Control.Menubar.js:150
-#: src/control/Control.Menubar.js:247
+#: src/control/Control.Menubar.js:161
+#: src/control/Control.Menubar.js:261
 msgid "Row"
 msgstr "Vico"
 
-#: src/control/Control.Menubar.js:151
-#: src/control/Control.Menubar.js:248
+#: src/control/Control.Menubar.js:162
+#: src/control/Control.Menubar.js:262
 msgid "Column"
 msgstr "Kolumno"
 
-#: src/control/Control.Menubar.js:152
+#: src/control/Control.Menubar.js:163
 msgid "Cell"
 msgstr "Ĉelo"
 
-#: src/control/Control.Menubar.js:153
-#: src/control/Control.Menubar.js:204
+#: src/control/Control.Menubar.js:164
+#: src/control/Control.Menubar.js:217
 msgid "Merge cells"
 msgstr "Kunfandi ĉelojn"
 
-#: src/control/Control.Menubar.js:155
-#: src/control/Control.Menubar.js:213
-#: src/control/Control.Menubar.js:259
+#: src/control/Control.Menubar.js:166
+#: src/control/Control.Menubar.js:226
+#: src/control/Control.Menubar.js:273
 msgid "Help"
 msgstr "Helpo"
 
-#: src/control/Control.Menubar.js:156
-#: src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:260
+#: src/control/Control.Menubar.js:167
+#: src/control/Control.Menubar.js:227
+#: src/control/Control.Menubar.js:274
 msgid "Keyboard shortcuts"
 msgstr "Fulmoklavoj"
 
-#: src/control/Control.Menubar.js:157
-#: src/control/Control.Menubar.js:215
-#: src/control/Control.Menubar.js:261
+#: src/control/Control.Menubar.js:168
+#: src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:275
 msgid "About"
 msgstr "Pri"
 
-#: src/control/Control.Menubar.js:168
+#: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
 msgstr "ODF-prezentaĵo (.odp)"
 
-#: src/control/Control.Menubar.js:169
+#: src/control/Control.Menubar.js:181
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:182
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:206
+#: src/control/Control.Menubar.js:219
 msgid "Slide"
 msgstr "Lumbildo"
 
-#: src/control/Control.Menubar.js:207
+#: src/control/Control.Menubar.js:220
 msgid "New slide"
 msgstr "Nova lumbildo"
 
-#: src/control/Control.Menubar.js:226
+#: src/control/Control.Menubar.js:240
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF-kalkultabelo (.ods)"
 
-#: src/control/Control.Menubar.js:227
+#: src/control/Control.Menubar.js:241
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:242
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:252
+#: src/control/Control.Menubar.js:266
 msgid "Cells"
 msgstr "Ĉeloj"
 
-#: src/control/Control.Menubar.js:253
+#: src/control/Control.Menubar.js:267
 msgid "Insert row"
 msgstr "Enmeti vicon"
 
-#: src/control/Control.Menubar.js:254
+#: src/control/Control.Menubar.js:268
 msgid "Insert column"
 msgstr "Enmeti kolumnon"
 
-#: src/control/Control.Menubar.js:256
-#: src/control/Control.RowHeader.js:46
+#: src/control/Control.Menubar.js:270
+#: src/control/Control.RowHeader.js:44
 msgid "Delete row"
 msgstr "Forigi vicon"
 
-#: src/control/Control.Menubar.js:434
+#: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ĉu vi certe volas forigi ĉi tiun lumbildon?"
 
-#: src/control/Control.RowHeader.js:39
+#: src/control/Control.MetricInput.js:38
+msgid "(100th/mm)"
+msgstr ""
+
+#: src/control/Control.MetricInput.js:44
+msgid "Add: "
+msgstr ""
+
+#: src/control/Control.MetricInput.js:61
+msgid "Default value"
+msgstr ""
+
+#: src/control/Control.MetricInput.js:68
+msgid "Submit"
+msgstr ""
+
+#: src/control/Control.RowHeader.js:37
 msgid "Insert row above"
 msgstr "Enigi vicon supre"
 
-#: src/control/Control.RowHeader.js:53
+#: src/control/Control.RowHeader.js:51
 msgid "Optimal Height"
-msgstr ""
+msgstr "Optimuma alto"
 
-#: src/control/Control.RowHeader.js:60
+#: src/control/Control.RowHeader.js:58
 msgid "Hide Rows"
-msgstr ""
+msgstr "Kaŝi vicojn"
 
-#: src/control/Control.RowHeader.js:67
+#: src/control/Control.RowHeader.js:65
 msgid "Show Rows"
+msgstr "Vidigi vicojn"
+
+#: src/control/Control.RowHeader.js:78
+#, fuzzy
+msgid "Optimal Row Height"
+msgstr "Optimuma vicoalto"
+
+#: src/control/Control.Scroll.Annotation.js:9
+msgid "Scroll up annotations"
 msgstr ""
 
-#: src/control/Control.RowHeader.js:80
-msgid "Optimal Row Height"
+#: src/control/Control.Scroll.Annotation.js:11
+msgid "Scroll down annotations"
 msgstr ""
 
 #: src/control/Control.Tabs.js:46
@@ -2370,9 +2504,8 @@ msgid "Delete sheet"
 msgstr "Forigi folion"
 
 #: src/control/Control.Tabs.js:52
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr "Ĉu vi certe volas forigi ĉi tiun folion?"
+msgstr "Ĉu vi certe volas forigi folion %sheet% ?"
 
 #: src/control/Control.Tabs.js:61
 msgid "Rename sheet"
@@ -2382,79 +2515,98 @@ msgstr "Alinomi folion"
 msgid "Enter new sheet name"
 msgstr "Enigi novan folinomon"
 
-#: src/control/Toolbar.js:70
-#: src/control/Toolbar.js:79
+#: src/control/Toolbar.js:74
+#: src/control/Toolbar.js:83
 msgid "Downloading..."
 msgstr "Elŝutas..."
 
-#: src/control/Toolbar.js:91
-#: src/map/Map.js:905
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:939
 msgid "Saving..."
 msgstr "Konservas..."
 
-#: src/control/Toolbar.js:242
+#: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "Ĉi tiu versio de %productName estas povigita de"
 
-#: src/core/Socket.js:23
+#: src/core/Socket.js:30
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Ho ve. Spertis problemon konektante al LibreOffice Online: "
 
-#: src/core/Socket.js:179
+#: src/core/Socket.js:188
 msgid "Unsupported server version."
 msgstr "Nesubtenata servila versio."
 
-#: src/core/Socket.js:217
+#: src/core/Socket.js:226
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "Posedanto de la dokumento finis la seancon"
 
-#: src/core/Socket.js:220
+#: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "La servilo aŭtomate malsaltiĝas por prizorgado"
 
-#: src/core/Socket.js:223
+#: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
-msgstr ""
+msgstr "La servilo cikle laboras kaj baldaŭ disponeblos"
 
-#: src/core/Socket.js:335
+#: src/core/Socket.js:348
 msgid "Document requires password to view."
 msgstr "Pasvorto necesas por vidi dokumenton."
 
-#: src/core/Socket.js:338
+#: src/core/Socket.js:351
 msgid "Document requires password to modify."
 msgstr "Pasvorto necesas por ŝanĝi dokumenton. "
 
-#: src/core/Socket.js:340
+#: src/core/Socket.js:353
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Alklaku al Nuligi por malfermi en nurlega reĝimo."
 
-#: src/core/Socket.js:344
+#: src/core/Socket.js:357
 msgid "Wrong password provided. Please try again."
 msgstr "Malĝusta pasvorto. Bonvolu reprovi."
 
-#: src/core/Socket.js:393
+#: src/core/Socket.js:420
 msgid "Connecting..."
-msgstr ""
+msgstr "Konektas..."
 
-#: src/core/Socket.js:514
+#: src/core/Socket.js:542
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Bedaŭrinde ni ne povas konekti al via dokumento. Bonvolu reprovi."
 
-#: src/map/Map.js:121
+#: src/layer/marker/Annotation.js:156
+msgid "Accept change"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:161
+msgid "Reject change"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:169
+msgid "Open menu"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:182
+msgid "Modify"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:194
+msgid "Remove"
+msgstr ""
+
+#: src/map/Map.js:131
 msgid "Initializing..."
 msgstr "Pravalorizas..."
 
-#: src/map/Map.js:786
+#: src/map/Map.js:820
 msgid "Inactive document - please click to resume editing"
-msgstr ""
+msgstr "Neaktiva dokumento - bonvolu alklaki por daŭrigi redakti"
 
-#: src/map/Map.js:908
+#: src/map/Map.js:942
 msgid "Loading..."
 msgstr "Ŝargas..."
 
 #: src/map/handler/Map.FileInserter.js:54
-#, fuzzy
 msgid "Uploading..."
-msgstr "Ŝargas..."
+msgstr "Alŝutas..."

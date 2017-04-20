@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 09:01+0000\n"
+"POT-Creation-Date: 2017-04-20 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0b7\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /ne/libo_online/loleaflet-help-ne.po\n"
-"X-Pootle-Revision: 826774\n"
+"X-Pootle-Revision: 2344088\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -892,7 +892,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
 msgid "Shift + Tab"
-msgstr ""
+msgstr "Shift+Tab"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A179
 msgid "Text selection and navigation in a textbox"
@@ -918,7 +918,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
 msgid "Esc"
-msgstr ""
+msgstr "Esc"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
 msgid "Select objects in the order in which they were created"

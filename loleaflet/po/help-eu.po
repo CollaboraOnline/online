@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-11 09:00+0000\n"
+"POT-Creation-Date: 2017-04-20 07:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0b7\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-help-eu.po\n"
-"X-Pootle-Revision: 826962\n"
+"X-Pootle-Revision: 831113\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -64,58 +64,50 @@ msgstr "Ktrl + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "Erakutsi teklatuaren lasterbiden laguntza"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
-#, fuzzy
 msgid "Ctrl + Shift + ?"
-msgstr "Ktrl + Maius + P"
+msgstr "Ktrl + Maius + ?"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A38
 #: dist%2Floleaflet-help.html+div.div.h2%3A160
-#, fuzzy
 msgid "Text formatting"
 msgstr "Testu-formatua"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
-#, fuzzy
 msgid "Bold"
 msgstr "Lodia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
-#, fuzzy
 msgid "Ctrl + B"
 msgstr "Ktrl + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
-#, fuzzy
 msgid "Italic"
 msgstr "Etzana"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
-#, fuzzy
 msgid "Ctrl + I"
 msgstr "Ktrl + I"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
-#, fuzzy
 msgid "Underline"
-msgstr "Azpimarratua"
+msgstr "Azpimarratu"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
-#, fuzzy
 msgid "Ctrl + U"
 msgstr "Ktrl + U"
 
@@ -125,119 +117,101 @@ msgstr "Azpimarra bikoitza"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
-#, fuzzy
 msgid "Ctrl + D"
 msgstr "Ktrl + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
-#, fuzzy
 msgid "Strikethrough"
-msgstr "Marratua"
+msgstr "Marratu"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
-#, fuzzy
 msgid "Ctrl + Alt + 5"
 msgstr "Ktrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
-#, fuzzy
 msgid "Superscript"
 msgstr "Goi-indizea"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
-#, fuzzy
 msgid "Ctrl + Shift + P"
 msgstr "Ktrl + Maius + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
-#, fuzzy
 msgid "Subscript"
 msgstr "Azpi-indizea"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
-#, fuzzy
 msgid "Ctrl + Shift + B"
 msgstr "Ktrl + Maius + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
-#, fuzzy
 msgid "Remove direct formatting"
 msgstr "Kendu formatu zuzena"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
-#, fuzzy
 msgid "Ctrl + M"
 msgstr "Ktrl + M"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A49
 #: dist%2Floleaflet-help.html+div.div.h2%3A170
-#, fuzzy
 msgid "Paragraph formatting"
 msgstr "Paragrafoaren formatua"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
-#, fuzzy
 msgid "Align Center"
 msgstr "Lerrokatu erdian"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
-#, fuzzy
 msgid "Ctrl + E"
 msgstr "Ktrl + E"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
-#, fuzzy
 msgid "Align Left"
 msgstr "Lerrokatu ezkerrean"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
-#, fuzzy
 msgid "Ctrl + L"
 msgstr "Ktrl + L"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
-#, fuzzy
 msgid "Align Right"
 msgstr "Lerrokatu eskuinean"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
-#, fuzzy
 msgid "Ctrl + R"
 msgstr "Ktrl + R"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
-#, fuzzy
 msgid "Justify"
-msgstr "Justifikatuta"
+msgstr "Justifikatu"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
-#, fuzzy
 msgid "Ctrl + J"
 msgstr "Ktrl + J"
 
@@ -271,7 +245,6 @@ msgstr "Aplikatu 3. izenburua paragrafo-estiloa"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
-#, fuzzy
 msgid "Ctrl + 3"
 msgstr "Ktrl + 3"
 
@@ -299,7 +272,6 @@ msgstr "Testu-hautapena eta nabigazioa dokumentuan"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
-#, fuzzy
 msgid "Select All"
 msgstr "Hautatu dena"
 
@@ -309,238 +281,199 @@ msgstr "Hautatu dena"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
-#, fuzzy
 msgid "Ctrl + A"
 msgstr "Ktrl + A"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
-#, fuzzy
 msgid "Move cursor to the left"
 msgstr "Eraman kurtsorea ezkerrerantz"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
-#, fuzzy
 msgid "Arrow Left"
 msgstr "Ezker-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
-#, fuzzy
 msgid "Move cursor with selection to the left"
 msgstr "Eraman kurtsorea ezkerrerantz hautapenarekin"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
-#, fuzzy
 msgid "Shift + Arrow Left"
 msgstr "Maius + Ezker-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
-#, fuzzy
 msgid "Go to beginning of a word"
 msgstr "Joan hitz-hasierara"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
-#, fuzzy
 msgid "Ctrl + Arrow Left"
 msgstr "Ktrl + Ezker-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
-#, fuzzy
 msgid "Select to the left word by word"
 msgstr "Hautatu ezkerrerantz hitzez hitz"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
-#, fuzzy
 msgid "Ctrl + Shift + Arrow Left"
 msgstr "Ktrl + Maius + Ezker-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
-#, fuzzy
 msgid "Move cursor to the right"
 msgstr "Eraman kurtsorea eskuinerantz"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
-#, fuzzy
 msgid "Arrow Right"
 msgstr "Eskuin-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
-#, fuzzy
 msgid "Move cursor with selection to the right"
 msgstr "Eraman kurtsorea eskuinerantz hautapenarekin"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
-#, fuzzy
 msgid "Shift + Arrow Right"
 msgstr "Maius + Eskuin-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
-#, fuzzy
 msgid "Go to start of the next word"
 msgstr "Joan hurrengo hitzaren hasierara"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
-#, fuzzy
 msgid "Ctrl + Arrow Right"
 msgstr "Ktrl + Eskuin-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
-#, fuzzy
 msgid "Select to the right word by word"
 msgstr "Hautatu eskuinerantz hitzez hitz"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
-#, fuzzy
 msgid "Ctrl + Shift + Arrow Right"
 msgstr "Ktrl + Maius + Eskuin-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
-#, fuzzy
 msgid "Move cursor up one line"
 msgstr "Igo kurtsorea lerro bat"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
-#, fuzzy
 msgid "Arrow Up"
 msgstr "Gora-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
-#, fuzzy
 msgid "Select lines in upwards direction"
 msgstr "Hautatu lerroak gorantz"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
-#, fuzzy
 msgid "Shift + Arrow Up"
 msgstr "Maius + Gora-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
-#, fuzzy
 msgid "Move cursor to beginning of the previous paragraph"
 msgstr "Eraman kurtsorea aurreko paragrafoaren hasierara"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
-#, fuzzy
 msgid "Ctrl + Arrow Up"
 msgstr "Ktrl + Gora-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
-#, fuzzy
 msgid "Select to beginning of paragraph"
 msgstr "Hautatu paragrafoaren hasierara"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
-#, fuzzy
 msgid "Ctrl + Shift + Arrow Up"
 msgstr "Ktrl + Maius + Gora-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
-#, fuzzy
 msgid "Move cursor down one line"
 msgstr "Jaitsi kurtsorea lerro bat"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
-#, fuzzy
 msgid "Arrow Down"
 msgstr "Behera-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
-#, fuzzy
 msgid "Select lines in downwards direction"
 msgstr "Hautatu lerroak beherantz"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
-#, fuzzy
 msgid "Shift + Arrow Down"
 msgstr "Maius + Behera-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
-#, fuzzy
 msgid "Move cursor to beginning of the next paragraph"
 msgstr "Eraman kurtsorea hurrengo paragrafoaren hasierara"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
-#, fuzzy
 msgid "Ctrl + Arrow Down"
 msgstr "Ktrl + Behera-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
-#, fuzzy
 msgid "Select to end of paragraph"
 msgstr "Hautatu paragrafoaren amaierara"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
-#, fuzzy
 msgid "Ctrl + Shift + Arrow Down"
 msgstr "Ktrl + Maius + Behera-gezia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
-#, fuzzy
 msgid "Go to beginning of line"
 msgstr "Joan lerro-hasierara"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
-#, fuzzy
 msgid "Home"
 msgstr "Hasiera"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
-#, fuzzy
 msgid "Go and select to the beginning of a line"
 msgstr "Joan lerroaren hasierara eta hautatu"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
-#, fuzzy
 msgid "Shift + Home"
-msgstr "Shift + Hasiera"
+msgstr "Maius + Hasiera"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
-#, fuzzy
 msgid "Go to start of document"
 msgstr "Joan dokumentu-hasierara"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
-#, fuzzy
 msgid "Ctrl + Home"
-msgstr "Ctrl + Hasiera"
+msgstr "Ktrl + Hasiera"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 msgid "Go and select text to start of document"
@@ -548,44 +481,37 @@ msgstr "Joan dokumentu-hasierara eta hautatu testua"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
-#, fuzzy
 msgid "Ctrl + Shift + Home"
-msgstr "Ctrl + Shift + Hasiera"
+msgstr "Ktrl + Maius + Hasiera"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
-#, fuzzy
 msgid "Go to end of line"
 msgstr "Joan lerro-amaierara"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
-#, fuzzy
 msgid "End"
 msgstr "Amaiera"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
-#, fuzzy
 msgid "Go and select to the end of a line"
 msgstr "Joan lerroaren amaierara eta hautatu"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
-#, fuzzy
 msgid "Shift + End"
 msgstr "Maius + Amaiera"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
-#, fuzzy
 msgid "Go to end of document"
 msgstr "Joan dokumentu-amaierara"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
-#, fuzzy
 msgid "Ctrl + End"
 msgstr "Ktrl + Amaiera"
 
@@ -595,7 +521,6 @@ msgstr "Joan dokumentu-amaierara eta hautatu testua"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
-#, fuzzy
 msgid "Ctrl + Shift + End"
 msgstr "Ktrl + Maius + Amaiera"
 
@@ -753,7 +678,6 @@ msgstr "Alt + Ktrl + Gezi-teklak"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
-#, fuzzy
 msgid "Like Alt, but only the active cell is modified"
 msgstr "Alt bezala, baina gelaxka aktiboa besterik ez da aldatzen"
 
@@ -842,13 +766,11 @@ msgstr "Ktrl + Alt + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
-#, fuzzy
 msgid "Insert comment"
 msgstr "Txertatu iruzkina"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
-#, fuzzy
 msgid "Ctrl + Alt + C"
 msgstr "Krtl + Alt + C"
 
@@ -890,7 +812,6 @@ msgstr "Eskuzko orrialde-jauzia"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
-#, fuzzy
 msgid "Ctrl + Enter"
 msgstr "Ktrl + Sartu"
 
@@ -911,7 +832,6 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A131
-#, fuzzy
 msgid "Alt + Enter"
 msgstr "Alt + Sartu"
 
@@ -999,7 +919,6 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
-#, fuzzy
 msgid "Tab"
 msgstr "Tabulazioa"
 
@@ -1011,7 +930,6 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
-#, fuzzy
 msgid "Shift + Tab"
 msgstr "Maius + Tab"
 

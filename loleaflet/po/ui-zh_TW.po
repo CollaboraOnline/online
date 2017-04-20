@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-11 09:02+0000\n"
+"POT-Creation-Date: 2017-04-20 08:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0b7\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /zh_TW/libo_online/loleaflet-ui-zh_TW.po\n"
-"X-Pootle-Revision: 823480\n"
+"X-Pootle-Revision: 2438006\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -72,7 +72,7 @@ msgstr "經過的時間"
 
 #: admin.strings.js:19
 msgid "Idle time"
-msgstr ""
+msgstr "閒置時間"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -83,10 +83,10 @@ msgid "Graphs"
 msgstr "圖表"
 
 #: admin.strings.js:22
-#: dist/toolbar/toolbar.js:364
+#: dist/toolbar/toolbar.js:470
 #: src/control/Control.Menubar.js:11
-#: src/control/Control.Menubar.js:163
-#: src/control/Control.Menubar.js:221
+#: src/control/Control.Menubar.js:164
+#: src/control/Control.Menubar.js:223
 msgid "Save"
 msgstr "儲存"
 
@@ -198,6 +198,14 @@ msgstr "更新索引或目錄"
 msgid "Delete Index or Table of Contents"
 msgstr "刪除索引或目錄"
 
+#: unocommands.js:18
+msgid "Reply"
+msgstr "回覆"
+
+#: unocommands.js:19
+msgid "Refresh"
+msgstr "重整"
+
 #: dist/errormessages.js:1
 msgid ""
 "No disk space left on server, please contact the server administrator to "
@@ -211,461 +219,482 @@ msgid ""
 msgstr "主機 URL 空白。loolwsd 伺服器可能設定錯誤，請聯絡管理員。"
 
 #: dist/errormessages.js:3
-#, fuzzy
 msgid ""
 "This development build is limited to %0 documents, and %1 connections - to "
 "avoid the impression that it is suitable for deployment in large "
 "enterprises. To find out more about deploying and scaling %2 check out: "
 "<br/><a href=\"%3\">%3</a>."
 msgstr ""
-"此開發組建版本之限制為 %0 份文件、%1 個連線 ─ 以避免已適合大型企業佈署的印象。若想瞭解佈署與規模縮放 %s 檢出的更多資訊：<br/><a "
-"href=%3\">%3</a>。"
+"此開發組建版本之限制為 %0 份文件、%1 個連線 ─ 以避免該版本已適合大型企業佈署的印象。若想瞭解佈署與規模縮放 %2 檢出的更多資訊：<br/><"
+"a href=\"%3\">%3</a>。"
 
 #: dist/errormessages.js:4
+msgid ""
+"This service is limited to %0 documents, and %1 connections total by the "
+"admin. This limit has been reached. Please try again later."
+msgstr "本服務經管理員限制總共 %0 份文件、%1 個連線。已達上限。請稍後重試。"
+
+#: dist/errormessages.js:5
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr "服務無法使用。請稍後重試，若問題持續發生請回報給您的管理員。"
 
-#: dist/errormessages.js:5
+#: dist/errormessages.js:6
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr "未授權的 WOPI 主機。請稍後重試，若問題持續發生請回報給您的管理員。"
 
-#: dist/errormessages.js:6
+#: dist/errormessages.js:7
 msgid ""
 "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
 "file_path=/path/to/doc/"
 msgstr "WOPISrc 錯誤，用法：WOPISrc=有效編碼的 URI、或檔案路徑，用法：file_path=/path/to/doc/"
 
-#: dist/errormessages.js:7
+#: dist/errormessages.js:8
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
-msgstr ""
+msgstr "您的作業階段將在 %time 內過期。請儲存您的工作並重整作業階段（或網頁）來繼續。"
 
-#: dist/errormessages.js:8
+#: dist/errormessages.js:9
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
-msgstr ""
+msgstr "您的作業階段已過期。後續之文件變更可能無法儲存。請重整作業階段（或網頁）來繼續。"
 
-#: dist/errormessages.js:11
+#: dist/errormessages.js:10
+msgid ""
+"Failed to load the document. Please ensure the file type is supported and "
+"not corrupted, and try again."
+msgstr "無法載入文件。請確認檔案類型有支援且並未毀損，確認後請再重試。"
+
+#: dist/errormessages.js:13
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server administrator to continue editing."
-msgstr ""
+msgstr "由於儲存空間的伺服器磁碟空間不足而儲存失敗。文件現在只能唯讀。請聯絡伺服器管理員以便繼續編輯。"
 
-#: dist/errormessages.js:12
+#: dist/errormessages.js:14
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server administrator."
-msgstr ""
+msgstr "文件無法儲存至儲存空間中。請檢查您的權限，或請聯絡儲存空間的伺服器管理員。"
 
-#: dist/toolbar/toolbar.js:159
+#: dist/toolbar/toolbar.js:105
+msgid "%n users"
+msgstr "%n 位使用者"
+
+#: dist/toolbar/toolbar.js:106
+msgid "1 user"
+msgstr "1 位使用者"
+
+#: dist/toolbar/toolbar.js:107
+msgid "0 users"
+msgstr "0 位使用者"
+
+#: dist/toolbar/toolbar.js:261
 msgid "Are you sure you want to delete this page?"
 msgstr "您確定要刪除這個頁面？"
 
-#: dist/toolbar/toolbar.js:355
+#: dist/toolbar/toolbar.js:461
 msgid "Textwrap"
 msgstr "文字環繞"
 
-#: dist/toolbar/toolbar.js:356
+#: dist/toolbar/toolbar.js:462
 msgid "No wrap"
 msgstr "不環繞"
 
-#: dist/toolbar/toolbar.js:357
+#: dist/toolbar/toolbar.js:463
 msgid "Page wrap"
 msgstr "頁面環繞"
 
-#: dist/toolbar/toolbar.js:358
+#: dist/toolbar/toolbar.js:464
 msgid "Wrap anchor only"
 msgstr "僅環繞錨定"
 
-#: dist/toolbar/toolbar.js:359
+#: dist/toolbar/toolbar.js:465
 msgid "Ideal wrap"
 msgstr "理想環繞"
 
-#: dist/toolbar/toolbar.js:360
+#: dist/toolbar/toolbar.js:466
 msgid "Left wrap"
 msgstr "左側環繞"
 
-#: dist/toolbar/toolbar.js:361
+#: dist/toolbar/toolbar.js:467
 msgid "Right wrap"
 msgstr "右側環繞"
 
-#: dist/toolbar/toolbar.js:362
+#: dist/toolbar/toolbar.js:468
 msgid "Wrap through"
 msgstr "穿繞式環繞"
 
-#: dist/toolbar/toolbar.js:366
+#: dist/toolbar/toolbar.js:472
 #: src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:173
-#: src/control/Control.Menubar.js:231
+#: src/control/Control.Menubar.js:174
+#: src/control/Control.Menubar.js:233
 msgid "Undo"
 msgstr "復原"
 
-#: dist/toolbar/toolbar.js:367
+#: dist/toolbar/toolbar.js:473
 #: src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:174
-#: src/control/Control.Menubar.js:232
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:234
 msgid "Redo"
 msgstr "取消復原"
 
-#: dist/toolbar/toolbar.js:368
+#: dist/toolbar/toolbar.js:474
 msgid "Document repair"
 msgstr "文件修復"
 
-#: dist/toolbar/toolbar.js:374
+#: dist/toolbar/toolbar.js:480
 #: src/control/Control.Menubar.js:60
 msgid "Bold"
 msgstr "粗體"
 
-#: dist/toolbar/toolbar.js:375
+#: dist/toolbar/toolbar.js:481
 #: src/control/Control.Menubar.js:61
 msgid "Italic"
 msgstr "斜體"
 
-#: dist/toolbar/toolbar.js:376
+#: dist/toolbar/toolbar.js:482
 #: src/control/Control.Menubar.js:62
 msgid "Underline"
 msgstr "底線"
 
-#: dist/toolbar/toolbar.js:377
+#: dist/toolbar/toolbar.js:483
 msgid "Strikeout"
 msgstr "刪除線"
 
-#: dist/toolbar/toolbar.js:379
+#: dist/toolbar/toolbar.js:485
 msgid "Insert Footnote"
 msgstr "插入註腳"
 
-#: dist/toolbar/toolbar.js:382
+#: dist/toolbar/toolbar.js:488
 msgid "Font color"
 msgstr "字型色彩"
 
-#: dist/toolbar/toolbar.js:384
+#: dist/toolbar/toolbar.js:490
 msgid "Highlighting"
 msgstr "色彩標明"
 
-#: dist/toolbar/toolbar.js:386
+#: dist/toolbar/toolbar.js:492
 msgid "Align left"
 msgstr "靠左對齊"
 
-#: dist/toolbar/toolbar.js:387
+#: dist/toolbar/toolbar.js:493
 msgid "Center horizontally"
 msgstr "水平置中"
 
-#: dist/toolbar/toolbar.js:388
+#: dist/toolbar/toolbar.js:494
 msgid "Align right"
 msgstr "靠右對齊"
 
-#: dist/toolbar/toolbar.js:389
+#: dist/toolbar/toolbar.js:495
 #: src/control/Control.Menubar.js:101
 msgid "Justified"
 msgstr "左右對齊"
 
-#: dist/toolbar/toolbar.js:391
+#: dist/toolbar/toolbar.js:497
 msgid "Wrap Text"
 msgstr "環繞文字"
 
-#: dist/toolbar/toolbar.js:392
+#: dist/toolbar/toolbar.js:498
 msgid "Merge and Center Cells"
 msgstr "合併並置中儲存格"
 
-#: dist/toolbar/toolbar.js:394
+#: dist/toolbar/toolbar.js:500
 msgid "Format as Currency"
 msgstr "格式為貨幣單位"
 
-#: dist/toolbar/toolbar.js:395
+#: dist/toolbar/toolbar.js:501
 msgid "Format as Percent"
 msgstr "格式為百分比"
 
-#: dist/toolbar/toolbar.js:396
+#: dist/toolbar/toolbar.js:502
 msgid "Format as Number"
 msgstr "格式為數字"
 
-#: dist/toolbar/toolbar.js:397
+#: dist/toolbar/toolbar.js:503
 msgid "Format as Date"
 msgstr "格式為日期"
 
-#: dist/toolbar/toolbar.js:398
+#: dist/toolbar/toolbar.js:504
 msgid "Add Decimal Place"
 msgstr "加入小數點"
 
-#: dist/toolbar/toolbar.js:399
+#: dist/toolbar/toolbar.js:505
 msgid "Delete Decimal Place"
 msgstr "刪除小數點"
 
-#: dist/toolbar/toolbar.js:401
+#: dist/toolbar/toolbar.js:507
 msgid "Sort Ascending"
 msgstr "按升序排序"
 
-#: dist/toolbar/toolbar.js:402
+#: dist/toolbar/toolbar.js:508
 msgid "Sort Descending"
 msgstr "按降序排序"
 
-#: dist/toolbar/toolbar.js:404
+#: dist/toolbar/toolbar.js:510
 #: src/control/Control.Menubar.js:107
 msgid "Bullets on/off"
 msgstr "開啟/關閉項目符號"
 
-#: dist/toolbar/toolbar.js:405
+#: dist/toolbar/toolbar.js:511
 #: src/control/Control.Menubar.js:108
 msgid "Numbering on/off"
 msgstr "開啟/關閉編號"
 
-#: dist/toolbar/toolbar.js:407
+#: dist/toolbar/toolbar.js:513
 #: src/control/Control.Menubar.js:95
 msgid "Increase indent"
 msgstr "增加縮排"
 
-#: dist/toolbar/toolbar.js:408
+#: dist/toolbar/toolbar.js:514
 #: src/control/Control.Menubar.js:96
 msgid "Decrease indent"
 msgstr "減少縮排"
 
-#: dist/toolbar/toolbar.js:411
+#: dist/toolbar/toolbar.js:517
 msgid "Insert table"
 msgstr "插入表格"
 
-#: dist/toolbar/toolbar.js:412
+#: dist/toolbar/toolbar.js:518
 msgid "Insert comment"
 msgstr "插入評註"
 
-#: dist/toolbar/toolbar.js:413
+#: dist/toolbar/toolbar.js:519
 msgid "Insert graphic"
 msgstr "插入圖形"
 
-#: dist/toolbar/toolbar.js:414
+#: dist/toolbar/toolbar.js:520
 msgid "Special Character"
-msgstr ""
+msgstr "特殊字元"
 
-#: dist/toolbar/toolbar.js:416
+#: dist/toolbar/toolbar.js:522
 msgid "More"
 msgstr "更多"
 
-#: dist/toolbar/toolbar.js:417
+#: dist/toolbar/toolbar.js:524
+#: src/control/Control.Menubar.js:159
+#: src/control/Control.Menubar.js:218
+#: src/control/Control.Menubar.js:265
 msgid "Close document"
 msgstr "關閉文件"
 
-#: dist/toolbar/toolbar.js:496
+#: dist/toolbar/toolbar.js:603
 msgid "Layout"
 msgstr "版面配置"
 
-#: dist/toolbar/toolbar.js:519
-#: dist/toolbar/toolbar.js:851
+#: dist/toolbar/toolbar.js:628
+#: dist/toolbar/toolbar.js:975
 msgid "Sum"
 msgstr "總和"
 
-#: dist/toolbar/toolbar.js:520
+#: dist/toolbar/toolbar.js:629
 msgid "Function"
 msgstr "函式"
 
-#: dist/toolbar/toolbar.js:521
+#: dist/toolbar/toolbar.js:630
 #: src/control/Control.CharacterMap.js:428
 msgid "Cancel"
 msgstr "取消"
 
-#: dist/toolbar/toolbar.js:522
+#: dist/toolbar/toolbar.js:631
 msgid "Accept"
 msgstr "接受"
 
-#: dist/toolbar/toolbar.js:533
+#: dist/toolbar/toolbar.js:642
 msgid "First sheet"
 msgstr "第一個工作表"
 
-#: dist/toolbar/toolbar.js:534
+#: dist/toolbar/toolbar.js:643
 msgid "Previous sheet"
 msgstr "上一個工作表"
 
-#: dist/toolbar/toolbar.js:535
+#: dist/toolbar/toolbar.js:644
 msgid "Next sheet"
 msgstr "下一個工作表"
 
-#: dist/toolbar/toolbar.js:536
+#: dist/toolbar/toolbar.js:645
 msgid "Last sheet"
 msgstr "最後的工作表"
 
-#: dist/toolbar/toolbar.js:546
-#: src/control/Control.Menubar.js:211
+#: dist/toolbar/toolbar.js:655
+#: src/control/Control.Menubar.js:212
 msgid "Fullscreen presentation"
 msgstr "全螢幕呈現"
 
-#: dist/toolbar/toolbar.js:548
+#: dist/toolbar/toolbar.js:657
 msgid "Insert slide"
 msgstr "插入投影片"
 
-#: dist/toolbar/toolbar.js:549
-#: src/control/Control.Menubar.js:208
+#: dist/toolbar/toolbar.js:658
+#: src/control/Control.Menubar.js:209
 msgid "Duplicate slide"
 msgstr "複製出投影片"
 
-#: dist/toolbar/toolbar.js:550
-#: src/control/Control.Menubar.js:209
+#: dist/toolbar/toolbar.js:659
+#: src/control/Control.Menubar.js:210
 msgid "Delete slide"
 msgstr "刪除投影片"
 
-#: dist/toolbar/toolbar.js:563
+#: dist/toolbar/toolbar.js:672
 msgid "Search:"
 msgstr "搜尋："
 
-#: dist/toolbar/toolbar.js:568
+#: dist/toolbar/toolbar.js:677
 msgid "Search backwards"
 msgstr "向前搜尋"
 
-#: dist/toolbar/toolbar.js:569
+#: dist/toolbar/toolbar.js:678
 msgid "Search forward"
 msgstr "向後搜尋"
 
-#: dist/toolbar/toolbar.js:570
+#: dist/toolbar/toolbar.js:679
 msgid "Cancel the search"
 msgstr "取消搜尋"
 
-#: dist/toolbar/toolbar.js:575
-#: dist/toolbar/toolbar.js:1404
+#: dist/toolbar/toolbar.js:684
 msgid "No users"
 msgstr "無使用者"
 
-#: dist/toolbar/toolbar.js:577
+#: dist/toolbar/toolbar.js:686
 msgid "Previous page"
 msgstr "上一頁"
 
-#: dist/toolbar/toolbar.js:578
+#: dist/toolbar/toolbar.js:687
 msgid "Next page"
 msgstr "下一頁"
 
-#: dist/toolbar/toolbar.js:580
+#: dist/toolbar/toolbar.js:689
 #: src/control/Control.Menubar.js:36
-#: src/control/Control.Menubar.js:187
+#: src/control/Control.Menubar.js:188
 msgid "Reset zoom"
 msgstr "重設遠近"
 
-#: dist/toolbar/toolbar.js:581
+#: dist/toolbar/toolbar.js:690
 #: src/control/Control.Menubar.js:35
-#: src/control/Control.Menubar.js:186
+#: src/control/Control.Menubar.js:187
 msgid "Zoom out"
 msgstr "拉遠"
 
-#: dist/toolbar/toolbar.js:583
+#: dist/toolbar/toolbar.js:692
 #: src/control/Control.Menubar.js:34
-#: src/control/Control.Menubar.js:185
+#: src/control/Control.Menubar.js:186
 msgid "Zoom in"
 msgstr "拉近"
 
-#: dist/toolbar/toolbar.js:597
+#: dist/toolbar/toolbar.js:706
 msgid "%user has joined"
 msgstr "%user 已加入"
 
-#: dist/toolbar/toolbar.js:598
+#: dist/toolbar/toolbar.js:707
 msgid "%user has left"
 msgstr "%user 已離開"
 
-#: dist/toolbar/toolbar.js:700
-#: dist/toolbar/toolbar.js:1187
+#: dist/toolbar/toolbar.js:824
+#: dist/toolbar/toolbar.js:1349
 msgid "Size"
 msgstr "大小"
 
-#: dist/toolbar/toolbar.js:832
+#: dist/toolbar/toolbar.js:956
 msgid "Number of Sheets"
 msgstr "工作表數量"
 
-#: dist/toolbar/toolbar.js:835
+#: dist/toolbar/toolbar.js:959
 msgid "Selected range of cells"
 msgstr "所選的儲存格範圍"
 
-#: dist/toolbar/toolbar.js:838
-#: dist/toolbar/toolbar.js:869
+#: dist/toolbar/toolbar.js:962
+#: dist/toolbar/toolbar.js:997
 msgid "Entering text mode"
 msgstr "輸入文字模式"
 
-#: dist/toolbar/toolbar.js:841
-#: dist/toolbar/toolbar.js:872
+#: dist/toolbar/toolbar.js:965
+#: dist/toolbar/toolbar.js:1000
 msgid "Selection Mode"
 msgstr "選取模式"
 
-#: dist/toolbar/toolbar.js:844
+#: dist/toolbar/toolbar.js:968
 msgid "Choice of functions"
 msgstr "函式選擇"
 
-#: dist/toolbar/toolbar.js:846
+#: dist/toolbar/toolbar.js:970
 msgid "Average"
 msgstr "平均值"
 
-#: dist/toolbar/toolbar.js:847
+#: dist/toolbar/toolbar.js:971
 msgid "CountA"
 msgstr "CountA"
 
-#: dist/toolbar/toolbar.js:848
+#: dist/toolbar/toolbar.js:972
 msgid "Count"
 msgstr "計數"
 
-#: dist/toolbar/toolbar.js:849
+#: dist/toolbar/toolbar.js:973
 msgid "Maximum"
 msgstr "最大值"
 
-#: dist/toolbar/toolbar.js:850
+#: dist/toolbar/toolbar.js:974
 msgid "Minimum"
 msgstr "最小值"
 
-#: dist/toolbar/toolbar.js:852
+#: dist/toolbar/toolbar.js:976
 msgid "Selection count"
 msgstr "選取數目"
 
-#: dist/toolbar/toolbar.js:853
+#: dist/toolbar/toolbar.js:977
 #: src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr "無"
 
-#: dist/toolbar/toolbar.js:863
+#: dist/toolbar/toolbar.js:991
 msgid "Number of Pages"
 msgstr "頁數"
 
-#: dist/toolbar/toolbar.js:866
+#: dist/toolbar/toolbar.js:994
 msgid "Word Counter"
 msgstr "字數統計"
 
-#: dist/toolbar/toolbar.js:883
+#: dist/toolbar/toolbar.js:1017
 msgid "Number of Slides"
 msgstr "投影片數"
 
-#: dist/toolbar/toolbar.js:1011
+#: dist/toolbar/toolbar.js:1159
 msgid "Document saved"
 msgstr "文件已儲存"
 
-#: dist/toolbar/toolbar.js:1170
+#: dist/toolbar/toolbar.js:1322
 msgid "Style"
 msgstr "樣式"
 
-#: dist/toolbar/toolbar.js:1182
+#: dist/toolbar/toolbar.js:1341
 msgid "Font"
 msgstr "字型"
 
-#: dist/toolbar/toolbar.js:1206
+#: dist/toolbar/toolbar.js:1377
 msgid "Previous slide"
 msgstr "上一張投影片"
 
-#: dist/toolbar/toolbar.js:1207
+#: dist/toolbar/toolbar.js:1378
 msgid "Next slide"
 msgstr "下一張投影片"
 
-#: dist/toolbar/toolbar.js:1265
+#: dist/toolbar/toolbar.js:1431
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr ""
+msgstr "多位使用者間取消動作/再次動作發生衝突。請使用文件修復來解決問題"
 
-#: dist/toolbar/toolbar.js:1395
-msgid "%n users"
-msgstr "%n 位使用者"
-
-#: dist/toolbar/toolbar.js:1402
-msgid "1 user"
-msgstr "1 位使用者"
-
-#: dist/toolbar/toolbar.js:1429
+#: dist/toolbar/toolbar.js:1595
 #: src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr "您"
+
+#: dist/toolbar/toolbar.js:1604
+msgid "Readonly"
+msgstr ""
 
 #: src/admin/AdminSocketBase.js:45
 msgid "Connection error"
@@ -674,6 +703,10 @@ msgstr "連線錯誤"
 #: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
 msgstr "您確定要終止本次的作業階段？"
+
+#: src/admin/AdminSocketSettings.js:31
+msgid "Are you sure you want to shutdown the server?"
+msgstr ""
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -707,1076 +740,1076 @@ msgstr " 秒"
 
 #: src/control/Control.CharacterMap.js:12
 msgid "Basic Latin"
-msgstr ""
+msgstr "基本拉丁字母"
 
 #: src/control/Control.CharacterMap.js:13
 msgid "Latin-1"
-msgstr ""
+msgstr "拉丁字母-1"
 
 #: src/control/Control.CharacterMap.js:14
 msgid "Latin Extended-A"
-msgstr ""
+msgstr "拉丁文擴充-A"
 
 #: src/control/Control.CharacterMap.js:15
 msgid "Latin Extended-B"
-msgstr ""
+msgstr "拉丁文擴充-B"
 
 #: src/control/Control.CharacterMap.js:16
 msgid "IPA Extensions"
-msgstr ""
+msgstr "IPA 國際音標擴充"
 
 #: src/control/Control.CharacterMap.js:17
 msgid "Spacing Modifier Letters"
-msgstr ""
+msgstr "佔位修飾字元"
 
 #: src/control/Control.CharacterMap.js:18
 msgid "Combining Diacritical Marks"
-msgstr ""
+msgstr "組合式變音符號"
 
 #: src/control/Control.CharacterMap.js:19
 msgid "Basic Greek"
-msgstr ""
+msgstr "基本希臘字母"
 
 #: src/control/Control.CharacterMap.js:20
 msgid "Cyrillic"
-msgstr ""
+msgstr "西里爾字母"
 
 #: src/control/Control.CharacterMap.js:21
 msgid "Armenian"
-msgstr ""
+msgstr "亞美尼亞文"
 
 #: src/control/Control.CharacterMap.js:22
 msgid "Basic Hebrew"
-msgstr ""
+msgstr "基本希伯來文"
 
 #: src/control/Control.CharacterMap.js:23
 msgid "Basic Arabic"
-msgstr ""
+msgstr "基本阿拉伯文"
 
 #: src/control/Control.CharacterMap.js:24
 msgid "Syriac"
-msgstr ""
+msgstr "敘利亞文"
 
 #: src/control/Control.CharacterMap.js:25
 msgid "Thaana"
-msgstr ""
+msgstr "塔納文"
 
 #: src/control/Control.CharacterMap.js:26
 msgid "Devanagari"
-msgstr ""
+msgstr "天城文"
 
 #: src/control/Control.CharacterMap.js:27
 msgid "Bengali"
-msgstr ""
+msgstr "孟加拉文"
 
 #: src/control/Control.CharacterMap.js:28
 msgid "Gurmukhi"
-msgstr ""
+msgstr "古爾穆基文"
 
 #: src/control/Control.CharacterMap.js:29
 msgid "Gujarati"
-msgstr ""
+msgstr "古吉拉特文"
 
 #: src/control/Control.CharacterMap.js:30
 msgid "Odia"
-msgstr ""
+msgstr "奧里亞文"
 
 #: src/control/Control.CharacterMap.js:31
 msgid "Tamil"
-msgstr ""
+msgstr "泰米爾文"
 
 #: src/control/Control.CharacterMap.js:32
 msgid "Telugu"
-msgstr ""
+msgstr "泰盧固文"
 
 #: src/control/Control.CharacterMap.js:33
 msgid "Kannada"
-msgstr ""
+msgstr "卡納達文"
 
 #: src/control/Control.CharacterMap.js:34
 msgid "Malayalam"
-msgstr ""
+msgstr "馬拉亞拉姆文"
 
 #: src/control/Control.CharacterMap.js:35
 msgid "Sinhala"
-msgstr ""
+msgstr "僧伽羅文"
 
 #: src/control/Control.CharacterMap.js:36
 msgid "Thai"
-msgstr ""
+msgstr "泰文"
 
 #: src/control/Control.CharacterMap.js:37
 msgid "Lao"
-msgstr ""
+msgstr "寮文"
 
 #: src/control/Control.CharacterMap.js:38
 msgid "Tibetan"
-msgstr ""
+msgstr "藏文"
 
 #: src/control/Control.CharacterMap.js:39
 msgid "Myanmar"
-msgstr ""
+msgstr "緬甸文"
 
 #: src/control/Control.CharacterMap.js:40
 msgid "Basic Georgian"
-msgstr ""
+msgstr "基本喬治亞文"
 
 #: src/control/Control.CharacterMap.js:41
 msgid "Hangul Jamo"
-msgstr ""
+msgstr "韓文字母"
 
 #: src/control/Control.CharacterMap.js:43
 msgid "Ethiopic"
-msgstr ""
+msgstr "衣索比亞文"
 
 #: src/control/Control.CharacterMap.js:44
 msgid "Cherokee"
-msgstr ""
+msgstr "切羅基文"
 
 #: src/control/Control.CharacterMap.js:46
 msgid "Canadian Aboriginal Syllables"
-msgstr ""
+msgstr "加拿大原住民音節字"
 
 #: src/control/Control.CharacterMap.js:47
 msgid "Ogham"
-msgstr ""
+msgstr "歐甘文"
 
 #: src/control/Control.CharacterMap.js:48
 msgid "Runic"
-msgstr ""
+msgstr "盧恩文字"
 
 #: src/control/Control.CharacterMap.js:49
 msgid "Khmer"
-msgstr ""
+msgstr "高棉文"
 
 #: src/control/Control.CharacterMap.js:50
 msgid "Mongolian"
-msgstr ""
+msgstr "蒙古文"
 
 #: src/control/Control.CharacterMap.js:51
 msgid "Latin Extended Additional"
-msgstr ""
+msgstr "拉丁文額外擴充"
 
 #: src/control/Control.CharacterMap.js:52
 msgid "Greek Extended"
-msgstr ""
+msgstr "希臘字母擴充"
 
 #: src/control/Control.CharacterMap.js:53
 msgid "General Punctuation"
-msgstr ""
+msgstr "一般標點符號"
 
 #: src/control/Control.CharacterMap.js:54
 msgid "Superscripts and Subscripts"
-msgstr ""
+msgstr "上標和下標"
 
 #: src/control/Control.CharacterMap.js:55
 msgid "Currency Symbols"
-msgstr ""
+msgstr "貨幣符號"
 
 #: src/control/Control.CharacterMap.js:56
 msgid "Combining Diacritical Symbols"
-msgstr ""
+msgstr "結合式變音符號"
 
 #: src/control/Control.CharacterMap.js:57
 msgid "Letterlike Symbols"
-msgstr ""
+msgstr "似字母符號"
 
 #: src/control/Control.CharacterMap.js:58
 msgid "Number Forms"
-msgstr ""
+msgstr "數字圖樣"
 
 #: src/control/Control.CharacterMap.js:59
 msgid "Arrows"
-msgstr ""
+msgstr "箭頭符號"
 
 #: src/control/Control.CharacterMap.js:60
 msgid "Mathematical Operators"
-msgstr ""
+msgstr "數學運算符號"
 
 #: src/control/Control.CharacterMap.js:61
 msgid "Miscellaneous Technical"
-msgstr ""
+msgstr "零雜技術符號"
 
 #: src/control/Control.CharacterMap.js:62
 msgid "Control Pictures"
-msgstr ""
+msgstr "控制圖像"
 
 #: src/control/Control.CharacterMap.js:63
 msgid "Optical Character Recognition"
-msgstr ""
+msgstr "光學字元辨識"
 
 #: src/control/Control.CharacterMap.js:64
 msgid "Enclosed Alphanumerics"
-msgstr ""
+msgstr "括圈字母數字"
 
 #: src/control/Control.CharacterMap.js:65
 msgid "Box Drawing"
-msgstr ""
+msgstr "方塊圖畫"
 
 #: src/control/Control.CharacterMap.js:66
 msgid "Block Elements"
-msgstr ""
+msgstr "區塊元件"
 
 #: src/control/Control.CharacterMap.js:67
 msgid "Geometric Shapes"
-msgstr ""
+msgstr "幾何形狀"
 
 #: src/control/Control.CharacterMap.js:68
 msgid "Miscellaneous Symbols"
-msgstr ""
+msgstr "零雜符號"
 
 #: src/control/Control.CharacterMap.js:69
 msgid "Dingbats"
-msgstr ""
+msgstr "裝飾符號"
 
 #: src/control/Control.CharacterMap.js:70
 msgid "Braille Patterns"
-msgstr ""
+msgstr "盲人點字樣式"
 
 #: src/control/Control.CharacterMap.js:71
 msgid "CJK Radicals Supplement"
-msgstr ""
+msgstr "中日韓部首補充"
 
 #: src/control/Control.CharacterMap.js:72
 msgid "Kangxi Radicals"
-msgstr ""
+msgstr "康熙部首"
 
 #: src/control/Control.CharacterMap.js:73
 msgid "Ideographic Description Characters"
-msgstr ""
+msgstr "表意文字描述字元"
 
 #: src/control/Control.CharacterMap.js:74
 msgid "CJK Symbols and Punctuation"
-msgstr ""
+msgstr "中日韓符號和標點符號"
 
 #: src/control/Control.CharacterMap.js:75
 msgid "Hiragana"
-msgstr ""
+msgstr "平假名"
 
 #: src/control/Control.CharacterMap.js:76
 msgid "Katakana"
-msgstr ""
+msgstr "片假名"
 
 #: src/control/Control.CharacterMap.js:77
 msgid "Bopomofo"
-msgstr ""
+msgstr "注音符號"
 
 #: src/control/Control.CharacterMap.js:78
 msgid "Hangul Compatibility Jamo"
-msgstr ""
+msgstr "韓文相容字母"
 
 #: src/control/Control.CharacterMap.js:79
 msgid "Kanbun"
-msgstr ""
+msgstr "日本漢文訓點號"
 
 #: src/control/Control.CharacterMap.js:80
 msgid "Bopomofo Extended"
-msgstr ""
+msgstr "注音符號擴充"
 
 #: src/control/Control.CharacterMap.js:81
 msgid "Enclosed CJK Letters and Months"
-msgstr ""
+msgstr "被包圍的中日韓字母和月份"
 
 #: src/control/Control.CharacterMap.js:82
 msgid "CJK Compatibility"
-msgstr ""
+msgstr "中日韓相容字元"
 
 #: src/control/Control.CharacterMap.js:84
 msgid "CJK Unified Ideographs Extension A"
-msgstr ""
+msgstr "中日韓統一表意文字擴充 A"
 
 #: src/control/Control.CharacterMap.js:86
 msgid "CJK Unified Ideographs"
-msgstr ""
+msgstr "中日韓統一表意文字"
 
 #: src/control/Control.CharacterMap.js:88
 msgid "Yi Syllables"
-msgstr ""
+msgstr "彝文音節字"
 
 #: src/control/Control.CharacterMap.js:90
 msgid "Yi Radicals"
-msgstr ""
+msgstr "彝文字根"
 
 #: src/control/Control.CharacterMap.js:92
 msgid "Hangul"
-msgstr ""
+msgstr "韓文"
 
 #: src/control/Control.CharacterMap.js:94
 msgid "High Surrogates"
-msgstr ""
+msgstr "高段代理區"
 
 #: src/control/Control.CharacterMap.js:95
 msgid "High Private Use Surrogates"
-msgstr ""
+msgstr "高段私用代理區"
 
 #: src/control/Control.CharacterMap.js:97
 msgid "Low Surrogates"
-msgstr ""
+msgstr "低段代理區"
 
 #: src/control/Control.CharacterMap.js:99
 msgid "Private Use Area"
-msgstr ""
+msgstr "私用區塊"
 
 #: src/control/Control.CharacterMap.js:101
 msgid "CJK Compatibility Ideographs"
-msgstr ""
+msgstr "中日韓相容表意文字"
 
 #: src/control/Control.CharacterMap.js:102
 msgid "Alphabetic Presentation Forms"
-msgstr ""
+msgstr "字母表現圖樣"
 
 #: src/control/Control.CharacterMap.js:104
 msgid "Arabic Presentation Forms-A"
-msgstr ""
+msgstr "阿拉伯文表現圖樣-A"
 
 #: src/control/Control.CharacterMap.js:105
 msgid "Combining Half Marks"
-msgstr ""
+msgstr "結合式半形符號"
 
 #: src/control/Control.CharacterMap.js:106
 msgid "CJK Compatibility Forms"
-msgstr ""
+msgstr "中日韓相容圖樣"
 
 #: src/control/Control.CharacterMap.js:107
 msgid "Small Form Variants"
-msgstr ""
+msgstr "小寫圖樣變體"
 
 #: src/control/Control.CharacterMap.js:108
 msgid "Arabic Presentation Forms-B"
-msgstr ""
+msgstr "阿拉伯表現圖樣-B"
 
 #: src/control/Control.CharacterMap.js:109
 msgid "Specials"
-msgstr ""
+msgstr "特殊區塊"
 
 #: src/control/Control.CharacterMap.js:110
 msgid "Halfwidth and Fullwidth Forms"
-msgstr ""
+msgstr "半寬與全寬符號"
 
 #: src/control/Control.CharacterMap.js:111
 msgid "Old Italic"
-msgstr ""
+msgstr "古意大利文"
 
 #: src/control/Control.CharacterMap.js:112
 msgid "Gothic"
-msgstr ""
+msgstr "歌德文"
 
 #: src/control/Control.CharacterMap.js:113
 msgid "Deseret"
-msgstr ""
+msgstr "猶他大學音標"
 
 #: src/control/Control.CharacterMap.js:114
 msgid "Byzantine Musical Symbols"
-msgstr ""
+msgstr "拜占庭音樂符號"
 
 #: src/control/Control.CharacterMap.js:115
 #: src/control/Control.CharacterMap.js:116
 msgid "Musical Symbols"
-msgstr ""
+msgstr "音樂符號"
 
 #: src/control/Control.CharacterMap.js:118
 msgid "CJK Unified Ideographs Extension B"
-msgstr ""
+msgstr "中日韓統一表意文字擴充 B"
 
 #: src/control/Control.CharacterMap.js:121
 msgid "CJK Compatibility Ideographs Supplement"
-msgstr ""
+msgstr "中日韓相容表意文字補充"
 
 #: src/control/Control.CharacterMap.js:122
 msgid "Tags"
-msgstr ""
+msgstr "語言標籤"
 
 #: src/control/Control.CharacterMap.js:123
 msgid "Cyrillic Supplement"
-msgstr ""
+msgstr "西里爾字母補充"
 
 #: src/control/Control.CharacterMap.js:124
 msgid "Tagalog"
-msgstr ""
+msgstr "他加祿文"
 
 #: src/control/Control.CharacterMap.js:125
 msgid "Hanunoo"
-msgstr ""
+msgstr "哈努諾文"
 
 #: src/control/Control.CharacterMap.js:126
 msgid "Buhid"
-msgstr ""
+msgstr "布希德文"
 
 #: src/control/Control.CharacterMap.js:127
 msgid "Tagbanwa"
-msgstr ""
+msgstr "塔格巴努亞文"
 
 #: src/control/Control.CharacterMap.js:128
 msgid "Miscellaneous Mathematical Symbols-A"
-msgstr ""
+msgstr "雜合數學用符號-A"
 
 #: src/control/Control.CharacterMap.js:129
 msgid "Supplemental Arrows-A"
-msgstr ""
+msgstr "補充箭號-A"
 
 #: src/control/Control.CharacterMap.js:130
 msgid "Supplemental Arrows-B"
-msgstr ""
+msgstr "補充箭號-B"
 
 #: src/control/Control.CharacterMap.js:131
 msgid "Miscellaneous Mathematical Symbols-B"
-msgstr ""
+msgstr "雜合數學用符號-B"
 
 #: src/control/Control.CharacterMap.js:132
 msgid "Supplemental Mathematical Operators"
-msgstr ""
+msgstr "補充數學運算符"
 
 #: src/control/Control.CharacterMap.js:133
 msgid "Katakana Phonetics Extensions"
-msgstr ""
+msgstr "片假名音標擴充"
 
 #: src/control/Control.CharacterMap.js:134
 msgid "Variation Selectors"
-msgstr ""
+msgstr "字形變體選取器"
 
 #: src/control/Control.CharacterMap.js:136
 msgid "Supplementary Private Use Area-A"
-msgstr ""
+msgstr "補充私用區-A"
 
 #: src/control/Control.CharacterMap.js:139
 msgid "Supplementary Private Use Area-B"
-msgstr ""
+msgstr "補充私用區-B"
 
 #: src/control/Control.CharacterMap.js:140
 msgid "Limbu"
-msgstr ""
+msgstr "林布文"
 
 #: src/control/Control.CharacterMap.js:141
 msgid "Tai Le"
-msgstr ""
+msgstr "傣哪文"
 
 #: src/control/Control.CharacterMap.js:142
 msgid "Khmer Symbols"
-msgstr ""
+msgstr "高棉符號"
 
 #: src/control/Control.CharacterMap.js:143
 msgid "Phonetic Extensions"
-msgstr ""
+msgstr "音標擴充"
 
 #: src/control/Control.CharacterMap.js:144
 msgid "Miscellaneous Symbols And Arrows"
-msgstr ""
+msgstr "零雜符號與箭號"
 
 #: src/control/Control.CharacterMap.js:145
 msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgstr "易經六十四卦象符號"
 
 #: src/control/Control.CharacterMap.js:146
 msgid "Linear B Syllabary"
-msgstr ""
+msgstr "線形 B 音節文字"
 
 #: src/control/Control.CharacterMap.js:147
 msgid "Linear B Ideograms"
-msgstr ""
+msgstr "線形 B 表意文字"
 
 #: src/control/Control.CharacterMap.js:148
 msgid "Aegean Numbers"
-msgstr ""
+msgstr "愛琴海數字"
 
 #: src/control/Control.CharacterMap.js:149
 msgid "Ugaritic"
-msgstr ""
+msgstr "烏加里特楔形文字"
 
 #: src/control/Control.CharacterMap.js:150
 msgid "Shavian"
-msgstr ""
+msgstr "肅伯納字母"
 
 #: src/control/Control.CharacterMap.js:151
 msgid "Osmanya"
-msgstr ""
+msgstr "奥斯曼亞字母"
 
 #: src/control/Control.CharacterMap.js:152
 msgid "Cypriot Syllabary"
-msgstr ""
+msgstr "塞浦路斯音節字"
 
 #: src/control/Control.CharacterMap.js:153
 msgid "Tai Xuan Jing Symbols"
-msgstr ""
+msgstr "太玄經符號"
 
 #: src/control/Control.CharacterMap.js:154
 msgid "Variation Selectors Supplement"
-msgstr ""
+msgstr "字形變體選取器補充"
 
 #: src/control/Control.CharacterMap.js:155
 msgid "Ancient Greek Musical Notation"
-msgstr ""
+msgstr "古希臘音樂譜記號"
 
 #: src/control/Control.CharacterMap.js:156
 msgid "Ancient Greek Numbers"
-msgstr ""
+msgstr "古希臘數字"
 
 #: src/control/Control.CharacterMap.js:157
 msgid "Arabic Supplement"
-msgstr ""
+msgstr "阿拉伯文補充"
 
 #: src/control/Control.CharacterMap.js:158
 msgid "Buginese"
-msgstr ""
+msgstr "布吉文"
 
 #: src/control/Control.CharacterMap.js:159
 msgid "CJK Strokes"
-msgstr ""
+msgstr "中日韓筆劃部件"
 
 #: src/control/Control.CharacterMap.js:160
 msgid "Combining Diacritical Marks Supplement"
-msgstr ""
+msgstr "結合式變音符號補充"
 
 #: src/control/Control.CharacterMap.js:161
 msgid "Coptic"
-msgstr ""
+msgstr "科普特文"
 
 #: src/control/Control.CharacterMap.js:162
 msgid "Ethiopic Extended"
-msgstr ""
+msgstr "衣索比亞文擴充"
 
 #: src/control/Control.CharacterMap.js:163
 msgid "Ethiopic Supplement"
-msgstr ""
+msgstr "衣索比亞文補充"
 
 #: src/control/Control.CharacterMap.js:164
 msgid "Georgian Supplement"
-msgstr ""
+msgstr "喬治亞文補充"
 
 #: src/control/Control.CharacterMap.js:165
 msgid "Glagolitic"
-msgstr ""
+msgstr "格拉哥里字母"
 
 #: src/control/Control.CharacterMap.js:166
 msgid "Kharoshthi"
-msgstr ""
+msgstr "佉盧字母"
 
 #: src/control/Control.CharacterMap.js:167
 msgid "Modifier Tone Letters"
-msgstr ""
+msgstr "聲調修飾符號"
 
 #: src/control/Control.CharacterMap.js:168
 msgid "New Tai Lue"
-msgstr ""
+msgstr "新傣仂文"
 
 #: src/control/Control.CharacterMap.js:169
 msgid "Old Persian"
-msgstr ""
+msgstr "古波斯文"
 
 #: src/control/Control.CharacterMap.js:170
 msgid "Phonetic Extensions Supplement"
-msgstr ""
+msgstr "音標擴充補充"
 
 #: src/control/Control.CharacterMap.js:171
 msgid "Supplemental Punctuation"
-msgstr ""
+msgstr "補充標點符號"
 
 #: src/control/Control.CharacterMap.js:172
 msgid "Syloti Nagri"
-msgstr ""
+msgstr "錫爾赫特文"
 
 #: src/control/Control.CharacterMap.js:173
 msgid "Tifinagh"
-msgstr ""
+msgstr "提非納格字母"
 
 #: src/control/Control.CharacterMap.js:174
 msgid "Vertical Forms"
-msgstr ""
+msgstr "豎排符號"
 
 #: src/control/Control.CharacterMap.js:175
 msgid "Nko"
-msgstr ""
+msgstr "Nko 西非書面文"
 
 #: src/control/Control.CharacterMap.js:176
 msgid "Balinese"
-msgstr ""
+msgstr "巴厘文"
 
 #: src/control/Control.CharacterMap.js:177
 msgid "Latin Extended-C"
-msgstr ""
+msgstr "拉丁字母擴充-C"
 
 #: src/control/Control.CharacterMap.js:178
 msgid "Latin Extended-D"
-msgstr ""
+msgstr "拉丁字母擴充-D"
 
 #: src/control/Control.CharacterMap.js:179
 msgid "Phags-Pa"
-msgstr ""
+msgstr "八思巴字母"
 
 #: src/control/Control.CharacterMap.js:180
 msgid "Phoenician"
-msgstr ""
+msgstr "腓尼基字母"
 
 #: src/control/Control.CharacterMap.js:182
 msgid "Cuneiform"
-msgstr ""
+msgstr "楔形文字"
 
 #: src/control/Control.CharacterMap.js:183
 msgid "Cuneiform Numbers And Punctuation"
-msgstr ""
+msgstr "楔形文字數字及標點"
 
 #: src/control/Control.CharacterMap.js:184
 msgid "Counting Rod Numerals"
-msgstr ""
+msgstr "算籌記數式"
 
 #: src/control/Control.CharacterMap.js:185
 msgid "Sundanese"
-msgstr ""
+msgstr "巽他文"
 
 #: src/control/Control.CharacterMap.js:186
 msgid "Lepcha"
-msgstr ""
+msgstr "雷布查文"
 
 #: src/control/Control.CharacterMap.js:187
 msgid "Ol Chiki"
-msgstr ""
+msgstr "桑塔利文"
 
 #: src/control/Control.CharacterMap.js:188
 msgid "Cyrillic Extended-A"
-msgstr ""
+msgstr "西里爾字母擴充-A"
 
 #: src/control/Control.CharacterMap.js:190
 msgid "Vai"
-msgstr ""
+msgstr "瓦伊文"
 
 #: src/control/Control.CharacterMap.js:191
 msgid "Cyrillic Extended-B"
-msgstr ""
+msgstr "西里爾字母擴充-B"
 
 #: src/control/Control.CharacterMap.js:192
 msgid "Saurashtra"
-msgstr ""
+msgstr "索拉什特拉文"
 
 #: src/control/Control.CharacterMap.js:193
 msgid "Kayah Li"
-msgstr ""
+msgstr "克耶文"
 
 #: src/control/Control.CharacterMap.js:194
 msgid "Rejang"
-msgstr ""
+msgstr "勒姜文"
 
 #: src/control/Control.CharacterMap.js:195
 msgid "Cham"
-msgstr ""
+msgstr "占文"
 
 #: src/control/Control.CharacterMap.js:196
 msgid "Ancient Symbols"
-msgstr ""
+msgstr "古代符號"
 
 #: src/control/Control.CharacterMap.js:197
 msgid "Phaistos Disc"
-msgstr ""
+msgstr "費斯托斯泥圓盤文字"
 
 #: src/control/Control.CharacterMap.js:198
 msgid "Lycian"
-msgstr ""
+msgstr "呂基亞文"
 
 #: src/control/Control.CharacterMap.js:199
 msgid "Carian"
-msgstr ""
+msgstr "卡里亞文"
 
 #: src/control/Control.CharacterMap.js:200
 msgid "Lydian"
-msgstr ""
+msgstr "呂底亞文"
 
 #: src/control/Control.CharacterMap.js:201
 msgid "Mahjong Tiles"
-msgstr ""
+msgstr "麻將牌面"
 
 #: src/control/Control.CharacterMap.js:202
 msgid "Domino Tiles"
-msgstr ""
+msgstr "西洋骨牌牌面"
 
 #: src/control/Control.CharacterMap.js:203
 msgid "Samaritan"
-msgstr ""
+msgstr "撒馬利亞字母"
 
 #: src/control/Control.CharacterMap.js:204
 msgid "Canadian Aboriginal Syllabics Extended"
-msgstr ""
+msgstr "加拿大原住民音節字擴充"
 
 #: src/control/Control.CharacterMap.js:205
 msgid "Tai Tham"
-msgstr ""
+msgstr "老傣文"
 
 #: src/control/Control.CharacterMap.js:206
 msgid "Vedic Extensions"
-msgstr ""
+msgstr "吠陀梵文擴充"
 
 #: src/control/Control.CharacterMap.js:207
 msgid "Lisu"
-msgstr ""
+msgstr "老傈僳文"
 
 #: src/control/Control.CharacterMap.js:208
 msgid "Bamum"
-msgstr ""
+msgstr "巴蒙文"
 
 #: src/control/Control.CharacterMap.js:209
 msgid "Common Indic Number Forms"
-msgstr ""
+msgstr "常用印度數字圖樣"
 
 #: src/control/Control.CharacterMap.js:210
 msgid "Devanagari Extended"
-msgstr ""
+msgstr "天城文擴充"
 
 #: src/control/Control.CharacterMap.js:211
 msgid "Hangul Jamo Extended-A"
-msgstr ""
+msgstr "韓文字母擴充-A"
 
 #: src/control/Control.CharacterMap.js:212
 msgid "Javanese"
-msgstr ""
+msgstr "爪哇文"
 
 #: src/control/Control.CharacterMap.js:213
 msgid "Myanmar Extended-A"
-msgstr ""
+msgstr "緬甸文擴充-A"
 
 #: src/control/Control.CharacterMap.js:214
 msgid "Tai Viet"
-msgstr ""
+msgstr "傣端文"
 
 #: src/control/Control.CharacterMap.js:215
 msgid "Meetei Mayek"
-msgstr ""
+msgstr "曼尼普爾文"
 
 #: src/control/Control.CharacterMap.js:216
 msgid "Hangul Jamo Extended-B"
-msgstr ""
+msgstr "韓文字母擴充-B"
 
 #: src/control/Control.CharacterMap.js:217
 msgid "Imperial Aramaic"
-msgstr ""
+msgstr "規範阿拉米文"
 
 #: src/control/Control.CharacterMap.js:218
 msgid "Old South Arabian"
-msgstr ""
+msgstr "古南阿拉伯文"
 
 #: src/control/Control.CharacterMap.js:219
 msgid "Avestan"
-msgstr ""
+msgstr "阿維斯陀文"
 
 #: src/control/Control.CharacterMap.js:220
 msgid "Inscriptional Parthian"
-msgstr ""
+msgstr "帕提亞文碑銘體"
 
 #: src/control/Control.CharacterMap.js:221
 msgid "Inscriptional Pahlavi"
-msgstr ""
+msgstr "巴列維文碑銘體"
 
 #: src/control/Control.CharacterMap.js:222
 msgid "Old Turkic"
-msgstr ""
+msgstr "古突厥文"
 
 #: src/control/Control.CharacterMap.js:223
 msgid "Rumi Numeral Symbols"
-msgstr ""
+msgstr "魯米數字符號"
 
 #: src/control/Control.CharacterMap.js:224
 msgid "Kaithi"
-msgstr ""
+msgstr "凱提字母"
 
 #: src/control/Control.CharacterMap.js:226
 msgid "Egyptian Hieroglyphs"
-msgstr ""
+msgstr "古埃及聖書字碑銘體"
 
 #: src/control/Control.CharacterMap.js:227
 msgid "Enclosed Alphanumeric Supplement"
-msgstr ""
+msgstr "括圈字母數字補充"
 
 #: src/control/Control.CharacterMap.js:228
 msgid "Enclosed Ideographic Supplement"
-msgstr ""
+msgstr "括圈表意文字補充"
 
 #: src/control/Control.CharacterMap.js:230
 msgid "CJK Unified Ideographs Extension C"
-msgstr ""
+msgstr "中日韓統一表意文字擴充 C"
 
 #: src/control/Control.CharacterMap.js:231
 msgid "Mandaic"
-msgstr ""
+msgstr "曼達文"
 
 #: src/control/Control.CharacterMap.js:232
 msgid "Batak"
-msgstr ""
+msgstr "巴塔克文"
 
 #: src/control/Control.CharacterMap.js:233
 msgid "Ethiopic Extended-A"
-msgstr ""
+msgstr "衣索比亞文擴充-A"
 
 #: src/control/Control.CharacterMap.js:234
 msgid "Brahmi"
-msgstr ""
+msgstr "婆羅米字母"
 
 #: src/control/Control.CharacterMap.js:236
 msgid "Bamum Supplement"
-msgstr ""
+msgstr "巴蒙文補充"
 
 #: src/control/Control.CharacterMap.js:237
 msgid "Kana Supplement"
-msgstr ""
+msgstr "假名補充"
 
 #: src/control/Control.CharacterMap.js:238
 msgid "Playing Cards"
-msgstr ""
+msgstr "撲克牌牌面"
 
 #: src/control/Control.CharacterMap.js:240
 msgid "Miscellaneous Symbols And Pictographs"
-msgstr ""
+msgstr "雜合符號和象形圖示"
 
 #: src/control/Control.CharacterMap.js:241
 msgid "Emoticons"
-msgstr ""
+msgstr "表情圖示"
 
 #: src/control/Control.CharacterMap.js:242
 msgid "Transport And Map Symbols"
-msgstr ""
+msgstr "運輸和地圖符號"
 
 #: src/control/Control.CharacterMap.js:243
 msgid "Alchemical Symbols"
-msgstr ""
+msgstr "煉金術符號"
 
 #: src/control/Control.CharacterMap.js:245
 msgid "CJK Unified Ideographs Extension D"
-msgstr ""
+msgstr "中日韓統一表意文字擴充 D"
 
 #: src/control/Control.CharacterMap.js:247
 msgid "Arabic Extended-A"
-msgstr ""
+msgstr "阿拉伯文擴充-A"
 
 #: src/control/Control.CharacterMap.js:248
 msgid "Arabic Mathematical Alphabetic Symbols"
-msgstr ""
+msgstr "阿拉伯文數學用字母符號"
 
 #: src/control/Control.CharacterMap.js:249
 msgid "Chakma"
-msgstr ""
+msgstr "查克馬文"
 
 #: src/control/Control.CharacterMap.js:250
 msgid "Meetei Mayek Extensions"
-msgstr ""
+msgstr "曼尼普爾文擴充"
 
 #: src/control/Control.CharacterMap.js:251
 msgid "Meroitic Cursive"
-msgstr ""
+msgstr "麥羅埃文通俗體"
 
 #: src/control/Control.CharacterMap.js:252
 msgid "Meroitic Hieroglyphs"
-msgstr ""
+msgstr "麥羅埃文碑銘體"
 
 #: src/control/Control.CharacterMap.js:253
 msgid "Miao"
-msgstr ""
+msgstr "柏格理苗文"
 
 #: src/control/Control.CharacterMap.js:254
 msgid "Sharada"
-msgstr ""
+msgstr "夏拉達文"
 
 #: src/control/Control.CharacterMap.js:255
 msgid "Sora Sompeng"
-msgstr ""
+msgstr "索朗桑朋文"
 
 #: src/control/Control.CharacterMap.js:256
 msgid "Sundanese Supplement"
-msgstr ""
+msgstr "巽他文補充"
 
 #: src/control/Control.CharacterMap.js:257
 msgid "Takri"
-msgstr ""
+msgstr "塔克里文"
 
 #: src/control/Control.CharacterMap.js:258
 msgid "Bassa Vah"
-msgstr ""
+msgstr "巴撒符文"
 
 #: src/control/Control.CharacterMap.js:259
 msgid "Caucasian Albanian"
-msgstr ""
+msgstr "高加索阿爾巴尼亞文"
 
 #: src/control/Control.CharacterMap.js:260
 msgid "Coptic Epact Numbers"
-msgstr ""
+msgstr "科普特潤餘數字"
 
 #: src/control/Control.CharacterMap.js:261
 msgid "Combining Diacritical Marks Extended"
-msgstr ""
+msgstr "組合變音標記擴充"
 
 #: src/control/Control.CharacterMap.js:262
 msgid "Duployan"
-msgstr ""
+msgstr "杜普雷速記號"
 
 #: src/control/Control.CharacterMap.js:263
 msgid "Elbasan"
-msgstr ""
+msgstr "艾爾巴桑文"
 
 #: src/control/Control.CharacterMap.js:264
 msgid "Geometric Shapes Extended"
-msgstr ""
+msgstr "幾何圖形擴充"
 
 #: src/control/Control.CharacterMap.js:265
 msgid "Grantha"
-msgstr ""
+msgstr "帕拉瓦文"
 
 #: src/control/Control.CharacterMap.js:266
 msgid "Khojki"
-msgstr ""
+msgstr "可吉文"
 
 #: src/control/Control.CharacterMap.js:267
 msgid "Khudawadi"
-msgstr ""
+msgstr "庫達瓦迪文"
 
 #: src/control/Control.CharacterMap.js:268
 msgid "Latin Extended-E"
-msgstr ""
+msgstr "拉丁文擴充-E"
 
 #: src/control/Control.CharacterMap.js:270
 msgid "Linear A"
-msgstr ""
+msgstr "線形文字A"
 
 #: src/control/Control.CharacterMap.js:271
 msgid "Mahajani"
-msgstr ""
+msgstr "馬哈佳尼文"
 
 #: src/control/Control.CharacterMap.js:272
 msgid "Manichaean"
-msgstr ""
+msgstr "摩尼教文"
 
 #: src/control/Control.CharacterMap.js:273
 msgid "Mende Kikakui"
-msgstr ""
+msgstr "門德語奇卡奎文"
 
 #: src/control/Control.CharacterMap.js:274
 msgid "Modi"
-msgstr ""
+msgstr "莫迪文"
 
 #: src/control/Control.CharacterMap.js:275
 msgid "Mro"
-msgstr ""
+msgstr "蒙羅文"
 
 #: src/control/Control.CharacterMap.js:276
 msgid "Myanmar Extended-B"
-msgstr ""
+msgstr "緬甸文擴充-B"
 
 #: src/control/Control.CharacterMap.js:277
 msgid "Nabataean"
-msgstr ""
+msgstr "納巴泰文"
 
 #: src/control/Control.CharacterMap.js:278
 msgid "Old North Arabian"
-msgstr ""
+msgstr "古北阿拉伯文"
 
 #: src/control/Control.CharacterMap.js:279
 msgid "Old Permic"
-msgstr ""
+msgstr "古彼爾姆文"
 
 #: src/control/Control.CharacterMap.js:280
 msgid "Ornamental Dingbats"
-msgstr ""
+msgstr "裝飾符號"
 
 #: src/control/Control.CharacterMap.js:281
 msgid "Pahawh Hmong"
-msgstr ""
+msgstr "救世苗文"
 
 #: src/control/Control.CharacterMap.js:282
 msgid "Palmyrene"
-msgstr ""
+msgstr "帕爾邁拉文"
 
 #: src/control/Control.CharacterMap.js:283
 msgid "Pau Cin Hau"
-msgstr ""
+msgstr "包欽浩文"
 
 #: src/control/Control.CharacterMap.js:284
 msgid "Psalter Pahlavi"
-msgstr ""
+msgstr "詩篇巴列維文"
 
 #: src/control/Control.CharacterMap.js:285
 msgid "Shorthand Format Controls"
-msgstr ""
+msgstr "速記格式控制符"
 
 #: src/control/Control.CharacterMap.js:286
 msgid "Siddham"
-msgstr ""
+msgstr "悉曇文"
 
 #: src/control/Control.CharacterMap.js:287
 msgid "Sinhala Archaic Numbers"
-msgstr ""
+msgstr "古僧伽羅文數字"
 
 #: src/control/Control.CharacterMap.js:288
 msgid "Supplemental Arrows-C"
-msgstr ""
+msgstr "追加箭頭-C"
 
 #: src/control/Control.CharacterMap.js:289
 msgid "Tirhuta"
-msgstr ""
+msgstr "特忽塔文"
 
 #: src/control/Control.CharacterMap.js:290
 msgid "Warang Citi"
-msgstr ""
+msgstr "瓦蘭齊地文"
 
 #: src/control/Control.CharacterMap.js:291
 msgid "Ahom"
-msgstr ""
+msgstr "阿洪姆文"
 
 #: src/control/Control.CharacterMap.js:293
 msgid "Anatolian Hieroglyphs"
-msgstr ""
+msgstr "安那托利亞文碑銘體"
 
 #: src/control/Control.CharacterMap.js:294
 msgid "Cherokee Supplement"
-msgstr ""
+msgstr "切羅基文補充"
 
 #: src/control/Control.CharacterMap.js:295
 #: src/control/Control.CharacterMap.js:296
 msgid "CJK Unified Ideographs Extension E"
-msgstr ""
+msgstr "中日韓統一表意文字擴充 E"
 
 #: src/control/Control.CharacterMap.js:298
 msgid "Early Dynastic Cuneiform"
-msgstr ""
+msgstr "古王國時期楔形文字"
 
 #: src/control/Control.CharacterMap.js:299
 msgid "Hatran"
-msgstr ""
+msgstr "哈坦文"
 
 #: src/control/Control.CharacterMap.js:300
 msgid "Multani"
-msgstr ""
+msgstr "穆爾坦尼文"
 
 #: src/control/Control.CharacterMap.js:301
 msgid "Old Hungarian"
-msgstr ""
+msgstr "古匈牙利文"
 
 #: src/control/Control.CharacterMap.js:302
 msgid "Supplemental Symbols And Pictographs"
-msgstr ""
+msgstr "補充符號和象形圖示"
 
 #: src/control/Control.CharacterMap.js:304
 msgid "Sutton Signwriting"
-msgstr ""
+msgstr "薩頓手語符號"
 
 #: src/control/Control.CharacterMap.js:390
 msgid "Special Characters"
-msgstr ""
+msgstr "特殊字元"
 
 #: src/control/Control.CharacterMap.js:395
 msgid "Font Name:"
-msgstr ""
+msgstr "字型名稱："
 
 #: src/control/Control.CharacterMap.js:402
 msgid "Subset:"
-msgstr ""
+msgstr "子集："
 
 #: src/control/Control.CharacterMap.js:413
 msgid "Selected Character:"
-msgstr ""
+msgstr "選取的字元："
 
 #: src/control/Control.CharacterMap.js:418
 msgid "Hexadecimal:"
-msgstr ""
+msgstr "十六進位："
 
 #: src/control/Control.CharacterMap.js:424
 #: src/control/Control.Menubar.js:38
 #: src/control/Control.Menubar.js:138
-#: src/control/Control.Menubar.js:189
-#: src/control/Control.Menubar.js:195
-#: src/control/Control.Menubar.js:243
+#: src/control/Control.Menubar.js:190
+#: src/control/Control.Menubar.js:196
+#: src/control/Control.Menubar.js:245
 msgid "Insert"
 msgstr "插入"
 
@@ -1785,7 +1818,7 @@ msgid "Insert column before"
 msgstr "前方插欄"
 
 #: src/control/Control.ColumnHeader.js:48
-#: src/control/Control.Menubar.js:257
+#: src/control/Control.Menubar.js:259
 msgid "Delete column"
 msgstr "刪除欄"
 
@@ -1795,15 +1828,31 @@ msgstr "最適寬度"
 
 #: src/control/Control.ColumnHeader.js:62
 msgid "Hide Columns"
-msgstr ""
+msgstr "隱藏欄"
 
 #: src/control/Control.ColumnHeader.js:69
 msgid "Show Columns"
-msgstr ""
+msgstr "顯示欄"
 
 #: src/control/Control.ColumnHeader.js:84
 msgid "Optimal Column Width"
 msgstr "最適欄寬"
+
+#: src/control/Control.ContextMenu.js:135
+msgid "Internal Cut"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:138
+msgid "Internal Copy"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:141
+msgid "Internal Paste"
+msgstr ""
+
+#: src/control/Control.ContextMenu.js:163
+msgid "Internal Paste Special"
+msgstr ""
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
@@ -1819,7 +1868,7 @@ msgstr "索引"
 
 #: src/control/Control.DocumentRepair.js:44
 #: src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:245
+#: src/control/Control.Menubar.js:247
 msgid "Comment"
 msgstr "評註"
 
@@ -1836,32 +1885,32 @@ msgid "Jump to state"
 msgstr "跳回狀態"
 
 #: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:162
-#: src/control/Control.Menubar.js:220
+#: src/control/Control.Menubar.js:163
+#: src/control/Control.Menubar.js:222
 msgid "File"
 msgstr "檔案"
 
 #: src/control/Control.Menubar.js:12
-#: src/control/Control.Menubar.js:164
-#: src/control/Control.Menubar.js:222
+#: src/control/Control.Menubar.js:165
+#: src/control/Control.Menubar.js:224
 msgid "Print"
 msgstr "列印"
 
 #: src/control/Control.Menubar.js:13
-#: src/control/Control.Menubar.js:165
-#: src/control/Control.Menubar.js:223
+#: src/control/Control.Menubar.js:166
+#: src/control/Control.Menubar.js:225
 msgid "See revision history"
 msgstr "檢視修訂記錄"
 
 #: src/control/Control.Menubar.js:14
-#: src/control/Control.Menubar.js:166
-#: src/control/Control.Menubar.js:224
+#: src/control/Control.Menubar.js:167
+#: src/control/Control.Menubar.js:226
 msgid "Download as"
 msgstr "下載為"
 
 #: src/control/Control.Menubar.js:15
-#: src/control/Control.Menubar.js:167
-#: src/control/Control.Menubar.js:225
+#: src/control/Control.Menubar.js:168
+#: src/control/Control.Menubar.js:227
 msgid "PDF Document (.pdf)"
 msgstr "PDF 文件 (.pdf)"
 
@@ -1878,8 +1927,8 @@ msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:172
-#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:173
+#: src/control/Control.Menubar.js:232
 msgid "Edit"
 msgstr "編輯"
 
@@ -1888,46 +1937,78 @@ msgid "Repair"
 msgstr "修復"
 
 #: src/control/Control.Menubar.js:25
-#: src/control/Control.Menubar.js:176
-#: src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:177
+#: src/control/Control.Menubar.js:236
 msgid "Cut"
 msgstr "剪下"
 
 #: src/control/Control.Menubar.js:26
-#: src/control/Control.Menubar.js:177
-#: src/control/Control.Menubar.js:235
+#: src/control/Control.Menubar.js:178
+#: src/control/Control.Menubar.js:237
 msgid "Copy"
 msgstr "複製"
 
 #: src/control/Control.Menubar.js:27
-#: src/control/Control.Menubar.js:178
-#: src/control/Control.Menubar.js:236
+#: src/control/Control.Menubar.js:179
+#: src/control/Control.Menubar.js:238
 msgid "Paste"
 msgstr "貼上"
 
 #: src/control/Control.Menubar.js:29
-#: src/control/Control.Menubar.js:180
-#: src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:181
+#: src/control/Control.Menubar.js:240
 msgid "Select all"
 msgstr "全選"
 
 #: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:182
-#: src/control/Control.Menubar.js:240
+msgid "Track Changes"
+msgstr ""
+
+#: src/control/Control.Menubar.js:32
+msgid "Record"
+msgstr ""
+
+#: src/control/Control.Menubar.js:33
+msgid "Show"
+msgstr ""
+
+#: src/control/Control.Menubar.js:35
+msgid "Previous"
+msgstr ""
+
+#: src/control/Control.Menubar.js:36
+#, fuzzy
+msgid "Next"
+msgstr "文字"
+
+#: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:183
+#: src/control/Control.Menubar.js:242
 msgid "View"
 msgstr "檢視"
 
 #: src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:183
-#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:184
+#: src/control/Control.Menubar.js:243
 msgid "Full screen"
 msgstr "全螢幕"
 
+#: src/control/Control.Menubar.js:46
+#, fuzzy
+msgid "Formatting Marks"
+msgstr "格式設定標記"
+
 #: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:190
-#: src/control/Control.Menubar.js:244
+#: src/control/Control.Menubar.js:191
+#: src/control/Control.Menubar.js:246
 msgid "Image"
 msgstr "影像"
+
+#: src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:203
+#: src/control/Control.Menubar.js:259
+msgid "Comment..."
+msgstr ""
 
 #: src/control/Control.Menubar.js:42
 msgid "Footnote"
@@ -1946,294 +2027,294 @@ msgid "Column break"
 msgstr "斷欄"
 
 #: src/control/Control.Menubar.js:48
-#: src/control/Control.Menubar.js:192
-#: src/control/Control.Menubar.js:250
+#: src/control/Control.Menubar.js:193
+#: src/control/Control.Menubar.js:252
 msgid "Special character..."
-msgstr ""
+msgstr "特殊字元..."
 
 #: src/control/Control.Menubar.js:49
 msgid "Formatting mark"
-msgstr ""
+msgstr "格式設定標記"
 
 #: src/control/Control.Menubar.js:50
 msgid "Non-breaking space"
-msgstr ""
+msgstr "不斷行空格"
 
 #: src/control/Control.Menubar.js:51
 msgid "Non-breaking hyphen"
-msgstr ""
+msgstr "不斷行連字符"
 
 #: src/control/Control.Menubar.js:52
 msgid "Soft hyphen"
-msgstr ""
+msgstr "軟性連字符"
 
 #: src/control/Control.Menubar.js:53
 msgid "No-width optional break"
-msgstr ""
+msgstr "無寬度選擇性斷行"
 
 #: src/control/Control.Menubar.js:54
 msgid "No-width no break"
-msgstr ""
+msgstr "無寬度不斷行"
 
 #: src/control/Control.Menubar.js:55
 msgid "Left-to-right mark"
-msgstr ""
+msgstr "從左至右標記"
 
 #: src/control/Control.Menubar.js:56
 msgid "Right-to-left mark"
-msgstr ""
+msgstr "從右至左標記"
 
 #: src/control/Control.Menubar.js:58
 msgid "Format"
-msgstr ""
+msgstr "格式"
 
 #: src/control/Control.Menubar.js:59
 msgid "Text"
-msgstr ""
+msgstr "文字"
 
 #: src/control/Control.Menubar.js:63
 msgid "Double underline"
-msgstr ""
+msgstr "雙底線"
 
 #: src/control/Control.Menubar.js:64
 msgid "Strikethrough"
-msgstr ""
+msgstr "刪除線"
 
 #: src/control/Control.Menubar.js:65
 msgid "Overline"
-msgstr ""
+msgstr "頂線"
 
 #: src/control/Control.Menubar.js:67
 msgid "Superscript"
-msgstr ""
+msgstr "上標"
 
 #: src/control/Control.Menubar.js:68
 msgid "Subscript"
-msgstr ""
+msgstr "下標"
 
 #: src/control/Control.Menubar.js:69
 msgid "ꜱᴍᴀʟʟ ᴄᴀᴘꜱ"
-msgstr ""
+msgstr "小型大寫字"
 
 #: src/control/Control.Menubar.js:71
 msgid "Shadow"
-msgstr ""
+msgstr "陰影"
 
 #: src/control/Control.Menubar.js:72
 msgid "Outline"
-msgstr ""
+msgstr "輪廓"
 
 #: src/control/Control.Menubar.js:74
 msgid "Increase size"
-msgstr ""
+msgstr "增加大小"
 
 #: src/control/Control.Menubar.js:75
 msgid "Decrease size"
-msgstr ""
+msgstr "減少大小"
 
 #: src/control/Control.Menubar.js:77
 msgid "UPPERCASE"
-msgstr ""
+msgstr "大寫字母"
 
 #: src/control/Control.Menubar.js:78
 msgid "lowercase"
-msgstr ""
+msgstr "小寫字母"
 
 #: src/control/Control.Menubar.js:79
 msgid "Cycle case"
-msgstr ""
+msgstr "循環轉換大小寫"
 
 #: src/control/Control.Menubar.js:81
 msgid "Sentence case"
-msgstr ""
+msgstr "句式大小寫"
 
 #: src/control/Control.Menubar.js:82
 msgid "Capitalize Every Word"
-msgstr ""
+msgstr "每個字詞字首大寫"
 
 #: src/control/Control.Menubar.js:83
 msgid "tOGGLE cASE"
-msgstr ""
+msgstr "反轉大小寫"
 
 #: src/control/Control.Menubar.js:84
 msgid "Text orientation"
-msgstr ""
+msgstr "文字方向"
 
 #: src/control/Control.Menubar.js:85
 msgid "Set paragraph left-to-right"
-msgstr ""
+msgstr "設定段落由左至右"
 
 #: src/control/Control.Menubar.js:86
 msgid "Set paragraph right-to-left"
-msgstr ""
+msgstr "設定段落由右至左"
 
 #: src/control/Control.Menubar.js:87
 msgid "Spacing"
-msgstr ""
+msgstr "間距"
 
 #: src/control/Control.Menubar.js:88
 msgid "Line spacing: 1"
-msgstr ""
+msgstr "行距：1"
 
 #: src/control/Control.Menubar.js:89
 msgid "Line spacing: 1.5"
-msgstr ""
+msgstr "行距：1.5"
 
 #: src/control/Control.Menubar.js:90
 msgid "Line spacing: 2"
-msgstr ""
+msgstr "行距：2"
 
 #: src/control/Control.Menubar.js:92
 msgid "Increase paragraph spacing"
-msgstr ""
+msgstr "增加段落間距"
 
 #: src/control/Control.Menubar.js:93
 msgid "Decrease paragraph spacing"
-msgstr ""
+msgstr "減少段落間距"
 
 #: src/control/Control.Menubar.js:97
 msgid "Align"
-msgstr ""
+msgstr "對齊"
 
 #: src/control/Control.Menubar.js:98
 msgid "Left"
-msgstr ""
+msgstr "向左"
 
 #: src/control/Control.Menubar.js:99
 msgid "Centered"
-msgstr ""
+msgstr "置中"
 
 #: src/control/Control.Menubar.js:100
 msgid "Right"
-msgstr ""
+msgstr "向右"
 
 #: src/control/Control.Menubar.js:103
 msgid "Top"
-msgstr ""
+msgstr "向上"
 
 #: src/control/Control.Menubar.js:104
 msgid "Center"
-msgstr ""
+msgstr "居中"
 
 #: src/control/Control.Menubar.js:105
 msgid "Bottom"
-msgstr ""
+msgstr "向下"
 
 #: src/control/Control.Menubar.js:106
 msgid "Lists"
-msgstr ""
+msgstr "列表"
 
 #: src/control/Control.Menubar.js:110
 msgid "Demote one level"
-msgstr ""
+msgstr "降一層級"
 
 #: src/control/Control.Menubar.js:111
 msgid "Promote one level"
-msgstr ""
+msgstr "升一層級"
 
 #: src/control/Control.Menubar.js:112
 msgid "Demote one level with subpoints"
-msgstr ""
+msgstr "連同子點降一層級"
 
 #: src/control/Control.Menubar.js:113
 msgid "Promote one level with subpoints"
-msgstr ""
+msgstr "連同子點升一層級"
 
 #: src/control/Control.Menubar.js:115
 msgid "Move down"
-msgstr ""
+msgstr "下移"
 
 #: src/control/Control.Menubar.js:116
 msgid "Move up"
-msgstr ""
+msgstr "上移"
 
 #: src/control/Control.Menubar.js:117
 msgid "Move down with subpoints"
-msgstr ""
+msgstr "連同子點向下移動"
 
 #: src/control/Control.Menubar.js:118
 msgid "Move up with subpoints"
-msgstr ""
+msgstr "連同子點向上移動"
 
 #: src/control/Control.Menubar.js:120
 msgid "Insert unnumbered entry"
-msgstr ""
+msgstr "插入不帶編號的條目"
 
 #: src/control/Control.Menubar.js:121
 msgid "Restart numbering"
-msgstr ""
+msgstr "重新編號"
 
 #: src/control/Control.Menubar.js:123
 msgid "To next paragraph in level"
-msgstr ""
+msgstr "到同層級的下個段落"
 
 #: src/control/Control.Menubar.js:124
 msgid "To previous paragraph in level"
-msgstr ""
+msgstr "到同層級的上個段落"
 
 #: src/control/Control.Menubar.js:125
 msgid "Continue previous numbering"
-msgstr ""
+msgstr "接續前一編號"
 
 #: src/control/Control.Menubar.js:126
 msgid "Clear direct formatting"
-msgstr ""
+msgstr "清除直接格式設定"
 
 #: src/control/Control.Menubar.js:127
 msgid "Page"
-msgstr ""
+msgstr "頁面"
 
 #: src/control/Control.Menubar.js:128
 #: src/control/Control.Menubar.js:130
 #: src/control/Control.Menubar.js:132
 #: src/control/Control.Menubar.js:134
 msgid "Portrait"
-msgstr ""
+msgstr "縱向"
 
 #: src/control/Control.Menubar.js:129
 #: src/control/Control.Menubar.js:131
 #: src/control/Control.Menubar.js:133
 #: src/control/Control.Menubar.js:135
 msgid "Landscape"
-msgstr ""
+msgstr "橫向"
 
 #: src/control/Control.Menubar.js:137
-#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:195
 msgid "Tables"
 msgstr "表格"
 
 #: src/control/Control.Menubar.js:139
-#: src/control/Control.Menubar.js:196
+#: src/control/Control.Menubar.js:197
 msgid "Rows before"
 msgstr "上方列"
 
 #: src/control/Control.Menubar.js:140
-#: src/control/Control.Menubar.js:197
+#: src/control/Control.Menubar.js:198
 msgid "Rows after"
 msgstr "下方列"
 
 #: src/control/Control.Menubar.js:142
-#: src/control/Control.Menubar.js:199
+#: src/control/Control.Menubar.js:200
 msgid "Columns left"
 msgstr "左側欄"
 
 #: src/control/Control.Menubar.js:143
-#: src/control/Control.Menubar.js:200
+#: src/control/Control.Menubar.js:201
 msgid "Columns right"
 msgstr "右側欄"
 
 #: src/control/Control.Menubar.js:144
-#: src/control/Control.Menubar.js:201
+#: src/control/Control.Menubar.js:202
 msgid "Delete"
 msgstr "刪除"
 
 #: src/control/Control.Menubar.js:145
-#: src/control/Control.Menubar.js:202
+#: src/control/Control.Menubar.js:203
 msgid "Rows"
 msgstr "橫列"
 
 #: src/control/Control.Menubar.js:146
-#: src/control/Control.Menubar.js:203
+#: src/control/Control.Menubar.js:204
 msgid "Columns"
 msgstr "直欄"
 
@@ -2247,12 +2328,12 @@ msgid "Select"
 msgstr "選取"
 
 #: src/control/Control.Menubar.js:150
-#: src/control/Control.Menubar.js:247
+#: src/control/Control.Menubar.js:249
 msgid "Row"
 msgstr "列"
 
 #: src/control/Control.Menubar.js:151
-#: src/control/Control.Menubar.js:248
+#: src/control/Control.Menubar.js:250
 msgid "Column"
 msgstr "欄"
 
@@ -2261,80 +2342,96 @@ msgid "Cell"
 msgstr "儲存格"
 
 #: src/control/Control.Menubar.js:153
-#: src/control/Control.Menubar.js:204
+#: src/control/Control.Menubar.js:205
 msgid "Merge cells"
 msgstr "合併儲存格"
 
 #: src/control/Control.Menubar.js:155
-#: src/control/Control.Menubar.js:213
-#: src/control/Control.Menubar.js:259
+#: src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:261
 msgid "Help"
 msgstr "說明"
 
 #: src/control/Control.Menubar.js:156
-#: src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:260
+#: src/control/Control.Menubar.js:215
+#: src/control/Control.Menubar.js:262
 msgid "Keyboard shortcuts"
 msgstr "鍵盤快捷鍵"
 
 #: src/control/Control.Menubar.js:157
-#: src/control/Control.Menubar.js:215
-#: src/control/Control.Menubar.js:261
+#: src/control/Control.Menubar.js:216
+#: src/control/Control.Menubar.js:263
 msgid "About"
 msgstr "關於"
 
-#: src/control/Control.Menubar.js:168
+#: src/control/Control.Menubar.js:169
 msgid "ODF presentation (.odp)"
 msgstr "ODF 簡報 (.odp)"
 
-#: src/control/Control.Menubar.js:169
+#: src/control/Control.Menubar.js:170
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:171
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:206
+#: src/control/Control.Menubar.js:207
 msgid "Slide"
 msgstr "投影片"
 
-#: src/control/Control.Menubar.js:207
+#: src/control/Control.Menubar.js:208
 msgid "New slide"
 msgstr "新增投影片"
 
-#: src/control/Control.Menubar.js:226
+#: src/control/Control.Menubar.js:228
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF 試算表 (.ods)"
 
-#: src/control/Control.Menubar.js:227
+#: src/control/Control.Menubar.js:229
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:230
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:252
+#: src/control/Control.Menubar.js:254
 msgid "Cells"
 msgstr "儲存格"
 
-#: src/control/Control.Menubar.js:253
+#: src/control/Control.Menubar.js:255
 msgid "Insert row"
 msgstr "插入列"
 
-#: src/control/Control.Menubar.js:254
+#: src/control/Control.Menubar.js:256
 msgid "Insert column"
 msgstr "插入欄"
 
-#: src/control/Control.Menubar.js:256
+#: src/control/Control.Menubar.js:258
 #: src/control/Control.RowHeader.js:46
 msgid "Delete row"
 msgstr "刪除橫列"
 
-#: src/control/Control.Menubar.js:434
+#: src/control/Control.Menubar.js:457
 msgid "Are you sure you want to delete this slide?"
 msgstr "確定要刪除此投影片？"
+
+#: src/control/Control.MetricInput.js:38
+msgid "(100th/mm)"
+msgstr ""
+
+#: src/control/Control.MetricInput.js:44
+msgid "Add: "
+msgstr ""
+
+#: src/control/Control.MetricInput.js:61
+msgid "Default value"
+msgstr ""
+
+#: src/control/Control.MetricInput.js:68
+msgid "Submit"
+msgstr ""
 
 #: src/control/Control.RowHeader.js:39
 msgid "Insert row above"
@@ -2346,15 +2443,23 @@ msgstr "最適高度"
 
 #: src/control/Control.RowHeader.js:60
 msgid "Hide Rows"
-msgstr ""
+msgstr "隱藏列"
 
 #: src/control/Control.RowHeader.js:67
 msgid "Show Rows"
-msgstr ""
+msgstr "顯示列"
 
 #: src/control/Control.RowHeader.js:80
 msgid "Optimal Row Height"
 msgstr "最適列高"
+
+#: src/control/Control.Scroll.Annotation.js:9
+msgid "Scroll up annotations"
+msgstr ""
+
+#: src/control/Control.Scroll.Annotation.js:11
+msgid "Scroll down annotations"
+msgstr ""
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -2369,9 +2474,8 @@ msgid "Delete sheet"
 msgstr "刪除工作表"
 
 #: src/control/Control.Tabs.js:52
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr "確定要刪除這份工作表？"
+msgstr "您確定要刪除這份工作表，%sheet%？"
 
 #: src/control/Control.Tabs.js:61
 msgid "Rename sheet"
@@ -2381,75 +2485,95 @@ msgstr "重新命名工作表"
 msgid "Enter new sheet name"
 msgstr "請輸入新的工作表名稱"
 
-#: src/control/Toolbar.js:70
-#: src/control/Toolbar.js:79
+#: src/control/Toolbar.js:74
+#: src/control/Toolbar.js:83
 msgid "Downloading..."
 msgstr "下載中…"
 
-#: src/control/Toolbar.js:91
-#: src/map/Map.js:905
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:913
 msgid "Saving..."
 msgstr "儲存中…"
 
-#: src/control/Toolbar.js:242
+#: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "此 %productName 版本源自"
 
-#: src/core/Socket.js:23
+#: src/core/Socket.js:30
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "糟糕，連接至 LibreOffice Online 時發生問題："
 
-#: src/core/Socket.js:179
+#: src/core/Socket.js:186
 msgid "Unsupported server version."
 msgstr "未支援的伺服器版本。"
 
-#: src/core/Socket.js:217
+#: src/core/Socket.js:224
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "作業階段由文件擁有者終止"
 
-#: src/core/Socket.js:220
+#: src/core/Socket.js:227
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "伺服器正在關機作維護（自動存檔中）"
 
-#: src/core/Socket.js:223
+#: src/core/Socket.js:230
 msgid "Server is recycling and will be available shortly"
-msgstr ""
+msgstr "伺服器正在重啟循環，即將無法使用"
 
-#: src/core/Socket.js:335
+#: src/core/Socket.js:342
 msgid "Document requires password to view."
 msgstr "文件需要密碼才能檢視。"
 
-#: src/core/Socket.js:338
+#: src/core/Socket.js:345
 msgid "Document requires password to modify."
 msgstr "文件需要密碼才能修改。"
 
-#: src/core/Socket.js:340
+#: src/core/Socket.js:347
 msgid "Hit Cancel to open in view-only mode."
 msgstr "點按「取消」以唯讀模式開啟。"
 
-#: src/core/Socket.js:344
+#: src/core/Socket.js:351
 msgid "Wrong password provided. Please try again."
 msgstr "提供的密碼錯誤。請重試。"
 
-#: src/core/Socket.js:393
+#: src/core/Socket.js:414
 msgid "Connecting..."
 msgstr "連接中…"
 
-#: src/core/Socket.js:514
+#: src/core/Socket.js:535
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "啊，這尷尬了… 我們沒辦法連接您的文件。請重試一次。"
 
-#: src/map/Map.js:121
+#: src/layer/marker/Annotation.js:156
+msgid "Accept change"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:161
+msgid "Reject change"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:169
+msgid "Open menu"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:182
+msgid "Modify"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:194
+msgid "Remove"
+msgstr ""
+
+#: src/map/Map.js:122
 msgid "Initializing..."
 msgstr "初始化中…"
 
-#: src/map/Map.js:786
+#: src/map/Map.js:794
 msgid "Inactive document - please click to resume editing"
-msgstr ""
+msgstr "非使用中文件 - 請點按按鍵繼續編輯"
 
-#: src/map/Map.js:908
+#: src/map/Map.js:916
 msgid "Loading..."
 msgstr "載入中…"
 
