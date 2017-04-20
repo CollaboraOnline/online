@@ -41,7 +41,7 @@ dist-hook: build-l10n
 	mv po/styles/*.json $(distdir)/dist/l10n/styles/
 
 	mkdir -p $(distdir)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
-	cp -a node_modules/jquery-ui/themes/ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png $(distdir)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
+	cp -a "node_modules/jquery-ui/themes/ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png" $(distdir)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
 
 pot:
 	xgettext --from-code=UTF-8 --keyword=_ --output=po/templates/loleaflet-ui.pot \
