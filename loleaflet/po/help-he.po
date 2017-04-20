@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 09:00+0000\n"
+"POT-Creation-Date: 2017-04-20 07:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0b7\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-help-he.po\n"
-"X-Pootle-Revision: 826980\n"
+"X-Pootle-Revision: 842317\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -241,27 +241,24 @@ msgid "Apply Default paragraph style"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
-#, fuzzy
 msgid "Ctrl + 0"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 0"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Apply Heading 1 paragraph style"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
-#, fuzzy
 msgid "Ctrl + 1"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Apply Heading 2 paragraph style"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
-#, fuzzy
 msgid "Ctrl + 2"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 2"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 msgid "Apply Heading 3 paragraph style"
@@ -278,22 +275,20 @@ msgid "Apply Heading 4 paragraph style"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
-#, fuzzy
 msgid "Ctrl + 4"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 4"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Apply Heading 5 paragraph style"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
-#, fuzzy
 msgid "Ctrl + 5"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 5"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A62
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "בחירת טקסט וניווט במסמך"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
@@ -857,12 +852,11 @@ msgstr "עיצוב טקסט"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
 msgid "Display comment"
-msgstr ""
+msgstr "הצגת הערה"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
-#, fuzzy
 msgid "Ctrl + F1"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + F1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Fill Down"
@@ -870,61 +864,55 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
 msgid "Set Optimal Column Width"
-msgstr ""
+msgstr "הגדרת רוחב עמודה מיטבי"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
 msgid "Two decimal places, thousands separator"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
-#, fuzzy
 msgid "Ctrl + Shift + 1"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
 msgid "Standard exponential format"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
-#, fuzzy
 msgid "Ctrl + Shift + 2"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + 2"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
 msgid "Standard date format"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
-#, fuzzy
 msgid "Ctrl + Shift + 3"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + 3"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
 msgid "Standard currency format"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
-#, fuzzy
 msgid "Ctrl + Shift + 4"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + 4"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
 msgid "Standard percentage format (two decimal places)"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
-#, fuzzy
 msgid "Ctrl + Shift + 5"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
 msgid "Standard format"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
-#, fuzzy
 msgid "Ctrl + Shift + 6"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Shift + 6"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
 msgid "Demote list item (list item has to be selected)"

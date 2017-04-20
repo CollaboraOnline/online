@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 09:00+0000\n"
+"POT-Creation-Date: 2017-04-20 07:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0b7\n"
+"X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-help-da.po\n"
-"X-Pootle-Revision: 829576\n"
+"X-Pootle-Revision: 2471973\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -140,7 +140,7 @@ msgstr "Hævet skrift"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
 msgid "Ctrl + Shift + P"
-msgstr "Ctrl + Shift + P"
+msgstr "Ctrl + Skift + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
@@ -150,7 +150,7 @@ msgstr "Sænket skrift"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Ctrl + Shift + B"
-msgstr "Ctrl + Shift + B"
+msgstr "Ctrl + Skift + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
@@ -462,7 +462,7 @@ msgstr "Gå hen og vælg til begyndelsen af en linje"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
 msgid "Shift + Home"
-msgstr "Shift + Home"
+msgstr "Skift + Home"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
@@ -482,7 +482,7 @@ msgstr "Gå til og marker tekst til begyndelsen af dokumentet"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
 msgid "Ctrl + Shift + Home"
-msgstr "Ctrl + Shift + Home"
+msgstr "Ctrl + Skift + Home"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
@@ -522,7 +522,7 @@ msgstr "Gå til og marker tekst til slutningen af dokumentet"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
 msgid "Ctrl + Shift + End"
-msgstr "Ctrl + Shift + End"
+msgstr "Ctrl + Skift + End"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
 msgid "Move the view up one page"
@@ -787,7 +787,7 @@ msgstr "Indsæt hård bindestreg"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
 msgid "Ctrl + Shift + -"
-msgstr "Ctrl + Shift + -"
+msgstr "Ctrl + Skift + -"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Insert non-breaking space"
@@ -820,14 +820,13 @@ msgstr "Kolonneskift (i tekst med flere kolonner)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
 msgid "Ctrl + Shift + Enter"
-msgstr "Ctrl + Shift + Enter"
+msgstr "Ctrl + Skift + Enter"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
 msgstr ""
-"Indsætter et nyt afsnit direkte før eller efter en sektion eller før en "
-"tabel."
+"Indsæt et nyt afsnit direkte før eller efter en sektion eller før en tabel"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A131
@@ -926,7 +925,7 @@ msgstr "Opgrader et listeelement (listeelementet skal være markeret)"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
 msgid "Shift + Tab"
-msgstr "Shift+Tabulator"
+msgstr "Skift + Tabulator"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A179
 msgid "Text selection and navigation in a textbox"
@@ -959,11 +958,11 @@ msgstr "Esc"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
 msgid "Select objects in the order in which they were created"
-msgstr "Marker objekter i den rækkefølge, som de blev oprettet."
+msgstr "Marker objekter i den rækkefølge, som de blev oprettet"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
 msgid "Select objects in the reverse order in which they were created"
-msgstr "Marker objekter i den modsatte rækkefølge af den, de blev oprettet i."
+msgstr "Marker objekter i den modsatte rækkefølge af den, de blev oprettet i"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
 msgid "Move to next text object on slide / drawing page"
