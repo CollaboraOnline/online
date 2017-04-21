@@ -65,7 +65,7 @@ std::pair<std::time_t, std::string> Document::getSnapshot() const
     oss << "\"activeViews\"" << ":" << this->getActiveViews() << ",";
 
     oss << "\"views\"" << ":[";
-    std::string separator = "";
+    std::string separator;
     for (auto view : this->getViews())
     {
         oss << separator << "\"";
@@ -93,7 +93,7 @@ const std::string Document::getHistory() const
     oss << "\"end\"" << ":" << this->_end << ",";
     oss << "\"pid\"" << ":" << this->getPid() << ",";
     oss << "\"snapshots\"" << ":[";
-    std::string separator = "";
+    std::string separator;
     for (auto s : _snapshots)
     {
         oss << separator << s.second;
@@ -186,7 +186,7 @@ std::string AdminModel::getAllHistory() const
 {
     std::ostringstream oss;
     oss << "{ \"documents\" : [";
-    std::string separator1 = "";
+    std::string separator1;
     for (auto d : _documents)
     {
         oss << separator1;
@@ -518,7 +518,7 @@ std::string AdminModel::getDocuments() const
     std::ostringstream oss;
     std::map<std::string, View> viewers;
     oss << '{' << "\"documents\"" << ':' << '[';
-    std::string separator1 = "";
+    std::string separator1;
     for (const auto& it: _documents)
     {
         if (!it.second.isExpired())
@@ -534,7 +534,7 @@ std::string AdminModel::getDocuments() const
                 << "\"idleTime\"" << ':' << it.second.getIdleTime() << ','
                 << "\"views\"" << ':' << '[';
             viewers = it.second.getViews();
-            std::string separator = "";
+            std::string separator;
             for(const auto& viewIt: viewers)
             {
                 if(!viewIt.second.isExpired()) {
