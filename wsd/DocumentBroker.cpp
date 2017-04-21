@@ -562,16 +562,14 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId,
 
     const bool res = saveToStorageInternal(sessionId, success, result);
 
-    // If marked to destroy, then this was the last session.
-    // FIXME: If during that last save another client connects
-    // to this doc, the _markToDestroy will be reset and we
-    // will leak the last session. Need to mark the session as
-    // dead and cleanup somehow.
-    if (_markToDestroy)
-    {
-        // We've saved and can safely destroy.
+    // If marked to destroy, or session is disconnected, remove.
+    const auto it = _sessions.find(sessionId);
+    if (_markToDestroy || (it != _sessions.end() && it->second->isCloseFrame()))
         removeSessionInternal(sessionId);
 
+    // If marked to destroy, then this was the last session.
+    if (_markToDestroy || _sessions.empty())
+    {
         // Stop so we get cleaned up and removed.
         _stop = true;
     }
@@ -866,7 +864,8 @@ size_t DocumentBroker::removeSession(const std::string& id, bool destroyIfLast)
     try
     {
         LOG_INF("Removing session [" << id << "] on docKey [" << _docKey <<
-                "]. Have " << _sessions.size() << " sessions.");
+                "]. Have " << _sessions.size() << " sessions. markToDestroy: " << _markToDestroy <<
+                ", LastEditableSession: " << _lastEditableSession);
 
         if (!_lastEditableSession || !autoSave(true))
             return removeSessionInternal(id);
@@ -1231,7 +1230,8 @@ void DocumentBroker::destroyIfLastEditor(const std::string& id)
     // Last view going away, can destroy.
     _markToDestroy = (_sessions.size() <= 1);
     LOG_DBG("startDestroy on session [" << id << "] on docKey [" << _docKey <<
-            "], markToDestroy: " << _markToDestroy << ", lastEditableSession: " << _lastEditableSession);
+            "], sessions: " << _sessions.size() << " markToDestroy: " << _markToDestroy <<
+            ", lastEditableSession: " << _lastEditableSession);
 }
 
 void DocumentBroker::setModified(const bool value)
