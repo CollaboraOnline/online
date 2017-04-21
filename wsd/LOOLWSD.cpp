@@ -1579,10 +1579,6 @@ private:
                 LOG_DBG("Not enough content yet: ContentLength: " << contentLength << ", available: " << available);
                 return SocketHandlerInterface::SocketOwnership::UNCHANGED;
             }
-
-            // if we succeeded - remove the request from our input buffer
-            // we expect one request per socket
-            in.erase(in.begin(), itBody);
         }
         catch (const std::exception& exc)
         {
@@ -1668,6 +1664,9 @@ private:
                     LOOLProtocol::getAbbreviatedMessage(in) << "]: " << exc.what());
         }
 
+        // if we succeeded - remove the request from our input buffer
+        // we expect one request per socket
+        in.erase(in.begin(), itBody);
         return socketOwnership;
     }
 
