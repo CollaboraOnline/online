@@ -88,8 +88,9 @@ public:
 
     void dumpState(std::ostream& os) override;
 
-    HandleResult handlePoll(std::chrono::steady_clock::time_point /* now */,
-                            int events) override
+    void handlePoll(SocketDisposition &,
+                    std::chrono::steady_clock::time_point /* now */,
+                    int events) override
     {
         if (events & POLLIN)
         {
@@ -103,8 +104,6 @@ public:
             LOG_DBG("Accepted client #" << clientSocket->getFD());
             _clientPoller.insertNewSocket(clientSocket);
         }
-
-        return Socket::HandleResult::CONTINUE;
     }
 
 private:

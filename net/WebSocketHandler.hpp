@@ -250,7 +250,7 @@ public:
     }
 
     /// Implementation of the SocketHandlerInterface.
-    virtual SocketHandlerInterface::SocketOwnership handleIncomingMessage() override
+    virtual void handleIncomingMessage(SocketDisposition&) override
     {
         auto socket = _socket.lock();
         if (socket == nullptr)
@@ -262,8 +262,6 @@ public:
             while (handleOneIncomingMessage(socket))
                 ; // can have multiple msgs in one recv'd packet.
         }
-
-        return SocketHandlerInterface::SocketOwnership::UNCHANGED;
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point now,

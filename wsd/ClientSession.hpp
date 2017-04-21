@@ -30,7 +30,7 @@ public:
 
     virtual ~ClientSession();
 
-    SocketHandlerInterface::SocketOwnership handleIncomingMessage() override;
+    void handleIncomingMessage(SocketDisposition &) override;
 
     void setReadOnly() override;
 

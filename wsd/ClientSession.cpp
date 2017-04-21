@@ -50,13 +50,13 @@ ClientSession::~ClientSession()
     LOG_INF("~ClientSession dtor [" << getName() << "], current number of connections: " << curConnections);
 }
 
-SocketHandlerInterface::SocketOwnership ClientSession::handleIncomingMessage()
+void ClientSession::handleIncomingMessage(SocketDisposition &disposition)
 {
     if (UnitWSD::get().filterHandleRequest(
-            UnitWSD::TestRequest::Client, *this))
-        return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+            UnitWSD::TestRequest::Client, disposition, *this))
+        return;
 
-    return Session::handleIncomingMessage();
+    Session::handleIncomingMessage(disposition);
 }
 
 bool ClientSession::_handleInput(const char *buffer, int length)

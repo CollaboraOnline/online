@@ -121,6 +121,7 @@ public:
 
     virtual bool filterHandleRequest(
         TestRequest /* type */,
+        SocketDisposition & /* disposition */,
         WebSocketHandler & /* socket */) override
     {
 #if 0 // loolnb
