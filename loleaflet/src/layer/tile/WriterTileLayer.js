@@ -12,6 +12,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 			comment.anchorPix = this._twipsToPixels(comment.anchorPos.min);
 		}
 		if (comment.anchorPos) {
+			this._annotations.updateDocBounds(0, this._annotations.options.extraSize);
 			this._annotations.modify(this._annotations.add(comment));
 		}
 	},
@@ -229,9 +230,11 @@ L.WriterTileLayer = L.TileLayer.extend({
 		this._update();
 	},
 
-	_updateMaxBounds: function (sizeChanged) {
-		var extraSize = this._annotations && this._annotations._items.length > 0 ?
-			this._annotations.options.extraSize : null;
+	_updateMaxBounds: function (sizeChanged, extraSize) {
+		if (!extraSize) {
+			extraSize = this._annotations && this._annotations._items.length > 0 ?
+				this._annotations.options.extraSize : null;
+		}
 		L.GridLayer.prototype._updateMaxBounds.call(this, sizeChanged, extraSize, {panInside: false});
 	}
 });

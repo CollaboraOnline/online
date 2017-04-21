@@ -210,6 +210,12 @@ L.AnnotationManager = L.Class.extend({
 		this.layout();
 	},
 
+	updateDocBounds: function (count, extraSize) {
+		if (this._items.length === count) {
+			this._map._docLayer._updateMaxBounds(true, extraSize);
+		}
+	},
+
 	layoutUp: function (commentThread, latLng, layoutBounds) {
 		if (commentThread.length <= 0)
 			return;
@@ -473,6 +479,7 @@ L.AnnotationManager = L.Class.extend({
 			if (this._selected && !this._selected.isEdit()) {
 				this._map.focus();
 			}
+			this.updateDocBounds(1);
 			this.layout();
 		} else if (action === 'Remove') {
 			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
@@ -480,6 +487,7 @@ L.AnnotationManager = L.Class.extend({
 			if (removed) {
 				this.adjustParentRemove(removed);
 				this._map.removeLayer(this.removeItem(id));
+				this.updateDocBounds(0);
 				if (this._selected === removed) {
 					this.unselect();
 				} else {
@@ -508,6 +516,7 @@ L.AnnotationManager = L.Class.extend({
 	_onAnnotationCancel: function (e) {
 		if (e.annotation._data.id === 'new') {
 			this._map.removeLayer(this.removeItem(e.annotation._data.id));
+			this.updateDocBounds(0);
 		}
 		if (this._selected === e.annotation) {
 			this.unselect();
