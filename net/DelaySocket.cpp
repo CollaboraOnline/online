@@ -22,34 +22,33 @@ class DelaySocket : public Socket {
     bool _closed;
     bool _stopPoll;
     bool _waitForWrite;
-    std::weak_ptr<DelaySocket> _dest;
+    std::shared_ptr<DelaySocket> _dest;
 
     const size_t WindowSize = 64 * 1024;
 
-    struct DelayChunk {
+    /// queued up data - sent to us by our opposite twin.
+    struct WriteChunk {
         std::chrono::steady_clock::time_point _sendTime;
         std::vector<char> _data;
-        DelayChunk(int delayMs)
+        WriteChunk(int delayMs)
         {
             _sendTime = std::chrono::steady_clock::now() +
                 std::chrono::milliseconds(delayMs);
         }
         bool isError() { return _data.size() == 0; }
     private:
-        DelayChunk();
+        WriteChunk();
     };
 
-    size_t _chunksSize;
-    std::vector<std::shared_ptr<DelayChunk>> _chunks;
+    std::vector<std::shared_ptr<WriteChunk>> _chunks;
 public:
     DelaySocket(int delayMs, int fd) :
         Socket (fd), _delayMs(delayMs), _closed(false),
-        _stopPoll(false), _waitForWrite(false),
-        _chunksSize(0)
+        _stopPoll(false), _waitForWrite(false)
 	{
 //        setSocketBufferSize(Socket::DefaultSendBufferSize);
 	}
-    void setDestination(const std::weak_ptr<DelaySocket> &dest)
+    void setDestination(const std::shared_ptr<DelaySocket> &dest)
     {
         _dest = dest;
     }
@@ -74,71 +73,64 @@ public:
     int getPollEvents(std::chrono::steady_clock::time_point now,
                       int &timeoutMaxMs) override
     {
-        auto dest = _dest.lock();
-
-        bool bOtherIsWriteBlocked = !dest || dest->_waitForWrite;
-        bool bWeAreReadBlocked = _chunksSize >= WindowSize;
-
-        if (_chunks.size() > 0 && (!bOtherIsWriteBlocked || !bWeAreReadBlocked))
+        if (_chunks.size() > 0)
         {
             int remainingMs = std::chrono::duration_cast<std::chrono::milliseconds>(
                 (*_chunks.begin())->_sendTime - now).count();
             if (remainingMs < timeoutMaxMs)
                 std::cerr << "#" << getFD() << " reset timeout max to " << remainingMs
-                          << "ms from " << timeoutMaxMs << "ms "
-                          << "owb: " << bOtherIsWriteBlocked << " rb: "
-                          << bWeAreReadBlocked << "\n";
+                          << "ms from " << timeoutMaxMs << "ms\n";
             timeoutMaxMs = std::min(timeoutMaxMs, remainingMs);
         }
 
-        if (_stopPoll)
-            return -1;
-
-        int events = 0;
-
-        if (!bWeAreReadBlocked)
-            events |= POLLIN;
-
-        // NB. controlled by the other socket.
-        if (_waitForWrite)
-            events |= POLLOUT;
-
-        return events;
+        if (_chunks.size() > 0 &&
+            now > (*_chunks.begin())->_sendTime)
+            return POLLIN | POLLOUT;
+        else
+            return POLLIN;
     }
 
     void pushCloseChunk(bool bErrorSocket)
     {
         // socket in error state ? don't keep polling it.
         _stopPoll |= bErrorSocket;
-        _chunks.push_back(std::make_shared<DelayChunk>(_delayMs));
+        _chunks.push_back(std::make_shared<WriteChunk>(_delayMs));
     }
 
     HandleResult handlePoll(std::chrono::steady_clock::time_point now, int events) override
     {
-        auto dest = _dest.lock();
-
         if (events & POLLIN)
         {
-            auto chunk = std::make_shared<DelayChunk>(_delayMs);
+            auto chunk = std::make_shared<WriteChunk>(_delayMs);
 
             char buf[64 * 1024];
             ssize_t len;
-            size_t toRead = std::min(sizeof(buf), WindowSize - _chunksSize);
-            if (_closed)
-            { // get last data before async close
-                toRead = sizeof (buf);
-            }
+            size_t toRead = sizeof(buf); //std::min(sizeof(buf), WindowSize - _chunksSize);
             do {
                 len = ::read(getFD(), buf, toRead);
             } while (len < 0 && errno == EINTR);
+
+            if (len == 0)
+            { // EOF.
+                if (_dest) // FIXME: cut and paste ...
+                {
+                    _dest->pushCloseChunk(false);
+                    _dest = nullptr;
+                }
+                std::cerr << "EOF on input\n";
+                shutdown();
+                return HandleResult::SOCKET_CLOSED;
+            }
 
             if (len >= 0)
             {
                 std::cerr << "#" << getFD() << " read " << len
                       << " to queue: " << _chunks.size() << "\n";
                 chunk->_data.insert(chunk->_data.end(), &buf[0], &buf[len]);
-                _chunksSize += len;
-                _chunks.push_back(chunk);
+                if (_dest)
+                    _dest->_chunks.push_back(chunk);
+                else
+                    std::cerr << "no destination for data\n";
             }
             else if (errno != EAGAIN && errno != EWOULDBLOCK)
             {
@@ -147,65 +139,54 @@ public:
             }
         }
 
-        if (_closed)
-        {
-            std::cerr << "#" << getFD() << " closing\n";
-            dumpState(std::cerr);
-            if (dest)
-            {
-                std::cerr << "\t#" << dest->getFD() << " closing linked\n";
-                dest->dumpState(std::cerr);
-                dest->pushCloseChunk(false);
-                _dest.reset();
-            }
-            return HandleResult::SOCKET_CLOSED;
-        }
-
         // Write if we have delayed enough.
-        if (dest && _chunks.size() > 0)
+        if (_chunks.size() > 0)
         {
-            std::shared_ptr<DelayChunk> chunk = *_chunks.begin();
+            std::shared_ptr<WriteChunk> chunk = *_chunks.begin();
             if (std::chrono::duration_cast<std::chrono::milliseconds>(
                     now - chunk->_sendTime).count() >= 0)
             {
-                dest->_waitForWrite = false;
-
                 if (chunk->_data.size() == 0)
                 { // delayed error or close
-                    std::cerr << "#" << getFD() << " handling delayed close with " << _chunksSize << "bytes left\n";
+                    std::cerr << "#" << getFD() << " handling delayed close\n";
                     _closed = true;
-                    return HandleResult::CONTINUE;
+                    _dest = nullptr;
+                    shutdown();
+                    return HandleResult::SOCKET_CLOSED;
                 }
 
                 ssize_t len;
                 do {
-                    len = ::write(dest->getFD(), &chunk->_data[0], chunk->_data.size());
+                    len = ::write(getFD(), &chunk->_data[0], chunk->_data.size());
                 } while (len < 0 && errno == EINTR);
 
                 if (len < 0)
                 {
                     if (errno == EAGAIN || errno == EWOULDBLOCK)
                     {
-                        dest->_waitForWrite = true;
-                        std::cerr << "#" << dest->getFD() << " full - waiting for write ultimately from fd #" << getFD() << "\n";
+                        std::cerr << "#" << getFD() << " full - waiting for write\n";
                     }
                     else
                     {
-                        std::cerr << "#" << dest->getFD() << " failed onwards write " << len << "bytes of "
-                                  << chunk->_data.size() << " ultimately from fd #" << getFD()
+                        std::cerr << "#" << getFD() << " failed onwards write " << len << "bytes of "
+                                  << chunk->_data.size()
                                   << " queue: " << _chunks.size() << " error " << strerror(errno) << "\n";
-                        dest->pushCloseChunk(false);
+                        // URGH - cut and paste ...
+                        _closed = true;
+                        _dest = nullptr;
+                        // FIXME: tell dest we're dead ... [!] ...
+                        shutdown();
+                        return HandleResult::SOCKET_CLOSED;
                     }
                 }
                 else
                 {
-                    std::cerr << "#" << dest->getFD() << " written onwards " << len << "bytes of "
-                              << chunk->_data.size() << " ultimately from fd #" << getFD()
+                    std::cerr << "#" << getFD() << " written onwards " << len << "bytes of "
+                              << chunk->_data.size()
                               << " queue: " << _chunks.size() << "\n";
                     if (len > 0)
                     {
                         chunk->_data.erase(chunk->_data.begin(), chunk->_data.begin() + len);
-                        _chunksSize -= len;
                     }
 
                     if (chunk->_data.size() == 0)
