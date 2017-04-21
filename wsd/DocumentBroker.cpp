@@ -562,11 +562,12 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId,
 
     const bool res = saveToStorageInternal(sessionId, success, result);
 
-    // We've saved and can safely destroy this session.
-    removeSessionInternal(sessionId);
+    // If marked to destroy, or session is disconnected, remove.
+    const auto it = _sessions.find(sessionId);
+    if (_markToDestroy || (it != _sessions.end() && it->second->isCloseFrame()))
+        removeSessionInternal(sessionId);
 
     // If marked to destroy, then this was the last session.
-    // Otherwise, check that we are (which we might be by now).
     if (_markToDestroy || _sessions.empty())
     {
         // Stop so we get cleaned up and removed.
