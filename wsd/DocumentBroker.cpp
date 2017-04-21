@@ -244,14 +244,10 @@ void DocumentBroker::pollThread()
 
             // First copy into local container, since removeSession
             // will erase from _sessions, but will leave the last.
-            std::vector<std::shared_ptr<ClientSession>> sessions;
-            for (const auto& pair : _sessions)
+            std::map<std::string, std::shared_ptr<ClientSession>> sessions = _sessions;
+            for (const auto& pair : sessions)
             {
-                sessions.push_back(pair.second);
-            }
-
-            for (const std::shared_ptr<ClientSession>& session : sessions)
-            {
+                std::shared_ptr<ClientSession> session = pair.second;
                 try
                 {
                     // Notify the client and disconnect.
