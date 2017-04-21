@@ -39,8 +39,8 @@ public:
     void setAttached() { _isAttached = true; }
 
     /// Returns true if this session has loaded a view (i.e. we got status message).
-    bool isLoaded() const { return _isLoaded; }
-    void setLoaded() { _isLoaded = true; }
+    bool isViewLoaded() const { return _isViewLoaded; }
+    void setViewLoaded() { _isViewLoaded = true; }
 
     const std::string getUserId() const { return _userId; }
     const std::string getUserName() const {return _userName; }
@@ -148,7 +148,7 @@ private:
     bool _isAttached;
 
     /// If we have loaded a view.
-    bool _isLoaded;
+    bool _isViewLoaded;
 
     /// Wopi FileInfo object
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;

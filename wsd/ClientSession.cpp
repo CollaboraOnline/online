@@ -38,7 +38,7 @@ ClientSession::ClientSession(const std::string& id,
     _uriPublic(uriPublic),
     _isDocumentOwner(false),
     _isAttached(false),
-    _isLoaded(false)
+    _isViewLoaded(false)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
@@ -632,7 +632,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
         else if (tokens[0] == "status:")
         {
-            setLoaded();
+            setViewLoaded();
             docBroker->setLoaded();
 
             // Forward the status response to the client.
