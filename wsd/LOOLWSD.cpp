@@ -169,7 +169,7 @@ int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 static bool DisplayVersion = false;
 
 /// Funky latency simulation basic delay (ms)
-static int SimulatedLatencyMs = 150;
+static int SimulatedLatencyMs = 0; // 150;
 
 // Tracks the set of prisoners / children waiting to be used.
 static std::mutex NewChildrenMutex;
