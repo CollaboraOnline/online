@@ -11,6 +11,8 @@
 
 #include "net/DelaySocket.hpp"
 
+#define DELAY_LOG(X) std::cerr << X << "\n";
+
 class Delayer;
 
 // FIXME: TerminatingPoll ?
@@ -79,8 +81,8 @@ public:
             int remainingMs = std::chrono::duration_cast<std::chrono::milliseconds>(
                 (*_chunks.begin())->_sendTime - now).count();
             if (remainingMs < timeoutMaxMs)
-                std::cerr << "#" << getFD() << " reset timeout max to " << remainingMs
-                          << "ms from " << timeoutMaxMs << "ms\n";
+                DELAY_LOG("#" << getFD() << " reset timeout max to " << remainingMs
+                          << "ms from " << timeoutMaxMs << "ms\n");
             timeoutMaxMs = std::min(timeoutMaxMs, remainingMs);
         }
 
@@ -116,8 +118,7 @@ public:
             shutdown();
             break;
         }
-        std::cerr << "#" << getFD() << " changed to state "
-                  << newState << "\n";
+        DELAY_LOG("#" << getFD() << " changed to state " << newState << "\n");
         _state = newState;
     }
 
@@ -138,8 +139,8 @@ public:
                 changeState(EofFlushWrites);
             else if (len >= 0)
             {
-                std::cerr << "#" << getFD() << " read " << len
-                      << " to queue: " << _chunks.size() << "\n";
+                DELAY_LOG("#" << getFD() << " read " << len
+                          << " to queue: " << _chunks.size() << "\n");
                 chunk->_data.insert(chunk->_data.end(), &buf[0], &buf[len]);
                 if (_dest)
                     _dest->_chunks.push_back(chunk);
@@ -148,7 +149,7 @@ public:
             }
             else if (errno != EAGAIN && errno != EWOULDBLOCK)
             {
-                std::cerr << "#" << getFD() << " error : " << errno << " " << strerror(errno) << "\n";
+                DELAY_LOG("#" << getFD() << " error : " << errno << " " << strerror(errno) << "\n");
                 changeState(Closed); // FIXME - propagate the error ?
             }
         }
@@ -166,7 +167,7 @@ public:
             {
                 if (chunk->_data.size() == 0)
                 { // delayed error or close
-                    std::cerr << "#" << getFD() << " handling delayed close\n";
+                    DELAY_LOG("#" << getFD() << " handling delayed close\n");
                     changeState(Closed);
                 }
                 else
@@ -180,21 +181,23 @@ public:
                     {
                         if (errno == EAGAIN || errno == EWOULDBLOCK)
                         {
-                            std::cerr << "#" << getFD() << " full - waiting for write\n";
+                            DELAY_LOG("#" << getFD() << " full - waiting for write\n");
                         }
                         else
                         {
-                            std::cerr << "#" << getFD() << " failed onwards write " << len << "bytes of "
+                            DELAY_LOG("#" << getFD() << " failed onwards write "
+                                      << len << "bytes of "
                                       << chunk->_data.size()
-                                  << " queue: " << _chunks.size() << " error " << strerror(errno) << "\n";
+                                      << " queue: " << _chunks.size() << " error "
+                                      << strerror(errno) << "\n");
                             changeState(Closed);
                         }
                     }
                     else
                     {
-                        std::cerr << "#" << getFD() << " written onwards " << len << "bytes of "
+                        DELAY_LOG("#" << getFD() << " written onwards " << len << "bytes of "
                                   << chunk->_data.size()
-                                  << " queue: " << _chunks.size() << "\n";
+                                  << " queue: " << _chunks.size() << "\n");
                         if (len > 0)
                             chunk->_data.erase(chunk->_data.begin(), chunk->_data.begin() + len);
 
@@ -207,7 +210,7 @@ public:
 
         if (events & (POLLERR | POLLHUP | POLLNVAL))
         {
-            std::cerr << "#" << getFD() << " error events: " << events << "\n";
+            DELAY_LOG("#" << getFD() << " error events: " << events << "\n");
             changeState(Closed);
         }
 
