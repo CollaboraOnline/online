@@ -740,7 +740,7 @@ msgstr ""
 "A bheil thu cinnteach gu bheil thu airson crìoch a chur air an t-seisean seo?"
 
 #: src/admin/AdminSocketSettings.js:31
-msgid "Are you sure you want to shutdown the server?"
+msgid "Are you sure you want to shut down the server?"
 msgstr ""
 
 #: src/admin/Util.js:13

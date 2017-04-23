@@ -705,7 +705,7 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "您確定要終止本次的作業階段？"
 
 #: src/admin/AdminSocketSettings.js:31
-msgid "Are you sure you want to shutdown the server?"
+msgid "Are you sure you want to shut down the server?"
 msgstr ""
 
 #: src/admin/Util.js:13

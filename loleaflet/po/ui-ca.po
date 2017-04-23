@@ -736,7 +736,7 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Esteu segur que voleu finalitzar aquesta sessió?"
 
 #: src/admin/AdminSocketSettings.js:31
-msgid "Are you sure you want to shutdown the server?"
+msgid "Are you sure you want to shut down the server?"
 msgstr "Esteu segur que voleu aturar tots els servidors?"
 
 #: src/admin/Util.js:13

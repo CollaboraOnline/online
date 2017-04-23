@@ -28,7 +28,7 @@ var AdminSocketSettings = AdminSocketBase.extend({
 
 			$('#btnShutdown').click(function() {
 				vex.dialog.confirm({
-					message: _('Are you sure you want to shutdown the server?'),
+					message: _('Are you sure you want to shut down the server?'),
 					callback: function(value) {
 						// TODO: Prompt for reason.
 						socketSettings.send('shutdown maintenance');
