@@ -915,13 +915,16 @@ protected:
 namespace HttpHelper
 {
     void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path, const std::string& mediaType,
-                  Poco::Net::HTTPResponse& response, bool noCache = false, bool deflate = false);
+                  Poco::Net::HTTPResponse& response, bool noCache = false, bool deflate = false,
+                  const bool headerOnly = false);
 
     inline void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-                         const std::string& mediaType, bool noCache = false, bool deflate = false)
+                         const std::string& mediaType, bool noCache = false, bool deflate = false,
+                         const bool headerOnly = false)
+
     {
         Poco::Net::HTTPResponse response;
-        sendFile(socket, path, mediaType, response, noCache, deflate);
+        sendFile(socket, path, mediaType, response, noCache, deflate, headerOnly);
     }
 };
 
