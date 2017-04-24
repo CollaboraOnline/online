@@ -34,8 +34,8 @@ constexpr auto CHILD_URI = "/loolws/child?";
 constexpr auto NEW_CHILD_URI = "/loolws/newchild?";
 constexpr auto LO_JAIL_SUBPATH = "lo";
 
-/// The HTTP response User-Agent. TODO: Include version.
-constexpr auto HTTP_AGENT_STRING = "LOOLWSD Agent";
+/// The HTTP response User-Agent.
+constexpr auto HTTP_AGENT_STRING = "LOOLWSD Agent " LOOLWSD_VERSION;
 
 // The client port number, both loolwsd and the kits have this.
 extern int ClientPortNumber;
