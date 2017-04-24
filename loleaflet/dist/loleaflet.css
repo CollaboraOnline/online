@@ -155,6 +155,10 @@ body {
         width: 180px;
 }
 
+.loleaflet-annotation-redline-content-wrapper {
+        width: 240px;
+}
+
 .loleaflet-annotation-content {
 	margin: 3px 3px;
 	line-height: 1.4;
