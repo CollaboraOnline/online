@@ -177,8 +177,10 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	unselect: function () {
-		this._selected = null;
-		this.update();
+		if (this._selected) {
+			this._selected = null;
+			this.update();
+		}
 	},
 
 	select: function (annotation) {
