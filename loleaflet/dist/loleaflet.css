@@ -178,6 +178,7 @@ body {
 	resize: none;
 	background-color: white;
 	overflow-x: hidden;
+	height: 50px;
 	width: 95%;
 }
 
