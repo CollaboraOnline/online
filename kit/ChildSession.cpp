@@ -1006,7 +1006,7 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
         if (LOOLProtocol::parseNameValuePair(payload, name, value, '='))
         {
             auto lock(getLock());
-            _stateRecorder.recordState(name, value);
+            _stateRecorder.recordState(name, payload);
         }
     }
 }
