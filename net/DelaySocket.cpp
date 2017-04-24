@@ -233,7 +233,7 @@ namespace Delay {
     {
         int pair[2];
         int rc = socketpair(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0, pair);
-        assert (rc == 0);
+        assert (rc == 0); (void)rc;
         int internalFd = pair[0];
         int delayFd = pair[1];
 
