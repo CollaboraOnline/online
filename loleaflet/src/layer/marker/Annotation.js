@@ -215,20 +215,21 @@ L.Annotation = L.Layer.extend({
 
 	_onCancelClick: function (e) {
 		L.DomEvent.stopPropagation(e);
-		this._nodeModifyText.value = this._contentText.innerHTML;
+		this._nodeModifyText.value = this._contentText.origText;
 		this.show();
 		this._map.fire('AnnotationCancel', {annotation: this});
 	},
 
 	_onSaveComment: function (e) {
 		L.DomEvent.stopPropagation(e);
-		this._data.text = this._contentText.innerHTML = this._nodeModifyText.value;
+		this._data.text = this._nodeModifyText.value;
+		this._updateContent();
 		this.show();
 		this._map.fire('AnnotationSave', {annotation: this});
 	},
 
 	_onLostFocus: function (e) {
-		if (this._contentText.innerHTML !== this._nodeModifyText.value) {
+		if (this._contentText.origText !== this._nodeModifyText.value) {
 			this._onSaveComment(e);
 		}
 	},
@@ -284,7 +285,10 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_updateContent: function () {
-		$(this._contentText).text(this._data.text);
+		var linkedText = Autolinker.link(this._data.text);
+		$(this._contentText).text(linkedText);
+		// Original unlinked text
+		this._contentText.origText = this._data.text;
 		$(this._nodeModifyText).text(this._data.text);
 		$(this._contentAuthor).text(this._data.author);
 
