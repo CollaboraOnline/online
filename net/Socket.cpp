@@ -17,6 +17,7 @@
 #include <Poco/DateTime.h>
 #include <Poco/DateTimeFormat.h>
 #include <Poco/DateTimeFormatter.h>
+#include <Poco/Net/HTTPResponse.h>
 
 #include "SigUtil.hpp"
 #include "Socket.hpp"
@@ -171,6 +172,17 @@ void StreamSocket::dumpState(std::ostream& os)
         dump_hex("\t\tinBuffer:\n", "\t\t", _inBuffer);
     if (_outBuffer.size() > 0)
         dump_hex("\t\toutBuffer:\n", "\t\t", _inBuffer);
+}
+
+void StreamSocket::send(Poco::Net::HTTPResponse& response)
+{
+    response.set("User-Agent", HTTP_AGENT_STRING);
+    response.set("Date", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
+
+    std::ostringstream oss;
+    response.write(oss);
+
+    send(oss.str());
 }
 
 void SocketPoll::dumpState(std::ostream& os)

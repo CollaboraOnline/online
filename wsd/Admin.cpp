@@ -15,6 +15,7 @@
 
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPResponse.h>
 #include <Poco/StringTokenizer.h>
 
 #include "Admin.hpp"

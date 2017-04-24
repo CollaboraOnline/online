@@ -13,6 +13,7 @@
 
 #include <fstream>
 
+#include <Poco/Net/HTTPResponse.h>
 #include <Poco/URI.h>
 
 #include "Common.hpp"
@@ -599,7 +600,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 std::string encodedFilePath;
                 Poco::URI::encode(resultURL.getPath(), "", encodedFilePath);
                 LOG_TRC("Sending file: " << encodedFilePath);
-                HttpHelper::sendFile(_saveAsSocket, encodedFilePath, mimeType);
+                Poco::Net::HTTPResponse response;
+                HttpHelper::sendFile(_saveAsSocket, encodedFilePath, mimeType, response);
             }
 
             // Conversion is done, cleanup this fake session.

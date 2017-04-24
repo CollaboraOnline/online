@@ -19,6 +19,7 @@
 #include <Poco/FileStream.h>
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPBasicCredentials.h>
+#include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/NameValueCollection.h>

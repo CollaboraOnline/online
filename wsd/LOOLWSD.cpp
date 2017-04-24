@@ -1747,7 +1747,8 @@ private:
         }
 
         auto socket = _socket.lock();
-        HttpHelper::sendFile(socket, faviconPath, mimeType);
+        Poco::Net::HTTPResponse response;
+        HttpHelper::sendFile(socket, faviconPath, mimeType, response);
         socket->shutdown();
     }
 

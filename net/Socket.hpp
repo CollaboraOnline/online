@@ -31,12 +31,18 @@
 #include <thread>
 #include <chrono>
 
-#include <Poco/Net/HTTPResponse.h>
-
 #include "Common.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
 #include "SigUtil.hpp"
+
+namespace Poco
+{
+    namespace Net
+    {
+        class HTTPResponse;
+    }
+}
 
 /// A non-blocking, streaming socket.
 class Socket
@@ -705,13 +711,8 @@ public:
     }
 
     /// Sends HTTP response.
-    void send(Poco::Net::HTTPResponse& response)
-    {
-        response.set("User-Agent", HTTP_AGENT_STRING);
-        std::ostringstream oss;
-        response.write(oss);
-        send(oss.str());
-    }
+    /// Adds Date and User-Agent.
+    void send(Poco::Net::HTTPResponse& response);
 
     /// Reads data by invoking readData() and buffering.
     /// Return false iff the socket is closed.
@@ -914,18 +915,10 @@ protected:
 
 namespace HttpHelper
 {
+    /// Sends file as HTTP response.
     void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path, const std::string& mediaType,
                   Poco::Net::HTTPResponse& response, bool noCache = false, bool deflate = false,
                   const bool headerOnly = false);
-
-    inline void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-                         const std::string& mediaType, bool noCache = false, bool deflate = false,
-                         const bool headerOnly = false)
-
-    {
-        Poco::Net::HTTPResponse response;
-        sendFile(socket, path, mediaType, response, noCache, deflate, headerOnly);
-    }
 };
 
 #endif
