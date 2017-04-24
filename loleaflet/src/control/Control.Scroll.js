@@ -116,6 +116,12 @@ L.Control.Scroll = L.Control.extend({
 		}
 		this._prevScrollY = -e.mcs.top;
 		this._prevScrollX = -e.mcs.left;
+		// Scrolling quickly via mousewheel messes up the annotations for some reason
+		// Triggering the layouting algorithm here, though unnecessary, fixes the problem.
+		// This is just a workaround till we find the root cause of why it messes up the annotations
+		if (this._map._docLayer._annotations.layout) {
+			this._map._docLayer._annotations.layout();
+		}
 	},
 
 	_onScrollTo: function (e) {
