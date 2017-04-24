@@ -14,6 +14,7 @@
   "//": "mocha: ~2.1.0",
   "//": "ws: ~0.7.2",
   "devDependencies": {
+    "autolinker": "1.4.3",
     "bootstrap": "3.3.6",
     "browserify": "^13.1.0",
     "browserify-css": "^0.9.1",

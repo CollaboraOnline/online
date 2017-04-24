@@ -1,6 +1,6 @@
 // If not debug, don't print anything on the console
 // except in tile debug mode (Ctrl-Shift-Alt-d)
-console.log2 = console.log
+console.log2 = console.log;
 if (loleaflet_logging !== 'true') {
 	var methods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd'];
 	for (var i = 0; i < methods.length; i++) {
@@ -18,6 +18,7 @@ require('smartmenus');
 require('jquery-ui');
 require('jquery-contextmenu');
 require('timeago');
+global.Autolinker = require('autolinker');
 // FIXME: would be good to remove w2ui script tags and require
 // like other modules. problem is that w2ui doesn't export
 // its global variables for a module, so following doesn't work
