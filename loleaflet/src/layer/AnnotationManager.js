@@ -4,10 +4,10 @@
 
 L.AnnotationManager = L.Class.extend({
 	options: {
-		marginX: 50,
+		marginX: 40,
 		marginY: 10,
 		offset: 5,
-		extraSize: L.point(250, 0)
+		extraSize: L.point(290, 0)
 	},
 
 	initialize: function (map, options) {

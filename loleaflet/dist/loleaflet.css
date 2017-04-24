@@ -149,10 +149,7 @@ body {
 	color: #222;
 	border: none;
 	border-radius: 2px;
-}
-
-.loleaflet-annotation-content-wrapper {
-        width: 180px;
+	width: 240px;
 }
 
 .loleaflet-annotation-content {
