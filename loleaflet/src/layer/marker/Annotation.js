@@ -113,6 +113,10 @@ L.Annotation = L.Layer.extend({
 		this._nodeReplyText.focus();
 	},
 
+	parentOf: function(comment) {
+		return this._data.id === comment._data.parent;
+	},
+
 	_createButton: function(container, value, handler) {
 		var button = L.DomUtil.create('input', 'loleaflet-controls', container);
 		button.type = 'button';

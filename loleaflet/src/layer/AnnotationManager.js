@@ -458,7 +458,7 @@ L.AnnotationManager = L.Class.extend({
 			newId = this._items[parentIdx]._data.id;
 		}
 		var currentIdx = this.getIndexOf(comment._data.id);
-		if (this._items[currentIdx + 1]) {
+		if (this._items[currentIdx + 1] && this._items[currentIdx].parentOf(this._items[currentIdx + 1])) {
 			this._items[currentIdx + 1]._data.parent = newId;
 		}
 	},
