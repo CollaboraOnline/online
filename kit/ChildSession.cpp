@@ -117,15 +117,24 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             sendTextFrame("setpart: part=" + std::to_string(curPart));
         }
 
+        // Invalidate if we have to
+        // TODO instead just a "_invalidate" flag, we should remember / grow
+        // the rectangle to invalidate; invalidating everything is sub-optimal
+        if (_stateRecorder._invalidate)
+        {
+            std::string payload = "0, 0, " + std::to_string(INT_MAX) + ", " + std::to_string(INT_MAX) + ", " + std::to_string(curPart);
+            loKitCallback(LOK_CALLBACK_INVALIDATE_TILES, payload);
+        }
+
         for (const auto& viewPair : _stateRecorder._recordedViewEvents)
         {
-                for (const auto& eventPair : viewPair.second)
-                {
-                    const RecordedEvent& event = eventPair.second;
-                    LOG_TRC("Replaying missed view event: " <<  viewPair.first << " " << LOKitHelper::kitCallbackTypeToString(event._type)
-                                                            << ": " << event._payload);
-                    loKitCallback(event._type, event._payload);
-                }
+            for (const auto& eventPair : viewPair.second)
+            {
+                const RecordedEvent& event = eventPair.second;
+                LOG_TRC("Replaying missed view event: " <<  viewPair.first << " " << LOKitHelper::kitCallbackTypeToString(event._type)
+                                                        << ": " << event._payload);
+                loKitCallback(event._type, event._payload);
+            }
         }
 
         for (const auto& eventPair : _stateRecorder._recordedEvents)
@@ -971,16 +980,21 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, const std::ve
  */
 void ChildSession::rememberEventsForInactiveUser(const int type, const std::string& payload)
 {
-    if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
-        type == LOK_CALLBACK_CURSOR_VISIBLE ||
-        type == LOK_CALLBACK_TEXT_SELECTION ||
-        type == LOK_CALLBACK_TEXT_SELECTION_START ||
-        type == LOK_CALLBACK_TEXT_SELECTION_END ||
-        type == LOK_CALLBACK_CELL_FORMULA ||
-        type == LOK_CALLBACK_CELL_CURSOR ||
-        type == LOK_CALLBACK_GRAPHIC_SELECTION ||
-        type == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
-        type == LOK_CALLBACK_INVALIDATE_HEADER)
+    if (type == LOK_CALLBACK_INVALIDATE_TILES)
+    {
+        auto lock(getLock());
+        _stateRecorder.recordInvalidate(); // TODO remember the area, not just a bool ('true' invalidates everything)
+    }
+    else if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
+             type == LOK_CALLBACK_CURSOR_VISIBLE ||
+             type == LOK_CALLBACK_TEXT_SELECTION ||
+             type == LOK_CALLBACK_TEXT_SELECTION_START ||
+             type == LOK_CALLBACK_TEXT_SELECTION_END ||
+             type == LOK_CALLBACK_CELL_FORMULA ||
+             type == LOK_CALLBACK_CELL_CURSOR ||
+             type == LOK_CALLBACK_GRAPHIC_SELECTION ||
+             type == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
+             type == LOK_CALLBACK_INVALIDATE_HEADER)
     {
         auto lock(getLock());
         _stateRecorder.recordEvent(type, payload);
