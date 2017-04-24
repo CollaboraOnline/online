@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-20 07:58+0000\n"
+"POT-Creation-Date: 2017-04-24 18:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /ca/libo_online/loleaflet-ui-ca.po\n"
-"X-Pootle-Revision: 2471032\n"
+"X-Pootle-Revision: 2488177\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -169,7 +169,7 @@ msgstr "Envia cap enrere"
 
 #: unocommands.js:10
 msgid "Paste Special"
-msgstr "Enganxa especial"
+msgstr "Enganxament especial"
 
 #: unocommands.js:11
 msgid "Unformatted Text"
@@ -1871,19 +1871,19 @@ msgstr "Amplada òptima de la columna"
 
 #: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "Retalla (intern)"
 
 #: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"
-msgstr ""
+msgstr "Copia (intern)"
 
 #: src/control/Control.ContextMenu.js:141
 msgid "Internal Paste"
-msgstr ""
+msgstr "Enganxa (intern)"
 
 #: src/control/Control.ContextMenu.js:163
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Enganxament especial intern"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
@@ -1992,11 +1992,11 @@ msgstr "Selecciona-ho tot"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
-msgstr ""
+msgstr "Seguiment de canvis"
 
 #: src/control/Control.Menubar.js:32
 msgid "Record"
-msgstr ""
+msgstr "Enregistra"
 
 #: src/control/Control.Menubar.js:33
 msgid "Show"
@@ -2483,11 +2483,11 @@ msgstr "Alçada òptima de la fila"
 
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Desplaça cap amunt les anotacions"
 
 #: src/control/Control.Scroll.Annotation.js:11
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Desplaça cap avall les anotacions"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"

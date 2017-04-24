@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-20 07:59+0000\n"
+"POT-Creation-Date: 2017-04-24 18:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /en_GB/libo_online/loleaflet-ui-en_GB.po\n"
-"X-Pootle-Revision: 2437973\n"
+"X-Pootle-Revision: 2514467\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -719,7 +719,7 @@ msgstr "You"
 
 #: dist/toolbar/toolbar.js:1604
 msgid "Readonly"
-msgstr ""
+msgstr "Readonly"
 
 #: src/admin/AdminSocketBase.js:45
 msgid "Connection error"
@@ -731,7 +731,7 @@ msgstr "Are you sure you want to terminate this session?"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shutdown the server?"
-msgstr ""
+msgstr "Are you sure you want to shutdown the server?"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -1865,19 +1865,19 @@ msgstr "Optimal Column Width"
 
 #: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "Internal Cut"
 
 #: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"
-msgstr ""
+msgstr "Internal Copy"
 
 #: src/control/Control.ContextMenu.js:141
 msgid "Internal Paste"
-msgstr ""
+msgstr "Internal Paste"
 
 #: src/control/Control.ContextMenu.js:163
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Internal Paste Special"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
@@ -1987,24 +1987,23 @@ msgstr "Select all"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
-msgstr ""
+msgstr "Track Changes"
 
 #: src/control/Control.Menubar.js:32
 msgid "Record"
-msgstr ""
+msgstr "Record"
 
 #: src/control/Control.Menubar.js:33
 msgid "Show"
-msgstr ""
+msgstr "Show"
 
 #: src/control/Control.Menubar.js:35
 msgid "Previous"
-msgstr ""
+msgstr "Previous"
 
 #: src/control/Control.Menubar.js:36
-#, fuzzy
 msgid "Next"
-msgstr "Text"
+msgstr "Next"
 
 #: src/control/Control.Menubar.js:31
 #: src/control/Control.Menubar.js:183
@@ -2019,9 +2018,8 @@ msgid "Full screen"
 msgstr "Full screen"
 
 #: src/control/Control.Menubar.js:46
-#, fuzzy
 msgid "Formatting Marks"
-msgstr "Formatting mark"
+msgstr "Formatting Marks"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:191
@@ -2033,7 +2031,7 @@ msgstr "Image"
 #: src/control/Control.Menubar.js:203
 #: src/control/Control.Menubar.js:259
 msgid "Comment..."
-msgstr ""
+msgstr "Comment..."
 
 #: src/control/Control.Menubar.js:42
 msgid "Footnote"
@@ -2444,19 +2442,19 @@ msgstr "Are you sure you want to delete this slide?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
-msgstr ""
+msgstr "(100th/mm)"
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "
-msgstr ""
+msgstr "Add: "
 
 #: src/control/Control.MetricInput.js:61
 msgid "Default value"
-msgstr ""
+msgstr "Default value"
 
 #: src/control/Control.MetricInput.js:68
 msgid "Submit"
-msgstr ""
+msgstr "Submit"
 
 #: src/control/Control.RowHeader.js:39
 msgid "Insert row above"
@@ -2480,11 +2478,11 @@ msgstr "Optimal Row Height"
 
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Scroll up annotations"
 
 #: src/control/Control.Scroll.Annotation.js:11
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Scroll down annotations"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -2574,23 +2572,23 @@ msgstr ""
 
 #: src/layer/marker/Annotation.js:156
 msgid "Accept change"
-msgstr ""
+msgstr "Accept change"
 
 #: src/layer/marker/Annotation.js:161
 msgid "Reject change"
-msgstr ""
+msgstr "Reject change"
 
 #: src/layer/marker/Annotation.js:169
 msgid "Open menu"
-msgstr ""
+msgstr "Open menu"
 
 #: src/layer/tile/TileLayer.js:182
 msgid "Modify"
-msgstr ""
+msgstr "Modify"
 
 #: src/layer/tile/TileLayer.js:194
 msgid "Remove"
-msgstr ""
+msgstr "Remove"
 
 #: src/map/Map.js:122
 msgid "Initializing..."

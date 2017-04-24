@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-20 08:00+0000\n"
+"POT-Creation-Date: 2017-04-24 18:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-ui-nl.po\n"
-"X-Pootle-Revision: 2474364\n"
+"X-Pootle-Revision: 2511679\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -1871,7 +1871,7 @@ msgstr "Optimale kolombreedte"
 
 #: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "Intern knippen"
 
 #: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"

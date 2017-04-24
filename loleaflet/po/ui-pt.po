@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-20 08:01+0000\n"
+"POT-Creation-Date: 2017-04-24 08:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /pt/libo_online/loleaflet-ui-pt.po\n"
-"X-Pootle-Revision: 2438562\n"
+"X-Pootle-Revision: 2509302\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -720,7 +720,7 @@ msgstr "Você"
 
 #: dist/toolbar/toolbar.js:1604
 msgid "Readonly"
-msgstr ""
+msgstr "Apenas leitura"
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -732,7 +732,7 @@ msgstr "Tem a certeza de que deseja terminar esta sessão?"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shutdown the server?"
-msgstr ""
+msgstr "Tem a certeza de que deseja encerrar este servidor?"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -1591,11 +1591,11 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:242
 msgid "Transport And Map Symbols"
-msgstr ""
+msgstr "Símbolos de transportes e mapas"
 
 #: src/control/Control.CharacterMap.js:243
 msgid "Alchemical Symbols"
-msgstr ""
+msgstr "Símbolos de alquimia"
 
 #: src/control/Control.CharacterMap.js:245
 #, fuzzy
@@ -1707,19 +1707,19 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:273
 msgid "Mende Kikakui"
-msgstr ""
+msgstr "Alfabeto Mende"
 
 #: src/control/Control.CharacterMap.js:274
 msgid "Modi"
-msgstr ""
+msgstr "Modi"
 
 #: src/control/Control.CharacterMap.js:275
 msgid "Mro"
-msgstr ""
+msgstr "Mro"
 
 #: src/control/Control.CharacterMap.js:276
 msgid "Myanmar Extended-B"
-msgstr ""
+msgstr "Birmanês expandido B"
 
 #: src/control/Control.CharacterMap.js:277
 msgid "Nabataean"
@@ -1827,7 +1827,7 @@ msgstr "Carácter especial"
 
 #: src/control/Control.CharacterMap.js:395
 msgid "Font Name:"
-msgstr ""
+msgstr "Nome do tipo de letra:"
 
 #: src/control/Control.CharacterMap.js:402
 msgid "Subset:"
@@ -1835,11 +1835,11 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:413
 msgid "Selected Character:"
-msgstr ""
+msgstr "Carácter selecionado:"
 
 #: src/control/Control.CharacterMap.js:418
 msgid "Hexadecimal:"
-msgstr ""
+msgstr "Hexadecimal:"
 
 #: src/control/Control.CharacterMap.js:424
 #: src/control/Control.Menubar.js:49
@@ -1865,11 +1865,11 @@ msgstr "Largura ideal"
 
 #: src/control/Control.ColumnHeader.js:60
 msgid "Hide Columns"
-msgstr ""
+msgstr "Ocultar colunas"
 
 #: src/control/Control.ColumnHeader.js:67
 msgid "Show Columns"
-msgstr ""
+msgstr "Mostrar colunas"
 
 #: src/control/Control.ColumnHeader.js:82
 msgid "Optimal Column Width"

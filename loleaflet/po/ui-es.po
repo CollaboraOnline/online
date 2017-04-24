@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-20 07:59+0000\n"
+"POT-Creation-Date: 2017-04-24 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-ui-es.po\n"
-"X-Pootle-Revision: 2475214\n"
+"X-Pootle-Revision: 2511712\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -1088,9 +1088,8 @@ msgid "CJK Compatibility Ideographs"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:102
-#, fuzzy
 msgid "Alphabetic Presentation Forms"
-msgstr "Formas de presentación del árabe, A"
+msgstr "Formas de presentación alfabéticas"
 
 #: src/control/Control.CharacterMap.js:104
 msgid "Arabic Presentation Forms-A"
@@ -1358,14 +1357,12 @@ msgid "Balinese"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:177
-#, fuzzy
 msgid "Latin Extended-C"
-msgstr "Latino, ampliación A"
+msgstr "Latino, ampliación C"
 
 #: src/control/Control.CharacterMap.js:178
-#, fuzzy
 msgid "Latin Extended-D"
-msgstr "Latino, ampliación A"
+msgstr "Latino, ampliación D"
 
 #: src/control/Control.CharacterMap.js:179
 msgid "Phags-Pa"
@@ -1608,9 +1605,8 @@ msgid "CJK Unified Ideographs Extension D"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:247
-#, fuzzy
 msgid "Arabic Extended-A"
-msgstr "Latino, ampliación A"
+msgstr "Árabe, ampliación A"
 
 #: src/control/Control.CharacterMap.js:248
 msgid "Arabic Mathematical Alphabetic Symbols"
@@ -1693,9 +1689,8 @@ msgid "Khudawadi"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:268
-#, fuzzy
 msgid "Latin Extended-E"
-msgstr "Latino, ampliación A"
+msgstr "Latino, ampliación E"
 
 #: src/control/Control.CharacterMap.js:270
 msgid "Linear A"
