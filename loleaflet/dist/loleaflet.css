@@ -227,6 +227,9 @@ body {
 	padding-right: 10px;
 	vertical-align: top;
 	display: table-cell;
+	width: 100%;
+	overflow: hidden;
+	max-width: 110px;
 }
 
 .loleaflet-annotation-menu, .loleaflet-annotation-menu-redline, .loleaflet-redline-accept-button, .loleaflet-redline-reject-button {
