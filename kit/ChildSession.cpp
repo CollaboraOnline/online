@@ -150,6 +150,12 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             loKitCallback(LOK_CALLBACK_STATE_CHANGED, pair.second);
         }
 
+        for (const auto& event : _stateRecorder._recordedEventsVector)
+        {
+            LOG_TRC("Replaying missed event (part of sequence): " << LOKitHelper::kitCallbackTypeToString(event._type) << ": " << event._payload);
+            loKitCallback(event._type, event._payload);
+        }
+
         _stateRecorder.clear();
 
         LOG_TRC("Finished replaying messages.");
@@ -1022,6 +1028,13 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
             auto lock(getLock());
             _stateRecorder.recordState(name, payload);
         }
+    }
+    else if (type == LOK_CALLBACK_REDLINE_TABLE_SIZE_CHANGED ||
+             type == LOK_CALLBACK_REDLINE_TABLE_ENTRY_MODIFIED ||
+             type == LOK_CALLBACK_COMMENT)
+    {
+        auto lock(getLock());
+        _stateRecorder.recordEventSequence(type, payload);
     }
 }
 
