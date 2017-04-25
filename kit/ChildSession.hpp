@@ -74,6 +74,7 @@ public:
     std::unordered_map<std::string, std::string> _recordedStates;
     std::unordered_map<int, std::unordered_map<int, RecordedEvent>> _recordedViewEvents;
     std::unordered_map<int, RecordedEvent> _recordedEvents;
+    std::vector<RecordedEvent> _recordedEventsVector;
 
     StateRecorder() : _invalidate(false) {}
 
@@ -98,12 +99,20 @@ public:
         _recordedStates[name] = value;
     }
 
+    /// In the case we need to rememeber all the events that come, not just
+    /// the final state.
+    void recordEventSequence(const int type, const std::string& payload)
+    {
+        _recordedEventsVector.push_back({type, payload});
+    }
+
     void clear()
     {
         _invalidate = false;
         _recordedEvents.clear();
         _recordedViewEvents.clear();
         _recordedStates.clear();
+        _recordedEventsVector.clear();
     }
 };
 
