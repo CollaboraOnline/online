@@ -51,8 +51,9 @@ L.Map.include({
 		if (!this._searchRequested) {
 			this.focus();
 		}
-		if (docLayer._docType === 'spreadsheet')
+		if (docLayer._docType === 'spreadsheet') {
 			this.fire('updaterowcolumnheaders', {x: this._getTopLeftPoint().x, y: this._getTopLeftPoint(), offset: {x: undefined, y: undefined}});
+		}
 	},
 
 	getPreview: function (id, index, maxWidth, maxHeight, options) {
