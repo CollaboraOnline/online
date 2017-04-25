@@ -1591,7 +1591,7 @@ private:
             return SocketHandlerInterface::SocketOwnership::UNCHANGED;
         }
 
-        SocketHandlerInterface::SocketOwnership socketOwnership = SocketHandlerInterface::SocketOwnership::UNCHANGED;
+        SocketDisposition tailDisposition(socket);
         try
         {
             // Routing
@@ -1607,12 +1607,13 @@ private:
             // Admin connections
             else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
             {
-                LOG_ERR("Admin request: " << request.getURI());
+                LOG_INF("Admin request: " << request.getURI());
                 if (AdminSocketHandler::handleInitialRequest(_socket, request))
                 {
-                    // Hand the socket over to the Admin poll.
-                    Admin::instance().insertNewSocket(socket);
-                    socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
+                    tailDisposition.setMove([](const std::shared_ptr<StreamSocket> &moveSocket){
+                            // Hand the socket over to the Admin poll.
+                            Admin::instance().insertNewSocket(moveSocket);
+                        });
                 }
             }
             // Client post and websocket connections
@@ -1637,12 +1638,12 @@ private:
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
                 {
                     // All post requests have url prefix 'lool'.
-                    socketOwnership = handlePostRequest(request, message);
+                    handlePostRequest(request, message, tailDisposition);
                 }
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws" &&
                          request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
                 {
-                    socketOwnership = handleClientWsUpgrade(request, reqPathTokens[1]);
+                    handleClientWsUpgrade(request, reqPathTokens[1], tailDisposition);
                 }
                 else
                 {
@@ -1671,7 +1672,7 @@ private:
         // if we succeeded - remove the request from our input buffer
         // we expect one request per socket
         in.erase(in.begin(), itBody);
-        return socketOwnership;
+        return tailDisposition.execute();
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
@@ -1806,14 +1807,14 @@ private:
         return "application/octet-stream";
     }
 
-    SocketHandlerInterface::SocketOwnership handlePostRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
+    void handlePostRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
+                           SocketDisposition &tailDisposition)
     {
         LOG_INF("Post request: [" << request.getURI() << "]");
 
         Poco::Net::HTTPResponse response;
         auto socket = _socket.lock();
 
-        SocketHandlerInterface::SocketOwnership socketOwnership = SocketHandlerInterface::SocketOwnership::UNCHANGED;
         StringTokenizer tokens(request.getURI(), "/?");
         if (tokens.count() >= 3 && tokens[2] == "convert-to")
         {
@@ -1851,21 +1852,22 @@ private:
                     auto clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker, isReadOnly);
                     if (clientSession)
                     {
-                        // Transfer the client socket to the DocumentBroker.
-                        socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
+                        tailDisposition.setMove([docBroker, clientSession, format]
+                                                (const std::shared_ptr<StreamSocket> &moveSocket)
+                        { // Perform all of this after removing the socket
 
                         // Make sure the thread is running before adding callback.
                         docBroker->startThread();
 
                         // We no longer own this socket.
-                        socket->setThreadOwner(std::thread::id(0));
+                        moveSocket->setThreadOwner(std::thread::id(0));
 
-                        docBroker->addCallback([docBroker, socket, clientSession, format]()
+                        docBroker->addCallback([docBroker, moveSocket, clientSession, format]()
                         {
-                            clientSession->setSaveAsSocket(socket);
+                            clientSession->setSaveAsSocket(moveSocket);
 
                             // Move the socket into DocBroker.
-                            docBroker->addSocketToPoll(socket);
+                            docBroker->addSocketToPoll(moveSocket);
 
                             // First add and load the session.
                             docBroker->addSession(clientSession);
@@ -1889,6 +1891,7 @@ private:
                             std::vector<char> saveasRequest(saveas.begin(), saveas.end());
                             clientSession->handleMessage(true, WebSocketHandler::WSOpCode::Text, saveasRequest);
                         });
+                        });
 
                         sent = true;
                     }
@@ -1902,8 +1905,6 @@ private:
                 // TODO: We should differentiate between bad request and failed conversion.
                 throw BadRequestException("Failed to convert and send file.");
             }
-
-            return socketOwnership;
         }
         else if (tokens.count() >= 4 && tokens[3] == "insertfile")
         {
@@ -1943,7 +1944,7 @@ private:
                     File(tmpPath).moveTo(fileName);
                     response.setContentLength(0);
                     socket->send(response);
-                    return socketOwnership;
+                    return;
                 }
             }
         }
@@ -2010,21 +2011,20 @@ private:
             {
                 LOG_ERR("Download file [" << filePath.toString() << "] not found.");
             }
-
             (void)responded;
-            return socketOwnership;
         }
 
         throw BadRequestException("Invalid or unknown request.");
     }
 
-    SocketHandlerInterface::SocketOwnership handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url)
+    void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url,
+                               SocketDisposition &tailDisposition)
     {
         auto socket = _socket.lock();
         if (!socket)
         {
             LOG_WRN("No socket to handle client WS upgrade for request: " << request.getURI() << ", url: " << url);
-            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+            return;
         }
 
         LOG_INF("Client WS request: " << request.getURI() << ", url: " << url << ", socket #" << socket->getFD());
@@ -2036,7 +2036,7 @@ private:
         {
             LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
             shutdownLimitReached(ws);
-            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+            return;
         }
 
         LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << url << "].");
@@ -2064,8 +2064,6 @@ private:
 
         LOG_INF("URL [" << url << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
 
-        SocketHandlerInterface::SocketOwnership socketOwnership = SocketHandlerInterface::SocketOwnership::UNCHANGED;
-
         // Request a kit process for this doc.
         auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
         if (docBroker)
@@ -2073,28 +2071,28 @@ private:
             auto clientSession = createNewClientSession(&ws, _id, uriPublic, docBroker, isReadOnly);
             if (clientSession)
             {
-                // Transfer the client socket to the DocumentBroker.
-
-                // Remove from current poll as we're moving ownership.
-                socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
-
-                // Make sure the thread is running before adding callback.
-                docBroker->startThread();
-
-                // We no longer own this socket.
-                socket->setThreadOwner(std::thread::id(0));
-
-                docBroker->addCallback([docBroker, socket, clientSession]()
+                // Transfer the client socket to the DocumentBroker when we get back to the poll:
+                tailDisposition.setMove([docBroker, clientSession]
+                                        (const std::shared_ptr<StreamSocket> &moveSocket)
                 {
-                    // Set the ClientSession to handle Socket events.
-                    socket->setHandler(clientSession);
-                    LOG_DBG("Socket #" << socket->getFD() << " handler is " << clientSession->getName());
+                    // Make sure the thread is running before adding callback.
+                    docBroker->startThread();
 
-                    // Move the socket into DocBroker.
-                    docBroker->addSocketToPoll(socket);
+                    // We no longer own this socket.
+                    moveSocket->setThreadOwner(std::thread::id(0));
 
-                    // Add and load the session.
-                    docBroker->addSession(clientSession);
+                    docBroker->addCallback([docBroker, moveSocket, clientSession]()
+                    {
+                        // Set the ClientSession to handle Socket events.
+                        moveSocket->setHandler(clientSession);
+                        LOG_DBG("Socket #" << moveSocket->getFD() << " handler is " << clientSession->getName());
+
+                        // Move the socket into DocBroker.
+                        docBroker->addSocketToPoll(moveSocket);
+
+                        // Add and load the session.
+                        docBroker->addSession(clientSession);
+                    });
                 });
             }
             else
@@ -2105,8 +2103,6 @@ private:
         }
         else
             LOG_WRN("Failed to create DocBroker with docKey [" << docKey << "].");
-
-        return socketOwnership;
     }
 
 private:

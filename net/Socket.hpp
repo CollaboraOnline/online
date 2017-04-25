@@ -198,6 +198,11 @@ public:
         }
     }
 
+    const std::thread::id &getThreadOwner()
+    {
+        return _owner;
+    }
+
     /// Asserts in the debug builds, otherwise just logs.
     void assertCorrectThread()
     {
@@ -249,7 +254,6 @@ private:
     /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;
 };
-
 
 /// Handles non-blocking socket event polling.
 /// Only polls on N-Sockets and invokes callback and
@@ -911,6 +915,39 @@ protected:
     friend class ClientRequestDispatcher;
     friend class PrisonerRequestDispatcher;
     friend class SimpleResponseClient;
+};
+
+/// Helper to allow us to easily defer the movement of a socket
+/// between polls to clarify thread ownership.
+class SocketDisposition
+{
+    std::shared_ptr<StreamSocket> _socket;
+    typedef std::function<void(const std::shared_ptr<StreamSocket> &)> MoveFunction;
+    MoveFunction _socketMove;
+    SocketHandlerInterface::SocketOwnership _socketOwnership;
+public:
+    SocketDisposition(const std::shared_ptr<StreamSocket> &socket) :
+        _socket(socket),
+        _socketOwnership(SocketHandlerInterface::SocketOwnership::UNCHANGED)
+    {}
+    ~SocketDisposition()
+    {
+        assert (!_socketMove);
+    }
+    void setMove(MoveFunction moveFn)
+    {
+        _socketMove = moveFn;
+        _socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
+    }
+    SocketHandlerInterface::SocketOwnership execute()
+    {
+        // We should have hard ownership of this socket.
+        assert(_socket->getThreadOwner() == std::this_thread::get_id());
+        if (_socketMove)
+            _socketMove(_socket);
+        _socketMove = nullptr;
+        return _socketOwnership;
+    }
 };
 
 namespace HttpHelper
