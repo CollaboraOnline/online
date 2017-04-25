@@ -1598,47 +1598,46 @@ private:
             Poco::URI requestUri(request.getURI());
             std::vector<std::string> reqPathSegs;
             requestUri.getPathSegments(reqPathSegs);
-            const StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
-            if (request.getMethod() == HTTPRequest::HTTP_GET ||
-                request.getMethod() == HTTPRequest::HTTP_HEAD)
+            // File server
+            if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
             {
-                // Clear the request header already consumed.
-                in.erase(in.begin(), itBody);
-
-                // File server
+                handleFileServerRequest(request, message);
+            }
+            // Admin connections
+            else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
+            {
+                LOG_ERR("Admin request: " << request.getURI());
+                if (AdminSocketHandler::handleInitialRequest(_socket, request))
+                {
+                    // Hand the socket over to the Admin poll.
+                    Admin::instance().insertNewSocket(socket);
+                    socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
+                }
+            }
+            // Client post and websocket connections
+            else if ((request.getMethod() == HTTPRequest::HTTP_GET ||
+                      request.getMethod() == HTTPRequest::HTTP_HEAD) &&
+                     request.getURI() == "/")
+            {
+                handleRootRequest(request);
+            }
+            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/favicon.ico")
+            {
+                handleFaviconRequest(request);
+            }
+            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/hosting/discovery")
+            {
+                handleWopiDiscoveryRequest(request);
+            }
+            else
+            {
+                StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                 if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
-                    reqPathTokens.count() >= 5 && reqPathTokens[0] == "lool")
+                    reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
                 {
                     // All post requests have url prefix 'lool'.
-                    handleFileDownloadRequest(request);
-                }
-                else if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
-                {
-                    handleFileServerRequest(request, message);
-                }
-                else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
-                {
-                    // Admin connections
-                    LOG_INF("Admin request: " << request.getURI());
-                    if (AdminSocketHandler::handleInitialRequest(_socket, request))
-                    {
-                        // Hand the socket over to the Admin poll.
-                        Admin::instance().insertNewSocket(socket);
-                        socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
-                    }
-                }
-                else if (request.getURI() == "/")
-                {
-                    handleRootRequest(request);
-                }
-                else if (request.getURI() == "/favicon.ico")
-                {
-                    handleFaviconRequest(request);
-                }
-                else if (request.getURI() == "/hosting/discovery")
-                {
-                    handleWopiDiscoveryRequest(request);
+                    socketOwnership = handlePostRequest(request, message);
                 }
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws" &&
                          request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
@@ -1647,31 +1646,19 @@ private:
                 }
                 else
                 {
-                    throw std::runtime_error("Bad request.");
-                }
+                    LOG_ERR("Unknown resource: " << request.getURI());
 
-                return socketOwnership;
-            }
-            else if (request.getMethod() == HTTPRequest::HTTP_POST)
-            {
-                if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
-                {
-                    handleFileServerRequest(request, message);
-                    return socketOwnership;
-                }
-
-                if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
-                    reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
-                {
-                    // All post requests have url prefix 'lool'.
-                    socketOwnership = handlePostRequest(request, message);
-                    in.erase(in.begin(), itBody);
-                    return socketOwnership;
+                    // Bad request.
+                    std::ostringstream oss;
+                    oss << "HTTP/1.1 400\r\n"
+                        << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                        << "User-Agent: LOOLWSD WOPI Agent\r\n"
+                        << "Content-Length: 0\r\n"
+                        << "\r\n";
+                    socket->send(oss.str());
+                    socket->shutdown();
                 }
             }
-
-            LOG_ERR("#" << socket->getFD() << " Unknown request: [" <<
-                    LOOLProtocol::getAbbreviatedMessage(in) << "].");
         }
         catch (const std::exception& exc)
         {
@@ -1681,17 +1668,10 @@ private:
                     LOOLProtocol::getAbbreviatedMessage(in) << "]: " << exc.what());
         }
 
-        // Bad request.
-        std::ostringstream oss;
-        oss << "HTTP/1.1 400\r\n"
-            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: " << HTTP_AGENT_STRING << "\r\n"
-            << "Content-Length: 0\r\n"
-            << "\r\n";
-        socket->send(oss.str());
-        socket->shutdown();
-
-        return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+        // if we succeeded - remove the request from our input buffer
+        // we expect one request per socket
+        in.erase(in.begin(), itBody);
+        return socketOwnership;
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
@@ -1967,81 +1947,75 @@ private:
                 }
             }
         }
+        else if (tokens.count() >= 6)
+        {
+            LOG_INF("File download request.");
+            // TODO: Check that the user in question has access to this file!
+
+            // 1. Validate the dockey
+            std::string decodedUri;
+            URI::decode(tokens[2], decodedUri);
+            const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+            auto docBrokerIt = DocBrokers.find(docKey);
+            if (docBrokerIt == DocBrokers.end())
+            {
+                throw BadRequestException("DocKey [" + docKey + "] is invalid.");
+            }
+
+            // 2. Cross-check if received child id is correct
+            if (docBrokerIt->second->getJailId() != tokens[3])
+            {
+                throw BadRequestException("ChildId does not correspond to docKey");
+            }
+
+            // 3. Don't let user download the file in main doc directory containing
+            // the document being edited otherwise we will end up deleting main directory
+            // after download finishes
+            if (docBrokerIt->second->getJailId() == tokens[4])
+            {
+                throw BadRequestException("RandomDir cannot be equal to ChildId");
+            }
+            docBrokersLock.unlock();
+
+            std::string fileName;
+            bool responded = false;
+            URI::decode(tokens[5], fileName);
+            const Path filePath(LOOLWSD::ChildRoot + tokens[3]
+                                + JAILED_DOCUMENT_ROOT + tokens[4] + "/" + fileName);
+            LOG_INF("HTTP request for: " << filePath.toString());
+            if (filePath.isAbsolute() && File(filePath).exists())
+            {
+                std::string contentType = getContentType(fileName);
+                if (Poco::Path(fileName).getExtension() == "pdf")
+                {
+                    contentType = "application/pdf";
+                    response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                }
+
+                try
+                {
+                    HttpHelper::sendFile(socket, filePath.toString(), contentType, response);
+                    responded = true;
+                }
+                catch (const Exception& exc)
+                {
+                    LOG_ERR("Error sending file to client: " << exc.displayText() <<
+                            (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+                }
+
+                FileUtil::removeFile(File(filePath.parent()).path(), true);
+            }
+            else
+            {
+                LOG_ERR("Download file [" << filePath.toString() << "] not found.");
+            }
+
+            (void)responded;
+            return socketOwnership;
+        }
 
         throw BadRequestException("Invalid or unknown request.");
-    }
-
-    void handleFileDownloadRequest(const Poco::Net::HTTPRequest& request)
-    {
-        LOG_INF("File download request.");
-
-        Poco::Net::HTTPResponse response;
-        auto socket = _socket.lock();
-
-        StringTokenizer tokens(request.getURI(), "/?");
-        // TODO: Check that the user in question has access to this file!
-
-        // 1. Validate the dockey
-        std::string decodedUri;
-        URI::decode(tokens[2], decodedUri);
-        const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
-        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        auto docBrokerIt = DocBrokers.find(docKey);
-        if (docBrokerIt == DocBrokers.end())
-        {
-            throw BadRequestException("DocKey [" + docKey + "] is invalid.");
-        }
-
-        // 2. Cross-check if received child id is correct
-        if (docBrokerIt->second->getJailId() != tokens[3])
-        {
-            throw BadRequestException("ChildId does not correspond to docKey");
-        }
-
-        // 3. Don't let user download the file in main doc directory containing
-        // the document being edited otherwise we will end up deleting main directory
-        // after download finishes
-        if (docBrokerIt->second->getJailId() == tokens[4])
-        {
-            throw BadRequestException("RandomDir cannot be equal to ChildId");
-        }
-        docBrokersLock.unlock();
-
-        std::string fileName;
-        bool responded = false;
-        URI::decode(tokens[5], fileName);
-        const Path filePath(LOOLWSD::ChildRoot + tokens[3]
-                            + JAILED_DOCUMENT_ROOT + tokens[4] + "/" + fileName);
-        LOG_INF("HTTP request for: " << filePath.toString());
-        if (filePath.isAbsolute() && File(filePath).exists())
-        {
-            std::string contentType = getContentType(fileName);
-            if (Poco::Path(fileName).getExtension() == "pdf")
-            {
-                contentType = "application/pdf";
-                response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-            }
-
-            try
-            {
-                HttpHelper::sendFile(socket, filePath.toString(), contentType, response);
-                responded = true;
-            }
-            catch (const Exception& exc)
-            {
-                LOG_ERR("Error sending file to client: " << exc.displayText() <<
-                        (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
-            }
-
-            FileUtil::removeFile(File(filePath.parent()).path(), true);
-        }
-        else
-        {
-            LOG_ERR("Download file [" << filePath.toString() << "] not found.");
-        }
-
-        // TODO: Use this to send failure response.
-        (void)responded;
     }
 
     SocketHandlerInterface::SocketOwnership handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url)
