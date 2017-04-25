@@ -191,6 +191,7 @@ L.Annotation = L.Layer.extend({
 
 		buttons = L.DomUtil.create(tagDiv, empty, this._nodeModify);
 		L.DomEvent.on(this._nodeModifyText, 'blur', this._onLostFocus, this);
+		L.DomEvent.on(this._nodeReplyText, 'blur', this._onLostFocusReply, this);
 		this._createButton(buttons, _('Save'), this._onSaveComment);
 		this._createButton(buttons, cancel, this._onCancelClick);
 		buttons = L.DomUtil.create(tagDiv, empty, this._nodeReply);
@@ -227,6 +228,12 @@ L.Annotation = L.Layer.extend({
 	_onLostFocus: function (e) {
 		if (this._contentText.innerHTML !== this._nodeModifyText.value) {
 			this._onSaveComment(e);
+		}
+	},
+
+	_onLostFocusReply: function(e) {
+		if (this._nodeReplyText.value !== '') {
+			this._onReplyClick(e);
 		}
 	},
 
