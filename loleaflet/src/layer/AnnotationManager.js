@@ -476,6 +476,11 @@ L.AnnotationManager = L.Class.extend({
 	adjustParentAdd: function(comment) {
 		if (comment.parent && comment.parent > '0') {
 			var parentIdx = this.getIndexOf(comment.parent);
+			if (parentIdx === -1) {
+				console.warn('adjustParentAdd: No parent comment to attach received comment to. ' +
+				             'Parent comment ID sought is :' + comment.parent + ' for current comment with ID : ' + comment.id);
+				return;
+			}
 			if (this._items[parentIdx + 1] && this._items[parentIdx + 1]._data.parent === this._items[parentIdx]._data.id) {
 				this._items[parentIdx + 1]._data.parent = comment.id;
 			}
