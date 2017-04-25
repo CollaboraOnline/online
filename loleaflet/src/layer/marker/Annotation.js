@@ -212,20 +212,21 @@ L.Annotation = L.Layer.extend({
 
 	_onCancelClick: function (e) {
 		L.DomEvent.stopPropagation(e);
-		this._nodeModifyText.value = this._contentText.innerHTML;
+		this._nodeModifyText.value = this._contentText.origText;
 		this.show();
 		this._map.fire('AnnotationCancel', {annotation: this});
 	},
 
 	_onSaveComment: function (e) {
 		L.DomEvent.stopPropagation(e);
-		this._data.text = this._contentText.innerHTML = this._nodeModifyText.value;
+		this._data.text = this._nodeModifyText.value;
+		this._updateContent();
 		this.show();
 		this._map.fire('AnnotationSave', {annotation: this});
 	},
 
 	_onLostFocus: function (e) {
-		if (this._contentText.innerHTML !== this._nodeModifyText.value) {
+		if (this._contentText.origText !== this._nodeModifyText.value) {
 			this._onSaveComment(e);
 		}
 	},
@@ -276,7 +277,9 @@ L.Annotation = L.Layer.extend({
 			this._data.dateTime = new Date(this._data.dateTime.replace(/,.*/, 'Z'));
 		}
 		var linkedText = Autolinker.link(this._data.text);
-		this._contentText.innerHTML = this._nodeModifyText.innerHTML = linkedText;
+		this._contentText.innerHTML = linkedText;
+		// Original unlinked text
+		this._contentText.origText = this._nodeModifyText.innerHTML = this._data.text;
 		this._contentAuthor.innerHTML = this._data.author;
 		this._contentDate.innerHTML = this._data.dateTime.toDateString();
 		if (this._data.trackchange) {
