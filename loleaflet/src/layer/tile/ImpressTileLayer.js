@@ -40,6 +40,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	onAdd: function (map) {
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = {};
+		this._topAnnotation = 0;
 	},
 
 	onAnnotationCancel: function (e) {
