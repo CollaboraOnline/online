@@ -184,8 +184,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                 {
                     // TESTME: harder ... - do we even want ETag support ?
                     std::ostringstream oss;
-                    Poco::Timestamp nowTs;
-                    Poco::DateTime now(nowTs);
+                    Poco::DateTime now;
                     Poco::DateTime later(now.utcTime(), int64_t(1000)*1000 * 60 * 60 * 24 * 128);
                     oss << "HTTP/1.1 304 Not Modified\r\n"
                         << "Date: " << Poco::DateTimeFormatter::format(
