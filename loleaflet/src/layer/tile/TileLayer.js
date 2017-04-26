@@ -184,8 +184,8 @@ L.TileLayer = L.GridLayer.extend({
 						that.onAnnotationModify.call(that, options.$trigger.get(0).annotation);
 					}
 				},
-				reply: {
-					name:_('Reply'),
+				reply: (this._docType !== 'text') ? undefined : {
+					name: _('Reply'),
 					callback: function (key, options) {
 						that.onAnnotationReply.call(that, options.$trigger.get(0).annotation);
 					}
