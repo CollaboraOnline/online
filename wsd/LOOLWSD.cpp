@@ -169,7 +169,7 @@ int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 static bool DisplayVersion = false;
 
 /// Funky latency simulation basic delay (ms)
-static int SimulatedLatencyMs = 0; // 150;
+static int SimulatedLatencyMs = 0;
 
 // Tracks the set of prisoners / children waiting to be used.
 static std::mutex NewChildrenMutex;
@@ -987,6 +987,10 @@ void LOOLWSD::handleOption(const std::string& optionName,
     static const char* masterPort = std::getenv("LOOL_TEST_MASTER_PORT");
     if (masterPort)
         MasterPortNumber = std::stoi(masterPort);
+
+    static const char* latencyMs = std::getenv("LOOL_DELAY_SOCKET_MS");
+    if (latencyMs)
+        SimulatedLatencyMs = std::stoi(latencyMs);
 #endif
 
 #ifdef FUZZER
@@ -1615,6 +1619,7 @@ private:
                             Admin::instance().insertNewSocket(moveSocket);
                         });
                 }
+
             }
             // Client post and websocket connections
             else if ((request.getMethod() == HTTPRequest::HTTP_GET ||
