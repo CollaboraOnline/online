@@ -4,6 +4,7 @@
  */
 
 L.ImpressTileLayer = L.TileLayer.extend({
+	extraSize: L.point(290, 0),
 
 	newAnnotation: function (comment) {
 		var annotation = L.annotation(this._map.getCenter(), comment, {noMenu: true}).addTo(this._map);
@@ -12,6 +13,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	beforeAdd: function (map) {
+		map.on('zoomend', this._onAnnotationZoom, this);
 		map.on('updateparts', this.onUpdateParts, this);
 		map.on('AnnotationCancel', this.onAnnotationCancel, this);
 		map.on('AnnotationReply', this.onReplyClick, this);
@@ -34,6 +36,18 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		var annotations = this._annotations[this._partHashes[part]];
 		for (var index in annotations) {
 			annotations[index].hide();
+		}
+	},
+
+	hasAnnotations: function (part) {
+		var annotations = this._annotations[this._partHashes[part]];
+		return annotations && annotations.length > 0;
+	},
+
+	updateDocBounds: function (count, extraSize) {
+		var annotations = this._annotations[this._partHashes[this._selectedPart]];
+		if (annotations && annotations.length === count) {
+			this._map._docLayer._updateMaxBounds(true, extraSize);
 		}
 	},
 
@@ -98,6 +112,10 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		this._map.focus();
 	},
 
+	_onAnnotationZoom: function (e) {
+		this.layoutAnnotations();
+	},
+
 	onReplyClick: function (e) {
 		var comment = {
 			Id: {
@@ -127,6 +145,9 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	onUpdateParts: function (e) {
 		if (typeof this._prevSelectedPart === 'number') {
 			this.hideAnnotations(this._prevSelectedPart);
+			if (this.hasAnnotations(this._selectedPart)) {
+				this._map._docLayer._updateMaxBounds(true);
+			}
 			this.layoutAnnotations();
 		}
 	},
@@ -144,7 +165,10 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 	layoutAnnotations: function () {
 		var annotations = this._annotations[this._partHashes[this._selectedPart]];
-		var topRight = this._map.latLngToLayerPoint(this._map.options.maxBounds.getNorthEast()).add(L.point(this.options.marginX, this.options.marginY));
+		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
+		var topRight = this._map.latLngToLayerPoint(this._map.options.maxBounds.getNorthEast())
+			.subtract(this.extraSize.multiplyBy(scale))
+			.add(L.point(this.options.marginX, this.options.marginY));
 		var bounds, annotation;
 		for (var index in annotations) {
 			annotation = annotations[index];
@@ -190,6 +214,9 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				this._annotations[comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
 			}
 			this._topAnnotation = 0;
+			if (this.hasAnnotations(this._selectedPart)) {
+				this._map._docLayer._updateMaxBounds(true);
+			}
 			this.layoutAnnotations();
 		} else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
@@ -205,10 +232,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				}
 				this._annotations[obj.comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), obj.comment).addTo(this._map));
 				this._topAnnotation = Math.min(this._topAnnotation, this._annotations[this._partHashes[this._selectedPart]].length - 1);
+				this.updateDocBounds(1, this.extraSize);
 				this.layoutAnnotations();
 			} else if (obj.comment.action === 'Remove') {
 				this.removeAnnotation(obj.comment.id);
 				this._topAnnotation = Math.min(this._topAnnotation, this._annotations[this._partHashes[this._selectedPart]].length - 1);
+				this.updateDocBounds(0);
 				this.layoutAnnotations();
 			} else if (obj.comment.action === 'Modify') {
 				var modified = this.getAnnotation(obj.comment.id);
@@ -379,5 +408,14 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				partNames: this._partHashes
 			});
 		}
+	},
+
+	_updateMaxBounds: function (sizeChanged, extraSize) {
+		if (!extraSize) {
+			var annotations = this._annotations && this._partHashes && this._selectedPart !== undefined ?
+				this._annotations[this._partHashes[this._selectedPart]] : [];
+			extraSize = annotations && annotations.length > 0 ? this.extraSize : null;
+		}
+		L.GridLayer.prototype._updateMaxBounds.call(this, sizeChanged, extraSize, {panInside: false});
 	}
 });

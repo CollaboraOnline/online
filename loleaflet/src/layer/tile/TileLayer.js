@@ -49,7 +49,7 @@ L.TileLayer = L.GridLayer.extend({
 		detectRetina: true,
 		crossOrigin: false,
 		previewInvalidationTimeout: 1000,
-		marginX: 50,
+		marginX: 10,
 		marginY: 10
 	},
 
