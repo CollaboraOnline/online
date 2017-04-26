@@ -57,13 +57,21 @@ L.AnnotationManager = L.Class.extend({
 		color = viewId >= 0 ? L.LOUtil.rgbToHex(this._map.getViewColor(viewId)) : '#43ACE8';
 		if (rectangles.length > 0) {
 			comment.textSelected = L.polygon(rectangles, {
-				interactive: true,
+				pointerEvents: 'all',
+				interactive: false,
 				fillColor: color,
 				fillOpacity: 0.25,
 				weight: 2,
 				opacity: 0.25
 			});
-			comment.textSelected.on('click', function() {
+			comment.textSelected.on('click', function(e) {
+				// Simulate a click at this position in the document
+				var latlng = this._map.mouseEventToLatLng(e.originalEvent);
+				var pos = this._map._docLayer._latLngToTwips(latlng);
+				this._map._docLayer._postMouseEvent('buttondown', pos.x, pos.y, 1, 1, 0);
+				this._map._docLayer._postMouseEvent('buttonup', pos.x, pos.y, 1, 1, 0);
+
+				// Also select this comment
 				this.selectById(comment.id);
 			}, this);
 		}
@@ -88,11 +96,18 @@ L.AnnotationManager = L.Class.extend({
 		color = viewId >= 0 ? L.LOUtil.rgbToHex(this._map.getViewColor(viewId)) : '#43ACE8';
 		if (rectangles.length > 0) {
 			redline.textSelected = L.polygon(rectangles, {
-				interactive: true,
+				pointerEvents: 'all',
+				interactive: false,
 				fillOpacity: 0,
 				opacity: 0
 			});
-			redline.textSelected.on('click', function() {
+			redline.textSelected.on('click', function(e) {
+				// Simulate a click at this position in the document
+				var latlng = this._map.mouseEventToLatLng(e.originalEvent);
+				var pos = this._map._docLayer._latLngToTwips(latlng);
+				this._map._docLayer._postMouseEvent('buttondown', pos.x, pos.y, 1, 1, 0);
+				this._map._docLayer._postMouseEvent('buttonup', pos.x, pos.y, 1, 1, 0);
+
 				this.selectById(redline.id);
 			}, this);
 		}
