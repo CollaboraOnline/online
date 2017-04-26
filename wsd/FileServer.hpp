@@ -27,6 +27,17 @@ public:
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, Poco::Net::HTTPResponse& response);
 
     static void handleRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket);
+
+    static void initializeCompression();
+
+    static void readDirToHash(std::string path);
+
+    static std::string getCompressedFile(std::string path);
+
+    static std::string getUncompressedFile(std::string path);
+
+private:
+   static std::map<std::string, std::pair<std::string, std::string>> FileHash;
 };
 
 #endif
