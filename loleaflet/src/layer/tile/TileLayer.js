@@ -63,7 +63,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._tileHeightPx = options.tileSize;
 
 		// detecting retina displays, adjusting tileWidthPx, tileHeightPx and zoom levels
-		if (options.detectRetina && L.Browser.retina && options.maxZoom > 0) {
+		if (options.docType !== 'spreadsheet' && options.detectRetina && L.Browser.retina && options.maxZoom > 0) {
 			this._tileWidthPx *= 2;
 			this._tileHeightPx *= 2;
 			options.zoomOffset++;
