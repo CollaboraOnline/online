@@ -70,6 +70,12 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	adjustRedLine: function(redline) {
+		// All sane values ?
+		if (!redline.textRange) {
+			console.warn('Redline received has invalid textRange');
+			return false;
+		}
+
 		var rectangles, color, viewId;
 		// transform change tracking index into an id
 		redline.id = 'change-' + redline.index;
@@ -90,6 +96,8 @@ L.AnnotationManager = L.Class.extend({
 				this.selectById(redline.id);
 			}, this);
 		}
+
+		return true;
 	},
 
 	// Fill normal comments in the documents
@@ -112,7 +120,10 @@ L.AnnotationManager = L.Class.extend({
 		this.clearChanges();
 		for (var idx in redlines) {
 			changecomment = redlines[idx];
-			this.adjustRedLine(changecomment);
+			if (!this.adjustRedLine(changecomment)) {
+				// something wrong in this redline, skip this one
+				continue;
+			}
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), changecomment).addTo(this._map));
 		}
 		if (this._items.length > 0) {
@@ -471,7 +482,10 @@ L.AnnotationManager = L.Class.extend({
 		var action = changetrack ? obj.redline.action : obj.comment.action;
 		if (action === 'Add') {
 			if (changetrack) {
-				this.adjustRedLine(obj.redline);
+				if (!this.adjustRedLine(obj.redline)) {
+					// something wrong in this redline
+					return;
+				}
 				this.add(obj.redline);
 			} else {
 				this.adjustComment(obj.comment);
@@ -502,7 +516,10 @@ L.AnnotationManager = L.Class.extend({
 			if (modified) {
 				var modifiedObj;
 				if (changetrack) {
-					this.adjustRedLine(obj.redline);
+					if (!this.adjustRedLine(obj.redline)) {
+						// something wrong in this redline
+						return;
+					}
 					modifiedObj = obj.redline;
 				} else {
 					this.adjustComment(obj.comment);
