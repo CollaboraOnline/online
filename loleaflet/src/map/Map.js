@@ -981,11 +981,16 @@ L.Map = L.Evented.extend({
 		// For touch devices, to pop-up the keyboard, it is required to call
 		// .focus() method on hidden input within actual 'click' event here
 		// Calling from some other place with no real 'click' event doesn't work
-		if (type === 'click' && this._permission === 'edit') {
-			this._textArea.blur();
-			this._textArea.focus();
-			if (this._docLayer && this._docLayer._annotations && this._docLayer._annotations.unselect)
+		if (type === 'click') {
+			if (this._permission === 'edit') {
+				this._textArea.blur();
+				this._textArea.focus();
+			}
+
+			// unselect if anything is selected already
+			if (this._docLayer && this._docLayer._annotations && this._docLayer._annotations.unselect) {
 				this._docLayer._annotations.unselect();
+			}
 		}
 
 		// we need to keep track if we have entered/left the map
