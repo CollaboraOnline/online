@@ -280,15 +280,15 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_updateContent: function () {
-		if (!(this._data.dateTime instanceof Date)) {
-			this._data.dateTime = new Date(this._data.dateTime.replace(/,.*/, 'Z'));
-		}
 		var linkedText = Autolinker.link(this._data.text);
 		this._contentText.innerHTML = linkedText;
 		// Original unlinked text
 		this._contentText.origText = this._nodeModifyText.innerHTML = this._data.text;
 		this._contentAuthor.innerHTML = this._data.author;
-		this._contentDate.innerHTML = this._data.dateTime.toDateString();
+
+		var d = new Date(this._data.dateTime.replace(/,.*/, 'Z'));
+		this._contentDate.innerHTML = isNaN(d.getTime())? this._data.dateTime: d.toDateString();
+
 		if (this._data.trackchange) {
 			this._captionText.innerHTML = this._data.description;
 		}
