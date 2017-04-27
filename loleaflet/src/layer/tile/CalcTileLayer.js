@@ -153,6 +153,10 @@ L.CalcTileLayer = L.TileLayer.extend({
 				Text: {
 					type: 'string',
 					value: e.annotation._data.text
+				},
+				Author: {
+					type: 'string',
+					value: this._map.getViewName(this._viewId)
 				}
 			};
 			this._map.sendUnoCommand('.uno:EditAnnotation', comment);
