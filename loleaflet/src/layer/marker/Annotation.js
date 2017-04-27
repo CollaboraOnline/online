@@ -283,7 +283,7 @@ L.Annotation = L.Layer.extend({
 
 		this._contentText.innerHTML = this._nodeModifyText.innerHTML = this._data.text;
 		this._contentAuthor.innerHTML = this._data.author;
-		this._contentDate.innerHTML = isNaN(d.getTime())? this._data.dateTime: d.toDateString();
+		this._contentDate.innerHTML = (isNaN(d.getTime()) || this._map.getDocType() === 'spreadsheet')? this._data.dateTime: d.toDateString();
 		if (this._data.trackchange) {
 			this._captionText.innerHTML = this._data.description;
 		}
