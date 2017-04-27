@@ -265,7 +265,10 @@ L.Annotation = L.Layer.extend({
 	_onReplyClick: function (e) {
 		L.DomEvent.stopPropagation(e);
 		this._data.reply = this._nodeReplyText.value;
-		this._nodeReplyText.value = null;
+		// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
+		// While in browsers like Chrome and Firefox, a null value is automatically converted to ''
+		// Better to assign '' here instead of null to keep the behavior same for all
+		this._nodeReplyText.value = '';
 		this.show();
 		this._map.fire('AnnotationReply', {annotation: this});
 	},
