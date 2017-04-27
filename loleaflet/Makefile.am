@@ -10,10 +10,14 @@ MINIFY=false
 
 EXTRA_DIST = $(shell git ls-files)
 
-all-local: node_modules
+all-local: node_modules build-l10n
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
 	jake build debug=$(ENABLE_DEBUG) minify=$(MINIFY)
+
+	mkdir -p dist/l10n/styles
+	mv po/*.json dist/l10n/
+	mv po/styles/*.json dist/l10n/styles/
 
 node_modules: npm-shrinkwrap.json
 	npm install
