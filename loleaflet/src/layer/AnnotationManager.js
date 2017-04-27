@@ -399,7 +399,7 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	add: function (comment) {
-		var annotation = L.annotation(this._map.options.maxBounds.getSouthEast(), comment,
+		var annotation = L.annotation(this._map._docLayer._twipsToLatLng(comment.anchorPos.getTopRight()), comment,
 			comment.id === 'new' ? {noMenu: true} : {}).addTo(this._map);
 		if (comment.parent && comment.parent > '0') {
 			var parentIdx = this.getIndexOf(comment.parent);
