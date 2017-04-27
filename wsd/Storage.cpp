@@ -31,6 +31,12 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/Timestamp.h>
 
+// For residual Poco SSL usage.
+#include <Poco/Net/Context.h>
+#include <Poco/Net/SSLManager.h>
+#include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/KeyConsoleHandler.h>
+
 #include "Auth.hpp"
 #include "Common.hpp"
 #include "Exceptions.hpp"
@@ -98,6 +104,24 @@ void StorageBase::initialize()
             }
         }
     }
+
+#if ENABLE_SSL
+    // FIXME: should use our own SSL socket implementation here.
+    Poco::Crypto::initializeCrypto();
+    Poco::Net::initializeSSL();
+
+    // Init client
+    Poco::Net::Context::Params sslClientParams;
+
+    // TODO: Be more strict and setup SSL key/certs for remove server and us
+    sslClientParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
+
+    Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleClientHandler = new Poco::Net::KeyConsoleHandler(false);
+    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidClientCertHandler = new Poco::Net::AcceptCertificateHandler(false);
+
+    Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
+    Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
+#endif
 }
 
 bool isLocalhost(const std::string& targetHost)
@@ -283,6 +307,8 @@ namespace {
 inline
 Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
 {
+    // FIXME: if we're configured for http - we can still use an https:// wopi
+    // host surely; of course - the converse is not true / sensible.
     return (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination())
         ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(),
                                             Poco::Net::SSLManager::instance().defaultClientContext())
