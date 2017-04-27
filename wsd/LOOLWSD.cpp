@@ -794,7 +794,7 @@ void LOOLWSD::initialize(Application& self)
         LOG_INF("Command trace dumping enabled to file: " << path);
     }
 
-    FileServerRequestHandler::initializeCompression();
+    FileServerRequestHandler::initialize();
 
     StorageBase::initialize();
 

@@ -28,13 +28,14 @@ public:
 
     static void handleRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket);
 
-    static void initializeCompression();
+    /// Read all files that we can serve into memory and compress them.
+    static void initialize();
 
-    static void readDirToHash(std::string path);
+    static void readDirToHash(const std::string &basePath, const std::string &path);
 
-    static std::string getCompressedFile(std::string path);
+    static const std::string *getCompressedFile(const std::string &path);
 
-    static std::string getUncompressedFile(std::string path);
+    static const std::string *getUncompressedFile(const std::string &path);
 
 private:
    static std::map<std::string, std::pair<std::string, std::string>> FileHash;

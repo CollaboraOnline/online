@@ -153,19 +153,15 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                 response.add("Referrer-Policy", "no-referrer");
             }
 
-            const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
-            const auto filepath = path.absolute().toString();
-            if (filepath.find(LOOLWSD::FileServerRoot) != 0)
-            {
-                // Accessing unauthorized path.
-                throw Poco::FileAccessDeniedException("Invalid or forbidden file path: [" + filepath + "].");
-            }
+            const std::string relPath = getRequestPathname(request);
+            // Is this a file we read at startup - if not; its not for serving.
+            if (FileHash.find(relPath) == FileHash.end())
+                throw Poco::FileAccessDeniedException("Invalid or forbidden file path: [" + relPath + "].");
 
+            // Do we have an extension.
             const std::size_t extPoint = endPoint.find_last_of('.');
             if (extPoint == std::string::npos)
-            {
                 throw Poco::FileNotFoundException("Invalid file.");
-            }
 
             const std::string fileType = endPoint.substr(extPoint + 1);
             std::string mimeType;
@@ -220,25 +216,22 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             response.setContentType(mimeType);
             response.add("X-Content-Type-Options", "nosniff");
 
-            if(gzip)
+            const std::string *content;
+            if (gzip)
             {
                 response.set("Content-Encoding", "gzip");
-                std::ostringstream oss;
-                response.write(oss);
-                const std::string header = oss.str();
-                LOG_TRC("#" << socket->getFD() << ": Sending compressed file [" << filepath << "]: " << header);
-                socket->send(header);
-                socket->send(getCompressedFile(filepath));
+                content = getCompressedFile(relPath);
             }
             else
-            {
-                std::ostringstream oss;
-                response.write(oss);
-                const std::string header = oss.str();
-                LOG_TRC("#" << socket->getFD() << ": Sending file [" << filepath << "]: " << header);
-                socket->send(header);
-                socket->send(getUncompressedFile(filepath));
-            }
+                content = getUncompressedFile(relPath);
+
+            std::ostringstream oss;
+            response.write(oss);
+            const std::string header = oss.str();
+            LOG_TRC("#" << socket->getFD() << ": Sending " <<
+                    (!gzip ? "un":"") << "compressed : file [" << relPath << "]: " << header);
+            socket->send(header);
+            socket->send(*content);
         }
     }
     catch (const Poco::Net::NotAuthenticatedException& exc)
@@ -283,30 +276,31 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
     }
 }
 
-void FileServerRequestHandler::readDirToHash(std::string path)
+void FileServerRequestHandler::readDirToHash(const std::string &basePath, const std::string &path)
 {
-
     struct dirent *currentFile;
     struct stat fileStat;
     DIR *workingdir;
 
-    workingdir = opendir(path.c_str());
+    LOG_TRC("Pre-reading directory: " << basePath + path << "\n");
+    workingdir = opendir((basePath + path).c_str());
 
-    while((currentFile = readdir(workingdir)) != NULL)
+    while ((currentFile = readdir(workingdir)) != NULL)
     {
-        if(currentFile->d_name[0] == '.')
+        if (currentFile->d_name[0] == '.')
             continue;
 
-        std::string filePath = path + "/" + currentFile->d_name;
-        stat(filePath.c_str(), &fileStat);
+        std::string relPath = path + "/" + currentFile->d_name;
+        stat ((basePath + relPath).c_str(), &fileStat);
 
-        if(S_ISDIR(fileStat.st_mode))
+        if (S_ISDIR(fileStat.st_mode))
+            readDirToHash(basePath, relPath);
+
+        else if (S_ISREG(fileStat.st_mode))
         {
-            readDirToHash(filePath);
-        }
-        else if(S_ISREG(fileStat.st_mode))
-        {
-            std::ifstream file(filePath, std::ios::binary);
+            LOG_TRC("Reading file: '" << (basePath + relPath) << " as '" << relPath << "'\n");
+
+            std::ifstream file(basePath + relPath, std::ios::binary);
 
             z_stream strm;
             strm.zalloc = Z_NULL;
@@ -317,12 +311,12 @@ void FileServerRequestHandler::readDirToHash(std::string path)
             auto buf = std::unique_ptr<char[]>(new char[fileStat.st_size]);
             std::string compressedFile = "";
             std::string uncompressedFile = "";
-            do{
-
+            do {
                 file.read(&buf[0], fileStat.st_size);
                 const long unsigned int size = file.gcount();
-                if(size == 0)
+                if (size == 0)
                     break;
+
                 long unsigned int haveComp;
                 long unsigned int compSize = compressBound(size);
                 char *cbuf;
@@ -341,36 +335,36 @@ void FileServerRequestHandler::readDirToHash(std::string path)
                 compressedFile = compressedFile + partialcompFile;
                 uncompressedFile = uncompressedFile + partialuncompFile;
 
-            }while(true);
+            } while(true);
+
             std::pair<std::string, std::string> FilePair(uncompressedFile, compressedFile);
-            FileHash.emplace(filePath, FilePair);
+            FileHash.emplace(relPath, FilePair);
         }
     }
     closedir(workingdir);
 }
 
-void FileServerRequestHandler::initializeCompression()
+void FileServerRequestHandler::initialize()
 {
-    std::string rootPath(get_current_dir_name());
-    static const std::vector<std::string> extensionArray
-        = {"/loleaflet/dist"};
-
-    for(const auto& extension: extensionArray)
+    static const std::vector<std::string> subdirs = { "/loleaflet/dist" };
+    for(const auto& subdir: subdirs)
     {
-        std::string extensionPath;
-        extensionPath = rootPath + extension;
-        readDirToHash(extensionPath);
+        try {
+            readDirToHash(LOOLWSD::FileServerRoot, subdir);
+        } catch (...) {
+            LOG_ERR("Failed to read from directory " << subdir);
+        }
     }
 }
 
-std::string FileServerRequestHandler::getCompressedFile(std::string path)
+const std::string *FileServerRequestHandler::getCompressedFile(const std::string &path)
 {
-    return FileHash[path].second;
+    return &FileHash[path].second;
 }
 
-std::string FileServerRequestHandler::getUncompressedFile(std::string path)
+const std::string *FileServerRequestHandler::getUncompressedFile(const std::string &path)
 {
-    return FileHash[path].first;
+    return &FileHash[path].first;
 }
 
 std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& request)
@@ -381,9 +375,8 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
 
     std::string path(requestUri.getPath());
 
-    // Convert version back to a real file name. Remove first foreslash as the root ends in one.
-    Poco::replaceInPlace(path, std::string("/loleaflet/" LOOLWSD_VERSION_HASH "/"), std::string("loleaflet/dist/"));
-    Poco::replaceInPlace(path, std::string("/loleaflet/"), std::string("loleaflet/"));
+    // Convert version back to a real file name.
+    Poco::replaceInPlace(path, std::string("/loleaflet/" LOOLWSD_VERSION_HASH "/"), std::string("/loleaflet/dist/"));
 
     return path;
 }
@@ -402,12 +395,13 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
             wopiDomain = Poco::URI(wopiHost).getScheme() + "://" + Poco::URI(wopiHost).getHost();
         }
     }
-    const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
-    LOG_DBG("Preprocessing file: " << path.toString());
 
-    if (!Poco::File(path).exists())
+    // Is this a file we read at startup - if not; its not for serving.
+    const std::string relPath = getRequestPathname(request);
+    LOG_DBG("Preprocessing file: " << relPath);
+    if (FileHash.find(relPath) == FileHash.end())
     {
-        LOG_ERR("File [" << path.toString() << "] does not exist.");
+        LOG_ERR("File [" << relPath << "] does not exist.");
 
         // 404 not found
         std::ostringstream oss;
@@ -420,10 +414,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         return;
     }
 
-    std::string preprocess;
-    FileInputStream file(path.toString());
-    StreamCopier::copyToString(file, preprocess);
-    file.close();
+    std::string preprocess = *getUncompressedFile(relPath);
 
     HTMLForm form(request, message);
     const std::string& accessToken = form.get("access_token", "");
@@ -564,7 +555,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         << preprocess;
 
     socket->send(oss.str());
-    LOG_DBG("Sent file: " << path.toString() << ": " << preprocess);
+    LOG_DBG("Sent file: " << relPath << ": " << preprocess);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
