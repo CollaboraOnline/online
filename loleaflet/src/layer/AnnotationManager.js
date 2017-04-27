@@ -14,7 +14,6 @@ L.AnnotationManager = L.Class.extend({
 		this._map = map;
 		this._items = [];
 		this._selected = null;
-		this._animation = new L.PosAnimation();
 		L.setOptions(this, options);
 		this._arrow = L.polyline([], {color: 'darkblue', weight: 1});
 		this._map.on('zoomend', this._onAnnotationZoom, this);
