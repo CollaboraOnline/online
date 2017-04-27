@@ -191,12 +191,6 @@ body {
 	width: 95%;
 }
 
-.loleaflet-cell-annotation {
-	background: red;
-	border: 1px solid red;
-	pointer-events: none;
-}
-
 .loleaflet-div-layer {
 	position: absolute;
 	left: 0;

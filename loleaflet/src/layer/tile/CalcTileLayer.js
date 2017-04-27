@@ -34,16 +34,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 	createAnnotation: function (comment) {
 		var annotation = L.divOverlay(comment.cellPos).bindAnnotation(L.annotation(L.latLng(0, 0),
 			comment, comment.id === 'new' ? {noMenu: true} : {}));
-		annotation.mark = L.marker(comment.cellPos.getNorthEast(), {
-			draggable: false,
-			clickable: false,
-			keyboard: false,
-			icon: L.divIcon({
-				iconSize: L.point(2, 2),
-				iconAnchor: L.point(4, 0),
-				className: 'loleaflet-cell-annotation'
-			})
-		});
 		return annotation;
 	},
 
@@ -94,12 +84,10 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	showAnnotation: function (annotation) {
-		this._map.addLayer(annotation.mark);
 		this._map.addLayer(annotation);
 	},
 
 	hideAnnotation: function (annotation) {
-		this._map.removeLayer(annotation.mark);
 		this._map.removeLayer(annotation);
 	},
 
