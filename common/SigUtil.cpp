@@ -190,6 +190,14 @@ namespace SigUtil
 
         sigaction(signal, &action, nullptr);
 
+        dumpBacktrace();
+
+        // let default handler process the signal
+        kill(Poco::Process::id(), signal);
+    }
+
+    void dumpBacktrace()
+    {
         char header[32];
         sprintf(header, "Backtrace %d:\n", getpid());
 
@@ -224,9 +232,6 @@ namespace SigUtil
             LOG_ERR("Sleeping 30s to allow debugging.");
             sleep(30);
         }
-
-        // let default handler process the signal
-        kill(Poco::Process::id(), signal);
     }
 
     void setFatalSignals()
