@@ -19,21 +19,58 @@
 #include <sys/capability.h>
 #include <unistd.h>
 #include <utime.h>
-
-#include <common/Log.hpp>
-
-#include <Seccomp.hpp>
-
+#include <signal.h>
 #include <sys/prctl.h>
 #include <linux/audit.h>
 #include <linux/filter.h>
 #include <linux/seccomp.h>
 
+#include <common/Log.hpp>
+#include <common/SigUtil.hpp>
+#include <Seccomp.hpp>
+
+#ifndef SYS_SECCOMP
+#  define SYS_SECCOMP 1
+#endif
+
 #if defined(__x86_64__)
 #  define AUDIT_ARCH_NR AUDIT_ARCH_X86_64
+#  define REG_SYSCALL   REG_RAX
 #else
 #  error "Platform does not support seccomp filtering yet - unsafe."
 #endif
+
+extern "C" {
+
+static void handleSysSignal(int /* signal */,
+                            siginfo_t *info,
+                            void *context)
+{
+	ucontext_t *uctx = reinterpret_cast<ucontext_t *>(context);
+
+    Log::signalLogPrefix();
+    Log::signalLog("SIGSYS trapped with code: ");
+    Log::signalLogNumber(info->si_code);
+    Log::signalLog(" and context ");
+    Log::signalLogNumber(reinterpret_cast<size_t>(context));
+    Log::signalLog("\n");
+
+	if (info->si_code != SYS_SECCOMP || !uctx)
+		return;
+
+	unsigned int syscall = uctx->uc_mcontext.gregs[REG_SYSCALL];
+
+    Log::signalLogPrefix();
+    Log::signalLog(" seccomp trapped signal, un-authorized sys-call: ");
+    Log::signalLogNumber(syscall);
+    Log::signalLog("\n");
+
+    SigUtil::dumpBacktrace();
+
+    _exit(1);
+}
+
+} // extern "C"
 
 namespace Seccomp {
 
@@ -47,7 +84,7 @@ bool lockdown(Type type)
 
     #define KILL_SYSCALL(name) \
         BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, __NR_##name, 0, 1), \
-        BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_KILL)
+        BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_TRAP)
 
     struct sock_filter filterCode[] = {
         // Check our architecture is correct.
@@ -139,8 +176,7 @@ bool lockdown(Type type)
         KILL_SYSCALL(seccomp), // no further fiddling
         KILL_SYSCALL(bpf),     // no further fiddling
 
-        // allow the rest - FIXME: prolly we should white-list
-        // but LibreOffice is rather large.
+        // allow the rest.
         BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
     };
 
@@ -160,7 +196,17 @@ bool lockdown(Type type)
         return false;
     }
 
+    // Trap, log, and exit on failure
+    struct sigaction action;
+
+    sigemptyset(&action.sa_mask);
+    action.sa_flags = SA_SIGINFO;
+    action.sa_handler = reinterpret_cast<__sighandler_t>(handleSysSignal);
+
+    sigaction(SIGSYS, &action, nullptr);
+
     LOG_TRC("Install seccomp filter successfully.");
+
     return true;
 }
 
