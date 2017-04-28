@@ -47,6 +47,7 @@ shared_sources = common/FileUtil.cpp \
                  common/Log.cpp \
                  common/Protocol.cpp \
                  common/Session.cpp \
+                 common/Seccomp.cpp \
                  common/MessageQueue.cpp \
                  common/SigUtil.cpp \
                  common/SpookyV2.cpp \
@@ -151,6 +152,7 @@ shared_headers = common/Common.hpp \
                  common/Log.hpp \
                  common/LOOLWebSocket.hpp \
                  common/Protocol.hpp \
+                 common/Seccomp.hpp \
                  common/Session.hpp \
                  common/Unit.hpp \
                  common/UnitHTTP.hpp \

@@ -266,6 +266,9 @@ AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
 AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
                  [],
                  [AC_MSG_ERROR([header Poco/Net/WebSocket.h not found, perhaps you want to use --with-poco-includes])])
+AC_CHECK_HEADERS([linux/seccomp.h],
+                 [],
+                 [AC_MSG_ERROR([critical security header linux/seccomp.h not found.])])
 
 AC_MSG_CHECKING([POCO version])
 AC_COMPILE_IFELSE([AC_LANG_SOURCE([

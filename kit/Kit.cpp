@@ -65,6 +65,7 @@
 #include "Util.hpp"
 
 #include "common/SigUtil.hpp"
+#include "common/Seccomp.hpp"
 
 #ifdef FUZZER
 #include <kit/DummyLibreOfficeKit.hpp>
@@ -1759,6 +1760,13 @@ void lokit_main(const std::string& childRoot,
                 LOG_FTL("LibreOfficeKit initialization failed. Exiting.");
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
+        }
+
+        // Lock down the syscalls that can be used
+        if (!Seccomp::lockdown(Seccomp::Type::KIT))
+        {
+            LOG_ERR("LibreOfficeKit security lockdown failed. Exiting.");
+            std::_Exit(Application::EXIT_SOFTWARE);
         }
 
         assert(loKit);
