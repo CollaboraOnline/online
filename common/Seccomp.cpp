@@ -41,7 +41,10 @@ bool lockdown(Type type)
 {
     (void)type; // so far just the kit.
 
-    // FIXME: partition better to give log() branching.
+    #define ACCEPT_SYSCALL(name) \
+        BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, __NR_##name, 0, 1), \
+        BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
+
     #define KILL_SYSCALL(name) \
         BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, __NR_##name, 0, 1), \
         BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_KILL)
@@ -55,8 +58,23 @@ bool lockdown(Type type)
         // Load sycall number
         BPF_STMT(BPF_LD+BPF_W+BPF_ABS,  offsetof(struct seccomp_data, nr)),
 
-        // FIXME: white-list low-numbers / safe common-cases first
-        // at the expense of some cross-platform complexity ?
+        // ------------------------------------------------------------
+        // ---   First white-list the syscalls we frequently use.   ---
+        // ------------------------------------------------------------
+        ACCEPT_SYSCALL(recvfrom),
+        ACCEPT_SYSCALL(write),
+        ACCEPT_SYSCALL(futex),
+
+        // glibc's 'poll' has to answer for this lot:
+        ACCEPT_SYSCALL(epoll_wait),
+        ACCEPT_SYSCALL(epoll_ctl),
+        ACCEPT_SYSCALL(epoll_create),
+        ACCEPT_SYSCALL(close),
+        ACCEPT_SYSCALL(nanosleep),
+
+        // ------------------------------------------------------------
+        // --- Now block everything that we don't like the look of. ---
+        // ------------------------------------------------------------
 
         // FIXME: should we bother blocking calls that have early
         // permission checks we don't meet ?
@@ -73,17 +91,16 @@ bool lockdown(Type type)
         KILL_SYSCALL(setitimer),
         KILL_SYSCALL(sendfile),
         KILL_SYSCALL(shutdown),
-        KILL_SYSCALL(listen),
+        KILL_SYSCALL(listen),  // server sockets
+        KILL_SYSCALL(accept),  // server sockets
 #if 0
         KILL_SYSCALL(wait4),
 #endif
         KILL_SYSCALL(kill),   // !
         KILL_SYSCALL(shmctl),
-        KILL_SYSCALL(ptrace), // !
+        KILL_SYSCALL(ptrace), // tracing
         KILL_SYSCALL(capset),
-#if 0
         KILL_SYSCALL(uselib),
-#endif
         KILL_SYSCALL(personality), // !
         KILL_SYSCALL(vhangup),
         KILL_SYSCALL(modify_ldt), // !
@@ -114,7 +131,9 @@ bool lockdown(Type type)
         KILL_SYSCALL(tee),
         KILL_SYSCALL(vmsplice), // vm bits
         KILL_SYSCALL(move_pages), // vm bits
+        KILL_SYSCALL(accept4), // server sockets
         KILL_SYSCALL(inotify_init1),
+        KILL_SYSCALL(perf_event_open), // profiling
         KILL_SYSCALL(fanotify_init),
         KILL_SYSCALL(fanotify_mark),
         KILL_SYSCALL(seccomp), // no further fiddling
