@@ -56,6 +56,9 @@ namespace SigUtil
     /// after a certain (short) timeout.
     bool killChild(const int pid);
 
+    /// Dump a signal-safe back-trace
+    void dumpBacktrace();
+
 } // end namespace SigUtil
 
 #endif
