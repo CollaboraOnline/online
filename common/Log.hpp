@@ -50,6 +50,8 @@ namespace Log
     void signalLogPrefix();
     /// Signal safe logging
     void signalLog(const char* message);
+    /// Signal log number
+    void signalLogNumber(size_t num);
 
     /// The following is to write streaming logs.
     /// Log::info() << "Value: 0x" << std::hex << value

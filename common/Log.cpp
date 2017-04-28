@@ -78,6 +78,21 @@ namespace Log
         }
     }
 
+    // We need a signal safe means of writing messages
+    //   $ man 7 signal
+    void signalLogNumber(size_t num)
+    {
+        int i;
+        char buf[22];
+        buf[21] = '\0';
+        for (i = 20; i > 0 && num > 0; --i)
+        {
+            buf[i] = '0' + num % 10;
+            num /= 10;
+        }
+        signalLog(buf + i + 1);
+    }
+
     char* prefix(char* buffer, const char* level, bool sigSafe)
     {
         long osTid;
