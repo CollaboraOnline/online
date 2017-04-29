@@ -120,7 +120,7 @@ tar cf - . | (cd %{buildroot}/usr/share/loolwsd/loleaflet && tar xf -)
 %endif
 
 %config(noreplace) /etc/cron.d/loolwsd.cron
-%config(noreplace) /etc/loolwsd/loolwsd.xml
+%config(noreplace) %attr(640, lool, root) /etc/loolwsd/loolwsd.xml
 %config(noreplace) %attr(400, lool, lool) /etc/loolwsd/key.pem
 %if %{ssl_support} == "YES"
 %config(noreplace) /etc/loolwsd/cert.pem
