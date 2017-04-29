@@ -10,6 +10,8 @@ case "$1" in
 	adduser --quiet --system --group --home /opt/lool lool
 	mkdir -p /var/cache/loolwsd && chown lool: /var/cache/loolwsd
 	rm -rf /var/cache/loolwsd/*
+	chown lool: /etc/loolwsd/loolwsd.xml
+	chmod 640 /etc/loowsd/loolwsd.xml
 
 	# We assume that the LibreOffice to be used is built TDF-style
 	# and installs in /opt/collaboraoffice5.1, and that /opt/lool is
