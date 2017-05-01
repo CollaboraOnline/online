@@ -540,6 +540,33 @@ inline void sendText(std::shared_ptr<LOOLWebSocket>& socket, const std::string& 
     }
 }
 
+inline std::vector<char> getTileAndSave(std::shared_ptr<LOOLWebSocket>& socket,
+                                        const std::string& req,
+                                        const std::string& filename,
+                                        const std::string& testname)
+{
+    std::cerr << testname << "Requesting: " << req << std::endl;
+    sendTextFrame(socket, req, testname);
+
+    const auto tile = getResponseMessage(socket, "tile:", testname);
+    std::cerr << testname << " Tile PNG size: " << tile.size() << std::endl;
+
+    const std::string firstLine = LOOLProtocol::getFirstLine(tile);
+    std::vector<char> res(tile.begin() + firstLine.size() + 1, tile.end());
+    std::stringstream streamRes;
+    std::copy(res.begin(), res.end(), std::ostream_iterator<char>(streamRes));
+
+    if (!filename.empty())
+    {
+        std::fstream outStream(filename, std::ios::out);
+        outStream.write(res.data(), res.size());
+        outStream.close();
+        std::cerr << testname << "Saved [" << firstLine << "] to [" << filename << "]" << std::endl;
+    }
+
+    return res;
+}
+
 }
 
 #endif

@@ -92,6 +92,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 //    CPPUNIT_TEST(testEditAnnotationWriter);
     // FIXME CPPUNIT_TEST(testInsertAnnotationCalc);
     CPPUNIT_TEST(testCalcEditRendering);
+    CPPUNIT_TEST(testCalcRenderAfterNewView);
     CPPUNIT_TEST(testFontList);
     CPPUNIT_TEST(testStateUnoCommandWriter);
     CPPUNIT_TEST(testStateUnoCommandCalc);
@@ -146,6 +147,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testEditAnnotationWriter();
     void testInsertAnnotationCalc();
     void testCalcEditRendering();
+    void testCalcRenderAfterNewView();
     void testFontList();
     void testStateUnoCommandWriter();
     void testStateUnoCommandCalc();
@@ -1765,6 +1767,50 @@ void HTTPWSTest::testCalcEditRendering()
             break;
         }
     }
+}
+
+/// When a second view is loaded to a Calc doc,
+/// the first stops rendering correctly.
+/// This only happens at high rows.
+void HTTPWSTest::testCalcRenderAfterNewView()
+{
+    const auto testname = "calcRenderAfterNewView ";
+
+    // Load a doc with the cursor saved at a top row.
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.ods", documentPath, documentURL, testname);
+
+    auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    // Page Down until we get to the bottom of the doc.
+    for (int i = 0; i < 40; ++i)
+    {
+        sendTextFrame(socket, "key type=input char=0 key=1031", testname);
+    }
+
+    // Wait for status due to doc resize.
+    assertResponseString(socket, "status:", testname);
+
+    const auto req = "tilecombine part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
+
+    // Get tile.
+    const std::vector<char> tile1 = getTileAndSave(socket, req, "/tmp/calc_render_orig.png", testname);
+
+
+    // Connect second client, which will load at the top.
+    std::cerr << testname << "Connecting second client." << std::endl;
+    auto socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
+
+
+    // Up one row on the first view to trigger the bug.
+    std::cerr << testname << "Up." << std::endl;
+    sendTextFrame(socket, "key type=input char=0 key=1025", testname);
+    assertResponseString(socket, "invalidatetiles:", testname); // Up invalidates.
+
+    // Get same tile again.
+    const std::vector<char> tile2 = getTileAndSave(socket, req, "/tmp/calc_render_sec.png", testname);
+
+    CPPUNIT_ASSERT(tile1 == tile2);
 }
 
 std::string HTTPWSTest::getFontList(const std::string& message)
