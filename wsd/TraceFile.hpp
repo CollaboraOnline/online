@@ -35,7 +35,7 @@ public:
         Invalid = 0,
         Incoming = '>',
         Outgoing = '<',
-        Event = '-'
+        Event = '~'
     };
 
     TraceFileRecord() :
@@ -115,7 +115,7 @@ public:
                 // Create a snapshot file.
                 const Poco::Path origPath(localPath);
                 std::string filename = origPath.getBaseName();
-                filename += '_' + Poco::DateTimeFormatter::format(Poco::DateTime(), "%Y%m%d_%H~%M~%S");
+                filename += '_' + Poco::DateTimeFormatter::format(Poco::DateTime(), "%Y%m%d_%H-%M-%S");
                 filename += '.' + origPath.getExtension();
                 snapshot = Poco::Path(_path, filename).toString();
 
@@ -273,8 +273,9 @@ private:
         }
 
         std::string res = path.substr(0, pos);
-        res += Poco::DateTimeFormatter::format(Poco::DateTime(), "%Y%m%d_%H~%M~%S");
+        res += Poco::DateTimeFormatter::format(Poco::DateTime(), "%Y%m%d_%H-%M-%S");
         res += path.substr(pos + 1);
+        LOG_INF("Command trace dumping enabled to file: " << res);
         return res;
     }
 

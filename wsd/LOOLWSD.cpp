@@ -791,7 +791,6 @@ void LOOLWSD::initialize(Application& self)
         const auto compress = getConfigValue<bool>(conf, "trace.path[@compress]", false);
         const auto takeSnapshot = getConfigValue<bool>(conf, "trace.path[@snapshot]", false);
         TraceDumper.reset(new TraceFileWriter(path, recordOutgoing, compress, takeSnapshot, filters));
-        LOG_INF("Command trace dumping enabled to file: " << path);
     }
 
     FileServerRequestHandler::initialize();
