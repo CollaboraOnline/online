@@ -247,6 +247,7 @@ L.AnnotationManager = L.Class.extend({
 		if (commentThread.length <= 0)
 			return;
 
+		(new L.PosAnimation()).run(commentThread[0]._container, this._map.latLngToLayerPoint(latLng));
 		commentThread[0].setLatLng(latLng);
 		var bounds = commentThread[0].getBounds();
 		var idx = 1;
@@ -268,6 +269,7 @@ L.AnnotationManager = L.Class.extend({
 		idx = 0;
 		for (idx = 0; idx < commentThread.length; ++idx) {
 			latLng = this._map.layerPointToLatLng(pt);
+			(new L.PosAnimation()).run(commentThread[idx]._container, this._map.latLngToLayerPoint(latLng));
 			commentThread[idx].setLatLng(latLng);
 			commentThread[idx].show();
 
@@ -280,6 +282,7 @@ L.AnnotationManager = L.Class.extend({
 		if (commentThread.length <= 0)
 			return;
 
+		(new L.PosAnimation()).run(commentThread[0]._container, this._map.latLngToLayerPoint(latLng));
 		commentThread[0].setLatLng(latLng);
 		var bounds = commentThread[0].getBounds();
 		var idx = 1;
@@ -301,6 +304,7 @@ L.AnnotationManager = L.Class.extend({
 		idx = 0;
 		for (idx = 0; idx < commentThread.length; ++idx) {
 			latLng = this._map.layerPointToLatLng(pt);
+			(new L.PosAnimation()).run(commentThread[idx]._container, this._map.latLngToLayerPoint(latLng));
 			commentThread[idx].setLatLng(latLng);
 			commentThread[idx].show();
 
