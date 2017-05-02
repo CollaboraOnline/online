@@ -28,7 +28,7 @@ L.DivOverlay = L.Layer.extend({
 	},
 
 	update: function () {
-		if (this._container) {
+		if (this._container && this._map) {
 			var topLeft = this._map.latLngToLayerPoint(this._latLngBounds.getNorthWest());
 			var size = this._map.latLngToLayerPoint(this._latLngBounds.getSouthEast()).subtract(topLeft);
 			L.DomUtil.setPosition(this._container, topLeft);
