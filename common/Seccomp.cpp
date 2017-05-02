@@ -173,8 +173,12 @@ bool lockdown(Type type)
         KILL_SYSCALL(perf_event_open), // profiling
         KILL_SYSCALL(fanotify_init),
         KILL_SYSCALL(fanotify_mark),
+#ifdef __NR_seccomp
         KILL_SYSCALL(seccomp), // no further fiddling
+#endif
+#ifdef __NR_bpf
         KILL_SYSCALL(bpf),     // no further fiddling
+#endif
 
         // allow the rest.
         BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
