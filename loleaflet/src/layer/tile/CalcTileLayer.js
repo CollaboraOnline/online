@@ -210,6 +210,9 @@ L.CalcTileLayer = L.TileLayer.extend({
 		} else if (textMsg.startsWith('invalidateheader: row')) {
 			this._map.fire('updaterowcolumnheaders', {x: 0, y: this._map._getTopLeftPoint().y, offset: {x: 0, y: undefined}});
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
+		} else if (textMsg.startsWith('invalidateheader: all')) {
+			this._map.fire('updaterowcolumnheaders', {x: this._map._getTopLeftPoint().x, y: this._map._getTopLeftPoint(), offset: {x: undefined, y: undefined}});
+			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
 		}
