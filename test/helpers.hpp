@@ -13,6 +13,9 @@
 #include <iterator>
 
 #include <Poco/BinaryReader.h>
+#include <Poco/Dynamic/Var.h>
+#include <Poco/JSON/JSON.h>
+#include <Poco/JSON/Parser.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -565,6 +568,34 @@ inline std::vector<char> getTileAndSave(std::shared_ptr<LOOLWebSocket>& socket,
     }
 
     return res;
+}
+
+inline void getServerVersion(LOOLWebSocket& socket,
+                             int& major, int& minor,
+                             const std::string& testname)
+{
+    const std::string clientVersion = "loolclient 0.1";
+    sendTextFrame(socket, clientVersion);
+    std::vector<char> loVersion = getResponseMessage(socket, "lokitversion", testname);
+    std::string line = LOOLProtocol::getFirstLine(loVersion.data(), loVersion.size());
+    line = line.substr(strlen("lokitversion "));
+    Poco::JSON::Parser parser;
+    Poco::Dynamic::Var loVersionVar = parser.parse(line);
+    const Poco::SharedPtr<Poco::JSON::Object>& loVersionObject = loVersionVar.extract<Poco::JSON::Object::Ptr>();
+    std::string loProductVersion = loVersionObject->get("ProductVersion").toString();
+    std::istringstream stream(loProductVersion);
+    stream >> major;
+    assert(stream.get() == '.');
+    stream >> minor;
+
+    std::cerr << testname << "Client [" << major << '.' << minor << "]." << std::endl;
+}
+
+inline void getServerVersion(std::shared_ptr<LOOLWebSocket>& socket,
+                             int& major, int& minor,
+                             const std::string& testname)
+{
+    getServerVersion(*socket, major, minor, testname);
 }
 
 }
