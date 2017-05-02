@@ -16,9 +16,6 @@
 #include <regex>
 #include <vector>
 
-#include <Poco/Dynamic/Var.h>
-#include <Poco/JSON/JSON.h>
-#include <Poco/JSON/Parser.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -92,7 +89,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 //    CPPUNIT_TEST(testEditAnnotationWriter);
     // FIXME CPPUNIT_TEST(testInsertAnnotationCalc);
     CPPUNIT_TEST(testCalcEditRendering);
-    CPPUNIT_TEST(testCalcRenderAfterNewView);
+    CPPUNIT_TEST(testCalcRenderAfterNewView51);
+    CPPUNIT_TEST(testCalcRenderAfterNewView53);
     CPPUNIT_TEST(testFontList);
     CPPUNIT_TEST(testStateUnoCommandWriter);
     CPPUNIT_TEST(testStateUnoCommandCalc);
@@ -147,7 +145,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testEditAnnotationWriter();
     void testInsertAnnotationCalc();
     void testCalcEditRendering();
-    void testCalcRenderAfterNewView();
+    void testCalcRenderAfterNewView51();
+    void testCalcRenderAfterNewView53();
     void testFontList();
     void testStateUnoCommandWriter();
     void testStateUnoCommandCalc();
@@ -1712,21 +1711,9 @@ void HTTPWSTest::testCalcEditRendering()
     std::cerr << "size: " << tile.size() << std::endl;
 
     // Return early for now when on LO >= 5.2.
-    std::string clientVersion = "loolclient 0.1";
-    sendTextFrame(socket, clientVersion);
-    std::vector<char> loVersion = getResponseMessage(socket, "lokitversion", testname);
-    std::string line = LOOLProtocol::getFirstLine(loVersion.data(), loVersion.size());
-    line = line.substr(strlen("lokitversion "));
-    Poco::JSON::Parser parser;
-    Poco::Dynamic::Var loVersionVar = parser.parse(line);
-    const Poco::SharedPtr<Poco::JSON::Object>& loVersionObject = loVersionVar.extract<Poco::JSON::Object::Ptr>();
-    std::string loProductVersion = loVersionObject->get("ProductVersion").toString();
-    std::istringstream stream(loProductVersion);
     int major = 0;
-    stream >> major;
-    assert(stream.get() == '.');
     int minor = 0;
-    stream >> minor;
+    getServerVersion(socket, major, minor, testname);
 
     const std::string firstLine = LOOLProtocol::getFirstLine(tile);
     std::vector<char> res(tile.begin() + firstLine.size() + 1, tile.end());
@@ -1772,15 +1759,25 @@ void HTTPWSTest::testCalcEditRendering()
 /// When a second view is loaded to a Calc doc,
 /// the first stops rendering correctly.
 /// This only happens at high rows.
-void HTTPWSTest::testCalcRenderAfterNewView()
+void HTTPWSTest::testCalcRenderAfterNewView51()
 {
-    const auto testname = "calcRenderAfterNewView ";
+    const auto testname = "calcRenderAfterNewView51 ";
 
     // Load a doc with the cursor saved at a top row.
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.ods", documentPath, documentURL, testname);
 
     auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    int major = 0;
+    int minor = 0;
+    getServerVersion(socket, major, minor, testname);
+    if (major != 5 || minor != 1)
+    {
+        std::cerr << testname << "Skipping test on incompatible client ["
+                  << major << '.' << minor << "], expected [5.1]." << std::endl;
+        return;
+    }
 
     // Page Down until we get to the bottom of the doc.
     for (int i = 0; i < 40; ++i)
@@ -1794,7 +1791,7 @@ void HTTPWSTest::testCalcRenderAfterNewView()
     const auto req = "tilecombine part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
 
     // Get tile.
-    const std::vector<char> tile1 = getTileAndSave(socket, req, "/tmp/calc_render_orig.png", testname);
+    const std::vector<char> tile1 = getTileAndSave(socket, req, "/tmp/calc_render_51_orig.png", testname);
 
 
     // Connect second client, which will load at the top.
@@ -1808,9 +1805,55 @@ void HTTPWSTest::testCalcRenderAfterNewView()
     assertResponseString(socket, "invalidatetiles:", testname); // Up invalidates.
 
     // Get same tile again.
-    const std::vector<char> tile2 = getTileAndSave(socket, req, "/tmp/calc_render_sec.png", testname);
+    const std::vector<char> tile2 = getTileAndSave(socket, req, "/tmp/calc_render_51_sec.png", testname);
 
     CPPUNIT_ASSERT(tile1 == tile2);
+}
+
+void HTTPWSTest::testCalcRenderAfterNewView53()
+{
+    const auto testname = "calcRenderAfterNewView53 ";
+
+    // Load a doc with the cursor saved at a top row.
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("calc-render.ods", documentPath, documentURL, testname);
+
+    auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    int major = 0;
+    int minor = 0;
+    getServerVersion(socket, major, minor, testname);
+    if (major < 5 || minor < 3)
+    {
+        std::cerr << testname << "Skipping test on incompatible client ["
+                  << major << '.' << minor << "], expected [>=5.3]." << std::endl;
+        return;
+    }
+
+    sendTextFrame(socket, "clientvisiblearea x=750 y=1861 width=20583 height=6997", testname);
+    sendTextFrame(socket, "key type=input char=0 key=1031", testname);
+
+    // Get tile.
+    const auto req = "tilecombine part=0 width=256 height=256 tileposx=0 tileposy=291840 tilewidth=3840 tileheight=3840 oldhash=0";
+    const std::vector<char> tile1 = getTileAndSave(socket, req, "/tmp/calc_render_53_orig.png", testname);
+
+
+    // Connect second client, which will load at the top.
+    std::cerr << testname << "Connecting second client." << std::endl;
+    auto socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
+
+
+    std::cerr << testname << "Waiting for cellviewcursor of second on first." << std::endl;
+    assertResponseString(socket, "cellviewcursor:", testname);
+
+    // Get same tile again.
+    const std::vector<char> tile2 = getTileAndSave(socket, req, "/tmp/calc_render_53_sec.png", testname);
+
+    CPPUNIT_ASSERT(tile1 == tile2);
+
+    // Don't let them go out of scope and disconnect.
+    socket2->shutdown();
+    socket->shutdown();
 }
 
 std::string HTTPWSTest::getFontList(const std::string& message)
