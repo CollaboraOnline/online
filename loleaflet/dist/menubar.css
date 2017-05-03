@@ -62,7 +62,7 @@
     cursor: default;
 }
 .lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
-    padding: 5px 15px;
+    padding: 5px 22px;
     color: #000;
 }
 .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
@@ -225,4 +225,18 @@
 	display: block;
 	top: 3px; /* This is not a menu, plain action, but we want it to appear like a menu */
     }
+}
+
+/* Some more lo-menu specific customizations */
+
+/* The smartmenus plugin doesn't seem to have support for icons, so implement our own pseudo-elements */
+.lo-menu-item-checked::before {
+    position: absolute;
+    content: '\2713';
+    left: 5px;
+    top: 5px;
+}
+
+.lo-menu-item-checked:hover::before {
+    color: #fff;
 }
