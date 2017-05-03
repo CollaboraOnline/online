@@ -433,11 +433,6 @@ function onColorPick(e, color) {
 	map.focus();
 }
 
-// This object is used to store enabled/disabled state of each and every eligible item
-// (i.e the one having UNO command) of toolbar-up. When the permission is changed to/from
-// edit/view mode, state from this object is read and then applied on corresponding buttons
-var formatButtons = {};
-
 var stylesSelectValue;
 var fontsSelectValue;
 var fontsizesSelectValue;
@@ -590,15 +585,6 @@ $(function () {
 						placeholder: _('Layout')
 					});
 					$('.styles-select').on('select2:select', onStyleSelect);
-				}
-			}
-
-			// Intialize the formatButtons object
-			if (Object.keys(formatButtons).length === 0) {
-				for (var itemIdx in w2ui['toolbar-up'].items) {
-					if (w2ui['toolbar-up'].items[itemIdx].uno) {
-						formatButtons[w2ui['toolbar-up'].items[itemIdx].id] = true;
-					}
 				}
 			}
 
@@ -1183,41 +1169,28 @@ map.on('commandstatechanged', function (e) {
 	}
 
 	var id = unoCmdToToolbarId(commandName);
-	if (typeof formatButtons[id] !== 'undefined') {
-		if (state === 'true') {
+	if (state === 'true') {
+		toolbar.enable(id);
+		toolbar.check(id);
+		toolbarUpMore.check(id);
+	}
+	else if (state === 'false') {
+		toolbar.enable(id);
+		toolbar.uncheck(id);
+		toolbarUpMore.uncheck(id);
+	}
+	// Change the toolbar button states if we are in editmode
+	// If in non-edit mode, will be taken care of when permission is changed to 'edit'
+	else if (map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
+		// in case some buttons are in toolbar-up-more, find
+		// them and en/dis-able them.
+		if (state === 'enabled') {
 			toolbar.enable(id);
-			toolbar.check(id);
-			toolbarUpMore.check(id);
-		}
-		else if (state === 'false') {
-			toolbar.enable(id);
+			toolbarUpMore.enable(id);
+		} else {
 			toolbar.uncheck(id);
-			toolbarUpMore.uncheck(id);
-		}
-		// only store the state for now;
-		// buttons with stored state === enabled will
-		// be enabled later (if we are in editmode)
-		// If we are in viewmode, these store states will be used
-		// when we get the edit access
-		else if (state === 'enabled') {
-			formatButtons[id] = true;
-		}
-		else if (state === 'disabled') {
-			formatButtons[id] = false;
-		}
-
-		// Change the toolbar button states immediately if we are in editmode
-		if (map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
-			// in case some buttons are in toolbar-up-more, find
-			// them and en/dis-able them.
-			if (formatButtons[id]) {
-				toolbar.enable(id);
-				toolbarUpMore.enable(id);
-			} else {
-				toolbar.uncheck(id);
-				toolbar.disable(id);
-				toolbarUpMore.disable(id);
-			}
+			toolbar.disable(id);
+			toolbarUpMore.disable(id);
 		}
 	}
 
@@ -1440,16 +1413,20 @@ map.on('updatepermission', function (e) {
 	var toolbar = w2ui['toolbar-up'];
 	var toolbarUpMore = w2ui['toolbar-up-more'];
 
-	// {En,Dis}able toolbar buttons
-	for (var id in formatButtons) {
-		if (e.perm === 'edit' && formatButtons[id]) {
-			// restore the state from stored object (formatButtons)
-			toolbar.enable(id);
-			// some might be hidden in toolbar-up-more
-			toolbarUpMore.enable(id);
+	// copy the first array
+	var items = toolbar.items.slice();
+	items.concat(toolbarUpMore.items);
+	for (var idx in items) {
+		var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : items[idx].uno;
+		var keepDisabled = map['stateChangeHandler'].getItemValue(unoCmd) === 'disabled';
+		if (e.perm === 'edit') {
+			if (!keepDisabled) {
+				toolbar.enable(items[idx].id);
+				toolbarUpMore.enable(items[idx].id);
+			}
 		} else {
-			toolbar.disable(id);
-			toolbarUpMore.disable(id);
+			toolbar.disable(items[idx].id);
+			toolbarUpMore.disable(items[idx].id);
 		}
 	}
 
