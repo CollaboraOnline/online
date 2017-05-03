@@ -6,6 +6,11 @@ bin_PROGRAMS = loolwsd loolforkit loolmap loolmount looltool loolstress
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
+dist_doc_DATA = wsd/README \
+                wsd/README.vars \
+                wsd/protocol.txt \
+                wsd/reference.txt
+
 loolwsddatadir = @LOOLWSD_DATADIR@
 
 loolwsddata_DATA = discovery.xml \
