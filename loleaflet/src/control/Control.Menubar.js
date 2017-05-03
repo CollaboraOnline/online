@@ -296,15 +296,6 @@ L.Control.Menubar = L.Control.extend({
 		this._menubarCont = L.DomUtil.get('main-menu');
 
 		map.on('doclayerinit', this._onDocLayerInit, this);
-		map.on('commandstatechanged', this._onCommandStateChanged, this);
-	},
-
-	_onCommandStateChanged: function(e) {
-		// Store information about enabled/disabled commands
-		// Used later just before showing menu to enable/disable menu items
-		if (e.state === 'enabled' || e.state === 'disabled') {
-			this.options.commandStates[e.commandName] = e.state;
-		}
 	},
 
 	_onDocLayerInit: function() {
@@ -382,10 +373,16 @@ L.Control.Menubar = L.Control.extend({
 			if (map._permission === 'edit') {
 				if (type === 'unocommand') { // enable all depending on stored commandStates
 					var unoCommand = $(aItem).data('uno');
-					if (self.options.commandStates[unoCommand] === 'disabled') {
+					if (map['stateChangeHandler'].getItemValue(unoCommand) === 'disabled') {
 						$(aItem).addClass('disabled');
 					} else {
 						$(aItem).removeClass('disabled');
+					}
+
+					if (map['stateChangeHandler'].getItemValue(unoCommand) === 'true') {
+						$(aItem).addClass('lo-menu-item-checked');
+					} else {
+						$(aItem).removeClass('lo-menu-item-checked');
 					}
 				} else if (type === 'action') { // enable all except fullscreen on windows
 					if (id === 'fullscreen' && (L.Browser.ie || L.Browser.edge)) { // Full screen works weirdly on IE 11 and on Edge
