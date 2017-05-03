@@ -248,6 +248,11 @@ var deps = {
 		desc: 'Handles inserting a file (image) in the document.'
 	},
 
+	StateChanges: {
+		src: ['map/handler/Map.StateChanges.js'],
+		desc: 'Handles state changes for the opened document'
+	},
+
 	WOPI: {
 		src: ['map/handler/Map.WOPI.js'],
 		desc: 'Handles WOPI related logic.'
