@@ -11,7 +11,7 @@ case "$1" in
 	mkdir -p /var/cache/loolwsd && chown lool: /var/cache/loolwsd
 	rm -rf /var/cache/loolwsd/*
 	chown lool: /etc/loolwsd/loolwsd.xml
-	chmod 640 /etc/loowsd/loolwsd.xml
+	chmod 640 /etc/loolwsd/loolwsd.xml
 
 	# We assume that the LibreOffice to be used is built TDF-style
 	# and installs in @LO_PATH@, and that /opt/lool is
