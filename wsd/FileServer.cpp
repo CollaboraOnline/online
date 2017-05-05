@@ -202,28 +202,35 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                 }
             }
 
-            bool gzip = request.hasToken("Accept-Encoding", "gzip");
-
             response.set("User-Agent", HTTP_AGENT_STRING);
             response.set("Date", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
-            if (!noCache)
-            {
-                // 60 * 60 * 24 * 128 (days) = 11059200
-                response.set("Cache-Control", "max-age=11059200");
-                response.set("ETag", "\"" LOOLWSD_VERSION_HASH "\"");
-            }
 
-            response.setContentType(mimeType);
-            response.add("X-Content-Type-Options", "nosniff");
-
+            bool gzip = request.hasToken("Accept-Encoding", "gzip");
             const std::string *content;
-            if (gzip)
+            if (std::getenv("LOOL_SERVE_FROM_FS"))
+            {
+                // Useful to not serve from memory sometimes especially during loleaflet development
+                // Avoids having to restart loolwsd everytime you make a change in loleaflet
+                const auto filePath = Poco::Path(LOOLWSD::FileServerRoot, relPath).absolute().toString();
+                HttpHelper::sendFile(socket, filePath, mimeType, response, noCache);
+                return;
+            }
+            else if (gzip)
             {
                 response.set("Content-Encoding", "gzip");
                 content = getCompressedFile(relPath);
             }
             else
                 content = getUncompressedFile(relPath);
+
+            if (!noCache)
+            {
+                // 60 * 60 * 24 * 128 (days) = 11059200
+                response.set("Cache-Control", "max-age=11059200");
+                response.set("ETag", "\"" LOOLWSD_VERSION_HASH "\"");
+            }
+            response.setContentType(mimeType);
+            response.add("X-Content-Type-Options", "nosniff");
 
             std::ostringstream oss;
             response.write(oss);
