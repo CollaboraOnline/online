@@ -44,6 +44,48 @@ namespace Poco
     }
 }
 
+class Socket;
+
+/// Helper to allow us to easily defer the movement of a socket
+/// between polls to clarify thread ownership.
+class SocketDisposition
+{
+    typedef std::function<void(const std::shared_ptr<Socket> &)> MoveFunction;
+    enum class Type { CONTINUE, CLOSED, MOVE };
+
+    Type _disposition;
+    MoveFunction _socketMove;
+    std::shared_ptr<Socket> _socket;
+
+public:
+    SocketDisposition(const std::shared_ptr<Socket> &socket) :
+        _disposition(Type::CONTINUE),
+        _socket(socket)
+    {}
+    ~SocketDisposition()
+    {
+        assert (!_socketMove);
+    }
+    void setMove()
+    {
+        _disposition = Type::MOVE;
+    }
+    void setMove(MoveFunction moveFn)
+    {
+        _socketMove = moveFn;
+        _disposition = Type::MOVE;
+    }
+    void setClosed()
+    {
+        _disposition = Type::CLOSED;
+    }
+    bool isMove() { return _disposition == Type::MOVE; }
+    bool isClosed() { return _disposition == Type::CLOSED; }
+
+    /// Perform the queued up work.
+    void execute();
+};
+
 /// A non-blocking, streaming socket.
 class Socket
 {
@@ -86,8 +128,9 @@ public:
                               int &timeoutMaxMs) = 0;
 
     /// Handle results of events returned from poll
-    enum class HandleResult { CONTINUE, SOCKET_CLOSED, MOVED };
-    virtual HandleResult handlePoll(std::chrono::steady_clock::time_point now, int events) = 0;
+    virtual void handlePoll(SocketDisposition &disposition,
+                            std::chrono::steady_clock::time_point now,
+                            int events) = 0;
 
     /// manage latency issues around packet aggregation
     virtual void setNoDelay()
@@ -411,26 +454,30 @@ public:
         // Fire the poll callbacks and remove dead fds.
         std::chrono::steady_clock::time_point newNow =
             std::chrono::steady_clock::now();
+
         for (int i = static_cast<int>(size) - 1; i >= 0; --i)
         {
-            Socket::HandleResult res = Socket::HandleResult::SOCKET_CLOSED;
+            SocketDisposition disposition(_pollSockets[i]);
             try
             {
-                res = _pollSockets[i]->handlePoll(newNow, _pollFds[i].revents);
+                _pollSockets[i]->handlePoll(disposition, newNow,
+                                            _pollFds[i].revents);
             }
             catch (const std::exception& exc)
             {
                 LOG_ERR("Error while handling poll for socket #" <<
                         _pollFds[i].fd << " in " << _name << ": " << exc.what());
+                disposition.setClosed();
             }
 
-            if (res == Socket::HandleResult::SOCKET_CLOSED ||
-                res == Socket::HandleResult::MOVED)
+            if (disposition.isMove() || disposition.isClosed())
             {
                 LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
                         _pollSockets.size() << ") from " << _name);
                 _pollSockets.erase(_pollSockets.begin() + i);
             }
+
+            disposition.execute();
         }
     }
 
@@ -608,14 +655,8 @@ public:
     /// Will be called exactly once.
     virtual void onConnect(const std::shared_ptr<StreamSocket>& socket) = 0;
 
-    enum class SocketOwnership
-    {
-        UNCHANGED,  //< Same socket poll, business as usual.
-        MOVED       //< The socket poll is now different.
-    };
-
     /// Called after successful socket reads.
-    virtual SocketHandlerInterface::SocketOwnership handleIncomingMessage() = 0;
+    virtual void handleIncomingMessage(SocketDisposition &disposition) = 0;
 
     /// Prepare our poll record; adjust @timeoutMaxMs downwards
     /// for timeouts, based on current time @now.
@@ -773,15 +814,16 @@ protected:
 
     /// Called when a polling event is received.
     /// @events is the mask of events that triggered the wake.
-    HandleResult handlePoll(std::chrono::steady_clock::time_point now,
-                            const int events) override
+    void handlePoll(SocketDisposition &disposition,
+                    std::chrono::steady_clock::time_point now,
+                    const int events) override
     {
         assertCorrectThread();
 
         _socketHandler->checkTimeout(now);
 
         if (!events)
-            return Socket::HandleResult::CONTINUE;
+            return;
 
         // FIXME: need to close input, but not output (?)
         bool closed = (events & (POLLHUP | POLLERR | POLLNVAL));
@@ -801,8 +843,9 @@ protected:
         while (!_inBuffer.empty() && oldSize != _inBuffer.size())
         {
             oldSize = _inBuffer.size();
-            if (_socketHandler->handleIncomingMessage() == SocketHandlerInterface::SocketOwnership::MOVED)
-                return Socket::HandleResult::MOVED;
+            _socketHandler->handleIncomingMessage(disposition);
+            if (disposition.isMove())
+                return;
         }
 
         do
@@ -837,8 +880,8 @@ protected:
             _socketHandler->onDisconnect();
         }
 
-        return _closed ? HandleResult::SOCKET_CLOSED :
-                         HandleResult::CONTINUE;
+        if (_closed)
+            disposition.setClosed();
     }
 
     /// Override to write data out to socket.
@@ -915,39 +958,6 @@ protected:
     friend class ClientRequestDispatcher;
     friend class PrisonerRequestDispatcher;
     friend class SimpleResponseClient;
-};
-
-/// Helper to allow us to easily defer the movement of a socket
-/// between polls to clarify thread ownership.
-class SocketDisposition
-{
-    std::shared_ptr<StreamSocket> _socket;
-    typedef std::function<void(const std::shared_ptr<StreamSocket> &)> MoveFunction;
-    MoveFunction _socketMove;
-    SocketHandlerInterface::SocketOwnership _socketOwnership;
-public:
-    SocketDisposition(const std::shared_ptr<StreamSocket> &socket) :
-        _socket(socket),
-        _socketOwnership(SocketHandlerInterface::SocketOwnership::UNCHANGED)
-    {}
-    ~SocketDisposition()
-    {
-        assert (!_socketMove);
-    }
-    void setMove(MoveFunction moveFn)
-    {
-        _socketMove = moveFn;
-        _socketOwnership = SocketHandlerInterface::SocketOwnership::MOVED;
-    }
-    SocketHandlerInterface::SocketOwnership execute()
-    {
-        // We should have hard ownership of this socket.
-        assert(_socket->getThreadOwner() == std::this_thread::get_id());
-        if (_socketMove)
-            _socketMove(_socket);
-        _socketMove = nullptr;
-        return _socketOwnership;
-    }
 };
 
 namespace HttpHelper

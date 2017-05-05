@@ -122,7 +122,8 @@ public:
         _state = newState;
     }
 
-    HandleResult handlePoll(std::chrono::steady_clock::time_point now, int events) override
+    void handlePoll(SocketDisposition &disposition,
+                    std::chrono::steady_clock::time_point now, int events) override
     {
         if (_state == ReadWrite && (events & POLLIN))
         {
@@ -215,9 +216,7 @@ public:
         }
 
         if (_state == Closed)
-            return HandleResult::SOCKET_CLOSED;
-        else
-            return HandleResult::CONTINUE;
+            disposition.setClosed();
     }
 };
 

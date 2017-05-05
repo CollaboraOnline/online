@@ -1380,16 +1380,17 @@ private:
     }
 
     /// Called after successful socket reads.
-    SocketHandlerInterface::SocketOwnership handleIncomingMessage() override
+    void handleIncomingMessage(SocketDisposition &disposition) override
     {
         if (UnitWSD::get().filterHandleRequest(
-                UnitWSD::TestRequest::Prisoner, *this))
-            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+                UnitWSD::TestRequest::Prisoner, disposition, *this))
+            return;
 
         if (_childProcess.lock())
         {
             // FIXME: inelegant etc. - derogate to websocket code
-            return WebSocketHandler::handleIncomingMessage();
+            WebSocketHandler::handleIncomingMessage(disposition);
+            return;
         }
 
         auto socket = _socket.lock();
@@ -1402,7 +1403,7 @@ private:
         if (itBody == in.end())
         {
             LOG_TRC("#" << socket->getFD() << " doesn't have enough data yet.");
-            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+            return;
         }
 
         // Skip the marker.
@@ -1434,7 +1435,7 @@ private:
             if (request.getURI().find(NEW_CHILD_URI) != 0)
             {
                 LOG_ERR("Invalid incoming URI.");
-                return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+                return;
             }
 
             // New Child is spawned.
@@ -1455,7 +1456,7 @@ private:
             if (pid <= 0)
             {
                 LOG_ERR("Invalid PID in child URI [" << request.getURI() << "].");
-                return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+                return;
             }
 
             in.clear();
@@ -1466,24 +1467,21 @@ private:
 
             auto child = std::make_shared<ChildProcess>(pid, socket, request);
 
-            // Drop pretentions of ownership before adding to the list.
-            socket->setThreadOwner(std::thread::id(0));
-
             _childProcess = child; // weak
-            addNewChild(child);
 
             // Remove from prisoner poll since there is no activity
             // until we attach the childProcess (with this socket)
             // to a docBroker, which will do the polling.
-            return SocketHandlerInterface::SocketOwnership::MOVED;
+            disposition.setMove([child](const std::shared_ptr<Socket> &){
+                    // Drop pretentions of ownership before adding to the list.
+                    addNewChild(child);
+                });
         }
         catch (const std::exception& exc)
         {
             // Probably don't have enough data just yet.
             // TODO: timeout if we never get enough.
         }
-
-        return SocketHandlerInterface::SocketOwnership::UNCHANGED;
     }
 
     /// Prisoner websocket fun ... (for now)
@@ -1538,7 +1536,7 @@ private:
     }
 
     /// Called after successful socket reads.
-    SocketHandlerInterface::SocketOwnership handleIncomingMessage() override
+    void handleIncomingMessage(SocketDisposition &disposition) override
     {
         auto socket = _socket.lock();
         std::vector<char>& in = socket->_inBuffer;
@@ -1551,7 +1549,7 @@ private:
         if (itBody == in.end())
         {
             LOG_DBG("#" << socket->getFD() << " doesn't have enough data yet.");
-            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+            return;
         }
 
         // Skip the marker.
@@ -1586,17 +1584,16 @@ private:
             if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH && available < contentLength)
             {
                 LOG_DBG("Not enough content yet: ContentLength: " << contentLength << ", available: " << available);
-                return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+                return;
             }
         }
         catch (const std::exception& exc)
         {
             // Probably don't have enough data just yet.
             // TODO: timeout if we never get enough.
-            return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+            return;
         }
 
-        SocketDisposition tailDisposition(socket);
         try
         {
             // Routing
@@ -1615,7 +1612,7 @@ private:
                 LOG_INF("Admin request: " << request.getURI());
                 if (AdminSocketHandler::handleInitialRequest(_socket, request))
                 {
-                    tailDisposition.setMove([](const std::shared_ptr<StreamSocket> &moveSocket){
+                    disposition.setMove([](const std::shared_ptr<Socket> &moveSocket){
                             // Hand the socket over to the Admin poll.
                             Admin::instance().insertNewSocket(moveSocket);
                         });
@@ -1644,12 +1641,12 @@ private:
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
                 {
                     // All post requests have url prefix 'lool'.
-                    handlePostRequest(request, message, tailDisposition);
+                    handlePostRequest(request, message, disposition);
                 }
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws" &&
                          request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
                 {
-                    handleClientWsUpgrade(request, reqPathTokens[1], tailDisposition);
+                    handleClientWsUpgrade(request, reqPathTokens[1], disposition);
                 }
                 else
                 {
@@ -1678,7 +1675,6 @@ private:
         // if we succeeded - remove the request from our input buffer
         // we expect one request per socket
         in.erase(in.begin(), itBody);
-        return tailDisposition.execute();
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
@@ -1819,7 +1815,7 @@ private:
     }
 
     void handlePostRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
-                           SocketDisposition &tailDisposition)
+                           SocketDisposition &disposition)
     {
         LOG_INF("Post request: [" << request.getURI() << "]");
 
@@ -1863,8 +1859,8 @@ private:
                     auto clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker, isReadOnly);
                     if (clientSession)
                     {
-                        tailDisposition.setMove([docBroker, clientSession, format]
-                                                (const std::shared_ptr<StreamSocket> &moveSocket)
+                        disposition.setMove([docBroker, clientSession, format]
+                                            (const std::shared_ptr<Socket> &moveSocket)
                         { // Perform all of this after removing the socket
 
                         // Make sure the thread is running before adding callback.
@@ -1875,7 +1871,8 @@ private:
 
                         docBroker->addCallback([docBroker, moveSocket, clientSession, format]()
                         {
-                            clientSession->setSaveAsSocket(moveSocket);
+			    auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                            clientSession->setSaveAsSocket(streamSocket);
 
                             // Move the socket into DocBroker.
                             docBroker->addSocketToPoll(moveSocket);
@@ -2028,7 +2025,7 @@ private:
     }
 
     void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url,
-                               SocketDisposition &tailDisposition)
+                               SocketDisposition &disposition)
     {
         auto socket = _socket.lock();
         if (!socket)
@@ -2082,8 +2079,8 @@ private:
             if (clientSession)
             {
                 // Transfer the client socket to the DocumentBroker when we get back to the poll:
-                tailDisposition.setMove([docBroker, clientSession]
-                                        (const std::shared_ptr<StreamSocket> &moveSocket)
+                disposition.setMove([docBroker, clientSession]
+                                    (const std::shared_ptr<Socket> &moveSocket)
                 {
                     // Make sure the thread is running before adding callback.
                     docBroker->startThread();
@@ -2093,8 +2090,10 @@ private:
 
                     docBroker->addCallback([docBroker, moveSocket, clientSession]()
                     {
+			auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+
                         // Set the ClientSession to handle Socket events.
-                        moveSocket->setHandler(clientSession);
+                        streamSocket->setHandler(clientSession);
                         LOG_DBG("Socket #" << moveSocket->getFD() << " handler is " << clientSession->getName());
 
                         // Move the socket into DocBroker.
