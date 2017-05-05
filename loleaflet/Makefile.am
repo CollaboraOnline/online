@@ -8,41 +8,38 @@ DRAW_VERSION=0.2.4
 
 MINIFY=false
 
+L10N_PO = $(wildcard po/*.po)
+L10N_JSON = $(patsubst po/%.po,dist/l10n/%.json,$(L10N_PO))
+
+L10N_STYLES_PO = $(wildcard po/styles/*.po)
+L10N_STYLES_JSON = $(patsubst po/styles/%.po,dist/l10n/styles/%.json,$(L10N_STYLES_PO))
+
 EXTRA_DIST = $(shell git ls-files)
 
-all-local: node_modules build-l10n
+all-local: node_modules $(L10N_JSON) $(L10N_STYLES_JSON)
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
 	jake build debug=$(ENABLE_DEBUG) minify=$(MINIFY)
-
-	mkdir -p dist/l10n/styles
-	mv po/*.json dist/l10n/
-	mv po/styles/*.json dist/l10n/styles/
 
 node_modules: npm-shrinkwrap.json
 	npm install
 	touch node_modules
 
-.PHONY: build-l10n
-build-l10n:
-	util/po2json.py --quiet po/*.po
-	util/po2json.py --quiet po/styles/*.po
+dist/l10n/%.json: po/%.po
+	@util/po2json.py $< -o $@
 
-.PHONY: move-l10n-to-dist
-move-l10n-to-dist:
-	mv po/*.json dist/l10n/
-	mv po/styles/*.json dist/l10n/styles/
+dist/l10n/styles:
+	@mkdir -p $@
+
+dist/l10n/styles/%.json: po/styles/%.po dist/l10n/styles
+	@util/po2json.py $< -o $@
 
 install-data-hook:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/loleaflet; \
 	cp -ar dist/ $(DESTDIR)$(pkgdatadir)/loleaflet/;
 
-dist-hook: build-l10n
+dist-hook:
 	chmod u+w $(distdir)/dist
-
-	mkdir -p $(distdir)/dist/l10n/styles
-	mv po/*.json $(distdir)/dist/l10n/
-	mv po/styles/*.json $(distdir)/dist/l10n/styles/
 
 	mkdir -p $(distdir)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
 	cp -a node_modules/jquery-ui/themes/ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png $(distdir)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
