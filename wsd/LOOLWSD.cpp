@@ -1793,7 +1793,13 @@ private:
 
     static std::string getContentType(const std::string& fileName)
     {
-        const std::string nodePath = Poco::format("//[@ext='%s']", Poco::Path(fileName).getExtension());
+        const std::string extension = Poco::Path(fileName).getExtension();
+
+        // TODO discovery.xml missing application/pdf
+        if (extension == "pdf")
+            return "application/pdf";
+
+        const std::string nodePath = Poco::format("//[@ext='%s']", extension);
         std::string discPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
         if (!File(discPath).exists())
         {
@@ -1803,7 +1809,6 @@ private:
         InputSource input(discPath);
         DOMParser domParser;
         AutoPtr<Poco::XML::Document> doc = domParser.parse(&input);
-        // TODO. discovery.xml missing application/pdf
         Node* node = doc->getNodeByPath(nodePath);
         if (node && (node = node->parentNode()) && node->hasAttributes())
         {
@@ -1994,9 +1999,8 @@ private:
             if (filePath.isAbsolute() && File(filePath).exists())
             {
                 std::string contentType = getContentType(fileName);
-                if (Poco::Path(fileName).getExtension() == "pdf")
+                if (contentType == "application/pdf" || contentType == "text/plain")
                 {
-                    contentType = "application/pdf";
                     response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
                 }
 

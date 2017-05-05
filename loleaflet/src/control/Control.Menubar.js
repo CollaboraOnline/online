@@ -15,7 +15,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
 					{name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action'},
 					{name: _('Microsoft Word 2003 (.doc)'), id: 'downloadas-doc', type: 'action'},
-					{name: _('Microsoft Word (.docx)'), id: 'downloadas-docx', type: 'action'}]}]
+					{name: _('Microsoft Word (.docx)'), id: 'downloadas-docx', type: 'action'},
+					{name: _('Plain text (.txt)'), id: 'downloadas-txt', type: 'action'}]}]
 			},
 			{name: _('Edit'), type: 'menu', menu: [
 				{name: _('Repair'), id: 'repair',  type: 'action'},
@@ -283,7 +284,7 @@ L.Control.Menubar = L.Control.extend({
 		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'help'],
 
 		allowedViewModeActions: [
-			'downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx', // file menu
+			'downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-txt', // file menu
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', // file menu
 			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', // view menu
