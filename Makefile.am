@@ -81,7 +81,6 @@ noinst_PROGRAMS = clientnb \
                   connect \
                   lokitclient \
                   loolforkit-nocaps \
-                  loolnb \
                   loolwsd_fuzzer
 
 connect_SOURCES = tools/Connect.cpp \
