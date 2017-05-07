@@ -1431,11 +1431,16 @@ private:
             // New Child is spawned.
             const auto params = Poco::URI(request.getURI()).getQueryParameters();
             Poco::Process::PID pid = -1;
+            std::string jailId;
             for (const auto& param : params)
             {
                 if (param.first == "pid")
                 {
                     pid = std::stoi(param.second);
+                }
+                else if (param.first == "jailid")
+                {
+                    jailId = param.second;
                 }
                 else if (param.first == "version")
                 {
@@ -1449,13 +1454,19 @@ private:
                 return;
             }
 
+            if (jailId.empty())
+            {
+                LOG_ERR("Invalid JailId in child URI [" << request.getURI() << "].");
+                return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+            }
+
             in.clear();
 
-            LOG_INF("New child [" << pid << "].");
+            LOG_INF("New child [" << pid << "], jailId: " << jailId << ".");
 
             UnitWSD::get().newChild(*this);
 
-            auto child = std::make_shared<ChildProcess>(pid, socket, request);
+            auto child = std::make_shared<ChildProcess>(pid, jailId, socket, request);
 
             _childProcess = child; // weak
 

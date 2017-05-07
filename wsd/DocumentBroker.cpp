@@ -804,7 +804,7 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     try
     {
         // First load the document, since this can fail.
-        if (!load(session, std::to_string(_childProcess->getPid())))
+        if (!load(session, _childProcess->getJailId()))
         {
             const auto msg = "Failed to load document with URI [" + session->getPublicUri().toString() + "].";
             LOG_ERR(msg);

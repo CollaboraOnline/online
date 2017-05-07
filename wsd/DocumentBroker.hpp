@@ -59,9 +59,13 @@ class ChildProcess
 public:
     /// @param pid is the process ID of the child.
     /// @param socket is the underlying Sockeet to the child.
-    ChildProcess(const Poco::Process::PID pid, const std::shared_ptr<StreamSocket>& socket, const Poco::Net::HTTPRequest &request) :
+    ChildProcess(const Poco::Process::PID pid,
+                 const std::string& jailId,
+                 const std::shared_ptr<StreamSocket>& socket,
+                 const Poco::Net::HTTPRequest &request) :
 
         _pid(pid),
+        _jailId(jailId),
         _ws(std::make_shared<WebSocketHandler>(socket, request)),
         _socket(socket)
     {
@@ -143,6 +147,7 @@ public:
     }
 
     Poco::Process::PID getPid() const { return _pid; }
+    const std::string& getJailId() const { return _jailId; }
 
     /// Send a text payload to the child-process WS.
     bool sendTextFrame(const std::string& data)
@@ -185,6 +190,7 @@ public:
 
 private:
     Poco::Process::PID _pid;
+    const std::string _jailId;
     std::shared_ptr<WebSocketHandler> _ws;
     std::shared_ptr<Socket> _socket;
     std::weak_ptr<DocumentBroker> _docBroker;

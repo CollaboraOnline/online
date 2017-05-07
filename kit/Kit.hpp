@@ -10,6 +10,7 @@
 #define INCLUDED_LOOLKIT_HPP
 
 void lokit_main(const std::string& childRoot,
+                const std::string& jailId,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
                 const std::string& loSubPath,
