@@ -14,6 +14,7 @@
     <num_prespawn_children desc="Number of child processes to keep started in advance and waiting for new clients." type="uint" default="1">1</num_prespawn_children>
     <per_document desc="Document-specific settings, including LO Core settings.">
         <max_concurrency desc="The maximum number of threads to use while processing a document." type="uint" default="4">4</max_concurrency>
+        <idle_timeout_secs desc="The maximum number of seconds before unloading an idle document. Defaults to 1 hour." type="uint" default="3600">3600</idle_timeout_secs>
     </per_document>
 
     <loleaflet_html desc="Allows UI customization by replacing the single endpoint of loleaflet.html" type="string" default="loleaflet.html">loleaflet.html</loleaflet_html>
@@ -51,13 +52,13 @@
         <cert_file_path desc="Path to the cert file" relative="false">/etc/loolwsd/cert.pem</cert_file_path>
         <key_file_path desc="Path to the key file" relative="false">/etc/loolwsd/key.pem</key_file_path>
         <ca_file_path desc="Path to the ca file" relative="false">/etc/loolwsd/ca-chain.cert.pem</ca_file_path>
-	<hpkp desc="Enable HTTP Public key pinning" enable="false" report_only="false">
-	    <max_age desc="HPKP's max-age directive - time in seconds browser should remember the pins" enable="true">1000</max_age>
-	    <report_uri desc="HPKP's report-uri directive - pin validation failure are reported at this URL" enable="false"></report_uri>
-	    <pins desc="Base64 encoded SPKI fingerprints of keys to be pinned">
-	      <pin></pin>
-	    </pins>
-	</hpkp>
+        <hpkp desc="Enable HTTP Public key pinning" enable="false" report_only="false">
+            <max_age desc="HPKP's max-age directive - time in seconds browser should remember the pins" enable="true">1000</max_age>
+            <report_uri desc="HPKP's report-uri directive - pin validation failure are reported at this URL" enable="false"></report_uri>
+            <pins desc="Base64 encoded SPKI fingerprints of keys to be pinned">
+            <pin></pin>
+            </pins>
+        </hpkp>
     </ssl>
 
     <storage desc="Backend storage">

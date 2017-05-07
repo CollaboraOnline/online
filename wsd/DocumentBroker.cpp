@@ -222,6 +222,8 @@ void DocumentBroker::pollThread()
     auto last30SecCheckTime = std::chrono::steady_clock::now();
 
     static const bool AutoSaveEnabled = !std::getenv("LOOL_NO_AUTOSAVE");
+    static const size_t IdleDocTimeoutSecs = LOOLWSD::getConfigValue<int>(
+                                                      "per_document.idle_timeout_secs", 3600);
 
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
@@ -273,7 +275,7 @@ void DocumentBroker::pollThread()
         }
 
         // Remove idle documents after 1 hour.
-        const bool idle = (getIdleTimeSecs() >= 3600);
+        const bool idle = (getIdleTimeSecs() >= IdleDocTimeoutSecs);
 
         // If all sessions have been removed, no reason to linger.
         if ((isLoaded() || _markToDestroy) && (_sessions.empty() || idle))
