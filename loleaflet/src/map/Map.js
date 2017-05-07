@@ -18,7 +18,9 @@ L.Map = L.Evented.extend({
 		defaultZoom: 10,
 		tileWidthTwips: 3840,
 		tileHeightTwips: 3840,
-		urlPrefix: 'lool'
+		urlPrefix: 'lool',
+		idleTimeoutSecs: 15 * 60,  // Dim when user is idle.
+		outOfFocusTimeoutSecs: 30, // Dim after switching tabs.
 	},
 
 	lastActiveTime: Date.now(),
@@ -853,12 +855,13 @@ L.Map = L.Evented.extend({
 
 		this._doclayer && this._docLayer._onMessage('textselection:', null);
 		console.debug('_dim: sending userinactive');
+		map.fire('postMessage', {msgId: 'User_Idle'});
 		this._socket.sendMessage('userinactive');
 	},
 
 	_dimIfInactive: function () {
 		console.debug('_dimIfInactive: diff=' + (Date.now() - this.lastActiveTime));
-		if ((Date.now() - this.lastActiveTime) >= 10 * 60 * 1000) { // Dim 10 minutes after last user activity
+		if ((Date.now() - this.lastActiveTime) >= this.options.idleTimeoutSecs * 1000) {
 			this._dim();
 		} else {
 			this._startInactiveTimer();
@@ -894,7 +897,7 @@ L.Map = L.Evented.extend({
 		var map = this;
 		vex.timer = setTimeout(function() {
 			map._dim();
-		}, 30 * 1000); // Dim in 30 seconds.
+		}, this.options.outOfFocusTimeoutSecs * 1000);
 	},
 
 	_onLostFocus: function () {
