@@ -364,6 +364,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('cellcursor:')) {
 			this._onCellCursorMsg(textMsg);
 		}
+		else if (textMsg.startsWith('celladdress:')) {
+			this._onCellAddressMsg(textMsg);
+		}
 		else if (textMsg.startsWith('cellformula:')) {
 			this._onCellFormulaMsg(textMsg);
 		}
@@ -497,6 +500,11 @@ L.TileLayer = L.GridLayer.extend({
 				commandValues: obj.commandValues
 			});
 		}
+	},
+
+	_onCellAddressMsg: function (textMsg) {
+		var address = textMsg.substring(13);
+		this._map.fire('celladdress', {address: address});
 	},
 
 	_onCellFormulaMsg: function (textMsg) {

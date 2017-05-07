@@ -52,9 +52,14 @@
     padding-left: 125px;
 }
 
+#addressInput {
+    height: 29px;
+    width: 100px;
+}
+
 #formulaInput {
     height: 29px;
-    width: 800px;
+    width: 700px;
 }
 
 #tb_toolbar-up_item_close {

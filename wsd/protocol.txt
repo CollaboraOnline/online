@@ -375,6 +375,11 @@ comment:
     Signals that comment has either been added, removed or modified. See
     LOK_CALLBACK_COMMENT for JSON structure.
 
+celladdress: <payload>
+
+    Message is sent anytime the content of the address input box should be updated.
+    The <payload> is a string representing the new content.
+
 stats: <key> <value>
 
     Contains statistical data. Eg: 'stats: wopiloadduration 5' means that
