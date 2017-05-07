@@ -111,6 +111,9 @@ namespace LOKitHelper
             return "COMMENT";
         case LOK_CALLBACK_INVALIDATE_HEADER:
             return "INVALIDATE_HEADER";
+        case LOK_CALLBACK_CELL_ADDRESS:
+            return "CELL_ADDRESS";
+
        }
 
         return std::to_string(type);

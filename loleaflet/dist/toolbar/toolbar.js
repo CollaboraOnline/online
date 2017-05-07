@@ -598,6 +598,8 @@ $(function () {
 		name: 'formulabar',
 		items: [
 			{type: 'html',  id: 'left'},
+			{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
+			{type: 'break'},
 			{type: 'button',  id: 'sum',  img: 'autosum', hint: _('Sum')},
 			{type: 'button',  id: 'function',  img: 'equal', hint: _('Function')},
 			{type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _('Cancel')},
@@ -608,6 +610,7 @@ $(function () {
 			onClick(e.target);
 		},
 		onRefresh: function(e) {
+			$('#addressInput').off('keyup', onAddressInput).on('keyup', onAddressInput);
 			$('#formulaInput').off('keyup', onFormulaInput).on('keyup', onFormulaInput);
 			$('#formulaInput').off('blur', onFormulaBarBlur).on('blur', onFormulaBarBlur);
 			$('#formulaInput').off('focus', onFormulaBarFocus).on('focus', onFormulaBarFocus);
@@ -850,6 +853,25 @@ function onInsertFile() {
 	// even if the same file is selected
 	insertGraphic.value = null;
 	return false;
+}
+
+function onAddressInput(e) {
+	if (e.keyCode === 13) {
+		// address control should not have focus anymore
+		map.focus();
+		var value = L.DomUtil.get('addressInput').value;
+		var command = {
+			ToPoint : {
+				type: 'string',
+				value: value
+			}
+
+		};
+		map.sendUnoCommand('.uno:GoToCell', command);
+	} else if (e.keyCode === 27) { // 27 = esc key
+		map.sendUnoCommand('.uno:Cancel');
+		map.focus();
+	}
 }
 
 function onFormulaInput(e) {
@@ -1392,6 +1414,13 @@ map.on('commandresult', function (e) {
 	}
 });
 
+map.on('celladdress', function (e) {
+	if (document.activeElement !== L.DomUtil.get('addressInput')) {
+		// if the user is not editing the address field
+		L.DomUtil.get('addressInput').value = e.address;
+	}
+});
+
 map.on('cellformula', function (e) {
 	if (document.activeElement !== L.DomUtil.get('formulaInput')) {
 		// if the user is not editing the formula bar
@@ -1441,6 +1470,7 @@ map.on('updatepermission', function (e) {
 		$('.fontsizes-select').prop('disabled', false);
 
 		// Enable formula bar
+		$('#addressInput').prop('disabled', false);
 		$('#formulaInput').prop('disabled', false);
 		toolbar = w2ui.formulabar;
 		formulaBarButtons.forEach(function(id) {
@@ -1470,6 +1500,7 @@ map.on('updatepermission', function (e) {
 		$('.fontsizes-select').prop('disabled', true);
 
 		// Disable formula bar
+		$('#addressInput').prop('disabled', true);
 		$('#formulaInput').prop('disabled', true);
 
 		toolbar = w2ui.formulabar;
