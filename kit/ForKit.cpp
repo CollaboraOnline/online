@@ -197,6 +197,7 @@ static void cleanupChildren()
     std::vector<std::string> jails;
     Process::PID exitedChildPid;
     int status;
+    // Reap quickly without doing slow cleanup so WSD can spawn more rapidly.
     while ((exitedChildPid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
     {
         const auto it = childJails.find(exitedChildPid);
@@ -225,7 +226,10 @@ static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& loSubPath,
                                 bool queryVersion = false)
 {
-    LOG_DBG("Forking a loolkit process.");
+    // Generate a jail ID to be used for in the jail path.
+    const std::string jailId = Util::rng::getFilename(16);
+
+    LOG_DBG("Forking a loolkit process with jailId: " << jailId << ".");
 
     const Process::PID pid = fork();
     if (!pid)
@@ -252,9 +256,9 @@ static int createLibreOfficeKit(const std::string& childRoot,
         }
 
 #ifndef KIT_IN_PROCESS
-        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, NoCapsForKit, queryVersion, DisplayVersion);
+        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, NoCapsForKit, queryVersion, DisplayVersion);
 #else
-        lokit_main(childRoot, sysTemplate, loTemplate, loSubPath, true, queryVersion, DisplayVersion);
+        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, true, queryVersion, DisplayVersion);
 #endif
     }
     else
@@ -267,7 +271,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
         else
         {
             LOG_INF("Forked kit [" << pid << "].");
-            childJails[pid] = childRoot + std::to_string(pid);
+            childJails[pid] = childRoot + jailId;
         }
 
 #ifndef KIT_IN_PROCESS

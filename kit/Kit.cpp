@@ -1577,6 +1577,7 @@ void documentViewCallback(const int type, const char* payload, void* data)
 
 #ifndef BUILDING_TESTS
 void lokit_main(const std::string& childRoot,
+                const std::string& jailId,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
                 const std::string& loSubPath,
@@ -1609,12 +1610,6 @@ void lokit_main(const std::string& childRoot,
     assert(!sysTemplate.empty());
     assert(!loTemplate.empty());
     assert(!loSubPath.empty());
-
-    // Ideally this will be a random ID, but forkit will cleanup
-    // our jail directory when we die, and it's simpler to know
-    // the jailId (i.e. the path) implicitly by knowing our pid.
-    static const std::string pid = std::to_string(Process::id());
-    static const std::string jailId = pid;
 
     LOG_DBG("Process started.");
 
@@ -1772,7 +1767,10 @@ void lokit_main(const std::string& childRoot,
         assert(loKit);
         LOG_INF("Process is ready.");
 
-        std::string requestUrl = std::string(NEW_CHILD_URI) + "pid=" + pid;
+        static const std::string pid = std::to_string(Process::id());
+
+        std::string requestUrl = NEW_CHILD_URI;
+        requestUrl += "pid=" + pid + "&jailid=" + jailId;
         if (queryVersion)
         {
             char* versionInfo = loKit->getVersionInfo();
@@ -1796,9 +1794,9 @@ void lokit_main(const std::string& childRoot,
 
         auto queue = std::make_shared<TileQueue>();
 
-        const std::string socketName = "child_ws_" + std::to_string(getpid());
+        const std::string socketName = "child_ws_" + pid;
         IoUtil::SocketProcessor(ws, socketName,
-                [&socketName, &ws, &loKit, &queue](const std::vector<char>& data)
+                [&socketName, &ws, &loKit, &jailId, &queue](const std::vector<char>& data)
                 {
                     std::string message(data.data(), data.size());
 

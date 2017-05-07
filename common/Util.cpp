@@ -99,8 +99,14 @@ namespace Util
 
         std::string getFilename(const size_t length)
         {
-            std::string s = getB64String(length);
-            std::replace(s.begin(), s.end(), '/', '_');
+            std::string s = getB64String(length * 2);
+            s.erase(std::remove_if(s.begin(), s.end(),
+                                   [](const std::string::value_type& c)
+                                   {
+                                       // Remove undesirable characters in a filename.
+                                       return c == '/' || c == ' ' || c == '+';
+                                   }),
+                     s.end());
             return s.substr(0, length);
         }
     }
