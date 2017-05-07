@@ -81,6 +81,15 @@ public:
         return LOOLWSD::SSLTermination.get();
     }
 
+    /// Returns the value of the specified application configuration,
+    /// of the default, if one doesn't exist.
+    template<typename T>
+    static
+    T getConfigValue(const std::string& name, const T def)
+    {
+        return getConfigValue(Application::instance().config(), name, def);
+    }
+
     /// Trace a new session and take a snapshot of the file.
     static void dumpNewSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri, const std::string& path);
 

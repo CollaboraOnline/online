@@ -618,6 +618,7 @@ void LOOLWSD::initialize(Application& self)
             { "file_server_root_path", "loleaflet/.." },
             { "num_prespawn_children", "1" },
             { "per_document.max_concurrency", "4" },
+            { "per_document.idle_timeout_secs", "3600" },
             { "loleaflet_html", "loleaflet.html" },
             { "logging.color", "true" },
             { "logging.level", "trace" },
