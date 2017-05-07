@@ -354,19 +354,19 @@ void TileCacheTests::testCancelTilesMultiView()
 void TileCacheTests::testDisconnectMultiView()
 {
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, "cancelTilesMultiView ");
+    getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, "disconnectMultiView ");
 
     const size_t repeat = 4;
     for (size_t j = 1; j <= repeat; ++j)
     {
-        std::cerr << "cancelTilesMultiView try #" << j << std::endl;
+        std::cerr << "disconnectMultiView try #" << j << std::endl;
 
         // Wait to clear previous sessions.
         countLoolKitProcesses(InitialLoolKitCount);
 
         // Request a huge tile, and cancel immediately.
-        auto socket1 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-1 ");
-        auto socket2 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-2 ", true);
+        auto socket1 = loadDocAndGetSocket(_uri, documentURL, "disconnectMultiView-1 ");
+        auto socket2 = loadDocAndGetSocket(_uri, documentURL, "disconnectMultiView-2 ", true);
 
         sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-1 ");
         sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
@@ -375,11 +375,11 @@ void TileCacheTests::testDisconnectMultiView()
 
         for (auto i = 0; i < 4; ++i)
         {
-            getTileMessage(*socket2, "cancelTilesMultiView-2 ");
+            getTileMessage(*socket2, "disconnectMultiView-2 ");
         }
 
         // Should never get more than 4 tiles on socket2.
-        const auto res2 = getResponseString(socket2, "tile:", "cancelTilesMultiView-2 ", 500);
+        const auto res2 = getResponseString(socket2, "tile:", "disconnectMultiView-2 ", 500);
     }
 }
 
