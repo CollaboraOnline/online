@@ -128,7 +128,11 @@ void SocketDisposition::execute()
     // We should have hard ownership of this socket.
     assert(_socket->getThreadOwner() == std::this_thread::get_id());
     if (_socketMove)
+    {
+        // Drop pretentions of ownership before _socketMove.
+        _socket->setThreadOwner(std::thread::id(0));
         _socketMove(_socket);
+    }
     _socketMove = nullptr;
 }
 

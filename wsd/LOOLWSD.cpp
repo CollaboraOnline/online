@@ -1485,7 +1485,6 @@ private:
             // until we attach the childProcess (with this socket)
             // to a docBroker, which will do the polling.
             disposition.setMove([child](const std::shared_ptr<Socket> &){
-                    // Drop pretentions of ownership before adding to the list.
                     addNewChild(child);
                 });
         }
