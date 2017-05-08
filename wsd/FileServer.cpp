@@ -264,19 +264,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 {
     const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
     const auto params = Poco::URI(request.getURI()).getQueryParameters();
-    std::string wopiDomain;
-    for (const auto& param : params)
-    {
-        if (param.first == "WOPISrc")
-        {
-            std::string wopiHost;
-            Poco::URI::decode(param.second, wopiHost);
-            wopiDomain = Poco::URI(wopiHost).getScheme() + "://" + Poco::URI(wopiHost).getHost();
-        }
-    }
+
     const auto path = Poco::Path(LOOLWSD::FileServerRoot, getRequestPathname(request));
     LOG_DBG("Preprocessing file: " << path.toString());
-
     if (!Poco::File(path).exists())
     {
         LOG_ERR("File [" << path.toString() << "] does not exist.");
@@ -360,14 +350,42 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
            << "style-src 'self' 'unsafe-inline'; "
            << "font-src 'self' data:; "
            << "img-src 'self' data:; ";
-    if (!wopiDomain.empty())
+
+    std::string frameAncestor;
+    const auto it = request.find("Referer"); // Referer[sic]
+    if (it != request.end())
     {
+        frameAncestor = it->second;
+        LOG_TRC("Picking frame ancestor from HTTP Referer header: " << frameAncestor);
+    }
+    else // Use WOPISrc value if Referer is absent
+    {
+        for (const auto& param : params)
+        {
+            if (param.first == "WOPISrc")
+            {
+                Poco::URI::decode(param.second, frameAncestor);
+                LOG_TRC("Picking frame ancestor from WOPISrc: " << frameAncestor);
+                break;
+            }
+        }
+    }
+
+    // Keep only the origin, reject everything else
+    Poco::URI uriFrameAncestor(frameAncestor);
+    if (!frameAncestor.empty() && !uriFrameAncestor.getScheme().empty() && !uriFrameAncestor.getHost().empty())
+    {
+        frameAncestor = uriFrameAncestor.getScheme() + "://" + uriFrameAncestor.getHost();
+        LOG_TRC("Final frame ancestor: " << frameAncestor);
+
         // Replaced by frame-ancestors in CSP but some oldies don't know about that
-        oss << "X-Frame-Options: allow-from " << wopiDomain << "\r\n";
-        cspOss << "frame-ancestors " << wopiDomain;
+        oss << "X-Frame-Options: allow-from " << frameAncestor << "\r\n";
+        cspOss << "frame-ancestors " << frameAncestor;
     }
     else
     {
+        LOG_TRC("Denied frame ancestor: " << frameAncestor);
+
         oss << "X-Frame-Options: deny\r\n";
     }
 
