@@ -37,6 +37,9 @@ L.Control.Scroll = L.Control.extend({
 				whileScrolling: function() {
 					control._onScroll(this);
 				},
+				onUpdate: function() {
+					console.debug('mCustomScrollbar: onUpdate:');
+				},
 				alwaysTriggerOffsets: false
 			}
 		});
@@ -89,14 +92,16 @@ L.Control.Scroll = L.Control.extend({
 			return;
 		}
 
+		console.debug('_onScroll: ');
 		if (!this._map._enabled) {
 			return;
 		}
 
 		if (this._ignoreScroll) {
-			this._ignoreScroll = null;
+			console.debug('_onScroll: ignoring scroll');
 			return;
 		}
+
 		var offset = new L.Point(
 			-e.mcs.left - this._prevScrollX,
 			-e.mcs.top - this._prevScrollY);
@@ -104,6 +109,7 @@ L.Control.Scroll = L.Control.extend({
 		if (!offset.equals(new L.Point(0, 0))) {
 			this._prevScrollY = -e.mcs.top;
 			this._prevScrollX = -e.mcs.left;
+			console.debug('_onScroll: scrolling: ' + offset);
 			this._map.scroll(offset.x, offset.y);
 			this._map.fire('scrolloffset', offset);
 		}
@@ -113,6 +119,13 @@ L.Control.Scroll = L.Control.extend({
 		// needed in order to keep the row/column header correctly aligned
 		if (this._map._docLayer._docType === 'spreadsheet') {
 			return;
+		}
+
+		console.debug('_onScrollEnd:');
+		if (this._ignoreScroll) {
+			this._ignoreScroll = null;
+			console.debug('_onScrollEnd: scrollTop: ' + -e.mcs.top);
+			this._map.scrollTop(-e.mcs.top);
 		}
 		this._prevScrollY = -e.mcs.top;
 		this._prevScrollX = -e.mcs.left;
@@ -186,6 +199,7 @@ L.Control.Scroll = L.Control.extend({
 
 		// for writer documents, ignore scroll while document size is being reduced
 		if (this._map.getDocType() === 'text' && newDocHeight < this._prevDocHeight) {
+			console.debug('_onUpdateSize: Ignore the scroll !');
 			this._ignoreScroll = true;
 		}
 		L.DomUtil.setStyle(this._mockDoc, 'width', e.x + 'px');

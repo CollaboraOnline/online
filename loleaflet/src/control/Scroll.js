@@ -30,6 +30,7 @@ L.Map.include({
 	scrollTop: function (y, options) {
 		this._setUpdateOffsetEvt(options);
 		var offset = this.scrollOffset();
+		console.debug('scrollTop: ' + y + ' ' + offset.y + ' ' + (y - offset.y));
 		this.panBy(new L.Point(0, y - offset.y), {animate: false});
 	},
 
