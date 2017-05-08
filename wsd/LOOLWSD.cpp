@@ -1925,6 +1925,7 @@ private:
                 // TODO: We should differentiate between bad request and failed conversion.
                 throw BadRequestException("Failed to convert and send file.");
             }
+            return;
         }
         else if (tokens.count() >= 4 && tokens[3] == "insertfile")
         {
@@ -2031,6 +2032,7 @@ private:
                 LOG_ERR("Download file [" << filePath.toString() << "] not found.");
             }
             (void)responded;
+            return;
         }
 
         throw BadRequestException("Invalid or unknown request.");
