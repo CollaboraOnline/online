@@ -1468,7 +1468,7 @@ private:
             if (jailId.empty())
             {
                 LOG_ERR("Invalid JailId in child URI [" << request.getURI() << "].");
-                return SocketHandlerInterface::SocketOwnership::UNCHANGED;
+                return;
             }
 
             in.clear();
