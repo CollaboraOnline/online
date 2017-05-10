@@ -12,7 +12,7 @@ Name:           loolwsd%{name_suffix}
 Name:           loolwsd
 %endif
 Version:        @PACKAGE_VERSION@
-Release:        8%{?dist}
+Release:        1%{?dist}
 Vendor:         Collabora
 Summary:        LibreOffice On-Line WebSocket Daemon
 License:        MPL
