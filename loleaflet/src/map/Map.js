@@ -18,9 +18,7 @@ L.Map = L.Evented.extend({
 		defaultZoom: 10,
 		tileWidthTwips: 3840,
 		tileHeightTwips: 3840,
-		urlPrefix: 'lool',
-		idleTimeoutSecs: 15 * 60,  // Dim when user is idle.
-		outOfFocusTimeoutSecs: 30, // Dim after switching tabs.
+		urlPrefix: 'lool'
 	},
 
 	lastActiveTime: Date.now(),
@@ -897,7 +895,7 @@ L.Map = L.Evented.extend({
 		var map = this;
 		vex.timer = setTimeout(function() {
 			map._dim();
-		}, this.options.outOfFocusTimeoutSecs * 1000);
+		}, map.options.outOfFocusTimeoutSecs * 1000);
 	},
 
 	_onLostFocus: function () {

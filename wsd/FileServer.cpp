@@ -454,6 +454,10 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     const auto& config = Application::instance().config();
     const auto loleafletLogging = config.getString("loleaflet_logging", "false");
     Poco::replaceInPlace(preprocess, std::string("%LOLEAFLET_LOGGING%"), loleafletLogging);
+    const auto outOfFocusTimeoutSecs= config.getString("per_view.out_of_focus_timeout_secs", "60");
+    Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), outOfFocusTimeoutSecs);
+    const auto idleTimeoutSecs= config.getString("per_view.idle_timeout_secs", "900");
+    Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), idleTimeoutSecs);
 
     const std::string mimeType = "text/html";
 

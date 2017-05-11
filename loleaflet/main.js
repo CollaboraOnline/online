@@ -103,15 +103,17 @@ if (wopiSrc != '') {
 
 document.title = title;
 var map = L.map('map', {
-    server: host,
-    doc: docURL,
-    docParams: docParams,
-    permission: permission,
-    timestamp: timestamp,
-    documentContainer: 'document-container',
-    debug: debugMode,
+	server: host,
+	doc: docURL,
+	docParams: docParams,
+	permission: permission,
+	timestamp: timestamp,
+	documentContainer: 'document-container',
+	debug: debugMode,
 	wopi: isWopi,
-	alwaysActive: alwaysActive
+	alwaysActive: alwaysActive,
+	idleTimeoutSecs: idleTimeoutSecs,  // Dim when user is idle.
+	outOfFocusTimeoutSecs: outOfFocusTimeoutSecs, // Dim after switching tabs.
 });
 // toolbar.js (loaded in <script> tag accesses map as global variable,
 // so expose it

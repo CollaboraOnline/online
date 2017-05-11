@@ -623,6 +623,8 @@ void LOOLWSD::initialize(Application& self)
             { "num_prespawn_children", "1" },
             { "per_document.max_concurrency", "4" },
             { "per_document.idle_timeout_secs", "3600" },
+            { "per_view.out_of_focus_timeout_secs", "60" },
+            { "per_view.idle_timeout_secs", "900" },
             { "loleaflet_html", "loleaflet.html" },
             { "logging.color", "true" },
             { "logging.level", "trace" },
