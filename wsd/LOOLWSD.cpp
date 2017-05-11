@@ -1784,11 +1784,15 @@ private:
         InputSource input(discPath);
         DOMParser domParser;
         AutoPtr<Poco::XML::Document> doc = domParser.parse(&input);
-        // TODO. discovery.xml missing application/pdf
-        Node* node = doc->getNodeByPath(nodePath);
-        if (node && (node = node->parentNode()) && node->hasAttributes())
+        if (doc)
         {
-            return dynamic_cast<Element*>(node)->getAttribute("name");
+            Node* node = doc->getNodeByPath(nodePath);
+            if (node && node->parentNode())
+            {
+                Element* elem = dynamic_cast<Element*>(node->parentNode());
+                if (elem && elem->hasAttributes())
+                    return elem->getAttribute("name");
+            }
         }
 
         return "application/octet-stream";
@@ -1976,16 +1980,11 @@ private:
             LOG_INF("HTTP request for: " << filePath.toString());
             if (filePath.isAbsolute() && File(filePath).exists())
             {
-                std::string contentType = getContentType(fileName);
-                if (Poco::Path(fileName).getExtension() == "pdf")
-                {
-                    contentType = "application/pdf";
-                    response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-                }
-
+                // Instruct browsers to download the file, not display it
+                response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
                 try
                 {
-                    HttpHelper::sendFile(socket, filePath.toString(), contentType, response);
+                    HttpHelper::sendFile(socket, filePath.toString(), getContentType(fileName), response);
                     responded = true;
                 }
                 catch (const Exception& exc)
@@ -2073,7 +2072,7 @@ private:
 
                     docBroker->addCallback([docBroker, moveSocket, clientSession]()
                     {
-			auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                        auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
 
                         // Set the ClientSession to handle Socket events.
                         streamSocket->setHandler(clientSession);

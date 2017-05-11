@@ -305,5 +305,23 @@
         <app name="application/vnd.sun.xml.report.chart">
             <action name="edit" ext="odc"/>
         </app>
+        <app name="image/png">
+            <action name="view" ext="png"/>
+        </app>
+        <app name="image/gif">
+            <action name="view" ext="gif"/>
+        </app>
+        <app name="image/tiff">
+            <action name="view" ext="tiff"/>
+        </app>
+        <app name="image/jpg">
+            <action name="view" ext="jpg"/>
+        </app>
+        <app name="image/jpeg">
+            <action name="view" ext="jpeg"/>
+        </app>
+        <app name="application/pdf">
+            <action name="view" ext="pdf"/>
+        </app>
     </net-zone>
 </wopi-discovery>
