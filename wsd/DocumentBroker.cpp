@@ -208,9 +208,6 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
         return false;
     }
 
-    const Poco::URI& uriPublic = session->getPublicUri();
-    LOG_DBG("Loading from URI: " << uriPublic.toString());
-
     _jailId = jailId;
 
     // The URL is the publicly visible one, not visible in the chroot jail.
@@ -228,10 +225,11 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
 
     if (_storage == nullptr)
     {
-        // TODO: Maybe better to pass docKey to storage here instead of uriPublic here because
-        // uriPublic would be different for each view of the document (due to
-        // different query params like access token etc.)
-        LOG_DBG("Creating new storage instance for URI [" << uriPublic.toString() << "].");
+        // Pass the public URI to storage as it needs to load using the token
+        // and other storage-specific data provided in the URI.
+        const Poco::URI& uriPublic = session->getPublicUri();
+        LOG_DBG("Loading, and creating new storage instance for URI [" << uriPublic.toString() << "].");
+
         _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString());
         if (_storage == nullptr)
         {
@@ -248,7 +246,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     std::chrono::duration<double> getInfoCallDuration(0);
     if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
     {
-        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = static_cast<WopiStorage*>(_storage.get())->getWOPIFileInfo(uriPublic);
+        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = static_cast<WopiStorage*>(_storage.get())->getWOPIFileInfo(session->getAccessToken());
         userid = wopifileinfo->_userid;
         username = wopifileinfo->_username;
 
@@ -287,7 +285,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     }
     else if (dynamic_cast<LocalStorage*>(_storage.get()) != nullptr)
     {
-        std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo = static_cast<LocalStorage*>(_storage.get())->getLocalFileInfo(uriPublic);
+        std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo = static_cast<LocalStorage*>(_storage.get())->getLocalFileInfo();
         userid = localfileinfo->_userid;
         username = localfileinfo->_username;
     }
@@ -300,7 +298,7 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     const auto fileInfo = _storage->getFileInfo();
     if (!fileInfo.isValid())
     {
-        LOG_ERR("Invalid fileinfo for URI [" << uriPublic.toString() << "].");
+        LOG_ERR("Invalid fileinfo for URI [" << session->getPublicUri().toString() << "].");
         return false;
     }
 
@@ -308,13 +306,13 @@ bool DocumentBroker::load(std::shared_ptr<ClientSession>& session, const std::st
     const bool loaded = _storage->isLoaded();
     if (!loaded)
     {
-        const auto localPath = _storage->loadStorageFileToLocal();
+        const auto localPath = _storage->loadStorageFileToLocal(session->getAccessToken());
         _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
         _filename = fileInfo._filename;
 
         // Use the local temp file's timestamp.
         _lastFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
-        _tileCache.reset(new TileCache(_uriPublic.toString(), _lastFileModifiedTime, _cacheRoot));
+        _tileCache.reset(new TileCache(_storage->getUri(), _lastFileModifiedTime, _cacheRoot));
     }
 
     // Since document has been loaded, send the stats if its WOPI
@@ -343,8 +341,8 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
         return false;
     }
 
-    const Poco::URI& uriPublic = it->second->getPublicUri();
-    const auto uri = uriPublic.toString();
+    const std::string accessToken = it->second->getAccessToken();
+    const auto uri = it->second->getPublicUri().toString();
 
     // If save requested, but core didn't save because document was unmodified
     // notify the waiting thread, if any.
@@ -371,7 +369,7 @@ bool DocumentBroker::save(const std::string& sessionId, bool success, const std:
     LOG_DBG("Saving to URI [" << uri << "].");
 
     assert(_storage && _tileCache);
-    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(uriPublic);
+    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(accessToken);
     if (storageSaveResult == StorageBase::SaveResult::OK)
     {
         _isModified = false;

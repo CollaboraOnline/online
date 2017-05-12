@@ -419,4 +419,17 @@ void ClientSession::setReadOnly()
     sendTextFrame("perm: readonly");
 }
 
+std::string ClientSession::getAccessToken() const
+{
+    std::string accessToken;
+    Poco::URI::QueryParameters queryParams = _uriPublic.getQueryParameters();
+    for (auto& param: queryParams)
+    {
+        if (param.first == "access_token")
+            return param.second;
+    }
+
+    return std::string();
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
