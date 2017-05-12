@@ -724,6 +724,19 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
     return true;
 }
 
+std::string ClientSession::getAccessToken() const
+{
+    std::string accessToken;
+    Poco::URI::QueryParameters queryParams = _uriPublic.getQueryParameters();
+    for (auto& param: queryParams)
+    {
+        if (param.first == "access_token")
+            return param.second;
+    }
+
+    return std::string();
+}
+
 void ClientSession::onDisconnect()
 {
     LOG_INF(getName() << " Disconnected, current number of connections: " << LOOLWSD::NumConnections);

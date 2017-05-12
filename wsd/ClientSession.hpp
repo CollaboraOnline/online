@@ -89,7 +89,14 @@ public:
 
     /// Exact URI (including query params - access tokens etc.) with which
     /// client made the request to us
+    ///
+    /// Note: This URI is unsafe - when connecting to existing sessions, we must
+    /// ignore everything but the access_token, and use the access_token with
+    /// the URI of the initial request.
     const Poco::URI& getPublicUri() const { return _uriPublic; }
+
+    /// The access token of this session.
+    std::string getAccessToken() const;
 
     /// Set WOPI fileinfo object
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
