@@ -101,7 +101,7 @@ if test "z$tst" == "z"; then
 
 else # newer unit tests.
     echo "Running $tst | $tst_log ...";
-	if ${valgrind} \
+    if ${valgrind} \
        ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
                                    --o:lo_template_path="$lo_path" \
                                    --o:child_root_path="$jails_path" \
@@ -111,11 +111,11 @@ else # newer unit tests.
                                    --o:ssl.cert_file_path="${abs_top_builddir}/etc/cert.pem" \
                                    --o:ssl.ca_file_path="${abs_top_builddir}/etc/ca-chain.cert.pem" \
                                    --o:admin_console.username=admin --o:admin_console.password=admin \
-                                   --unitlib=".libs/$tst.so" > "$tst_log" 2>&1; then
+                                   --unitlib=".libs/$tst.so" 2> "$tst_log"; then
         echo "Test $tst passed."
         echo ":test-result: PASS $tst" >> $test_output
     else
-        cat "$tst_log"
+	cat $tst_log
         echo "============================================================="
         echo "Test failed on unit: $tst re-run with:"
         echo "   $ gdb --args ${abs_top_builddir}/loolwsd --o:sys_template_path=\"$systemplate_path\" \\"
@@ -128,6 +128,8 @@ else # newer unit tests.
         echo "         --o:ssl.ca_file_path=\"${abs_top_builddir}/etc/ca-chain.cert.pem\" \\"
         echo "         --o:admin_console.username=admin --o:admin_console.password=admin \\"
         echo "         --unitlib=\".libs/$tst.so\""
+	echo ""
+	echo "   $ less $tst_log # for detailed failure log files"
         echo "============================================================="
         echo ":test-result: FAIL $tst" >> $test_output
     fi

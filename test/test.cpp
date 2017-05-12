@@ -24,6 +24,8 @@
 
 #include <Log.hpp>
 
+#include "test.hpp"
+
 class HTTPGetTest;
 
 bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry, const std::string testName)
@@ -62,6 +64,20 @@ int main(int argc, char** argv)
     const char* loglevel = verbose ? "trace" : "error";
 
     Log::initialize("tst", loglevel, true, false, {});
+
+    runClientTests(true, verbose);
+}
+
+static bool IsStandalone = false;
+
+bool isStandalone()
+{
+    return IsStandalone;
+}
+
+bool runClientTests(bool standalone, bool verbose)
+{
+    IsStandalone = standalone;
 
     CPPUNIT_NS::TestResult controller;
     CPPUNIT_NS::TestResultCollector result;

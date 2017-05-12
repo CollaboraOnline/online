@@ -208,6 +208,7 @@ void HTTPCrashTest::testCrashForkit()
 
         std::cerr << "Killing forkit." << std::endl;
         killLoKitProcesses("(loolforkit)");
+        killLoKitProcesses("(forkit)"); // on new kernels: prctrl does that.
         std::cerr << "Communicating after kill." << std::endl;
 
         sendTextFrame(socket, "status", testname);

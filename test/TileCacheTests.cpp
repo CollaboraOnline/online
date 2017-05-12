@@ -26,6 +26,7 @@
 
 #include "countloolkits.hpp"
 #include "helpers.hpp"
+#include "test.hpp"
 
 using namespace helpers;
 
@@ -153,9 +154,10 @@ public:
 
 void TileCacheTests::testSimple()
 {
-    if (!UnitWSD::init(UnitWSD::UnitType::Wsd, ""))
+    if (isStandalone())
     {
-        throw std::runtime_error("Failed to load wsd unit test library.");
+        if (!UnitWSD::init(UnitWSD::UnitType::Wsd, ""))
+            throw std::runtime_error("Failed to load wsd unit test library.");
     }
 
     // Create TileCache and pretend the file was modified as recently as

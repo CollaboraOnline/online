@@ -14,7 +14,7 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(top_srcdir)/test/data\" \
 
 noinst_LTLIBRARIES = \
         unit-timeout.la unit-prefork.la \
-        unit-storage.la \
+        unit-storage.la unit-client.la \
         unit-admin.la unit-tilecache.la \
 	unit-fuzz.la unit-oob.la
 
@@ -56,6 +56,8 @@ unit_oob_la_SOURCES = UnitOOB.cpp
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
 unit_admin_la_SOURCES = UnitAdmin.cpp
 unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
+unit_client_la_SOURCES = UnitClient.cpp ${test_SOURCES}
+unit_client_la_LIBADD = $(CPPUNIT_LIBS)
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_storage_la_SOURCES = UnitStorage.cpp
@@ -73,7 +75,7 @@ check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
-TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la # unit-storage.la # unit-admin.la
+TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la # unit-client.la - enable to run unit-tests in wsd ...
 else
 TESTS = ${top_builddir}/test/test
 endif
