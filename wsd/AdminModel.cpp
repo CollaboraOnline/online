@@ -274,6 +274,24 @@ void AdminModel::notify(const std::string& message)
     }
 }
 
+void AdminModel::modificationAlert(const std::string& docKey, Poco::Process::PID pid, bool value)
+{
+    assertCorrectThread();
+
+    auto doc = _documents.find(docKey);
+    if(doc != _documents.end())
+    {
+        doc->second.setModified(value);
+    }
+
+    std::ostringstream oss;
+    oss << "modifications "
+        << pid << ' '
+        << (value?"Yes":"No");
+
+    notify(oss.str());
+}
+
 void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
                              const std::string& filename, const std::string& sessionId,
                              const std::string& userName)
@@ -429,6 +447,7 @@ std::string AdminModel::getDocuments() const
                 << "\"memory\"" << ':' << it.second.getMemoryDirty() << ','
                 << "\"elapsedTime\"" << ':' << it.second.getElapsedTime() << ','
                 << "\"idleTime\"" << ':' << it.second.getIdleTime() << ','
+                << "\"modified\"" << ':' << '"' << (it.second.getModifiedStatus() ? "Yes" : "No") << '"' << ','
                 << "\"views\"" << ':' << '[';
             viewers = it.second.getViews();
             std::string separator = "";
