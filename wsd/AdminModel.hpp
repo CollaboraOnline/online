@@ -85,9 +85,13 @@ public:
     const std::string getHistory() const;
     void takeSnapshot();
 
+    void setModified(bool value) { _isModified = value; }
+    bool getModifiedStatus() const { return _isModified; }
+
     std::string to_string() const;
 
 private:
+    bool _isModified;
     const std::string _docKey;
     const Poco::Process::PID _pid;
     /// SessionId mapping to View object
@@ -174,6 +178,8 @@ public:
     void subscribe(int sessionId, const std::string& command);
 
     void unsubscribe(int sessionId, const std::string& command);
+
+    void modificationAlert(const std::string& docKey, Poco::Process::PID pid, bool value);
 
     void clearMemStats() { _memStats.clear(); }
 
