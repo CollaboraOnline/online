@@ -2226,6 +2226,8 @@ public:
         os << "LOOLWSDServer:\n"
            << "  Ports: server " << ClientPortNumber
            <<          " prisoner " << MasterPortNumber << "\n"
+           << "  SSL: " << (LOOLWSD::isSSLEnabled() ? "https" : "http") << "\n"
+           << "  SSL-Termination: " << (LOOLWSD::isSSLTermination() ? "yes" : "no") << "\n"
            << "  TerminationFlag: " << TerminationFlag << "\n"
            << "  isShuttingDown: " << ShutdownRequestFlag << "\n"
            << "  NewChildren: " << NewChildren.size() << "\n"
