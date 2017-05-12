@@ -85,10 +85,10 @@ public:
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
-    virtual std::string loadStorageFileToLocal() = 0;
+    virtual std::string loadStorageFileToLocal(const std::string& accessToken) = 0;
 
     /// Writes the contents of the file back to the source.
-    virtual SaveResult saveLocalFileToStorage(const Poco::URI& uriPublic) = 0;
+    virtual SaveResult saveLocalFileToStorage(const std::string& accessToken) = 0;
 
     static size_t getFileSize(const std::string& filename);
 
@@ -148,11 +148,11 @@ public:
     /// Returns the URI specific file data
     /// Also stores the basic file information which can then be
     /// obtained using getFileInfo method
-    std::unique_ptr<LocalFileInfo> getLocalFileInfo(const Poco::URI& uriPublic);
+    std::unique_ptr<LocalFileInfo> getLocalFileInfo();
 
-    std::string loadStorageFileToLocal() override;
+    std::string loadStorageFileToLocal(const std::string& accessToken) override;
 
-    SaveResult saveLocalFileToStorage(const Poco::URI& uriPublic) override;
+    SaveResult saveLocalFileToStorage(const std::string& accessToken) override;
 
 private:
     /// True if the jailed file is not linked but copied.
@@ -230,15 +230,16 @@ public:
         std::chrono::duration<double> _callDuration;
     };
 
-    /// Returns the response of CheckFileInfo WOPI call for given URI
+    /// Returns the response of CheckFileInfo WOPI call for URI that was
+    /// provided during the initial creation of the WOPI storage.
     /// Also extracts the basic file information from the response
     /// which can then be obtained using getFileInfo()
-    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Poco::URI& uriPublic);
+    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const std::string& accessToken);
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
-    std::string loadStorageFileToLocal() override;
+    std::string loadStorageFileToLocal(const std::string& accessToken) override;
 
-    SaveResult saveLocalFileToStorage(const Poco::URI& uriPublic) override;
+    SaveResult saveLocalFileToStorage(const std::string& accessToken) override;
 
     /// Total time taken for making WOPI calls during load
     std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
@@ -266,9 +267,9 @@ public:
     // Implement me
     // WebDAVFileInfo getWebDAVFileInfo(const Poco::URI& uriPublic);
 
-    std::string loadStorageFileToLocal() override;
+    std::string loadStorageFileToLocal(const std::string& accessToken) override;
 
-    SaveResult saveLocalFileToStorage(const Poco::URI& uriPublic) override;
+    SaveResult saveLocalFileToStorage(const std::string& accessToken) override;
 
 private:
     std::unique_ptr<AuthBase> _authAgent;
