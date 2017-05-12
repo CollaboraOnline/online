@@ -2647,7 +2647,7 @@ void dump_state()
     srv.dumpState(oss);
 
     const std::string msg = oss.str();
-    std::cerr << msg << std::endl;
+    fprintf(stderr, "%s\n", msg.c_str());
     LOG_TRC(msg);
 }
 

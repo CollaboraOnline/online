@@ -138,30 +138,37 @@ void SocketDisposition::execute()
 
 namespace {
 
-void dump_hex (const char *legend, const char *prefix, std::vector<char> buffer)
+void dump_hex (std::ostream &os, const char *legend, const char *prefix, std::vector<char> buffer)
 {
     unsigned int i, j;
-    fprintf (stderr, "%s", legend);
+    char scratch[64];
+
+    os << legend;
     for (j = 0; j < buffer.size() + 15; j += 16)
     {
-        fprintf (stderr, "%s0x%.4x  ", prefix, j);
+        sprintf (scratch, "%s0x%.4x  ", prefix, j);
+        os << scratch;
         for (i = 0; i < 16; i++)
         {
             if ((j + i) < buffer.size())
-                fprintf (stderr, "%.2x ", (unsigned char)buffer[j+i]);
+                sprintf (scratch, "%.2x ", (unsigned char)buffer[j+i]);
             else
-                fprintf (stderr, "   ");
+                sprintf (scratch, "   ");
+            os << scratch;
             if (i == 8)
-                fprintf (stderr, " ");
+                os << " ";
         }
-        fprintf (stderr, " | ");
+        os << " | ";
 
         for (i = 0; i < 16; i++)
+        {
             if ((j + i) < buffer.size() && ::isprint(buffer[j+i]))
-                fprintf (stderr, "%c", buffer[j+i]);
+                sprintf (scratch, "%c", buffer[j+i]);
             else
-                fprintf (stderr, ".");
-        fprintf (stderr, "\n");
+                sprintf (scratch, ".");
+            os << scratch;
+        }
+        os << "\n";
     }
 }
 
@@ -172,7 +179,7 @@ void WebSocketHandler::dumpState(std::ostream& os)
     os << (_shuttingDown ? "shutd " : "alive ")
        << std::setw(5) << 1.0*_pingTimeUs/1000 << "ms ";
     if (_wsPayload.size() > 0)
-        dump_hex("\t\tws queued payload:\n", "\t\t", _wsPayload);
+        dump_hex(os, "\t\tws queued payload:\n", "\t\t", _wsPayload);
 }
 
 void StreamSocket::dumpState(std::ostream& os)
@@ -183,9 +190,9 @@ void StreamSocket::dumpState(std::ostream& os)
        << _inBuffer.size() << "\t" << _outBuffer.size() << "\t";
     _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
-        dump_hex("\t\tinBuffer:\n", "\t\t", _inBuffer);
+        dump_hex(os, "\t\tinBuffer:\n", "\t\t", _inBuffer);
     if (_outBuffer.size() > 0)
-        dump_hex("\t\toutBuffer:\n", "\t\t", _inBuffer);
+        dump_hex(os, "\t\toutBuffer:\n", "\t\t", _inBuffer);
 }
 
 void StreamSocket::send(Poco::Net::HTTPResponse& response)
