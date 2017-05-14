@@ -422,7 +422,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
-        request.set("User-Agent", "LOOLWSD WOPI Agent");
+        request.set("User-Agent", WOPI_AGENT_STRING);
         psession->sendRequest(request);
 
         Poco::Net::HTTPResponse response;
@@ -539,7 +539,7 @@ std::string WopiStorage::loadStorageFileToLocal(const std::string& accessToken)
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
-        request.set("User-Agent", "LOOLWSD WOPI Agent");
+        request.set("User-Agent", WOPI_AGENT_STRING);
         psession->sendRequest(request);
 
         Poco::Net::HTTPResponse response;
