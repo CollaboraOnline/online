@@ -1719,7 +1719,7 @@ private:
                     std::ostringstream oss;
                     oss << "HTTP/1.1 400\r\n"
                         << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                        << "User-Agent: LOOLWSD WOPI Agent\r\n"
+                        << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                         << "Content-Length: 0\r\n"
                         << "\r\n";
                     socket->send(oss.str());
@@ -1775,7 +1775,7 @@ private:
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
             << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
             << "Content-Length: " << responseString.size() << "\r\n"
             << "Content-Type: " << mimeType << "\r\n"
             << "\r\n";
@@ -1818,7 +1818,7 @@ private:
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
             << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
             << "Content-Length: " << xml.size() << "\r\n"
             << "Content-Type: text/xml\r\n"
             << "X-Content-Type-Options: nosniff\r\n"

@@ -236,7 +236,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                             now, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
                         << "Expires: " << Poco::DateTimeFormatter::format(
                             later, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                        << "User-Agent: LOOLWSD WOPI Agent\r\n"
+                        << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                         << "Cache-Control: max-age=11059200\r\n"
                         << "\r\n";
                     socket->send(oss.str());
@@ -257,7 +257,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
         std::ostringstream oss;
         oss << "HTTP/1.1 401\r\n"
             << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
             << "Content-Length: 0\r\n"
             << "WWW-Authenticate: Basic realm=\"online\"\r\n"
             << "\r\n";
@@ -271,7 +271,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
         std::ostringstream oss;
         oss << "HTTP/1.1 403\r\n"
             << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
             << "Content-Length: 0\r\n"
             << "\r\n";
         socket->send(oss.str());
@@ -284,7 +284,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
         std::ostringstream oss;
         oss << "HTTP/1.1 404\r\n"
             << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
             << "Content-Length: 0\r\n"
             << "\r\n";
         socket->send(oss.str());
@@ -320,7 +320,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         std::ostringstream oss;
         oss << "HTTP/1.1 404\r\n"
             << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: LOOLWSD WOPI Agent\r\n"
+            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
             << "Content-Length: 0\r\n"
             << "\r\n";
         socket->send(oss.str());
@@ -382,7 +382,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     oss << "HTTP/1.1 200 OK\r\n"
         << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
         << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-        << "User-Agent: LOOLWSD WOPI Agent\r\n"
+        << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
         << "Cache-Control:max-age=11059200\r\n"
         << "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
         << "Content-Length: " << preprocess.size() << "\r\n"
