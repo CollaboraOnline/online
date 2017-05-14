@@ -7,9 +7,18 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	extraSize: L.point(290, 0),
 
 	newAnnotation: function (comment) {
-		var annotation = L.annotation(this._map.getCenter(), comment, {noMenu: true}).addTo(this._map);
-		annotation.edit();
-		annotation.focus();
+		if (this._draft) {
+			return;
+		}
+		this.onAnnotationCancel();
+		this._draft = L.annotation(L.latLng(0, 0), comment, {noMenu: true}).addTo(this._map);
+		this._draft.edit();
+		var mapCenter = this._map.latLngToLayerPoint(this._map.getCenter());
+		var bounds = this._draft.getBounds();
+		var topLeft = mapCenter.subtract(L.point(bounds.max.x - bounds.min.x, (bounds.max.y - bounds.min.y)/2));
+		this._draft.setLatLng(this._map.layerPointToLatLng(topLeft));
+		this.layoutAnnotations();
+		this._draft.focus();
 	},
 
 	beforeAdd: function (map) {
@@ -33,6 +42,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	hideAnnotations: function (part) {
+		this._selectedAnnotation = undefined;
 		var annotations = this._annotations[this._partHashes[part]];
 		for (var index in annotations) {
 			annotations[index].hide();
@@ -54,27 +64,40 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	onAdd: function (map) {
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = {};
-		this._topAnnotation = 0;
+		this._topAnnotation = [];
+		this._topAnnotation[this._selectedPart] = 0;
+		this._selectedAnnotation = undefined;
+		this._draft = null;
 	},
 
 	onAnnotationCancel: function (e) {
-		this._map.removeLayer(e.annotation);
+		if (this._draft) {
+			this._map.removeLayer(this._draft);
+			this._draft = null;
+		}
 		this._map.focus();
+		this._selectedAnnotation = undefined;
+		this.layoutAnnotations();
 	},
 
 	onAnnotationModify: function (annotation) {
-		var draft = L.annotation(this._map.getCenter(), annotation._data).addTo(this._map);
-		draft.edit();
-		draft.focus();
+		this.onAnnotationCancel();
+		this._selectedAnnotation = annotation._data.id;
+		annotation.edit();
+		this.scrollUntilAnnotationIsVisible(annotation);
+		annotation.focus();
 	},
 
 	onAnnotationReply: function (annotation) {
-		var draft = L.annotation(this._map.getCenter(), annotation._data).addTo(this._map);
-		draft.reply();
-		draft.focus();
+		this.onAnnotationCancel();
+		this._selectedAnnotation = annotation._data.id;
+		annotation.reply();
+		this.scrollUntilAnnotationIsVisible(annotation);
+		annotation.focus();
 	},
 
 	onAnnotationRemove: function (id) {
+		this.onAnnotationCancel();
 		var comment = {
 			Id: {
 				type: 'string',
@@ -87,14 +110,16 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 	onAnnotationSave: function (e) {
 		var comment;
-		if (e.annotation._data.id === 'new') {
+		if (this._draft) {
 			comment = {
 				Text: {
 					type: 'string',
-					value: e.annotation._data.text
+					value: this._draft._data.text
 				}
 			};
 			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
+			this._map.removeLayer(this._draft);
+			this._draft = null;
 		} else {
 			comment = {
 				Id: {
@@ -107,13 +132,13 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				}
 			};
 			this._map.sendUnoCommand('.uno:EditAnnotation', comment);
+			this._selectedAnnotation = undefined;
 		}
-		this._map.removeLayer(e.annotation);
 		this._map.focus();
 	},
 
 	_onAnnotationZoom: function (e) {
-		this.layoutAnnotations();
+		this.onAnnotationCancel();
 	},
 
 	onReplyClick: function (e) {
@@ -128,18 +153,21 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			}
 		};
 		this._map.sendUnoCommand('.uno:ReplyToAnnotation', comment);
-		this._map.removeLayer(e.annotation);
+		this._selectedAnnotation = undefined;
 		this._map.focus();
 	},
 
 	onAnnotationScrollDown: function (e) {
-		this._topAnnotation = Math.min(++this._topAnnotation, this._annotations[this._partHashes[this._selectedPart]].length - 1);
-		this.layoutAnnotations();
+		this._topAnnotation[this._selectedPart] = Math.min(++this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
+		this.onAnnotationCancel();
 	},
 
 	onAnnotationScrollUp: function (e) {
-		this._topAnnotation = Math.max(--this._topAnnotation, 0);
-		this.layoutAnnotations();
+		if (this._topAnnotation[this._selectedPart] === 0) {
+			this._map.fire('scrollby', {x: 0, y: -100});
+		}
+		this._topAnnotation[this._selectedPart] = Math.max(--this._topAnnotation[this._selectedPart], 0);
+		this.onAnnotationCancel();
 	},
 
 	onUpdateParts: function (e) {
@@ -147,8 +175,11 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this.hideAnnotations(this._prevSelectedPart);
 			if (this.hasAnnotations(this._selectedPart)) {
 				this._map._docLayer._updateMaxBounds(true);
+				if (this._topAnnotation[this._selectedPart] === undefined) {
+					this._topAnnotation[this._selectedPart] = 0;
+				}
+				this.onAnnotationCancel();
 			}
-			this.layoutAnnotations();
 		}
 	},
 
@@ -163,20 +194,61 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	scrollUntilAnnotationIsVisible: function(annotation) {
+		var bounds = annotation.getBounds();
+		var mapBounds = this._map.getBounds();
+		if (this._map.layerPointToLatLng(bounds.getTopRight()).lat > mapBounds.getNorth()) {
+			this._topAnnotation[this._selectedPart] = Math.max(this._topAnnotation[this._selectedPart] - 2, 0);
+		}
+		else if (this._map.layerPointToLatLng(bounds.getBottomLeft()).lat < mapBounds.getSouth()) {
+			this._topAnnotation[this._selectedPart] = Math.min(this._topAnnotation[this._selectedPart] + 2, this._annotations[this._partHashes[this._selectedPart]].length - 1);
+		}
+		this.layoutAnnotations();
+	},
+
 	layoutAnnotations: function () {
 		var annotations = this._annotations[this._partHashes[this._selectedPart]];
 		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		var topRight = this._map.latLngToLayerPoint(this._map.options.maxBounds.getNorthEast())
 			.subtract(this.extraSize.multiplyBy(scale))
-			.add(L.point(this.options.marginX, this.options.marginY));
+			.add(L.point((this._selectedAnnotation ? 3 : 2) * this.options.marginX, this.options.marginY));
+		var topAnnotation = this._topAnnotation[this._selectedPart];
 		var bounds, annotation;
 		for (var index in annotations) {
 			annotation = annotations[index];
-			if (index >= this._topAnnotation) {
-				annotation.setLatLng(bounds ? this._map.layerPointToLatLng(bounds.getBottomLeft()) : this._map.layerPointToLatLng(topRight));
+			if (topAnnotation > 0 && parseInt(index) === topAnnotation - 1) {
+				// if the top annotation is not the first one, show a bit of the bottom of the previous annotation
+				// so that the user gets aware that there are more annotations above.
+
+				// get annotation bounds
+				annotation.setLatLng(this._map.layerPointToLatLng(L.point(0, -100000))); // placed where it's not visible
+				annotation.show(); // if it's hidden the bounds are wrong
+				bounds = annotation.getBounds();
+				annotation.hide();
+				var topLeft = topRight.subtract(L.point(0, bounds.max.y-bounds.min.y));
+				annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
+				annotation.show();
 				bounds = annotation.getBounds();
 				bounds.extend(L.point(bounds.max.x, bounds.max.y + this.options.marginY));
-				annotation.show();
+
+			} else if (index >= topAnnotation) { // visible annotations
+				if (annotation._data.id === this._selectedAnnotation) {
+					if (bounds) {
+						bounds.extend(L.point(bounds.max.x, bounds.max.y + 2 * this.options.marginY));
+					}
+					var offsetX = L.point(2 * this.options.marginX, 0);
+					var topLeft = (bounds ? bounds.getBottomLeft() : topRight).subtract(offsetX);
+					annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
+					bounds = annotation.getBounds();
+					bounds = L.bounds(bounds.getBottomLeft().add(offsetX), bounds.getTopRight().add(offsetX));
+					bounds.extend(L.point(bounds.max.x, bounds.max.y + 3 * this.options.marginY));
+				} else {
+					var topLeft = bounds ? bounds.getBottomLeft() : topRight;
+					annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
+					annotation.show();
+					bounds = annotation.getBounds();
+					bounds.extend(L.point(bounds.max.x, bounds.max.y + this.options.marginY));
+				}
 			} else {
 				annotation.hide();
 			}
@@ -213,7 +285,10 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				}
 				this._annotations[comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
 			}
-			this._topAnnotation = 0;
+			if (!this._topAnnotation) {
+				this._topAnnotation = [];
+			}
+			this._topAnnotation[this._selectedPart] = 0;
 			if (this.hasAnnotations(this._selectedPart)) {
 				this._map._docLayer._updateMaxBounds(true);
 			}
@@ -231,12 +306,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 					this._annotations[obj.comment.parthash] = [];
 				}
 				this._annotations[obj.comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), obj.comment).addTo(this._map));
-				this._topAnnotation = Math.min(this._topAnnotation, this._annotations[this._partHashes[this._selectedPart]].length - 1);
+				this._topAnnotation[this._selectedPart] = Math.min(this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
 				this.updateDocBounds(1, this.extraSize);
 				this.layoutAnnotations();
 			} else if (obj.comment.action === 'Remove') {
 				this.removeAnnotation(obj.comment.id);
-				this._topAnnotation = Math.min(this._topAnnotation, this._annotations[this._partHashes[this._selectedPart]].length - 1);
+				this._topAnnotation[this._selectedPart] = Math.min(this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
 				this.updateDocBounds(0);
 				this.layoutAnnotations();
 			} else if (obj.comment.action === 'Modify') {
@@ -244,6 +319,8 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				if (modified) {
 					modified._data = obj.comment;
 					modified.update();
+					this._selectedAnnotation = undefined;
+					this.layoutAnnotations();
 				}
 			}
 		} else {
