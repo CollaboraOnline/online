@@ -152,6 +152,14 @@ uno <command>
 
     <command> is a line of text.
 
+save dontTerminateEdit=<value> dontSaveIfUnmodified=<value>
+
+    A wrapper over UNO save command. A non-zero <value> is considered true.
+    'dontTerminateEdit' means not terminating the edit session in
+    spreadsheets when saving the document. In most cases, you should set it to
+    non-zero. 'dontSaveIfUnmodified' when set to non-zero skips saving the document when it is
+    unmodified.
+
 clientvisiblearea x=<x> y=<y> width=<width> height=<height>
 
     Invokes lok::Document::setClientVisibleArea().
@@ -660,5 +668,3 @@ lokitversion <JSON string>
          "ProductVersion": "5.3",
          "ProductExtension": ".0.0.alpha0",
          "BuildId": "<full 40 char git hash>"}
-
-

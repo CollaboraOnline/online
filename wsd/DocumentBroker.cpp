@@ -696,11 +696,29 @@ bool DocumentBroker::autoSave(const bool force)
     // Remember the last save time, since this is the predicate.
     LOG_TRC("Checking to autosave [" << _docKey << "].");
 
+    // Which session to use when auto saving ?
+    std::string savingSessionId;
+    for (auto& sessionIt : _sessions)
+    {
+        // Save the document using first session available ...
+        if (savingSessionId.empty())
+        {
+            savingSessionId = sessionIt.second->getId();
+        }
+
+        // or if any of the sessions is document owner, use that.
+        if (sessionIt.second->isDocumentOwner())
+        {
+            savingSessionId = sessionIt.second->getId();
+            break;
+        }
+    }
+
     bool sent = false;
     if (force)
     {
         LOG_TRC("Sending forced save command for [" << _docKey << "].");
-        sent = sendUnoSave(true);
+        sent = sendUnoSave(savingSessionId);
     }
     else if (_isModified)
     {
@@ -715,37 +733,20 @@ bool DocumentBroker::autoSave(const bool force)
             timeSinceLastSaveMs >= AutoSaveDurationMs)
         {
             LOG_TRC("Sending timed save command for [" << _docKey << "].");
-            sent = sendUnoSave(true);
+            sent = sendUnoSave(savingSessionId);
         }
     }
 
     return sent;
 }
 
-bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
+bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminateEdit, bool dontSaveIfUnmodified)
 {
     assertCorrectThread();
 
-    LOG_INF("Autosave triggered for doc [" << _docKey << "].");
+    LOG_INF("Saving doc [" << _docKey << "].");
 
-    std::shared_ptr<ClientSession> savingSession;
-    for (auto& sessionIt : _sessions)
-    {
-        // Save the document using first session available ...
-        if (!savingSession)
-        {
-            savingSession = sessionIt.second;
-        }
-
-        // or if any of the sessions is document owner, use that.
-        if (sessionIt.second->isDocumentOwner())
-        {
-            savingSession = sessionIt.second;
-            break;
-        }
-    }
-
-    if (savingSession)
+    if (_sessions.find(sessionId) != _sessions.end())
     {
         // Invalidate the timestamp to force persisting.
         _lastFileModifiedTime = Poco::Timestamp::fromEpochTime(0);
@@ -756,18 +757,21 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
         // arguments init
         oss << "{";
 
-        // Mention DontTerminateEdit always
-        oss << "\"DontTerminateEdit\":"
-            << "{"
-            << "\"type\":\"boolean\","
-            << "\"value\":true"
-            << "}";
+        if (dontTerminateEdit)
+        {
+            oss << "\"DontTerminateEdit\":"
+                << "{"
+                << "\"type\":\"boolean\","
+                << "\"value\":true"
+                << "}";
+        }
 
-        // Mention DontSaveIfUnmodified
         if (dontSaveIfUnmodified)
         {
-            oss << ","
-                << "\"DontSaveIfUnmodified\":"
+            if (dontTerminateEdit)
+                oss << ",";
+
+            oss << "\"DontSaveIfUnmodified\":"
                 << "{"
                 << "\"type\":\"boolean\","
                 << "\"value\":true"
@@ -780,12 +784,12 @@ bool DocumentBroker::sendUnoSave(const bool dontSaveIfUnmodified)
         const auto saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);
         const auto command = "uno .uno:Save " + saveArgs;
-        forwardToChild(savingSession->getId(), command);
+        forwardToChild(sessionId, command);
         _lastSaveRequestTime = std::chrono::steady_clock::now();
         return true;
     }
 
-    LOG_ERR("Failed to auto-save doc [" << _docKey << "]: No valid sessions.");
+    LOG_ERR("Failed to save doc [" << _docKey << "]: No valid sessions.");
     return false;
 }
 

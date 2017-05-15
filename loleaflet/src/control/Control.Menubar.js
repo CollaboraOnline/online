@@ -8,7 +8,7 @@ L.Control.Menubar = L.Control.extend({
 	options: {
 		text:  [
 			{name: _('File'), id: 'file', type: 'menu', menu: [
-				{name: _('Save'), id: 'save', type: 'unocommand', uno: '.uno:Save'},
+				{name: _('Save'), id: 'save', type: 'action'},
 				{name: _('Print'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: _('Download as'), id: 'downloadas', type: 'menu', menu: [
@@ -172,7 +172,7 @@ L.Control.Menubar = L.Control.extend({
 
 		presentation: [
 			{name: _('File'), id: 'file', type: 'menu', menu: [
-				{name: _('Save'), id: 'save', type: 'unocommand', uno: '.uno:Save'},
+				{name: _('Save'), id: 'save', type: 'action'},
 				{name: _('Print'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: _('Download as'), id: 'downloadas', type: 'menu', menu: [
@@ -232,7 +232,7 @@ L.Control.Menubar = L.Control.extend({
 
 		spreadsheet: [
 			{name: _('File'), id: 'file', type: 'menu', menu: [
-				{name: _('Save'), id: 'save', type: 'unocommand', uno: '.uno:Save'},
+				{name: _('Save'), id: 'save', type: 'action'},
 				{name: _('Print'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: _('Download as'), id:'downloadas', type: 'menu', menu: [
@@ -417,7 +417,9 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_executeAction: function(id) {
-		if (id === 'print') {
+		if (id === 'save') {
+			map.save(true, true);
+		} else if (id === 'print') {
 			map.print();
 		} else if (id.startsWith('downloadas-')) {
 			var format = id.substring('downloadas-'.length);
