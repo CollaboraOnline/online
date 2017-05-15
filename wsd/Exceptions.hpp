@@ -50,7 +50,7 @@ public:
     using BadRequestException::BadRequestException;
 };
 
-/// An authorization exception that is means to signify,
+/// An authorization exception that is meant to signify,
 /// and translate into, an HTTP unauthorized error.
 class UnauthorizedRequestException : public LoolException
 {

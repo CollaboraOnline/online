@@ -64,13 +64,13 @@ Session::~Session()
 
 bool Session::sendTextFrame(const char* buffer, const int length)
 {
-    LOG_TRC(getName() << ": Send: " << getAbbreviatedMessage(buffer, length));
+    LOG_TRC(getName() << ": Send: [" << getAbbreviatedMessage(buffer, length) << "].");
     return sendMessage(buffer, length, WSOpCode::Text) >= length;
 }
 
 bool Session::sendBinaryFrame(const char *buffer, int length)
 {
-    LOG_TRC(getName() << ": Send: " << std::to_string(length) << " bytes.");
+    LOG_TRC(getName() << ": Send: " << std::to_string(length) << " binary bytes.");
     return sendMessage(buffer, length, WSOpCode::Binary) >= length;
 }
 
