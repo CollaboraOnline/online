@@ -2221,6 +2221,7 @@ public:
     {
         // FIXME: add some stop-world magic before doing the dump(?)
         Socket::InhibitThreadChecks = true;
+        SocketPoll::InhibitThreadChecks = true;
 
         os << "LOOLWSDServer:\n"
            << "  Ports: server " << ClientPortNumber
@@ -2254,6 +2255,7 @@ public:
             i.second->dumpState(os);
 
         Socket::InhibitThreadChecks = false;
+        SocketPoll::InhibitThreadChecks = false;
     }
 
 private:
@@ -2532,6 +2534,7 @@ int LOOLWSD::innerMain()
 
     // Disable thread checking - we'll now cleanup lots of things if we can
     Socket::InhibitThreadChecks = true;
+    SocketPoll::InhibitThreadChecks = true;
 
     DocBrokers.clear();
 
