@@ -27,6 +27,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLOOLProtocolFunctions);
     CPPUNIT_TEST(testMessageAbbreviation);
     CPPUNIT_TEST(testTokenizer);
+    CPPUNIT_TEST(testReplace);
     CPPUNIT_TEST(testRegexListMatcher);
     CPPUNIT_TEST(testRegexListMatcher_Init);
     CPPUNIT_TEST(testEmptyCellCursor);
@@ -37,6 +38,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testLOOLProtocolFunctions();
     void testMessageAbbreviation();
     void testTokenizer();
+    void testReplace();
     void testRegexListMatcher();
     void testRegexListMatcher_Init();
     void testEmptyCellCursor();
@@ -216,6 +218,16 @@ void WhiteBoxTests::testTokenizer()
     CPPUNIT_ASSERT_EQUAL(std::string("tilewidth=3840"), tokens[6]);
     CPPUNIT_ASSERT_EQUAL(std::string("tileheight=3840"), tokens[7]);
     CPPUNIT_ASSERT_EQUAL(std::string("ver=-1"), tokens[8]);
+}
+
+void WhiteBoxTests::testReplace()
+{
+    CPPUNIT_ASSERT_EQUAL(std::string("zesz one zwo flee"), Util::replace("test one two flee", "t", "z"));
+    CPPUNIT_ASSERT_EQUAL(std::string("testt one two flee"), Util::replace("test one two flee", "tes", "test"));
+    CPPUNIT_ASSERT_EQUAL(std::string("testest one two flee"), Util::replace("test one two flee", "tes", "testes"));
+    CPPUNIT_ASSERT_EQUAL(std::string("tete one two flee"), Util::replace("tettet one two flee", "tet", "te"));
+    CPPUNIT_ASSERT_EQUAL(std::string("t one two flee"), Util::replace("test one two flee", "tes", ""));
+    CPPUNIT_ASSERT_EQUAL(std::string("test one two flee"), Util::replace("test one two flee", "", "X"));
 }
 
 void WhiteBoxTests::testRegexListMatcher()

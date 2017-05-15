@@ -103,7 +103,7 @@ namespace Util
     /// Example: "procmemstats: pid=123 rss=12400 pss=566"
     std::string getMemoryStats(FILE* file);
 
-    std::string replace(const std::string& s, const std::string& a, const std::string& b);
+    std::string replace(std::string s, const std::string& a, const std::string& b);
 
     std::string formatLinesForLog(const std::string& s);
 

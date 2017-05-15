@@ -242,14 +242,20 @@ namespace Util
         return 0;
     }
 
-    std::string replace(const std::string& s, const std::string& a, const std::string& b)
+    std::string replace(std::string result, const std::string& a, const std::string& b)
     {
-        std::string result = s;
-        std::string::size_type pos;
-        while ((pos = result.find(a)) != std::string::npos)
+        const size_t aSize = a.size();
+        if (aSize > 0)
         {
-            result = result.replace(pos, a.size(), b);
+            const size_t bSize = b.size();
+            std::string::size_type pos = 0;
+            while ((pos = result.find(a, pos)) != std::string::npos)
+            {
+                result = result.replace(pos, aSize, b);
+                pos += bSize; // Skip the replacee to avoid endless recursion.
+            }
         }
+
         return result;
     }
 
