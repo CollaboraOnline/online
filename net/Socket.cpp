@@ -24,6 +24,7 @@
 #include "WebSocketHandler.hpp"
 
 int SocketPoll::DefaultPollTimeoutMs = 5000;
+std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
 // help with initialization order

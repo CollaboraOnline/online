@@ -319,6 +319,7 @@ public:
 
     /// Default poll time - useful to increase for debugging.
     static int DefaultPollTimeoutMs;
+    static std::atomic<bool> InhibitThreadChecks;
 
     /// Stop the polling thread.
     void stop()
@@ -370,6 +371,8 @@ public:
     /// Asserts in the debug builds, otherwise just logs.
     void assertCorrectThread() const
     {
+        if (InhibitThreadChecks)
+            return;
         // 0 owner means detached and can be invoked by any thread.
         const bool sameThread = (!isAlive() || _owner == std::thread::id(0) || std::this_thread::get_id() == _owner);
         if (!sameThread)
