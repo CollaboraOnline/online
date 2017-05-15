@@ -218,6 +218,9 @@ function onClick(id, item, subItem) {
 			map.toggleCommandState(item.uno);
 		}
 	}
+	else if (id === 'save') {
+		map.save(true, true);
+	}
 	else if (id === 'repair') {
 		map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 	}
@@ -451,7 +454,7 @@ $(function () {
 		name: 'toolbar-up',
 		items: [
 			{type: 'html', id: 'left'},
-			{type: 'button',  id: 'save', img: 'save', hint: _('Save'), uno: 'Save'},
+			{type: 'button',  id: 'save', img: 'save', hint: _('Save')},
 			{type: 'break', id: 'savebreak'},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _('Undo'), uno: 'Undo'},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _('Redo'), uno: 'Redo'},

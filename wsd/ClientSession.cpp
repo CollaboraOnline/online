@@ -203,6 +203,14 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return sendCombinedTiles(buffer, length, tokens, docBroker);
     }
+    else if (tokens[0] == "save")
+    {
+        int dontTerminateEdit = 1;
+        int dontSaveIfUnmodified = 1;
+        getTokenInteger(tokens[1], "dontTerminateEdit", dontTerminateEdit);
+        getTokenInteger(tokens[2], "dontSaveIfUnmodified", dontSaveIfUnmodified);
+        docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0);
+    }
     else
     {
         if (!filterMessage(firstLine))
