@@ -58,6 +58,21 @@ public:
     using LoolException::LoolException;
 };
 
+/// An access-denied exception that is meant to signify
+/// a storage authentication error.
+class AccessDeniedException : public LoolException
+{
+public:
+    using LoolException::LoolException;
+};
+
+/// A service-unavailable exception that is meant to signify
+/// an internal error.
+class ServiceUnavailableException : public LoolException
+{
+public:
+    using LoolException::LoolException;
+};
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

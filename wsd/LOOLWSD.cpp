@@ -2049,79 +2049,102 @@ private:
         // First Upgrade.
         WebSocketHandler ws(_socket, request);
 
-        if (LOOLWSD::NumConnections >= MAX_CONNECTIONS)
+        // Response to clients beyond this point is done via WebSocket.
+        try
         {
-            LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
-            shutdownLimitReached(ws);
-            return;
-        }
-
-        LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << url << "].");
-
-        // Indicate to the client that document broker is searching.
-        const std::string status("statusindicator: find");
-        LOG_TRC("Sending to Client [" << status << "].");
-        ws.sendMessage(status);
-
-        const auto uriPublic = DocumentBroker::sanitizeURI(url);
-        const auto docKey = DocumentBroker::getDocKey(uriPublic);
-        LOG_INF("Sanitized URI [" << url << "] to [" << uriPublic.toString() <<
-                "] and mapped to docKey [" << docKey << "] for session [" << _id << "].");
-
-        // Check if readonly session is required
-        bool isReadOnly = false;
-        for (const auto& param : uriPublic.getQueryParameters())
-        {
-            LOG_DBG("Query param: " << param.first << ", value: " << param.second);
-            if (param.first == "permission" && param.second == "readonly")
+            if (LOOLWSD::NumConnections >= MAX_CONNECTIONS)
             {
-                isReadOnly = true;
+                LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
+                shutdownLimitReached(ws);
+                return;
             }
-        }
 
-        LOG_INF("URL [" << url << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
+            LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << url << "].");
 
-        // Request a kit process for this doc.
-        auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
-        if (docBroker)
-        {
-            auto clientSession = createNewClientSession(&ws, _id, uriPublic, docBroker, isReadOnly);
-            if (clientSession)
+            // Indicate to the client that document broker is searching.
+            const std::string status("statusindicator: find");
+            LOG_TRC("Sending to Client [" << status << "].");
+            ws.sendMessage(status);
+
+            const auto uriPublic = DocumentBroker::sanitizeURI(url);
+            const auto docKey = DocumentBroker::getDocKey(uriPublic);
+            LOG_INF("Sanitized URI [" << url << "] to [" << uriPublic.toString() <<
+                    "] and mapped to docKey [" << docKey << "] for session [" << _id << "].");
+
+            // Check if readonly session is required
+            bool isReadOnly = false;
+            for (const auto& param : uriPublic.getQueryParameters())
             {
-                // Transfer the client socket to the DocumentBroker when we get back to the poll:
-                disposition.setMove([docBroker, clientSession]
-                                    (const std::shared_ptr<Socket> &moveSocket)
+                LOG_DBG("Query param: " << param.first << ", value: " << param.second);
+                if (param.first == "permission" && param.second == "readonly")
                 {
-                    // Make sure the thread is running before adding callback.
-                    docBroker->startThread();
+                    isReadOnly = true;
+                }
+            }
 
-                    // We no longer own this socket.
-                    moveSocket->setThreadOwner(std::thread::id(0));
+            LOG_INF("URL [" << url << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
 
-                    docBroker->addCallback([docBroker, moveSocket, clientSession]()
+            // Request a kit process for this doc.
+            auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
+            if (docBroker)
+            {
+                auto clientSession = createNewClientSession(&ws, _id, uriPublic, docBroker, isReadOnly);
+                if (clientSession)
+                {
+                    // Transfer the client socket to the DocumentBroker when we get back to the poll:
+                    disposition.setMove([docBroker, clientSession]
+                                        (const std::shared_ptr<Socket> &moveSocket)
                     {
-                        auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                        // Make sure the thread is running before adding callback.
+                        docBroker->startThread();
 
-                        // Set the ClientSession to handle Socket events.
-                        streamSocket->setHandler(clientSession);
-                        LOG_DBG("Socket #" << moveSocket->getFD() << " handler is " << clientSession->getName());
+                        // We no longer own this socket.
+                        moveSocket->setThreadOwner(std::thread::id(0));
 
-                        // Move the socket into DocBroker.
-                        docBroker->addSocketToPoll(moveSocket);
+                        docBroker->addCallback([docBroker, moveSocket, clientSession]()
+                        {
+                            try
+                            {
+                                auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
 
-                        // Add and load the session.
-                        docBroker->addSession(clientSession);
+                                // Set the ClientSession to handle Socket events.
+                                streamSocket->setHandler(clientSession);
+                                LOG_DBG("Socket #" << moveSocket->getFD() << " handler is " << clientSession->getName());
+
+                                // Move the socket into DocBroker.
+                                docBroker->addSocketToPoll(moveSocket);
+
+                                // Add and load the session.
+                                docBroker->addSession(clientSession);
+                            }
+                            catch (const std::exception& exc)
+                            {
+                                LOG_ERR("Error while handling loading : " << exc.what());
+                                const std::string msg = "error: cmd=internal kind=unauthorized";
+                                clientSession->sendMessage(msg);
+                                docBroker->stop();
+                            }
+                        });
                     });
-                });
+                }
+                else
+                {
+                    LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
+                    cleanupDocBrokers();
+                }
             }
             else
             {
-                LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
-                cleanupDocBrokers();
+                throw ServiceUnavailableException("Failed to create DocBroker with docKey [" + docKey + "].");
             }
         }
-        else
-            LOG_WRN("Failed to create DocBroker with docKey [" << docKey << "].");
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Error while handling Client WS Request: " << exc.what());
+            const std::string msg = "error: cmd=internal kind=load";
+            ws.sendMessage(msg);
+            ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, msg);
+        }
     }
 
 private:

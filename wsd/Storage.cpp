@@ -493,7 +493,8 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
     }
     else
     {
-        LOG_ERR("WOPI::CheckFileInfo is missing JSON payload");
+        LOG_ERR("WOPI::CheckFileInfo failed and no JSON payload returned. Access denied.");
+        throw UnauthorizedRequestException("Access denied.");
     }
 
     Poco::Timestamp modifiedTime = Poco::Timestamp::fromEpochTime(0);
