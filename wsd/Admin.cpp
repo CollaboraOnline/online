@@ -322,7 +322,7 @@ void Admin::pollingThread()
             cpuWait += _cpuStatsTaskIntervalMs;
         }
         int memWait = _memStatsTaskIntervalMs -
-            std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCPU).count();
+            std::chrono::duration_cast<std::chrono::milliseconds>(now - lastMem).count();
         if (memWait <= 0)
         {
             const auto totalMem = getTotalMemoryUsage();
