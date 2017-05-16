@@ -1,6 +1,6 @@
 // If not debug, don't print anything on the console
 // except in tile debug mode (Ctrl-Shift-Alt-d)
-console.log2 = console.log
+console.log2 = console.log;
 if (loleaflet_logging !== 'true') {
 	var methods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd'];
 	for (var i = 0; i < methods.length; i++) {
