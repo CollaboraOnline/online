@@ -369,6 +369,7 @@ private:
     Poco::URI _uriJailed;
     std::string _jailId;
     std::string _filename;
+    std::string _hostInstanceId;
 
     /// The last time we tried saving, regardless of whether the
     /// document was modified and saved or not.

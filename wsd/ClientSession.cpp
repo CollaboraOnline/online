@@ -736,7 +736,6 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
 
 std::string ClientSession::getAccessToken() const
 {
-    std::string accessToken;
     Poco::URI::QueryParameters queryParams = _uriPublic.getQueryParameters();
     for (auto& param: queryParams)
     {

@@ -102,15 +102,7 @@ Poco::URI DocumentBroker::sanitizeURI(const std::string& uri)
 
 std::string DocumentBroker::getDocKey(const Poco::URI& uri)
 {
-    // If multiple host-names are used to access us, then
-    // we force same document (when opened from
-    // alias hosts) to load as separate documents and sharing doesn't
-    // work. Worse, saving overwrites one another.
-    // But we also do not want different WOPI hosts using the same path
-    // for some file getting shared across WOPI hosts
-    std::string docKey;
-    Poco::URI::encode(uri.getHost() + ":" + std::to_string(uri.getPort()) + uri.getPath(), "", docKey);
-    return docKey;
+    return StorageBase::getUniqueDocId(uri);
 }
 
 /// The Document Broker Poll - one of these in a thread per document
@@ -409,6 +401,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             LOG_ERR("Failed to create Storage instance for [" << _docKey << "] in " << jailPath.toString());
             return false;
         }
+
         firstInstance = true;
     }
 
@@ -423,6 +416,14 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(session->getAccessToken());
         userid = wopifileinfo->_userid;
         username = wopifileinfo->_username;
+        if (firstInstance)
+        {
+            _hostInstanceId = wopifileinfo->_hostInstanceId;
+        }
+        else if (!_hostInstanceId.empty() && _hostInstanceId != wopifileinfo->_hostInstanceId)
+        {
+            throw UnauthorizedRequestException("Unauthorized WOPI host.");
+        }
 
         if (!wopifileinfo->_userCanWrite)
         {

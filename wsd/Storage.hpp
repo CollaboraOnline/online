@@ -100,10 +100,28 @@ public:
     static std::unique_ptr<StorageBase> create(const Poco::URI& uri,
                                                const std::string& jailRoot,
                                                const std::string& jailPath);
+
+    /// Given the URI of a doc, return a unique doc ID.
+    /// Wopi host aliases are resolved to unique host ID.
+    static std::string getUniqueDocId(const Poco::URI& uri);
+
 protected:
 
     /// Returns the root path of the jail directory of docs.
     std::string getLocalRootPath() const;
+
+    /// Returns true iff WOPI is enabled, and the host is whitelisted (or local).
+    static bool isWopiHostAuthorized(const std::string& host)
+    {
+        if (WopiEnabled)
+        {
+            return (WopiHosts.match(host) || isLocalhost(host));
+        }
+
+        return false;
+    }
+
+    static bool isLocalhost(const std::string& host);
 
 protected:
     const Poco::URI _uri;
@@ -176,11 +194,16 @@ public:
                 "], jailPath: [" << jailPath << "], uri: [" << uri.toString() << "].");
     }
 
-    class WOPIFileInfo
+    class WOPIFileInfo : public FileInfo
     {
     public:
-        WOPIFileInfo(const std::string& userid,
+        WOPIFileInfo(const std::string& filename,
+                     const std::string& ownerId,
+                     const Poco::Timestamp& modifiedTime,
+                     size_t size,
+                     const std::string& userid,
                      const std::string& username,
+                     const std::string& hostInstanceId,
                      const bool userCanWrite,
                      const std::string& postMessageOrigin,
                      const bool hidePrintOption,
@@ -191,8 +214,10 @@ public:
                      const bool disableExport,
                      const bool disableCopy,
                      const std::chrono::duration<double> callDuration)
-            : _userid(userid),
+            : FileInfo(filename, ownerId, modifiedTime, size),
+              _userid(userid),
               _username(username),
+              _hostInstanceId(hostInstanceId),
               _userCanWrite(userCanWrite),
               _postMessageOrigin(postMessageOrigin),
               _hidePrintOption(hidePrintOption),
@@ -210,6 +235,8 @@ public:
         std::string _userid;
         /// Display Name of user accessing the file
         std::string _username;
+        /// Host instance ID (unique to the given host).
+        std::string _hostInstanceId;
         /// If user accessing the file has write permission
         bool _userCanWrite;
         /// WOPI Post message property
@@ -236,7 +263,12 @@ public:
     /// provided during the initial creation of the WOPI storage.
     /// Also extracts the basic file information from the response
     /// which can then be obtained using getFileInfo()
-    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const std::string& accessToken);
+    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const std::string& accessToken)
+    {
+        std::unique_ptr<WOPIFileInfo> info = getWOPIFileInfo(_uri, accessToken);
+        _fileInfo = FileInfo(info->_filename, info->_ownerId, info->_modifiedTime, info->_size);
+        return info;
+    }
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string loadStorageFileToLocal(const std::string& accessToken) override;
@@ -245,6 +277,11 @@ public:
 
     /// Total time taken for making WOPI calls during load
     std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
+
+    /// Given the URI of a doc, return a unique doc ID.
+    static std::string getUniqueDocId(const Poco::URI& uri);
+
+    static std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(Poco::URI uriObject, const std::string& accessToken);
 
 private:
     // Time spend in loading the file from storage
@@ -272,6 +309,13 @@ public:
     std::string loadStorageFileToLocal(const std::string& accessToken) override;
 
     SaveResult saveLocalFileToStorage(const std::string& accessToken) override;
+
+    /// Given the URI of a doc, return a unique doc ID.
+    static std::string getUniqueDocId(const std::string& uri)
+    {
+        // TODO: Implement.
+        return uri;
+    }
 
 private:
     std::unique_ptr<AuthBase> _authAgent;
