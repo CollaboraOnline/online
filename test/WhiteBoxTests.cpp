@@ -216,6 +216,16 @@ void WhiteBoxTests::testTokenizer()
     CPPUNIT_ASSERT_EQUAL(std::string("tilewidth=3840"), tokens[6]);
     CPPUNIT_ASSERT_EQUAL(std::string("tileheight=3840"), tokens[7]);
     CPPUNIT_ASSERT_EQUAL(std::string("ver=-1"), tokens[8]);
+
+    // With custom delimeters
+    tokens = LOOLProtocol::tokenize(std::string("ABC:DEF"), ':');
+    CPPUNIT_ASSERT_EQUAL(std::string("ABC"), tokens[0]);
+    CPPUNIT_ASSERT_EQUAL(std::string("DEF"), tokens[1]);
+
+    tokens = LOOLProtocol::tokenize(std::string("ABC,DEF,XYZ"), ',');
+    CPPUNIT_ASSERT_EQUAL(std::string("ABC"), tokens[0]);
+    CPPUNIT_ASSERT_EQUAL(std::string("DEF"), tokens[1]);
+    CPPUNIT_ASSERT_EQUAL(std::string("XYZ"), tokens[2]);
 }
 
 void WhiteBoxTests::testRegexListMatcher()

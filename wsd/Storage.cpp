@@ -26,6 +26,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetworkInterface.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/StreamCopier.h>
@@ -404,6 +405,24 @@ void setQueryParameter(Poco::URI& uriObject, const std::string& key, const std::
     uriObject.addQueryParameter(key, value);
 }
 
+
+void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
+{
+#if ENABLE_DEBUG
+    if (std::getenv("LOOL_STORAGE_COOKIE"))
+    {
+        Poco::Net::NameValueCollection nvcCookies;
+        std::vector<std::string> cookieTokens = LOOLProtocol::tokenize(std::string(std::getenv("LOOL_STORAGE_COOKIE")), ':');
+        if (cookieTokens.size() == 2)
+        {
+            nvcCookies.add(cookieTokens[0], cookieTokens[1]);
+            request.setCookies(nvcCookies);
+            LOG_TRC("Added storage debug cookie [" << cookieTokens[0] << "=" << cookieTokens[1] << "].");
+        }
+    }
+#endif
+}
+
 } // anonymous namespace
 
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const std::string& accessToken)
@@ -423,6 +442,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", "LOOLWSD WOPI Agent");
+        addStorageDebugCookie(request);
         psession->sendRequest(request);
 
         Poco::Net::HTTPResponse response;
@@ -547,6 +567,7 @@ std::string WopiStorage::loadStorageFileToLocal(const std::string& accessToken)
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", "LOOLWSD WOPI Agent");
+        addStorageDebugCookie(request);
         psession->sendRequest(request);
 
         Poco::Net::HTTPResponse response;
@@ -617,7 +638,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
         request.set("X-WOPI-Override", "PUT");
         request.setContentType("application/octet-stream");
         request.setContentLength(size);
-
+        addStorageDebugCookie(request);
         std::ostream& os = psession->sendRequest(request);
         std::ifstream ifs(_jailedFilePath);
         Poco::StreamCopier::copyStream(ifs, os);

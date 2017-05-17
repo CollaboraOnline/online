@@ -96,7 +96,7 @@ namespace LOOLProtocol
 
     /// Tokenize space-delimited values until we hit new-line or the end.
     inline
-    std::vector<std::string> tokenize(const char* data, const size_t size)
+    std::vector<std::string> tokenize(const char* data, const size_t size, const char delimeter = ' ')
     {
         std::vector<std::string> tokens;
         if (size == 0 || data == nullptr)
@@ -108,22 +108,22 @@ namespace LOOLProtocol
         const char* end = data;
         for (size_t i = 0; i < size && data[i] != '\n'; ++i, ++end)
         {
-            if (data[i] == ' ')
+            if (data[i] == delimeter)
             {
-                if (start != end && *start != ' ')
+                if (start != end && *start != delimeter)
                 {
                     tokens.emplace_back(start, end);
                 }
 
                 start = end;
             }
-            else if (*start == ' ')
+            else if (*start == delimeter)
             {
                 ++start;
             }
         }
 
-        if (start != end && *start != ' ' && *start != '\n')
+        if (start != end && *start != delimeter && *start != '\n')
         {
             tokens.emplace_back(start, end);
         }
@@ -132,9 +132,9 @@ namespace LOOLProtocol
     }
 
     inline
-    std::vector<std::string> tokenize(const std::string& s)
+    std::vector<std::string> tokenize(const std::string& s, const char delimeter = ' ')
     {
-        return tokenize(s.data(), s.size());
+        return tokenize(s.data(), s.size(), delimeter);
     }
 
     inline bool getTokenIntegerFromMessage(const std::string& message, const std::string& name, int& value)
