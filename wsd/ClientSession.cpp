@@ -132,6 +132,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "renderfont" &&
              tokens[0] != "requestloksession" &&
              tokens[0] != "resetselection" &&
+             tokens[0] != "save" &&
              tokens[0] != "saveas" &&
              tokens[0] != "selectgraphic" &&
              tokens[0] != "selecttext" &&
