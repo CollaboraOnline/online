@@ -2,6 +2,8 @@
  * L.Annotation
  */
 
+/* global $ Autolinker L */
+
 L.Annotation = L.Layer.extend({
 	options: {
 		minWidth: 160,
@@ -284,16 +286,17 @@ L.Annotation = L.Layer.extend({
 
 	_updateContent: function () {
 		var linkedText = Autolinker.link(this._data.text);
-		this._contentText.innerHTML = linkedText;
+		$(this._contentText).text(linkedText);
 		// Original unlinked text
-		this._contentText.origText = this._nodeModifyText.innerHTML = this._data.text;
-		this._contentAuthor.innerHTML = this._data.author;
+		this._contentText.origText = this._data.text;
+		$(this._nodeModifyText).text(this._data.text);
+		$(this._contentAuthor).text(this._data.author);
 
 		var d = new Date(this._data.dateTime.replace(/,.*/, 'Z'));
-		this._contentDate.innerHTML = (isNaN(d.getTime()) || this._map.getDocType() === 'spreadsheet')? this._data.dateTime: d.toDateString();
+		$(this._contentDate).text((isNaN(d.getTime()) || this._map.getDocType() === 'spreadsheet')? this._data.dateTime: d.toDateString());
 
 		if (this._data.trackchange) {
-			this._captionText.innerHTML = this._data.description;
+			$(this._captionText).text(this._data.description);
 		}
 	},
 
