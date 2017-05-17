@@ -408,6 +408,7 @@ void setQueryParameter(Poco::URI& uriObject, const std::string& key, const std::
 
 void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
 {
+    (void) request;
 #if ENABLE_DEBUG
     if (std::getenv("LOOL_STORAGE_COOKIE"))
     {
