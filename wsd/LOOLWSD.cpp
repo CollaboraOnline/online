@@ -1995,10 +1995,15 @@ private:
             if (filePath.isAbsolute() && File(filePath).exists())
             {
                 // Instruct browsers to download the file, not display it
-                response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                // with the exception of SVG where we need the browser to
+                // actually show it.
+                std::string contentType = getContentType(fileName);
+                if (contentType != "image/svg+xml")
+                    response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
                 try
                 {
-                    HttpHelper::sendFile(socket, filePath.toString(), getContentType(fileName), response);
+                    HttpHelper::sendFile(socket, filePath.toString(), contentType, response);
                     responded = true;
                 }
                 catch (const Exception& exc)
