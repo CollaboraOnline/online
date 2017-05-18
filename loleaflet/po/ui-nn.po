@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:11+0000\n"
+"POT-Creation-Date: 2017-05-15 08:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /nn/libo_online/loleaflet-ui-nn.po\n"
-"X-Pootle-Revision: 2438550\n"
+"X-Pootle-Revision: 2536232\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -724,7 +724,7 @@ msgstr "Du"
 
 #: dist/toolbar/toolbar.js:1604
 msgid "Readonly"
-msgstr ""
+msgstr "Skriveverna"
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -736,7 +736,7 @@ msgstr "Er du sikker på at du vil avslutta denne økta?"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "Er du sikker på at du vil slå av tenaren"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -1870,19 +1870,19 @@ msgstr "Beste kolonnebreidd"
 
 #: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "Intern klipp ut"
 
 #: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"
-msgstr ""
+msgstr "Intern kopi"
 
 #: src/control/Control.ContextMenu.js:141
 msgid "Internal Paste"
-msgstr ""
+msgstr "Intern lim inn"
 
 #: src/control/Control.ContextMenu.js:163
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Intern lim inn spesial"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
@@ -1991,24 +1991,23 @@ msgstr "Vel alt"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
-msgstr ""
+msgstr "Spor endringar"
 
 #: src/control/Control.Menubar.js:32
 msgid "Record"
-msgstr ""
+msgstr "Ta opp"
 
 #: src/control/Control.Menubar.js:33
 msgid "Show"
-msgstr ""
+msgstr "Vis"
 
 #: src/control/Control.Menubar.js:35
 msgid "Previous"
-msgstr ""
+msgstr "Førre"
 
 #: src/control/Control.Menubar.js:36
-#, fuzzy
 msgid "Next"
-msgstr "Tekst"
+msgstr "Neste"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:194
@@ -2023,7 +2022,6 @@ msgid "Full screen"
 msgstr "Fullskjerm"
 
 #: src/control/Control.Menubar.js:46
-#, fuzzy
 msgid "Formatting Marks"
 msgstr "Formateringsmerkje"
 
@@ -2037,7 +2035,7 @@ msgstr "Bilete"
 #: src/control/Control.Menubar.js:203
 #: src/control/Control.Menubar.js:259
 msgid "Comment..."
-msgstr ""
+msgstr "Merknad …"
 
 #: src/control/Control.Menubar.js:53
 msgid "Footnote"
@@ -2448,19 +2446,19 @@ msgstr "Er du sikker på at du vil sletta dette lysbiletet?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
-msgstr ""
+msgstr "(100/mm)"
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "
-msgstr ""
+msgstr "Legg til:"
 
 #: src/control/Control.MetricInput.js:61
 msgid "Default value"
-msgstr ""
+msgstr "Standardverdi"
 
 #: src/control/Control.MetricInput.js:68
 msgid "Submit"
-msgstr ""
+msgstr "Send inn"
 
 #: src/control/Control.RowHeader.js:37
 msgid "Insert row above"
@@ -2484,11 +2482,11 @@ msgstr "Beste radhøgd"
 
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Rull opp merknadar"
 
 #: src/control/Control.Scroll.Annotation.js:11
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Rull ned merknadar"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -2576,23 +2574,23 @@ msgstr "Vi kan diverre ikkje kopla deg til dokumentet ditt. Prøv igjen."
 
 #: src/layer/marker/Annotation.js:156
 msgid "Accept change"
-msgstr ""
+msgstr "Godta endring"
 
 #: src/layer/marker/Annotation.js:161
 msgid "Reject change"
-msgstr ""
+msgstr "Avvis endring"
 
 #: src/layer/marker/Annotation.js:169
 msgid "Open menu"
-msgstr ""
+msgstr "Opna meny"
 
 #: src/layer/tile/TileLayer.js:182
 msgid "Modify"
-msgstr ""
+msgstr "Endra"
 
 #: src/layer/tile/TileLayer.js:194
 msgid "Remove"
-msgstr ""
+msgstr "Fjern"
 
 #: src/map/Map.js:131
 msgid "Initializing..."

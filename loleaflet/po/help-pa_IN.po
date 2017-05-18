@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:11+0000\n"
+"POT-Creation-Date: 2017-05-16 08:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,11 +12,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /pa_IN/libo_online/loleaflet-help-pa_IN.po\n"
-"X-Pootle-Revision: 826793\n"
+"X-Pootle-Revision: 2536589\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A27
 msgid "General Keyboard Shortcuts"
@@ -24,27 +24,27 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Undo"
-msgstr ""
+msgstr "ਵਾਪਸ ਉਹੀ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Ctrl + Z"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
 msgid "Redo"
-msgstr ""
+msgstr "ਮੁੜ ਕਰੋ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
 msgid "Ctrl + Y"
-msgstr ""
+msgstr "Ctrl + Y"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
 msgid "Cut"
-msgstr ""
+msgstr "ਕੱਟੋ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
 msgid "Ctrl + X"
-msgstr ""
+msgstr "Ctrl + X"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Paste as unformatted text"
@@ -52,105 +52,105 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Ctrl + Alt + Shift + V"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + V"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "ਪਰਿੰਟ (PDF ਡਾਊਨਲੋਡ ਕਰੋ)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
 msgid "Ctrl + P"
-msgstr ""
+msgstr "Ctrl + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਮਦਦ ਵੇਖਾਓ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
 msgid "Ctrl + Shift + ?"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A38
 #: dist%2Floleaflet-help.html+div.div.h2%3A160
 msgid "Text formatting"
-msgstr ""
+msgstr "ਟੈਕਸਟ ਫਾਰਮੈਟਿੰਗ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
 msgid "Bold"
-msgstr ""
+msgstr "ਗੂੜ੍ਹੇ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
 msgid "Ctrl + B"
-msgstr ""
+msgstr "Ctrl + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
 msgid "Italic"
-msgstr ""
+msgstr "ਤਿਰਛੇ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
 msgid "Ctrl + I"
-msgstr ""
+msgstr "Ctrl + I"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
 msgid "Underline"
-msgstr ""
+msgstr "ਹੇਠਾਂ ਲਾਈਨ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
 msgid "Ctrl + U"
-msgstr ""
+msgstr "Ctrl + U"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 msgid "Double Underline"
-msgstr ""
+msgstr "ਹੇਠਾਂ ਦੂਹਰੀ ਰੇਖਾ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Ctrl + D"
-msgstr ""
+msgstr "Ctrl + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
 msgid "Strikethrough"
-msgstr ""
+msgstr "ਵਿੰਨ੍ਹੋ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
 msgid "Ctrl + Alt + 5"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
 msgid "Superscript"
-msgstr ""
+msgstr "ਉੱਪਰ ਅੰਕਿਤ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
 msgid "Ctrl + Shift + P"
-msgstr ""
+msgstr "Ctrl + Shift + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Subscript"
-msgstr ""
+msgstr "ਨਿਮਨ ਲਿਖਤ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Ctrl + Shift + B"
-msgstr ""
+msgstr "Ctrl + Shift + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141

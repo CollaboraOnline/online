@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:10+0000\n"
+"POT-Creation-Date: 2017-05-15 08:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /hsb/libo_online/loleaflet-help-hsb.po\n"
-"X-Pootle-Revision: 2514277\n"
+"X-Pootle-Revision: 2524295\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -407,7 +407,7 @@ msgstr "Strg + Umsch + šipk horje"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
 msgid "Move cursor down one line"
-msgstr "Kursor wo linku dele pohibować"
+msgstr "Kursor wo jednu linku dele pohibować"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
@@ -457,7 +457,7 @@ msgstr "Pos1"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
 msgid "Go and select to the beginning of a line"
-msgstr "K spočatkej linki přeńć a jón wubrać"
+msgstr "K spočatkej linki přeńć a wubrać"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
@@ -492,7 +492,7 @@ msgstr "Ke kóncej linki přeńć"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
 msgid "End"
-msgstr "Kónc"
+msgstr "Ende"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
@@ -613,7 +613,7 @@ msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
-"Jeli aktiwna cele je prózdna: Wuběra cyłu tabelu. Hewak: Wuběra wobsah "
+"Jeli aktiwna cela je prózdna: Wuběra cyłu tabelu. Hewak: Wuběra wobsah "
 "aktiwneje cele. Wospjetowane tłóčenje cyłu tabelu wubjerje."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
@@ -700,7 +700,7 @@ msgid ""
 "merges cell with neighboring cell"
 msgstr ""
 "3 sekundy w zhašenskim modusu, šipkowe tasty linku/špaltu zhašeja, Strg + "
-"šipkowe linki ze susodnej celu zwjaza"
+"šipkowe tasty linki ze susodnej celu zwjaza"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A112
 msgid "Shift + Ctrl + Del"
@@ -795,7 +795,7 @@ msgstr "Linkowe łamanje zasadźić"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Shift + Enter"
-msgstr "Shift + Enter"
+msgstr "Umsch + Enter"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
 msgid "Manual page break"
@@ -940,7 +940,7 @@ msgid ""
 "from object selection mode switch to view mode."
 msgstr ""
 "Aktualny modus wopušćić, t. r. wobdźěłowanski modus do modusa objektoweho "
-"wuběra, z modus objektoweho wuběra do normalneho napohlada."
+"wuběra, z modusa objektoweho wuběra do normalneho napohlada."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
 msgid "Esc"

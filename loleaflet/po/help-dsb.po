@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:10+0000\n"
+"POT-Creation-Date: 2017-05-16 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,268 +12,268 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /dsb/libo_online/loleaflet-help-dsb.po\n"
-"X-Pootle-Revision: 2514048\n"
+"X-Pootle-Revision: 2524299\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tastowe skrotconki"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A27
 msgid "General Keyboard Shortcuts"
-msgstr ""
+msgstr "Powšykne tastowe skrotconki"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Undo"
-msgstr ""
+msgstr "Anulěrowaś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Ctrl + Z"
-msgstr ""
+msgstr "Strg + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
 msgid "Redo"
-msgstr ""
+msgstr "Wóspjetowaś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
 msgid "Ctrl + Y"
-msgstr ""
+msgstr "Strg + Y"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
 msgid "Cut"
-msgstr ""
+msgstr "Wurězaś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
 msgid "Ctrl + X"
-msgstr ""
+msgstr "Strg + X"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Paste as unformatted text"
-msgstr ""
+msgstr "Ako njeformatěrowany tekst zasajźiś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Ctrl + Alt + Shift + V"
-msgstr ""
+msgstr "Strg + Alt + Umsch + V"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "Śišćaś (ako PDF ześěgnuś)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
 msgid "Ctrl + P"
-msgstr ""
+msgstr "Strg + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "Pomoc za tastowe skrotconki pokazaś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
 msgid "Ctrl + Shift + ?"
-msgstr ""
+msgstr "Strg + Umsch + ?"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A38
 #: dist%2Floleaflet-help.html+div.div.h2%3A160
 msgid "Text formatting"
-msgstr ""
+msgstr "Tekstowe formatěrowanje"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
 msgid "Bold"
-msgstr ""
+msgstr "Tucny"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
 msgid "Ctrl + B"
-msgstr ""
+msgstr "Strg + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
 msgid "Italic"
-msgstr ""
+msgstr "Kursiwny"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
 msgid "Ctrl + I"
-msgstr ""
+msgstr "Strg + I"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
 msgid "Underline"
-msgstr ""
+msgstr "Pódšmarnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
 msgid "Ctrl + U"
-msgstr ""
+msgstr "Strg + U"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 msgid "Double Underline"
-msgstr ""
+msgstr "Dwójcy pódšmarnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Ctrl + D"
-msgstr ""
+msgstr "Strg + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
 msgid "Strikethrough"
-msgstr ""
+msgstr "Pśešmarnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
 msgid "Ctrl + Alt + 5"
-msgstr ""
+msgstr "Strg + Alt + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
 msgid "Superscript"
-msgstr ""
+msgstr "Wušejstajony"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
 msgid "Ctrl + Shift + P"
-msgstr ""
+msgstr "Strg + Umsch + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Subscript"
-msgstr ""
+msgstr "Nižejstajony"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Ctrl + Shift + B"
-msgstr ""
+msgstr "Strg + Umsch + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
 msgid "Remove direct formatting"
-msgstr ""
+msgstr "Direktne formatěrowanje wótwónoźeś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
 msgid "Ctrl + M"
-msgstr ""
+msgstr "Strg + M"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A49
 #: dist%2Floleaflet-help.html+div.div.h2%3A170
 msgid "Paragraph formatting"
-msgstr ""
+msgstr "Wótstawkowe formatěrowanje"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
 msgid "Align Center"
-msgstr ""
+msgstr "Centrěrowano"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
 msgid "Ctrl + E"
-msgstr ""
+msgstr "Strg + E"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
 msgid "Align Left"
-msgstr ""
+msgstr "Nalěwo wusměriś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
 msgid "Ctrl + L"
-msgstr ""
+msgstr "Strg + L"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
 msgid "Align Right"
-msgstr ""
+msgstr "Napšawo wusměriś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
 msgid "Ctrl + R"
-msgstr ""
+msgstr "Strg + R"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
 msgid "Justify"
-msgstr ""
+msgstr "Blokowa sajźba"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
 msgid "Ctrl + J"
-msgstr ""
+msgstr "Strg + J"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Apply Default paragraph style"
-msgstr ""
+msgstr "Standardnu wótstawkowu pśedłogu nałožyś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Ctrl + 0"
-msgstr ""
+msgstr "Strg + 0"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Apply Heading 1 paragraph style"
-msgstr ""
+msgstr "Wótstawkowu pśedłogu Nadpismo 1 nałožyś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Ctrl + 1"
-msgstr ""
+msgstr "Strg + 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Apply Heading 2 paragraph style"
-msgstr ""
+msgstr "Wótstawkowu pśedłogu Nadpismo 2 nałožyś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Ctrl + 2"
-msgstr ""
+msgstr "Strg + 2"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 msgid "Apply Heading 3 paragraph style"
-msgstr ""
+msgstr "Wótstawkowu pśedłogu Nadpismo 3 nałožyś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
 msgid "Ctrl + 3"
-msgstr ""
+msgstr "Strg + 3"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Apply Heading 4 paragraph style"
-msgstr ""
+msgstr "Wótstawkowu pśedłogu Nadpismo 4 nałožyś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Ctrl + 4"
-msgstr ""
+msgstr "Strg + 4"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Apply Heading 5 paragraph style"
-msgstr ""
+msgstr "Wótstawkowu pśedłogu Nadpismo 5 nałožyś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Ctrl + 5"
-msgstr ""
+msgstr "Strg + 5"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A62
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "Tekstowy wuběrk a nawigacija w dokumenśe"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 msgid "Select All"
-msgstr ""
+msgstr "Wše wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
@@ -282,337 +282,339 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
 msgid "Ctrl + A"
-msgstr ""
+msgstr "Strg + A"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
 msgid "Move cursor to the left"
-msgstr ""
+msgstr "Kursor nalěwo gibnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
 msgid "Arrow Left"
-msgstr ""
+msgstr "Šypka nalěwo"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
 msgid "Move cursor with selection to the left"
-msgstr ""
+msgstr "Kursor z wuběrkom nalěwo gibnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
 msgid "Shift + Arrow Left"
-msgstr ""
+msgstr "Umsch + šypka nalěwo"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
 msgid "Go to beginning of a word"
-msgstr ""
+msgstr "K zachopjeńkoju słowa pśejś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
 msgid "Ctrl + Arrow Left"
-msgstr ""
+msgstr "Strg + šypka nalěwo"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
 msgid "Select to the left word by word"
-msgstr ""
+msgstr "Słowo pó słowje nalěwo wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
 msgid "Ctrl + Shift + Arrow Left"
-msgstr ""
+msgstr "Strg + Umsch + šypka nalěwo"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
 msgid "Move cursor to the right"
-msgstr ""
+msgstr "Kursor napšawo gibnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
 msgid "Arrow Right"
-msgstr ""
+msgstr "Šypka napšawo"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
 msgid "Move cursor with selection to the right"
-msgstr ""
+msgstr "Kursor z wuběrkom napšawo gibnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
 msgid "Shift + Arrow Right"
-msgstr ""
+msgstr "Umsch + šypka napšawo"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
 msgid "Go to start of the next word"
-msgstr ""
+msgstr "K zachopjeńkoju pśiducego słowa pśejś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
 msgid "Ctrl + Arrow Right"
-msgstr ""
+msgstr "Strg + šypka napšawo"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
 msgid "Select to the right word by word"
-msgstr ""
+msgstr "Słowo pó słowje napšawo wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
 msgid "Ctrl + Shift + Arrow Right"
-msgstr ""
+msgstr "Strg + Umsch + šypka napšawo"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
 msgid "Move cursor up one line"
-msgstr ""
+msgstr "Kursor wó jadnu smužku górjej gibnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
 msgid "Arrow Up"
-msgstr ""
+msgstr "Šypka górjej"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
 msgid "Select lines in upwards direction"
-msgstr ""
+msgstr "Smužki górjej wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
 msgid "Shift + Arrow Up"
-msgstr ""
+msgstr "Umsch + šypka górjej"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr ""
+msgstr "Kursor k zachopjeńkoju pjerwjejšnego wótstawka gibnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
 msgid "Ctrl + Arrow Up"
-msgstr ""
+msgstr "Strg + šypka górjej"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "K zachopjeńkoju wótstawka wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
 msgid "Ctrl + Shift + Arrow Up"
-msgstr ""
+msgstr "Strg + Umsch + šypka górjej"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
 msgid "Move cursor down one line"
-msgstr ""
+msgstr "Kursor wó jadnu smužku dołoj gibnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
 msgid "Arrow Down"
-msgstr ""
+msgstr "Šypka dołoj"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
 msgid "Select lines in downwards direction"
-msgstr ""
+msgstr "Smužki dołoj wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
 msgid "Shift + Arrow Down"
-msgstr ""
+msgstr "Umsch + šypka dołoj"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
 msgid "Move cursor to beginning of the next paragraph"
-msgstr ""
+msgstr "Kursor k zachopjeńkoju pśiducego wótstawka gibnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
 msgid "Ctrl + Arrow Down"
-msgstr ""
+msgstr "Strg + šypka dołoj"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
 msgid "Select to end of paragraph"
-msgstr ""
+msgstr "Ku kóńcoju wótstawka wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
 msgid "Ctrl + Shift + Arrow Down"
-msgstr ""
+msgstr "Strg + Umsch + šypka dołoj"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
 msgid "Go to beginning of line"
-msgstr ""
+msgstr "K zachopjeńkoju smužki pśejś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
 msgid "Home"
-msgstr ""
+msgstr "Pos1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
 msgid "Go and select to the beginning of a line"
-msgstr ""
+msgstr "K zachopjeńkoju smužki pśejś a wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
 msgid "Shift + Home"
-msgstr ""
+msgstr "Umsch + Pos1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
 msgid "Go to start of document"
-msgstr ""
+msgstr "K zachopjeńkoju dokumenta pśejś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
 msgid "Ctrl + Home"
-msgstr ""
+msgstr "Strg + Pos1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 msgid "Go and select text to start of document"
-msgstr ""
+msgstr "K zachopjeńkoju dokumenta pśejś a tekst wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
 msgid "Ctrl + Shift + Home"
-msgstr ""
+msgstr "Strg + Umsch + Pos1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
 msgid "Go to end of line"
-msgstr ""
+msgstr "Ku kóńcoju smužki pśejś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
 msgid "End"
-msgstr ""
+msgstr "Ende"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
 msgid "Go and select to the end of a line"
-msgstr ""
+msgstr "Ku kóńcoju smužki pśejś a wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
 msgid "Shift + End"
-msgstr ""
+msgstr "Umsch + Ende"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
 msgid "Go to end of document"
-msgstr ""
+msgstr "Ku kóńcoju dokumenta pśejś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
 msgid "Ctrl + End"
-msgstr ""
+msgstr "Strg + Ende"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 msgid "Go and select text to end of document"
-msgstr ""
+msgstr "Ku kóńcoju dokumenta pśejś a tekst wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
 msgid "Ctrl + Shift + End"
-msgstr ""
+msgstr "Strg + Umsch + Ende"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
 msgid "Move the view up one page"
-msgstr ""
+msgstr "Wó jaden bok wobrazowki górjej gibnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
 msgid "PageUp"
-msgstr ""
+msgstr "Bild↑"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
 msgid "Switch cursor between text and header"
-msgstr ""
+msgstr "Kursor mjazy tekstom a głowoweju smužku pśešaltowaś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
 msgid "Ctrl + PageUp"
-msgstr ""
+msgstr "Strg + Bild↑"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
 msgid "Extend the selection up one page"
-msgstr ""
+msgstr "Wuběrk wó jaden bok górjej rozšyriś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
 msgid "Shift + PageUp"
-msgstr ""
+msgstr "Umsch + Bild↑"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
 msgid "Move the view down one page"
-msgstr ""
+msgstr "Wó jaden bok wobrazowki dołoj gibnuś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
 msgid "PageDown"
-msgstr ""
+msgstr "Bild↓"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
 msgid "Switch cursor between text and footer"
-msgstr ""
+msgstr "Kursor mjazy tekstom a nogoweju smužku pśešaltowaś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
 msgid "Ctrl + PageDown"
-msgstr ""
+msgstr "Strg + Bild↓"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
 msgid "Extend the selection down one page"
-msgstr ""
+msgstr "Wuběrk wó jaden bok dołoj rozšyriś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
 msgid "Shift + PageDown"
-msgstr ""
+msgstr "Umsch + Bild↓"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
 msgid "Delete to beginning of word"
-msgstr ""
+msgstr "K zachopjeńkoju słowa lašowaś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
 msgid "Ctrl + Backspace"
-msgstr ""
+msgstr "Strg + slědktasta"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
 msgid "Delete to end of word"
-msgstr ""
+msgstr "Až do kóńca słowa lašowaś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
 msgid "Ctrl + Del"
-msgstr ""
+msgstr "Strg + Entf"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
 msgid "Delete to beginning of sentence"
-msgstr ""
+msgstr "K zachopjeńkoju sady lašowaś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
 msgid "Ctrl + Shift + Backspace"
-msgstr ""
+msgstr "Strg + Umsch + slědktasta"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A98
 msgid "Delete to end of sentence"
-msgstr ""
+msgstr "Ku kóńcoju sady lašowaś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A98
 msgid "Ctrl + Shift + Del"
-msgstr ""
+msgstr "Strg + Umsch + Entf"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A100
 msgid "Shortcut Keys for Tables"
-msgstr ""
+msgstr "Tastowe skrotconki za tabele"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
+"Jolic aktiwna cela jo prozna: Wuběra cełu tabelu. Howac: Wuběra wopśimjeśe "
+"aktiwneje cele. Wóspjetowane tłocenje cełu tabelu wubjerjo."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
 msgid ""
@@ -620,6 +622,9 @@ msgid ""
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
+"Jolic aktualna cela jo prozna: Pśejźo k zachopjeńkoju tabele. Howac: Z "
+"prědnym tłocenim pśejźo k zachopjeńkoju aktiwneje cele, z drugim tłocenim k "
+"zachopjeńkoju aktualneje tabele, z tśeśim tłocenim k zachopjeńkoju dokumenta."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
 msgid ""
@@ -627,70 +632,80 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
+"Jolic aktualna cela jo prozna: Pśejźo ku kóńcoju tabele. Howac: Z prědnym "
+"tłocenim pśejźo ku kóńcoju aktiwneje cele, z drugim tłocenim ku kóńcoju "
+"aktualneje tabele, z tśeśim tłocenim ku kóńcoju dokumenta."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
 msgid "Ctrl + Tab"
-msgstr ""
+msgstr "Strg + Tab"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "Alt + Tab may be used instead."
 msgstr ""
+"Zasajźijo tabulator (jano w tabelach). We wótwisnosći wót togo, lěc se "
+"woknowy zastojnik wužywa, dajo se teke Alt + Tab wužywaś."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
 msgid "Alt + Arrow Keys"
-msgstr ""
+msgstr "Alt + šypkowe tasty"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
 msgstr ""
+"Pówětšujo/pómjeńšujo wjelikosć słupa/smužki na pšawej/dolnej kšomje cele"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
 msgid "Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Alt + Umsch + šypkowe tasty"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
-msgstr ""
+msgstr "Pówětšujo/pómjeńšujo wjelikosć słupa/smužki na lěwej/górnej kšomje cele"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr ""
+msgstr "Alt + Strg + šypkowe tasty"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "Ako Alt, ale jano aktiwna cela se změnijo"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Strg + Alt + Umsch + šypkowe tasty"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
 msgid "Alt + Insert"
-msgstr ""
+msgstr "Alt + Einfg"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
 "inserts cell"
 msgstr ""
+"3 sekundy w zasajźeńskem modusu, šypkowe tasty smužku/słup zasajźa, Strg + "
+"šypkowe tasty celu zasajźa"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
 msgid "Alt + Del"
-msgstr ""
+msgstr "Alt + Entf"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
 "merges cell with neighboring cell"
 msgstr ""
+"3 sekundy w lašowańskem modusu, šypkowe tasty smužku/słup lašuju, Strg + "
+"šypkowe tasty smužki ze susedneju celu zwěžo"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A112
 msgid "Shift + Ctrl + Del"
-msgstr ""
+msgstr "Umsch + Strg + Entf"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A112
 msgid ""
@@ -698,6 +713,9 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
+"Jolic žedna cela njejo wubrana, se tekst wót kursora do kóńca aktualneje "
+"sady wulašujo. Jolic kursor jo na kóńcu cele, a žedna ceła cela njejo "
+"wubrana, se wopśimjeśe pśiduceje cele wulašujo."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A113
 msgid ""
@@ -705,6 +723,8 @@ msgid ""
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
 msgstr ""
+"Jolic žedna ceła cela njejo wubrana a kursor jo na kóńcu tabele, se wótstawk "
+"wulašujo, kótaryž tabeli slědujo, snaźkuli jo slědny wótstawk w dokumenśe."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A114
 msgid ""
@@ -712,226 +732,233 @@ msgid ""
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
+"Jolic jadna cela abo někotare cele su wubrane, se cełe smužki wulašuju, "
+"kótarež wuběrk wopśimuju. Jolic wše smužki su dopołnje abo pó źělach "
+"wubrane, se ceła tabela wulašujo."
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A117
 msgid "Word processor functions"
-msgstr ""
+msgstr "Funkcije tekstowego pśeźěłanja"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
 msgid "Insert footnote"
-msgstr ""
+msgstr "Nožku zasajźiś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
 msgid "Ctrl + Alt + F"
-msgstr ""
+msgstr "Strg + Alt + F"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
 msgid "Insert endnote"
-msgstr ""
+msgstr "Kóńcnu nožku zasajźiś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
 msgid "Ctrl + Alt + D"
-msgstr ""
+msgstr "Strg + Alt + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
 msgid "Insert comment"
-msgstr ""
+msgstr "Komentar zasajźiś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
 msgid "Ctrl + Alt + C"
-msgstr ""
+msgstr "Strg + Alt + C"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
 msgid "Insert soft hyphen"
-msgstr ""
+msgstr "Měku źěleńsku smužku zasajźiś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
 msgid "Ctrl + -"
-msgstr ""
+msgstr "Strg + -"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
 msgid "Insert non-breaking hyphen"
-msgstr ""
+msgstr "Šćitanu wězawku zasajźiś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
 msgid "Ctrl + Shift + -"
-msgstr ""
+msgstr "Strg + Umsch + -"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Insert non-breaking space"
-msgstr ""
+msgstr "Šcitane prozne znamuško zasajźiś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Ctrl + Shift + Space"
-msgstr ""
+msgstr "Strg + Umsch + prozne znamuško"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Insert line break"
-msgstr ""
+msgstr "Smužkowe łamanje zasajźiś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Shift + Enter"
-msgstr ""
+msgstr "Umsch + Enter"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
 msgid "Manual page break"
-msgstr ""
+msgstr "Manuelne łamanje boka"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
 msgid "Ctrl + Enter"
-msgstr ""
+msgstr "Strg + Enter"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
 msgid "Column break (in multicolumnar text)"
-msgstr ""
+msgstr "Słupowe łamanje (we wěcejsłupowem teksće)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
 msgid "Ctrl + Shift + Enter"
-msgstr ""
+msgstr "Strg + Umsch + Enter"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
-msgstr ""
+msgstr "Nowy wótstawk direktnje pśed abo za wótrězkom abo pśed tabelu zasajźiś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A131
 msgid "Alt + Enter"
-msgstr ""
+msgstr "Alt + Enter"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A131
 msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
 msgstr ""
+"Nowy wótstawk bźez numerěrowanja w lisćinje zasajźiś. Njefunkcioněrujo, gaž "
+"kursor jo na kóńcu lisćiny."
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A135
 msgid "Cell formatting"
-msgstr ""
+msgstr "Celowe formatěrowanje"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
 msgid "Display comment"
-msgstr ""
+msgstr "Komentar pokazaś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
 msgid "Ctrl + F1"
-msgstr ""
+msgstr "Strg + F1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Fill Down"
-msgstr ""
+msgstr "Dołoj wupołniś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
 msgid "Set Optimal Column Width"
-msgstr ""
+msgstr "Optimalnu słupowu šěrokosć nastajiś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
 msgid "Two decimal places, thousands separator"
-msgstr ""
+msgstr "Dwě decimalnej městnje, źěleńske znamuško tysacowkow"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
 msgid "Ctrl + Shift + 1"
-msgstr ""
+msgstr "Strg + Umsch + 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
 msgid "Standard exponential format"
-msgstr ""
+msgstr "Standardny eksponencialny format"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
 msgid "Ctrl + Shift + 2"
-msgstr ""
+msgstr "Strg + Umsch + 2"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
 msgid "Standard date format"
-msgstr ""
+msgstr "Standardny datumy format"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
 msgid "Ctrl + Shift + 3"
-msgstr ""
+msgstr "Strg + Umsch + 3"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
 msgid "Standard currency format"
-msgstr ""
+msgstr "Standardny pjenjezny format"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
 msgid "Ctrl + Shift + 4"
-msgstr ""
+msgstr "Strg + Umsch + 4"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
 msgid "Standard percentage format (two decimal places)"
-msgstr ""
+msgstr "Standardny procentowy format (dwě decimalnej městnje)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
 msgid "Ctrl + Shift + 5"
-msgstr ""
+msgstr "Strg + Umsch + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
 msgid "Standard format"
-msgstr ""
+msgstr "Standardny format"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
 msgid "Ctrl + Shift + 6"
-msgstr ""
+msgstr "Strg + Umsch + 6"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
 msgid "Demote list item (list item has to be selected)"
-msgstr ""
+msgstr "Lisćinowu rowninu znižyś (lisćinowy zapisk musy wubrany byś)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
 msgid "Tab"
-msgstr ""
+msgstr "Tabulator"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
 msgid "Promote list item (list item has to be selected)"
-msgstr ""
+msgstr "Lisćinowu rowninu zwušyś (lisćinowy zapisk musy wubrany byś)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
 msgid "Shift + Tab"
-msgstr ""
+msgstr "Umsch + Tabulator"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A179
 msgid "Text selection and navigation in a textbox"
-msgstr ""
+msgstr "Tekstowy wuběrk a nawigacija w tekstowem pólu"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
 msgid "Go and select text to start of textbox"
-msgstr ""
+msgstr "K zachopjeńkoju tekstowego póla pśejś a tekst wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
 msgid "Go and select text to end of textbox"
-msgstr ""
+msgstr "Ku kóńcoju tekstowego póla pśejś a tekst wubraś"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A207
 msgid "Slide / draw page keyboard shortcuts"
-msgstr ""
+msgstr "Tastowe skrotconki za folije/kresleńske płoniny"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
 msgstr ""
+"Aktualny modus spušćiś, t. gr. wobźěłowański modus do modusa objektowego "
+"wuběrka, z modusa objektowego wuběrka do normalnego naglěda."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
 msgid "Esc"
-msgstr ""
+msgstr "Esc"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
 msgid "Select objects in the order in which they were created"
-msgstr ""
+msgstr "Objekty w pórěźe wubraś, w kótaremž su se napórali"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
 msgid "Select objects in the reverse order in which they were created"
-msgstr ""
+msgstr "Objekty w nawopacnem pórěźe wubraś, w kótarymž su se napórali"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
 msgid "Move to next text object on slide / drawing page"
-msgstr ""
+msgstr "K pśiducemu tekstowemu objektoju na foliji/kresleńskej płoninje pśejś"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
 msgid "Select all in slide / drawing page"
-msgstr ""
+msgstr "Wšykno na foliji/kresleńskej płoninje wubraś"

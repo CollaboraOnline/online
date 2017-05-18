@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:10+0000\n"
+"POT-Creation-Date: 2017-05-17 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-ui-eo.po\n"
-"X-Pootle-Revision: 2438492\n"
+"X-Pootle-Revision: 2551882\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -1870,19 +1870,19 @@ msgstr "Optimuma kolumnolarĝo"
 
 #: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "Eltondi (interna)"
 
 #: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"
-msgstr ""
+msgstr "Kopii (interna)"
 
 #: src/control/Control.ContextMenu.js:141
 msgid "Internal Paste"
-msgstr ""
+msgstr "Alglui (interna)"
 
 #: src/control/Control.ContextMenu.js:163
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Alglui speciale (interna)"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"

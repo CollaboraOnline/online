@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:10+0000\n"
+"POT-Creation-Date: 2017-05-16 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
-"X-Pootle-Revision: 2441244\n"
+"X-Pootle-Revision: 2520061\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -1995,7 +1995,7 @@ msgstr "Επιλογή όλων"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
-msgstr ""
+msgstr "Παρακολούθηση αλλαγών"
 
 #: src/control/Control.Menubar.js:32
 msgid "Record"
@@ -2450,7 +2450,7 @@ msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε 
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
-msgstr ""
+msgstr "(100στο/mm)"
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "
