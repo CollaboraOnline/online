@@ -34,6 +34,14 @@ public:
     using LoolException::LoolException;
 };
 
+/// General exception thrown when we are not able to
+/// connect to storage.
+class StorageConnectionException : public LoolException
+{
+public:
+    using LoolException::LoolException;
+};
+
 /// A bad-request exception that is meant to signify,
 /// and translate into, an HTTP bad request.
 class BadRequestException : public LoolException
