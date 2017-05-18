@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-02 21:11+0000\n"
+"POT-Creation-Date: 2017-05-17 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-ui-es.po\n"
-"X-Pootle-Revision: 2523850\n"
+"X-Pootle-Revision: 2549595\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -1097,7 +1097,7 @@ msgstr "Formas de presentación del árabe, A"
 
 #: src/control/Control.CharacterMap.js:105
 msgid "Combining Half Marks"
-msgstr ""
+msgstr "Diacríticos combinables por mitades"
 
 #: src/control/Control.CharacterMap.js:106
 msgid "CJK Compatibility Forms"
@@ -1121,7 +1121,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:111
 msgid "Old Italic"
-msgstr ""
+msgstr "Itálico prerromano"
 
 #: src/control/Control.CharacterMap.js:112
 msgid "Gothic"
@@ -1133,7 +1133,7 @@ msgstr "Deseret"
 
 #: src/control/Control.CharacterMap.js:114
 msgid "Byzantine Musical Symbols"
-msgstr ""
+msgstr "Símbolos musicales bizantinos"
 
 #: src/control/Control.CharacterMap.js:115
 #: src/control/Control.CharacterMap.js:116
@@ -1230,7 +1230,7 @@ msgstr "Símbolos y flechas diversos"
 
 #: src/control/Control.CharacterMap.js:145
 msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgstr "Hexagramas del I Ching"
 
 #: src/control/Control.CharacterMap.js:146
 msgid "Linear B Syllabary"
@@ -1250,7 +1250,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:150
 msgid "Shavian"
-msgstr ""
+msgstr "Shawiano"
 
 #: src/control/Control.CharacterMap.js:151
 msgid "Osmanya"
@@ -1294,7 +1294,7 @@ msgstr "Diacríticos combinables suplementarios"
 
 #: src/control/Control.CharacterMap.js:161
 msgid "Coptic"
-msgstr ""
+msgstr "Copto"
 
 #: src/control/Control.CharacterMap.js:162
 msgid "Ethiopic Extended"
@@ -1310,7 +1310,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:165
 msgid "Glagolitic"
-msgstr ""
+msgstr "Glagolítico"
 
 #: src/control/Control.CharacterMap.js:166
 msgid "Kharoshthi"
@@ -1658,7 +1658,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:260
 msgid "Coptic Epact Numbers"
-msgstr ""
+msgstr "Cifras epactas coptas"
 
 #: src/control/Control.CharacterMap.js:261
 msgid "Combining Diacritical Marks Extended"
