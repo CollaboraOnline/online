@@ -379,7 +379,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     Poco::URI uriFrameAncestor(frameAncestor);
     if (!frameAncestor.empty() && !uriFrameAncestor.getScheme().empty() && !uriFrameAncestor.getHost().empty())
     {
-        frameAncestor = uriFrameAncestor.getScheme() + "://" + uriFrameAncestor.getHost();
+        frameAncestor = uriFrameAncestor.getScheme() + "://" + uriFrameAncestor.getHost() + ":" + std::to_string(uriFrameAncestor.getPort());
+
         LOG_TRC("Final frame ancestor: " << frameAncestor);
 
         // Replaced by frame-ancestors in CSP but some oldies don't know about that
