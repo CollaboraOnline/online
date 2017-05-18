@@ -113,7 +113,7 @@ var map = L.map('map', {
 	wopi: isWopi,
 	alwaysActive: alwaysActive,
 	idleTimeoutSecs: idleTimeoutSecs,  // Dim when user is idle.
-	outOfFocusTimeoutSecs: outOfFocusTimeoutSecs, // Dim after switching tabs.
+	outOfFocusTimeoutSecs: outOfFocusTimeoutSecs // Dim after switching tabs.
 });
 // toolbar.js (loaded in <script> tag accesses map as global variable,
 // so expose it

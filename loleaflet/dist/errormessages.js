@@ -10,6 +10,7 @@ exports.sessionexpired = _('Your session has been expired. Further changes to do
 exports.faileddocloading = _('Failed to load the document. Please ensure the file type is supported and not corrupted, and try again.');
 
 exports.storage = {
-	savediskfull: _('Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server administrator to continue editing.'),
-	savefailed: _('Document cannot be saved to storage. Check your permissions or contact the storage server administrator.')
+	loadfailed: _('Failed to read document from storage. Please contact your storage server (%storageserver) administrator.'),
+	savediskfull: _('Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing.'),
+	savefailed: _('Document cannot be saved to storage. Check your permissions or contact the storage server (%storageserver) administrator.')
 };

@@ -1883,7 +1883,7 @@ private:
 
                         docBroker->addCallback([docBroker, moveSocket, clientSession, format]()
                         {
-			    auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
                             clientSession->setSaveAsSocket(streamSocket);
 
                             // Move the socket into DocBroker.
@@ -2125,10 +2125,18 @@ private:
                             catch (const std::exception& exc)
                             {
                                 LOG_ERR("Error while handling loading : " << exc.what());
-                                const std::string msg = "error: cmd=internal kind=unauthorized";
-                                clientSession->sendMessage(msg);
+                                // only send our default error message if we haven't handled the
+                                // exception already up the stack
+                                if (std::uncaught_exception())
+                                {
+                                    // FIXME: Are we sure we want to say that all other failures due
+                                    // to an 'unauthorized' WOPI host ?
+                                    const std::string msg = "error: cmd=internal kind=unauthorized";
+                                    clientSession->sendMessage(msg);
+                                }
                                 docBroker->stop();
                             }
+
                         });
                     });
                 }
