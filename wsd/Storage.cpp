@@ -464,7 +464,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
 
         if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
         {
-            LOG_ERR("WOPI::CheckFileInfo failed with " + response.getStatus() + response.getReason());
+            LOG_ERR("WOPI::CheckFileInfo failed with " << response.getStatus() << ' ' << response.getReason());
             throw StorageConnectionException("WOPI::CheckFileInfo failed");
         }
 
@@ -590,7 +590,7 @@ std::string WopiStorage::loadStorageFileToLocal(const std::string& accessToken)
 
         if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
         {
-            LOG_ERR("WOPI::GetFile failed with " + response.getStatus() + response.getReason());
+            LOG_ERR("WOPI::GetFile failed with " << response.getStatus() << ' ' << response.getReason());
             throw StorageConnectionException("WOPI::GetFile failed");
         }
         else // Successful
