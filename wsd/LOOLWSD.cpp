@@ -2116,11 +2116,15 @@ private:
                                 const std::string msg = "error: cmd=internal kind=unauthorized";
                                 clientSession->sendMessage(msg);
                             }
+                            catch (const StorageConnectionException& exc)
+                            {
+                                // Alert user about failed load
+                                const std::string msg = "error: cmd=storage kind=loadfailed";
+                                clientSession->sendMessage(msg);
+                            }
                             catch (const std::exception& exc)
                             {
-                                LOG_ERR("Error while handling loading : " << exc.what());
-                                const std::string msg = "error: cmd=internal kind=unauthorized";
-                                clientSession->sendMessage(msg);
+                                LOG_ERR("Error while loading : " << exc.what());
                             }
                         });
                     });

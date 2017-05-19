@@ -34,6 +34,14 @@ public:
     using LoolException::LoolException;
 };
 
+/// General exception thrown when we are not able to
+/// connect to storage.
+class StorageConnectionException : public LoolException
+{
+public:
+    using LoolException::LoolException;
+};
+
 /// A bad-request exception that is meant to signify,
 /// and translate into, an HTTP bad request.
 class BadRequestException : public LoolException
@@ -53,14 +61,6 @@ public:
 /// An authorization exception that is means to signify,
 /// and translate into, an HTTP unauthorized error.
 class UnauthorizedRequestException : public LoolException
-{
-public:
-    using LoolException::LoolException;
-};
-
-/// An access-denied exception that is meant to signify
-/// a storage authentication error.
-class AccessDeniedException : public LoolException
 {
 public:
     using LoolException::LoolException;

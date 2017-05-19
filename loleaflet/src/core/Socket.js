@@ -313,13 +313,28 @@ L.Socket = L.Class.extend({
 			return;
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'storage') {
+			var storageError;
 			if (command.errorKind === 'savediskfull') {
-				this._map.fire('error', {msg: errorMessages.storage.savediskfull});
+				storageError = errorMessages.storage.savediskfull;
 			}
 			else if (command.errorKind === 'savefailed') {
-				// Just warn the user
-				this._map.fire('warn', {msg: errorMessages.storage.savefailed});
+				storageError = errorMessages.storage.savefailed;
 			}
+			else if (command.errorKind === 'loadfailed') {
+				storageError = errorMessages.storage.loadfailed;
+				// Since this is a document load failure, wsd will disconnect the socket anyway,
+				// better we do it first so that another error message doesn't override this one
+				// upon socket close.
+				this._map.hideBusy();
+				this.close();
+			}
+
+			// Parse the storage url as link
+			var tmpLink = document.createElement('a');
+			tmpLink.href = this._map.options.doc;
+			// Insert the storage server address to be more friendly
+			storageError = storageError.replace('%storageserver', tmpLink.host);
+			this._map.fire('warn', {msg: storageError});
 
 			return;
 		}

@@ -441,6 +441,12 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
             LOG_END(logger);
         }
 
+        if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
+        {
+            LOG_ERR("WOPI::CheckFileInfo failed with " << response.getStatus() << ' ' << response.getReason());
+            throw StorageConnectionException("WOPI::CheckFileInfo failed");
+        }
+
         Poco::StreamCopier::copyToString(rs, resMsg);
     }
     catch(const Poco::Exception& pexc)
@@ -560,15 +566,25 @@ std::string WopiStorage::loadStorageFileToLocal(const std::string& accessToken)
             LOG_END(logger);
         }
 
-        _jailedFilePath = Poco::Path(getLocalRootPath(), _fileInfo._filename).toString();
-        std::ofstream ofs(_jailedFilePath);
-        std::copy(std::istreambuf_iterator<char>(rs),
-                  std::istreambuf_iterator<char>(),
-                  std::ostreambuf_iterator<char>(ofs));
+        if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
+        {
+            LOG_ERR("WOPI::GetFile failed with " << response.getStatus() << ' ' << response.getReason());
+            throw StorageConnectionException("WOPI::GetFile failed");
+        }
+        else // Successful
+        {
+            _jailedFilePath = Poco::Path(getLocalRootPath(), _fileInfo._filename).toString();
+            std::ofstream ofs(_jailedFilePath);
+            std::copy(std::istreambuf_iterator<char>(rs),
+                      std::istreambuf_iterator<char>(),
+                      std::ostreambuf_iterator<char>(ofs));
+            LOG_INF("WOPI::GetFile downloaded " << getFileSize(_jailedFilePath) << " bytes from [" << uriObject.toString() <<
+                    "] -> " << _jailedFilePath << " in " << diff.count() << "s");
 
-        LOG_INF("WOPI::GetFile downloaded " << getFileSize(_jailedFilePath) << " bytes from [" << uriObject.toString() <<
-                "] -> " << _jailedFilePath << " in " << diff.count() << "s : " <<
-                response.getStatus() << " " << response.getReason());
+            _isLoaded = true;
+            // Now return the jailed path.
+            return Poco::Path(_jailPath, _fileInfo._filename).toString();
+        }
     }
     catch(const Poco::Exception& pexc)
     {
@@ -577,9 +593,7 @@ std::string WopiStorage::loadStorageFileToLocal(const std::string& accessToken)
         throw;
     }
 
-    _isLoaded = true;
-    // Now return the jailed path.
-    return Poco::Path(_jailPath, _fileInfo._filename).toString();
+    return "";
 }
 
 StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& accessToken)
