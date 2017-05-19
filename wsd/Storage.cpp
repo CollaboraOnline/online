@@ -125,7 +125,7 @@ void StorageBase::initialize()
 #endif
 }
 
-bool StorageBase::isLocalhost(const std::string& targetHost)
+bool isLocalhost(const std::string& targetHost)
 {
     std::string targetAddress;
     try
@@ -202,7 +202,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     {
         LOG_INF("Public URI [" << uri.toString() << "] considered WOPI.");
         const auto& targetHost = uri.getHost();
-        if (isWopiHostAuthorized(targetHost))
+        if (WopiHosts.match(targetHost) || isLocalhost(targetHost))
         {
             return std::unique_ptr<StorageBase>(new WopiStorage(uri, jailRoot, jailPath));
         }
@@ -211,39 +211,6 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     }
 
     throw BadRequestException("No Storage configured or invalid URI.");
-}
-
-std::string StorageBase::getUniqueDocId(const Poco::URI& uri)
-{
-    std::string docId;
-    if (uri.isRelative() || uri.getScheme() == "file")
-    {
-        Poco::URI::encode(uri.getPath(), "", docId);
-    }
-    else if (WopiEnabled)
-    {
-        const auto& targetHost = uri.getHost();
-        if (isWopiHostAuthorized(targetHost))
-        {
-            std::string accessToken;
-            Poco::URI::QueryParameters queryParams = uri.getQueryParameters();
-            for (auto& param: queryParams)
-            {
-                if (param.first == "access_token")
-                    accessToken = param.second;
-            }
-
-            const std::unique_ptr<WopiStorage::WOPIFileInfo> info = WopiStorage::getWOPIFileInfo(uri, accessToken);
-            const std::string prefix = !info->_hostInstanceId.empty()
-                                     ? info->_hostInstanceId
-                                     : (uri.getHost() + ':' + std::to_string(uri.getPort()));
-            Poco::URI::encode(prefix + uri.getPath(), "", docId);
-        }
-        else
-            throw UnauthorizedRequestException("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
-    }
-
-    return docId;
 }
 
 std::atomic<unsigned> LocalStorage::LastLocalStorageId;
@@ -459,9 +426,10 @@ void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
 
 } // anonymous namespace
 
-std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(Poco::URI uriObject, const std::string& accessToken)
+std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const std::string& accessToken)
 {
     // update the access_token to the one matching to the session
+    Poco::URI uriObject(_uri);
     setQueryParameter(uriObject, "access_token", accessToken);
 
     LOG_DBG("Getting info for wopi uri [" << uriObject.toString() << "].");
@@ -509,7 +477,6 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(Poco::UR
     std::string ownerId;
     std::string userId;
     std::string userName;
-    std::string hostInstanceId;
     bool canWrite = false;
     bool enableOwnerTermination = false;
     std::string postMessageOrigin;
@@ -544,7 +511,6 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(Poco::UR
         getWOPIValue(object, "DisableExport", disableExport);
         getWOPIValue(object, "DisableCopy", disableCopy);
         getWOPIValue(object, "LastModifiedTime", lastModifiedTime);
-        getWOPIValue(object, "HostInstanceId", hostInstanceId);
     }
     else
     {
@@ -574,7 +540,9 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(Poco::UR
         }
     }
 
-    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(filename, ownerId, modifiedTime, size, userId, userName, hostInstanceId, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, callDuration));
+    _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
+
+    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, callDuration}));
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
