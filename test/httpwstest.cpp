@@ -1149,6 +1149,8 @@ void HTTPWSTest::testInsertDelete()
         std::cerr << "Deleting 10 slides." << std::endl;
         for (size_t it = 1; it <= 10; it++)
         {
+            // Explicitly delete the nth slide.
+            sendTextFrame(socket, "setclientpart part=" + std::to_string(it));
             sendTextFrame(socket, "uno .uno:DeletePage");
             response = getResponseString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
