@@ -10,8 +10,12 @@
 #ifndef INCLUDED_WEBSOCKETHANDLER_HPP
 #define INCLUDED_WEBSOCKETHANDLER_HPP
 
-#include "Common.hpp"
-#include "Log.hpp"
+#include <chrono>
+#include <memory>
+#include <vector>
+
+#include "common/Common.hpp"
+#include "common/Log.hpp"
 #include "Socket.hpp"
 
 #include <Poco/Net/HTTPRequest.h>

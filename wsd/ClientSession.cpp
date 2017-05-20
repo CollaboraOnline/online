@@ -14,16 +14,17 @@
 #include <fstream>
 
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "Common.hpp"
+#include "common/Common.hpp"
 #include "DocumentBroker.hpp"
 #include "LOOLWSD.hpp"
-#include "Log.hpp"
-#include "Protocol.hpp"
-#include "Session.hpp"
-#include "Util.hpp"
-#include "Unit.hpp"
+#include "common/Log.hpp"
+#include "common/Protocol.hpp"
+#include "common/Session.hpp"
+#include "common/Util.hpp"
+#include "common/Unit.hpp"
 
 using namespace LOOLProtocol;
 

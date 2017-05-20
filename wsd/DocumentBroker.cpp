@@ -11,6 +11,7 @@
 
 #include "DocumentBroker.hpp"
 
+#include <atomic>
 #include <cassert>
 #include <chrono>
 #include <ctime>
@@ -27,14 +28,14 @@
 #include "Admin.hpp"
 #include "ClientSession.hpp"
 #include "Exceptions.hpp"
-#include "Message.hpp"
-#include "Protocol.hpp"
 #include "LOOLWSD.hpp"
-#include "Log.hpp"
+#include "SenderQueue.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
-#include "SenderQueue.hpp"
-#include "Unit.hpp"
+#include "common/Log.hpp"
+#include "common/Message.hpp"
+#include "common/Protocol.hpp"
+#include "common/Unit.hpp"
 
 using namespace LOOLProtocol;
 
@@ -409,6 +410,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             LOG_ERR("Failed to create Storage instance for [" << _docKey << "] in " << jailPath.toString());
             return false;
         }
+
         firstInstance = true;
     }
 

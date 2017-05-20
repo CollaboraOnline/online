@@ -21,20 +21,21 @@
 #include <atomic>
 #include <cassert>
 #include <cerrno>
+#include <chrono>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <mutex>
 #include <sstream>
 #include <thread>
-#include <chrono>
 
-#include "Common.hpp"
-#include "Log.hpp"
-#include "Util.hpp"
-#include "SigUtil.hpp"
+#include "common/Common.hpp"
+#include "common/Log.hpp"
+#include "common/Util.hpp"
+#include "common/SigUtil.hpp"
 
 namespace Poco
 {
@@ -136,8 +137,8 @@ public:
     virtual void setNoDelay()
     {
         const int val = 1;
-        setsockopt (_fd, IPPROTO_TCP, TCP_NODELAY,
-                    (char *) &val, sizeof(val));
+        ::setsockopt(_fd, IPPROTO_TCP, TCP_NODELAY,
+                     (char *) &val, sizeof(val));
     }
 
     /// Sets the kernel socket send buffer in size bytes.
