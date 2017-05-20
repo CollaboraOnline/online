@@ -207,7 +207,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
 
             bool gzip = request.hasToken("Accept-Encoding", "gzip");
             const std::string *content;
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
             if (std::getenv("LOOL_SERVE_FROM_FS"))
             {
                 // Useful to not serve from memory sometimes especially during loleaflet development
