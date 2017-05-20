@@ -75,7 +75,7 @@ void ChildSession::disconnect()
 
 bool ChildSession::_handleInput(const char *buffer, int length)
 {
-    LOG_TRC(getName() + ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
+    LOG_TRC(getName() << ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
     const auto tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
@@ -348,7 +348,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
         return false;
     }
 
-    LOG_INF("Created new view with viewid: [" << _viewId << + "] for username: [" <<
+    LOG_INF("Created new view with viewid: [" << _viewId << "] for username: [" <<
             _userName << "] in session: [" << getId() << "].");
 
     std::unique_lock<std::mutex> lockLokDoc(_docManager.getDocumentMutex());

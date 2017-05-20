@@ -497,7 +497,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 {
     const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
 
-    LOG_TRC(getName() + ": handling kit-to-client [" << payload->abbr() << "].");
+    LOG_TRC(getName() << ": handling kit-to-client [" << payload->abbr() << "].");
     const std::string& firstLine = payload->firstLine();
 
     const auto docBroker = _docBroker.lock();

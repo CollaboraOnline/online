@@ -291,7 +291,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
     struct stat fileStat;
     DIR *workingdir;
 
-    LOG_TRC("Pre-reading directory: " << basePath + path << "\n");
+    LOG_TRC("Pre-reading directory: " << basePath << path << "\n");
     workingdir = opendir((basePath + path).c_str());
 
     while ((currentFile = readdir(workingdir)) != NULL)
@@ -299,7 +299,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
         if (currentFile->d_name[0] == '.')
             continue;
 
-        std::string relPath = path + "/" + currentFile->d_name;
+        const std::string relPath = path + '/' + currentFile->d_name;
         stat ((basePath + relPath).c_str(), &fileStat);
 
         if (S_ISDIR(fileStat.st_mode))
@@ -307,7 +307,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
         else if (S_ISREG(fileStat.st_mode))
         {
-            LOG_TRC("Reading file: '" << (basePath + relPath) << " as '" << relPath << "'\n");
+            LOG_TRC("Reading file: '" << basePath << relPath << " as '" << relPath << "'\n");
 
             std::ifstream file(basePath + relPath, std::ios::binary);
 

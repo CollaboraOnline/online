@@ -460,7 +460,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         // Mark the session as 'Document owner' if WOPI hosts supports it
         if (userid == _storage->getFileInfo()._ownerId)
         {
-            LOG_DBG("Session [" + sessionId + "] is the document owner");
+            LOG_DBG("Session [" << sessionId << "] is the document owner");
             session->setDocumentOwner(true);
         }
 
