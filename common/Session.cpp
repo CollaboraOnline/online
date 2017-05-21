@@ -164,8 +164,7 @@ void Session::shutdown(const WebSocketHandler::StatusCodes statusCode, const std
             static_cast<unsigned>(statusCode) << "] and reason [" << statusMessage << "].");
 
     // See protocol.txt for this application-level close frame.
-    const std::string msg = "close: " + statusMessage;
-    sendTextFrame(msg.data(), msg.size());
+    sendMessage("close: " + statusMessage);
 
     WebSocketHandler::shutdown(statusCode, statusMessage);
 }

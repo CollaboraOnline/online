@@ -339,6 +339,10 @@ public:
     bool sendUnoSave(const std::string& sessionId, bool dontTerminateEdit = true, bool dontSaveIfUnmodified = true);
 
 private:
+
+    /// Shutdown all client connections with the given reason.
+    void shutdownClients(const std::string& closeReason);
+
     /// This gracefully terminates the connection
     /// with the child and cleans up ChildProcess etc.
     void terminateChild(const std::string& closeReason, const bool rude);

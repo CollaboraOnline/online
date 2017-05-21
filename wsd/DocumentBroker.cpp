@@ -223,6 +223,7 @@ void DocumentBroker::pollThread()
     static const bool AutoSaveEnabled = !std::getenv("LOOL_NO_AUTOSAVE");
     static const size_t IdleDocTimeoutSecs = LOOLWSD::getConfigValue<int>(
                                                       "per_document.idle_timeout_secs", 3600);
+    std::string closeReason = "stopped";
 
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
@@ -240,30 +241,8 @@ void DocumentBroker::pollThread()
 
         if (ShutdownRequestFlag)
         {
-            // Shutting down the server: notify clients, save, and stop.
-            static const std::string msg("close: recycling");
-
-            // First copy into local container, since removeSession
-            // will erase from _sessions, but will leave the last.
-            std::map<std::string, std::shared_ptr<ClientSession>> sessions = _sessions;
-            for (const auto& pair : sessions)
-            {
-                std::shared_ptr<ClientSession> session = pair.second;
-                try
-                {
-                    // Notify the client and disconnect.
-                    session->sendMessage(msg);
-                    session->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, "recycling");
-
-                    // Remove session, save, and mark to destroy.
-                    removeSession(session->getId(), true);
-                }
-                catch (const std::exception& exc)
-                {
-                    LOG_WRN("Error while shutting down client [" <<
-                            session->getName() << "]: " << exc.what());
-                }
-            }
+            closeReason = "recycling";
+            shutdownClients(closeReason);
         }
         else if (AutoSaveEnabled && !_stop &&
                  std::chrono::duration_cast<std::chrono::seconds>(now - last30SecCheckTime).count() >= 30)
@@ -281,6 +260,7 @@ void DocumentBroker::pollThread()
         {
             LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
                     " DocumentBroker for docKey [" << getDocKey() << "].");
+            closeReason = (idle ? "idle" : "dead");
             _stop = true;
         }
     }
@@ -289,11 +269,7 @@ void DocumentBroker::pollThread()
             _poll->continuePolling() << ", ShutdownRequestFlag: " << ShutdownRequestFlag <<
             ", TerminationFlag: " << TerminationFlag << ".");
 
-    // Terminate properly while we can.
-    //TODO: pass some sensible reason.
-    terminateChild("", false);
-
-    // Flush socket data.
+    // Flush socket data first.
     const int flushTimeoutMs = POLL_TIMEOUT_MS * 2; // ~1000ms
     const auto flushStartTime = std::chrono::steady_clock::now();
     while (_poll->getSocketCount())
@@ -305,6 +281,9 @@ void DocumentBroker::pollThread()
 
         _poll->poll(std::min(flushTimeoutMs - elapsedMs, POLL_TIMEOUT_MS / 5));
     }
+
+    // Terminate properly while we can.
+    terminateChild(closeReason, false);
 
     // Stop to mark it done and cleanup.
     _poll->stop();
@@ -1323,6 +1302,33 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
     return false;
 }
 
+void DocumentBroker::shutdownClients(const std::string& closeReason)
+{
+    assertCorrectThread();
+    LOG_INF("Terminating " << _sessions.size() << " clients of doc [" << _docKey << "].");
+
+    // First copy into local container, since removeSession
+    // will erase from _sessions, but will leave the last.
+    std::map<std::string, std::shared_ptr<ClientSession>> sessions = _sessions;
+    for (const auto& pair : sessions)
+    {
+        std::shared_ptr<ClientSession> session = pair.second;
+        try
+        {
+            // Notify the client and disconnect.
+            session->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, closeReason);
+
+            // Remove session, save, and mark to destroy.
+            removeSession(session->getId(), true);
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_WRN("Error while shutting down client [" <<
+                    session->getName() << "]: " << exc.what());
+        }
+    }
+}
+
 void DocumentBroker::childSocketTerminated()
 {
     assertCorrectThread();
@@ -1334,17 +1340,7 @@ void DocumentBroker::childSocketTerminated()
 
     // We could restore the kit if this was unexpected.
     // For now, close the connections to cleanup.
-    for (auto& pair : _sessions)
-    {
-        try
-        {
-            pair.second->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, "");
-        }
-        catch (const std::exception& ex)
-        {
-            LOG_ERR("Error while terminating client connection [" << pair.first << "]: " << ex.what());
-        }
-    }
+    shutdownClients("terminated");
 }
 
 void DocumentBroker::terminateChild(const std::string& closeReason, const bool rude)
@@ -1356,17 +1352,7 @@ void DocumentBroker::terminateChild(const std::string& closeReason, const bool r
     // Close all running sessions
     if (!rude)
     {
-        for (const auto& pair : _sessions)
-        {
-            try
-            {
-                pair.second->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, closeReason);
-            }
-            catch (const std::exception& ex)
-            {
-                LOG_ERR("Error while terminating client connection [" << pair.first << "]: " << ex.what());
-            }
-        }
+        shutdownClients(closeReason);
     }
 
     if (_childProcess)
