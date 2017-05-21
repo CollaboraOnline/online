@@ -246,7 +246,7 @@ void DocumentBroker::pollThread()
         if (ShutdownRequestFlag)
         {
             closeReason = "recycling";
-            _stop = true;
+            shutdownClients(closeReason);
         }
         else if (AutoSaveEnabled && !_stop &&
                  std::chrono::duration_cast<std::chrono::seconds>(now - last30SecCheckTime).count() >= 30)
