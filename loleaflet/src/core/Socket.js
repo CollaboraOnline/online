@@ -226,6 +226,9 @@ L.Socket = L.Class.extend({
 			if (textMsg === 'ownertermination') {
 				msg = _('Session terminated by document owner');
 			}
+			else if (textMsg === 'idle') {
+				msg = _('Session terminated due to idleness');
+			}
 			else if (textMsg === 'shuttingdown') {
 				msg = _('Server is shutting down for maintenance (auto-saving)');
 			}
@@ -299,11 +302,7 @@ L.Socket = L.Class.extend({
 				this._map.fire('postMessage', {msgId: 'Session_Closed'});
 			}
 
-			if (textMsg === 'idle') {
-				this._map._active = false;
-			}
-
-			if (textMsg === 'ownertermination') {
+			if (textMsg === 'idle' || textMsg === 'ownertermination') {
 				this._map.remove();
 			}
 
