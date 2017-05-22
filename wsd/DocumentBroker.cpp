@@ -785,6 +785,25 @@ std::string DocumentBroker::getJailRoot() const
 
 size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
 {
+    try
+    {
+        return addSessionInternal(session);
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_ERR("Failed to add session to [" << _docKey << "] with URI [" << session->getPublicUri().toString() << "]: " << exc.what());
+        if (_sessions.empty())
+        {
+            LOG_INF("Doc [" << _docKey << "] has no more sessions. Marking to destroy.");
+            _markToDestroy = true;
+        }
+
+        throw;
+    }
+}
+
+size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session)
+{
     assertCorrectThread();
 
     try
@@ -815,12 +834,7 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     _markToDestroy = false;
     _stop = false;
 
-    // Add and attach the session.
-    _sessions.emplace(session->getId(), session);
-    session->setAttached();
-
     const auto id = session->getId();
-    const auto count = _sessions.size();
 
     // Request a new session from the child kit.
     const std::string aMessage = "session " + id + ' ' + _docKey + ' ' + _docId;
@@ -829,6 +843,11 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     // Tell the admin console about this new doc
     Admin::instance().addDoc(_docKey, getPid(), getFilename(), id, session->getUserName());
 
+    // Add and attach the session.
+    _sessions.emplace(session->getId(), session);
+    session->setAttached();
+
+    const auto count = _sessions.size();
     LOG_TRC("Added " << (session->isReadOnly() ? "readonly" : "non-readonly") <<
             " session [" << id << "] to docKey [" <<
             _docKey << "] to have " << count << " sessions.");
