@@ -33,11 +33,8 @@ L.Control.Header = L.Control.extend({
 		if (this._selection.start === -1 && this._selection.end === -1)
 			return;
 		var childs = element.children;
-		// if the selection is cleared when the end selection cell is not in the current viewport,
-		// we have _selection.end === -1, since only a portion of the header is fetched;
-		// so, without the following hack, the selection would not be cleared correctly
 		var start = (this._selection.start === -1) ? 0 : this._selection.start;
-		var end = (this._selection.end === -1) ? childs.length : this._selection.end + 1;
+		var end = this._selection.end + 1;
 		for (var iterator = start; iterator < end; iterator++) {
 			this.unselect(childs[iterator]);
 		}
@@ -70,6 +67,12 @@ L.Control.Header = L.Control.extend({
 				itEnd = iterator;
 				break;
 			}
+		}
+
+		// if end is greater than the last fetched header position set itEnd to the max possible value
+		// without this hack selecting a whole row and then a whole column (or viceversa) leads to an incorrect selection
+		if (itStart !== -1 && itEnd === -1) {
+			itEnd = childs.length - 1;
 		}
 
 		// we need to unselect the row (column) header entry for the current cell cursor position
