@@ -445,7 +445,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
     }
     catch(const Poco::Exception& pexc)
     {
-        LOG_ERR("Cannot get file info from WOPI storage uri [" + uriObject.toString() + "]. Error: " << pexc.displayText() <<
+        LOG_ERR("Cannot get file info from WOPI storage uri [" << uriObject.toString() << "]. Error: " << pexc.displayText() <<
                 (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));
         throw;
     }
@@ -494,7 +494,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
     else
     {
         LOG_ERR("WOPI::CheckFileInfo failed and no JSON payload returned. Access denied.");
-        throw UnauthorizedRequestException("Access denied.");
+        throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriObject.toString());
     }
 
     Poco::Timestamp modifiedTime = Poco::Timestamp::fromEpochTime(0);
