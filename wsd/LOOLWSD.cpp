@@ -2129,18 +2129,16 @@ private:
                                 clientSession->sendMessage(msg);
                                 docBroker->stop();
                             }
+                            catch (const StorageConnectionException& exc)
+                            {
+                                // Alert user about failed load
+                                const std::string msg = "error: cmd=storage kind=loadfailed";
+                                clientSession->sendMessage(msg);
+                                docBroker->stop();
+                            }
                             catch (const std::exception& exc)
                             {
-                                LOG_ERR("Error while handling loading : " << exc.what());
-                                // only send our default error message if we haven't handled the
-                                // exception already up the stack
-                                if (std::uncaught_exception())
-                                {
-                                    // FIXME: Are we sure we want to say that all other failures due
-                                    // to an 'unauthorized' WOPI host ?
-                                    const std::string msg = "error: cmd=internal kind=unauthorized";
-                                    clientSession->sendMessage(msg);
-                                }
+                                LOG_ERR("Error while loading : " << exc.what());
                                 docBroker->stop();
                             }
                         });

@@ -797,12 +797,6 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
             throw std::runtime_error(msg);
         }
     }
-    catch (const StorageConnectionException& exc)
-    {
-        // Alert user about failed load
-        session->sendMessage("error: cmd=storage kind=loadfailed");
-        throw;
-    }
     catch (const StorageSpaceLowException&)
     {
         LOG_ERR("Out of storage while loading document with URI [" << session->getPublicUri().toString() << "].");
