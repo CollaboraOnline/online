@@ -111,6 +111,7 @@ L.Socket = L.Class.extend({
 
 	_onSocketOpen: function () {
 		console.debug('_onSocketOpen:');
+		this._map._serverRecycling = false;
 		// Always send the protocol version number.
 		// TODO: Move the version number somewhere sensible.
 		this._doSend('loolclient ' + this.ProtocolVersionNumber);
@@ -238,6 +239,7 @@ L.Socket = L.Class.extend({
 				msg = _('Server is recycling and will be available shortly');
 
 				this._map._active = false;
+				this._map._serverRecycling = true;
 
 				// Prevent reconnecting the world at the same time.
 				var min = 5000;

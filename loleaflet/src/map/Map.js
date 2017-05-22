@@ -71,6 +71,7 @@ L.Map = L.Evented.extend({
 		this._fatal = false;
 		this._enabled = true;
 		this._debugAlwaysActive = false; // disables the dimming / document inactivity when true
+		this._serverRecycling = false;
 
 		vex.dialogID = -1;
 
@@ -777,6 +778,10 @@ L.Map = L.Evented.extend({
 	},
 
 	_activate: function () {
+		if (this._serverRecycling) {
+			return;
+		}
+
 		console.debug('_activate:');
 		clearTimeout(vex.timer);
 
@@ -867,6 +872,10 @@ L.Map = L.Evented.extend({
 	},
 
 	_startInactiveTimer: function () {
+		if (this._serverRecycling) {
+			return;
+		}
+
 		console.debug('_startInactiveTimer:');
 		clearTimeout(vex.timer);
 		var map = this;
@@ -876,6 +885,10 @@ L.Map = L.Evented.extend({
 	},
 
 	_deactivate: function () {
+		if (this._serverRecycling) {
+			return;
+		}
+
 		console.debug('_deactivate:');
 		clearTimeout(vex.timer);
 
