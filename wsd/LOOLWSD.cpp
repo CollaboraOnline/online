@@ -2122,6 +2122,13 @@ private:
                                 // Add and load the session.
                                 docBroker->addSession(clientSession);
                             }
+                            catch (const UnauthorizedRequestException& exc)
+                            {
+                                LOG_ERR("Unauthorized Request while loading session for " << docBroker->getDocKey() << ": " << exc.what());
+                                const std::string msg = "error: cmd=internal kind=unauthorized";
+                                clientSession->sendMessage(msg);
+                                docBroker->stop();
+                            }
                             catch (const std::exception& exc)
                             {
                                 LOG_ERR("Error while handling loading : " << exc.what());
@@ -2136,7 +2143,6 @@ private:
                                 }
                                 docBroker->stop();
                             }
-
                         });
                     });
                 }
