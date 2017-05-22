@@ -346,6 +346,9 @@ private:
     /// Saves the doc to the storage.
     bool saveToStorageInternal(const std::string& sesionId, bool success, const std::string& result = "");
 
+    /// Loads a new session and adds to the sessions container.
+    size_t addSessionInternal(const std::shared_ptr<ClientSession>& session);
+
     /// Removes a session by ID. Returns the new number of sessions.
     size_t removeSessionInternal(const std::string& id);
 

@@ -1543,6 +1543,7 @@ private:
     {
         auto socket = _socket.lock();
         std::vector<char>& in = socket->_inBuffer;
+        LOG_TRC("#" << socket->getFD() << " handling incoming " << in.size() << " bytes.");
 
         // Find the end of the header, if any.
         static const std::string marker("\r\n\r\n");
@@ -1619,6 +1620,7 @@ private:
                             Admin::instance().insertNewSocket(moveSocket);
                         });
                 }
+
             }
             // Client post and websocket connections
             else if ((request.getMethod() == HTTPRequest::HTTP_GET ||
@@ -1869,7 +1871,7 @@ private:
 
                         docBroker->addCallback([docBroker, moveSocket, clientSession, format]()
                         {
-			    auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
                             clientSession->setSaveAsSocket(streamSocket);
 
                             // Move the socket into DocBroker.
@@ -2113,14 +2115,12 @@ private:
                                 LOG_ERR("Unauthorized Request while loading session for " << docBroker->getDocKey() << ": " << exc.what());
                                 const std::string msg = "error: cmd=internal kind=unauthorized";
                                 clientSession->sendMessage(msg);
-                                docBroker->stop();
                             }
                             catch (const std::exception& exc)
                             {
                                 LOG_ERR("Error while handling loading : " << exc.what());
                                 const std::string msg = "error: cmd=internal kind=unauthorized";
                                 clientSession->sendMessage(msg);
-                                docBroker->stop();
                             }
                         });
                     });
