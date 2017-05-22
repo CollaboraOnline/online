@@ -344,6 +344,7 @@ L.Socket = L.Class.extend({
 				this._map.fire('error', {msg: errorMessages.diskfull});
 			}
 			else if (command.errorKind === 'unauthorized') {
+				this._map.hideBusy();
 				this._map.fire('error', {msg: errorMessages.unauthorized});
 			}
 
