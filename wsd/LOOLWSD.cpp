@@ -2127,19 +2127,16 @@ private:
                                 LOG_ERR("Unauthorized Request while loading session for " << docBroker->getDocKey() << ": " << exc.what());
                                 const std::string msg = "error: cmd=internal kind=unauthorized";
                                 clientSession->sendMessage(msg);
-                                docBroker->stop();
                             }
                             catch (const StorageConnectionException& exc)
                             {
                                 // Alert user about failed load
                                 const std::string msg = "error: cmd=storage kind=loadfailed";
                                 clientSession->sendMessage(msg);
-                                docBroker->stop();
                             }
                             catch (const std::exception& exc)
                             {
                                 LOG_ERR("Error while loading : " << exc.what());
-                                docBroker->stop();
                             }
                         });
                     });
