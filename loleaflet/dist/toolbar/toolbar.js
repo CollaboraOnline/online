@@ -1412,7 +1412,7 @@ map.on('commandresult', function (e) {
 		}
 	}
 	else if ((commandName === '.uno:Undo' || commandName === '.uno:Redo') &&
-		e.success === true && e.result.value && e.result.value === '130') { /*UNDO_CONFLICT*/
+		e.success === true && e.result.value && !isNaN(e.result.value)) { /*UNDO_CONFLICT*/
 		$('#tb_toolbar-up_item_repair').w2overlay({ html: '<div style="padding: 10px; line-height: 150%">' +
 			_('Conflict Undo/Redo with multiple users. Please use document repair to resolve') + '</div>'});
 	}
