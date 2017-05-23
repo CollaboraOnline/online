@@ -20,6 +20,7 @@ L.DivIcon = L.Icon.extend({
 		var div = (oldIcon && oldIcon.tagName === 'DIV') ? oldIcon : document.createElement('div'),
 		    options = this.options;
 
+		L.DomEvent.on(div, 'contextmenu', L.DomEvent.preventDefault);
 		div.innerHTML = options.html !== false ? options.html : '';
 
 		if (options.bgPos) {
