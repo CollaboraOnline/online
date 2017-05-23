@@ -162,6 +162,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			row = L.DomUtil.create('div', 'spreadsheet-header-row', this._rows);
 			text = L.DomUtil.create('div', 'spreadsheet-header-row-text', row);
 			resize = L.DomUtil.create('div', 'spreadsheet-header-row-resize', row);
+			L.DomEvent.on(resize, 'contextmenu', L.DomEvent.preventDefault);
 			row.size = rows[iterator].size;
 			var content = rows[iterator].text;
 			text.setAttribute('rel', 'spreadsheet-row-' + content); // for easy addressing
