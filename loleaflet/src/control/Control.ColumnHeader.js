@@ -171,6 +171,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			column = L.DomUtil.create('div', 'spreadsheet-header-column', this._columns);
 			text = L.DomUtil.create('div', 'spreadsheet-header-column-text', column);
 			resize = L.DomUtil.create('div', 'spreadsheet-header-column-resize', column);
+			L.DomEvent.on(resize, 'contextmenu', L.DomEvent.preventDefault);
 			column.size = columns[iterator].size;
 			var content = columns[iterator].text;
 			text.setAttribute('rel', 'spreadsheet-column-' + content); // for easy addressing
