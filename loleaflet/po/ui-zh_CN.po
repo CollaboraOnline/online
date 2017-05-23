@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:12+0000\n"
+"POT-Creation-Date: 2017-05-22 08:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-ui-zh_CN.po\n"
-"X-Pootle-Revision: 2438005\n"
+"X-Pootle-Revision: 2548681\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -275,25 +275,25 @@ msgstr "无法载入文件，请确认文件类型正确且文件并未受损，
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server administrator to continue editing."
-msgstr ""
+msgstr "服务器上的存储空间不足，保存失败。文档现在将被设定为只读。要继续编辑，请联系服务器管理员。"
 
 #: dist/errormessages.js:14
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server administrator."
-msgstr ""
+msgstr "无法将文档保存到存储服务器。请检查您的权限，或者联系存储服务器的管理员。"
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
-msgstr ""
+msgstr "%n 位用户"
 
 #: dist/toolbar/toolbar.js:106
 msgid "1 user"
-msgstr ""
+msgstr "1 位用户"
 
 #: dist/toolbar/toolbar.js:107
 msgid "0 users"
-msgstr ""
+msgstr "0 位用户"
 
 #: dist/toolbar/toolbar.js:261
 msgid "Are you sure you want to delete this page?"
@@ -301,36 +301,35 @@ msgstr "您确定要删除该页面吗？"
 
 #: dist/toolbar/toolbar.js:461
 msgid "Textwrap"
-msgstr ""
+msgstr "文字环绕"
 
 #: dist/toolbar/toolbar.js:462
-#, fuzzy
 msgid "No wrap"
 msgstr "无环绕"
 
 #: dist/toolbar/toolbar.js:463
 msgid "Page wrap"
-msgstr ""
+msgstr "页面环绕"
 
 #: dist/toolbar/toolbar.js:464
 msgid "Wrap anchor only"
-msgstr ""
+msgstr "仅环绕锚定"
 
 #: dist/toolbar/toolbar.js:465
 msgid "Ideal wrap"
-msgstr ""
+msgstr "最佳环绕"
 
 #: dist/toolbar/toolbar.js:466
 msgid "Left wrap"
-msgstr ""
+msgstr "左环绕"
 
 #: dist/toolbar/toolbar.js:467
 msgid "Right wrap"
-msgstr ""
+msgstr "右环绕"
 
 #: dist/toolbar/toolbar.js:468
 msgid "Wrap through"
-msgstr ""
+msgstr "贯穿环绕"
 
 #: dist/toolbar/toolbar.js:472
 #: src/control/Control.Menubar.js:22
@@ -348,7 +347,7 @@ msgstr "重做"
 
 #: dist/toolbar/toolbar.js:474
 msgid "Document repair"
-msgstr ""
+msgstr "文档修复"
 
 #: dist/toolbar/toolbar.js:480
 #: src/control/Control.Menubar.js:60
@@ -371,7 +370,7 @@ msgstr "删除线"
 
 #: dist/toolbar/toolbar.js:485
 msgid "Insert Footnote"
-msgstr ""
+msgstr "插入脚注"
 
 #: dist/toolbar/toolbar.js:488
 msgid "Font color"
@@ -472,7 +471,7 @@ msgstr "插入图形"
 
 #: dist/toolbar/toolbar.js:520
 msgid "Special Character"
-msgstr ""
+msgstr "特殊字符"
 
 #: dist/toolbar/toolbar.js:522
 msgid "More"
@@ -560,7 +559,7 @@ msgstr "取消搜索"
 
 #: dist/toolbar/toolbar.js:684
 msgid "No users"
-msgstr ""
+msgstr "无用户"
 
 #: dist/toolbar/toolbar.js:686
 msgid "Previous page"
@@ -590,11 +589,11 @@ msgstr "放大"
 
 #: dist/toolbar/toolbar.js:706
 msgid "%user has joined"
-msgstr ""
+msgstr "用户 %user 已加入"
 
 #: dist/toolbar/toolbar.js:707
 msgid "%user has left"
-msgstr ""
+msgstr "用户 %user 已离开"
 
 #: dist/toolbar/toolbar.js:824
 #: dist/toolbar/toolbar.js:1349
@@ -687,16 +686,16 @@ msgstr "下一张幻灯片"
 #: dist/toolbar/toolbar.js:1431
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr ""
+msgstr "多个用户之间的撤销/重做发生了冲突。请使用文档恢复来解决冲突。"
 
 #: dist/toolbar/toolbar.js:1595
 #: src/control/Control.DocumentRepair.js:87
 msgid "You"
-msgstr ""
+msgstr "您"
 
 #: dist/toolbar/toolbar.js:1604
 msgid "Readonly"
-msgstr ""
+msgstr "只读"
 
 #: src/admin/AdminSocketBase.js:45
 msgid "Connection error"
@@ -708,7 +707,7 @@ msgstr "您确定要停止此次会话吗？"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "您确定要关闭服务器吗？"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -742,59 +741,59 @@ msgstr " s"
 
 #: src/control/Control.CharacterMap.js:12
 msgid "Basic Latin"
-msgstr ""
+msgstr "基本拉丁字母"
 
 #: src/control/Control.CharacterMap.js:13
 msgid "Latin-1"
-msgstr ""
+msgstr "拉丁字母-1"
 
 #: src/control/Control.CharacterMap.js:14
 msgid "Latin Extended-A"
-msgstr ""
+msgstr "拉丁文扩充-A"
 
 #: src/control/Control.CharacterMap.js:15
 msgid "Latin Extended-B"
-msgstr ""
+msgstr "拉丁文扩充-B"
 
 #: src/control/Control.CharacterMap.js:16
 msgid "IPA Extensions"
-msgstr ""
+msgstr "国际音标扩充"
 
 #: src/control/Control.CharacterMap.js:17
 msgid "Spacing Modifier Letters"
-msgstr ""
+msgstr "占位修饰字符"
 
 #: src/control/Control.CharacterMap.js:18
 msgid "Combining Diacritical Marks"
-msgstr ""
+msgstr "组合变音标记"
 
 #: src/control/Control.CharacterMap.js:19
 msgid "Basic Greek"
-msgstr ""
+msgstr "基本希腊字母"
 
 #: src/control/Control.CharacterMap.js:20
 msgid "Cyrillic"
-msgstr ""
+msgstr "西里尔字母"
 
 #: src/control/Control.CharacterMap.js:21
 msgid "Armenian"
-msgstr ""
+msgstr "亚美尼亚文"
 
 #: src/control/Control.CharacterMap.js:22
 msgid "Basic Hebrew"
-msgstr ""
+msgstr "基本希伯来文"
 
 #: src/control/Control.CharacterMap.js:23
 msgid "Basic Arabic"
-msgstr ""
+msgstr "基本阿拉伯文"
 
 #: src/control/Control.CharacterMap.js:24
 msgid "Syriac"
-msgstr ""
+msgstr "古代叙利亚语"
 
 #: src/control/Control.CharacterMap.js:25
 msgid "Thaana"
-msgstr ""
+msgstr "塔纳文"
 
 #: src/control/Control.CharacterMap.js:26
 msgid "Devanagari"
@@ -1788,23 +1787,23 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:390
 msgid "Special Characters"
-msgstr ""
+msgstr "特殊字符"
 
 #: src/control/Control.CharacterMap.js:395
 msgid "Font Name:"
-msgstr ""
+msgstr "字体名称："
 
 #: src/control/Control.CharacterMap.js:402
 msgid "Subset:"
-msgstr ""
+msgstr "子集："
 
 #: src/control/Control.CharacterMap.js:413
 msgid "Selected Character:"
-msgstr ""
+msgstr "选择的字符："
 
 #: src/control/Control.CharacterMap.js:418
 msgid "Hexadecimal:"
-msgstr ""
+msgstr "十六进制："
 
 #: src/control/Control.CharacterMap.js:424
 #: src/control/Control.Menubar.js:38
@@ -1826,47 +1825,47 @@ msgstr "删除列"
 
 #: src/control/Control.ColumnHeader.js:55
 msgid "Optimal Width"
-msgstr ""
+msgstr "最佳宽度"
 
 #: src/control/Control.ColumnHeader.js:62
 msgid "Hide Columns"
-msgstr ""
+msgstr "隐藏列"
 
 #: src/control/Control.ColumnHeader.js:69
 msgid "Show Columns"
-msgstr ""
+msgstr "显示列"
 
 #: src/control/Control.ColumnHeader.js:84
 msgid "Optimal Column Width"
-msgstr ""
+msgstr "最佳列宽"
 
 #: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "内部剪切"
 
 #: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"
-msgstr ""
+msgstr "内部复制"
 
 #: src/control/Control.ContextMenu.js:141
 msgid "Internal Paste"
-msgstr ""
+msgstr "内部粘贴"
 
 #: src/control/Control.ContextMenu.js:163
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "内部选择性粘贴"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
-msgstr ""
+msgstr "修复文档"
 
 #: src/control/Control.DocumentRepair.js:40
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #: src/control/Control.DocumentRepair.js:42
 msgid "Index"
-msgstr ""
+msgstr "索引"
 
 #: src/control/Control.DocumentRepair.js:44
 #: src/control/Control.Menubar.js:40
@@ -1876,15 +1875,15 @@ msgstr "批注"
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "User name"
-msgstr ""
+msgstr "用户名"
 
 #: src/control/Control.DocumentRepair.js:48
 msgid "Timestamp"
-msgstr ""
+msgstr "时间戳"
 
 #: src/control/Control.DocumentRepair.js:52
 msgid "Jump to state"
-msgstr ""
+msgstr "跳转到状态"
 
 #: src/control/Control.Menubar.js:10
 #: src/control/Control.Menubar.js:163
@@ -1936,7 +1935,7 @@ msgstr "编辑"
 
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
-msgstr ""
+msgstr "修复"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:177
@@ -1964,23 +1963,23 @@ msgstr "全选"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
-msgstr ""
+msgstr "追踪修订"
 
 #: src/control/Control.Menubar.js:32
 msgid "Record"
-msgstr ""
+msgstr "记录"
 
 #: src/control/Control.Menubar.js:33
 msgid "Show"
-msgstr ""
+msgstr "显示"
 
 #: src/control/Control.Menubar.js:35
 msgid "Previous"
-msgstr ""
+msgstr "上一个"
 
 #: src/control/Control.Menubar.js:36
 msgid "Next"
-msgstr ""
+msgstr "下一个"
 
 #: src/control/Control.Menubar.js:31
 #: src/control/Control.Menubar.js:183
@@ -1996,7 +1995,7 @@ msgstr "全屏"
 
 #: src/control/Control.Menubar.js:46
 msgid "Formatting Marks"
-msgstr ""
+msgstr "格式标记"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:191
@@ -2008,61 +2007,61 @@ msgstr "图像"
 #: src/control/Control.Menubar.js:203
 #: src/control/Control.Menubar.js:259
 msgid "Comment..."
-msgstr ""
+msgstr "批注..."
 
 #: src/control/Control.Menubar.js:42
 msgid "Footnote"
-msgstr ""
+msgstr "脚注"
 
 #: src/control/Control.Menubar.js:43
 msgid "Endnote"
-msgstr ""
+msgstr "尾注"
 
 #: src/control/Control.Menubar.js:45
 msgid "Page break"
-msgstr ""
+msgstr "换页符"
 
 #: src/control/Control.Menubar.js:46
 msgid "Column break"
-msgstr ""
+msgstr "分栏符"
 
 #: src/control/Control.Menubar.js:48
 #: src/control/Control.Menubar.js:193
 #: src/control/Control.Menubar.js:252
 msgid "Special character..."
-msgstr ""
+msgstr "特殊字符..."
 
 #: src/control/Control.Menubar.js:49
 msgid "Formatting mark"
-msgstr ""
+msgstr "格式标记"
 
 #: src/control/Control.Menubar.js:50
 msgid "Non-breaking space"
-msgstr ""
+msgstr "不间断空格"
 
 #: src/control/Control.Menubar.js:51
 msgid "Non-breaking hyphen"
-msgstr ""
+msgstr "不间断连字符"
 
 #: src/control/Control.Menubar.js:52
 msgid "Soft hyphen"
-msgstr ""
+msgstr "软连字符"
 
 #: src/control/Control.Menubar.js:53
 msgid "No-width optional break"
-msgstr ""
+msgstr "无宽度可选间断符"
 
 #: src/control/Control.Menubar.js:54
 msgid "No-width no break"
-msgstr ""
+msgstr "无宽度不间断符"
 
 #: src/control/Control.Menubar.js:55
 msgid "Left-to-right mark"
-msgstr ""
+msgstr "从左到右标记"
 
 #: src/control/Control.Menubar.js:56
 msgid "Right-to-left mark"
-msgstr ""
+msgstr "从右到左标记"
 
 #: src/control/Control.Menubar.js:58
 msgid "Format"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:12+0000\n"
+"POT-Creation-Date: 2017-05-22 08:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /sk/libo_online/loleaflet-ui-sk.po\n"
-"X-Pootle-Revision: 2438580\n"
+"X-Pootle-Revision: 2565066\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -724,7 +724,7 @@ msgstr "Vy"
 
 #: dist/toolbar/toolbar.js:1604
 msgid "Readonly"
-msgstr ""
+msgstr "Len na čítanie"
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -736,7 +736,7 @@ msgstr "Naozaj chcete túto reláciu ukončiť?"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "Naozaj chcete vypnúť tento server?"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -1991,11 +1991,11 @@ msgstr "Vybrať všetko"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
-msgstr ""
+msgstr "Sledovať zmeny"
 
 #: src/control/Control.Menubar.js:32
 msgid "Record"
-msgstr ""
+msgstr "Zaznamenávať"
 
 #: src/control/Control.Menubar.js:33
 msgid "Show"

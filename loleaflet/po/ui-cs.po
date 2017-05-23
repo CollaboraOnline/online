@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 08:00+0000\n"
+"POT-Creation-Date: 2017-05-22 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.0.0\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-ui-cs.po\n"
-"X-Pootle-Revision: 2490153\n"
+"X-Pootle-Revision: 2522834\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -737,7 +737,7 @@ msgstr "Opravdu si přejete ukončit tuto relaci?"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "Opravdu si přejete vypnout tento server?"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -1992,11 +1992,11 @@ msgstr "Vybrat vše"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
-msgstr ""
+msgstr "Sledování změn"
 
 #: src/control/Control.Menubar.js:32
 msgid "Record"
-msgstr ""
+msgstr "Záznam"
 
 #: src/control/Control.Menubar.js:33
 msgid "Show"
@@ -2038,7 +2038,7 @@ msgstr "Obrázek"
 #: src/control/Control.Menubar.js:203
 #: src/control/Control.Menubar.js:259
 msgid "Comment..."
-msgstr ""
+msgstr "Komentář..."
 
 #: src/control/Control.Menubar.js:53
 msgid "Footnote"
@@ -2453,15 +2453,15 @@ msgstr ""
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "
-msgstr ""
+msgstr "Přidat:"
 
 #: src/control/Control.MetricInput.js:61
 msgid "Default value"
-msgstr ""
+msgstr "Výchozí hodnota"
 
 #: src/control/Control.MetricInput.js:68
 msgid "Submit"
-msgstr ""
+msgstr "Odeslat"
 
 #: src/control/Control.RowHeader.js:37
 msgid "Insert row above"
@@ -2581,11 +2581,11 @@ msgstr ""
 
 #: src/layer/marker/Annotation.js:161
 msgid "Reject change"
-msgstr ""
+msgstr "Odmítnout změnu"
 
 #: src/layer/marker/Annotation.js:169
 msgid "Open menu"
-msgstr ""
+msgstr "Otevřít nabídku"
 
 #: src/layer/tile/TileLayer.js:182
 msgid "Modify"
