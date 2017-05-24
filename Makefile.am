@@ -213,6 +213,7 @@ all-local: loolforkit @JAILS_PATH@ $(SYSTEM_STAMP)
 	else \
 	    echo "Skipping capability setting"; \
 	fi
+	( cd loleaflet && make )
 
 # just run the build without any tests
 build-nocheck: all-am
