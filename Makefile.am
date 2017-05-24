@@ -2,7 +2,7 @@ SUBDIRS = . test loleaflet
 
 export ENABLE_DEBUG
 
-bin_PROGRAMS = loolwsd loolforkit loolmap loolmount looltool loolstress
+bin_PROGRAMS = loolwsd loolforkit loolmap loolmount looltool loolstress loolconfig
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
@@ -133,6 +133,8 @@ loolstress_SOURCES = tools/Stress.cpp \
                      common/Protocol.cpp \
                      common/Log.cpp \
 		     common/Util.cpp
+
+loolconfig_SOURCES = tools/Config.cpp
 
 wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \
