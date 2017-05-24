@@ -42,6 +42,8 @@ namespace Util
         std::string getFilename(const size_t length);
     }
 
+    /// Hex to unsigned char
+    bool dataFromHexString(const std::string& hexString, std::vector<unsigned char>& data);
     /// Encode an integral ID into a string, with padding support.
     std::string encodeId(const unsigned number, const int padding = 5);
     /// Decode an integral ID from a string.

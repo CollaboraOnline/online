@@ -216,6 +216,7 @@ int Config::main(const std::vector<std::string>& args)
 
             std::cout << "Saving configuration to : " << ConfigFile << " ..." << std::endl;
             _loolConfig.save(ConfigFile);
+            std::cout << "Saved" << std::endl;
         }
     }
 
