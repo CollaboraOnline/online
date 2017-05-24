@@ -9,8 +9,11 @@
 
 #include "config.h"
 
+#include <iomanip>
 #include <string>
 #include <vector>
+
+#include <openssl/evp.h>
 
 #include <Poco/DateTime.h>
 #include <Poco/DateTimeFormat.h>
@@ -32,6 +35,7 @@
 #include "Auth.hpp"
 #include "Common.hpp"
 #include "FileServer.hpp"
+#include "Protocol.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 
@@ -70,18 +74,52 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
         LOG_INF("No existing JWT cookie found");
     }
 
+    HTTPBasicCredentials credentials(request);
+    std::string userProvidedPwd = credentials.getPassword();
+
     // If no cookie found, or is invalid, let admin re-login
-    const auto user = config.getString("admin_console.username", "");
-    const auto pass = config.getString("admin_console.password", "");
+    const std::string user = config.getString("admin_console.username", "");
+    std::string pass = config.getString("admin_console.password", "");
+    if (config.has("admin_console.secure_password"))
+    {
+        pass = config.getString("admin_console.secure_password");
+        // Extract the salt from the config
+        std::vector<unsigned char> saltData;
+        std::vector<std::string> tokens = LOOLProtocol::tokenize(pass, '.');
+        if (tokens.size() != 5 ||
+            tokens[0] != "pbkdf2" ||
+            tokens[1] != "sha512" ||
+            !Util::dataFromHexString(tokens[3], saltData))
+        {
+            LOG_ERR("Incorrect format detected for secure_password in config file."
+                    << "Denying access until correctly set."
+                    << "Use loolconfig to configure admin password.");
+            return false;
+        }
+
+        unsigned char userProvidedPwdHash[tokens[4].size() / 2];
+        PKCS5_PBKDF2_HMAC(userProvidedPwd.c_str(), -1,
+                          saltData.data(), saltData.size(),
+                          std::stoi(tokens[2]),
+                          EVP_sha512(),
+                          sizeof userProvidedPwdHash, userProvidedPwdHash);
+
+        std::stringstream stream;
+        for (unsigned j = 0; j < sizeof userProvidedPwdHash; ++j)
+            stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(userProvidedPwdHash[j]);
+
+        userProvidedPwd = stream.str();
+        pass = tokens[4];
+    }
+
     if (user.empty() || pass.empty())
     {
         LOG_ERR("Admin Console credentials missing. Denying access until set.");
         return false;
     }
 
-    HTTPBasicCredentials credentials(request);
     if (credentials.getUsername() == user &&
-        credentials.getPassword() == pass)
+        userProvidedPwd == pass)
     {
         const std::string htmlMimeType = "text/html";
         // generate and set the cookie

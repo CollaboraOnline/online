@@ -111,6 +111,27 @@ namespace Util
         }
     }
 
+    bool dataFromHexString(const std::string& hexString, std::vector<unsigned char>& data)
+    {
+        if (hexString.length() % 2 != 0)
+        {
+            return false;
+        }
+
+        data.clear();
+        std::stringstream stream;
+        unsigned value;
+        for (unsigned offset = 0; offset < hexString.size(); offset += 2)
+        {
+            stream.clear();
+            stream << std::hex << hexString.substr(offset, 2);
+            stream >> value;
+            data.push_back(static_cast<unsigned char>(value));
+        }
+
+        return true;
+    }
+
     std::string encodeId(const unsigned number, const int padding)
     {
         std::ostringstream oss;
