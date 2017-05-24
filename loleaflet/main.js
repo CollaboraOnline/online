@@ -75,6 +75,8 @@ var closebutton = getParameterByName('closebutton');
 var revHistoryEnabled = getParameterByName('revisionhistory');
 // Should the document go inactive or not
 var alwaysActive = getParameterByName('alwaysactive');
+// Disable the about dialog
+var disableAbout = getParameterByName('disableabout');
 // Loleaflet Debug mode
 var debugMode = getParameterByName('debug');
 if (wopiSrc === '' && filePath === '') {
@@ -88,6 +90,7 @@ if (host === '') {
 // TODO: Get rid of these globals
 global.closebutton = closebutton;
 global.revHistoryEnabled = revHistoryEnabled;
+global.disableAbout = disableAbout;
 global.title = title;
 global.errorMessages = errorMessages;
 var docURL, docParams;
