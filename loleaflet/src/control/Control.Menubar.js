@@ -541,8 +541,8 @@ L.Control.Menubar = L.Control.extend({
 	_createMenu: function(menu) {
 		var itemList = [];
 		for (var i in menu) {
-			if (menu[i].id === 'help' && disableAbout) {
-				menu[i].menu.pop();
+			if (menu[i].id === 'about' && disableAbout) {
+				continue;
 			}
 
 			if (map._permission === 'readonly' && menu[i].type === 'menu') {
