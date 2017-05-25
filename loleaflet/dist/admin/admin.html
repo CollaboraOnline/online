@@ -78,28 +78,56 @@
 	      <h4><script>document.write(l10nstrings.strMemoryConsumed)</script></h4>
 	    </div>
 	  </div>
+    <div class="container">
+      <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#view1" data-toggle="tab">
+          <h4><script>document.write(l10nstrings.strDocumentsOpened)</script></h4>
+        </a>
+      </li>
+      <li>
+        <a href="#view2" data-toggle="tab">
+          <h4><script>document.write(l10nstrings.strUsersOnline)</script></h4>
+        </a>
+      </li>
+      </ul>
 
-	  <h2 class="sub-header"><script>document.write(l10nstrings.strDocumentsOpened)</script></h2>
-	  <div class="table-responsive">
-	    <table class="table table-striped">
-	      <thead>
-		<tr>
-		  <th><script>document.write(l10nstrings.strPid)</script></th>
-		  <th><script>document.write(l10nstrings.strDocument)</script></th>
-		  <th><script>document.write(l10nstrings.strNumberOfViews)</script></th>
-		  <th><script>document.write(l10nstrings.strMemoryConsumed)</script></th>
-		  <th><script>document.write(l10nstrings.strElapsedTime)</script></th>
-		  <th><script>document.write(l10nstrings.strIdleTime)</script></th>
-		  <th><script>document.write(l10nstrings.strModified)</script></th>
-		</tr>
-	      </thead>
-	      <tbody id="doclist">
-	      </tbody>
-	    </table>
-	  </div>
-	</div>
+      <div class="tab-content">
+        <div id="view1" class="active tab-pane table-responsive">
+    	    <table id="docview" class="table table-striped">
+    	      <thead>
+          		<tr>
+          		  <th><script>document.write(l10nstrings.strPid)</script></th>
+          		  <th><script>document.write(l10nstrings.strDocument)</script></th>
+          		  <th><script>document.write(l10nstrings.strNumberOfViews)</script></th>
+          		  <th><script>document.write(l10nstrings.strMemoryConsumed)</script></th>
+          		  <th><script>document.write(l10nstrings.strElapsedTime)</script></th>
+          		  <th><script>document.write(l10nstrings.strIdleTime)</script></th>
+          		  <th><script>document.write(l10nstrings.strModified)</script></th>
+          		</tr>
+    	      </thead>
+    	      <tbody id="doclist">
+    	      </tbody>
+    	    </table>
+        </div>
+
+        <div id="view2" class="tab-pane table-responsive">
+          <table id="userview" class="tab-pane table table-striped">
+            <thead>
+              <tr>
+                <th><script>document.write(l10nstrings.strUserName)</script></th>
+                <th><script>document.write(l10nstrings.strDocumentNumber)</script></th>
+                <th><script>document.write(l10nstrings.strDocumentsOpened)</script></th>
+              </tr>
+            </thead>
+            <tbody id="userlist">
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+  </div>
+</div>
 
     <div id="rowContextMenu" class="dropdown clearfix">
       <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
