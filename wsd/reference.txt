@@ -41,11 +41,9 @@ DisableExport
 	HideExportOption is assumed to be true
 
 DisableCopy
-	Disables copy/paste from/to the document in libreoffice online backend.
-	However, it is still possible to do an "internal" cut/copy/paste i.e
-	copy from the document and paste to the same document view. The context
-	menu options pertaining to cut/copy/paste would be renamed to 'Internal
-	Cut/Copy/Paste' when this option is mentioned.
+	Disables copying from the document in libreoffice online
+	backend. Pasting into the document would still be possible.
+	However, it is still possible to do an "internal" cut/copy/paste.
 
 EnableOwnerTermination
 	If set to true, it allows the document owner (the one with OwnerId =
