@@ -2,7 +2,7 @@
 * Control.Menubar
 */
 
-/* global $ _ map title vex revHistoryEnabled closebutton disableAbout*/
+/* global $ _ map title vex revHistoryEnabled closebutton */
 L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
@@ -541,7 +541,7 @@ L.Control.Menubar = L.Control.extend({
 	_createMenu: function(menu) {
 		var itemList = [];
 		for (var i in menu) {
-			if (menu[i].id === 'about' && disableAbout) {
+			if (menu[i].id === 'about' && (L.DomUtil.get('about-dialog') === null)) {
 				continue;
 			}
 
