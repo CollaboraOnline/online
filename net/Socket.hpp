@@ -31,6 +31,7 @@
 #include <mutex>
 #include <sstream>
 #include <thread>
+#include <atomic>
 
 #include "common/Common.hpp"
 #include "common/Log.hpp"
@@ -691,7 +692,9 @@ public:
         Socket(fd),
         _socketHandler(std::move(socketHandler)),
         _closed(false),
-        _shutdownSignalled(false)
+        _shutdownSignalled(false),
+        _bytesSent(0),
+        _bytesRecvd(0)
     {
         LOG_DBG("StreamSocket ctor #" << fd);
 
@@ -785,6 +788,7 @@ public:
             if (len > 0)
             {
                 assert (len <= ssize_t(sizeof(buf)));
+                _bytesRecvd += len;
                 _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
             }
             // else poll will handle errors.
@@ -915,6 +919,7 @@ protected:
 
             if (len > 0)
             {
+                _bytesSent += len;
                 _outBuffer.erase(_outBuffer.begin(), _outBuffer.begin() + len);
             }
             else
@@ -942,6 +947,12 @@ protected:
 
     void dumpState(std::ostream& os) override;
 
+    void getStats(uint64_t &sent, uint64_t &recv)
+    {
+        sent = _bytesSent;
+        recv = _bytesRecvd;
+    }
+
 protected:
     /// Client handling the actual data.
     std::shared_ptr<SocketHandlerInterface> _socketHandler;
@@ -954,6 +965,9 @@ protected:
 
     std::vector< char > _inBuffer;
     std::vector< char > _outBuffer;
+
+    std::atomic<uint64_t> _bytesSent;
+    std::atomic<uint64_t> _bytesRecvd;
 
     // To be able to access _inBuffer and _outBuffer.
     // TODO we probably need accessors to the _inBuffer & _outBuffer

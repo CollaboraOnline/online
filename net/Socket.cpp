@@ -181,6 +181,7 @@ void WebSocketHandler::dumpState(std::ostream& os)
        << std::setw(5) << 1.0*_pingTimeUs/1000 << "ms ";
     if (_wsPayload.size() > 0)
         dump_hex(os, "\t\tws queued payload:\n", "\t\t", _wsPayload);
+    os << "\n";
 }
 
 void StreamSocket::dumpState(std::ostream& os)
@@ -188,7 +189,8 @@ void StreamSocket::dumpState(std::ostream& os)
     int timeoutMaxMs = SocketPoll::DefaultPollTimeoutMs;
     int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMs);
     os << "\t" << getFD() << "\t" << events << "\t"
-       << _inBuffer.size() << "\t" << _outBuffer.size() << "\t";
+       << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
+       << " r: " << _bytesRecvd << "\t w: " << _bytesSent << "\t";
     _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
         dump_hex(os, "\t\tinBuffer:\n", "\t\t", _inBuffer);
