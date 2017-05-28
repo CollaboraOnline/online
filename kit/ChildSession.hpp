@@ -137,6 +137,7 @@ public:
     void setViewId(const int viewId) { _viewId = viewId; }
     const std::string& getViewUserId() const { return _userId; }
     const std::string& getViewUserName() const { return _userName; }
+    const std::string& getViewUserExtraInfo() const { return _userExtraInfo; }
 
     void loKitCallback(const int type, const std::string& payload);
 

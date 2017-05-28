@@ -398,6 +398,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
     // Call the storage specific fileinfo functions
     std::string userid, username;
+    std::string userExtraInfo;
     std::chrono::duration<double> getInfoCallDuration(0);
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
@@ -405,6 +406,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(session->getAccessToken());
         userid = wopifileinfo->_userid;
         username = wopifileinfo->_username;
+        userExtraInfo = wopifileinfo->_userExtraInfo;
 
         if (!wopifileinfo->_userCanWrite)
         {
@@ -465,6 +467,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     LOG_DBG("Setting username [" << username << "] and userId [" << userid << "] for session [" << sessionId << "]");
     session->setUserId(userid);
     session->setUserName(username);
+    session->setUserExtraInfo(userExtraInfo);
 
     // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
     const auto fileInfo = _storage->getFileInfo();

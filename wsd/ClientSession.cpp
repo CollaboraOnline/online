@@ -261,11 +261,18 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         {
             std::string encodedUserId;
             Poco::URI::encode(_userId, "", encodedUserId);
-            oss << " authorid=" + encodedUserId;
+            oss << " authorid=" << encodedUserId;
 
             std::string encodedUserName;
             Poco::URI::encode(_userName, "", encodedUserName);
-            oss << " author=" + encodedUserName;
+            oss << " author=" << encodedUserName;
+        }
+
+        if (!_userExtraInfo.empty())
+        {
+            std::string encodedUserExtraInfo;
+            Poco::URI::encode(_userExtraInfo, "", encodedUserExtraInfo);
+            oss << " authorextrainfo=" << encodedUserExtraInfo;
         }
 
         oss << " readonly=" << isReadOnly();

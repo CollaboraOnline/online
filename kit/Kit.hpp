@@ -9,6 +9,11 @@
 #ifndef INCLUDED_LOOLKIT_HPP
 #define INCLUDED_LOOLKIT_HPP
 
+#include <map>
+#include <string>
+
+#include <common/Util.hpp>
+
 void lokit_main(const std::string& childRoot,
                 const std::string& jailId,
                 const std::string& sysTemplate,
@@ -37,9 +42,26 @@ struct CallbackDescriptor
 /// after any child session goes away
 struct UserInfo
 {
-    std::string userid;
-    std::string username;
-    bool isReadOnly;
+    UserInfo()
+    {
+    }
+
+    UserInfo(const std::string& userId,
+             const std::string& username,
+             const std::string& userExtraInfo,
+             const bool readonly) :
+        UserId(userId),
+        Username(username),
+        IsReadOnly(readonly)
+    {
+        if (!userExtraInfo.empty())
+            UserExtraInfo = "\"userextrainfo\":[" + userExtraInfo + ']';
+    }
+
+    std::string UserId;
+    std::string Username;
+    std::string UserExtraInfo;
+    bool IsReadOnly;
 };
 
 /// Check the ForkCounter, and if non-zero, fork more of them accordingly.

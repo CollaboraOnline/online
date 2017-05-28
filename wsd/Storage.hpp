@@ -181,6 +181,7 @@ public:
     public:
         WOPIFileInfo(const std::string& userid,
                      const std::string& username,
+                     const std::string& userExtraInfo,
                      const bool userCanWrite,
                      const std::string& postMessageOrigin,
                      const bool hidePrintOption,
@@ -204,12 +205,15 @@ public:
               _disableCopy(disableCopy),
               _callDuration(callDuration)
             {
+                _userExtraInfo = userExtraInfo;
             }
 
         /// User id of the user accessing the file
         std::string _userid;
         /// Display Name of user accessing the file
         std::string _username;
+        /// Extra info per user, typically mail and other links, as json.
+        std::string _userExtraInfo;
         /// If user accessing the file has write permission
         bool _userCanWrite;
         /// WOPI Post message property

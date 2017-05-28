@@ -489,7 +489,7 @@ void insertUserNames(const std::map<int, UserInfo>& viewInfo, std::string& json)
                 int viewId = action->getValue<int>("viewId");
                 auto it = viewInfo.find(viewId);
                 if (it != viewInfo.end())
-                    action->set("userName", Poco::Dynamic::Var(it->second.username));
+                    action->set("userName", Poco::Dynamic::Var(it->second.Username));
             }
         }
     }
