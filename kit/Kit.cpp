@@ -1074,10 +1074,12 @@ private:
             }
             else
             {
-                oss << "\"userid\":\"" << itView->second.userid << "\",";
-                const auto username = itView->second.username;
+                oss << "\"userid\":\"" << itView->second.UserId << "\",";
+                const auto username = itView->second.Username;
                 oss << "\"username\":\"" << username << "\",";
-                const auto readonly = itView->second.isReadOnly;
+                if (!itView->second.UserExtraInfo.empty())
+                    oss << itView->second.UserExtraInfo << ',';
+                const auto readonly = itView->second.IsReadOnly;
                 oss << "\"readonly\":\"" << readonly << "\",";
                 const auto it = viewColorsMap.find(username);
                 if (it != viewColorsMap.end())
@@ -1248,7 +1250,8 @@ private:
 
         const int viewId = _loKitDocument->getView();
         session->setViewId(viewId);
-        _sessionUserInfo[viewId] = UserInfo({session->getViewUserId(), session->getViewUserName(), session->isReadOnly()});
+        _sessionUserInfo[viewId] = UserInfo(session->getViewUserId(), session->getViewUserName(),
+                                            session->getViewUserExtraInfo(), session->isReadOnly());
 
         _viewIdToCallbackDescr.emplace(viewId,
                                        std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));

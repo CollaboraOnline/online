@@ -99,14 +99,20 @@ void Session::parseDocOptions(const std::vector<std::string>& tokens, int& part,
         }
         else if (tokens[i].find("authorid=") == 0)
         {
-            std::string userId = tokens[i].substr(strlen("authorid="));
+            const std::string userId = tokens[i].substr(strlen("authorid="));
             Poco::URI::decode(userId, _userId);
             ++offset;
         }
         else if (tokens[i].find("author=") == 0)
         {
-            std::string userName = tokens[i].substr(strlen("author="));
+            const std::string userName = tokens[i].substr(strlen("author="));
             Poco::URI::decode(userName, _userName);
+            ++offset;
+        }
+        else if (tokens[i].find("authorextrainfo=") == 0)
+        {
+            const std::string userExtraInfo= tokens[i].substr(strlen("authorextrainfo="));
+            Poco::URI::decode(userExtraInfo, _userExtraInfo);
             ++offset;
         }
         else if (tokens[i].find("readonly=") == 0)

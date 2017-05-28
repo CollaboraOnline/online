@@ -152,6 +152,9 @@ protected:
     /// Name of the user to whom the session belongs to
     std::string _userName;
 
+    /// Extra info per user, mostly mail, avatar, links, etc.
+    std::string _userExtraInfo;
+
     /// Language for the document based on what the user has in the UI.
     std::string _lang;
 };

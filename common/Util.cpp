@@ -39,6 +39,9 @@
 #include <Poco/ConsoleChannel.h>
 #include <Poco/Exception.h>
 #include <Poco/Format.h>
+#include <Poco/JSON/JSON.h>
+#include <Poco/JSON/Object.h>
+#include <Poco/JSON/Parser.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
 #include <Poco/RandomStream.h>
@@ -334,7 +337,25 @@ namespace Util
     std::string UniqueId()
     {
         static std::atomic_int counter(0);
-        return std::to_string(Poco::Process::id()) + "/" + std::to_string(counter++);
+        return std::to_string(Poco::Process::id()) + '/' + std::to_string(counter++);
+    }
+
+    std::map<std::string, std::string> JsonToMap(const std::string& jsonString)
+    {
+        Poco::JSON::Parser parser;
+        const auto result = parser.parse(jsonString);
+        const auto& json = result.extract<Poco::JSON::Object::Ptr>();
+
+        std::vector<std::string> names;
+        json->getNames(names);
+
+        std::map<std::string, std::string> map;
+        for (const auto& name : names)
+        {
+            map[name] = json->get(name).toString();
+        }
+
+        return map;
     }
 }
 
