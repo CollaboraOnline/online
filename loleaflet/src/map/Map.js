@@ -163,7 +163,7 @@ L.Map = L.Evented.extend({
 		this.fire('postMessage', {msgId: 'View_Added', args: {ViewId: viewInfo.id, UserId: viewInfo.userid, UserName: viewInfo.username, Color: viewInfo.color, ReadOnly: viewInfo.readonly}});
 
 		// Fire last, otherwise not all events are handled correctly.
-		this.fire('addview', {viewId: viewInfo.id, username: viewInfo.username, readonly: this.isViewReadOnly(viewInfo.id)});
+		this.fire('addview', {viewId: viewInfo.id, username: viewInfo.username, extraInfo: viewInfo.userextrainfo, readonly: this.isViewReadOnly(viewInfo.id)});
 	},
 
 	removeView: function(viewid) {

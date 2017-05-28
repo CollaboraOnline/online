@@ -1550,10 +1550,19 @@ function onUseritemClicked(e) {
 	}
 }
 
-function getUserItem(viewId, userName, color) {
+function getUserItem(viewId, userName, extraInfo, color) {
 	var html = '<tr class="useritem" id="user-' + viewId + '" onclick="onUseritemClicked(event)">' +
-	             '<td class=usercolor style="background-color: ' + color  +';"></td>' +
-	             '<td class="username loleaflet-font">' + userName + '</td>' +
+	             '<td class=usercolor style="background-color: ' + color  +';';
+	if (extraInfo !== undefined && 'avatar' in extraInfo[0]) {
+		html += 'top=0px ! important;"> <img src="' + extraInfo[0].avatar + '" width="32" height="32" />'
+	}
+	else {
+		html += '">';
+	}
+
+	// TODO: Add mail and other links as sub-menu.
+	html += '</td>' +
+	             '<td class="username loleaflet-font" >' + userName + '</td>' +
 	    '</tr>';
 
 	return html;
@@ -1602,7 +1611,7 @@ map.on('addview', function(e) {
 	}
 
 	var userlistItem = w2ui['toolbar-down'].get('userlist');
-	var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username, color)).parent().parent()[0].outerHTML;
+	var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
 	userlistItem.html = newhtml;
 	updateUserListCount();
 });
