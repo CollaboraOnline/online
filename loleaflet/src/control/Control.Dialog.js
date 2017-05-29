@@ -21,7 +21,10 @@ L.Control.Dialog = L.Control.extend({
 		if (e.msg) {
 			vex.dialog.alert(e.msg);
 		}
-		else if (e.cmd && e.kind) {
+		else if (e.cmd == 'load' && e.kind == 'docunloading') {
+			// Handled by transparently retrying.
+			return;
+		} else if (e.cmd && e.kind) {
 			var msg = 'The server encountered a \'' + e.kind + '\' error while' +
 						' parsing the \'' + e.cmd + '\' command.';
 			vex.dialog.alert(msg);
