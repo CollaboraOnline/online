@@ -97,19 +97,14 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         getLOKitDocument()->setView(_viewId);
 
-        // Get the list of view ids from the core
-        const int viewCount = getLOKitDocument()->getViewsCount();
-        std::vector<int> viewIds(viewCount);
-        getLOKitDocument()->getViewIds(viewIds.data(), viewCount);
-
         int curPart = 0;
         if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
             curPart = getLOKitDocument()->getPart();
 
-        lockLokDoc.unlock();
-
         // Notify all views about updated view info
-        _docManager.notifyViewInfo(viewIds);
+        _docManager.notifyViewInfo();
+
+        lockLokDoc.unlock();
 
         if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
         {
@@ -370,15 +365,8 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
         return false;
     }
 
-    // Get the list of view ids from the core
-    const int viewCount = getLOKitDocument()->getViewsCount();
-    std::vector<int> viewIds(viewCount);
-    getLOKitDocument()->getViewIds(viewIds.data(), viewCount);
-
-    lockLokDoc.unlock();
-
     // Inform everyone (including this one) about updated view info
-    _docManager.notifyViewInfo(viewIds);
+    _docManager.notifyViewInfo();
 
     LOG_INF("Loaded session " << getId());
     return true;

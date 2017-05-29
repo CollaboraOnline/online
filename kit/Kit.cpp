@@ -1022,14 +1022,8 @@ private:
 
         if (viewCount > 0)
         {
-            // Get the list of view ids from the core
-            std::vector<int> viewIds(viewCount);
-            _loKitDocument->getViewIds(viewIds.data(), viewCount);
-
-            lockLokDoc.unlock();
-
             // Broadcast updated view info
-            notifyViewInfo(viewIds);
+            notifyViewInfo();
         }
     }
 
@@ -1051,11 +1045,18 @@ private:
     }
 
     /// Notify all views of viewId and their associated usernames
-    void notifyViewInfo(const std::vector<int>& viewIds) override
+    void notifyViewInfo() override
     {
-        // Store the list of viewid, username mapping in a map
-        std::map<int, UserInfo> viewInfoMap = getViewInfo();
-        std::map<std::string, int> viewColorsMap = getViewColors();
+        Util::assertIsLocked(_documentMutex);
+
+        // Get the list of view ids from the core
+        const int viewCount = getLOKitDocument()->getViewsCount();
+        std::vector<int> viewIds(viewCount);
+        getLOKitDocument()->getViewIds(viewIds.data(), viewCount);
+
+        const std::map<int, UserInfo> viewInfoMap = _sessionUserInfo;
+
+        const std::map<std::string, int> viewColorsMap = getViewColors();
 
         // Double check if list of viewids from core and our list matches,
         // and create an array of JSON objects containing id and username
@@ -1103,17 +1104,13 @@ private:
     // Get the color value for all author names from the core
     std::map<std::string, int> getViewColors()
     {
-        std::string colorValues;
+        Util::assertIsLocked(_documentMutex);
+
+        char* values = _loKitDocument->getCommandValues(".uno:TrackedChangeAuthors");
+        const std::string colorValues = std::string(values == nullptr ? "" : values);
+        std::free(values);
+
         std::map<std::string, int> viewColors;
-
-        {
-            std::unique_lock<std::mutex> lock(_documentMutex);
-
-            char* values = _loKitDocument->getCommandValues(".uno:TrackedChangeAuthors");
-            colorValues = std::string(values == nullptr ? "" : values);
-            std::free(values);
-        }
-
         try
         {
             if (!colorValues.empty())
