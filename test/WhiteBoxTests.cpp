@@ -335,7 +335,7 @@ public:
         return nullptr;
     }
 
-    void notifyViewInfo(const std::vector<int>& /*viewIds*/) override
+    void notifyViewInfo() override
     {
     }
 
