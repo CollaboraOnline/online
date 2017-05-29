@@ -45,8 +45,9 @@ public:
     /// Access to the document instance.
     virtual std::shared_ptr<lok::Document> getLOKitDocument() = 0;
 
-    /// Send updated view info to all active sessions
-    virtual void notifyViewInfo(const std::vector<int>& viewIds) = 0;
+    /// Send updated view info to all active sessions.
+    virtual void notifyViewInfo() = 0;
+
     /// Get a view ID <-> UserInfo map.
     virtual std::map<int, UserInfo> getViewInfo() = 0;
     virtual std::mutex& getMutex() = 0;
