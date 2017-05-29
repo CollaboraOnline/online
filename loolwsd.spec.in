@@ -96,6 +96,7 @@ echo "0 0 */1 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -ex
 /usr/bin/loolmount
 /usr/bin/loolstress
 /usr/bin/looltool
+/usr/bin/loolconfig
 /usr/share/loolwsd/discovery.xml
 /usr/share/loolwsd/favicon.ico
 /usr/share/loolwsd/robots.txt
