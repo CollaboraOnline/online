@@ -62,6 +62,7 @@ Obsoletes:      loleaflet <= 1.5.8
 
 %build
 %configure \
+	--enable-silent-rules \
 	--with-lokit-path=bundled/include \
 	--with-lo-path=%{loroot} \
 %if 0%{?config_options:1}
