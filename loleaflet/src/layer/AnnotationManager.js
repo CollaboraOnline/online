@@ -118,12 +118,20 @@ L.AnnotationManager = L.Class.extend({
 	fill: function (comments) {
 		var comment;
 		this.clear();
+		// items contains redlines
+		var ordered = !this._items.length > 0;
 		for (var index in comments) {
 			comment = comments[index];
 			this.adjustComment(comment);
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
 		}
 		if (this._items.length > 0) {
+			if (!ordered) {
+				this._items.sort(function(a, b) {
+					return Math.abs(a._data.anchorPos.min.y) - Math.abs(b._data.anchorPos.min.y) ||
+						Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
+				});
+			}
 			this._map._docLayer._updateMaxBounds(true);
 			this.layout();
 		}
@@ -132,6 +140,8 @@ L.AnnotationManager = L.Class.extend({
 	fillChanges: function(redlines) {
 		var changecomment;
 		this.clearChanges();
+		// items contains comments
+		var ordered = !this._items.length > 0;
 		for (var idx in redlines) {
 			changecomment = redlines[idx];
 			if (!this.adjustRedLine(changecomment)) {
@@ -141,6 +151,12 @@ L.AnnotationManager = L.Class.extend({
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), changecomment).addTo(this._map));
 		}
 		if (this._items.length > 0) {
+			if (!ordered) {
+				this._items.sort(function(a, b) {
+					return Math.abs(a._data.anchorPos.min.y) - Math.abs(b._data.anchorPos.min.y) ||
+						Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
+				});
+			}
 			this._map._docLayer._updateMaxBounds(true);
 			this.layout();
 		}
