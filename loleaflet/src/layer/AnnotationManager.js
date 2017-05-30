@@ -28,21 +28,28 @@ L.AnnotationManager = L.Class.extend({
 
 	// Remove only text comments from the document (excluding change tracking comments)
 	clear: function () {
-		for (var key in this._items) {
-			if (!this._items[key].trackchange) {
-				this._map.removeLayer(this._items[key]);
+		var it = 0;
+		while (it < this._items.length) {
+			if (!this._items[it].trackchange) {
+				this._map.removeLayer(this._items[it]);
+				this._items.splice(it, 1);
+			} else {
+				it++;
 			}
 		}
-		this._items = [];
 		this._selected = null;
 		this._map.removeLayer(this._arrow);
 	},
 
 	// Remove only change tracking comments from the document
 	clearChanges: function() {
-		for (var key in this._items) {
-			if (this._items[key].trackchange) {
-				this._map.removeLayer(this._items[key]);
+		var it = 0;
+		while (it < this._items.length) {
+			if (this._items[it].trackchange) {
+				this._map.removeLayer(this._items[it]);
+				this._items.splice(it, 1);
+			} else {
+				it++;
 			}
 		}
 	},
@@ -119,6 +126,8 @@ L.AnnotationManager = L.Class.extend({
 	fill: function (comments) {
 		var comment;
 		this.clear();
+		// items contains redlines
+		var ordered = !this._items.length;
 		for (var index in comments) {
 			comment = comments[index];
 			this.adjustComment(comment);
@@ -128,6 +137,12 @@ L.AnnotationManager = L.Class.extend({
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
 		}
 		if (this._items.length > 0) {
+			if (!ordered) {
+				this._items.sort(function(a, b) {
+					return Math.abs(a._data.anchorPos.min.y) - Math.abs(b._data.anchorPos.min.y) ||
+						Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
+				});
+			}
 			this._map._docLayer._updateMaxBounds(true);
 			this.layout();
 		}
@@ -136,6 +151,8 @@ L.AnnotationManager = L.Class.extend({
 	fillChanges: function(redlines) {
 		var changecomment;
 		this.clearChanges();
+		// items contains comments
+		var ordered = !this._items.length;
 		for (var idx in redlines) {
 			changecomment = redlines[idx];
 			if (!this.adjustRedLine(changecomment)) {
@@ -148,6 +165,12 @@ L.AnnotationManager = L.Class.extend({
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), changecomment).addTo(this._map));
 		}
 		if (this._items.length > 0) {
+			if (!ordered) {
+				this._items.sort(function(a, b) {
+					return Math.abs(a._data.anchorPos.min.y) - Math.abs(b._data.anchorPos.min.y) ||
+						Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
+				});
+			}
 			this._map._docLayer._updateMaxBounds(true);
 			this.layout();
 		}
