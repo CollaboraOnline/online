@@ -613,19 +613,6 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         _lastSaveTime = std::chrono::steady_clock::now();
         _poll->wakeup();
 
-        // Calling getWOPIFileInfo() or getLocalFileInfo() has the side-effect of updating
-        // StorageBase::_fileInfo. Get the timestamp of the document as persisted in its storage
-        // from there.
-        // FIXME: Yes, of course we should turn this stuff into a virtual function and avoid this
-        // dynamic_cast dance.
-        if (dynamic_cast<WopiStorage*>(_storage.get()) != nullptr)
-        {
-            auto wopiFileInfo = static_cast<WopiStorage*>(_storage.get())->getWOPIFileInfo(accessToken);
-        }
-        else if (dynamic_cast<LocalStorage*>(_storage.get()) != nullptr)
-        {
-            auto localFileInfo = static_cast<LocalStorage*>(_storage.get())->getLocalFileInfo();
-        }
         // So set _documentLastModifiedTime then
         _documentLastModifiedTime = _storage->getFileInfo()._modifiedTime;
 

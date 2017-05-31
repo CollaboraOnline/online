@@ -291,6 +291,10 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const std::string& 
         {
             LOG_INF("Copying " << _jailedFilePath << " to " << _uri.getPath());
             Poco::File(_jailedFilePath).copyTo(_uri.getPath());
+
+            // update its fileinfo object. This is used later to check if someone else changed the
+            // document while we are/were editing it
+            _fileInfo._modifiedTime = Poco::File(_uri.getPath()).getLastModified();
         }
     }
     catch (const Poco::Exception& exc)
