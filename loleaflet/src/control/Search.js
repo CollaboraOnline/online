@@ -1,10 +1,13 @@
 L.Map.include({
-	search: function (text, backward, all, expand) {
+	search: function (text, backward, replaceString,  command, expand) {
 		if (backward === undefined) {
 			backward = false;
 		}
-		if (all === undefined) {
-			all = 0;
+		if (command === undefined) {
+			command = 0;
+		}
+		if (replaceString === undefined) {
+			replaceString = '';
 		}
 		if (this._docLayer._searchResults && text !== this._docLayer._searchTerm)
 		{
@@ -15,8 +18,20 @@ L.Map.include({
 			'SearchItem.SearchString': {
 				'type': 'string'
 			},
+			'SearchItem.ReplaceString': {
+				'type': 'string'
+			},
 			'SearchItem.Backward': {
 				'type': 'boolean'
+			},
+			'SearchItem.SearchStartPointX': {
+				'type': 'long'
+			},
+			'SearchItem.SearchStartPointY': {
+				'type': 'long'
+			},
+			'SearchItem.Command': {
+				'type': 'long'
 			}
 		};
 
@@ -41,15 +56,10 @@ L.Map.include({
 
 		searchCmd['SearchItem.SearchString'].value = text;
 		searchCmd['SearchItem.Backward'].value = backward;
-		searchCmd['SearchItem.SearchStartPointX'] = {};
-		searchCmd['SearchItem.SearchStartPointX'].type = 'long';
+		searchCmd['SearchItem.ReplaceString'].value = replaceString;
 		searchCmd['SearchItem.SearchStartPointX'].value = searchStartPointX;
-		searchCmd['SearchItem.SearchStartPointY'] = {};
-		searchCmd['SearchItem.SearchStartPointY'].type = 'long';
 		searchCmd['SearchItem.SearchStartPointY'].value = searchStartPointY;
-		searchCmd['SearchItem.Command'] = {};
-		searchCmd['SearchItem.Command'].type = 'long';
-		searchCmd['SearchItem.Command'].value = all;
+		searchCmd['SearchItem.Command'].value = command;
 		this._searchRequested = true;
 		this._socket.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
 	},
