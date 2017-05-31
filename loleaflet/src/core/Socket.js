@@ -320,6 +320,9 @@ L.Socket = L.Class.extend({
 			else if (command.errorKind === 'savefailed') {
 				storageError = errorMessages.storage.savefailed;
 			}
+			else if (command.errorKind === 'saveunauthorized') {
+				storageError = errorMessages.storage.saveunauthorized;
+			}
 			else if (command.errorKind === 'loadfailed') {
 				storageError = errorMessages.storage.loadfailed;
 				// Since this is a document load failure, wsd will disconnect the socket anyway,

@@ -12,5 +12,6 @@ exports.faileddocloading = _('Failed to load the document. Please ensure the fil
 exports.storage = {
 	loadfailed: _('Failed to read document from storage. Please contact your storage server (%storageserver) administrator.'),
 	savediskfull: _('Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing.'),
+	saveunauthorized: _('Document cannot be saved to storage server (%storageserver) due to expired or invalid access token. Refresh your session to not to lose your work.'),
 	savefailed: _('Document cannot be saved to storage. Check your permissions or contact the storage server (%storageserver) administrator.')
 };
