@@ -107,6 +107,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCursorPosition);
     CPPUNIT_TEST(testAlertAllUsers);
     CPPUNIT_TEST(testViewInfoMsg);
+    CPPUNIT_TEST(testUndoConflict);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -163,6 +164,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testCursorPosition();
     void testAlertAllUsers();
     void testViewInfoMsg();
+    void testUndoConflict();
 
     void loadDoc(const std::string& documentURL, const std::string& testname);
 
@@ -2594,6 +2596,55 @@ void HTTPWSTest::testViewInfoMsg()
         // Check if first view also got the same viewinfo message
         const auto response1 = getResponseString(socket0, "viewinfo: ", testname + "0 ");
         CPPUNIT_ASSERT_EQUAL(response, response1);
+    }
+    catch(const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testUndoConflict()
+{
+    const std::string testname = "testUndoConflict-";
+    Poco::JSON::Parser parser;
+    std::string docPath;
+    std::string docURL;
+    int conflict;
+
+    getDocumentPathAndURL("empty.odt", docPath, docURL, testname);
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
+    auto socket0 = connectLOKit(_uri, request, _response);
+    auto socket1 = connectLOKit(_uri, request, _response);
+
+    std::string response;
+    try
+    {
+        // Load first view
+        sendTextFrame(socket0, "load url=" + docURL);
+        response = getResponseString(socket0, "invalidatecursor:", testname + "0 ");
+
+        // Load second view
+        sendTextFrame(socket1, "load url=" + docURL);
+        response = getResponseString(socket1, "invalidatecursor:", testname + "1 ");
+
+        // edit first view
+        sendTextFrame(socket0, "key type=input char=97 key=0", testname);
+        response = getResponseString(socket0, "invalidatecursor:", testname + "0 ");
+        // edit second view
+        sendTextFrame(socket1, "key type=input char=98 key=0", testname);
+        response = getResponseString(socket1, "invalidatecursor:", testname + "1 ");
+        // try to undo first view
+        sendTextFrame(socket0, "uno .uno:Undo", testname);
+        // undo conflict
+        response = getResponseString(socket0, "unocommandresult:", testname + "0 ");
+        auto objJSON = parser.parse(response.substr(17)).extract<Poco::JSON::Object::Ptr>();
+        Poco::DynamicStruct dsJSON = *objJSON;
+        CPPUNIT_ASSERT_EQUAL(dsJSON["commandName"].toString(), std::string(".uno:Undo"));
+        CPPUNIT_ASSERT_EQUAL(dsJSON["success"].toString(), std::string("true"));
+        CPPUNIT_ASSERT_EQUAL(dsJSON["result"]["type"].toString(), std::string("long"));
+        CPPUNIT_ASSERT(Poco::strToInt(dsJSON["result"]["value"].toString(), conflict, 10));
+        CPPUNIT_ASSERT(conflict > 0); /*UNDO_CONFLICT*/
     }
     catch(const Poco::Exception& exc)
     {
