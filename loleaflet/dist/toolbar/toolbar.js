@@ -753,7 +753,7 @@ function selectItem(item, func)
 }
 function onSearch(e) {
 	var toolbar = w2ui['toolbar-down'];
-	map.search(L.DomUtil.get('search-input').value, false, 0, true /* expand search */);
+	map.search(L.DomUtil.get('search-input').value, false, '', 0, true /* expand search */);
 	toolbar.enable('searchprev');
 	toolbar.enable('searchnext');
 	toolbar.show('cancelsearch');
@@ -1251,8 +1251,10 @@ map.on('search', function (e) {
 		toolbar.disable('searchnext');
 		toolbar.hide('cancelsearch');
 		L.DomUtil.addClass(searchInput, 'search-not-found');
+		$('#findthis').addClass('search-not-found');
 		map.resetSelection();
 		setTimeout(function () {
+			$('#findthis').removeClass('search-not-found');
 			L.DomUtil.removeClass(searchInput, 'search-not-found');
 		}, 500);
 	}
