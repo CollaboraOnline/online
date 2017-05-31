@@ -494,8 +494,12 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             fileInfo._modifiedTime != Zero &&
             _documentLastModifiedTime != fileInfo._modifiedTime)
         {
-            LOG_ERR("Document has been modified behind our back, URI [" << session->getPublicUri().toString() << "].");
-            // What do do?
+            LOG_WRN("Document [" << _docKey << "] has been modified behind our back. Informing all clients.");
+            // Inform all clients
+            for (const auto& sessionIt : _sessions)
+            {
+                sessionIt.second->sendTextFrame("error: cmd=storage kind=documentconflict");
+            }
         }
     }
 
@@ -644,6 +648,16 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         //TODO: Should we notify all clients?
         LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << uri << "]. Notifying client.");
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
+    }
+    else if (storageSaveResult == StorageBase::SaveResult::DOC_CHANGED)
+    {
+        LOG_ERR("PutFile says that Document changed in storage");
+
+        // Inform all clients
+        for (const auto& sessionIt : _sessions)
+        {
+            sessionIt.second->sendTextFrame("error: cmd=storage kind=documentconflict");
+        }
     }
 
     return false;

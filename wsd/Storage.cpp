@@ -351,6 +351,27 @@ int getLevenshteinDist(const std::string& string1, const std::string& string2) {
     return matrix[string1.size()][string2.size()];
 }
 
+// Gets value for `key` directly from the given JSON in `object`
+template <typename T>
+T getJSONValue(const Poco::JSON::Object::Ptr &object, const std::string& key)
+{
+    T value = T();
+    try
+    {
+        const Poco::Dynamic::Var valueVar = object->get(key);
+        value = valueVar.convert<T>();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOG_ERR("getJSONValue: " << exc.displayText() <<
+                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+    }
+
+    return value;
+}
+
+// Function that searches `object` for `key` and warns if there are minor mis-spellings involved
+// Upon successfull search, fills `value` with value found in object.
 template <typename T>
 void getWOPIValue(const Poco::JSON::Object::Ptr &object, const std::string& key, T& value)
 {
@@ -375,21 +396,29 @@ void getWOPIValue(const Poco::JSON::Object::Ptr &object, const std::string& key,
             return;
         }
 
-        try
-        {
-            const Poco::Dynamic::Var valueVar = object->get(userInput);
-            value = valueVar.convert<T>();
-        }
-        catch (const Poco::Exception& exc)
-        {
-            LOG_ERR("getWOPIValue: " << exc.displayText() <<
-                    (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
-        }
-
+        value = getJSONValue<T>(object, userInput);
         return;
     }
 
     LOG_WRN("Missing JSON property [" << key << "]");
+}
+
+// Parse the json string and fill the Poco::JSON object
+// Returns true if parsing successful otherwise false
+bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
+{
+    bool success = false;
+    const auto index = json.find_first_of("{");
+    if (index != std::string::npos)
+    {
+        const std::string stringJSON = json.substr(index);
+        Poco::JSON::Parser parser;
+        const auto result = parser.parse(stringJSON);
+        object = result.extract<Poco::JSON::Object::Ptr>();
+        success = true;
+    }
+
+    return success;
 }
 
 void setQueryParameter(Poco::URI& uriObject, const std::string& key, const std::string& value)
@@ -446,6 +475,8 @@ Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time)
 
     return timestamp;
 }
+
+
 
 } // anonymous namespace
 
@@ -519,13 +550,9 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
     std::string lastModifiedTime;
 
     LOG_DBG("WOPI::CheckFileInfo returned: " << resMsg << ". Call duration: " << callDuration.count() << "s");
-    const auto index = resMsg.find_first_of('{');
-    if (index != std::string::npos)
+    Poco::JSON::Object::Ptr object;
+    if (parseJSON(resMsg, object))
     {
-        const std::string stringJSON = resMsg.substr(index);
-        Poco::JSON::Parser parser;
-        const auto result = parser.parse(stringJSON);
-        const auto& object = result.extract<Poco::JSON::Object::Ptr>();
         getWOPIValue(object, "BaseFileName", filename);
         getWOPIValue(object, "Size", size);
         getWOPIValue(object, "OwnerId", ownerId);
@@ -549,7 +576,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
         throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriObject.toString());
     }
 
-    modifiedTime = iso8601ToTimestamp(lastModifiedTime);
+    const Poco::Timestamp modifiedTime = iso8601ToTimestamp(lastModifiedTime);
     _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, userExtraInfo, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, callDuration}));
@@ -641,6 +668,9 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("X-WOPI-Override", "PUT");
+        request.set("X-LOOL-WOPI-Timestamp",
+                    Poco::DateTimeFormatter::format(Poco::DateTime(_fileInfo._modifiedTime),
+                                                    Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
         request.setContentType("application/octet-stream");
         request.setContentLength(size);
         addStorageDebugCookie(request);
@@ -659,17 +689,16 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
         {
             saveResult = StorageBase::SaveResult::OK;
-            const auto index = oss.str().find_first_of('{');
-            if (index != std::string::npos)
+            Poco::JSON::Object::Ptr object;
+            if (parseJSON(oss.str(), object))
             {
-                const std::string stringJSON = oss.str().substr(index);
-                Poco::JSON::Parser parser;
-                const auto result = parser.parse(stringJSON);
-                const auto& object = result.extract<Poco::JSON::Object::Ptr>();
-
-                std::string lastModifiedTime;
-                getWOPIValue(object, "LastFileModifiedTime", lastModifiedTime);
+                const std::string lastModifiedTime = getJSONValue<std::string>(object, "LastModifiedTime");
+                LOG_TRC("WOPI::PutFile returns LastModifiedTime [" << lastModifiedTime << "].");
                 _fileInfo._modifiedTime = iso8601ToTimestamp(lastModifiedTime);
+            }
+            else
+            {
+                LOG_WRN("Invalid/Missing JSON found in WOPI::PutFile response");
             }
         }
         else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_REQUESTENTITYTOOLARGE)
@@ -679,6 +708,23 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
         else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED)
         {
             saveResult = StorageBase::SaveResult::UNAUTHORIZED;
+        }
+        else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_CONFLICT)
+        {
+            saveResult = StorageBase::SaveResult::CONFLICT;
+            Poco::JSON::Object::Ptr object;
+            if (parseJSON(oss.str(), object))
+            {
+                const unsigned loolStatusCode = getJSONValue<unsigned>(object, "LOOLStatusCode");
+                if (loolStatusCode == static_cast<unsigned>(LOOLStatusCode::DOC_CHANGED))
+                {
+                    saveResult = StorageBase::SaveResult::DOC_CHANGED;
+                }
+            }
+            else
+            {
+                LOG_WRN("Invalid/missing JSON in WOPI::PutFile response");
+            }
         }
     }
     catch(const Poco::Exception& pexc)

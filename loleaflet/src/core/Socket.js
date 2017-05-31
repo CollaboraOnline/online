@@ -331,6 +331,10 @@ L.Socket = L.Class.extend({
 				this._map.hideBusy();
 				this.close();
 			}
+			else if (command.errorKind === 'documentconflict')
+			{
+				storageError = errorMessages.storage.documentconflict;
+			}
 
 			// Parse the storage url as link
 			var tmpLink = document.createElement('a');
