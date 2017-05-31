@@ -58,7 +58,14 @@ public:
         OK,
         DISKFULL,
         UNAUTHORIZED,
+        DOC_CHANGED, /* Document changed in storage */
+        CONFLICT,
         FAILED
+    };
+
+    enum class LOOLStatusCode
+    {
+        DOC_CHANGED = 1010 // Document changed externally in storage
     };
 
     /// localStorePath the absolute root path of the chroot.
