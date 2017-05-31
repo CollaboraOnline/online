@@ -647,6 +647,11 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             sessionIt.second->sendTextFrame("error: cmd=storage kind=savediskfull");
         }
     }
+    else if (storageSaveResult == StorageBase::SaveResult::UNAUTHORIZED)
+    {
+        LOG_ERR("Cannot save docKey [" << _docKey << "] to storage URI [" << uri << "]. Invalid or expired access token. Notifying client.");
+        it->second->sendTextFrame("error: cmd=storage kind=saveunauthorized");
+    }
     else if (storageSaveResult == StorageBase::SaveResult::FAILED)
     {
         //TODO: Should we notify all clients?

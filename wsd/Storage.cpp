@@ -662,6 +662,10 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
         {
             saveResult = StorageBase::SaveResult::DISKFULL;
         }
+        else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED)
+        {
+            saveResult = StorageBase::SaveResult::UNAUTHORIZED;
+        }
     }
     catch(const Poco::Exception& pexc)
     {

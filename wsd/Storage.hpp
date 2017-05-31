@@ -57,6 +57,7 @@ public:
     {
         OK,
         DISKFULL,
+        UNAUTHORIZED,
         FAILED
     };
 
