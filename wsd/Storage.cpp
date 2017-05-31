@@ -424,6 +424,25 @@ void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
 #endif
 }
 
+Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time)
+{
+    Poco::Timestamp timestamp = Poco::Timestamp::fromEpochTime(0);
+    try
+    {
+        int timeZoneDifferential;
+        Poco::DateTime dateTime;
+        Poco::DateTimeParser::parse(Poco::DateTimeFormat::ISO8601_FRAC_FORMAT, iso8601Time, dateTime, timeZoneDifferential);
+        timestamp = dateTime.timestamp();
+    }
+    catch (const Poco::SyntaxException& exc)
+    {
+        LOG_WRN("Time [" << iso8601Time << "] is in invalid format: " << exc.displayText() <<
+                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+    }
+
+    return timestamp;
+}
+
 } // anonymous namespace
 
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const std::string& accessToken)
@@ -526,28 +545,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
         throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriObject.toString());
     }
 
-    Poco::Timestamp modifiedTime = Poco::Timestamp::fromEpochTime(0);
-    if (lastModifiedTime != "")
-    {
-        Poco::DateTime dateTime;
-        int timeZoneDifferential;
-        bool valid = false;
-        try
-        {
-            Poco::DateTimeParser::parse(Poco::DateTimeFormat::ISO8601_FRAC_FORMAT, lastModifiedTime, dateTime, timeZoneDifferential);
-            valid = true;
-        }
-        catch (const Poco::SyntaxException& exc)
-        {
-            LOG_WRN("LastModifiedTime property [" << lastModifiedTime << "] was invalid format: " << exc.displayText() <<
-                    (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
-        }
-        if (valid)
-        {
-            modifiedTime = dateTime.timestamp();
-        }
-    }
-
+    modifiedTime = iso8601ToTimestamp(lastModifiedTime);
     _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, userExtraInfo, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, callDuration}));
@@ -657,6 +655,18 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
         {
             saveResult = StorageBase::SaveResult::OK;
+            const auto index = oss.str().find_first_of('{');
+            if (index != std::string::npos)
+            {
+                const std::string stringJSON = oss.str().substr(index);
+                Poco::JSON::Parser parser;
+                const auto result = parser.parse(stringJSON);
+                const auto& object = result.extract<Poco::JSON::Object::Ptr>();
+
+                std::string lastModifiedTime;
+                getWOPIValue(object, "LastFileModifiedTime", lastModifiedTime);
+                _fileInfo._modifiedTime = iso8601ToTimestamp(lastModifiedTime);
+            }
         }
         else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_REQUESTENTITYTOOLARGE)
         {
