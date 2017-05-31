@@ -219,7 +219,7 @@ function onClick(id, item, subItem) {
 		}
 	}
 	else if (id === 'save') {
-		map.save(true, true);
+		map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
 	}
 	else if (id === 'repair') {
 		map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');

@@ -511,7 +511,8 @@ L.Map.Keyboard = L.Handler.extend({
 			this._map.print();
 			return true;
 		case 83: // s
-			this._map.save(true, true);
+			this._map.save(false /* An explicit save should terminate cell edit */,
+			               false /* An explicit save should save it again */);
 			return true;
 		case 86: // v
 		case 118: // v (Safari)
