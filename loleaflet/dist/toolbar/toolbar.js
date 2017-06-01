@@ -1568,8 +1568,8 @@ function onUseritemClicked(e) {
 function getUserItem(viewId, userName, extraInfo, color) {
 	var html = '<tr class="useritem" id="user-' + viewId + '" onclick="onUseritemClicked(event)">' +
 	             '<td class=usercolor style="background-color: ' + color  +';';
-	if (extraInfo !== undefined && 'avatar' in extraInfo[0]) {
-		html += 'top=0px ! important;"> <img src="' + extraInfo[0].avatar + '" width="32" height="32" />'
+	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
+		html += 'top=0px ! important;"> <img src="' + extraInfo.avatar + '" width="32" height="32" />'
 	}
 	else {
 		html += '">';

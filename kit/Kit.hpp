@@ -52,10 +52,9 @@ struct UserInfo
              const bool readonly) :
         UserId(userId),
         Username(username),
+        UserExtraInfo(userExtraInfo),
         IsReadOnly(readonly)
     {
-        if (!userExtraInfo.empty())
-            UserExtraInfo = "\"userextrainfo\":[" + userExtraInfo + ']';
     }
 
     std::string UserId;
