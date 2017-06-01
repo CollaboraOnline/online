@@ -1078,7 +1078,7 @@ private:
                 const auto username = itView->second.Username;
                 oss << "\"username\":\"" << username << "\",";
                 if (!itView->second.UserExtraInfo.empty())
-                    oss << itView->second.UserExtraInfo << ',';
+                    oss << "\"userextrainfo\":" << itView->second.UserExtraInfo << ",";
                 const auto readonly = itView->second.IsReadOnly;
                 oss << "\"readonly\":\"" << readonly << "\",";
                 const auto it = viewColorsMap.find(username);
