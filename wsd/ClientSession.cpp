@@ -134,6 +134,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "resetselection" &&
              tokens[0] != "save" &&
              tokens[0] != "saveas" &&
+             tokens[0] != "savetostorage" &&
              tokens[0] != "selectgraphic" &&
              tokens[0] != "selecttext" &&
              tokens[0] != "setclientpart" &&
@@ -218,6 +219,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         getTokenInteger(tokens[1], "dontTerminateEdit", dontTerminateEdit);
         getTokenInteger(tokens[2], "dontSaveIfUnmodified", dontSaveIfUnmodified);
         docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0);
+    }
+    else if (tokens[0] == "savetostorage")
+    {
+        int force = 0;
+        getTokenInteger(tokens[1], "force", force);
+        docBroker->saveToStorage(getId(), true, "" /* This is irrelevant when success is true*/, true);
     }
     else
     {

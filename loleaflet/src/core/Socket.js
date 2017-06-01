@@ -369,7 +369,7 @@ L.Socket = L.Class.extend({
 							this.sendMessage('closedocument');
 						} else {
 							// They want to overwrite
-							this.sendMessage('documentconflict.overwrite');
+							this.sendMessage('savetostorage force=1');
 						}
 					}, this)
 				});

@@ -240,7 +240,7 @@ public:
     bool isDocumentChangedInStorage() { return _documentChangedInStorage; }
 
     /// Save the document to Storage if it needs persisting.
-    bool saveToStorage(const std::string& sesionId, bool success, const std::string& result = "");
+    bool saveToStorage(const std::string& sesionId, bool success, const std::string& result = "", bool force = false);
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
 

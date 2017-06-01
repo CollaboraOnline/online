@@ -668,13 +668,14 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("X-WOPI-Override", "PUT");
-        if (!_forceOverwrite)
+        if (!_forceSave)
         {
             // Request WOPI host to not overwrite if timestamps mismatch
             request.set("X-LOOL-WOPI-Timestamp",
                         Poco::DateTimeFormatter::format(Poco::DateTime(_fileInfo._modifiedTime),
                                                         Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
         }
+
         request.setContentType("application/octet-stream");
         request.setContentLength(size);
         addStorageDebugCookie(request);
@@ -699,6 +700,10 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
                 const std::string lastModifiedTime = getJSONValue<std::string>(object, "LastModifiedTime");
                 LOG_TRC("WOPI::PutFile returns LastModifiedTime [" << lastModifiedTime << "].");
                 _fileInfo._modifiedTime = iso8601ToTimestamp(lastModifiedTime);
+
+                // Reset the force save flag now, if any, since we are done saving
+                // Next saves shouldn't be saved forcefully unless commanded
+                _forceSave = false;
             }
             else
             {
