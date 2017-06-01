@@ -77,7 +77,8 @@ public:
         _localStorePath(localStorePath),
         _jailPath(jailPath),
         _fileInfo("", "lool", Poco::Timestamp::fromEpochTime(0), 0),
-        _isLoaded(false)
+        _isLoaded(false),
+        _forceOverwrite(false)
     {
         LOG_DBG("Storage ctor: " << uri.toString());
     }
@@ -88,6 +89,10 @@ public:
     const std::string& getRootFilePath() const { return _jailedFilePath; };
 
     bool isLoaded() const { return _isLoaded; }
+
+    /// Asks the storage object to force overwrite to storage upon next save
+    /// even if document turned out to be changed in storage
+    void forceOverwrite() { _forceOverwrite = true; }
 
     /// Returns the basic information about the file.
     const FileInfo& getFileInfo() const { return _fileInfo; }
@@ -122,6 +127,7 @@ protected:
     std::string _jailedFilePath;
     FileInfo _fileInfo;
     bool _isLoaded;
+    bool _forceOverwrite;
 
     static bool FilesystemEnabled;
     static bool WopiEnabled;

@@ -171,6 +171,13 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             LOG_DBG("Session [" << getId() << "] requested owner termination");
             docBroker->closeDocument("ownertermination");
         }
+        else if (docBroker->isDocumentChangedInStorage())
+        {
+            LOG_DBG("Document marked as changed in storage and user ["
+                    << getUserId() << ", " << getUserName()
+                    << "] wants to refresh the document for all.");
+            docBroker->closeDocument("documentconflict " + getUserName());
+        }
 
         return true;
     }
