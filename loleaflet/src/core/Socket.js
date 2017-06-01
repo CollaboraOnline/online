@@ -273,6 +273,10 @@ L.Socket = L.Class.extend({
 				var username = textMsg.substring('documentconflict '.length);
 				msg = _('%user asked to refresh the document. Document will now refresh automatically.').replace('%user', username);
 
+				// Detach all the handlers from current socket, otherwise _onSocketClose tries to reconnect again
+				// However, we want to reconnect manually here.
+				this.close();
+
 				// Reload the document
 				this._map._active = false;
 				map = this._map;
@@ -361,6 +365,15 @@ L.Socket = L.Class.extend({
 			else if (command.errorKind === 'documentconflict')
 			{
 				storageError = errorMessages.storage.documentconflict;
+
+				// TODO: We really really need to factor this out duplicate dialog code logic everywhere
+				// Close any open dialogs first.
+				if (vex.dialogID > 0) {
+					var id = vex.dialogID;
+					vex.dialogID = -1;
+					vex.close(id);
+				}
+
 				vex.dialog.confirm({
 					message: _('Document has been changed in storage. Do you want to refresh the page to load the new document ? Cancelling will continue editing and overwrite.'),
 					callback: L.bind(function(value) {
