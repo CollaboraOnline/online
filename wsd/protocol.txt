@@ -334,6 +334,10 @@ tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<
     a hash of the tile contents, and can be included by the client in
     the next 'tile' message requesting the same tile.
 
+commandresult: <payload>
+    This is used to acknowledge the commands from the client.
+    <payload> is { command: <command name>, success: 'true' }
+
 Each LOK_CALLBACK_FOO_BAR callback except
 LOK_CALLBACK_INVALIDATE_TILES causes a corresponding message to the
 client, consisting of the FOO_BAR part in lowercase, without
@@ -343,12 +347,12 @@ message as documented above.) For instance:
 
 invalidatecursor: <payload>
 
-The payload contains a rectangle describing the cursor position.
+    The payload contains a rectangle describing the cursor position.
 
-The communication between the parent process (the one keeping open the
-Websocket connections to the clients) and a child process (handling
-one document through LibreOfficeKit) uses the same protocol, with
-the following additions and changes:
+    The communication between the parent process (the one keeping open the
+    Websocket connections to the clients) and a child process (handling
+    one document through LibreOfficeKit) uses the same protocol, with
+    the following additions and changes:
 
 unocommandresult: <payload>
 

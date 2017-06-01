@@ -226,7 +226,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         int force = 0;
         getTokenInteger(tokens[1], "force", force);
-        docBroker->saveToStorage(getId(), true, "" /* This is irrelevant when success is true*/, true);
+        if (docBroker->saveToStorage(getId(), true, "" /* This is irrelevant when success is true*/, true))
+        {
+            docBroker->broadcastMessage("commandresult: { \"command\": \"savetostorage\", \"success\": true }");
+        }
     }
     else
     {

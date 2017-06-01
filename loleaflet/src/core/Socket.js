@@ -221,6 +221,18 @@ L.Socket = L.Class.extend({
 			this._map.fire('wopiprops', wopiInfo);
 			return;
 		}
+		else if (textMsg.startsWith('commandresult: ')) {
+			var commandresult = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			if (commandresult['command'] === 'savetostorage' && commandresult['success']) {
+				// Close any open confirmation dialogs
+				if (vex.dialogID > 0) {
+					var id = vex.dialogID;
+					vex.dialogID = -1;
+					vex.close(id);
+				}
+			}
+			return;
+		}
 		else if (textMsg.startsWith('close: ')) {
 			textMsg = textMsg.substring('close: '.length);
 			msg = '';

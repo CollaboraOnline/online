@@ -627,6 +627,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
         // So set _documentLastModifiedTime then
         _documentLastModifiedTime = _storage->getFileInfo()._modifiedTime;
+
         // After a successful save, we are sure that document in the storage is same as ours
         _documentChangedInStorage = false;
 
@@ -662,11 +663,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     {
         LOG_ERR("PutFile says that Document changed in storage");
         _documentChangedInStorage = true;
-        // Inform all clients
-        for (const auto& sessionIt : _sessions)
-        {
-            sessionIt.second->sendTextFrame("error: cmd=storage kind=documentconflict");
-        }
+        broadcastMessage("error: cmd=storage kind=documentconflict");
     }
 
     return false;
@@ -1416,6 +1413,17 @@ void DocumentBroker::closeDocument(const std::string& reason)
 
     LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
     terminateChild(reason, false);
+}
+
+void DocumentBroker::broadcastMessage(const std::string& message)
+{
+    assertCorrectThread();
+
+    LOG_DBG("Broadcasting message [" << message << "] to all sessions.");
+    for (const auto& sessionIt : _sessions)
+    {
+        sessionIt.second->sendTextFrame(message);
+    }
 }
 
 void DocumentBroker::updateLastActivityTime()
