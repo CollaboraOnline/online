@@ -495,11 +495,9 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         {
             LOG_WRN("Document [" << _docKey << "] has been modified behind our back. Informing all clients.");
             _documentChangedInStorage = true;
-            // Inform all clients
-            for (const auto& sessionIt : _sessions)
-            {
-                sessionIt.second->sendTextFrame("error: cmd=storage kind=documentconflict");
-            }
+            const std::string errorMsg = "error: cmd=storage kind=documentconflict";
+            session->sendTextFrame(errorMsg);
+            broadcastMessage(errorMsg);
         }
     }
 

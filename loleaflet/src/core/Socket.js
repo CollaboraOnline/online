@@ -285,6 +285,9 @@ L.Socket = L.Class.extend({
 				var username = textMsg.substring('documentconflict '.length);
 				msg = _('%user asked to refresh the document. Document will now refresh automatically.').replace('%user', username);
 
+				if (this._map._docLayer) {
+					this._map._docLayer.removeAllViews();
+				}
 				// Detach all the handlers from current socket, otherwise _onSocketClose tries to reconnect again
 				// However, we want to reconnect manually here.
 				this.close();
