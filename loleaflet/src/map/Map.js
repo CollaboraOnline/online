@@ -134,6 +134,7 @@ L.Map = L.Evented.extend({
 
 		// View info (user names and view ids)
 		this._viewInfo = {};
+		this._viewInfoByUser = {};
 
 		// View color map
 		this._viewColors = {};
@@ -160,14 +161,18 @@ L.Map = L.Evented.extend({
 
 	addView: function(viewInfo) {
 		this._viewInfo[viewInfo.id] = viewInfo;
+		this._viewInfoByUser[viewInfo.userid] = viewInfo;
 		this.fire('postMessage', {msgId: 'View_Added', args: {ViewId: viewInfo.id, UserId: viewInfo.userid, UserName: viewInfo.username, UserExtraInfo: viewInfo.userextrainfo, Color: L.LOUtil.rgbToHex(viewInfo.color), ReadOnly: viewInfo.readonly}});
 
 		// Fire last, otherwise not all events are handled correctly.
 		this.fire('addview', {viewId: viewInfo.id, username: viewInfo.username, extraInfo: viewInfo.userextrainfo, readonly: this.isViewReadOnly(viewInfo.id)});
+
+		this.updateAvatars();
 	},
 
 	removeView: function(viewid) {
 		var username = this._viewInfo[viewid].username;
+		delete this._viewInfoByUser[this._viewInfo[viewid].userid];
 		delete this._viewInfo[viewid];
 		this.fire('postMessage', {msgId: 'View_Removed', args: {ViewId: viewid}});
 
@@ -181,6 +186,17 @@ L.Map = L.Evented.extend({
 		zoom = zoom === undefined ? this.getZoom() : zoom;
 		this._resetView(L.latLng(center), this._limitZoom(zoom));
 		return this;
+	},
+
+	updateAvatars: function() {
+		if (this._docLayer && this._docLayer._annotations && this._docLayer._annotations._items) {
+			for (var idxAnno in this._docLayer._annotations._items) {
+				var userid = this._docLayer._annotations._items[idxAnno]._data.author;
+				if (this._viewInfoByUser[userid]) {
+					$(this._docLayer._annotations._items[idxAnno]._authorAvatarImg).attr('src', this._viewInfoByUser[userid].userextrainfo.avatar);
+				}
+			}
+		}
 	},
 
 	showBusy: function(label, bar) {
