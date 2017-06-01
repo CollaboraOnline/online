@@ -335,3 +335,19 @@ tr.useritem > td.usercolor {
     left: 3px;
     position: relative;
 }
+
+tr.useritem-avatar:hover {
+    cursor: default;
+    background-color: rgba(67, 172, 232, 0.25);
+}
+
+tr.useritem-avatar > td {
+    padding: 7px;
+}
+
+tr.useritem-avatar > td.usercolor {
+    display: inline-block;
+    top: 0px;
+    left: 3px;
+    position: relative;
+}
