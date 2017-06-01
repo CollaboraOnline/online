@@ -161,7 +161,9 @@ L.Map = L.Evented.extend({
 
 	addView: function(viewInfo) {
 		this._viewInfo[viewInfo.id] = viewInfo;
-		this._viewInfoByUser[viewInfo.userid] = viewInfo;
+		if (viewInfo.userextrainfo !== undefined && viewInfo.userextrainfo.avatar !== undefined) {
+			this._viewInfoByUser[viewInfo.userid] = viewInfo;
+		}
 		this.fire('postMessage', {msgId: 'View_Added', args: {ViewId: viewInfo.id, UserId: viewInfo.userid, UserName: viewInfo.username, UserExtraInfo: viewInfo.userextrainfo, Color: viewInfo.color, ReadOnly: viewInfo.readonly}});
 
 		// Fire last, otherwise not all events are handled correctly.
