@@ -237,6 +237,8 @@ public:
     bool isLoaded() const { return _isLoaded; }
     void setLoaded();
 
+    bool isDocumentChangedInStorage() { return _documentChangedInStorage; }
+
     /// Save the document to Storage if it needs persisting.
     bool saveToStorage(const std::string& sesionId, bool success, const std::string& result = "");
     bool isModified() const { return _isModified; }
@@ -375,6 +377,10 @@ private:
     Poco::URI _uriJailed;
     std::string _jailId;
     std::string _filename;
+
+    /// Set to true when document changed in storage and we are waiting
+    /// for user's command to act.
+    bool _documentChangedInStorage;
 
     /// The last time we tried saving, regardless of whether the
     /// document was modified and saved or not.

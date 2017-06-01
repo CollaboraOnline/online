@@ -147,6 +147,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _docId(Util::encodeId(DocBrokerId++, 3)),
     _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
+    _documentChangedInStorage(false),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _lastSaveRequestTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(COMMAND_TIMEOUT_MS)),
     _markToDestroy(false),
@@ -495,6 +496,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             _documentLastModifiedTime != fileInfo._modifiedTime)
         {
             LOG_WRN("Document [" << _docKey << "] has been modified behind our back. Informing all clients.");
+            _documentChangedInStorage = true;
             // Inform all clients
             for (const auto& sessionIt : _sessions)
             {
@@ -652,7 +654,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     else if (storageSaveResult == StorageBase::SaveResult::DOC_CHANGED)
     {
         LOG_ERR("PutFile says that Document changed in storage");
-
+        _documentChangedInStorage = true;
         // Inform all clients
         for (const auto& sessionIt : _sessions)
         {
@@ -1334,7 +1336,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
 void DocumentBroker::shutdownClients(const std::string& closeReason)
 {
     assertCorrectThread();
-    LOG_INF("Terminating " << _sessions.size() << " clients of doc [" << _docKey << "].");
+    LOG_INF("Terminating " << _sessions.size() << " clients of doc [" << _docKey << "] with reason: " << closeReason);
 
     // First copy into local container, since removeSession
     // will erase from _sessions, but will leave the last.
@@ -1376,7 +1378,7 @@ void DocumentBroker::terminateChild(const std::string& closeReason, const bool r
 {
     assertCorrectThread();
 
-    LOG_INF("Terminating doc [" << _docKey << "].");
+    LOG_INF("Terminating doc [" << _docKey << "] with reason: " << closeReason);
 
     // Close all running sessions
     if (!rude)

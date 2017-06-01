@@ -668,9 +668,13 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("X-WOPI-Override", "PUT");
-        request.set("X-LOOL-WOPI-Timestamp",
-                    Poco::DateTimeFormatter::format(Poco::DateTime(_fileInfo._modifiedTime),
-                                                    Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
+        if (!_forceOverwrite)
+        {
+            // Request WOPI host to not overwrite if timestamps mismatch
+            request.set("X-LOOL-WOPI-Timestamp",
+                        Poco::DateTimeFormatter::format(Poco::DateTime(_fileInfo._modifiedTime),
+                                                        Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
+        }
         request.setContentType("application/octet-stream");
         request.setContentLength(size);
         addStorageDebugCookie(request);

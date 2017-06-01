@@ -266,6 +266,21 @@ L.Socket = L.Class.extend({
 					}
 				}, timeoutMs);
 			}
+			else if (textMsg.startsWith('documentconflict')) {
+				var username = textMsg.substring('documentconflict '.length);
+				msg = _('%user asked to refresh the document. Document will now refresh automatically.').replace('%user', username);
+
+				// Reload the document
+				this._map._active = false;
+				map = this._map;
+				vex.timer = setInterval(function() {
+					try {
+						// Activate and cancel timer and dialogs.
+						map._activate();
+					} catch (error) {
+					}
+				}, 3000);
+			}
 
 			// Close any open dialogs first.
 			if (vex.dialogID > 0) {
@@ -334,6 +349,21 @@ L.Socket = L.Class.extend({
 			else if (command.errorKind === 'documentconflict')
 			{
 				storageError = errorMessages.storage.documentconflict;
+				vex.dialog.confirm({
+					message: _('Document has been changed in storage. Do you want to refresh the page to load the new document ? Cancelling will continue editing and overwrite.'),
+					callback: L.bind(function(value) {
+						if (value) {
+							// They want to refresh the page and load document again for all
+							this.sendMessage('closedocument');
+						} else {
+							// They want to overwrite
+							this.sendMessage('documentconflict.overwrite');
+						}
+					}, this)
+				});
+				vex.dialogID = vex.globalID - 1;
+
+				return;
 			}
 
 			// Parse the storage url as link
