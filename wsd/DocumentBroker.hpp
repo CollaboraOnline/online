@@ -367,6 +367,8 @@ private:
     /// associated with this document.
     void pollThread();
 
+    void getIOStats(uint64_t &sent, uint64_t &recv);
+
 private:
     const std::string _uriOrig;
     const Poco::URI _uriPublic;

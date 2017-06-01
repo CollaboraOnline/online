@@ -818,6 +818,12 @@ public:
         return socket;
     }
 
+    void getIOStats(uint64_t &sent, uint64_t &recv)
+    {
+        sent = _bytesSent;
+        recv = _bytesRecvd;
+    }
+
 protected:
 
     /// Called when a polling event is received.
@@ -947,12 +953,6 @@ protected:
 
     void dumpState(std::ostream& os) override;
 
-    void getStats(uint64_t &sent, uint64_t &recv)
-    {
-        sent = _bytesSent;
-        recv = _bytesRecvd;
-    }
-
 protected:
     /// Client handling the actual data.
     std::shared_ptr<SocketHandlerInterface> _socketHandler;
@@ -966,8 +966,8 @@ protected:
     std::vector< char > _inBuffer;
     std::vector< char > _outBuffer;
 
-    std::atomic<uint64_t> _bytesSent;
-    std::atomic<uint64_t> _bytesRecvd;
+    uint64_t _bytesSent;
+    uint64_t _bytesRecvd;
 
     // To be able to access _inBuffer and _outBuffer.
     // TODO we probably need accessors to the _inBuffer & _outBuffer

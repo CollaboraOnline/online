@@ -82,6 +82,8 @@ public:
     void closeFrame() { _isCloseFrame = true; };
     bool isCloseFrame() const { return _isCloseFrame; }
 
+    void getIOStats(uint64_t &sent, uint64_t &recv);
+
 protected:
     Session(const std::string& name, const std::string& id, bool readonly);
     virtual ~Session();

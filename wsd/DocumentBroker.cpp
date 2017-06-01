@@ -1430,9 +1430,26 @@ void DocumentBroker::updateLastActivityTime()
     Admin::instance().updateLastActivityTime(_docKey);
 }
 
+void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)
+{
+    sent = 0;
+    recv = 0;
+    assertCorrectThread();
+    for (const auto& sessionIt : _sessions)
+    {
+        uint64_t s, r;
+        sessionIt.second->getIOStats(s, r);
+        sent += s;
+        recv += r;
+    }
+}
+
 void DocumentBroker::dumpState(std::ostream& os)
 {
     std::unique_lock<std::mutex> lock(_mutex);
+
+    uint64_t sent, recv;
+    getIOStats(sent, recv);
 
     os << " Broker: " << _filename << " pid: " << getPid();
     if (_markToDestroy)
@@ -1443,6 +1460,8 @@ void DocumentBroker::dumpState(std::ostream& os)
         os << "\n  loaded in: " << _loadDuration.count() << "ms";
     else
         os << "\n  still loading...";
+    os << "\n  sent: " << sent;
+    os << "\n  recv?: " << recv;
     os << "\n  modified?: " << _isModified;
     os << "\n  jail id: " << _jailId;
     os << "\n  filename: " << _filename;
