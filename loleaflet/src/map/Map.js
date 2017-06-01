@@ -842,7 +842,7 @@ L.Map = L.Evented.extend({
 
 		var options = $.extend({}, vex.defaultOptions, {
 			contentCSS: {'background':'rgba(0, 0, 0, 0)',
-				     'font-size': 'xx-large',
+			             'font-size': 'xx-large',
 				     'color': '#fff',
 				     'text-align': 'center'},
 			content: _('Inactive document - please click to resume editing')
