@@ -1406,7 +1406,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
     assertCorrectThread();
 
     LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
-    terminateChild(reason, true);
+    terminateChild(reason, false);
 }
 
 void DocumentBroker::updateLastActivityTime()
