@@ -1566,13 +1566,15 @@ function onUseritemClicked(e) {
 }
 
 function getUserItem(viewId, userName, extraInfo, color) {
-	var html = '<tr class="useritem" id="user-' + viewId + '" onclick="onUseritemClicked(event)">' +
-	             '<td class=usercolor style="background-color: ' + color  +';';
+	var className = 'useritem';
 	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
-		html += 'top=0px ! important;"> <img src="' + extraInfo.avatar + '" width="32" height="32" />'
+		className = 'useritem-avatar';
 	}
-	else {
-		html += '">';
+
+	var html = '<tr class="' + className + '" id="user-' + viewId + '" onclick="onUseritemClicked(event)">' +
+	             '<td class=usercolor style="background-color: ' + color  +';">';
+	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
+		html += '<img src="' + extraInfo.avatar + '" width="32" height="32" />'
 	}
 
 	// TODO: Add mail and other links as sub-menu.
