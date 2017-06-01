@@ -123,7 +123,7 @@ L.AnnotationManager = L.Class.extend({
 		for (var index in comments) {
 			comment = comments[index];
 			this.adjustComment(comment);
-			if (this._map._viewInfoByUser[comment.author]) {
+			if (comment.author in this._map._viewInfoByUser) {
 				comment.avatar = this._map._viewInfoByUser[comment.author].userextrainfo.avatar;
 			}
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
@@ -151,7 +151,7 @@ L.AnnotationManager = L.Class.extend({
 				// something wrong in this redline, skip this one
 				continue;
 			}
-			if (this._map._viewInfoByUser[changecomment.author]) {
+			if (changecomment.author in this._map._viewInfoByUser) {
 				changecomment.avatar = this._map._viewInfoByUser[changecomment.author].userextrainfo.avatar;
 			}
 			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), changecomment).addTo(this._map));
@@ -525,7 +525,7 @@ L.AnnotationManager = L.Class.extend({
 		var id;
 		var changetrack = obj.redline ? true : false;
 		var action = changetrack ? obj.redline.action : obj.comment.action;
-		if (this._map._viewInfoByUser[obj.comment.author]) {
+		if (obj.comment.author in this._map._viewInfoByUser) {
 			obj.comment.avatar = this._map._viewInfoByUser[obj.comment.author].userextrainfo.avatar;
 		}
 
