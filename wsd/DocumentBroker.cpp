@@ -627,6 +627,8 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
         // So set _documentLastModifiedTime then
         _documentLastModifiedTime = _storage->getFileInfo()._modifiedTime;
+        // After a successful save, we are sure that document in the storage is same as ours
+        _documentChangedInStorage = false;
 
         LOG_DBG("Saved docKey [" << _docKey << "] to URI [" << uri << "] and updated tile cache. Document modified timestamp: " <<
                 Poco::DateTimeFormatter::format(Poco::DateTime(_documentLastModifiedTime),
