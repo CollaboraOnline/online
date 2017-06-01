@@ -153,6 +153,7 @@ L.Annotation = L.Layer.extend({
 		imgAuthor.setAttribute('src', L.Icon.Default.imagePath + '/user.png');
 		imgAuthor.setAttribute('width', this.options.imgSize.x);
 		imgAuthor.setAttribute('height', this.options.imgSize.y);
+		this._authorAvatarImg = imgAuthor;
 		L.DomUtil.create(tagDiv, 'loleaflet-annotation-userline', tdImg);
 		this._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
 		this._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
@@ -291,6 +292,7 @@ L.Annotation = L.Layer.extend({
 		this._contentText.origText = this._data.text;
 		$(this._nodeModifyText).text(this._data.text);
 		$(this._contentAuthor).text(this._data.author);
+		$(this._authorAvatarImg).attr('src', this._data.avatar);
 
 		var d = new Date(this._data.dateTime.replace(/,.*/, 'Z'));
 		$(this._contentDate).text((isNaN(d.getTime()) || this._map.getDocType() === 'spreadsheet')? this._data.dateTime: d.toDateString());
