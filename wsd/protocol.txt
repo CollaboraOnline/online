@@ -160,6 +160,14 @@ save dontTerminateEdit=<value> dontSaveIfUnmodified=<value>
     non-zero. 'dontSaveIfUnmodified' when set to non-zero skips saving the document when it is
     unmodified.
 
+savetostorage force=<value>
+
+    Saves the files to storage. A 'save' command automatically saves the file to
+    storage almost always except in the case where there is a document conflict
+    i.e document in the storage is changed behind our back. We might need to do
+    call this command with force=1 in that case to forcefully save it to storage
+    after asking from the user.
+
 clientvisiblearea x=<x> y=<y> width=<width> height=<height>
 
     Invokes lok::Document::setClientVisibleArea().

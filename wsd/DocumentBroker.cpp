@@ -544,10 +544,15 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 }
 
 bool DocumentBroker::saveToStorage(const std::string& sessionId,
-                                   bool success, const std::string& result)
+                                   bool success, const std::string& result, bool force)
 {
     assertCorrectThread();
 
+    if (force)
+    {
+        LOG_TRC("Document will be saved forcefully to storage.");
+        _storage->forceSave();
+    }
     const bool res = saveToStorageInternal(sessionId, success, result);
 
     // If marked to destroy, or session is disconnected, remove.
