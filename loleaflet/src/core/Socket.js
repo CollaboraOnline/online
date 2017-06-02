@@ -112,6 +112,8 @@ L.Socket = L.Class.extend({
 	_onSocketOpen: function () {
 		console.debug('_onSocketOpen:');
 		this._map._serverRecycling = false;
+		this._map._documentIdle = false;
+
 		// Always send the protocol version number.
 		// TODO: Move the version number somewhere sensible.
 		this._doSend('loolclient ' + this.ProtocolVersionNumber);
@@ -231,6 +233,7 @@ L.Socket = L.Class.extend({
 			}
 			else if (textMsg === 'idle') {
 				msg = _('Session terminated due to idleness');
+				this._map._documentIdle = true;
 			}
 			else if (textMsg === 'shuttingdown') {
 				msg = _('Server is shutting down for maintenance (auto-saving)');
@@ -298,6 +301,15 @@ L.Socket = L.Class.extend({
 			});
 			options.$vex.append(options.$vexContent);
 
+			if (textMsg === 'idle') {
+				var map = this._map;
+				options.$vex.bind('click.vex', function(e) {
+					console.debug('idleness: reactivating');
+					map._documentIdle = false;
+					return map._activate();
+				});
+			}
+
 			$(options.appendLocation).append(options.$vex);
 			vex.setupBodyClassName(options.$vex);
 
@@ -306,7 +318,7 @@ L.Socket = L.Class.extend({
 				this._map.fire('postMessage', {msgId: 'Session_Closed'});
 			}
 
-			if (textMsg === 'idle' || textMsg === 'ownertermination') {
+			if (textMsg === 'ownertermination') {
 				this._map.remove();
 			}
 
