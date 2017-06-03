@@ -554,10 +554,13 @@ history
     }
 
 total_mem
+sent_bytes
+recv_bytes
 
-    Queries for total memory being consumed by the server in kilobytes.
-    This includes processes - loolwsd, loolforkit, and child processes
-    hosting various documents
+    Queries for total memory or bandwidth being consumed by the server
+    in kilobytes. For total_mem this includes processes - loolwsd,
+    loolforkit, and child processes hosting various documents. For
+    sent/recv_bytes this includes only external traffic.
 
 active_docs_count
 
@@ -651,6 +654,8 @@ documents <pid> <filename> <number of views> <memory consumed> <elapsed time> <i
     Each set document attributes is separated by a newline.
 
 total_mem <memory>
+sent_bytes <memory>
+recv_bytes <memory>
 
     <memory> in kilobytes
 

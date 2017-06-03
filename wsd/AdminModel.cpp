@@ -373,6 +373,18 @@ void AdminModel::notify(const std::string& message)
     }
 }
 
+void AdminModel::addBytes(const std::string& docKey, uint64_t sent, uint64_t recv)
+{
+    assertCorrectThread();
+
+    auto doc = _documents.find(docKey);
+    if(doc != _documents.end())
+        doc->second.addBytes(sent, recv);
+
+    _sentBytesTotal += sent;
+    _recvBytesTotal += recv;
+}
+
 void AdminModel::modificationAlert(const std::string& docKey, Poco::Process::PID pid, bool value)
 {
     assertCorrectThread();

@@ -228,12 +228,34 @@ void DocumentBroker::pollThread()
                                                       "per_document.idle_timeout_secs", 3600);
     std::string closeReason = "stopped";
 
+    // Used to accumulate B/W deltas.
+    uint64_t adminSent = 0;
+    uint64_t adminRecv = 0;
+    auto lastBWUpdateTime = std::chrono::steady_clock::now();
+
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
     {
         _poll->poll(SocketPoll::DefaultPollTimeoutMs);
 
         const auto now = std::chrono::steady_clock::now();
+
+        if (std::chrono::duration_cast<std::chrono::milliseconds>
+                    (now - lastBWUpdateTime).count() >= 5 * 1000)
+        {
+            lastBWUpdateTime = now;
+            uint64_t sent, recv;
+            getIOStats(sent, recv);
+            // send change since last notification.
+            Admin::instance().addBytes(getDocKey(),
+                                       // connection drop transiently reduces this.
+                                       std::max(sent - adminSent, uint64_t(0)),
+                                       std::max(recv - adminRecv, uint64_t(0)));
+            LOG_INF("Doc [" << _docKey << "] added sent: " << sent << " recv: " << recv << " bytes to totals");
+            adminSent = sent;
+            adminRecv = recv;
+        }
+
         if (_lastSaveTime < _lastSaveRequestTime &&
             std::chrono::duration_cast<std::chrono::milliseconds>
                     (now - _lastSaveRequestTime).count() <= COMMAND_TIMEOUT_MS)
@@ -1461,7 +1483,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     else
         os << "\n  still loading...";
     os << "\n  sent: " << sent;
-    os << "\n  recv?: " << recv;
+    os << "\n  recv: " << recv;
     os << "\n  modified?: " << _isModified;
     os << "\n  jail id: " << _jailId;
     os << "\n  filename: " << _filename;

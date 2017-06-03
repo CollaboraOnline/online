@@ -367,6 +367,7 @@ private:
     /// associated with this document.
     void pollThread();
 
+    /// Sum the I/O stats from all connected sessions
     void getIOStats(uint64_t &sent, uint64_t &recv);
 
 private:

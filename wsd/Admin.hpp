@@ -69,7 +69,7 @@ public:
     /// Custom poll thread function
     void pollingThread() override;
 
-    unsigned getTotalMemoryUsage();
+    size_t getTotalMemoryUsage();
 
     void modificationAlert(const std::string& dockey, Poco::Process::PID pid, bool value);
     /// Update the Admin Model.
@@ -99,6 +99,7 @@ public:
 
     void updateLastActivityTime(const std::string& docKey);
     void updateMemoryDirty(const std::string& docKey, int dirty);
+    void addBytes(const std::string& docKey, uint64_t sent, uint64_t recv);
 
     void dumpState(std::ostream& os) override;
 
@@ -107,7 +108,7 @@ private:
     /// the Admin Poll thread.
     AdminModel _model;
     int _forKitPid;
-    long _lastTotalMemory;
+    size_t _lastTotalMemory;
 
     std::atomic<int> _memStatsTaskIntervalMs;
     std::atomic<int> _cpuStatsTaskIntervalMs;

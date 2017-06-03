@@ -55,7 +55,9 @@ public:
           _filename(filename),
           _memoryDirty(0),
           _start(std::time(nullptr)),
-          _lastActivity(_start)
+          _lastActivity(_start),
+          _sentBytes(0),
+          _recvBytes(0)
     {
     }
 
@@ -88,6 +90,12 @@ public:
     void setModified(bool value) { _isModified = value; }
     bool getModifiedStatus() const { return _isModified; }
 
+    void addBytes(uint64_t sent, uint64_t recv)
+    {
+        _sentBytes += sent;
+        _recvBytes += recv;
+    }
+
     std::string to_string() const;
 
 private:
@@ -107,6 +115,9 @@ private:
     std::time_t _lastActivity;
     std::time_t _end = 0;
     std::map<std::time_t,std::string> _snapshots;
+
+    /// Total bytes sent and recv'd by this document.
+    uint64_t _sentBytes, _recvBytes;
 };
 
 /// An Admin session subscriber.
@@ -203,6 +214,11 @@ public:
     void updateLastActivityTime(const std::string& docKey);
     void updateMemoryDirty(const std::string& docKey, int dirty);
 
+    void addBytes(const std::string& docKey, uint64_t sent, uint64_t recv);
+
+    uint64_t getSentBytesTotal() { return _sentBytesTotal; }
+    uint64_t getRecvBytesTotal() { return _recvBytesTotal; }
+
 private:
     std::string getMemStats();
 
@@ -223,6 +239,9 @@ private:
 
     std::list<unsigned> _cpuStats;
     unsigned _cpuStatsSize = 100;
+
+    uint64_t _sentBytesTotal;
+    uint64_t _recvBytesTotal;
 
     /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;

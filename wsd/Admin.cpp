@@ -140,10 +140,14 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         }
     }
     else if (tokens[0] == "total_mem")
-    {
-        const auto totalMem = _admin->getTotalMemoryUsage();
-        sendTextFrame("total_mem " + std::to_string(totalMem));
-    }
+        sendTextFrame("total_mem " + std::to_string(_admin->getTotalMemoryUsage()));
+
+    else if (tokens[0] == "sent_bytes")
+        sendTextFrame("sent_bytes " + std::to_string(model.getSentBytesTotal() / 1024));
+
+    else if (tokens[0] == "recv_bytes")
+        sendTextFrame("recv_bytes " + std::to_string(model.getRecvBytesTotal() / 1024));
+
     else if (tokens[0] == "kill" && tokens.count() == 2)
     {
         try
@@ -244,7 +248,10 @@ void AdminSocketHandler::sendTextFrame(const std::string& message)
 {
     UnitWSD::get().onAdminQueryMessage(message);
     if (_isAuthenticated)
+    {
+        LOG_TRC("send admin text frame '" << message << "'");
         sendMessage(message);
+    }
     else
         LOG_TRC("Skip sending message to non-authenticated client: '" << message << "'");
 }
@@ -387,7 +394,7 @@ void Admin::rescheduleCpuTimer(unsigned interval)
     wakeup();
 }
 
-unsigned Admin::getTotalMemoryUsage()
+size_t Admin::getTotalMemoryUsage()
 {
     // To simplify and clarify this; since load, link and pre-init all
     // inside the forkit - we should account all of our fixed cost of
@@ -425,6 +432,12 @@ void Admin::updateMemoryDirty(const std::string& docKey, int dirty)
 {
     addCallback([this, docKey, dirty]
                  { _model.updateMemoryDirty(docKey, dirty); });
+}
+
+void Admin::addBytes(const std::string& docKey, uint64_t sent, uint64_t recv)
+{
+    addCallback([this, docKey, sent, recv]
+                 { _model.addBytes(docKey, sent, recv); });
 }
 
 void Admin::dumpState(std::ostream& os)

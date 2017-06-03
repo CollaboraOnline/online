@@ -16,6 +16,8 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		this.socket.send('total_mem');
 		this.socket.send('active_docs_count');
 		this.socket.send('active_users_count');
+		this.socket.send('sent_bytes');
+		this.socket.send('recv_bytes');
 	},
 
 	onSocketOpen: function() {
@@ -341,13 +343,17 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		}
 		else if (textMsg.startsWith('total_mem') ||
 			textMsg.startsWith('active_docs_count') ||
-			textMsg.startsWith('active_users_count'))
+			textMsg.startsWith('active_users_count') ||
+			textMsg.startsWith('sent_bytes') ||
+			textMsg.startsWith('recv_bytes'))
 		{
 			textMsg = textMsg.split(' ');
 			var sCommand = textMsg[0];
 			var nData = parseInt(textMsg[1]);
 
-			if (sCommand === 'total_mem') {
+			if (sCommand === 'total_mem' ||
+			    sCommand === 'sent_bytes' ||
+			    sCommand === 'recv_bytes') {
 				nData = Util.humanizeMem(nData);
 			}
 			$(document.getElementById(sCommand)).text(nData);
