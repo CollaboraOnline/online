@@ -232,7 +232,7 @@ L.Socket = L.Class.extend({
 				msg = _('Session terminated by document owner');
 			}
 			else if (textMsg === 'idle') {
-				msg = _('Session terminated due to idleness');
+				msg = _('Session was terminated due to idleness - please click to reload');
 				this._map._documentIdle = true;
 			}
 			else if (textMsg === 'shuttingdown') {
