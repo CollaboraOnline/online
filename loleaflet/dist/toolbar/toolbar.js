@@ -1406,10 +1406,14 @@ map.on('commandresult', function (e) {
 	var commandName = e.commandName;
 
 	if (commandName === '.uno:Save' && e.success === true) {
+		// Saved a new version; the document is modified.
+		map._everModified = true;
+
 		// owncloud integration
-		if (typeof window.parent.documentsMain !== 'undefined') {
-			window.parent.documentsMain.saveDocumentBack();
-		}
+		//FIXME: CSP Violation.
+		//if (typeof window.parent.documentsMain !== 'undefined') {
+			// window.parent.documentsMain.saveDocumentBack();
+		// }
 	}
 	else if ((commandName === '.uno:Undo' || commandName === '.uno:Redo') &&
 		e.success === true && e.result.value && !isNaN(e.result.value)) { /*UNDO_CONFLICT*/
