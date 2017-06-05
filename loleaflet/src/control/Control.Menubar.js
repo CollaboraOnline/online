@@ -191,6 +191,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{type: 'separator'},
+				{name: _('Find & Replace'), id: 'findandreplace', type: 'action'},
+				{type: 'separator'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
@@ -250,6 +252,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Cut'), type: 'unocommand', uno: '.uno:Cut'},
 				{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
+				{type: 'separator'},
+				{name: _('Find & Replace'), id: 'findandreplace', type: 'action'},
 				{type: 'separator'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
 			},
@@ -452,6 +456,7 @@ L.Control.Menubar = L.Control.extend({
 				</tr>\
 			</table>\
 			';
+			var mouseMoveFunc;
 			vex.dialog.open({
 				showCloseButton: true,
 				escapeButtonCloses: true,
@@ -505,7 +510,7 @@ L.Control.Menubar = L.Control.extend({
 						selected.style.cursor = 'default';
 						selected = null;
 					});
-					$('.vex').on('mousemove', function(e) {
+					var mouseMoveFunc = function(e) {
 						xPos = e.pageX;
 						yPos = e.pageY;
 						if (selected !== null) {
@@ -518,7 +523,11 @@ L.Control.Menubar = L.Control.extend({
 								selected.style.top = (yPos - yElem) + 'px';
 							}
 						}
-					});
+					};
+					$(document).on('mousemove', mouseMoveFunc);
+				},
+				afterClose: function(e) {
+					$(document).off('mousemove', mouseMoveFunc);
 				},
 				onSubmit: function(event) {
 					$vexContent = $(this).parent();
