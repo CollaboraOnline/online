@@ -390,8 +390,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
            << "connect-src 'self' " << host << "; "
            << "script-src 'unsafe-inline' 'self'; "
            << "style-src 'self' 'unsafe-inline'; "
-           << "font-src 'self' data:; "
-           << "img-src 'self' data:; ";
+           << "font-src 'self' data:; ";
 
     std::string frameAncestor;
     const auto it = request.find("Referer"); // Referer[sic]
@@ -423,12 +422,14 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 
         // Replaced by frame-ancestors in CSP but some oldies don't know about that
         oss << "X-Frame-Options: allow-from " << frameAncestor << "\r\n";
-        cspOss << "frame-ancestors " << frameAncestor;
+        cspOss << "img-src 'self' data: " << frameAncestor << "; "
+               << "frame-ancestors " << frameAncestor;
     }
     else
     {
         LOG_TRC("Denied frame ancestor: " << frameAncestor);
 
+        cspOss << "img-src 'self' data: ;";
         oss << "X-Frame-Options: deny\r\n";
     }
 
