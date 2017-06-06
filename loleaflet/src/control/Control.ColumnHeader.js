@@ -23,6 +23,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.on('updatecurrentheader', this._onUpdateCurrentColumn, this);
 		var rowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
 		var cornerHeader = L.DomUtil.create('div', 'spreadsheet-header-corner', rowColumnFrame);
+		L.DomEvent.on(cornerHeader, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.addListener(cornerHeader, 'click', this._onCornerHeaderClick, this);
 		var headersContainer = L.DomUtil.create('div', 'spreadsheet-header-columns-container', rowColumnFrame);
 		this._columns = L.DomUtil.create('div', 'spreadsheet-header-columns', headersContainer);
