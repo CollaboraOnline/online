@@ -54,6 +54,7 @@ public:
           _pid(pid),
           _filename(filename),
           _memoryDirty(0),
+          _lastJiffy(0),
           _start(std::time(nullptr)),
           _lastActivity(_start),
           _sentBytes(0),
@@ -76,6 +77,9 @@ public:
     int expireView(const std::string& sessionId);
 
     unsigned getActiveViews() const { return _activeViews; }
+
+    unsigned getLastJiffies() const { return _lastJiffy; }
+    void setLastJiffies(size_t newJ) { _lastJiffy = newJ; }
 
     const std::map<std::string, View>& getViews() const { return _views; }
 
@@ -110,6 +114,8 @@ private:
     std::string _filename;
     /// The dirty (ie. un-shared) memory of the document's Kit process.
     int _memoryDirty;
+    /// Last noted Jiffy count
+    unsigned _lastJiffy;
 
     std::time_t _start;
     std::time_t _lastActivity;
@@ -184,6 +190,7 @@ public:
 
     /// Returns memory consumed by all active loolkit processes
     unsigned getKitsMemoryUsage();
+    size_t getKitsJiffies();
 
     void subscribe(int sessionId, const std::weak_ptr<WebSocketHandler>& ws);
     void subscribe(int sessionId, const std::string& command);

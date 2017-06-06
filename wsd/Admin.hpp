@@ -70,6 +70,7 @@ public:
     void pollingThread() override;
 
     size_t getTotalMemoryUsage();
+    size_t getTotalCpuUsage();
 
     void modificationAlert(const std::string& dockey, Poco::Process::PID pid, bool value);
     /// Update the Admin Model.
@@ -109,6 +110,7 @@ private:
     AdminModel _model;
     int _forKitPid;
     size_t _lastTotalMemory;
+    size_t _lastJiffies;
 
     std::atomic<int> _memStatsTaskIntervalMs;
     std::atomic<int> _cpuStatsTaskIntervalMs;

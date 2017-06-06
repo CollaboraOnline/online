@@ -105,6 +105,10 @@ namespace Util
     /// Example: "procmemstats: pid=123 rss=12400 pss=566"
     std::string getMemoryStats(FILE* file);
 
+    size_t getCpuUsage(const Poco::Process::PID pid);
+
+    size_t getStatFromPid(const Poco::Process::PID pid, int ind);
+
     std::string replace(std::string s, const std::string& a, const std::string& b);
 
     std::string formatLinesForLog(const std::string& s);

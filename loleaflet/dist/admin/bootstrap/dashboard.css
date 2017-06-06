@@ -139,3 +139,14 @@ tr:hover .dropdown-menu{
 .doc_list_label{
   cursor: pointer;
 }
+
+/*
+ * Graph view buttons
+ */
+
+.nav-tabs > li.active > a{
+  background-color: #f5f5f5;
+}
+.graph-content {
+  background-color: #f5f5f5;
+}

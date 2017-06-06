@@ -271,6 +271,31 @@ unsigned AdminModel::getKitsMemoryUsage()
     return totalMem;
 }
 
+size_t AdminModel::getKitsJiffies()
+{
+    assertCorrectThread();
+
+    size_t totalJ = 0;
+    for (auto& it : _documents)
+    {
+        if (!it.second.isExpired())
+        {
+            const auto pid = it.second.getPid();
+            if (pid > 0)
+            {
+                unsigned newJ = Util::getCpuUsage(pid);
+                unsigned prevJ = it.second.getLastJiffies();
+                if(newJ >= prevJ)
+                {
+                    totalJ += (newJ - prevJ);
+                    it.second.setLastJiffies(newJ);
+                }
+            }
+        }
+    }
+    return totalJ;
+}
+
 void AdminModel::subscribe(int sessionId, const std::weak_ptr<WebSocketHandler>& ws)
 {
     assertCorrectThread();

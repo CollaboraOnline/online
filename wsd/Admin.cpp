@@ -12,6 +12,7 @@
 #include <cassert>
 #include <mutex>
 #include <sys/poll.h>
+#include <unistd.h>
 
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -298,8 +299,9 @@ Admin::Admin() :
     _model(AdminModel()),
     _forKitPid(-1),
     _lastTotalMemory(0),
+    _lastJiffies(0),
     _memStatsTaskIntervalMs(5000),
-    _cpuStatsTaskIntervalMs(5000)
+    _cpuStatsTaskIntervalMs(2000)
 {
     LOG_INF("Admin ctor.");
 
@@ -327,9 +329,13 @@ void Admin::pollingThread()
         std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         int cpuWait = _cpuStatsTaskIntervalMs -
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCPU).count();
+
+        size_t currentJiffies = getTotalCpuUsage();
         if (cpuWait <= 0)
         {
-            // TODO: implement me ...
+            auto cpuPercent = 100 * 1000 * currentJiffies / (sysconf (_SC_CLK_TCK) * _cpuStatsTaskIntervalMs);
+            _model.addCpuStats(cpuPercent);
+
             lastCPU = now;
             cpuWait += _cpuStatsTaskIntervalMs;
         }
@@ -406,6 +412,24 @@ size_t Admin::getTotalMemoryUsage()
     const size_t totalMem = wsdPssKb + forkitRssKb + kitsDirtyKb;
 
     return totalMem;
+}
+
+size_t Admin::getTotalCpuUsage()
+{
+    const size_t forkitJ = Util::getCpuUsage(_forKitPid);
+    const size_t wsdJ = Util::getCpuUsage(Poco::Process::id());
+    const size_t kitsJ = _model.getKitsJiffies();
+
+    if(_lastJiffies == 0)
+    {
+        _lastJiffies = forkitJ + wsdJ;
+        return 0;
+    }
+
+    const size_t totalJ = ((forkitJ + wsdJ) - _lastJiffies) + kitsJ;
+    _lastJiffies = forkitJ + wsdJ;
+
+    return totalJ;
 }
 
 unsigned Admin::getMemStatsInterval()

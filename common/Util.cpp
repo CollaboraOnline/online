@@ -228,14 +228,38 @@ namespace Util
     size_t getMemoryUsageRSS(const Poco::Process::PID pid)
     {
         static const auto pageSizeBytes = getpagesize();
+        size_t rss = 0;
 
+        if (pid > 0)
+        {
+            rss = getStatFromPid(pid, 23);
+            rss *= pageSizeBytes;
+            rss /= 1024;
+            return rss;
+        }
+        return 0;
+    }
+
+    size_t getCpuUsage(const Poco::Process::PID pid)
+    {
+        if (pid > 0)
+        {
+            size_t totalJiffies = 0;
+            totalJiffies += getStatFromPid(pid, 13);
+            totalJiffies += getStatFromPid(pid, 14);
+            return totalJiffies;
+        }
+        return 0;
+    }
+
+    size_t getStatFromPid(const Poco::Process::PID pid, int ind)
+    {
         if (pid > 0)
         {
             const auto cmd = "/proc/" + std::to_string(pid) + "/stat";
             FILE* fp = fopen(cmd.c_str(), "r");
             if (fp != nullptr)
             {
-                size_t rss = 0;
                 char line[4096] = { 0 };
                 if (fgets(line, sizeof (line), fp))
                 {
@@ -244,25 +268,17 @@ namespace Util
                     auto pos = s.find(' ');
                     while (pos != std::string::npos)
                     {
-                        if (index == 23)
+                        if (index == ind)
                         {
-                            // Convert from memory pages to KB.
-                            rss = strtol(&s[pos], nullptr, 10);
-                            rss *= pageSizeBytes;
-                            rss /= 1024;
-                            break;
+                            fclose(fp);
+                            return strtol(&s[pos], nullptr, 10);
                         }
-
                         ++index;
                         pos = s.find(' ', pos + 1);
                     }
                 }
-
-                fclose(fp);
-                return rss;
             }
         }
-
         return 0;
     }
 

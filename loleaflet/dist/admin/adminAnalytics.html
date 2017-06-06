@@ -62,13 +62,35 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header"><script>document.write(l10nstrings.strGraphs)</script></h1>
-		        <div class="graph-container">
-		          <div class="jumbotron">
-		            <svg id="visualisation" width="1010" height="510"></svg>
-		          </div>
-		        </div>
-	      </div>
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#memview" data-toggle="tab">
+                <h4><script>document.write(l10nstrings.strMemoryGraph)</script></h3>
+              </a>
+            </li>
+            <li>
+              <a href="#cpuview" data-toggle="tab">
+                <h4><script>document.write(l10nstrings.strCpuGraph)</script></h3>
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content graph-content">
+            <div id="memview" class="active tab-pane">
+              <div class="graph-container">
+                <div>
+                  <svg id="MemVisualisation" width="1010" height="510"></svg>
+                </div>
+              </div>
+            </div>
+            <div id="cpuview" class="tab-pane">
+              <div class="graph-container">
+                <div>
+                  <svg id="CpuVisualisation" width="1010" height="510"></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>

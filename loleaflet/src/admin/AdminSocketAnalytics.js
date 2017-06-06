@@ -19,22 +19,23 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 	_cpuStatsSize: 0,
 	_cpuStatsInterval: 0,
 
-	_initMemStatsData: function(memStatsSize, memStatsInterval, reset) {
+	_initStatsData: function(option, size, interval, reset) {
+		var actualData;
+
 		if (reset) {
-			this._memStatsData = [];
+			actualData = [];
 		}
 
-		var offset = this._memStatsData.length * memStatsInterval;
-		for (var i = 0; i < memStatsSize; i++) {
-			this._memStatsData.unshift({time: -(offset), value: 0});
-			offset += memStatsInterval;
+		var offset = actualData.length * interval;
+		for (var i = 0; i < size; i++) {
+			actualData.unshift({time: -(offset), value: 0});
+			offset += interval;
 		}
-	},
 
-	_initCpuStatsData: function() {
-		for (var i = 0; i < this._cpuStatsSize; i++) {
-			this._cpuStatsData.push({time: -((this._cpuStatsSize - i - 1) * this._cpuStatsInterval), value: 0});
-		}
+		if (option === 'mem')
+			this._memStatsData = actualData;
+		else if (option === 'cpu')
+			this._cpuStatsData = actualData;
 	},
 
 	onSocketOpen: function() {
@@ -44,19 +45,20 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		this.socket.send('subscribe mem_stats cpu_stats settings');
 		this.socket.send('settings');
 		this.socket.send('mem_stats');
+		this.socket.send('cpu_stats');
 	},
 
-	_createMemData: function() {
-		for (var i = this._memStatsRawData.length - 1, j = this._memStatsData.length - 1; i >= 0 && j >= 0; i--, j--) {
-			this._memStatsData[j].value = parseInt(this._memStatsRawData[i]);
-		}
-	},
+	_d3MemXAxis: null,
+	_d3MemYAxis: null,
+	_d3MemLine: null,
+	_xMemScale: null,
+	_yMemScale: null,
 
-	_d3xAxis: null,
-	_d3yAxis: null,
-	_d3line: null,
-	_xScale: null,
-	_yScale: null,
+	_d3CpuXAxis: null,
+	_d3CpuYAxis: null,
+	_d3CpuLine: null,
+	_xCpuScale: null,
+	_yCpuScale: null,
 
 	_graphWidth: 1000,
 	_graphHeight: 500,
@@ -67,22 +69,28 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		left: 100
 	},
 
-	_setUpAxis: function() {
-		this._xScale = d3.scale.linear().range([this._graphMargins.left, this._graphWidth - this._graphMargins.right]).domain([d3.min(this._memStatsData, function(d) {
+	_setUpAxis: function(option) {
+
+		if (option === 'mem')
+			data = this._memStatsData;
+		else if (option === 'cpu')
+			data = this._cpuStatsData;
+
+		xScale = d3.scale.linear().range([this._graphMargins.left, this._graphWidth - this._graphMargins.right]).domain([d3.min(data, function(d) {
 			return d.time;
-		}), d3.max(this._memStatsData, function(d) {
+		}), d3.max(data, function(d) {
 			return d.time;
 		})]);
 
 
-		this._yScale = d3.scale.linear().range([this._graphHeight - this._graphMargins.bottom, this._graphMargins.top]).domain([d3.min(this._memStatsData, function(d) {
+		yScale = d3.scale.linear().range([this._graphHeight - this._graphMargins.bottom, this._graphMargins.top]).domain([d3.min(data, function(d) {
 			return d.value;
-		}), d3.max(this._memStatsData, function(d) {
+		}), d3.max(data, function(d) {
 			return d.value;
 		})]);
 
-		this._d3xAxis = d3.svg.axis()
-			.scale(this._xScale)
+		d3XAxis = d3.svg.axis()
+			.scale(xScale)
 			.tickFormat(function(d) {
 				d = Math.abs(d / 1000);
 				var units = ['s', 'min', 'hr'];
@@ -92,76 +100,120 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 				return parseInt(d) + units[i] + ' ago';
 			});
 
-		this._d3yAxis = d3.svg.axis()
-			.scale(this._yScale)
-			.tickFormat(function (d) {
-				return Util.humanizeMem(d);
-			})
-			.orient('left');
-
-		var xScale = this._xScale;
-		var yScale = this._yScale;
-
-		this._d3line = d3.svg.line()
+		d3Line = d3.svg.line()
 			.x(function(d) {
 				return xScale(d.time);
 			})
 			.y(function(d) {
 				return yScale(d.value);
-			});
+			})
+			.interpolate('basis');
+
+		if (option === 'mem') {
+			this._xMemScale = xScale;
+			this._yMemScale = yScale;
+			this._d3MemXAxis = d3XAxis;
+			this._d3MemYAxis = d3.svg.axis()
+				.scale(this._yMemScale)
+				.tickFormat(function (d) {
+					return Util.humanizeMem(d);
+				})
+				.orient('left');
+			this._d3MemLine = d3Line;
+		}
+		else if (option === 'cpu') {
+			this._xCpuScale = xScale;
+			this._yCpuScale = yScale;
+			this._d3CpuXAxis = d3XAxis;
+			this._d3CpuYAxis = d3.svg.axis()
+				.scale(this._yCpuScale)
+				.tickFormat(function (d) {
+					return d + '%';
+				})
+				.orient('left');
+			this._d3CpuLine = d3Line;
+		}
 	},
 
-	_createMemGraph: function() {
-		var vis = d3.select('#visualisation');
-
-		this._setUpAxis();
+	_createGraph: function(option) {
+		if (option === 'mem') {
+			var vis = d3.select('#MemVisualisation');
+			this._setUpAxis('mem');
+			xAxis = this._d3MemXAxis;
+			yAxis = this._d3MemYAxis;
+			line = this._d3MemLine;
+			data = this._memStatsData;
+		}
+		else if (option === 'cpu') {
+			var vis = d3.select('#CpuVisualisation');
+			this._setUpAxis('cpu');
+			xAxis = this._d3CpuXAxis;
+			yAxis = this._d3CpuYAxis;
+			line = this._d3CpuLine;
+			data = this._cpuStatsData;
+		}
 
 		vis.append('svg:g')
 		.attr('class', 'x-axis')
 		.attr('transform', 'translate(0,' + (this._graphHeight - this._graphMargins.bottom) + ')')
-		.call(this._d3xAxis);
+		.call(xAxis);
 
 		vis.append('svg:g')
 		.attr('class', 'y-axis')
 		.attr('transform', 'translate(' + this._graphMargins.left + ',0)')
-		.call(this._d3yAxis);
+		.call(yAxis);
 
 		vis.append('svg:path')
-			.attr('d', this._d3line(this._memStatsData))
+			.attr('d', line(data))
 			.attr('class', 'line')
 			.attr('stroke', 'blue')
 			.attr('stroke-width', 2)
 			.attr('fill', 'none');
 	},
 
-	_addNewMemData: function(data) {
+	_addNewData: function(oldData, newData) {
 		// make a space for new data
-		for (var i = this._memStatsData.length - 1; i > 0; i--) {
-			this._memStatsData[i].time = this._memStatsData[i - 1].time;
+		for (var i = oldData.length - 1; i > 0; i--) {
+			oldData[i].time = oldData[i - 1].time;
 		}
 
 		// push new data at time '0'
-		this._memStatsData.push({time: 0, value: parseInt(data)});
+		oldData.push({time: 0, value: parseInt(newData)});
 
 		// remove extra items
-		if (this._memStatsData.length > this._memStatsSize) {
-			this._memStatsData.shift();
+		if (oldData.length > this._memStatsSize) {
+			oldData.shift();
 		}
 	},
 
 	_updateMemGraph: function() {
-		var svg = d3.select('#visualisation');
+		svg = d3.select('#MemVisualisation');
 
-		this._setUpAxis();
+		this._setUpAxis('mem');
 
 		svg.select('.line')
-		.attr('d', this._d3line(this._memStatsData));
+		.attr('d', this._d3MemLine(this._memStatsData));
 
 		svg.select('.x-axis')
-		.call(this._d3xAxis);
+		.call(this._d3MemXAxis);
 
 		svg.select('.y-axis')
-		.call(this._d3yAxis);
+		.call(this._d3MemYAxis);
+	},
+
+	_updateCpuGraph: function() {
+		svg = d3.select('#CpuVisualisation');
+
+		this._setUpAxis('cpu');
+
+		svg.select('.line')
+		.attr('d', this._d3CpuLine(this._cpuStatsData));
+
+		svg.select('.x-axis')
+		.call(this._d3CpuXAxis);
+
+		svg.select('.y-axis')
+		.call(this._d3CpuYAxis);
 	},
 
 	onSocketMessage: function(e) {
@@ -173,12 +225,10 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 			textMsg = '';
 		}
 
-
 		if (textMsg.startsWith('settings')) {
 			textMsg = textMsg.substring('settings '.length);
 			textMsg = textMsg.split(' ');
 
-			//TODO: Add CPU statistics
 			var memStatsSize, memStatsInterval, cpuStatsSize, cpuStatsInterval;
 			var i, j, data;
 			memStatsSize = this._memStatsSize;
@@ -204,10 +254,10 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 			// Fix the axes according to changed data
 			if (memStatsInterval !== this._memStatsInterval) {
 				// We can possibly reuse the data with a bit of work
-				this._initMemStatsData(memStatsSize, memStatsInterval, true);
+				this._initStatsData('mem', memStatsSize, memStatsInterval, true);
 			}
 			else if (memStatsSize > this._memStatsSize) {
-				this._initMemStatsData(memStatsSize - this._memStatsSize, memStatsInterval, false);
+				this._initStatsData('mem', memStatsSize - this._memStatsSize, memStatsInterval, false);
 			}
 			else {
 				// just strip the extra items
@@ -218,11 +268,24 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 
 			this._memStatsSize = memStatsSize;
 			this._memStatsInterval = memStatsInterval;
+
+			// Similar Logic as above for CPU stats
+			if (cpuStatsInterval !== this._cpuStatsInterval) {
+				this._initStatsData('cpu', cpuStatsSize, cpuStatsInterval, true);
+			}
+			else if (cpuStatsSize > this._cpuStatsSize) {
+				this._initStatsData('cpu', cpuStatsSize - this._cpuStatsSize, cpuStatsInterval, false);
+			}
+			else {
+				for (i = 0; i < this._cpuStatsSize - cpuStatsSize; i++) {
+					this._cpuStatsData.shift();
+				}
+			}
+
 			this._cpuStatsSize = cpuStatsSize;
 			this._cpuStatsInterval = cpuStatsInterval;
 		}
-		else if (textMsg.startsWith('mem_stats') ||
-			textMsg.startsWith('cpu_stats')) {
+		else if (textMsg.startsWith('mem_stats')) {
 			textMsg = textMsg.split(' ')[1];
 			if (textMsg.endsWith(',')) {
 				// This is the result of query, not notification
@@ -231,14 +294,32 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 					this._memStatsData[i].value = parseInt(data[j]);
 				}
 
-				//this._createMemData(data);
-				this._createMemGraph();
+				this._createGraph('mem');
 			}
 			else {
 				// this is a notification data; append to _memStatsData
 				data = textMsg.trim();
-				this._addNewMemData(data);
+				this._addNewData(this._memStatsData, data);
 				this._updateMemGraph();
+			}
+		}
+		else if (textMsg.startsWith('cpu_stats')) {
+			textMsg = textMsg.split(' ')[1];
+			if (textMsg.endsWith(',')) {
+				// This is the result of query, not notification
+				data = textMsg.substring(0, textMsg.length - 1).split(',');
+
+				for (i = this._cpuStatsData.length - 1, j = data.length - 1; i >= 0 && j >= 0; i--, j--) {
+					this._cpuStatsData[i].value = parseInt(data[j]);
+				}
+
+				this._createGraph('cpu');
+			}
+			else {
+				// this is a notification data; append to _cpuStatsData
+				data = textMsg.trim();
+				this._addNewData(this._cpuStatsData, data);
+				this._updateCpuGraph();
 			}
 		}
 	},
