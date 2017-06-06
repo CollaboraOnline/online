@@ -286,8 +286,14 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_updateContent: function () {
-		var linkedText = Autolinker.link(this._data.text);
-		$(this._contentText).text(linkedText);
+		// .text() method will escape the string, does not interpret the string as HTML
+		$(this._contentText).text(this._data.text);
+		// Get the escaped HTML out and find for possible, useful links
+		var linkedText = Autolinker.link($(this._contentText).html());
+		// Set the property of text field directly. This is insecure otherwise because it doesn't escape the input
+		// But we have already escaped the input before and only thing we are adding on top of that is Autolinker
+		// generated text.
+		this._contentText.innerHTML = linkedText;
 		// Original unlinked text
 		this._contentText.origText = this._data.text;
 		$(this._nodeModifyText).text(this._data.text);
