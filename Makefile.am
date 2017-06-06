@@ -193,6 +193,7 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  bundled/include/LibreOfficeKit/LibreOfficeKitInit.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h \
                  test/countloolkits.hpp \
+                 test/test.hpp \
                  test/helpers.hpp
 
 dist-hook:
