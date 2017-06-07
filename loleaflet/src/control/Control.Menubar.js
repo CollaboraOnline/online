@@ -25,7 +25,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Cut'), type: 'unocommand', uno: '.uno:Cut'},
 				{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
-				{type: 'separator'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{name: _('Find & Replace'), id: 'findandreplace', type: 'action'},
@@ -190,10 +189,9 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Cut'), type: 'unocommand', uno: '.uno:Cut'},
 				{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
+				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace'), id: 'findandreplace', type: 'action'},
-				{type: 'separator'},
-				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
+				{name: _('Find & Replace'), id: 'findandreplace', type: 'action'}]
 			},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
@@ -252,10 +250,9 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Cut'), type: 'unocommand', uno: '.uno:Cut'},
 				{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
+				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace'), id: 'findandreplace', type: 'action'},
-				{type: 'separator'},
-				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'}]
+				{name: _('Find & Replace'), id: 'findandreplace', type: 'action'}]
 			},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'}]
