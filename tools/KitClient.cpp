@@ -189,13 +189,10 @@ protected:
                 pngStream.write(png.data(), png.size());
                 pngStream.close();
 
-                if (std::getenv("DISPLAY") != nullptr)
+                if (std::system((std::string("display ") + pngFile.path()).c_str()) == -1)
                 {
-                    if (std::system((std::string("display ") + pngFile.path()).c_str()) == -1)
-                    {
-                        // Not worth it to display a warning, this is just a throwaway test program, and
-                        // the developer running it surely notices if nothing shows up...
-                    }
+                    // Not worth it to display a warning, this is just a throwaway test program, and
+                    // the developer running it surely notices if nothing shows up...
                 }
             }
             else

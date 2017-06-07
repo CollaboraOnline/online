@@ -13,6 +13,5 @@ exports.storage = {
 	loadfailed: _('Failed to read document from storage. Please contact your storage server (%storageserver) administrator.'),
 	savediskfull: _('Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing.'),
 	saveunauthorized: _('Document cannot be saved due to expired or invalid access token.'),
-	savefailed: _('Document cannot be saved. Check your permissions or contact the storage server administrator.'),
-	documentconflict: _('Document has been changed in storage outside WOPI.')
+	savefailed: _('Document cannot be saved. Check your permissions or contact the storage server administrator.')
 };
