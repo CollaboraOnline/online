@@ -1538,6 +1538,11 @@ public:
     {
     }
 
+    static void InitStaticFileContentCache()
+    {
+        StaticFileContentCache["discovery.xml"] = getDiscoveryXML();
+    }
+
 private:
 
     /// Set the socket associated with this ResponseClient.
@@ -1752,36 +1757,9 @@ private:
     {
         LOG_DBG("Wopi discovery request: " << request.getURI());
 
-        // http://server/hosting/discovery
-        std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
-        if (!File(discoveryPath).exists())
-        {
-            discoveryPath = LOOLWSD::FileServerRoot + "/discovery.xml";
-        }
-
-        const std::string mediaType = "text/xml";
-        const std::string action = "action";
-        const std::string urlsrc = "urlsrc";
-        const auto& config = Application::instance().config();
-        const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-        const std::string uriValue = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://")
-                                   + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName)
-                                   + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
-
-        InputSource inputSrc(discoveryPath);
-        DOMParser parser;
-        AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);
-        AutoPtr<NodeList> listNodes = docXML->getElementsByTagName(action);
-
-        for (unsigned long it = 0; it < listNodes->length(); ++it)
-        {
-            static_cast<Element*>(listNodes->item(it))->setAttribute(urlsrc, uriValue);
-        }
-
-        std::ostringstream ostrXML;
-        DOMWriter writer;
-        writer.writeNode(ostrXML, docXML);
-        const std::string xml = ostrXML.str();
+        std::string xml = getFileContent("discovery.xml");
+        const std::string hostname = (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+        Poco::replaceInPlace(xml, std::string("%SERVER_HOST%"), hostname);
 
         // TODO: Refactor this to some common handler.
         std::ostringstream oss;
@@ -1789,7 +1767,7 @@ private:
             << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
             << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
             << "Content-Length: " << xml.size() << "\r\n"
-            << "Content-Type: " << mediaType << "\r\n"
+            << "Content-Type: text/xml\r\n"
             << "X-Content-Type-Options: nosniff\r\n"
             << "\r\n"
             << xml;
@@ -2161,12 +2139,62 @@ private:
         }
     }
 
+    /// Lookup cached file content.
+    const std::string& getFileContent(const std::string& filename)
+    {
+        const auto it = StaticFileContentCache.find(filename);
+        if (it == StaticFileContentCache.end())
+        {
+            throw Poco::FileAccessDeniedException("Invalid or forbidden file path: [" + filename + "].");
+        }
+
+        return it->second;
+    }
+
+    /// Process the discovery.xml file and return as string.
+    static std::string getDiscoveryXML()
+    {
+        // http://server/hosting/discovery
+        std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
+        if (!File(discoveryPath).exists())
+        {
+            discoveryPath = LOOLWSD::FileServerRoot + "/discovery.xml";
+        }
+
+        const std::string action = "action";
+        const std::string urlsrc = "urlsrc";
+        const auto& config = Application::instance().config();
+        const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
+        const std::string uriValue = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://")
+                                   + std::string("%SERVER_HOST%")
+                                   + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
+
+        InputSource inputSrc(discoveryPath);
+        DOMParser parser;
+        AutoPtr<Poco::XML::Document> docXML = parser.parse(&inputSrc);
+        AutoPtr<NodeList> listNodes = docXML->getElementsByTagName(action);
+
+        for (unsigned long it = 0; it < listNodes->length(); ++it)
+        {
+            static_cast<Element*>(listNodes->item(it))->setAttribute(urlsrc, uriValue);
+        }
+
+        std::ostringstream ostrXML;
+        DOMWriter writer;
+        writer.writeNode(ostrXML, docXML);
+        return ostrXML.str();
+    }
+
 private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
     std::string _id;
+
+    /// Cache for static files, to avoid reading and processing from disk.
+    static std::map<std::string, std::string> StaticFileContentCache;
 };
 
+std::map<std::string, std::string> ClientRequestDispatcher::StaticFileContentCache;
 
 class PlainSocketFactory : public SocketFactory
 {
@@ -2468,6 +2496,8 @@ int LOOLWSD::innerMain()
 
     if (ClientPortNumber == MasterPortNumber)
         throw IncompatibleOptionsException("port");
+
+    ClientRequestDispatcher::InitStaticFileContentCache();
 
     // Start the internal prisoner server and spawn forkit,
     // which in turn forks first child.
