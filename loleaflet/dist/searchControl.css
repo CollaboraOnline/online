@@ -20,6 +20,7 @@
 	float: left !important;
 	margin: 0px !important;
 	margin-right: 6px !important;
+	width: 20%;
 }
 .findReplaceVex .vex-dialog-button {
 	text-transform: initial !important;
