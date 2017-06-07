@@ -2,7 +2,7 @@
  * L.WOPI contains WOPI related logic
  */
 
-/* global title */
+/* global title w2ui toolbarUpMobileItems resizeToolbar */
 L.Map.WOPI = L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
@@ -100,7 +100,36 @@ L.Map.WOPI = L.Handler.extend({
 		}
 
 		var msg = JSON.parse(e.data);
-		if (msg.MessageId === 'Set_Settings') {
+		if (msg.MessageId === 'Insert_Button') {
+			if (msg.Values) {
+				if (msg.Values.id && !w2ui['toolbar-up'].get(msg.Values.id)
+				   && msg.Values.imgurl) {
+					// add the css rule for the image
+					$('html > head > style').append('.w2ui-icon.' + msg.Values.id + '{background: url(' + msg.Values.imgurl + ')}');
+
+					// add the item to the toolbar
+					w2ui['toolbar-up'].insert('save', [
+						{
+							type: 'button',
+							id: msg.Values.id,
+							img: msg.Values.id,
+							hint: _(msg.Values.hint), /* "Try" to localize ! */
+							postmessage: true /* Notify the host back when button is clicked */
+						}
+					]);
+					if (msg.Values.mobile)
+					{
+						// Add to our list of items to preserve when in mobile mode
+						// FIXME: Wrap the toolbar in a class so that we don't make use
+						// global variables and functions like this
+						var idx = toolbarUpMobileItems.indexOf('save');
+						toolbarUpMobileItems.splice(idx, 0, msg.Values.id);
+					}
+					resizeToolbar();
+				}
+			}
+		}
+		else if (msg.MessageId === 'Set_Settings') {
 			if (msg.Values) {
 				var alwaysActive = msg.Values.AlwaysActive;
 				this._map.options.alwaysActive = !!alwaysActive;
@@ -126,6 +155,7 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId === 'Action_Save') {
 			var dontTerminateEdit = msg.Values && msg.Values['DontTerminateEdit'];
 			var dontSaveIfUnmodified = msg.Values && msg.Values['DontSaveIfUnmodified'];
+			this._notifySave = msg.Values && msg.Values['Notify'];
 
 			this._map.save(dontTerminateEdit, dontSaveIfUnmodified);
 		}
@@ -159,6 +189,14 @@ L.Map.WOPI = L.Handler.extend({
 		var msgId = e.msgId;
 		var values = e.args || {};
 		if (!!this.PostMessageOrigin && window.parent !== window.self) {
+			// Filter out unwanted save request response
+			if (msgId === 'Action_Save_Resp') {
+				if (!this._notifySave)
+					return;
+
+				this._notifySave = false;
+			}
+
 			var msg = {
 				'MessageId': msgId,
 				'SendTime': Date.now(),
