@@ -45,6 +45,7 @@ cscope*
 *.orig
 loolwsd.log
 *.log.*.gz
+*.lo
 
 connect
 lokitclient
