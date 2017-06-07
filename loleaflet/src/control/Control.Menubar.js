@@ -470,13 +470,13 @@ L.Control.Menubar = L.Control.extend({
 							$vexContent.data().vex.option = 'replaceAll';
 						}}),
 					$.extend({}, vex.dialog.buttons.findPrev, {
-						text: '⯇ ' + _('Prev'),
+						text: _('Previous'),
 						className: 'btnArrow',
 						click: function($vexContent, e) {
 							$vexContent.data().vex.option = 'previous';
 						}}),
 					$.extend({}, vex.dialog.buttons.findNext, {
-						text: _('Next') + ' ⯈',
+						text: _('Next'),
 						className: 'btnArrow',
 						click: function($vexContent, e) {
 							$vexContent.data().vex.option = 'next';
