@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-22 08:00+0000\n"
+"POT-Creation-Date: 2017-06-07 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.1.0\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-ui-cs.po\n"
-"X-Pootle-Revision: 2522834\n"
+"X-Pootle-Revision: 2581025\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -2004,12 +2004,11 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:35
 msgid "Previous"
-msgstr ""
+msgstr "Předchozí"
 
 #: src/control/Control.Menubar.js:36
-#, fuzzy
 msgid "Next"
-msgstr "Text"
+msgstr "Další"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:194
@@ -2024,9 +2023,8 @@ msgid "Full screen"
 msgstr "Celá obrazovka"
 
 #: src/control/Control.Menubar.js:46
-#, fuzzy
 msgid "Formatting Marks"
-msgstr "Formátovací značka"
+msgstr "Řídicí znaky"
 
 #: src/control/Control.Menubar.js:50
 #: src/control/Control.Menubar.js:202
@@ -2577,7 +2575,7 @@ msgstr "Toto je nepříjemné, nemůžeme se připojit k dokumentu. Zkuste to zn
 
 #: src/layer/marker/Annotation.js:156
 msgid "Accept change"
-msgstr ""
+msgstr "Přijmout změnu"
 
 #: src/layer/marker/Annotation.js:161
 msgid "Reject change"
@@ -2589,11 +2587,11 @@ msgstr "Otevřít nabídku"
 
 #: src/layer/tile/TileLayer.js:182
 msgid "Modify"
-msgstr ""
+msgstr "Změnit"
 
 #: src/layer/tile/TileLayer.js:194
 msgid "Remove"
-msgstr ""
+msgstr "Odstranit"
 
 #: src/map/Map.js:131
 msgid "Initializing..."

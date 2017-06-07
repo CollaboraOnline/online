@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-22 08:00+0000\n"
+"POT-Creation-Date: 2017-06-07 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.1.0\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-ui-da.po\n"
-"X-Pootle-Revision: 2561692\n"
+"X-Pootle-Revision: 2604903\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -724,7 +724,7 @@ msgstr "Dig"
 
 #: dist/toolbar/toolbar.js:1604
 msgid "Readonly"
-msgstr ""
+msgstr "Skrivebeskyttet"
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -1870,19 +1870,19 @@ msgstr "Optimal kolonnebredde"
 
 #: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "Klip internt"
 
 #: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"
-msgstr ""
+msgstr "Kopier internt"
 
 #: src/control/Control.ContextMenu.js:141
 msgid "Internal Paste"
-msgstr ""
+msgstr "Indsæt internt"
 
 #: src/control/Control.ContextMenu.js:163
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Indsæt speciel internt"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
@@ -1991,7 +1991,7 @@ msgstr "Vælg alle"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
-msgstr ""
+msgstr "Registrer ændringer"
 
 #: src/control/Control.Menubar.js:32
 msgid "Record"
@@ -2006,9 +2006,8 @@ msgid "Previous"
 msgstr "Forrige"
 
 #: src/control/Control.Menubar.js:36
-#, fuzzy
 msgid "Next"
-msgstr "Tekst"
+msgstr "Næste"
 
 #: src/control/Control.Menubar.js:39
 #: src/control/Control.Menubar.js:194
@@ -2447,7 +2446,7 @@ msgstr "Er du sikker på, at du vil slette dette dias?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
-msgstr ""
+msgstr "(100th/mm)"
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "

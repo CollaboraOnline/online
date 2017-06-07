@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-22 08:01+0000\n"
+"POT-Creation-Date: 2017-06-07 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.1.0\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-ui-eu.po\n"
-"X-Pootle-Revision: 2534367\n"
+"X-Pootle-Revision: 2608213\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -2446,7 +2446,7 @@ msgstr "Ziur zaude diapositiba hau ezabatu nahi duzula?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
-msgstr ""
+msgstr "(1/100 mm)"
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "
