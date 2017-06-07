@@ -83,7 +83,9 @@ public:
     bool isLoaded() const { return _isLoaded; }
 
     /// Returns the basic information about the file.
-    FileInfo getFileInfo() { return _fileInfo; }
+    const FileInfo& getFileInfo() const { return _fileInfo; }
+
+    std::string getFileExtension() const { return Poco::Path(_fileInfo._filename).getExtension(); }
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.

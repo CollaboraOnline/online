@@ -546,6 +546,7 @@ std::string LOOLWSD::LOKitVersion;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
+std::set<std::string> LOOLWSD::ViewFileExtensions;
 
 static std::string UnitTestLibrary;
 
@@ -2164,7 +2165,12 @@ private:
 
         for (unsigned long it = 0; it < listNodes->length(); ++it)
         {
-            static_cast<Element*>(listNodes->item(it))->setAttribute(urlsrc, uriValue);
+            Element* elem = static_cast<Element*>(listNodes->item(it));
+            elem->setAttribute(urlsrc, uriValue);
+
+            // Set the View extensions cache as well.
+            if (elem->getAttribute("name") == "view")
+                LOOLWSD::ViewFileExtensions.insert(elem->getAttribute("ext"));
         }
 
         std::ostringstream ostrXML;
