@@ -170,6 +170,14 @@ L.Map.WOPI = L.Handler.extend({
 				this._map.downloadAs(filename + '.' + format, format);
 			}
 		}
+		else if (msg.MessageId === 'Action_ShowBusy') {
+			if (msg.Values && msg.Values.Label) {
+				this._map.fire('showbusy', {label: msg.Values.Label});
+			}
+		}
+		else if (msg.MessageId === 'Action_HideBusy') {
+			this._map.fire('hidebusy');
+		}
 		else if (msg.MessageId === 'Get_Export_Formats') {
 			var exportFormatsResp = [];
 			for (var idx in this._map._docLayer._exportFormats) {
