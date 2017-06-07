@@ -536,7 +536,10 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 // Save to Storage and log result.
                 std::string id = getId();
                 docBroker->saveToStorage(id, success, result);
-                forwardToClient(payload);
+
+                if (!isCloseFrame())
+                    forwardToClient(payload);
+
                 return true;
             }
         }
