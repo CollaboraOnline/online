@@ -176,7 +176,7 @@ L.Map.include({
 
 	showLOKeyboardHelp: function() {
 		var w = window.innerWidth / 2;
-		$.get('/loleaflet/dist/loleaflet-help.html', function(data) {
+		$.get('loleaflet-help.html', function(data) {
 			vex.open({
 				content: data,
 				showCloseButton: true,
