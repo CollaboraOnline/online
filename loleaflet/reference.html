@@ -2896,6 +2896,7 @@ WOPI host to editor
 		<td><code>
 		    <nobr>DontTerminateEdit: &lt;boolean&gt;</nobr>
 		    <nobr>DontSaveIfUnmodified: &lt;boolean&gt;</nobr>
+		    <nobr>Notify: &lt;boolean&gt;</nobr>
 		</code></td>
 		<td>Saves the document.<br/>
 		<code>DontTerminateEdit</code> is relevant for spreadsheets where saving
@@ -2905,6 +2906,9 @@ WOPI host to editor
 		<code>DontSaveIfUnmodified</code> prevents loolwsd to save the file back to storage if document is
 		unmodified (only cursor position changed etc.) but still saved. This can be helpful
 		to prevent creating unnecessary file revisions.
+		<code>Notify</code> when present and set to true notifies the
+		host when document is saved. See <code>Action_Save_Resp</code>
+		for details.
 		</td>
 	</tr>
 	<tr>
@@ -2923,6 +2927,35 @@ WOPI host to editor
 		<td>
 		Downloads the document in format specified by <code>Format</code>. Format must be from the list returned
 		in <code>Get_Export_Formats</code>
+		</td>
+	</tr>
+</table>
+
+Actions response
+(WOPI editor to host)
+<table data-id='postmessage-actions-response'>
+	<tr>
+		<th>MessageId</th>
+		<th>Values</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>Action_Save_Resp</b></code></td>
+		<td><code>
+		    <nobr>success: &lt;boolean&gt;</nobr>
+		    <nobr>result: &lt;string&gt;</nobr>
+		</code></td>
+		<td>Acknowledgement when save finishes.<br/>
+		<code>success</code> tells if LOOL was able to save the document
+		successfully. When this is false, then another
+		parameter, <code>result</code> is present which contains the
+		reason that document was not saved.
+		In case, document was not saved because it was not modified,
+		then this parameter contains the string 'unmodified'. In this
+		case, WOPI hosts can be sure that there are no changes pending
+		in the document to be saved to the storage.
+		This response is only emitted if <code>Notify</code> parameter
+		is mentioned by <code>Action_Save</code> PostMessage API.
 		</td>
 	</tr>
 </table>

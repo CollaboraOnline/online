@@ -210,7 +210,11 @@ function onClick(id, item, subItem) {
 	if (item.disabled) {
 		return;
 	}
-	if (item.uno) {
+
+	if (item.postmessage && item.type === 'button') {
+		map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: item.id} });
+	}
+	else if (item.uno) {
 		if (item.unosheet && map.getDocType() === 'spreadsheet') {
 			map.toggleCommandState(item.unosheet);
 		}
@@ -1407,9 +1411,19 @@ map.on('updateparts pagenumberchanged', function (e) {
 map.on('commandresult', function (e) {
 	var commandName = e.commandName;
 
-	if (commandName === '.uno:Save' && e.success === true) {
-		// Saved a new version; the document is modified.
-		map._everModified = true;
+	if (commandName === '.uno:Save') {
+		if (e.success) {
+			// Saved a new version; the document is modified.
+			map._everModified = true;
+		}
+		var postMessageObj = {
+			success: e.success
+		};
+		if (!e.success) {
+			// add the result reason string if failed
+			postMessageObj['result'] = e.result && e.result.value;
+		}
+		map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
 	}
 	else if ((commandName === '.uno:Undo' || commandName === '.uno:Redo') &&
 		e.success === true && e.result.value && !isNaN(e.result.value)) { /*UNDO_CONFLICT*/
