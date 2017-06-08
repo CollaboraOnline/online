@@ -12,6 +12,10 @@
 	left: calc(50vw - 325px);
 	box-shadow: 0 4px 16px rgba(0,0,0,.2);
 	border: 1px solid rgba(0,0,0,.333);
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 .vex-dialog-message {
 	font-size: 1.2em;
