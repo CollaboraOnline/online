@@ -510,7 +510,11 @@ L.AnnotationManager = L.Class.extend({
 		var id;
 		var changetrack = obj.redline ? true : false;
 		var action = changetrack ? obj.redline.action : obj.comment.action;
-		if (obj.comment.author in this._map._viewInfoByUser) {
+
+		if (changetrack && obj.redline.author in this._map._viewInfoByUser) {
+			obj.redline.avatar = this._map._viewInfoByUser[obj.redline.author].userextrainfo.avatar;
+		}
+		else if (!changetrack && obj.comment.author in this._map._viewInfoByUser) {
 			obj.comment.avatar = this._map._viewInfoByUser[obj.comment.author].userextrainfo.avatar;
 		}
 
