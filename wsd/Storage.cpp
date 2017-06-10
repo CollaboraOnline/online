@@ -286,16 +286,20 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const std::string& 
 {
     try
     {
+        LOG_TRC("Saving local file to local file storage " << _isCopy << " for " << _jailedFilePath);
         // Copy the file back.
         if (_isCopy && Poco::File(_jailedFilePath).exists())
         {
             LOG_INF("Copying " << _jailedFilePath << " to " << _uri.getPath());
             Poco::File(_jailedFilePath).copyTo(_uri.getPath());
 
-            // update its fileinfo object. This is used later to check if someone else changed the
-            // document while we are/were editing it
-            _fileInfo._modifiedTime = Poco::File(_uri.getPath()).getLastModified();
+
         }
+
+        // update its fileinfo object. This is used later to check if someone else changed the
+        // document while we are/were editing it
+        _fileInfo._modifiedTime = Poco::File(_uri.getPath()).getLastModified();
+        Log::trace() << "New FileInfo modified time in storage " << _fileInfo._modifiedTime << Log::end;
     }
     catch (const Poco::Exception& exc)
     {
