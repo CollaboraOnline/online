@@ -510,21 +510,21 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     if (firstInstance)
     {
         _documentLastModifiedTime = fileInfo._modifiedTime;
-        LOG_DBG("Document timestamp: " << Poco::DateTimeFormatter::format(Poco::DateTime(_documentLastModifiedTime),
-                                                                          Poco::DateTimeFormat::ISO8601_FORMAT));
+        Log::debug() << "Document timestamp: " << _documentLastModifiedTime << Log::end;
     }
     else
     {
         // Check if document has been modified by some external action
-        LOG_TRC("Document modified time: " <<
-                Poco::DateTimeFormatter::format(Poco::DateTime(fileInfo._modifiedTime),
-                                                Poco::DateTimeFormat::ISO8601_FORMAT));
+        Log::trace() << "Document modified time: " << fileInfo._modifiedTime << Log::end;
         static const Poco::Timestamp Zero(Poco::Timestamp::fromEpochTime(0));
         if (_documentLastModifiedTime != Zero &&
             fileInfo._modifiedTime != Zero &&
             _documentLastModifiedTime != fileInfo._modifiedTime)
         {
-            LOG_WRN("Document [" << _docKey << "] has been modified behind our back. Informing all clients.");
+            Log::trace() << "Document " << _docKey << "] has been modified behind our back. Informing all clients."
+                         << "Expected: " << _documentLastModifiedTime
+                         << "Actual: " << fileInfo._modifiedTime << Log::end;
+
             _documentChangedInStorage = true;
             const std::string errorMsg = "error: cmd=storage kind=documentconflict";
             session->sendTextFrame(errorMsg);
@@ -658,9 +658,9 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         // After a successful save, we are sure that document in the storage is same as ours
         _documentChangedInStorage = false;
 
-        LOG_DBG("Saved docKey [" << _docKey << "] to URI [" << uri << "] and updated tile cache. Document modified timestamp: " <<
-                Poco::DateTimeFormatter::format(Poco::DateTime(_documentLastModifiedTime),
-                                                               Poco::DateTimeFormat::ISO8601_FORMAT));
+        Log::debug() << "Saved docKey [" << _docKey << "] to URI [" << uri
+                     << "] and updated tile cache. Document modified timestamp: "
+                     << _documentLastModifiedTime << Log::end;
         return true;
     }
     else if (storageSaveResult == StorageBase::SaveResult::DISKFULL)

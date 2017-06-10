@@ -17,6 +17,9 @@
 #include <sstream>
 #include <string>
 
+#include <Poco/DateTime.h>
+#include <Poco/DateTimeFormat.h>
+#include <Poco/DateTimeFormatter.h>
 #include <Poco/Logger.h>
 
 namespace Log
@@ -165,6 +168,17 @@ namespace Log
         if (lhs.enabled())
         {
             lhs._stream << rhs;
+        }
+
+        return lhs;
+    }
+
+    inline StreamLogger& operator<<(StreamLogger& lhs, const Poco::Timestamp& rhs)
+    {
+        if (lhs.enabled())
+        {
+            lhs._stream <<  Poco::DateTimeFormatter::format(Poco::DateTime(rhs),
+                                                            Poco::DateTimeFormat::ISO8601_FRAC_FORMAT);
         }
 
         return lhs;
