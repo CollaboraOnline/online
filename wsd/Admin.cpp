@@ -104,7 +104,9 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
              tokens[0] == "active_users_count" ||
              tokens[0] == "active_docs_count" ||
              tokens[0] == "mem_stats" ||
-             tokens[0] == "cpu_stats")
+             tokens[0] == "cpu_stats" ||
+             tokens[0] == "sent_activity" ||
+             tokens[0] == "recv_activity")
     {
         const std::string result = model.query(tokens[0]);
         if (!result.empty())
@@ -170,7 +172,9 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
             << "mem_stats_size=" << model.query("mem_stats_size") << ' '
             << "mem_stats_interval=" << std::to_string(_admin->getMemStatsInterval()) << ' '
             << "cpu_stats_size="  << model.query("cpu_stats_size") << ' '
-            << "cpu_stats_interval=" << std::to_string(_admin->getCpuStatsInterval()) << ' ';
+            << "cpu_stats_interval=" << std::to_string(_admin->getCpuStatsInterval()) << ' '
+            << "net_stats_size=" << model.query("net_stats_size") << ' '
+            << "net_stats_interval=" << std::to_string(_admin->getNetStatsInterval()) << ' ';
 
         const DocProcSettings& docProcSettings = _admin->getDefDocProcSettings();
         oss << "limit_virt_mem_mb=" << docProcSettings.LimitVirtMemMb << ' '
@@ -321,8 +325,11 @@ Admin::Admin() :
     _forKitWritePipe(-1),
     _lastTotalMemory(0),
     _lastJiffies(0),
+    _lastSentCount(0),
+    _lastRecvCount(0),
     _memStatsTaskIntervalMs(5000),
-    _cpuStatsTaskIntervalMs(2000)
+    _cpuStatsTaskIntervalMs(2000),
+    _networkStatsIntervalMs(5000)
 {
     LOG_INF("Admin ctor.");
 
@@ -338,28 +345,30 @@ Admin::~Admin()
 
 void Admin::pollingThread()
 {
-    std::chrono::steady_clock::time_point lastCPU, lastMem;
+    std::chrono::steady_clock::time_point lastCPU, lastMem, lastNet;
 
     _model.setThreadOwner(std::this_thread::get_id());
 
     lastCPU = std::chrono::steady_clock::now();
     lastMem = lastCPU;
+    lastNet = lastCPU;
 
     while (!_stop && !TerminationFlag && !ShutdownRequestFlag)
     {
         std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+
         int cpuWait = _cpuStatsTaskIntervalMs -
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCPU).count();
-
-        size_t currentJiffies = getTotalCpuUsage();
         if (cpuWait <= 0)
         {
+            size_t currentJiffies = getTotalCpuUsage();
             auto cpuPercent = 100 * 1000 * currentJiffies / (sysconf (_SC_CLK_TCK) * _cpuStatsTaskIntervalMs);
             _model.addCpuStats(cpuPercent);
 
             lastCPU = now;
             cpuWait += _cpuStatsTaskIntervalMs;
         }
+
         int memWait = _memStatsTaskIntervalMs -
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastMem).count();
         if (memWait <= 0)
@@ -377,8 +386,25 @@ void Admin::pollingThread()
             memWait += _memStatsTaskIntervalMs;
         }
 
+        int netWait = _networkStatsIntervalMs -
+            std::chrono::duration_cast<std::chrono::milliseconds>(now - lastNet).count();
+        if(netWait <= 0)
+        {
+            uint64_t sentCount = _model.getSentBytesTotal();
+            uint64_t recvCount = _model.getRecvBytesTotal();
+
+            _model.addSentStats(sentCount - _lastSentCount);
+            _model.addRecvStats(recvCount - _lastRecvCount);
+
+            LOG_TRC("Total Data sent: " << sentCount << ", recv: " << recvCount);
+            _lastRecvCount = recvCount;
+            _lastSentCount = sentCount;
+
+            lastNet = now;
+            netWait += _networkStatsIntervalMs;
+        }
         // Handle websockets & other work.
-        int timeout = std::min(cpuWait, memWait);
+        int timeout = std::min(std::min(cpuWait, memWait), netWait);
         LOG_TRC("Admin poll for " << timeout << "ms");
         poll(timeout);
     }
@@ -461,6 +487,11 @@ unsigned Admin::getMemStatsInterval()
 unsigned Admin::getCpuStatsInterval()
 {
     return _cpuStatsTaskIntervalMs;
+}
+
+unsigned Admin::getNetStatsInterval()
+{
+    return _networkStatsIntervalMs;
 }
 
 AdminModel& Admin::getModel()

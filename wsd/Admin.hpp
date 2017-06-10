@@ -95,6 +95,8 @@ public:
 
     unsigned getCpuStatsInterval();
 
+    unsigned getNetStatsInterval();
+
     void rescheduleMemTimer(unsigned interval);
 
     void rescheduleCpuTimer(unsigned interval);
@@ -124,11 +126,13 @@ private:
     int _forKitWritePipe;
     size_t _lastTotalMemory;
     size_t _lastJiffies;
+    uint64_t _lastSentCount;
+    uint64_t _lastRecvCount;
 
     std::atomic<int> _memStatsTaskIntervalMs;
     std::atomic<int> _cpuStatsTaskIntervalMs;
-
     DocProcSettings _defDocProcSettings;
+    std::atomic<int> _networkStatsIntervalMs;
 };
 
 #endif

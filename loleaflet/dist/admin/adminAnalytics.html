@@ -73,6 +73,11 @@
                 <h4><script>document.write(l10nstrings.strCpuGraph)</script></h3>
               </a>
             </li>
+            <li>
+              <a href="#networkview" data-toggle="tab">
+                <h4><script>document.write(l10nstrings.strNetGraph)</script></h3>
+              </a>
+            </li>
           </ul>
           <div class="tab-content graph-content">
             <div id="memview" class="active tab-pane">
@@ -86,6 +91,13 @@
               <div class="graph-container">
                 <div>
                   <svg id="CpuVisualisation" width="1010" height="510"></svg>
+                </div>
+              </div>
+            </div>
+            <div id="networkview" class="tab-pane">
+              <div class="graph-container">
+                <div>
+                  <svg id="NetVisualisation" width="1010" height="510"></svg>
                 </div>
               </div>
             </div>

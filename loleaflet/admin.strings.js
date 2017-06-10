@@ -27,6 +27,7 @@ l10nstrings.strKill = _('Kill');
 l10nstrings.strGraphs = _('Graphs');
 l10nstrings.strMemoryGraph = _('Memory Graph');
 l10nstrings.strCpuGraph = _('CPU Graph');
+l10nstrings.strNetGraph = _('Network Graph');
 l10nstrings.strSave = _('Save');
 l10nstrings.strMemoryStatsCachesize = _('Cache size of memory statistics');
 l10nstrings.strMemoryStatsInterval = _('Time interval of memory statistics (in ms)');

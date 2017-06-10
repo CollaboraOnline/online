@@ -249,8 +249,8 @@ void DocumentBroker::pollThread()
             // send change since last notification.
             Admin::instance().addBytes(getDocKey(),
                                        // connection drop transiently reduces this.
-                                       std::max(sent - adminSent, uint64_t(0)),
-                                       std::max(recv - adminRecv, uint64_t(0)));
+                                       (sent > adminSent ? (sent - adminSent): uint64_t(0)),
+                                       (recv > adminRecv ? (recv - adminRecv): uint64_t(0)));
             LOG_INF("Doc [" << _docKey << "] added sent: " << sent << " recv: " << recv << " bytes to totals");
             adminSent = sent;
             adminRecv = recv;
