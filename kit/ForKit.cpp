@@ -37,6 +37,7 @@
 #include "Util.hpp"
 
 #include "common/FileUtil.hpp"
+#include "common/Seccomp.hpp"
 #include "common/SigUtil.hpp"
 #include "security.h"
 
@@ -418,6 +419,21 @@ int main(int argc, char** argv)
             Util::getVersionInfo(version, hash);
             std::cout << "loolforkit version details: " << version << " - " << hash << std::endl;
             DisplayVersion = true;
+        }
+        else if (std::strstr(cmd, "--rlimits") == cmd)
+        {
+            eq = std::strchr(cmd, '=');
+            const std::string rlimits = std::string(eq+1);
+            std::vector<std::string> tokens = LOOLProtocol::tokenize(rlimits, ';');
+            for (const std::string& cmdLimit : tokens)
+            {
+                const auto pair = LOOLProtocol::split(cmdLimit, ':');
+                std::vector<std::string> tokensLimit = { "setconfig", pair.first, pair.second };
+                if (!Seccomp::handleSetrlimitCommand(tokensLimit))
+                {
+                    LOG_ERR("Unknown rlimits command: " << cmdLimit);
+                }
+            }
         }
 #if ENABLE_DEBUG
         // this process has various privileges - don't run arbitrary code.

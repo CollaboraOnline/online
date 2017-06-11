@@ -1162,6 +1162,14 @@ bool LOOLWSD::createForKit()
     args.push_back("--childroot=" + ChildRoot);
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
     args.push_back("--masterport=" + std::to_string(MasterPortNumber));
+
+    std::ostringstream ossRLimits;
+    ossRLimits << "limit_virt_mem_mb:" << getConfigValue<int>("per_document.limit_virt_mem_mb", 0);
+    ossRLimits << ";limit_data_mem_kb:" << getConfigValue<int>("per_document.limit_data_mem_kb", 0);
+    ossRLimits << ";limit_stack_mem_kb:" << getConfigValue<int>("per_document.limit_stack_mem_kb", 0);
+    ossRLimits << ";limit_file_size_mb:" << getConfigValue<int>("per_document.limit_file_size_mb", 0);
+    args.push_back("--rlimits=" + ossRLimits.str());
+
     if (UnitWSD::get().hasKitHooks())
     {
         args.push_back("--unitlib=" + UnitTestLibrary);

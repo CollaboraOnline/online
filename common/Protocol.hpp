@@ -161,6 +161,21 @@ namespace LOOLProtocol
         return std::string(message, size);
     }
 
+    /// Split a string in two at the delimeter, removing it.
+    inline
+    std::pair<std::string, std::string> split(const char* s, const int length, const char delimeter = ' ')
+    {
+        const auto size = getDelimiterPosition(s, length, delimeter);
+        return std::make_pair(std::string(s, size), std::string(s+size+1));
+    }
+
+    /// Split a string in two at the delimeter, removing it.
+    inline
+    std::pair<std::string, std::string> split(const std::string& s, const char delimeter = ' ')
+    {
+        return split(s.c_str(), s.size(), delimeter);
+    }
+
     /// Returns the first token of a message.
     inline
     std::string getFirstToken(const char *message, const int length, const char delim = ' ')
