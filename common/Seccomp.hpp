@@ -14,6 +14,10 @@ namespace Seccomp {
 
     /// Lock-down a process hard - @returns true on success.
     bool lockdown(Type type);
+
+    /// Handles setconfig command with limit_... subcommands.
+    /// Returns true iff it handled the command, regardless of success/failure.
+    bool handleSetrlimitCommand(const std::vector<std::string>& tokens);
 };
 
 #endif

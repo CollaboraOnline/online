@@ -16,16 +16,17 @@
 #if DISABLE_SECCOMP == 0
 #include <dlfcn.h>
 #include <ftw.h>
-#include <malloc.h>
-#include <sys/capability.h>
-#include <unistd.h>
-#include <utime.h>
-#include <signal.h>
-#include <sys/prctl.h>
 #include <linux/audit.h>
 #include <linux/filter.h>
 #include <linux/seccomp.h>
-#endif
+#include <malloc.h>
+#include <signal.h>
+#include <sys/capability.h>
+#include <sys/prctl.h>
+#include <sys/resource.h>
+#include <sys/time.h>
+#include <unistd.h>
+#include <utime.h>
 
 #include <common/Log.hpp>
 #include <common/SigUtil.hpp>
@@ -221,6 +222,83 @@ bool lockdown(Type type)
      LOG_WRN("Warning this code was compiled without seccomp enabled, this setup is not recommended for production.");
      return true;
 #endif // DISABLE_SECCOMP == 0
+}
+
+bool handleSetrlimitCommand(const std::vector<std::string>& tokens)
+{
+    if (tokens.size() == 3 && tokens[0] == "setconfig")
+    {
+        if (tokens[1] == "limit_virt_mem_mb")
+        {
+            rlim_t lim = std::stoi(tokens[2]) * 1024 * 1024;
+            if (lim <= 0)
+                lim = RLIM_INFINITY;
+
+            rlimit rlim = { lim, lim };
+            if (setrlimit(RLIMIT_AS, &rlim) != 0)
+                LOG_SYS("Failed to set RLIMIT_AS to " << lim << " bytes.");
+
+            if (getrlimit(RLIMIT_AS, &rlim) == 0)
+                LOG_INF("RLIMIT_AS is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
+            else
+                LOG_SYS("Failed to get RLIMIT_AS.");
+
+            return true;
+        }
+        else if (tokens[1] == "limit_data_mem_kb")
+        {
+            rlim_t lim = std::stoi(tokens[2]) * 1024;
+            if (lim <= 0)
+                lim = RLIM_INFINITY;
+
+            rlimit rlim = { lim, lim };
+            if (setrlimit(RLIMIT_DATA, &rlim) != 0)
+                LOG_SYS("Failed to set RLIMIT_DATA to " << lim << " bytes.");
+
+            if (getrlimit(RLIMIT_DATA, &rlim) == 0)
+                LOG_INF("RLIMIT_DATA is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
+            else
+                LOG_SYS("Failed to get RLIMIT_DATA.");
+
+            return true;
+        }
+        else if (tokens[1] == "limit_stack_mem_kb")
+        {
+            rlim_t lim = std::stoi(tokens[2]) * 1024;
+            if (lim <= 0)
+                lim = RLIM_INFINITY;
+
+            rlimit rlim = { lim, lim };
+            if (setrlimit(RLIMIT_STACK, &rlim) != 0)
+                LOG_SYS("Failed to set RLIMIT_STACK to " << lim << " bytes.");
+
+            if (getrlimit(RLIMIT_STACK, &rlim) == 0)
+                LOG_INF("RLIMIT_STACK is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
+            else
+                LOG_SYS("Failed to get RLIMIT_STACK.");
+
+            return true;
+        }
+        else if (tokens[1] == "limit_file_size_mb")
+        {
+            rlim_t lim = std::stoi(tokens[2]) * 1024 * 1024;
+            if (lim <= 0)
+                lim = RLIM_INFINITY;
+
+            rlimit rlim = { lim, lim };
+            if (setrlimit(RLIMIT_NOFILE, &rlim) != 0)
+                LOG_SYS("Failed to set RLIMIT_NOFILE to " << lim << " bytes.");
+
+            if (getrlimit(RLIMIT_NOFILE, &rlim) == 0)
+                LOG_INF("RLIMIT_NOFILE is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
+            else
+                LOG_SYS("Failed to get RLIMIT_NOFILE.");
+
+            return true;
+        }
+    }
+
+    return false;
 }
 
 } // namespace Seccomp
