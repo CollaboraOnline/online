@@ -1831,7 +1831,7 @@ void lokit_main(const std::string& childRoot,
 #endif
 
                     LOG_DBG(socketName << ": recv [" << LOOLProtocol::getAbbreviatedMessage(message) << "].");
-                    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                    std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
 
                     // Note: Syntax or parsing errors here are unexpected and fatal.
                     if (TerminationFlag)
@@ -1875,6 +1875,14 @@ void lokit_main(const std::string& childRoot,
                         else
                         {
                             LOG_WRN("No document while processing " << tokens[0] << " request.");
+                        }
+                    }
+                    else if (tokens.size() == 3 && tokens[0] == "setconfig")
+                    {
+                        // Currently onlly rlimit entries are supported.
+                        if (!Seccomp::handleSetrlimitCommand(tokens))
+                        {
+                            LOG_ERR("Unknown setconfig command: " << message);
                         }
                     }
                     else
