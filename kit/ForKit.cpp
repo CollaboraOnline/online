@@ -111,6 +111,18 @@ public:
                     LOG_WRN("Cannot spawn " << tokens[1] << " children as requested.");
                 }
             }
+            else if (tokens.size() == 3 && tokens[0] == "setconfig")
+            {
+                // Currently onlly rlimit entries are supported.
+                if (!Seccomp::handleSetrlimitCommand(tokens))
+                {
+                    LOG_ERR("Unknown setconfig command: " << message);
+                }
+            }
+            else
+            {
+                LOG_ERR("Unknown command: " << message);
+            }
         }
         catch (const std::exception& exc)
         {
