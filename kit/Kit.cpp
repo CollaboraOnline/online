@@ -19,6 +19,8 @@
 #include <sys/capability.h>
 #include <unistd.h>
 #include <utime.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 #include <atomic>
 #include <cassert>
@@ -1763,6 +1765,27 @@ void lokit_main(const std::string& childRoot,
             LOG_ERR("LibreOfficeKit security lockdown failed. Exiting.");
             std::_Exit(Application::EXIT_SOFTWARE);
         }
+
+        rlimit rlim = { 0, 0 };
+        if (getrlimit(RLIMIT_AS, &rlim) == 0)
+            LOG_INF("RLIMIT_AS is " << rlim.rlim_max << " bytes.");
+        else
+            LOG_SYS("Failed to get RLIMIT_AS.");
+
+        if (getrlimit(RLIMIT_DATA, &rlim) == 0)
+            LOG_INF("RLIMIT_DATA is " << rlim.rlim_max << " bytes.");
+        else
+            LOG_SYS("Failed to get RLIMIT_DATA.");
+
+        if (getrlimit(RLIMIT_STACK, &rlim) == 0)
+            LOG_INF("RLIMIT_STACK is " << rlim.rlim_max << " bytes.");
+        else
+            LOG_SYS("Failed to get RLIMIT_STACK.");
+
+        if (getrlimit(RLIMIT_NOFILE, &rlim) == 0)
+            LOG_INF("RLIMIT_NOFILE is " << rlim.rlim_max << " bytes.");
+        else
+            LOG_SYS("Failed to get RLIMIT_NOFILE.");
 
         assert(loKit);
         LOG_INF("Process is ready.");
