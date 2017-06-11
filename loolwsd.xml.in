@@ -16,6 +16,10 @@
     <per_document desc="Document-specific settings, including LO Core settings.">
         <max_concurrency desc="The maximum number of threads to use while processing a document." type="uint" default="4">4</max_concurrency>
         <idle_timeout_secs desc="The maximum number of seconds before unloading an idle document. Defaults to 1 hour." type="uint" default="3600">3600</idle_timeout_secs>
+        <limit_virt_mem_kb desc="The maximum virtual memory allowed to each document process. 0 for unlimited, 1700 min." type="uint">0</limit_virt_mem_kb>
+        <limit_data_mem_kb desc="The maximum memory data segment allowed to each document process. 0 for unlimited." type="uint">0</limit_data_mem_kb>
+        <limit_stack_mem_kb desc="The maximum stack size allowed to each document process. 0 for unlimited." type="uint">8000</limit_stack_mem_kb>
+        <limit_file_size_mb desc="The maximum file size allowed to each documen process to write. 0 for unlimited." type="uint">50</limit_file_size_mb>
     </per_document>
 
     <per_view desc="View-specific settings.">
