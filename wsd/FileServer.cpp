@@ -481,7 +481,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
            << "script-src 'unsafe-inline' 'self'; "
            << "style-src 'self' 'unsafe-inline'; "
            << "font-src 'self' data:; "
-           << "object-src blob: ;";
+           << "object-src blob:; ";
 
     std::string frameAncestor;
     const auto it = request.find("Referer"); // Referer[sic]
