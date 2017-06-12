@@ -85,6 +85,7 @@ public:
     void rmDoc(const std::string& docKey);
 
     void setForKitPid(const int forKitPid) { _forKitPid = forKitPid; }
+    void setForKitWritePipe(const int forKitWritePipe) { _forKitWritePipe = forKitWritePipe; }
 
     /// Callers must ensure that modelMutex is acquired
     AdminModel& getModel();
@@ -103,7 +104,15 @@ public:
     void dumpState(std::ostream& os) override;
 
     const DocProcSettings& getDefDocProcSettings() const { return _defDocProcSettings; }
-    void setDefDocProcSettings(const DocProcSettings& docProcSettings) { _defDocProcSettings = docProcSettings; }
+    void setDefDocProcSettings(const DocProcSettings& docProcSettings)
+    {
+        _defDocProcSettings = docProcSettings;
+        notifyForkit();
+    }
+
+private:
+    /// Notify Forkit of changed settings.
+    void notifyForkit();
 
 private:
     /// Memory consumption has increased, start killing kits etc. till memory consumption gets back
@@ -115,6 +124,7 @@ private:
     /// the Admin Poll thread.
     AdminModel _model;
     int _forKitPid;
+    int _forKitWritePipe;
     size_t _lastTotalMemory;
     size_t _totalSysMem;
 

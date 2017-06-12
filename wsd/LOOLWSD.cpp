@@ -801,6 +801,13 @@ void LOOLWSD::initialize(Application& self)
 
     ServerApplication::initialize(self);
 
+    DocProcSettings docProcSettings;
+    docProcSettings.LimitVirtMemMb = getConfigValue<int>("per_document.limit_virt_mem_mb", 0);
+    docProcSettings.LimitDataMemKb = getConfigValue<int>("per_document.limit_data_mem_kb", 0);
+    docProcSettings.LimitStackMemKb = getConfigValue<int>("per_document.limit_stack_mem_kb", 0);
+    docProcSettings.LimitFileSizeMb = getConfigValue<int>("per_document.limit_file_size_mb", 0);
+    Admin::instance().setDefDocProcSettings(docProcSettings);
+
 #if ENABLE_DEBUG
     std::cerr << "\nLaunch this in your browser:\n\n"
               << getLaunchURI() << '\n' << std::endl;
@@ -1168,13 +1175,7 @@ bool LOOLWSD::createForKit()
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
     args.push_back("--masterport=" + std::to_string(MasterPortNumber));
 
-    DocProcSettings docProcSettings;
-    docProcSettings.LimitVirtMemMb = getConfigValue<int>("per_document.limit_virt_mem_mb", 0);
-    docProcSettings.LimitDataMemKb = getConfigValue<int>("per_document.limit_data_mem_kb", 0);
-    docProcSettings.LimitStackMemKb = getConfigValue<int>("per_document.limit_stack_mem_kb", 0);
-    docProcSettings.LimitFileSizeMb = getConfigValue<int>("per_document.limit_file_size_mb", 0);
-    Admin::instance().setDefDocProcSettings(docProcSettings);
-
+    const DocProcSettings& docProcSettings = Admin::instance().getDefDocProcSettings();
     std::ostringstream ossRLimits;
     ossRLimits << "limit_virt_mem_mb:" << docProcSettings.LimitVirtMemMb;
     ossRLimits << ";limit_data_mem_kb:" << docProcSettings.LimitDataMemKb;
@@ -1200,14 +1201,20 @@ bool LOOLWSD::createForKit()
     }
 
     // Always reap first, in case we haven't done so yet.
-    int status;
-    waitpid(ForKitProcId, &status, WUNTRACED | WNOHANG);
-    ForKitProcId = -1;
-    Admin::instance().setForKitPid(ForKitProcId);
+    if (ForKitProcId != -1)
+    {
+        int status;
+        waitpid(ForKitProcId, &status, WUNTRACED | WNOHANG);
+        ForKitProcId = -1;
+        Admin::instance().setForKitPid(ForKitProcId);
+    }
 
     if (ForKitWritePipe != -1)
+    {
         close(ForKitWritePipe);
-    ForKitWritePipe = -1;
+        ForKitWritePipe = -1;
+        Admin::instance().setForKitWritePipe(ForKitWritePipe);
+    }
 
     // ForKit always spawns one.
     ++OutstandingForks;
@@ -1228,6 +1235,7 @@ bool LOOLWSD::createForKit()
 
     // Init the Admin manager
     Admin::instance().setForKitPid(ForKitProcId);
+    Admin::instance().setForKitWritePipe(ForKitWritePipe);
 
     rebalanceChildren(LOOLWSD::NumPreSpawnedChildren - 1);
     return ForKitProcId != -1;
