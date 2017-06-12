@@ -166,14 +166,19 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     {
         // for now, we have only these settings
         std::ostringstream oss;
-        oss << tokens[0] << " "
-            << "mem_stats_size=" << model.query("mem_stats_size") << " "
-            << "mem_stats_interval=" << std::to_string(_admin->getMemStatsInterval()) << " "
-            << "cpu_stats_size="  << model.query("cpu_stats_size") << " "
-            << "cpu_stats_interval=" << std::to_string(_admin->getCpuStatsInterval());
+        oss << "settings "
+            << "mem_stats_size=" << model.query("mem_stats_size") << ' '
+            << "mem_stats_interval=" << std::to_string(_admin->getMemStatsInterval()) << ' '
+            << "cpu_stats_size="  << model.query("cpu_stats_size") << ' '
+            << "cpu_stats_interval=" << std::to_string(_admin->getCpuStatsInterval()) << ' ';
 
-        std::string responseFrame = oss.str();
-        sendTextFrame(responseFrame);
+        const DocProcSettings& docProcSettings = _admin->getDefDocProcSettings();
+        oss << "limit_virt_mem_mb=" << docProcSettings.LimitVirtMemMb << ' '
+            << "limit_data_mem_kb=" << docProcSettings.LimitDataMemKb << ' '
+            << "limit_stack_mem_kb=" << docProcSettings.LimitStackMemKb << ' '
+            << "limit_file_size_mb=" << docProcSettings.LimitFileSizeMb << ' ';
+
+        sendTextFrame(oss.str());
     }
     else if (tokens[0] == "shutdown")
     {
@@ -187,7 +192,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         for (size_t i = 1; i < tokens.count(); i++)
         {
             StringTokenizer setting(tokens[i], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            unsigned settingVal = 0;
+            int settingVal = 0;
             try
             {
                 settingVal = std::stoi(setting[1]);
@@ -199,37 +204,65 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
                 return;
             }
 
-            if (setting[0] == "mem_stats_size")
+            const std::string settingName = setting[0];
+            if (settingName == "mem_stats_size")
             {
-                if (settingVal != static_cast<unsigned>(std::stoi(model.query(setting[0]))))
+                if (settingVal != std::stoi(model.query(settingName)))
                 {
                     model.setMemStatsSize(settingVal);
                 }
             }
-            else if (setting[0] == "mem_stats_interval")
+            else if (settingName == "mem_stats_interval")
             {
-                if (settingVal != _admin->getMemStatsInterval())
+                if (settingVal != static_cast<int>(_admin->getMemStatsInterval()))
                 {
                     _admin->rescheduleMemTimer(settingVal);
                     model.clearMemStats();
                     model.notify("settings mem_stats_interval=" + std::to_string(settingVal));
                 }
             }
-            else if (setting[0] == "cpu_stats_size")
+            else if (settingName == "cpu_stats_size")
             {
-                if (settingVal != static_cast<unsigned>(std::stoi(model.query(setting[0]))))
+                if (settingVal != std::stoi(model.query(settingName)))
                 {
                     model.setCpuStatsSize(settingVal);
                 }
             }
-            else if (setting[0] == "cpu_stats_interval")
+            else if (settingName == "cpu_stats_interval")
             {
-                if (settingVal != _admin->getCpuStatsInterval())
+                if (settingVal != static_cast<int>(_admin->getCpuStatsInterval()))
                 {
                     _admin->rescheduleCpuTimer(settingVal);
                     model.clearCpuStats();
                     model.notify("settings cpu_stats_interval=" + std::to_string(settingVal));
                 }
+            }
+            else if (LOOLProtocol::matchPrefix("limit_", settingName))
+            {
+                DocProcSettings docProcSettings = _admin->getDefDocProcSettings();
+                if (settingName == "limit_virt_mem_mb")
+                {
+                    docProcSettings.LimitVirtMemMb = settingVal;
+                }
+                else if (settingName == "limit_data_mem_kb")
+                {
+                    docProcSettings.LimitDataMemKb = settingVal;
+                }
+                else if (settingName == "limit_stack_mem_kb")
+                {
+                    docProcSettings.LimitStackMemKb = settingVal;
+                }
+                else if (settingName == "limit_file_size_mb")
+                {
+                    docProcSettings.LimitFileSizeMb = settingVal;
+                }
+                else
+                {
+                    LOG_ERR("Unknown limit: " << settingName);
+                }
+
+                model.notify("settings " + settingName + '=' + std::to_string(settingVal));
+                _admin->setDefDocProcSettings(docProcSettings);
             }
         }
     }

@@ -43,6 +43,14 @@ private:
     std::time_t _end = 0;
 };
 
+struct DocProcSettings
+{
+    size_t LimitVirtMemMb;
+    size_t LimitDataMemKb;
+    size_t LimitStackMemKb;
+    size_t LimitFileSizeMb;
+};
+
 /// A document in Admin controller.
 class Document
 {
@@ -100,6 +108,9 @@ public:
         _recvBytes += recv;
     }
 
+    const DocProcSettings& getDocProcSettings() const { return _docProcSettings; }
+    void setDocProcSettings(const DocProcSettings& docProcSettings) { _docProcSettings = docProcSettings; }
+
     std::string to_string() const;
 
 private:
@@ -124,6 +135,9 @@ private:
 
     /// Total bytes sent and recv'd by this document.
     uint64_t _sentBytes, _recvBytes;
+
+    /// Per-doc kit process settings.
+    DocProcSettings _docProcSettings;
 };
 
 /// An Admin session subscriber.

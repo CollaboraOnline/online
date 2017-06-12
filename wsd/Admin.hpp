@@ -104,6 +104,9 @@ public:
 
     void dumpState(std::ostream& os) override;
 
+    const DocProcSettings& getDefDocProcSettings() const { return _defDocProcSettings; }
+    void setDefDocProcSettings(const DocProcSettings& docProcSettings) { _defDocProcSettings = docProcSettings; }
+
 private:
     /// The model is accessed only during startup & in
     /// the Admin Poll thread.
@@ -114,6 +117,8 @@ private:
 
     std::atomic<int> _memStatsTaskIntervalMs;
     std::atomic<int> _cpuStatsTaskIntervalMs;
+
+    DocProcSettings _defDocProcSettings;
 };
 
 #endif
