@@ -27,6 +27,10 @@ l10nstrings.strMemoryStatsCachesize = _('Cache size of memory statistics');
 l10nstrings.strMemoryStatsInterval = _('Time interval of memory statistics (in ms)');
 l10nstrings.strCpuStatsCachesize = _('Cache size of CPU statistics');
 l10nstrings.strCpuStatsInterval = _('Time interval of CPU statistics (in ms)');
+l10nstrings.strLimitVirtMemMb = _('Maximum Document process virtual memory (in MB)');
+l10nstrings.strLimitDataMemKb = _('Maximum Document process data memory (in KB)');
+l10nstrings.strLimitStackMemKb = _('Maximum Document process stack memory (in KB)');
+l10nstrings.strLimitFileSizeMb = _('Maximum file size allowed to write to disk (in MB)');
 
 if (module) {
 	module.exports = l10nstrings;

@@ -102,6 +102,9 @@ public:
 
     void dumpState(std::ostream& os) override;
 
+    const DocProcSettings& getDefDocProcSettings() const { return _defDocProcSettings; }
+    void setDefDocProcSettings(const DocProcSettings& docProcSettings) { _defDocProcSettings = docProcSettings; }
+
 private:
     /// Memory consumption has increased, start killing kits etc. till memory consumption gets back
     /// under @hardModeLimit
@@ -117,6 +120,8 @@ private:
 
     std::atomic<int> _memStatsTaskIntervalMs;
     std::atomic<int> _cpuStatsTaskIntervalMs;
+
+    DocProcSettings _defDocProcSettings;
 };
 
 #endif

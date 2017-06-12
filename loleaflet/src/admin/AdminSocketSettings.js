@@ -23,6 +23,10 @@ var AdminSocketSettings = AdminSocketBase.extend({
 				command += ' mem_stats_interval=' + memStatsInterval;
 				command += ' cpu_stats_size=' + cpuStatsSize;
 				command += ' cpu_stats_interval=' + cpuStatsInterval;
+				command += ' limit_virt_mem_mb=' + $('#limit_virt_mem_mb').val();
+				command += ' limit_data_mem_kb=' + $('#limit_data_mem_kb').val();
+				command += ' limit_stack_mem_kb=' + $('#limit_stack_mem_kb').val();
+				command += ' limit_file_size_mb=' + $('#limit_file_size_mb').val();
 				socketSettings.send(command);
 			});
 

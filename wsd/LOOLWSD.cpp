@@ -805,7 +805,7 @@ void LOOLWSD::initialize(Application& self)
     std::cerr << "\nLaunch this in your browser:\n\n"
               << getLaunchURI() << '\n' << std::endl;
 
-    std::string adminURI = getAdminURI(config());
+    const std::string adminURI = getAdminURI(config());
     if (!adminURI.empty())
         std::cerr << "\nOr for the Admin Console:\n\n"
                   << adminURI << '\n' << std::endl;
@@ -1168,11 +1168,18 @@ bool LOOLWSD::createForKit()
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
     args.push_back("--masterport=" + std::to_string(MasterPortNumber));
 
+    DocProcSettings docProcSettings;
+    docProcSettings.LimitVirtMemMb = getConfigValue<int>("per_document.limit_virt_mem_mb", 0);
+    docProcSettings.LimitDataMemKb = getConfigValue<int>("per_document.limit_data_mem_kb", 0);
+    docProcSettings.LimitStackMemKb = getConfigValue<int>("per_document.limit_stack_mem_kb", 0);
+    docProcSettings.LimitFileSizeMb = getConfigValue<int>("per_document.limit_file_size_mb", 0);
+    Admin::instance().setDefDocProcSettings(docProcSettings);
+
     std::ostringstream ossRLimits;
-    ossRLimits << "limit_virt_mem_mb:" << getConfigValue<int>("per_document.limit_virt_mem_mb", 0);
-    ossRLimits << ";limit_data_mem_kb:" << getConfigValue<int>("per_document.limit_data_mem_kb", 0);
-    ossRLimits << ";limit_stack_mem_kb:" << getConfigValue<int>("per_document.limit_stack_mem_kb", 0);
-    ossRLimits << ";limit_file_size_mb:" << getConfigValue<int>("per_document.limit_file_size_mb", 0);
+    ossRLimits << "limit_virt_mem_mb:" << docProcSettings.LimitVirtMemMb;
+    ossRLimits << ";limit_data_mem_kb:" << docProcSettings.LimitDataMemKb;
+    ossRLimits << ";limit_stack_mem_kb:" << docProcSettings.LimitStackMemKb;
+    ossRLimits << ";limit_file_size_mb:" << docProcSettings.LimitFileSizeMb;
     args.push_back("--rlimits=" + ossRLimits.str());
 
     if (UnitWSD::get().hasKitHooks())

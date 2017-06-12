@@ -60,6 +60,13 @@ struct DocBasicInfo
           _saved(saved),
           _mem(mem)
         { }
+
+struct DocProcSettings
+{
+    size_t LimitVirtMemMb;
+    size_t LimitDataMemKb;
+    size_t LimitStackMemKb;
+    size_t LimitFileSizeMb;
 };
 
 /// A document in Admin controller.
@@ -105,6 +112,9 @@ public:
     void setModified(bool value) { _isModified = value; }
     bool getModifiedStatus() const { return _isModified; }
 
+    const DocProcSettings& getDocProcSettings() const { return _docProcSettings; }
+    void setDocProcSettings(const DocProcSettings& docProcSettings) { _docProcSettings = docProcSettings; }
+
 private:
     bool _isModified;
     const std::string _docKey;
@@ -121,6 +131,9 @@ private:
     std::time_t _start;
     std::time_t _lastActivity;
     std::time_t _end = 0;
+    
+    /// Per-doc kit process settings.
+    DocProcSettings _docProcSettings;
 };
 
 /// An Admin session subscriber.
