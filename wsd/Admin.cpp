@@ -331,6 +331,7 @@ Admin::Admin() :
     SocketPoll("admin"),
     _model(AdminModel()),
     _forKitPid(-1),
+    _forKitWritePipe(-1),
     _lastTotalMemory(0),
     _lastJiffies(0),
     _memStatsTaskIntervalMs(5000),
@@ -495,6 +496,16 @@ void Admin::addBytes(const std::string& docKey, uint64_t sent, uint64_t recv)
 {
     addCallback([this, docKey, sent, recv]
                  { _model.addBytes(docKey, sent, recv); });
+}
+
+void Admin::notifyForkit()
+{
+    std::ostringstream oss;
+    oss << "setconfig limit_virt_mem_mb " << _defDocProcSettings.LimitVirtMemMb << '\n'
+        << "setconfig limit_data_mem_kb " << _defDocProcSettings.LimitDataMemKb << '\n'
+        << "setconfig limit_stack_mem_kb " << _defDocProcSettings.LimitStackMemKb << '\n'
+        << "setconfig limit_file_size_mb " << _defDocProcSettings.LimitFileSizeMb << '\n';
+    IoUtil::writeToPipe(_forKitWritePipe, oss.str());
 }
 
 void Admin::dumpState(std::ostream& os)
