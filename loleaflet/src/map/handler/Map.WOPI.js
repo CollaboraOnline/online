@@ -103,29 +103,35 @@ L.Map.WOPI = L.Handler.extend({
 		if (msg.MessageId === 'Insert_Button') {
 			if (msg.Values) {
 				if (msg.Values.id && !w2ui['toolbar-up'].get(msg.Values.id)
-				   && msg.Values.imgurl) {
-					// add the css rule for the image
-					$('html > head > style').append('.w2ui-icon.' + msg.Values.id + '{background: url(' + msg.Values.imgurl + ')}');
+				    && msg.Values.imgurl) {
+					if (this._map._permission === 'edit') {
+						// add the css rule for the image
+						$('html > head > style').append('.w2ui-icon.' + msg.Values.id + '{background: url(' + msg.Values.imgurl + ')}');
 
-					// add the item to the toolbar
-					w2ui['toolbar-up'].insert('save', [
+						// add the item to the toolbar
+						w2ui['toolbar-up'].insert('save', [
+							{
+								type: 'button',
+								id: msg.Values.id,
+								img: msg.Values.id,
+								hint: _(msg.Values.hint), /* "Try" to localize ! */
+								postmessage: true /* Notify the host back when button is clicked */
+							}
+						]);
+						if (msg.Values.mobile)
 						{
-							type: 'button',
-							id: msg.Values.id,
-							img: msg.Values.id,
-							hint: _(msg.Values.hint), /* "Try" to localize ! */
-							postmessage: true /* Notify the host back when button is clicked */
+							// Add to our list of items to preserve when in mobile mode
+							// FIXME: Wrap the toolbar in a class so that we don't make use
+							// global variables and functions like this
+							var idx = toolbarUpMobileItems.indexOf('save');
+							toolbarUpMobileItems.splice(idx, 0, msg.Values.id);
 						}
-					]);
-					if (msg.Values.mobile)
-					{
-						// Add to our list of items to preserve when in mobile mode
-						// FIXME: Wrap the toolbar in a class so that we don't make use
-						// global variables and functions like this
-						var idx = toolbarUpMobileItems.indexOf('save');
-						toolbarUpMobileItems.splice(idx, 0, msg.Values.id);
+						resizeToolbar();
 					}
-					resizeToolbar();
+					else if (this._map._permission === 'readonly') {
+						// Just add a menu entry for it
+						this._map.fire('addmenu', {id: msg.Values.id, label: msg.Values.hint});
+					}
 				}
 			}
 		}
