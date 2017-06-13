@@ -245,23 +245,6 @@ bool handleSetrlimitCommand(const std::vector<std::string>& tokens)
 
             return true;
         }
-        else if (tokens[1] == "limit_data_mem_kb")
-        {
-            rlim_t lim = std::stoi(tokens[2]) * 1024;
-            if (lim <= 0)
-                lim = RLIM_INFINITY;
-
-            rlimit rlim = { lim, lim };
-            if (setrlimit(RLIMIT_DATA, &rlim) != 0)
-                LOG_SYS("Failed to set RLIMIT_DATA to " << lim << " bytes.");
-
-            if (getrlimit(RLIMIT_DATA, &rlim) == 0)
-                LOG_INF("RLIMIT_DATA is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
-            else
-                LOG_SYS("Failed to get RLIMIT_DATA.");
-
-            return true;
-        }
         else if (tokens[1] == "limit_stack_mem_kb")
         {
             rlim_t lim = std::stoi(tokens[2]) * 1024;

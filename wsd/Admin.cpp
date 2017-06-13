@@ -164,7 +164,6 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
 
         const DocProcSettings& docProcSettings = _admin->getDefDocProcSettings();
         oss << "limit_virt_mem_mb=" << docProcSettings.LimitVirtMemMb << ' '
-            << "limit_data_mem_kb=" << docProcSettings.LimitDataMemKb << ' '
             << "limit_stack_mem_kb=" << docProcSettings.LimitStackMemKb << ' '
             << "limit_file_size_mb=" << docProcSettings.LimitFileSizeMb << ' ';
 
@@ -231,25 +230,13 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
             {
                 DocProcSettings docProcSettings = _admin->getDefDocProcSettings();
                 if (settingName == "limit_virt_mem_mb")
-                {
                     docProcSettings.LimitVirtMemMb = settingVal;
-                }
-                else if (settingName == "limit_data_mem_kb")
-                {
-                    docProcSettings.LimitDataMemKb = settingVal;
-                }
                 else if (settingName == "limit_stack_mem_kb")
-                {
                     docProcSettings.LimitStackMemKb = settingVal;
-                }
                 else if (settingName == "limit_file_size_mb")
-                {
                     docProcSettings.LimitFileSizeMb = settingVal;
-                }
                 else
-                {
                     LOG_ERR("Unknown limit: " << settingName);
-                }
 
                 model.notify("settings " + settingName + '=' + std::to_string(settingVal));
                 _admin->setDefDocProcSettings(docProcSettings);
@@ -511,7 +498,6 @@ void Admin::notifyForkit()
 {
     std::ostringstream oss;
     oss << "setconfig limit_virt_mem_mb " << _defDocProcSettings.LimitVirtMemMb << '\n'
-        << "setconfig limit_data_mem_kb " << _defDocProcSettings.LimitDataMemKb << '\n'
         << "setconfig limit_stack_mem_kb " << _defDocProcSettings.LimitStackMemKb << '\n'
         << "setconfig limit_file_size_mb " << _defDocProcSettings.LimitFileSizeMb << '\n';
     IoUtil::writeToPipe(_forKitWritePipe, oss.str());

@@ -621,7 +621,6 @@ void LOOLWSD::initialize(Application& self)
             { "per_document.max_concurrency", "4" },
             { "per_document.idle_timeout_secs", "3600" },
             { "per_document.limit_virt_mem_mb", "0" },
-            { "per_document.limit_data_mem_kb", "0" },
             { "per_document.limit_stack_mem_kb", "8000" },
             { "per_document.limit_file_size_mb", "50" },
             { "per_view.out_of_focus_timeout_secs", "60" },
@@ -803,7 +802,6 @@ void LOOLWSD::initialize(Application& self)
 
     DocProcSettings docProcSettings;
     docProcSettings.LimitVirtMemMb = getConfigValue<int>("per_document.limit_virt_mem_mb", 0);
-    docProcSettings.LimitDataMemKb = getConfigValue<int>("per_document.limit_data_mem_kb", 0);
     docProcSettings.LimitStackMemKb = getConfigValue<int>("per_document.limit_stack_mem_kb", 0);
     docProcSettings.LimitFileSizeMb = getConfigValue<int>("per_document.limit_file_size_mb", 0);
     Admin::instance().setDefDocProcSettings(docProcSettings);
@@ -1178,7 +1176,6 @@ bool LOOLWSD::createForKit()
     const DocProcSettings& docProcSettings = Admin::instance().getDefDocProcSettings();
     std::ostringstream ossRLimits;
     ossRLimits << "limit_virt_mem_mb:" << docProcSettings.LimitVirtMemMb;
-    ossRLimits << ";limit_data_mem_kb:" << docProcSettings.LimitDataMemKb;
     ossRLimits << ";limit_stack_mem_kb:" << docProcSettings.LimitStackMemKb;
     ossRLimits << ";limit_file_size_mb:" << docProcSettings.LimitFileSizeMb;
     args.push_back("--rlimits=" + ossRLimits.str());

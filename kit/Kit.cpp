@@ -1772,11 +1772,6 @@ void lokit_main(const std::string& childRoot,
         else
             LOG_SYS("Failed to get RLIMIT_AS.");
 
-        if (getrlimit(RLIMIT_DATA, &rlim) == 0)
-            LOG_INF("RLIMIT_DATA is " << rlim.rlim_max << " bytes.");
-        else
-            LOG_SYS("Failed to get RLIMIT_DATA.");
-
         if (getrlimit(RLIMIT_STACK, &rlim) == 0)
             LOG_INF("RLIMIT_STACK is " << rlim.rlim_max << " bytes.");
         else
