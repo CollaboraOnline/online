@@ -2,7 +2,7 @@
 * Control.Menubar
 */
 
-/* global $ _ map title vex revHistoryEnabled closebutton */
+/* global $ _ map title vex revHistoryEnabled closebutton L */
 L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
@@ -299,6 +299,25 @@ L.Control.Menubar = L.Control.extend({
 		this._menubarCont = L.DomUtil.get('main-menu');
 
 		map.on('doclayerinit', this._onDocLayerInit, this);
+		map.on('addmenu', this._addMenu, this);
+	},
+
+	_addMenu: function(e) {
+		var alreadyExists = L.DomUtil.get('menu-' + e.id);
+		if (alreadyExists)
+			return;
+
+		var liItem = L.DomUtil.create('li', '');
+		liItem.id = 'menu-' + e.id;
+		if (map._permission === 'readonly') {
+			L.DomUtil.addClass(liItem, 'readonly');
+		}
+		var aItem = L.DomUtil.create('a', '', liItem);
+		$(aItem).text(e.label);
+		$(aItem).data('id', e.id);
+		$(aItem).data('type', 'action');
+		$(aItem).data('postmessage', 'true');
+		this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
 	},
 
 	_onDocLayerInit: function() {
@@ -419,7 +438,8 @@ L.Control.Menubar = L.Control.extend({
 		});
 	},
 
-	_executeAction: function(id) {
+	_executeAction: function(item) {
+		var id = $(item).data('id');
 		if (id === 'save') {
 			map.save(true, true);
 		} else if (id === 'print') {
@@ -432,7 +452,7 @@ L.Control.Menubar = L.Control.extend({
 			fileName = fileName === '' ? 'document' : fileName;
 			map.downloadAs(fileName + '.' + format, format);
 		} else if (id === 'findandreplace') {
-			findReplaceContent =
+			var findReplaceContent =
 			'\
 			<table class="findreplacetable">\
 				<tr>\
@@ -464,7 +484,7 @@ L.Control.Menubar = L.Control.extend({
 					$.extend({}, vex.dialog.buttons.replace, {
 						text: _('Replace'),
 						click: function($vexContent, e) {
-							$vexContent.data().vex.option = 'replace'
+							$vexContent.data().vex.option = 'replace';
 						}}),
 					$.extend({}, vex.dialog.buttons.replaceAll, {
 						text: _('Replace All'),
@@ -511,8 +531,8 @@ L.Control.Menubar = L.Control.extend({
 						xPos = e.pageX;
 						yPos = e.pageY;
 						if (selected !== null) {
-							isOutVert = (yPos - yElem >= 0 && (yPos - yElem + selected.offsetHeight) <= maxH);
-							isOutHor = (xPos - xElem >= 0 && (xPos - xElem + selected.offsetWidth) <= maxW);
+							var isOutVert = (yPos - yElem >= 0 && (yPos - yElem + selected.offsetHeight) <= maxH);
+							var isOutHor = (xPos - xElem >= 0 && (xPos - xElem + selected.offsetWidth) <= maxW);
 							if (isOutHor) {
 								selected.style.left = (xPos - xElem) + 'px';
 							}
@@ -527,13 +547,13 @@ L.Control.Menubar = L.Control.extend({
 					$(document).off('mousemove', mouseMoveFunc);
 				},
 				onSubmit: function(event) {
-					$vexContent = $(this).parent();
+					var $vexContent = $(this).parent();
 					event.preventDefault();
 					event.stopPropagation();
 
-					opt = $vexContent.data().vex.option;
-					findText = this.findthis.value;
-					replaceText = this.replacewith.value;
+					var opt = $vexContent.data().vex.option;
+					var findText = this.findthis.value;
+					var replaceText = this.replacewith.value;
 
 					if (findText.length != 0) {
 						if (opt === 'next') {
@@ -638,6 +658,11 @@ L.Control.Menubar = L.Control.extend({
 			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Height":{"type":"long", "value": "21590"},"AttributePageSize.Width":{"type":"long", "value": "35560"}}');
 			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "true"}}');
 		}
+
+		// Inform the host if asked
+		if ($(item).data('postmessage') === 'true') {
+			map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: id} });
+		}
 	},
 
 	_onDeleteSlide: function(e) {
@@ -653,11 +678,10 @@ L.Control.Menubar = L.Control.extend({
 			var unoCommand = $(item).data('uno');
 			map.sendUnoCommand(unoCommand);
 		} else if (type === 'action') {
-			var id = $(item).data('id');
-			self._executeAction(id);
+			self._executeAction(item);
 		}
 
-		if (id !== 'insertcomment')
+		if ($(item).data('id') !== 'insertcomment')
 			map.focus();
 	},
 

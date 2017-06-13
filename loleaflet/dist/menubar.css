@@ -223,7 +223,10 @@
      */
     #menu-closedocument.readonly {
 	display: block;
-	top: 3px; /* This is not a menu, plain action, but we want it to appear like a menu */
+    }
+
+    .readonly {
+	top: 3px;
     }
 }
 
