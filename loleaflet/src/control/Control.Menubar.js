@@ -438,22 +438,9 @@ L.Control.Menubar = L.Control.extend({
 		});
 	},
 
-	_executeAction: function(item) {
-		var id = $(item).data('id');
-		if (id === 'save') {
-			map.save(true, true);
-		} else if (id === 'print') {
-			map.print();
-		} else if (id.startsWith('downloadas-')) {
-			var format = id.substring('downloadas-'.length);
-			// remove the extension if any
-			var fileName = title.substr(0, title.lastIndexOf('.')) || title;
-			// check if it is empty
-			fileName = fileName === '' ? 'document' : fileName;
-			map.downloadAs(fileName + '.' + format, format);
-		} else if (id === 'findandreplace') {
-			var findReplaceContent =
-			'\
+	_onClickFindAndReplace: function() {
+		var findReplaceContent =
+		    '\
 			<table class="findreplacetable">\
 				<tr>\
 					<td>\
@@ -473,104 +460,121 @@ L.Control.Menubar = L.Control.extend({
 				</tr>\
 			</table>\
 			';
-			var mouseMoveFunc;
-			vex.dialog.open({
-				showCloseButton: true,
-				escapeButtonCloses: true,
-				className: 'vex-theme-plain findReplaceVex',
-				message: _('Find & Replace'),
-				input: findReplaceContent,
-				buttons: [
-					$.extend({}, vex.dialog.buttons.replace, {
-						text: _('Replace'),
-						click: function($vexContent, e) {
-							$vexContent.data().vex.option = 'replace';
-						}}),
-					$.extend({}, vex.dialog.buttons.replaceAll, {
-						text: _('Replace All'),
-						click: function($vexContent, e) {
-							$vexContent.data().vex.option = 'replaceAll';
-						}}),
-					$.extend({}, vex.dialog.buttons.findPrev, {
-						text: _('Previous'),
-						className: 'btnArrow',
-						click: function($vexContent, e) {
-							$vexContent.data().vex.option = 'previous';
-						}}),
-					$.extend({}, vex.dialog.buttons.findNext, {
-						text: _('Next'),
-						className: 'btnArrow',
-						click: function($vexContent, e) {
-							$vexContent.data().vex.option = 'next';
-						}})
-				],
-				afterOpen: function(e) {
-					$('.vex-overlay').remove();
-					$('.vex').css('position', 'static');
-					var selected = null;
-					var xPos = 0, yPos = 0;
-					var xElem = 0, yElem = 0;
-					var maxH = window.innerHeight, maxW = window.innerWidth;
+		var mouseMoveFunc;
+		vex.dialog.open({
+			showCloseButton: true,
+			escapeButtonCloses: true,
+			className: 'vex-theme-plain findReplaceVex',
+			message: _('Find & Replace'),
+			input: findReplaceContent,
+			buttons: [
+				$.extend({}, vex.dialog.buttons.replace, {
+					text: _('Replace'),
+					click: function($vexContent, e) {
+						$vexContent.data().vex.option = 'replace';
+					}}),
+				$.extend({}, vex.dialog.buttons.replaceAll, {
+					text: _('Replace All'),
+					click: function($vexContent, e) {
+						$vexContent.data().vex.option = 'replaceAll';
+					}}),
+				$.extend({}, vex.dialog.buttons.findPrev, {
+					text: _('Previous'),
+					className: 'btnArrow',
+					click: function($vexContent, e) {
+						$vexContent.data().vex.option = 'previous';
+					}}),
+				$.extend({}, vex.dialog.buttons.findNext, {
+					text: _('Next'),
+					className: 'btnArrow',
+					click: function($vexContent, e) {
+						$vexContent.data().vex.option = 'next';
+					}})
+			],
+			afterOpen: function(e) {
+				$('.vex-overlay').remove();
+				$('.vex').css('position', 'static');
+				var selected = null;
+				var xPos = 0, yPos = 0;
+				var xElem = 0, yElem = 0;
+				var maxH = window.innerHeight, maxW = window.innerWidth;
 
-					$('#findthis').on('input', function() {
-						if (this.value.length != 0) {
-							map.search(this.value, false, '', 0, true);
+				$('#findthis').on('input', function() {
+					if (this.value.length != 0) {
+						map.search(this.value, false, '', 0, true);
+					}
+				});
+				$('.vex-content').on('mousedown', function(e) {
+					selected = this;
+					selected.style.cursor = 'move';
+					xElem = xPos - selected.offsetLeft;
+					yElem = yPos - selected.offsetTop;
+				});
+				$('.vex-content').on('mouseup', function(e) {
+					selected.style.cursor = 'default';
+					selected = null;
+				});
+				var mouseMoveFunc = function(e) {
+					xPos = e.pageX;
+					yPos = e.pageY;
+					if (selected !== null) {
+						var isOutVert = (yPos - yElem >= 0 && (yPos - yElem + selected.offsetHeight) <= maxH);
+						var isOutHor = (xPos - xElem >= 0 && (xPos - xElem + selected.offsetWidth) <= maxW);
+						if (isOutHor) {
+							selected.style.left = (xPos - xElem) + 'px';
 						}
-					});
-					$('.vex-content').on('mousedown', function(e) {
-						selected = this;
-						selected.style.cursor = 'move';
-						xElem = xPos - selected.offsetLeft;
-						yElem = yPos - selected.offsetTop;
-					});
-					$('.vex-content').on('mouseup', function(e) {
-						selected.style.cursor = 'default';
-						selected = null;
-					});
-					var mouseMoveFunc = function(e) {
-						xPos = e.pageX;
-						yPos = e.pageY;
-						if (selected !== null) {
-							var isOutVert = (yPos - yElem >= 0 && (yPos - yElem + selected.offsetHeight) <= maxH);
-							var isOutHor = (xPos - xElem >= 0 && (xPos - xElem + selected.offsetWidth) <= maxW);
-							if (isOutHor) {
-								selected.style.left = (xPos - xElem) + 'px';
-							}
-							if (isOutVert) {
-								selected.style.top = (yPos - yElem) + 'px';
-							}
-						}
-					};
-					$(document).on('mousemove', mouseMoveFunc);
-				},
-				afterClose: function(e) {
-					$(document).off('mousemove', mouseMoveFunc);
-				},
-				onSubmit: function(event) {
-					var $vexContent = $(this).parent();
-					event.preventDefault();
-					event.stopPropagation();
-
-					var opt = $vexContent.data().vex.option;
-					var findText = this.findthis.value;
-					var replaceText = this.replacewith.value;
-
-					if (findText.length != 0) {
-						if (opt === 'next') {
-							map.search(findText);
-						}
-						else if (opt === 'previous') {
-							map.search(findText, true);
-						}
-						else if (opt === 'replace') {
-							map.search(findText, false, replaceText, 2);
-						}
-						else if (opt === 'replaceAll') {
-							map.search(findText, false, replaceText, 3);
+						if (isOutVert) {
+							selected.style.top = (yPos - yElem) + 'px';
 						}
 					}
+				};
+				$(document).on('mousemove', mouseMoveFunc);
+			},
+			afterClose: function(e) {
+				$(document).off('mousemove', mouseMoveFunc);
+			},
+			onSubmit: function(event) {
+				var $vexContent = $(this).parent();
+				event.preventDefault();
+				event.stopPropagation();
+
+				var opt = $vexContent.data().vex.option;
+				var findText = this.findthis.value;
+				var replaceText = this.replacewith.value;
+
+				if (findText.length != 0) {
+					if (opt === 'next') {
+						map.search(findText);
+					}
+					else if (opt === 'previous') {
+						map.search(findText, true);
+					}
+					else if (opt === 'replace') {
+						map.search(findText, false, replaceText, 2);
+					}
+					else if (opt === 'replaceAll') {
+						map.search(findText, false, replaceText, 3);
+					}
 				}
-			}, this);
+			}
+		}, this);
+	},
+
+	_executeAction: function(item) {
+		var id = $(item).data('id');
+		if (id === 'save') {
+			map.save(true, true);
+		} else if (id === 'print') {
+			map.print();
+		} else if (id.startsWith('downloadas-')) {
+			var format = id.substring('downloadas-'.length);
+			// remove the extension if any
+			var fileName = title.substr(0, title.lastIndexOf('.')) || title;
+			// check if it is empty
+			fileName = fileName === '' ? 'document' : fileName;
+			map.downloadAs(fileName + '.' + format, format);
+		} else if (id === 'findandreplace') {
+			this._onClickFindAndReplace();
 		} else if (id === 'insertcomment') {
 			map.insertComment();
 		} else if (id === 'insertgraphic') {
