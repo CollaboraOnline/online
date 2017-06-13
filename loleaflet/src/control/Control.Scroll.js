@@ -37,7 +37,8 @@ L.Control.Scroll = L.Control.extend({
 					if (autoHideTimeout)
 						clearTimeout(autoHideTimeout);
 					autoHideTimeout = setTimeout(function() {
-						$('.mCS-autoHide > .mCustomScrollBox .mCSB_scrollTools, .mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').css({opacity: 0, 'filter': 'alpha(opacity=0)', '-ms-filter': 'alpha(opacity=0)'});
+						//	$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').css({opacity: 0, 'filter': 'alpha(opacity=0)', '-ms-filter': 'alpha(opacity=0)'});
+						$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').removeClass('loleaflet-scrollbar-show');
 					}, 2000);
 				},
 				whileScrolling: function() {
@@ -46,7 +47,7 @@ L.Control.Scroll = L.Control.extend({
 					// autoHide feature doesn't work because plugin relies on hovering on scroll container
 					// and we have a mock scroll container whereas the actual user hovering happens only on
 					// real document. Change the CSS rules manually to simulate autoHide feature.
-					$('.mCS-autoHide > .mCustomScrollBox .mCSB_scrollTools, .mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').css({opacity: 1, 'filter': 'alpha(opacity=100)', '-ms-filter': 'alpha(opacity=100)'});
+					$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').addClass('loleaflet-scrollbar-show');
 				},
 				onUpdate: function() {
 					console.debug('mCustomScrollbar: onUpdate:');
