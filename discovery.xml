@@ -305,6 +305,9 @@
         <app name="application/vnd.sun.xml.report.chart">
             <action name="edit" ext="odc"/>
         </app>
+        <app name="image/bmp">
+            <action name="view" ext="bmp"/>
+        </app>
         <app name="image/png">
             <action name="view" ext="png"/>
         </app>
