@@ -460,6 +460,12 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo = localStorage->getLocalFileInfo();
             userid = localfileinfo->_userid;
             username = localfileinfo->_username;
+
+            if (LOOLWSD::IsViewFileExtension(localStorage->getFileExtension()))
+            {
+                LOG_DBG("Setting the session as readonly");
+                session->setReadOnly();
+            }
         }
     }
 
