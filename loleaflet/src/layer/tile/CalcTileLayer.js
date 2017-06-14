@@ -244,7 +244,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 		var tilePositionsX = '';
 		var tilePositionsY = '';
-		var oldHashes = '';
+		var oldWireIds = '';
 		var needsNewTiles = false;
 
 		for (var key in this._tiles) {
@@ -268,14 +268,14 @@ L.CalcTileLayer = L.TileLayer.extend({
 						tilePositionsY += ',';
 					}
 					tilePositionsY += tileTopLeft.y;
-					if (oldHashes !== '') {
-						oldHashes += ',';
+					if (oldWireIds !== '') {
+						oldWireIds += ',';
 					}
-					if (this._tiles[key].oldhash === undefined) {
-						oldHashes += '0';
+					if (this._tiles[key].oldWireId === undefined) {
+						oldWireIds += '0';
 					}
 					else {
-						oldHashes += this._tiles[key].oldhash;
+						oldWireIds += this._tiles[key].oldWireId;
 					}
 					needsNewTiles = true;
 					if (this._debug) {
@@ -300,7 +300,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 				'tileposy=' + tilePositionsY + ' ' +
 				'tilewidth=' + this._tileWidthTwips + ' ' +
 				'tileheight=' + this._tileHeightTwips + ' ' +
-				'oldhash=' + oldHashes;
+				'oldwid=' + oldWireIds;
 
 			this._map._socket.sendMessage(message, '');
 			if (this._debug) {

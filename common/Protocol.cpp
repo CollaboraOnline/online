@@ -59,6 +59,20 @@ namespace LOOLProtocol
         return true;
     }
 
+    bool stringToUInt32(const std::string& input, uint32_t& value)
+    {
+        try
+        {
+            value = std::stoul(input);
+        }
+        catch (std::invalid_argument&)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     bool stringToUInt64(const std::string& input, uint64_t& value)
     {
         try
@@ -97,6 +111,21 @@ namespace LOOLProtocol
             const char* str = token.data() + name.size() + 1;
             char* endptr = nullptr;
             value = strtoull(str, &endptr, 10);
+            return (endptr > str);
+        }
+
+        return false;
+    }
+
+    bool getTokenUInt32(const std::string& token, const std::string& name, uint32_t& value)
+    {
+        if (token.size() > (name.size() + 1) &&
+            token.compare(0, name.size(), name) == 0 &&
+            token[name.size()] == '=')
+        {
+            const char* str = token.data() + name.size() + 1;
+            char* endptr = nullptr;
+            value = strtoul(str, &endptr, 10);
             return (endptr > str);
         }
 

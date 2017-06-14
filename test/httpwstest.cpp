@@ -1876,7 +1876,7 @@ void HTTPWSTest::testCalcRenderAfterNewView53()
     sendTextFrame(socket, "key type=input char=0 key=1031", testname);
 
     // Get tile.
-    const auto req = "tilecombine part=0 width=256 height=256 tileposx=0 tileposy=291840 tilewidth=3840 tileheight=3840 oldhash=0";
+    const auto req = "tilecombine part=0 width=256 height=256 tileposx=0 tileposy=291840 tilewidth=3840 tileheight=3840 oldwid=0";
     const std::vector<char> tile1 = getTileAndSave(socket, req, "/tmp/calc_render_53_orig.png", testname);
 
 

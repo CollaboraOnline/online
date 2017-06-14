@@ -42,6 +42,7 @@ namespace LOOLProtocol
     std::tuple<int, int, std::string> ParseVersion(const std::string& version);
 
     bool stringToInteger(const std::string& input, int& value);
+    bool stringToUInt32(const std::string& input, uint32_t& value);
     bool stringToUInt64(const std::string& input, uint64_t& value);
 
     inline
@@ -66,6 +67,7 @@ namespace LOOLProtocol
     }
 
     bool getTokenInteger(const std::string& token, const std::string& name, int& value);
+    bool getTokenUInt32(const std::string& token, const std::string& name, uint32_t& value);
     bool getTokenUInt64(const std::string& token, const std::string& name, uint64_t& value);
     bool getTokenString(const std::string& token, const std::string& name, std::string& value);
     bool getTokenKeyword(const std::string& token, const std::string& name, const std::map<std::string, int>& map, int& value);

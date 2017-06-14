@@ -20,6 +20,9 @@
 #include "Exceptions.hpp"
 #include "Protocol.hpp"
 
+typedef uint32_t TileWireId;
+typedef uint64_t TileBinaryHash;
+
 /// Tile Descriptor
 /// Represents a tile's coordinates and dimensions.
 class TileDesc
@@ -37,8 +40,8 @@ public:
         _imgSize(imgSize),
         _id(id),
         _broadcast(broadcast),
-        _oldHash(0),
-        _hash(0)
+        _oldWireId(0),
+        _wireId(0)
     {
         if (_part < 0 ||
             _width <= 0 ||
@@ -66,10 +69,10 @@ public:
     void setImgSize(const int imgSize) { _imgSize = imgSize; }
     int getId() const { return _id; }
     bool getBroadcast() const { return _broadcast; }
-    void setOldHash(uint64_t hash) { _oldHash = hash; }
-    uint64_t getOldHash() const { return _oldHash; }
-    void setHash(uint64_t hash) { _hash = hash; }
-    uint64_t getHash() const { return _hash; }
+    void setOldWireId(TileWireId id) { _oldWireId = id; }
+    TileWireId getOldWireId() const { return _oldWireId; }
+    void setWireId(TileWireId id) { _wireId = id; }
+    TileWireId getWireId() const { return _wireId; }
 
     bool operator==(const TileDesc& other) const
     {
@@ -145,8 +148,8 @@ public:
             << " tileposy=" << _tilePosY
             << " tilewidth=" << _tileWidth
             << " tileheight=" << _tileHeight
-            << " oldhash=" << _oldHash
-            << " hash=" << _hash;
+            << " oldwid=" << _oldWireId
+            << " wid=" << _wireId;
 
         // Anything after ver is optional.
         oss << " ver=" << _ver;
@@ -181,13 +184,13 @@ public:
         pairs["imgsize"] = 0;
         pairs["id"] = -1;
 
-        uint64_t oldHash = 0;
-        uint64_t hash = 0;
+        TileWireId oldWireId = 0;
+        TileWireId wireId = 0;
         for (size_t i = 0; i < tokens.size(); ++i)
         {
-            if (LOOLProtocol::getTokenUInt64(tokens[i], "oldhash", oldHash))
+            if (LOOLProtocol::getTokenUInt32(tokens[i], "oldwid", oldWireId))
                 ;
-            else if (LOOLProtocol::getTokenUInt64(tokens[i], "hash", hash))
+            else if (LOOLProtocol::getTokenUInt32(tokens[i], "wid", wireId))
                 ;
             else
             {
@@ -209,8 +212,8 @@ public:
                                pairs["tilewidth"], pairs["tileheight"],
                                pairs["ver"],
                                pairs["imgsize"], pairs["id"], broadcast);
-        result.setOldHash(oldHash);
-        result.setHash(hash);
+        result.setOldWireId(oldWireId);
+        result.setWireId(wireId);
 
         return result;
     }
@@ -233,8 +236,8 @@ private:
     int _imgSize; //< Used for responses.
     int _id;
     bool _broadcast;
-    uint64_t _oldHash;
-    uint64_t _hash;
+    TileWireId _oldWireId;
+    TileWireId _wireId;
 };
 
 /// One or more tile header.
@@ -247,8 +250,8 @@ private:
                  const std::string& tilePositionsX, const std::string& tilePositionsY,
                  int tileWidth, int tileHeight, const std::string& vers,
                  const std::string& imgSizes, int id,
-                 const std::string& oldHashes,
-                 const std::string& hashes) :
+                 const std::string& oldWireIds,
+                 const std::string& wireIds) :
         _part(part),
         _width(width),
         _height(height),
@@ -269,8 +272,8 @@ private:
         Poco::StringTokenizer positionYtokens(tilePositionsY, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         Poco::StringTokenizer imgSizeTokens(imgSizes, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         Poco::StringTokenizer verTokens(vers, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        Poco::StringTokenizer oldHashTokens(oldHashes, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        Poco::StringTokenizer hashTokens(hashes, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer oldWireIdTokens(oldWireIds, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        Poco::StringTokenizer wireIdTokens(wireIds, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
 
         const auto numberOfPositions = positionXtokens.count();
 
@@ -278,8 +281,8 @@ private:
         if (numberOfPositions != positionYtokens.count() ||
             (!imgSizes.empty() && numberOfPositions != imgSizeTokens.count()) ||
             (!vers.empty() && numberOfPositions != verTokens.count()) ||
-            (!oldHashes.empty() && numberOfPositions != oldHashTokens.count()) ||
-            (!hashes.empty() && numberOfPositions != hashTokens.count()))
+            (!oldWireIds.empty() && numberOfPositions != oldWireIdTokens.count()) ||
+            (!wireIds.empty() && numberOfPositions != wireIdTokens.count()))
         {
             throw BadArgumentException("Invalid tilecombine descriptor. Unequal number of tiles in parameters.");
         }
@@ -310,21 +313,21 @@ private:
                 throw BadArgumentException("Invalid 'ver' in tilecombine descriptor.");
             }
 
-            uint64_t oldHash = 0;
-            if (oldHashTokens.count() && !LOOLProtocol::stringToUInt64(oldHashTokens[i], oldHash))
+            TileWireId oldWireId = 0;
+            if (oldWireIdTokens.count() && !LOOLProtocol::stringToUInt32(oldWireIdTokens[i], oldWireId))
             {
                 throw BadArgumentException("Invalid tilecombine descriptor.");
             }
 
-            uint64_t hash = 0;
-            if (hashTokens.count() && !LOOLProtocol::stringToUInt64(hashTokens[i], hash))
+            TileWireId wireId = 0;
+            if (wireIdTokens.count() && !LOOLProtocol::stringToUInt32(wireIdTokens[i], wireId))
             {
                 throw BadArgumentException("Invalid tilecombine descriptor.");
             }
 
             _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight, ver, imgSize, id, false);
-            _tiles.back().setOldHash(oldHash);
-            _tiles.back().setHash(hash);
+            _tiles.back().setOldWireId(oldWireId);
+            _tiles.back().setWireId(wireId);
         }
     }
 
@@ -378,17 +381,17 @@ public:
         }
         oss.seekp(-1, std::ios_base::cur); // Ditto.
 
-        oss << " oldhash=";
+        oss << " oldwid=";
         for (const auto& tile : _tiles)
         {
-            oss << tile.getOldHash() << ',';
+            oss << tile.getOldWireId() << ',';
         }
         oss.seekp(-1, std::ios_base::cur); // Ditto
 
-        oss << " hash=";
+        oss << " wid=";
         for (const auto& tile : _tiles)
         {
-            oss << tile.getHash() << ',';
+            oss << tile.getWireId() << ',';
         }
         oss.seekp(-1, std::ios_base::cur); // See beow.
 
@@ -416,8 +419,8 @@ public:
         std::string tilePositionsY;
         std::string imgSizes;
         std::string versions;
-        std::string oldhashes;
-        std::string hashes;
+        std::string oldwireIds;
+        std::string wireIds;
 
         for (const auto& token : tokens)
         {
@@ -441,13 +444,13 @@ public:
                 {
                     versions = value;
                 }
-                else if (name == "oldhash")
+                else if (name == "oldwid")
                 {
-                    oldhashes = value;
+                    oldwireIds = value;
                 }
-                else if (name == "hash")
+                else if (name == "wid")
                 {
-                    hashes = value;
+                    wireIds = value;
                 }
                 else
                 {
@@ -464,7 +467,7 @@ public:
                             tilePositionsX, tilePositionsY,
                             pairs["tilewidth"], pairs["tileheight"],
                             versions,
-                            imgSizes, pairs["id"], oldhashes, hashes);
+                            imgSizes, pairs["id"], oldwireIds, wireIds);
     }
 
     /// Deserialize a TileDesc from a string format.
@@ -488,8 +491,8 @@ public:
             xs << tile.getTilePosX() << ',';
             ys << tile.getTilePosY() << ',';
             vers << tile.getVersion() << ',';
-            oldhs << tile.getOldHash() << ',';
-            hs << tile.getHash() << ',';
+            oldhs << tile.getOldWireId() << ',';
+            hs << tile.getWireId() << ',';
         }
 
         vers.seekp(-1, std::ios_base::cur); // Remove last comma.

@@ -284,11 +284,14 @@ namespace
 class PngCache
 {
     typedef std::shared_ptr< std::vector< char > > CacheData;
+
     struct CacheEntry {
         size_t    _hitCount;
+        TileWireId _wireId;
         CacheData _data;
-        CacheEntry(size_t defaultSize) :
+        CacheEntry(size_t defaultSize, TileWireId id) :
             _hitCount(1),   // Every entry is used at least once; prevent removal at birth.
+            _wireId(id),
             _data( new std::vector< char >() )
         {
             _data->reserve( defaultSize );
@@ -299,7 +302,32 @@ class PngCache
     static const size_t CacheSizeHardLimit = CacheSizeSoftLimit * 2;
     size_t _cacheHits;
     size_t _cacheTests;
-    std::map< uint64_t, CacheEntry > _cache;
+    TileWireId _nextId;
+
+    std::map< TileBinaryHash, CacheEntry > _cache;
+    std::map< TileWireId, TileBinaryHash > _wireToHash;
+
+    void clearCache(bool logStats = false)
+    {
+        if (logStats)
+            LOG_DBG("cache clear " << _cache.size() << " items total size " <<
+                    _cacheSize << " current hits " << _cacheHits);
+        _cache.clear();
+        _cacheSize = 0;
+        _cacheHits = 0;
+        _cacheTests = 0;
+        _nextId = 1;
+    }
+
+    // Keep these ids small and wrap them.
+    TileWireId createNewWireId()
+    {
+        TileWireId id = ++_nextId;
+        // FIXME: if we wrap - we should flush the clients too really ...
+        if (id < 1)
+            clearCache(true);
+        return id;
+    }
 
     void balanceCache()
     {
@@ -324,6 +352,11 @@ class PngCache
                     // Shrink cache when we exceed the size to maximize
                     // the chance of hitting these entries in the future.
                     _cacheSize -= it->second._data->size();
+
+                    auto wIt = _wireToHash.find(it->second._wireId);
+                    assert(wIt != _wireToHash.end());
+                    _wireToHash.erase(wIt);
+
                     it = _cache.erase(it);
                 }
                 else
@@ -366,10 +399,10 @@ class PngCache
                                    int width, int height,
                                    int bufferWidth, int bufferHeight,
                                    std::vector<char>& output, LibreOfficeKitTileMode mode,
-                                   const uint64_t hash)
+                                   TileBinaryHash hash, TileWireId wid)
     {
         LOG_DBG("PNG cache with hash " << hash << " missed.");
-        CacheEntry newEntry(bufferWidth * bufferHeight * 1);
+        CacheEntry newEntry(bufferWidth * bufferHeight * 1, wid);
         if (Png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
                                       bufferWidth, bufferHeight,
                                       *newEntry._data, mode))
@@ -392,39 +425,51 @@ class PngCache
     }
 
 public:
-    PngCache() :
-        _cacheSize(0),
-        _cacheHits(0),
-        _cacheTests(0)
+    PngCache()
     {
+        clearCache();
+    }
+
+    TileWireId hashToWireId(TileBinaryHash id)
+    {
+        TileWireId wid;
+        if (id == 0)
+            return 0;
+        auto it = _cache.find(id);
+        if (it != _cache.end())
+            wid = it->second._wireId;
+        else
+        {
+            wid = createNewWireId();
+            _wireToHash.emplace(wid, id);
+        }
+        return wid;
     }
 
     bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
                            std::vector<char>& output, LibreOfficeKitTileMode mode,
-                           uint64_t hash)
+                           TileBinaryHash hash, TileWireId wid)
     {
         if (cacheTest(hash, output))
-        {
             return true;
-        }
 
         return cacheEncodeSubBufferToPNG(pixmap, 0, 0, width, height,
-                                         width, height, output, mode, hash);
+                                         width, height, output, mode,
+                                         hash, wid);
     }
 
     bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
                               int width, int height,
                               int bufferWidth, int bufferHeight,
                               std::vector<char>& output, LibreOfficeKitTileMode mode,
-                              uint64_t hash)
+                              TileBinaryHash hash, TileWireId wid)
     {
         if (cacheTest(hash, output))
-        {
             return true;
-        }
 
         return cacheEncodeSubBufferToPNG(pixmap, startX, startY, width, height,
-                                         bufferWidth, bufferHeight, output, mode, hash);
+                                         bufferWidth, bufferHeight, output, mode,
+                                         hash, wid);
     }
 };
 
@@ -606,21 +651,9 @@ public:
         assert(ws && "Expected a non-null websocket.");
         auto tile = TileDesc::parse(tokens);
 
-        // Send back the request with all optional parameters given in the request.
-        const auto tileMsg = tile.serialize("tile:");
-#if ENABLE_DEBUG
-        const std::string response = tileMsg + " renderid=" + Util::UniqueId() + "\n";
-#else
-        const std::string response = tileMsg + "\n";
-#endif
-
-        std::vector<char> output;
-        output.reserve(response.size() + (4 * tile.getWidth() * tile.getHeight()));
-        output.resize(response.size());
-        std::memcpy(output.data(), response.data(), response.size());
-
+        size_t pixmapDataSize = 4 * tile.getWidth() * tile.getHeight();
         std::vector<unsigned char> pixmap;
-        pixmap.resize(output.capacity());
+        pixmap.resize(pixmapDataSize);
 
         std::unique_lock<std::mutex> lock(_documentMutex);
         if (!_loKitDocument)
@@ -647,18 +680,36 @@ public:
                 " ms (" << area / elapsed << " MP/s).");
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
-        const uint64_t hash = Png::hashBuffer(pixmap.data(), tile.getWidth(), tile.getHeight());
-        if (hash != 0 && tile.getOldHash() == hash)
+        const TileBinaryHash hash = Png::hashBuffer(pixmap.data(), tile.getWidth(), tile.getHeight());
+        TileWireId wid = _pngCache.hashToWireId(hash);
+
+        tile.setWireId(wid);
+
+        // Send back the request with all optional parameters given in the request.
+        const auto tileMsg = tile.serialize("tile:");
+#if ENABLE_DEBUG
+        const std::string response = tileMsg + " renderid=" + Util::UniqueId() + "\n";
+#else
+        const std::string response = tileMsg + "\n";
+#endif
+
+        std::vector<char> output;
+        output.reserve(response.size() + pixmapDataSize);
+        output.resize(response.size());
+        std::memcpy(output.data(), response.data(), response.size());
+
+        if (hash != 0 && tile.getOldWireId() == wid)
         {
             // The tile content is identical to what the client already has, so skip it
-            LOG_TRC("Match oldhash==hash (" << hash << "), skipping");
+            LOG_TRC("Match oldWireId==wid (" << wid << " for hash " << hash << "), skipping");
             return;
         }
 
-        if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode, hash))
+        if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode, hash, wid))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");
+
             LOG_ERR("Failed to encode tile into PNG.");
             return;
         }
@@ -742,17 +793,19 @@ public:
             const uint64_t hash = Png::hashSubBuffer(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight,
                                                      pixelWidth, pixelHeight, pixmapWidth, pixmapHeight);
 
-            if (hash != 0 && tiles[tileIndex].getOldHash() == hash)
+            TileWireId wireId = _pngCache.hashToWireId(hash);
+            if (hash != 0 && tiles[tileIndex].getOldWireId() == wireId)
             {
                 // The tile content is identical to what the client already has, so skip it
                 LOG_TRC("Match for tile #" << tileIndex << " at (" << positionX << "," <<
-                        positionY << ") oldhash==hash (" << hash << "), skipping");
+                        positionY << ") oldhash==hash (" << hash << "), wireId: " << wireId << " skipping");
                 tiles.erase(tiles.begin() + tileIndex);
                 continue;
             }
 
             if (!_pngCache.encodeSubBufferToPNG(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight,
-                                                pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode, hash))
+                                                pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode,
+                                                hash, wireId))
             {
                 //FIXME: Return error.
                 //sendTextFrame("error: cmd=tile kind=failure");
@@ -761,9 +814,9 @@ public:
             }
 
             const auto imgSize = output.size() - oldSize;
-            LOG_TRC("Encoded tile #" << tileIndex << " at (" << positionX << "," << positionY << ") with oldhash=" <<
-                    tiles[tileIndex].getOldHash() << ", hash=" << hash << " in " << imgSize << " bytes.");
-            tiles[tileIndex].setHash(hash);
+            LOG_TRC("Encoded tile #" << tileIndex << " at (" << positionX << "," << positionY << ") with oldWireId=" <<
+                    tiles[tileIndex].getOldWireId() << ", hash=" << hash << " wireId: " << wireId << " in " << imgSize << " bytes.");
+            tiles[tileIndex].setWireId(wireId);
             tiles[tileIndex].setImgSize(imgSize);
             tileIndex++;
         }

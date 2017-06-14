@@ -760,8 +760,8 @@ L.Socket = L.Class.extend({
 			else if (tokens[i].substring(0, 12) === 'rendercount=') {
 				command.rendercount = parseInt(tokens[i].substring(12));
 			}
-			else if (tokens[i].startsWith('hash=')) {
-				command.hash = this.getParameterValue(tokens[i]);
+			else if (tokens[i].startsWith('wid=')) {
+				command.wireId = this.getParameterValue(tokens[i]);
 			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {

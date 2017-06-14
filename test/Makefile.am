@@ -75,7 +75,7 @@ check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
-TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la # unit-client.la - enable to run unit-tests in wsd ...
+TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la # unit-client.la # - enable to run unit-tests in wsd ...
 else
 TESTS = ${top_builddir}/test/test
 endif

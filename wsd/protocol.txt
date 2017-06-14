@@ -129,11 +129,10 @@ status
 
 styles
 
-tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [id=<id> broadcast=<yesOrNo>] [oldhash=<hash>]
+tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [id=<id> broadcast=<yesOrNo>] [oldwid=<wireId>]
 
     Parameters are numbers except broadcast which is 'yes' or 'no' and
-    hash which is a 64-bit hash. (There is no need for the client to
-    parse it into a number, it can be treated as an opaque string.)
+    wireId which is an opaque string identifier unique to this tile.
 
     Note: id must be echoed back in the response verbatim. It and the
     following parameter, broadcast, are used when rendering slide
@@ -144,7 +143,7 @@ tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<y
 tilecombine <parameters>
 
     Accepts same parameters as the 'tile' message except that
-    parameters 'tileposx', 'tileposy' and 'oldhash' are
+    parameters 'tileposx', 'tileposy' and 'oldwid are
     comma-separated lists, and the number of elements in each must be
     same.
 
@@ -323,16 +322,17 @@ textselectioncontent: <content>
 
     Current selection's content
 
-tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [renderid=<id>] [hash=<hash>]
+tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [renderid=<id>] [wid=<wireId>]
 <binaryPngImage>
 
     The parameters from the corresponding 'tile' command.
 
     In a debug build, the renderid is either a unique identifier,
     different for each actual call to LibreOfficeKit to render a tile,
-    or the string 'cached' if the tile was found in the cache. hash is
-    a hash of the tile contents, and can be included by the client in
-    the next 'tile' message requesting the same tile.
+    or the string 'cached' if the tile was found in the cache. WireId
+    is a unique reference to a hashed tile on the server, and can
+    be included by the client in the next 'tile' message requesting
+    the same tile.
 
 commandresult: <payload>
     This is used to acknowledge the commands from the client.
