@@ -242,9 +242,9 @@ std::string LocalStorage::loadStorageFileToLocal(const std::string& /*accessToke
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
     const auto publicFilePath = _uri.getPath();
 
-    if (!FileUtil::checkDiskSpace(publicFilePath))
+    if (!FileUtil::checkDiskSpace(_jailedFilePath))
     {
-        throw StorageSpaceLowException("Low disk space for " + publicFilePath);
+        throw StorageSpaceLowException("Low disk space for " + _jailedFilePath);
     }
 
     LOG_INF("Linking " << publicFilePath << " to " << _jailedFilePath);
