@@ -63,5 +63,7 @@ loolwsd_fuzzer
 clientnb
 
 # make tags
+tags
+test/tags
 TAGS
 test/TAGS
