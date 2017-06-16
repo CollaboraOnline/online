@@ -35,6 +35,12 @@ public:
         _worker.join();
     }
 
+    virtual bool filterAlertAllusers(const std::string & msg)
+    {
+        std::cout << "Alert: " << msg << "\n";
+        return false;
+    }
+
     void configure(Poco::Util::LayeredConfiguration& config) override
     {
         UnitWSD::configure(config);

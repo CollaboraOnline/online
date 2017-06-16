@@ -983,6 +983,9 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 {
     assertCorrectThread();
 
+    if (UnitWSD::get().filterAlertAllusers(msg))
+        return;
+
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
 
     LOG_DBG("Alerting all users of [" << _docKey << "]: " << msg);

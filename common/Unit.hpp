@@ -102,6 +102,12 @@ public:
         return false;
     }
 
+    /// Trap and filter alerting all users
+    virtual bool filterAlertAllusers(const std::string & /* msg */)
+    {
+        return false;
+    }
+
     /// If the test times out this gets invoked, the default just exits.
     virtual void timeout();
 

@@ -217,6 +217,9 @@ void alertAllUsersInternal(const std::string& msg)
 
     LOG_INF("Alerting all users: [" << msg << "]");
 
+    if (UnitWSD::get().filterAlertAllusers(msg))
+        return;
+
     for (auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
