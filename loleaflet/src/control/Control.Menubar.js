@@ -499,11 +499,13 @@ L.Control.Menubar = L.Control.extend({
 				var xElem = 0, yElem = 0;
 				var maxH = window.innerHeight, maxW = window.innerWidth;
 
-				$('#findthis').on('input', function() {
-					if (this.value.length != 0) {
-						map.search(this.value, false, '', 0, true);
-					}
-				});
+				if (map.getDocType() === 'text') {
+					$('#findthis').on('input', function() {
+						if (this.value.length != 0) {
+							map.search(this.value, false, '', 0, true);
+						}
+					});
+				}
 				$('.vex-content').on('mousedown', function(e) {
 					selected = this;
 					selected.style.cursor = 'move';
