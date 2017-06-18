@@ -40,6 +40,10 @@ AM_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib $(ZLIB_LIBS)
 
 if ENABLE_SSL
 AM_LDFLAGS += -lssl -lcrypto
+else
+loolwsd_fuzzer_LDADD = -lssl -lcrypto
+loolwsd_LDADD = -lssl -lcrypto
+loolconfig_LDADD = -lssl -lcrypto
 endif
 
 loolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 -DFUZZER=1 -DTDOC=\"$(abs_top_srcdir)/test/data\" $(AM_CPPFLAGS)
