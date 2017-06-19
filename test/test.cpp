@@ -7,6 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "test.hpp"
+
 #include "config.h"
 
 #include <cstdlib>
@@ -23,8 +25,6 @@
 #include <Poco/RegularExpression.h>
 
 #include <Log.hpp>
-
-#include "test.hpp"
 
 class HTTPGetTest;
 
