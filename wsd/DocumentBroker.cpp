@@ -526,9 +526,16 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                          << "Actual: " << fileInfo._modifiedTime << Log::end;
 
             _documentChangedInStorage = true;
-            const std::string errorMsg = "error: cmd=storage kind=documentconflict";
-            session->sendTextFrame(errorMsg);
-            broadcastMessage(errorMsg);
+            if (_isModified)
+            {
+                const std::string errorMsg = "error: cmd=storage kind=documentconflict";
+                session->sendTextFrame(errorMsg);
+                broadcastMessage(errorMsg);
+            }
+            else
+            {
+                closeDocument("documentconflict");
+            }
         }
     }
 
@@ -690,7 +697,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     {
         LOG_ERR("PutFile says that Document changed in storage");
         _documentChangedInStorage = true;
-        broadcastMessage("error: cmd=storage kind=documentconflict");
+        if (_isModified)
+        {
+            broadcastMessage("error: cmd=storage kind=documentconflict");
+        }
+        else
+        {
+            closeDocument("documentconflict");
+        }
     }
 
     return false;
