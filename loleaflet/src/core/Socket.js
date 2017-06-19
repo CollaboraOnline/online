@@ -282,8 +282,7 @@ L.Socket = L.Class.extend({
 				}, timeoutMs);
 			}
 			else if (textMsg.startsWith('documentconflict')) {
-				var username = textMsg.substring('documentconflict '.length);
-				msg = _('%user asked to refresh the document. Document will now refresh automatically.').replace('%user', username);
+				msg = _('Document has changed in storage. Loading the new document. Your version is available as revision.');
 
 				if (this._map._docLayer) {
 					this._map._docLayer.removeAllViews();

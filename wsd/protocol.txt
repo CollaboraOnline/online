@@ -277,9 +277,9 @@ close: <reason>
     shutting down to let clients know they can try connecting
     after a short interval.
 
-    * documentconflict <user name> - All sessions of this document are going down
-    because file was changed in storage and one of the user ( with <user
-    name>) asked to reload the session for all.
+    * documentconflict - All sessions of this document are going down
+    because file was changed in storage and we want to load the new document
+    from the storage.
 
 getchildid: id=<id>
 
