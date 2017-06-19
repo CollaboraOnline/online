@@ -1235,9 +1235,7 @@ map.on('commandstatechanged', function (e) {
 	}
 
 	if (id === 'undo' || id === 'redo') {
-		if (toolbar.get('undo').disabled && toolbar.get('redo').disabled) {
-			toolbar.disable('repair');
-		} else {
+		if (!toolbar.get('undo').disabled || !toolbar.get('redo').disabled) {
 			toolbar.enable('repair');
 		}
 	}
