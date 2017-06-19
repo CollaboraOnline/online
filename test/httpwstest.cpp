@@ -31,6 +31,12 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
+#include <Poco/DOM/Node.h>
+#include <Poco/DOM/Document.h>
+#include <Poco/DOM/NodeFilter.h>
+#include <Poco/DOM/NodeIterator.h>
+#include <Poco/DOM/DOMParser.h>
+#include <Poco/SAX/InputSource.h>
 
 #include <cppunit/extensions/HelperMacros.h>
 
@@ -1204,6 +1210,27 @@ void HTTPWSTest::testInsertDelete()
     }
 }
 
+static int findInDOM(Poco::XML::Document *doc, const char *string, bool checkName,
+                     unsigned long nodeFilter = Poco::XML::NodeFilter::SHOW_ALL)
+{
+    int count = 0;
+    Poco::XML::NodeIterator itCode(doc, nodeFilter);
+    while (Poco::XML::Node* pNode = itCode.nextNode())
+    {
+        if (checkName)
+        {
+            if (pNode->nodeName() == string)
+                count++;
+        }
+        else
+        {
+            if (pNode->getNodeValue().find(string) != std::string::npos)
+                count++;
+        }
+    }
+    return count;
+}
+
 void HTTPWSTest::testSlideShow()
 {
     const auto testname = "slideshow ";
@@ -1250,15 +1277,26 @@ void HTTPWSTest::testSlideShow()
         CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseSVG.getStatus());
         CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
         std::cerr << "SVG file size: " << responseSVG.getContentLength() << std::endl;
-        // std::ofstream ofs("/tmp/slide.svg");
-        // Poco::StreamCopier::copyStream(rs, ofs);
-        // ofs.close();
-        (void)rs;
-        // Some setups render differently; recognize these two valid output sizes for now.
-        // Seems LO generates different svg content, even though visually identical.
-        // Current known sizes: 434748, 451329, 467345, 468653, 483882.
-        CPPUNIT_ASSERT(responseSVG.getContentLength() >= std::streamsize(430000) &&
-                       responseSVG.getContentLength() <= std::streamsize(490000));
+
+//        std::ofstream ofs("/tmp/slide.svg");
+//        Poco::StreamCopier::copyStream(rs, ofs);
+//        ofs.close();
+
+        // Asserting on the size of the stream is really unhelpful;
+        // lets checkout the contents instead ...
+        Poco::XML::DOMParser parser;
+        Poco::XML::InputSource svgSrc(rs);
+        Poco::AutoPtr<Poco::XML::Document> doc = parser.parse(&svgSrc);
+
+        // Do we have our automation / scripting
+        CPPUNIT_ASSERT(findInDOM(doc, "jessyinkstart",    false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
+        CPPUNIT_ASSERT(findInDOM(doc, "jessyinkend",      false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
+        CPPUNIT_ASSERT(findInDOM(doc, "libreofficestart", false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
+        CPPUNIT_ASSERT(findInDOM(doc, "libreofficeend",   false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
+
+        // Do we have plausible content ?
+        int countText = findInDOM(doc, "text", true, Poco::XML::NodeFilter::SHOW_ELEMENT);
+        CPPUNIT_ASSERT_EQUAL(countText, 93);
     }
     catch (const Poco::Exception& exc)
     {
