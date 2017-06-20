@@ -949,9 +949,8 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
 
             const auto readonly = (it->second ? it->second->isReadOnly() : false);
 
-            //FIXME: We might be called from the session we are removing,
-            //FIXME: and if this is the last/only reference, we destroy it.
-            //FIXME: Should flag and remove from the poll thread.
+            // Remove. The caller must have a reference to the session
+            // in question, lest we destroy from underneith them.
             _sessions.erase(it);
 
             const auto count = _sessions.size();
@@ -1355,7 +1354,9 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
         if (sid == "all")
         {
             // Broadcast to all.
-            for (const auto& pair : _sessions)
+            // Events could cause the removal of sessions.
+            std::map<std::string, std::shared_ptr<ClientSession>> sessions(_sessions);
+            for (const auto& pair : sessions)
             {
                 pair.second->handleKitToClientMessage(data, size);
             }
@@ -1365,7 +1366,10 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
             const auto it = _sessions.find(sid);
             if (it != _sessions.end())
             {
-                return it->second->handleKitToClientMessage(data, size);
+                // Take a ref as the session could be removed from _sessions
+                // if it's the save confirmation keeping a stopped session alive.
+                std::shared_ptr<ClientSession> session = it->second;
+                return session->handleKitToClientMessage(data, size);
             }
             else
             {
