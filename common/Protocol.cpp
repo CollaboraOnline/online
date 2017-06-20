@@ -188,8 +188,9 @@ namespace LOOLProtocol
             auto pos = message.find(name);
             while (pos != std::string::npos)
             {
+                bool spaceBefore = pos == 0 || message[pos-1] == ' ';
                 const auto beg = pos + name.size();
-                if (message[beg] == '=')
+                if (spaceBefore && message[beg] == '=')
                 {
                     const auto end = message.find_first_of(" \n", beg);
                     value = message.substr(beg + 1, end - beg - 1);
