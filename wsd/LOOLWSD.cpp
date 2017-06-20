@@ -1163,6 +1163,8 @@ bool LOOLWSD::createForKit()
 #else
     LOG_INF("Creating new forkit process.");
 
+    std::unique_lock<std::mutex> newChildrenLock(NewChildrenMutex);
+
     Process::Args args;
     args.push_back("--losubpath=" + std::string(LO_JAIL_SUBPATH));
     args.push_back("--systemplate=" + SysTemplate);
@@ -1194,10 +1196,6 @@ bool LOOLWSD::createForKit()
         forKitPath = forKitPath + std::string("-nocaps");
         args.push_back("--nocaps");
     }
-
-    // If we're recovering forkit, don't allow processing new requests.
-    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-    std::unique_lock<std::mutex> newChildrenLock(NewChildrenMutex);
 
     // Always reap first, in case we haven't done so yet.
     if (ForKitProcId != -1)
@@ -1236,6 +1234,7 @@ bool LOOLWSD::createForKit()
     Admin::instance().setForKitPid(ForKitProcId);
     Admin::instance().setForKitWritePipe(ForKitWritePipe);
 
+    rebalanceChildren(LOOLWSD::NumPreSpawnedChildren - 1);
     return ForKitProcId != -1;
 #endif
 }
@@ -2557,9 +2556,6 @@ int LOOLWSD::innerMain()
         assert(NewChildren.size() > 0);
     }
 #endif
-
-    // Prefork initial children
-    prespawnChildren();
 
     // Start the server.
     srv.start(ClientPortNumber);
