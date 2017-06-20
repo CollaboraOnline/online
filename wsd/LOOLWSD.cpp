@@ -401,9 +401,9 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks()
     ++numPreSpawn; // Replace the one we'll dispatch just now.
     if (rebalanceChildren(numPreSpawn) < 0)
     {
-        LOG_DBG("getNewChild: rebalancing of children failed. Checking and restoring forkit.");
+        LOG_DBG("getNewChild: rebalancing of children failed. Scheduling housekeeping to recover.");
 
-        LOOLWSD::checkAndRestoreForKit();
+        LOOLWSD::doHousekeeping();
 
         // Let the caller retry after a while.
         return nullptr;
