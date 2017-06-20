@@ -35,7 +35,7 @@ public:
         _worker.join();
     }
 
-    virtual bool filterAlertAllusers(const std::string & msg)
+    bool filterAlertAllusers(const std::string & msg) override
     {
         std::cout << "Alert: " << msg << "\n";
         return false;
