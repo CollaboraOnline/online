@@ -104,6 +104,17 @@ L.Map.WOPI = L.Handler.extend({
 		}
 
 		var msg = JSON.parse(e.data);
+		if (msg.MessageId === 'Host_PostmessageReady') {
+			// We already have a listener for this in loleaflet.html, so ignore it here
+			return;
+		}
+
+		// For all other messages, warn if trying to interact before we are completely loaded
+		if (!this._appLoaded) {
+			console.error('LibreOffice Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
+			return;
+		}
+
 		if (msg.MessageId === 'Insert_Button') {
 			if (msg.Values) {
 				if (msg.Values.id && !w2ui['toolbar-up'].get(msg.Values.id)
