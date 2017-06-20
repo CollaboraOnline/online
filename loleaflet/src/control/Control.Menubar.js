@@ -444,7 +444,7 @@ L.Control.Menubar = L.Control.extend({
 			<table class="findreplacetable">\
 				<tr>\
 					<td>\
-						<label for="findthis">Find</label>\
+						<label for="findthis">' + _('Find') + '</label>\
 					</td>\
 					<td>\
 						<input id="findthis" name="findthis">\
@@ -452,7 +452,7 @@ L.Control.Menubar = L.Control.extend({
 				</tr>\
 				<tr>\
 					<td>\
-						<label for="replacewith">Replace with</label>\
+						<label for="replacewith">' + _('Replace with') + '</label>\
 					</td>\
 					<td>\
 						<input name="replacewith">\
