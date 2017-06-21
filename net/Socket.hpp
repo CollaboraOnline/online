@@ -74,7 +74,7 @@ public:
     }
     void setMove(MoveFunction moveFn)
     {
-        _socketMove = moveFn;
+        _socketMove = std::move(moveFn);
         _disposition = Type::MOVE;
     }
     void setClosed()
