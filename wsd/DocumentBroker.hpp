@@ -344,7 +344,7 @@ private:
 
     /// This gracefully terminates the connection
     /// with the child and cleans up ChildProcess etc.
-    void terminateChild(const std::string& closeReason, const bool rude);
+    void terminateChild(const std::string& closeReason);
 
     /// Saves the doc to the storage.
     bool saveToStorageInternal(const std::string& sesionId, bool success, const std::string& result = "");
