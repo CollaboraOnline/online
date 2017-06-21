@@ -105,6 +105,12 @@ class Document;
 static std::shared_ptr<Document> document;
 static LokHookFunction2* initFunction = nullptr;
 
+#if ENABLE_DEBUG
+#  define ADD_DEBUG_RENDERID(s) ((s)+ " renderid=" + Util::UniqueId())
+#else
+#  define ADD_DEBUG_RENDERID(s) (s)
+#endif
+
 namespace
 {
 #ifndef BUILDING_TESTS
@@ -685,25 +691,20 @@ public:
 
         tile.setWireId(wid);
 
+        if (hash != 0 && tile.getOldWireId() == wid)
+        {
+            // The tile content is identical to what the client already has, so skip it
+            LOG_TRC("Match oldWireId==wid (" << wid << " for hash " << hash << "); unchanged");
+            return;
+        }
+
         // Send back the request with all optional parameters given in the request.
-        const auto tileMsg = tile.serialize("tile:");
-#if ENABLE_DEBUG
-        const std::string response = tileMsg + " renderid=" + Util::UniqueId() + "\n";
-#else
-        const std::string response = tileMsg + "\n";
-#endif
+        std::string response = ADD_DEBUG_RENDERID(tile.serialize("tile:")) + "\n";
 
         std::vector<char> output;
         output.reserve(response.size() + pixmapDataSize);
         output.resize(response.size());
         std::memcpy(output.data(), response.data(), response.size());
-
-        if (hash != 0 && tile.getOldWireId() == wid)
-        {
-            // The tile content is identical to what the client already has, so skip it
-            LOG_TRC("Match oldWireId==wid (" << wid << " for hash " << hash << "), skipping");
-            return;
-        }
 
         if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode, hash, wid))
         {
@@ -826,11 +827,7 @@ public:
                 renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
                 " took " << (elapsed/1000.) << " ms (including the paintTile).");
 
-#if ENABLE_DEBUG
-        const auto tileMsg = tileCombined.serialize("tilecombine:") + " renderid=" + Util::UniqueId() + "\n";
-#else
-        const auto tileMsg = tileCombined.serialize("tilecombine:") + "\n";
-#endif
+        const auto tileMsg = ADD_DEBUG_RENDERID(tileCombined.serialize("tilecombine:")) + "\n";
         LOG_TRC("Sending back painted tiles for " << tileMsg);
 
         std::vector<char> response;
