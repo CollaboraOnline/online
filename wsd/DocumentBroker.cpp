@@ -646,9 +646,6 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
     LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uri << "].");
 
-    // FIXME: We should check before persisting the document that it hasn't been updated in its
-    // storage behind our backs.
-
     assert(_storage && _tileCache);
     StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(accessToken);
     if (storageSaveResult == StorageBase::SaveResult::OK)
