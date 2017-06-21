@@ -308,7 +308,7 @@ void DocumentBroker::pollThread()
     }
 
     // Terminate properly while we can.
-    terminateChild(closeReason, false);
+    terminateChild(closeReason);
 
     // Stop to mark it done and cleanup.
     _poll->stop();
@@ -1424,17 +1424,14 @@ void DocumentBroker::childSocketTerminated()
     shutdownClients("terminated");
 }
 
-void DocumentBroker::terminateChild(const std::string& closeReason, const bool rude)
+void DocumentBroker::terminateChild(const std::string& closeReason)
 {
     assertCorrectThread();
 
     LOG_INF("Terminating doc [" << _docKey << "] with reason: " << closeReason);
 
     // Close all running sessions
-    if (!rude)
-    {
-        shutdownClients(closeReason);
-    }
+    shutdownClients(closeReason);
 
     if (_childProcess)
     {
@@ -1442,12 +1439,8 @@ void DocumentBroker::terminateChild(const std::string& closeReason, const bool r
 
         // First flag to stop as it might be waiting on our lock
         // to process some incoming message.
-        if (!rude)
-        {
-            _childProcess->stop();
-        }
-
-        _childProcess->close(rude);
+        _childProcess->stop();
+        _childProcess->close(false);
     }
 
     _stop = true;
@@ -1458,7 +1451,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
     assertCorrectThread();
 
     LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
-    terminateChild(reason, false);
+    terminateChild(reason);
 }
 
 void DocumentBroker::broadcastMessage(const std::string& message)
