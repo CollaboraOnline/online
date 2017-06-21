@@ -953,6 +953,14 @@ map.on('wopiprops', function(e) {
 	if (e.HideSaveOption) {
 		w2ui['toolbar-up'].hide('save');
 	}
+	if (e.DisableCopy) {
+		$('input#formulaInput').bind('copy', function(evt) {
+			evt.preventDefault();
+		});
+		$('input#addressInput').bind('copy', function(evt) {
+			evt.preventDefault();
+		});
+	}
 });
 
 map.on('doclayerinit', function () {
@@ -1586,7 +1594,7 @@ function getUserItem(viewId, userName, extraInfo, color) {
 	var html = '<tr class="' + className + '" id="user-' + viewId + '" onclick="onUseritemClicked(event)">' +
 	             '<td class=usercolor style="background-color: ' + color  +';">';
 	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
-		html += '<img src="' + extraInfo.avatar + '" width="32" height="32" />'
+		html += '<img src="' + extraInfo.avatar + '" width="32" height="32" />';
 	}
 
 	// TODO: Add mail and other links as sub-menu.
