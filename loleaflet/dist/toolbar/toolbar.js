@@ -748,7 +748,7 @@ function onSearch(e) {
 		toolbar.hide('cancelsearch');
 	}
 	else {
-		if(map.getDocType() === 'text')
+		if (map.getDocType() === 'text')
 			map.search(L.DomUtil.get('search-input').value, false, '', 0, true /* expand search */);
 		toolbar.enable('searchprev');
 		toolbar.enable('searchnext');
