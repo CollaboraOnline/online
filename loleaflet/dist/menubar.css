@@ -218,12 +218,9 @@
     #menu-closedocument {
 	display: none;
     }
-    /* In readonly mode, we have no toolbar => no close button,
-     * so only way to close the document is file menu option
-     */
-    #menu-closedocument.readonly {
-	display: block;
-	top: 3px; /* This is not a menu, plain action, but we want it to appear like a menu */
+
+    .readonly {
+	top: 3px;
     }
 }
 

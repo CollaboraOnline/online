@@ -62,12 +62,27 @@
     width: 700px;
 }
 
-#tb_toolbar-up_item_close {
+#closebuttonwrapper {
     position: fixed;
     z-index: 1050;
     right: 0;
     top: 0;
+    width: 26px;
+    height: 26px;
 }
+#closebutton {
+    width: 24px;
+    height: 24px;
+    border: 1px solid;
+    border-color: transparent;
+    border-radius: 5px;
+}
+#closebutton:hover {
+    border-color: #ccc;
+    background-color: #eee;
+}
+.closebuttonimage{ background: url('../images/lc_closedoc.svg') no-repeat center !important; }
+
 #tb_toolbar-up_item_right {
     width: 100%;
 }
@@ -215,7 +230,6 @@ button.leaflet-control-search-next
 .w2ui-icon.bullet{ background: url('../images/lc_defaultbullet.svg') no-repeat center !important; }
 .w2ui-icon.cancel{ background: url('../images/lc_cancel.svg') no-repeat center !important; }
 .w2ui-icon.color{ background: url('../images/lc_color.svg') no-repeat center !important; }
-.w2ui-icon.closedoc{ background: url('../images/lc_closedoc.svg') no-repeat center !important; }
 .w2ui-icon.decrementindent{ background: url('../images/lc_decrementindent.svg') no-repeat center !important; }
 .w2ui-icon.deletepage{ background: url('../images/lc_deletepage.svg') no-repeat center !important; }
 .w2ui-icon.duplicatepage{ background: url('../images/lc_duplicatepage.svg') no-repeat center !important; }
