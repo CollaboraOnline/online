@@ -101,7 +101,7 @@ body {
     #tb_toolbar-up_item_rightmenupadding {
 	padding-right: 40px;
     }
-    #tb_toolbar-up_item_close {
+    #closebutton {
 	display: none;
     }
 }
