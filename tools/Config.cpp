@@ -36,8 +36,7 @@ using Poco::Util::XMLConfiguration;
 class LoolConfig final: public XMLConfiguration
 {
 public:
-    LoolConfig() :
-        XMLConfiguration()
+    LoolConfig()
         {}
 };
 
