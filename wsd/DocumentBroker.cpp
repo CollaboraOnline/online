@@ -194,6 +194,9 @@ void DocumentBroker::pollThread()
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
                                                                   _threadStart).count() > timeoutMs)
             break;
+
+        // Nominal time between retries, lest we  busy-loop. getNewChild could also wait, so don't double that here.
+        std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS / 10));
     }
     while (!_stop && _poll->continuePolling() && !TerminationFlag && !ShutdownRequestFlag);
 
