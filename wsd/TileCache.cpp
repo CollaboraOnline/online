@@ -17,7 +17,6 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include <mutex>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -73,6 +72,7 @@ TileCache::TileCache(const std::string& docURL,
 
 TileCache::~TileCache()
 {
+    _owner = std::thread::id(0);
     LOG_INF("~TileCache dtor for uri [" << _docURL << "].");
 }
 
@@ -114,7 +114,7 @@ std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(c
 {
     const std::string cachedName = cacheFileName(tileDesc);
 
-    Util::assertIsLocked(_tilesBeingRenderedMutex);
+    assertCorrectThread();
 
     const auto tile = _tilesBeingRendered.find(cachedName);
     return tile != _tilesBeingRendered.end() ? tile->second : nullptr;
@@ -124,7 +124,7 @@ void TileCache::forgetTileBeingRendered(const TileDesc& tile)
 {
     const std::string cachedName = cacheFileName(tile);
 
-    Util::assertIsLocked(_tilesBeingRenderedMutex);
+    assertCorrectThread();
 
     _tilesBeingRendered.erase(cachedName);
 }
@@ -149,7 +149,7 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
 
 void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const size_t size)
 {
-    std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
+    assertCorrectThread();
 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
 
@@ -321,8 +321,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
 
     File dir(_cacheDir);
 
-    std::unique_lock<std::mutex> lock(_cacheMutex);
-    std::unique_lock<std::mutex> lockSubscribers(_tilesBeingRenderedMutex);
+    assertCorrectThread();
 
     if (dir.exists() && dir.isDirectory())
     {
@@ -446,7 +445,7 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
     oss << '(' << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ')';
     const auto name = oss.str();
 
-    std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
+    assertCorrectThread();
 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
 
@@ -493,7 +492,7 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
     assert(subscriber && "cancelTiles expects valid subscriber");
     LOG_TRC("Cancelling tiles for " << subscriber->getName());
 
-    std::unique_lock<std::mutex> lock(_tilesBeingRenderedMutex);
+    assertCorrectThread();
 
     const auto sub = subscriber.get();
 
@@ -532,6 +531,16 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
 
     const auto canceltiles = oss.str();
     return canceltiles.empty() ? canceltiles : "canceltiles " + canceltiles;
+}
+
+void TileCache::assertCorrectThread()
+{
+    const bool correctThread = _owner == std::thread::id(0) || std::this_thread::get_id() == _owner;
+    if (!correctThread)
+        LOG_ERR("TileCache method invoked from foreign thread. Expected: 0x" << std::hex <<
+                _owner << " but called from 0x" << std::this_thread::get_id() << " (" <<
+                std::dec << Util::getThreadId() << ").");
+    assert (correctThread);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

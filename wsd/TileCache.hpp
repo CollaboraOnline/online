@@ -13,7 +13,7 @@
 #include <iosfwd>
 #include <map>
 #include <memory>
-#include <mutex>
+#include <thread>
 #include <string>
 
 #include <Poco/Timestamp.h>
@@ -75,9 +75,10 @@ public:
     /// Store the timestamp to modtime.txt.
     void saveLastModified(const Poco::Timestamp& timestamp);
 
-    std::unique_lock<std::mutex> getTilesBeingRenderedLock() { return std::unique_lock<std::mutex>(_tilesBeingRenderedMutex); }
-
     void forgetTileBeingRendered(const TileDesc& tile);
+
+    void setThreadOwner(const std::thread::id &id) { _owner = id; }
+    void assertCorrectThread();
 
 private:
     void invalidateTiles(int part, int x, int y, int width, int height);
@@ -98,9 +99,7 @@ private:
 
     const std::string _cacheDir;
 
-    std::mutex _cacheMutex;
-
-    mutable std::mutex _tilesBeingRenderedMutex;
+    std::thread::id _owner;
 
     std::map<std::string, std::shared_ptr<TileBeingRendered> > _tilesBeingRendered;
 };
