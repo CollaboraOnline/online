@@ -529,7 +529,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     oss << cspOss.str();
 
     // Setup HTTP Public key pinning
-    if (LOOLWSD::isSSLEnabled() && config.getBool("ssl.hpkp[@enable]", false))
+    if ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) && config.getBool("ssl.hpkp[@enable]", false))
     {
         size_t i = 0;
         std::string pinPath = "ssl.hpkp.pins.pin[" + std::to_string(i) + "]";
