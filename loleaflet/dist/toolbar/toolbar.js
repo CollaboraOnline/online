@@ -27,8 +27,7 @@ var toolbarUpMobileItems = [
 	'rightpara',
 	'justifypara',
 	'right',
-	'rightmenupadding',
-	'close'
+	'rightmenupadding'
 ];
 
 var statusbarMobileItems = [
@@ -131,7 +130,7 @@ function resizeToolbar() {
 
 	// move items from toolbar-up -> toolbar-up-more
 	while ($('#toolbar-up')[0].scrollWidth > Math.max($(window).width(), parseInt($('body').css('min-width')))) {
-		var itemId = toolbarUp.items[toolbarUp.items.length - 5].id;
+		var itemId = toolbarUp.items[toolbarUp.items.length - 4].id;
 		item = toolbarUp.get(itemId);
 		toolbarUp.remove(itemId);
 		toolbarUpMore.insert(toolbarUpMore.items[0], item);
@@ -341,10 +340,6 @@ function onClick(id, item, subItem) {
 		w2ui['toolbar-up-more'].render();
 		resizeToolbar();
 	}
-	else if (id === 'close') {
-		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
-		map.remove();
-	}
 	else if (id === 'specialcharacter') {
 		var fontList = $('.fonts-select option');
 		var selectedIndex = $('.fonts-select').prop('selectedIndex');
@@ -509,8 +504,7 @@ $(function () {
 			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _('Special Character')},
 			{type: 'html', id: 'right'},
 			{type: 'button',  id: 'more', img: 'more', hint: _('More')},
-			{type: 'html', id: 'rightmenupadding'},
-			{type: 'button',  id: 'close',  img: 'closedoc', hint: _('Close document'), hidden: true}
+			{type: 'html', id: 'rightmenupadding'}
 		],
 		onClick: function (e) {
 			onClick(e.target);
@@ -1672,8 +1666,13 @@ $(window).resize(function() {
 
 $(document).ready(function() {
 	var toolbar = w2ui['toolbar-up'];
-	if (closebutton) {
-		toolbar.show('close');
+	if (!closebutton) {
+		$('#closebuttonwrapper').hide();
+	} else {
+		$('#closebutton').click(function(e) {
+			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
+			map.remove();
+		});
 	}
 
 	// Attach insert file action
