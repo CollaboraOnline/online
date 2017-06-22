@@ -31,7 +31,6 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
-#include <Poco/RegularExpression.h>
 #include <Poco/Runnable.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
