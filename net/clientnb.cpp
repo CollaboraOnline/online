@@ -45,11 +45,7 @@ using Poco::Net::HTTPResponse;
 using Poco::Net::WebSocket;
 using Poco::Runnable;
 using Poco::Thread;
-using Poco::URI;
 using Poco::Util::Application;
-using Poco::Util::HelpFormatter;
-using Poco::Util::Option;
-using Poco::Util::OptionSet;
 
 const char *HostName = "127.0.0.1";
 constexpr int HttpPortNumber = 9191;
