@@ -26,9 +26,9 @@
 #include "Unit.hpp"
 #include "Util.hpp"
 
-void Document::addView(const std::string& sessionId, const std::string& userName)
+void Document::addView(const std::string& sessionId, const std::string& userName, const std::string& userId)
 {
-    const auto ret = _views.emplace(sessionId, View(sessionId, userName));
+    const auto ret = _views.emplace(sessionId, View(sessionId, userName, userId));
     if (!ret.second)
     {
         LOG_WRN("View with SessionID [" << sessionId << "] already exists.");
@@ -294,16 +294,18 @@ void AdminModel::modificationAlert(const std::string& docKey, Poco::Process::PID
 
 void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
                              const std::string& filename, const std::string& sessionId,
-                             const std::string& userName)
+                             const std::string& userName, const std::string& userId)
 {
     assertCorrectThread();
 
     const auto ret = _documents.emplace(docKey, Document(docKey, pid, filename));
-    ret.first->second.addView(sessionId, userName);
+    ret.first->second.addView(sessionId, userName, userId);
     LOG_DBG("Added admin document [" << docKey << "].");
 
     std::string encodedUsername;
     std::string encodedFilename;
+    std::string encodedUserId;
+    Poco::URI::encode(userId, " ", encodedUserId);
     Poco::URI::encode(filename, " ", encodedFilename);
     Poco::URI::encode(userName, " ", encodedUsername);
 
@@ -313,7 +315,8 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
         << pid << ' '
         << encodedFilename << ' '
         << sessionId << ' '
-        << encodedUsername << ' ';
+        << encodedUsername << ' '
+        << encodedUserId << ' ';
 
     // We have to wait until the kit sends us its PSS.
     // Here we guestimate until we get an update.
@@ -456,6 +459,7 @@ std::string AdminModel::getDocuments() const
                 if(!viewIt.second.isExpired()) {
                     oss << separator << '{'
                         << "\"userName\"" << ':' << '"' << viewIt.second.getUserName() << '"' << ','
+                        << "\"userId\"" << ':' << '"' << viewIt.second.getUserId() << '"' << ','
                         << "\"sessionid\"" << ':' << '"' << viewIt.second.getSessionId() << '"' << '}';
                         separator = ',';
                 }

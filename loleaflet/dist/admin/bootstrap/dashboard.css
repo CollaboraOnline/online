@@ -113,10 +113,10 @@ body {
   position: absolute;
   display: none;
 }
-.userContainer{
+.userContainer, .docContainer{
   position: absolute;
 }
-tr:hover .dropdown-menu{
+tr:hover .userContainer .dropdown-menu, td:hover .docContainer .dropdown-menu{
   display: block;
 }
 
@@ -135,7 +135,4 @@ tr:hover .dropdown-menu{
 }
 .selected-view-opt{
   background-color: #f5f5f5;
-}
-.doc_list_label{
-  cursor: pointer;
 }

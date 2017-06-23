@@ -350,10 +350,11 @@ void Admin::modificationAlert(const std::string& dockey, Poco::Process::PID pid,
                 { _model.modificationAlert(dockey, pid, value); });
 }
 
-void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId, const std::string& userName)
+void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename,
+        const std::string& sessionId, const std::string& userName, const std::string& userId)
 {
-    addCallback([this, docKey, pid, filename, sessionId, userName]
-                 { _model.addDocument(docKey, pid, filename, sessionId, userName); });
+    addCallback([this, docKey, pid, filename, sessionId, userName, userId]
+                 { _model.addDocument(docKey, pid, filename, sessionId, userName, userId); });
 }
 
 void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)

@@ -24,21 +24,24 @@
 class View
 {
 public:
-    View(const std::string& sessionId, const std::string& userName) :
+    View(const std::string& sessionId, const std::string& userName, const std::string& userId) :
         _sessionId(sessionId),
         _userName(userName),
+        _userId(userId),
         _start(std::time(nullptr))
     {
     }
 
     void expire() { _end = std::time(nullptr); }
     std::string getUserName() const { return _userName; }
+    std::string getUserId() const { return _userId; }
     std::string getSessionId() const { return _sessionId; }
     bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
 private:
     const std::string _sessionId;
     const std::string _userName;
+    const std::string _userId;
     const std::time_t _start;
     std::time_t _end = 0;
 };
@@ -69,7 +72,7 @@ public:
 
     std::time_t getIdleTime() const { return std::time(nullptr) - _lastActivity; }
 
-    void addView(const std::string& sessionId, const std::string& userName);
+    void addView(const std::string& sessionId, const std::string& userName, const std::string& userId);
 
     int expireView(const std::string& sessionId);
 
@@ -190,7 +193,7 @@ public:
 
     void notify(const std::string& message);
 
-    void addDocument(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId, const std::string& userName);
+    void addDocument(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId, const std::string& userName, const std::string& userId);
 
     void removeDocument(const std::string& docKey, const std::string& sessionId);
     void removeDocument(const std::string& docKey);
