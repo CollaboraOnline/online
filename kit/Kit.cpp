@@ -405,7 +405,7 @@ class PngCache
                                    int width, int height,
                                    int bufferWidth, int bufferHeight,
                                    std::vector<char>& output, LibreOfficeKitTileMode mode,
-                                   TileBinaryHash hash, TileWireId wid)
+                                   TileBinaryHash hash, TileWireId wid, TileWireId /* oldWid */)
     {
         LOG_DBG("PNG cache with hash " << hash << " missed.");
         CacheEntry newEntry(bufferWidth * bufferHeight * 1, wid);
@@ -454,28 +454,28 @@ public:
 
     bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
                            std::vector<char>& output, LibreOfficeKitTileMode mode,
-                           TileBinaryHash hash, TileWireId wid)
+                           TileBinaryHash hash, TileWireId wid, TileWireId oldWid)
     {
         if (cacheTest(hash, output))
             return true;
 
         return cacheEncodeSubBufferToPNG(pixmap, 0, 0, width, height,
                                          width, height, output, mode,
-                                         hash, wid);
+                                         hash, wid, oldWid);
     }
 
     bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
                               int width, int height,
                               int bufferWidth, int bufferHeight,
                               std::vector<char>& output, LibreOfficeKitTileMode mode,
-                              TileBinaryHash hash, TileWireId wid)
+                              TileBinaryHash hash, TileWireId wid, TileWireId oldWid)
     {
         if (cacheTest(hash, output))
             return true;
 
         return cacheEncodeSubBufferToPNG(pixmap, startX, startY, width, height,
                                          bufferWidth, bufferHeight, output, mode,
-                                         hash, wid);
+                                         hash, wid, oldWid);
     }
 };
 
@@ -688,10 +688,11 @@ public:
 
         const TileBinaryHash hash = Png::hashBuffer(pixmap.data(), tile.getWidth(), tile.getHeight());
         TileWireId wid = _pngCache.hashToWireId(hash);
+        TileWireId oldWireId = tile.getOldWireId();
 
         tile.setWireId(wid);
 
-        if (hash != 0 && tile.getOldWireId() == wid)
+        if (hash != 0 && oldWireId == wid)
         {
             // The tile content is identical to what the client already has, so skip it
             LOG_TRC("Match oldWireId==wid (" << wid << " for hash " << hash << "); unchanged");
@@ -706,7 +707,7 @@ public:
         output.resize(response.size());
         std::memcpy(output.data(), response.data(), response.size());
 
-        if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode, hash, wid))
+        if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode, hash, wid, oldWireId))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");
@@ -795,7 +796,8 @@ public:
                                                      pixelWidth, pixelHeight, pixmapWidth, pixmapHeight);
 
             TileWireId wireId = _pngCache.hashToWireId(hash);
-            if (hash != 0 && tiles[tileIndex].getOldWireId() == wireId)
+            TileWireId oldWireId = tiles[tileIndex].getOldWireId();
+            if (hash != 0 && oldWireId == wireId)
             {
                 // The tile content is identical to what the client already has, so skip it
                 LOG_TRC("Match for tile #" << tileIndex << " at (" << positionX << "," <<
@@ -806,7 +808,7 @@ public:
 
             if (!_pngCache.encodeSubBufferToPNG(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight,
                                                 pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode,
-                                                hash, wireId))
+                                                hash, wireId, oldWireId))
             {
                 //FIXME: Return error.
                 //sendTextFrame("error: cmd=tile kind=failure");
