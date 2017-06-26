@@ -1577,15 +1577,38 @@ map.on('keydown', function (e) {
 });
 
 function onUseritemClicked(e) {
+	var docLayer = map._docLayer;
 	var viewId = parseInt(e.currentTarget.id.replace('user-', ''));
 
-	if (map._docLayer) {
-		if (map.getDocType() === 'spreadsheet') {
-			map._docLayer.goToCellViewCursor(viewId);
-		} else if (map.getDocType() === 'text') {
-			map._docLayer.goToViewCursor(viewId);
-		}
+	if (map.getDocType() === 'spreadsheet') {
+		docLayer.goToCellViewCursor(viewId);
+	} else if (map.getDocType() === 'text' || map.getDocType() === 'presentation') {
+		docLayer.goToViewCursor(viewId);
 	}
+
+	if (viewId === map._docLayer._viewId) {
+		$('#tb_toolbar-down_item_userlist').w2overlay('');
+		return;
+	} else if (docLayer._followThis !== -1) {
+		map.fire('setFollowOff');
+	}
+
+	docLayer._followThis = viewId;
+	docLayer._followUser = true;
+	docLayer._followEditor = false;
+
+	selectUser(viewId);
+}
+
+function selectUser(viewId) {
+	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	userlistItem.html = $(userlistItem.html).find('#user-' + viewId).addClass('selected-user').parent().parent().parent()[0].outerHTML;
+	$('#tb_toolbar-down_item_userlist').w2overlay('');
+}
+
+function deselectUser(viewId) {
+	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	userlistItem.html = $(userlistItem.html).find('#user-' + viewId).removeClass('selected-user').parent().parent().parent()[0].outerHTML;
 }
 
 function getUserItem(viewId, userName, extraInfo, color) {
@@ -1670,9 +1693,25 @@ map.on('removeview', function(e) {
 		userPopupTimeout = null;
 	}, 3000);
 
+	if (e.viewId === map._docLayer._followThis) {
+		map._docLayer._followThis = -1;
+		map._docLayer._followUser = false;
+	}
+
 	var userlistItem = w2ui['toolbar-down'].get('userlist');
 	userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
 	updateUserListCount();
+});
+
+map.on('setFollowOff', function(e) {
+	var docLayer = map._docLayer;
+	var viewId = docLayer._followThis;
+	if (viewId !== -1 && map._viewInfo[viewId]) {
+		deselectUser(viewId);
+	}
+	docLayer._followThis = -1;
+	docLayer._followUser = false;
+	docLayer._followEditor = false;
 });
 
 $(window).resize(function() {

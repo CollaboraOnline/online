@@ -142,6 +142,10 @@ L.TileLayer = L.GridLayer.extend({
 			'tiletwipwidth=' + this.options.tileWidthTwips + ' ' +
 			'tiletwipheight=' + this.options.tileHeightTwips;
 
+		this._followThis = -1;
+		this._followUser = false;
+		this._followEditor = false;
+
 		// Mark visible area as dirty by default.
 		this._invalidateClientVisibleArea();
 	},
@@ -702,6 +706,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onInvalidateCursorMsg: function (textMsg) {
+		var docLayer = this._map._docLayer;
 		var strTwips = textMsg.match(/\d+/g);
 		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
@@ -711,6 +716,10 @@ L.TileLayer = L.GridLayer.extend({
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 		this._visibleCursorOnLostFocus = this._visibleCursor;
 		this._isCursorOverlayVisible = true;
+		if ((docLayer._followEditor || docLayer._followUser) && this._map.lastActionByUser) {
+			this._map.fire('setFollowOff');
+		}
+		this._map.lastActionByUser = false;
 		this._onUpdateCursor();
 	},
 
@@ -718,6 +727,7 @@ L.TileLayer = L.GridLayer.extend({
 		textMsg = textMsg.substring('invalidateviewcursor:'.length + 1);
 		var obj = JSON.parse(textMsg);
 		var viewId = parseInt(obj.viewId);
+		var docLayer = this._map._docLayer;
 
 		// Ignore if viewid is same as ours or not in our db
 		if (viewId === this._viewId || !this._map._viewInfo[viewId]) {
@@ -741,6 +751,15 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._onUpdateViewCursor(viewId);
+
+		if (docLayer._followThis === viewId && (docLayer._followEditor || docLayer._followUser)) {
+			if (this._map.getDocType() === 'text' || this._map.getDocType() === 'presentation') {
+				this.goToViewCursor(viewId);
+			}
+			else if (this._map.getDocType() === 'spreadsheet') {
+				this.goToCellViewCursor(viewId);
+			}
+		}
 	},
 
 	_onCellViewCursorMsg: function (textMsg) {
@@ -1315,6 +1334,7 @@ L.TileLayer = L.GridLayer.extend({
 	// Update cursor layer (blinking cursor).
 	_onUpdateCursor: function (e) {
 		var cursorPos = this._visibleCursor.getNorthWest();
+		var docLayer = this._map._docLayer;
 
 		if (!e && !this._map.getBounds().contains(this._visibleCursor) && this._isCursorVisible) {
 			var center = this._map.project(cursorPos);
@@ -1323,7 +1343,8 @@ L.TileLayer = L.GridLayer.extend({
 			center.y = Math.round(center.y < 0 ? 0 : center.y);
 
 			if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
-			    !(this._selectionHandles.end && this._selectionHandles.end.isDragged)) {
+			    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
+			    !(docLayer._followEditor || docLayer._followUser)) {
 				this._map.fire('scrollto', {x: center.x, y: center.y});
 			}
 		}

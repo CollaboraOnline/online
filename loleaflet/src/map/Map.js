@@ -1026,6 +1026,12 @@ L.Map = L.Evented.extend({
 			}
 		}
 
+		// we need to keep track about the last action, this
+		// will help us to avoid wrongly removing the editor
+		if (type === 'click' || type === 'keypress') {
+			this.lastActionByUser = true;
+		}
+
 		// we need to keep track if we have entered/left the map
 		this._mouseEnteringLeaving = false;
 		// mouse leaving the map ?
