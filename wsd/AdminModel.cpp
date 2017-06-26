@@ -178,8 +178,8 @@ void AdminModel::assertCorrectThread() const
 
 AdminModel::~AdminModel()
 {
-    Log::debug("History:\n\n" + getAllHistory() + "\n");
-    Log::info("AdminModel dtor.");
+    LOG_DBG("History:\n\n" << getAllHistory() << '\n');
+    LOG_INF("AdminModel dtor.");
 }
 
 std::string AdminModel::getAllHistory() const
@@ -187,7 +187,7 @@ std::string AdminModel::getAllHistory() const
     std::ostringstream oss;
     oss << "{ \"documents\" : [";
     std::string separator1;
-    for (auto d : _documents)
+    for (const auto& d : _documents)
     {
         oss << separator1;
         oss << d.second.getHistory();
@@ -195,7 +195,7 @@ std::string AdminModel::getAllHistory() const
     }
     oss << "], \"expiredDocuments\" : [";
     separator1 = "";
-    for (auto ed : _expiredDocuments)
+    for (const auto& ed : _expiredDocuments)
     {
         oss << separator1;
         oss << ed.second.getHistory();
