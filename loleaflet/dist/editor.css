@@ -1,3 +1,21 @@
+#userlist_table {
+	width: 100%;
+}
 .selected-user {
 	background-color: darkgrey;
+}
+#editor-btn {
+	padding: 3px 5px;
+	max-width: 120px;
+	text-align: center;
+	vertical-align: middle;
+	width: 100%;
+	font-size: 14px;
+}
+#editor-btn #follow-checkbox{
+	margin: 3px;
+}
+#currently-msg{
+	text-align: center;
+	padding: 3px 5px;
 }

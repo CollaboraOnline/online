@@ -351,6 +351,15 @@ public:
     {
     }
 
+    void updateEditorSpeeds(int, int) override
+    {
+    }
+
+    int getEditorId() override
+    {
+        return -1;
+    }
+
     std::map<int, UserInfo> getViewInfo() override
     {
         return {};

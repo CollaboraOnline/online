@@ -367,6 +367,8 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
 
     // Inform everyone (including this one) about updated view info
     _docManager.notifyViewInfo();
+    sendTextFrame("editor: " + std::to_string(_docManager.getEditorId()));
+
 
     LOG_INF("Loaded session " << getId());
     return true;
@@ -1027,6 +1029,31 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
     }
 }
 
+void ChildSession::updateSpeed() {
+
+    std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
+
+    while(_cursorInvalidatedEvent.size() != 0 &&
+        std::chrono::duration_cast<std::chrono::milliseconds>(now - _cursorInvalidatedEvent.front()).count() > _eventStorageIntervalMs)
+    {
+        _cursorInvalidatedEvent.pop();
+    }
+    _cursorInvalidatedEvent.push(now);
+    _docManager.updateEditorSpeeds(_viewId, _cursorInvalidatedEvent.size());
+}
+
+int ChildSession::getSpeed() {
+
+    std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
+
+    while(_cursorInvalidatedEvent.size() > 0 &&
+        std::chrono::duration_cast<std::chrono::milliseconds>(now - _cursorInvalidatedEvent.front()).count() > _eventStorageIntervalMs)
+    {
+        _cursorInvalidatedEvent.pop();
+    }
+    return _cursorInvalidatedEvent.size();
+}
+
 void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
     const auto typeName = LOKitHelper::kitCallbackTypeToString(type);
@@ -1101,6 +1128,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         }
         break;
     case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
+        updateSpeed();
         sendTextFrame("invalidatecursor: " + payload);
         break;
     case LOK_CALLBACK_TEXT_SELECTION:

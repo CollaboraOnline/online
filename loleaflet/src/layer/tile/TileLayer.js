@@ -143,6 +143,7 @@ L.TileLayer = L.GridLayer.extend({
 			'tiletwipheight=' + this.options.tileHeightTwips;
 
 		this._followThis = -1;
+		this._editorId = -1;
 		this._followUser = false;
 		this._followEditor = false;
 
@@ -459,6 +460,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('graphicviewselection:')) {
 			this._onGraphicViewSelectionMsg(textMsg);
 		}
+		else if (textMsg.startsWith('editor:')) {
+			this._updateEditor(textMsg);
+		}
 	},
 
 	toggleTileDebugMode: function() {
@@ -721,6 +725,21 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		this._map.lastActionByUser = false;
 		this._onUpdateCursor();
+	},
+
+	_updateEditor: function(textMsg) {
+		textMsg = textMsg.substring('editor:'.length + 1);
+		var editorId = parseInt(textMsg);
+		var docLayer = this._map._docLayer;
+
+		docLayer._editorId = editorId;
+
+		if (docLayer._followEditor) {
+			docLayer._followThis = editorId;
+		}
+
+		if (this._map._viewInfo[editorId])
+			this._map.fire('updateEditorName', {username: this._map._viewInfo[editorId].username})
 	},
 
 	_onInvalidateViewCursorMsg: function (textMsg) {

@@ -678,7 +678,16 @@ $(function () {
 			{type: 'html',  id: 'right'},
 			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
 			{type: 'break', id: 'modifiedstatuslabelbreak'},
-			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table></div>' },
+			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
+				'<hr><table class="loleaflet-font" id="editor-btn">' +
+				'<tr>' +
+				'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
+				'<td>Always follow the editor</td>' + 
+				'</tr>' +
+				'</table>' +
+				'<p id="currently-msg">Current - <b><span id="current-editor">Dewan</span></b></p>' +
+				'</div>'
+			},
 			{type: 'break', id: 'userlistbreak'},
 			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
 			{type: 'button',  id: 'next', img: 'next', hint: _('Next page')},
@@ -690,6 +699,19 @@ $(function () {
 		],
 		onClick: function (e) {
 			if (e.item.id === 'userlist') {
+				setTimeout(function() {
+					var cBox = $('#follow-checkbox')[0];
+					var docLayer = map._docLayer;
+					var editorId = docLayer._editorId;
+
+					if (cBox)
+						cBox.checked = docLayer._followEditor;
+
+					if (docLayer.editorId !== -1 && map._viewInfo[editorId])
+						$('#current-editor').text(map._viewInfo[editorId].username);
+					else
+						$('#currently-msg').hide();
+				}, 100);
 				return;
 			}
 			onClick(e.target, e.item, e.subItem);
@@ -1576,15 +1598,24 @@ map.on('keydown', function (e) {
 	}
 });
 
+function goToViewId(id) {
+	var docLayer = map._docLayer;
+
+	if (id === -1)
+		return;
+
+	if (map.getDocType() === 'spreadsheet') {
+		docLayer.goToCellViewCursor(id);
+	} else if (map.getDocType() === 'text' || map.getDocType() === 'presentation') {
+		docLayer.goToViewCursor(id);
+	}
+}
+
 function onUseritemClicked(e) {
 	var docLayer = map._docLayer;
 	var viewId = parseInt(e.currentTarget.id.replace('user-', ''));
 
-	if (map.getDocType() === 'spreadsheet') {
-		docLayer.goToCellViewCursor(viewId);
-	} else if (map.getDocType() === 'text' || map.getDocType() === 'presentation') {
-		docLayer.goToViewCursor(viewId);
-	}
+	goToViewId(viewId);
 
 	if (viewId === map._docLayer._viewId) {
 		$('#tb_toolbar-down_item_userlist').w2overlay('');
@@ -1598,6 +1629,31 @@ function onUseritemClicked(e) {
 	docLayer._followEditor = false;
 
 	selectUser(viewId);
+}
+
+function editorUpdate(e) {
+	var docLayer = map._docLayer;
+
+	if (e.target.checked) {
+		var editorId = docLayer._editorId;
+		var userlistItem = w2ui['toolbar-down'].get('userlist');
+
+		docLayer._followUser = false;
+		docLayer._followEditor = true;
+		if (editorId !== -1 && editorId !== docLayer.viewId) {
+			goToViewId(editorId);
+			docLayer._followThis = editorId;
+		}
+
+		$('.selected-user').removeClass('selected-user');
+		if ($(userlistItem.html).find('.selected-user').length !== 0)
+			userlistItem.html = $(userlistItem.html).find('.selected-user').removeClass('selected-user').parent().parent().parent()[0].outerHTML;
+		$('#tb_toolbar-down_item_userlist').w2overlay('');
+	}
+	else {
+		docLayer._followEditor = false;
+		docLayer._followThis = -1;
+	}
 }
 
 function selectUser(viewId) {
@@ -1701,6 +1757,11 @@ map.on('removeview', function(e) {
 	var userlistItem = w2ui['toolbar-down'].get('userlist');
 	userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
 	updateUserListCount();
+});
+
+map.on('updateEditorName', function(e) {
+	$('#currently-msg').show()
+	$('#current-editor').text(e.username);
 });
 
 map.on('setFollowOff', function(e) {

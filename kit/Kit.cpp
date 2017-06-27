@@ -516,7 +516,9 @@ public:
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
         _stop(false),
-        _isLoading(0)
+        _isLoading(0),
+        _editorId(-1),
+        _editorChangeWarning(false)
     {
         LOG_INF("Document ctor for [" << _docKey <<
                 "] url [" << _url << "] on child [" << _jailId <<
@@ -560,6 +562,10 @@ public:
 
             auto session = std::make_shared<ChildSession>(sessionId, _jailId, *this);
             _sessions.emplace(sessionId, session);
+
+            int viewId = session->getViewId();
+            _lastUpdatedAt[viewId] = std::chrono::steady_clock::now();
+            _speedCount[viewId] = 0;
 
             LOG_DBG("Sessions: " << _sessions.size());
             return true;
@@ -1098,6 +1104,11 @@ private:
         return _tileQueue;
     }
 
+    int getEditorId() override
+    {
+        return _editorId;
+    }
+
     /// Notify all views of viewId and their associated usernames
     void notifyViewInfo() override
     {
@@ -1151,6 +1162,51 @@ private:
 
         // Broadcast updated viewinfo to all clients.
         sendTextFrame("client-all " + msg);
+    }
+
+    void updateEditorSpeeds(int id, int speed) override
+    {
+        int maxSpeed = -1, fastestUser = -1;
+
+        auto now = std::chrono::steady_clock::now();
+        _lastUpdatedAt[id] = now;
+        _speedCount[id] = speed;
+
+        for (const auto& it : _sessions)
+        {
+            const auto session = it.second;
+            int sessionId = session->getViewId();
+
+            auto duration = (_lastUpdatedAt[id] - now);
+            auto durationInMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+            if (_speedCount[sessionId] != 0 && durationInMs > 5000)
+            {
+                _speedCount[sessionId] = session->getSpeed();
+                _lastUpdatedAt[sessionId] = now;
+            }
+            if (_speedCount[sessionId] > maxSpeed)
+            {
+                maxSpeed = _speedCount[sessionId];
+                fastestUser = sessionId;
+            }
+        }
+        // 0 for preventing selection of the first always
+        // 1 for preventing the new users from directly beoming the editors
+        if (_editorId != fastestUser && (maxSpeed != 0 || maxSpeed != 1)) {
+            if (!_editorChangeWarning && _editorId != -1)
+            {
+                _editorChangeWarning = true;
+            }
+            else
+            {
+                _editorChangeWarning = false;
+                _editorId = fastestUser;
+                for (const auto& it : _sessions)
+                    it.second->sendTextFrame("editor: " + std::to_string(_editorId));
+            }
+        }
+        else
+            _editorChangeWarning = false;
     }
 
 private:
@@ -1351,6 +1407,9 @@ private:
                 if (size == disconnect.size() &&
                     strncmp(data, disconnect.data(), disconnect.size()) == 0)
                 {
+                    if(session->getViewId() == _editorId) {
+                        _editorId = -1;
+                    }
                     LOG_DBG("Removing ChildSession [" << sessionId << "].");
                     _sessions.erase(it);
                     const auto count = _sessions.size();
@@ -1431,7 +1490,7 @@ private:
 
         LOG_DBG("Thread started.");
 
-        // Update memory stats every 5 seconds.
+        // Update memory stats and editor every 5 seconds.
         const auto memStatsPeriodMs = 5000;
         auto lastMemStatsTime = std::chrono::steady_clock::now();
         sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
@@ -1443,14 +1502,13 @@ private:
                 const TileQueue::Payload input = _tileQueue->get(POLL_TIMEOUT_MS * 2);
                 if (input.empty())
                 {
-                    const auto duration = (std::chrono::steady_clock::now() - lastMemStatsTime);
-                    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+                    auto duration = (std::chrono::steady_clock::now() - lastMemStatsTime);
+                    auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
                     if (durationMs > memStatsPeriodMs)
                     {
                         sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
                         lastMemStatsTime = std::chrono::steady_clock::now();
                     }
-
                     continue;
                 }
 
@@ -1616,9 +1674,13 @@ private:
 
     std::condition_variable _cvLoading;
     std::atomic_size_t _isLoading;
+    int _editorId;
+    bool _editorChangeWarning;
     std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
     std::map<std::string, std::shared_ptr<ChildSession>> _sessions;
 
+    std::map<int, std::chrono::steady_clock::time_point> _lastUpdatedAt;
+    std::map<int, int> _speedCount;
     /// For showing disconnected user info in the doc repair dialog.
     std::map<int, UserInfo> _sessionUserInfo;
     Poco::Thread _callbackThread;

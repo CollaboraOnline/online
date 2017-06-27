@@ -68,7 +68,8 @@ L.Cursor = L.Layer.extend({
 		if (this._cursorHeader) {
 			L.DomUtil.setStyle(this._cursorHeader, 'visibility', 'visible');
 
-			setTimeout(L.bind(function() {
+			clearTimeout(this._blinkTimeout);
+			this._blinkTimeout = setTimeout(L.bind(function() {
 				L.DomUtil.setStyle(this._cursorHeader, 'visibility', 'hidden');
 			}, this), this.options.headerTimeout);
 		}
@@ -81,7 +82,8 @@ L.Cursor = L.Layer.extend({
 
 			this._cursorHeader.innerHTML = this.options.headerName;
 
-			setTimeout(L.bind(function() {
+			clearTimeout(this._blinkTimeout);
+			this._blinkTimeout = setTimeout(L.bind(function() {
 				L.DomUtil.setStyle(this._cursorHeader, 'visibility', 'hidden');
 			}, this), this.options.headerTimeout);
 		}
