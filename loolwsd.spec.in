@@ -19,10 +19,10 @@ License:        MPL
 Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
 BuildRequires:  libcap-devel libpng-devel poco-devel >= 1.7.5
 %if 0%{?fedora} || 0%{?rhel} >= 7
-BuildRequires:  libpcap
+BuildRequires:  libpcap kernel-headers
 %else
 %if 0%{?suse_version}
-BuildRequires:  libcap-progs systemd-rpm-macros
+BuildRequires:  libcap-progs linux-glibc-devel systemd-rpm-macros
 %endif
 %endif
 
