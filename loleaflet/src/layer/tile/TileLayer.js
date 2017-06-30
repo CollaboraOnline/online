@@ -1281,6 +1281,44 @@ L.TileLayer = L.GridLayer.extend({
 				docType: this._docType
 			});
 		}
+		else if (tile && typeof(img) == 'object') {
+			// 'Uint8Array' delta
+			console.log('hit here with a delta');
+			var canvas = document.createElement('canvas');
+			canvas.width = 256;
+			canvas.height = 256;
+			var ctx = canvas.getContext('2d');
+
+			oldImg = new Image();
+			oldImg.src = tile.el.src;
+			ctx.drawImage(oldImg, 0, 0);
+
+			// FIXME; can we operate directly on the image ?
+			var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+			var delta = img;
+			var pixSize = canvas.width * canvas.height * 4;
+			var offset = 0;
+			for (var i = 1; i < delta.length &&
+			     offset < pixSize; ++i)
+			{
+				var span = delta[i] & 127;
+				if (delta[i] & 128) { // changed run.
+					console.log('apply new span of size ' + span + ' at offset ' + i + ' into delta at byte: ' + offset);
+					while (span-- > 0) {
+						imgData.data[offset++] = delta[++i];
+					}
+				} else {
+					offset += span;
+				}
+			}
+			ctx.putImageData(imgData, 0, 0);
+
+			tile.oldWireId = tile.wireId;
+			tile.wireId = command.wireId;
+			tile.el.src = canvas.toDataURL('image/png');
+
+			console.log('set new image');
+		}
 		else if (tile) {
 			if (command.wireId != undefined) {
 				tile.oldWireId = command.wireId;

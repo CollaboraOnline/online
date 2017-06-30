@@ -285,6 +285,121 @@ namespace
 #endif
 }
 
+/// A quick and dirty delta generator for last tile changes
+struct DeltaGenerator {
+
+    struct DeltaData {
+        TileWireId _wid;
+        std::shared_ptr<std::vector<char>> _rawData;
+    };
+    std::vector<DeltaData> _deltaEntries;
+
+    bool makeDelta(
+        const DeltaData &prevData,
+        const DeltaData &curData,
+        std::vector<char>& output)
+    {
+        std::vector<char> &prev = *prevData._rawData.get();
+        std::vector<char> &cur = *curData._rawData.get();
+
+        if (prev.size() != cur.size())
+        {
+            LOG_ERR("mis-sized delta: " << prev.size() << " vs " << cur.size() << "bytes");
+            return false;
+        }
+
+        output.push_back('D');
+        LOG_TRC("building delta of " << prev.size() << "bytes");
+        // FIXME: really lame - some RLE might help etc.
+        for (size_t i = 0; i < prev.size(); ++i)
+        {
+            int sameCount = 0;
+            while (i + sameCount < prev.size() &&
+                   prev[i+sameCount] == cur[i+sameCount])
+            {
+                if (sameCount >= 127)
+                    break;
+                ++sameCount;
+            }
+            if (sameCount > 0)
+                output.push_back(sameCount);
+            i += sameCount;
+            LOG_TRC("identical " << sameCount << "bytes");
+
+            int diffCount = 0;
+            while (i + diffCount < prev.size() &&
+                   (prev[i+diffCount] != cur[i+diffCount] || diffCount < 3))
+            {
+                if (diffCount >= 127)
+                    break;
+                ++diffCount;
+            }
+
+            if (diffCount > 0)
+            {
+                output.push_back(diffCount | 0x80);
+                for (int j = 0; j < diffCount; ++j)
+                    output.push_back(cur[i+j]);
+            }
+            LOG_TRC("different " << diffCount << "bytes");
+            i += diffCount;
+        }
+        return true;
+    }
+
+    std::shared_ptr<std::vector<char>> dataToVector(
+        unsigned char* pixmap, size_t startX, size_t startY,
+        int width, int height,
+        int bufferWidth, int bufferHeight)
+    {
+        assert (startX + width <= (size_t)bufferWidth);
+        assert (startY + height <= (size_t)bufferHeight);
+
+        auto vector = std::make_shared<std::vector<char>>();
+        LOG_TRC("Converting data to vector of size "
+                << (width * height * 4) << " width " << width
+                << " height " << height);
+
+        vector->resize(width * height * 4);
+        for (int y = 0; y < height; ++y)
+        {
+            size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
+            memcpy(&(*vector)[y * width * 4], pixmap + position, width * 4);
+        }
+
+        return vector;
+    }
+
+    // Creates a bespoke delta file-format ...
+    bool createDelta(
+        unsigned char* pixmap, size_t startX, size_t startY,
+        int width, int height,
+        int bufferWidth, int bufferHeight,
+        std::vector<char>& output,
+        TileWireId wid, TileWireId oldWid)
+    {
+        // First store a copy for later:
+        if (_deltaEntries.size() > 6) // FIXME: hard-coded ...
+            _deltaEntries.erase(_deltaEntries.begin());
+
+        // FIXME: assuming width etc. are all constant & so on.
+        DeltaData reference;
+        reference._wid = wid;
+        reference._rawData = dataToVector(pixmap, startX, startY, width, height,
+                                          bufferWidth, bufferHeight);
+        _deltaEntries.push_back(reference);
+
+        for (auto &it : _deltaEntries)
+        {
+            if (oldWid == it._wid)
+                return makeDelta(reference, it, output);
+        }
+        return false;
+    }
+};
+
+
+
 /// A quick & dirty cache of the last few PNGs
 /// and their hashes to avoid re-compression
 /// wherever possible.
@@ -310,6 +425,7 @@ class PngCache
     size_t _cacheHits;
     size_t _cacheTests;
     TileWireId _nextId;
+    DeltaGenerator _deltaGen;
 
     std::map< TileBinaryHash, CacheEntry > _cache;
     std::map< TileWireId, TileBinaryHash > _wireToHash;
@@ -406,9 +522,15 @@ class PngCache
                                    int width, int height,
                                    int bufferWidth, int bufferHeight,
                                    std::vector<char>& output, LibreOfficeKitTileMode mode,
-                                   TileBinaryHash hash, TileWireId wid, TileWireId /* oldWid */)
+                                   TileBinaryHash hash, TileWireId wid, TileWireId oldWid)
     {
         LOG_DBG("PNG cache with hash " << hash << " missed.");
+        if (_deltaGen.createDelta(pixmap, startX, startY, width, height,
+                                  bufferWidth, bufferHeight,
+                                  output, wid, oldWid))
+            return true;
+
+        LOG_DBG("Encode a new png for this tile.");
         CacheEntry newEntry(bufferWidth * bufferHeight * 1, wid);
         if (Png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
                                       bufferWidth, bufferHeight,

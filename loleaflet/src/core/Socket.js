@@ -611,6 +611,7 @@ L.Socket = L.Class.extend({
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('dialogpaint:') && !textMsg.startsWith('dialogchildpaint:')) {
 			// log the tile msg separately as we need the tile coordinates
 			L.Log.log(textMsg, L.INCOMING);
+
 			if (imgBytes !== undefined) {
 				try {
 					// if it's not a tile, parse the whole message
@@ -628,12 +629,21 @@ L.Socket = L.Class.extend({
 		}
 		else {
 			var data = imgBytes.subarray(index + 1);
-			// read the tile data
-			var strBytes = '';
-			for (var i = 0; i < data.length; i++) {
-				strBytes += String.fromCharCode(data[i]);
+
+			if (data.length > 0 && data[0] == 68 /* D */)
+			{
+				console.log('Socket: got a delta !');
+				var img = data;
 			}
-			var img = 'data:image/png;base64,' + window.btoa(strBytes);
+			else
+			{
+				// read the tile data
+				var strBytes = '';
+				for (var i = 0; i < data.length; i++) {
+					strBytes += String.fromCharCode(data[i]);
+				}
+				var img = 'data:image/png;base64,' + window.btoa(strBytes);
+			}
 		}
 
 		if (textMsg.startsWith('status:')) {
