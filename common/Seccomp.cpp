@@ -23,7 +23,9 @@
 #include <sys/prctl.h>
 #include <linux/audit.h>
 #include <linux/filter.h>
+#if DISABLE_SECCOMP == 0
 #include <linux/seccomp.h>
+#endif
 
 #include <common/Log.hpp>
 #include <common/SigUtil.hpp>
@@ -40,6 +42,7 @@
 #  error "Platform does not support seccomp filtering yet - unsafe."
 #endif
 
+#if DISABLE_SECCOMP == 0
 extern "C" {
 
 static void handleSysSignal(int /* signal */,
@@ -71,6 +74,7 @@ static void handleSysSignal(int /* signal */,
 }
 
 } // extern "C"
+#endif
 
 namespace Seccomp {
 
@@ -78,6 +82,7 @@ bool lockdown(Type type)
 {
     (void)type; // so far just the kit.
 
+#if DISABLE_SECCOMP == 0
     #define ACCEPT_SYSCALL(name) \
         BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, __NR_##name, 0, 1), \
         BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
@@ -212,8 +217,13 @@ bool lockdown(Type type)
     LOG_TRC("Install seccomp filter successfully.");
 
     return true;
+#else // DISABLE_SECCOMP == 0
+     LOG_WRN("Warning this code was compiled without seccomp enabled, this setup is not recommended for production.");
+     return true;
+#endif // DISABLE_SECCOMP == 0
 }
 
 } // namespace Seccomp
+
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
