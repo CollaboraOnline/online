@@ -1927,7 +1927,7 @@ void lokit_main(const std::string& childRoot,
                     else if (tokens.size() == 3 && tokens[0] == "setconfig")
                     {
                         // Currently onlly rlimit entries are supported.
-                        if (!Seccomp::handleSetrlimitCommand(tokens))
+                        if (!Rlimit::handleSetrlimitCommand(tokens))
                         {
                             LOG_ERR("Unknown setconfig command: " << message);
                         }

@@ -113,8 +113,8 @@ public:
             }
             else if (tokens.size() == 3 && tokens[0] == "setconfig")
             {
-                // Currently onlly rlimit entries are supported.
-                if (!Seccomp::handleSetrlimitCommand(tokens))
+                // Currently only rlimit entries are supported.
+                if (!Rlimit::handleSetrlimitCommand(tokens))
                 {
                     LOG_ERR("Unknown setconfig command: " << message);
                 }
@@ -442,7 +442,7 @@ int main(int argc, char** argv)
             {
                 const auto pair = LOOLProtocol::split(cmdLimit, ':');
                 std::vector<std::string> tokensLimit = { "setconfig", pair.first, pair.second };
-                if (!Seccomp::handleSetrlimitCommand(tokensLimit))
+                if (!Rlimit::handleSetrlimitCommand(tokensLimit))
                 {
                     LOG_ERR("Unknown rlimits command: " << cmdLimit);
                 }

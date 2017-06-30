@@ -52,6 +52,10 @@ AC_ARG_ENABLE([debug],
               AS_HELP_STRING([--enable-debug],
                              [Enable debugging, link with debugging version of Poco libraries]))
 
+AC_ARG_ENABLE([seccomp],
+              AS_HELP_STRING([--disable-seccomp],
+                             [Disable use of linux/seccomp.h header when kernel on target system does not support it.
+                              Beware of the security consequences!]))
 AC_ARG_WITH([lokit-path],
             AS_HELP_STRING([--with-lokit-path=<path>],
                            [Path to the "include" directory with the LibreOfficeKit headers]))
@@ -267,9 +271,16 @@ AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
 AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
                  [],
                  [AC_MSG_ERROR([header Poco/Net/WebSocket.h not found, perhaps you want to use --with-poco-includes])])
-AC_CHECK_HEADERS([linux/seccomp.h],
-                 [],
-                 [AC_MSG_ERROR([critical security header linux/seccomp.h not found.])])
+DISABLE_SECCOMP=
+if test "$enable_seccomp" != "no"; then
+    AC_CHECK_HEADERS([linux/seccomp.h],
+                     [],
+                     [AC_MSG_ERROR([critical security header linux/seccomp.h not found. If kernel on target system does not support SECCOMP, you can use --disable-seccomp, but mind the security consequences.])])
+    AC_DEFINE([DISABLE_SECCOMP],0,[Whether to disable SECCOMP])
+else
+    AC_DEFINE([DISABLE_SECCOMP],1,[Whether to disable SECCOMP])
+fi
+
 
 AC_MSG_CHECKING([POCO version])
 AC_COMPILE_IFELSE([AC_LANG_SOURCE([
