@@ -31,6 +31,9 @@ public:
     /// Read all files that we can serve into memory and compress them.
     static void initialize();
 
+    /// Clean cached files.
+    static void uninitialize() { FileHash.clear(); }
+
     static void readDirToHash(const std::string &basePath, const std::string &path);
 
     static const std::string *getCompressedFile(const std::string &path);
