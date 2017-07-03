@@ -206,12 +206,12 @@ int Config::main(const std::vector<std::string>& args)
                 stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(pwdhash[j]);
             const std::string passwordHash = stream.str();
 
-            const std::string pwdConfigValue = "pbkdf2.sha512." +
-                                                std::to_string(_adminConfig.pwdIterations) + "." +
-                                                saltHash + "." + passwordHash;
+            std::stringstream pwdConfigValue("pbkdf2.sha512.");
+            pwdConfigValue << std::to_string(_adminConfig.pwdIterations) << ".";
+            pwdConfigValue << saltHash << "." << passwordHash;
             _loolConfig.setString("admin_console.secure_password[@desc]",
                                   "Salt and password hash combination generated using PBKDF2 with SHA512 digest.");
-            _loolConfig.setString("admin_console.secure_password", pwdConfigValue);
+            _loolConfig.setString("admin_console.secure_password", pwdConfigValue.str());
 
             std::cout << "Saving configuration to : " << ConfigFile << " ..." << std::endl;
             _loolConfig.save(ConfigFile);
