@@ -2609,6 +2609,8 @@ int LOOLWSD::innerMain()
 
 void LOOLWSD::cleanup()
 {
+    FileServerRequestHandler::uninitialize();
+
     // Finally, we no longer need SSL.
     if (LOOLWSD::isSSLEnabled())
     {

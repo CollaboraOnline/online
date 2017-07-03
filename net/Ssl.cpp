@@ -128,6 +128,7 @@ SslContext::SslContext(const std::string& certFilePath,
 
 SslContext::~SslContext()
 {
+    SSL_CTX_free(_ctx);
     EVP_cleanup();
     ERR_free_strings();
     CRYPTO_set_locking_callback(0);

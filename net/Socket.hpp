@@ -613,6 +613,10 @@ private:
 
             // Invoke the virtual implementation.
             pollingThread();
+
+            // Release sockets.
+            _pollSockets.clear();
+            _newSockets.clear();
         }
         catch (const std::exception& exc)
         {
