@@ -355,18 +355,18 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
 
             auto buf = std::unique_ptr<char[]>(new char[fileStat.st_size]);
-            std::string compressedFile = "";
-            std::string uncompressedFile = "";
+            std::string compressedFile;
+            compressedFile.reserve(fileStat.st_size);
+            std::string uncompressedFile;
+            uncompressedFile.reserve(fileStat.st_size);
             do {
                 file.read(&buf[0], fileStat.st_size);
                 const long unsigned int size = file.gcount();
                 if (size == 0)
                     break;
 
-                long unsigned int haveComp;
-                long unsigned int compSize = compressBound(size);
-                char *cbuf;
-                cbuf = (char *)calloc(compSize, sizeof(char));
+                const long unsigned int compSize = compressBound(size);
+                char *cbuf = (char *)calloc(compSize, sizeof(char));
 
                 strm.next_in = (unsigned char *)&buf[0];
                 strm.avail_in = size;
@@ -375,16 +375,17 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
                 deflate(&strm, Z_FINISH);
 
-                haveComp = compSize - strm.avail_out;
+                const long unsigned int haveComp = compSize - strm.avail_out;
                 std::string partialcompFile(cbuf, haveComp);
                 std::string partialuncompFile(buf.get(), size);
                 compressedFile = compressedFile + partialcompFile;
                 uncompressedFile = uncompressedFile + partialuncompFile;
+                free(cbuf);
 
             } while(true);
 
-            std::pair<std::string, std::string> FilePair(uncompressedFile, compressedFile);
-            FileHash.emplace(relPath, FilePair);
+            FileHash.emplace(relPath, std::make_pair(uncompressedFile, compressedFile));
+            deflateEnd(&strm);
         }
     }
     closedir(workingdir);
