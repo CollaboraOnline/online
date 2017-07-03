@@ -216,7 +216,7 @@ static void cleanupChildren()
         const auto it = childJails.find(exitedChildPid);
         if (it != childJails.end())
         {
-            LOG_INF("Child " << exitedChildPid << " has exited, removing its jail '" << it->second << "'.");
+            LOG_INF("Child " << exitedChildPid << " has exited, will remove its jail [" << it->second << "].");
             jails.emplace_back(it->second);
             childJails.erase(it);
         }
@@ -229,6 +229,7 @@ static void cleanupChildren()
     // Now delete the jails.
     for (const auto& path : jails)
     {
+        LOG_INF("Removing jail [" << path << "].");
         FileUtil::removeFile(path, true);
     }
 }
