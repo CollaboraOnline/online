@@ -1036,7 +1036,7 @@ bool LOOLWSD::checkAndRestoreForKit()
     if (ForKitProcId == -1)
     {
         // Fire the ForKit process for the first time.
-        if (!createForKit())
+        if (!ShutdownRequestFlag && !TerminationFlag && !createForKit())
         {
             // Should never fail.
             LOG_FTL("Failed to spawn loolforkit.");
@@ -1065,7 +1065,7 @@ bool LOOLWSD::checkAndRestoreForKit()
                 }
 
                 // Spawn a new forkit and try to dust it off and resume.
-                if (!createForKit())
+                if (!ShutdownRequestFlag && !TerminationFlag && !createForKit())
                 {
                     LOG_FTL("Failed to spawn forkit instance. Shutting down.");
                     SigUtil::requestShutdown();
@@ -1099,7 +1099,7 @@ bool LOOLWSD::checkAndRestoreForKit()
         {
             // No child processes.
             // Spawn a new forkit and try to dust it off and resume.
-            if (!createForKit())
+            if (!ShutdownRequestFlag && !TerminationFlag && !createForKit())
             {
                 LOG_FTL("Failed to spawn forkit instance. Shutting down.");
                 SigUtil::requestShutdown();
