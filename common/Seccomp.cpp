@@ -13,6 +13,7 @@
 
 #include "config.h"
 
+#if DISABLE_SECCOMP == 0
 #include <dlfcn.h>
 #include <ftw.h>
 #include <malloc.h>
@@ -23,7 +24,6 @@
 #include <sys/prctl.h>
 #include <linux/audit.h>
 #include <linux/filter.h>
-#if DISABLE_SECCOMP == 0
 #include <linux/seccomp.h>
 #endif
 
