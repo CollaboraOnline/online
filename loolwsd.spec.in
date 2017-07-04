@@ -27,10 +27,10 @@ BuildRequires:  libcap-progs systemd-rpm-macros
 %endif
 
 Requires:       collaboraoffice5.3 >= 5.3.10.15 collaboraoffice5.3-ure >= 5.3.10.15 collaboraofficebasis5.3-core >= 5.3.10.15 collaboraofficebasis5.3-writer >= 5.3.10.15 collaboraofficebasis5.3-impress >= 5.3.10.15 collaboraofficebasis5.3-graphicfilter >= 5.3.10.15 collaboraofficebasis5.3-en-US >= 5.3.10.15 collaboraofficebasis5.3-calc >= 5.3.10.15 collaboraofficebasis5.3-en-US-res >= 5.3.10.15 collaboraofficebasis5.3-en-US-calc >= 5.3.10.15 collaboraofficebasis5.3-ooofonts >= 5.3.10.15 collaboraofficebasis5.3-images >= 5.3.10.15 collaboraofficebasis5.3-noto-fonts >= 5.3.10.15 collaboraofficebasis5.3-draw >= 5.3.10.15 collaboraofficebasis5.3-extension-pdf-import >= 5.3.10.15
-Requires:       systemd
 Requires(post): coreutils grep sed
 %if 0%{?fedora} || 0%{?rhel} >= 7
 # loolwsd dependencies
+Requires:       systemd
 Requires:       expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssl-libs pcre xz-libs zlib
 Requires:       poco-crypto >= 1.7.5 poco-foundation >= 1.7.5 poco-json >= 1.7.5 poco-net >= 1.7.5 poco-netssl >= 1.7.5 poco-util >= 1.7.5 poco-xml >= 1.7.5
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
@@ -38,6 +38,7 @@ Requires:       atk avahi-glib avahi-libs bzip2-libs cairo cups-libs dbus-glib d
 %else
 %if 0%{?suse_version}
 # loolwsd dependencies
+Requires:       systemd
 Requires(post): libcap-progs
 Requires:       libcap2 libopenssl1_0_0 libpng12-0 libpcre1 libz1 %{?systemd_requires} %{fillup_prereq}
 Requires:       libPocoCrypto48 >= 1.7.8 libPocoFoundation48 >= 1.7.8 libPocoJSON48 >= 1.7.8 libPocoNet48 >= 1.7.8 libPocoNetSSL48 >= 1.7.8 libPocoUtil48 >= 1.7.8 libPocoXML48 >= 1.7.8
@@ -76,12 +77,17 @@ env BUILDING_FROM_RPMBUILD=yes make %{?_smp_mflags}
 
 %install
 env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
-%__install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -d -m 755 %{buildroot}/var/adm/fillup-templates
+%if 0%{?rhel} == 6
+install -d -m 755 %{buildroot}/etc/init.d
+install -D -m 755 loolwsd.init %{buildroot}/etc/init.d/loolwsd
+%endif
 %if 0%{?fedora} || 0%{?rhel} >= 7
+install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -D -m 644 sysconfig.loolwsd %{buildroot}/etc/sysconfig/loolwsd
 %else
 %if 0%{?suse_version}
+install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
 %endif
 %endif
@@ -106,11 +112,15 @@ echo "0 0 */1 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -ex
 /usr/share/doc/loolwsd/README.vars
 /usr/share/doc/loolwsd/protocol.txt
 /usr/share/doc/loolwsd/reference.txt
-%{_unitdir}/loolwsd.service
+%if 0%{?rhel} == 6
+/etc/init.d/loolwsd
+%endif
 %if 0%{?fedora} || 0%{?rhel} >= 7
+%{_unitdir}/loolwsd.service
 %config(noreplace) /etc/sysconfig/loolwsd
 %else
 %if 0%{?suse_version}
+%{_unitdir}/loolwsd.service
 /var/adm/fillup-templates/sysconfig.loolwsd
 %endif
 %endif
@@ -135,6 +145,11 @@ setcap cap_sys_admin=ep /usr/bin/loolmount
 
 mkdir -p /var/cache/loolwsd && chown lool:lool /var/cache/loolwsd
 rm -rf /var/cache/loolwsd/*
+
+%if 0%{?rhel} == 6
+touch /var/log/loolwsd.log && chown lool:lool /var/log/loolwsd.log
+%endif
+
 
 # Figure out where LO is installed, let's hope it is not a mount point
 # Create a directory for loolwsd on the same file system

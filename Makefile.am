@@ -190,6 +190,7 @@ dist-hook:
 EXTRA_DIST = discovery.xml \
              favicon.ico \
              loolkitconfig.xcu \
+             loolwsd.init \
              loolwsd.spec \
              loolwsd.xml.in \
              loolwsd.service \
