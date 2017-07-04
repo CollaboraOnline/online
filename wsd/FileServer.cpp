@@ -43,13 +43,11 @@
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 
-using Poco::FileInputStream;
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
 using Poco::Net::NameValueCollection;
 using Poco::Net::HTTPBasicCredentials;
-using Poco::StreamCopier;
 using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
