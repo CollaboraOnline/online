@@ -1028,7 +1028,7 @@ L.Map = L.Evented.extend({
 
 		// we need to keep track about the last action, this
 		// will help us to avoid wrongly removing the editor
-		if (type === 'click' || type === 'keypress') {
+		if (type === 'keypress') {
 			this.lastActionByUser = true;
 		}
 
