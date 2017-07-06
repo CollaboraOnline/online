@@ -1342,7 +1342,8 @@ void HTTPWSTest::testInactiveClient()
                                             token == "textselectionstart:" ||
                                             token == "textviewselection:" ||
                                             token == "viewcursorvisible:" ||
-                                            token == "viewinfo:");
+                                            token == "viewinfo:" ||
+                                            token == "editor:");
 
                     // End when we get state changed.
                     return (token != "statechanged:");
