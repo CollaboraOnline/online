@@ -459,6 +459,11 @@ client-<sessionId> <Payload Message>
     Forwarding message between a child and its parent session.
     The payload message is forwarded to the ClientSession.
 
+procmemstats: pid=<pid> pss=<pss in kb> dirty=<private dirty in kb>
+
+    Memory information sent periodically to parent process by each of
+    the kit processes.
+
 parent -> child
 ===============
 
