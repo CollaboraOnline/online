@@ -412,7 +412,7 @@ void getWOPIValue(const Poco::JSON::Object::Ptr &object, const std::string& key,
 bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
 {
     bool success = false;
-    const auto index = json.find_first_of("{");
+    const auto index = json.find_first_of('{');
     if (index != std::string::npos)
     {
         const std::string stringJSON = json.substr(index);
