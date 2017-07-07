@@ -46,6 +46,22 @@ private:
     std::time_t _end = 0;
 };
 
+/// Containing basic information about document
+struct DocBasicInfo
+{
+    std::string _docKey;
+    std::time_t _idleTime;
+    bool _saved;
+    int _mem;
+
+    DocBasicInfo(const std::string& docKey, std::time_t idleTime, bool saved, int mem)
+        : _docKey(docKey),
+          _idleTime(idleTime),
+          _saved(saved),
+          _mem(mem)
+        { }
+};
+
 /// A document in Admin controller.
 class Document
 {
@@ -61,6 +77,8 @@ public:
           _lastActivity(_start)
     {
     }
+
+    const std::string getDocKey() const { return _docKey; }
 
     Poco::Process::PID getPid() const { return _pid; }
 
@@ -200,6 +218,9 @@ public:
 
     void updateLastActivityTime(const std::string& docKey);
     void updateMemoryDirty(const std::string& docKey, int dirty);
+
+    /// Document basic info list sorted by most idle time
+    std::list<DocBasicInfo> getDocumentsSortedByIdle() const;
 
 private:
     std::string getMemStats();

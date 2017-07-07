@@ -243,7 +243,7 @@ L.Socket = L.Class.extend({
 			if (textMsg === 'ownertermination') {
 				msg = _('Session terminated by document owner');
 			}
-			else if (textMsg === 'idle') {
+			else if (textMsg === 'idle' || textMsg === 'oom') {
 				msg = _('Session was terminated due to idleness - please click to reload');
 				this._map._documentIdle = true;
 			}
@@ -335,7 +335,7 @@ L.Socket = L.Class.extend({
 			});
 			options.$vex.append(options.$vexContent);
 
-			if (textMsg === 'idle') {
+			if (textMsg === 'idle' || textMsg === 'oom') {
 				var map = this._map;
 				options.$vex.bind('click.vex', function(e) {
 					console.debug('idleness: reactivating');

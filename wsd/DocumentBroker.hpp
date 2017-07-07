@@ -341,6 +341,9 @@ public:
 
     /// Sends a message to all sessions
     void broadcastMessage(const std::string& message);
+    
+    /// Sets the reason for closing document;
+    void setCloseReason(const std::string& closeReason) { _closeReason = closeReason; }
 
 private:
 
@@ -412,6 +415,7 @@ private:
     mutable std::mutex _mutex;
     std::unique_ptr<DocumentBrokerPoll> _poll;
     std::atomic<bool> _stop;
+    std::string _closeReason;
 
     /// Versioning is used to prevent races between
     /// painting and invalidation.

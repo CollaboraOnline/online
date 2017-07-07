@@ -103,11 +103,17 @@ public:
     void dumpState(std::ostream& os) override;
 
 private:
+    /// Memory consumption has increased, start killing kits etc. till memory consumption gets back
+    /// under @hardModeLimit
+    void triggerMemoryCleanup(size_t hardModeLimit);
+
+private:
     /// The model is accessed only during startup & in
     /// the Admin Poll thread.
     AdminModel _model;
     int _forKitPid;
-    long _lastTotalMemory;
+    size_t _lastTotalMemory;
+    size_t _totalSysMem;
 
     std::atomic<int> _memStatsTaskIntervalMs;
     std::atomic<int> _cpuStatsTaskIntervalMs;
