@@ -157,6 +157,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _cursorHeight(0),
     _poll(new DocumentBrokerPoll("docbroker_" + _docId, *this)),
     _stop(false),
+    _closeReason("stopped"),
     _tileVersion(0),
     _debugRenderedTileCount(0)
 {
@@ -223,8 +224,6 @@ void DocumentBroker::pollThread()
     static const bool AutoSaveEnabled = !std::getenv("LOOL_NO_AUTOSAVE");
     static const size_t IdleDocTimeoutSecs = LOOLWSD::getConfigValue<int>(
                                                       "per_document.idle_timeout_secs", 3600);
-    std::string closeReason = "stopped";
-
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
     {
@@ -241,7 +240,7 @@ void DocumentBroker::pollThread()
 
         if (ShutdownRequestFlag)
         {
-            closeReason = "recycling";
+            _closeReason = "recycling";
             _stop = true;
         }
         else if (AutoSaveEnabled && !_stop &&
@@ -260,7 +259,7 @@ void DocumentBroker::pollThread()
         {
             LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
                     " DocumentBroker for docKey [" << getDocKey() << "].");
-            closeReason = (idle ? "idle" : "dead");
+            _closeReason = (idle ? "idle" : "dead");
             _stop = true;
         }
     }
@@ -283,7 +282,7 @@ void DocumentBroker::pollThread()
     }
 
     // Terminate properly while we can.
-    terminateChild(closeReason);
+    terminateChild(_closeReason);
 
     // Stop to mark it done and cleanup.
     _poll->stop();
@@ -1396,7 +1395,8 @@ void DocumentBroker::closeDocument(const std::string& reason)
     assertCorrectThread();
 
     LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
-    terminateChild(reason);
+    _closeReason = reason; // used later in the polling loop
+    stop();
 }
 
 void DocumentBroker::updateLastActivityTime()

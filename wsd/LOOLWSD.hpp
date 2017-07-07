@@ -121,6 +121,9 @@ public:
     /// child kit processes and cleans up DocBrokers.
     static void doHousekeeping();
 
+    /// Close document with @docKey and a @message
+    static void closeDocument(const std::string& docKey, const std::string& message);
+
 protected:
     void initialize(Poco::Util::Application& self) override;
     void defineOptions(Poco::Util::OptionSet& options) override;
@@ -155,6 +158,7 @@ private:
         void operator()(unsigned int& value) { value = _config.getUInt(_name); }
         void operator()(bool& value) { value = _config.getBool(_name); }
         void operator()(std::string& value) { value = _config.getString(_name); }
+        void operator()(double& value) { value = _config.getDouble(_name); }
     };
 
     template <typename T>
