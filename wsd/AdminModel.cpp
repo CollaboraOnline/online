@@ -50,7 +50,7 @@ int Document::expireView(const std::string& sessionId)
         if (--_activeViews == 0)
             _end = std::time(nullptr);
     }
-    this->takeSnapshot();
+    takeSnapshot();
 
     return _activeViews;
 }
@@ -61,12 +61,12 @@ std::pair<std::time_t, std::string> Document::getSnapshot() const
     std::ostringstream oss;
     oss << "{";
     oss << "\"creationTime\"" << ":" << ct << ",";
-    oss << "\"memoryDirty\"" << ":" << this->getMemoryDirty() << ",";
-    oss << "\"activeViews\"" << ":" << this->getActiveViews() << ",";
+    oss << "\"memoryDirty\"" << ":" << getMemoryDirty() << ",";
+    oss << "\"activeViews\"" << ":" << getActiveViews() << ",";
 
     oss << "\"views\"" << ":[";
     std::string separator;
-    for (auto view : this->getViews())
+    for (auto view : getViews())
     {
         oss << separator << "\"";
         if(view.second.isExpired())
@@ -78,7 +78,7 @@ std::pair<std::time_t, std::string> Document::getSnapshot() const
     }
     oss << "],";
 
-    oss << "\"lastActivity\"" << ":" << this->_lastActivity;
+    oss << "\"lastActivity\"" << ":" << _lastActivity;
     oss << "}";
     return std::make_pair(ct, oss.str());
 }
@@ -87,11 +87,11 @@ const std::string Document::getHistory() const
 {
     std::ostringstream oss;
     oss << "{";
-    oss << "\"docKey\"" << ":\"" << this->_docKey << "\",";
-    oss << "\"filename\"" << ":\"" << this->getFilename() << "\",";
-    oss << "\"start\"" << ":" << this->_start << ",";
-    oss << "\"end\"" << ":" << this->_end << ",";
-    oss << "\"pid\"" << ":" << this->getPid() << ",";
+    oss << "\"docKey\"" << ":\"" << _docKey << "\",";
+    oss << "\"filename\"" << ":\"" << getFilename() << "\",";
+    oss << "\"start\"" << ":" << _start << ",";
+    oss << "\"end\"" << ":" << _end << ",";
+    oss << "\"pid\"" << ":" << getPid() << ",";
     oss << "\"snapshots\"" << ":[";
     std::string separator;
     for (auto s : _snapshots)
@@ -105,7 +105,7 @@ const std::string Document::getHistory() const
 
 void Document::takeSnapshot()
 {
-    auto p = this->getSnapshot();
+    auto p = getSnapshot();
     auto insPoint = _snapshots.upper_bound(p.first);
     _snapshots.insert(insPoint, p);
 }
@@ -114,13 +114,13 @@ std::string Document::to_string() const
 {
     std::ostringstream oss;
     std::string encodedFilename;
-    Poco::URI::encode(this->getFilename(), " ", encodedFilename);
-    oss << this->getPid() << ' '
+    Poco::URI::encode(getFilename(), " ", encodedFilename);
+    oss << getPid() << ' '
         << encodedFilename << ' '
-        << this->getActiveViews() << ' '
-        << this->getMemoryDirty() << ' '
-        << this->getElapsedTime() << ' '
-        << this->getIdleTime() << ' ';
+        << getActiveViews() << ' '
+        << getMemoryDirty() << ' '
+        << getElapsedTime() << ' '
+        << getIdleTime() << ' ';
     return oss.str();
 }
 
