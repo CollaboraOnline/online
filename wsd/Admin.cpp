@@ -456,7 +456,7 @@ void Admin::triggerMemoryCleanup(size_t totalMem)
                 LOG_DBG("OOM: Killing saved document with DocKey " << docIt->_docKey);
                 LOOLWSD::closeDocument(docIt->_docKey, "oom");
                 memToFree -= docIt->_mem;
-                docList.erase(docIt);
+                docIt = docList.erase(docIt);
             }
             else
                 ++docIt;
