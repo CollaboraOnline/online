@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 08:00+0000\n"
+"POT-Creation-Date: 2017-07-07 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /fr/libo_online/loleaflet-ui-fr.po\n"
-"X-Pootle-Revision: 2444028\n"
+"X-Pootle-Revision: 2620885\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -38,6 +38,10 @@ msgstr "(actif)"
 msgid "Analytics"
 msgstr "Analytique"
 
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "Historique"
+
 #: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Tableau de bord"
@@ -46,13 +50,29 @@ msgstr "Tableau de bord"
 msgid "Users online"
 msgstr "Utilisateurs connectés"
 
+#: admin.strings.js:14
+msgid "Users Name"
+msgstr "Nom des utilisateurs"
+
 #: admin.strings.js:13
 msgid "Documents opened"
 msgstr "Documents ouverts"
 
+#: admin.strings.js:16
+msgid "Number of Documents"
+msgstr "Nombre de documents"
+
 #: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "Mémoire consommée"
+
+#: admin.strings.js:18
+msgid "Bytes sent"
+msgstr "Octets envoyés"
+
+#: admin.strings.js:19
+msgid "Bytes received"
+msgstr "Octets reçus"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -73,6 +93,10 @@ msgstr "Temps écoulé"
 #: admin.strings.js:19
 msgid "Idle time"
 msgstr "Durée d'inactivité"
+
+#: admin.strings.js:25
+msgid "Modified"
+msgstr "Modifié"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -122,10 +146,6 @@ msgstr "Couleurs web"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "Retour à la palette"
-
-#: evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "Historique"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -297,20 +317,43 @@ msgstr ""
 
 #: dist/errormessages.js:13
 msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
 msgstr ""
-"L'enregistrement a échoué par manque d'espace disque sur le serveur de "
-"stockage. Le document est maintenant en lecture seule. Veuillez contacter "
-"l'administrateur système pour continuer l'édition."
+"Échec de la lecture du document à partir du stockage. Veuillez contacter "
+"votre administrateur de serveur de stockage (%storageserver)."
 
 #: dist/errormessages.js:14
 msgid ""
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+"L'enregistrement a échoué par manque d'espace disque sur le serveur de "
+"stockage. Le document est maintenant en lecture seule. Veuillez contacter "
+"l'administrateur du serveur (%storageserver) pour poursuivre l'édition."
+
+#: dist/errormessages.js:15
+msgid ""
+"Document cannot be saved to storage server (%storageserver) due to expired "
+"or invalid access token. Refresh your session to not to lose your work."
+msgstr ""
+"Le document ne peut pas être enregistré sur le serveur de stockage "
+"(%storageserver) en raison d'un jeton d'accès périmé ou incorrecte. "
+"Rafraîchissez votre session afin de ne pas perdre votre travail."
+
+#: dist/errormessages.js:16
+msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"storage server (%storageserver) administrator."
 msgstr ""
 "Le document ne peut pas être enregistré sur le stockage. Vérifiez vos "
-"permissions ou contactez l'administrateur du serveur de stockage."
+"permissions ou contacter l'administrateur du serveur de stockage "
+"(%storageserver)."
+
+#: dist/errormessages.js:17
+msgid "Document has been changed in storage outside WOPI."
+msgstr "Le document a été modifié dans le stockage en dehors de WOPI."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -1993,6 +2036,11 @@ msgid "Select all"
 msgstr "Tout sélectionner"
 
 #: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:459
+msgid "Find & Replace"
+msgstr "Rechercher & remplacer"
+
+#: src/control/Control.Menubar.js:31
 msgid "Track Changes"
 msgstr "Suivi des modifications"
 
@@ -2443,6 +2491,18 @@ msgstr "Insérer une colonne"
 msgid "Delete row"
 msgstr "Supprimer la ligne"
 
+#: src/control/Control.Menubar.js:463
+msgid "Replace"
+msgstr "Remplacer"
+
+#: src/control/Control.Menubar.js:468
+msgid "Replace All"
+msgstr "Tout remplacer"
+
+#: src/control/Control.Menubar.js:473
+msgid "Prev"
+msgstr "Précédente"
+
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
 msgstr "Voulez-vous vraiment supprimer cette diapo ?"
@@ -2541,6 +2601,12 @@ msgstr "Version non prise en charge par le serveur."
 msgid "Session terminated by document owner"
 msgstr "Session terminée par le propriétaire du document"
 
+#: src/core/Socket.js:247
+msgid "Session was terminated due to idleness - please click to reload"
+msgstr ""
+"La session a été terminée en raison d'inactivité - veuillez cliquer pour la "
+"recharger."
+
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Le serveur ferme pour maintenance (enregistrement automatique)"
@@ -2548,6 +2614,22 @@ msgstr "Le serveur ferme pour maintenance (enregistrement automatique)"
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
 msgstr "Le serveur est cours de recyclage et sera bientôt disponible"
+
+#: src/core/Socket.js:286
+msgid ""
+"%user asked to refresh the document. Document will now refresh automatically."
+msgstr ""
+"%user a demandé à rafraîchir le document. Le document ne se rafraîchira pas "
+"automatiquement."
+
+#: src/core/Socket.js:393
+msgid ""
+"Document has been changed in storage. Do you want to refresh the page to "
+"load the new document ? Cancelling will continue editing and overwrite."
+msgstr ""
+"Le document a été modifié sur le stockage. Voulez-vous rafraîchir la page "
+"pour charger le nouveau document ? L'annulation continuera l'édition et "
+"l'écrasement."
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."

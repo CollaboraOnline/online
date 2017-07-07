@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-22 08:00+0000\n"
+"POT-Creation-Date: 2017-07-07 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-ui-es.po\n"
-"X-Pootle-Revision: 2571636\n"
+"X-Pootle-Revision: 2665447\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -738,7 +738,7 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "¿Confirma que quiere finalizar esta sesión?"
 
 #: src/admin/AdminSocketSettings.js:31
-msgid "Are you sure you want to shut down the server?"
+msgid "Are you sure you want to shutdown the server?"
 msgstr "¿Confirma que quiere apagar el servidor?"
 
 #: src/admin/Util.js:13
@@ -945,7 +945,7 @@ msgstr "Diacríticos combinables"
 
 #: src/control/Control.CharacterMap.js:57
 msgid "Letterlike Symbols"
-msgstr ""
+msgstr "Símbolos de letras"
 
 #: src/control/Control.CharacterMap.js:58
 msgid "Number Forms"
@@ -965,7 +965,7 @@ msgstr "Caracteres técnicos diversos"
 
 #: src/control/Control.CharacterMap.js:62
 msgid "Control Pictures"
-msgstr ""
+msgstr "Símbolos de caracteres de control"
 
 #: src/control/Control.CharacterMap.js:63
 msgid "Optical Character Recognition"
@@ -973,7 +973,7 @@ msgstr "Reconocimiento óptico de caracteres"
 
 #: src/control/Control.CharacterMap.js:64
 msgid "Enclosed Alphanumerics"
-msgstr ""
+msgstr "Alfanuméricos delimitados"
 
 #: src/control/Control.CharacterMap.js:65
 msgid "Box Drawing"
@@ -997,7 +997,7 @@ msgstr "Pictogramas"
 
 #: src/control/Control.CharacterMap.js:70
 msgid "Braille Patterns"
-msgstr ""
+msgstr "Braille"
 
 #: src/control/Control.CharacterMap.js:71
 msgid "CJK Radicals Supplement"
@@ -1057,11 +1057,11 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:88
 msgid "Yi Syllables"
-msgstr ""
+msgstr "Sílabas yi"
 
 #: src/control/Control.CharacterMap.js:90
 msgid "Yi Radicals"
-msgstr ""
+msgstr "Radicales yi"
 
 #: src/control/Control.CharacterMap.js:92
 msgid "Hangul"
@@ -1125,7 +1125,7 @@ msgstr "Itálico prerromano"
 
 #: src/control/Control.CharacterMap.js:112
 msgid "Gothic"
-msgstr ""
+msgstr "Gótico"
 
 #: src/control/Control.CharacterMap.js:113
 msgid "Deseret"
@@ -2485,11 +2485,11 @@ msgstr "Altura óptima de filas"
 
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Desplazar anotaciones hacia arriba"
 
 #: src/control/Control.Scroll.Annotation.js:11
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Desplazar anotaciones hacia abajo"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"

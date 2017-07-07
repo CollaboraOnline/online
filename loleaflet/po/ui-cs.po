@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-07 08:00+0000\n"
+"POT-Creation-Date: 2017-07-07 11:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.1.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-ui-cs.po\n"
-"X-Pootle-Revision: 2581025\n"
+"X-Pootle-Revision: 2614587\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -38,6 +38,10 @@ msgstr "(aktuální)"
 msgid "Analytics"
 msgstr "Analytické údaje"
 
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "Historie"
+
 #: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Nástěnka"
@@ -46,13 +50,30 @@ msgstr "Nástěnka"
 msgid "Users online"
 msgstr "Přihlášení uživatelé"
 
+#: admin.strings.js:14
+#, fuzzy
+msgid "Users Name"
+msgstr "Uživatelské jméno"
+
 #: admin.strings.js:13
 msgid "Documents opened"
 msgstr "Otevřené dokumenty"
 
+#: admin.strings.js:16
+msgid "Number of Documents"
+msgstr ""
+
 #: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "Spotřebovaná paměť"
+
+#: admin.strings.js:18
+msgid "Bytes sent"
+msgstr ""
+
+#: admin.strings.js:19
+msgid "Bytes received"
+msgstr ""
 
 #: admin.strings.js:15
 msgid "PID"
@@ -73,6 +94,10 @@ msgstr "Uplynulý čas"
 #: admin.strings.js:19
 msgid "Idle time"
 msgstr "Doba nečinnosti"
+
+#: admin.strings.js:25
+msgid "Modified"
+msgstr ""
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -122,10 +147,6 @@ msgstr "Další barvy"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "Zpět na paletu"
-
-#: evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "Historie"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -295,20 +316,39 @@ msgstr ""
 
 #: dist/errormessages.js:13
 msgid ""
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
+msgstr ""
+
+#: dist/errormessages.js:14
+#, fuzzy
+msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
 msgstr ""
 "Uložení se nezdařilo z důvodu nedostatku volného místa na serveru. Dokument "
 "je nyní pouze pro čtení. Pro pokračování v úpravách se prosím obraťte na "
 "správce serveru."
 
-#: dist/errormessages.js:14
+#: dist/errormessages.js:15
+msgid ""
+"Document cannot be saved to storage server (%storageserver) due to expired "
+"or invalid access token. Refresh your session to not to lose your work."
+msgstr ""
+
+#: dist/errormessages.js:16
+#, fuzzy
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"storage server (%storageserver) administrator."
 msgstr ""
 "Dokument nelze uložit. Ujistěte se, zda máte dostatečná oprávnění nebo se "
 "obraťte na správce serveru."
+
+#: dist/errormessages.js:17
+msgid "Document has been changed in storage outside WOPI."
+msgstr ""
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -736,6 +776,7 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Opravdu si přejete ukončit tuto relaci?"
 
 #: src/admin/AdminSocketSettings.js:31
+#, fuzzy
 msgid "Are you sure you want to shut down the server?"
 msgstr "Opravdu si přejete vypnout tento server?"
 
@@ -1991,6 +2032,11 @@ msgid "Select all"
 msgstr "Vybrat vše"
 
 #: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:459
+msgid "Find & Replace"
+msgstr ""
+
+#: src/control/Control.Menubar.js:31
 msgid "Track Changes"
 msgstr "Sledování změn"
 
@@ -2441,6 +2487,18 @@ msgstr "Vložit sloupec"
 msgid "Delete row"
 msgstr "Smazat řádek"
 
+#: src/control/Control.Menubar.js:463
+msgid "Replace"
+msgstr ""
+
+#: src/control/Control.Menubar.js:468
+msgid "Replace All"
+msgstr ""
+
+#: src/control/Control.Menubar.js:473
+msgid "Prev"
+msgstr ""
+
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
 msgstr "Opravdu si přejete smazat tento snímek?"
@@ -2539,6 +2597,10 @@ msgstr "Nepodporovaná verze serveru."
 msgid "Session terminated by document owner"
 msgstr "Relace byla ukončena vlastníkem dokumentu"
 
+#: src/core/Socket.js:247
+msgid "Session was terminated due to idleness - please click to reload"
+msgstr ""
+
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server bude vypnut z důvodu údržby (automatické ukládání)"
@@ -2546,6 +2608,17 @@ msgstr "Server bude vypnut z důvodu údržby (automatické ukládání)"
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
 msgstr "Server je obnovován a bude brzy dostupný"
+
+#: src/core/Socket.js:286
+msgid ""
+"%user asked to refresh the document. Document will now refresh automatically."
+msgstr ""
+
+#: src/core/Socket.js:393
+msgid ""
+"Document has been changed in storage. Do you want to refresh the page to "
+"load the new document ? Cancelling will continue editing and overwrite."
+msgstr ""
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."
