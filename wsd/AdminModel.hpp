@@ -54,6 +54,22 @@ struct DocProcSettings
     size_t LimitFileSizeMb;
 };
 
+/// Containing basic information about document
+struct DocBasicInfo
+{
+    std::string _docKey;
+    std::time_t _idleTime;
+    bool _saved;
+    int _mem;
+
+    DocBasicInfo(const std::string& docKey, std::time_t idleTime, bool saved, int mem)
+        : _docKey(docKey),
+          _idleTime(idleTime),
+          _saved(saved),
+          _mem(mem)
+        { }
+};
+
 /// A document in Admin controller.
 class Document
 {
@@ -72,6 +88,8 @@ public:
           _recvBytes(0)
     {
     }
+
+    const std::string getDocKey() const { return _docKey; }
 
     Poco::Process::PID getPid() const { return _pid; }
 
@@ -246,6 +264,9 @@ public:
 
     uint64_t getSentBytesTotal() { return _sentBytesTotal; }
     uint64_t getRecvBytesTotal() { return _recvBytesTotal; }
+
+    /// Document basic info list sorted by most idle time
+    std::list<DocBasicInfo> getDocumentsSortedByIdle() const;
 
 private:
     std::string getMemStats();

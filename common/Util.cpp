@@ -171,6 +171,27 @@ namespace Util
         return nullptr;
     }
 
+    size_t getTotalSystemMemory()
+    {
+        size_t totalMemKb = 0;
+        FILE* file = fopen("/proc/meminfo", "r");
+        if (file != nullptr)
+        {
+            char line[4096] = { 0 };
+            while (fgets(line, sizeof(line), file))
+            {
+                const char* value;
+                if ((value = startsWith(line, "MemTotal:")))
+                {
+                    totalMemKb = atoi(value);
+                    break;
+                }
+            }
+        }
+
+        return totalMemKb;
+    }
+
     std::pair<size_t, size_t> getPssAndDirtyFromSMaps(FILE* file)
     {
         size_t numPSSKb = 0;

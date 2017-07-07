@@ -118,6 +118,10 @@ private:
     /// Notify Forkit of changed settings.
     void notifyForkit();
 
+    /// Memory consumption has increased, start killing kits etc. till memory consumption gets back
+    /// under @hardModeLimit
+    void triggerMemoryCleanup(size_t hardModeLimit);
+
 private:
     /// The model is accessed only during startup & in
     /// the Admin Poll thread.
@@ -128,6 +132,7 @@ private:
     size_t _lastJiffies;
     uint64_t _lastSentCount;
     uint64_t _lastRecvCount;
+    size_t _totalSysMem;
 
     std::atomic<int> _memStatsTaskIntervalMs;
     std::atomic<int> _cpuStatsTaskIntervalMs;

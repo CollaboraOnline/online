@@ -333,6 +333,9 @@ Admin::Admin() :
 {
     LOG_INF("Admin ctor.");
 
+    _totalSysMem = Util::getTotalSystemMemory();
+    LOG_TRC("Total system memory : " << _totalSysMem);
+
     const auto totalMem = getTotalMemoryUsage();
     LOG_TRC("Total memory used: " << totalMem);
     _model.addMemStats(totalMem);
@@ -384,6 +387,9 @@ void Admin::pollingThread()
 
             lastMem = now;
             memWait += _memStatsTaskIntervalMs;
+
+            // If our total memory consumption is above limit, cleanup
+            triggerMemoryCleanup(totalMem);
         }
 
         int netWait = _networkStatsIntervalMs -
@@ -524,6 +530,43 @@ void Admin::notifyForkit()
         << "setconfig limit_stack_mem_kb " << _defDocProcSettings.LimitStackMemKb << '\n'
         << "setconfig limit_file_size_mb " << _defDocProcSettings.LimitFileSizeMb << '\n';
     IoUtil::writeToPipe(_forKitWritePipe, oss.str());
+}
+
+void Admin::triggerMemoryCleanup(size_t totalMem)
+{
+    LOG_TRC("Total memory we are consuming (in kB): " << totalMem);
+    // Trigger mem cleanup when we are consuming too much memory (as configured by sysadmin)
+    const auto memLimit = LOOLWSD::getConfigValue<double>("memproportion", static_cast<double>(80.0));
+    LOG_TRC("Mem proportion for LOOL configured : " << memLimit);
+    float memToFreePercentage = 0;
+    if ( (memToFreePercentage = (totalMem/static_cast<double>(_totalSysMem)) - memLimit/100.) > 0.0 )
+    {
+        int memToFree = memToFreePercentage * totalMem;
+        LOG_TRC("Memory to be freed (in kB) : " << memToFree);
+        // prepare document list sorted by most idle times
+        std::list<DocBasicInfo> docList = _model.getDocumentsSortedByIdle();
+
+        LOG_TRC("Checking saved documents in document list, length: " << docList.size());
+        // Kill the saved documents first
+        std::list<DocBasicInfo>::iterator docIt = docList.begin();
+        while (docIt != docList.end() && memToFree > 0)
+        {
+            LOG_TRC("Document: DocKey[" << docIt->_docKey << "], Idletime[" << docIt->_idleTime << "],"
+                    << " Saved: [" << docIt->_saved << "], Mem: [" << docIt->_mem << "].");
+            if (docIt->_saved)
+            {
+                // Kill and remove from list
+                LOG_DBG("OOM: Killing saved document with DocKey " << docIt->_docKey);
+                LOOLWSD::closeDocument(docIt->_docKey, "oom");
+                memToFree -= docIt->_mem;
+                docList.erase(docIt);
+            }
+            else
+                ++docIt;
+        }
+    }
+
+    LOG_TRC("OOM: Memory to free percentage : " << memToFreePercentage);
 }
 
 void Admin::dumpState(std::ostream& os)

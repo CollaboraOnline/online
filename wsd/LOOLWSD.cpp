@@ -624,6 +624,7 @@ void LOOLWSD::initialize(Application& self)
             { "lo_jail_subpath", "lo" },
             { "server_name", "" },
             { "file_server_root_path", "loleaflet/.." },
+            { "memproportion", "80.0" },
             { "num_prespawn_children", "1" },
             { "per_document.max_concurrency", "4" },
             { "per_document.idle_timeout_secs", "3600" },
@@ -1116,6 +1117,19 @@ bool LOOLWSD::checkAndRestoreForKit()
 void LOOLWSD::doHousekeeping()
 {
     PrisonerPoll.wakeup();
+}
+
+void LOOLWSD::closeDocument(const std::string& docKey, const std::string& message)
+{
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+    auto docBrokerIt = DocBrokers.find(docKey);
+    if (docBrokerIt != DocBrokers.end())
+    {
+        std::shared_ptr<DocumentBroker> docBroker = docBrokerIt->second;
+        docBroker->addCallback([docBroker, message]() {
+                docBroker->closeDocument(message);
+            });
+    }
 }
 
 /// Really do the house-keeping
