@@ -4,16 +4,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-12 16:59+0200\n"
+"POT-Creation-Date: 2017-07-08 23:10+0200\n"
 "PO-Revision-Date: 2017-06-12 17:06+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
-"Language: sl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3);\n"
 "X-Generator: Poedit 2.0.2\n"
 "X-Accelerator-Marker: ~\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -42,93 +42,69 @@ msgstr "(trenutno)"
 msgid "Analytics"
 msgstr "Analitika"
 
-#: admin.strings.js:11 evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "Zgodovina"
-
-#: admin.strings.js:12
+#: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Nadzorna plošča"
 
-#: admin.strings.js:13
+#: admin.strings.js:12
 msgid "Users online"
 msgstr "povezanih uporabnikov"
 
-#: admin.strings.js:14
-msgid "Users Name"
-msgstr "Ime uporabnika"
-
-#: admin.strings.js:15
+#: admin.strings.js:13
 msgid "Documents opened"
 msgstr "odprtih dokumentov"
 
-#: admin.strings.js:16
-msgid "Number of Documents"
-msgstr "Število dokumentov"
-
-#: admin.strings.js:17
+#: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "zasedenega pomnilnika"
 
-#: admin.strings.js:18
-msgid "Bytes sent"
-msgstr "poslanih bajtov"
-
-#: admin.strings.js:19
-msgid "Bytes received"
-msgstr "prejetih bajtov"
-
-#: admin.strings.js:20
+#: admin.strings.js:15
 msgid "PID"
 msgstr "PID"
 
-#: admin.strings.js:21
+#: admin.strings.js:16
 msgid "Document"
 msgstr "Dokument"
 
-#: admin.strings.js:22
+#: admin.strings.js:17
 msgid "Number of views"
 msgstr "Število ogledov"
 
-#: admin.strings.js:23
+#: admin.strings.js:18
 msgid "Elapsed time"
 msgstr "Pretekli čas"
 
-#: admin.strings.js:24
+#: admin.strings.js:19
 msgid "Idle time"
 msgstr "Čas nedejavnosti"
 
-#: admin.strings.js:25
-msgid "Modified"
-msgstr "Spremenjeno"
-
-#: admin.strings.js:26
+#: admin.strings.js:20
 msgid "Kill"
 msgstr "Ubij"
 
-#: admin.strings.js:27
+#: admin.strings.js:21
 msgid "Graphs"
 msgstr "Grafikoni"
 
-#: admin.strings.js:28 dist/toolbar/toolbar.js:471
+#: admin.strings.js:22 dist/toolbar/toolbar.js:461
 #: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:177
 #: src/control/Control.Menubar.js:237 src/layer/marker/Annotation.js:198
 msgid "Save"
 msgstr "Shrani"
 
-#: admin.strings.js:29
+#: admin.strings.js:23
 msgid "Cache size of memory statistics"
 msgstr "Velikost medpomnilnika za statistiko pomnilnika"
 
-#: admin.strings.js:30
+#: admin.strings.js:24
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Časovni interval za statistiko pomnilnika (v ms)"
 
-#: admin.strings.js:31
+#: admin.strings.js:25
 msgid "Cache size of CPU statistics"
 msgstr "Velikost medpomnilnika za statistiko CPE"
 
-#: admin.strings.js:32
+#: admin.strings.js:26
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Časovni interval za statistiko CPE (v ms)"
 
@@ -147,6 +123,10 @@ msgstr "Spletne barve"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "Nazaj na paleto"
+
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "Zgodovina"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -334,20 +314,14 @@ msgstr ""
 "(%storageserver)."
 
 #: dist/errormessages.js:15
-#, javascript-format
-msgid ""
-"Document cannot be saved to storage server (%storageserver) due to expired "
-"or invalid access token. Refresh your session to not to lose your work."
+msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
-"Dokumenta ni mogoče shraniti na strežnik shrambe (%storageserver) zaradi "
-"poteklega ali neveljavnega žetona za dostop. Osvežite svojo sejo, da ne bi "
-"izgubili opravljenega dela."
 
 #: dist/errormessages.js:16
-#, javascript-format
+#, fuzzy
 msgid ""
-"Document cannot be saved to storage. Check your permissions or contact the "
-"storage server (%storageserver) administrator."
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
 msgstr ""
 "Dokumenta ni mogoče shraniti v shrambo. Preverite svoje pravice ali stopite "
 "v stik z upraviteljem strežnika shrambe (%storageserver)."
@@ -368,381 +342,345 @@ msgstr "1 uporabnik"
 msgid "0 users"
 msgstr "0 uporabnikov"
 
-#: dist/toolbar/toolbar.js:267
+#: dist/toolbar/toolbar.js:271
 msgid "Are you sure you want to delete this page?"
 msgstr "Ali ste prepričani, da želite izbrisati to stran?"
 
-#: dist/toolbar/toolbar.js:462
-msgid "Textwrap"
-msgstr "Oblivanje besedila"
-
-#: dist/toolbar/toolbar.js:463
-msgid "No wrap"
-msgstr "Brez oblivanja"
-
-#: dist/toolbar/toolbar.js:464
-msgid "Page wrap"
-msgstr "Oblivanje strani"
-
-#: dist/toolbar/toolbar.js:465
-msgid "Wrap anchor only"
-msgstr "Oblij samo sidro"
-
-#: dist/toolbar/toolbar.js:466
-msgid "Ideal wrap"
-msgstr "Idealno oblivanje"
-
-#: dist/toolbar/toolbar.js:467
-msgid "Left wrap"
-msgstr "Levo oblivanje"
-
-#: dist/toolbar/toolbar.js:468
-msgid "Right wrap"
-msgstr "Desno oblivanje"
-
-#: dist/toolbar/toolbar.js:469
-msgid "Wrap through"
-msgstr "Oblij skozi"
-
-#: dist/toolbar/toolbar.js:473 src/control/Control.Menubar.js:22
+#: dist/toolbar/toolbar.js:463 src/control/Control.Menubar.js:22
 #: src/control/Control.Menubar.js:187 src/control/Control.Menubar.js:247
 msgid "Undo"
 msgstr "Razveljavi"
 
-#: dist/toolbar/toolbar.js:474 src/control/Control.Menubar.js:23
+#: dist/toolbar/toolbar.js:464 src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:188 src/control/Control.Menubar.js:248
 msgid "Redo"
 msgstr "Ponovi"
 
-#: dist/toolbar/toolbar.js:475
+#: dist/toolbar/toolbar.js:465
 msgid "Document repair"
 msgstr "Popravi dokument"
 
-#: dist/toolbar/toolbar.js:481 src/control/Control.Menubar.js:73
+#: dist/toolbar/toolbar.js:471 src/control/Control.Menubar.js:73
 msgid "Bold"
 msgstr "Krepko"
 
-#: dist/toolbar/toolbar.js:482 src/control/Control.Menubar.js:74
+#: dist/toolbar/toolbar.js:472 src/control/Control.Menubar.js:74
 msgid "Italic"
 msgstr "Ležeče"
 
-#: dist/toolbar/toolbar.js:483 src/control/Control.Menubar.js:75
+#: dist/toolbar/toolbar.js:473 src/control/Control.Menubar.js:75
 msgid "Underline"
 msgstr "Podčrtano"
 
-#: dist/toolbar/toolbar.js:484
+#: dist/toolbar/toolbar.js:474
 msgid "Strikeout"
 msgstr "Prečrtano"
 
-#: dist/toolbar/toolbar.js:486
-msgid "Insert Footnote"
-msgstr "Vstavi sprotno opombo"
-
-#: dist/toolbar/toolbar.js:489
+#: dist/toolbar/toolbar.js:477
 msgid "Font color"
 msgstr "Barva pisave"
 
-#: dist/toolbar/toolbar.js:491
+#: dist/toolbar/toolbar.js:479
 msgid "Highlighting"
 msgstr "Poudarjanje"
 
-#: dist/toolbar/toolbar.js:493
+#: dist/toolbar/toolbar.js:481
 msgid "Align left"
 msgstr "Poravnaj levo"
 
-#: dist/toolbar/toolbar.js:494
+#: dist/toolbar/toolbar.js:482
 msgid "Center horizontally"
 msgstr "Vodoravno na sredino"
 
-#: dist/toolbar/toolbar.js:495
+#: dist/toolbar/toolbar.js:483
 msgid "Align right"
 msgstr "Poravnaj desno"
 
-#: dist/toolbar/toolbar.js:496 src/control/Control.Menubar.js:114
+#: dist/toolbar/toolbar.js:484 src/control/Control.Menubar.js:114
 msgid "Justified"
 msgstr "Obojestransko"
 
-#: dist/toolbar/toolbar.js:498
+#: dist/toolbar/toolbar.js:486
 msgid "Wrap Text"
 msgstr "Prelomi besedilo"
 
-#: dist/toolbar/toolbar.js:499
+#: dist/toolbar/toolbar.js:487
 msgid "Merge and Center Cells"
 msgstr "Spoji celice in jih poravnaj na sredino"
 
-#: dist/toolbar/toolbar.js:501
+#: dist/toolbar/toolbar.js:489
 msgid "Format as Currency"
 msgstr "Oblikuj kot valuto"
 
-#: dist/toolbar/toolbar.js:502
+#: dist/toolbar/toolbar.js:490
 msgid "Format as Percent"
 msgstr "Oblikuj kot odstotek"
 
-#: dist/toolbar/toolbar.js:503
+#: dist/toolbar/toolbar.js:491
 msgid "Format as Number"
 msgstr "Oblikuj kot število"
 
-#: dist/toolbar/toolbar.js:504
+#: dist/toolbar/toolbar.js:492
 msgid "Format as Date"
 msgstr "Oblikuj kot datum"
 
-#: dist/toolbar/toolbar.js:505
+#: dist/toolbar/toolbar.js:493
 msgid "Add Decimal Place"
 msgstr "Dodaj decimalno mesto"
 
-#: dist/toolbar/toolbar.js:506
+#: dist/toolbar/toolbar.js:494
 msgid "Delete Decimal Place"
 msgstr "Izbriši decimalno mesto"
 
-#: dist/toolbar/toolbar.js:508
+#: dist/toolbar/toolbar.js:496
 msgid "Sort Ascending"
 msgstr "Razvrsti naraščajoče"
 
-#: dist/toolbar/toolbar.js:509
+#: dist/toolbar/toolbar.js:497
 msgid "Sort Descending"
 msgstr "Razvrsti padajoče"
 
-#: dist/toolbar/toolbar.js:511 src/control/Control.Menubar.js:120
+#: dist/toolbar/toolbar.js:499 src/control/Control.Menubar.js:120
 msgid "Bullets on/off"
 msgstr "Oznake vključene/izključene"
 
-#: dist/toolbar/toolbar.js:512 src/control/Control.Menubar.js:121
+#: dist/toolbar/toolbar.js:500 src/control/Control.Menubar.js:121
 msgid "Numbering on/off"
 msgstr "Oštevilčevanje vključeno/izključeno"
 
-#: dist/toolbar/toolbar.js:514 src/control/Control.Menubar.js:108
+#: dist/toolbar/toolbar.js:502 src/control/Control.Menubar.js:108
 msgid "Increase indent"
 msgstr "Povečaj zamik"
 
-#: dist/toolbar/toolbar.js:515 src/control/Control.Menubar.js:109
+#: dist/toolbar/toolbar.js:503 src/control/Control.Menubar.js:109
 msgid "Decrease indent"
 msgstr "Zmanjšaj zamik"
 
-#: dist/toolbar/toolbar.js:518
+#: dist/toolbar/toolbar.js:506
 msgid "Insert table"
 msgstr "Vstavi tabelo"
 
-#: dist/toolbar/toolbar.js:519
+#: dist/toolbar/toolbar.js:507
 msgid "Insert comment"
 msgstr "Vstavi komentar"
 
-#: dist/toolbar/toolbar.js:520
+#: dist/toolbar/toolbar.js:508
 msgid "Insert graphic"
 msgstr "Vstavi sliko"
 
-#: dist/toolbar/toolbar.js:521
+#: dist/toolbar/toolbar.js:509
 msgid "Special Character"
 msgstr "Poseben znak"
 
-#: dist/toolbar/toolbar.js:523
+#: dist/toolbar/toolbar.js:511
 msgid "More"
 msgstr "Dodatno"
 
-#: dist/toolbar/toolbar.js:525 src/control/Control.Menubar.js:172
+#: dist/toolbar/toolbar.js:513 src/control/Control.Menubar.js:172
 #: src/control/Control.Menubar.js:232 src/control/Control.Menubar.js:279
 msgid "Close document"
 msgstr "Zapri dokument"
 
-#: dist/toolbar/toolbar.js:604
+#: dist/toolbar/toolbar.js:592
 msgid "Layout"
 msgstr "Postavitev"
 
-#: dist/toolbar/toolbar.js:622 dist/toolbar/toolbar.js:987
+#: dist/toolbar/toolbar.js:610 dist/toolbar/toolbar.js:976
 msgid "Sum"
 msgstr "Vsota"
 
-#: dist/toolbar/toolbar.js:623
+#: dist/toolbar/toolbar.js:611
 msgid "Function"
 msgstr "Funkcija"
 
-#: dist/toolbar/toolbar.js:624 src/control/Control.CharacterMap.js:428
+#: dist/toolbar/toolbar.js:612 src/control/Control.CharacterMap.js:428
 #: src/layer/marker/Annotation.js:137
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: dist/toolbar/toolbar.js:625
+#: dist/toolbar/toolbar.js:613
 msgid "Accept"
 msgstr "Sprejmi"
 
-#: dist/toolbar/toolbar.js:641
+#: dist/toolbar/toolbar.js:629
 msgid "First sheet"
 msgstr "Prvi delovni list"
 
-#: dist/toolbar/toolbar.js:642
+#: dist/toolbar/toolbar.js:630
 msgid "Previous sheet"
 msgstr "Prejšnji delovni list"
 
-#: dist/toolbar/toolbar.js:643
+#: dist/toolbar/toolbar.js:631
 msgid "Next sheet"
 msgstr "Naslednji delovni list"
 
-#: dist/toolbar/toolbar.js:644
+#: dist/toolbar/toolbar.js:632
 msgid "Last sheet"
 msgstr "Zadnji delovni list"
 
-#: dist/toolbar/toolbar.js:654 src/control/Control.Menubar.js:226
+#: dist/toolbar/toolbar.js:642 src/control/Control.Menubar.js:226
 msgid "Fullscreen presentation"
 msgstr "Celozaslonska predstavitev"
 
-#: dist/toolbar/toolbar.js:656
+#: dist/toolbar/toolbar.js:644
 msgid "Insert slide"
 msgstr "Vstavi prosojnico"
 
-#: dist/toolbar/toolbar.js:657 src/control/Control.Menubar.js:223
+#: dist/toolbar/toolbar.js:645 src/control/Control.Menubar.js:223
 msgid "Duplicate slide"
 msgstr "Podvoji prosojnico"
 
-#: dist/toolbar/toolbar.js:658 src/control/Control.Menubar.js:224
+#: dist/toolbar/toolbar.js:646 src/control/Control.Menubar.js:224
 msgid "Delete slide"
 msgstr "Izbriši prosojnico"
 
-#: dist/toolbar/toolbar.js:671
+#: dist/toolbar/toolbar.js:659
 msgid "Search:"
 msgstr "Išči:"
 
-#: dist/toolbar/toolbar.js:676
+#: dist/toolbar/toolbar.js:664
 msgid "Search backwards"
 msgstr "Išči nazaj"
 
-#: dist/toolbar/toolbar.js:677
+#: dist/toolbar/toolbar.js:665
 msgid "Search forward"
 msgstr "Išči naprej"
 
-#: dist/toolbar/toolbar.js:678
+#: dist/toolbar/toolbar.js:666
 msgid "Cancel the search"
 msgstr "Prekliči iskanje"
 
-#: dist/toolbar/toolbar.js:683
+#: dist/toolbar/toolbar.js:671
 msgid "No users"
 msgstr "Ni uporabnikov"
 
-#: dist/toolbar/toolbar.js:685
+#: dist/toolbar/toolbar.js:673
 msgid "Previous page"
 msgstr "Prejšnja stran"
 
-#: dist/toolbar/toolbar.js:686
+#: dist/toolbar/toolbar.js:674
 msgid "Next page"
 msgstr "Naslednja stran"
 
-#: dist/toolbar/toolbar.js:688 src/control/Control.Menubar.js:46
+#: dist/toolbar/toolbar.js:676 src/control/Control.Menubar.js:46
 #: src/control/Control.Menubar.js:201
 msgid "Reset zoom"
 msgstr "Ponastavi povečavo"
 
-#: dist/toolbar/toolbar.js:689 src/control/Control.Menubar.js:45
+#: dist/toolbar/toolbar.js:677 src/control/Control.Menubar.js:45
 #: src/control/Control.Menubar.js:200
 msgid "Zoom out"
 msgstr "Približaj"
 
-#: dist/toolbar/toolbar.js:691 src/control/Control.Menubar.js:44
+#: dist/toolbar/toolbar.js:679 src/control/Control.Menubar.js:44
 #: src/control/Control.Menubar.js:199
 msgid "Zoom in"
 msgstr "Oddalji"
 
-#: dist/toolbar/toolbar.js:707
+#: dist/toolbar/toolbar.js:695
 msgid "%user has joined"
 msgstr "Pridružil se je uporabnik %user"
 
-#: dist/toolbar/toolbar.js:708
+#: dist/toolbar/toolbar.js:696
 msgid "%user has left"
 msgstr "Odšel je uporabnik %user"
 
-#: dist/toolbar/toolbar.js:817 dist/toolbar/toolbar.js:1352
+#: dist/toolbar/toolbar.js:805 dist/toolbar/toolbar.js:1339
 msgid "Size"
 msgstr "Velikost"
 
-#: dist/toolbar/toolbar.js:968
+#: dist/toolbar/toolbar.js:957
 msgid "Number of Sheets"
 msgstr "Število delovnih listov"
 
-#: dist/toolbar/toolbar.js:971
+#: dist/toolbar/toolbar.js:960
 msgid "Selected range of cells"
 msgstr "Izbran obseg celic"
 
-#: dist/toolbar/toolbar.js:974 dist/toolbar/toolbar.js:1009
+#: dist/toolbar/toolbar.js:963 dist/toolbar/toolbar.js:998
 msgid "Entering text mode"
 msgstr "Vstopanje v besedilni način"
 
-#: dist/toolbar/toolbar.js:977 dist/toolbar/toolbar.js:1012
+#: dist/toolbar/toolbar.js:966 dist/toolbar/toolbar.js:1001
 msgid "Selection Mode"
 msgstr "Izbirni način"
 
-#: dist/toolbar/toolbar.js:980
+#: dist/toolbar/toolbar.js:969
 msgid "Choice of functions"
 msgstr "Izbor funkcij"
 
-#: dist/toolbar/toolbar.js:982
+#: dist/toolbar/toolbar.js:971
 msgid "Average"
 msgstr "Povprečno"
 
-#: dist/toolbar/toolbar.js:983
+#: dist/toolbar/toolbar.js:972
 msgid "CountA"
 msgstr "ŠtevecA"
 
-#: dist/toolbar/toolbar.js:984
+#: dist/toolbar/toolbar.js:973
 msgid "Count"
 msgstr "Števec"
 
-#: dist/toolbar/toolbar.js:985
+#: dist/toolbar/toolbar.js:974
 msgid "Maximum"
 msgstr "Največ"
 
-#: dist/toolbar/toolbar.js:986
+#: dist/toolbar/toolbar.js:975
 msgid "Minimum"
 msgstr "Najmanj"
 
-#: dist/toolbar/toolbar.js:988
+#: dist/toolbar/toolbar.js:977
 msgid "Selection count"
 msgstr "Seštevek izbora"
 
-#: dist/toolbar/toolbar.js:989 src/control/Control.CharacterMap.js:11
+#: dist/toolbar/toolbar.js:978 src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr "Brez"
 
-#: dist/toolbar/toolbar.js:1003
+#: dist/toolbar/toolbar.js:992
 msgid "Number of Pages"
 msgstr "Število strani"
 
-#: dist/toolbar/toolbar.js:1006
+#: dist/toolbar/toolbar.js:995
 msgid "Word Counter"
 msgstr "Števec besed"
 
-#: dist/toolbar/toolbar.js:1029
+#: dist/toolbar/toolbar.js:1018
 msgid "Number of Slides"
 msgstr "Število prosojnic"
 
-#: dist/toolbar/toolbar.js:1172
+#: dist/toolbar/toolbar.js:1161
 msgid "Document saved"
 msgstr "Dokument shranjen"
 
-#: dist/toolbar/toolbar.js:1324
+#: dist/toolbar/toolbar.js:1311
 msgid "Style"
 msgstr "Slog"
 
-#: dist/toolbar/toolbar.js:1344
+#: dist/toolbar/toolbar.js:1331
 msgid "Font"
 msgstr "Pisava"
 
-#: dist/toolbar/toolbar.js:1380
+#: dist/toolbar/toolbar.js:1367
 msgid "Previous slide"
 msgstr "Prejšnja prosojnica"
 
-#: dist/toolbar/toolbar.js:1381
+#: dist/toolbar/toolbar.js:1368
 msgid "Next slide"
 msgstr "Naslednja prosojnica"
 
-#: dist/toolbar/toolbar.js:1432
+#: dist/toolbar/toolbar.js:1429
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Spor razveljavljanja/ponavljanja med več uporabniki. Uporabite popravilo "
 "dokumenta za razrešitev težave."
 
-#: dist/toolbar/toolbar.js:1621 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1618 src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr "Vi"
 
-#: dist/toolbar/toolbar.js:1627
+#: dist/toolbar/toolbar.js:1624
 msgid "Readonly"
 msgstr "Samo za branje"
 
@@ -750,7 +688,7 @@ msgstr "Samo za branje"
 msgid "Connection error"
 msgstr "Napaka povezave"
 
-#: src/admin/AdminSocketOverview.js:68
+#: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ste prepričani, da želite zaključiti to sejo?"
 
@@ -1858,27 +1796,27 @@ msgstr "Šestnajstiško:"
 msgid "Insert"
 msgstr "Vstavi"
 
-#: src/control/Control.ColumnHeader.js:39
+#: src/control/Control.ColumnHeader.js:40
 msgid "Insert column before"
 msgstr "Vstavi stolpec pred"
 
-#: src/control/Control.ColumnHeader.js:46 src/control/Control.Menubar.js:273
+#: src/control/Control.ColumnHeader.js:47 src/control/Control.Menubar.js:273
 msgid "Delete column"
 msgstr "Izbriši stolpec"
 
-#: src/control/Control.ColumnHeader.js:53
+#: src/control/Control.ColumnHeader.js:54
 msgid "Optimal Width"
 msgstr "Optimalna širina"
 
-#: src/control/Control.ColumnHeader.js:60
+#: src/control/Control.ColumnHeader.js:61
 msgid "Hide Columns"
 msgstr "Skrij stolpce"
 
-#: src/control/Control.ColumnHeader.js:67
+#: src/control/Control.ColumnHeader.js:68
 msgid "Show Columns"
 msgstr "Pokaži stolpce"
 
-#: src/control/Control.ColumnHeader.js:82
+#: src/control/Control.ColumnHeader.js:83
 msgid "Optimal Column Width"
 msgstr "Optimalna širina stolpca"
 
@@ -1992,7 +1930,7 @@ msgstr "Prilepi"
 msgid "Select all"
 msgstr "Izberi vse"
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:459
+#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:479
 msgid "Find & Replace"
 msgstr "Najdi in zamenjaj"
 
@@ -2008,11 +1946,11 @@ msgstr "Zapiši"
 msgid "Show"
 msgstr "Pokaži"
 
-#: src/control/Control.Menubar.js:37
+#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:493
 msgid "Previous"
 msgstr "Prejšnji"
 
-#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:479
+#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:499
 msgid "Next"
 msgstr "Naslednji"
 
@@ -2422,19 +2360,15 @@ msgstr "Vstavi stolpec"
 msgid "Delete row"
 msgstr "Izbriši vrstico"
 
-#: src/control/Control.Menubar.js:463
+#: src/control/Control.Menubar.js:483
 msgid "Replace"
 msgstr "Zamenjaj"
 
-#: src/control/Control.Menubar.js:468
+#: src/control/Control.Menubar.js:488
 msgid "Replace All"
 msgstr "Zamenjaj vse"
 
-#: src/control/Control.Menubar.js:473
-msgid "Prev"
-msgstr "Prejšnji"
-
-#: src/control/Control.Menubar.js:593
+#: src/control/Control.Menubar.js:613
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ali ste prepričani, da želite izbrisati to prosojnico?"
 
@@ -2581,8 +2515,7 @@ msgstr "Povezovanje ..."
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr ""
-"Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
+msgstr "Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
 
 #: src/layer/marker/Annotation.js:167
 msgid "Accept change"
@@ -2619,3 +2552,57 @@ msgstr "Nalaganje ..."
 #: src/map/handler/Map.FileInserter.js:54
 msgid "Uploading..."
 msgstr "Prenašanje na strežnik ..."
+
+#~ msgid "Users Name"
+#~ msgstr "Ime uporabnika"
+
+#~ msgid "Number of Documents"
+#~ msgstr "Število dokumentov"
+
+#~ msgid "Bytes sent"
+#~ msgstr "poslanih bajtov"
+
+#~ msgid "Bytes received"
+#~ msgstr "prejetih bajtov"
+
+#~ msgid "Modified"
+#~ msgstr "Spremenjeno"
+
+#, javascript-format
+#~ msgid ""
+#~ "Document cannot be saved to storage server (%storageserver) due to expired "
+#~ "or invalid access token. Refresh your session to not to lose your work."
+#~ msgstr ""
+#~ "Dokumenta ni mogoče shraniti na strežnik shrambe (%storageserver) zaradi "
+#~ "poteklega ali neveljavnega žetona za dostop. Osvežite svojo sejo, da ne bi "
+#~ "izgubili opravljenega dela."
+
+#~ msgid "Textwrap"
+#~ msgstr "Oblivanje besedila"
+
+#~ msgid "No wrap"
+#~ msgstr "Brez oblivanja"
+
+#~ msgid "Page wrap"
+#~ msgstr "Oblivanje strani"
+
+#~ msgid "Wrap anchor only"
+#~ msgstr "Oblij samo sidro"
+
+#~ msgid "Ideal wrap"
+#~ msgstr "Idealno oblivanje"
+
+#~ msgid "Left wrap"
+#~ msgstr "Levo oblivanje"
+
+#~ msgid "Right wrap"
+#~ msgstr "Desno oblivanje"
+
+#~ msgid "Wrap through"
+#~ msgstr "Oblij skozi"
+
+#~ msgid "Insert Footnote"
+#~ msgstr "Vstavi sprotno opombo"
+
+#~ msgid "Prev"
+#~ msgstr "Prejšnji"
