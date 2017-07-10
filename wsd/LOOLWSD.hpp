@@ -124,6 +124,9 @@ public:
     /// Close document with @docKey and a @message
     static void closeDocument(const std::string& docKey, const std::string& message);
 
+    /// Autosave a given document
+    static void autoSave(const std::string& docKey);
+
 protected:
     void initialize(Poco::Util::Application& self) override;
     void defineOptions(Poco::Util::OptionSet& options) override;
