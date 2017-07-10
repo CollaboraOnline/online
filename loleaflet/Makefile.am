@@ -28,10 +28,7 @@ node_modules: npm-shrinkwrap.json
 dist/l10n/%.json: po/%.po
 	@util/po2json.py $< -o $@
 
-dist/l10n/styles:
-	@mkdir -p $@
-
-dist/l10n/styles/%.json: po/styles/%.po dist/l10n/styles
+dist/l10n/styles/%.json: po/styles/%.po
 	@util/po2json.py $< -o $@
 
 install-data-hook:

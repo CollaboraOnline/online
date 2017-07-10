@@ -10,6 +10,7 @@ import polib
 import re
 import string
 import sys
+import errno
 
 parser = optparse.OptionParser(usage="usage: %prog [options] pofile...")
 parser.add_option("--quiet", action="store_false", default=True, dest="verbose", help="don't print status messages to stdout")
@@ -44,6 +45,13 @@ for srcfile in args:
 			continue
 
 		xlate_map[entry.msgid] = entry.msgstr;
+
+	if not os.path.exists(os.path.dirname(destfile)):
+		try:
+			os.makedirs(os.path.dirname(destfile))
+		except OSError as exc: # Guard against race condition
+			if exc.errno != errno.EEXIST:
+				raise
 
 	dest = open(destfile, "w")
 
