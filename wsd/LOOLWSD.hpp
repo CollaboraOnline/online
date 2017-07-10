@@ -170,7 +170,7 @@ private:
             ConfigValueGetter(config, name)(value);
             return true;
         }
-        catch (const Poco::SyntaxException&)
+        catch (const std::exception&)
         {
         }
 
