@@ -433,8 +433,14 @@ void Admin::triggerMemoryCleanup(size_t totalMem)
 {
     LOG_TRC("Total memory we are consuming (in kB): " << totalMem);
     // Trigger mem cleanup when we are consuming too much memory (as configured by sysadmin)
-    const auto memLimit = LOOLWSD::getConfigValue<double>("memproportion", static_cast<double>(80.0));
+    const auto memLimit = LOOLWSD::getConfigValue<double>("memproportion", static_cast<double>(0.0));
     LOG_TRC("Mem proportion for LOOL configured : " << memLimit);
+    if (memLimit == 0.0 || _totalSysMem == 0)
+    {
+        LOG_TRC("Not configured to do memory cleanup. Skipping memory cleanup.");
+        return;
+    }
+
     float memToFreePercentage = 0;
     if ( (memToFreePercentage = (totalMem/static_cast<double>(_totalSysMem)) - memLimit/100.) > 0.0 )
     {
