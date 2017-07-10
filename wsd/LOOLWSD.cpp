@@ -1118,6 +1118,19 @@ void LOOLWSD::closeDocument(const std::string& docKey, const std::string& messag
     }
 }
 
+void LOOLWSD::autoSave(const std::string& docKey)
+{
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+    auto docBrokerIt = DocBrokers.find(docKey);
+    if (docBrokerIt != DocBrokers.end())
+    {
+        std::shared_ptr<DocumentBroker> docBroker = docBrokerIt->second;
+        docBroker->addCallback([docBroker]() {
+                docBroker->autoSave(true);
+            });
+    }
+}
+
 /// Really do the house-keeping
 void PrisonerPoll::wakeupHook()
 {

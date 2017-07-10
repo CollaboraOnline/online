@@ -489,6 +489,15 @@ void Admin::triggerMemoryCleanup(size_t totalMem)
             else
                 ++docIt;
         }
+
+        // Save unsaved documents
+        docIt = docList.begin();
+        while (docIt != docList.end() && memToFree > 0)
+        {
+            LOG_TRC("Saving document: DocKey[" << docIt->_docKey << "].");
+            LOOLWSD::autoSave(docIt->_docKey);
+            ++docIt;
+        }
     }
 
     LOG_TRC("OOM: Memory to free percentage : " << memToFreePercentage);
