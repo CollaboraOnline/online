@@ -80,8 +80,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     // If no cookie found, or is invalid, let admin re-login
     const std::string user = config.getString("admin_console.username", "");
     std::string pass = config.getString("admin_console.password", "");
+
     if (config.has("admin_console.secure_password"))
     {
+#if HAVE_PKCS5_PBKDF2_HMAC
         pass = config.getString("admin_console.secure_password");
         // Extract the salt from the config
         std::vector<unsigned char> saltData;
@@ -110,6 +112,11 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 
         userProvidedPwd = stream.str();
         pass = tokens[4];
+#else
+        LOG_ERR("The config file has admin_console.secure_password setting, "
+                << "but this application was compiled with old OpenSSL version, "
+                << "and this setting cannot be used. Falling back to plain text password, if it is set.");
+#endif
     }
 
     if (user.empty() || pass.empty())

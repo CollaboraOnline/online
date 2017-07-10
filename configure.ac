@@ -280,6 +280,18 @@ else
     AC_DEFINE([DISABLE_SECCOMP],1,[Whether to disable SECCOMP])
 fi
 
+AC_MSG_CHECKING([Whether OpenSSL has PKCS5_PBKDF2_HMAC()])
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+#include <openssl/opensslv.h>
+#if OPENSSL_VERSION_NUMBER < 0x10001000L
+#error PKCS5_PBKDF2_HMAC() is in OpenSSL 1.0.1 or newer
+#endif
+])],
+                  [AC_MSG_RESULT([yes])
+                   AC_DEFINE([HAVE_PKCS5_PBKDF2_HMAC],1,[whether OpenSSL has PKCS5_PBKDF2_HMAC()])],
+                  [AC_MSG_RESULT([no])
+                   AC_MSG_WARN([OpenSSL is too old. Secure password storage for Admin Console is not supported.])
+                   AC_DEFINE([HAVE_PKCS5_PBKDF2_HMAC],0,[Whether OpenSSL has PKCS5_PBKDF2_HMAC()])])
 
 AC_MSG_CHECKING([POCO version])
 AC_COMPILE_IFELSE([AC_LANG_SOURCE([

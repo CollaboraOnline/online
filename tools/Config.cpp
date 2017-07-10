@@ -154,6 +154,7 @@ int Config::main(const std::vector<std::string>& args)
         return Application::EXIT_NOINPUT;
     }
 
+#if HAVE_PKCS5_PBKDF2_HMAC
     _loolConfig.load(ConfigFile);
 
     for (unsigned i = 0; i < args.size(); i++) {
@@ -222,6 +223,10 @@ int Config::main(const std::vector<std::string>& args)
 
     // This tool only handles options, nothing to do here
     return Application::EXIT_OK;
+#else
+    std::cerr << "This application was compiled with old OpenSSL. Operation not supported. You can use plain text password in /etc/loolwsd/loolwsd.xml." << std::endl;
+    return Application::EXIT_UNAVAILABLE;
+#endif
 }
 
 POCO_APP_MAIN(Config);
