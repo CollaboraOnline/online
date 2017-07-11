@@ -444,7 +444,7 @@ void Admin::triggerMemoryCleanup(size_t totalMem)
     float memToFreePercentage = 0;
     if ( (memToFreePercentage = (totalMem/static_cast<double>(_totalSysMem)) - memLimit/100.) > 0.0 )
     {
-        int memToFree = memToFreePercentage * totalMem;
+        int memToFree = memToFreePercentage * _totalSysMem;
         LOG_TRC("Memory to be freed (in kB) : " << memToFree);
         // prepare document list sorted by most idle times
         std::list<DocBasicInfo> docList = _model.getDocumentsSortedByIdle();
