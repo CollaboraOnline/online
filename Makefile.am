@@ -281,7 +281,7 @@ clean-cache cache-clean:
 	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]
 
 clang-tidy:
-	for i in $(shell git ls-files|grep /.*cpp$$|grep -v test); do echo $$i; clang-tidy -header-filter=^$(PWD).* $$i || break; done
+	parallel clang-tidy -header-filter=^$(PWD).* -- $(shell git ls-files|grep /.*cpp$$|grep -v test)
 
 # After building loolforkit, set its capabilities as required. Do it
 # already after a plain 'make' to allow for testing without
