@@ -158,6 +158,12 @@ namespace Log
         else
             channel = static_cast<Poco::Channel*>(new Poco::ConsoleChannel());
 
+        /**
+         * Open the channel explicitly, instead of waiting for first log message
+         * This is important especially for the kit process where opening the channel
+         * after chroot can cause file creation inside the jail instead of outside
+         * */
+        channel->open();
         auto& logger = Poco::Logger::create(Source.name, channel, Poco::Message::PRIO_TRACE);
 
         logger.setLevel(logLevel.empty() ? std::string("trace") : logLevel);
