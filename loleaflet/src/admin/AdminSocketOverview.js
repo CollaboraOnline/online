@@ -63,7 +63,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			$('#rowContextMenu').hide();
 		});
 
-		$('#rowContextMenu').on('click', 'a', function() {
+		$('body').on('click', '#rowContextMenu a', function() {
 			vex.dialog.confirm({
 				message: _('Are you sure you want to terminate this session?'),
 				callback: function(value) {
