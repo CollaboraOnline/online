@@ -55,7 +55,7 @@ public:
     static std::atomic<unsigned> NumConnections;
     static bool TileCachePersistent;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
-    static std::set<std::string> ViewFileExtensions;
+    static std::set<std::string> EditFileExtensions;
 
     /// Flag to shutdown the server.
     std::atomic<bool> ShutdownFlag;
@@ -85,7 +85,7 @@ public:
     /// Return truee iff extension is marked as view action in discovery.xml.
     static bool IsViewFileExtension(const std::string& extension)
     {
-        return ViewFileExtensions.find(extension) != ViewFileExtensions.end();
+        return EditFileExtensions.find(extension) == EditFileExtensions.end();
     }
 
     /// Returns the value of the specified application configuration,

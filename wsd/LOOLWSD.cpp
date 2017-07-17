@@ -553,7 +553,7 @@ std::string LOOLWSD::LOKitVersion;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
-std::set<std::string> LOOLWSD::ViewFileExtensions;
+std::set<std::string> LOOLWSD::EditFileExtensions;
 
 static std::string UnitTestLibrary;
 
@@ -2233,8 +2233,8 @@ private:
             elem->setAttribute(urlsrc, uriValue);
 
             // Set the View extensions cache as well.
-            if (elem->getAttribute("name") == "view")
-                LOOLWSD::ViewFileExtensions.insert(elem->getAttribute("ext"));
+            if (elem->getAttribute("name") == "edit")
+                LOOLWSD::EditFileExtensions.insert(elem->getAttribute("ext"));
         }
 
         std::ostringstream ostrXML;
