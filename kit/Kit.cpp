@@ -1192,7 +1192,7 @@ private:
         }
         // 0 for preventing selection of the first always
         // 1 for preventing the new users from directly beoming the editors
-        if (_editorId != fastestUser && (maxSpeed != 0 || maxSpeed != 1)) {
+        if (_editorId != fastestUser && (maxSpeed != 0 && maxSpeed != 1)) {
             if (!_editorChangeWarning && _editorId != -1)
             {
                 _editorChangeWarning = true;
