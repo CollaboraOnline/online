@@ -23,6 +23,7 @@
 #include <Poco/Util/XMLConfiguration.h>
 
 #include "Util.hpp"
+#include "Crypto.hpp"
 
 using Poco::Util::Application;
 using Poco::Util::Option;
@@ -73,7 +74,11 @@ void Config::displayHelp()
 {
     std::cout << "loolconfig - Configuration tool for LibreOffice Online." << std::endl
               << "Commands:" << std::endl
-              << "  set-admin-password" << std::endl;
+              << "  set-admin-password" << std::endl
+#if ENABLE_SUPPORT_KEY
+              << "  set-support-key" << std::endl
+#endif
+        ;
 }
 
 void Config::defineOptions(OptionSet& optionSet)
@@ -154,12 +159,14 @@ int Config::main(const std::vector<std::string>& args)
         return Application::EXIT_NOINPUT;
     }
 
-#if HAVE_PKCS5_PBKDF2_HMAC
+    bool changed = false;
     _loolConfig.load(ConfigFile);
 
-    for (unsigned i = 0; i < args.size(); i++) {
+    for (unsigned i = 0; i < args.size(); i++)
+    {
         if (args[i] == "set-admin-password")
         {
+#if HAVE_PKCS5_PBKDF2_HMAC
             unsigned char pwdhash[_adminConfig.pwdHashLength];
             unsigned char salt[_adminConfig.pwdSaltLength];
             RAND_bytes(salt, _adminConfig.pwdSaltLength);
@@ -215,18 +222,52 @@ int Config::main(const std::vector<std::string>& args)
                                   "Salt and password hash combination generated using PBKDF2 with SHA512 digest.");
             _loolConfig.setString("admin_console.secure_password", pwdConfigValue);
 
-            std::cout << "Saving configuration to : " << ConfigFile << " ..." << std::endl;
-            _loolConfig.save(ConfigFile);
-            std::cout << "Saved" << std::endl;
+            changed = true;
+#else
+            std::cerr << "This application was compiled with old OpenSSL. Operation not supported. You can use plain text password in /etc/loolwsd/loolwsd.xml." << std::endl;
+            return Application::EXIT_UNAVAILABLE;
+#endif
         }
+#if ENABLE_SUPPORT_KEY
+        else if (args[i] == "set-support-key")
+        {
+            std::string supportKeyString;
+            std::cout << "Enter support key: ";
+            std::cin >> supportKeyString;
+            if (supportKeyString.length() > 0)
+            {
+                SupportKey key(supportKeyString);
+                if (!key.verify())
+                    std::cerr << "Invalid key\n";
+                else {
+                    int validDays =  key.validDaysRemaining();
+                    if (validDays <= 0)
+                        std::cerr << "Valid but expired key\n";
+                    else
+                    {
+                        std::cerr << "Valid for " << validDays << " days - setting to config\n";
+                        _loolConfig.setString("support_key", supportKeyString);
+                    }
+                }
+            }
+            else
+            {
+                std::cerr << "Removing empty support key\n";
+                _loolConfig.remove("support_key");
+            }
+            changed = true;
+        }
+#endif
+    }
+    if (changed)
+    {
+        std::cout << "Saving configuration to : " << ConfigFile << " ..." << std::endl;
+        _loolConfig.save(ConfigFile);
+        std::cout << "Saved" << std::endl;
     }
 
     // This tool only handles options, nothing to do here
     return Application::EXIT_OK;
-#else
-    std::cerr << "This application was compiled with old OpenSSL. Operation not supported. You can use plain text password in /etc/loolwsd/loolwsd.xml." << std::endl;
-    return Application::EXIT_UNAVAILABLE;
-#endif
 }
 
 POCO_APP_MAIN(Config);
