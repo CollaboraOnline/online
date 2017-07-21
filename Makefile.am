@@ -130,7 +130,10 @@ loolstress_SOURCES = tools/Stress.cpp \
                      common/Log.cpp \
 		     common/Util.cpp
 
-loolconfig_SOURCES = tools/Config.cpp
+loolconfig_SOURCES = tools/Config.cpp \
+		     common/Crypto.cpp \
+		     common/Log.cpp \
+		     common/Util.cpp
 
 wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \

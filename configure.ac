@@ -96,6 +96,10 @@ AC_ARG_ENABLE([ssl],
             AS_HELP_STRING([--disable-ssl],
                            [Compile without SSL support]))
 
+AC_ARG_ENABLE([support-key],
+            AS_HELP_STRING([--enable-support-key],
+                [Implements signed key with expiration required for support. Almost certainly you don't want to enable this.]))
+
 AC_ARG_WITH([max-connections],
             AS_HELP_STRING([--max-connections],
                            [Set the limit on the total number of client connections. Def: 20, Min: 3.]))
@@ -290,6 +294,11 @@ else
 fi
 
 AC_SUBST(ENABLE_SSL)
+
+AS_IF([test "$enable_support_key" == "yes"],
+      [AC_DEFINE([ENABLE_SUPPORT_KEY],1,[Whether to enable support key])],
+      [AC_DEFINE([ENABLE_SUPPORT_KEY],0,[Whether to enable support key])])
+AC_SUBST(ENABLE_SUPPORT_KEY)
 
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
 
