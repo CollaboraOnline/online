@@ -439,6 +439,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('unocommandresult:')) {
 			this._onUnoCommandResultMsg(textMsg);
 		}
+		else if (textMsg.startsWith('rulerupdate:')) {
+			this._onRulerUpdate(textMsg);
+		}
 		else if (textMsg.startsWith('contextmenu:')) {
 			this._onContextMenuMsg(textMsg);
 		}
@@ -1057,6 +1060,13 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.hideBusy();
 		this._map.fire('commandresult', {commandName: commandName, success: success, result: obj.result});
 
+	},
+
+	_onRulerUpdate: function (textMsg) {
+		textMsg = textMsg.substring(13);
+		var obj = JSON.parse(textMsg);
+
+		this._map.fire('rulerupdate', obj);
 	},
 
 	_onContextMenuMsg: function (textMsg) {

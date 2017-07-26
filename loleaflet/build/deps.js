@@ -410,6 +410,11 @@ var deps = {
 		desc: 'Contains LibreOffice programmatic to UI name style mappings'
 	},
 
+	Ruler: {
+		src: ['control/Ruler.js'],
+		desc: 'Ruler to be displayed on the map.'
+	},
+
 	AnimationPan: {
 		src: [
 			'dom/DomEvent.js',

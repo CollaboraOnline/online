@@ -760,3 +760,91 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 .leaflet-slideshow {
 	background: #FFFFFF;
 	}
+
+/*Ruler styling*/
+.leaflet-left .leaflet-control {
+	margin: 0px;
+}
+
+.loleaflet-ruler {
+	background-color: #efefef;
+	height: 20px;
+	width: 100vw;
+	margin: 0px;
+	}
+
+.loleaflet-ruler-breakcontainer {
+	height: 100%;
+	position: absolute;
+	width: 100vw;
+	}
+
+.loleaflet-ruler-marginwrapper {
+	height: 100%;
+	position: absolute;
+	width: inherit;
+	z-index: 11;
+	}
+
+.loleaflet-ruler-breakwrapper {
+	position: absolute;
+	height: 100%;
+	overflow: hidden;
+	width: inherit;
+	z-index: 10;
+	}
+
+.loleaflet-ruler-face {
+	margin:0px auto;
+	height: 100%;
+	transition: width .2s;
+	}
+
+.loleaflet-ruler-maj {
+	height: 35%;
+	display: inline-block;
+	border-width: 0px .5px;
+	border-style: solid;
+	border-color: grey;
+	}
+
+.loleaflet-ruler-margin {
+	height: 100%;
+	background-color: #efefef;
+	transition: width .2s;
+	}
+
+.loleaflet-ruler-left {
+	left: 0px;
+	height: 100%;
+	float: left;
+	}
+
+.loleaflet-ruler-right {
+	left: 0px;
+	height: 100%;
+	float: right;
+	}
+
+.loleaflet-ruler-drag {
+	height: 100%;
+	width: 0px;
+	}
+
+.loleaflet-ruler-drag.loleaflet-ruler-right {
+	border-left: 3px solid grey;
+	}
+
+.loleaflet-ruler-drag.loleaflet-ruler-left {
+	border-right: 3px solid grey;
+	}
+
+.loleaflet-ruler-left.leaflet-drag-moving {
+	height: 100vh;
+	border-right: 2px dotted grey;
+	}
+
+.loleaflet-ruler-right.leaflet-drag-moving {
+	height: 100vh;
+	border-left: 2px dotted grey;
+	}

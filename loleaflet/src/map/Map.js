@@ -117,6 +117,9 @@ L.Map = L.Evented.extend({
 			if (!this.initComplete) {
 				this._fireInitComplete('doclayerinit');
 			}
+			if (this._docLayer._docType == 'text') {
+				L.control.ruler({position:'topleft'}).addTo(this);
+			}
 		});
 		this.on('updatetoolbarcommandvalues', function(e) {
 			if (this.initComplete) {
