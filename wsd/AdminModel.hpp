@@ -60,6 +60,7 @@ struct DocBasicInfo
           _saved(saved),
           _mem(mem)
         { }
+};
 
 struct DocProcSettings
 {

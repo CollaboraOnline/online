@@ -12,13 +12,13 @@
  */
 
 #include "config.h"
-
-#if DISABLE_SECCOMP == 0
 #include <dlfcn.h>
 #include <ftw.h>
 #include <linux/audit.h>
 #include <linux/filter.h>
+#if DISABLE_SECCOMP == 0
 #include <linux/seccomp.h>
+#endif
 #include <malloc.h>
 #include <signal.h>
 #include <sys/capability.h>
