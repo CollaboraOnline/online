@@ -45,25 +45,27 @@ L.Map.Mouse = L.Handler.extend({
 			if (docLayer._graphicMarker.isDragged) {
 				return;
 			}
-			if (!docLayer._isEmptyRectangle(docLayer._graphicSelection) &&
-					docLayer._graphicMarker.getBounds().contains(e.latlng)) {
+			if (!docLayer._isEmptyRectangle(docLayer._graphicSelection)) {
 				// if we have a graphic selection and the user clicks inside the rectangle
-				if (e.type === 'mousedown') {
+				var isInside = docLayer._graphicMarker.getBounds().contains(e.latlng);
+				if (e.type === 'mousedown' && isInside) {
 					this._prevMousePos = e.latlng;
 				}
-				else if (e.type === 'mousemove' && this._mouseDown && !this._prevMousePos) {
-					// if the user started to drag the shape before the selection
-					// has been drawn
-					this._prevMousePos = e.latlng;
-				}
-				else if (e.type === 'mousemove' && this._prevMousePos) {
-					// we have a graphic selection and the user started to drag it
-					var delta = L.latLng(e.latlng.lat - this._prevMousePos.lat, e.latlng.lng - this._prevMousePos.lng);
-					this._prevMousePos = e.latlng;
-					var oldSelectionCenter = docLayer._graphicMarker.getBounds().getCenter();
-					var newSelectionCenter = L.latLng(oldSelectionCenter.lat + delta.lat, oldSelectionCenter.lng + delta.lng);
-					if (docLayer._graphicMarker.editing) {
-						docLayer._graphicMarker.editing._move(newSelectionCenter);
+				else if (e.type === 'mousemove' && this._mouseDown) {
+					if (!this._prevMousePos && isInside) {
+						// if the user started to drag the shape before the selection
+						// has been drawn
+						this._prevMousePos = e.latlng;
+					}
+					else {
+						// we have a graphic selection and the user started to drag it
+						var delta = L.latLng(e.latlng.lat - this._prevMousePos.lat, e.latlng.lng - this._prevMousePos.lng);
+						this._prevMousePos = e.latlng;
+						var oldSelectionCenter = docLayer._graphicMarker.getBounds().getCenter();
+						var newSelectionCenter = L.latLng(oldSelectionCenter.lat + delta.lat, oldSelectionCenter.lng + delta.lng);
+						if (docLayer._graphicMarker.editing) {
+							docLayer._graphicMarker.editing._move(newSelectionCenter);
+						}
 					}
 				}
 				else if (e.type === 'mouseup') {
