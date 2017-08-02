@@ -449,9 +449,14 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks()
 class ConvertToPartHandler : public PartHandler
 {
     std::string& _filename;
+
+    /// Is it really a convert-to, ie. use an especially formed path?
+    bool _convertTo;
+
 public:
-    ConvertToPartHandler(std::string& filename)
+    ConvertToPartHandler(std::string& filename, bool convertTo = false)
         : _filename(filename)
+        , _convertTo(convertTo)
     {
     }
 
@@ -469,7 +474,8 @@ public:
         if (!params.has("filename"))
             return;
 
-        Path tempPath = Path::forDirectory(Poco::TemporaryFile::tempName() + "/");
+        Path tempPath = _convertTo? Path::forDirectory(Poco::TemporaryFile::tempName("/tmp/convert-to") + "/") :
+                                    Path::forDirectory(Poco::TemporaryFile::tempName() + "/");
         File(tempPath).createDirectories();
         // Prevent user inputting anything funny here.
         // A "filename" should always be a filename, not a path
@@ -1737,9 +1743,18 @@ private:
         }
         catch (const std::exception& exc)
         {
-            // TODO: Send back failure.
+            // Bad request.
+            std::ostringstream oss;
+            oss << "HTTP/1.1 400\r\n"
+                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: LOOLWSD WOPI Agent\r\n"
+                << "Content-Length: 0\r\n"
+                << "\r\n";
+            socket->send(oss.str());
+            socket->shutdown();
+
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
-            LOG_ERR("#" << socket->getFD() << " Exception while processing incoming request: [" <<
+            LOG_INF("#" << socket->getFD() << " Exception while processing incoming request: [" <<
                     LOOLProtocol::getAbbreviatedMessage(in) << "]: " << exc.what());
         }
 
@@ -1866,12 +1881,17 @@ private:
         auto socket = _socket.lock();
 
         StringTokenizer tokens(request.getURI(), "/?");
-        if (tokens.count() >= 3 && tokens[2] == "convert-to")
+        if (tokens.count() > 2 && tokens[2] == "convert-to")
         {
             std::string fromPath;
-            ConvertToPartHandler handler(fromPath);
+            ConvertToPartHandler handler(fromPath, /*convertTo =*/ true);
             HTMLForm form(request, message, handler);
-            const std::string format = (form.has("format") ? form.get("format") : "");
+
+            std::string format = (form.has("format") ? form.get("format") : "");
+
+            // prefer what is in the URI
+            if (tokens.count() > 3)
+                format = tokens[3];
 
             bool sent = false;
             if (!fromPath.empty())

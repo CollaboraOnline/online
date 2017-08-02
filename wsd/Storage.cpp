@@ -195,6 +195,21 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
         {
             return std::unique_ptr<StorageBase>(new LocalStorage(uri, jailRoot, jailPath));
         }
+        else
+        {
+            // guard against attempts to escape
+            Poco::URI normalizedUri(uri);
+            normalizedUri.normalize();
+
+            std::vector<std::string> pathSegments;
+            normalizedUri.getPathSegments(pathSegments);
+
+            if (pathSegments.size() == 4 && pathSegments[0] == "tmp" && pathSegments[1] == "convert-to")
+            {
+                LOG_INF("Public URI [" << normalizedUri.toString() << "] is actually a convert-to tempfile.");
+                return std::unique_ptr<StorageBase>(new LocalStorage(normalizedUri, jailRoot, jailPath));
+            }
+        }
 
         LOG_ERR("Local Storage is disabled by default. Enable in the config file or on the command-line to enable.");
     }
