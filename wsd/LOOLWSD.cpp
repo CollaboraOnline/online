@@ -1866,14 +1866,17 @@ private:
         auto socket = _socket.lock();
 
         StringTokenizer tokens(request.getURI(), "/?");
-        if (tokens.count() >= 4 && tokens[2] == "convert-to")
+        if (tokens.count() > 2 && tokens[2] == "convert-to")
         {
             std::string fromPath;
             ConvertToPartHandler handler(fromPath, /*convertTo =*/ true);
             HTMLForm form(request, message, handler);
 
-            // extract the target format from the URI
-            const std::string format = tokens[3];
+            std::string format = (form.has("format") ? form.get("format") : "");
+
+            // prefer what is in the URI
+            if (tokens.count() > 3)
+                format = tokens[3];
 
             bool sent = false;
             if (!fromPath.empty())

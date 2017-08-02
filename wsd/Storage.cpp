@@ -197,14 +197,17 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
         }
         else
         {
-            std::vector<std::string> pathSegments;
-            Poco::URI(uri).getPathSegments(pathSegments);
-
             // guard against attempts to escape
-            if (pathSegments.size() == 4 && pathSegments[0] == "tmp" && pathSegments[1] == "convert-to" && pathSegments[2] != ".." && pathSegments[3] != "..")
+            Poco::URI normalizedUri(uri);
+            normalizedUri.normalize();
+
+            std::vector<std::string> pathSegments;
+            normalizedUri.getPathSegments(pathSegments);
+
+            if (pathSegments.size() == 4 && pathSegments[0] == "tmp" && pathSegments[1] == "convert-to")
             {
-                LOG_INF("Public URI [" << uri.toString() << "] is actually a convert-to tempfile.");
-                return std::unique_ptr<StorageBase>(new LocalStorage(uri, jailRoot, jailPath));
+                LOG_INF("Public URI [" << normalizedUri.toString() << "] is actually a convert-to tempfile.");
+                return std::unique_ptr<StorageBase>(new LocalStorage(normalizedUri, jailRoot, jailPath));
             }
         }
 
