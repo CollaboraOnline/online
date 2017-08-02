@@ -638,7 +638,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 std::string encodedFilePath;
                 Poco::URI::encode(resultURL.getPath(), "", encodedFilePath);
                 LOG_TRC("Sending file: " << encodedFilePath);
+
+                const std::string fileName = Poco::Path(resultURL.getPath()).getFileName();
                 Poco::Net::HTTPResponse response;
+                if (!fileName.empty())
+                    response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
                 HttpHelper::sendFile(_saveAsSocket, encodedFilePath, mimeType, response);
             }
 
