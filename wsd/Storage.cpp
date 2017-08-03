@@ -501,6 +501,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", WOPI_AGENT_STRING);
+        request.set("Authorization", "Bearer " + accessToken);
         addStorageDebugCookie(request);
         psession->sendRequest(request);
 
@@ -603,6 +604,7 @@ std::string WopiStorage::loadStorageFileToLocal(const std::string& accessToken)
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", WOPI_AGENT_STRING);
+        request.set("Authorization", "Bearer " + accessToken);
         addStorageDebugCookie(request);
         psession->sendRequest(request);
 
@@ -672,6 +674,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("X-WOPI-Override", "PUT");
+        request.set("Authorization", "Bearer " + accessToken);
         if (!_forceSave)
         {
             // Request WOPI host to not overwrite if timestamps mismatch
