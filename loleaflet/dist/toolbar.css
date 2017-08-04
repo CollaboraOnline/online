@@ -42,6 +42,16 @@
     width: 100%;
 }
 
+/* For MS Edge 40, the select2 combo boxes need to have higher z-index than #map
+ * Ideal would be to add the class to select2-container <span>, but
+ * https://github.com/select2/select2/issues/285
+ * So, for now just define the z-index here separately for the same class that select2 uses
+ * as a container
+ */
+.select2-container {
+    z-index: 11;
+}
+
 /* center the toolbar */
 #tb_presentation-toolbar_item_left {
     width: 50%;
