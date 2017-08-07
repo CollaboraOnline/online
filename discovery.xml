@@ -128,9 +128,22 @@
             <action name="edit" ext="oxt"/>
         </app>
 
-	<!-- Microsoft Word Template -->
-	<app name="application/msword">
+        <!-- MS Word -->
+        <app name="application/msword">
+            <action name="edit" ext="doc"/>
+        </app>
+        <app name="application/msword">
             <action name="edit" ext="dot"/>
+        </app>
+
+        <!-- MS Excel -->
+        <app name="application/vnd.ms-excel">
+            <action name="edit" ext="xls"/>
+        </app>
+
+        <!-- MS PowerPoint -->
+        <app name="application/vnd.ms-powerpoint">
+            <action name="edit" ext="ppt"/>
         </app>
 
 	<!-- OOXML wordprocessing -->
