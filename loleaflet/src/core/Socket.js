@@ -389,7 +389,11 @@ L.Socket = L.Class.extend({
 				}
 
 				vex.dialog.confirm({
-					message: _('Document has been changed in storage. Do you want to refresh the page to load the new document ? Cancelling will continue editing and overwrite.'),
+					message: _('Document has been changed in storage. Do you want to discard your changes, and load the new document?'),
+					buttons: [
+						$.extend({}, vex.dialog.buttons.YES, { text: _('Discard changes') }),
+						$.extend({}, vex.dialog.buttons.NO, { text: _('Overwrite document') })
+					],
 					callback: L.bind(function(value) {
 						if (value) {
 							// They want to refresh the page and load document again for all
