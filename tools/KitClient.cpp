@@ -78,6 +78,7 @@ extern "C"
             CASE(COMMENT);
             CASE(INVALIDATE_HEADER);
             CASE(CELL_ADDRESS);
+            CASE(RULER_UPDATE);
 #undef CASE
         }
         std::cout << " payload: " << payload << std::endl;
