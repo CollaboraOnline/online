@@ -12,56 +12,62 @@
 //#include "Exceptions.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
+#include "UnitHTTP.hpp"
 #include "helpers.hpp"
 #include <Poco/JSON/Object.h>
 #include <Poco/LocalDateTime.h>
 #include <Poco/DateTimeFormat.h>
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/HTTPServer.h>
-#include <Poco/Net/HTTPRequestHandlerFactory.h>
-#include <Poco/Net/HTTPRequestHandler.h>
-#include <Poco/Net/HTTPServerRequest.h>
-#include <Poco/Net/HTTPServerResponse.h>
-#include <Poco/Net/HTTPServerParams.h>
-#include <Poco/Net/ServerSocket.h>
 #include <Poco/Net/OAuth20Credentials.h>
+#include <Poco/Util/LayeredConfiguration.h>
 
 using Poco::DateTimeFormatter;
 using Poco::DateTimeFormat;
-using Poco::JSON::Object;
-using Poco::Net::HTTPServer;
-using Poco::Net::HTTPRequest;
-using Poco::Net::HTTPResponse;
-using Poco::Net::HTTPRequestHandlerFactory;
-using Poco::Net::HTTPRequestHandler;
-using Poco::Net::HTTPServerRequest;
-using Poco::Net::HTTPServerResponse;
-using Poco::Net::HTTPServerParams;
 using Poco::Net::OAuth20Credentials;
-using Poco::Net::ServerSocket;
 
-class WopiHostRequestHandler: public HTTPRequestHandler
+class UnitOAuth : public UnitWSD
 {
-public:
-    void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response)
-    {
-        Poco::URI uriReq(request.getURI());
+    enum class Phase {
+        Load,   // loading the document
+        Polling // let the loading progress, and when it succeeds, finish
+    } _phase;
 
-        // The resource server MUST validate the access token
-        // and ensure that it has not expired and that its scope
-        // covers the requested resource.
-        OAuth20Credentials creds(request);
-        assert (creds.getBearerToken() == "s3hn3ct0k3v");
+public:
+    UnitOAuth() :
+        _phase(Phase::Load)
+    {
+    }
+
+    /// Here we act as a WOPI server, so that we have a server that responds to
+    /// the wopi requests without additional expensive setup.
+    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request, std::shared_ptr<StreamSocket>& socket) override
+    {
+        static const std::string hello("Hello, world");
+
+        Poco::URI uriReq(request.getURI());
+        LOG_INF("Fake wopi host request: " << uriReq.toString());
 
         // CheckFileInfo
         if (uriReq.getPath() == "/wopi/files/0")
         {
+            LOG_INF("Fake wopi host request, handling CheckFileInfo.");
+
+            // check that the request contains the Authorization: header
+            try {
+                OAuth20Credentials creds(request);
+                CPPUNIT_ASSERT_EQUAL(creds.getBearerToken(), std::string("s3hn3ct0k3v"));
+            }
+            catch (const std::exception&)
+            {
+                // fail as fast as possible
+                exit(1);
+            }
+
             Poco::LocalDateTime now;
-            Object::Ptr fileInfo = new Object();
-            fileInfo->set("BaseFileName", "empty.odt");
-            fileInfo->set("Size", "1024");
+            Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
+            fileInfo->set("BaseFileName", "hello.txt");
+            fileInfo->set("Size", hello.size());
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
             fileInfo->set("UserId", "test");
@@ -70,74 +76,94 @@ public:
             fileInfo->set("PostMessageOrigin", "localhost");
             fileInfo->set("LastModifiedTime", DateTimeFormatter::format(now, DateTimeFormat::ISO8601_FORMAT));
 
+            std::ostringstream jsonStream;
+            fileInfo->stringify(jsonStream);
+            std::string responseString = jsonStream.str();
+
+            const std::string mimeType = "application/json; charset=utf-8";
+
             std::ostringstream oss;
-            fileInfo->stringify(oss);
-            response.setContentType("application/json; charset=utf-8");
-            std::ostream& ostr = response.send();
-            ostr << oss.str();
+            oss << "HTTP/1.1 200 OK\r\n"
+                << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                << "Content-Length: " << responseString.size() << "\r\n"
+                << "Content-Type: " << mimeType << "\r\n"
+                << "\r\n"
+                << responseString;
+
+            socket->send(oss.str());
+            socket->shutdown();
+
+            return true;
         }
         // GetFile
         else if (uriReq.getPath() == "/wopi/files/0/contents")
         {
-            response.sendFile(Poco::Path(TDOC, "empty.odt").toString(), "application/vnd.oasis.opendocument.text");
-            response.setStatusAndReason(HTTPResponse::HTTP_OK);
+            LOG_INF("Fake wopi host request, handling GetFile.");
+
+            // check that the request contains the Authorization: header
+            try {
+                OAuth20Credentials creds(request);
+                CPPUNIT_ASSERT_EQUAL(creds.getBearerToken(), std::string("s3hn3ct0k3v"));
+            }
+            catch (const std::exception&)
+            {
+                // fail as fast as possible
+                exit(1);
+            }
+
+            const std::string mimeType = "text/plain; charset=utf-8";
+
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+                << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                << "Content-Length: " << hello.size() << "\r\n"
+                << "Content-Type: " << mimeType << "\r\n"
+                << "\r\n"
+                << hello;
+
+            socket->send(oss.str());
+            socket->shutdown();
+
+            exitTest(TestResult::Ok);
+
+            return true;
         }
-    }
 
-};
-
-class WopiHostRequestHandlerFactory: public HTTPRequestHandlerFactory
-{
-public:
-    HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& /*request*/)
-    {
-        return new WopiHostRequestHandler();
-    }
-};
-
-
-class UnitOAuth : public UnitWSD
-{
-public:
-    UnitOAuth()
-    {
-    }
-
-    virtual void configure(Poco::Util::LayeredConfiguration& /*config*/) override
-    {
+        return false;
     }
 
     void invokeTest() override
     {
-        HTTPResponse response;
-        ServerSocket wopiSocket(0);
-        HTTPServerParams* wopiParams = new HTTPServerParams();
-        wopiParams->setKeepAlive(false);
-        HTTPServer fakeWopiHost(new WopiHostRequestHandlerFactory, wopiSocket, wopiParams);
-        fakeWopiHost.start();
+        constexpr char testName[] = "UnitOAuth";
 
-        std::string WopiSrc;
-        const std::string testName = "UnitOAuth ";
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                Poco::URI wopiURL(helpers::getTestServerURI() + "/wopi/files/0?access_token=s3hn3ct0k3v");
+                //wopiURL.setPort(_wopiSocket->address().port());
+                std::string wopiSrc;
+                Poco::URI::encode(wopiURL.toString(), ":/?", wopiSrc);
+                Poco::URI loolUri(helpers::getTestServerURI());
 
-        // RFC 6749
-        // 7. Accessing Protected Resources
-        // The client accesses protected resources by presenting the access
-        // token (access_token) to the resource server.
-        Poco::URI wopiURL("http://localhost/wopi/files/0?access_token=s3hn3ct0k3v");
-        wopiURL.setPort(wopiSocket.address().port());
-        Poco::URI::encode(wopiURL.toString(), ":/?", WopiSrc);
-        Poco::URI loolUri(helpers::getTestServerURI());
-        HTTPRequest request(HTTPRequest::HTTP_GET, "lool/" + WopiSrc + "/ws");
+                LOG_INF("Connecting to the fake WOPI server: /lool/" << wopiSrc << "/ws");
 
-        auto socket = helpers::connectLOKit(loolUri, request, response);
-        helpers::sendTextFrame(socket, "load url=" + WopiSrc, testName);
+                std::unique_ptr<UnitWebSocket> ws(new UnitWebSocket("/lool/" + wopiSrc + "/ws"));
+                assert(ws.get());
 
-        const auto status = helpers::assertResponseString(socket, "status:", testName);
+                helpers::sendTextFrame(*ws->getLOOLWebSocket(), "load url=" + wopiSrc, testName);
 
-        Poco::Thread::sleep(1000);
-        fakeWopiHost.stop();
-
-        exitTest(TestResult::Ok);
+                _phase = Phase::Polling;
+                break;
+            }
+            case Phase::Polling:
+            {
+                // let handleHttpRequest() perform the checks...
+                break;
+            }
+        }
     }
 };
 
