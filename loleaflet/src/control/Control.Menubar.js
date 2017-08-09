@@ -16,6 +16,7 @@ L.Control.Menubar = L.Control.extend({
 		text:  [
 			{name: _('File'), id: 'file', type: 'menu', menu: [
 				{name: _('Save'), id: 'save', type: 'action'},
+				{name: _('Save As'), id: 'saveas', type: 'action'},
 				{name: _('Print'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: _('Download as'), id: 'downloadas', type: 'menu', menu: [
@@ -491,6 +492,8 @@ L.Control.Menubar = L.Control.extend({
 		var id = $(item).data('id');
 		if (id === 'save') {
 			map.save(true, true);
+		} else if (id === 'saveas') {
+			map.fire('postMessage', {msgId: 'UI_SaveAs'});
 		} else if (id === 'print') {
 			map.print();
 		} else if (id.startsWith('downloadas-')) {

@@ -2849,7 +2849,6 @@ Editor to WOPI host
 		export of the document.
 		</td>
 	</tr>
-
 </table>
 
 <h3 id="loleaflet-postmessage-sessions">Session Management</h3>
@@ -2911,6 +2910,18 @@ WOPI host to editor
 		<code>Notify</code> when present and set to true notifies the
 		host when document is saved. See <code>Action_Save_Resp</code>
 		for details.
+		</td>
+	</tr>
+	<tr>
+		<td><code><b>Action_SaveAs</b></code></td>
+		<td><code>
+		    <nobr>Name: &lt;String&gt;</nobr>
+		    <nobr>Path: &lt;String&gt;</nobr>
+		</code></td>
+		<td>Creates copy of the document with given Name.<br/>
+		<code>Name</code> is the requested name for the new file.<br/>
+		<code>Path</code> is the relative path in the WOPI host file system where the
+		user wants the new file to be saved.<br/>
 		</td>
 	</tr>
 	<tr>
@@ -3034,6 +3045,15 @@ Editor to WOPI host
 		<td>
 		  This event is emitted when the custom button added
 		  via <code>Insert_Button</code> API above is clicked.
+		</td>
+	</tr>
+	<tr>
+		<td><code><b>UI_SaveAs</b></code></td>
+		<td></td>
+		<td>
+		Requests WOPI host to create appropriate UI, so that the user can choose
+		path and File name for creating a copy of the current file.
+		Response to this query is sent via <code>Action_SaveAs</code> message.
 		</td>
 	</tr>
 </table>

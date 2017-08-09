@@ -458,6 +458,9 @@ L.Socket = L.Class.extend({
 
 			return;
 		}
+		else if (textMsg.startsWith('error:') && command.errorCmd === 'saveas') {
+			this._map.hideBusy();
+		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'load') {
 			this.close();
 
@@ -554,6 +557,12 @@ L.Socket = L.Class.extend({
 					'. Rendered tiles: ' + command.rendercount +
 					', last: ' + (command.rendercount - this._map._docLayer._debugRenderCount));
 			this._map._docLayer._debugRenderCount = command.rendercount;
+		}
+		else if (textMsg.startsWith('saveas:')) {
+			textMsg = (textMsg.substring(7)).trim();
+			// var url = textMsg.substring(0, textMsg.indexOf(' '));
+			// var fileName = textMsg.substring(textMsg.indexOf(' '));
+			/// redirect or not?
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			//FIXME: We should get statusindicator when saving too, no?
