@@ -108,6 +108,12 @@ public:
         return false;
     }
 
+    /// Custom response to a http request.
+    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& /*request*/, std::shared_ptr<StreamSocket>& /*socket*/)
+    {
+        return false;
+    }
+
     /// If the test times out this gets invoked, the default just exits.
     virtual void timeout();
 

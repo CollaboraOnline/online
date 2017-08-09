@@ -1678,14 +1678,18 @@ private:
             std::vector<std::string> reqPathSegs;
             requestUri.getPathSegments(reqPathSegs);
 
-            // File server
-            if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
+            if (UnitWSD::get().handleHttpRequest(request, socket))
             {
+                // Unit testing, nothing to do here
+            }
+            else if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
+            {
+                // File server
                 handleFileServerRequest(request, message);
             }
-            // Admin connections
             else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
             {
+                // Admin connections
                 LOG_INF("Admin request: " << request.getURI());
                 if (AdminSocketHandler::handleInitialRequest(_socket, request))
                 {
