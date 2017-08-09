@@ -217,6 +217,7 @@ L.Annotation = L.Layer.extend({
 	_onCancelClick: function (e) {
 		L.DomEvent.stopPropagation(e);
 		this._nodeModifyText.value = this._contentText.origText;
+		this._nodeReplyText.value = '';
 		this.show();
 		this._map.fire('AnnotationCancel', {annotation: this});
 	},
@@ -232,6 +233,10 @@ L.Annotation = L.Layer.extend({
 	_onLostFocus: function (e) {
 		if (this._contentText.origText !== this._nodeModifyText.value) {
 			this._onSaveComment(e);
+		}
+		else if (this._nodeModifyText.value == '') {
+			// Implies that this._contentText.origText == ''
+			this._onCancelClick(e);
 		}
 	},
 
