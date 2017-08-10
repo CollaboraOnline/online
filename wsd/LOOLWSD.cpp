@@ -2597,7 +2597,7 @@ int LOOLWSD::innerMain()
         {
             const auto msg = "Failed to fork child processes.";
             LOG_FTL(msg);
-            std::cerr << msg << std::endl;
+            std::cerr << "FATAL: " << msg << std::endl;
             throw std::runtime_error(msg);
         }
 
