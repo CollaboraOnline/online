@@ -1,12 +1,12 @@
 # -*- Mode: Autoconf; tab-width: 4; indent-tabs-mode: nil -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.69])
+AC_PREREQ([2.63])
 
 AC_INIT([libreoffice-online], [5.4.0.2], [libreoffice@lists.freedesktop.org])
 LT_INIT([shared, disable-static, dlopen])
 
-AM_INIT_AUTOMAKE([1.11 silent-rules subdir-objects tar-pax -Wno-portability])
+AM_INIT_AUTOMAKE([1.10 subdir-objects tar-pax -Wno-portability])
 
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -161,6 +161,34 @@ CXXFLAGS="$CXXFLAGS -std=c++11"
 CXXFLAGS="$CXXFLAGS -Wall -Wextra -Werror -Wshadow"
 CFLAGS="$CFLAGS -Wall -Wextra -Werror"
 
+# check for C++11 support
+HAVE_CXX11=
+AC_MSG_CHECKING([whether $CXX supports C++14 or C++11])
+for flag in -std=gnu++14 -std=gnu++1y -std=c++14 -std=c++1y -std=gnu++11 -std=gnu++0x -std=c++11 -std=c++0x ; do
+    save_CXXFLAGS=$CXXFLAGS
+    CXXFLAGS="$CXXFLAGS $flag -Werror"
+    AC_LANG_PUSH([C++])
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+        #include <algorithm>
+        #include <functional>
+        #include <vector>
+        void f(std::vector<int> & v, std::function<bool(int, int)> fn) {
+            std::sort(v.begin(), v.end(), fn);
+        }
+        ]])],[CXXFLAGS_CXX11=$flag])
+    AC_LANG_POP([C++])
+    CXXFLAGS=$save_CXXFLAGS
+    if test -n "$CXXFLAGS_CXX11"; then
+        HAVE_CXX11=TRUE
+        break
+    fi
+done
+if test "$HAVE_CXX11" = TRUE; then
+    AC_MSG_RESULT([yes ($CXXFLAGS_CXX11)])
+else
+    AC_MSG_ERROR(no)
+fi
+
 with_lokit_path=`readlink -f $with_lokit_path`
 AS_IF([test -n "$with_lokit_path"],
       [CPPFLAGS="$CPPFLAGS -I${with_lokit_path}"])
@@ -220,12 +248,6 @@ AS_IF([test `uname -s` = Linux],
 AS_IF([test `uname -s` = Linux],
       [AS_IF([test -n "$with_cppunit_libs"],
              [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_cppunit_libs}"])])
-
-AS_IF([test `uname -s` != Darwin],
-      [AC_SEARCH_LIBS([dlopen],
-                      [dl dld],
-                      [],
-                      [AC_MSG_ERROR([dlopen not found])])])
 
 AC_SEARCH_LIBS([png_create_write_struct],
                [png],
