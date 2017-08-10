@@ -472,7 +472,11 @@ int main(int argc, char** argv)
         LOG_INF("Note: LD_BIND_NOW is not set.");
 
     if (!NoCapsForKit && !haveCorrectCapabilities())
+    {
+        std::cerr << "FATAL: Capabilities are not set for the loolforkit program." << std::endl;
+        std::cerr << "If you are on SLES11, please set 'file_caps=1' as kernel boot option." << std::endl << std::endl;
         return Application::EXIT_SOFTWARE;
+    }
 
     // Initialize LoKit
     if (!globalPreinit(loTemplate))
