@@ -62,6 +62,9 @@ L.Socket = L.Class.extend({
 		this.socket.onmessage = function () {};
 		this.socket.close();
 
+		// Reset wopi's app loaded so that reconnecting again informs outerframe about initialization
+		this._map['wopi'].resetAppLoaded();
+		this._map.fire('docloaded', {status: false});
 		clearTimeout(this._accessTokenExpireTimeout);
 	},
 
@@ -574,59 +577,64 @@ L.Socket = L.Class.extend({
 			var img = 'data:image/png;base64,' + window.btoa(strBytes);
 		}
 
-		if (textMsg.startsWith('status:') && !this._map._docLayer) {
-			// first status message, we need to create the document layer
-			var tileWidthTwips = this._map.options.tileWidthTwips;
-			var tileHeightTwips = this._map.options.tileHeightTwips;
-			if (this._map.options.zoom !== this._map.options.defaultZoom) {
-				var scale = this._map.options.crs.scale(this._map.options.defaultZoom - this._map.options.zoom);
-				tileWidthTwips = Math.round(tileWidthTwips * scale);
-				tileHeightTwips = Math.round(tileHeightTwips * scale);
-			}
-
-			var docLayer = null;
-			if (command.type === 'text') {
-				docLayer = new L.WriterTileLayer('', {
-					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips,
-					tileHeightTwips: tileHeightTwips,
-					docType: command.type
-				});
-			}
-			else if (command.type === 'spreadsheet') {
-				docLayer = new L.CalcTileLayer('', {
-					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips,
-					tileHeightTwips: tileHeightTwips,
-					docType: command.type
-				});
-			}
-			else {
-				if (command.type === 'presentation' &&
-						this._map.options.defaultZoom === this._map.options.zoom) {
-					// If we have a presentation document and the zoom level has not been set
-					// in the options, resize the document so that it fits the viewing area
-					var verticalTiles = this._map.getSize().y / 256;
-					tileWidthTwips = Math.round(command.height / verticalTiles);
-					tileHeightTwips = Math.round(command.height / verticalTiles);
+		if (textMsg.startsWith('status:')) {
+			if (!this._map._docLayer) {
+				// first status message, we need to create the document layer
+				var tileWidthTwips = this._map.options.tileWidthTwips;
+				var tileHeightTwips = this._map.options.tileHeightTwips;
+				if (this._map.options.zoom !== this._map.options.defaultZoom) {
+					var scale = this._map.options.crs.scale(this._map.options.defaultZoom - this._map.options.zoom);
+					tileWidthTwips = Math.round(tileWidthTwips * scale);
+					tileHeightTwips = Math.round(tileHeightTwips * scale);
 				}
-				docLayer = new L.ImpressTileLayer('', {
-					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips,
-					tileHeightTwips: tileHeightTwips,
-					docType: command.type
-				});
+
+				var docLayer = null;
+				if (command.type === 'text') {
+					docLayer = new L.WriterTileLayer('', {
+						permission: this._map.options.permission,
+						tileWidthTwips: tileWidthTwips,
+						tileHeightTwips: tileHeightTwips,
+						docType: command.type
+					});
+				}
+				else if (command.type === 'spreadsheet') {
+					docLayer = new L.CalcTileLayer('', {
+						permission: this._map.options.permission,
+						tileWidthTwips: tileWidthTwips,
+						tileHeightTwips: tileHeightTwips,
+						docType: command.type
+					});
+				}
+				else {
+					if (command.type === 'presentation' &&
+					    this._map.options.defaultZoom === this._map.options.zoom) {
+						// If we have a presentation document and the zoom level has not been set
+						// in the options, resize the document so that it fits the viewing area
+						var verticalTiles = this._map.getSize().y / 256;
+						tileWidthTwips = Math.round(command.height / verticalTiles);
+						tileHeightTwips = Math.round(command.height / verticalTiles);
+					}
+					docLayer = new L.ImpressTileLayer('', {
+						permission: this._map.options.permission,
+						tileWidthTwips: tileWidthTwips,
+						tileHeightTwips: tileHeightTwips,
+						docType: command.type
+					});
+				}
+
+				this._map._docLayer = docLayer;
+				this._map.addLayer(docLayer);
+				this._map.fire('doclayerinit');
+			}
+			else if (this._reconnecting) {
+				// we are reconnecting ...
+				this._reconnecting = false;
+				this._map._docLayer._onMessage('invalidatetiles: EMPTY', null);
+				this._map.fire('statusindicator', {statusType: 'reconnected'});
+				this._map.setPermission(this._map.options.permission);
 			}
 
-			this._map._docLayer = docLayer;
-			this._map.addLayer(docLayer);
-			this._map.fire('doclayerinit');
-		} else if (textMsg.startsWith('status:') && this._reconnecting) {
-			// we are reconnecting ...
-			this._reconnecting = false;
-			this._map._docLayer._onMessage('invalidatetiles: EMPTY', null);
-			this._map.fire('statusindicator', {statusType: 'reconnected'});
-			this._map.setPermission(this._map.options.permission);
+			this._map.fire('docloaded', {status: true});
 		}
 
 		// these can arrive very early during the startup
@@ -671,8 +679,9 @@ L.Socket = L.Class.extend({
 			this._map.fire('error', {msg: _('Well, this is embarrassing, we cannot connect to your document. Please try again.'), cmd: 'socket', kind: 'closed', id: 4});
 		}
 
-		// Reset wopi's app loaded so that reconnecting again informs outerframe about initialization again
+		// Reset wopi's app loaded so that reconnecting again informs outerframe about initialization
 		this._map['wopi'].resetAppLoaded();
+		this._map.fire('docloaded', {status: false});
 
 		if (!this._reconnecting) {
 			this._reconnecting = true;

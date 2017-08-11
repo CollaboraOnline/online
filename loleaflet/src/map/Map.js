@@ -143,9 +143,23 @@ L.Map = L.Evented.extend({
 		// This becomes true if document was ever modified by the user
 		this._everModified = false;
 
+		// Document is completely loaded or not
+		this._docLoaded = false;
+
 		this.on('commandstatechanged', function(e) {
 			if (e.commandName === '.uno:ModifiedStatus')
 				this._everModified = this._everModified || (e.state === 'true');
+		}, this);
+
+		this.on('docloaded', function(e) {
+			if (e.status) {
+				// so that dim timer starts from now()
+				this.lastActiveTime = Date.now();
+				if (!document.hasFocus()) {
+					this._deactivate();
+				}
+			}
+			this._docLoaded = e.status;
 		}, this);
 	},
 
@@ -883,7 +897,8 @@ L.Map = L.Evented.extend({
 
 	_dimIfInactive: function () {
 		console.debug('_dimIfInactive: diff=' + (Date.now() - this.lastActiveTime));
-		if ((Date.now() - this.lastActiveTime) >= this.options.idleTimeoutSecs * 1000) {
+		if (this._docLoaded && // don't dim if document hasn't been loaded yet
+		    (Date.now() - this.lastActiveTime) >= this.options.idleTimeoutSecs * 1000) {
 			this._dim();
 		} else {
 			this._startInactiveTimer();
@@ -904,7 +919,7 @@ L.Map = L.Evented.extend({
 	},
 
 	_deactivate: function () {
-		if (this._serverRecycling || this._documentIdle) {
+		if (this._serverRecycling || this._documentIdle || !this._docLoaded) {
 			return;
 		}
 
