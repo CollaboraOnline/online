@@ -17,7 +17,7 @@ L.Map.WOPI = L.Handler.extend({
 	DisableCopy: false,
 
 	_appLoadedConditions: {
-		doclayerinit: false,
+		docloaded: false,
 		updatepermission: false,
 		viewinfo: false /* Whether view information has already arrived */
 	},
@@ -32,7 +32,7 @@ L.Map.WOPI = L.Handler.extend({
 		this._map.on('postMessage', this._postMessage, this);
 
 		// init messages
-		this._map.on('doclayerinit', this._postLoaded, this);
+		this._map.on('docloaded', this._postLoaded, this);
 		this._map.on('updatepermission', this._postLoaded, this);
 		// This indicates that 'viewinfo' message has already arrived
 		this._map.on('viewinfo', this._postLoaded, this);
@@ -45,7 +45,7 @@ L.Map.WOPI = L.Handler.extend({
 		this._map.off('postMessage', this._postMessage, this);
 
 		// init messages
-		this._map.off('doclayerinit', this._postLoaded, this);
+		this._map.off('docloaded', this._postLoaded, this);
 		this._map.off('updatepermission', this._postLoaded, this);
 		this._map.off('viewinfo', this._postLoaded, this);
 
@@ -81,7 +81,11 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 
-		if (e.type === 'doclayerinit') {
+		if (e.type === 'docloaded') {
+			// doc unloaded
+			if (!e.status)
+				return;
+
 			this.DocumentLoadedTime = Date.now();
 		}
 		this._appLoadedConditions[e.type] = true;
