@@ -183,13 +183,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     }
     else if (!_isDocLoaded)
     {
-        // Be forgiving to these messages while we load.
-        if (tokens[0] == "useractive" ||
-            tokens[0] == "userinactive")
-        {
-            return true;
-        }
-
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
     }

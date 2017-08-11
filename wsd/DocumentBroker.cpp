@@ -1316,6 +1316,12 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
 {
     assertCorrectThread();
 
+    // Ignore userinactive, useractive message until document is loaded
+    if (!isLoaded() && (message == "userinactive" || message == "useractive"))
+    {
+        return true;
+    }
+
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << message);
 
     std::string msg = "child-" + viewId + ' ' + message;
