@@ -152,14 +152,16 @@ L.Map = L.Evented.extend({
 		}, this);
 
 		this.on('docloaded', function(e) {
-			if (e.status) {
+			this._docLoaded = e.status;
+			if (this._docLoaded) {
 				// so that dim timer starts from now()
 				this.lastActiveTime = Date.now();
 				if (!document.hasFocus()) {
 					this._deactivate();
+				} else {
+					this._activate();
 				}
 			}
-			this._docLoaded = e.status;
 		}, this);
 	},
 
@@ -906,7 +908,7 @@ L.Map = L.Evented.extend({
 	},
 
 	_startInactiveTimer: function () {
-		if (this._serverRecycling || this._documentIdle) {
+		if (this._serverRecycling || this._documentIdle || !this._docLoaded) {
 			return;
 		}
 
