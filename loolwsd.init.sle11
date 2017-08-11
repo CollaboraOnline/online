@@ -1,0 +1,68 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides: loolwsd
+# Default-Start:     3 5
+# Default-Stop:      0 1 2 4 6
+# Short-Description: LibreOffice Online Websocket Daemon
+# Description: LibreOffice Online Websocket Daemon
+### END INIT INFO
+
+RETVAL=0
+prog="loolwsd"
+
+# Source function library.
+. /etc/rc.status
+rc_reset
+
+LOOLWSD=/usr/bin/loolwsd
+PID_FILE=/var/run/loolwsd.pid
+
+case "$1" in
+    start)
+        echo -n "Starting $prog "
+        /sbin/startproc -u lool -p $PID_FILE $LOOLWSD --version --o:sys_template_path=/opt/lool/systemplate --o:lo_template_path=/opt/collaboraoffice5.3 --o:child_root_path=/opt/lool/child-roots --o:file_server_root_path=/usr/share/loolwsd --o:logging.file[@enable]=true 2>/dev/null
+        rc_status -v
+        ;;
+
+    stop)
+        echo -n "Shutting down $prog "
+        /sbin/killproc -p $PID_FILE $LOOLWSD -TERM
+        rc_status -v
+        ;;
+
+    restart)
+        $0 stop
+        $0 start
+        rc_status
+        ;;
+
+    reload)
+        echo -n "Reload service $prog "
+        killproc $LOOLWSD -HUP
+        rc_status -v
+        ;;
+
+    force-reload)
+        $0 reload
+        ;;
+
+    status)
+        echo -n "Checking for service $prog"
+        /sbin/checkproc $LOOLWSD
+        rc_status -v
+        ;;
+
+    condrestart|try-restart)
+        $0 status
+        if test $? = 0; then
+            $0 restart
+        else
+            rc_reset    # Not running is not a failure.
+        fi
+        rc_status
+        ;;
+    *)
+    echo "Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+    exit 1
+esac
+rc_exit

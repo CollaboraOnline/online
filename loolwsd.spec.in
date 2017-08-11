@@ -108,9 +108,13 @@ env BUILDING_FROM_RPMBUILD=yes make %{?_smp_mflags}
 %install
 env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
 install -d -m 755 %{buildroot}/var/adm/fillup-templates
-%if 0%{?rhel} == 6 || 0%{?suse_version} == 1110
+%if 0%{?rhel} == 6
 install -d -m 755 %{buildroot}/etc/init.d
-install -D -m 755 loolwsd.init %{buildroot}/etc/init.d/loolwsd
+install -D -m 755 loolwsd.init.rhel6 %{buildroot}/etc/init.d/loolwsd
+%endif
+%if 0%{?suse_version} == 1110
+install -d -m 755 %{buildroot}/etc/init.d
+install -D -m 755 loolwsd.init.sle11 %{buildroot}/etc/init.d/loolwsd
 %endif
 %if 0%{?fedora} || 0%{?rhel} >= 7
 install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
