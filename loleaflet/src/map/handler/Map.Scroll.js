@@ -15,6 +15,7 @@ L.Map.Scroll = L.Handler.extend({
 		}, this);
 
 		this._delta = 0;
+		this._vertical = 1;
 	},
 
 	removeHooks: function () {
@@ -41,7 +42,12 @@ L.Map.Scroll = L.Handler.extend({
 		if (e.ctrlKey) {
 			this._timer = setTimeout(L.bind(this._performZoom, this), left);
 		}
+		else if (e.shiftKey) {
+			this._vertical = 0;
+			this._timer = setTimeout(L.bind(this._performScroll, this), left);
+		}
 		else {
+			this._vertical = 1;
 			this._timer = setTimeout(L.bind(this._performScroll, this), left);
 		}
 
@@ -57,7 +63,7 @@ L.Map.Scroll = L.Handler.extend({
 		this._startTime = null;
 
 		if (!delta) { return; }
-		map.fire('scrollby', {x: 0, y: delta * scrollAmount});
+		map.fire('scrollby', {x: (1 - this._vertical) * delta * scrollAmount, y: this._vertical * delta * scrollAmount});
 	},
 
 	_performZoom: function () {
