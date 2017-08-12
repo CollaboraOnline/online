@@ -249,6 +249,12 @@ AS_IF([test `uname -s` = Linux],
       [AS_IF([test -n "$with_cppunit_libs"],
              [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_cppunit_libs}"])])
 
+AS_IF([test `uname -s` != Darwin],
+      [AC_SEARCH_LIBS([dlopen],
+                      [dl dld],
+                      [],
+                      [AC_MSG_ERROR([dlopen not found])])])
+
 AC_SEARCH_LIBS([png_create_write_struct],
                [png],
                [],
