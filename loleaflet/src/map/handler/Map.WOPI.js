@@ -109,6 +109,12 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 
+		// allow closing documents before they are completely loaded
+		if (msg.MessageId === 'Close_Session') {
+			this._map._socket.sendMessage('closedocument');
+			return;
+		}
+
 		// For all other messages, warn if trying to interact before we are completely loaded
 		if (!this._appLoaded) {
 			console.error('LibreOffice Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
@@ -169,9 +175,6 @@ L.Map.WOPI = L.Handler.extend({
 			}
 
 			this._postMessage({msgId: 'Get_Views_Resp', args: getMembersRespVal});
-		}
-		else if (msg.MessageId === 'Close_Session') {
-			this._map._socket.sendMessage('closedocument');
 		}
 		else if (msg.MessageId === 'Action_Save') {
 			var dontTerminateEdit = msg.Values && msg.Values['DontTerminateEdit'];
