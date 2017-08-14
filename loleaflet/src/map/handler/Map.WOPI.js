@@ -84,7 +84,10 @@ L.Map.WOPI = L.Handler.extend({
 		if (e.type === 'docloaded') {
 			// doc unloaded
 			if (!e.status)
+			{
+				this._appLoadedConditions[e.type] = false;
 				return;
+			}
 
 			this.DocumentLoadedTime = Date.now();
 		}
