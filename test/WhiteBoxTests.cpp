@@ -11,6 +11,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <Auth.hpp>
 #include <ChildSession.hpp>
 #include <Common.hpp>
 #include <Kit.hpp>
@@ -31,6 +32,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRegexListMatcher_Init);
     CPPUNIT_TEST(testEmptyCellCursor);
     CPPUNIT_TEST(testRectanglesIntersect);
+    CPPUNIT_TEST(testAuthorization);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -41,6 +43,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRegexListMatcher_Init();
     void testEmptyCellCursor();
     void testRectanglesIntersect();
+    void testAuthorization();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -396,6 +399,48 @@ void WhiteBoxTests::testRectanglesIntersect()
                                                   2000, 3000, 1000, 1000));
     CPPUNIT_ASSERT(!TileDesc::rectanglesIntersect(2000, 3000, 1000, 1000,
                                                   1000, 1000, 2000, 1000));
+}
+
+void WhiteBoxTests::testAuthorization()
+{
+    Authorization auth1(Authorization::Type::Token, "abc");
+    Poco::URI uri1("http://localhost");
+    auth1.authorizeURI(uri1);
+    CPPUNIT_ASSERT_EQUAL(uri1.toString(), std::string("http://localhost/?access_token=abc"));
+    Poco::Net::HTTPRequest req1;
+    auth1.authorizeRequest(req1);
+    CPPUNIT_ASSERT_EQUAL(req1.get("Authorization"), std::string("Bearer abc"));
+
+    Authorization auth1modify(Authorization::Type::Token, "modified");
+    // still the same uri1, currently "http://localhost/?access_token=abc"
+    auth1modify.authorizeURI(uri1);
+    CPPUNIT_ASSERT_EQUAL(uri1.toString(), std::string("http://localhost/?access_token=modified"));
+
+    Authorization auth2(Authorization::Type::Header, "def");
+    Poco::Net::HTTPRequest req2;
+    auth2.authorizeRequest(req2);
+    CPPUNIT_ASSERT(!req2.has("Authorization"));
+
+    Authorization auth3(Authorization::Type::Header, "Authorization: Basic huhu== ");
+    Poco::URI uri2("http://localhost");
+    auth3.authorizeURI(uri2);
+    // nothing added with the Authorization header approach
+    CPPUNIT_ASSERT_EQUAL(uri2.toString(), std::string("http://localhost"));
+    Poco::Net::HTTPRequest req3;
+    auth3.authorizeRequest(req3);
+    CPPUNIT_ASSERT_EQUAL(req3.get("Authorization"), std::string("Basic huhu=="));
+
+    Authorization auth4(Authorization::Type::Header, "  Authorization: Basic blah== \n\r X-Something:   additional  ");
+    Poco::Net::HTTPRequest req4;
+    auth4.authorizeRequest(req4);
+    CPPUNIT_ASSERT_EQUAL(req4.get("Authorization"), std::string("Basic blah=="));
+    CPPUNIT_ASSERT_EQUAL(req4.get("X-Something"), std::string("additional"));
+
+    Authorization auth5(Authorization::Type::Header, "  Authorization: Basic huh== \n\r X-Something-More:   else  \n\r");
+    Poco::Net::HTTPRequest req5;
+    auth5.authorizeRequest(req5);
+    CPPUNIT_ASSERT_EQUAL(req5.get("Authorization"), std::string("Basic huh=="));
+    CPPUNIT_ASSERT_EQUAL(req5.get("X-Something-More"), std::string("else"));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);

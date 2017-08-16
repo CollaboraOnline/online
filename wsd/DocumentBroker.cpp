@@ -403,7 +403,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
-        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(session->getAccessToken());
+        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(session->getAuthorization());
         userid = wopifileinfo->_userid;
         username = wopifileinfo->_username;
         userExtraInfo = wopifileinfo->_userExtraInfo;
@@ -527,7 +527,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     // Let's load the document now, if not loaded.
     if (!_storage->isLoaded())
     {
-        const auto localPath = _storage->loadStorageFileToLocal(session->getAccessToken());
+        const auto localPath = _storage->loadStorageFileToLocal(session->getAuthorization());
 
         std::ifstream istr(localPath, std::ios::binary);
         Poco::SHA1Engine sha1;
@@ -613,7 +613,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         return false;
     }
 
-    const std::string accessToken = it->second->getAccessToken();
+    const Authorization auth = it->second->getAuthorization();
     const auto uri = it->second->getPublicUri().toString();
 
     // If we aren't destroying the last editable session just yet,
@@ -635,7 +635,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     // storage behind our backs.
 
     assert(_storage && _tileCache);
-    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(accessToken);
+    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(auth);
     if (storageSaveResult == StorageBase::SaveResult::OK)
     {
         setModified(false);
