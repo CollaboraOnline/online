@@ -769,17 +769,25 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
     return true;
 }
 
-std::string ClientSession::getAccessToken() const
+Authorization ClientSession::getAuthorization() const
 {
     std::string accessToken;
     Poco::URI::QueryParameters queryParams = _uriPublic.getQueryParameters();
+
+    // prefer the access_token
     for (auto& param: queryParams)
     {
         if (param.first == "access_token")
-            return param.second;
+            return Authorization(Authorization::Type::Token, param.second);
     }
 
-    return std::string();
+    for (auto& param: queryParams)
+    {
+        if (param.first == "access_header")
+            return Authorization(Authorization::Type::Header, param.second);
+    }
+
+    return Authorization();
 }
 
 void ClientSession::onDisconnect()

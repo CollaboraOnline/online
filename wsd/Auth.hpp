@@ -11,10 +11,46 @@
 #ifndef INCLUDED_AUTH_HPP
 #define INCLUDED_AUTH_HPP
 
+#include <cassert>
 #include <string>
 
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/URI.h>
+
+/// Class to keep the authorization data.
+class Authorization
+{
+public:
+    enum class Type {
+        None,
+        Token,
+        Header
+    };
+
+private:
+    Type _type;
+    std::string _data;
+
+public:
+    Authorization()
+        : _type(Type::None)
+    {
+    }
+
+    Authorization(Type type, const std::string& data)
+        : _type(type)
+        , _data(data)
+    {
+    }
+
+    /// Set the access_token parametr to the given uri.
+    void authorizeURI(Poco::URI& uri) const;
+
+    /// Set the Authorization: header in request.
+    void authorizeRequest(Poco::Net::HTTPRequest& request) const;
+};
 
 /// Base class of all Authentication/Authorization implementations.
 class AuthBase

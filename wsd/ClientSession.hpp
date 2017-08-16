@@ -98,7 +98,7 @@ public:
     const Poco::URI& getPublicUri() const { return _uriPublic; }
 
     /// The access token of this session.
-    std::string getAccessToken() const;
+    Authorization getAuthorization() const;
 
     /// Set WOPI fileinfo object
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }

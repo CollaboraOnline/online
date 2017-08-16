@@ -246,7 +246,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     return std::unique_ptr<LocalStorage::LocalFileInfo>(new LocalFileInfo({"localhost" + std::to_string(LastLocalStorageId), "Local Host #" + std::to_string(LastLocalStorageId++)}));
 }
 
-std::string LocalStorage::loadStorageFileToLocal(const std::string& /*accessToken*/)
+std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
 {
     // /chroot/jailId/user/doc/childId/file.ext
     const auto filename = Poco::Path(_uri.getPath()).getFileName();
@@ -297,7 +297,7 @@ std::string LocalStorage::loadStorageFileToLocal(const std::string& /*accessToke
 #endif
 }
 
-StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const std::string& /*accessToken*/)
+StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization& /*auth*/)
 {
     try
     {
@@ -440,24 +440,6 @@ bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
     return success;
 }
 
-void setQueryParameter(Poco::URI& uriObject, const std::string& key, const std::string& value)
-{
-    Poco::URI::QueryParameters queryParams = uriObject.getQueryParameters();
-    for (auto& param: queryParams)
-    {
-        if (param.first == key)
-        {
-            param.second = value;
-            uriObject.setQueryParameters(queryParams);
-            return;
-        }
-    }
-
-    // it did not exist yet
-    uriObject.addQueryParameter(key, value);
-}
-
-
 void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
 {
     (void) request;
@@ -499,11 +481,11 @@ Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time)
 
 } // anonymous namespace
 
-std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const std::string& accessToken)
+std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth)
 {
     // update the access_token to the one matching to the session
     Poco::URI uriObject(_uri);
-    setQueryParameter(uriObject, "access_token", accessToken);
+    auth.authorizeURI(uriObject);
 
     LOG_DBG("Getting info for wopi uri [" << uriObject.toString() << "].");
 
@@ -516,7 +498,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", WOPI_AGENT_STRING);
-        request.set("Authorization", "Bearer " + accessToken);
+        auth.authorizeRequest(request);
         addStorageDebugCookie(request);
         psession->sendRequest(request);
 
@@ -603,13 +585,14 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const st
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
-std::string WopiStorage::loadStorageFileToLocal(const std::string& accessToken)
+std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
 {
     // WOPI URI to download files ends in '/contents'.
     // Add it here to get the payload instead of file info.
     Poco::URI uriObject(_uri);
     uriObject.setPath(uriObject.getPath() + "/contents");
-    setQueryParameter(uriObject, "access_token", accessToken);
+    auth.authorizeURI(uriObject);
+
     LOG_DBG("Wopi requesting: " << uriObject.toString());
 
     const auto startTime = std::chrono::steady_clock::now();
@@ -619,7 +602,7 @@ std::string WopiStorage::loadStorageFileToLocal(const std::string& accessToken)
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", WOPI_AGENT_STRING);
-        request.set("Authorization", "Bearer " + accessToken);
+        auth.authorizeRequest(request);
         addStorageDebugCookie(request);
         psession->sendRequest(request);
 
@@ -670,14 +653,14 @@ std::string WopiStorage::loadStorageFileToLocal(const std::string& accessToken)
     return "";
 }
 
-StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& accessToken)
+StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization& auth)
 {
     // TODO: Check if this URI has write permission (canWrite = true)
     const auto size = getFileSize(_jailedFilePath);
 
     Poco::URI uriObject(_uri);
     uriObject.setPath(uriObject.getPath() + "/contents");
-    setQueryParameter(uriObject, "access_token", accessToken);
+    auth.authorizeURI(uriObject);
 
     LOG_INF("Uploading URI via WOPI [" << uriObject.toString() << "] from [" << _jailedFilePath + "].");
 
@@ -689,7 +672,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("X-WOPI-Override", "PUT");
-        request.set("Authorization", "Bearer " + accessToken);
+        auth.authorizeRequest(request);
         if (!_forceSave)
         {
             // Request WOPI host to not overwrite if timestamps mismatch
@@ -768,14 +751,14 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
     return saveResult;
 }
 
-std::string WebDAVStorage::loadStorageFileToLocal(const std::string& /*accessToken*/)
+std::string WebDAVStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
 {
     // TODO: implement webdav GET.
     _isLoaded = true;
     return _uri.toString();
 }
 
-StorageBase::SaveResult WebDAVStorage::saveLocalFileToStorage(const std::string& /*accessToken*/)
+StorageBase::SaveResult WebDAVStorage::saveLocalFileToStorage(const Authorization& /*auth*/)
 {
     // TODO: implement webdav PUT.
     return StorageBase::SaveResult::OK;

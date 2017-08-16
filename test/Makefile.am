@@ -37,6 +37,7 @@ wsd_sources = \
             ../common/Util.cpp \
             ../common/MessageQueue.cpp \
             ../kit/Kit.cpp \
+            ../wsd/Auth.cpp \
             ../wsd/TileCache.cpp \
             ../wsd/TestStubs.cpp \
             ../common/Unit.cpp \
