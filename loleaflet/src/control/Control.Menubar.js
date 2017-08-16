@@ -179,7 +179,9 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Language for paragraph'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'noneparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
 				{name: _('Language for entire document'), type: 'menu', menu: [
-					{name: _('None (Do not check spelling)'), id: 'nonelanguage', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
+					{name: _('None (Do not check spelling)'), id: 'nonelanguage', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
+				{name: _('Spelling and Grammar'), uno: '.uno:SpellingAndGrammarDialog', type: 'unocommand'},
+				{name: _('Word count'), uno: '.uno:WordCountDialog', type: 'unocommand'}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
