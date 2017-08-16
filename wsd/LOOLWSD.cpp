@@ -2541,8 +2541,10 @@ int LOOLWSD::innerMain()
 
     if (access(Cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
-        LOG_SFL("Unable to access cache [" << Cache <<
-                "] please make sure it exists, and has write permission for this user.");
+        const auto err = "Unable to access cache [" + Cache +
+                "] please make sure it exists, and has write permission for this user.";
+        LOG_SFL( err );
+        std::cerr << "FATAL: " << err << std::endl;
         return Application::EXIT_SOFTWARE;
     }
 
