@@ -1672,11 +1672,11 @@ void lokit_main(const std::string& childRoot,
             const auto networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
             for (const auto& filename : networkFiles)
             {
-                const auto etcPath = Path(jailPath, filename).toString();
-                const File networkFile(filename);
-                if (networkFile.exists() && !File(etcPath).exists())
+                const auto etcPath = Path(jailPath, filename);
+                const auto etcPathString = etcPath.toString();
+                if (File(filename).exists() && !File(etcPathString).exists() )
                 {
-                    networkFile.copyTo(etcPath);
+                    linkOrCopy( filename, etcPath, LinkOrCopyType::LO );
                 }
             }
 
