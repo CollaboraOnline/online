@@ -24,7 +24,7 @@ Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
 BuildRequires:  libcap-devel libpng-devel poco-devel >= 1.7.5
 
 # Red Hat and CentOS
-%if 0%{?fedora} || 0%{?rhel} >= 6
+%if 0%{?fedora} || 0%{?rhel} >= 7
 BuildRequires:  libpcap
 %endif
 
