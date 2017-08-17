@@ -29,14 +29,42 @@ using Poco::Net::OAuth20Credentials;
 class UnitOAuth : public UnitWSD
 {
     enum class Phase {
-        Load,   // loading the document
+        Load0,  // loading the document with Bearer token
+        Load1,  // loading the document with Basic auth
         Polling // let the loading progress, and when it succeeds, finish
     } _phase;
 
+    bool _finished0;
+    bool _finished1;
+
 public:
     UnitOAuth() :
-        _phase(Phase::Load)
+        _phase(Phase::Load0),
+        _finished0(false),
+        _finished1(false)
     {
+    }
+
+    void assertRequest(const Poco::Net::HTTPRequest& request, int fileIndex)
+    {
+        // check that the request contains the Authorization: header
+        try {
+            if (fileIndex == 0)
+            {
+                OAuth20Credentials creds(request);
+                CPPUNIT_ASSERT_EQUAL(std::string("s3hn3ct0k3v"), creds.getBearerToken());
+            }
+            else
+            {
+                OAuth20Credentials creds(request, "Basic");
+                CPPUNIT_ASSERT_EQUAL(std::string("basic=="), creds.getBearerToken());
+            }
+        }
+        catch (const std::exception&)
+        {
+            // fail as fast as possible
+            exit(1);
+        }
     }
 
     /// Here we act as a WOPI server, so that we have a server that responds to
@@ -49,20 +77,11 @@ public:
         LOG_INF("Fake wopi host request: " << uriReq.toString());
 
         // CheckFileInfo
-        if (uriReq.getPath() == "/wopi/files/0")
+        if (uriReq.getPath() == "/wopi/files/0" || uriReq.getPath() == "/wopi/files/1")
         {
-            LOG_INF("Fake wopi host request, handling CheckFileInfo.");
+            LOG_INF("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
 
-            // check that the request contains the Authorization: header
-            try {
-                OAuth20Credentials creds(request);
-                CPPUNIT_ASSERT_EQUAL(creds.getBearerToken(), std::string("s3hn3ct0k3v"));
-            }
-            catch (const std::exception&)
-            {
-                // fail as fast as possible
-                exit(1);
-            }
+            assertRequest(request, (uriReq.getPath() == "/wopi/files/0")? 0: 1);
 
             Poco::LocalDateTime now;
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
@@ -97,19 +116,19 @@ public:
             return true;
         }
         // GetFile
-        else if (uriReq.getPath() == "/wopi/files/0/contents")
+        else if (uriReq.getPath() == "/wopi/files/0/contents" || uriReq.getPath() == "/wopi/files/1/contents")
         {
-            LOG_INF("Fake wopi host request, handling GetFile.");
+            LOG_INF("Fake wopi host request, handling GetFile: " << uriReq.getPath());
 
-            // check that the request contains the Authorization: header
-            try {
-                OAuth20Credentials creds(request);
-                CPPUNIT_ASSERT_EQUAL(creds.getBearerToken(), std::string("s3hn3ct0k3v"));
-            }
-            catch (const std::exception&)
+            if (uriReq.getPath() == "/wopi/files/0/contents")
             {
-                // fail as fast as possible
-                exit(1);
+                assertRequest(request, 0);
+                _finished0 = true;
+            }
+            else
+            {
+                assertRequest(request, 1);
+                _finished1 = true;
             }
 
             const std::string mimeType = "text/plain; charset=utf-8";
@@ -126,7 +145,8 @@ public:
             socket->send(oss.str());
             socket->shutdown();
 
-            exitTest(TestResult::Ok);
+            if (_finished0 && _finished1)
+                exitTest(TestResult::Ok);
 
             return true;
         }
@@ -140,9 +160,12 @@ public:
 
         switch (_phase)
         {
-            case Phase::Load:
+            case Phase::Load0:
+            case Phase::Load1:
             {
-                Poco::URI wopiURL(helpers::getTestServerURI() + "/wopi/files/0?access_token=s3hn3ct0k3v");
+                Poco::URI wopiURL(helpers::getTestServerURI() +
+                        ((_phase == Phase::Load0)? "/wopi/files/0?access_token=s3hn3ct0k3v":
+                                                   "/wopi/files/1?access_header=Authorization: Basic basic=="));
                 //wopiURL.setPort(_wopiSocket->address().port());
                 std::string wopiSrc;
                 Poco::URI::encode(wopiURL.toString(), ":/?", wopiSrc);
@@ -155,7 +178,10 @@ public:
 
                 helpers::sendTextFrame(*ws->getLOOLWebSocket(), "load url=" + wopiSrc, testName);
 
-                _phase = Phase::Polling;
+                if (_phase == Phase::Load0)
+                    _phase = Phase::Load1;
+                else
+                    _phase = Phase::Polling;
                 break;
             }
             case Phase::Polling:
