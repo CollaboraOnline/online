@@ -60,6 +60,9 @@ var wopiSrc = getParameterByName('WOPISrc');
 if (wopiSrc !== '' && access_token !== '') {
 	var wopiParams = { 'access_token': access_token, 'access_token_ttl': access_token_ttl };
 }
+else if (wopiSrc !== '' && access_header !== '') {
+	var wopiParams = { 'access_header': access_header };
+}
 
 var filePath = getParameterByName('file_path');
 var title = getParameterByName('title');

@@ -462,12 +462,15 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     const std::string& accessToken = form.get("access_token", "");
     const std::string& accessTokenTtl = form.get("access_token_ttl", "");
     LOG_TRC("access_token=" << accessToken << ", access_token_ttl=" << accessTokenTtl);
+    const std::string& accessHeader = form.get("access_header", "");
+    LOG_TRC("access_header=" << accessHeader);
 
     // Escape bad characters in access token.
     // This is placed directly in javascript in loleaflet.html, we need to make sure
     // that no one can do anything nasty with their clever inputs.
-    std::string escapedAccessToken;
+    std::string escapedAccessToken, escapedAccessHeader;
     Poco::URI::encode(accessToken, "'", escapedAccessToken);
+    Poco::URI::encode(accessHeader, "'", escapedAccessHeader);
 
     unsigned long tokenTtl = 0;
     if (accessToken != "")
@@ -491,6 +494,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), std::to_string(tokenTtl));
+    Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
 
