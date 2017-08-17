@@ -778,13 +778,21 @@ Authorization ClientSession::getAuthorization() const
     for (auto& param: queryParams)
     {
         if (param.first == "access_token")
-            return Authorization(Authorization::Type::Token, param.second);
+        {
+            std::string decodedToken;
+            Poco::URI::decode(param.second, decodedToken);
+            return Authorization(Authorization::Type::Token, decodedToken);
+        }
     }
 
     for (auto& param: queryParams)
     {
         if (param.first == "access_header")
-            return Authorization(Authorization::Type::Header, param.second);
+        {
+            std::string decodedHeader;
+            Poco::URI::decode(param.second, decodedHeader);
+            return Authorization(Authorization::Type::Header, decodedHeader);
+        }
     }
 
     return Authorization();
