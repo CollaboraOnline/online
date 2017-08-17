@@ -28,20 +28,21 @@ using Poco::Net::OAuth20Credentials;
 
 class UnitOAuth : public UnitWSD
 {
-    enum class Phase {
-        Load0,  // loading the document with Bearer token
-        Load1,  // loading the document with Basic auth
-        Polling // let the loading progress, and when it succeeds, finish
+    enum class Phase
+    {
+        LoadToken,  // loading the document with Bearer token
+        LoadHeader, // loading the document with Basic auth
+        Polling     // let the loading progress, and when it succeeds, finish
     } _phase;
 
-    bool _finished0;
-    bool _finished1;
+    bool _finishedToken;
+    bool _finishedHeader;
 
 public:
     UnitOAuth() :
-        _phase(Phase::Load0),
-        _finished0(false),
-        _finished1(false)
+        _phase(Phase::LoadToken),
+        _finishedToken(false),
+        _finishedHeader(false)
     {
     }
 
@@ -123,12 +124,12 @@ public:
             if (uriReq.getPath() == "/wopi/files/0/contents")
             {
                 assertRequest(request, 0);
-                _finished0 = true;
+                _finishedToken = true;
             }
             else
             {
                 assertRequest(request, 1);
-                _finished1 = true;
+                _finishedHeader = true;
             }
 
             const std::string mimeType = "text/plain; charset=utf-8";
@@ -145,7 +146,7 @@ public:
             socket->send(oss.str());
             socket->shutdown();
 
-            if (_finished0 && _finished1)
+            if (_finishedToken && _finishedHeader)
                 exitTest(TestResult::Ok);
 
             return true;
@@ -160,11 +161,11 @@ public:
 
         switch (_phase)
         {
-            case Phase::Load0:
-            case Phase::Load1:
+            case Phase::LoadToken:
+            case Phase::LoadHeader:
             {
                 Poco::URI wopiURL(helpers::getTestServerURI() +
-                        ((_phase == Phase::Load0)? "/wopi/files/0?access_token=s3hn3ct0k3v":
+                        ((_phase == Phase::LoadToken)? "/wopi/files/0?access_token=s3hn3ct0k3v":
                                                    "/wopi/files/1?access_header=Authorization: Basic basic=="));
                 //wopiURL.setPort(_wopiSocket->address().port());
                 std::string wopiSrc;
@@ -178,8 +179,8 @@ public:
 
                 helpers::sendTextFrame(*ws->getLOOLWebSocket(), "load url=" + wopiSrc, testName);
 
-                if (_phase == Phase::Load0)
-                    _phase = Phase::Load1;
+                if (_phase == Phase::LoadToken)
+                    _phase = Phase::LoadHeader;
                 else
                     _phase = Phase::Polling;
                 break;

@@ -23,7 +23,8 @@
 class Authorization
 {
 public:
-    enum class Type {
+    enum class Type
+    {
         None,
         Token,
         Header
@@ -73,7 +74,8 @@ public:
           _aud(aud),
           _key(Poco::Crypto::RSAKey("", keyPath)),
           _digestEngine(_key, "SHA256")
-    {    }
+    {
+    }
 
     const std::string getAccessToken() override;
 

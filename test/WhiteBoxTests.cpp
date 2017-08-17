@@ -427,15 +427,15 @@ void WhiteBoxTests::testAuthorization()
     Authorization auth1(Authorization::Type::Token, "abc");
     Poco::URI uri1("http://localhost");
     auth1.authorizeURI(uri1);
-    CPPUNIT_ASSERT_EQUAL(uri1.toString(), std::string("http://localhost/?access_token=abc"));
+    CPPUNIT_ASSERT_EQUAL(std::string("http://localhost/?access_token=abc"), uri1.toString());
     Poco::Net::HTTPRequest req1;
     auth1.authorizeRequest(req1);
-    CPPUNIT_ASSERT_EQUAL(req1.get("Authorization"), std::string("Bearer abc"));
+    CPPUNIT_ASSERT_EQUAL(std::string("Bearer abc"), req1.get("Authorization"));
 
     Authorization auth1modify(Authorization::Type::Token, "modified");
     // still the same uri1, currently "http://localhost/?access_token=abc"
     auth1modify.authorizeURI(uri1);
-    CPPUNIT_ASSERT_EQUAL(uri1.toString(), std::string("http://localhost/?access_token=modified"));
+    CPPUNIT_ASSERT_EQUAL(std::string("http://localhost/?access_token=modified"), uri1.toString());
 
     Authorization auth2(Authorization::Type::Header, "def");
     Poco::Net::HTTPRequest req2;
@@ -446,22 +446,22 @@ void WhiteBoxTests::testAuthorization()
     Poco::URI uri2("http://localhost");
     auth3.authorizeURI(uri2);
     // nothing added with the Authorization header approach
-    CPPUNIT_ASSERT_EQUAL(uri2.toString(), std::string("http://localhost"));
+    CPPUNIT_ASSERT_EQUAL(std::string("http://localhost"), uri2.toString());
     Poco::Net::HTTPRequest req3;
     auth3.authorizeRequest(req3);
-    CPPUNIT_ASSERT_EQUAL(req3.get("Authorization"), std::string("Basic huhu=="));
+    CPPUNIT_ASSERT_EQUAL(std::string("Basic huhu=="), req3.get("Authorization"));
 
     Authorization auth4(Authorization::Type::Header, "  Authorization: Basic blah== \n\r X-Something:   additional  ");
     Poco::Net::HTTPRequest req4;
     auth4.authorizeRequest(req4);
-    CPPUNIT_ASSERT_EQUAL(req4.get("Authorization"), std::string("Basic blah=="));
-    CPPUNIT_ASSERT_EQUAL(req4.get("X-Something"), std::string("additional"));
+    CPPUNIT_ASSERT_EQUAL(std::string("Basic blah=="), req4.get("Authorization"));
+    CPPUNIT_ASSERT_EQUAL(std::string("additional"), req4.get("X-Something"));
 
     Authorization auth5(Authorization::Type::Header, "  Authorization: Basic huh== \n\r X-Something-More:   else  \n\r");
     Poco::Net::HTTPRequest req5;
     auth5.authorizeRequest(req5);
-    CPPUNIT_ASSERT_EQUAL(req5.get("Authorization"), std::string("Basic huh=="));
-    CPPUNIT_ASSERT_EQUAL(req5.get("X-Something-More"), std::string("else"));
+    CPPUNIT_ASSERT_EQUAL(std::string("Basic huh=="), req5.get("Authorization"));
+    CPPUNIT_ASSERT_EQUAL(std::string("else"), req5.get("X-Something-More"));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
