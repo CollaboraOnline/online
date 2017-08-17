@@ -98,4 +98,4 @@ all-local: unittest
 	@echo "Running build-time unit tests.  For more thorough testing, please run 'make check'."
 	@echo
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	@${top_builddir}/test/unittest 2> unittest.log || { cat unittest.log ; exit 1 ; }
+	@${top_builddir}/test/unittest

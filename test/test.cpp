@@ -65,7 +65,7 @@ int main(int argc, char** argv)
 
     Log::initialize("tst", loglevel, true, false, {});
 
-    runClientTests(true, verbose);
+    return runClientTests(true, verbose)? 0: 1;
 }
 
 static bool IsStandalone = false;
@@ -134,7 +134,7 @@ bool runClientTests(bool standalone, bool verbose)
     outputter.setNoWrap();
     outputter.write();
 
-    return result.wasSuccessful() ? 0 : 1;
+    return result.wasSuccessful();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
