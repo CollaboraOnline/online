@@ -120,12 +120,17 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		d3XAxis = d3.svg.axis()
 			.scale(xScale)
 			.tickFormat(function(d) {
-				d = Math.abs(d / 1000);
+				var d = Math.abs(d / 1000), sUnit;
 				var units = ['s', 'min', 'hr'];
 				for (var i = 0; i < units.length && Math.abs(d) >= 60; i++) {
+					sUnit = parseInt(d % 60);
 					d = parseInt(d / 60);
 				}
-				return parseInt(d) + units[i] + ' ago';
+				if (i !== 0 && sUnit !== 0) {
+					return d + units[i][0] + ' ' + sUnit + units[i-1][0];
+				}
+				else
+					return d + units[i];
 			});
 
 		d3Line = d3.svg.line()
@@ -236,12 +241,12 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		}
 
 		vis.append('svg:g')
-		.attr('class', 'x-axis')
+		.attr('class', 'x-axis axis')
 		.attr('transform', 'translate(0,' + (this._graphHeight - this._graphMargins.bottom) + ')')
 		.call(xAxis);
 
 		vis.append('svg:g')
-		.attr('class', 'y-axis')
+		.attr('class', 'y-axis axis')
 		.attr('transform', 'translate(' + this._graphMargins.left + ',0)')
 		.call(yAxis);
 
@@ -251,7 +256,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 				.attr('d', line(data))
 				.attr('class', 'line')
 				.attr('stroke', 'blue')
-				.attr('stroke-width', 2)
+				.attr('stroke-width', 1)
 				.attr('fill', 'none');
 		}
 		else if (option === 'net') {
@@ -260,29 +265,54 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 				.attr('d', this._d3NetSentLine(this._sentAvgStats))
 				.attr('class', 'lineSent')
 				.attr('stroke', 'red')
-				.attr('stroke-width', 2)
+				.attr('stroke-width', 1)
 				.attr('fill', 'none');
 
 			vis.append('svg:path')
 				.attr('d', this._d3NetRecvLine(this._recvAvgStats))
 				.attr('class', 'lineRecv')
 				.attr('stroke', 'green')
-				.attr('stroke-width', 2)
+				.attr('stroke-width', 1)
 				.attr('fill', 'none');
 		}
 
 	},
 
 	_addNewData: function(oldData, newData, option) {
-		var size;
-		if (option === 'mem')
+		var size, graphName, line, elemSize;
+		elemSize = this._graphWidth - this._graphMargins['left'] - this._graphMargins['right'];
+
+		if (option === 'mem') {
 			size = this._memStatsSize;
-		else if (option === 'cpu')
+			graphName = '#MemVisualisation';
+			line = 'line';
+		}
+		else if (option === 'cpu') {
 			size = this._cpuStatsSize;
+			graphName = '#CpuVisualisation';
+			line = 'line';
+		}
+		else if (option === 'sent_avg') {
+			size = this._netStatsSize - this._netAvgSize + 1;
+			graphName = '#NetVisualisation';
+			line = 'lineSent';
+		}
+		else if (option === 'recv_avg') {
+			size = this._netStatsSize - this._netAvgSize + 1;
+			graphName = '#NetVisualisation';
+			line = 'lineRecv';
+		}
 		else if (option === 'sent' || option === 'recv')
 			size = this._netStatsSize;
-		else if (option === 'sent_avg' || option === 'recv_avg')
-			size = this._netStatsSize - this._netAvgSize + 1;
+
+		if (graphName === '#MemVisualisation' || graphName === '#CpuVisualisation' ||
+				graphName === '#NetVisualisation') {
+			d3.select(graphName)
+			.select('.' + line)
+			.attr('transform', 'translate(' + elemSize/size + ')')
+			.transition()
+			.attr('transform', 'translate(' + 0 + ')');
+		}
 
 		// make a space for new data
 		for (var i = oldData.length - 1; i > 0; i--) {
@@ -309,7 +339,9 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		svg.select('.x-axis')
 		.call(this._d3MemXAxis);
 
-		svg.select('.y-axis')
+		svg.transition()
+		.duration(500)
+		.select('.y-axis')
 		.call(this._d3MemYAxis);
 	},
 
@@ -324,7 +356,9 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		svg.select('.x-axis')
 		.call(this._d3CpuXAxis);
 
-		svg.select('.y-axis')
+		svg.transition()
+		.select('.y-axis')
+		.duration(500)
 		.call(this._d3CpuYAxis);
 	},
 
@@ -341,7 +375,9 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		svg.select('.x-axis')
 		.call(this._d3NetXAxis);
 
-		svg.select('.y-axis')
+		svg.transition()
+		.select('.y-axis')
+		.duration(500)
 		.call(this._d3NetYAxis);
 	},
 

@@ -140,10 +140,20 @@ tr:hover .userContainer .dropdown-menu, td:hover .docContainer .dropdown-menu{
 /*
  * Graph view buttons
  */
-
 .nav-tabs > li.active > a{
   background-color: #f5f5f5;
 }
 .graph-content {
   background-color: #f5f5f5;
+}
+
+.axis path, .axis line{
+  fill: none;
+  stroke: grey;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+path {
+  stroke-width: 1;
 }
