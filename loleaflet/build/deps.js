@@ -357,6 +357,7 @@ var deps = {
 
 	ControlDialog: {
 		src: ['control/Control.js',
+		      'control/Control.LokDialog.js',
 		      'control/Control.AlertDialog.js'],
 		heading: 'Controls',
 		desc: 'Handles vex dialogs for displaying alerts'

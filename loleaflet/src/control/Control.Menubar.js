@@ -766,6 +766,8 @@ L.Control.Menubar = L.Control.extend({
 			map.sendUnoCommand(unoCommand);
 		} else if (type === 'action') {
 			self._executeAction(item);
+		} else if (type === 'dialog') {
+			map.sendDialogCommand($(item).data('id'));
 		}
 
 		if ($(item).data('id') !== 'insertcomment')
@@ -845,6 +847,9 @@ L.Control.Menubar = L.Control.extend({
 			} else if (menu[i].type === 'unocommand') {
 				$(aItem).data('type', 'unocommand');
 				$(aItem).data('uno', menu[i].uno);
+			} else if (menu[i].type === 'dialog') {
+				$(aItem).data('type', 'dialog');
+				$(aItem).data('id', menu[i].id);
 			} else if (menu[i].type === 'separator') {
 				$(aItem).addClass('separator');
 			} else if (menu[i].type === 'action') {
