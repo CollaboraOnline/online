@@ -130,7 +130,8 @@ private:
     {
         if (_tokens[0] == "tile:" ||
             _tokens[0] == "tilecombine:" ||
-            _tokens[0] == "renderfont:")
+            _tokens[0] == "renderfont:" ||
+            _tokens[0] == "dialogpaint:")
         {
             return Type::Binary;
         }

@@ -149,6 +149,10 @@ tilecombine <parameters>
     comma-separated lists, and the number of elements in each must be
     same.
 
+dialog <command>
+
+    <command> is unique identifier for the dialog that needs to be painted.
+
 uno <command>
 
     <command> is a line of text.
