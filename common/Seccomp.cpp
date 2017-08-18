@@ -219,7 +219,7 @@ bool lockdown(Type type)
 
     return true;
 #else // DISABLE_SECCOMP == 0
-     LOG_WRN("Warning this code was compiled without seccomp enabled, this setup is not recommended for production.");
+     LOG_WRN("Warning: this binary was compiled with disabled seccomp-bpf.");
      return true;
 #endif // DISABLE_SECCOMP == 0
 }
