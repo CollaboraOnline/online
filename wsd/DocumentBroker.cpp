@@ -1075,6 +1075,10 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
         {
             handleTileCombinedResponse(payload);
         }
+        else if (command == "dialogpaint:")
+        {
+            handleDialogPaintResponse(payload);
+        }
         else if (command == "errortoall:")
         {
             LOG_CHECK_RET(message->tokens().size() == 3, false);
@@ -1164,6 +1168,17 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
     const std::string request = "tile " + tileMsg;
     _childProcess->sendTextFrame(request);
     _debugRenderedTileCount++;
+}
+
+void DocumentBroker::handleDialogRequest(const std::string& dialogId,
+                                         const std::shared_ptr<ClientSession>& /*session*/)
+{
+    assertCorrectThread();
+    std::unique_lock<std::mutex> lock(_mutex);
+
+    LOG_DBG("Sending dialog render request for dialog " << dialogId);
+    const std::string request = "dialog " + dialogId;
+    _childProcess->sendTextFrame(request);
 }
 
 void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
@@ -1263,6 +1278,31 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
     catch (const std::exception& exc)
     {
         LOG_ERR("Failed to process tile response [" << firstLine << "]: " << exc.what() << ".");
+    }
+}
+
+void DocumentBroker::handleDialogPaintResponse(const std::vector<char>& payload)
+{
+    const std::string firstLine = getFirstLine(payload);
+    LOG_DBG("Handling dialogpaint: " << firstLine);
+
+    const auto length = payload.size();
+    if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
+    {
+        const auto buffer = payload.data();
+        const auto offset = firstLine.size() + 1;
+
+        auto msgPayload = std::make_shared<Message>(firstLine,
+                                                    Message::Dir::Out,
+                                                    payload.size());
+        msgPayload->append("\n", 1);
+        msgPayload->append(buffer + offset, payload.size() - offset);
+
+        std::unique_lock<std::mutex> lock(_mutex);
+        for (const auto& sessionIt : _sessions)
+        {
+            sessionIt.second->enqueueSendMessage(msgPayload);
+        }
     }
 }
 
