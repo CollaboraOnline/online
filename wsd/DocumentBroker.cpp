@@ -729,7 +729,7 @@ void DocumentBroker::saveFileAs(const std::string& sessionId, const std::string&
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
-        const std::string newUrl = wopiStorage->createCopyFile(it->second->getAccessToken(), newFileName, path);
+        const std::string newUrl = wopiStorage->createCopyFile(it->second->getAuthorization(), newFileName, path);
         if (!newUrl.empty())
         {
             it->second->sendTextFrame("saveas: " + newUrl + " " + newFileName);

@@ -585,12 +585,12 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 }
 
 /// PutRelativeFile - uri format: http://server/<...>/wopi*/files/<id>/
-std::string WopiStorage::createCopyFile(const std::string& accessToken, const std::string& newFileName, const std::string& path)
+std::string WopiStorage::createCopyFile(const Authorization& auth, const std::string& newFileName, const std::string& path)
 {
     const auto size = getFileSize(_jailedFilePath);
     std::ostringstream oss;
     Poco::URI uriObject(_uri);
-    setQueryParameter(uriObject, "access_token", accessToken);
+    auth.authorizeURI(uriObject);
 
     LOG_DBG("Wopi PutRelativeFile(save as) request for : " << uriObject.toString());
 
@@ -600,6 +600,7 @@ std::string WopiStorage::createCopyFile(const std::string& accessToken, const st
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", WOPI_AGENT_STRING);
+        auth.authorizeRequest(request);
         request.set("X-WOPI-Override", "PUT_RELATIVE");
         request.set("X-WOPI-RelativeTarget", newFileName + "." + getFileExtension());
         request.set("X-WOPI-Size", std::to_string(size));
