@@ -581,7 +581,7 @@ L.Socket = L.Class.extend({
 				}
 			}
 		}
-		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:')) {
+		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('dialogpaint:')) {
 			// log the tile msg separately as we need the tile coordinates
 			L.Log.log(textMsg, L.INCOMING);
 			if (imgBytes !== undefined) {

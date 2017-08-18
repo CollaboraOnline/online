@@ -145,6 +145,12 @@ L.Map.include({
 		}
 	},
 
+	sendDialogCommand: function (command, json) {
+		if (this._permission === 'edit') {
+			this._socket.sendMessage('dialog ' + command + (json ? ' ' + JSON.stringify(json) : ''));
+		}
+	},
+
 	toggleCommandState: function (unoState) {
 		if (this._permission === 'edit') {
 			if (!unoState.startsWith('.uno:')) {
