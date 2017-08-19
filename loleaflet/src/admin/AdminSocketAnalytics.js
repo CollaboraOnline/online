@@ -173,7 +173,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 			this._d3NetYAxis = d3.svg.axis()
 				.scale(this._yNetScale)
 				.tickFormat(function (d) {
-					return Util.humanizeMem(d) + '/sec';
+					return Util.humanizeMem(d/1000) + '/sec';
 				})
 				.orient('left');
 			this._d3NetSentLine = d3Line;
@@ -534,7 +534,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 				data = textMsg.substring(0, textMsg.length - 1).split(',');
 
 				for (i = this._sentStatsData.length - 1, j = data.length - 1; i >= 0 && j >= 0; i--, j--) {
-					this._sentStatsData[i].value = parseInt(data[j]) / this._netStatsInterval;
+					this._sentStatsData[i].value = parseInt(data[j]);
 				}
 				this._updateAverage('sent', true);
 
@@ -544,7 +544,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 			else {
 				// this is a notification data; append to _sentStatsData
 				data = textMsg.trim();
-				this._addNewData(this._sentStatsData, parseInt(data) / this._netStatsInterval, 'sent');
+				this._addNewData(this._sentStatsData, parseInt(data), 'sent');
 				this._updateAverage('sent', false);
 				this._updateNetGraph();
 			}
@@ -556,7 +556,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 				data = textMsg.substring(0, textMsg.length - 1).split(',');
 
 				for (i = this._recvStatsData.length - 1, j = data.length - 1; i >= 0 && j >= 0; i--, j--) {
-					this._recvStatsData[i].value = parseInt(data[j]) / this._netStatsInterval;
+					this._recvStatsData[i].value = parseInt(data[j]);
 				}
 				this._updateAverage('recv', true);
 
@@ -566,7 +566,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 			else {
 				// this is a notification data; append to _recvStatsData
 				data = textMsg.trim();
-				this._addNewData(this._recvStatsData, parseInt(data) / this._netStatsInterval, 'recv');
+				this._addNewData(this._recvStatsData, parseInt(data), 'recv');
 				this._updateAverage('recv', false);
 				this._updateNetGraph();
 			}
