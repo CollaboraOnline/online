@@ -806,6 +806,10 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 	border-width: 0px .5px;
 	border-style: solid;
 	border-color: grey;
+	font-size: 10px;
+	text-align: center;
+	color: grey;
+	line-height: 7px;
 	}
 
 .loleaflet-ruler-margin {

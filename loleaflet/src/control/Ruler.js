@@ -7,6 +7,7 @@ L.Control.Ruler = L.Control.extend({
 	options: {
 		interactive: true,
 		marginSet: false,
+		displayNumber: true,
 		margin1: null,
 		margin2: null,
 		nullOffset: null,
@@ -74,14 +75,21 @@ L.Control.Ruler = L.Control.extend({
 
 		this._rFace.style.width = wPixel + 'px';
 		this._rFace.style.backgroundColor = 'white';
-		this._rBPContainer.style.marginLeft = (-1 * (convertRatioDrag *(1000 - (this.options.nullOffset % 1000))) + 1) + 'px';
+		this._rBPContainer.style.marginLeft = (-1 * (convertRatioDrag *(500 - (this.options.nullOffset % 1000))) + 1) + 'px';
+
+		var numCounter = -1 * parseInt(this.options.nullOffset/1000);
 
 		$('.' + classMajorSep).remove();
 		for (var num = 0; num <= (this.options.pageWidth / 1000) + 1; num++) {
 
 			var marker = L.DomUtil.create('div', classMajorSep, this._rBPContainer);
 			marker.style.width = convertRatioDrag*1000 - 2 + 'px';
-
+			if (this.options.displayNumber) {
+				if (numCounter !== 0)
+					marker.innerText = Math.abs(numCounter++);
+				else
+					numCounter++;
+			}
 		}
 
 		if (!this.options.marginSet) {
