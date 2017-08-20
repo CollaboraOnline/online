@@ -12,7 +12,7 @@ L.Control.Ruler = L.Control.extend({
 		nullOffset: null,
 		pageOffset: null,
 		pageWidth: null,
-		unit: 'cm',
+		unit: null,
 		convertRatioDrag: null
 	},
 
@@ -55,6 +55,8 @@ L.Control.Ruler = L.Control.extend({
 		classDraggable = 'loleaflet-ruler-drag',
 		rightComp = 'loleaflet-ruler-right',
 		leftComp = 'loleaflet-ruler-left',
+		lToolTip = 'loleaflet-ruler-ltooltip',
+		rToolTip = 'loleaflet-ruler-rtooltip',
 		leftMarginStr = _('Left Margin'),
 		rightMarginStr = _('Right Margin'),
 		convertRatioDrag, lMargin, rMargin, wPixel, hPixel;
@@ -91,7 +93,9 @@ L.Control.Ruler = L.Control.extend({
 
 			if (this.options.interactive) {
 				this._lMarginDrag = L.DomUtil.create('div', classDraggable + ' ' + leftComp, this._rMarginWrapper);
+				this._lToolTip = L.DomUtil.create('div', lToolTip, this._lMarginDrag)
 				this._rMarginDrag = L.DomUtil.create('div', classDraggable + ' ' + rightComp, this._rMarginWrapper);
+				this._rToolTip = L.DomUtil.create('div', rToolTip, this._rMarginDrag)
 				this._lMarginDrag.style.cursor = 'e-resize';
 				this._rMarginDrag.style.cursor = 'w-resize';
 				this._lMarginDrag.title = leftMarginStr;
@@ -130,33 +134,43 @@ L.Control.Ruler = L.Control.extend({
 
 	_moveMargin: function(e) {
 		var posChange = e.clientX - this._initialposition;
-
+		var unit = this.options.unit ? this.options.unit : ' cm';
 		if (L.DomUtil.hasClass(this._rMarginDrag, 'leaflet-drag-moving')) {
 			var rMargin = this.options.pageWidth - (this.options.nullOffset + this.options.margin2);
-			this._rMarginDrag.style.width = this.options.convertRatioDrag*rMargin - posChange + 'px';
+			var newPos = this.options.convertRatioDrag*rMargin - posChange;
+			this._rToolTip.style.display = 'block';
+			this._rToolTip.style.right = newPos - 25 + 'px';
+			this._rToolTip.innerText = (Math.round(this.options.pageWidth / 100 - newPos / (this.options.convertRatioDrag * 100)) / 10).toString() + unit;
+			this._rMarginDrag.style.width = newPos + 'px';
 		}
 		else {
-			this._lMarginDrag.style.width = this.options.convertRatioDrag*this.options.nullOffset + posChange + 'px';
+			var newPos = this.options.convertRatioDrag*this.options.nullOffset + posChange;
+			this._lToolTip.style.display = 'block';
+			this._lToolTip.style.left = newPos - 25 + 'px';
+			this._lToolTip.innerText = (Math.round(newPos / (this.options.convertRatioDrag * 100)) / 10).toString() + unit;
+			this._lMarginDrag.style.width = newPos + 'px';
 		}
 	},
 
+
 	_endDrag: function(e) {
-		var dragableElem = e.originalEvent.srcElement || e.originalEvent.target;
 		var posChange = e.originalEvent.clientX - this._initialposition;
 		var unoObj = {}, marginType, fact;
 
 		L.DomEvent.off(this._rFace, 'mousemove', this._moveMargin, this);
 		L.DomEvent.off(this._map, 'mouseup', this._endDrag, this);
 
-		if (L.DomUtil.hasClass(dragableElem, 'loleaflet-ruler-right')) {
+		if (L.DomUtil.hasClass(this._rMarginDrag, 'leaflet-drag-moving')) {
 			marginType = 'Margin2';
 			fact = -1;
 			L.DomUtil.removeClass(this._rMarginDrag, 'leaflet-drag-moving');
+			this._rToolTip.style.display = 'none';
 		}
 		else {
 			marginType = 'Margin1';
 			fact = 1;
 			L.DomUtil.removeClass(this._lMarginDrag, 'leaflet-drag-moving');
+			this._lToolTip.style.display = 'none';
 		}
 
 		this._rFace.style.cursor = 'default';

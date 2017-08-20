@@ -811,7 +811,7 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 .loleaflet-ruler-margin {
 	height: 100%;
 	background-color: #efefef;
-	transition: width .2s;
+	transition: width .1s;
 	}
 
 .loleaflet-ruler-left {
@@ -847,4 +847,19 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 .loleaflet-ruler-right.leaflet-drag-moving {
 	height: 100vh;
 	border-left: 2px dotted grey;
+	}
+
+.loleaflet-ruler-ltooltip, .loleaflet-ruler-rtooltip {
+	display: none;
+	text-align: center;
+	width: 46px;
+	height: 20px;
+	padding: 2px 4px;
+	line-height: 20px;
+	position: absolute;
+	border: 1px solid grey;
+	background-color: rgba(0,0,0,.4);
+	border-radius: 2px;
+	top: 24px;
+	color: white;
 	}
