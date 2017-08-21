@@ -529,7 +529,11 @@ void Admin::notifyForkit()
     oss << "setconfig limit_virt_mem_mb " << _defDocProcSettings.LimitVirtMemMb << '\n'
         << "setconfig limit_stack_mem_kb " << _defDocProcSettings.LimitStackMemKb << '\n'
         << "setconfig limit_file_size_mb " << _defDocProcSettings.LimitFileSizeMb << '\n';
-    IoUtil::writeToPipe(_forKitWritePipe, oss.str());
+
+    if (_forKitWritePipe != -1)
+        IoUtil::writeToPipe(_forKitWritePipe, oss.str());
+    else
+        LOG_INF("Forkit write pipe not set (yet).");
 }
 
 void Admin::triggerMemoryCleanup(size_t totalMem)
