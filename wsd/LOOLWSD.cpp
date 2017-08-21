@@ -812,7 +812,7 @@ void LOOLWSD::initialize(Application& self)
     docProcSettings.LimitVirtMemMb = getConfigValue<int>("per_document.limit_virt_mem_mb", 0);
     docProcSettings.LimitStackMemKb = getConfigValue<int>("per_document.limit_stack_mem_kb", 0);
     docProcSettings.LimitFileSizeMb = getConfigValue<int>("per_document.limit_file_size_mb", 0);
-    Admin::instance().setDefDocProcSettings(docProcSettings);
+    Admin::instance().setDefDocProcSettings(docProcSettings, false);
 
 #if ENABLE_DEBUG
     std::cerr << "\nLaunch this in your browser:\n\n"

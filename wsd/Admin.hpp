@@ -104,10 +104,11 @@ public:
     void dumpState(std::ostream& os) override;
 
     const DocProcSettings& getDefDocProcSettings() const { return _defDocProcSettings; }
-    void setDefDocProcSettings(const DocProcSettings& docProcSettings)
+    void setDefDocProcSettings(const DocProcSettings& docProcSettings, bool notifyKit)
     {
         _defDocProcSettings = docProcSettings;
-        notifyForkit();
+        if (notifyKit)
+            notifyForkit();
     }
 
 private:

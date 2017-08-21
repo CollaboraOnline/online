@@ -239,7 +239,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
                     LOG_ERR("Unknown limit: " << settingName);
 
                 model.notify("settings " + settingName + '=' + std::to_string(settingVal));
-                _admin->setDefDocProcSettings(docProcSettings);
+                _admin->setDefDocProcSettings(docProcSettings, true);
             }
         }
     }
