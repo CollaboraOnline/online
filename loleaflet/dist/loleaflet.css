@@ -333,3 +333,10 @@ body {
 	font: bold 18px 'Lucida Console', Monaco, monospace;
 	text-indent: 1px;
 }
+
+#lokdialog_container {
+        padding: 0px;
+	overflow: hidden;
+	width: auto;
+	height: auto;
+}

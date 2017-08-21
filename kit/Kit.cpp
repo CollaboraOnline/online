@@ -849,7 +849,9 @@ public:
     {
         assert(ws && "Expected a non-null websocket.");
 
-        size_t pixmapDataSize = 4 * 800 * 600;
+        const int nCanvasWidth = 800;
+        const int nCanvasHeight = 600;
+        size_t pixmapDataSize = 4 * nCanvasWidth * nCanvasHeight;
         std::vector<unsigned char> pixmap(pixmapDataSize);
 
         std::unique_lock<std::mutex> lock(_documentMutex);
@@ -865,8 +867,8 @@ public:
             return;
         }
 
-        int nWidth = 0;
-        int nHeight = 0;
+        int nWidth = nCanvasWidth;
+        int nHeight = nCanvasHeight;
         Timestamp timestamp;
         _loKitDocument->paintDialog(tokens[1].c_str(), pixmap.data(), nWidth, nHeight);
         const double area = nWidth * nHeight;
@@ -882,7 +884,7 @@ public:
         std::memcpy(output.data(), response.data(), response.size());
 
         // TODO: use png cache for dialogs too
-        if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, nWidth, nHeight, nWidth, nHeight, output, LOK_TILEMODE_RGBA))
+        if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, nWidth, nHeight, nCanvasWidth, nCanvasHeight, output, LOK_TILEMODE_RGBA))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");
@@ -955,7 +957,7 @@ public:
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
         std::vector<char> output;
-        output.reserve(pixmapWidth * pixmapHeight * 4);
+        output.reserve(pixmapSize);
 
         size_t tileIndex = 0;
         for (Util::Rectangle& tileRect : tileRecs)
