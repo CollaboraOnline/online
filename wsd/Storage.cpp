@@ -320,7 +320,7 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
     {
         LOG_ERR("copyTo(\"" << _jailedFilePath << "\", \"" << _uri.getPath() <<
                 "\") failed: " << exc.displayText());
-        throw;
+        return StorageBase::SaveResult::FAILED;
     }
 
     return StorageBase::SaveResult::OK;
