@@ -438,6 +438,9 @@ L.TileLayer = L.GridLayer.extend({
 			this._onTileMsg(textMsg, img);
 		}
 		else if (textMsg.startsWith('dialogpaint:')) {
+			this._onDialogPaintMsg(textMsg, img);
+		}
+		else if (textMsg.startsWith('dialog:')) {
 			this._onDialogMsg(textMsg, img);
 		}
 		else if (textMsg.startsWith('unocommandresult:')) {
@@ -1183,18 +1186,24 @@ L.TileLayer = L.GridLayer.extend({
 
 	},
 
-	_onDialogMsg: function(textMsg, img) {
+	_onDialogPaintMsg: function(textMsg, img) {
 		var command = this._map._socket.parseServerCmd(textMsg);
 		var dlgWidth = command.width;
 		var dlgHeight = command.height;
 
-		this._map.fire('dialog', {
+		this._map.fire('dialogpaint', {
 			id: command.id,
 			dialog: img,
 			// TODO: add id too
 			width: dlgWidth,
 			height: dlgHeight
 		});
+	},
+
+	_onDialogMsg: function(textMsg) {
+		textMsg = textMsg.substring('dialog: '.length);
+		var dialogMsg = JSON.parse(textMsg);
+		this._map.fire('dialog', dialogMsg);
 	},
 
 	_onTileMsg: function (textMsg, img) {
