@@ -290,7 +290,7 @@ struct DeltaGenerator {
 
     struct DeltaData {
         TileWireId _wid;
-        std::shared_ptr<std::vector<char>> _rawData;
+        std::shared_ptr<std::vector<uint32_t>> _rawData;
     };
     std::vector<DeltaData> _deltaEntries;
 
@@ -299,8 +299,10 @@ struct DeltaGenerator {
         const DeltaData &curData,
         std::vector<char>& output)
     {
-        std::vector<char> &prev = *prevData._rawData.get();
-        std::vector<char> &cur = *curData._rawData.get();
+        std::vector<uint32_t> &prev = *prevData._rawData.get();
+        std::vector<uint32_t> &cur = *curData._rawData.get();
+
+        // FIXME: should we split and compress alpha separately ?
 
         if (prev.size() != cur.size())
         {
@@ -311,43 +313,59 @@ struct DeltaGenerator {
         output.push_back('D');
         LOG_TRC("building delta of " << prev.size() << "bytes");
         // FIXME: really lame - some RLE might help etc.
-        for (size_t i = 0; i < prev.size(); ++i)
+        for (size_t i = 0; i < prev.size();)
         {
             int sameCount = 0;
             while (i + sameCount < prev.size() &&
                    prev[i+sameCount] == cur[i+sameCount])
             {
-                if (sameCount >= 127)
-                    break;
                 ++sameCount;
             }
             if (sameCount > 0)
-                output.push_back(sameCount);
-            i += sameCount;
-            LOG_TRC("identical " << sameCount << "bytes");
+            {
+#if 0
+                if (sameCount < 64)
+                    output.push_back(sameCount);
+                else
+#endif
+                {
+                    output.push_back(0x80 | 0x00); // long-same
+                    output.push_back(sameCount & 0xff);
+                    output.push_back(sameCount >> 8);
+                }
+                i += sameCount;
+                LOG_TRC("identical " << sameCount << "pixels");
+            }
 
             int diffCount = 0;
             while (i + diffCount < prev.size() &&
-                   (prev[i+diffCount] != cur[i+diffCount] || diffCount < 3))
+                   (prev[i+diffCount] != cur[i+diffCount]))
             {
-                if (diffCount >= 127)
-                    break;
                 ++diffCount;
             }
 
             if (diffCount > 0)
             {
-                output.push_back(diffCount | 0x80);
-                for (int j = 0; j < diffCount; ++j)
-                    output.push_back(cur[i+j]);
+#if 0
+                if (diffCount < 64)
+                    output.push_back(0x40 & diffCount);
+                else
+#endif
+                {
+                    output.push_back(0x80 | 0x40); // long-diff
+                    output.push_back(diffCount & 0xff);
+                    output.push_back(diffCount >> 8);
+                }
+
+                output.insert(output.end(), (char *)&cur[i], (char *)&cur[i+diffCount]);
+                LOG_TRC("different " << diffCount << "pixels");
+                i += diffCount;
             }
-            LOG_TRC("different " << diffCount << "bytes");
-            i += diffCount;
         }
         return true;
     }
 
-    std::shared_ptr<std::vector<char>> dataToVector(
+    std::shared_ptr<std::vector<uint32_t>> dataToVector(
         unsigned char* pixmap, size_t startX, size_t startY,
         int width, int height,
         int bufferWidth, int bufferHeight)
@@ -355,16 +373,16 @@ struct DeltaGenerator {
         assert (startX + width <= (size_t)bufferWidth);
         assert (startY + height <= (size_t)bufferHeight);
 
-        auto vector = std::make_shared<std::vector<char>>();
+        auto vector = std::make_shared<std::vector<uint32_t>>();
         LOG_TRC("Converting data to vector of size "
                 << (width * height * 4) << " width " << width
                 << " height " << height);
 
-        vector->resize(width * height * 4);
+        vector->resize(width * height);
         for (int y = 0; y < height; ++y)
         {
             size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
-            memcpy(&(*vector)[y * width * 4], pixmap + position, width * 4);
+            memcpy(&(*vector)[y * width], pixmap + position, width * 4);
         }
 
         return vector;

@@ -13,6 +13,18 @@ if (typeof String.prototype.startsWith !== 'function') {
 	};
 }
 
+function hex2string(inData)
+{
+	hexified = [];
+	data = new Uint8Array(inData);
+	for (var i = 0; i < data.length; i++) {
+		hex = data[i].toString(16);
+		paddedHex = ('00' + hex).slice(-2);
+		hexified.push(paddedHex);
+	}
+	return hexified.join('');
+}
+
 L.Compatibility = {
 	clipboardGet: function (event) {
 		var text = null;
@@ -1283,7 +1295,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (tile && typeof(img) == 'object') {
 			// 'Uint8Array' delta
-			console.log('hit here with a delta');
 			var canvas = document.createElement('canvas');
 			canvas.width = 256;
 			canvas.height = 256;
@@ -1298,18 +1309,47 @@ L.TileLayer = L.GridLayer.extend({
 			var delta = img;
 			var pixSize = canvas.width * canvas.height * 4;
 			var offset = 0;
+
+			console.log('Applying a delta of length ' + delta.length + ' pix size: ' + pixSize + '\nhex: ' + hex2string(delta));
+
+			// wipe to grey.
+//			for (var i = 0; i < pixSize * 4; ++i)
+//			{
+//				imgData.data[i] = 128;
+//			}
+
+			// Apply delta.
 			for (var i = 1; i < delta.length &&
-			     offset < pixSize; ++i)
+			     offset < pixSize;)
 			{
-				var span = delta[i] & 127;
-				if (delta[i] & 128) { // changed run.
+//				var span = delta[i];
+//				var isChangedRun = span & 64;
+//				if (span >= 128)
+//				{
+				// first char is a control code.
+				var isChangedRun = delta[i++] & 64;
+				span = delta[i++];
+				span += delta[i++] * 256;
+//				}
+				if (isChangedRun) {
 					console.log('apply new span of size ' + span + ' at offset ' + i + ' into delta at byte: ' + offset);
+					span *= 4;
 					while (span-- > 0) {
-						imgData.data[offset++] = delta[++i];
+						imgData.data[offset++] = delta[i++];
 					}
+					imgData.data[offset - 2] = 256; // debug - blue terminator
 				} else {
-					offset += span;
+					console.log('apply unchanged span of size ' + span + ' at offset ' + i + ' into delta at byte: ' + offset);
+					offset += span * 4;
+					imgData.data[offset - 3] = 256; // debug - green terminator
 				}
+			}
+
+			while (offset < pixSize) // debug
+			{
+				imgData.data[offset] = 256; // redden the remaining section.
+				imgData.data[offset+3] = 256; // with some alpha
+				offset += 4;
 			}
 			ctx.putImageData(imgData, 0, 0);
 
