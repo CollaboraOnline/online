@@ -877,7 +877,7 @@ public:
                 << " and rendered in " << (elapsed/1000.) <<
                 " ms (" << area / elapsed << " MP/s).");
 
-        const std::string response = "dialogpaint: width=" + std::to_string(nWidth) + " height=" + std::to_string(nHeight) + "\n";
+        const std::string response = "dialogpaint: id=" + tokens[1] + " width=" + std::to_string(nWidth) + " height=" + std::to_string(nHeight) + "\n";
         std::vector<char> output;
         output.reserve(response.size() + pixmapDataSize);
         output.resize(response.size());

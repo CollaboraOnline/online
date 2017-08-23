@@ -334,7 +334,7 @@ body {
 	text-indent: 1px;
 }
 
-#lokdialog_container {
+.lokdialog_container.ui-dialog-content.ui-widget-content {
         padding: 0px;
 	overflow: hidden;
 	width: auto;

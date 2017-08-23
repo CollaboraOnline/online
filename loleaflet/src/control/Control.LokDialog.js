@@ -10,18 +10,19 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogMsg: function (e) {
-		var content = '<div id="lokdialog_container"><img id="lokdialog_content" src= ' + e.dialog + '></div>';
+		var dialogId = e.id.replace('.uno:', '');
+		var content = '<div class="lokdialog_container" id="' + dialogId + '">' +
+		    '<img class="lokdialog_content" src= ' + e.dialog + '></div>';
 		$(document.body).append(content);
-		$('#lokdialog_container').dialog({
+		$('#' + dialogId).dialog({
 			width: e.width,
 			height: 'auto',
-			closeText: 'X',
 			title: 'LOK Dialog', // TODO: Get the 'real' dialog title from the backend
 			modal: false,
 			closeOnEscape: true,
 			resizable: false,
 			close: function(e, ui) {
-				$('#lokdialog_container').remove();
+				$('#' + dialogId).remove();
 			}
 		});
 	}
