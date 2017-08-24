@@ -176,6 +176,7 @@ private:
     bool insertFile(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool keyEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool mouseEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool dialogMouseEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool unoCommand(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool selectText(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool selectGraphic(const char* buffer, int length, const std::vector<std::string>& tokens);

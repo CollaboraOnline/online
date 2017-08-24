@@ -220,6 +220,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "insertfile" ||
                tokens[0] == "key" ||
                tokens[0] == "mouse" ||
+               tokens[0] == "dialogmouse" ||
                tokens[0] == "uno" ||
                tokens[0] == "selecttext" ||
                tokens[0] == "selectgraphic" ||
@@ -263,6 +264,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "mouse")
         {
             return mouseEvent(buffer, length, tokens);
+        }
+        else if (tokens[0] == "dialogmouse")
+        {
+            return dialogMouseEvent(buffer, length, tokens);
         }
         else if (tokens[0] == "uno")
         {
@@ -782,6 +787,44 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, const std:
     getLOKitDocument()->setView(_viewId);
 
     getLOKitDocument()->postMouseEvent(type, x, y, count, buttons, modifier);
+
+    return true;
+}
+
+bool ChildSession::dialogMouseEvent(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+{
+    int type, x, y, count;
+    bool success = true;
+
+    // default values for compatibility reasons with older loleaflets
+    int buttons = 1; // left button
+    int modifier = 0;
+    std::string dialogId;
+    if (tokens.size() < 6 ||
+        !getTokenString(tokens[1], "dialogid", dialogId) ||
+        !getTokenKeyword(tokens[2], "type",
+                         {{"buttondown", LOK_MOUSEEVENT_MOUSEBUTTONDOWN},
+                          {"buttonup", LOK_MOUSEEVENT_MOUSEBUTTONUP},
+                          {"move", LOK_MOUSEEVENT_MOUSEMOVE}},
+                         type) ||
+        !getTokenInteger(tokens[3], "x", x) ||
+        !getTokenInteger(tokens[4], "y", y) ||
+        !getTokenInteger(tokens[5], "count", count) ||
+        !getTokenInteger(tokens[6], "buttons", buttons) ||
+        !getTokenInteger(tokens[7], "modifier", modifier))
+    {
+        success = false;
+    }
+
+    if (!success)
+    {
+        sendTextFrame("error: cmd=dialogmouse kind=syntax");
+        return false;
+    }
+
+    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+
+    getLOKitDocument()->postDialogMouseEvent(dialogId.c_str(), type, x, y, count, buttons, modifier);
 
     return true;
 }

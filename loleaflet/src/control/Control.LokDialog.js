@@ -2,7 +2,7 @@
  * L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global vex $ */
+/* global vex $ map */
 L.Control.LokDialog = L.Control.extend({
 	onAdd: function (map) {
 		map.on('dialogpaint', this._onDialogPaint, this);
@@ -24,6 +24,8 @@ L.Control.LokDialog = L.Control.extend({
 			// ignore any invalidate callbacks when we have closed the dialog
 			if (this._isOpen(e.dialogId))
 				this._map.sendDialogCommand(e.dialogId);
+		} else if (e.action === 'close') {
+			this._onDialogClose(e.dialogId);
 		}
 	},
 
@@ -44,7 +46,40 @@ L.Control.LokDialog = L.Control.extend({
 			}
 		});
 
+		that = this;
+		// attach the mouse/key events
+		$('#' + dialogId + ' > .lokdialog_content').on('mousedown', function(e) {
+			var buttons = 0;
+			buttons |= e.button === map['mouse'].JSButtons.left ? map['mouse'].LOButtons.left : 0;
+			buttons |= e.button === map['mouse'].JSButtons.middle ? map['mouse'].LOButtons.middle : 0;
+			buttons |= e.button === map['mouse'].JSButtons.right ? map['mouse'].LOButtons.right : 0;
+			var modifier = 0;
+			that._postDialogMouseEvent('buttondown', dialogId, e.offsetX, e.offsetY, 1, buttons, modifier);
+		});
+
+		$('#' + dialogId + ' > .lokdialog_content').on('mouseup', function(e) {
+			var buttons = 0;
+			buttons |= e.button === map['mouse'].JSButtons.left ? map['mouse'].LOButtons.left : 0;
+			buttons |= e.button === map['mouse'].JSButtons.middle ? map['mouse'].LOButtons.middle : 0;
+			buttons |= e.button === map['mouse'].JSButtons.right ? map['mouse'].LOButtons.right : 0;
+			var modifier = 0;
+			that._postDialogMouseEvent('buttonup', dialogId, e.offsetX, e.offsetY, 1, buttons, modifier);
+		});
+
+		$('#' + dialogId + ' > .lokdialog_content').on('mousemove', function(e) {
+			//that._postDialogMouseEvent('move', dialogId, e.offsetX, e.offsetY, 1, 0, 0);
+		});
+
 		this._dialogs[dialogId] = true;
+	},
+
+	_postDialogMouseEvent: function(type, dialogid, x, y, count, buttons, modifier) {
+		if (!dialogid.startsWith('.uno:'))
+			dialogid = '.uno:' + dialogid;
+
+		this._map._socket.sendMessage('dialogmouse dialogid=' + dialogid +  ' type=' + type +
+		                              ' x=' + x + ' y=' + y + ' count=' + count +
+		                              ' buttons=' + buttons + ' modifier=' + modifier);
 	},
 
 	_onDialogClose: function(dialogId) {
