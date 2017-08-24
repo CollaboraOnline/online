@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-07 11:02+0000\n"
+"POT-Creation-Date: 2017-08-24 08:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /oc/libo_online/loleaflet-help-oc.po\n"
-"X-Pootle-Revision: 2329631\n"
+"X-Pootle-Revision: 2713039\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -662,7 +662,7 @@ msgstr "Alt + Ctrl + las sagetas de direccion"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "Coma Alt, mas actiu unicament se la cellula activa es modificada"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
 msgid "Ctrl + Alt + Shift + Arrow Keys"
@@ -769,7 +769,7 @@ msgstr "Ctrl + Maj + Espaci"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Insert line break"
-msgstr ""
+msgstr "Inserir un saut de linha"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Shift + Enter"
@@ -826,7 +826,7 @@ msgstr "Emplenar cap aval"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
 msgid "Set Optimal Column Width"
-msgstr ""
+msgstr "Definir una largor de colomna optimala"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
 msgid "Two decimal places, thousands separator"

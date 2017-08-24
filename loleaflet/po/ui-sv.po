@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-07 08:01+0000\n"
+"POT-Creation-Date: 2017-08-23 08:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /sv/libo_online/loleaflet-ui-sv.po\n"
-"X-Pootle-Revision: 2654192\n"
+"X-Pootle-Revision: 2683905\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -51,7 +51,6 @@ msgid "Users online"
 msgstr "Anslutna användare"
 
 #: admin.strings.js:14
-#, fuzzy
 msgid "Users Name"
 msgstr "Användarnamn"
 
@@ -61,7 +60,7 @@ msgstr "Öppna dokument"
 
 #: admin.strings.js:16
 msgid "Number of Documents"
-msgstr ""
+msgstr "Antal dokument"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
@@ -69,11 +68,11 @@ msgstr "Använt minne"
 
 #: admin.strings.js:18
 msgid "Bytes sent"
-msgstr ""
+msgstr "Skickade byte"
 
 #: admin.strings.js:19
 msgid "Bytes received"
-msgstr ""
+msgstr "Mottagna byte"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -97,7 +96,7 @@ msgstr "Tid utan aktivitet"
 
 #: admin.strings.js:25
 msgid "Modified"
-msgstr ""
+msgstr "Ändrad"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -2033,7 +2032,7 @@ msgstr "Markera allt"
 #: src/control/Control.Menubar.js:31
 #: src/control/Control.Menubar.js:459
 msgid "Find & Replace"
-msgstr ""
+msgstr "Sök och ersätt"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
@@ -2488,15 +2487,15 @@ msgstr "Ta bort rad"
 
 #: src/control/Control.Menubar.js:463
 msgid "Replace"
-msgstr ""
+msgstr "Ersätt"
 
 #: src/control/Control.Menubar.js:468
 msgid "Replace All"
-msgstr ""
+msgstr "Ersätt alla"
 
 #: src/control/Control.Menubar.js:473
 msgid "Prev"
-msgstr ""
+msgstr "Föregående"
 
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
@@ -2655,15 +2654,15 @@ msgstr ""
 
 #: src/layer/marker/Annotation.js:169
 msgid "Open menu"
-msgstr ""
+msgstr "Öppna meny"
 
 #: src/layer/tile/TileLayer.js:182
 msgid "Modify"
-msgstr ""
+msgstr "Ändra"
 
 #: src/layer/tile/TileLayer.js:194
 msgid "Remove"
-msgstr ""
+msgstr "Ta bort"
 
 #: src/map/Map.js:131
 msgid "Initializing..."

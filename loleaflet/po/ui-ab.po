@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-07 11:01+0000\n"
+"POT-Creation-Date: 2017-08-23 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /ab/libo_online/loleaflet-ui-ab.po\n"
-"X-Pootle-Revision: 2614545\n"
+"X-Pootle-Revision: 2702644\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: admin.strings.js:6
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Анавигациа"
 
 #: admin.strings.js:7
 msgid "Settings"
-msgstr ""
+msgstr "Апараметрқәа"
 
 #: admin.strings.js:8
 msgid "Overview"
@@ -32,15 +32,15 @@ msgstr ""
 
 #: admin.strings.js:9
 msgid "(current)"
-msgstr ""
+msgstr "(уажәтәи)"
 
 #: admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "Аналитика"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "Ажурнал"
 
 #: admin.strings.js:11
 msgid "Dashboard"
@@ -76,19 +76,19 @@ msgstr ""
 
 #: admin.strings.js:15
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: admin.strings.js:16
 msgid "Document"
-msgstr ""
+msgstr "Адокумент"
 
 #: admin.strings.js:17
 msgid "Number of views"
-msgstr ""
+msgstr "Ахәаҧшрақәа рхыҧхьаӡара"
 
 #: admin.strings.js:18
 msgid "Elapsed time"
-msgstr ""
+msgstr "Ицахьо аамҭа"
 
 #: admin.strings.js:19
 msgid "Idle time"
@@ -104,7 +104,7 @@ msgstr ""
 
 #: admin.strings.js:21
 msgid "Graphs"
-msgstr ""
+msgstr "Аграфикқәа"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -113,7 +113,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:235
 #: src/layer/marker/Annotation.js:184
 msgid "Save"
-msgstr ""
+msgstr "Иеиқәырхатәуп"
 
 #: admin.strings.js:23
 msgid "Cache size of memory statistics"
@@ -133,11 +133,11 @@ msgstr ""
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "Атема аҧштәқәа"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "Истандарту аҧштәқәа"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
@@ -165,27 +165,27 @@ msgstr ""
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "Иҧсахтәуп азгәаҭақәа "
 
 #: unocommands.js:5
 msgid "Insert Comment"
-msgstr ""
+msgstr "Ибжьаргылатәуп азгәаҭа"
 
 #: unocommands.js:6
 msgid "Merge"
-msgstr ""
+msgstr "Аилалара"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
+msgstr "Еидҵатәуп абларҭақәа..."
 
 #: unocommands.js:8
 msgid "Bring Forward"
-msgstr ""
+msgstr "Ииагатәуп ҧхьаҟа"
 
 #: unocommands.js:9
 msgid "Send Backward"
-msgstr ""
+msgstr "Ииагатәуп шьҭахьҟа"
 
 #: unocommands.js:10
 msgid "Paste Special"
@@ -209,7 +209,7 @@ msgstr ""
 
 #: unocommands.js:15
 msgid "Enable Contour"
-msgstr ""
+msgstr "Аконтур"
 
 #: unocommands.js:16
 msgid "Update Index or Table of Contents"
@@ -223,11 +223,11 @@ msgstr ""
 #: src/layer/marker/Annotation.js:187
 #: src/layer/tile/TileLayer.js:188
 msgid "Reply"
-msgstr ""
+msgstr "Аҭак"
 
 #: unocommands.js:19
 msgid "Refresh"
-msgstr ""
+msgstr "Ирҿыцтәуп"
 
 #: dist/errormessages.js:1
 msgid ""
@@ -411,7 +411,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:491
 msgid "Font color"
-msgstr ""
+msgstr "Ашрифт аҧштәы"
 
 #: dist/toolbar/toolbar.js:493
 msgid "Highlighting"
@@ -519,7 +519,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:230
 #: src/control/Control.Menubar.js:277
 msgid "Close document"
-msgstr ""
+msgstr "Иарктәуп адокумент"
 
 #: dist/toolbar/toolbar.js:606
 msgid "Layout"
@@ -577,7 +577,7 @@ msgstr ""
 #: dist/toolbar/toolbar.js:666
 #: src/control/Control.Menubar.js:222
 msgid "Delete slide"
-msgstr ""
+msgstr "Ианыхтәуп аслаид"
 
 #: dist/toolbar/toolbar.js:679
 msgid "Search:"
@@ -703,7 +703,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:1161
 msgid "Document saved"
-msgstr ""
+msgstr "Адокумент еиқәырхоуп"
 
 #: dist/toolbar/toolbar.js:1324
 msgid "Style"
@@ -711,7 +711,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:1343
 msgid "Font"
-msgstr ""
+msgstr "Ашрифт"
 
 #: dist/toolbar/toolbar.js:1379
 msgid "Previous slide"
@@ -1829,7 +1829,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:395
 msgid "Font Name:"
-msgstr ""
+msgstr "Агарнитура:"
 
 #: src/control/Control.CharacterMap.js:402
 msgid "Subset:"
@@ -1859,7 +1859,7 @@ msgstr ""
 #: src/control/Control.ColumnHeader.js:46
 #: src/control/Control.Menubar.js:271
 msgid "Delete column"
-msgstr ""
+msgstr "Ианыхтәуп аиҵагыла"
 
 #: src/control/Control.ColumnHeader.js:53
 msgid "Optimal Width"
@@ -2001,7 +2001,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:31
 #: src/control/Control.Menubar.js:459
 msgid "Find & Replace"
-msgstr ""
+msgstr "Иҧшаатәуп иагьыҧсахтәуп"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
@@ -2243,7 +2243,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:117
 msgid "Lists"
-msgstr ""
+msgstr "Ахьӡынҵақәа"
 
 #: src/control/Control.Menubar.js:121
 msgid "Demote one level"
@@ -2347,7 +2347,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:155
 #: src/control/Control.Menubar.js:214
 msgid "Delete"
-msgstr ""
+msgstr "Ианыхтәуп"
 
 #: src/control/Control.Menubar.js:156
 #: src/control/Control.Menubar.js:215
@@ -2452,7 +2452,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:270
 #: src/control/Control.RowHeader.js:44
 msgid "Delete row"
-msgstr ""
+msgstr "Ианыхтәуп ацәаҳәа"
 
 #: src/control/Control.Menubar.js:463
 msgid "Replace"
@@ -2524,7 +2524,7 @@ msgstr ""
 
 #: src/control/Control.Tabs.js:48
 msgid "Delete sheet"
-msgstr ""
+msgstr "Ианыхтәуп абӷьыц"
 
 #: src/control/Control.Tabs.js:52
 msgid "Are you sure you want to delete sheet, %sheet% ?"
