@@ -429,9 +429,6 @@ private:
 
     /// Unique DocBroker ID for tracing and debugging.
     static std::atomic<unsigned> DocBrokerId;
-
-    static constexpr auto IdleSaveDurationMs = 30 * 1000;
-    static constexpr auto AutoSaveDurationMs = 300 * 1000;
 };
 
 #endif
