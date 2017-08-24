@@ -799,9 +799,11 @@ bool DocumentBroker::autoSave(const bool force)
         LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSaveMs <<
                 "ms and most recent activity was " << inactivityTimeMs << "ms ago.");
 
+        static const auto idleSaveDurationMs = LOOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30) * 1000;
+        static const auto autoSaveDurationMs = LOOLWSD::getConfigValue<int>("per_document.autosave_duration_secs", 300) * 1000;
         // Either we've been idle long enough, or it's auto-save time.
-        if (inactivityTimeMs >= IdleSaveDurationMs ||
-            timeSinceLastSaveMs >= AutoSaveDurationMs)
+        if (inactivityTimeMs >= idleSaveDurationMs ||
+            timeSinceLastSaveMs >= autoSaveDurationMs)
         {
             LOG_TRC("Sending timed save command for [" << _docKey << "].");
             sent = sendUnoSave(savingSessionId);
