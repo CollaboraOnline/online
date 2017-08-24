@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-07 08:00+0000\n"
+"POT-Creation-Date: 2017-08-24 12:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /de/libo_online/loleaflet-ui-de.po\n"
-"X-Pootle-Revision: 2616145\n"
+"X-Pootle-Revision: 2680022\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -2041,7 +2041,7 @@ msgstr "Alles auswählen"
 #: src/control/Control.Menubar.js:31
 #: src/control/Control.Menubar.js:459
 msgid "Find & Replace"
-msgstr "Suchen & Ersetzen"
+msgstr "Suchen und Ersetzen"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"

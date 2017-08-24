@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-07 11:01+0000\n"
+"POT-Creation-Date: 2017-08-23 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-ui-cs.po\n"
-"X-Pootle-Revision: 2614587\n"
+"X-Pootle-Revision: 2681648\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -51,7 +51,6 @@ msgid "Users online"
 msgstr "Přihlášení uživatelé"
 
 #: admin.strings.js:14
-#, fuzzy
 msgid "Users Name"
 msgstr "Uživatelské jméno"
 
@@ -61,7 +60,7 @@ msgstr "Otevřené dokumenty"
 
 #: admin.strings.js:16
 msgid "Number of Documents"
-msgstr ""
+msgstr "Počet dokumentů"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
@@ -69,11 +68,11 @@ msgstr "Spotřebovaná paměť"
 
 #: admin.strings.js:18
 msgid "Bytes sent"
-msgstr ""
+msgstr "Odeslané bajty"
 
 #: admin.strings.js:19
 msgid "Bytes received"
-msgstr ""
+msgstr "Přijaté bajty"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -97,7 +96,7 @@ msgstr "Doba nečinnosti"
 
 #: admin.strings.js:25
 msgid "Modified"
-msgstr ""
+msgstr "Změněno"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -319,36 +318,39 @@ msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
+"Nepodařilo se načíst dokument. Prosím kontaktujte správce vašeho síťového "
+"úložiště (%storageserver)."
 
 #: dist/errormessages.js:14
-#, fuzzy
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
-"Uložení se nezdařilo z důvodu nedostatku volného místa na serveru. Dokument "
-"je nyní pouze pro čtení. Pro pokračování v úpravách se prosím obraťte na "
-"správce serveru."
+"Z důvodu nedostatku volného místa na serveru se nepodařilo dokument uložit. "
+"Dokument je nyní pouze pro čtení. Chcete-li pokračovat v úpravách, "
+"kontaktujte prosím správce síťového úložiště (%storageserver)."
 
 #: dist/errormessages.js:15
 msgid ""
 "Document cannot be saved to storage server (%storageserver) due to expired "
 "or invalid access token. Refresh your session to not to lose your work."
 msgstr ""
+"Dokument nelze uložit na síťové úložiště (%storageserver) kvůli přístupovému "
+"tokenu, který je neplatný nebo jehož platnost vypršela. Obnovte svou relaci, "
+"ať nepřijdete o práci."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved to storage. Check your permissions or contact the "
 "storage server (%storageserver) administrator."
 msgstr ""
 "Dokument nelze uložit. Ujistěte se, zda máte dostatečná oprávnění nebo se "
-"obraťte na správce serveru."
+"obraťte na správce síťového úložiště (%storageserver)."
 
 #: dist/errormessages.js:17
 msgid "Document has been changed in storage outside WOPI."
-msgstr ""
+msgstr "Dokument byl v úložišti změněn mimo WOPI."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -776,9 +778,8 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Opravdu si přejete ukončit tuto relaci?"
 
 #: src/admin/AdminSocketSettings.js:31
-#, fuzzy
 msgid "Are you sure you want to shut down the server?"
-msgstr "Opravdu si přejete vypnout tento server?"
+msgstr "Opravdu si přejete tento server vypnout?"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -1912,19 +1913,19 @@ msgstr "Optimální šířka sloupce"
 
 #: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "Vyjmout (interní)"
 
 #: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"
-msgstr ""
+msgstr "Kopírovat (interní)"
 
 #: src/control/Control.ContextMenu.js:141
 msgid "Internal Paste"
-msgstr ""
+msgstr "Vložit (interní)"
 
 #: src/control/Control.ContextMenu.js:163
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Vložit jinak (interní)"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
@@ -2034,7 +2035,7 @@ msgstr "Vybrat vše"
 #: src/control/Control.Menubar.js:31
 #: src/control/Control.Menubar.js:459
 msgid "Find & Replace"
-msgstr ""
+msgstr "Najít a nahradit"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
@@ -2046,7 +2047,7 @@ msgstr "Záznam"
 
 #: src/control/Control.Menubar.js:33
 msgid "Show"
-msgstr ""
+msgstr "Zobrazit"
 
 #: src/control/Control.Menubar.js:35
 msgid "Previous"
@@ -2489,15 +2490,15 @@ msgstr "Smazat řádek"
 
 #: src/control/Control.Menubar.js:463
 msgid "Replace"
-msgstr ""
+msgstr "Nahradit"
 
 #: src/control/Control.Menubar.js:468
 msgid "Replace All"
-msgstr ""
+msgstr "Nahradit vše"
 
 #: src/control/Control.Menubar.js:473
 msgid "Prev"
-msgstr ""
+msgstr "Předchozí"
 
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
@@ -2505,7 +2506,7 @@ msgstr "Opravdu si přejete smazat tento snímek?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
-msgstr ""
+msgstr "(setiny mm)"
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "
@@ -2541,11 +2542,11 @@ msgstr "Optimální výška řádku"
 
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Posunout na komentář výše"
 
 #: src/control/Control.Scroll.Annotation.js:11
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Posunout na komentář níže"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -2599,7 +2600,7 @@ msgstr "Relace byla ukončena vlastníkem dokumentu"
 
 #: src/core/Socket.js:247
 msgid "Session was terminated due to idleness - please click to reload"
-msgstr ""
+msgstr "Relace byla kvůli nečinnosti ukončena – znovu ji načtete kliknutím"
 
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -2613,12 +2614,16 @@ msgstr "Server je obnovován a bude brzy dostupný"
 msgid ""
 "%user asked to refresh the document. Document will now refresh automatically."
 msgstr ""
+"%user požaduje obnovení dokumentu. Dokument se proto nyní automaticky obnoví."
 
 #: src/core/Socket.js:393
 msgid ""
 "Document has been changed in storage. Do you want to refresh the page to "
 "load the new document ? Cancelling will continue editing and overwrite."
 msgstr ""
+"Dokument byl v úložišti změněn. Přejete si obnovit stránku a načíst nový "
+"dokument? Pokud zvolíte zrušení, budete pokračovat v úpravách a dokument "
+"přepíšete."
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."

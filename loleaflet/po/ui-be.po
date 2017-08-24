@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-07 08:00+0000\n"
+"POT-Creation-Date: 2017-08-24 12:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /be/libo_online/loleaflet-ui-be.po\n"
-"X-Pootle-Revision: 2614565\n"
+"X-Pootle-Revision: 2699920\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -165,11 +165,11 @@ msgstr ""
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "Правіць заўвагу"
 
 #: unocommands.js:5
 msgid "Insert Comment"
-msgstr ""
+msgstr "Уставіць заўвагу"
 
 #: unocommands.js:6
 msgid "Merge"
@@ -177,7 +177,7 @@ msgstr ""
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
+msgstr "Аб'яднаць клеткі..."
 
 #: unocommands.js:8
 msgid "Bring Forward"
@@ -440,7 +440,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:501
 msgid "Merge and Center Cells"
-msgstr ""
+msgstr "Аб'яднаць і цэнтраваць клеткі"
 
 #: dist/toolbar/toolbar.js:503
 msgid "Format as Currency"
@@ -500,7 +500,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:521
 msgid "Insert comment"
-msgstr ""
+msgstr "Уставіць заўвагу"
 
 #: dist/toolbar/toolbar.js:522
 msgid "Insert graphic"
@@ -1484,7 +1484,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:209
 msgid "Common Indic Number Forms"
-msgstr ""
+msgstr "Агульныя індыйскія лічбавыя формы"
 
 #: src/control/Control.CharacterMap.js:210
 msgid "Devanagari Extended"
@@ -1908,7 +1908,7 @@ msgstr ""
 #: src/control/Control.DocumentRepair.js:44
 #: src/layer/tile/TileLayer.js:215
 msgid "Comment"
-msgstr ""
+msgstr "Заўвага"
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "User name"
@@ -2049,7 +2049,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:203
 #: src/control/Control.Menubar.js:259
 msgid "Comment..."
-msgstr ""
+msgstr "Каментарый..."
 
 #: src/control/Control.Menubar.js:53
 msgid "Footnote"
@@ -2385,7 +2385,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:164
 #: src/control/Control.Menubar.js:217
 msgid "Merge cells"
-msgstr ""
+msgstr "Аб'яднаць клеткі"
 
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226

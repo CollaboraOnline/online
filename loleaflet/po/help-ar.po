@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-07 11:01+0000\n"
+"POT-Creation-Date: 2017-08-23 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /ar/libo_online/loleaflet-help-ar.po\n"
-"X-Pootle-Revision: 842331\n"
+"X-Pootle-Revision: 2667858\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -20,7 +20,7 @@ msgstr "اختصارات لوحة المفاتيح"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A27
 msgid "General Keyboard Shortcuts"
-msgstr ""
+msgstr "اختصارات لوحة المفاتيح العامة"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Undo"
@@ -103,7 +103,7 @@ msgstr "Ctrl + I"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
 msgid "Underline"
-msgstr "مسطّر"
+msgstr "تسطير"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
@@ -113,12 +113,12 @@ msgstr "Ctrl + U"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 msgid "Double Underline"
-msgstr ""
+msgstr "تسطير مزدوج"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Ctrl + D"
-msgstr ""
+msgstr "Ctrl + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
@@ -150,7 +150,7 @@ msgstr "حرف تحتي"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Ctrl + Shift + B"
-msgstr ""
+msgstr "Ctrl + Shift + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
@@ -317,12 +317,12 @@ msgstr "Ctrl + سهم اليسار"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
 msgid "Select to the left word by word"
-msgstr ""
+msgstr "التحديد إلى اليسار كلمة بكلمة"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
 msgid "Ctrl + Shift + Arrow Left"
-msgstr ""
+msgstr "Ctrl + Shift + سهم اليسار"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
@@ -357,12 +357,12 @@ msgstr "Ctrl + سهم اليمين"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
 msgid "Select to the right word by word"
-msgstr ""
+msgstr "التحديد إلى اليمين كلمة بكلمة"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
 msgid "Ctrl + Shift + Arrow Right"
-msgstr ""
+msgstr "Ctrl + Shift + سهم اليمين"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
@@ -372,57 +372,57 @@ msgstr "تحريك المؤشر لأعلى سطرا واحدا"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
 msgid "Arrow Up"
-msgstr ""
+msgstr "سهم الأعلى"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
 msgid "Select lines in upwards direction"
-msgstr ""
+msgstr "تحديد الأسطر باتجاه الأعلى"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
 msgid "Shift + Arrow Up"
-msgstr ""
+msgstr "Shift + سهم الأعلى"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr ""
+msgstr "نقل المؤشر إلى بداية الفقرة السابقة"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
 msgid "Ctrl + Arrow Up"
-msgstr ""
+msgstr "Ctrl + سهم الأعلى"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "التحديد إلى بداية الفقرة"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
 msgid "Ctrl + Shift + Arrow Up"
-msgstr ""
+msgstr "Ctrl + Shift + سهم الأعلى"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
 msgid "Move cursor down one line"
-msgstr ""
+msgstr "تحريك المؤشر لأسفل سطرا واحدا"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
 msgid "Arrow Down"
-msgstr ""
+msgstr "سهم الأسفل"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
 msgid "Select lines in downwards direction"
-msgstr ""
+msgstr "تحديد الأسطر باتجاه الأسفل"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
 msgid "Shift + Arrow Down"
-msgstr ""
+msgstr "Shift + سهم الأسفل"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
@@ -457,12 +457,12 @@ msgstr "Home"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
 msgid "Go and select to the beginning of a line"
-msgstr ""
+msgstr "الانتقال والتحديد إلى بداية أحد الأسطر"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
 msgid "Shift + Home"
-msgstr ""
+msgstr "Shift + Home"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
@@ -477,12 +477,12 @@ msgstr "Ctrl + Home"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 msgid "Go and select text to start of document"
-msgstr ""
+msgstr "الانتقال وتحديد النص إلى بداية المستند"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
 msgid "Ctrl + Shift + Home"
-msgstr ""
+msgstr "Ctrl + Shift + Home"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
@@ -497,7 +497,7 @@ msgstr "End"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
 msgid "Go and select to the end of a line"
-msgstr ""
+msgstr "الانتقال والتحديد إلى نهاية أحد الأسطر"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
@@ -516,13 +516,11 @@ msgid "Ctrl + End"
 msgstr "Ctrl + End"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
-#, fuzzy
 msgid "Go and select text to end of document"
-msgstr "الانتقال إلى نهاية المستند مع تحديد النص"
+msgstr "الانتقال وتحديد النص إلى نهاية المستند"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
-#, fuzzy
 msgid "Ctrl + Shift + End"
 msgstr "Ctrl + Shift + End"
 
@@ -588,7 +586,7 @@ msgstr "الحذف إلى نهاية الكلمة"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
 msgid "Ctrl + Del"
-msgstr ""
+msgstr "Ctrl + Del"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
 msgid "Delete to beginning of sentence"
@@ -608,13 +606,15 @@ msgstr "Ctrl + Shift + Del"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A100
 msgid "Shortcut Keys for Tables"
-msgstr ""
+msgstr "مفاتيح الاختصارات للجداول"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
+"إن كانت الخلية النشطة فارغة: تحديد الجدول بالكامل. عدا ذلك: تحديد محتوى "
+"الخلية النشطة. الضغط مجدددا يحدّد الجدول بالكامل."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
 msgid ""
@@ -622,6 +622,9 @@ msgid ""
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
+"إن كانت الخلية النشطة فارغة: الانتقال إلى بداية الجدول. عدا ذلك: أول ضغطة "
+"للانتقال إلى بداية الخلية النشطة، ثاني ضغطة للانتقال إلى بداية الجدول الحالي،"
+" ثالث ضغطة للانتقال إلى بداية المستند."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
 msgid ""
@@ -629,70 +632,79 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
+"إن كانت الخلية النشطة فارغة: الانتقال إلى نهاية الجدول. عدا ذلك: أول ضغطة "
+"للانتقال إلى نهاية الخلية النشطة، ثاني ضغطة للانتقال إلى نهاية الجدول الحالي،"
+" ثالث ضغطة للانتقال إلى نهاية المستند."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
 msgid "Ctrl + Tab"
-msgstr ""
+msgstr "Ctrl + Tab"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "Alt + Tab may be used instead."
 msgstr ""
+"إدراج وفقة جدولة (فقط في الجداول). اعتمادا على مدير النوافذ المستخدم، يمكن "
+"استخدام Alt + Tab عوضا عنه."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
 msgid "Alt + Arrow Keys"
-msgstr ""
+msgstr "Alt + مفاتيح الأسهم"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
-msgstr ""
+msgstr "زيادة/إنقاص مقاس العمود/الصف على حافة الخلية اليمنى/السفلى"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
 msgid "Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Alt + Shift + مفاتيح الأسهم"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
-msgstr ""
+msgstr "زيادة/إنقاص مقاس العمود/الصف على حافة الخلية اليسرى/العليا"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr ""
+msgstr "Alt + Ctrl + مفاتيح الأسهم"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "مثل عمل Alt، ولكن فقط الخلية النشطة هي التي تتأثر بالتعديل."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + مفاتيح الأسهم"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
 msgid "Alt + Insert"
-msgstr ""
+msgstr "Alt + Insert"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
 "inserts cell"
 msgstr ""
+"3 ثوانٍ في وضع الإدراج، مفاتيح الأسهم تُدرج صفًّا/عمودًا، Ctrl ومفتاح سهم "
+"يدرج خلية"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
 msgid "Alt + Del"
-msgstr ""
+msgstr "Alt + Del"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
 "merges cell with neighboring cell"
 msgstr ""
+"3 ثوانٍ في وضع الحذف، مفاتيح الأسهم تحذف الصف/العمود، Ctrl ومفتاح سهم يدمج "
+"الخلية مع جارتها"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A112
 msgid "Shift + Ctrl + Del"
-msgstr ""
+msgstr "Shift + Ctrl + Del"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A112
 msgid ""
@@ -700,6 +712,9 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
+"إن لم يكن هناك أيّة خليّة محددة، فسيُحذف النص من المؤشر إلى نهاية الجملة "
+"الحالية. إن كان المؤشر على نهاية إحدى الخلايا وليس هناك كاملة محددة، فسيُحذف "
+"محتوى الخلية التالية."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A113
 msgid ""
@@ -707,6 +722,8 @@ msgid ""
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
 msgstr ""
+"إن لم تكن هناك خلية كاملة محددة والمؤشر على نهاية الجدول، فستُحذف الفقرة "
+"التالية للجدول، إلا إن كانت آخر فقرة في المستند."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A114
 msgid ""
@@ -714,6 +731,8 @@ msgid ""
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
+"إن كانت هناك خلية محددة فأكثر، الصفوف الكاملة التي تحتوي التحديد ستُحذف. إن "
+"كانت كل الصفوف محددة بشكل كامل أو جزئي، فسيُحذف الجدول بالكامل."
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A117
 msgid "Word processor functions"
@@ -721,19 +740,19 @@ msgstr "وظائف معالج الكلمات"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
 msgid "Insert footnote"
-msgstr ""
+msgstr "إدراج حاشية"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
 msgid "Ctrl + Alt + F"
-msgstr ""
+msgstr "Ctrl + Alt + F"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
 msgid "Insert endnote"
-msgstr ""
+msgstr "إدراج حاشية ختامية"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
 msgid "Ctrl + Alt + D"
-msgstr ""
+msgstr "Ctrl + Alt + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
@@ -747,27 +766,27 @@ msgstr "Ctrl + Alt + C"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
 msgid "Insert soft hyphen"
-msgstr ""
+msgstr "إدراج شَرطة اختيارية"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
 msgid "Ctrl + -"
-msgstr ""
+msgstr "Ctrl + -"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
 msgid "Insert non-breaking hyphen"
-msgstr ""
+msgstr "إدراج شَرطة غير فاصلة"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
 msgid "Ctrl + Shift + -"
-msgstr ""
+msgstr "Ctrl + Shift + -"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Insert non-breaking space"
-msgstr ""
+msgstr "إدراج مسافة غير فاصلة"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Ctrl + Shift + Space"
-msgstr ""
+msgstr "Ctrl + Shift + المسافة"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Insert line break"
@@ -788,17 +807,16 @@ msgstr "Ctrl + Enter"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
 msgid "Column break (in multicolumnar text)"
-msgstr ""
+msgstr "فاصل أعمدة (في النصوص متعددة الأعمدة)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
 msgid "Ctrl + Shift + Enter"
-msgstr ""
+msgstr "Ctrl + Shift + Enter"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
-#, fuzzy
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
-msgstr "إدراج فقرة جديدة مباشرة بعد قسم أو قبله، أو قبل جدول"
+msgstr "إدراج فقرة جديدة مباشرة قبل إحدى الأقسام أو بعده، أو قبل أحد الجداول"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A131
@@ -810,6 +828,8 @@ msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
 msgstr ""
+"إدراج فقرة جديدة دون ترقيم داخل قائمة. لا يعمل إن كان المؤشر على نهاية "
+"القائمة."
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A135
 msgid "Cell formatting"
@@ -829,73 +849,73 @@ msgstr "الملء لأسفل"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
 msgid "Set Optimal Column Width"
-msgstr ""
+msgstr "ضبط عرض العمود الأمثل"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
 msgid "Two decimal places, thousands separator"
-msgstr ""
+msgstr "خانتان عشريّتان، فاصل الألوف"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
 msgid "Ctrl + Shift + 1"
-msgstr ""
+msgstr "Ctrl + Shift + 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
 msgid "Standard exponential format"
-msgstr ""
+msgstr "التنسيق الأُسّيّ القياسي"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
 msgid "Ctrl + Shift + 2"
-msgstr ""
+msgstr "Ctrl + Shift + 2"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
 msgid "Standard date format"
-msgstr ""
+msgstr "تنسيق التاريخ القياسي"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
 msgid "Ctrl + Shift + 3"
-msgstr ""
+msgstr "Ctrl + Shift + 3"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
 msgid "Standard currency format"
-msgstr ""
+msgstr "تنسيق العملة القياسي"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
 msgid "Ctrl + Shift + 4"
-msgstr ""
+msgstr "Ctrl + Shift + 4"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
 msgid "Standard percentage format (two decimal places)"
-msgstr ""
+msgstr "تنسيق النسبة القياسي (خانتان عشريّتان)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
 msgid "Ctrl + Shift + 5"
-msgstr ""
+msgstr "Ctrl + Shift + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
 msgid "Standard format"
-msgstr ""
+msgstr "التنسيق القياسي"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
 msgid "Ctrl + Shift + 6"
-msgstr ""
+msgstr "Ctrl + Shift + 6"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
 msgid "Demote list item (list item has to be selected)"
-msgstr ""
+msgstr "خفض عنصر القائمة (يجب أن يكون العنصر محددًا)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
 msgid "Promote list item (list item has to be selected)"
-msgstr ""
+msgstr "ترقية عنصر القائمة (يجب أن يكون العنصر محددًا)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
 msgid "Shift + Tab"
-msgstr ""
+msgstr "Shift + Tab"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A179
 msgid "Text selection and navigation in a textbox"
@@ -903,26 +923,27 @@ msgstr "تحديد النصوص والتنقل في مربع نص"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
 msgid "Go and select text to start of textbox"
-msgstr ""
+msgstr "الانتقال وتحديد النص إلى بداية مربع النص"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
 msgid "Go and select text to end of textbox"
-msgstr ""
+msgstr "الانتقال وتحديد النص إلى نهاية مربع النص"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A207
-#, fuzzy
 msgid "Slide / draw page keyboard shortcuts"
-msgstr "اختصارات لوحة مفاتيح الشرائح / صفحات الرسم"
+msgstr "اختصارات لوحة مفاتيح الشريحة / صفحة الرسم"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
 msgstr ""
+"إنهاء الوضع الحالي، مثل الانتقال من وضع التحرير إلى وضع تحديد الكائنات،  أو "
+"من وضع تحديد الكائنات إلى وضع العرض."
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
 msgid "Esc"
-msgstr ""
+msgstr "Esc"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
 msgid "Select objects in the order in which they were created"
