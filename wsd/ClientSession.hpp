@@ -125,7 +125,7 @@ private:
     bool sendTile(const char* buffer, int length, const std::vector<std::string>& tokens,
                   const std::shared_ptr<DocumentBroker>& docBroker);
     bool sendDialog(const char* buffer, int length, const std::vector<std::string>& tokens,
-                    const std::shared_ptr<DocumentBroker>& docBroker);
+                    const std::shared_ptr<DocumentBroker>& docBroker, bool child);
     bool sendCombinedTiles(const char* buffer, int length, const std::vector<std::string>& tokens,
                            const std::shared_ptr<DocumentBroker>& docBroker);
 

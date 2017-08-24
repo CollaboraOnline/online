@@ -134,7 +134,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "paste" &&
              tokens[0] != "insertfile" &&
              tokens[0] != "key" &&
+             tokens[0] != "dialogkey" &&
              tokens[0] != "mouse" &&
+             tokens[0] != "dialogmouse" &&
+             tokens[0] != "dialogchildmouse" &&
              tokens[0] != "partpagerectangles" &&
              tokens[0] != "ping" &&
              tokens[0] != "renderfont" &&
@@ -153,7 +156,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "uno" &&
              tokens[0] != "useractive" &&
              tokens[0] != "userinactive" &&
-             tokens[0] != "dialog")
+             tokens[0] != "dialog" &&
+             tokens[0] != "dialogchild")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
@@ -219,7 +223,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "dialog")
     {
-        return sendDialog(buffer, length, tokens, docBroker);
+        return sendDialog(buffer, length, tokens, docBroker, false);
+    }
+    else if (tokens[0] == "dialogchild")
+    {
+        return sendDialog(buffer, length, tokens, docBroker, true);
     }
     else if (tokens[0] == "tilecombine")
     {
@@ -428,16 +436,20 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const std:
 }
 
 bool ClientSession::sendDialog(const char * /*buffer*/, int /*length*/, const std::vector<std::string>& tokens,
-                               const std::shared_ptr<DocumentBroker>& docBroker)
+                               const std::shared_ptr<DocumentBroker>& docBroker, bool child)
 {
+    const std::string dialogCmd = child ? "dialogchild" : "dialog";
     try
     {
-        docBroker->handleDialogRequest(tokens[1], shared_from_this());
+        if (child)
+            docBroker->handleDialogRequest(tokens[1], shared_from_this(), true);
+        else
+            docBroker->handleDialogRequest(tokens[1], shared_from_this(), false);
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Failed to process dialog command: " << exc.what());
-        return sendTextFrame("error: cmd=dialog kind=invalid");
+        LOG_ERR("Failed to process " + dialogCmd + " command: " << exc.what());
+        return sendTextFrame("error: cmd=" + dialogCmd + " kind=invalid");
     }
 
     return true;

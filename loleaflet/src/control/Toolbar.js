@@ -145,11 +145,14 @@ L.Map.include({
 		}
 	},
 
-	sendDialogCommand: function (command, json) {
+	sendDialogCommand: function (command, json, child) {
 		if (this._permission === 'edit') {
 			if (!command.startsWith('.uno:'))
 				command = '.uno:' + command;
-			this._socket.sendMessage('dialog ' + command + (json ? ' ' + JSON.stringify(json) : ''));
+			var dialogCmd = 'dialog';
+			if (child)
+				dialogCmd = 'dialogchild';
+			this._socket.sendMessage(dialogCmd + ' ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},
 

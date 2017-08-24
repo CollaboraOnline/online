@@ -180,8 +180,15 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('None (Do not check spelling)'), id: 'noneparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
 				{name: _('Language for entire document'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
-				{name: _('Spelling and Grammar'), uno: '.uno:SpellingAndGrammarDialog', type: 'unocommand'},
-				{name: _('Word count'), uno: '.uno:WordCountDialog', type: 'unocommand'}
+				{name: _('Search Dialog'), id: '.uno:SearchDialog', type: 'dialog'},
+				{name: _('Accept/Reject changes'), id: '.uno:AcceptTrackedChanges', type: 'dialog'},
+				{name: _('Insert Field'), id: '.uno:InsertField', type: 'dialog'},
+				{name: _('Image Map Dialog'), id: '.uno:ImageMapDialog', type: 'dialog'},
+				{name: _('Hyperlink Dialog'), id: '.uno:HyperlinkDialog', type: 'dialog'},
+				{name: _('Spelling and Grammar'), id: '.uno:SpellingAndGrammarDialog', type: 'dialog'},
+				{name: _('Insert Indexes Entry'), id: '.uno:InsertIndexesEntry', type: 'dialog'},
+				{name: _('Insert Authority Entry'), id: '.uno:InsertAuthoritiesEntry', type: 'dialog'},
+				{name: _('Word count'), id: '.uno:WordCountDialog', type: 'dialog'}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
@@ -767,7 +774,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (type === 'action') {
 			self._executeAction(item);
 		} else if (type === 'dialog') {
-			map.sendDialogCommand($(item).data('id'));
+			map.fire('opendialog', {dialogId: $(item).data('id')});
 		}
 
 		if ($(item).data('id') !== 'insertcomment')
