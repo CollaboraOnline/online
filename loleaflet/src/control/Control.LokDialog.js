@@ -20,6 +20,10 @@ L.Control.LokDialog = L.Control.extend({
 			// FIXME: core sends a different id for spelling dialog in 'invalidate' cb
 			if (e.dialogId === 'SpellingDialog')
 				e.dialogId = 'SpellingAndGrammarDialog';
+			else if (e.dialogId === 'FindReplaceDialog')
+				e.dialogId = 'SearchDialog';
+			else if (e.dialogId === 'AcceptRejectChangesDialog')
+				e.dialogId = 'AcceptTrackedChanges';
 
 			// ignore any invalidate callbacks when we have closed the dialog
 			if (this._isOpen(e.dialogId))

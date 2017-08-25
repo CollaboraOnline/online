@@ -180,8 +180,15 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Reset to Default Language'), id: 'resetparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_RESET_LANGUAGES'}]},
 				{name: _('Language for entire document'), type: 'menu', menu: [
 					{name: _('Reset to Default Language'), id: 'resetlanguage', type: 'unocommand', uno:'.uno:LanguageStatus?Language:string=Default_RESET_LANGUAGES'}]},
-				{name: _('Spelling and Grammar'), uno: '.uno:SpellingAndGrammarDialog', type: 'unocommand'},
-				{name: _('Word count'), uno: '.uno:WordCountDialog', type: 'unocommand'}
+				{name: _('Search Dialog'), id: '.uno:SearchDialog', type: 'dialog'},
+				{name: _('Accept/Reject changes'), id: '.uno:AcceptTrackedChanges', type: 'dialog'},
+				{name: _('Insert Field'), id: '.uno:InsertField', type: 'dialog'},
+				{name: _('Image Map Dialog'), id: '.uno:ImageMapDialog', type: 'dialog'},
+				{name: _('Hyperlink Dialog'), id: '.uno:HyperlinkDialog', type: 'dialog'},
+				{name: _('Spelling and Grammar'), id: '.uno:SpellingAndGrammarDialog', type: 'dialog'},
+				{name: _('Insert Indexes Entry'), id: '.uno:InsertIndexesEntry', type: 'dialog'},
+				{name: _('Insert Authority Entry'), id: '.uno:InsertAuthoritiesEntry', type: 'dialog'},
+				{name: _('Word count'), id: '.uno:WordCountDialog', type: 'dialog'}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
