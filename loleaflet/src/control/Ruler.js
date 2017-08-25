@@ -8,21 +8,32 @@ L.Control.Ruler = L.Control.extend({
 		interactive: true,
 		marginSet: false,
 		displayNumber: true,
+		tileMargin: 18,
+		extraSize: 0,
 		margin1: null,
 		margin2: null,
 		nullOffset: null,
 		pageOffset: null,
 		pageWidth: null,
 		unit: null,
-		convertRatioDrag: null
+		DraggableConvertRatio: null,
+		timer: null
 	},
 
 	onAdd: function(map) {
 		map.on('rulerupdate', this._updateOptions, this);
-		map.on('docsize', this._updateBreakPoints, this);
+		map.on('docsize', this._updatePaintTimer, this);
+		map.on('scrolloffset resize', this._fixOffset, this);
+		this._map = map;
 
 		return this._initLayout();
 	},
+
+	_updatePaintTimer: function() {
+		clearTimeout(this.options.timer);
+		this.options.timer = setTimeout(L.bind(this._updateBreakPoints, this), 300);
+	},
+
 
 	_initLayout: function() {
 		this._rWrapper = L.DomUtil.create('div', 'loleaflet-ruler leaflet-bar leaflet-control leaflet-control-custom');
@@ -51,6 +62,12 @@ L.Control.Ruler = L.Control.extend({
 		if (this.options.margin1 == null || this.options.margin2 == null)
 			return;
 
+		if (this._map._docLayer._annotations._items.length === 0)
+			this.options.extraSize = 0;
+		else
+			this.options.extraSize = 290;
+		/// as used for the size of actual comments
+
 		var classMajorSep = 'loleaflet-ruler-maj',
 		classMargin = 'loleaflet-ruler-margin',
 		classDraggable = 'loleaflet-ruler-drag',
@@ -60,30 +77,26 @@ L.Control.Ruler = L.Control.extend({
 		rToolTip = 'loleaflet-ruler-rtooltip',
 		leftMarginStr = _('Left Margin'),
 		rightMarginStr = _('Right Margin'),
-		convertRatioDrag, lMargin, rMargin, wPixel, hPixel;
+		DraggableConvertRatio, lMargin, rMargin, wPixel, scale;
 
 		lMargin = this.options.nullOffset;
 		rMargin = this.options.pageWidth - (this.options.nullOffset + this.options.margin2);
+		scale = this._map.getZoomScale(this._map.getZoom(), 10);
+		wPixel = this._map._docLayer._docPixelSize.x - (this.options.extraSize + this.options.tileMargin * 2) * scale;
 
-		// Multiplication with this facor is temporary,
-		// I think, we need to find the margin in the left tiles
-		// and subtract here accordingly
-		wPixel = .958*this._map._docLayer._docPixelSize.x;
-		hPixel = this._map._docLayer._docPixelSize.y;
+		this._fixOffset();
 
-		convertRatioDrag = this.options.convertRatioDrag = wPixel / this.options.pageWidth;
-
+		DraggableConvertRatio = this.options.DraggableConvertRatio = wPixel / this.options.pageWidth;
 		this._rFace.style.width = wPixel + 'px';
-		this._rFace.style.backgroundColor = 'white';
-		this._rBPContainer.style.marginLeft = (-1 * (convertRatioDrag *(500 - (this.options.nullOffset % 1000))) + 1) + 'px';
+		this._rBPContainer.style.marginLeft = (-1 * (DraggableConvertRatio * (500 - (lMargin % 1000))) + 1) + 'px';
 
-		var numCounter = -1 * parseInt(this.options.nullOffset/1000);
+		var numCounter = -1 * parseInt(lMargin / 1000);
 
 		$('.' + classMajorSep).remove();
 		for (var num = 0; num <= (this.options.pageWidth / 1000) + 1; num++) {
 
 			var marker = L.DomUtil.create('div', classMajorSep, this._rBPContainer);
-			marker.style.width = convertRatioDrag*1000 - 2 + 'px';
+			marker.style.width = DraggableConvertRatio*1000 - 2 + 'px';
 			if (this.options.displayNumber) {
 				if (numCounter !== 0)
 					marker.innerText = Math.abs(numCounter++);
@@ -111,16 +124,27 @@ L.Control.Ruler = L.Control.extend({
 			}
 		}
 
-		this._lMarginMarker.style.width = (convertRatioDrag*lMargin) + 'px';
-		this._rMarginMarker.style.width = (convertRatioDrag*rMargin) + 'px';
+		this._lMarginMarker.style.width = (DraggableConvertRatio*lMargin) + 'px';
+		this._rMarginMarker.style.width = (DraggableConvertRatio*rMargin) + 'px';
 
 		if (this.options.interactive) {
-			this._lMarginDrag.style.width = (convertRatioDrag*lMargin) + 'px';
-			this._rMarginDrag.style.width = (convertRatioDrag*rMargin) + 'px';
+			this._lMarginDrag.style.width = (DraggableConvertRatio*lMargin) + 'px';
+			this._rMarginDrag.style.width = (DraggableConvertRatio*rMargin) + 'px';
 		}
 
 		L.DomEvent.on(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
 		L.DomEvent.on(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
+	},
+
+	_fixOffset: function() {
+		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
+		var mapPane = this._map._mapPane;
+		var fTile = mapPane.getElementsByClassName('leaflet-tile')[0];
+		var tileContainer = mapPane.getElementsByClassName('leaflet-tile-container');
+		tileContainer = tileContainer[tileContainer.length - 1];
+		var mapPaneOffset = parseInt(mapPane.style.transform.match(/\(([-0-9]*)/)[1]) + parseInt(fTile.style.left) + parseInt(tileContainer.style.transform.match(/\(([-0-9]*)/)[1]) + 18 * scale;
+
+		this._rFace.style.marginLeft = mapPaneOffset + 'px';
 	},
 
 	_initiateDrag: function(e) {
@@ -145,17 +169,17 @@ L.Control.Ruler = L.Control.extend({
 		var unit = this.options.unit ? this.options.unit : ' cm';
 		if (L.DomUtil.hasClass(this._rMarginDrag, 'leaflet-drag-moving')) {
 			var rMargin = this.options.pageWidth - (this.options.nullOffset + this.options.margin2);
-			var newPos = this.options.convertRatioDrag*rMargin - posChange;
+			var newPos = this.options.DraggableConvertRatio*rMargin - posChange;
 			this._rToolTip.style.display = 'block';
 			this._rToolTip.style.right = newPos - 25 + 'px';
-			this._rToolTip.innerText = (Math.round(this.options.pageWidth / 100 - newPos / (this.options.convertRatioDrag * 100)) / 10).toString() + unit;
+			this._rToolTip.innerText = (Math.round(this.options.pageWidth / 100 - newPos / (this.options.DraggableConvertRatio * 100)) / 10).toString() + unit;
 			this._rMarginDrag.style.width = newPos + 'px';
 		}
 		else {
-			var newPos = this.options.convertRatioDrag*this.options.nullOffset + posChange;
+			var newPos = this.options.DraggableConvertRatio*this.options.nullOffset + posChange;
 			this._lToolTip.style.display = 'block';
 			this._lToolTip.style.left = newPos - 25 + 'px';
-			this._lToolTip.innerText = (Math.round(newPos / (this.options.convertRatioDrag * 100)) / 10).toString() + unit;
+			this._lToolTip.innerText = (Math.round(newPos / (this.options.DraggableConvertRatio * 100)) / 10).toString() + unit;
 			this._lMarginDrag.style.width = newPos + 'px';
 		}
 	},
@@ -185,7 +209,7 @@ L.Control.Ruler = L.Control.extend({
 
 		unoObj[marginType] = {};
 		unoObj[marginType]['type'] = 'string';
-		unoObj[marginType]['value'] = fact * posChange/(this.options.convertRatioDrag * this.options.pageWidth);
+		unoObj[marginType]['value'] = fact * posChange/(this.options.DraggableConvertRatio * this.options.pageWidth);
 		this._map._socket.sendMessage('uno .uno:RulerChangeState ' + JSON.stringify(unoObj));
 	}
 });

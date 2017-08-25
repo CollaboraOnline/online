@@ -230,11 +230,11 @@ L.WriterTileLayer = L.TileLayer.extend({
 		this._update();
 	},
 
-	_updateMaxBounds: function (sizeChanged, extraSize) {
+	_updateMaxBounds: function (sizeChanged, extraSize, zoom) {
 		if (!extraSize) {
 			extraSize = this._annotations && this._annotations._items.length > 0 ?
 				this._annotations.options.extraSize : null;
 		}
-		L.GridLayer.prototype._updateMaxBounds.call(this, sizeChanged, extraSize, {panInside: false});
+		L.GridLayer.prototype._updateMaxBounds.call(this, sizeChanged, extraSize, {panInside: false}, zoom);
 	}
 });

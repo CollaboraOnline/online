@@ -776,7 +776,6 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 .loleaflet-ruler-breakcontainer {
 	height: 100%;
 	position: absolute;
-	width: 100vw;
 	}
 
 .loleaflet-ruler-marginwrapper {
@@ -795,9 +794,8 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 	}
 
 .loleaflet-ruler-face {
-	margin:0px auto;
 	height: 100%;
-	transition: width .2s;
+	background-color: white;
 	}
 
 .loleaflet-ruler-maj {
@@ -815,7 +813,6 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 .loleaflet-ruler-margin {
 	height: 100%;
 	background-color: #efefef;
-	transition: width .1s;
 	}
 
 .loleaflet-ruler-left {

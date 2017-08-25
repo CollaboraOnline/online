@@ -339,7 +339,7 @@ L.GridLayer = L.Layer.extend({
 			this._tileZoom = tileZoom;
 			if (tileZoomChanged) {
 				this._updateTileTwips();
-				this._updateMaxBounds();
+				this._updateMaxBounds(null, null, zoom);
 			}
 			this._updateLevels();
 			this._resetGrid();
@@ -363,16 +363,19 @@ L.GridLayer = L.Layer.extend({
 		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
 	},
 
-	_updateMaxBounds: function (sizeChanged, extraSize, options) {
+	_updateMaxBounds: function (sizeChanged, extraSize, options, zoom) {
 		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
 			return;
+		}
+		if (!zoom) {
+			var zoom = this._map.getZoom();
 		}
 		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
 			this._docHeightTwips / this.options.tileHeightTwips);
 		docPixelLimits = extraSize ? docPixelLimits.multiplyBy(this._tileSize).add(extraSize) :
 			docPixelLimits.multiplyBy(this._tileSize);
 
-		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
+		var scale = this._map.getZoomScale(zoom, 10);
 		var topLeft = new L.Point(0, 0);
 		topLeft = this._map.unproject(topLeft.multiplyBy(scale));
 		var bottomRight = new L.Point(docPixelLimits.x, docPixelLimits.y);
