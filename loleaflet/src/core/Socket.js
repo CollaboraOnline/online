@@ -248,17 +248,22 @@ L.Socket = L.Class.extend({
 		else if (textMsg.startsWith('close: ')) {
 			textMsg = textMsg.substring('close: '.length);
 			msg = '';
-
+			var postMsgData = {};
 			// This is due to document owner terminating the session
 			if (textMsg === 'ownertermination') {
 				msg = _('Session terminated by document owner');
+				postMsgData['Reason'] = 'OwnerTermination';
 			}
 			else if (textMsg === 'idle' || textMsg === 'oom') {
 				msg = _('Idle document - please click to reload and resume editing');
 				this._map._documentIdle = true;
+				postMsgData['Reason'] = 'DocumentIdle';
+				if (textMsg === 'oom')
+					postMsgData['Reason'] = 'OOM';
 			}
 			else if (textMsg === 'shuttingdown') {
 				msg = _('Server is shutting down for maintenance (auto-saving)');
+				postMsgData['Reason'] = 'ShuttingDown';
 			}
 			else if (textMsg === 'docdisconnected') {
 				msg = _('Oops, there is a problem connecting the document');
@@ -266,7 +271,6 @@ L.Socket = L.Class.extend({
 			}
 			else if (textMsg === 'recycling') {
 				msg = _('Server is recycling and will be available shortly');
-
 				this._map._active = false;
 				this._map._serverRecycling = true;
 
@@ -365,9 +369,9 @@ L.Socket = L.Class.extend({
 			$(options.appendLocation).append(options.$vex);
 			vex.setupBodyClassName(options.$vex);
 
-			if (textMsg !== 'shuttingdown') {
+			if (postMsgData['Reason']) {
 				// Tell WOPI host about it which should handle this situation
-				this._map.fire('postMessage', {msgId: 'Session_Closed'});
+				this._map.fire('postMessage', {msgId: 'Session_Closed', args: postMsgData});
 			}
 
 			if (textMsg === 'ownertermination') {
