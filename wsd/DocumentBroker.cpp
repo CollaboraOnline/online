@@ -430,6 +430,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         wopiInfo->set("DisablePrint", wopifileinfo->_disablePrint);
         wopiInfo->set("DisableExport", wopifileinfo->_disableExport);
         wopiInfo->set("DisableCopy", wopifileinfo->_disableCopy);
+        wopiInfo->set("DisableInactiveMessages", wopifileinfo->_disableInactiveMessages);
 
         std::ostringstream ossWopiInfo;
         wopiInfo->stringify(ossWopiInfo);
