@@ -568,12 +568,12 @@ history
             }
     }
 
-total_mem
+mem_consumed
 sent_bytes
 recv_bytes
 
     Queries for total memory or bandwidth being consumed by the server
-    in kilobytes. For total_mem this includes processes - loolwsd,
+    in kilobytes. For mem_consumed this includes processes - loolwsd,
     loolforkit, and child processes hosting various documents. For
     sent/recv_bytes this includes only external traffic.
 
@@ -668,7 +668,13 @@ documents <pid> <filename> <number of views> <memory consumed> <elapsed time> <i
 
     Each set document attributes is separated by a newline.
 
-total_mem <memory>
+mem_consumed <memory>
+    Total memory being consumed by LibreOffice Online.
+total_avail_mem <memory>
+    Total memory available to whole LibreOffice Online. This takes into account
+    the memproportion setting, if set by the user, when calculating the amount
+    of memory available to the process.
+
 sent_bytes <memory>
 recv_bytes <memory>
 

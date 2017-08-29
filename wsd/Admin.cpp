@@ -142,8 +142,8 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
             model.unsubscribe(_sessionId, tokens[i + 1]);
         }
     }
-    else if (tokens[0] == "total_mem")
-        sendTextFrame("total_mem " + std::to_string(_admin->getTotalMemoryUsage()));
+    else if (tokens[0] == "mem_consumed")
+        sendTextFrame("mem_consumed " + std::to_string(_admin->getTotalMemoryUsage()));
 
     else if (tokens[0] == "total_avail_mem")
         sendTextFrame("total_avail_mem " + std::to_string(_admin->getTotalAvailableMemory()));

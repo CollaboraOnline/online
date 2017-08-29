@@ -13,7 +13,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 	_docElapsedTimeIntervalId: 0,
 
 	_getBasicStats: function() {
-		this.socket.send('total_mem');
+		this.socket.send('mem_consumed');
 		this.socket.send('active_docs_count');
 		this.socket.send('active_users_count');
 		this.socket.send('sent_bytes');
@@ -339,7 +339,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				$(document.getElementById('docListContainer_' + encodedUId)).append($docentry);
 			}
 		}
-		else if (textMsg.startsWith('total_mem') ||
+		else if (textMsg.startsWith('mem_consumed') ||
 			textMsg.startsWith('active_docs_count') ||
 			textMsg.startsWith('active_users_count') ||
 			textMsg.startsWith('sent_bytes') ||
@@ -349,7 +349,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			var sCommand = textMsg[0];
 			var nData = parseInt(textMsg[1]);
 
-			if (sCommand === 'total_mem' ||
+			if (sCommand === 'mem_consumed' ||
 			    sCommand === 'sent_bytes' ||
 			    sCommand === 'recv_bytes') {
 				nData = Util.humanizeMem(nData);
