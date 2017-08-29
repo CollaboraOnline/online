@@ -207,6 +207,7 @@ public:
                      const bool disablePrint,
                      const bool disableExport,
                      const bool disableCopy,
+                     const bool disableInactiveMessages,
                      const std::chrono::duration<double> callDuration)
             : _userid(userid),
               _username(username),
@@ -219,6 +220,7 @@ public:
               _disablePrint(disablePrint),
               _disableExport(disableExport),
               _disableCopy(disableCopy),
+              _disableInactiveMessages(disableInactiveMessages),
               _callDuration(callDuration)
             {
                 _userExtraInfo = userExtraInfo;
@@ -248,6 +250,8 @@ public:
         bool _disableExport;
         /// If WOPI host has allowed the user to copy to/from the document
         bool _disableCopy;
+        /// If WOPI host has allowed the loleaflet to show texts on the overlay informing about inactivity, or if the integration is handling that.
+        bool _disableInactiveMessages;
         /// Time it took to call WOPI's CheckFileInfo
         std::chrono::duration<double> _callDuration;
     };

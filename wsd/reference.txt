@@ -63,6 +63,12 @@ DisableCopy
 	backend. Pasting into the document would still be possible.
 	However, it is still possible to do an "internal" cut/copy/paste.
 
+DisableInactiveMessages
+	Disables displaying of the explanation text on the overlay when the
+	document becomes inactive or killed.  With this, the JS integration
+	must provide the user with appropriate message when it gets
+	Session_Closed or User_Idle postMessage's.
+
 EnableOwnerTermination
 	If set to true, it allows the document owner (the one with OwnerId =
 	UserId) to send a 'closedocument' message (see protocol.txt)
