@@ -70,6 +70,9 @@ public:
     void pollingThread() override;
 
     unsigned getTotalMemoryUsage();
+    /// Takes into account the 'memproportion' property in config file to find the amount of memory
+    /// available to us.
+    size_t getTotalAvailableMemory() { return _totalAvailMem; }
 
     void modificationAlert(const std::string& dockey, Poco::Process::PID pid, bool value);
     /// Update the Admin Model.
@@ -114,6 +117,7 @@ private:
     int _forKitPid;
     size_t _lastTotalMemory;
     size_t _totalSysMem;
+    size_t _totalAvailMem;
 
     std::atomic<int> _memStatsTaskIntervalMs;
     std::atomic<int> _cpuStatsTaskIntervalMs;

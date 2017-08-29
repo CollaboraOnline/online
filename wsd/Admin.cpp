@@ -135,10 +135,11 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         }
     }
     else if (tokens[0] == "total_mem")
-    {
-        const auto totalMem = _admin->getTotalMemoryUsage();
-        sendTextFrame("total_mem " + std::to_string(totalMem));
-    }
+        sendTextFrame("total_mem " + std::to_string(_admin->getTotalMemoryUsage()));
+
+    else if (tokens[0] == "total_avail_mem")
+        sendTextFrame("total_avail_mem " + std::to_string(_admin->getTotalAvailableMemory()));
+
     else if (tokens[0] == "kill" && tokens.count() == 2)
     {
         try
@@ -293,6 +294,13 @@ Admin::Admin() :
 
     _totalSysMem = Util::getTotalSystemMemory();
     LOG_TRC("Total system memory : " << _totalSysMem);
+
+    const auto memLimit = LOOLWSD::getConfigValue<double>("memproportion", static_cast<double>(0.0));
+    _totalAvailMem = _totalSysMem;
+    if (memLimit != 0.0)
+        _totalAvailMem = _totalSysMem * memLimit/100.;
+
+    LOG_TRC("Total available memory: " << _totalAvailMem << " (memproportion: " << memLimit << ").");
 
     const auto totalMem = getTotalMemoryUsage();
     LOG_TRC("Total memory used: " << totalMem);
