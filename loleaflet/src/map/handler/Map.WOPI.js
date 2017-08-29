@@ -15,6 +15,7 @@ L.Map.WOPI = L.Handler.extend({
 	DisablePrint: false,
 	DisableExport: false,
 	DisableCopy: false,
+	DisableInactiveMessages: false,
 
 	_appLoadedConditions: {
 		doclayerinit: false,
@@ -65,6 +66,7 @@ L.Map.WOPI = L.Handler.extend({
 		this.DisablePrint = !!wopiInfo['DisablePrint'];
 		this.DisableExport = !!wopiInfo['DisableExport'];
 		this.DisableCopy = !!wopiInfo['DisableCopy'];
+		this.DisableInactiveMessages = !!wopiInfo['DisableInactiveMessages'];
 
 		this._map.fire('postMessage', {msgId: 'App_LoadingStatus', args: {Status: 'Frame_Ready'}});
 	},

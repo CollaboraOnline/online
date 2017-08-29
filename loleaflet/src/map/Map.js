@@ -843,12 +843,18 @@ L.Map = L.Evented.extend({
 		this._active = false;
 		clearTimeout(vex.timer);
 
+		var message = '';
+		var map = this;
+		if (!map['wopi'].DisableInactiveMessages) {
+			message = _('Inactive document - please click to resume editing');
+		}
+
 		var options = $.extend({}, vex.defaultOptions, {
 			contentCSS: {'background':'rgba(0, 0, 0, 0)',
 			             'font-size': 'xx-large',
 				     'color': '#fff',
 				     'text-align': 'center'},
-			content: _('Inactive document - please click to resume editing')
+			content: message
 		});
 		options.id = vex.globalID;
 		vex.dialogID = options.id;
@@ -860,7 +866,6 @@ L.Map = L.Evented.extend({
 			vex: options
 		});
 
-		var map = this;
 		options.$vex.bind('click.vex', function(e) {
 			console.debug('_dim: click.vex function');
 			return map._activate();

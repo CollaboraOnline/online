@@ -549,6 +549,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     bool disablePrint = false;
     bool disableExport = false;
     bool disableCopy = false;
+    bool disableInactiveMessages = false;
     std::string lastModifiedTime;
 
     LOG_DBG("WOPI::CheckFileInfo returned: " << resMsg << ". Call duration: " << callDuration.count() << "s");
@@ -570,6 +571,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         getWOPIValue(object, "DisablePrint", disablePrint);
         getWOPIValue(object, "DisableExport", disableExport);
         getWOPIValue(object, "DisableCopy", disableCopy);
+        getWOPIValue(object, "DisableInactiveMessages", disableInactiveMessages);
         getWOPIValue(object, "LastModifiedTime", lastModifiedTime);
     }
     else
@@ -581,7 +583,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     const Poco::Timestamp modifiedTime = iso8601ToTimestamp(lastModifiedTime);
     _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
 
-    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, userExtraInfo, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, callDuration}));
+    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, userExtraInfo, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, disableInactiveMessages, callDuration}));
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
