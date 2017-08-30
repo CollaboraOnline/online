@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 #include <termios.h>
 
 #include <openssl/rand.h>
@@ -207,7 +208,7 @@ int Config::main(const std::vector<std::string>& args)
                 stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(pwdhash[j]);
             const std::string passwordHash = stream.str();
 
-            std::stringstream pwdConfigValue("pbkdf2.sha512.");
+            std::stringstream pwdConfigValue("pbkdf2.sha512.", std::ios_base::in | std::ios_base::out | std::ios_base::ate);
             pwdConfigValue << std::to_string(_adminConfig.pwdIterations) << ".";
             pwdConfigValue << saltHash << "." << passwordHash;
             _loolConfig.setString("admin_console.secure_password[@desc]",
