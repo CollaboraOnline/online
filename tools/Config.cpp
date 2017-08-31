@@ -19,6 +19,7 @@
 
 #include <Poco/Exception.h>
 #include <Poco/Util/Application.h>
+#include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/XMLConfiguration.h>
@@ -26,6 +27,7 @@
 #include "Util.hpp"
 
 using Poco::Util::Application;
+using Poco::Util::HelpFormatter;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::XMLConfiguration;
@@ -71,7 +73,12 @@ std::string Config::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 
 void Config::displayHelp()
 {
-    std::cout << "loolconfig - Configuration tool for LibreOffice Online." << std::endl
+    HelpFormatter helpFormatter(options());
+    helpFormatter.setCommand(commandName());
+    helpFormatter.setHeader("Configuration tool for LibreOffice Online.");
+    helpFormatter.setUsage("OPTIONS COMMAND");
+    helpFormatter.format(std::cout);
+    std::cout << std::endl
               << "Commands:" << std::endl
               << "  set-admin-password" << std::endl;
 }
@@ -80,25 +87,29 @@ void Config::defineOptions(OptionSet& optionSet)
 {
     Application::defineOptions(optionSet);
 
-    optionSet.addOption(Option("help", "", "Config helper tool to set loolwsd configuration")
+    // global options
+    optionSet.addOption(Option("help", "", "Prints help information")
                         .required(false)
                         .repeatable(false));
-    optionSet.addOption(Option("pwd-salt-length", "", "Length of the salt to use to hash password")
-                        .required(false)
-                        .repeatable(false).
-                        argument("number"));
-    optionSet.addOption(Option("pwd-iterations", "", "Number of iterations to do in PKDBF2 password hashing")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("number"));
-    optionSet.addOption(Option("pwd-hash-length", "", "Length of password hash to generate")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("number"));
     optionSet.addOption(Option("config-file", "", "Specify configuration file path manually.")
                         .required(false)
                         .repeatable(false)
                         .argument("path"));
+
+    // Command specific option
+    optionSet.addOption(Option("pwd-salt-length", "", "Length of the salt to use to hash password. To be used with set-admin-password command.")
+                        .required(false)
+                        .repeatable(false).
+                        argument("number"));
+    optionSet.addOption(Option("pwd-iterations", "", "Number of iterations to do in PKDBF2 password hashing. To be used with set-admin-password command.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("number"));
+    optionSet.addOption(Option("pwd-hash-length", "", "Length of password hash to generate. To be used with set-admin-password command.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("number"));
+
 }
 
 void Config::handleOption(const std::string& optionName, const std::string& optionValue)
