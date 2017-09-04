@@ -157,6 +157,9 @@ protected:
     /// Extra info per user, mostly mail, avatar, links, etc.
     std::string _userExtraInfo;
 
+    /// In case a watermark has to be rendered on each tile.
+    std::string _watermarkText;
+
     /// Language for the document based on what the user has in the UI.
     std::string _lang;
 };

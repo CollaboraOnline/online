@@ -540,6 +540,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     std::string userId;
     std::string userName;
     std::string userExtraInfo;
+    std::string watermarkText;
     bool canWrite = false;
     bool enableOwnerTermination = false;
     std::string postMessageOrigin;
@@ -562,6 +563,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         getWOPIValue(object, "UserId", userId);
         getWOPIValue(object, "UserFriendlyName", userName);
         getWOPIValue(object, "UserExtraInfo", userExtraInfo);
+        getWOPIValue(object, "WatermarkText", watermarkText);
         getWOPIValue(object, "UserCanWrite", canWrite);
         getWOPIValue(object, "PostMessageOrigin", postMessageOrigin);
         getWOPIValue(object, "HidePrintOption", hidePrintOption);
@@ -583,7 +585,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     const Poco::Timestamp modifiedTime = iso8601ToTimestamp(lastModifiedTime);
     _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
 
-    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, userExtraInfo, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, disableInactiveMessages, callDuration}));
+    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, userExtraInfo, watermarkText, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, disableInactiveMessages, callDuration}));
 }
 
 /// PutRelativeFile - uri format: http://server/<...>/wopi*/files/<id>/
