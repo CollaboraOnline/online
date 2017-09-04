@@ -6,6 +6,12 @@
 L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
+		initial: [
+			{name: _('File'), disabled: true},
+			{name: _('Edit'), disabled: true},
+			{name: _('View'), disabled: true},
+			{name: _('Insert'), disabled: true}
+		],
 		text:  [
 			{name: _('File'), id: 'file', type: 'menu', menu: [
 				{name: _('Save'), id: 'save', type: 'action'},
@@ -296,6 +302,7 @@ L.Control.Menubar = L.Control.extend({
 	onAdd: function (map) {
 		this._initialized = false;
 		this._menubarCont = L.DomUtil.get('main-menu');
+		this._initializeMenu(this.options.initial);
 
 		map.on('doclayerinit', this._onDocLayerInit, this);
 		map.on('addmenu', this._addMenu, this);
@@ -320,6 +327,11 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_onDocLayerInit: function() {
+		// clear initial menu
+		while (this._menubarCont.hasChildNodes()) {
+			this._menubarCont.removeChild(this._menubarCont.firstChild);
+		}
+
 		// Add document specific menu
 		var docType = this._map.getDocType();
 		if (docType === 'text') {
@@ -734,7 +746,7 @@ L.Control.Menubar = L.Control.extend({
 					L.DomUtil.addClass(liItem, 'readonly');
 				}
 			}
-			var aItem = L.DomUtil.create('a', '', liItem);
+			var aItem = L.DomUtil.create('a', menu[i].disabled ? 'disabled' : '', liItem);
 			aItem.innerHTML = menu[i].name;
 
 			if (menu[i].type === 'menu') {
