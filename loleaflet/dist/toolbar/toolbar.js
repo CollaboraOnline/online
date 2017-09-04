@@ -722,6 +722,9 @@ $(function () {
 			$('#search-input').off('keypress', onSearchKeyPress).on('keypress', onSearchKeyPress);
 		}
 	});
+	if ($('#toolbar-up').children().length === 0) {
+		console.log('w2ui toolbar is not created');
+	}
 });
 
 var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
