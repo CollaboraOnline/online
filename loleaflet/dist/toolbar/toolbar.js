@@ -1330,7 +1330,9 @@ function updateCommandValues() {
 			data = data.concat(Object.keys(commandValues));
 		}
 		$('.fonts-select').select2({
-			data: data,
+			data: data.sort(function (a, b) {  // also sort(localely)
+				return a.localeCompare(b);
+			}),
 			placeholder: _('Font')
 		});
 		$('.fonts-select').on('select2:select', onFontSelect);
