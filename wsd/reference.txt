@@ -55,5 +55,9 @@ EnableOwnerTermination
 	If set to true, it allows the document owner (the one with OwnerId =
 	UserId) to send a 'closedocument' message (see protocol.txt)
 
+WatermarkText
+	If set to a non-empty string, is used for rendering a watermark-like
+	text on each tile of the document
+
 Note that it is possible to just hide print,save,export options while still
 being able to access them from WOPI hosts using PostMessage API (see loleaflet/reference.html)

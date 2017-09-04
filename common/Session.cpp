@@ -136,6 +136,12 @@ void Session::parseDocOptions(const std::vector<std::string>& tokens, int& part,
             _lang = tokens[i].substr(strlen("lang="));
             ++offset;
         }
+        else if (tokens[i].find("watermarkText=") == 0)
+        {
+            const std::string watermarkText = tokens[i].substr(strlen("watermarkText="));
+            Poco::URI::decode(watermarkText, _watermarkText);
+            ++offset;
+        }
     }
 
     if (tokens.size() > offset)

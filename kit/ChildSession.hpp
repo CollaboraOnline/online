@@ -36,7 +36,8 @@ public:
                         const std::string& docPassword,
                         const std::string& renderOpts,
                         const bool haveDocPassword,
-                        const std::string& lang) = 0;
+                        const std::string& lang,
+                        const std::string& watermarkText) = 0;
 
     /// Unload a client session, which unloads the document
     /// if it is the last and only.
@@ -139,6 +140,7 @@ public:
     const std::string& getViewUserId() const { return _userId; }
     const std::string& getViewUserName() const { return _userName; }
     const std::string& getViewUserExtraInfo() const { return _userExtraInfo; }
+    const std::string& getWatermarkText() const { return _watermarkText; }
 
     void loKitCallback(const int type, const std::string& payload);
 
