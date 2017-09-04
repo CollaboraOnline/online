@@ -198,6 +198,7 @@ public:
         WOPIFileInfo(const std::string& userid,
                      const std::string& username,
                      const std::string& userExtraInfo,
+                     const std::string& watermarkText,
                      const bool userCanWrite,
                      const std::string& postMessageOrigin,
                      const bool hidePrintOption,
@@ -211,6 +212,7 @@ public:
                      const std::chrono::duration<double> callDuration)
             : _userid(userid),
               _username(username),
+              _watermarkText(watermarkText),
               _userCanWrite(userCanWrite),
               _postMessageOrigin(postMessageOrigin),
               _hidePrintOption(hidePrintOption),
@@ -232,6 +234,8 @@ public:
         std::string _username;
         /// Extra info per user, typically mail and other links, as json.
         std::string _userExtraInfo;
+        /// In case a watermark has to be rendered on each tile.
+        std::string _watermarkText;
         /// If user accessing the file has write permission
         bool _userCanWrite;
         /// WOPI Post message property

@@ -336,7 +336,8 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    bool loaded = _docManager.onLoad(getId(), _jailedFilePath, _userName, _docPassword, renderOpts, _haveDocPassword, _lang);
+    bool loaded = _docManager.onLoad(getId(), _jailedFilePath, _userName,
+            _docPassword, renderOpts, _haveDocPassword, _lang, _watermarkText);
     if (!loaded || _viewId < 0)
     {
         LOG_ERR("Failed to get LoKitDocument instance.");
@@ -405,7 +406,8 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
     std::memcpy(output.data(), response.data(), response.size());
 
     Timestamp timestamp;
-    int width, height;
+    // renderFont use a default font size (25) when width and height are 0
+    int width = 0, height = 0;
     unsigned char* ptrFont = nullptr;
 
     {

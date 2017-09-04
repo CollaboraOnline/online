@@ -47,6 +47,7 @@ public:
     void setUserId(const std::string& userId) { _userId = userId; }
     void setUserName(const std::string& userName) { _userName = userName; }
     void setUserExtraInfo(const std::string& userExtraInfo) { _userExtraInfo = userExtraInfo; }
+    void setWatermarkText(const std::string& watermarkText) { _watermarkText = watermarkText; }
     void setDocumentOwner(const bool documentOwner) { _isDocumentOwner = documentOwner; }
     bool isDocumentOwner() const { return _isDocumentOwner; }
 

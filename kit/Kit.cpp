@@ -428,6 +428,119 @@ public:
     }
 };
 
+class Watermark
+{
+public:
+    Watermark(std::shared_ptr<lok::Document> loKitDoc, std::string text)
+        : _loKitDoc(loKitDoc)
+        , _text(text)
+        , _font("Liberation Sans")
+        , _width(0)
+        , _height(0)
+        , _color{64, 64, 64}
+        , _alphaLevel(0.2)
+        , _pixmap(nullptr)
+    {
+    }
+
+    ~Watermark()
+    {
+        if (_pixmap)
+            std::free(_pixmap);
+    }
+
+    void blending(unsigned char* tilePixmap,
+                   int offsetX, int offsetY,
+                   int tilesPixmapWidth, int tilesPixmapHeight,
+                   int tileWidth, int tileHeight,
+                   LibreOfficeKitTileMode mode)
+    {
+        // set requested watermark size a little bit smaller than tile size
+        int width = tileWidth * 0.9;
+        int height = tileHeight * 0.9;
+
+        const unsigned char* pixmap = getPixmap(width, height);
+
+        if (pixmap && tilePixmap)
+        {
+            unsigned int pixmapSize = tilesPixmapWidth * tilesPixmapHeight * 4;
+            int maxX = std::min(tileWidth, _width);
+            int maxY = std::min(tileHeight, _height);
+
+            // center watermark
+            offsetX += (tileWidth - maxX) / 2;
+            offsetY += (tileHeight - maxY) / 2;
+
+            for (int y = 0; y < maxY; ++y)
+            {
+                for (int x = 0; x < maxX; ++x)
+                {
+                    unsigned int i = (y * _width + x) * 4;
+                    unsigned int alpha = pixmap[i + 3];
+                    if (alpha)
+                    {
+                        for (int h = 0; h < 3; ++h)
+                        {
+                            unsigned int j = ((y + offsetY) * tilesPixmapWidth  + (x + offsetX)) * 4 + h;
+                            if (j < pixmapSize)
+                            {
+                                unsigned int color = (mode == LOK_TILEMODE_BGRA) ? _color[2 - h] : _color[h];
+
+                                // original alpha blending for smoothing text edges
+                                color = ((color * alpha) + tilePixmap[j] * (255 - alpha)) / 255;
+                                // blending between document tile and watermark
+                                tilePixmap[j] = color * _alphaLevel + tilePixmap[j] * (1 - _alphaLevel);
+                           }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+private:
+    const unsigned char* getPixmap(int width, int height)
+    {
+        if (_pixmap && width == _width && height == _height)
+            return _pixmap;
+
+        if (_pixmap)
+            std::free(_pixmap);
+
+        _width = width;
+        _height = height;
+
+        if (!_loKitDoc)
+        {
+            LOG_ERR("Watermark rendering requested without a valid document.");
+            return nullptr;
+        }
+
+        // renderFont returns a buffer based on RGBA mode, where r, g, b
+        // are always set to 0 (black) and the alpha level is 0 everywhere
+        // except on the text area; the alpha level take into account of
+        // performing anti-aliasing over the text edges.
+        _pixmap = _loKitDoc->renderFont(_font.c_str(), _text.c_str(), &_width, &_height);
+
+        if (!_pixmap)
+        {
+            LOG_ERR("Watermark: rendering failed.");
+        }
+
+        return _pixmap;
+    }
+
+private:
+    std::shared_ptr<lok::Document> _loKitDoc;
+    std::string _text;
+    std::string _font;
+    int _width;
+    int _height;
+    unsigned char _color[3];
+    double _alphaLevel;
+    unsigned char* _pixmap;
+};
+
 static FILE* ProcSMapsFile = nullptr;
 
 /// A document container.
@@ -464,6 +577,7 @@ public:
         _haveDocPassword(false),
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
+        _docWatermark(),
         _stop(false),
         _isLoading(0)
     {
@@ -655,6 +769,12 @@ public:
             return;
         }
 
+        int pixelWidth = tile.getWidth();
+        int pixelHeight = tile.getHeight();
+
+        if (_docWatermark)
+            _docWatermark->blending(pixmap.data(), 0, 0, pixelWidth, pixelHeight, pixelWidth, pixelHeight, mode);
+
         if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode, hash))
         {
             //FIXME: Return error.
@@ -750,6 +870,15 @@ public:
                 tiles.erase(tiles.begin() + tileIndex);
                 continue;
             }
+
+            int offsetX = positionX  * pixelWidth;
+            int offsetY = positionY * pixelHeight;
+
+            if (_docWatermark)
+                _docWatermark->blending(pixmap.data(), offsetX, offsetY,
+                                        pixmapWidth, pixmapHeight,
+                                        tileCombined.getWidth(), tileCombined.getHeight(),
+                                        mode);
 
             if (!_pngCache.encodeSubBufferToPNG(pixmap.data(), positionX * pixelWidth, positionY * pixelHeight,
                                                 pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode, hash))
@@ -926,7 +1055,8 @@ private:
                 const std::string& docPassword,
                 const std::string& renderOpts,
                 const bool haveDocPassword,
-                const std::string& lang) override
+                const std::string& lang,
+                const std::string& watermarkText) override
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
@@ -955,7 +1085,7 @@ private:
 
         try
         {
-            if (!load(session, uri, userName, docPassword, renderOpts, haveDocPassword, lang))
+            if (!load(session, uri, userName, docPassword, renderOpts, haveDocPassword, lang, watermarkText))
             {
                 return false;
             }
@@ -1147,7 +1277,8 @@ private:
                                         const std::string& docPassword,
                                         const std::string& renderOpts,
                                         const bool haveDocPassword,
-                                        const std::string& lang)
+                                        const std::string& lang,
+                                        const std::string& watermarkText)
     {
         const std::string sessionId = session->getId();
 
@@ -1212,6 +1343,9 @@ private:
             // Only save the options on opening the document.
             // No support for changing them after opening a document.
             _renderOpts = renderOpts;
+
+            if (!watermarkText.empty())
+                _docWatermark.reset(new Watermark(_loKitDocument, watermarkText));
         }
         else
         {
@@ -1554,6 +1688,9 @@ private:
     bool _isDocPasswordProtected;
     // Whether password is required to view the document, or modify it
     PasswordType _docPasswordType;
+
+    // Document watermark
+    std::unique_ptr<Watermark> _docWatermark;
 
     std::atomic<bool> _stop;
     mutable std::mutex _mutex;
