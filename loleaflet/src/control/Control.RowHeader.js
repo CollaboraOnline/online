@@ -271,14 +271,14 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 		if (item.height != distance.y) {
 			var command = {
+				RowHeight: {
+					type: 'unsigned short',
+					value: this._map._docLayer.twipsToHMM(Math.max(distance.y, 0))
+				},
 				Row: {
 					type: 'long',
 					value: item.parentNode && item.parentNode.nextSibling &&
 					       L.DomUtil.getStyle(item.parentNode.nextSibling, 'display') === 'none' ? item.row + 1 : item.row
-				},
-				Height: {
-					type: 'unsigned short',
-					value: Math.max(distance.y, 0)
 				}
 			};
 

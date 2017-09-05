@@ -297,14 +297,14 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		if (item.width != distance.x) {
 			var command = {
+				ColumnWidth: {
+					type: 'unsigned short',
+					value: this._map._docLayer.twipsToHMM(Math.max(distance.x, 0))
+				},
 				Column: {
 					type: 'unsigned short',
 					value: item.parentNode && item.parentNode.nextSibling &&
 					       L.DomUtil.getStyle(item.parentNode.nextSibling, 'display') === 'none' ? item.column + 1 : item.column
-				},
-				Width: {
-					type: 'unsigned short',
-					value: Math.max(distance.x, 0)
 				}
 			};
 
