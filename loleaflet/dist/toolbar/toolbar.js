@@ -938,6 +938,9 @@ map.on('wopiprops', function(e) {
 		w2ui['toolbar-up'].hide('save');
 		w2ui['toolbar-up'].hide('savebreak');
 	}
+	if (e.HideExportOption) {
+		w2ui['presentation-toolbar'].hide('presentation', 'presentationbreak');
+	}
 	if (e.DisableCopy) {
 		$('input#formulaInput').bind('copy', function(evt) {
 			evt.preventDefault();
@@ -1017,7 +1020,10 @@ map.on('doclayerinit', function () {
 		break;
 	case 'presentation':
 		var presentationToolbar = w2ui['presentation-toolbar'];
-		presentationToolbar.show('presentation', 'presentationbreak', 'insertpage', 'duplicatepage', 'deletepage');
+		presentationToolbar.show('insertpage', 'duplicatepage', 'deletepage');
+		if (!map['wopi'].HideExportOption) {
+			presentationToolbar.show('presentation', 'presentationbreak');
+		}
 		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		toolbarUpMore.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		statusbar.insert('left', [

@@ -222,7 +222,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('New slide'), id: 'insertpage', type: 'action'},
 				{name: _('Duplicate slide'), id: 'duplicatepage', type: 'action'},
 				{name: _('Delete slide'), id: 'deletepage', type: 'action'},
-				{type: 'separator'},
+				{type: 'separator', id: 'fullscreen-presentation-separator'},
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
@@ -709,6 +709,9 @@ L.Control.Menubar = L.Control.extend({
 				continue;
 
 			if (menu[i].id === 'save' && this._map['wopi'].HideSaveOption)
+				continue;
+
+			if (menu[i].id && menu[i].id.startsWith('fullscreen-presentation') && this._map['wopi'].HideExportOption)
 				continue;
 
 			// Keep track of all 'downloadas-' options and register them as
