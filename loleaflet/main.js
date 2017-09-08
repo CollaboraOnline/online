@@ -100,7 +100,7 @@ if (wopiSrc != '') {
 	docParams = wopiParams;
 	isWopi = true;
 } else {
-    docURL = filePath;
+	docURL = filePath;
 	docParams = {};
 }
 
@@ -114,6 +114,7 @@ var map = L.map('map', {
 	documentContainer: 'document-container',
 	debug: debugMode,
 	wopi: isWopi,
+	wopiSrc: wopiSrc,
 	alwaysActive: alwaysActive,
 	idleTimeoutSecs: idleTimeoutSecs,  // Dim when user is idle.
 	outOfFocusTimeoutSecs: outOfFocusTimeoutSecs // Dim after switching tabs.

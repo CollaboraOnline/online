@@ -22,7 +22,11 @@ L.Socket = L.Class.extend({
 			if (map.options.permission) {
 				map.options.docParams['permission'] = map.options.permission;
 			}
-			this.socket = new WebSocket(map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws');
+			var wopiSrc = '';
+			if (map.options.wopiSrc != '') {
+				wopiSrc = '?WOPISrc=' + map.options.wopiSrc;
+			}
+			this.socket = new WebSocket(map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc);
 			this.socket.onerror = L.bind(this._onSocketError, this);
 			this.socket.onclose = L.bind(this._onSocketClose, this);
 			this.socket.onopen = L.bind(this._onSocketOpen, this);
