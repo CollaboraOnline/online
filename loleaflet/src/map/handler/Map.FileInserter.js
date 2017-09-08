@@ -14,8 +14,12 @@ L.Map.FileInserter = L.Handler.extend({
 		this._toInsert = {};
 		var parser = document.createElement('a');
 		parser.href = map.options.server;
+		var wopiSrc = '';
+		if (map.options.wopiSrc != '') {
+			wopiSrc = '?WOPISrc=' + map.options.wopiSrc;
+		}
 		this._url = map.options.webserver + '/' + map.options.urlPrefix +
-			'/' + encodeURIComponent(map.options.doc) + '/insertfile';
+			'/' + encodeURIComponent(map.options.doc) + '/insertfile' + wopiSrc;
 	},
 
 	addHooks: function () {
