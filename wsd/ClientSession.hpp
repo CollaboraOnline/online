@@ -162,6 +162,9 @@ private:
     /// Wopi FileInfo object
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;
 
+    /// Count of key-strokes
+    uint64_t _keyEvents;
+
     SenderQueue<std::shared_ptr<Message>> _senderQueue;
 };
 

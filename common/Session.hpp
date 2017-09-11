@@ -119,6 +119,7 @@ private:
     /// True if the user is active, otherwise false (switched tabs).
     std::atomic<bool> _isActive;
 
+    /// Time of the last interactive event being received
     std::chrono::steady_clock::time_point _lastActivityTime;
 
     // Whether websocket received close frame.  Closing Handshake

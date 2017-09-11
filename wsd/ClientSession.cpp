@@ -40,7 +40,8 @@ ClientSession::ClientSession(const std::string& id,
     _uriPublic(uriPublic),
     _isDocumentOwner(false),
     _isAttached(false),
-    _isViewLoaded(false)
+    _isViewLoaded(false),
+    _keyEvents(1)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
@@ -82,7 +83,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         updateLastActivityTime();
         docBroker->updateLastActivityTime();
     }
-
     if (tokens[0] == "loolclient")
     {
         const auto versionTuple = ParseVersion(tokens[1]);
@@ -240,6 +240,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else
     {
+        if (tokens[0] == "key")
+            _keyEvents++;
+
         if (!filterMessage(firstLine))
         {
             const std::string dummyFrame = "dummymsg";
@@ -879,9 +882,19 @@ void ClientSession::dumpState(std::ostream& os)
     os << "\t\tisReadOnly: " << isReadOnly()
        << "\n\t\tisDocumentOwner: " << _isDocumentOwner
        << "\n\t\tisAttached: " << _isAttached
-       << "\n";
-    _senderQueue.dumpState(os);
-}
+       << "\n\t\tkeyEvents: " << _keyEvents;
 
+    std::shared_ptr<StreamSocket> socket = _socket.lock();
+    if (socket)
+    {
+        uint64_t sent, recv;
+        socket->getIOStats(sent, recv);
+        os << "\n\t\tsent/keystroke: " << (double)sent/_keyEvents << "bytes";
+    }
+
+    os << "\n";
+    _senderQueue.dumpState(os);
+
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
