@@ -207,6 +207,7 @@ EXTRA_DIST = discovery.xml \
              debian/changelog \
              debian/control \
              debian/loolwsd.postinst \
+             debian/loolwsd.postrm \
              etc/key.pem \
              etc/cert.pem \
              etc/ca-chain.cert.pem
