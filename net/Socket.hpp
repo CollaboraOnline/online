@@ -659,6 +659,7 @@ class StreamSocket;
 class SocketHandlerInterface
 {
 public:
+    virtual ~SocketHandlerInterface() {}
     /// Called when the socket is newly created to
     /// set the socket associated with this ResponseClient.
     /// Will be called exactly once.

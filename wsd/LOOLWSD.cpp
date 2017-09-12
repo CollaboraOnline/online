@@ -2280,7 +2280,7 @@ private:
 
 std::map<std::string, std::string> ClientRequestDispatcher::StaticFileContentCache;
 
-class PlainSocketFactory : public SocketFactory
+class PlainSocketFactory final : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int physicalFd) override
     {
@@ -2299,7 +2299,7 @@ class PlainSocketFactory : public SocketFactory
 };
 
 #if ENABLE_SSL
-class SslSocketFactory : public SocketFactory
+class SslSocketFactory final : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int physicalFd) override
     {
@@ -2313,7 +2313,7 @@ class SslSocketFactory : public SocketFactory
 };
 #endif
 
-class PrisonerSocketFactory : public SocketFactory
+class PrisonerSocketFactory final : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int fd) override
     {

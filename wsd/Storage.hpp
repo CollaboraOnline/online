@@ -83,6 +83,8 @@ public:
         LOG_DBG("Storage ctor: " << uri.toString());
     }
 
+    virtual ~StorageBase() {}
+
     const std::string getUri() const { return _uri.toString(); }
 
     /// Returns the root path to the jailed file.
