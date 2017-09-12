@@ -357,7 +357,9 @@ struct DeltaGenerator {
                     output.push_back(diffCount >> 8);
                 }
 
-                output.insert(output.end(), (char *)&cur[i], (char *)&cur[i+diffCount]);
+                size_t dest = output.size();
+                output.resize(dest + diffCount * 4);
+                memcpy(&output[dest], &cur[i], diffCount * 4);
                 LOG_TRC("different " << diffCount << "pixels");
                 i += diffCount;
             }
@@ -401,16 +403,16 @@ struct DeltaGenerator {
             _deltaEntries.erase(_deltaEntries.begin());
 
         // FIXME: assuming width etc. are all constant & so on.
-        DeltaData reference;
-        reference._wid = wid;
-        reference._rawData = dataToVector(pixmap, startX, startY, width, height,
-                                          bufferWidth, bufferHeight);
-        _deltaEntries.push_back(reference);
+        DeltaData update;
+        update._wid = wid;
+        update._rawData = dataToVector(pixmap, startX, startY, width, height,
+                                       bufferWidth, bufferHeight);
+        _deltaEntries.push_back(update);
 
-        for (auto &it : _deltaEntries)
+        for (auto &old : _deltaEntries)
         {
-            if (oldWid == it._wid)
-                return makeDelta(reference, it, output);
+            if (oldWid == old._wid)
+                return makeDelta(old, update, output);
         }
         return false;
     }
