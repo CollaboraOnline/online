@@ -482,7 +482,7 @@ public:
 class Watermark
 {
 public:
-    Watermark(std::shared_ptr<lok::Document> loKitDoc, std::string text)
+    Watermark(const std::shared_ptr<lok::Document>& loKitDoc, const std::string& text)
         : _loKitDoc(loKitDoc)
         , _text(text)
         , _font("Liberation Sans")
@@ -628,7 +628,6 @@ public:
         _haveDocPassword(false),
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
-        _docWatermark(),
         _stop(false),
         _isLoading(0),
         _editorId(-1),
