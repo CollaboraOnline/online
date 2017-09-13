@@ -165,6 +165,10 @@ L.Map = L.Evented.extend({
 		}, this);
 	},
 
+	loadDocument: function() {
+		this._socket.connect();
+	},
+
 	// public methods that modify map state
 
 	getViewId: function (username) {
