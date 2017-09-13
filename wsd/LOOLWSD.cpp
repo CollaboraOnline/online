@@ -2616,6 +2616,9 @@ int LOOLWSD::innerMain()
 
     /// The main-poll does next to nothing:
     SocketPoll mainWait("main");
+#if ENABLE_DEBUG
+    std::cerr << "Ready to accept connections.\n" << std::endl;
+#endif
 
     const auto startStamp = std::chrono::steady_clock::now();
 
