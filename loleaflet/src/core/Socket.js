@@ -18,6 +18,11 @@ L.Socket = L.Class.extend({
 	initialize: function (map) {
 		console.debug('socket.initialize:');
 		this._map = map;
+		this._msgQueue = [];
+	},
+
+	connect: function() {
+		var map = this._map;
 		try {
 			if (map.options.permission) {
 				map.options.docParams['permission'] = map.options.permission;
@@ -39,7 +44,6 @@ L.Socket = L.Class.extend({
 			this._accessTokenExpireTimeout = setTimeout(L.bind(this._sessionExpiredWarning, this),
 			                                            parseInt(map.options.docParams.access_token_ttl) - Date.now() - tokenExpiryWarning);
 		}
-		this._msgQueue = [];
 	},
 
 	_sessionExpiredWarning: function() {
