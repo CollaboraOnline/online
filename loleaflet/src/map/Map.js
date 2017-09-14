@@ -983,7 +983,7 @@ L.Map = L.Evented.extend({
 	},
 
 	_handleDOMEvent: function (e) {
-		if (!this._loaded || !this._enabled || L.DomEvent._skipped(e)) { return; }
+		if (!this._docLayer || !this._loaded || !this._enabled || L.DomEvent._skipped(e)) { return; }
 
 		this.lastActiveTime = Date.now();
 
