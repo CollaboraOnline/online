@@ -164,6 +164,9 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Cell'), type: 'unocommand', uno: '.uno:EntireCell'}]},
 					{name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'}]
 			},
+			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
+				{name: _('Automatic Spell Checking'), type: 'unocommand', uno: '.uno:SpellOnline'}
+			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
@@ -225,6 +228,9 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator', id: 'fullscreen-presentation-separator'},
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			},
+			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
+				{name: _('Automatic Spell Checking'), type: 'unocommand', uno: '.uno:SpellOnline'}
+			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
@@ -273,6 +279,9 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Delete row'), type: 'unocommand', uno: '.uno:DeleteRows'},
 				{name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
 			},
+			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
+				{name: _('Automatic Spell Checking'), type: 'unocommand', uno: '.uno:SpellOnline'}
+			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
