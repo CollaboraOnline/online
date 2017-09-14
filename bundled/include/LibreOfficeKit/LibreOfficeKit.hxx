@@ -487,6 +487,9 @@ public:
      *
      * @param pUrl the URL of the document to load
      * @param pFilterOptions options for the import filter, e.g. SkipImages.
+     *        Another useful FilterOption is "Language=...".  It is consumed
+     *        by the documentLoad() itself, and when provided, LibreOfficeKit
+     *        switches the language accordingly first.
      * @since pFilterOptions argument added in LibreOffice 5.0
      */
     inline Document* documentLoad(const char* pUrl, const char* pFilterOptions = NULL)
@@ -600,6 +603,19 @@ public:
     inline char* getVersionInfo()
     {
         return mpThis->pClass->getVersionInfo(mpThis);
+    }
+
+    /**
+     * Run a macro.
+     *
+     * Same syntax as on command line is permissible (ie. the macro:// URI forms)
+     *
+     * @param pURL macro url to run
+     */
+
+    inline bool runMacro( const char* pURL)
+    {
+        return mpThis->pClass->runMacro( mpThis, pURL );
     }
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
