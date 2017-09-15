@@ -24,7 +24,7 @@ L.Socket = L.Class.extend({
 			}
 			var wopiSrc = '';
 			if (map.options.wopiSrc != '') {
-				wopiSrc = '?WOPISrc=' + map.options.wopiSrc;
+				wopiSrc = '?WOPISrc=' + map.options.wopiSrc + '&compat=/ws';
 			}
 			this.socket = new WebSocket(map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc);
 			this.socket.onerror = L.bind(this._onSocketError, this);
