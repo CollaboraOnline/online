@@ -19,7 +19,21 @@ verbose=''
 # Automake generates. Don't be mislead by 'git grep' not showing any
 # use of --test-name for instance.
 
+print_help ()
+{
+    echo "Usage: run_unit.sh --test-name <name.la> [OPTIONS]"
+    echo "Runs a specified unit test"
+    echo ""
+    echo "   --log-file <file>   Log output to this file - default /dev/stderr"
+    echo "   --trs-file <file>   Records the results of a test for automake (default /dev/stderr)"
+    echo "   --valgrind          Run under valgrind if enabled"
+    echo "   --verbose           Print out more stuff - if you run out of things to read"
+    exit 1
+}
+
 tst=
+tst_log=/dev/stderr
+tst_output=/dev/stderr
 while test $# -gt 0; do
   case $1 in
       --test-name) tst=$2; shift;;
@@ -27,6 +41,7 @@ while test $# -gt 0; do
       --trs-file)  test_output=$2; shift;;
       --valgrind)  valgrind=$valgrind_cmd; shift;;
       --verbose)   verbose="--verbose";;
+      --help)      print_help ;;
   -*) ;; # ignore
   esac
   shift
