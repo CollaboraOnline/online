@@ -188,7 +188,8 @@ void Session::handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &
         std::unique_ptr< std::vector<char> > replace;
         if (UnitBase::get().filterSessionInput(this, &data[0], data.size(), replace))
         {
-            _handleInput(replace->data(), replace->size());
+            if (!replace || replace->empty())
+                _handleInput(replace->data(), replace->size());
             return;
         }
 
