@@ -10,8 +10,10 @@
 #define INCLUDED_DELTA_HPP
 
 #include <vector>
+#include <assert.h>
+#include <Log.hpp>
 
-#ifdef TILE_WIRE_ID
+#ifndef TILE_WIRE_ID
 #  define TILE_WIRE_ID
    typedef uint32_t TileWireId;
 #endif
@@ -125,7 +127,7 @@ class DeltaGenerator {
     DeltaGenerator() {}
 
     /**
-     * Creates a delta if possible:
+     * Creates a delta between @oldWid and pixmap if possible:
      *   if so - returns @true and appends the delta to @output
      * stores @pixmap, and other data to accelerate delta
      * creation in a limited size cache.
