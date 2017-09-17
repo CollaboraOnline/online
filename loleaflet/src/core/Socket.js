@@ -260,6 +260,10 @@ L.Socket = L.Class.extend({
 			else if (textMsg === 'shuttingdown') {
 				msg = _('Server is shutting down for maintenance (auto-saving)');
 			}
+			else if (textMsg === 'docdisconnected') {
+				msg = _('Oops, there is a problem connecting the document');
+				postMsgData['Reason'] = 'DocumentDisconnected';
+			}
 			else if (textMsg === 'recycling') {
 				msg = _('Server is recycling and will be available shortly');
 
