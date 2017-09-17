@@ -23,24 +23,26 @@ L.Socket = L.Class.extend({
 
 	connect: function() {
 		var map = this._map;
+		if (map.options.permission) {
+			map.options.docParams['permission'] = map.options.permission;
+		}
+		var wopiSrc = '';
+		if (map.options.wopiSrc != '') {
+			wopiSrc = '?WOPISrc=' + map.options.wopiSrc + '&compat=/ws';
+		}
+
 		try {
-			if (map.options.permission) {
-				map.options.docParams['permission'] = map.options.permission;
-			}
-			var wopiSrc = '';
-			if (map.options.wopiSrc != '') {
-				wopiSrc = '?WOPISrc=' + map.options.wopiSrc + '&compat=/ws';
-			}
 			this.socket = new WebSocket(map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc);
-			this.socket.onerror = L.bind(this._onSocketError, this);
-			this.socket.onclose = L.bind(this._onSocketClose, this);
-			this.socket.onopen = L.bind(this._onSocketOpen, this);
-			this.socket.onmessage = L.bind(this._onMessage, this);
-			this.socket.binaryType = 'arraybuffer';
 		} catch (e) {
 			this._map.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ' + e), cmd: 'socket', kind: 'failed', id: 3});
-			return null;
+			return;
 		}
+
+		this.socket.onerror = L.bind(this._onSocketError, this);
+		this.socket.onclose = L.bind(this._onSocketClose, this);
+		this.socket.onopen = L.bind(this._onSocketOpen, this);
+		this.socket.onmessage = L.bind(this._onMessage, this);
+		this.socket.binaryType = 'arraybuffer';
 
 		if (map.options.docParams.access_token && parseInt(map.options.docParams.access_token_ttl)) {
 			var tokenExpiryWarning = 900 * 1000; // Warn when 15 minutes remain
