@@ -1439,6 +1439,7 @@ private:
         {
             auto lock = docBroker->getLock();
             docBroker->assertCorrectThread();
+            docBroker->setCloseReason("docdisconnected");
             docBroker->stop();
         }
     }
