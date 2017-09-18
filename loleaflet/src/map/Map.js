@@ -826,7 +826,7 @@ L.Map = L.Evented.extend({
 					return vex.close(id);
 				}
 			} else {
-				this._socket.initialize(this);
+				this.loadDocument();
 			}
 		}
 
