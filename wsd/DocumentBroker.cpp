@@ -515,16 +515,12 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                          << "Actual: " << fileInfo._modifiedTime << Log::end;
 
             _documentChangedInStorage = true;
+            std::string message = "close: documentconflict";
             if (_isModified)
-            {
-                const std::string errorMsg = "error: cmd=storage kind=documentconflict";
-                session->sendTextFrame(errorMsg);
-                broadcastMessage(errorMsg);
-            }
-            else
-            {
-                closeDocument("documentconflict");
-            }
+                message = "error: cmd=storage kind=documentconflict";
+
+            session->sendTextFrame(message);
+            broadcastMessage(message);
         }
     }
 
