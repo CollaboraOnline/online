@@ -91,7 +91,7 @@ L.Socket = L.Class.extend({
 
 		var socketState = this.socket.readyState;
 		if (socketState === 2 || socketState === 3) {
-			this.initialize(this._map);
+			this._map.loadDocument();
 		}
 
 		if (socketState === 1) {
@@ -297,7 +297,7 @@ L.Socket = L.Class.extend({
 					}
 
 					try {
-						socket.initialize(map);
+						map.loadDocument(map);
 					} catch (error) {
 					}
 				}, timeoutMs);
@@ -514,10 +514,10 @@ L.Socket = L.Class.extend({
 					callback: L.bind(function(data) {
 						if (data) {
 							this._map._docPassword = data.password;
-							this.initialize(this._map);
+							this._map.loadDocument();
 						} else if (passwordType === 'to-modify') {
 							this._map._docPassword = '';
-							this.initialize(this._map);
+							this._map.loadDocument();
 						} else {
 							this._map.hideBusy();
 						}
