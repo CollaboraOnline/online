@@ -135,7 +135,7 @@ public:
                             int events) = 0;
 
     /// manage latency issues around packet aggregation
-    virtual void setNoDelay()
+    void setNoDelay()
     {
         const int val = 1;
         ::setsockopt(_fd, IPPROTO_TCP, TCP_NODELAY,
