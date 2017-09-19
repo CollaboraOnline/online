@@ -10,11 +10,22 @@
 #ifndef INCLUDED_TEST_HPP
 #define INCLUDED_TEST_HPP
 
+#include <vector>
+
 /// Are we running inside WSD or by ourselves.
 bool isStandalone();
 
 /// Run the set of client tests we have
 bool runClientTests(bool standalone, bool verbose);
+
+/// Get the list of kit PIDs
+std::vector<int> getKitPids();
+
+/// Get the PID of the forkit
+std::vector<int> getForKitPids();
+
+/// How many live lookit processes do we have ?
+int getLoolKitProcessCount();
 
 #endif
 

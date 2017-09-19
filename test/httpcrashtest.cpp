@@ -15,9 +15,7 @@
 
 #include <cstring>
 
-#include <Poco/DirectoryIterator.h>
 #include <Poco/Dynamic/Var.h>
-#include <Poco/FileStream.h>
 #include <Poco/JSON/JSON.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
@@ -44,6 +42,7 @@
 #include <LOOLWebSocket.hpp>
 #include "helpers.hpp"
 #include "countloolkits.hpp"
+#include "test.hpp"
 
 using namespace helpers;
 
@@ -68,7 +67,8 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
     void testCrashForkit();
 
     static
-    void killLoKitProcesses(const char* exec_filename);
+    void killLoKitProcesses();
+    void killForkitProcess();
 
 public:
     HTTPCrashTest()
@@ -108,7 +108,7 @@ void HTTPCrashTest::testBarren()
     const auto testname = "barren ";
     try
     {
-        killLoKitProcesses("(loolkit)");
+        killLoKitProcesses();
         countLoolKitProcesses(0);
 
         std::cerr << "Loading after kill." << std::endl;
@@ -134,7 +134,7 @@ void HTTPCrashTest::testCrashKit()
 
         std::cerr << "Killing loolkit instances." << std::endl;
 
-        killLoKitProcesses("(loolkit)");
+        killLoKitProcesses();
         countLoolKitProcesses(0);
 
         // We expect the client connection to close.
@@ -183,7 +183,7 @@ void HTTPCrashTest::testRecoverAfterKitCrash()
 
         std::cerr << "Killing loolkit instances." << std::endl;
 
-        killLoKitProcesses("(loolkit)");
+        killLoKitProcesses();
         countLoolKitProcesses(0);
 
         // We expect the client connection to close.
@@ -207,8 +207,7 @@ void HTTPCrashTest::testCrashForkit()
         auto socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
         std::cerr << "Killing forkit." << std::endl;
-        killLoKitProcesses("(loolforkit)");
-        killLoKitProcesses("(forkit)"); // on new kernels: prctrl does that.
+        killForkitProcess();
         std::cerr << "Communicating after kill." << std::endl;
 
         sendTextFrame(socket, "status", testname);
@@ -217,9 +216,8 @@ void HTTPCrashTest::testCrashForkit()
         // respond close frame
         socket->shutdown();
 
-
         std::cerr << "Killing loolkit." << std::endl;
-        killLoKitProcesses("(loolkit)");
+        killLoKitProcesses();
         countLoolKitProcesses(0);
         std::cerr << "Communicating after kill." << std::endl;
         loadDocAndGetSocket("empty.odt", _uri, testname);
@@ -230,46 +228,26 @@ void HTTPCrashTest::testCrashForkit()
     }
 }
 
-void HTTPCrashTest::killLoKitProcesses(const char* exec_filename)
+void killPids(const std::vector<int> &pids)
 {
-    // Crash all lokit processes.
-    for (auto it = Poco::DirectoryIterator(std::string("/proc")); it != Poco::DirectoryIterator(); ++it)
+    std::cout << "kill pids " << pids.size() << "\n";
+    // Now kill them
+    for (int pid : pids)
     {
-        try
-        {
-            Poco::Path procEntry = it.path();
-            const std::string& fileName = procEntry.getFileName();
-            int pid;
-            std::size_t endPos = 0;
-            try
-            {
-                pid = std::stoi(fileName, &endPos);
-            }
-            catch (const std::invalid_argument&)
-            {
-                pid = 0;
-            }
-
-            if (pid > 1 && endPos == fileName.length())
-            {
-                Poco::FileInputStream stat(procEntry.toString() + "/stat");
-                std::string statString;
-                Poco::StreamCopier::copyToString(stat, statString);
-                Poco::StringTokenizer tokens(statString, " ");
-                if (tokens.count() > 3 && tokens[1] == exec_filename)
-                {
-                    std::cerr << "Killing " << pid << std::endl;
-                    if (kill(pid, SIGKILL) == -1)
-                    {
-                        std::cerr << "kill(" << pid << ", SIGKILL) failed: " << std::strerror(errno) << std::endl;
-                    }
-                }
-            }
-        }
-        catch (const Poco::Exception&)
-        {
-        }
+        std::cerr << "Killing " << pid << std::endl;
+        if (kill(pid, SIGKILL) == -1)
+            std::cerr << "kill(" << pid << ", SIGKILL) failed: " << std::strerror(errno) << std::endl;
     }
+}
+
+void HTTPCrashTest::killLoKitProcesses()
+{
+    killPids(getKitPids());
+}
+
+void HTTPCrashTest::killForkitProcess()
+{
+    killPids(getForKitPids());
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPCrashTest);

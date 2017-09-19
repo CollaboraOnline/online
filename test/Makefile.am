@@ -43,13 +43,25 @@ wsd_sources = \
             ../common/Unit.cpp \
             ../net/Socket.cpp
 
+test_base_source = \
+	TileQueueTests.cpp \
+	WhiteBoxTests.cpp \
+	$(wsd_sources)
+
+test_all_source = \
+	$(test_base_source) \
+	TileCacheTests.cpp \
+	integration-http-server.cpp \
+	httpwstest.cpp \
+	httpcrashtest.cpp \
+	httpwserror.cpp
+
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
-unittest_SOURCES = TileQueueTests.cpp WhiteBoxTests.cpp test.cpp $(wsd_sources)
+unittest_SOURCES = $(test_base_source) test.cpp
 unittest_LDADD = $(CPPUNIT_LIBS)
 
 test_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
-test_SOURCES = TileCacheTests.cpp integration-http-server.cpp \
-               httpwstest.cpp httpcrashtest.cpp httpwserror.cpp $(unittest_SOURCES)
+test_SOURCES = $(test_all_source) test.cpp
 test_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
@@ -57,7 +69,7 @@ unit_oob_la_SOURCES = UnitOOB.cpp
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
 unit_admin_la_SOURCES = UnitAdmin.cpp
 unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
-unit_client_la_SOURCES = UnitClient.cpp ${test_SOURCES}
+unit_client_la_SOURCES = UnitClient.cpp ${test_base_source}
 unit_client_la_LIBADD = $(CPPUNIT_LIBS)
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
@@ -78,7 +90,10 @@ check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
-TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la unit-oauth.la # unit-client.la unit-storage.la unit-admin.la # - enable to run unit-tests in wsd ...
+TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la unit-oauth.la
+# TESTS += unit-client.la
+# TESTS += unit-admin.la
+# TESTS += unit-storage.la
 else
 TESTS = ${top_builddir}/test/test
 endif

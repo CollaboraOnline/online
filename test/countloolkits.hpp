@@ -21,62 +21,7 @@
 #include <Poco/StringTokenizer.h>
 
 #include <Common.hpp>
-
-/// Counts the number of LoolKit process instances without wiating.
-static int getLoolKitProcessCount()
-{
-    int result = 0;
-    for (auto i = Poco::DirectoryIterator(std::string("/proc")); i != Poco::DirectoryIterator(); ++i)
-    {
-        try
-        {
-            Poco::Path procEntry = i.path();
-            const std::string& fileName = procEntry.getFileName();
-            int pid;
-            std::size_t endPos = 0;
-            try
-            {
-                pid = std::stoi(fileName, &endPos);
-            }
-            catch (const std::invalid_argument&)
-            {
-                pid = 0;
-            }
-
-            if (pid > 1 && endPos == fileName.length())
-            {
-                Poco::FileInputStream stat(procEntry.toString() + "/stat");
-                std::string statString;
-                Poco::StreamCopier::copyToString(stat, statString);
-                Poco::StringTokenizer tokens(statString, " ");
-                if (tokens.count() > 3 && tokens[1] == "(loolkit)")
-                {
-                    switch (tokens[2].c_str()[0])
-                    {
-                        // Dead marker for old and new kernels.
-                    case 'x':
-                    case 'X':
-                        // Don't ignore zombies.
-                        break;
-                    default:
-                        ++result;
-                        break;
-                    }
-                    // std::cout << "Process:" << pid << ", '" << tokens[1] << "'" << " state: " << tokens[2] << std::endl;
-                }
-            }
-        }
-        catch (const std::exception& ex)
-        {
-            // 'File not found' is common here, since there is a race
-            // between iterating the /proc directory and opening files,
-            // the process in question might have been gone.
-            //std::cerr << "Error while iterating processes: " << ex.what() << std::endl;
-        }
-    }
-
-    return result;
-}
+#include "test.hpp"
 
 static int countLoolKitProcesses(const int expected)
 {

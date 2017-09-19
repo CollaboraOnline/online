@@ -23,6 +23,10 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
 #include <Poco/RegularExpression.h>
+#include <Poco/DirectoryIterator.h>
+#include <Poco/FileStream.h>
+#include <Poco/StreamCopier.h>
+#include <Poco/StringTokenizer.h>
 
 #include <Log.hpp>
 
@@ -135,6 +139,87 @@ bool runClientTests(bool standalone, bool verbose)
     outputter.write();
 
     return result.wasSuccessful();
+}
+
+std::vector<int> getProcPids(const char* exec_filename, bool ignoreZombies = false)
+{
+    std::vector<int> pids;
+
+    // Crash all lokit processes.
+    for (auto it = Poco::DirectoryIterator(std::string("/proc")); it != Poco::DirectoryIterator(); ++it)
+    {
+        try
+        {
+            Poco::Path procEntry = it.path();
+            const std::string& fileName = procEntry.getFileName();
+            int pid;
+            std::size_t endPos = 0;
+            try
+            {
+                pid = std::stoi(fileName, &endPos);
+            }
+            catch (const std::invalid_argument&)
+            {
+                pid = 0;
+            }
+
+            if (pid > 1 && endPos == fileName.length())
+            {
+                Poco::FileInputStream stat(procEntry.toString() + "/stat");
+                std::string statString;
+                Poco::StreamCopier::copyToString(stat, statString);
+                Poco::StringTokenizer tokens(statString, " ");
+                if (tokens.count() > 3 && tokens[1] == exec_filename)
+                {
+                    if (ignoreZombies)
+                    {
+                        switch (tokens[2].c_str()[0])
+                        {
+                            // Dead marker for old and new kernels.
+                        case 'x':
+                        case 'X':
+                            // Don't ignore zombies.
+                            break;
+                        default:
+                            pids.push_back(pid);
+                            break;
+                        }
+                    }
+                    else
+                        pids.push_back(pid);
+                }
+            }
+        }
+        catch (const Poco::Exception&)
+        {
+        }
+    }
+    return pids;
+}
+
+std::vector<int> getKitPids()
+{
+    std::vector<int> pids;
+
+    pids = getProcPids("(loolkit)");
+
+    return pids;
+}
+
+int getLoolKitProcessCount()
+{
+    return getProcPids("(loolkit)", true).size();
+}
+
+std::vector<int> getForKitPids()
+{
+    std::vector<int> pids, pids2;
+
+    pids = getProcPids("(loolforkit)");
+    pids2 = getProcPids("(forkit)");
+    pids.insert(pids.end(), pids2.begin(), pids2.end());
+
+    return pids;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

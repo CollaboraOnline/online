@@ -69,4 +69,8 @@ UnitBase *unit_create_wsd(void)
     return new UnitClient();
 }
 
+// Allows re-use of UnitClient in test.cpp impls.
+#define UNIT_CLIENT_TESTS
+#include "test.cpp"
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
