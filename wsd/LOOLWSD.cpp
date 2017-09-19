@@ -2765,7 +2765,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     return returnValue;
 }
 
-
 void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& /* request */, UnitHTTPServerResponse& /* response */)
 {
     switch (type)
@@ -2782,6 +2781,22 @@ void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& /* requ
         assert(false);
         break;
     }
+}
+
+std::vector<int> LOOLWSD::getKitPids()
+{
+    std::vector<int> pids;
+    {
+        std::unique_lock<std::mutex> lock(NewChildrenMutex);
+        for (const auto &child : NewChildren)
+            pids.push_back(child->getPid());
+    }
+    {
+        std::unique_lock<std::mutex> lock(DocBrokersMutex);
+        for (const auto &it : DocBrokers)
+            pids.push_back(it.second->getPid());
+    }
+    return pids;
 }
 
 #if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS)

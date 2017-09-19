@@ -18,6 +18,8 @@ bool isStandalone();
 /// Run the set of client tests we have
 bool runClientTests(bool standalone, bool verbose);
 
+// ---- Abstraction for standalone vs. WSD ----
+
 /// Get the list of kit PIDs
 std::vector<int> getKitPids();
 

@@ -69,7 +69,7 @@ unit_oob_la_SOURCES = UnitOOB.cpp
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
 unit_admin_la_SOURCES = UnitAdmin.cpp
 unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
-unit_client_la_SOURCES = UnitClient.cpp ${test_base_source}
+unit_client_la_SOURCES = UnitClient.cpp ${test_all_source}
 unit_client_la_LIBADD = $(CPPUNIT_LIBS)
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
@@ -91,7 +91,7 @@ check-local:
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
 TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la unit-oauth.la
-# TESTS += unit-client.la
+# TESTS = unit-client.la
 # TESTS += unit-admin.la
 # TESTS += unit-storage.la
 else

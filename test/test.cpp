@@ -79,6 +79,7 @@ bool isStandalone()
     return IsStandalone;
 }
 
+// returns true on success
 bool runClientTests(bool standalone, bool verbose)
 {
     IsStandalone = standalone;
@@ -140,6 +141,9 @@ bool runClientTests(bool standalone, bool verbose)
 
     return result.wasSuccessful();
 }
+
+// Versions assuming a single user, on a single machine
+#ifndef UNIT_CLIENT_TESTS
 
 std::vector<int> getProcPids(const char* exec_filename, bool ignoreZombies = false)
 {
@@ -221,5 +225,32 @@ std::vector<int> getForKitPids()
 
     return pids;
 }
+
+#else // UNIT_CLIENT_TESTS
+
+// Here we are compiled inside UnitClient.cpp and we have
+// full access to the WSD process internals.
+
+std::vector<int> getKitPids()
+{
+    return LOOLWSD::getKitPids();
+}
+
+/// Get the PID of the forkit
+std::vector<int> getForKitPids()
+{
+    std::vector<int> pids;
+    if (LOOLWSD::ForKitProcId >= 0)
+        pids.push_back(LOOLWSD::ForKitProcId);
+    return pids;
+}
+
+/// How many live lookit processes do we have ?
+int getLoolKitProcessCount()
+{
+    return getKitPids().size();
+}
+
+#endif // UNIT_CLIENT_TESTS
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

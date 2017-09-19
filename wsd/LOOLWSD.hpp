@@ -57,6 +57,8 @@ public:
     static std::unique_ptr<TraceFileWriter> TraceDumper;
     static std::set<std::string> EditFileExtensions;
 
+    static std::vector<int> getKitPids();
+
     /// Flag to shutdown the server.
     std::atomic<bool> ShutdownFlag;
 

@@ -57,9 +57,9 @@ public:
 
         _worker = std::thread([this]{
                 if (runClientTests(false, true))
-                    exitTest (TestResult::Failed);
+                    exitTest(TestResult::Ok);
                 else
-                    exitTest (TestResult::Ok);
+                    exitTest(TestResult::Failed);
             });
     }
 };
