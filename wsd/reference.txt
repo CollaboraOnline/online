@@ -79,3 +79,16 @@ WatermarkText
 
 Note that it is possible to just hide print,save,export options while still
 being able to access them from WOPI hosts using PostMessage API (see loleaflet/reference.html)
+
+Alternative authentication possibility
+--------------------------------------
+
+Instead of the 'access_token', it is possible to pass an 'access_header' at
+the places where the 'access_token' would be used in the initial iframe setup.
+
+The 'access_header' can be eg. of a form
+
+    Authorization: Basic abcd1234==
+
+This header is then used in all the WOPI calls like PutFile, GetFile or
+CheckFileInfo, allowing Basic authentication to work.
