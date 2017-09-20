@@ -69,7 +69,7 @@
     background: #538ecd;
     color: #fff;
 }
-.lo-menu > li {
+.lo-menu > li, .lo-menu > li > a.disabled {
     background: #efefef; /* top-level menus remain greyish */
 }
 .lo-menu > li > a:hover, .lo-menu > li > a:focus, .lo-menu > li > a:active, .lo-menu > li > a.highlighted {
