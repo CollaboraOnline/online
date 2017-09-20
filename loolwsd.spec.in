@@ -38,7 +38,7 @@ BuildRequires:  libcap-progs systemd-rpm-macros
 BuildRequires:  libcap-progs
 %endif
 
-Requires:       collaboraoffice5.3 >= 5.3.10.22 collaboraoffice5.3-ure >= 5.3.10.22 collaboraofficebasis5.3-core >= 5.3.10.22 collaboraofficebasis5.3-writer >= 5.3.10.22 collaboraofficebasis5.3-impress >= 5.3.10.22 collaboraofficebasis5.3-graphicfilter >= 5.3.10.22 collaboraofficebasis5.3-en-US >= 5.3.10.22 collaboraofficebasis5.3-calc >= 5.3.10.22 collaboraofficebasis5.3-en-US-res >= 5.3.10.22 collaboraofficebasis5.3-en-US-calc >= 5.3.10.22 collaboraofficebasis5.3-ooofonts >= 5.3.10.22 collaboraofficebasis5.3-images >= 5.3.10.22 collaboraofficebasis5.3-noto-fonts >= 5.3.10.22 collaboraofficebasis5.3-draw >= 5.3.10.22 collaboraofficebasis5.3-extension-pdf-import >= 5.3.10.22
+Requires:       collaboraoffice5.3 >= 5.3.10.26 collaboraoffice5.3-ure >= 5.3.10.26 collaboraofficebasis5.3-core >= 5.3.10.26 collaboraofficebasis5.3-writer >= 5.3.10.26 collaboraofficebasis5.3-impress >= 5.3.10.26 collaboraofficebasis5.3-graphicfilter >= 5.3.10.26 collaboraofficebasis5.3-en-US >= 5.3.10.26 collaboraofficebasis5.3-calc >= 5.3.10.26 collaboraofficebasis5.3-en-US-res >= 5.3.10.26 collaboraofficebasis5.3-en-US-calc >= 5.3.10.26 collaboraofficebasis5.3-ooofonts >= 5.3.10.26 collaboraofficebasis5.3-images >= 5.3.10.26 collaboraofficebasis5.3-noto-fonts >= 5.3.10.26 collaboraofficebasis5.3-draw >= 5.3.10.26 collaboraofficebasis5.3-extension-pdf-import >= 5.3.10.26
 Requires(post): coreutils grep sed
 %if 0%{?rhel} == 6
 # loolwsd dependencies
