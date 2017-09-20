@@ -40,7 +40,6 @@
 }
 
 .lo-menu a.disabled {
-    background: #efefef;
     cursor: default;
 }
 .lo-menu > li > a.has-submenu {
