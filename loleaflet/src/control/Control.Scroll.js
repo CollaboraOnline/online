@@ -233,9 +233,13 @@ L.Control.Scroll = L.Control.extend({
 		// used on window resize
 		if (this._map._docLayer._docType === 'spreadsheet') {
 			var offset = new L.Point(e.x - this._prevScrollX, e.y - this._prevScrollY);
-			if (!offset.equals(new L.Point(0, 0))) {
-				this._onUpdateRowColumnHeaders({x: e.x, y: e.y, offset: offset});
+			if (offset.x === 0) {
+				offset.x = 1;
 			}
+			if (offset.y === 0) {
+				offset.y = 1;
+			}
+			this._onUpdateRowColumnHeaders({x: e.x, y: e.y, offset: offset});
 		}
 		this._ignoreScroll = null;
 		$('.scroll-container').mCustomScrollbar('stop');
