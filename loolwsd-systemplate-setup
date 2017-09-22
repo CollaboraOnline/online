@@ -9,7 +9,7 @@ INSTDIR=$2
 
 test -d "$INSTDIR" || { echo "No such directory: $INSTDIR"; exit 1; }
 
-mkdir $CHROOT || exit 1
+mkdir -p $CHROOT || exit 1
 
 CHROOT=`cd $CHROOT && /bin/pwd`
 INSTDIR=`cd $INSTDIR && /bin/pwd`
