@@ -165,7 +165,6 @@ echo "0 0 */1 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -ex
 %doc README
 
 %pre
-touch /tmp/loolwsd_install_in_progress
 %if 0%{?suse_version} >= 1300
 %service_add_pre loolwsd.service
 %endif
@@ -175,37 +174,49 @@ getent passwd lool >/dev/null || useradd -g lool -r lool -d /opt/lool -s /bin/ba
 
 # for filename in `find /opt/lool/systemplate -type f`;do stripped=$(echo -ne $filename | sed -e "s|/opt/lool/systemplate||");rpm -qf --qf="%{NAME}\n" $stripped;done | grep -v devel | grep -v 32bit | grep -v -- -fonts | sort | uniq
 %triggerin -- Mesa arts atk atlas avahi-libs cairo cups-filters cups-libs dbus-1 dbus-1-glib dbus-glib dbus-libs dyninst enscript expat font-util fontconfig fonts-config freetype freetype2 gdk-pixbuf2 glib2 glibc glibc-locale gnutls graphviz gstreamer gstreamer-plugins-base gtk2 ifnteuro kernel keyutils-libs krb5 krb5-libs libICE libICE6 libSM libSM6 libX11 libX11-6 libXau libXau6 libXcomposite libXcomposite1 libXcursor libXcursor1 libXdamage libXdamage1 libXext libXext6 libXfixes libXfixes3 libXi libXi6 libXinerama libXinerama1 libXrandr libXrandr2 libXrender libXrender1 libXxf86vm libatk-1_0-0 libavahi-client3 libavahi-common3 libbz2-1 libcairo2 libcap libcap-ng libcap2 libcom_err libcom_err2 libdatrie1 libdbus-1-3 libdrm libexpat1 libffi libffi4 libfreetype6 libgcc libgcc_s1 libgcrypt libgdk_pixbuf-2_0-0 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgpg-error libgraphite2-3 libgstinterfaces-0_10-0 libgstreamer-0_10-0 libgthread-2_0-0 libgtk-2_0-0 libharfbuzz0 libiscsi libkeyutils1 liblangtag liblangtag1 libopenssl0_9_8 libopenssl1_0_0 libpango-1_0-0 libpcre1 libpixman-1-0 libpng libpng12 libpng12-0 libpng15-15 libpng16-16 libselinux libselinux1 libstdc++ libstdc++6 libtasn1 libthai0 libuuid libuuid1 libxcb libxcb-render0 libxcb-shm0 libxcb1 libxshmfence libz1 lsb mariadb-libs mesa-dri-drivers mesa-libEGL mesa-libGL mesa-libgbm mesa-libglapi mysql-libs netcfg nss-mdns nss-softokn-freebl openssl-libs pango pcre pixman qt3 redhat-lsb-core samba-client samba-winbind samba-winbind-clients setup sssd sssd-client systemd-libs timezone tzdata xorg-x11-libICE xorg-x11-libSM xorg-x11-libX11 xorg-x11-libXau xorg-x11-libXext xorg-x11-libXfixes xorg-x11-libXrender xorg-x11-libs xorg-x11-libxcb xterm xulrunner zlib
-# do not run the trigger when loolwsd package itself is installed/updated
-if [ ! -f /tmp/loolwsd_install_in_progress ]; then
-    echo -ne "Triggered update of loolwsd systemplate..."
+
+echo -ne "Triggered update of loolwsd systemplate..."
+
 %if 0%{?rhel} == 6
-    if [ -f /var/lock/subsys/loolwsd ]; then LOOLWSD_IS_ACTIVE=1; else LOOLWSD_IS_ACTIVE=0; fi
+if [ -f /var/lock/subsys/loolwsd ]; then LOOLWSD_IS_ACTIVE=1; else LOOLWSD_IS_ACTIVE=0; fi
 %endif
+
 %if 0%{?suse_version} == 1110
-    if [ -f /var/run/loolwsd.pid ]; then LOOLWSD_IS_ACTIVE=1; else LOOLWSD_IS_ACTIVE=0; fi
+if [ -f /var/run/loolwsd.pid ]; then LOOLWSD_IS_ACTIVE=1; else LOOLWSD_IS_ACTIVE=0; fi
 %endif
+
 %if 0%{?rhel} == 6 || 0%{?suse_version} == 1110
-    if [ $LOOLWSD_IS_ACTIVE == "1" ]; then /etc/init.d/loolwsd stop; fi
+if [ $LOOLWSD_IS_ACTIVE == "1" ]; then /etc/init.d/loolwsd stop; fi
 %endif
+
 %if 0%{?fedora} || 0%{?rhel} >= 7 || 0%{?suse_version} >= 1300
-    systemctl is-active -q loolwsd && LOOLWSD_IS_ACTIVE=1 || LOOLWSD_IS_ACTIVE=0
-    if [ $LOOLWSD_IS_ACTIVE == "1" ]; then systemctl stop loolwsd; fi
+systemctl is-active -q loolwsd && LOOLWSD_IS_ACTIVE=1 || LOOLWSD_IS_ACTIVE=0
+if [ $LOOLWSD_IS_ACTIVE == "1" ]; then systemctl stop loolwsd; fi
 %endif
-    loroot=/opt/collaboraoffice5.3
-    loolparent=`cd ${loroot} && cd .. && /bin/pwd`
-    rm -rf ${loolparent}/lool
-    mkdir -p ${loolparent}/lool/child-roots
-    chown lool:lool ${loolparent}/lool
-    chown lool:lool ${loolparent}/lool/child-roots
-    su lool -c "loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null 2>&1"
+
+# Figure out where LO is installed, let's hope it is not a mount point
+# Create a directory for loolwsd on the same file system
+loroot=/opt/collaboraoffice5.3
+loolparent=`cd ${loroot} && cd .. && /bin/pwd`
+
+rm -rf ${loolparent}/lool
+mkdir -p ${loolparent}/lool/child-roots
+
+chown lool:lool ${loolparent}/lool
+chown lool:lool ${loolparent}/lool/child-roots
+
+fc-cache ${loroot}/share/fonts/truetype
+su lool -c "loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null 2>&1"
+
 %if 0%{?rhel} == 6 || 0%{?suse_version} == 1110
-    if [ $LOOLWSD_IS_ACTIVE == "1" ]; then /etc/init.d/loolwsd start; fi
+if [ $LOOLWSD_IS_ACTIVE == "1" ]; then /etc/init.d/loolwsd start; fi
 %endif
+
 %if 0%{?fedora} || 0%{?rhel} >= 7 || 0%{?suse_version} >= 1300
-    if [ $LOOLWSD_IS_ACTIVE == "1" ]; then systemctl start loolwsd; fi
+if [ $LOOLWSD_IS_ACTIVE == "1" ]; then systemctl start loolwsd; fi
 %endif
-    echo "   Done."
-fi
+
+echo "   Done."
 
 %post
 setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit
@@ -218,20 +229,6 @@ rm -rf /var/cache/loolwsd/*
 touch /var/log/loolwsd.log && chown lool:lool /var/log/loolwsd.log
 %endif
 
-
-# Figure out where LO is installed, let's hope it is not a mount point
-# Create a directory for loolwsd on the same file system
-loroot=/opt/collaboraoffice5.3
-loolparent=`cd ${loroot} && cd .. && /bin/pwd`
-
-rm -rf ${loolparent}/lool
-mkdir -p ${loolparent}/lool/child-roots
-chown lool:lool ${loolparent}/lool
-chown lool:lool ${loolparent}/lool/child-roots
-
-fc-cache ${loroot}/share/fonts/truetype
-su lool -c "loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null 2>&1"
-
 %if 0%{?fedora} || 0%{?rhel} >= 7
 %systemd_post loolwsd.service
 %else
@@ -240,7 +237,6 @@ su lool -c "loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >
 %{fillup_only -n loolwsd}
 %endif
 %endif
-rm /tmp/loolwsd_install_in_progress
 
 %preun
 %if 0%{?fedora} || 0%{?rhel} >= 7
