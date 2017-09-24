@@ -180,7 +180,7 @@ static void                    lo_registerCallback (LibreOfficeKit* pThis,
                                                     LibreOfficeKitCallback pCallback,
                                                     void* pData);
 static char* lo_getFilterTypes(LibreOfficeKit* pThis);
-static void lo_setOptionalFeatures(LibreOfficeKit* pThis, uint64_t features);
+static void lo_setOptionalFeatures(LibreOfficeKit* pThis, unsigned long long features);
 static void                    lo_setDocumentPassword(LibreOfficeKit* pThis,
                                                        const char* pURL,
                                                        const char* pPassword);
@@ -534,7 +534,7 @@ static char* lo_getFilterTypes(LibreOfficeKit* pThis)
     return nullptr;
 }
 
-static void lo_setOptionalFeatures(LibreOfficeKit* pThis, uint64_t const features)
+static void lo_setOptionalFeatures(LibreOfficeKit* pThis, unsigned long long const features)
 {
     (void) pThis;
     (void) features;
