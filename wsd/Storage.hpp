@@ -78,7 +78,8 @@ public:
         _jailPath(jailPath),
         _fileInfo("", "lool", Poco::Timestamp::fromEpochTime(0), 0),
         _isLoaded(false),
-        _forceSave(false)
+        _forceSave(false),
+        _isUserModified(false)
     {
         LOG_DBG("Storage ctor: " << uri.toString());
     }
@@ -95,6 +96,9 @@ public:
     /// Asks the storage object to force overwrite to storage upon next save
     /// even if document turned out to be changed in storage
     void forceSave() { _forceSave = true; }
+
+    /// To be able to set the WOPI extension header appropriately.
+    void setUserModified(bool isUserModified) { _isUserModified = isUserModified; }
 
     /// Returns the basic information about the file.
     const FileInfo& getFileInfo() const { return _fileInfo; }
@@ -130,6 +134,9 @@ protected:
     FileInfo _fileInfo;
     bool _isLoaded;
     bool _forceSave;
+
+    /// The document has been modified by the user.
+    bool _isUserModified;
 
     static bool FilesystemEnabled;
     static bool WopiEnabled;

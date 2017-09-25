@@ -92,3 +92,14 @@ The 'access_header' can be eg. of a form
 
 This header is then used in all the WOPI calls like PutFile, GetFile or
 CheckFileInfo, allowing Basic authentication to work.
+
+PutFile headers
+---------------
+
+PutFile additionally indicates whether the user has modified the document
+before the save, or if they just pressed the Save button without any
+modification.  The following header:
+
+   X-LOOL-WOPI-IsModifiedByUser
+
+will have the value 'true' or 'false' accordingly.
