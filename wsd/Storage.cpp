@@ -643,6 +643,8 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const std::string& a
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("X-WOPI-Override", "PUT");
+        request.set("X-LOOL-WOPI-IsModifiedByUser", _isUserModified? "true": "false");
+
         request.setContentType("application/octet-stream");
         request.setContentLength(size);
         addStorageDebugCookie(request);

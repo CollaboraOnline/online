@@ -61,3 +61,14 @@ WatermarkText
 
 Note that it is possible to just hide print,save,export options while still
 being able to access them from WOPI hosts using PostMessage API (see loleaflet/reference.html)
+
+PutFile headers
+---------------
+
+PutFile additionally indicates whether the user has modified the document
+before the save, or if they just pressed the Save button without any
+modification.  The following header:
+
+   X-LOOL-WOPI-IsModifiedByUser
+
+will have the value 'true' or 'false' accordingly.
