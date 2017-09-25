@@ -808,6 +808,9 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         // arguments end
         oss << "}";
 
+        assert(_storage);
+        _storage->setUserModified(_isModified);
+
         const auto saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);
         const auto command = "uno .uno:Save " + saveArgs;
