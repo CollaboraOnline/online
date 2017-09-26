@@ -1914,8 +1914,13 @@ void lokit_main(const std::string& childRoot,
         else
             LOG_SYS("Failed to get RLIMIT_STACK.");
 
+        if (getrlimit(RLIMIT_FSIZE, &rlim) == 0)
+            LOG_INF("RLIMIT_FSIZE is " << rlim.rlim_max << " bytes.");
+        else
+            LOG_SYS("Failed to get RLIMIT_FSIZE.");
+
         if (getrlimit(RLIMIT_NOFILE, &rlim) == 0)
-            LOG_INF("RLIMIT_NOFILE is " << rlim.rlim_max << " bytes.");
+            LOG_INF("RLIMIT_NOFILE is " << rlim.rlim_max << " files.");
         else
             LOG_SYS("Failed to get RLIMIT_NOFILE.");
 

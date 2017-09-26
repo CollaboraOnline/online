@@ -269,11 +269,28 @@ bool handleSetrlimitCommand(const std::vector<std::string>& tokens)
                 lim = RLIM_INFINITY;
 
             rlimit rlim = { lim, lim };
+            if (setrlimit(RLIMIT_FSIZE, &rlim) != 0)
+                LOG_SYS("Failed to set RLIMIT_NOFILE to " << lim << " bytes.");
+
+            if (getrlimit(RLIMIT_FSIZE, &rlim) == 0)
+                LOG_INF("RLIMIT_FSIZE is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
+            else
+                LOG_SYS("Failed to get RLIMIT_FSIZE.");
+
+            return true;
+        }
+        else if (tokens[1] == "limit_num_open_files")
+        {
+            rlim_t lim = std::stoi(tokens[2]);
+            if (lim <= 0)
+                lim = RLIM_INFINITY;
+
+            rlimit rlim = { lim, lim };
             if (setrlimit(RLIMIT_NOFILE, &rlim) != 0)
                 LOG_SYS("Failed to set RLIMIT_NOFILE to " << lim << " bytes.");
 
             if (getrlimit(RLIMIT_NOFILE, &rlim) == 0)
-                LOG_INF("RLIMIT_NOFILE is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
+                LOG_INF("RLIMIT_NOFILE is " << rlim.rlim_max << " files after setting it to " << lim << " files.");
             else
                 LOG_SYS("Failed to get RLIMIT_NOFILE.");
 

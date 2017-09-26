@@ -68,6 +68,7 @@ struct DocProcSettings
     size_t LimitDataMemKb;
     size_t LimitStackMemKb;
     size_t LimitFileSizeMb;
+    size_t LimitNumberOpenFiles;
 };
 
 /// A document in Admin controller.
@@ -132,7 +133,7 @@ private:
     std::time_t _start;
     std::time_t _lastActivity;
     std::time_t _end = 0;
-    
+
     /// Per-doc kit process settings.
     DocProcSettings _docProcSettings;
 };
