@@ -638,6 +638,7 @@ void LOOLWSD::initialize(Application& self)
             { "per_document.limit_virt_mem_mb", "0" },
             { "per_document.limit_stack_mem_kb", "8000" },
             { "per_document.limit_file_size_mb", "50" },
+            { "per_document.limit_num_open_files", "1024" },
             { "per_view.out_of_focus_timeout_secs", "60" },
             { "per_view.idle_timeout_secs", "900" },
             { "loleaflet_html", "loleaflet.html" },
@@ -821,6 +822,7 @@ void LOOLWSD::initialize(Application& self)
     docProcSettings.LimitVirtMemMb = getConfigValue<int>("per_document.limit_virt_mem_mb", 0);
     docProcSettings.LimitStackMemKb = getConfigValue<int>("per_document.limit_stack_mem_kb", 0);
     docProcSettings.LimitFileSizeMb = getConfigValue<int>("per_document.limit_file_size_mb", 0);
+    docProcSettings.LimitNumberOpenFiles = getConfigValue<int>("per_document.limit_num_open_files", 0);
     Admin::instance().setDefDocProcSettings(docProcSettings, false);
 
 #if ENABLE_DEBUG
@@ -1212,6 +1214,7 @@ bool LOOLWSD::createForKit()
     ossRLimits << "limit_virt_mem_mb:" << docProcSettings.LimitVirtMemMb;
     ossRLimits << ";limit_stack_mem_kb:" << docProcSettings.LimitStackMemKb;
     ossRLimits << ";limit_file_size_mb:" << docProcSettings.LimitFileSizeMb;
+    ossRLimits << ";limit_num_open_files:" << docProcSettings.LimitNumberOpenFiles;
     args.push_back("--rlimits=" + ossRLimits.str());
 
     if (UnitWSD::get().hasKitHooks())

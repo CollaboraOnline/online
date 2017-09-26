@@ -52,6 +52,7 @@ struct DocProcSettings
     size_t LimitDataMemKb;
     size_t LimitStackMemKb;
     size_t LimitFileSizeMb;
+    size_t LimitNumberOpenFiles;
 };
 
 /// Containing basic information about document

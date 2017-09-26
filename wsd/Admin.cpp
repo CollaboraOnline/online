@@ -182,7 +182,8 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         const DocProcSettings& docProcSettings = _admin->getDefDocProcSettings();
         oss << "limit_virt_mem_mb=" << docProcSettings.LimitVirtMemMb << ' '
             << "limit_stack_mem_kb=" << docProcSettings.LimitStackMemKb << ' '
-            << "limit_file_size_mb=" << docProcSettings.LimitFileSizeMb << ' ';
+            << "limit_file_size_mb=" << docProcSettings.LimitFileSizeMb << ' '
+            << "limit_num_open_files=" << docProcSettings.LimitNumberOpenFiles << ' ';
 
         sendTextFrame(oss.str());
     }
@@ -252,6 +253,8 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
                     docProcSettings.LimitStackMemKb = settingVal;
                 else if (settingName == "limit_file_size_mb")
                     docProcSettings.LimitFileSizeMb = settingVal;
+                else if (settingName == "limit_num_open_files")
+                    docProcSettings.LimitNumberOpenFiles = settingVal;
                 else
                     LOG_ERR("Unknown limit: " << settingName);
 
@@ -538,7 +541,8 @@ void Admin::notifyForkit()
     std::ostringstream oss;
     oss << "setconfig limit_virt_mem_mb " << _defDocProcSettings.LimitVirtMemMb << '\n'
         << "setconfig limit_stack_mem_kb " << _defDocProcSettings.LimitStackMemKb << '\n'
-        << "setconfig limit_file_size_mb " << _defDocProcSettings.LimitFileSizeMb << '\n';
+        << "setconfig limit_file_size_mb " << _defDocProcSettings.LimitFileSizeMb << '\n'
+        << "setconfig limit_num_open_files " << _defDocProcSettings.LimitNumberOpenFiles << '\n';
 
     if (_forKitWritePipe != -1)
         IoUtil::writeToPipe(_forKitWritePipe, oss.str());
