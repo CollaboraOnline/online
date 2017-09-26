@@ -9,24 +9,18 @@
 
 #include "config.h"
 
-//#include "Exceptions.hpp"
+#include "WopiTestServer.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
 #include "helpers.hpp"
-#include <Poco/JSON/Object.h>
-#include <Poco/LocalDateTime.h>
-#include <Poco/DateTimeFormat.h>
-#include <Poco/DateTimeFormatter.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/OAuth20Credentials.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
-using Poco::DateTimeFormatter;
-using Poco::DateTimeFormat;
 using Poco::Net::OAuth20Credentials;
 
-class UnitOAuth : public UnitWSD
+class UnitOAuth : public WopiTestServer
 {
     enum class Phase
     {
@@ -46,6 +40,7 @@ public:
     {
     }
 
+    /// The actual assert of the authentication.
     void assertRequest(const Poco::Net::HTTPRequest& request, int fileIndex)
     {
         // check that the request contains the Authorization: header
@@ -68,91 +63,30 @@ public:
         }
     }
 
-    /// Here we act as a WOPI server, so that we have a server that responds to
-    /// the wopi requests without additional expensive setup.
-    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request, std::shared_ptr<StreamSocket>& socket) override
+    void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& request) override
     {
-        static const std::string hello("Hello, world");
+        std::string path = Poco::URI(request.getURI()).getPath();
+        assertRequest(request, (path == "/wopi/files/0")? 0: 1);
+    }
 
-        Poco::URI uriReq(request.getURI());
-        LOG_INF("Fake wopi host request: " << uriReq.toString());
-
-        // CheckFileInfo
-        if (uriReq.getPath() == "/wopi/files/0" || uriReq.getPath() == "/wopi/files/1")
+    void assertGetFileRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        std::string path = Poco::URI(request.getURI()).getPath();
+        if (path == "/wopi/files/0/contents")
         {
-            LOG_INF("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
-
-            assertRequest(request, (uriReq.getPath() == "/wopi/files/0")? 0: 1);
-
-            Poco::LocalDateTime now;
-            Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
-            fileInfo->set("BaseFileName", "hello.txt");
-            fileInfo->set("Size", hello.size());
-            fileInfo->set("Version", "1.0");
-            fileInfo->set("OwnerId", "test");
-            fileInfo->set("UserId", "test");
-            fileInfo->set("UserFriendlyName", "test");
-            fileInfo->set("UserCanWrite", "true");
-            fileInfo->set("PostMessageOrigin", "localhost");
-            fileInfo->set("LastModifiedTime", DateTimeFormatter::format(now, DateTimeFormat::ISO8601_FORMAT));
-
-            std::ostringstream jsonStream;
-            fileInfo->stringify(jsonStream);
-            std::string responseString = jsonStream.str();
-
-            const std::string mimeType = "application/json; charset=utf-8";
-
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "Content-Length: " << responseString.size() << "\r\n"
-                << "Content-Type: " << mimeType << "\r\n"
-                << "\r\n"
-                << responseString;
-
-            socket->send(oss.str());
-            socket->shutdown();
-
-            return true;
+            assertRequest(request, 0);
+            _finishedToken = true;
         }
-        // GetFile
-        else if (uriReq.getPath() == "/wopi/files/0/contents" || uriReq.getPath() == "/wopi/files/1/contents")
+        else
         {
-            LOG_INF("Fake wopi host request, handling GetFile: " << uriReq.getPath());
-
-            if (uriReq.getPath() == "/wopi/files/0/contents")
-            {
-                assertRequest(request, 0);
-                _finishedToken = true;
-            }
-            else
-            {
-                assertRequest(request, 1);
-                _finishedHeader = true;
-            }
-
-            const std::string mimeType = "text/plain; charset=utf-8";
-
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "Content-Length: " << hello.size() << "\r\n"
-                << "Content-Type: " << mimeType << "\r\n"
-                << "\r\n"
-                << hello;
-
-            socket->send(oss.str());
-            socket->shutdown();
-
-            if (_finishedToken && _finishedHeader)
-                exitTest(TestResult::Ok);
-
-            return true;
+            assertRequest(request, 1);
+            _finishedHeader = true;
         }
+    }
 
-        return false;
+    bool wopiServerFinish() override
+    {
+        return _finishedToken && _finishedHeader;
     }
 
     void invokeTest() override
