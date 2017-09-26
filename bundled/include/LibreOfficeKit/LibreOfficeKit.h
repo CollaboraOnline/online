@@ -69,7 +69,7 @@ struct _LibreOfficeKitClass
     char* (*getFilterTypes) (LibreOfficeKit* pThis);
 
     /// @see lok::Office::setOptionalFeatures().
-    void (*setOptionalFeatures)(LibreOfficeKit* pThis, uint64_t features);
+    void (*setOptionalFeatures)(LibreOfficeKit* pThis, unsigned long long features);
 
     /// @see lok::Office::setDocumentPassword().
     void (*setDocumentPassword) (LibreOfficeKit* pThis,
