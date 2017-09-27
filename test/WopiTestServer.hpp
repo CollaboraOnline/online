@@ -9,6 +9,7 @@
 
 #include "config.h"
 
+#include "helpers.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
@@ -20,9 +21,30 @@
 
 class WopiTestServer : public UnitWSD
 {
+protected:
+    /// The WOPISrc URL.
+    std::string _wopiSrc;
+
+    /// Websocket to communicate.
+    std::unique_ptr<UnitWebSocket> _ws;
+
 public:
     WopiTestServer() : UnitWSD()
     {
+    }
+
+    void initWebsocket(std::string wopiName)
+    {
+        Poco::URI wopiURL(helpers::getTestServerURI() + wopiName);
+
+        _wopiSrc = "";
+        Poco::URI::encode(wopiURL.toString(), ":/?", _wopiSrc);
+        Poco::URI loolUri(helpers::getTestServerURI());
+
+        LOG_INF("Connecting to the fake WOPI server: /lool/" << _wopiSrc << "/ws");
+
+        _ws.reset(new UnitWebSocket("/lool/" + _wopiSrc + "/ws"));
+        assert(_ws.get());
     }
 
     virtual void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& request) = 0;

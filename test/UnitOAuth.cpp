@@ -98,20 +98,12 @@ public:
             case Phase::LoadToken:
             case Phase::LoadHeader:
             {
-                Poco::URI wopiURL(helpers::getTestServerURI() +
-                        ((_phase == Phase::LoadToken)? "/wopi/files/0?access_token=s3hn3ct0k3v":
-                                                   "/wopi/files/1?access_header=Authorization: Basic basic=="));
-                //wopiURL.setPort(_wopiSocket->address().port());
-                std::string wopiSrc;
-                Poco::URI::encode(wopiURL.toString(), ":/?", wopiSrc);
-                Poco::URI loolUri(helpers::getTestServerURI());
+                if (_phase == Phase::LoadToken)
+                    initWebsocket("/wopi/files/0?access_token=s3hn3ct0k3v");
+                else
+                    initWebsocket("/wopi/files/1?access_header=Authorization: Basic basic==");
 
-                LOG_INF("Connecting to the fake WOPI server: /lool/" << wopiSrc << "/ws");
-
-                std::unique_ptr<UnitWebSocket> ws(new UnitWebSocket("/lool/" + wopiSrc + "/ws"));
-                assert(ws.get());
-
-                helpers::sendTextFrame(*ws->getLOOLWebSocket(), "load url=" + wopiSrc, testName);
+                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "load url=" + _wopiSrc, testName);
 
                 if (_phase == Phase::LoadToken)
                     _phase = Phase::LoadHeader;
