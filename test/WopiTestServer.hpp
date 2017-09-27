@@ -29,7 +29,7 @@ public:
 
     virtual void assertGetFileRequest(const Poco::Net::HTTPRequest& request) = 0;
 
-    virtual bool wopiServerFinish() = 0;
+    virtual void assertPutFileRequest(const Poco::Net::HTTPRequest& request) = 0;
 
 protected:
     /// Here we act as a WOPI server, so that we have a server that responds to
@@ -81,7 +81,7 @@ protected:
             return true;
         }
         // GetFile
-        else if (uriReq.getPath() == "/wopi/files/0/contents" || uriReq.getPath() == "/wopi/files/1/contents")
+        else if (request.getMethod() == "GET" && (uriReq.getPath() == "/wopi/files/0/contents" || uriReq.getPath() == "/wopi/files/1/contents"))
         {
             LOG_INF("Fake wopi host request, handling GetFile: " << uriReq.getPath());
 
@@ -101,8 +101,22 @@ protected:
             socket->send(oss.str());
             socket->shutdown();
 
-            if (wopiServerFinish())
-                exitTest(TestResult::Ok);
+            return true;
+        }
+        else if (request.getMethod() == "POST" && (uriReq.getPath() == "/wopi/files/0/contents" || uriReq.getPath() == "/wopi/files/1/contents"))
+        {
+            LOG_INF("Fake wopi host request, handling PutFile: " << uriReq.getPath());
+
+            assertPutFileRequest(request);
+
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+                << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: " << HTTP_AGENT_STRING << "\r\n"
+                << "\r\n";
+
+            socket->send(oss.str());
+            socket->shutdown();
 
             return true;
         }
