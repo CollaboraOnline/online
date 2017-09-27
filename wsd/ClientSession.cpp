@@ -63,7 +63,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC(getName() << ": handling incoming [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
-    const auto tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
+    const std::vector<std::string> tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
     auto docBroker = getDocumentBroker();
     if (!docBroker)
@@ -83,6 +83,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
     if (tokens[0] == "loolclient")
     {
+        if (tokens.size() < 1)
+        {
+            sendTextFrame("error: cmd=loolclient kind=badprotocolversion");
+            return false;
+        }
+
         const auto versionTuple = ParseVersion(tokens[1]);
         if (std::get<0>(versionTuple) != ProtocolMajorVersionNumber ||
             std::get<1>(versionTuple) != ProtocolMinorVersionNumber)
@@ -208,8 +214,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         int dontTerminateEdit = 1;
         int dontSaveIfUnmodified = 1;
-        getTokenInteger(tokens[1], "dontTerminateEdit", dontTerminateEdit);
-        getTokenInteger(tokens[2], "dontSaveIfUnmodified", dontSaveIfUnmodified);
+        if (tokens.size() > 1)
+            getTokenInteger(tokens[1], "dontTerminateEdit", dontTerminateEdit);
+
+        if (tokens.size() > 2)
+            getTokenInteger(tokens[2], "dontSaveIfUnmodified", dontSaveIfUnmodified);
+
         docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0);
     }
     else
