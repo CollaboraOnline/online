@@ -181,6 +181,7 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitInit.h \
                  bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h \
+                 test/WopiTestServer.hpp \
                  test/countloolkits.hpp \
                  test/helpers.hpp
 
