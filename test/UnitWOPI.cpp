@@ -24,7 +24,7 @@ class UnitWOPI : public WopiTestServer
         LoadAndSave,
         Modify,
         SaveModified,
-        Finish
+        Polling
     } _phase;
 
     enum class SavingPhase
@@ -66,6 +66,9 @@ public:
             CPPUNIT_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
             _finishedSaveModified = true;
         }
+
+        if (_finishedSaveUnmodified && _finishedSaveModified)
+            exitTest(TestResult::Ok);
     }
 
     void invokeTest() override
@@ -83,6 +86,7 @@ public:
 
                 _phase = Phase::Modify;
                 _savingPhase = SavingPhase::Unmodified;
+                SocketPoll::wakeupWorld();
                 break;
             }
             case Phase::Modify:
@@ -97,14 +101,13 @@ public:
             {
                 helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "save dontTerminateEdit=0 dontSaveIfUnmodified=0", testName);
 
-                _phase = Phase::Finish;
+                _phase = Phase::Polling;
                 _savingPhase = SavingPhase::Modified;
                 break;
             }
-            case Phase::Finish:
+            case Phase::Polling:
             {
-                CPPUNIT_ASSERT(_finishedSaveUnmodified && _finishedSaveModified);
-                exitTest(TestResult::Ok);
+                // just wait for the results
                 break;
             }
         }

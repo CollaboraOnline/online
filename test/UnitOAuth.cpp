@@ -26,7 +26,7 @@ class UnitOAuth : public WopiTestServer
     {
         LoadToken,  // loading the document with Bearer token
         LoadHeader, // loading the document with Basic auth
-        Finish      // assert all went fine and finish
+        Polling     // just wait for the results
     } _phase;
 
     bool _finishedToken;
@@ -82,6 +82,9 @@ public:
             assertRequest(request, 1);
             _finishedHeader = true;
         }
+
+        if (_finishedToken && _finishedHeader)
+            exitTest(TestResult::Ok);
     }
 
     void assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
@@ -104,17 +107,17 @@ public:
                     initWebsocket("/wopi/files/1?access_header=Authorization: Basic basic==");
 
                 helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "load url=" + _wopiSrc, testName);
+                SocketPoll::wakeupWorld();
 
                 if (_phase == Phase::LoadToken)
                     _phase = Phase::LoadHeader;
                 else
-                    _phase = Phase::Finish;
+                    _phase = Phase::Polling;
                 break;
             }
-            case Phase::Finish:
+            case Phase::Polling:
             {
-                CPPUNIT_ASSERT(_finishedToken && _finishedHeader);
-                exitTest(TestResult::Ok);
+                // just wait for the results
                 break;
             }
         }
