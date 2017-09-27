@@ -36,8 +36,6 @@ class UnitWOPI : public WopiTestServer
     bool _finishedSaveUnmodified;
     bool _finishedSaveModified;
 
-    std::unique_ptr<UnitWebSocket> _ws;
-
 public:
     UnitWOPI() :
         _phase(Phase::LoadAndSave),
@@ -78,17 +76,9 @@ public:
         {
             case Phase::LoadAndSave:
             {
-                Poco::URI wopiURL(helpers::getTestServerURI() + "/wopi/files/0?access_token=anything");
-                std::string wopiSrc;
-                Poco::URI::encode(wopiURL.toString(), ":/?", wopiSrc);
-                Poco::URI loolUri(helpers::getTestServerURI());
+                initWebsocket("/wopi/files/0?access_token=anything");
 
-                LOG_INF("Connecting to the fake WOPI server: /lool/" << wopiSrc << "/ws");
-
-                _ws.reset(new UnitWebSocket("/lool/" + wopiSrc + "/ws"));
-                assert(_ws.get());
-
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "load url=" + wopiSrc, testName);
+                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "load url=" + _wopiSrc, testName);
                 helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "save dontTerminateEdit=1 dontSaveIfUnmodified=0", testName);
 
                 _phase = Phase::Modify;
