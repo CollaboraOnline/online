@@ -16,7 +16,8 @@ noinst_LTLIBRARIES = \
 	unit-timeout.la unit-prefork.la \
 	unit-storage.la \
 	unit-admin.la unit-tilecache.la \
-	unit-fuzz.la unit-oob.la unit-oauth.la
+	unit-fuzz.la unit-oob.la unit-oauth.la \
+	unit-wopi.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS)
@@ -63,6 +64,8 @@ unit_storage_la_SOURCES = UnitStorage.cpp
 unit_tilecache_la_SOURCES = UnitTileCache.cpp
 unit_oauth_la_SOURCES = UnitOAuth.cpp
 unit_oauth_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_la_SOURCES = UnitWOPI.cpp
+unit_wopi_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -76,7 +79,7 @@ check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
-TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la unit-oauth.la # unit-storage.la # unit-admin.la
+TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la unit-oauth.la unit-wopi.la # unit-storage.la # unit-admin.la
 else
 TESTS = ${top_builddir}/test/test
 endif
