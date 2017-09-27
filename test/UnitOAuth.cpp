@@ -26,7 +26,7 @@ class UnitOAuth : public WopiTestServer
     {
         LoadToken,  // loading the document with Bearer token
         LoadHeader, // loading the document with Basic auth
-        Polling     // let the loading progress, and when it succeeds, finish
+        Finish      // assert all went fine and finish
     } _phase;
 
     bool _finishedToken;
@@ -84,9 +84,9 @@ public:
         }
     }
 
-    bool wopiServerFinish() override
+    void assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        return _finishedToken && _finishedHeader;
+        // nothing to assert
     }
 
     void invokeTest() override
@@ -116,12 +116,13 @@ public:
                 if (_phase == Phase::LoadToken)
                     _phase = Phase::LoadHeader;
                 else
-                    _phase = Phase::Polling;
+                    _phase = Phase::Finish;
                 break;
             }
-            case Phase::Polling:
+            case Phase::Finish:
             {
-                // let handleHttpRequest() perform the checks...
+                CPPUNIT_ASSERT(_finishedToken && _finishedHeader);
+                exitTest(TestResult::Ok);
                 break;
             }
         }
