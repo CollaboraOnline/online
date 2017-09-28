@@ -21,106 +21,149 @@
 /// A quick and dirty delta generator for last tile changes
 class DeltaGenerator {
 
+    struct DeltaBitmapRow {
+        uint64_t _crc;
+        std::vector<uint32_t> _pixels;
+
+        bool identical(const DeltaBitmapRow &other) const
+        {
+            if (_crc != other._crc)
+                return false;
+            return _pixels == other._pixels;
+        }
+    };
+
     struct DeltaData {
         TileWireId _wid;
-        std::shared_ptr<std::vector<uint32_t>> _rawData;
+        int _width;
+        int _height;
+        std::vector<DeltaBitmapRow> _rows;
     };
-    std::vector<DeltaData> _deltaEntries;
+    std::vector<std::shared_ptr<DeltaData>> _deltaEntries;
 
     bool makeDelta(
-        const DeltaData &prevData,
-        const DeltaData &curData,
+        const DeltaData &prev,
+        const DeltaData &cur,
         std::vector<char>& output)
     {
-        std::vector<uint32_t> &prev = *prevData._rawData.get();
-        std::vector<uint32_t> &cur = *curData._rawData.get();
-
-        // FIXME: should we split and compress alpha separately ?
-
-        if (prev.size() != cur.size())
+        // TODO: should we split and compress alpha separately ?
+        if (prev._width != cur._width || prev._height != cur._height)
         {
-            LOG_ERR("mis-sized delta: " << prev.size() << " vs " << cur.size() << "bytes");
+            LOG_ERR("mis-sized delta: " << prev._width << "x" << prev._height << " vs "
+                    << cur._width << "x" << cur._height);
             return false;
         }
 
         output.push_back('D');
-        LOG_TRC("building delta of " << prev.size() << "bytes");
-        // FIXME: really lame - some RLE might help etc.
-        for (size_t i = 0; i < prev.size();)
+        LOG_TRC("building delta of a " << cur._width << "x" << cur._height << " bitmap");
+
+        // row move/copy src/dest is a byte.
+        assert (prev._height <= 256);
+        // column position is a byte.
+        assert (prev._width <= 256);
+
+        // How do the rows look against each other ?
+        size_t lastMatchOffset = 0;
+        for (int y = 0; y < prev._height; ++y)
         {
-            int sameCount = 0;
-            while (i + sameCount < prev.size() &&
-                   prev[i+sameCount] == cur[i+sameCount])
+            // Life is good where rows match:
+            if (prev._rows[y].identical(cur._rows[y]))
+                continue;
+
+            // Hunt for other rows
+            bool matched = false;
+            for (int yn = 0; yn < prev._height && !matched; ++yn)
             {
-                ++sameCount;
-            }
-            if (sameCount > 0)
-            {
-#if 0
-                if (sameCount < 64)
-                    output.push_back(sameCount);
-                else
-#endif
+                size_t match = (y + lastMatchOffset + yn) % prev._height;
+                if (prev._rows[match].identical(cur._rows[y]))
                 {
-                    output.push_back(0x80 | 0x00); // long-same
-                    output.push_back(sameCount & 0xff);
-                    output.push_back(sameCount >> 8);
+                    // TODO: if offsets are >256 - use 16bits?
+
+                    // hopefully find blocks of this.
+                    lastMatchOffset = match - y;
+                    output.push_back('c'); // copy-row
+                    output.push_back(match); // src
+                    output.push_back(y); // dest
+                    matched = true;
+                    continue;
                 }
-                i += sameCount;
-                LOG_TRC("identical " << sameCount << "pixels");
             }
+            if (matched)
+                continue;
 
-            int diffCount = 0;
-            while (i + diffCount < prev.size() &&
-                   (prev[i+diffCount] != cur[i+diffCount]))
+            // Our row is just that different:
+            const DeltaBitmapRow &curRow = cur._rows[y];
+            const DeltaBitmapRow &prevRow = prev._rows[y];
+            for (int x = 0; x < prev._width;)
             {
-                ++diffCount;
-            }
+                int same;
+                for (same = 0; same + x < prev._width &&
+                         prevRow._pixels[x+same] == curRow._pixels[x+same];)
+                    ++same;
 
-            if (diffCount > 0)
-            {
-#if 0
-                if (diffCount < 64)
-                    output.push_back(0x40 & diffCount);
-                else
-#endif
+                x += same;
+
+                int diff;
+                for (diff = 0; diff + x < prev._width &&
+                         (prevRow._pixels[x+diff] == curRow._pixels[x+diff] || diff < 2) &&
+                         diff < 254;)
+                    ++diff;
+                if (diff > 0)
                 {
-                    output.push_back(0x80 | 0x40); // long-diff
-                    output.push_back(diffCount & 0xff);
-                    output.push_back(diffCount >> 8);
-                }
+                    output.push_back('d');
+                    output.push_back(y);
+                    output.push_back(x);
+                    output.push_back(diff);
 
-                size_t dest = output.size();
-                output.resize(dest + diffCount * 4);
-                memcpy(&output[dest], &cur[i], diffCount * 4);
-                LOG_TRC("different " << diffCount << "pixels");
-                i += diffCount;
+                    size_t dest = output.size();
+                    output.resize(dest + diff * 4);
+                    memcpy(&output[dest], &curRow._pixels[x], diff * 4);
+
+                    LOG_TRC("different " << diff << "pixels");
+                    x += diff;
+                }
             }
         }
+
         return true;
     }
 
-    std::shared_ptr<std::vector<uint32_t>> dataToVector(
+    std::shared_ptr<DeltaData> dataToDeltaData(
+        TileWireId wid,
         unsigned char* pixmap, size_t startX, size_t startY,
         int width, int height,
         int bufferWidth, int bufferHeight)
     {
+        auto data = std::make_shared<DeltaData>();
+        data->_wid = wid;
+
         assert (startX + width <= (size_t)bufferWidth);
         assert (startY + height <= (size_t)bufferHeight);
 
-        auto vector = std::make_shared<std::vector<uint32_t>>();
-        LOG_TRC("Converting data to vector of size "
+        LOG_TRC("Converting pixel data to delta data of size "
                 << (width * height * 4) << " width " << width
                 << " height " << height);
 
-        vector->resize(width * height);
+        data->_width = width;
+        data->_height = height;
+        data->_rows.resize(height);
         for (int y = 0; y < height; ++y)
         {
+            DeltaBitmapRow &row = data->_rows[y];
             size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
-            memcpy(&(*vector)[y * width], pixmap + position, width * 4);
+            int32_t *src = reinterpret_cast<int32_t *>(pixmap + position);
+
+            // We get the hash ~for free as we copy - with a cheap hash.
+            uint64_t crc = 0x7fffffff - 1;
+            row._pixels.resize(width);
+            for (int x = 0; x < width; ++x)
+            {
+                crc = (crc << 7) + crc + src[x];
+                row._pixels[x] = src[x];
+            }
         }
 
-        return vector;
+        return data;
     }
 
   public:
@@ -143,17 +186,15 @@ class DeltaGenerator {
         if (_deltaEntries.size() > 6) // FIXME: hard-coded ...
             _deltaEntries.erase(_deltaEntries.begin());
 
-        // FIXME: assuming width etc. are all constant & so on.
-        DeltaData update;
-        update._wid = wid;
-        update._rawData = dataToVector(pixmap, startX, startY, width, height,
-                                       bufferWidth, bufferHeight);
+        std::shared_ptr<DeltaData> update =
+            dataToDeltaData(wid, pixmap, startX, startY, width, height,
+                            bufferWidth, bufferHeight);
         _deltaEntries.push_back(update);
 
         for (auto &old : _deltaEntries)
         {
-            if (oldWid == old._wid)
-                return makeDelta(old, update, output);
+            if (oldWid == old->_wid)
+                return makeDelta(*old, *update, output);
         }
         return false;
     }

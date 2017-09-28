@@ -57,61 +57,85 @@ class DeltaTests : public CPPUNIT_NS::TestFixture
         const std::vector<char> &delta);
 
     void assertEqual(const std::vector<char> &a,
-                     const std::vector<char> &b);
+                     const std::vector<char> &b,
+                     int width, int height);
 };
 
 // Quick hack for debugging
 std::vector<char> DeltaTests::applyDelta(
     const std::vector<char> &pixmap,
-    png_uint_32 /* width */, png_uint_32 /* height */,
+    png_uint_32 width, png_uint_32 height,
     const std::vector<char> &delta)
 {
     CPPUNIT_ASSERT(delta.size() >= 4);
     CPPUNIT_ASSERT(delta[0] == 'D');
 
-//    std::cout << "apply delta of size " << delta.size() << "\n";
+    std::cout << "apply delta of size " << delta.size() << "\n";
 
+    // start with the same state.
     std::vector<char> output = pixmap;
-    CPPUNIT_ASSERT_EQUAL(output.size(), pixmap.size());
-    size_t offset = 0;
-    for (size_t i = 1; i < delta.size() &&
-             offset < output.size();)
+    CPPUNIT_ASSERT_EQUAL(output.size(), size_t(pixmap.size()));
+    CPPUNIT_ASSERT_EQUAL(output.size(), size_t(width * height * 4));
+
+    size_t offset = 0, i;
+    for (i = 1; i < delta.size() && offset < output.size();)
     {
-        bool isChangedRun = delta[i++] & 64;
-        CPPUNIT_ASSERT(i < delta.size());
-        uint32_t span = (unsigned char)delta[i++];
-        CPPUNIT_ASSERT(i < delta.size());
-        span += ((unsigned char)delta[i++])*256;
-        CPPUNIT_ASSERT(i < delta.size() ||
-                       (i == delta.size() && !isChangedRun));
-        span *= 4;
-//        std::cout << "span " << span << " offset " << offset << "\n";
-        if (isChangedRun)
+        switch (delta[i])
         {
-            CPPUNIT_ASSERT(offset + span <= output.size());
-            memcpy(&output[offset], &delta[i], span);
-            i += span;
+        case 'c': // copy row.
+        {
+            int srcRow = (uint8_t)(delta[i+1]);
+            int destRow = (uint8_t)(delta[i+2]);
+
+            std::cout << "copy row " << srcRow << " to " << destRow << "\n";
+            const char *src = &pixmap[width * srcRow * 4];
+            char *dest = &output[width * destRow * 4];
+            for (size_t j = 0; j < width * 4; ++j)
+                *dest++ = *src++;
+            i += 3;
+            break;
         }
-        offset += span;
+        case 'd': // new run
+        {
+            int destRow = (uint8_t)(delta[i+1]);
+            int destCol = (uint8_t)(delta[i+2]);
+            size_t length = (uint8_t)(delta[i+3]);
+            i += 4;
+
+            std::cout << "new " << length << " at " << destCol << ", " << destRow << "\n";
+            CPPUNIT_ASSERT(length <= width - destCol);
+
+            char *dest = &output[width * destRow * 4 + destCol * 4];
+            for (size_t j = 0; j < length * 4 && i < delta.size(); ++j)
+                *dest++ = delta[i++];
+            break;
+        }
+        default:
+            std::cout << "Unknown delta code " << delta[i] << "\n";
+            CPPUNIT_ASSERT(false);
+            break;
+        }
     }
-    CPPUNIT_ASSERT_EQUAL(pixmap.size(), output.size());
-    CPPUNIT_ASSERT_EQUAL(output.size(), offset);
+    CPPUNIT_ASSERT_EQUAL(delta.size(), i);
     return output;
 }
 
 void DeltaTests::assertEqual(const std::vector<char> &a,
-                             const std::vector<char> &b)
+                             const std::vector<char> &b,
+                             int width, int /* height */)
 {
     CPPUNIT_ASSERT_EQUAL(a.size(), b.size());
     for (size_t i = 0; i < a.size(); ++i)
     {
         if (a[i] != b[i])
         {
-            std::cout << "Differences starting at byte " << i;
+            std::cout << "Differences starting at byte " << i << " "
+                      << (i/4 % width) << ", " << (i / (width * 4)) << ":\n";
             size_t len;
-            for (len = 0; a[i+len] != b[i+len] && i + len < a.size(); ++len)
+            for (len = 0; (a[i+len] != b[i+len] || len < 8) && i + len < a.size(); ++len)
             {
-                std::cout << std::hex << (int)((unsigned char)a[i+len]) << " ";
+                std::cout << std::hex << (int)((unsigned char)a[i+len]) << " != ";
+                std::cout << std::hex << (int)((unsigned char)b[i+len]) << "  ";
                 if (len > 0 && (len % 16 == 0))
                     std::cout<< "\n";
             }
@@ -157,7 +181,7 @@ void DeltaTests::testDeltaSequence()
 
     // Apply it to move to the second frame
     std::vector<char> reText2 = applyDelta(text, width, height, delta);
-    assertEqual(reText2, text2);
+    assertEqual(reText2, text2, width, height);
 
     // Build a delta between text & text2Wid
     std::vector<char> two2one;
@@ -169,7 +193,7 @@ void DeltaTests::testDeltaSequence()
 
     // Apply it to get back to where we started
     std::vector<char> reText = applyDelta(text2, width, height, two2one);
-    assertEqual(reText, text);
+    assertEqual(reText, text, width, height);
 }
 
 void DeltaTests::testRandomDeltas()
