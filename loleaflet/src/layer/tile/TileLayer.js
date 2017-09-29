@@ -1306,6 +1306,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			// FIXME; can we operate directly on the image ?
 			var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+			var oldData = new Uint8ClampedArray(imgData);
 			var delta = img;
 			var pixSize = canvas.width * canvas.height * 4;
 			var offset = 0;
@@ -1319,38 +1320,43 @@ L.TileLayer = L.GridLayer.extend({
 //			}
 
 			// Apply delta.
-			for (var i = 1; i < delta.length &&
-			     offset < pixSize;)
+			for (var i = 1; i < delta.length;)
 			{
-//				var span = delta[i];
-//				var isChangedRun = span & 64;
-//				if (span >= 128)
-//				{
-				// first char is a control code.
-				var isChangedRun = delta[i++] & 64;
-				span = delta[i++];
-				span += delta[i++] * 256;
-//				}
-				if (isChangedRun) {
-					console.log('apply new span of size ' + span + ' at offset ' + i + ' into delta at byte: ' + offset);
+				switch (delta[i])
+				{
+				case 99: // 'c': // copy row
+					var srcRow = delta[i+1];
+					var destRow = delta[i+2]
+					i+= 3;
+					console.log('copy row ' + srcRow + ' to ' + destRow);
+					var src = srcRow * canvas.width * 4;
+					var dest = destRow * canvas.width * 4;
+					for (var i = 0; i < canvas.width * 4; ++i)
+					{
+						imgData.data[dest + i] = oldData[src + i];
+					}
+					break;
+				case 100: // 'd': // new run
+					var destRow = delta[i+1];
+					var destCol = delta[i+2];
+					var span = delta[i+3];
+					var offset = destRow * canvas.width * 4 + destCol * 4;
+					i += 4;
+					console.log('apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 					span *= 4;
+					imgData.data[offset + 1] = 256; // debug - greener start
 					while (span-- > 0) {
 						imgData.data[offset++] = delta[i++];
 					}
 					imgData.data[offset - 2] = 256; // debug - blue terminator
-				} else {
-					console.log('apply unchanged span of size ' + span + ' at offset ' + i + ' into delta at byte: ' + offset);
-					offset += span * 4;
-					imgData.data[offset - 3] = 256; // debug - green terminator
+					break;
+				default:
+					console.log('Unknown code ' + delta[i]);
+					i = delta.length;
+					break;
 				}
 			}
 
-			while (offset < pixSize) // debug
-			{
-				imgData.data[offset] = 256; // redden the remaining section.
-				imgData.data[offset+3] = 256; // with some alpha
-				offset += 4;
-			}
 			ctx.putImageData(imgData, 0, 0);
 
 			tile.oldWireId = tile.wireId;
