@@ -660,6 +660,9 @@ $(function () {
 			{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
 			{type: 'html',  id: 'left'},
 			{type: 'html',  id: 'right'},
+			{type: 'html',  id: 'LanguageStatus',
+			 html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id: 'languagestatusbreak'},
 			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
 			{type: 'break', id: 'modifiedstatuslabelbreak'},
 			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table></div>' },
@@ -1171,6 +1174,9 @@ map.on('commandstatechanged', function (e) {
 		if (div) {
 			L.DomUtil.setStyle(div, 'background', color);
 		}
+	}
+	else if (commandName === '.uno:LanguageStatus') {
+		$('#LanguageStatus').html(state);
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
 		var modifiedStatus = e.state === 'true';
