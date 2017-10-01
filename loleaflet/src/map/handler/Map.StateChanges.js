@@ -25,7 +25,9 @@ L.Map.StateChangeHandler = L.Handler.extend({
 	},
 
 	_onStateChanged: function(e) {
-		this._items[e.commandName] = e.state;
+		if (e.commandName.indexOf('?') === -1) {
+			this._items[e.commandName] = e.state;
+		}
 	},
 
 	getItems: function() {

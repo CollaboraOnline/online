@@ -1045,10 +1045,23 @@ L.TileLayer = L.GridLayer.extend({
 	_onStateChangedMsg: function (textMsg) {
 		textMsg = textMsg.substr(14);
 		var index = textMsg.indexOf('=');
-		var commandName = index !== -1 ? textMsg.substr(0, index) : '';
-		var state = index !== -1 ? textMsg.substr(index + 1) : '';
+		var commandName, state;
+		if (index !== -1)
+		{
+			commandName = textMsg.substr(0, index);
+			state = textMsg.substr(index + 1);
+			this._map.fire('commandstatechanged', {commandName : commandName, state : state});
+			return;
+		}
 
-		this._map.fire('commandstatechanged', {commandName : commandName, state : state});
+		index = textMsg.indexOf('?');
+		if (index !== -1)
+		{
+			commandName = textMsg.substr(0, index);
+			textMsg = textMsg.substr(index + 1);
+			state = JSON.parse(textMsg);
+			this._map.fire('commandinitialized', {commandName: commandName, data: state});
+		}
 	},
 
 	_onUnoCommandResultMsg: function (textMsg) {
