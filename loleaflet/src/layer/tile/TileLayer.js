@@ -171,6 +171,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._levels = {};
 		this._tiles = {};
 		this._tileCache = {};
+		this._map._socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		var that = this;
 		$.contextMenu({
@@ -1006,7 +1007,6 @@ L.TileLayer = L.GridLayer.extend({
 		var index = textMsg.indexOf('=');
 		var commandName = index !== -1 ? textMsg.substr(0, index) : '';
 		var state = index !== -1 ? textMsg.substr(index + 1) : '';
-
 		this._map.fire('commandstatechanged', {commandName : commandName, state : state});
 	},
 

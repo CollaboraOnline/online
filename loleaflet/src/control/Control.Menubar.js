@@ -10,7 +10,8 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('File'), disabled: true},
 			{name: _('Edit'), disabled: true},
 			{name: _('View'), disabled: true},
-			{name: _('Insert'), disabled: true}
+			{name: _('Insert'), disabled: true},
+			{name: _('Tools'), disabled: true},
 		],
 		text:  [
 			{name: _('File'), id: 'file', type: 'menu', menu: [
@@ -171,7 +172,9 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'}]
 			},
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
-				{name: _('Automatic Spell Checking'), type: 'unocommand', uno: '.uno:SpellOnline'}
+				{name: _('Automatic Spell Checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
+				{name: _('Language'), type: 'menu', menu: [
+					{name: _('Reset to Default Language'), id: 'resetlanguage', type: 'unocommand', uno:'.uno:LanguageStatus?Language:string=Default_RESET_LANGUAGES'}]}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
@@ -316,9 +319,10 @@ L.Control.Menubar = L.Control.extend({
 
 		map.on('doclayerinit', this._onDocLayerInit, this);
 		map.on('addmenu', this._addMenu, this);
+		map.on('commandvalues', this._onInitMenu, this);
 	},
 
-	_addMenu: function(e) {
+	_addMenu: function (e) {
 		var alreadyExists = L.DomUtil.get('menu-' + e.id);
 		if (alreadyExists)
 			return;
@@ -334,6 +338,21 @@ L.Control.Menubar = L.Control.extend({
 		$(aItem).data('type', 'action');
 		$(aItem).data('postmessage', 'true');
 		this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
+	},
+
+	_onInitMenu: function (e) {
+		if (e.commandName === '.uno:LanguageStatus') {
+			var liItem, aItem;
+			$menuParent = $('#menu-resetlanguage').parent();
+			for (var lang in e.commandValues) {
+				liItem = L.DomUtil.create('li', '');
+				aItem = L.DomUtil.create('a', '', liItem);
+				$(aItem).text(e.commandValues[lang]);
+				$(aItem).data('type', 'unocommand');
+				$(aItem).data('uno', '.uno:LanguageStatus?Language:string=' + encodeURIComponent('Default_' + e.commandValues[lang]));
+				$menuParent.append(liItem);
+			}
+		}
 	},
 
 	_onDocLayerInit: function() {
@@ -416,13 +435,22 @@ L.Control.Menubar = L.Control.extend({
 			if (map._permission === 'edit') {
 				if (type === 'unocommand') { // enable all depending on stored commandStates
 					var unoCommand = $(aItem).data('uno');
-					if (map['stateChangeHandler'].getItemValue(unoCommand) === 'disabled') {
+					var itemState = map['stateChangeHandler'].getItemValue(unoCommand);
+					if (itemState === 'disabled') {
 						$(aItem).addClass('disabled');
 					} else {
 						$(aItem).removeClass('disabled');
 					}
-
-					if (map['stateChangeHandler'].getItemValue(unoCommand) === 'true') {
+					if (unoCommand.indexOf('.uno:LanguageStatus') !== -1) {
+						var lang = map['stateChangeHandler'].getItemValue('.uno:LanguageStatus');
+						var label = $(aItem).html();
+						if (label === lang) {
+							$(aItem).addClass('lo-menu-item-checked');
+						} else {
+							$(aItem).removeClass('lo-menu-item-checked');
+						}
+					}
+					else if (itemState === 'true') {
 						$(aItem).addClass('lo-menu-item-checked');
 					} else {
 						$(aItem).removeClass('lo-menu-item-checked');
