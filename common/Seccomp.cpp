@@ -274,7 +274,7 @@ bool handleSetrlimitCommand(const std::vector<std::string>& tokens)
 
             rlimit rlim = { lim, lim };
             if (setrlimit(RLIMIT_FSIZE, &rlim) != 0)
-                LOG_SYS("Failed to set RLIMIT_NOFILE to " << lim << " bytes.");
+                LOG_SYS("Failed to set RLIMIT_FSIZE to " << lim << " bytes.");
 
             if (getrlimit(RLIMIT_FSIZE, &rlim) == 0)
                 LOG_INF("RLIMIT_FSIZE is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
