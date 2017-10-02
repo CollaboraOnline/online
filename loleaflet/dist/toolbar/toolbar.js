@@ -1571,7 +1571,9 @@ map.on('updatepermission', function (e) {
 map.on('keydown', function (e) {
 	if (e.originalEvent.ctrlKey && !e.originalEvent.altKey &&
 	   (e.originalEvent.key === 'f' || e.originalEvent.key === 'F')) {
-		L.DomUtil.get('search-input').focus();
+		var entry = L.DomUtil.get('search-input');
+		entry.focus();
+		entry.select();
 		e.originalEvent.preventDefault();
 	}
 });
