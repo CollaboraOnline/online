@@ -187,6 +187,7 @@ L.Control.Menubar = L.Control.extend({
 		presentation: [
 			{name: _('File'), id: 'file', type: 'menu', menu: [
 				{name: _('Save'), id: 'save', type: 'action'},
+				{name: _('Save As'), id: 'saveas', type: 'action'},
 				{name: _('Print'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: _('Download as'), id: 'downloadas', type: 'menu', menu: [
@@ -251,6 +252,7 @@ L.Control.Menubar = L.Control.extend({
 		spreadsheet: [
 			{name: _('File'), id: 'file', type: 'menu', menu: [
 				{name: _('Save'), id: 'save', type: 'action'},
+				{name: _('Save As'), id: 'saveas', type: 'action'},
 				{name: _('Print'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: _('Download as'), id:'downloadas', type: 'menu', menu: [
@@ -769,6 +771,9 @@ L.Control.Menubar = L.Control.extend({
 				continue;
 
 			if (menu[i].id === 'save' && this._map['wopi'].HideSaveOption)
+				continue;
+
+			if (menu[i].id === 'saveas' && this._map['wopi'].UserCanNotWriteRelative)
 				continue;
 
 			if (menu[i].id && menu[i].id.startsWith('fullscreen-presentation') && this._map['wopi'].HideExportOption)

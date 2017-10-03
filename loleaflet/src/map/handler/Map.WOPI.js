@@ -16,6 +16,7 @@ L.Map.WOPI = L.Handler.extend({
 	DisableExport: false,
 	DisableCopy: false,
 	DisableInactiveMessages: false,
+	UserCanNotWriteRelative: true,
 
 	_appLoadedConditions: {
 		doclayerinit: false,
@@ -67,6 +68,7 @@ L.Map.WOPI = L.Handler.extend({
 		this.DisableExport = !!wopiInfo['DisableExport'];
 		this.DisableCopy = !!wopiInfo['DisableCopy'];
 		this.DisableInactiveMessages = !!wopiInfo['DisableInactiveMessages'];
+		this.UserCanNotWriteRelative = !!wopiInfo['UserCanNotWriteRelative'];
 
 		this._map.fire('postMessage', {msgId: 'App_LoadingStatus', args: {Status: 'Frame_Ready'}});
 	},
