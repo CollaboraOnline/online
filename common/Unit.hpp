@@ -214,6 +214,12 @@ public:
         return false;
     }
 
+    /// To force the save operation being handled as auto-save from a unit test.
+    virtual bool isAutosave()
+    {
+        return false;
+    }
+
     // ---------------- WSD events ----------------
     virtual void onChildConnected(const int /* pid */, const std::string& /* sessionId */) {}
     /// When admin notify message is sent

@@ -44,6 +44,12 @@ public:
     {
     }
 
+    bool isAutosave() override
+    {
+        // we fake autosave when saving the modified document
+        return _savingPhase == SavingPhase::Modified;
+    }
+
     void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
         // nothing to assert in CheckFileInfo
@@ -58,12 +64,22 @@ public:
     {
         if (_savingPhase == SavingPhase::Unmodified)
         {
+            // the document is not modified
             CPPUNIT_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
+
+            // but the save action is an explicit user's request
+            CPPUNIT_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsAutosave"));
+
             _finishedSaveUnmodified = true;
         }
         else if (_savingPhase == SavingPhase::Modified)
         {
+            // the document is modified
             CPPUNIT_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
+
+            // and this test fakes that it's an autosave
+            CPPUNIT_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsAutosave"));
+
             _finishedSaveModified = true;
         }
 

@@ -337,7 +337,7 @@ public:
     }
 
     /// Sends the .uno:Save command to LoKit.
-    bool sendUnoSave(const std::string& sessionId, bool dontTerminateEdit = true, bool dontSaveIfUnmodified = true);
+    bool sendUnoSave(const std::string& sessionId, bool dontTerminateEdit = true, bool dontSaveIfUnmodified = true, bool isAutosave = false);
 
     /// Create copy of the file with a different name
     void saveFileAs(const std::string& sessionId, const std::string& newFileName, const std::string& path);

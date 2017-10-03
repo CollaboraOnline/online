@@ -765,6 +765,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
                                                         Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
         }
         request.set("X-LOOL-WOPI-IsModifiedByUser", _isUserModified? "true": "false");
+        request.set("X-LOOL-WOPI-IsAutosave", _isAutosave? "true": "false");
 
         request.setContentType("application/octet-stream");
         request.setContentLength(size);
