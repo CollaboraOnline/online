@@ -552,6 +552,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     bool disableCopy = false;
     bool disableInactiveMessages = false;
     std::string lastModifiedTime;
+    bool userCanNotWriteRelative = true;
 
     LOG_DBG("WOPI::CheckFileInfo returned: " << resMsg << ". Call duration: " << callDuration.count() << "s");
     Poco::JSON::Object::Ptr object;
@@ -575,6 +576,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         getWOPIValue(object, "DisableCopy", disableCopy);
         getWOPIValue(object, "DisableInactiveMessages", disableInactiveMessages);
         getWOPIValue(object, "LastModifiedTime", lastModifiedTime);
+        getWOPIValue(object, "UserCanNotWriteRelative", userCanNotWriteRelative);
     }
     else
     {
@@ -585,7 +587,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     const Poco::Timestamp modifiedTime = iso8601ToTimestamp(lastModifiedTime);
     _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
 
-    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, userExtraInfo, watermarkText, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, disableInactiveMessages, callDuration}));
+    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, userExtraInfo, watermarkText, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, disableInactiveMessages, userCanNotWriteRelative, callDuration}));
 }
 
 /// PutRelativeFile - uri format: http://server/<...>/wopi*/files/<id>/

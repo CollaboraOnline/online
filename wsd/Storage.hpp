@@ -225,6 +225,7 @@ public:
                      const bool disableExport,
                      const bool disableCopy,
                      const bool disableInactiveMessages,
+                     const bool userCanNotWriteRelative,
                      const std::chrono::duration<double> callDuration)
             : _userid(userid),
               _username(username),
@@ -239,6 +240,7 @@ public:
               _disableExport(disableExport),
               _disableCopy(disableCopy),
               _disableInactiveMessages(disableInactiveMessages),
+              _userCanNotWriteRelative(userCanNotWriteRelative),
               _callDuration(callDuration)
             {
                 _userExtraInfo = userExtraInfo;
@@ -272,6 +274,8 @@ public:
         bool _disableCopy;
         /// If WOPI host has allowed the loleaflet to show texts on the overlay informing about inactivity, or if the integration is handling that.
         bool _disableInactiveMessages;
+        /// If set to false, users can access the save-as functionality
+        bool _userCanNotWriteRelative;
         /// Time it took to call WOPI's CheckFileInfo
         std::chrono::duration<double> _callDuration;
     };
