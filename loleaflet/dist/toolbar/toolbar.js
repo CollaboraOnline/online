@@ -1817,6 +1817,7 @@ $(document).ready(function() {
 		$('#closebuttonwrapper').hide();
 	} else {
 		$('#closebutton').click(function(e) {
+			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
 			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
 			map.remove();
 		});

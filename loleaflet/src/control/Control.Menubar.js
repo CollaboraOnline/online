@@ -707,8 +707,10 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'rev-history') {
 			// if we are being loaded inside an iframe, ask
 			// our host to show revision history mode
-			map.fire('postMessage', {msgId: 'rev-history'});
+			map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
+			map.fire('postMessage', {msgId: 'UI_FileVersions'});
 		} else if (id === 'closedocument') {
+			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
 			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
 			map.remove();
 		}
