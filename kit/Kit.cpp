@@ -1751,6 +1751,10 @@ private:
         {
             LOG_ERR("QueueHandler::run: Exception: " << exc.what());
         }
+        catch (...)
+        {
+            LOG_FTL("QueueHandler::run: Unknown exception");
+        }
 
         LOG_DBG("Thread finished.");
     }
