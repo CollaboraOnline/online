@@ -89,6 +89,7 @@
 #include "Auth.hpp"
 #include "ClientSession.hpp"
 #include "Common.hpp"
+#include "Crypto.hpp"
 #include "DocumentBroker.hpp"
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
@@ -192,7 +193,7 @@ namespace
 
 inline void shutdownLimitReached(WebSocketHandler& ws)
 {
-    const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, MAX_DOCUMENTS, MAX_CONNECTIONS);
+    const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
     LOG_INF("Sending client limit-reached message: " << error);
 
     try
@@ -560,6 +561,8 @@ std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 std::set<std::string> LOOLWSD::EditFileExtensions;
+unsigned LOOLWSD::MaxConnections;
+unsigned LOOLWSD::MaxDocuments;
 
 static std::string UnitTestLibrary;
 
@@ -777,11 +780,58 @@ void LOOLWSD::initialize(Application& self)
     setenv("SAL_DISABLE_OPENCL", "true", 1);
 
     // Log the connection and document limits.
-    static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
-    static_assert(MAX_DOCUMENTS > 0 && MAX_DOCUMENTS <= MAX_CONNECTIONS,
-                  "max_documents must be positive and no more than max_connections");
-    LOG_INF("Maximum concurrent open Documents limit: " << MAX_DOCUMENTS);
-    LOG_INF("Maximum concurrent client Connections limit: " << MAX_CONNECTIONS);
+    LOOLWSD::MaxConnections = MAX_CONNECTIONS;
+    LOOLWSD::MaxDocuments = MAX_DOCUMENTS;
+
+#if ENABLE_SUPPORT_KEY
+    const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");
+
+    if (supportKeyString.empty())
+    {
+        LOG_WRN("Support key not set, please use 'loolconfig set-support-key'.");
+        std::cerr << "Support key not set, please use 'loolconfig set-support-key'." << std::endl;
+    }
+    else
+    {
+        SupportKey key(supportKeyString);
+
+        if (!key.verify())
+        {
+            LOG_WRN("Invalid support key, please use 'loolconfig set-support-key'.");
+            std::cerr << "Invalid support key, please use 'loolconfig set-support-key'." << std::endl;
+        }
+        else
+        {
+            int validDays =  key.validDaysRemaining();
+            if (validDays <= 0)
+            {
+                LOG_WRN("Your support key has expired, please ask for a new one, and use 'loolconfig set-support-key'.");
+                std::cerr << "Your support key has expired, please ask for a new one, and use 'loolconfig set-support-key'." << std::endl;
+            }
+            else
+            {
+                LOG_INF("Your support key is valid for " << validDays << " days");
+                LOOLWSD::MaxConnections = 1000;
+                LOOLWSD::MaxDocuments = 200;
+            }
+        }
+    }
+#endif
+
+    if (LOOLWSD::MaxConnections < 3)
+    {
+        LOG_ERR("MAX_CONNECTIONS must be at least 3");
+        LOOLWSD::MaxConnections = 3;
+    }
+
+    if (LOOLWSD::MaxDocuments > LOOLWSD::MaxConnections)
+    {
+        LOG_ERR("MAX_DOCUMENTS cannot be bigger than MAX_CONNECTIONS");
+        LOOLWSD::MaxDocuments = LOOLWSD::MaxConnections;
+    }
+
+    LOG_INF("Maximum concurrent open Documents limit: " << LOOLWSD::MaxDocuments);
+    LOG_INF("Maximum concurrent client Connections limit: " << LOOLWSD::MaxConnections);
 
     LOOLWSD::NumConnections = 0;
 
@@ -1342,10 +1392,9 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
     {
         Util::assertIsLocked(DocBrokersMutex);
 
-        static_assert(MAX_DOCUMENTS > 0, "MAX_DOCUMENTS must be positive");
-        if (DocBrokers.size() + 1 > MAX_DOCUMENTS)
+        if (DocBrokers.size() + 1 > LOOLWSD::MaxDocuments)
         {
-            LOG_ERR("Maximum number of open documents of " << MAX_DOCUMENTS << " reached.");
+            LOG_ERR("Maximum number of open documents of " << LOOLWSD::MaxDocuments << " reached.");
             shutdownLimitReached(ws);
             return nullptr;
         }
@@ -2118,9 +2167,9 @@ private:
         // Response to clients beyond this point is done via WebSocket.
         try
         {
-            if (LOOLWSD::NumConnections >= MAX_CONNECTIONS)
+            if (LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
             {
-                LOG_ERR("Limit on maximum number of connections of " << MAX_CONNECTIONS << " reached.");
+                LOG_ERR("Limit on maximum number of connections of " << LOOLWSD::MaxConnections << " reached.");
                 shutdownLimitReached(ws);
                 return;
             }

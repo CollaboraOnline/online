@@ -54,7 +54,7 @@ struct SupportKeyImpl
                     _signature = key.substr(lastColon + 1,
                                             key.length() - lastColon);
                     _data = key.substr(0, lastColon);
-                    std::cout << "signature '" << _signature << "' data '" << _data << "'\n";
+                    LOG_INF("Support key signature '" << _signature << "' data '" << _data << "'");
 
                     _invalid = false;
                 }
@@ -83,15 +83,23 @@ bool SupportKey::verify()
     }
 
     std::ifstream pubStream;
+    std::string supportKeyFilename =
+#if ENABLE_DEBUG
+        SUPPORT_KEY_FILE
+#else
+        LOOLWSD_CONFIGDIR "/" SUPPORT_KEY_FILE
+#endif
+        ;
+
     try {
-        pubStream.open ("pubKey.pub", std::ifstream::in);
+        pubStream.open(supportKeyFilename, std::ifstream::in);
         if (pubStream.fail())
         {
-            LOG_ERR("Failed to open support public key.");
+            LOG_ERR("Failed to open support public key '" << supportKeyFilename << "'.");
             return false;
         }
     } catch (...) {
-        LOG_ERR("Exception opening public key");
+        LOG_ERR("Exception opening public key '" << supportKeyFilename << "'.");
         return false;
     }
     try {

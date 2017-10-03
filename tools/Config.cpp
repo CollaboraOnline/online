@@ -63,6 +63,8 @@ class Config: public Application
 
 public:
     static std::string ConfigFile;
+    static std::string SupportKeyString;
+    static bool SupportKeyStringProvided;
 
 protected:
     void defineOptions(OptionSet&) override;
@@ -71,29 +73,31 @@ protected:
 };
 
 std::string Config::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
+std::string Config::SupportKeyString = "";
+bool Config::SupportKeyStringProvided = false;
 
 void Config::displayHelp()
 {
     HelpFormatter helpFormatter(options());
     helpFormatter.setCommand(commandName());
-    helpFormatter.setHeader("Configuration tool for LibreOffice Online.");
-    helpFormatter.setUsage("OPTIONS COMMAND");
-    helpFormatter.format(std::cout);
-    std::cout << std::endl
-              << "Commands:" << std::endl
-              << "  set-admin-password" << std::endl
+
+    std::string usage = "set-admin-password";
 #if ENABLE_SUPPORT_KEY
-              << "  set-support-key" << std::endl
+    usage = "(set-admin-password|set-support-key)";
 #endif
-        ;
+
+    helpFormatter.setUsage(usage + " OPTIONS");
+    helpFormatter.setHeader("loolconfig - Configuration tool for LibreOffice Online.\n"
+                            "\n"
+                            "Some options make sense only with a concrete command, in that case the command name is specified in brackets.");
+    helpFormatter.format(std::cout);
 }
 
 void Config::defineOptions(OptionSet& optionSet)
 {
     Application::defineOptions(optionSet);
 
-    // global options
-    optionSet.addOption(Option("help", "", "Prints help information")
+    optionSet.addOption(Option("help", "h", "Show this usage information.")
                         .required(false)
                         .repeatable(false));
     optionSet.addOption(Option("config-file", "", "Specify configuration file path manually.")
@@ -101,20 +105,23 @@ void Config::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("path"));
 
-    // Command specific option
-    optionSet.addOption(Option("pwd-salt-length", "", "Length of the salt to use to hash password. To be used with set-admin-password command.")
+    optionSet.addOption(Option("pwd-salt-length", "", "Length of the salt to use to hash password [set-admin-password].")
                         .required(false)
                         .repeatable(false).
                         argument("number"));
-    optionSet.addOption(Option("pwd-iterations", "", "Number of iterations to do in PKDBF2 password hashing. To be used with set-admin-password command.")
+    optionSet.addOption(Option("pwd-iterations", "", "Number of iterations to do in PKDBF2 password hashing [set-admin-password].")
                         .required(false)
                         .repeatable(false)
                         .argument("number"));
-    optionSet.addOption(Option("pwd-hash-length", "", "Length of password hash to generate. To be used with set-admin-password command.")
+    optionSet.addOption(Option("pwd-hash-length", "", "Length of password hash to generate [set-admin-password].")
                         .required(false)
                         .repeatable(false)
                         .argument("number"));
 
+    optionSet.addOption(Option("support-key", "", "Specify the support key [set-support-key].")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("key"));
 }
 
 void Config::handleOption(const std::string& optionName, const std::string& optionValue)
@@ -159,6 +166,11 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
         }
         _adminConfig.pwdHashLength = len;
     }
+    else if (optionName == "support-key")
+    {
+        SupportKeyString = optionValue;
+        SupportKeyStringProvided = true;
+    }
 }
 
 int Config::main(const std::vector<std::string>& args)
@@ -192,10 +204,10 @@ int Config::main(const std::vector<std::string>& args)
             tcsetattr(STDIN_FILENO, TCSANOW, &newTermios);
             std::string adminPwd;
             std::cout << "Enter admin password: ";
-            std::cin >> adminPwd;
+            std::getline(std::cin, adminPwd);
             std::string reAdminPwd;
             std::cout << std::endl << "Confirm admin password: ";
-            std::cin >> reAdminPwd;
+            std::getline(std::cin, reAdminPwd);
             std::cout << std::endl;
             // Set the termios to old state
             tcsetattr(STDIN_FILENO, TCSANOW, &oldTermios);
@@ -243,9 +255,15 @@ int Config::main(const std::vector<std::string>& args)
         else if (args[i] == "set-support-key")
         {
             std::string supportKeyString;
-            std::cout << "Enter support key: ";
-            std::cin >> supportKeyString;
-            if (supportKeyString.length() > 0)
+            if (SupportKeyStringProvided)
+                supportKeyString = SupportKeyString;
+            else
+            {
+                std::cout << "Enter support key: ";
+                std::getline(std::cin, supportKeyString);
+            }
+
+            if (!supportKeyString.empty())
             {
                 SupportKey key(supportKeyString);
                 if (!key.verify())
