@@ -6,25 +6,5 @@
 
 <!-- Enable spell-checking by default -->
 <item oor:path="/org.openoffice.Office.Linguistic/SpellChecking"><prop oor:name="IsSpellAuto" oor:op="fuse"><value>true</value></prop></item>
-<item oor:path="/org.openoffice.Office.Linguistic/ServiceManager/SpellCheckerList">
-  <prop oor:name="en-US" oor:op="fuse" oor:type="oor:string-list"><value><it>org.openoffice.lingu.MySpellSpellChecker</it></value></prop>
-</item>
-<item oor:path="/org.openoffice.Office.Linguistic/ServiceManager/SpellCheckerList">
-  <prop oor:name="en-GB" oor:op="fuse" oor:type="oor:string-list"><value><it>org.openoffice.lingu.MySpellSpellChecker</it></value></prop>
-</item>
-<item oor:path="/org.openoffice.Office.Linguistic/ServiceManager/SpellCheckerList">
-  <prop oor:name="fr" oor:op="fuse" oor:type="oor:string-list"><value><it>org.openoffice.lingu.MySpellSpellChecker</it></value></prop>
-</item>
-<item oor:path="/org.openoffice.Office.Linguistic/ServiceManager/SpellCheckerList">
-  <prop oor:name="de" oor:op="fuse" oor:type="oor:string-list"><value><it>org.openoffice.lingu.MySpellSpellChecker</it></value></prop>
-</item>
-<item oor:path="/org.openoffice.Office.Linguistic/ServiceManager/SpellCheckerList">
-  <prop oor:name="it" oor:op="fuse" oor:type="oor:string-list"><value><it>org.openoffice.lingu.MySpellSpellChecker</it></value></prop>
-</item>
-<item oor:path="/org.openoffice.Office.Linguistic/ServiceManager/SpellCheckerList">
-  <prop oor:name="pt-BR" oor:op="fuse" oor:type="oor:string-list"><value><it>org.openoffice.lingu.MySpellSpellChecker</it></value></prop>
-</item>
-<item oor:path="/org.openoffice.Office.Linguistic/ServiceManager/SpellCheckerList">
-  <prop oor:name="nl" oor:op="fuse" oor:type="oor:string-list"><value><it>org.openoffice.lingu.MySpellSpellChecker</it></value></prop>
-</item>
+
 </oor:items>
