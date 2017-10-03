@@ -320,7 +320,7 @@ L.Control.Menubar = L.Control.extend({
 
 		map.on('doclayerinit', this._onDocLayerInit, this);
 		map.on('addmenu', this._addMenu, this);
-		map.on('commandinitialized', this._onInitMenu, this);
+		map.on('commandvalues', this._onInitMenu, this);
 	},
 
 	_addMenu: function (e) {
@@ -345,12 +345,12 @@ L.Control.Menubar = L.Control.extend({
 		if (e.commandName === '.uno:LanguageStatus') {
 			var liItem, aItem;
 			$menuParent = $('#menu-resetlanguage').parent();
-			for (var lang in e.data) {
+			for (var lang in e.commandValues) {
 				liItem = L.DomUtil.create('li', '');
 				aItem = L.DomUtil.create('a', '', liItem);
-				$(aItem).text(e.data[lang]);
+				$(aItem).text(e.commandValues[lang]);
 				$(aItem).data('type', 'unocommand');
-				$(aItem).data('uno', '.uno:LanguageStatus?Language:string=' + encodeURIComponent('Default_' + e.data[lang]));
+				$(aItem).data('uno', '.uno:LanguageStatus?Language:string=' + encodeURIComponent('Default_' + e.commandValues[lang]));
 				$menuParent.append(liItem);
 			}
 		}
