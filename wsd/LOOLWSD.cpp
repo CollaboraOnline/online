@@ -2595,18 +2595,28 @@ int LOOLWSD::innerMain()
 
 #ifndef KIT_IN_PROCESS
     {
+        // Make sure we have at least one child before moving forward.
         std::unique_lock<std::mutex> lock(NewChildrenMutex);
-
-        const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 150 : 10);
-        const auto timeout = std::chrono::milliseconds(timeoutMs);
-        // Make sure we have at least one before moving forward.
-        LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
-        if (!NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
+        // If we are debugging, it's not uncommon to wait for several minutes before first
+        // child is born. Don't use an expiry timeout in that case.
+        const bool debugging = std::getenv("SLEEPFORDEBUGGER") || std::getenv("SLEEPKITFORDEBUGGER");
+        if (debugging)
         {
-            const auto msg = "Failed to fork child processes.";
-            LOG_FTL(msg);
-            std::cerr << "FATAL: " << msg << std::endl;
-            throw std::runtime_error(msg);
+            LOG_DBG("Waiting for new child without timeout.");
+            NewChildrenCV.wait(lock, []() { return !NewChildren.empty(); });
+        }
+        else
+        {
+            const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 150 : 10);
+            const auto timeout = std::chrono::milliseconds(timeoutMs);
+            LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
+            if (!NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
+            {
+                const auto msg = "Failed to fork child processes.";
+                LOG_FTL(msg);
+                std::cerr << "FATAL: " << msg << std::endl;
+                throw std::runtime_error(msg);
+            }
         }
 
         // Check we have at least one.
