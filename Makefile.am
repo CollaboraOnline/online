@@ -64,7 +64,8 @@ if ENABLE_SSL
 shared_sources += net/Ssl.cpp
 endif
 
-loolwsd_sources = wsd/Admin.cpp \
+loolwsd_sources = common/Crypto.cpp \
+                  wsd/Admin.cpp \
                   wsd/AdminModel.cpp \
                   wsd/Auth.cpp \
                   wsd/DocumentBroker.cpp \
@@ -147,6 +148,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/UserMessages.hpp
 
 shared_headers = common/Common.hpp \
+                 common/Crypto.hpp \
                  common/IoUtil.hpp \
                  common/FileUtil.hpp \
                  common/Log.hpp \

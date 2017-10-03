@@ -56,6 +56,8 @@ public:
     static bool TileCachePersistent;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
     static std::set<std::string> EditFileExtensions;
+    static unsigned MaxConnections;
+    static unsigned MaxDocuments;
 
     /// Flag to shutdown the server.
     std::atomic<bool> ShutdownFlag;

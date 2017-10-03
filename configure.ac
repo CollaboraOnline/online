@@ -96,9 +96,9 @@ AC_ARG_ENABLE([ssl],
             AS_HELP_STRING([--disable-ssl],
                            [Compile without SSL support]))
 
-AC_ARG_ENABLE([support-key],
-            AS_HELP_STRING([--enable-support-key],
-                [Implements signed key with expiration required for support. Almost certainly you don't want to enable this.]))
+AC_ARG_WITH([support-key],
+            AS_HELP_STRING([--with-support-key=<support-key-name.pub>],
+                [Implements signed key with expiration required for support. Almost certainly you don not want to use this.]))
 
 AC_ARG_WITH([max-connections],
             AS_HELP_STRING([--max-connections],
@@ -294,10 +294,13 @@ fi
 
 AC_SUBST(ENABLE_SSL)
 
-AS_IF([test "$enable_support_key" == "yes"],
-      [AC_DEFINE([ENABLE_SUPPORT_KEY],1,[Whether to enable support key])],
+SUPPORT_KEY_FILE=
+AS_IF([test "x$with_support_key" != "x"],
+      [AC_DEFINE([ENABLE_SUPPORT_KEY],1,[Whether to enable support key])
+       AC_DEFINE_UNQUOTED([SUPPORT_KEY_FILE],[["$with_support_key"]],[LibreOffice Online WebSocket server version])],
       [AC_DEFINE([ENABLE_SUPPORT_KEY],0,[Whether to enable support key])])
 AC_SUBST(ENABLE_SUPPORT_KEY)
+AC_SUBST(SUPPORT_KEY_FILE)
 
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
 
