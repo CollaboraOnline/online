@@ -676,9 +676,6 @@ $(function () {
 			{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
 			{type: 'html',  id: 'left'},
 			{type: 'html',  id: 'right'},
-			{type: 'html',  id: 'LanguageStatus',
-			 html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id: 'languagestatusbreak'},
 			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
 			{type: 'break', id: 'modifiedstatuslabelbreak'},
 			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
@@ -1056,6 +1053,9 @@ map.on('doclayerinit', function () {
 			{type: 'break', id:'break6'},
 			{type: 'html',  id: 'SelectionMode',
 				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break7'},
+			{type: 'html',  id: 'LanguageStatus',
+				html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' }
 		]);
 
 		// Remove irrelevant toolbars
