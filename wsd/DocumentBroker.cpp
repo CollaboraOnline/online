@@ -760,14 +760,14 @@ bool DocumentBroker::autoSave(const bool force)
             timeSinceLastSaveMs >= autoSaveDurationMs)
         {
             LOG_TRC("Sending timed save command for [" << _docKey << "].");
-            sent = sendUnoSave(savingSessionId);
+            sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/ true, /*dontSaveIfUnmodified=*/ true, /*isAutosave=*/ true);
         }
     }
 
     return sent;
 }
 
-bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminateEdit, bool dontSaveIfUnmodified)
+bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminateEdit, bool dontSaveIfUnmodified, bool isAutosave)
 {
     assertCorrectThread();
 
@@ -810,6 +810,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
 
         assert(_storage);
         _storage->setUserModified(_isModified);
+        _storage->setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
 
         const auto saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);

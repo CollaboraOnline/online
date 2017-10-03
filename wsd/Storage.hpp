@@ -79,7 +79,8 @@ public:
         _fileInfo("", "lool", Poco::Timestamp::fromEpochTime(0), 0),
         _isLoaded(false),
         _forceSave(false),
-        _isUserModified(false)
+        _isUserModified(false),
+        _isAutosave(false)
     {
         LOG_DBG("Storage ctor: " << uri.toString());
     }
@@ -97,6 +98,9 @@ public:
 
     /// To be able to set the WOPI extension header appropriately.
     void setUserModified(bool isUserModified) { _isUserModified = isUserModified; }
+
+    /// To be able to set the WOPI 'is autosave?' header appropriately.
+    void setIsAutosave(bool isAutosave) { _isAutosave = isAutosave; }
 
     /// Returns the basic information about the file.
     const FileInfo& getFileInfo() const { return _fileInfo; }
@@ -135,6 +139,9 @@ protected:
 
     /// The document has been modified by the user.
     bool _isUserModified;
+
+    /// This save operation is an autosave.
+    bool _isAutosave;
 
     static bool FilesystemEnabled;
     static bool WopiEnabled;

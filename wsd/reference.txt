@@ -73,3 +73,11 @@ modification.  The following header:
    X-LOOL-WOPI-IsModifiedByUser
 
 will have the value 'true' or 'false' accordingly.
+
+To distinguish autosave vs. explicit user requests to save, the following
+header:
+
+   X-LOOL-WOPI-IsAutosave
+
+will have the value 'true' when the PutFile is triggered by autosave, and
+'false' when triggered by explicit user operation (Save button or menu entry).

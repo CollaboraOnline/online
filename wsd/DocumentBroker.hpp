@@ -337,7 +337,7 @@ public:
     }
 
     /// Sends the .uno:Save command to LoKit.
-    bool sendUnoSave(const std::string& sessionId, bool dontTerminateEdit = true, bool dontSaveIfUnmodified = true);
+    bool sendUnoSave(const std::string& sessionId, bool dontTerminateEdit = true, bool dontSaveIfUnmodified = true, bool isAutosave = false);
 
     /// Sends a message to all sessions
     void broadcastMessage(const std::string& message);
