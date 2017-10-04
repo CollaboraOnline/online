@@ -175,7 +175,13 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
 				{name: _('Automatic Spell Checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
 				{name: _('Language'), type: 'menu', menu: [
-					{name: _('Reset to Default Language'), id: 'resetlanguage', type: 'unocommand', uno:'.uno:LanguageStatus?Language:string=Default_RESET_LANGUAGES'}]}
+					{name: _('For Selection'), type: 'menu', menu: [
+						{name: _('Reset to Default Language'), id: 'resetselection', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Current_RESET_LANGUAGES'}]},
+					{name: _('For Paragraph'), type: 'menu', menu: [
+						{name: _('Reset to Default Language'), id: 'resetparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_RESET_LANGUAGES'}]},
+					{name: _('For all Text'), type: 'menu', menu: [
+						{name: _('Reset to Default Language'), id: 'resetlanguage', type: 'unocommand', uno:'.uno:LanguageStatus?Language:string=Default_RESET_LANGUAGES'}]}
+				]}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
@@ -343,17 +349,25 @@ L.Control.Menubar = L.Control.extend({
 		this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
 	},
 
+	_createLangMenuItem: function (lang, command) {
+		var liItem, aItem;
+		liItem = L.DomUtil.create('li', '');
+		aItem = L.DomUtil.create('a', '', liItem);
+		$(aItem).text(lang);
+		$(aItem).data('type', 'unocommand');
+		$(aItem).data('uno', '.uno:LanguageStatus?Language:string=' + command);
+		return liItem;
+	},
+
 	_onInitMenu: function (e) {
 		if (e.commandName === '.uno:LanguageStatus') {
-			var liItem, aItem;
-			$menuParent = $('#menu-resetlanguage').parent();
+			$menuSelection = $('#menu-resetselection').parent();
+			$menuParagraph = $('#menu-resetparagraph').parent();
+			$menuDefault = $('#menu-resetlanguage').parent();
 			for (var lang in e.commandValues) {
-				liItem = L.DomUtil.create('li', '');
-				aItem = L.DomUtil.create('a', '', liItem);
-				$(aItem).text(e.commandValues[lang]);
-				$(aItem).data('type', 'unocommand');
-				$(aItem).data('uno', '.uno:LanguageStatus?Language:string=' + encodeURIComponent('Default_' + e.commandValues[lang]));
-				$menuParent.append(liItem);
+				$menuSelection.append(this._createLangMenuItem(e.commandValues[lang], encodeURIComponent('Current_' + e.commandValues[lang])));
+				$menuParagraph.append(this._createLangMenuItem(e.commandValues[lang], encodeURIComponent('Paragraph_' + e.commandValues[lang])));
+				$menuDefault.append(this._createLangMenuItem(e.commandValues[lang], encodeURIComponent('Default_' + e.commandValues[lang])));
 			}
 		}
 	},
