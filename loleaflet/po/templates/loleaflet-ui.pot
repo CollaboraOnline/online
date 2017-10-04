@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 10:03+0200\n"
+"POT-Creation-Date: 2017-10-04 13:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,8 +118,8 @@ msgid "Network Graph"
 msgstr ""
 
 #: admin.strings.js:30 dist/toolbar/toolbar.js:470
-#: src/control/Control.Menubar.js:18 src/control/Control.Menubar.js:189
-#: src/control/Control.Menubar.js:253 src/layer/marker/Annotation.js:198
+#: src/control/Control.Menubar.js:18 src/control/Control.Menubar.js:195
+#: src/control/Control.Menubar.js:260 src/layer/marker/Annotation.js:198
 msgid "Save"
 msgstr ""
 
@@ -240,7 +240,7 @@ msgid "Delete Index or Table of Contents"
 msgstr ""
 
 #: unocommands.js:18 src/layer/marker/Annotation.js:201
-#: src/layer/tile/TileLayer.js:193
+#: src/layer/tile/TileLayer.js:194
 msgid "Reply"
 msgstr ""
 
@@ -384,12 +384,12 @@ msgid "Wrap through"
 msgstr ""
 
 #: dist/toolbar/toolbar.js:472 src/control/Control.Menubar.js:30
-#: src/control/Control.Menubar.js:199 src/control/Control.Menubar.js:263
+#: src/control/Control.Menubar.js:206 src/control/Control.Menubar.js:271
 msgid "Undo"
 msgstr ""
 
 #: dist/toolbar/toolbar.js:473 src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:200 src/control/Control.Menubar.js:264
+#: src/control/Control.Menubar.js:207 src/control/Control.Menubar.js:272
 msgid "Redo"
 msgstr ""
 
@@ -521,7 +521,7 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:620 dist/toolbar/toolbar.js:1033
+#: dist/toolbar/toolbar.js:620 dist/toolbar/toolbar.js:1030
 msgid "Sum"
 msgstr ""
 
@@ -554,7 +554,7 @@ msgstr ""
 msgid "Last sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:652 src/control/Control.Menubar.js:239
+#: dist/toolbar/toolbar.js:652 src/control/Control.Menubar.js:246
 msgid "Fullscreen presentation"
 msgstr ""
 
@@ -562,11 +562,11 @@ msgstr ""
 msgid "Insert slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:655 src/control/Control.Menubar.js:236
+#: dist/toolbar/toolbar.js:655 src/control/Control.Menubar.js:243
 msgid "Duplicate slide"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:656 src/control/Control.Menubar.js:237
+#: dist/toolbar/toolbar.js:656 src/control/Control.Menubar.js:244
 msgid "Delete slide"
 msgstr ""
 
@@ -586,103 +586,103 @@ msgstr ""
 msgid "Cancel the search"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:680
-msgid "Text Language"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:684
+#: dist/toolbar/toolbar.js:681
 msgid "No users"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:695
+#: dist/toolbar/toolbar.js:692
 msgid "Previous page"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:696
+#: dist/toolbar/toolbar.js:693
 msgid "Next page"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:698 src/control/Control.Menubar.js:53
-#: src/control/Control.Menubar.js:214
+#: dist/toolbar/toolbar.js:695 src/control/Control.Menubar.js:53
+#: src/control/Control.Menubar.js:221
 msgid "Reset zoom"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:699 src/control/Control.Menubar.js:52
-#: src/control/Control.Menubar.js:213
+#: dist/toolbar/toolbar.js:696 src/control/Control.Menubar.js:52
+#: src/control/Control.Menubar.js:220
 msgid "Zoom out"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:701 src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:212
+#: dist/toolbar/toolbar.js:698 src/control/Control.Menubar.js:51
+#: src/control/Control.Menubar.js:219
 msgid "Zoom in"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:733
+#: dist/toolbar/toolbar.js:730
 msgid "%user has joined"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:734
+#: dist/toolbar/toolbar.js:731
 msgid "%user has left"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:852 dist/toolbar/toolbar.js:1404
+#: dist/toolbar/toolbar.js:849 dist/toolbar/toolbar.js:1404
 msgid "Size"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1014
+#: dist/toolbar/toolbar.js:1011
 msgid "Number of Sheets"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1017
+#: dist/toolbar/toolbar.js:1014
 msgid "Selected range of cells"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1020 dist/toolbar/toolbar.js:1055
+#: dist/toolbar/toolbar.js:1017 dist/toolbar/toolbar.js:1052
 msgid "Entering text mode"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1023 dist/toolbar/toolbar.js:1058
+#: dist/toolbar/toolbar.js:1020 dist/toolbar/toolbar.js:1055
 msgid "Selection Mode"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1026
+#: dist/toolbar/toolbar.js:1023
 msgid "Choice of functions"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1028
+#: dist/toolbar/toolbar.js:1025
 msgid "Average"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1029
+#: dist/toolbar/toolbar.js:1026
 msgid "CountA"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1030
+#: dist/toolbar/toolbar.js:1027
 msgid "Count"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1031
+#: dist/toolbar/toolbar.js:1028
 msgid "Maximum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1032
+#: dist/toolbar/toolbar.js:1029
 msgid "Minimum"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1034
+#: dist/toolbar/toolbar.js:1031
 msgid "Selection count"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1035 src/control/Control.CharacterMap.js:11
+#: dist/toolbar/toolbar.js:1032 src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1049
+#: dist/toolbar/toolbar.js:1046
 msgid "Number of Pages"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1052
+#: dist/toolbar/toolbar.js:1049
 msgid "Word Counter"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1058
+msgid "Text Language"
 msgstr ""
 
 #: dist/toolbar/toolbar.js:1078
@@ -714,11 +714,11 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1740 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1742 src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1746
+#: dist/toolbar/toolbar.js:1748
 msgid "Readonly"
 msgstr ""
 
@@ -1834,8 +1834,8 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:424 src/control/Control.Menubar.js:13
 #: src/control/Control.Menubar.js:58 src/control/Control.Menubar.js:158
-#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:223
-#: src/control/Control.Menubar.js:276
+#: src/control/Control.Menubar.js:223 src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:284
 msgid "Insert"
 msgstr ""
 
@@ -1843,7 +1843,7 @@ msgstr ""
 msgid "Insert column before"
 msgstr ""
 
-#: src/control/Control.ColumnHeader.js:47 src/control/Control.Menubar.js:290
+#: src/control/Control.ColumnHeader.js:47 src/control/Control.Menubar.js:298
 msgid "Delete column"
 msgstr ""
 
@@ -1891,7 +1891,7 @@ msgstr ""
 msgid "Index"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:44 src/layer/tile/TileLayer.js:220
+#: src/control/Control.DocumentRepair.js:44 src/layer/tile/TileLayer.js:221
 msgid "Comment"
 msgstr ""
 
@@ -1908,46 +1908,47 @@ msgid "Jump to state"
 msgstr ""
 
 #: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:17
-#: src/control/Control.Menubar.js:188 src/control/Control.Menubar.js:252
+#: src/control/Control.Menubar.js:194 src/control/Control.Menubar.js:259
 msgid "File"
 msgstr ""
 
 #: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:28
-#: src/control/Control.Menubar.js:198 src/control/Control.Menubar.js:262
+#: src/control/Control.Menubar.js:205 src/control/Control.Menubar.js:270
 msgid "Edit"
 msgstr ""
 
 #: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:48
-#: src/control/Control.Menubar.js:209 src/control/Control.Menubar.js:273
+#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:281
 msgid "View"
 msgstr ""
 
 #: src/control/Control.Menubar.js:14 src/control/Control.Menubar.js:175
-#: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:292
+#: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:300
 msgid "Tools"
 msgstr ""
 
-#: src/control/Control.Menubar.js:19
+#: src/control/Control.Menubar.js:19 src/control/Control.Menubar.js:196
+#: src/control/Control.Menubar.js:261
 msgid "Save As"
 msgstr ""
 
-#: src/control/Control.Menubar.js:20 src/control/Control.Menubar.js:190
-#: src/control/Control.Menubar.js:254
+#: src/control/Control.Menubar.js:20 src/control/Control.Menubar.js:197
+#: src/control/Control.Menubar.js:262
 msgid "Print"
 msgstr ""
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:191
-#: src/control/Control.Menubar.js:255
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:198
+#: src/control/Control.Menubar.js:263
 msgid "See revision history"
 msgstr ""
 
-#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:192
-#: src/control/Control.Menubar.js:256
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:199
+#: src/control/Control.Menubar.js:264
 msgid "Download as"
 msgstr ""
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:193
-#: src/control/Control.Menubar.js:257
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:200
+#: src/control/Control.Menubar.js:265
 msgid "PDF Document (.pdf)"
 msgstr ""
 
@@ -1967,28 +1968,28 @@ msgstr ""
 msgid "Repair"
 msgstr ""
 
-#: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:202
-#: src/control/Control.Menubar.js:266
+#: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:209
+#: src/control/Control.Menubar.js:274
 msgid "Cut"
 msgstr ""
 
-#: src/control/Control.Menubar.js:34 src/control/Control.Menubar.js:203
-#: src/control/Control.Menubar.js:267
+#: src/control/Control.Menubar.js:34 src/control/Control.Menubar.js:210
+#: src/control/Control.Menubar.js:275
 msgid "Copy"
 msgstr ""
 
-#: src/control/Control.Menubar.js:35 src/control/Control.Menubar.js:204
-#: src/control/Control.Menubar.js:268
+#: src/control/Control.Menubar.js:35 src/control/Control.Menubar.js:211
+#: src/control/Control.Menubar.js:276
 msgid "Paste"
 msgstr ""
 
-#: src/control/Control.Menubar.js:36 src/control/Control.Menubar.js:205
-#: src/control/Control.Menubar.js:269
+#: src/control/Control.Menubar.js:36 src/control/Control.Menubar.js:212
+#: src/control/Control.Menubar.js:277
 msgid "Select all"
 msgstr ""
 
-#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:207
-#: src/control/Control.Menubar.js:271 src/control/Control.Menubar.js:518
+#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:279 src/control/Control.Menubar.js:534
 msgid "Find & Replace"
 msgstr ""
 
@@ -2004,16 +2005,16 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: src/control/Control.Menubar.js:44 src/control/Control.Menubar.js:532
+#: src/control/Control.Menubar.js:44 src/control/Control.Menubar.js:548
 msgid "Previous"
 msgstr ""
 
-#: src/control/Control.Menubar.js:45 src/control/Control.Menubar.js:538
+#: src/control/Control.Menubar.js:45 src/control/Control.Menubar.js:554
 msgid "Next"
 msgstr ""
 
-#: src/control/Control.Menubar.js:49 src/control/Control.Menubar.js:210
-#: src/control/Control.Menubar.js:274
+#: src/control/Control.Menubar.js:49 src/control/Control.Menubar.js:217
+#: src/control/Control.Menubar.js:282
 msgid "Full screen"
 msgstr ""
 
@@ -2021,13 +2022,13 @@ msgstr ""
 msgid "Formatting Marks"
 msgstr ""
 
-#: src/control/Control.Menubar.js:59 src/control/Control.Menubar.js:217
-#: src/control/Control.Menubar.js:277
+#: src/control/Control.Menubar.js:59 src/control/Control.Menubar.js:224
+#: src/control/Control.Menubar.js:285
 msgid "Image"
 msgstr ""
 
-#: src/control/Control.Menubar.js:60 src/control/Control.Menubar.js:218
-#: src/control/Control.Menubar.js:278
+#: src/control/Control.Menubar.js:60 src/control/Control.Menubar.js:225
+#: src/control/Control.Menubar.js:286
 msgid "Comment..."
 msgstr ""
 
@@ -2047,8 +2048,8 @@ msgstr ""
 msgid "Column break"
 msgstr ""
 
-#: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:220
-#: src/control/Control.Menubar.js:283
+#: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:227
+#: src/control/Control.Menubar.js:291
 msgid "Special character..."
 msgstr ""
 
@@ -2294,35 +2295,35 @@ msgstr ""
 msgid "Landscape"
 msgstr ""
 
-#: src/control/Control.Menubar.js:157 src/control/Control.Menubar.js:222
+#: src/control/Control.Menubar.js:157 src/control/Control.Menubar.js:229
 msgid "Tables"
 msgstr ""
 
-#: src/control/Control.Menubar.js:159 src/control/Control.Menubar.js:224
+#: src/control/Control.Menubar.js:159 src/control/Control.Menubar.js:231
 msgid "Rows before"
 msgstr ""
 
-#: src/control/Control.Menubar.js:160 src/control/Control.Menubar.js:225
+#: src/control/Control.Menubar.js:160 src/control/Control.Menubar.js:232
 msgid "Rows after"
 msgstr ""
 
-#: src/control/Control.Menubar.js:162 src/control/Control.Menubar.js:227
+#: src/control/Control.Menubar.js:162 src/control/Control.Menubar.js:234
 msgid "Columns left"
 msgstr ""
 
-#: src/control/Control.Menubar.js:163 src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:163 src/control/Control.Menubar.js:235
 msgid "Columns right"
 msgstr ""
 
-#: src/control/Control.Menubar.js:164 src/control/Control.Menubar.js:229
+#: src/control/Control.Menubar.js:164 src/control/Control.Menubar.js:236
 msgid "Delete"
 msgstr ""
 
-#: src/control/Control.Menubar.js:165 src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:165 src/control/Control.Menubar.js:237
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.Menubar.js:166 src/control/Control.Menubar.js:231
+#: src/control/Control.Menubar.js:166 src/control/Control.Menubar.js:238
 msgid "Columns"
 msgstr ""
 
@@ -2334,11 +2335,11 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: src/control/Control.Menubar.js:170 src/control/Control.Menubar.js:280
+#: src/control/Control.Menubar.js:170 src/control/Control.Menubar.js:288
 msgid "Row"
 msgstr ""
 
-#: src/control/Control.Menubar.js:171 src/control/Control.Menubar.js:281
+#: src/control/Control.Menubar.js:171 src/control/Control.Menubar.js:289
 msgid "Column"
 msgstr ""
 
@@ -2346,12 +2347,12 @@ msgstr ""
 msgid "Cell"
 msgstr ""
 
-#: src/control/Control.Menubar.js:173 src/control/Control.Menubar.js:232
+#: src/control/Control.Menubar.js:173 src/control/Control.Menubar.js:239
 msgid "Merge cells"
 msgstr ""
 
-#: src/control/Control.Menubar.js:176 src/control/Control.Menubar.js:242
-#: src/control/Control.Menubar.js:293
+#: src/control/Control.Menubar.js:176 src/control/Control.Menubar.js:249
+#: src/control/Control.Menubar.js:301
 msgid "Automatic Spell Checking"
 msgstr ""
 
@@ -2360,94 +2361,107 @@ msgid "Language"
 msgstr ""
 
 #: src/control/Control.Menubar.js:178
+msgid "For Selection"
+msgstr ""
+
+#: src/control/Control.Menubar.js:179 src/control/Control.Menubar.js:181
+#: src/control/Control.Menubar.js:183
 msgid "Reset to Default Language"
 msgstr ""
 
-#: src/control/Control.Menubar.js:180 src/control/Control.Menubar.js:244
-#: src/control/Control.Menubar.js:295
+#: src/control/Control.Menubar.js:180
+msgid "For Paragraph"
+msgstr ""
+
+#: src/control/Control.Menubar.js:182
+msgid "For all Text"
+msgstr ""
+
+#: src/control/Control.Menubar.js:186 src/control/Control.Menubar.js:251
+#: src/control/Control.Menubar.js:303
 msgid "Help"
 msgstr ""
 
-#: src/control/Control.Menubar.js:181 src/control/Control.Menubar.js:245
-#: src/control/Control.Menubar.js:296
+#: src/control/Control.Menubar.js:187 src/control/Control.Menubar.js:252
+#: src/control/Control.Menubar.js:304
 msgid "Keyboard shortcuts"
 msgstr ""
 
-#: src/control/Control.Menubar.js:182 src/control/Control.Menubar.js:246
-#: src/control/Control.Menubar.js:297
+#: src/control/Control.Menubar.js:188 src/control/Control.Menubar.js:253
+#: src/control/Control.Menubar.js:305
 msgid "About"
 msgstr ""
 
-#: src/control/Control.Menubar.js:184 src/control/Control.Menubar.js:248
-#: src/control/Control.Menubar.js:299
+#: src/control/Control.Menubar.js:190 src/control/Control.Menubar.js:255
+#: src/control/Control.Menubar.js:307
 msgid "Close document"
 msgstr ""
 
-#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:201
 msgid "ODF presentation (.odp)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:195
+#: src/control/Control.Menubar.js:202
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:196
+#: src/control/Control.Menubar.js:203
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:241
 msgid "Slide"
 msgstr ""
 
-#: src/control/Control.Menubar.js:235
+#: src/control/Control.Menubar.js:242
 msgid "New slide"
 msgstr ""
 
-#: src/control/Control.Menubar.js:258
+#: src/control/Control.Menubar.js:266
 msgid "ODF spreadsheet (.ods)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:259
+#: src/control/Control.Menubar.js:267
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:260
+#: src/control/Control.Menubar.js:268
 msgid "Microsoft Excel (.xlsx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:285
+#: src/control/Control.Menubar.js:293
 msgid "Cells"
 msgstr ""
 
-#: src/control/Control.Menubar.js:286
+#: src/control/Control.Menubar.js:294
 msgid "Insert row"
 msgstr ""
 
-#: src/control/Control.Menubar.js:287
+#: src/control/Control.Menubar.js:295
 msgid "Insert column"
 msgstr ""
 
-#: src/control/Control.Menubar.js:289 src/control/Control.RowHeader.js:44
+#: src/control/Control.Menubar.js:297 src/control/Control.RowHeader.js:44
 msgid "Delete row"
 msgstr ""
 
-#: src/control/Control.Menubar.js:497
+#: src/control/Control.Menubar.js:513
 msgid "Find"
 msgstr ""
 
-#: src/control/Control.Menubar.js:505
+#: src/control/Control.Menubar.js:521
 msgid "Replace with"
 msgstr ""
 
-#: src/control/Control.Menubar.js:522
+#: src/control/Control.Menubar.js:538
 msgid "Replace"
 msgstr ""
 
-#: src/control/Control.Menubar.js:527
+#: src/control/Control.Menubar.js:543
 msgid "Replace All"
 msgstr ""
 
-#: src/control/Control.Menubar.js:677
+#: src/control/Control.Menubar.js:693
 msgid "Are you sure you want to delete this slide?"
 msgstr ""
 
@@ -2613,11 +2627,11 @@ msgstr ""
 msgid "Open menu"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:187
+#: src/layer/tile/TileLayer.js:188
 msgid "Modify"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:199
+#: src/layer/tile/TileLayer.js:200
 msgid "Remove"
 msgstr ""
 
