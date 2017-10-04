@@ -739,6 +739,13 @@ function toLocalePattern (pattern, regex, text, sub1, sub2) {
 	return text;
 }
 
+function updateToolbarItem(toolbar, id, html) {
+	var item = toolbar.get(id);
+	if (item) {
+		item.html = html;
+	}
+}
+
 function unoCmdToToolbarId(commandname)
 {
 	var id = commandname.toLowerCase().substr(5);
@@ -774,6 +781,7 @@ function selectItem(item, func)
 		item.current = index;
 	}
 }
+
 function onSearch(e) {
 	var toolbar = w2ui['toolbar-down'];
 	// conditionally disabling until, we find a solution for tdf#108577
@@ -1041,7 +1049,7 @@ map.on('doclayerinit', function () {
 		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		toolbarUpMore.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		statusbar.insert('left', [
-			{type: 'break', id:'break1'},
+			{type: 'break', id: 'break1'},
 			{type: 'html',  id: 'StatePageNumber',
 				html: '<div id="StatePageNumber" class="loleaflet-font" title="'+_('Number of Pages')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break2'},
@@ -1051,7 +1059,7 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'InsertMode',
 				html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break6'},
-			{type: 'html',  id: 'SelectionMode',
+			{type: 'html',  id: 'StatusSelectionMode',
 				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break7'},
 			{type: 'html',  id: 'LanguageStatus',
@@ -1213,34 +1221,36 @@ map.on('commandstatechanged', function (e) {
 		}
 	}
 	else if (commandName === '.uno:LanguageStatus') {
-		$('#LanguageStatus').html(_(state));
+		updateToolbarItem(statusbar, 'LanguageStatus', $('#LanguageStatus').html(_(state)).html());
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
 		var modifiedStatus = e.state === 'true';
+		var html;
 		if (modifiedStatus) {
-			$('#modifiedstatuslabel').html('');
+			html = $('#modifiedstatuslabel').html('').html();
 		}
 		else {
-			$('#modifiedstatuslabel').html(_('Document saved'));
+			html = $('#modifiedstatuslabel').html(_('Document saved')).html();
 		}
+		updateToolbarItem(statusbar, 'modifiedstatuslabel', html);
 	}
 	else if (commandName === '.uno:StatusDocPos') {
 		state = toLocalePattern('Sheet %1 of %2', 'Sheet (\\d+) of (\\d+)', state, '%1', '%2');
-		$('#StatusDocPos').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+		updateToolbarItem(statusbar, 'StatusDocPos', $('#StatusDocPos').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
 	}
 	else if (commandName === '.uno:RowColSelCount') {
 		state = toLocalePattern('$1 rows, $2 columns selected', '(\\d+) rows, (\\d+) columns selected', state, '$1', '$2');
-		$('#RowColSelCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+		updateToolbarItem(statusbar, 'RowColSelCount', $('#RowColSelCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
 	}
 	else if (commandName === '.uno:InsertMode') {
-		$('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+		updateToolbarItem(statusbar, 'InsertMode', $('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
 	}
 	else if (commandName === '.uno:StatusSelectionMode' ||
 		 commandName === '.uno:SelectionMode') {
-		$('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+		updateToolbarItem(statusbar, 'StatusSelectionMode', $('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
 	}
 	else if (commandName == '.uno:StateTableCell') {
-		$('#StateTableCell').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+		updateToolbarItem(statusbar, 'StateTableCell', $('#StateTableCell').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
 	}
 	else if (commandName === '.uno:StatusBarFunc') {
 		if (state) {
@@ -1249,15 +1259,15 @@ map.on('commandstatechanged', function (e) {
 	}
 	else if (commandName === '.uno:StatePageNumber') {
 		state = toLocalePattern('Page %1 of %2', 'Page (\\d+) of (\\d+)', state, '%1', '%2');
-		$('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+		updateToolbarItem(statusbar, 'StatePageNumber', $('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
 	}
 	else if (commandName === '.uno:StateWordCount') {
 		state = toLocalePattern('%1 words, %2 characters', '([\\d,]+) words, ([\\d,]+) characters', state, '%1', '%2');
-		$('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+		updateToolbarItem(statusbar, 'StateWordCount', $('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
 	}
 	else if (commandName === '.uno:PageStatus') {
 		state = toLocalePattern('Slide %1 of %2', 'Slide (\\d+) of (\\d+)', state, '%1', '%2');
-		$('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+		updateToolbarItem(statusbar, 'PageStatus', $('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
 	}
 
 	var id = unoCmdToToolbarId(commandName);
