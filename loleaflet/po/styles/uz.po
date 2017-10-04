@@ -2233,3 +2233,855 @@ msgstr "Shriftning nomi:"
 #: specialcharacters.ui
 msgid "Special Characters"
 msgstr "Maxsus belgilar"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[Yoʻq]"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "Nomaʼlum"
+
+#: langtab.src
+msgid "Afrikaans (South Africa)"
+msgstr "Afrikacha (Shimoliy Afrika)"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "Albancha"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "Arabcha"
+
+#: langtab.src
+msgid "Arabic (Algeria)"
+msgstr "Arabcha (Aljir)"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "Arabcha (Bahreyn)"
+
+#: langtab.src
+msgid "Arabic (Chad)"
+msgstr "Arabcha (Chad)"
+
+#: langtab.src
+msgid "Arabic (Comoros)"
+msgstr "Arabcha (Komoros)"
+
+#: langtab.src
+msgid "Arabic (Djibouti)"
+msgstr "Arabcha (Djibouti)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "Arabcha (Misr)"
+
+#: langtab.src
+msgid "Arabic (Eritrea)"
+msgstr "Arabcha (Eritreya)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "Arabcha (Iroq)"
+
+#: langtab.src
+msgid "Arabic (Israel)"
+msgstr "Arabcha (Isroil)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "Arabcha (Iordaniya)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "Arabcha (Quvayt)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "Arabcha (Livan)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "Arabcha (Liviya)"
+
+#: langtab.src
+msgid "Arabic (Mauritania)"
+msgstr "Arabcha (Mavritaniya)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "Arabcha (Marokash)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "Arabcha (Ummon)"
+
+#: langtab.src
+msgid "Arabic (Palestine)"
+msgstr "Arabcha (Falastin)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "Arabcha (Qatar)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "Arabcha (Saudiya Arabistoni)"
+
+#: langtab.src
+msgid "Arabic (Somalia)"
+msgstr "Arabcha (Somali)"
+
+#: langtab.src
+msgid "Arabic (Sudan)"
+msgstr "Arabcha (Sudan)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "Arabcha (Suriya)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "Arabcha (Tunis)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "Arabcha (BAA)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "Arabcha (Yaman)"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "Armancha"
+
+#: langtab.src
+msgid "Azerbaijani Latin"
+msgstr "Ozarbayjoncha (lotin)"
+
+#: langtab.src
+msgid "Azerbaijani Cyrillic"
+msgstr "Ozarbayjoncha (kiril)"
+
+#: langtab.src
+msgid "Basque"
+msgstr "Baskcha"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "Bengalcha (Hindiston)"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "Bolgarcha"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "Beloruscha"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "Kataloncha"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "Xitoycha (Anʼanaviy)"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "Xitoycha (Soddalashtirilgan)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "Xitoycha (Gankong)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "Xitoycha (Singapur)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "Xitoycha (Makau)"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "Xorvatcha"
+
+#: langtab.src
+msgid "Czech"
+msgstr "Chexcha"
+
+#: langtab.src
+msgid "Danish"
+msgstr "Daniyaliklar tili"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "Gollandcha (Niderlandlar)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "Gollandcha (Belgiya)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "Inglizcha (AQSH)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "Inglizcha (BB)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "Inglizcha (Avstraliya)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "Inglizcha (Kanada)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "Ingllizcha (Yangi Zellandiya)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "Inglizcha (Janubiy Afrika)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "Inglizcha (Yamayka)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "Inglizcha (Karib orollari)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "Inglizcha (Beliz)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "Inglizcha (Trinidad)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "Inglizcha (Zimbabve)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "Inglizcha (Filippin)"
+
+#: langtab.src
+msgid "English (India)"
+msgstr "Inglizcha (HIndiston)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "Estoncha"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "Fincha"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "Farercha"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "Fransuzcha (Fransiya)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "Fransuzcha (Belgiya)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "Fransuzcha (Kanada)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "Fransuzcha (Shveysariya0"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "Fransuzcha (Lyuksemburg)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "Fransuzcha (Monako)"
+
+#: langtab.src
+msgid "Gascon"
+msgstr "Gaskoncha"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "Nemischa (Germaniya)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "Nemischa (Sveysariya)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "Nemischa (Avstriya)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "Nemischa (Lyuksemburg)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "Nemischa (Lixtenshteyn)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "Yunoncha"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "Gujorati"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "Yahudiycha"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "Hindcha"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "Vengrcha"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "Islandcha"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "Indonezcha"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "Italyancha (Italiya)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "Italyancha (Shveysariya)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "Yaponcha"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "Kashmircha (Kashmir)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "Kashmircha (Hindiston)"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "Koreyscha (Janubiy Koreya)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "Latviacha"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "Litvacha"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "Makedoncha"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "Malaycha (Malayziya)"
+
+#: langtab.src
+msgid "Malay (Brunei Darussalam)"
+msgstr "Malaycha (Bruney Dorussalom)"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "Malayalamcha"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "Maratxi"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "Nepalcha (Nepal)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "Nepalcha (Hindiston)"
+
+#: langtab.src
+msgid "Norwegian, Bokmål"
+msgstr "Norvegcha (bokmal)"
+
+#: langtab.src
+msgid "Norwegian, Nynorsk"
+msgstr "Norvegcha (ninorsk)"
+
+#: langtab.src
+msgid "Polish"
+msgstr "Polyakcha"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "Portugalcha (Portugaliya)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "Portugalcha (Braziliya)"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "Panjobcha"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "Retro Roman"
+
+#: langtab.src
+msgid "Russian"
+msgstr "Ruscha"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "Sanskritcha"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia)"
+msgstr "Serbcha (kiril, Serbiya)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia)"
+msgstr "Serbcha (lotin, Serbiya)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Montenegro)"
+msgstr "Serbcha (kiril, qoratogʻ)"
+
+#: langtab.src
+msgid "Serbian Latin (Montenegro)"
+msgstr "Serbcha (lotin, qoratogʻ)"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "Sindxi"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "Slovakcha"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "Slovencha"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "Ispancha (Ispaniya)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "Ispancha (Meksika)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "Ispancha (Gvatemala)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "Ispancha (Kosta Rika)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "Ispancha (Panama0"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "Ispancha (Dominikan respublikasi)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "Ispancha (Venesuela)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "Ispancha (Kolumbiya)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "Ispancha (Peru)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "Ispancha (Argentina)"
+
+#: langtab.src
+msgid "Spanish (Ecuador)"
+msgstr "Ispancha (Ekvador)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "Ispancha (Chili)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "Ispancha (Urugvay)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "Ispancha (Paragvay)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "Ispancha (Boliviya)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "Ispancha (Al Salvador)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "Ispancha (Gonduras)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "Ispancha (Nikaragua)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "Ispancha (Puerto Riko)"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "Svahili (Kenya)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "Shvedcha (Shvedcha)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "Shvedcha (Finlandiya)"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "Tojikcha"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "Tamilcha"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "Tatarcha"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "Telugucha"
+
+#: langtab.src
+msgid "Thai"
+msgstr "Taycha"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "Turkcha"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "Urdu (Pokiston)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "Urdu (Hindiston)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "Ukraincha"
+
+#: langtab.src
+msgid "Uzbek Latin"
+msgstr "Oʻzbekcha (lotin)"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "Uelscha"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "Kinyaruanda (Ruanda)"
+
+#: langtab.src
+msgid "Galician"
+msgstr "Galisiyacha"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "Shimoliy Sotocha"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "Interlingva"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "Bosniyacha"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "Bengalcha (Bangladesh)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "Okkitan"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "Xmercha"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "Sardiniya"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "Svaxili (Tanzania)"
+
+#: langtab.src
+msgid "Lao"
+msgstr "Laoscha"
+
+#: langtab.src
+msgid "Irish"
+msgstr "Irlandcha"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "Tibetcha (XXR)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "Gruzincha"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "Frizcha"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "Tsvana (Shimoliy Afrika)"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "Zulucha"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "Vetnamcha"
+
+#: langtab.src
+msgid "Breton"
+msgstr "Bretoncha"
+
+#: langtab.src
+msgid "Ndebele, South"
+msgstr "Ndebele, shimoliy"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "Shimoliy Sotocha"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "Svazilendcha"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "Songa"
+
+#: langtab.src
+msgid "Venda"
+msgstr "Vendacha"
+
+#: langtab.src
+msgid "Tswana (Botswana)"
+msgstr "Tsvana (Botsvana)"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "Xosa"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "Sinxala"
+
+#: langtab.src
+msgid "Moore"
+msgstr "Mur"
+
+#: langtab.src
+msgid "Luxembourgish"
+msgstr "Liksemburgcha"
+
+#: langtab.src
+msgid "Fijian"
+msgstr "Fijicha"
+
+#: langtab.src
+msgid "English (Namibia)"
+msgstr "Inglizcha (Namibia)"
+
+#: langtab.src
+msgid "Walloon"
+msgstr "Valoncha"
+
+#: langtab.src
+msgid "Coptic"
+msgstr "Koptik"
+
+#: langtab.src
+msgid "Tigrigna (Eritrea)"
+msgstr "Tigrigna (Eritreya)"
+
+#: langtab.src
+msgid "Tigrigna (Ethiopia)"
+msgstr "Tigrigna (Efiopiya)"
+
+#: langtab.src
+msgid "Amharic"
+msgstr "Amhara"
+
+#: langtab.src
+msgid "Kirghiz"
+msgstr "Qirgʻizcha"
+
+#: langtab.src
+msgid "German (Belgium)"
+msgstr "Nemischa (Belgiya)"
+
+#: langtab.src
+msgid "Chuvash"
+msgstr "Chuvashcha"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "Birmacha"
+
+#: langtab.src
+msgid "Hausa (Nigeria)"
+msgstr "Hausa (Nigeriya)"
+
+#: langtab.src
+msgid "Hausa (Ghana)"
+msgstr "Hausa (Gana)"
+
+#: langtab.src
+msgid "Éwé"
+msgstr "Eve"
+
+#: langtab.src
+msgid "English (Ghana)"
+msgstr "Inglizcha (Gana)"
+
+#: langtab.src
+msgid "Tagalog"
+msgstr "Tagalcha"
+
+#: langtab.src
+msgid "Kashubian"
+msgstr "Kashubcha"
+
+#: langtab.src
+msgid "Spanish (Cuba)"
+msgstr "Ispancha (Kuba)"
+
+#: langtab.src
+msgid "Tetun (Indonesia)"
+msgstr "Tetum (Indoneziya)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, North)"
+msgstr "Kechua (Boliviya, shimoliy)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, South)"
+msgstr "Kechua (Boliviya, janubiy)"
+
+#: langtab.src
+msgid "Somali"
+msgstr "Somalicha"
+
+#: langtab.src
+msgid "Sami, Inari (Finland)"
+msgstr "Saamcha, inari (Finlandiya)"
+
+#: langtab.src
+msgid "Sami, Lule (Norway)"
+msgstr "Saamcha, lule (Norvegiya)"
+
+#: langtab.src
+msgid "Sami, Lule (Sweden)"
+msgstr "Saamcha, lule (Shvetsiya)"
+
+#: langtab.src
+msgid "Sami, Northern (Finland)"
+msgstr "Saamcha, shimoliy Finlandiya"
+
+#: langtab.src
+msgid "Sami, Northern (Norway)"
+msgstr "Saamcha shimoliy Norvegiya"
+
+#: langtab.src
+msgid "Sami, Northern (Sweden)"
+msgstr "Saamcha shimoliy Shvetsiya"
+
+#: langtab.src
+msgid "Sami, Skolt (Finland)"
+msgstr "Saamcha (Finlandiya)"
+
+#: langtab.src
+msgid "Sami, Southern (Norway)"
+msgstr "Saamcha (Norvegiya)"
+
+#: langtab.src
+msgid "Sami, Southern (Sweden)"
+msgstr "Saamcha, (Shvetsiya)"
+
+#: langtab.src
+msgid "Sami, Kildin (Russia)"
+msgstr "Saamcha, Kildin (Rossiya)"
+
+#: langtab.src
+msgid "Tetun (Timor-Leste)"
+msgstr "Tetun (Sharqiy Temor)"
+
+#: langtab.src
+msgid "Turkmen"
+msgstr "Turmancha"
+
+#: langtab.src
+msgid "Maltese"
+msgstr "Maltacha"
+
+#: langtab.src
+msgid "Shuswap"
+msgstr "Shusvap"
+
+#: langtab.src
+msgid "Maore"
+msgstr "Mur"

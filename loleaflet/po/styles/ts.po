@@ -2292,3 +2292,583 @@ msgstr "Nhlanga ya Marito Eka Vito:"
 #: specialcharacters.ui
 msgid "Special Characters"
 msgstr "Swivumbeko swo hlawuleka"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[Ku hava]"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "Xialbanian"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "Xiarabu"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "Xiarabu (Bahrain)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "Xiarabu (Egypt)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "Xiarabu (Iraq)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "Xiarabu (Jordan)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "Xiarabu (Kuwait)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "Xiarabu (Lebanono)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "Xiarabu (Libya)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "Xiarabu (Morocco)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "Xiarabu (Oman)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "Xiarabu (Qatar)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "Xiarabu (Saudi Arabia)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "Xiarabu (Syria)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "Xiarabu (Tunisia)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "Xiarabu (UAE)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "Xiarabu (Yemen)"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "Xiarmenian"
+
+#: langtab.src
+msgid "Basque"
+msgstr "Xibasque"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "Xibengali (Indiya)"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "Xicatalan"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "Xichayina (xa ndzhavuko)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "Xichayina (Hong Kong)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "Xichayina (Singapore)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "Xichayina (Macau)"
+
+#: langtab.src
+msgid "Czech"
+msgstr "Xiczech"
+
+#: langtab.src
+msgid "Danish"
+msgstr "Xidanish"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "Xidutch (xa Netherlands)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "Xidachi (Belgium)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "Xinghezi (xa USA)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "Xinghezi (UK)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "Xinghezi (Australia)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "Xinghezi (Canada)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "Xinghezi (New Zealand)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "Xinghezi (Afrika Dzonga)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "Xinghezi (Jamaica)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "Xnghezi (Caribbean)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "Xinghezi (Belize)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "Xinghezi (Trinidad)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "Xinghezi (Zimbabwe)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "Xinghezi (Philippines)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "Xiestonia"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "Xifinish"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "Xifaroese"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "Xifurwa (xa Furwa)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "Xifurwa (Belgium)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "Xifurwa (Canada)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "Xifurwa (Switzerland)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "Xifurwa (Luxembourg)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "Xifurwa (Monaco)"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "Xijarimani (xa Jarimani)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "Xijarimana (Switzerland)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "Xijarimana (Austria)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "Xijarimana (Luxembourg)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "Xijarimana (Liechtenstein)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "Xigriki"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "Xigujarati"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "Xiheveru"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "Xihindi"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "Xihungary"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "Xi-icelandi"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "Xi-indoneziya"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "Xintariyana (xa Italy)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "Xitariyana (Switzerland)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "Xijapani"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "Xikannada"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "Xikashmiri (Kashmir)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "Xikashmiri (India)"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "Xikonkani"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "Xikoriya (RoK)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "Xilatvian"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "Xiluthianiya"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "Ximasedoniya"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "Ximalay (Malaysia)"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "Ximalayalam"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "Ximanipuri"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "Ximarathi"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "Xinepali (Nepal)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "Xinepali (India)"
+
+#: langtab.src
+msgid "Polish"
+msgstr "Xopolish"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "Xiputukezi (xa Portugal)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "Xiputukezi (xa Brazil)"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "Xipunjabi"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "Xirhaeto-Romance"
+
+#: langtab.src
+msgid "Russian"
+msgstr "Xirussia"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "Xisanskrit"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "Xisindhi"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "Xisloveniya"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "Xipaniya (xa Spain)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "Xispanish (Mexico)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "Xispanish (Guatemala)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "Xispanish (Costa Rica)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "Xispanish (Panama)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "Xispanish (Dom. Rep.)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "Xispanish (Venezuela)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "Xispanish (Colombia)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "Xispanish (Peru)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "Xispanish (Argentina)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "Xispanish (Chile)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "Xispanish (Uruguay)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "Xispanish (Paraguay)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "Xispanish (Bolivia)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "Xispanish (El Salvador)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "Xispanish (Honduras)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "Xispanish (Nicaragua)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "Xispanish (Puerto Rico)"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "Xiswahili (Kenya)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "Xiswedish (xa Sweden)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "Xiswidixi (Finland)"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "Xitamil"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "Xitatar"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "Xitelugu"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "Xiturkey"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "Xi-urdu (Pakistan)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "Xi-urdu (India)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "Xi-ukraniya"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "Xiwelsh"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "Xi-espranto"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "Xikinyarwanda (Rwanda)"
+
+#: langtab.src
+msgid "Galician"
+msgstr "Xigalexiya"
+
+#: langtab.src
+msgid "Dhivehi"
+msgstr "Xidhivehi"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "Xipedi"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "Xigaeliki (Scotland)"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "Ririmi ra tinxaka"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "Xibosniya"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "Xibengali (Bangladesh)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "Xi-occitani"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "Xikhmer"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "Xisardiniya"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "Xiswahili (Tanzania)"
+
+#: langtab.src
+msgid "Lao"
+msgstr "Xilao"
+
+#: langtab.src
+msgid "Irish"
+msgstr "Xi-irish"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "Xitibet (PR Chayina)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "Xigeorgia"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "Xifrisia"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "Xitswana (Afrika Dzonga)"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "Xizulu"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "Xivietnam"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "Xisuthu"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "Xiswazi"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "Xitsonga"
+
+#: langtab.src
+msgid "Venda"
+msgstr "Xivhenda"
+
+#: langtab.src
+msgid "Tswana (Botswana)"
+msgstr "Xitswana (Botswana)"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "Xixhosa"

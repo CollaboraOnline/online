@@ -2010,3 +2010,735 @@ msgstr "Nyamongoliya"
 #: GenericCommands.xcu
 msgid "Font Name:"
 msgstr "Izina ry'Umukono:"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[Ntacyo]"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "Kitazwi"
+
+#: langtab.src
+msgid "Afrikaans (South Africa)"
+msgstr "Nyafurikansi"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "Icyalubaniya"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "Icyarabu"
+
+#: langtab.src
+msgid "Arabic (Algeria)"
+msgstr "Icyarabu (Aligeriya)"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "Icyarabu (Bahireyini)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "Icyarabu (Misiri)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "Icyarabu (Iraki)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "Icyarabu (Yorudani)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "Icyarabu (Koweti)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "Icyarabu (Libani)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "Icyarabu (Libiya)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "Icyarabu (Maroke)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "Icyarabu (Omani)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "Icyarabu (Katari)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "Icyarabu (Arabiya Sawudite)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "Icyarabu (Siriya)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "Icyarabu (Tunisiya)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "Icyarabu (UAE)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "Icyarabu (Yemeni)"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "Nyarumeniya"
+
+#: langtab.src
+msgid "Azerbaijani Latin"
+msgstr "Azeribayijini (Latini)"
+
+#: langtab.src
+msgid "Azerbaijani Cyrillic"
+msgstr "Azeribayijini (Siririki)"
+
+#: langtab.src
+msgid "Basque"
+msgstr "Basiki"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "Bengali (Ubuhindi)"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "Nyabuligariya"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "Nyaberarusiya"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "Nyakatara"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "Igishinwa (karande)"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "Igishinwa (cyoroheje)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "Igishinwa (Hong Kong)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "Igishinwa (Singapore)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "Igishinwa (Makawu)"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "Nyakorowatiya"
+
+#: langtab.src
+msgid "Czech"
+msgstr "Ceke"
+
+#: langtab.src
+msgid "Danish"
+msgstr "Nyadanimariki"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "Igihorandi (Ubuhorandi)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "Igihorandi (Ububirigi)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "Icyongereza (Leta Zunze Ubumwe z'Amerika)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "Icyongereza (Ubwongereza)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "Icyongereza (Ositarariya)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "Icyongereza (Kanada)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "Icyongereza (Neyuzirandi)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "Icyongereza (Afurika Yepfo)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "Icyongereza (Jamayika)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "Icyongereza (Karayibe)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "Icyongereza (Berize)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "Icyongereza (Tirinida)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "Icyongereza (Zimbabwe)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "Icyongereza (Firipine)"
+
+#: langtab.src
+msgid "English (India)"
+msgstr "Icyongereza (Ubuhinde)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "Ikinyesitoniya"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "Ikinyafinirande"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "Igifarowe"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "Igifaransa (Ubufaransa)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "Igifaransa (Ububirigi)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "Igifaransa (Kanada)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "Igifaransa (Ubusuwisi)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "Igifaransa (Lugizamburu)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "Igifaransa (Monako)"
+
+#: langtab.src
+msgid "Gascon"
+msgstr "Igasikoni"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "Ikidage (Ubudage)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "Ikidage (Ubusuwisi)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "Ikidage (Ositiriya)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "Ikidage (Lugizamburu)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "Ikidage (Lishitensiteyini)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "Ikigereki"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "Igiheburayo"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "Igihindi"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "Nyahongiriya"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "Nya-isilande"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "Nya-indonesiya"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "Igitariyani (Ubutariyani)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "Igitariyani (Ubusuwisi)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "Ikiyapani"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "Kashimiri (Kashimiri)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "Kashimiri (Ubuhindi)"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "Igikoreya (Roki)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "Nyarativiya"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "Ikirituwaniya"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "Nyamasedoniya"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "Ikinyamaleziya (Maleziya)"
+
+#: langtab.src
+msgid "Malay (Brunei Darussalam)"
+msgstr "Ikinyamaleziya (Buruneyi Darusalamu)"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "Malayalamu"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "Marati"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "Ikinyanepali (Nepali)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "Ikinyanepali (Ubuhindi)"
+
+#: langtab.src
+msgid "Norwegian, Bokmål"
+msgstr "Ikinyanoruveje (Bokimali)"
+
+#: langtab.src
+msgid "Norwegian, Nynorsk"
+msgstr "Ikinyanoruveje (Ninorisiki)"
+
+#: langtab.src
+msgid "Polish"
+msgstr "Igiporone"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "Igiporitigari (Poritigari)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "Igiporitigari (Burezire)"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "Panjabi"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "Nyarayeto-romanse"
+
+#: langtab.src
+msgid "Russian"
+msgstr "Ikirusiya"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "Igisansikiri"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "Sindi"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "Igisilovake"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "Ikinyasiloveniya"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "Icyesipanyoro (Esipanye)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "Icyesipanyoro (Megiziko)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "Icyesipanyoro (Gwatemara)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "Icyesipanyoro (Kosita Rika)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "Icyesipanyoro (Panama)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "Icyesipanyoro (Rep. Dom.)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "Icyesipanyoro (Venezuwera)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "Icyesipanyoro (Korombiya)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "Icyesipanyoro (Peru)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "Icyesipanyoro (Arijantina)"
+
+#: langtab.src
+msgid "Spanish (Ecuador)"
+msgstr "Icyesipanyole (Ekwadori)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "Icyesipanyoro (Shili)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "Icyesipanyoro (Irigwe)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "Icyesipanyoro (Paragwe)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "Icyesipanyoro (Boliviya)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "Icyesipanyoro (Eli Salivadoro)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "Icyesipanyoro (Hondurasi)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "Icyesipanyoro (Nikaragwa)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "Icyesipanyoro (Puwerito Riko)"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "Igiswayili (Kenya)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "Ikinyasuwedi (Suwede)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "Ikinyasuwedi (Finirandi)"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "Igitajiki"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "Tamili"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "Tatari"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "Tegulu"
+
+#: langtab.src
+msgid "Thai"
+msgstr "Tayi"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "Igiturukiya"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "Urudu (Pakisitani)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "Urudu (Ubuhindi)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "Nyaukerene"
+
+#: langtab.src
+msgid "Uzbek Latin"
+msgstr "Uzibeke (Ikiratini)"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "Ikigaruwa"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "Icyesiperanto"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "Ikinyarwanda (Rwanda)"
+
+#: langtab.src
+msgid "Galician"
+msgstr "Ikigalisiya"
+
+#: langtab.src
+msgid "Dhivehi"
+msgstr "Ikidivehi"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "Igisoto cy'amajyaruguru"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "Ikigayeliki (Ekose)"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "Ururimi rusange"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "Ikibosiniya"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "Ikibengali (Bangaladeshi)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "Icyogisita"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "Kumeri"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "Igisaridiniyani"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "Ikigiswayili"
+
+#: langtab.src
+msgid "Lao"
+msgstr "Lawo"
+
+#: langtab.src
+msgid "Irish"
+msgstr "Icyirirande"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "Tibetani (Ubushinwa)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "Ikinyageworugiya"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "Igifuriziyani"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "Tswana (Afurika Yepfo)"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "Ikizulu"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "Ikinyaviyetinamu"
+
+#: langtab.src
+msgid "Breton"
+msgstr "Ikinyabureto"
+
+#: langtab.src
+msgid "Ndebele, South"
+msgstr "Ndebele (Amajyepfo)"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "Ikinyasoto cy'Amajyepho"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "Ikinyaswazilandi"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "Igitsonga"
+
+#: langtab.src
+msgid "Venda"
+msgstr "Ikivenda"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "Ikigisosa"
+
+#: langtab.src
+msgid "Bambara"
+msgstr "Ikibambara"
+
+#: langtab.src
+msgid "Akan"
+msgstr "Ikinyakani"
+
+#: langtab.src
+msgid "Luxembourgish"
+msgstr "Ikinyalugizamburu"
+
+#: langtab.src
+msgid "Friulian"
+msgstr "Furiyuliyani"
+
+#: langtab.src
+msgid "Fijian"
+msgstr "Igifijiyani"
+
+#: langtab.src
+msgid "Afrikaans (Namibia)"
+msgstr "Icyafurinzi (Namibiya)"
+
+#: langtab.src
+msgid "English (Namibia)"
+msgstr "Icyongereza (Namibiya)"
+
+#: langtab.src
+msgid "Walloon"
+msgstr "Ikiwaloni"
+
+#: langtab.src
+msgid "Coptic"
+msgstr "Igikoputiki"
+
+#: langtab.src
+msgid "Tigrigna (Eritrea)"
+msgstr "Igitigirinya (Eritiriya)"
+
+#: langtab.src
+msgid "Tigrigna (Ethiopia)"
+msgstr "Igitigirinya (Etiyopiya)"
+
+#: langtab.src
+msgid "Amharic"
+msgstr "Icyamuhariki"
+
+#: langtab.src
+msgid "Kirghiz"
+msgstr "Igikerigizi"
+
+#: langtab.src
+msgid "German (Belgium)"
+msgstr "Ikidage (Ububiligi)"
+
+#: langtab.src
+msgid "Chuvash"
+msgstr "Shuvashi"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "Ikibirimaniya"
+
+#: langtab.src
+msgid "Hausa (Nigeria)"
+msgstr "Igihawusa (Nigeriya)"
+
+#: langtab.src
+msgid "Hausa (Ghana)"
+msgstr "Igihawusa (Gana)"
+
+#: langtab.src
+msgid "English (Ghana)"
+msgstr "Icyongereza (Ghana)"
+
+#: langtab.src
+msgid "Ganda"
+msgstr "Ikiganda"
+
+#: langtab.src
+msgid "Lingala"
+msgstr "Ilingala"
+
+#: langtab.src
+msgid "Maltese"
+msgstr "Ikimalite"

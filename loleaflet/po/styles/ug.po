@@ -2864,3 +2864,1467 @@ msgstr "خەت نۇسخا ئاتى:"
 #: specialcharacters.ui
 msgid "Special Characters"
 msgstr "ئالاھىدە ھەرپلەر"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[يوق]"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "نامەلۇم"
+
+#: langtab.src
+msgid "Afrikaans (South Africa)"
+msgstr "ئافرىكانچە (جەنۇبى ئافرىقا)"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "ئالبانچە"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "ئەرەبچە"
+
+#: langtab.src
+msgid "Arabic (Algeria)"
+msgstr "ئەرەبچە (ئالجېرىيە)"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "ئەرەبچە (بەھرەيىن)"
+
+#: langtab.src
+msgid "Arabic (Chad)"
+msgstr "ئەرەبچە (چاد)"
+
+#: langtab.src
+msgid "Arabic (Comoros)"
+msgstr "ئەرەبچە (كومورو)"
+
+#: langtab.src
+msgid "Arabic (Djibouti)"
+msgstr "ئەرەبچە (جىبۇتى)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "ئەرەبچە (مىسىر)"
+
+#: langtab.src
+msgid "Arabic (Eritrea)"
+msgstr "ئەرەبچە (ئېرىترېيە)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "ئەرەبچە (ئىراق)"
+
+#: langtab.src
+msgid "Arabic (Israel)"
+msgstr "ئەرەبچە (ئىسرائىلىيە)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "ئەرەبچە (ئىئوردانىيە)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "ئەرەبچە (كۈۋەيت)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "ئەرەبچە (لىۋان)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "ئەرەبچە (لىۋىيە)"
+
+#: langtab.src
+msgid "Arabic (Mauritania)"
+msgstr "ئەرەبچە (ماۋرىتانىيە)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "ئەرەبچە (ماراكەش)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "ئەرەبچە (ئومان)"
+
+#: langtab.src
+msgid "Arabic (Palestine)"
+msgstr "ئەرەبچە (پەلەستىن)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "ئەرەبچە (قاتار)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "ئەرەبچە (سەئۇدى ئەرەبىستان)"
+
+#: langtab.src
+msgid "Arabic (Somalia)"
+msgstr "ئەرەبچە (سومالى)"
+
+#: langtab.src
+msgid "Arabic (Sudan)"
+msgstr "ئەرەبچە (سۇدان)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "ئەرەبچە (سۈرىيە)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "ئەرەبچە (تۇنىس)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "ئەرەبچە (ئەرەب بىرلەشمە خەلىپىلىكى)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "ئەرەبچە (يەمەن)"
+
+#: langtab.src
+msgid "Aragonese"
+msgstr "ئاراگونچە"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "ئەرمەنچە"
+
+#: langtab.src
+msgid "Assamese"
+msgstr "ئاسسامچە"
+
+#: langtab.src
+msgid "Azerbaijani Latin"
+msgstr "ئەرمەنچە لاتىن"
+
+#: langtab.src
+msgid "Azerbaijani Cyrillic"
+msgstr "ئەرمەنچە سلاۋيان"
+
+#: langtab.src
+msgid "Basque"
+msgstr "باسكىچە"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "بېنگالچە (ھىندىستان)"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "بۇلغارچە"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "بېلورۇسىيەچە"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "كاتالانچە"
+
+#: langtab.src
+msgid "Catalan (Valencian)"
+msgstr "كاتالانچە (ۋالېنسىيە)"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "خەنزۇچە (مۇرەككەپ)"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "خەنزۇچە (ئاددىي)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "خەنزۇچە (شياڭگاڭ)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "خەنزۇچە (سىنگاپور)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "خەنزۇچە (ئاۋمىن)"
+
+#: langtab.src
+msgid "Church Slavic"
+msgstr "چېركاۋ سىلاۋيانچە"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "خورۋاتچە"
+
+#: langtab.src
+msgid "Czech"
+msgstr "چېخچە"
+
+#: langtab.src
+msgid "Danish"
+msgstr "دانىشچە"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "گوللاندىيەچە(گوللاندىيە)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "گوللاندىيىچە (بىلگىيە)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "ئىنگلىزچە (ئا ق ش)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "ئىنگلىزچە (ئەنگلىيە)"
+
+#: langtab.src
+msgid "English, OED spelling (UK)"
+msgstr "ئىنگلىزچە، ئوكىسفورد ئىنگلىزچە لۇغەت ئىملا تەكشۈرۈش (ئەنگلىيە)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "ئىنگلىزچە (ئاۋىسترالىيە)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "ئىنگلىزچە (كانادا)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "ئىنگلىزچە (يېڭى زېلاندىيە)"
+
+#: langtab.src
+msgid "English (Ireland)"
+msgstr "ئىنگلىزچە (ئېرلاندىيە)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "ئىنگلىزچە (جەنۇبى ئافرىقا)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "ئىنگلىزچە (يامايكا)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "ئىنگلىزچە (كارىب دېڭىزى)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "ئىنگلىزچە (بېلىز)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "ئىنگلىزچە (ترىنىداد)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "ئىنگلىزچە (زىمبابۋى)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "ئىنگلىزچە (فىلىپپىن)"
+
+#: langtab.src
+msgid "English (India)"
+msgstr "ئىنگلىزچە (ھىندىستان)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "ئېستونچە"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "فىنلاندىيەچە"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "فاروچە"
+
+#: langtab.src
+msgid "Persian"
+msgstr "پارىسچە"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "فرانسۇزچە (فرانسىيە)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "گوللاندىيىچە (بىلگىيە)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "فرانسۇزچە (كانادا)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "فرانسۇزچە (شۋېتسارىيە)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "فرانسۇزچە (ليۇكسېمبورگ)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "فرانسۇزچە (موناكو)"
+
+#: langtab.src
+msgid "Gascon"
+msgstr "گاسكونچە"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "گېرمانچە (گېرمانىيە)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "گېرمانچە (شۋېتسارىيە)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "گېرمانچە (ئاۋسترىيە)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "گېرمانچە (ليۇكسېمبورگ)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "گېرمانچە (لېچتېنىشتېن)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "گرېكچە"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "گۇجاراتى"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "ئىبرانىچە"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "ھىندىچە"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "ھونگىرچە"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "ئىسلاندچە"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "ھىندونېزىيەچە"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "ئىتالىيانچە (ئىتالىيە)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "ئىتالىيانچە (شۋېتسارىيە)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "ياپونچە"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "كانناداچە"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "كەشمىرچە (كەشمىر)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "كەشمىرچە (ھىندىستان)"
+
+#: langtab.src
+msgid "Kazakh"
+msgstr "قازاقچە"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "كونكانىچە"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "كورېيىچە (RoK)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "لاتۋىئانچە"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "لىتۋىئانچە"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "ماكېدونچە"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "مالايچە (مالايسىيە)"
+
+#: langtab.src
+msgid "Malay (Brunei Darussalam)"
+msgstr "مالايچە (برۇنېي دارۇسسلام)"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "مالايالامچە"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "مانىپۇرچە"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "ماراتىچە"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "نېپالچە (نېپال)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "نېپالچە (ھىندىستان)"
+
+#: langtab.src
+msgid "Norwegian, Bokmål"
+msgstr "نورۋىگىيىچە (بوكمال)"
+
+#: langtab.src
+msgid "Norwegian, Nynorsk"
+msgstr "نورۋېگىيىچە (ناينورىسكى)"
+
+#: langtab.src
+msgid "Odia"
+msgstr "ئودىيا"
+
+#: langtab.src
+msgid "Polish"
+msgstr "پولەكچە"
+
+#: langtab.src
+msgid "Portuguese (Angola)"
+msgstr "پورتۇگالچە (ئانگولا)"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "پورتۇگالچە (پورتۇگالىيە)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "پورتۇگالچە (بىرازىلىيە)"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "پەنجابچە"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "رىياتو-رۇمىنىيىچە"
+
+#: langtab.src
+msgid "Romanian (Romania)"
+msgstr "رۇمىنىيەچە (رۇمىنىيە)"
+
+#: langtab.src
+msgid "Romanian (Moldova)"
+msgstr "رۇمىنىيەچە (مولدوۋا)"
+
+#: langtab.src
+msgid "Russian"
+msgstr "رۇسچە"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "سانسكرىتچە"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia and Montenegro)"
+msgstr "سېرب سلاۋيانچە (سېربىيە ۋە مونتېنېگرو)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia and Montenegro)"
+msgstr "سېرب لاتىنچە (سېربىيە ۋە مونتېنېگرو)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia)"
+msgstr "سېرب سلاۋيانچە (سېربىيە)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia)"
+msgstr "سېرب لاتىنچە (سېربىيە)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Montenegro)"
+msgstr "سېرب سلاۋيانچە (مونتېنېگرو)"
+
+#: langtab.src
+msgid "Serbian Latin (Montenegro)"
+msgstr "سېرب لاتىنچە (مونتېنېگرو)"
+
+#: langtab.src
+msgid "Serbian Latin"
+msgstr "سىربچە لاتىن"
+
+#: langtab.src
+msgid "Sidama"
+msgstr "سىداماچە"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "سىندىچە"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "سىلوۋاكچە"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "سلوۋېنچە"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "ئىسپانچە (ئىسپانىيە)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "گۋاتېمالا (مېكسىكا)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "ئىسپانچە (گۋاتېمالا)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "ئىسپانچە (كوستارىكا)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "ئىسپانچە (پاناما)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "ئىسپانچە (Dom. Rep.)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "ئىسپانچە (ۋېنېسۇئېلا)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "ئىسپانچە (كولومبىيە)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "ئىسپانچە (پېرۇ)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "ئىسپانچە (ئارگېنتىنا)"
+
+#: langtab.src
+msgid "Spanish (Ecuador)"
+msgstr "ئىسپانچە (ئېكۋادور)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "ئىسپانچە (چىلى)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "ئىسپانچە (ئۇرۇگۋاي)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "ئىسپانچە (پاراگۋاي)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "ئىسپانچە (بولۋىيە)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "ئىسپانچە (ئەل سالۋادور)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "گۋاتېمالا (ھوندۇراس)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "ئىسپانچە (نىكاراگۇئا)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "ئىسپانچە (پۇئېرتورىكو)"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "سۋاھىلىچە (كېنىيە)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "شۋىدچە (شۋىتسارىيە)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "شۋىدچە (فىنلاندىيە)"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "تاجىكچە"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "تامىلچە"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "تاتارچە"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "تېلۇگۇچە"
+
+#: langtab.src
+msgid "Thai"
+msgstr "تايلاندچە"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "تۈركچە"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "ئۇردوچە (پاكىستان)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "ئۇردوچە (ھىندىستان)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "ئۇكرائىنچە"
+
+#: langtab.src
+msgid "Uzbek Latin"
+msgstr "ئۆزبېكچە لاتىن"
+
+#: langtab.src
+msgid "Uzbek Cyrillic"
+msgstr "ئۆزبېكچە كىرىل"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "ۋېلشچە"
+
+#: langtab.src
+msgid "Latin"
+msgstr "لاتىن"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "دۇنيا تىلى"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "كىنيارۋانداچە (رۋاندا)"
+
+#: langtab.src
+msgid "Maori"
+msgstr "ماۋرىچە"
+
+#: langtab.src
+msgid "Galician"
+msgstr "گالىسىيچە"
+
+#: langtab.src
+msgid "Dhivehi"
+msgstr "دىۋېيھىچە"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "شىمالىي سوتوچە"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "گەلىكچە (شوتلاندىيە)"
+
+#: langtab.src
+msgid "Mongolian Cyrillic"
+msgstr "موڭغۇلچە كىرىل"
+
+#: langtab.src
+msgid "Mongolian Mongolian"
+msgstr "موڭغۇلچە"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "لاتىنچە خەلقئارا تىل"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "بوسىنيانچە"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "بېنگالچە (بېنگال)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "ئوكسىتانچە"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "كخمېرچە"
+
+#: langtab.src
+msgid "Kurdish, Northern (Turkey)"
+msgstr "كۇردچە، شىمالىي (تۈركىيە)"
+
+#: langtab.src
+msgid "Kurdish, Northern (Syria)"
+msgstr "كۇردچە، شىمالىي (سۈرىيە)"
+
+#: langtab.src
+msgid "Kurdish, Central (Iraq)"
+msgstr "كۇردچە، مەركىزى (ئىراق)"
+
+#: langtab.src
+msgid "Kurdish, Central (Iran)"
+msgstr "كۇردچە، مەركىزى (ئىران)"
+
+#: langtab.src
+msgid "Kurdish, Southern (Iran)"
+msgstr "كۇردچە، جەنۇبىي (ئىران)"
+
+#: langtab.src
+msgid "Kurdish, Southern (Iraq)"
+msgstr "كۇردچە، جەنۇبىي (ئىراق)"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "ساردىنىيەچە"
+
+#: langtab.src
+msgid "Dzongkha"
+msgstr "زوڭكاچە"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "سۋاھىلىچە (تانزانىيە)"
+
+#: langtab.src
+msgid "Lao"
+msgstr "لائوسچە"
+
+#: langtab.src
+msgid "Irish"
+msgstr "ئېرلاندىيەچە"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "تىبەتچە (جۇڭخۇا خەلق جۇمھۇرىيىتى)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "گرۇزىنچە"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "فرىسونچە"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "تىسۋاناچە (جەنۇبىي ئافرىقا)"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "زۇلۇچە"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "ۋيېتنامچە"
+
+#: langtab.src
+msgid "Breton"
+msgstr "برېتونچە"
+
+#: langtab.src
+msgid "Kalaallisut"
+msgstr "كالائاللىسۇت"
+
+#: langtab.src
+msgid "Ndebele, South"
+msgstr "ندېبېلې، جەنۇبى"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "جەنۇبى سوتوچە (سۇتۇ)"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "سىۋازىچە"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "سونگاچە"
+
+#: langtab.src
+msgid "Venda"
+msgstr "ۋېنداچە"
+
+#: langtab.src
+msgid "Tswana (Botswana)"
+msgstr "تىسۋاناچە (بوتسۋانا)"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "كوساچە"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "سىنخالاچە"
+
+#: langtab.src
+msgid "Moore"
+msgstr "مۇرچە"
+
+#: langtab.src
+msgid "Bambara"
+msgstr "بامباراچە"
+
+#: langtab.src
+msgid "Akan"
+msgstr "ئاكانچە"
+
+#: langtab.src
+msgid "Luxembourgish"
+msgstr "ليۇكسېمبۇرگچە"
+
+#: langtab.src
+msgid "Friulian"
+msgstr "فرۇلىيانچە"
+
+#: langtab.src
+msgid "Fijian"
+msgstr "فىجىچە"
+
+#: langtab.src
+msgid "Afrikaans (Namibia)"
+msgstr "ئافرىكانچە (نامبىيە)"
+
+#: langtab.src
+msgid "English (Namibia)"
+msgstr "ئىنگلىزچە (نامبىيە)"
+
+#: langtab.src
+msgid "Walloon"
+msgstr "ۋاللونچە"
+
+#: langtab.src
+msgid "Coptic"
+msgstr "كوپتچە"
+
+#: langtab.src
+msgid "Tigrigna (Eritrea)"
+msgstr "تىگرىگناچە (ئېرىترېيە)"
+
+#: langtab.src
+msgid "Tigrigna (Ethiopia)"
+msgstr "تىگرىگناچە (ئېفىئوپىيە)"
+
+#: langtab.src
+msgid "Amharic"
+msgstr "ئامخاراچە"
+
+#: langtab.src
+msgid "Kirghiz"
+msgstr "قىرغىزچە"
+
+#: langtab.src
+msgid "German (Belgium)"
+msgstr "گېرمانچە (بېلگىيە)"
+
+#: langtab.src
+msgid "Chuvash"
+msgstr "چۇۋاشچە"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "بىرمىچە"
+
+#: langtab.src
+msgid "Hausa (Nigeria)"
+msgstr "خائۇساچە (نىگېرىيە)"
+
+#: langtab.src
+msgid "Hausa (Ghana)"
+msgstr "خائۇساچە (گانا)"
+
+#: langtab.src
+msgid "Éwé"
+msgstr "ئېۋېچە"
+
+#: langtab.src
+msgid "English (Ghana)"
+msgstr "ئىنگلىزچە (گانا)"
+
+#: langtab.src
+msgid "Sango"
+msgstr "سانگوچە"
+
+#: langtab.src
+msgid "Tagalog"
+msgstr "تاگالچە"
+
+#: langtab.src
+msgid "Ganda"
+msgstr "گانداچە"
+
+#: langtab.src
+msgid "Lingala"
+msgstr "لىنگالاچە"
+
+#: langtab.src
+msgid "Low German"
+msgstr "گېرمانچە (Low)"
+
+#: langtab.src
+msgid "Hiligaynon"
+msgstr "ھىلىگايناچە"
+
+#: langtab.src
+msgid "Nyanja"
+msgstr "نيانجاچە"
+
+#: langtab.src
+msgid "Kashubian"
+msgstr "كاشۇبىچە"
+
+#: langtab.src
+msgid "Spanish (Cuba)"
+msgstr "ئىسپانچە (كۇبا)"
+
+#: langtab.src
+msgid "Tetun (Indonesia)"
+msgstr "تېتۇنچە (ھىندونېزىيە)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, North)"
+msgstr "كېچياچە (بولىۋىيە، شىمالىي)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, South)"
+msgstr "كېچياچە (بولىۋىيە، جەنۇبىي)"
+
+#: langtab.src
+msgid "Somali"
+msgstr "سومالىچە"
+
+#: langtab.src
+msgid "Sami, Inari (Finland)"
+msgstr "سامىچە، ئىنارى (فىنلاندىيە)"
+
+#: langtab.src
+msgid "Sami, Lule (Norway)"
+msgstr "سامىچە، لۇلې (نورۋېگىيە)"
+
+#: langtab.src
+msgid "Sami, Lule (Sweden)"
+msgstr "سامىچە، لۇلې (شۋېتسىيە)"
+
+#: langtab.src
+msgid "Sami, Northern (Finland)"
+msgstr "سامىچە، شىمالىي (فىنلاندىيە)"
+
+#: langtab.src
+msgid "Sami, Northern (Norway)"
+msgstr "سامىچە، شىمالىي (نورۋېگىيە)"
+
+#: langtab.src
+msgid "Sami, Northern (Sweden)"
+msgstr "سامىچە، شىمالىي (شۋىتسىيە)"
+
+#: langtab.src
+msgid "Sami, Skolt (Finland)"
+msgstr "سامىچە، سكولت (فىنلاندىيە)"
+
+#: langtab.src
+msgid "Sami, Southern (Norway)"
+msgstr "سامىچە، جەنۇبىي (نورۋېگىيە)"
+
+#: langtab.src
+msgid "Sami, Southern (Sweden)"
+msgstr "سامىچە، جەنۇبىي (شۋېتسارىيە)"
+
+#: langtab.src
+msgid "Sami, Kildin (Russia)"
+msgstr "سامىچە، كىلدىن (رۇسىيە)"
+
+#: langtab.src
+msgid "Guarani (Paraguay)"
+msgstr "گۇئارانىچە (پاراگۋاي)"
+
+#: langtab.src
+msgid "Bodo"
+msgstr "بودوچە"
+
+#: langtab.src
+msgid "Dogri"
+msgstr "دوگراسچە"
+
+#: langtab.src
+msgid "Maithili"
+msgstr "مايتىلىچە"
+
+#: langtab.src
+msgid "Santali"
+msgstr "سانتالىچە"
+
+#: langtab.src
+msgid "Tetun (Timor-Leste)"
+msgstr "تېتۇنچە (شەرقىي تېمور)"
+
+#: langtab.src
+msgid "Turkmen"
+msgstr "تۈركمەنچە"
+
+#: langtab.src
+msgid "Maltese"
+msgstr "مالتاچە"
+
+#: langtab.src
+msgid "Tok Pisin"
+msgstr "توك پىسىنچە"
+
+#: langtab.src
+msgid "Shuswap"
+msgstr "شۇشۋاپچە"
+
+#: langtab.src
+msgid "Oromo"
+msgstr "ئورومو"
+
+#: langtab.src
+msgid "Greek, Ancient"
+msgstr "گرېكچە، قەدىمكى"
+
+#: langtab.src
+msgid "Yiddish (Israel)"
+msgstr "يىددىشچە (ئىسرائىلىيە)"
+
+#: langtab.src
+msgid "Quechua (Ecuador)"
+msgstr "كۋېچۇئاچە (ئېكىۋادور)"
+
+#: langtab.src
+msgid "Uyghur"
+msgstr "ئۇيغۇرچە"
+
+#: langtab.src
+msgid "Asturian"
+msgstr "ئاستۇرىيانچە"
+
+#: langtab.src
+msgid "Sorbian, Upper"
+msgstr "سوربىيانچە، يۇقىرى"
+
+#: langtab.src
+msgid "Sorbian, Lower"
+msgstr "سوربىيانچە، تۆۋەن"
+
+#: langtab.src
+msgid "Latgalian"
+msgstr "لاتگالىيانچە"
+
+#: langtab.src
+msgid "Maore"
+msgstr "ماۋرىچە"
+
+#: langtab.src
+msgid "Bushi"
+msgstr "بۇشىچە"
+
+#: langtab.src
+msgid "Tahitian"
+msgstr "تاخىتىيانچە"
+
+#: langtab.src
+msgid "Malagasy, Plateau"
+msgstr "ماداغاسقارچە، ئېگىزلىك"
+
+#: langtab.src
+msgid "Papiamentu (Netherlands Antilles)"
+msgstr "پاپىيامىنتۇچە(گوللاندىيە ئانتىللېس)"
+
+#: langtab.src
+msgid "Papiamento (Aruba)"
+msgstr "پاپىيامىنتۇچە(ئارۇبا)"
+
+#: langtab.src
+msgid "Sardinian, Campidanese"
+msgstr "ساردىنىيەچە(كامپىدانىس)"
+
+#: langtab.src
+msgid "Sardinian, Gallurese"
+msgstr "ساردىنىيەچە(گاللۇرا)"
+
+#: langtab.src
+msgid "Sardinian, Logudorese"
+msgstr "ساردىنىيەچە(لوگۇدورېس)"
+
+#: langtab.src
+msgid "Sardinian, Sassarese"
+msgstr "ساردىنىيەچە(ساسسارى)"
+
+#: langtab.src
+msgid "Bafia"
+msgstr "بافىياچە"
+
+#: langtab.src
+msgid "Gikuyu"
+msgstr "گىكۇيۇچە"
+
+#: langtab.src
+msgid "Yoruba"
+msgstr "يورۇباچە"
+
+#: langtab.src
+msgid "Rusyn (Ukraine)"
+msgstr "رۇسىن(ئۇكرائىنا)"
+
+#: langtab.src
+msgid "Rusyn (Slovakia)"
+msgstr "رۇسىن(سىلوۋاكىيە)"
+
+#: langtab.src
+msgid "Kabyle Latin"
+msgstr "كابىل لاتىن"
+
+#: langtab.src
+msgid "Yiddish (USA)"
+msgstr "يىددىشچە (ئا ق ش)"
+
+#: langtab.src
+msgid "Hawaiian"
+msgstr "ھاۋائىچە"
+
+#: langtab.src
+msgid "Limbu"
+msgstr "لىنبۇچە"
+
+#: langtab.src
+msgid "Lojban"
+msgstr "لوجبانچە"
+
+#: langtab.src
+msgid "Haitian"
+msgstr "ھايتىچە"
+
+#: langtab.src
+msgid "Beembe"
+msgstr "بانتۇچە"
+
+#: langtab.src
+msgid "Bekwel"
+msgstr "بېكۋېلچە"
+
+#: langtab.src
+msgid "Kituba"
+msgstr "كىتۇباچە"
+
+#: langtab.src
+msgid "Lari"
+msgstr "لارىچە"
+
+#: langtab.src
+msgid "Mbochi"
+msgstr "مبوچىچە"
+
+#: langtab.src
+msgid "Vili"
+msgstr "ۋىلىچە"
+
+#: langtab.src
+msgid "Pali Latin"
+msgstr "پالى لاتىنچە"
+
+#: langtab.src
+msgid "Kyrgyz (China)"
+msgstr "قىرغىزچە (جۇڭگو)"
+
+#: langtab.src
+msgid "Komi-Zyrian"
+msgstr "كومى-زىنانچە"
+
+#: langtab.src
+msgid "Komi-Permyak"
+msgstr "كومى-پىرمىياكچە"
+
+#: langtab.src
+msgid "Pitjantjatjara"
+msgstr "پىتجانجاتجاراچە"
+
+#: langtab.src
+msgid "English (Malawi)"
+msgstr "ئىنگلىزچە (مالاۋى)"
+
+#: langtab.src
+msgid "Erzya"
+msgstr "ئەرزياچە"
+
+#: langtab.src
+msgid "Mari, Meadow"
+msgstr "مارى، دېدوۋ"
+
+#: langtab.src
+msgid "Papiamento (Curaçao)"
+msgstr "پاپىيامىنتۇچە(كۇرۇچاۋ)"
+
+#: langtab.src
+msgid "Papiamento (Bonaire)"
+msgstr "پاپىيامىنتۇچە(بونائىر)"
+
+#: langtab.src
+msgid "Khanty"
+msgstr "خانتىچە"
+
+#: langtab.src
+msgid "Livonian"
+msgstr "لىۋونىيەچە"
+
+#: langtab.src
+msgid "Moksha"
+msgstr "موكشاچە"
+
+#: langtab.src
+msgid "Mari, Hill"
+msgstr "مارىچە (تاغلىق)"
+
+#: langtab.src
+msgid "Nganasan"
+msgstr "نگاناسانچە"
+
+#: langtab.src
+msgid "Olonets"
+msgstr "ئولونېتسچە"
+
+#: langtab.src
+msgid "Veps"
+msgstr "ۈېپسچە"
+
+#: langtab.src
+msgid "Võro"
+msgstr "ۋوروچە"
+
+#: langtab.src
+msgid "Nenets"
+msgstr "نېنېتسچە"
+
+#: langtab.src
+msgid "Aka (Congo)"
+msgstr "ئاكاچە(كونگو)"
+
+#: langtab.src
+msgid "Dibole"
+msgstr "دىبولېچە"
+
+#: langtab.src
+msgid "Doondo"
+msgstr "دۇندوچە"
+
+#: langtab.src
+msgid "Kaamba"
+msgstr "كامباچە"
+
+#: langtab.src
+msgid "Koongo (Congo)"
+msgstr "كۇنگوچە(كونگو)"
+
+#: langtab.src
+msgid "Kunyi"
+msgstr "كۇنيىچە"
+
+#: langtab.src
+msgid "Ngungwel"
+msgstr "نگۇڭۋېلچە"
+
+#: langtab.src
+msgid "Njyem (Congo)"
+msgstr "نيېمچە(كونگو)"
+
+#: langtab.src
+msgid "Punu"
+msgstr "پۇنۇچە"
+
+#: langtab.src
+msgid "Suundi"
+msgstr "سۇئۇندىچە"
+
+#: langtab.src
+msgid "Teke-Kukuya"
+msgstr "تېكې-كۇكۇياچە"
+
+#: langtab.src
+msgid "Tsaangi"
+msgstr "تسانگىچە"
+
+#: langtab.src
+msgid "Yaka"
+msgstr "ياكاچە"
+
+#: langtab.src
+msgid "Yombe (Congo)"
+msgstr "يومبېچە(كونگو)"
+
+#: langtab.src
+msgid "Udmurt"
+msgstr "ئۇدمۇرتچە"
+
+#: langtab.src
+msgid "Tibetan (India)"
+msgstr "تىبەتچە (ھىندىستان)"
+
+#: langtab.src
+msgid "Cornish"
+msgstr "كورنىشچە"
+
+#: langtab.src
+msgid "Sami, Pite (Sweden)"
+msgstr "سامىچە، پىتې (شۋېتسىيە)"
+
+#: langtab.src
+msgid "Ngäbere"
+msgstr "ڭوبىچە"
+
+#: langtab.src
+msgid "Kumyk"
+msgstr "قۇمۇقچە"
+
+#: langtab.src
+msgid "Nogai"
+msgstr "نوغايچە"
+
+#: langtab.src
+msgid "Karakalpak Latin"
+msgstr "قارا قالپاقچە لاتىن"
+
+#: langtab.src
+msgid "Ladin"
+msgstr "لادىنچە"
+
+#: langtab.src
+msgid "French (Burkina Faso)"
+msgstr "فىرانسۇزچە (بۇركىنا فاسو)"
+
+#: langtab.src
+msgid "Puinave"
+msgstr "پۇئىناۋچە"
+
+#: langtab.src
+msgid "Maninkakan, Eastern, Latin"
+msgstr "مانىنكاكانچە، شەرق، لاتىن"
+
+#: langtab.src
+msgid "Avar"
+msgstr "ئاۋارچە"
+
+#: langtab.src
+msgid "Cree, Plains, Latin"
+msgstr "كرېچە، تۈزلەڭلىك، لاتىن"
+
+#: langtab.src
+msgid "Cree, Plains, Syllabics"
+msgstr "كرېچە، تۈزلەڭلىك، بوغۇم"
+
+#: langtab.src
+msgid "Lengo"
+msgstr "لېڭگوچە"
+
+#: langtab.src
+msgid "French (Côte d'Ivoire)"
+msgstr "فىرانسۇزچە (كوتودىۋور)"
+
+#: langtab.src
+msgid "French (Mali)"
+msgstr "فىرانسۇزچە (مالى)"
+
+#: langtab.src
+msgid "French (Senegal)"
+msgstr "فىرانسۇزچە (سېنېگال)"
+
+#: langtab.src
+msgid "French (Benin)"
+msgstr "فىرانسۇزچە (بېنىن)"
+
+#: langtab.src
+msgid "French (Niger)"
+msgstr "فىرانسۇزچە (نىگېر)"
+
+#: langtab.src
+msgid "French (Togo)"
+msgstr "فىرانسۇزچە (توگو)"
+
+#: langtab.src
+msgid "Kven Finnish"
+msgstr "فىنلاندىيەچە كۋېن"
+
+#: langtab.src
+msgid "Venetian"
+msgstr "ۋېنېسىيەچە"
+
+#: langtab.src
+msgid "English (Gambia)"
+msgstr "ئىنگلىزچە (گامبىيە)"
+
+#: langtab.src
+msgid "Aranese"
+msgstr "ئاراگونچە"
+
+#: langtab.src
+msgid "Arpitan (France)"
+msgstr "ئارپىتانچە (فىرانسىيە)"
+
+#: langtab.src
+msgid "Arpitan (Italy)"
+msgstr "ئارپىتانچە (ئىتالىيە)"
+
+#: langtab.src
+msgid "Arpitan (Switzerland)"
+msgstr "ئارپىتانچە (شىۋېتسارىيە)"
+
+#: langtab.src
+msgid "English (Botswana)"
+msgstr "ئىنگلىزچە (بوتسۋانا)"
+
+#: langtab.src
+msgid "Interlingue Occidental"
+msgstr "غەربچە خەلقئارا تىل"
+
+#: langtab.src
+msgid "Apatani"
+msgstr "ئاپاتانىچە"
+
+#: langtab.src
+msgid "English (Mauritius)"
+msgstr "ئىنگلىزچە (ماۋرىتىئۇس)"
+
+#: langtab.src
+msgid "French (Mauritius)"
+msgstr "فىرانسۇزچە (ماۋرىتىئۇس)"

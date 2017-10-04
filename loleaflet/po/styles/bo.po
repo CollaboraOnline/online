@@ -2229,3 +2229,935 @@ msgstr "སྒྲ་བཀོད་ཀྱི་གཞུང་སྤྱོད་
 #: GenericCommands.xcu
 msgid "Font Name:"
 msgstr "ཡིག་གཟུགས།:"
+
+#: langtab.src
+msgid "[None]"
+msgstr "མེད་པ།"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "ཧ་མི་གོ་བ།"
+
+#: langtab.src
+msgid "Afrikaans (South Africa)"
+msgstr "ལྷོ་ཨ་ཧྥེ་རི་ཧོ་ལན་སྐད།(ལྷོ་ཨ་ཧྥེ་རི་ཁ)"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "ཨར་པ་ཉི་ཡའི་སྐད་"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "ཨ་རབ་སྐད་"
+
+#: langtab.src
+msgid "Arabic (Algeria)"
+msgstr "ཨ་རབ་སྐད་(ཨར་ཅི་རི་ཡ་)"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "ཨ་རབ་སྐད་(པ་ལེང་)"
+
+#: langtab.src
+msgid "Arabic (Chad)"
+msgstr "ཨ་རབ་སྐད(ཀྲེ་ཏ)"
+
+#: langtab.src
+msgid "Arabic (Comoros)"
+msgstr "ཨ་རབ་སྐད(ཁོ་མོ་ལོ་མནའ་འབྲེལ)"
+
+#: langtab.src
+msgid "Arabic (Djibouti)"
+msgstr "ཨ་རབ་སྐད(ཅི་པུ་ཐི)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "ཨ་རབ་སྐད་(ཨེ་ཇེ་)"
+
+#: langtab.src
+msgid "Arabic (Eritrea)"
+msgstr "ཨ་རབ་སྐད(ཨེ་ལི་ཐེ་ལི་ཡ)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "ཨ་རབ་སྐད་(དབྱི་རགས་)"
+
+#: langtab.src
+msgid "Arabic (Israel)"
+msgstr "ཨ་རབ་སྐད(དབྱི་སེ་རེ)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "ཨ་རབ་སྐད་(ཇོར་ཏན་)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "ཨ་རབ་སྐད་(ཁཱ་ཝུའི་ཐ་)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "ཨ་རབ་སྐད་(ལེ་པ་ནན་)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "ཨ་རབ་སྐད་(ལི་པི་ཡ་)"
+
+#: langtab.src
+msgid "Arabic (Mauritania)"
+msgstr "ཨ་རབ་སྐད(མའོ་ལི་ཏ་ཉི་ཡ)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "ཨ་རབ་སྐད་(མོ་རོ་ཁོ་)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "ཨ་རབ་སྐད་(ཨོ་མན)"
+
+#: langtab.src
+msgid "Arabic (Palestine)"
+msgstr "ཨ་རབ་སྐད(པར་སིག་ཐན)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "ཨ་རབ་སྐད་(ཁ་ཐར་)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "ཨ་རབ་སྐད་(ཧྲང་ཐེ་ཨ་རབ་)"
+
+#: langtab.src
+msgid "Arabic (Somalia)"
+msgstr "ཨ་རབ་སྐད(སོ་མ་ལི)"
+
+#: langtab.src
+msgid "Arabic (Sudan)"
+msgstr "ཨ་རབ་སྐད(སུ་ཏན)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "ཨ་རབ་སྐད་(སི་རི་ཡ་)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "ཨ་རབ་སྐད་(ཐུ་ཉི་སི་)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "ཨ་རབ་སྐད་(ཨ་རབ་མཉམ་འབྲེལ་ཚོགས་དཔོན་རྒྱལ་ཁབ་)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "ཨ་རབ་སྐད་(ཨོ་མན)"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "ཡ་མེ་ནི་ཡའི་སྐད་"
+
+#: langtab.src
+msgid "Azerbaijani Latin"
+msgstr "ཨའི་སའེ་པེ་ཅང་(ལ་ཏིང་སྐད་)"
+
+#: langtab.src
+msgid "Azerbaijani Cyrillic"
+msgstr "ཨའི་སའེ་པེ་ཅང་(གནའ་བོའི་སི་ལ་ཕུའི་སྐད་)"
+
+#: langtab.src
+msgid "Basque"
+msgstr "པ་སི་ཁེའི་སྐད་"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "བྷང་ག་ལ་འི་སྐད་(རྒྱ་གར་)"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "པོ་ཀ་ལི་ཡེའི་སྐད།"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "ཨུ་རུ་སུ་དཀར་པོ་སྐད་"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "ཅ་ཐེ་ལེ་ཉི་ཡ་(སེ་ཕེན་སྐད་ཡིག་)"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "རྒྱ་ཡིག(ཟོར་ལྕིའི་ཡི་གེ)"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "རྒྱ་ཡིག་(ཟོར་ཡང་)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "རྒྱ་ཡིག་(ཤང་ཀང་)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "རྒྱ་ཡིག་(ཤིན་ཅ་ཕོ་)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "རྒྱ་ཡིག་(ཨཱོ་མན་)"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "ཁེ་ལོ་ཏི་ཡའི་སྐད་"
+
+#: langtab.src
+msgid "Czech"
+msgstr "ཅེ་ཁེའི་སྐད་"
+
+#: langtab.src
+msgid "Danish"
+msgstr "ཏན་མིའི་སྐད་"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "ཧོ་ལན་སྐད་(ཧོ་ལན་)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "ཧོ་ལན་སྐད་(པི་ལི་སྲི་)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "དབྱིན་སྐད་(ཨ་རི་)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "དབྱིན་སྐད་(དབྱིན་ཇི་)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "དབྱིན་སྐད་(ཨའོ་ཏ་ལི་ཡ་)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "དབྱིན་སྐད་(ཁ་ན་ཏ་)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "དབྱིན་སྐད་(ཉེའུ་ཅི་ལན་)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "དབྱིན་སྐད་(ནན་ཕེ་)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "དབྱིན་སྐད་(ཡ་མེ་ཅ་)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "དབྱིན་སྐད་(ཅ་ལཱ་བྷིའི་)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "དབྱིན་སྐད་(པོ་ལེ་ཙེ་)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "དབྱིན་སྐད་(ཐ་ལི་ཉི་ཏ་གླིང་ཕྲན་)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "དབྱིན་སྐད་(ཅིང་པ་པུ་ཝུའི་)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "དབྱིན་སྐད་(ཧྥི་ལི་ཕིན་)"
+
+#: langtab.src
+msgid "English (India)"
+msgstr "དབྱིན་སྐད།(རྒྱ་གར་)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "ཨེ་ཧྲ་ནི་ཡའི་སྐད།"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "ཧྥིན་ལན་སྐད་"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "ཕ་ལོའི་སྐད་"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "ཧྥ་རན་སེའི་སྐད། (ཧྥ་རན་སེ)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "ཧྥ་སྐད་(པི་ལི་སྲི་)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "ཧྥ་སྐད་(ཁ་ན་ཏ་)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "ཧྥ་སྐད་(དབྲུའི་ཧྲེ་)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "ཧྥ་སྐད་(ལུ་སན་པའོ་)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "ཧྥ་སྐད་(མོ་ནཱ་ཀཱ་)"
+
+#: langtab.src
+msgid "Gascon"
+msgstr "གེ་སི་ཁེན་ཉི་སྐད།"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "འཇར་མན་སྐད། (འཇར་མན་རྒྱལ་ཁབ)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "འཇར་སྐད་(དབྲུའི་ཧྲེ་)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "འཇར་སྐད་(ཨའོ་ཏེ་ལི་)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "འཇར་སྐད་(ལུ་སན་པའོ་རྒྱལ་ཁབ་)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "འཇར་སྐད་(ལེ་ཀྲེ་ཏུན་ཐུ་ཏང་)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "ཀེ་རེ་སེའི་སྐད་"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "གུ་ཅི་ལའི་སྐད་"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "ཤི་པོ་ལེའི་སྐད་ཡིག་"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "རྒྱ་གར་བྱང་ཕྱོགས་སྐད་"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "ཧང་ག་རིའི་སྐད།"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "འཁྱགས་གླིང་གི་སྐད་"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "ཧིན་ཏུ་ཉི་ཤི་ཡའི་སྐད་"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "དབྱི་ཏ་ལིའི་སྐད་(དབྱི་ཏ་ལི་)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "དབྱི་ཏ་ལིའི་སྐད་(དབྲུའི་ཧྲེ་)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "འཇར་ཕན་སྐད།"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "ཨའེ་ན་ཏེའི་སྐད་"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "ཀེ་ཤེ་སྨིར་སྐད་(ཀེ་ཤེ་སྨིར་སྐད་)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "ཀེ་ཤེ་སྨིར་སྐད་(རྒྱ་གར་)"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "ཁུང་ཁ་ཉིའི་སྐད་"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "ཀུ་རེ་ཡའི་སྐད་(ལྷོ་ཀུ་རེ་ཡ་)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "ལ་ཐོ་ཨུའེ་ཡའི་སྐད་"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "ལི་ཐོ་དབན་"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "མ་ཆི་ཏུན་སྐད་"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "མ་ལའེ་ཤི་ཡའི་སྐད་(མ་ལའེ་ཚོགས་གླིང་)"
+
+#: langtab.src
+msgid "Malay (Brunei Darussalam)"
+msgstr "མ་ལའེ་སྐད་(དབུན་ལའེ་ཏ་ལུ་ས་ལན་)"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "རྒྱ་གར་ལྷོ་ཕྱོགས་ཀྱི་སྐད་"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "དམན་ཉི་ཕུར་སྐད་ཡིག་"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "མ་ལ་ཏིའི་སྐད་"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "ནེ་པ་ལའི་སྐད་(བལ་ཡུལ་)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "ནེ་པ་ལའི་སྐད་(རྒྱ་གར་)"
+
+#: langtab.src
+msgid "Norwegian, Bokmål"
+msgstr "ནོའོ་ཝུའི་སྐད་(ཡིག་ཐོག་ནོའོ་ཝུའི་སྐད་)"
+
+#: langtab.src
+msgid "Norwegian, Nynorsk"
+msgstr "ནོའོ་ཝུའི་སྐད་(ཉི་ལོ་སེ་ཁ་སྐད་)"
+
+#: langtab.src
+msgid "Polish"
+msgstr "ཕོ་ལན་གྱི་སྐད་"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "ཕུ་ཅུ་གྷལ་གྱི་སྐད་(ཕུ་ཅུ་གལ་)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "ཕུ་ཅུ་གྷལ་གྱི་སྐད་(པར་ཅིར་)"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "ཀེ་ཤེ་སྨིར་སྐད་"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "ལི་ཐོ་-རོ་མན་སྒྲུའུ་སྐད་"
+
+#: langtab.src
+msgid "Russian"
+msgstr "ཨུ་རུ་སུ་"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "ལེགས་སྦྱར་སྐད་"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia)"
+msgstr "སེར་ཝུ་ཡའི་སྐད(ཤི་ལིར་ཡི་གེ  སེར་ཝུ་ཡ)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia)"
+msgstr "སེར་ཝུ་ཡའི་སྐད(ལ་ཏིང་ཡི་གེ  སེར་ཝུ་ཡ)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Montenegro)"
+msgstr "སེར་ཝུ་ཡའི་སྐད(ཤི་ལིར་ཡི་གེ  ཧེ་ཧྲན)"
+
+#: langtab.src
+msgid "Serbian Latin (Montenegro)"
+msgstr "སེར་ཝུ་ཡའི་སྐད(ལ་ཏིང་ཡི་གེ  ཧེ་ཧྲེན)"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "ཤོན་ཏེའི་སྐད་"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "སེ་ལོ་ཧྥ་ཁེའི་སྐད།"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "སི་ལོག་འུན་ནི་ཡའི་སྐད་ཡིག་"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(སེ་ཕེན་ཡ་)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(མོ་ཞའི་ཁོ་)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཀུའེ་ཐེ་མ་ལ་)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཀ་སི་ཟླ་ལི་ཅ་)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཕ་ན་མ་)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཏོ་མི་ཉི་ཅ་)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ལེ་ནོ་ཙུའེ་ལ་)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཀ་ལུན་སྦི་ཡ་)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཕེ་རུ་)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཨ་ཀེ་ཐིན་)"
+
+#: langtab.src
+msgid "Spanish (Ecuador)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(དབུའི་ཀོ་ཏོར་)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཆི་ལི་)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཝུ་ར་ཀུའི་)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཕ་ར་ཀུའི་)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཕོ་ལེ་ཝེ་ཡ་)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(སར་ཝོ་ཏ་)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཧོར་ཏོ་ལ་སེ་)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(ཉི་ཅ་ལ་ཀོ་)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "སེ་ཕེན་སྐད་ཡིག་(པོ་ཏོ་ལི་)"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "སི་ཝ་ཤི་ལིའི་སྐད་(ཁན་ཉི་ཡ་)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "སུའེ་ཏན་སྐད་(སུའེ་ཏན་)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "སུའེ་ཏན་སྐད་(ཧྥིན་ལན་)"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "ཐ་ཅེ་ཁེའི་སྐད།"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "ཐན་མིན་སྐད་"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "ཐན་ཐའི་སྐད་"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "ཐད་ལུ་ཀུའི་སྐད་ཡིག་"
+
+#: langtab.src
+msgid "Thai"
+msgstr "ཐེ་ལན་སྐད་ཡིག་"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "ཏུར་ཀེའེ་སྐད་"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "ཨུར་ཏུའི་སྐད་ཡིག(པ་ཀི་སི་ཐན་)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "ཨུར་ཏུའི་སྐད་ཡིག(རྒྱ་གར)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "ཨུར་ཁ་ལན་གྱི་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "ས་ཧྲིའི་སྐད་"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "འཛམ་གླིང་སྤྱི་སྐད་"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "རུ་ཝང་ཏའི་སྐད་་(རུ་ཝང་ཏ་)"
+
+#: langtab.src
+msgid "Galician"
+msgstr "ཅ་ལེ་ཤི་སྐད་"
+
+#: langtab.src
+msgid "Dhivehi"
+msgstr "ཏེ་ཝུའི་ཤིའི་སྐད་"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "སུའོ་མུ་བྱང་ཕྱོགས་སྐད་"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "ཀེར་སྐད་(སུའུ་ཀ་ལན་)"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "ལ་ཏིང་སྐད་"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "པོ་སི་ཉི་ཡའི་སྐད་"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "བྷང་ག་ལའི་སྐད་(བྷང་ག་ལ་)）"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "ཨའོ་ཁེ་སི་ཐན་སྐད་"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "ཀའོ་མན་སྐད་"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "སན་ཏེང་སྐད་"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "སེ་ཝ་ཤི་ལིའི་སྐད(ཐན་སང་ཉི་ཡ)"
+
+#: langtab.src
+msgid "Lao"
+msgstr "ལོ་སེའི་སྐད་ཡིག་"
+
+#: langtab.src
+msgid "Irish"
+msgstr "ཨེར་ལན་སྐད་"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "བོད་ཡིག་(ཀྲུང་གོ་)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "ག་ལུ་ཅེ་ཡའི་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "ཕོ་ལི་སི་ནན་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "ཚེ་ཝ་ནའི་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "ཙུའུ་ལུའི་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "གཡོད་ནན་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Breton"
+msgstr "པུ་ལེ་ཐཱ་ཉིའི་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Kalaallisut"
+msgstr "ཀ་ལིང་ལན་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Ndebele, South"
+msgstr "ཨན་ཏེ་པའེ་ལིའི་སྐད་(ལྷོ་ཕྱོགས་)"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "སོ་ཐོ་ལྷོའི་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "སི་ཝུའི་ཧྲེ་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "ཚུལ་ཅཱ་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Venda"
+msgstr "ཝུན་ཏ་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Tswana (Botswana)"
+msgstr "ཚེ་ཝ་ནའི་སྐད་(བོ་ཚེ་ཝ་ན་)"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "ཁཱ་སའི་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "ཤི་ལན་གྱི་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Moore"
+msgstr "མུ་འར་སྐད།"
+
+#: langtab.src
+msgid "Bambara"
+msgstr "པན་པ་ལའི་སྐད།"
+
+#: langtab.src
+msgid "Akan"
+msgstr "ཁུ་ཨའི་སྐད།"
+
+#: langtab.src
+msgid "Luxembourgish"
+msgstr "ལུའུ་ཧྲེན་པའོ་སྐད།"
+
+#: langtab.src
+msgid "Friulian"
+msgstr "ཧྥུའུ་ལིའུ་རླིད་སྐད།"
+
+#: langtab.src
+msgid "Fijian"
+msgstr "ཧྥེ་ཅིའི་སྐད།"
+
+#: langtab.src
+msgid "Afrikaans (Namibia)"
+msgstr "ལྷོ་ཨ་ཧྥེ་རི་ཧོ་ལན་སྐད(ན་མི་པི་ཡ)"
+
+#: langtab.src
+msgid "English (Namibia)"
+msgstr "དབྱིན་སྐད(ན་མི་པི་ཡ)"
+
+#: langtab.src
+msgid "Walloon"
+msgstr "ཝ་ལུང་སྐད།"
+
+#: langtab.src
+msgid "Coptic"
+msgstr "ཨེ་ཅེབ་གནའ་སྐད།"
+
+#: langtab.src
+msgid "Tigrigna (Eritrea)"
+msgstr "ཐི་གེ་ལི་ནའི་སྐད(ཨེ་ལི་ཐེ་ལི་ཡ)"
+
+#: langtab.src
+msgid "Tigrigna (Ethiopia)"
+msgstr "ཐི་གེ་ལི་ནིའི་སྐད(ཨེ་སེ་ཨེ་པི་ཡ)"
+
+#: langtab.src
+msgid "Amharic"
+msgstr "ཨམ་ཧ་ལ་སྐད།"
+
+#: langtab.src
+msgid "Kirghiz"
+msgstr "ཅེ་ཨེར་ཅེ་སིའི་སྐད་ཡིག"
+
+#: langtab.src
+msgid "German (Belgium)"
+msgstr "འཇར་མན་སྐད།(པི་ལི་ཧྲི)"
+
+#: langtab.src
+msgid "Chuvash"
+msgstr "ཁྲུའུ་ཝ་ཧྲིའི་སྐད།"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "འབར་མའི་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Hausa (Nigeria)"
+msgstr "མོང་སའི་སྐད(ཀ་ན)"
+
+#: langtab.src
+msgid "Hausa (Ghana)"
+msgstr "མོང་སའི་སྐད(ཀ་ན)"
+
+#: langtab.src
+msgid "Éwé"
+msgstr "ཨེ་ཝུའི་སྐད་(ཀ་ན)"
+
+#: langtab.src
+msgid "English (Ghana)"
+msgstr "དབྱིན་སྐད།(ཀ་ན)"
+
+#: langtab.src
+msgid "Sango"
+msgstr "སང་གའི་སྐད།"
+
+#: langtab.src
+msgid "Tagalog"
+msgstr "ཐ་ཅ་ལུ་རིགས་ཀྱི་ཡི་གེ"
+
+#: langtab.src
+msgid "Ganda"
+msgstr "ཀན་ཏཱ་སྐད།"
+
+#: langtab.src
+msgid "Lingala"
+msgstr "ལིན་ཅ་ལའི་སྐད།"
+
+#: langtab.src
+msgid "Low German"
+msgstr "ས་དམའི་འཇར་མན་སྐད།"
+
+#: langtab.src
+msgid "Hiligaynon"
+msgstr "ཞི་ལི་ཀེ་ནུང་སྐད།"
+
+#: langtab.src
+msgid "Nyanja"
+msgstr "ཉེ་ཨར་ཅཱ་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Kashubian"
+msgstr "གཱ་སུའུ་པིའི་སྐད་ཡིག"
+
+#: langtab.src
+msgid "Spanish (Cuba)"
+msgstr "སི་ཕན་སྐད(ཁུ་པ)"
+
+#: langtab.src
+msgid "Tetun (Indonesia)"
+msgstr "ཏེ་ཏུན་སྐད(ཧིན་རྡུ་ནི་ཤི་ཡ)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, North)"
+msgstr "ཁེ་ཆུ་ཡའི་སྐད(པོ་ལི་ཝུ་ཡ།  ལྷོ་ཕྱོགས)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, South)"
+msgstr "ཁེ་ཆུ་ཡའི་སྐད(པོ་ལི་ཝུ་ཡ།  ལྷོ་ཕྱོགས)"
+
+#: langtab.src
+msgid "Somali"
+msgstr "སོ་མ་ལིའི་སྐད།"
+
+#: langtab.src
+msgid "Sami, Inari (Finland)"
+msgstr "ཡི་ན་ལི་ས་མིའི་སྐད(ཧྥུན་ལན)"
+
+#: langtab.src
+msgid "Sami, Lule (Norway)"
+msgstr "ལུ་ལེའོ་ས་མིའི་སྐད(ནོར་ཝུལ)"
+
+#: langtab.src
+msgid "Sami, Lule (Sweden)"
+msgstr "ལུ་ལེའོ་ས་མིའི་སྐད(སུའེ་ཏན)"
+
+#: langtab.src
+msgid "Sami, Northern (Finland)"
+msgstr "བྱང་ཕྱོགས་ས་མིའི་སྐད(ཧྥུན་ལན)"
+
+#: langtab.src
+msgid "Sami, Northern (Norway)"
+msgstr "བྱང་ཕྱོགས་ས་མིའི་སྐད(ནོར་ཝུལ)"
+
+#: langtab.src
+msgid "Sami, Northern (Sweden)"
+msgstr "བྱང་ཕྱོགས་ས་མིའི་སྐད(སུའེ་ཏན)"
+
+#: langtab.src
+msgid "Sami, Skolt (Finland)"
+msgstr "སེ་ཁོ་ཐེ་ས་མིའི་སྐད(ཧྥེན་ལན)"
+
+#: langtab.src
+msgid "Sami, Southern (Norway)"
+msgstr "ལྷོ་ཕྱོགས་ས་མིའི་སྐད(ནོར་ཝུལ)"
+
+#: langtab.src
+msgid "Sami, Southern (Sweden)"
+msgstr "ལྷོ་ཕྱོགས་ས་མིའི་སྐད(སུའེ་ཏན)"
+
+#: langtab.src
+msgid "Bodo"
+msgstr "པོ་ཏོའི་སྐད།"
+
+#: langtab.src
+msgid "Dogri"
+msgstr "ཏོ་ཀེ་ལའི་སྐད།"
+
+#: langtab.src
+msgid "Maithili"
+msgstr "རྨེ་ཏི་ལི་སྐད།"
+
+#: langtab.src
+msgid "Santali"
+msgstr "སང་ཐ་ལིའི་སྐད།"
+
+#: langtab.src
+msgid "Tetun (Timor-Leste)"
+msgstr "ཏེ་ཏུན་སྐད(ཏུང་ཏི་ཝུན)"
+
+#: langtab.src
+msgid "Turkmen"
+msgstr "ཐུ་ཁུ་མན་སྐད།"
+
+#: langtab.src
+msgid "Maltese"
+msgstr "མར་ཐའི་སྐད།"
+
+#: langtab.src
+msgid "Tok Pisin"
+msgstr "ཐོ་ཁེ་ཕི་ཤིན་སྐད།"
+
+#: langtab.src
+msgid "Shuswap"
+msgstr "ཧྲུའུ་ཧྲེ་ཝུའི་སྐད།"
+
+#: langtab.src
+msgid "Maore"
+msgstr "མུ་འར་སྐད།"

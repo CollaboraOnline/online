@@ -2280,3 +2280,159 @@ msgstr "შრიფტის სახელი:"
 #: specialcharacters.ui
 msgid "Special Characters"
 msgstr "სპეციალური სიმბოლოები"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[არცერთი]"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "უცნობი"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "სომხური"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "უნგრული"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "ჩინური (ტრადიციული)"
+
+#: langtab.src
+msgid "Czech"
+msgstr "ჩეხური"
+
+#: langtab.src
+msgid "Danish"
+msgstr "დანიური"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "ჰოლანდიური (ჰოლანდია)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "ინგლისური (აშშ)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "ინგლისური (აშშ)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "ესტონური"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "ფინური"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "ფრანგული (საფრანგეთი)"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "გერმანული (გერმანია)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "ბერძნული"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "გუჯარათი"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "ებრაული"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "ინდური"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "უნგრული"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "იტალიური (იტალია)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "იაპონური"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "კანადა"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "მალაიზიური"
+
+#: langtab.src
+msgid "Polish"
+msgstr "პოლონური"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "პორტუგალიური (პორტუგალია)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "პორტუგალიური (ბრაზილია)"
+
+#: langtab.src
+msgid "Russian"
+msgstr "რუსული"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "სლოვაკური"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "ესპანური (ესპანეთი)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "შვედური (შვედეთი)"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "თამილი"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "თელუგუ"
+
+#: langtab.src
+msgid "Thai"
+msgstr "ტაილანდური"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "თურქული"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "ხმერი"
+
+#: langtab.src
+msgid "Lao"
+msgstr "ლაოსური"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "სინჰალა"
+
+#: langtab.src
+msgid "Walloon"
+msgstr "ბუშტტები"
+
+#: langtab.src
+msgid "Yiddish (USA)"
+msgstr "ინგლისური (აშშ)"

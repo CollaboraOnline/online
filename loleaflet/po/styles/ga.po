@@ -2738,3 +2738,1191 @@ msgstr "Carachtair Speisialta"
 #: asianphoneticguidedialog.ui
 msgid "Preview:"
 msgstr "Réamhamharc:"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[Neamhní]"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "Anaithnid"
+
+#: langtab.src
+msgid "Afrikaans (South Africa)"
+msgstr "Afracáinis (An Afraic Theas)"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "Albáinis"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "Araibis"
+
+#: langtab.src
+msgid "Arabic (Algeria)"
+msgstr "Araibis (An Ailgéir)"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "Araibis (Bairéin)"
+
+#: langtab.src
+msgid "Arabic (Chad)"
+msgstr "Araibis (Sead)"
+
+#: langtab.src
+msgid "Arabic (Comoros)"
+msgstr "Araibis (Oileáin Chomóra)"
+
+#: langtab.src
+msgid "Arabic (Djibouti)"
+msgstr "Araibis (Djibouti)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "Araibis (An Éigipt)"
+
+#: langtab.src
+msgid "Arabic (Eritrea)"
+msgstr "Araibis (An Eiritré)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "Araibis (An Iaráic)"
+
+#: langtab.src
+msgid "Arabic (Israel)"
+msgstr "Araibis (Iosrael)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "Araibis (An Iordáin)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "Araibis (Cuáit)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "Araibis (An Liobáin)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "Araibis (An Libia)"
+
+#: langtab.src
+msgid "Arabic (Mauritania)"
+msgstr "Araibis (An Mháratáin)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "Araibis (Maracó)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "Araibis (Oman)"
+
+#: langtab.src
+msgid "Arabic (Palestine)"
+msgstr "Araibis (An Phalaistín)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "Araibis (Catar)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "Araibis (An Araib Shádach)"
+
+#: langtab.src
+msgid "Arabic (Somalia)"
+msgstr "Araibis (An tSomáil)"
+
+#: langtab.src
+msgid "Arabic (Sudan)"
+msgstr "Araibis (An tSúdáin)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "Araibis (An tSiria)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "Araibis (An Túinéis)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "Araibis (UAE)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "Araibis (Éimin)"
+
+#: langtab.src
+msgid "Aragonese"
+msgstr "Aragóinis"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "Airméinis"
+
+#: langtab.src
+msgid "Assamese"
+msgstr "Asaimis"
+
+#: langtab.src
+msgid "Azerbaijani Latin"
+msgstr "Asarbaiseáinis (Laidin)"
+
+#: langtab.src
+msgid "Azerbaijani Cyrillic"
+msgstr "Asarbaiseáinis (Coireallach)"
+
+#: langtab.src
+msgid "Basque"
+msgstr "Bascais"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "Beangáilis (An India)"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "Bulgáiris"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "Bealarúisis"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "Catalóinis"
+
+#: langtab.src
+msgid "Catalan (Valencian)"
+msgstr "Catalóinis (Vaileinsis)"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "Sínis (traidisiúnta)"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "Sínis (simplithe)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "Sínis (Hong Cong)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "Sínis (Singeapór)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "Sínis (Macao)"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "Cróitis"
+
+#: langtab.src
+msgid "Czech"
+msgstr "Seicis"
+
+#: langtab.src
+msgid "Danish"
+msgstr "Danmhairgis"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "Ollainnis (An Ísiltír)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "Ollainnis (An Bheilg)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "Béarla (SAM)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "Béarla (RA)"
+
+#: langtab.src
+msgid "English, OED spelling (UK)"
+msgstr "Béarla (RA), Litriú OED"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "Béarla (An Astráil)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "Béarla (Ceanada)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "Béarla (An Nua-Shéalainn)"
+
+#: langtab.src
+msgid "English (Ireland)"
+msgstr "Béarla (Éire)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "Béarla (An Afraic Theas)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "Béarla (An Iamáice)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "Béarla (Cairibeach)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "Béarla (An Bheilís)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "Béarla (Tríonóideach)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "Béarla (An tSiombáib)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "Béarla (Filipíneach)"
+
+#: langtab.src
+msgid "English (India)"
+msgstr "Béarla (India)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "Eastóinis"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "Fionlainnis"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "Faróis"
+
+#: langtab.src
+msgid "Persian"
+msgstr "Peirsis"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "Fraincis (An Fhrainc)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "Fraincis (An Bheilg)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "Fraincis (Ceanada)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "Fraincis (An Eilvéis)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "Fraincis (Lucsamburg)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "Fraincis (Monacó)"
+
+#: langtab.src
+msgid "Gascon"
+msgstr "Gascúinis"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "Gearmáinis (An Ghearmáin)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "Gearmáinis (An Eilvéis)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "Gearmáinis (An Ostair)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "Gearmáinis (Lucsamburg)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "Gearmáinis (Lichtinstéin)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "Gréigis"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "Gúisearáitis"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "Eabhrais"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "Hiondúis"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "Ungáiris"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "Íoslainnis"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "Indinéisis"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "Iodáilis (An Iodáil)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "Iodáilis (An Eilvéis)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "Seapáinis"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "Cannadais"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "Caismíris (Caismír)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "Caismíris (An India)"
+
+#: langtab.src
+msgid "Kazakh"
+msgstr "Casaicis"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "Concáinis"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "Cóiréis (PnC)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "Laitvis"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "Liotuáinis"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "Macadóinis"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "Malaeis (Malaeisia)"
+
+#: langtab.src
+msgid "Malay (Brunei Darussalam)"
+msgstr "Malaeis (Brúiné Dárasalám)"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "Mailéalaimis"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "Manapúiris"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "Maraitis"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "Neipealais (Neipeal)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "Neipealais (An India)"
+
+#: langtab.src
+msgid "Norwegian, Bokmål"
+msgstr "Ioruais (Bokmål)"
+
+#: langtab.src
+msgid "Norwegian, Nynorsk"
+msgstr "Ioruais (Nynorsk)"
+
+#: langtab.src
+msgid "Polish"
+msgstr "Polainnis"
+
+#: langtab.src
+msgid "Portuguese (Angola)"
+msgstr "Portaingéilis (Angóla)"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "Portaingéilis (An Phortaingéil)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "Portaingéilis (An Bhrasaíl)"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "Painseáibis"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "Raeta-Rómáinsis"
+
+#: langtab.src
+msgid "Romanian (Romania)"
+msgstr "Rómáinis (An Rómáin)"
+
+#: langtab.src
+msgid "Romanian (Moldova)"
+msgstr "Rómáinis (An Mholdóiv)"
+
+#: langtab.src
+msgid "Russian"
+msgstr "Rúisis"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "Sanscrait"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia and Montenegro)"
+msgstr "Seirbis (Coireallach, An tSeirbia agus Montainéagró)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia and Montenegro)"
+msgstr "Seirbis (Laidineach, An tSeirbia agus Montainéagró)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia)"
+msgstr "Seirbis (Coireallach, An tSeirbia)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia)"
+msgstr "Seirbis (Laidineach, An tSeirbia)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Montenegro)"
+msgstr "Seirbis (Coireallach, Montainéagró)"
+
+#: langtab.src
+msgid "Serbian Latin (Montenegro)"
+msgstr "Seirbis (Laidineach, Montainéagró)"
+
+#: langtab.src
+msgid "Serbian Latin"
+msgstr "Seirbis (Laidineach)"
+
+#: langtab.src
+msgid "Sidama"
+msgstr "Siodáimis"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "Sindis"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "Slóvaicis"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "Slóivéinis"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "Spáinnis (An Spáinn)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "Spáinnis (Meicsiceo)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "Spáinnis (Guatamala)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "Spáinnis (Cósta Ríce)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "Spáinnis (Panama)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "Spáinnis (An Phob. Dhoim.)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "Spáinnis (Veiniséala)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "Spáinnis (An Cholóim)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "Spáinnis (Peiriú)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "Spáinnis (Airgintín)"
+
+#: langtab.src
+msgid "Spanish (Ecuador)"
+msgstr "Spáinnis (Eacuadór)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "Spáinnis (An tSile)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "Spáinnis (Uragua)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "Spáinnis (Paragua)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "Spáinnis (An Bholaiv)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "Spáinnis (An tSalvadóir)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "Spáinnis (Hondúras)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "Spáinnis (Nicearagua)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "Spáinnis (Portó Ríce)"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "Svahaílis (An Chéinia)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "Sualainnis (An tSualainn)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "Sualainnis (An Fhionlainn)"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "Táidsícis"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "Tamailis"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "Tatairis"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "Teileagúis"
+
+#: langtab.src
+msgid "Thai"
+msgstr "Téalainnis"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "Tuircis"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "Urdais (An Phacastáin)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "Urdais (An India)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "Úcráinis"
+
+#: langtab.src
+msgid "Uzbek Latin"
+msgstr "Úisbéicis (Laidineach)"
+
+#: langtab.src
+msgid "Uzbek Cyrillic"
+msgstr "Úisbéicis (Coireallach)"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "Breatnais"
+
+#: langtab.src
+msgid "Latin"
+msgstr "Laidin"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "Cinearuáindis (Ruanda)"
+
+#: langtab.src
+msgid "Maori"
+msgstr "Maorais"
+
+#: langtab.src
+msgid "Galician"
+msgstr "Gailísis"
+
+#: langtab.src
+msgid "Dhivehi"
+msgstr "Divéihis"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "Seipidis"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "Gaeilge na hAlban"
+
+#: langtab.src
+msgid "Mongolian Cyrillic"
+msgstr "Mongóilis (Coireallach)"
+
+#: langtab.src
+msgid "Mongolian Mongolian"
+msgstr "Mongóilis (Mongólach)"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "Idirtheanga"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "Boisnis"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "Beangáilis (Banglaidéis)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "Ocatáinis"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "Ciméiris"
+
+#: langtab.src
+msgid "Kurdish, Northern (Turkey)"
+msgstr "Coirdis Thuaidh (An Tuirc)"
+
+#: langtab.src
+msgid "Kurdish, Northern (Syria)"
+msgstr "Coirdis Thuaidh (An tSiria)"
+
+#: langtab.src
+msgid "Kurdish, Central (Iraq)"
+msgstr "Coirdis Láir (An Iaráic)"
+
+#: langtab.src
+msgid "Kurdish, Central (Iran)"
+msgstr "Coirdis Láir (An Iaráin)"
+
+#: langtab.src
+msgid "Kurdish, Southern (Iran)"
+msgstr "Coirdis Theas (An Iaráin)"
+
+#: langtab.src
+msgid "Kurdish, Southern (Iraq)"
+msgstr "Coirdis Theas (An Iaráic)"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "Sairdínis"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "Svahaílis (An Tansáin)"
+
+#: langtab.src
+msgid "Lao"
+msgstr "Láóis"
+
+#: langtab.src
+msgid "Irish"
+msgstr "Gaeilge"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "Tibéidis (An tSín)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "Seoirsis"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "Freaslainnis"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "Suáinis (An Afraic Theas)"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "Súlúis"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "Vítneamais"
+
+#: langtab.src
+msgid "Breton"
+msgstr "Briotáinis"
+
+#: langtab.src
+msgid "Kalaallisut"
+msgstr "Graonlainnis"
+
+#: langtab.src
+msgid "Ndebele, South"
+msgstr "Ndebele Theas"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "Sótóis Theas"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "Suaisis"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "Songais"
+
+#: langtab.src
+msgid "Venda"
+msgstr "Veindis"
+
+#: langtab.src
+msgid "Tswana (Botswana)"
+msgstr "Suáinis (An Bhotsuáin)"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "Cóisis"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "Siolóinis"
+
+#: langtab.src
+msgid "Moore"
+msgstr "Móiréis"
+
+#: langtab.src
+msgid "Bambara"
+msgstr "Bambáiris"
+
+#: langtab.src
+msgid "Akan"
+msgstr "Acáinis"
+
+#: langtab.src
+msgid "Luxembourgish"
+msgstr "Lucsambuirgis"
+
+#: langtab.src
+msgid "Friulian"
+msgstr "Friúilis"
+
+#: langtab.src
+msgid "Fijian"
+msgstr "Fidsis"
+
+#: langtab.src
+msgid "Afrikaans (Namibia)"
+msgstr "Afracáinis (An Namaib)"
+
+#: langtab.src
+msgid "English (Namibia)"
+msgstr "Béarla (An Namaib)"
+
+#: langtab.src
+msgid "Walloon"
+msgstr "Vallúnais"
+
+#: langtab.src
+msgid "Coptic"
+msgstr "Coptais"
+
+#: langtab.src
+msgid "Tigrigna (Eritrea)"
+msgstr "Tigrínis (An Eiritré)"
+
+#: langtab.src
+msgid "Tigrigna (Ethiopia)"
+msgstr "Tigrínis (An Aetóip)"
+
+#: langtab.src
+msgid "Amharic"
+msgstr "Amáiris"
+
+#: langtab.src
+msgid "Kirghiz"
+msgstr "Cirgisis"
+
+#: langtab.src
+msgid "German (Belgium)"
+msgstr "Gearmáinis (An Bheilg)"
+
+#: langtab.src
+msgid "Chuvash"
+msgstr "Suvaisis"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "Maemarais"
+
+#: langtab.src
+msgid "Hausa (Nigeria)"
+msgstr "Hásais (An Nigéir)"
+
+#: langtab.src
+msgid "Hausa (Ghana)"
+msgstr "Hásais (Gána)"
+
+#: langtab.src
+msgid "Éwé"
+msgstr "Éivéis"
+
+#: langtab.src
+msgid "English (Ghana)"
+msgstr "Béarla (Gána)"
+
+#: langtab.src
+msgid "Sango"
+msgstr "Sangóis"
+
+#: langtab.src
+msgid "Tagalog"
+msgstr "Tagálaigis"
+
+#: langtab.src
+msgid "Ganda"
+msgstr "Gandais"
+
+#: langtab.src
+msgid "Lingala"
+msgstr "Liongáilis"
+
+#: langtab.src
+msgid "Low German"
+msgstr "Gearmáinis Íochtarach"
+
+#: langtab.src
+msgid "Hiligaynon"
+msgstr "Hiligionóinis"
+
+#: langtab.src
+msgid "Nyanja"
+msgstr "Siseivis"
+
+#: langtab.src
+msgid "Kashubian"
+msgstr "Caisiúibis"
+
+#: langtab.src
+msgid "Spanish (Cuba)"
+msgstr "Spáinnis (Cúba)"
+
+#: langtab.src
+msgid "Tetun (Indonesia)"
+msgstr "Teitinis (An Indinéis)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, North)"
+msgstr "Ceatsuais (An Bholaiv Thuaidh)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, South)"
+msgstr "Ceatsuais (An Bholaiv Theas)"
+
+#: langtab.src
+msgid "Somali"
+msgstr "Somáilis"
+
+#: langtab.src
+msgid "Sami, Inari (Finland)"
+msgstr "Sáimis, Inari (An Fhionlainn)"
+
+#: langtab.src
+msgid "Sami, Lule (Norway)"
+msgstr "Sáimis, Lule (An Fhionlainn)"
+
+#: langtab.src
+msgid "Sami, Lule (Sweden)"
+msgstr "Sáimis, Lule (An tSualainn)"
+
+#: langtab.src
+msgid "Sami, Northern (Finland)"
+msgstr "Sáimis Thuaidh (An Fhionlainn)"
+
+#: langtab.src
+msgid "Sami, Northern (Norway)"
+msgstr "Sáimis Thuaidh (An Iorua)"
+
+#: langtab.src
+msgid "Sami, Northern (Sweden)"
+msgstr "Sáimis Thuaidh (An tSualainn)"
+
+#: langtab.src
+msgid "Sami, Skolt (Finland)"
+msgstr "Sáimis Skolt (An Fhionlainn)"
+
+#: langtab.src
+msgid "Sami, Southern (Norway)"
+msgstr "Sáimis Theas (An Iorua)"
+
+#: langtab.src
+msgid "Sami, Southern (Sweden)"
+msgstr "Sáimis Theas (An tSualainn)"
+
+#: langtab.src
+msgid "Sami, Kildin (Russia)"
+msgstr "Sáimis, Kildin (An Rúis)"
+
+#: langtab.src
+msgid "Bodo"
+msgstr "Boróis"
+
+#: langtab.src
+msgid "Dogri"
+msgstr "Dóigris"
+
+#: langtab.src
+msgid "Maithili"
+msgstr "Maitilis"
+
+#: langtab.src
+msgid "Santali"
+msgstr "Santáilis"
+
+#: langtab.src
+msgid "Tetun (Timor-Leste)"
+msgstr "Teitinis (Tíomór Thoir)"
+
+#: langtab.src
+msgid "Turkmen"
+msgstr "Tuircméinis"
+
+#: langtab.src
+msgid "Maltese"
+msgstr "Máltais"
+
+#: langtab.src
+msgid "Oromo"
+msgstr "Oraimis"
+
+#: langtab.src
+msgid "Greek, Ancient"
+msgstr "An tSean-Ghréigis"
+
+#: langtab.src
+msgid "Yiddish (Israel)"
+msgstr "Giúdais (Iosrael)"
+
+#: langtab.src
+msgid "Quechua (Ecuador)"
+msgstr "Ceatsuais (Eacuadór)"
+
+#: langtab.src
+msgid "Uyghur"
+msgstr "Úígiúiris"
+
+#: langtab.src
+msgid "Asturian"
+msgstr "Astúiris"
+
+#: langtab.src
+msgid "Sorbian, Upper"
+msgstr "Sorbais Uachtarach"
+
+#: langtab.src
+msgid "Sorbian, Lower"
+msgstr "Sorbais Íochtarach"
+
+#: langtab.src
+msgid "Latgalian"
+msgstr "Latgáilis"
+
+#: langtab.src
+msgid "Maore"
+msgstr "Mahóiris"
+
+#: langtab.src
+msgid "Bushi"
+msgstr "Búisis"
+
+#: langtab.src
+msgid "Tahitian"
+msgstr "Taihítis"
+
+#: langtab.src
+msgid "Malagasy, Plateau"
+msgstr "Malagásais, Ardchlár"
+
+#: langtab.src
+msgid "Papiamentu (Netherlands Antilles)"
+msgstr "Paipeamaintis (Aintillí na hÍsiltíre)"
+
+#: langtab.src
+msgid "Papiamento (Aruba)"
+msgstr "Paipeamaintis (Aruba)"
+
+#: langtab.src
+msgid "Sardinian, Campidanese"
+msgstr "Sairdínis, Campadánach"
+
+#: langtab.src
+msgid "Sardinian, Gallurese"
+msgstr "Sairdínis, Gallúrach"
+
+#: langtab.src
+msgid "Sardinian, Logudorese"
+msgstr "Sairdínis, Logadórach"
+
+#: langtab.src
+msgid "Sardinian, Sassarese"
+msgstr "Sairdínis, Sasárach"
+
+#: langtab.src
+msgid "Bafia"
+msgstr "Báifis"
+
+#: langtab.src
+msgid "Gikuyu"
+msgstr "Ciocúis"
+
+#: langtab.src
+msgid "Yoruba"
+msgstr "Iarúibis"
+
+#: langtab.src
+msgid "Rusyn (Ukraine)"
+msgstr "Rúisínis (An Úcráin)"
+
+#: langtab.src
+msgid "Rusyn (Slovakia)"
+msgstr "Rúisínis (An tSlóvaic)"
+
+#: langtab.src
+msgid "Yiddish (USA)"
+msgstr "Giúdais (SAM)"
+
+#: langtab.src
+msgid "Hawaiian"
+msgstr "Haváis"
+
+#: langtab.src
+msgid "Limbu"
+msgstr "Liombúis"
+
+#: langtab.src
+msgid "Haitian"
+msgstr "Criól Háítíoch"
+
+#: langtab.src
+msgid "KeyID"
+msgstr "Aitheantais"
+
+#: langtab.src
+msgid "Kyrgyz (China)"
+msgstr "Cirgisis (An tSín)"
+
+#: langtab.src
+msgid "English (Malawi)"
+msgstr "Béarla (An Mhaláiv)"
+
+#: langtab.src
+msgid "Papiamento (Curaçao)"
+msgstr "Paipeamaintis (Curasao)"
+
+#: langtab.src
+msgid "Tibetan (India)"
+msgstr "Tibéidis (An India)"
+
+#: langtab.src
+msgid "Cornish"
+msgstr "Coirnis"
+
+#: langtab.src
+msgid "Sami, Pite (Sweden)"
+msgstr "Sáimis, Pite (An tSualainn)"
+
+#: langtab.src
+msgid "French (Burkina Faso)"
+msgstr "Fraincis (Buircíne Fasó)"
+
+#: langtab.src
+msgid "French (Mali)"
+msgstr "Fraincis (Mailí)"
+
+#: langtab.src
+msgid "French (Senegal)"
+msgstr "Fraincis (An tSeineagáil)"
+
+#: langtab.src
+msgid "French (Benin)"
+msgstr "Fraincis (Beinin)"
+
+#: langtab.src
+msgid "French (Niger)"
+msgstr "Fraincis (An Nígir)"
+
+#: langtab.src
+msgid "French (Togo)"
+msgstr "Fraincis (Tóga)"

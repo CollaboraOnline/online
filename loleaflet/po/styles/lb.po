@@ -1986,3 +1986,255 @@ msgid "Mongolian"
 msgstr "Mongolesch"
 
 # Translation of Special Characters dialog from LibreOffice core
+
+#: langtab.src
+msgid "Unknown"
+msgstr "Onbekannt"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "Albanesch"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "Arabesch"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "Armenesch"
+
+#: langtab.src
+msgid "Basque"
+msgstr "Baskesch"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "Bengalesch (Indien)"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "Bulgaresch"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "Wäissrussesch"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "Katalanesch"
+
+#: langtab.src
+msgid "Catalan (Valencian)"
+msgstr "Katalanesch (Valencianesch)"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "Chinesesch (traditionell)"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "Chinesesch (vereinfacht)"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "Kroatesch"
+
+#: langtab.src
+msgid "Czech"
+msgstr "Tschechesch"
+
+#: langtab.src
+msgid "Danish"
+msgstr "Dänesch"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "Hollännesch (Holland)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "Englesch (USA)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "Englesch (Südafrika)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "Estnesch"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "Finnesch"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "Färöesch"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "Franséisch (Frankräich)"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "Däitsch (Däitschland)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "Däitsch (Schwäiz)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "Däitsch (Éisterräich)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "Griichesch"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "Hebräesch"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "Ungaresch"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "Islännesch"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "Indonesesch"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "Italienesch (Italien)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "Japanesch"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "Lettesch"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "Litauesch"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "Mazedonesch"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "Marathesch"
+
+#: langtab.src
+msgid "Polish"
+msgstr "Polnisch"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "Portugisesch (Portugal)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "Portugisesch (Brasilien)"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "Rätoromanisch"
+
+#: langtab.src
+msgid "Russian"
+msgstr "Russesch"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "Slowakesch"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "Slovenesch"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "Spuenesch (Spuenien)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "Schwedesch (Schweden)"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "Türkesch"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "Ukrainesch"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "Walisesch"
+
+#: langtab.src
+msgid "Galician"
+msgstr "Galizesch"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "Nördliches Sotho"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "Bosnesch"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "Bengalesch (Bangladesch)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "Okzitanesch"
+
+#: langtab.src
+msgid "Lao"
+msgstr "Laotesch"
+
+#: langtab.src
+msgid "Irish"
+msgstr "Iresch"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "Georgesch"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "Vietnamesesch"
+
+#: langtab.src
+msgid "Breton"
+msgstr "Bretonesch"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "Singhalesesch"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "Burmesesch"
+
+#: langtab.src
+msgid "Maltese"
+msgstr "Maltesesch"
+
+#: langtab.src
+msgid "Uyghur"
+msgstr "Uiguresch"
+
+#: langtab.src
+msgid "Asturian"
+msgstr "Asturesch"

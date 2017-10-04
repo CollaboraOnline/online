@@ -2245,3 +2245,31 @@ msgstr "የተለዩ ባህሪዎች"
 #: asianphoneticguidedialog.ui
 msgid "Preview:"
 msgstr "ቅድመ እይታ:"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[ምንም]"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "ያልታወቀ"
+
+#: langtab.src
+msgid "Kazakh"
+msgstr "Kazak"
+
+#: langtab.src
+msgid "Papiamento (Curaçao)"
+msgstr "Papiamento (Aruba)"
+
+#: langtab.src
+msgid "Venetian"
+msgstr "ቬኒሺያን"
+
+#: langtab.src
+msgid "English (Mauritius)"
+msgstr "ኢንግልዝኛ (ሞሪሸስ)"
+
+#: langtab.src
+msgid "French (Mauritius)"
+msgstr "ፈረንሳይኛ (ሞሪሸስ)"
