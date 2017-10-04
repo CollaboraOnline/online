@@ -363,9 +363,9 @@ L.Control.Menubar = L.Control.extend({
 			$menuParagraph = $('#menu-resetparagraph').parent();
 			$menuDefault = $('#menu-resetlanguage').parent();
 			for (var lang in e.commandValues) {
-				$menuSelection.append(this._createLangMenuItem(e.commandValues[lang], encodeURIComponent('Current_' + e.commandValues[lang])));
-				$menuParagraph.append(this._createLangMenuItem(e.commandValues[lang], encodeURIComponent('Paragraph_' + e.commandValues[lang])));
-				$menuDefault.append(this._createLangMenuItem(e.commandValues[lang], encodeURIComponent('Default_' + e.commandValues[lang])));
+				$menuSelection.append(this._createLangMenuItem(_(e.commandValues[lang]), encodeURIComponent('Current_' + e.commandValues[lang])));
+				$menuParagraph.append(this._createLangMenuItem(_(e.commandValues[lang]), encodeURIComponent('Paragraph_' + e.commandValues[lang])));
+				$menuDefault.append(this._createLangMenuItem(_(e.commandValues[lang]), encodeURIComponent('Default_' + e.commandValues[lang])));
 			}
 		}
 	},

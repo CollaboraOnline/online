@@ -1176,7 +1176,7 @@ map.on('commandstatechanged', function (e) {
 		}
 	}
 	else if (commandName === '.uno:LanguageStatus') {
-		$('#LanguageStatus').html(state);
+		$('#LanguageStatus').html(_(state));
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
 		var modifiedStatus = e.state === 'true';
