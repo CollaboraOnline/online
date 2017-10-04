@@ -173,15 +173,13 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'}]
 			},
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
-				{name: _('Automatic Spell Checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
-				{name: _('Language'), type: 'menu', menu: [
-					{name: _('For Selection'), type: 'menu', menu: [
-						{name: _('Reset to Default Language'), id: 'resetselection', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Current_RESET_LANGUAGES'}]},
-					{name: _('For Paragraph'), type: 'menu', menu: [
-						{name: _('Reset to Default Language'), id: 'resetparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_RESET_LANGUAGES'}]},
-					{name: _('For all Text'), type: 'menu', menu: [
-						{name: _('Reset to Default Language'), id: 'resetlanguage', type: 'unocommand', uno:'.uno:LanguageStatus?Language:string=Default_RESET_LANGUAGES'}]}
-				]}
+				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
+				{name: _('Language for selection'), type: 'menu', menu: [
+					{name: _('Reset to Default Language'), id: 'resetselection', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Current_RESET_LANGUAGES'}]},
+				{name: _('Language for paragraph'), type: 'menu', menu: [
+					{name: _('Reset to Default Language'), id: 'resetparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_RESET_LANGUAGES'}]},
+				{name: _('Language for entire document'), type: 'menu', menu: [
+					{name: _('Reset to Default Language'), id: 'resetlanguage', type: 'unocommand', uno:'.uno:LanguageStatus?Language:string=Default_RESET_LANGUAGES'}]}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
@@ -246,7 +244,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			},
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
-				{name: _('Automatic Spell Checking'), type: 'unocommand', uno: '.uno:SpellOnline'}
+				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
@@ -298,7 +296,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
 			},
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
-				{name: _('Automatic Spell Checking'), type: 'unocommand', uno: '.uno:SpellOnline'}
+				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
