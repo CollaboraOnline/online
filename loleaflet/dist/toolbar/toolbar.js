@@ -1021,15 +1021,15 @@ map.on('doclayerinit', function () {
 			{type: 'break', id:'break8'},
 			{type: 'html',  id: 'StateTableCell',
 				html: '<div id="StateTableCell" class="loleaflet-font" title="'+_('Choice of functions')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-		        {type: 'menu', id: 'StateTableCellMenu', caption: '', current: 7, items: [
-				{ func: '1', text: _('Average'), icon: ''},
-				{ func: '3', text: _('CountA'), icon: ''},
-				{ func: '2', text: _('Count'), icon: ''},
-				{ func: '4', text: _('Maximum'), icon: ''},
-				{ func: '5', text: _('Minimum'), icon: ''},
-				{ func: '9', text: _('Sum'), icon: ''},
-				{ func: '12', text: _('Selection count'), icon: ''},
-				{ func: '16', text: _('None'), icon: 'selected'},
+		        {type: 'menu', id: 'StateTableCellMenu', caption: '', current: 5, items: [
+				{ func: '2', text: _('Average'), icon: ''},
+				{ func: '8', text: _('CountA'), icon: ''},
+				{ func: '4', text: _('Count'), icon: ''},
+				{ func: '16', text: _('Maximum'), icon: ''},
+				{ func: '32', text: _('Minimum'), icon: ''},
+				{ func: '512', text: _('Sum'), icon: 'selected'},
+				{ func: '8192', text: _('Selection count'), icon: ''},
+				{ func: '1', text: _('None'), icon: ''},
 		]},
 		]);
 
