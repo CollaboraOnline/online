@@ -101,11 +101,11 @@ AC_ARG_WITH([support-public-key],
                 [Implements signed key with expiration required for support. Almost certainly you don not want to use this.]))
 
 AC_ARG_WITH([max-connections],
-            AS_HELP_STRING([--max-connections],
+            AS_HELP_STRING([--with-max-connections],
                            [Set the limit on the total number of client connections. Def: 20, Min: 3.]))
 
 AC_ARG_WITH([max-documents],
-             AS_HELP_STRING([--max-documents],
+             AS_HELP_STRING([--with-max-documents],
                            [Set the limit on the total number of documents. Def: 10, Min: 2.]))
 
 AC_ARG_WITH([compiler-plugins],
