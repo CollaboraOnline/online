@@ -1951,3 +1951,99 @@ msgstr "تھائی لینڈ"
 #: GenericCommands.xcu
 msgid "Font Name:"
 msgstr "فانٹ نام:"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[کوئی نہیں]"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "عربی"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "چینی(روایتی)"
+
+#: langtab.src
+msgid "Czech"
+msgstr "چیکوسلوویکی"
+
+#: langtab.src
+msgid "Danish"
+msgstr "ڈینش"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "ڈچ(نیدرلینڈ‎س)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "انگریزی(یو ایس اے)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "ایستونیا"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "فن لینڈ"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "فرانسیسی(فرانس)"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "جرمن(جرمنی)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "یونئنی"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "عبرانی"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "ہنگروی"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "اطالوی(اٹلی)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "جاپانی"
+
+#: langtab.src
+msgid "Polish"
+msgstr "پولینڈ"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "پرتگالی(پرتگال)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "پرتگالی(برازیل)"
+
+#: langtab.src
+msgid "Russian"
+msgstr "روسی"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr " سپینی( سپین)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "سویڈنی(سویڈن)"
+
+#: langtab.src
+msgid "Thai"
+msgstr "تھائی لینڈ"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "ترکی"

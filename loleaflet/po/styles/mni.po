@@ -1984,3 +1984,99 @@ msgstr "থাই"
 #: GenericCommands.xcu
 msgid "Font Name:"
 msgstr "ফোন্ত মমিং:"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[অমত্তা নত্তে]"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "আরবী"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "চীনাগী (থাইনগী ওইবা)"
+
+#: langtab.src
+msgid "Czech"
+msgstr "চ্চেক"
+
+#: langtab.src
+msgid "Danish"
+msgstr "দেনিস"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "দচ্চ (নেদরলেন্দ)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "ইংরেজী (USA)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "ইস্তোনিয়ান"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "ফিন্নিশ"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "ফ্রেঞ্চ (ফ্ৰান্স)"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "জর্মন (জর্মনী)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "গ্রীক"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "হিব্রু"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "হংগেরীয়ান"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "ইটালিয়ান (ইটালি)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "জাপানীজ"
+
+#: langtab.src
+msgid "Polish"
+msgstr "পোলিশ"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "পোৰ্টুগীজ (পোৰ্টুগাল)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "পোৰ্টুগীজ (ব্ৰাজিল)"
+
+#: langtab.src
+msgid "Russian"
+msgstr "রুসিয়ান"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "স্পেনিস (স্পেইন)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "স্বইদিস (স্বইডেন)"
+
+#: langtab.src
+msgid "Thai"
+msgstr "থাই"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "তৰ্কী লোন"

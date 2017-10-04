@@ -2372,3 +2372,995 @@ msgstr "ဖောင့်အမည်:"
 #: specialcharacters.ui
 msgid "Special Characters"
 msgstr "အထူး အက္ခရာ၊သင်္ကေတများ"
+
+#: langtab.src
+msgid "[None]"
+msgstr "(ဘာမျှမရှိပါ)"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "မသိပါ"
+
+#: langtab.src
+msgid "Afrikaans (South Africa)"
+msgstr "အာဖရိကန်(တောင်အာဖရိက)"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "အဲဘေးနီးယန်း"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "အာရဗစ်"
+
+#: langtab.src
+msgid "Arabic (Algeria)"
+msgstr "အာရဗစ်(အဲဂျေးရီးယား)"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "အာရဗစ်(ဘာရိမ်း)"
+
+#: langtab.src
+msgid "Arabic (Chad)"
+msgstr "အာရဗစ် (ချက်)"
+
+#: langtab.src
+msgid "Arabic (Comoros)"
+msgstr "အာရဗစ် (ခိုမိုရိုစ်)"
+
+#: langtab.src
+msgid "Arabic (Djibouti)"
+msgstr "အာရဗစ် (ဒီဂျီဘောတီ)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "အာရဗစ်(အီဂျစ်)"
+
+#: langtab.src
+msgid "Arabic (Eritrea)"
+msgstr "အာရဗစ် (အီသီးယား)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "အာရဗစ်(အီရတ်)"
+
+#: langtab.src
+msgid "Arabic (Israel)"
+msgstr "အာရဗစ် (အစ်စရေး)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "အာရဗစ်(ဂျော်ဒန်)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "အာရဗစ်(ကူဝိတ်)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "အာရဗစ်(လဘနွန်)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "အာရဗစ်(လစ်ဗျား)"
+
+#: langtab.src
+msgid "Arabic (Mauritania)"
+msgstr "အာရဗစ် (မောရီတနီးယား)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "အာရဗစ်(မော်ရကို)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "အာရဗစ်(အိုမန်)"
+
+#: langtab.src
+msgid "Arabic (Palestine)"
+msgstr "အာရဗစ် (ပါလက်စတိုင်း)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "အာရဗစ်(ကာတာ)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "အာရဗစ်(ဆောဒီအာရေးဗီးယား)"
+
+#: langtab.src
+msgid "Arabic (Somalia)"
+msgstr "အာရဗစ် (ဆိုမာလီးယား)"
+
+#: langtab.src
+msgid "Arabic (Sudan)"
+msgstr "အာရဗစ် (ဆူဒန်)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "အာရဗစ်(ဆီရီးယား)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "အာရဗစ်(တူနီဆီးရား)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "အာရဗစ်(ယူအေအီး)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "အာရဗစ်(ရဲမန်)"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "အာမေးနီးယန်း"
+
+#: langtab.src
+msgid "Azerbaijani Latin"
+msgstr "အေဇာဘဂျနီ လက်တင်"
+
+#: langtab.src
+msgid "Azerbaijani Cyrillic"
+msgstr "အေဇာဘဂျနီ ဆီးရီးလစ်"
+
+#: langtab.src
+msgid "Basque"
+msgstr "ဘက်စ်ကျူ"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "ဘင်္ဂါလီ(အိန္ဒိယ)"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "ဘာဂါရီယန်"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "ဘလာရုဆီယန်"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "ကတလန်"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "တရုတ်(ရိုးရာ)"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "တရုတ်(ရိုးရိုး)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "တရုတ်(ဟောင်ကောင်)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "တရုတ်(စင်္ကာပူ)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "တရုတ်(မက်ကော)"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "ခရိုအေတီယန်"
+
+#: langtab.src
+msgid "Czech"
+msgstr "ချက်"
+
+#: langtab.src
+msgid "Danish"
+msgstr "ဒက်နစ်ခ်ျ"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "ဒတ်ခ်ျ (နယ်သာလန်)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "ဒတ်ခ်ျ(ဘယ်ဂျီယန်)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "အင်္ဂလိပ်(ယူအက်စ်အေ)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "အင်္ဂလိပ်(ယူကေ)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "အင်္ဂလိပ်(ဩစတေးလျ)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "အင်္ဂလိပ်(ကနေဒါ)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "အင်္ဂလိပ်(နယူးဇီလန်)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "အင်္ဂလိပ်(တောင်အာဖရိက)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "အင်္ဂလိပ်(ဂျမေကာ)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "အင်္ဂလိပ်(ကာရီဘီယန်)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "အင်္ဂလိပ်(ဘဲလီဇီ)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "အင်္ဂလိပ်(ထရီနီဒတ်)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "အင်္ဂလိပ်(ဇင်ဘာဘွေ)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "အင်္ဂလိပ်(ဖိလစ်ပိုင်)"
+
+#: langtab.src
+msgid "English (India)"
+msgstr "အင်္ဂလိပ်(အိန္ဒိယ)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "အက်စတိုနီယန်"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "ဖစ်နစ်ခ်ျ"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "ဖာရိုစ်"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "ပြင်သစ်(ဖရန့်စ်)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "ပြင်သစ်(ဘယ်လဂျီယန်)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "ပြင်သစ်(ကနေဒါ)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "ပြင်သစ်(ဆွစ်ဇလန်)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "ပြင်သစ်(လူဇမ်ဘက်)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "ပြင်သစ်(မိုနာကို)"
+
+#: langtab.src
+msgid "Gascon"
+msgstr "ဂက်စ်ကွန်"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "ဂျာမန်(ဂျာမနီ)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "ဂျာမန်(ဆွစ်ဇလန်)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "ဂျာမန်(ဩစတေးလျ)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "ဂျာမန်(လူဇန်ဘက်)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "ဂျာမန်(လိုင်ခ်ျတန်တိန်)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "ဂရိ"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "ဂူဂျာရတီ"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "ဟီဘရူး"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "ဟင်ဒီ"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "ဟောဂေးရီးယန်း"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "အန္တလန်တစ်"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "အင်ဒိုနီးရှား"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "အီတလီလျန်(အီတလီ)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "အီတလီလျန် (ဆွစ်ဇလန်)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "ဂျပန်"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "ကနေဒါ"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "ကတ်ခ်ျမီရီ(ကတ်ခ်ျမီးယား)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "ကတ်ခ်ျမီရီ(အိန္တိယ)"
+
+#: langtab.src
+msgid "Kazakh"
+msgstr "ကဇက်"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "ကွန်ကာနီ"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "ကိုရီးယား(ရော့ခ်)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "လာဗီးယန်း"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "လီသူနေးနီးယန်း"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "မက်ဆီဒိုးနီးယန်း"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "မလေး(မလေးရှား)"
+
+#: langtab.src
+msgid "Malay (Brunei Darussalam)"
+msgstr "မလေး (ဘရူနိုင်း ဒါရုဆလင်)"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "မလေးအလမ်"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "မနီပျူရီ"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "မာရာသီ"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "နီပလီ(နီပေါ)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "နီပလီ(အိန္ဒိယ)"
+
+#: langtab.src
+msgid "Norwegian, Bokmål"
+msgstr "နော်ဝေဂျီယန်၊ ဘော့မဲ"
+
+#: langtab.src
+msgid "Norwegian, Nynorsk"
+msgstr "နော်ဝေဂျီယန်၊ နီနော့"
+
+#: langtab.src
+msgid "Polish"
+msgstr "ပိုလစ်ခ်ျ"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "ပေါ်တူဂီ(ပေါ်တူဂယ်)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "ပေါ်တူဂီ(ဘရာဇီး)"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "ပန်ချာဘီ"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "ရဟေတို-ရောမ"
+
+#: langtab.src
+msgid "Russian"
+msgstr "ရှရား"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "ဆန်းစကစ်"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia)"
+msgstr "ဆာဗီယန်း ဆီးရီးလစ် (ဆာဗီးယား)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia)"
+msgstr "ဆာဗီယန်း လက်တင် (ဆာဗီးယား)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Montenegro)"
+msgstr "ဆာဗီယန်း ဆီးရီးလစ် (မွန်တီနီဂရိုး)"
+
+#: langtab.src
+msgid "Serbian Latin (Montenegro)"
+msgstr "ဆာဗီယန်း လက်တင် (မွန်တီနီဂရိုး)"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "စင်ဒီ"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "ဆလိုဗက်"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "ဆလိုဗေးနီးယန်း"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "စပိန်နစ်ခ်ျ (စပိန်)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "စပိန်နစ်ခ်ျ (မက်ဆီကို)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "စပိန်နစ်ခ်ျ (ဂေါတီမာလ)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "စပိန်နစ်ခ်ျ (ကော့စတာ ရီကာ)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "စပိန်နစ်ခ်ျ (ပနားမား)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "စပိန်နစ်ခ်ျ (ဒမ် ရပ်)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "စပိန်နစ်ခ်ျ (ဗင်နီဇွဲလား)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "စပိန်နစ်ခ်ျ (ကိုလမ်ဘီယာ)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "စပိန်နစ်ခ်ျ (ပီရူး)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "စပိန်နစ်ခ်ျ (အာဂျင်တီးနား)"
+
+#: langtab.src
+msgid "Spanish (Ecuador)"
+msgstr "စပိန်နစ်ခ်ျ (အီကူအေဒါ)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "စပိန်နစ်ခ်ျ (ချီလီ)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "စပိန်နစ်ခ်ျ (ဥရုဂွေး)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "စပိန်နစ်ခ်ျ (ပါရာဂွေး)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "စပိန်နစ်ခ်ျ (ဘောဗီးယား)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "စပိန်နစ်ခ်ျ (အီးအိုင် ဆာဗေးဒါ)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "စပိန်နစ်ခ်ျ (ဟွန်ဒူရက်စ်)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "စပိန်နစ်ခ်ျ (နီကာရဂူရ)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "စပိန်နစ်ခ်ျ (ပရက်တို ရီကို)"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "ဆွာဟီလီ(ကင်ညာ)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "ဆွာဟီလီ(ဆွီဒင်)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "ဆွာဟီလီ(ဖင်လန်)"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "တာဂျစ်"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "တမေးလ်"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "တတာ"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "တီလူဂု"
+
+#: langtab.src
+msgid "Thai"
+msgstr "ထိုင်း"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "တာကစ်ခ်ျ"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "အာဒု (ပါကစ်စတန်)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "အာဒု (အိန္ဒိယ)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "ယူကနေးနီးယန်း"
+
+#: langtab.src
+msgid "Uzbek Latin"
+msgstr "ဥဇဘက် လက်တင်"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "ဝီလက်ခ်ျ"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "အက်စပရန်တို"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "ကင်ညာဝန်ဒ (၀ရမ်ဒ)"
+
+#: langtab.src
+msgid "Galician"
+msgstr "ဂယ်လ်ဆီယန်"
+
+#: langtab.src
+msgid "Dhivehi"
+msgstr "ဒဟီဗီဟီ"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "တောင်ဘက်ဆောသို"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "ဂေးလစ်(စကော့တလန်)"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "အင်တာလင်ဂွာ"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "ဘော့စနီးယန်"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "ဘင်္ဂါလီ(ဘင်္ဂါးလားဒေ့ရှေ့)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "အောဆီတန်"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "ခမာ"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "ဆာဒီနီယန်"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "ဆွာဟီလီ(တန်ဇနီးယား)"
+
+#: langtab.src
+msgid "Lao"
+msgstr "လာအို"
+
+#: langtab.src
+msgid "Irish"
+msgstr "အီရစ်"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "တီဘီတန်(ပီအာ တရုတ်)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "ဂျော်ဂျီယန်"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "ဖရီဆီယန်"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "တဆွန်န (တောင်အာဖရိက)"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "ဇူလူ"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "ဗီနာမိစ်"
+
+#: langtab.src
+msgid "Breton"
+msgstr "ဘရီတန်"
+
+#: langtab.src
+msgid "Kalaallisut"
+msgstr "ကလလီဆွတ်"
+
+#: langtab.src
+msgid "Ndebele, South"
+msgstr "နဒီဘလီ (တောင်)"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "တောင်ဘက် ဆော်သို"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "ဆွာဇီ"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "တဆွန်ဂ"
+
+#: langtab.src
+msgid "Venda"
+msgstr "ဗန်ဒ"
+
+#: langtab.src
+msgid "Tswana (Botswana)"
+msgstr "တက်စ်၀န (ဘော့စ်၀န)"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "ဇောစ"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "စင်ဟလာ"
+
+#: langtab.src
+msgid "Moore"
+msgstr "မိုးရီ"
+
+#: langtab.src
+msgid "Bambara"
+msgstr "ဘန်ဘရာ"
+
+#: langtab.src
+msgid "Akan"
+msgstr "အာကန်"
+
+#: langtab.src
+msgid "Luxembourgish"
+msgstr "လူဇန်ဘက်"
+
+#: langtab.src
+msgid "Friulian"
+msgstr "ဖရူလီယန်"
+
+#: langtab.src
+msgid "Fijian"
+msgstr "ဖီဂျီယန်"
+
+#: langtab.src
+msgid "Afrikaans (Namibia)"
+msgstr "အာဖရိကန် (နမီဘီးယား)"
+
+#: langtab.src
+msgid "English (Namibia)"
+msgstr "အင်္ဂလိပ်(နမီဘီးယား)"
+
+#: langtab.src
+msgid "Walloon"
+msgstr "ဝေါလွန်"
+
+#: langtab.src
+msgid "Coptic"
+msgstr "ကော့တစ်"
+
+#: langtab.src
+msgid "Tigrigna (Eritrea)"
+msgstr "တီဂျစ်နား (အီသီးယား)"
+
+#: langtab.src
+msgid "Tigrigna (Ethiopia)"
+msgstr "တီဂျစ်နား (အီသီးယိုးပီးယား)"
+
+#: langtab.src
+msgid "Amharic"
+msgstr "အမ်ဟရစ်"
+
+#: langtab.src
+msgid "Kirghiz"
+msgstr "ကီးဟစ်"
+
+#: langtab.src
+msgid "German (Belgium)"
+msgstr "ဂျာမန်(ဘယ်လ်ဂျီယန်)"
+
+#: langtab.src
+msgid "Chuvash"
+msgstr "ကောဗက်ခ်ျ"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "မြန်မာ"
+
+#: langtab.src
+msgid "Hausa (Nigeria)"
+msgstr "ဟောစ(နိုင်ဂျေးရီးယား)"
+
+#: langtab.src
+msgid "Hausa (Ghana)"
+msgstr "ဟောစ (ဂဟန)"
+
+#: langtab.src
+msgid "English (Ghana)"
+msgstr "အင်္ဂလိပ်(ဂမ်န)"
+
+#: langtab.src
+msgid "Sango"
+msgstr "ဆန်းဂို"
+
+#: langtab.src
+msgid "Tagalog"
+msgstr "တာဂလော့"
+
+#: langtab.src
+msgid "Ganda"
+msgstr "ဂမ်ဒ"
+
+#: langtab.src
+msgid "Lingala"
+msgstr "လင်ဂလာ"
+
+#: langtab.src
+msgid "Low German"
+msgstr "ဂျာမန် အောက်ဘက်"
+
+#: langtab.src
+msgid "Hiligaynon"
+msgstr "ဟီလီဂေနွန်"
+
+#: langtab.src
+msgid "Nyanja"
+msgstr "နီယန်ဂျာ"
+
+#: langtab.src
+msgid "Kashubian"
+msgstr "ကက်စဘီးယန်း"
+
+#: langtab.src
+msgid "Spanish (Cuba)"
+msgstr "စပိန်နစ်ခ်ျ (ကူဘ)"
+
+#: langtab.src
+msgid "Tetun (Indonesia)"
+msgstr "တီထွန်း(အင်ဒိုနီးရှား)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, North)"
+msgstr "ကူကွခ်ျ(ဘောလ်ဗီးယား၊ မြောက်ဘက်)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, South)"
+msgstr "ကူကွခ်ျ(ဘောလ်ဗီးယား၊ တောင်ဘက်)"
+
+#: langtab.src
+msgid "Somali"
+msgstr "ဆိုမာလီ"
+
+#: langtab.src
+msgid "Sami, Inari (Finland)"
+msgstr "ဆမီ၊ အီနာရီ (ဖင်လန်)"
+
+#: langtab.src
+msgid "Sami, Lule (Norway)"
+msgstr "ဆမီ၊ လူလဲ့ (နော်ဝေ)"
+
+#: langtab.src
+msgid "Sami, Lule (Sweden)"
+msgstr "ဆမီ၊ လူလဲ့ (ဆွီဒင်)"
+
+#: langtab.src
+msgid "Sami, Northern (Finland)"
+msgstr "ဆမီ၊ နော်သန် (ဖင်လန်)"
+
+#: langtab.src
+msgid "Sami, Northern (Norway)"
+msgstr "ဆမီ၊​ နော်သန်​ (နော်ဝေ)"
+
+#: langtab.src
+msgid "Sami, Northern (Sweden)"
+msgstr "ဆမီ၊ နော်သန်​(ဆွီဒင်)"
+
+#: langtab.src
+msgid "Sami, Skolt (Finland)"
+msgstr "ဆမီ၊ စကော့ (ဖင်လန်)"
+
+#: langtab.src
+msgid "Sami, Southern (Norway)"
+msgstr "ဆမီ၊ တောင်ဘက်​ (နော်ဝေ)"
+
+#: langtab.src
+msgid "Sami, Southern (Sweden)"
+msgstr "ဆမီ၊ တောင်ဘက် (ဆွီဒင်)"
+
+#: langtab.src
+msgid "Sami, Kildin (Russia)"
+msgstr "ဆာမိ၊ ကေဒင်(ရှရှား)"
+
+#: langtab.src
+msgid "Bodo"
+msgstr "ဘိုဒို"
+
+#: langtab.src
+msgid "Dogri"
+msgstr "ဒေါ့ရိ"
+
+#: langtab.src
+msgid "Maithili"
+msgstr "မာသီလီ"
+
+#: langtab.src
+msgid "Santali"
+msgstr "ဆန်တလီ"
+
+#: langtab.src
+msgid "Tetun (Timor-Leste)"
+msgstr "တီထွန်း(တိမော-လက်စ်တီ)"
+
+#: langtab.src
+msgid "Turkmen"
+msgstr "တာမန်း"
+
+#: langtab.src
+msgid "Maltese"
+msgstr "မောတိစ်"
+
+#: langtab.src
+msgid "Tok Pisin"
+msgstr "တော့က် ပီဆင်"
+
+#: langtab.src
+msgid "Shuswap"
+msgstr "ရူဆွပ်"
+
+#: langtab.src
+msgid "Oromo"
+msgstr "အိုရိုမို"
+
+#: langtab.src
+msgid "Greek, Ancient"
+msgstr "ဂရိ၊ အေးရှင့်"
+
+#: langtab.src
+msgid "Yiddish (Israel)"
+msgstr "ကူဒစ်ခ်ျ(အီရတ်)"
+
+#: langtab.src
+msgid "Quechua (Ecuador)"
+msgstr "ကူကွခ်ျ(အီကူအေဒါ)"
+
+#: langtab.src
+msgid "Uyghur"
+msgstr "ယူဂါ"
+
+#: langtab.src
+msgid "Asturian"
+msgstr "ဩစတေးနီးယန်း"
+
+#: langtab.src
+msgid "Sorbian, Upper"
+msgstr "ဆော်ဘီးယန်း (အပေါ်)"
+
+#: langtab.src
+msgid "Sorbian, Lower"
+msgstr "ဆော်ဗီးယန် (အောက်ဘက်)"
+
+#: langtab.src
+msgid "Maore"
+msgstr "မိုးရီ"
+
+#: langtab.src
+msgid "Tahitian"
+msgstr "လာဗီးယန်း"
+
+#: langtab.src
+msgid "Yiddish (USA)"
+msgstr "ရီးဒစ်ခ်ျ"
+
+#: langtab.src
+msgid "Hawaiian"
+msgstr "ဂယ်လ်ဆီယန်"
+
+#: langtab.src
+msgid "Haitian"
+msgstr "လာဗီးယန်း"
+
+#: langtab.src
+msgid "English (Malawi)"
+msgstr "အင်္ဂလိပ်(ကနေဒါ)"

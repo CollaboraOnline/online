@@ -2327,3 +2327,567 @@ msgstr "Dzina ḽa Muṅwalo:"
 #: specialcharacters.ui
 msgid "Special Characters"
 msgstr "Maledere a tshipentshela"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[A huna]"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "Tshialibania"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "Tshiarabiki (Bahrain)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "Tshiarabiki (Egipita)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "Tshiarabiki (Iraka)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "Tshiarabiki (Jorodani)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "Tshiarabiki (Khuweiti)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "Tshiarabiki (Libanoni)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "Tshiarabiki (Libiya)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "Tshiarabiki (Morokho)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "Tshiarabiki (Omani)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "Tshiarabiki (Khwatha)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "Tshiarabiki (Saudi Arabia)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "Tshiarabiki (Siria)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "Tshiarabiki (Tshunisia)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "Tshiarabiki (UAE)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "Tshiarabiki (Yemeni)"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "Tshiamenia"
+
+#: langtab.src
+msgid "Basque"
+msgstr "Tshibaskiu"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "Tshikhathalani"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "Chinese (mvelele)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "Tshitshaina (Hong Kong)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "Tshitshaina (Singapore)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "Tshitshaina (Macau)"
+
+#: langtab.src
+msgid "Czech"
+msgstr "TshiCzech"
+
+#: langtab.src
+msgid "Danish"
+msgstr "TshiDanish"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "TshiDutch (Netherlands)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "Tshidatshi (Belgium)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "Luisimane (USA)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "Tshiisimane (UK)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "Tshiisimane (Australia)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "Tshiisimane (Canada)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "Tshiisimane (New Zealand)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "Tshiisimane (Afrika Tshipembe)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "Tshiisimane (Jamaica)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "Tshiisimane (Caribbean)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "Tshiisimane (Belize)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "Tshiisimane (Trinidad)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "Tshiisimane (Zimbabwe)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "Tshiisimane (Philippines)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "TshiEstonia"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "TshiFinnish"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "Tshifaruse"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "TshiFrench (France)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "Tshifura (Belgium)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "Tshifura (Canada)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "Tshifura (Switzerland)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "Tshifura (Luxembourg)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "Tshifura (Monaco)"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "TshiGerman (Germany)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "Tshidzheremani (Switzerland)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "Tshidzheremani (Australia)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "Tshidzheremani (Luxembourg)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "Tshidzheremani (Liechtenstein)"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "Tshigudzherati"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "TshiHeberu"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "TshiHungaria"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "Tshiaisilendiki"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "Tshiindonishia"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "TshiItalia (Italy)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "Tshitaliana (Switzerland)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "TshiJapane"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "Tshikannada"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "Tshikashmiri (Kashmir)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "Tshikashmiri (India)"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "Tshikonkani"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "Tshikorea (Rok)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "Tshilativia"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "Tshilutheniani"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "Tshimakedoniani"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "Tshimaleyi (Malaysia)"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "Tshimayalami"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "Tshimanipuri"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "Tshimarathi"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "Tshinepali (Nepal)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "Tshinepali (India)"
+
+#: langtab.src
+msgid "Polish"
+msgstr "TshiPolishi"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "TshiPortuguese (Portugal)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "TshiPortuguese (Brazil)"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "Tshiraethoromentsi"
+
+#: langtab.src
+msgid "Russian"
+msgstr "TshiRussia"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "Tshisankiriti"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "Tshisindi"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "Tshisilovenia"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "TshiSpanish (Spain)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "Tshipenishi (Mexico)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "Tshipenishi (Guatamala)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "Tshipenishi (Costa Rica)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "Tshipenishi (Panama)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "Tshipenishi (Dom. Rep.)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "Tshipenishi (Venezuela)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "Tshipenishi (Colombia)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "Tshipenishi (Peru)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "Tshipenishi (Argentina)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "Tshipenishi (Chile)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "Tshipenishi (Uruguay)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "Tshipeinishi (Paragwayi)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "Tshipenishi (Bolivia)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "Tshipenisi (El Salvador)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "Tshipenishi (Honduras)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "Tshipenishi (Nicaragua)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "Tshipenishi (Puerto Rico)"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "Tshiswahili (Kenya)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "TshiSwedish (Sweden)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "Tshiswedishi (Finland)"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "Tshitamili"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "Tshitata"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "Tshitelegu"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "TshiTurkish"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "Tshiudu (Pakistan)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "Tshiudu (India)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "Tshiyukireniani"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "Tshiwelishi"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "Tshiesipiranto"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "Tshikinyarwanda (Rwanda)"
+
+#: langtab.src
+msgid "Galician"
+msgstr "Tshigalishiani"
+
+#: langtab.src
+msgid "Dhivehi"
+msgstr "Tshidivehi"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "Tshisuthu tsha Devhula"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "Tshigaliki (Scotland)"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "Inthalunguwa"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "Tshibosinia"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "Tshibengali (Bangladesh)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "Tshiosithani"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "Khimere"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "Tshisaradinia"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "Tshiswahili (Tanzania)"
+
+#: langtab.src
+msgid "Lao"
+msgstr "Tshilao"
+
+#: langtab.src
+msgid "Irish"
+msgstr "Tshiayirishi"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "Tibetani (PR Tshaina)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "Tshigeorgia"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "Tshifirisia"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "Tshitswana (Afurika Tshipembe)"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "TshiZulu"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "TshiVietnamese"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "TshiSotho tsha Vhurwa"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "TshiSwazi"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "Tshitsonga"
+
+#: langtab.src
+msgid "Venda"
+msgstr "Tshivenda"
+
+#: langtab.src
+msgid "Tswana (Botswana)"
+msgstr "Tshitswana (Botswana)"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "TshiXhosa"
+
+#: langtab.src
+msgid "Tagalog"
+msgstr "Tagalogo"

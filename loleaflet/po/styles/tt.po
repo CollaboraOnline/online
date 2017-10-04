@@ -2242,3 +2242,279 @@ msgid "Braille Patterns"
 msgstr "Брайль калыплары"
 
 # Translation of Special Characters dialog from LibreOffice core
+
+#: langtab.src
+msgid "Unknown"
+msgstr "Билгесез"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "Албан"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "Гарәп"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "Әрмән"
+
+#: langtab.src
+msgid "Basque"
+msgstr "Баск"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "Һинд Бенгал"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "Болгар"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "Беларус"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "Каталан"
+
+#: langtab.src
+msgid "Catalan (Valencian)"
+msgstr "Валенция каталан"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "Гадәти Кытай"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "Гади Кытай"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "Хорват"
+
+#: langtab.src
+msgid "Czech"
+msgstr "Чех"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "Инглиз (Көньяк Африка)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "Эстон"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "Фин"
+
+#: langtab.src
+msgid "Greek"
+msgstr "Грек"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "Гүҗәтәри"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "Иврит"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "Һинд"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "Венгр"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "Исланд"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "Индонезия"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "Япон"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "Каннада"
+
+#: langtab.src
+msgid "Kazakh"
+msgstr "Казаһ"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "Конкани"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "Латвия"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "Литва"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "Македон"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "Малаялам"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "Манипури"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "Марати"
+
+#: langtab.src
+msgid "Polish"
+msgstr "Польша"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "Бразил португал"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "Пунҗәби"
+
+#: langtab.src
+msgid "Russian"
+msgstr "Рус"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "Словак"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "Словен"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "Таҗык"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "Тамил"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "Татар"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "Телугу"
+
+#: langtab.src
+msgid "Thai"
+msgstr "Тай"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "Төрек"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "Украин"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "Уэльс"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "Эсперанто"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "Төньяк Сото"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "Босния"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "Бангладеш Бенгал"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "Кхмер"
+
+#: langtab.src
+msgid "Lao"
+msgstr "Лао"
+
+#: langtab.src
+msgid "Irish"
+msgstr "Ирланд"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "Грузин"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "Зулу"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "Вьетнам"
+
+#: langtab.src
+msgid "Breton"
+msgstr "Бретон"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "Тсонга"
+
+#: langtab.src
+msgid "Venda"
+msgstr "Венда"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "Синһала"
+
+#: langtab.src
+msgid "Luxembourgish"
+msgstr "Люксембург"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "Бирма"
+
+#: langtab.src
+msgid "Bodo"
+msgstr "Бодо"
+
+#: langtab.src
+msgid "Santali"
+msgstr "Сантали"
+
+#: langtab.src
+msgid "Oromo"
+msgstr "Оромо"
+
+#: langtab.src
+msgid "Uyghur"
+msgstr "Уйгур"
+
+#: langtab.src
+msgid "Asturian"
+msgstr "Австрия"

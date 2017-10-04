@@ -2704,3 +2704,1167 @@ msgstr "글꼴 이름:"
 #: specialcharacters.ui
 msgid "Special Characters"
 msgstr "특수문자"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[없음]"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "알 수 없음"
+
+#: langtab.src
+msgid "Afrikaans (South Africa)"
+msgstr "아프리칸스어(남아프리카 공화국)"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "알바니아어"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "아랍어"
+
+#: langtab.src
+msgid "Arabic (Algeria)"
+msgstr "아랍어 (알제리)"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "아랍어(바레인)"
+
+#: langtab.src
+msgid "Arabic (Chad)"
+msgstr "아랍어 (차드)"
+
+#: langtab.src
+msgid "Arabic (Comoros)"
+msgstr "아랍어 (코모로)"
+
+#: langtab.src
+msgid "Arabic (Djibouti)"
+msgstr "아랍어 (지부티)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "아랍어(이집트)"
+
+#: langtab.src
+msgid "Arabic (Eritrea)"
+msgstr "아랍어 (에리트레아)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "아랍어(이라크)"
+
+#: langtab.src
+msgid "Arabic (Israel)"
+msgstr "아랍어 (이스라엘)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "아랍어(요르단)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "아랍어(쿠웨이트)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "아랍어(레바논)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "아랍어(리비아)"
+
+#: langtab.src
+msgid "Arabic (Mauritania)"
+msgstr "아랍어 (모리타니아)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "아랍어(모로코)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "아랍어(오만)"
+
+#: langtab.src
+msgid "Arabic (Palestine)"
+msgstr "아랍어 (팔레스타인)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "아랍어(카타르)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "아랍어(사우디아라비아)"
+
+#: langtab.src
+msgid "Arabic (Somalia)"
+msgstr "아랍어 (소말리아)"
+
+#: langtab.src
+msgid "Arabic (Sudan)"
+msgstr "아랍어 (수단)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "아랍어(시리아)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "아랍어(튀니지)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "아랍어(아랍에미리트)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "아랍어(예멘)"
+
+#: langtab.src
+msgid "Aragonese"
+msgstr "아라곤어"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "아르메니아어"
+
+#: langtab.src
+msgid "Assamese"
+msgstr "아삼어"
+
+#: langtab.src
+msgid "Azerbaijani Latin"
+msgstr "아제르바이잔 라틴어"
+
+#: langtab.src
+msgid "Azerbaijani Cyrillic"
+msgstr "아제르바이잔 키릴자모"
+
+#: langtab.src
+msgid "Basque"
+msgstr "바스크어"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "벵골어(인도)"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "불가리아어"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "벨라루스어"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "카탈로니아어"
+
+#: langtab.src
+msgid "Catalan (Valencian)"
+msgstr "카탈로니아어 (발렌시아)"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "중국어(번체)"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "중국어(간체)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "중국어(홍콩)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "중국어(싱가폴)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "중국어(마카오)"
+
+#: langtab.src
+msgid "Church Slavic"
+msgstr "교회 슬라브어"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "크로아티아어"
+
+#: langtab.src
+msgid "Czech"
+msgstr "체코어"
+
+#: langtab.src
+msgid "Danish"
+msgstr "덴마크어"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "네덜란드어(네덜란드)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "네덜란드어(벨기에)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "영어(미국)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "영어(영국)"
+
+#: langtab.src
+msgid "English, OED spelling (UK)"
+msgstr "영어, OED 맞춤법 (영국)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "영어(오스트레일리아)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "영어(캐나다)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "영어(뉴질랜드)"
+
+#: langtab.src
+msgid "English (Ireland)"
+msgstr "영어 (아일랜드)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "영어(남아프리카 공화국)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "영어(자메이카)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "영어(카리브 해)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "영어(벨리즈)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "영어(트리니다드)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "영어(짐바브웨)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "영어(필리핀)"
+
+#: langtab.src
+msgid "English (India)"
+msgstr "영어(인도)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "에스토니아어"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "핀란드어"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "파로어"
+
+#: langtab.src
+msgid "Persian"
+msgstr "페르시아어"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "프랑스어(프랑스)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "프랑스어(벨기에)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "프랑스어(캐나다)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "프랑스어(스위스)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "프랑스어(룩셈부르크)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "프랑스어(모나코)"
+
+#: langtab.src
+msgid "Gascon"
+msgstr "개스컨"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "독일어(독일)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "독일어(스위스)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "독일어(오스트리아)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "독일어(룩셈부르크)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "독일어(리히텐슈타인)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "그리스어"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "구자라트어"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "히브리어"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "힌두어"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "헝가리어"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "아이슬랜드어"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "인도네시아어"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "이탈리아어(이탈리아)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "이탈리아어(스위스)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "일본어"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "카나다어"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "카슈미르어(카슈미르)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "카슈미르어(인도)"
+
+#: langtab.src
+msgid "Kazakh"
+msgstr "카자흐스탄어"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "콘카니어"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "한국어(대한민국)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "라트비아어"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "리투아니아어"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "마케도니아어"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "말레이어(말레이시아)"
+
+#: langtab.src
+msgid "Malay (Brunei Darussalam)"
+msgstr "말레이어(브루나이)"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "말라얄람어"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "마니푸리어"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "마라티어"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "네팔어(네팔)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "네팔어(인도)"
+
+#: langtab.src
+msgid "Norwegian, Bokmål"
+msgstr "노르웨이어 부크몰"
+
+#: langtab.src
+msgid "Norwegian, Nynorsk"
+msgstr "노르웨이어 뉘노르스크"
+
+#: langtab.src
+msgid "Odia"
+msgstr "오디아어"
+
+#: langtab.src
+msgid "Polish"
+msgstr "폴란드어"
+
+#: langtab.src
+msgid "Portuguese (Angola)"
+msgstr "포르투칼어 (앙골라)"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "포르투갈어(포르투갈)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "포르투갈어(브라질)"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "펀잡어"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "레토로만어"
+
+#: langtab.src
+msgid "Romanian (Romania)"
+msgstr "루마니아어 (루마니아)"
+
+#: langtab.src
+msgid "Romanian (Moldova)"
+msgstr "루마니아어 (몰도바)"
+
+#: langtab.src
+msgid "Russian"
+msgstr "러시아어"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "산스크리트어"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia and Montenegro)"
+msgstr "세르비안 키릴 (세르비아 및 몬테네그로)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia and Montenegro)"
+msgstr "세르비안 라틴 (세르비아 및 몬테네그로)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia)"
+msgstr "세르비안 키릴 (세르비아)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia)"
+msgstr "세르비안 라틴(세르비아)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Montenegro)"
+msgstr "세르비안 키릴 (몬테네그로)"
+
+#: langtab.src
+msgid "Serbian Latin (Montenegro)"
+msgstr "세르비안 라틴 (몬테네그로)"
+
+#: langtab.src
+msgid "Serbian Latin"
+msgstr "세르바아어 라틴"
+
+#: langtab.src
+msgid "Sidama"
+msgstr "시다마어"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "신디어"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "슬로바키아어"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "슬로베니아어"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "스페인어(스페인)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "스페인어(멕시코)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "스페인어(과테말라)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "스페인어(코스타리카)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "스페인어(파나마)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "스페인어(도미니카 공화국)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "스페인어(베네수엘라)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "스페인어(콜롬비아)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "스페인어(페루)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "스페인어(아르헨티나)"
+
+#: langtab.src
+msgid "Spanish (Ecuador)"
+msgstr "스페인어(에콰도르)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "스페인어(칠레)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "스페인어(우루과이)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "스페인어(파라과이)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "스페인어(볼리비아)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "스페인어(엘살바도르)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "스페인어(온두라스)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "스페인어(니카라과)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "스페인어(푸에르토리코)"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "스와힐리어(케냐)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "스웨덴어(스웨덴)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "스웨덴어(핀란드)"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "타지크어"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "타밀어"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "타타르어"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "텔루구어"
+
+#: langtab.src
+msgid "Thai"
+msgstr "태국어"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "터키어"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "우르두어(파키스탄)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "우르두어(인도)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "우크라이나어"
+
+#: langtab.src
+msgid "Uzbek Latin"
+msgstr "우즈벡 라틴어"
+
+#: langtab.src
+msgid "Uzbek Cyrillic"
+msgstr "우즈벡어 키릴"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "웨일즈어"
+
+#: langtab.src
+msgid "Latin"
+msgstr "라틴어"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "에스페란토"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "키냐르완다어(르완다)"
+
+#: langtab.src
+msgid "Maori"
+msgstr "마오리어"
+
+#: langtab.src
+msgid "Galician"
+msgstr "갈리시아어"
+
+#: langtab.src
+msgid "Dhivehi"
+msgstr "디베히어"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "북부 소토어"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "게일어(스코틀랜드)"
+
+#: langtab.src
+msgid "Mongolian Cyrillic"
+msgstr "몽골어 키릴"
+
+#: langtab.src
+msgid "Mongolian Mongolian"
+msgstr "몽골 몽골어"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "과학자용 인공어"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "보스니아어"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "벵골어(방글라데시)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "프로방스어"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "크메르어"
+
+#: langtab.src
+msgid "Kurdish, Northern (Turkey)"
+msgstr "쿠르드어, 북부 (터키)"
+
+#: langtab.src
+msgid "Kurdish, Northern (Syria)"
+msgstr "쿠르드어, 북부 (시리아)"
+
+#: langtab.src
+msgid "Kurdish, Central (Iraq)"
+msgstr "쿠르드어, 중앙 (이라크)"
+
+#: langtab.src
+msgid "Kurdish, Central (Iran)"
+msgstr "쿠르드어, 중앙 (이란)"
+
+#: langtab.src
+msgid "Kurdish, Southern (Iran)"
+msgstr "쿠르드어, 남부 (이란)"
+
+#: langtab.src
+msgid "Kurdish, Southern (Iraq)"
+msgstr "쿠르드어, 남부 (이라크)"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "사르디니아어"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "스와힐리어(탄자니아)"
+
+#: langtab.src
+msgid "Lao"
+msgstr "라오스어"
+
+#: langtab.src
+msgid "Irish"
+msgstr "아일랜드어"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "티베트어 (중국)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "그루지아어"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "프리지아어"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "트스와나어(남아프리카)"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "줄루어"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "베트남어"
+
+#: langtab.src
+msgid "Breton"
+msgstr "부르타뉴어"
+
+#: langtab.src
+msgid "Kalaallisut"
+msgstr "칼라리수트"
+
+#: langtab.src
+msgid "Ndebele, South"
+msgstr "남부 은데벨레어"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "남부 소토어"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "스와지어"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "통가어"
+
+#: langtab.src
+msgid "Venda"
+msgstr "벤더어"
+
+#: langtab.src
+msgid "Tswana (Botswana)"
+msgstr "트스와나어(보츠와나)"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "코사어"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "싱헐리즈어"
+
+#: langtab.src
+msgid "Moore"
+msgstr "무어어"
+
+#: langtab.src
+msgid "Bambara"
+msgstr "밤바라어"
+
+#: langtab.src
+msgid "Akan"
+msgstr "아칸어"
+
+#: langtab.src
+msgid "Luxembourgish"
+msgstr "룩셈부르크어"
+
+#: langtab.src
+msgid "Friulian"
+msgstr "프리울리어"
+
+#: langtab.src
+msgid "Fijian"
+msgstr "피지어"
+
+#: langtab.src
+msgid "Afrikaans (Namibia)"
+msgstr "아프리칸스어(나미비아)"
+
+#: langtab.src
+msgid "English (Namibia)"
+msgstr "영어(나미비아)"
+
+#: langtab.src
+msgid "Walloon"
+msgstr "왈론어"
+
+#: langtab.src
+msgid "Coptic"
+msgstr "콥트어"
+
+#: langtab.src
+msgid "Tigrigna (Eritrea)"
+msgstr "티그리니아어(에리트레아)"
+
+#: langtab.src
+msgid "Tigrigna (Ethiopia)"
+msgstr "티그리니아어(에티오피아)"
+
+#: langtab.src
+msgid "Amharic"
+msgstr "암하라어"
+
+#: langtab.src
+msgid "Kirghiz"
+msgstr "키르기스어"
+
+#: langtab.src
+msgid "German (Belgium)"
+msgstr "독일어(벨기에)"
+
+#: langtab.src
+msgid "Chuvash"
+msgstr "추바슈"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "버마어"
+
+#: langtab.src
+msgid "Hausa (Nigeria)"
+msgstr "하우사어(나이지리아)"
+
+#: langtab.src
+msgid "Hausa (Ghana)"
+msgstr "하우사어(가나)"
+
+#: langtab.src
+msgid "Éwé"
+msgstr "에웨어"
+
+#: langtab.src
+msgid "English (Ghana)"
+msgstr "영어(가나)"
+
+#: langtab.src
+msgid "Sango"
+msgstr "산고어"
+
+#: langtab.src
+msgid "Tagalog"
+msgstr "타갈로그"
+
+#: langtab.src
+msgid "Ganda"
+msgstr "간다어"
+
+#: langtab.src
+msgid "Lingala"
+msgstr "링갈라어"
+
+#: langtab.src
+msgid "Low German"
+msgstr "독일 방언"
+
+#: langtab.src
+msgid "Hiligaynon"
+msgstr "힐리가이노인"
+
+#: langtab.src
+msgid "Nyanja"
+msgstr "냔자어"
+
+#: langtab.src
+msgid "Kashubian"
+msgstr "캬슈비아어"
+
+#: langtab.src
+msgid "Spanish (Cuba)"
+msgstr "스페인어 (쿠바)"
+
+#: langtab.src
+msgid "Tetun (Indonesia)"
+msgstr "테툰어(인도네시아)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, North)"
+msgstr "케추아어 (볼리비아, 북쪽)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, South)"
+msgstr "케추아어 (볼리비아, 남쪽)"
+
+#: langtab.src
+msgid "Somali"
+msgstr "소말리어"
+
+#: langtab.src
+msgid "Sami, Inari (Finland)"
+msgstr "Sami, Inari (핀란드)"
+
+#: langtab.src
+msgid "Sami, Lule (Norway)"
+msgstr "Sami, Lule (노르웨이)"
+
+#: langtab.src
+msgid "Sami, Lule (Sweden)"
+msgstr "Sami, Lule (스웨덴)"
+
+#: langtab.src
+msgid "Sami, Northern (Finland)"
+msgstr "Sami, Northern (핀란드)"
+
+#: langtab.src
+msgid "Sami, Northern (Norway)"
+msgstr "Sami, Northern (노르웨이)"
+
+#: langtab.src
+msgid "Sami, Northern (Sweden)"
+msgstr "Sami, Northern (스웨덴)"
+
+#: langtab.src
+msgid "Sami, Skolt (Finland)"
+msgstr "Sami, Skolt (핀란드)"
+
+#: langtab.src
+msgid "Sami, Southern (Norway)"
+msgstr "Sami, Southern (노르웨이)"
+
+#: langtab.src
+msgid "Sami, Southern (Sweden)"
+msgstr "Sami, Southern (스웨덴)"
+
+#: langtab.src
+msgid "Sami, Kildin (Russia)"
+msgstr "사미, 킬딘(러시아)"
+
+#: langtab.src
+msgid "Bodo"
+msgstr "보도어"
+
+#: langtab.src
+msgid "Dogri"
+msgstr "도그리어"
+
+#: langtab.src
+msgid "Maithili"
+msgstr "마이틸리어"
+
+#: langtab.src
+msgid "Santali"
+msgstr "산탈리어"
+
+#: langtab.src
+msgid "Tetun (Timor-Leste)"
+msgstr "테툰어(동티모르)"
+
+#: langtab.src
+msgid "Turkmen"
+msgstr "투르크멘어"
+
+#: langtab.src
+msgid "Maltese"
+msgstr "몰타어"
+
+#: langtab.src
+msgid "Tok Pisin"
+msgstr "톡 피진(파푸아뉴기니)"
+
+#: langtab.src
+msgid "Shuswap"
+msgstr "슈스와프어"
+
+#: langtab.src
+msgid "Oromo"
+msgstr "오로모어"
+
+#: langtab.src
+msgid "Greek, Ancient"
+msgstr "고대 그리스어"
+
+#: langtab.src
+msgid "Yiddish (Israel)"
+msgstr "이디시어 (이스라엘)"
+
+#: langtab.src
+msgid "Quechua (Ecuador)"
+msgstr "케추아어(에콰도르)"
+
+#: langtab.src
+msgid "Uyghur"
+msgstr "위구르어"
+
+#: langtab.src
+msgid "Asturian"
+msgstr "아스투리안어"
+
+#: langtab.src
+msgid "Sorbian, Upper"
+msgstr "소르비아어, 대문자"
+
+#: langtab.src
+msgid "Sorbian, Lower"
+msgstr "소르비안어, 소문자"
+
+#: langtab.src
+msgid "Tahitian"
+msgstr "타히티어"
+
+#: langtab.src
+msgid "Malagasy, Plateau"
+msgstr "말라가시어(플라토)"
+
+#: langtab.src
+msgid "Sardinian, Campidanese"
+msgstr "사르디니아어(Campidanese)"
+
+#: langtab.src
+msgid "Sardinian, Gallurese"
+msgstr "사르디니아어(Gallurese)"
+
+#: langtab.src
+msgid "Sardinian, Logudorese"
+msgstr "사르디니아어(Logudorese)"
+
+#: langtab.src
+msgid "Sardinian, Sassarese"
+msgstr "사르디니아어(Sassarese)"
+
+#: langtab.src
+msgid "Yoruba"
+msgstr "요루바어"
+
+#: langtab.src
+msgid "Kabyle Latin"
+msgstr "카바일어 라틴"
+
+#: langtab.src
+msgid "Yiddish (USA)"
+msgstr "이디시어 (미국)"
+
+#: langtab.src
+msgid "Hawaiian"
+msgstr "하와이"
+
+#: langtab.src
+msgid "Limbu"
+msgstr "림부"
+
+#: langtab.src
+msgid "Lojban"
+msgstr "로지반"
+
+#: langtab.src
+msgid "Haitian"
+msgstr "아이티어"
+
+#: langtab.src
+msgid "Kyrgyz (China)"
+msgstr "키르기스어 (중국)"
+
+#: langtab.src
+msgid "Komi-Zyrian"
+msgstr "코미지리안"
+
+#: langtab.src
+msgid "Komi-Permyak"
+msgstr "코미페르먀크"
+
+#: langtab.src
+msgid "Pitjantjatjara"
+msgstr "피짠짜짜라어"
+
+#: langtab.src
+msgid "English (Malawi)"
+msgstr "영어 (말라위)"
+
+#: langtab.src
+msgid "Erzya"
+msgstr "에르자어"
+
+#: langtab.src
+msgid "Mari, Meadow"
+msgstr "마리어, 메도우"
+
+#: langtab.src
+msgid "Papiamento (Curaçao)"
+msgstr "파피아멘토어 (쿠라카오)"
+
+#: langtab.src
+msgid "Papiamento (Bonaire)"
+msgstr "파피아멘토어 (보네르)"

@@ -2303,3 +2303,555 @@ msgstr "Gama Lefonti:"
 #: specialcharacters.ui
 msgid "Special Characters"
 msgstr "Amakharektha Akhethekileko"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[Ayikho]"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "Ayaziwa"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "isi-Albania"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "kwe-Arabhu (Bahrain)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "kwe-Arabhu (Egypt)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "kwe-Arabhu (Iraq)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "kwe-Arabhu (Jordan)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "kwe-Arabhu (Kuwait)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "kwe-Arabhu (Lebanon)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "kwe-Arabhu (Lybia)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "kwe-Arabhu (Morocco)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "kwe-Arabhu (Oman)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "kwe-Arabhu (Qatar)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "kwe-Arabhu (Saudi Arabia)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "kwe-Arabhu (Syria)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "kwe-Arabhu (Tunisia)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "kwe-Arabhu (UAE)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "kwe-Arabhu (Yemen)"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "kwe-Armeniya"
+
+#: langtab.src
+msgid "Basque"
+msgstr "i-Basque"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "Bhengali (Indiya)"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "i-Catalan"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "Isi-China (sendabuko)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "kwe-China (Hong Kong)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "kwe-China (Singapore)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "kwe-China (Macau)"
+
+#: langtab.src
+msgid "Czech"
+msgstr "Isi-Czech"
+
+#: langtab.src
+msgid "Danish"
+msgstr "Isi-Danish"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "IsiDatjhi (se-Netherlands)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "isiDutch (Belgium)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "IsiNgisi (se-USA)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "isiNgisi (UK)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "isiNgisi (Australia)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "isiNgisi (Canada)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "isiNgisi (New Zealand)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "isiNgisi (iSewula Afrika)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "isiNgisi (Jamaica)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "isiNgisi (Caribbean)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "isiNgisi (Belize)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "isiNgisi (Trinidad)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "isiNgisi (Zimbabwe)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "isiNgisi (Philippines)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "Isi-Estonian"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "Isi-Finnish"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "kweFaroese"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "Isi-Frentji (seFrance)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "isiFrentjhi (Belgium)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "isiFrentjhi (Canada)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "isiFrentjhi (Switzerland)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "isiFrentjhi (Luxembourg)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "isiFrentjhi (Monaco)"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "IsiJarimani (seJemeni)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "isiJarimani (Switzerland)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "isiJarimani (Australia)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "isiJarimani (Luxembourg)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "isiJarimani (Liechtenstein)"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "i-Gujarati"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "IsiHebheru"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "isiHindu"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "isiHangari"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "isi-Iceland"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "isi-Indonesia"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "Is-Tariyana (se-Italy)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "isi-Ithali (Swidzerland)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "IsJapani"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "i-Kannada"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "isiKashmiri (Kashmir)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "isiKashmiri (India)"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "isiKonkani"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "isiKoriya (RoK)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "isiLatvian"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "isiLithuania"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "isiMacedonia"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "isiMalay (Malaysia)"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "i-Malayam"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "isiManipuri"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "isiMarathi"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "isi-Nepali (Nepali)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "isi-Nepali (India)"
+
+#: langtab.src
+msgid "Polish"
+msgstr "IsiPolish"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "IsiPutukezi (sePortugal)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "IsiPutukezi (Brazil)"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "isi-Rhaeto-Romance"
+
+#: langtab.src
+msgid "Russian"
+msgstr "IsiRatjhiya"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "isi-Sanskrit"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "isiSindhi"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "i-Slovenia"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "I-Spanish (se-Spain)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "i-Spanish (Mexico)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "i-Spanish (Guatemala)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "i-Spanish (Costa Rica)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "i-Spanish (Panama)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "i-Spanish (Dom. Rep.)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "i-Spanish (Venezuela)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "i-Spanish (Colombia)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "i-Spanish (Peru)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "i-Spanish (Argentina)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "i-Spanish (Chile)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "i-Spanish (Uruguay)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "i-Spanish (Paraguay)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "i-Spanish (Bolivia)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "i-Spanish (El Salvador)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "i-Spanish (Honduras)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "i-Spanish (Nicaragua)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "i-Spanish (Puerto Rico)"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "isi-Swahili (Kenya)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "Isi-Sweden (se-Sweden)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "isi-Swedish (Finland)"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "i-Tamil"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "iTatar"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "i-Telugu"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "Isi-Turkish"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "isi-Urdu (Pakistan)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "isi-Urdu (India)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "isi-Ukrainia"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "isi-Welsh"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "isi-Esperanto"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "isiKinyarwanda (Rwanda)"
+
+#: langtab.src
+msgid "Galician"
+msgstr "isiGalicia"
+
+#: langtab.src
+msgid "Dhivehi"
+msgstr "isiDhivehi"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "isiGaelia (Scotland)"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "Ilimi leentjhabatjhaba"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "isiBosnia"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "isiBengali (Bangladesh)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "isi-Occita"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "i-Khmer"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "isiSardinia"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "isiSwahili (Tanzania)"
+
+#: langtab.src
+msgid "Lao"
+msgstr "i-Lao"
+
+#: langtab.src
+msgid "Irish"
+msgstr "Isi-Irish"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "isiTibetan (PR China)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "Jojiyeni"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "Frisiyeni"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "Tswana (Sewula Afrika)"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "IsiSotho seSewula"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "Swati"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "i-Sinhala"
+
+#: langtab.src
+msgid "Tagalog"
+msgstr "i-Tagalog"

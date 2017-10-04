@@ -2514,3 +2514,1395 @@ msgstr "תווים מיוחדים"
 #: asianphoneticguidedialog.ui
 msgid "Preview:"
 msgstr "תצוגה מקדימה:"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "לא מוכרת"
+
+#: langtab.src
+msgid "Afrikaans (South Africa)"
+msgstr "אפריקאנס (דרום אפריקה)"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "אלבנית"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "ערבית"
+
+#: langtab.src
+msgid "Arabic (Algeria)"
+msgstr "ערבית (אלג׳יריה)‏"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "ערבית (בחריין)‏"
+
+#: langtab.src
+msgid "Arabic (Chad)"
+msgstr "ערבית (עיראק)‏"
+
+#: langtab.src
+msgid "Arabic (Comoros)"
+msgstr "ערבית (איי קומורו)"
+
+#: langtab.src
+msgid "Arabic (Djibouti)"
+msgstr "ערבית (ג׳יבוטי)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "ערבית (מצרים)‏"
+
+#: langtab.src
+msgid "Arabic (Eritrea)"
+msgstr "ערבית (אריתריאה)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "ערבית (עיראק)‏"
+
+#: langtab.src
+msgid "Arabic (Israel)"
+msgstr "ערבית (ישראל)‏"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "ערבית (ירדן)‏"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "ערבית (כווית)‏"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "ערבית (לבנון)‏"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "ערבית (לוב)‏"
+
+#: langtab.src
+msgid "Arabic (Mauritania)"
+msgstr "ערבית (מאוריטניה)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "ערבית (מרוקו)‏"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "ערבית (עומאן)‏"
+
+#: langtab.src
+msgid "Arabic (Palestine)"
+msgstr "ערבית (הרשות הפלשתינית)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "ערבית (קטאר)‏"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "ערבית (ערב הסעודית)‏"
+
+#: langtab.src
+msgid "Arabic (Somalia)"
+msgstr "ערבית (סוריה)‏"
+
+#: langtab.src
+msgid "Arabic (Sudan)"
+msgstr "ערבית (ירדן)‏"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "ערבית (סוריה)‏"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "ערבית (תוניסיה)‏"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "ערבית (אמירויות)‏"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "ערבית (תימן)‏"
+
+#: langtab.src
+msgid "Aragonese"
+msgstr "אראגונית"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "ארמנית"
+
+#: langtab.src
+msgid "Assamese"
+msgstr "אסאמית"
+
+#: langtab.src
+msgid "Azerbaijani Latin"
+msgstr "אזרבייג'אנית (לטינית)‏"
+
+#: langtab.src
+msgid "Azerbaijani Cyrillic"
+msgstr "אזרבייג'אנית (קירילית)‏"
+
+#: langtab.src
+msgid "Basque"
+msgstr "בסקית"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "בנגלית"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "בולגרית"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "בלארוסית"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "קטלאנית"
+
+#: langtab.src
+msgid "Catalan (Valencian)"
+msgstr "קטלאנית (ולנסית)"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "סינית (מסורתית)‏"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "סינית (מפושטת)‏"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "סינית (הונג-קונג)‏"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "סינית (סינגפור)‏"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "סינית (מקאו)‏"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "קרואטית"
+
+#: langtab.src
+msgid "Czech"
+msgstr "צ׳כית"
+
+#: langtab.src
+msgid "Danish"
+msgstr "דנית"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "הולנדית (הולנד)‏"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "הולנדית (בלגיה)‏"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "אנגלית (ארה״ב)‏"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "אנגלית (בריטניה)‏"
+
+#: langtab.src
+msgid "English, OED spelling (UK)"
+msgstr "אנגלית, איות אוקספורד (אנגליה)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "אנגלית (אוסטרליה)‏"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "אנגלית (קנדה)‏"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "אנגלית (ניו זילנד)‏"
+
+#: langtab.src
+msgid "English (Ireland)"
+msgstr "אנגלית (אירלנד)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "אנגלית (דרום אפריקה)‏"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "אנגלית (ג׳מייקה)‏"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "אנגלית (האיים הקאריביים)‏"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "אנגלית (בליז)‏"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "אנגלית (טרינידד)‏"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "אנגלית (זימבבואה)‏"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "אנגלית (פיליפינים)‏"
+
+#: langtab.src
+msgid "English (India)"
+msgstr "אנגלית (הודו)‏"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "אסטונית"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "פינית"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "פארואזית"
+
+#: langtab.src
+msgid "Persian"
+msgstr "פרסית"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "צרפתית (צרפת)‏"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "צרפתית (בלגיה)‏"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "צרפתית (קנדה)‏"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "צרפתית (שווייץ)‏"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "צרפתית (לוקסמבורג)‏"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "צרפתית (מונקו)‏"
+
+#: langtab.src
+msgid "Gascon"
+msgstr "גסקונית"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "גרמנית (גרמניה)‏"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "גרמנית (שווייץ)‏"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "גרמנית (אוסטריה)‏"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "גרמנית (לוקסמבורג)‏"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "גרמנית (ליכטנשטיין)‏"
+
+#: langtab.src
+msgid "Greek"
+msgstr "יוונית"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "גוג׳ראטית"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "עברית"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "הינדי"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "הונגרית"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "איסלנדית"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "אינדונזית"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "איטלקית (איטליה)‏"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "איטלקית (שווייץ)‏"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "יפנית"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "קאנדה"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "קשמירית (קשמיר)‏"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "קשמירית (הודו)‏"
+
+#: langtab.src
+msgid "Kazakh"
+msgstr "קזחית"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "קונקאנית (הודו)‏"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "קוריאנית (דרום)‏"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "לטבית"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "ליטאית"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "מקדונית"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "מלאית (מלזיה)‏"
+
+#: langtab.src
+msgid "Malay (Brunei Darussalam)"
+msgstr "מלאית (ברוני דרוסלאם)‏"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "מלאיאלאם"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "מאניפורית"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "מרטהי (הודו)‏"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "נפאלית (נפאל)‏"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "נפאלי (הודו)‏"
+
+#: langtab.src
+msgid "Norwegian, Bokmål"
+msgstr "נורווגית ‏‫(Bokmål)‏"
+
+#: langtab.src
+msgid "Norwegian, Nynorsk"
+msgstr "נורווגית ‏‪(Nynorsk)‏"
+
+#: langtab.src
+msgid "Polish"
+msgstr "פולנית"
+
+#: langtab.src
+msgid "Portuguese (Angola)"
+msgstr "פורטוגלית (אנגולה)"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "פורטוגלית (פורטוגל)‏"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "פורטוגלית (ברזיל)‏"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "פנג׳בית"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "רטו־רומנית"
+
+#: langtab.src
+msgid "Romanian (Romania)"
+msgstr "רומנית (רומניה)"
+
+#: langtab.src
+msgid "Romanian (Moldova)"
+msgstr "רומנית (מולדובה)"
+
+#: langtab.src
+msgid "Russian"
+msgstr "רוסית"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "סנסקריט"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia and Montenegro)"
+msgstr "סרבית קירילית (סרביה ומונטנגרו)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia and Montenegro)"
+msgstr "סרבית לטינית (סרביה ומונטנגרו)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia)"
+msgstr "סרבית קירילית (סרביה)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia)"
+msgstr "סרבית לטינית (סרביה)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Montenegro)"
+msgstr "סרבית קירילית (מונטנגרו)"
+
+#: langtab.src
+msgid "Serbian Latin (Montenegro)"
+msgstr "סרבית לטינית (מונטנגרו)"
+
+#: langtab.src
+msgid "Serbian Latin"
+msgstr "סרבית לטינית"
+
+#: langtab.src
+msgid "Sidama"
+msgstr "סידמאית"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "סינדהי"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "סלובקית"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "סלובנית"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "ספרדית (ספרד)‏"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "ספרדית (מקסיקו)‏"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "ספרדית (גואטמלה)‏"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "ספרדית (קוסטה ריקה)‏"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "ספרדית (פנמה)‏"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "ספרדית (הרפובליקה הדומיניקנית)‏"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "ספרדית (ונצואלה)‏"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "ספרדית (קולומביה)‏"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "ספרדית (פרו)‏"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "ספרדית (ארגנטינה)‏"
+
+#: langtab.src
+msgid "Spanish (Ecuador)"
+msgstr "ספרדית (אקוודור)‏"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "ספרדית (צ'ילה)‏"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "ספרדית (אורגוואי)‏"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "ספרדית (פרגוואי)‏"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "ספרדית (בוליביה)‏"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "ספרדית (אל סלוודור)‏"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "ספרדית (הונדורס)‏"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "ספרדית (ניקרגואה)‏"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "ספרדית (פוארטו ריקו)‏"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "סוואהילי (קניה)‏"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "שוודית (שוודיה)‏"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "שוודית (פינלנד)‏"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "טג׳יקית"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "טמילית"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "טטרית"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "טלוגו"
+
+#: langtab.src
+msgid "Thai"
+msgstr "תאילנדית"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "טורקית"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "אורדו (פקיסטן)‏"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "אורדו (הודו)‏"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "אוקראינית"
+
+#: langtab.src
+msgid "Uzbek Latin"
+msgstr "אוזבקית (לטינית)‏"
+
+#: langtab.src
+msgid "Uzbek Cyrillic"
+msgstr "אוזבקית קירילית"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "ולשית"
+
+#: langtab.src
+msgid "Latin"
+msgstr "לטינית"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "אספרנטו"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "קיניארוואנדית"
+
+#: langtab.src
+msgid "Maori"
+msgstr "מאורית"
+
+#: langtab.src
+msgid "Galician"
+msgstr "גליסית"
+
+#: langtab.src
+msgid "Dhivehi"
+msgstr "דיווהי"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "סוטו צפונית"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "גאלית (סקוטלנד)‏"
+
+#: langtab.src
+msgid "Mongolian Cyrillic"
+msgstr "מונגולית קירילית"
+
+#: langtab.src
+msgid "Mongolian Mongolian"
+msgstr "מונגולית של מונגוליה"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "אינטרנלינגואה"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "בוסנית"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "בנגלית (בנגלדש)‏"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "אוקסיטנית"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "חמרית"
+
+#: langtab.src
+msgid "Kurdish, Northern (Turkey)"
+msgstr "כורדית צפונית (טורקיה)"
+
+#: langtab.src
+msgid "Kurdish, Northern (Syria)"
+msgstr "כורדית צפונית (סוריה)"
+
+#: langtab.src
+msgid "Kurdish, Central (Iraq)"
+msgstr "כורדית מרכזית (עיראק)"
+
+#: langtab.src
+msgid "Kurdish, Central (Iran)"
+msgstr "כורדית מרכזית (איראן)"
+
+#: langtab.src
+msgid "Kurdish, Southern (Iran)"
+msgstr "כורדית דרומית (איראן)"
+
+#: langtab.src
+msgid "Kurdish, Southern (Iraq)"
+msgstr "כורדית דרומית (עיראק)"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "סרדו"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "סווהילי (טנזניה)‏"
+
+#: langtab.src
+msgid "Lao"
+msgstr "לאו"
+
+#: langtab.src
+msgid "Irish"
+msgstr "אירית"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "טיבטית (סין העממית)‏"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "גאורגית"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "פריזית"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "סטסוואנה (דרום אפריקה)‏"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "זולו"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "וייטנאמית"
+
+#: langtab.src
+msgid "Breton"
+msgstr "ברטונית"
+
+#: langtab.src
+msgid "Kalaallisut"
+msgstr "גרינלנדית"
+
+#: langtab.src
+msgid "Ndebele, South"
+msgstr "נדבלה (דרומית)‏"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "סוטו דרומית"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "סוואזי"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "טסונגה"
+
+#: langtab.src
+msgid "Venda"
+msgstr "ונדה"
+
+#: langtab.src
+msgid "Tswana (Botswana)"
+msgstr "טסואנה (בוטסואנה)‏"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "קהוסה"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "סינהלית"
+
+#: langtab.src
+msgid "Moore"
+msgstr "מורה"
+
+#: langtab.src
+msgid "Bambara"
+msgstr "במברה"
+
+#: langtab.src
+msgid "Akan"
+msgstr "אקאן"
+
+#: langtab.src
+msgid "Luxembourgish"
+msgstr "לוקסמבורגית"
+
+#: langtab.src
+msgid "Friulian"
+msgstr "פריולית"
+
+#: langtab.src
+msgid "Fijian"
+msgstr "פיג׳ית"
+
+#: langtab.src
+msgid "Afrikaans (Namibia)"
+msgstr "אפריקאנס (נמיביה)"
+
+#: langtab.src
+msgid "English (Namibia)"
+msgstr "אנגלית (נמיביה)"
+
+#: langtab.src
+msgid "Walloon"
+msgstr "ואלונית"
+
+#: langtab.src
+msgid "Coptic"
+msgstr "קופטית"
+
+#: langtab.src
+msgid "Tigrigna (Eritrea)"
+msgstr "טיגריניה (אריטראה)"
+
+#: langtab.src
+msgid "Tigrigna (Ethiopia)"
+msgstr "טיגריניה (אתיופיה)"
+
+#: langtab.src
+msgid "Amharic"
+msgstr "אמהרית"
+
+#: langtab.src
+msgid "Kirghiz"
+msgstr "קירגיזית"
+
+#: langtab.src
+msgid "German (Belgium)"
+msgstr "גרמנית (בלגית)‏"
+
+#: langtab.src
+msgid "Chuvash"
+msgstr "צ׳ובשית"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "בורמזית"
+
+#: langtab.src
+msgid "Hausa (Nigeria)"
+msgstr "האוסה (ניגריה)"
+
+#: langtab.src
+msgid "Hausa (Ghana)"
+msgstr "האוסה (גאנה)"
+
+#: langtab.src
+msgid "Éwé"
+msgstr "אווה"
+
+#: langtab.src
+msgid "English (Ghana)"
+msgstr "אנגלית (גאנה)"
+
+#: langtab.src
+msgid "Sango"
+msgstr "סנגו"
+
+#: langtab.src
+msgid "Tagalog"
+msgstr "טגלוג"
+
+#: langtab.src
+msgid "Ganda"
+msgstr "לוגנדה"
+
+#: langtab.src
+msgid "Lingala"
+msgstr "לינגלה"
+
+#: langtab.src
+msgid "Low German"
+msgstr "גרמנית תחתית"
+
+#: langtab.src
+msgid "Hiligaynon"
+msgstr "היליגיינון"
+
+#: langtab.src
+msgid "Nyanja"
+msgstr "ניאנג׳ה"
+
+#: langtab.src
+msgid "Kashubian"
+msgstr "קשובית"
+
+#: langtab.src
+msgid "Spanish (Cuba)"
+msgstr "ספרדית (קובה)"
+
+#: langtab.src
+msgid "Tetun (Indonesia)"
+msgstr "טטון (אינדונזיה)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, North)"
+msgstr "קצ׳ואה (בוליביה, צפון)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, South)"
+msgstr "קצ׳ואה (בוליביה, דרום)"
+
+#: langtab.src
+msgid "Somali"
+msgstr "סומלית"
+
+#: langtab.src
+msgid "Sami, Inari (Finland)"
+msgstr "סאמי, אינרי (פינלנד)"
+
+#: langtab.src
+msgid "Sami, Lule (Norway)"
+msgstr "סאמי, לולה (נורווגיה)"
+
+#: langtab.src
+msgid "Sami, Lule (Sweden)"
+msgstr "סאמי, לולה (שוודיה)"
+
+#: langtab.src
+msgid "Sami, Northern (Finland)"
+msgstr "סאמי, צפונית (פינלנד)"
+
+#: langtab.src
+msgid "Sami, Northern (Norway)"
+msgstr "סאמי, צפונית (נורווגיה)"
+
+#: langtab.src
+msgid "Sami, Northern (Sweden)"
+msgstr "סאמי, צפונית (שוודיה)"
+
+#: langtab.src
+msgid "Sami, Skolt (Finland)"
+msgstr "סאמי, סקולט (פינלנד)"
+
+#: langtab.src
+msgid "Sami, Southern (Norway)"
+msgstr "סאמי, דרומית (נורווגיה)"
+
+#: langtab.src
+msgid "Sami, Southern (Sweden)"
+msgstr "סאמי, דרומית (שוודיה)"
+
+#: langtab.src
+msgid "Sami, Kildin (Russia)"
+msgstr "סאמי, קילדין (רוסיה)"
+
+#: langtab.src
+msgid "Bodo"
+msgstr "בודו"
+
+#: langtab.src
+msgid "Dogri"
+msgstr "דוֹגרי"
+
+#: langtab.src
+msgid "Maithili"
+msgstr "מאית'ילי"
+
+#: langtab.src
+msgid "Santali"
+msgstr "סנטלי"
+
+#: langtab.src
+msgid "Tetun (Timor-Leste)"
+msgstr "טטון (מזרח טימור)"
+
+#: langtab.src
+msgid "Turkmen"
+msgstr "טורקמנית"
+
+#: langtab.src
+msgid "Maltese"
+msgstr "מלטית"
+
+#: langtab.src
+msgid "Tok Pisin"
+msgstr "טוק פיסין"
+
+#: langtab.src
+msgid "Shuswap"
+msgstr "שוסוואפ"
+
+#: langtab.src
+msgid "Oromo"
+msgstr "אורומו"
+
+#: langtab.src
+msgid "Greek, Ancient"
+msgstr "יוונית עתיקה"
+
+#: langtab.src
+msgid "Yiddish (Israel)"
+msgstr "יידיש (ישראל)"
+
+#: langtab.src
+msgid "Quechua (Ecuador)"
+msgstr "קצ׳ווה (אקוודור)"
+
+#: langtab.src
+msgid "Uyghur"
+msgstr "אויגור"
+
+#: langtab.src
+msgid "Asturian"
+msgstr "אסטורית"
+
+#: langtab.src
+msgid "Sorbian, Upper"
+msgstr "סורבית עילית"
+
+#: langtab.src
+msgid "Sorbian, Lower"
+msgstr "סורבית תחתית"
+
+#: langtab.src
+msgid "Latgalian"
+msgstr "לטגלית"
+
+#: langtab.src
+msgid "Maore"
+msgstr "מאורה"
+
+#: langtab.src
+msgid "Bushi"
+msgstr "בושי"
+
+#: langtab.src
+msgid "Tahitian"
+msgstr "טהיטית"
+
+#: langtab.src
+msgid "Malagasy, Plateau"
+msgstr "מלגשית, רמה"
+
+#: langtab.src
+msgid "Papiamentu (Netherlands Antilles)"
+msgstr "פפיאמנטו (אנטיליים הולנדים)"
+
+#: langtab.src
+msgid "Papiamento (Aruba)"
+msgstr "פפיאמנטו (ארובה)"
+
+#: langtab.src
+msgid "Sardinian, Campidanese"
+msgstr "סרדינית קאמפידנזית"
+
+#: langtab.src
+msgid "Sardinian, Gallurese"
+msgstr "סרדינית גלורזית"
+
+#: langtab.src
+msgid "Sardinian, Logudorese"
+msgstr "סרדינית לוגודורזית"
+
+#: langtab.src
+msgid "Sardinian, Sassarese"
+msgstr "סרדינית סאסארית"
+
+#: langtab.src
+msgid "Bafia"
+msgstr "בפיה"
+
+#: langtab.src
+msgid "Gikuyu"
+msgstr "גיקויו"
+
+#: langtab.src
+msgid "Yoruba"
+msgstr "יורובה"
+
+#: langtab.src
+msgid "Rusyn (Ukraine)"
+msgstr "רוסינית (אוקראינה)"
+
+#: langtab.src
+msgid "Rusyn (Slovakia)"
+msgstr "רוסינית (סלובקיה)"
+
+#: langtab.src
+msgid "Kabyle Latin"
+msgstr "קבילית לטינית"
+
+#: langtab.src
+msgid "Yiddish (USA)"
+msgstr "יידיש (ארה״ב)"
+
+#: langtab.src
+msgid "Hawaiian"
+msgstr "הוואית"
+
+#: langtab.src
+msgid "Limbu"
+msgstr "לימבו"
+
+#: langtab.src
+msgid "Lojban"
+msgstr "לוז׳באן"
+
+#: langtab.src
+msgid "Haitian"
+msgstr "האיטית"
+
+#: langtab.src
+msgid "Beembe"
+msgstr "באמבה"
+
+#: langtab.src
+msgid "Bekwel"
+msgstr "בקוול"
+
+#: langtab.src
+msgid "Kituba"
+msgstr "קיטובה"
+
+#: langtab.src
+msgid "Lari"
+msgstr "לארי"
+
+#: langtab.src
+msgid "Mbochi"
+msgstr "מבוצ׳י"
+
+#: langtab.src
+msgid "Teke-Eboo"
+msgstr "טקה־אבואו"
+
+#: langtab.src
+msgid "Teke-Ibali"
+msgstr "טקה־איבלי"
+
+#: langtab.src
+msgid "Teke-Tyee"
+msgstr "טקה־טייה"
+
+#: langtab.src
+msgid "Vili"
+msgstr "וילי"
+
+#: langtab.src
+msgid "Pali Latin"
+msgstr "פאלי לטינית"
+
+#: langtab.src
+msgid "Kyrgyz (China)"
+msgstr "קירגיזית (סין)"
+
+#: langtab.src
+msgid "Komi-Zyrian"
+msgstr "קומי־זיריאנית"
+
+#: langtab.src
+msgid "Komi-Permyak"
+msgstr "קומי־פרמית"
+
+#: langtab.src
+msgid "Pitjantjatjara"
+msgstr "פיג׳נג׳רה"
+
+#: langtab.src
+msgid "English (Malawi)"
+msgstr "אנגלית (מלווי)‏"
+
+#: langtab.src
+msgid "Erzya"
+msgstr "ארזיה"
+
+#: langtab.src
+msgid "Mari, Meadow"
+msgstr "מארי (שדות)"
+
+#: langtab.src
+msgid "Papiamento (Curaçao)"
+msgstr "פפיאמנטו (קוראסאו)"
+
+#: langtab.src
+msgid "Papiamento (Bonaire)"
+msgstr "פפיאמנטו (בונייר)"
+
+#: langtab.src
+msgid "Khanty"
+msgstr "חאנטי"
+
+#: langtab.src
+msgid "Livonian"
+msgstr "ליבונית"
+
+#: langtab.src
+msgid "Moksha"
+msgstr "מוקשה"
+
+#: langtab.src
+msgid "Mari, Hill"
+msgstr "מארי מערבית"
+
+#: langtab.src
+msgid "Nganasan"
+msgstr "נגאנאסן"
+
+#: langtab.src
+msgid "Olonets"
+msgstr "אולונץ"
+
+#: langtab.src
+msgid "Veps"
+msgstr "ופס"
+
+#: langtab.src
+msgid "Võro"
+msgstr "והרו"
+
+#: langtab.src
+msgid "Nenets"
+msgstr "ננץ"
+
+#: langtab.src
+msgid "Aka (Congo)"
+msgstr "אקה (קונגו)"
+
+#: langtab.src
+msgid "Dibole"
+msgstr "דיבולה"
+
+#: langtab.src
+msgid "Doondo"
+msgstr "דונדו"
+
+#: langtab.src
+msgid "Kaamba"
+msgstr "קאמה"
+
+#: langtab.src
+msgid "Koongo (Congo)"
+msgstr "קונגו (קונגו)"
+
+#: langtab.src
+msgid "Kunyi"
+msgstr "קוניי"
+
+#: langtab.src
+msgid "Ngungwel"
+msgstr "נגונגוול"
+
+#: langtab.src
+msgid "Njyem (Congo)"
+msgstr "נג׳יים (קונגו)"
+
+#: langtab.src
+msgid "Punu"
+msgstr "פונו"
+
+#: langtab.src
+msgid "Suundi"
+msgstr "סונדי"
+
+#: langtab.src
+msgid "Teke-Kukuya"
+msgstr "טקה־קוקויה"
+
+#: langtab.src
+msgid "Tsaangi"
+msgstr "טשאנגי"
+
+#: langtab.src
+msgid "Yaka"
+msgstr "יקה"
+
+#: langtab.src
+msgid "Yombe (Congo)"
+msgstr "יומבה (קונגו)"
+
+#: langtab.src
+msgid "N'ko"
+msgstr "נ׳קו"
+
+#: langtab.src
+msgid "Udmurt"
+msgstr "אודמורטית"
+
+#: langtab.src
+msgid "Tibetan (India)"
+msgstr "טיבטית (הודו)"
+
+#: langtab.src
+msgid "Cornish"
+msgstr "קורנית"
+
+#: langtab.src
+msgid "Sami, Pite (Sweden)"
+msgstr "סאמי, פייט (שוודיה)"
+
+#: langtab.src
+msgid "Kumyk"
+msgstr "קומיקית"
+
+#: langtab.src
+msgid "Karakalpak Latin"
+msgstr "קרקלפקית בכתב לטיני"
+
+#: langtab.src
+msgid "Ladin"
+msgstr "לדינית"
+
+#: langtab.src
+msgid "French (Burkina Faso)"
+msgstr "צרפתית (בורקינה פאסו)"
+
+#: langtab.src
+msgid "French (Mali)"
+msgstr "צרפתית (מאלי)‏"
+
+#: langtab.src
+msgid "French (Senegal)"
+msgstr "צרפתית (סנגל)"
+
+#: langtab.src
+msgid "French (Benin)"
+msgstr "צרפתית (בנין)‏"
+
+#: langtab.src
+msgid "French (Niger)"
+msgstr "צרפתית (ניז׳ר)"
+
+#: langtab.src
+msgid "French (Togo)"
+msgstr "צרפתית (טוגו)"
+
+#: langtab.src
+msgid "English (Gambia)"
+msgstr "אנגלית (גמביה)"
+
+#: langtab.src
+msgid "Arpitan (France)"
+msgstr "ארפיטנית (צרפתית)"
+
+#: langtab.src
+msgid "Arpitan (Italy)"
+msgstr "ארפיטנית (איטליה)"
+
+#: langtab.src
+msgid "Arpitan (Switzerland)"
+msgstr "ארפיטנית (שווייץ)‏"

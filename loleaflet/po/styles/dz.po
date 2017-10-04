@@ -2335,3 +2335,283 @@ msgstr "ཀ་ཊ་ཀ་ན་སྒྲ་རྟགས་ཚུ།"
 #: GenericCommands.xcu
 msgid "Font Name:"
 msgstr "ཡིག་གཟུགས་མིང་།:"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "མ་ཤེསཔ།"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "ཨཱལ་བཱ་ནི་ཡཱན།"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "ཨ་ར་བིཀ།"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "ཨར་མི་ནི་ཡཱན།"
+
+#: langtab.src
+msgid "Basque"
+msgstr "བཱགསིཀ།"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "བེང་ག་ལི།(རྒྱ་གར།)"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr " བེ་ལ་རུ་སི་ཡཱན།"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "ཀེ་ཊ་ལཱན།"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "རྒྱ་ནག་གི་(སྔར་སྲོལ་)།"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "རྒྱ་ནག(འཇམ་སམ་བཟོ་ཡོདཔ།)"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "ཀོརོ་ཤི་ཡཱན།"
+
+#: langtab.src
+msgid "Czech"
+msgstr "ཅེཛི།"
+
+#: langtab.src
+msgid "Danish"
+msgstr "ཌེ་ནིཤ།"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "ཌཆ་(ནེ་དར་ལེནཌིསི་)།"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "ཨིང་ལིཤ་(ཨུ་ཨེསི་ཨེ་)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "ཨིསི་ཊོ་ནི་ཡཱན།"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "ཕིན་ནིཤ།"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "ཕེ་རོ་སི།"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "ཕིརེནཆི་(ཕརཱནསི་)།"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "ཇར་མཱན(ཇར་མ་ནི་)།"
+
+#: langtab.src
+msgid "Greek"
+msgstr "གི་རིཀ།"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "གུ་ཇ་རཱ་ཊི།"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "ཧེབ་བིརིའུ།"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "ཧིན་དི།"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "ཧང་ག་རི་ཡཱན།"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "ཨའིསི་ལེན་ཌིཀ།"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "ཨིན་དོ་ནི་ཤེ་ཡཱན།"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "ཨི་ཊ་ལི་ཡཱན་(ཨི་ཊ་ལི་)།"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "ཇ་པ་ནིསི།"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "ཀཱན་ན་ད།"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "ལེཊི་བི་ཡཱན།"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "ལི་ཐུ་འ་ནི་ཡཱན།"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "མེ་སི་ཌོ་ནི་ཡཱན།"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "མ་ལ་ཡ་ལམ།"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "མ་ར་ཐི།"
+
+#: langtab.src
+msgid "Polish"
+msgstr "པོ་ལིཤ།"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "པོར་ཊུ་གིསི་(པོར་ཊུ་གཱལ་)།"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "པོར་ཊུ་གིསི་(བ་ར་ཛིལ་)།"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "པཱན་ཇ་བི།"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "རེ་ཏོ-རོམ་མེནིསི།"
+
+#: langtab.src
+msgid "Russian"
+msgstr "ར་ཤི་ཡཱན།"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "སཱནསི་ཀིརིཊི།"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "སོལོ་བཱཀ།"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "སིཔེ་ནིཤི་(སིཔེན་)།"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "སུའི་ཌིཤི་(སུའི་ཌེན་)།"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "ཏ་ཇིཀ།"
+
+#: langtab.src
+msgid "Tamil"
+msgstr " ཏ་མིལ།"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "ཊ་ཊར།"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "ཏེ་ལུ་གུ།"
+
+#: langtab.src
+msgid "Thai"
+msgstr "ཐཱའི།"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "ཊར་ཀིཤ།"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "ཡུཀ་རའི་ནི་ཡཱན།"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "ཝེལཤི།"
+
+#: langtab.src
+msgid "Galician"
+msgstr "གེ་ལི་ཤི་ཡཱན།"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "བྱང་སོ་ཐོ།"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "བོསི་ནི་ཡཱན།"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "བེང་ག་ལི།(བང་ལ་དིཤི།)"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "ཁེ་མར།"
+
+#: langtab.src
+msgid "Lao"
+msgstr "ལའོ།"
+
+#: langtab.src
+msgid "Irish"
+msgstr " ཨའི་རིཤ།"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "ཛུ་ལུ།"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "ཝེཊི་ན་མིསི།"
+
+#: langtab.src
+msgid "Breton"
+msgstr "བིརི་ཊཱོན།"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "ས་ཝ་ཛི།"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "ཚོ་ང་།"
+
+#: langtab.src
+msgid "Venda"
+msgstr "ཝིན་ཌ།"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "ཨེགསི་ཨོ་ས།"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "སིན་ཧ་ལ།"
+
+#: langtab.src
+msgid "Tagalog"
+msgstr "ཏ་ག་ལོག"
+
+#: langtab.src
+msgid "Maltese"
+msgstr "མཱལ་ཊི་སི།"

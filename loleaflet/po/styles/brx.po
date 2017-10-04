@@ -1940,3 +1940,103 @@ msgstr "थाइ"
 #: GenericCommands.xcu
 msgid "Font Name:"
 msgstr "फन्टनि मुं:"
+
+#: langtab.src
+msgid "[None]"
+msgstr "रावबो नङा"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "मोनथिमोनै"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "एराबिक"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "चायनिज (गोदोनि)"
+
+#: langtab.src
+msgid "Czech"
+msgstr "चेक्"
+
+#: langtab.src
+msgid "Danish"
+msgstr "डनिश"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "डाच (निदरलेन्डस)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "इंग्राजि (USA)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "इस्टनियान"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "फिन्निश"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "फ्रेन्च (फ्रान्स)"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "जार्मन (जार्मनी)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "ग्रिक"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "हिब्रु"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "हांगेरियान"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "इटालियान (इटालि)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "जापानिज"
+
+#: langtab.src
+msgid "Polish"
+msgstr "पलिश"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "पर्तुगिज (पर्तुगाल)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "पर्तुगिज (ब्राजिल)"
+
+#: langtab.src
+msgid "Russian"
+msgstr "राशियान"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "स्पेनिश (स्पेन)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "स्विडिश (स्विडेन)"
+
+#: langtab.src
+msgid "Thai"
+msgstr "थाइ"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "टार्किश"

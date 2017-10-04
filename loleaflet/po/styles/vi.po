@@ -2370,3 +2370,919 @@ msgstr "Tên phông:"
 #: specialcharacters.ui
 msgid "Special Characters"
 msgstr "Ký tự đặc biệt"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[Không có]"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "Không rõ"
+
+#: langtab.src
+msgid "Afrikaans (South Africa)"
+msgstr "Hoà Nam Phi"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "An-ba-ni"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "Ả rập"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "Ả Rập (Ba-rainh)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "Ả Rập (Ai Cập)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "Ả Rập (I-rắc)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "Ả Rập (Gi-oa-đanh)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "Ả Rập (Khu-ouaith)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "Ả Rập (Le-ba-non)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "Ả Rập (Li-bi)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "Ả Rập (Ma Rốc)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "Ả Rập (Ô-manh)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "Ả rập (Kha-tă)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "Ả Rập (A Rập Xâu-đi)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "Ả Rập (Xi-ri)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "Ả Rập (Tu-ni-xi-a)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "Ả Rập (UAE)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "Ả Rập (Yê-menh)"
+
+#: langtab.src
+msgid "Aragonese"
+msgstr "Tiếng Aragon"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "Ác-mê-ni"
+
+#: langtab.src
+msgid "Azerbaijani Latin"
+msgstr "A-xợ-bai-giă-ni (La-tinh)"
+
+#: langtab.src
+msgid "Azerbaijani Cyrillic"
+msgstr "A-xợ-bai-giă-ni (Ki-rin)"
+
+#: langtab.src
+msgid "Basque"
+msgstr "Ba-x-quợ"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "Ben-ga-li (Ấn Độ)"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "Bun-ga-ri"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "Bê-la-rút-xi-a"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "Ca-ta-lan"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "Trung (phồn thể)"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "Trung (giản thể)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "Trung (Hông Kồng)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "Trung (Xin-ga-poa)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "Trung (Ma-cao)"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "Cợ-rô-a-ti-a"
+
+#: langtab.src
+msgid "Czech"
+msgstr "Séc"
+
+#: langtab.src
+msgid "Danish"
+msgstr "Đan Mạch"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "Hoà (Hoà Lan)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "Hà Lan (Bỉ)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "Anh (Mỹ)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "Anh (Quốc Anh)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "Anh (Úc)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "Anh (Ca-na-đa)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "Anh (Niu Xi-lan)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "Anh (Nam Phi)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "Anh (Gia-mê-ca)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "Anh (Ca-ri-bi)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "Anh (Be-li-xợ)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "Anh (Tợ-ri-ni-đạt)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "Anh (Xim-ba-buê)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "Anh (Phi-luật-tân)"
+
+#: langtab.src
+msgid "English (India)"
+msgstr "Anh (Ấn Độ)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "E-x-tô-ni-a"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "Phần Lan"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "Pha-rô"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "Pháp (Pháp)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "Pháp (Bỉ)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "Pháp (Ca-na-đa)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "Pháp (Thuỵ Sĩ)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "Pháp (Lúc-xam-buac)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "Pháp (Mo-na-cô)"
+
+#: langtab.src
+msgid "Gascon"
+msgstr "Ga-x-con"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "Đức (Đức)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "Đức (Thuỵ Sĩ)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "Đức (Ao)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "Đức (Lúc-xam-buac)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "Đức (Lich-ten-x-têinh)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "Hy Lạp"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "Gu-gia-ra-ti"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "Do Thái"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "Hin-đi"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "Hun-ga-ri"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "Băng Đảo"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "Nam Dương"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "Ý (Ý)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "Ý (Thuỵ Sĩ)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "Nhật"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "Kan-na-đa"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "Ca-xợ-mia (Ca-xợ-mia)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "Ca-xợ-mia (Ấn Độ)"
+
+#: langtab.src
+msgid "Kazakh"
+msgstr "Ca-xác"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "Con-ca-ni"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "Hàn Quốc (RoK)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "Lát-vi-a"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "Li-tu-a-ni"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "Ma-xê-đô-ni"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "Mã-lai (Mã-lai)"
+
+#: langtab.src
+msgid "Malay (Brunei Darussalam)"
+msgstr "Mã-lai (Bợ-ru-nêi Đa-ru-xa-lam)"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "Ma-lay-am"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "Ma-ni-pu-ri"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "Ma-ra-thi"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "Nê-pan (Ne-pan)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "Nê-pan (Ấn Độ)"
+
+#: langtab.src
+msgid "Norwegian, Bokmål"
+msgstr "Na Uy (Bokh-man)"
+
+#: langtab.src
+msgid "Norwegian, Nynorsk"
+msgstr "Na Uy (Ni-noa-x-kh)"
+
+#: langtab.src
+msgid "Polish"
+msgstr "Ba Lan"
+
+#: langtab.src
+msgid "Portuguese (Angola)"
+msgstr "Tiếng Bồ Đào Nha (Angola)"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "Bồ Đào Nha (Bồ Đào Nha)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "Bồ Đào Nha (Bra-xin)"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "Pun-gia-bi"
+
+#: langtab.src
+msgid "Russian"
+msgstr "Nga"
+
+#: langtab.src
+msgid "Sanskrit"
+msgstr "Phạn"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia)"
+msgstr "Xéc-bi Ki-rin (Xéc-bi)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia)"
+msgstr "Xéc-bi La-tinh (Xéc-bi)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Montenegro)"
+msgstr "Xéc-bi Ki-rin (Mon-te-nê-gợ-rô)"
+
+#: langtab.src
+msgid "Serbian Latin (Montenegro)"
+msgstr "Xéc-bi La-tinh (Mon-te-nê-gợ-rô"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "Xin-đi"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "Xlô-vác"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "Xlô-ven"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "Tây Ban Nha (Tây Ban Nha)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "Tây Ban Nha (Mê-hi-cô)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "Tây Ban Nha (Gua-te-ma-la)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "Tây Ban Nha (Có-x-ta Ri-ca)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "Tây Ban Nha (Pa-na-ma)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "Tây Ban Nha (Cộng Hoà Dô-mi-ni-ca)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "Tây Ban Nha (Ve-ne-xuê-la)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "Tây Ban Nha (Co-lom-bi-a)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "Tây Ban Nha (Pê-ru)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "Tây Ban Nha (Ă-gien-ti-na)"
+
+#: langtab.src
+msgid "Spanish (Ecuador)"
+msgstr "Tây Ban Nha (Ê-cua-đoa)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "Tây Ban Nha (Chi-lê)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "Tây Ban Nha (U-ru-guay)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "Tây Ban Nha (Pa-ra-guay)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "Tây Ban Nha (Bô-li-vi-a)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "Tây Ban Nha (En Xan-va-đoa)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "Tây Ban Nha (Hon-đu-rát)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "Tây Ban Nha (Ni-ca-ra-gua)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "Tây Ban Nha (Pu-e-tô Ri-cô)"
+
+#: langtab.src
+msgid "Swahili (Kenya)"
+msgstr "Xouă-hi-li (Ken-i-a)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "Thuỵ Điển (Thuỵ Điển)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "Thuỵ Điển (Phần Lan)"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "Ta-gíkh"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "Ta-min"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "Ta-tă"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "Te-lu-gu"
+
+#: langtab.src
+msgid "Thai"
+msgstr "Thái"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "Thổ Nhĩ Kỳ"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "Ua-đu (Pa-khi-x-tanh)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "Ua-đu (Ấn Độ)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "U-cợ-rainh"
+
+#: langtab.src
+msgid "Uzbek Latin"
+msgstr "U-x-béc (La-tinh)"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "Ouen-s"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "Ét-pe-ran-tô"
+
+#: langtab.src
+msgid "Kinyarwanda (Rwanda)"
+msgstr "Ki-nia-ouăn-đa (Rouăn-đa)"
+
+#: langtab.src
+msgid "Galician"
+msgstr "Ga-li-xi"
+
+#: langtab.src
+msgid "Dhivehi"
+msgstr "Đi-ve-hi"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "Bắc Xô-tô"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "Xen-tơ (Ê-cốt)"
+
+#: langtab.src
+msgid "Interlingua"
+msgstr "In-tơ-lin-gua"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "Bo-x-ni-a"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "Ben-ga-li (Băng-la-đexợ)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "Óc-xi-tan"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "Khơ-me"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "Xa-đi-ni-a"
+
+#: langtab.src
+msgid "Swahili (Tanzania)"
+msgstr "Xouă-hi-li (Tan-xa-ni-a)"
+
+#: langtab.src
+msgid "Lao"
+msgstr "Lào"
+
+#: langtab.src
+msgid "Irish"
+msgstr "Ai-len"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "Tây Tạng (Trung Quốc)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "Gi-oa-gi-a"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "Ph-ri-xi-a"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "T-xouă-na (Nam Phi)"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "Xu-lu"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "Việt"
+
+#: langtab.src
+msgid "Breton"
+msgstr "Bợ-re-ton"
+
+#: langtab.src
+msgid "Kalaallisut"
+msgstr "Ca-lă-li-xút"
+
+#: langtab.src
+msgid "Ndebele, South"
+msgstr "Nam N-đe-be-le"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "Nam Xô-tô"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "Xouă-xi"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "T-xôn-ga"
+
+#: langtab.src
+msgid "Venda"
+msgstr "Ven-đa"
+
+#: langtab.src
+msgid "Tswana (Botswana)"
+msgstr "T-xouă-na (Bót-xouă-na)"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "Xhô-xa"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "Xin-ha-la"
+
+#: langtab.src
+msgid "Moore"
+msgstr "Muă"
+
+#: langtab.src
+msgid "Bambara"
+msgstr "Bam-ba-ra"
+
+#: langtab.src
+msgid "Akan"
+msgstr "A-can"
+
+#: langtab.src
+msgid "Luxembourgish"
+msgstr "Lúc-xăm-buac"
+
+#: langtab.src
+msgid "Friulian"
+msgstr "Phợ-riu-li"
+
+#: langtab.src
+msgid "Fijian"
+msgstr "Phi-gi"
+
+#: langtab.src
+msgid "Afrikaans (Namibia)"
+msgstr "Hoà Nam Phi (Na-mi-bia)"
+
+#: langtab.src
+msgid "English (Namibia)"
+msgstr "Anh (Na-mi-bia)"
+
+#: langtab.src
+msgid "Walloon"
+msgstr "Oua-lunh"
+
+#: langtab.src
+msgid "Coptic"
+msgstr "Ngôn ngữ Giáo hội Ai Cập"
+
+#: langtab.src
+msgid "Tigrigna (Eritrea)"
+msgstr "Tíc-ríc-na (Ê-ri-tợ-rê-a)"
+
+#: langtab.src
+msgid "Tigrigna (Ethiopia)"
+msgstr "Tíc-ríc-na (Ê-ti-ô-pi)"
+
+#: langtab.src
+msgid "Amharic"
+msgstr "Am-ha-ri"
+
+#: langtab.src
+msgid "Kirghiz"
+msgstr "Khia-ghi-x"
+
+#: langtab.src
+msgid "German (Belgium)"
+msgstr "Đức (Bỉ)"
+
+#: langtab.src
+msgid "Chuvash"
+msgstr "Chu-vas"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "Miến Điện"
+
+#: langtab.src
+msgid "Hausa (Nigeria)"
+msgstr "Hau-xa (Ni-gê-ri-a)"
+
+#: langtab.src
+msgid "Hausa (Ghana)"
+msgstr "Hau-xa (Gha-na)"
+
+#: langtab.src
+msgid "Éwé"
+msgstr "É-oué"
+
+#: langtab.src
+msgid "English (Ghana)"
+msgstr "Anh (Gha-na)"
+
+#: langtab.src
+msgid "Sango"
+msgstr "Xan-gô"
+
+#: langtab.src
+msgid "Tagalog"
+msgstr "Ta-ga-loc"
+
+#: langtab.src
+msgid "Ganda"
+msgstr "Gan-đa"
+
+#: langtab.src
+msgid "Lingala"
+msgstr "Lin-ga-la"
+
+#: langtab.src
+msgid "Low German"
+msgstr "Đức thấp"
+
+#: langtab.src
+msgid "Hiligaynon"
+msgstr "Hi-li-gây-non"
+
+#: langtab.src
+msgid "Nyanja"
+msgstr "Ny-an-gia"
+
+#: langtab.src
+msgid "Kashubian"
+msgstr "Ka-xu-bi"
+
+#: langtab.src
+msgid "Spanish (Cuba)"
+msgstr "Tây Ban Nha (Cu-ba)"
+
+#: langtab.src
+msgid "Tetun (Indonesia)"
+msgstr "Te-tun (Nam Dương)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, North)"
+msgstr "Que-chua (Bắc Bô-li-vi)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, South)"
+msgstr "Que-chua (Nam Bô-li-vi"
+
+#: langtab.src
+msgid "Somali"
+msgstr "Xô-ma-li"
+
+#: langtab.src
+msgid "Sami, Inari (Finland)"
+msgstr "Xa-mi, I-na-ri (Phần Lan)"
+
+#: langtab.src
+msgid "Sami, Lule (Norway)"
+msgstr "Xa-mi, Lu-le (Na Uy)"
+
+#: langtab.src
+msgid "Sami, Lule (Sweden)"
+msgstr "Xa-mi, Lu-le (Thuỵ Điển)"
+
+#: langtab.src
+msgid "Sami, Northern (Finland)"
+msgstr "Bắc Xa-mi (Phần Lan)"
+
+#: langtab.src
+msgid "Sami, Northern (Norway)"
+msgstr "Bắc Xa-mi (Na Uy)"
+
+#: langtab.src
+msgid "Sami, Northern (Sweden)"
+msgstr "Bắc Xa-mi (Thuỵ Điển)"
+
+#: langtab.src
+msgid "Sami, Skolt (Finland)"
+msgstr "Xa-mi, X-cô-th (Phần Lan)"
+
+#: langtab.src
+msgid "Sami, Southern (Norway)"
+msgstr "Nam Xa-mi (Na Uy)"
+
+#: langtab.src
+msgid "Sami, Southern (Sweden)"
+msgstr "Nam Xa-mi (Thuỵ Điển)"
+
+#: langtab.src
+msgid "Sami, Kildin (Russia)"
+msgstr "Xa-mi, Kin-đin (Nga)"
+
+#: langtab.src
+msgid "Bodo"
+msgstr "Bô-đô"
+
+#: langtab.src
+msgid "Dogri"
+msgstr "Đô-gợ-ri"
+
+#: langtab.src
+msgid "Maithili"
+msgstr "Mai-ti-li"
+
+#: langtab.src
+msgid "Santali"
+msgstr "Xan-ta-li"
+
+#: langtab.src
+msgid "Tetun (Timor-Leste)"
+msgstr "Te-tun (Ti-moa Le-x-te)"
+
+#: langtab.src
+msgid "Turkmen"
+msgstr "Tuổc-menh"
+
+#: langtab.src
+msgid "Greek, Ancient"
+msgstr "Hy Lạp, cổ"
+
+#: langtab.src
+msgid "Sorbian, Upper"
+msgstr "Sorbian, Trên"
+
+#: langtab.src
+msgid "Sorbian, Lower"
+msgstr "Sorbian, Dưới"
+
+#: langtab.src
+msgid "Maore"
+msgstr "Muă"
+
+#: langtab.src
+msgid "English (Malawi)"
+msgstr "Anh (Ca-na-đa)"
+
+#: langtab.src
+msgid "Papiamento (Curaçao)"
+msgstr "Papiamento (Aruba)"

@@ -1967,3 +1967,423 @@ msgstr "Kimongolia"
 #: GenericCommands.xcu
 msgid "Font Name:"
 msgstr "Jina la Fonti:"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[Bila]"
+
+#: langtab.src
+msgid "Afrikaans (South Africa)"
+msgstr "Kiafrikana"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "Kialbania"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "Kiarabu"
+
+#: langtab.src
+msgid "Arabic (Algeria)"
+msgstr "Kiarabu (Aljeria)"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "Kiarabu (Bahareni)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "Kiarabu (Misri)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "Kiarabu (Iraki)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "Kiarabu (Jodan)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "Kiarabu (Kuweiti)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "Kiarabu (Lebanon)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "Kiarabu (Libya)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "Kiarabu (Moroko)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "Kiarabu (Oman)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "Kiarabu (Kwata)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "Kiarabu (Saudia)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "Kiarabu (Siria)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "Kiarabu (Tunisia)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "Kiarabu (UAE)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "Kiarabu (Yemen)"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "Kiarmenia"
+
+#: langtab.src
+msgid "Azerbaijani Latin"
+msgstr "Kiazabaijani (Kilatini)"
+
+#: langtab.src
+msgid "Azerbaijani Cyrillic"
+msgstr "Kiazabaijani (Kisirili)"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "Kibulgaria"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "Byelorussian"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "Kichina (Hong Kong)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "Kichana (Singapo)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "Kichina (Makau)"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "Kikroashia"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "Kidachi (Uholanzi)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "Kidachi (Ubelgiji)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "Kiingereza (Marekani)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "Kiingereza (Uingereza)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "Kiingereza (Austria)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "Kiingereza (Kanada)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "Kiingereza (New Zealand)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "Kiingereza (Afrika ya Kusini)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "Kiingereza (Jamaika)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "Kiingereza (Karibean)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "Kiingereza (Belize)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "Kiingereza (Trinidad)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "Kiingereza (Zimbabwe)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "Kiingereza (Philippine)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "Kiestonia"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "Kifaransa (Ufaransa)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "Kifaransa (Ubeligiji)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "Kifaransa (Kanada)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "Kifaransa (Uswisi)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "Kifaransa (Luksenbag)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "Kifaransa (Monako)"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "Kijerumani (Ujerumani)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "Kijerumani (Uswisi)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "Kijerumani (Austria)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "Kijerumani (Luksenbourg)"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "Kiebrania"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "Kihindi"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "Kihangari"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "Kiiceland"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "Kiindonesia"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "Kiitaly (Italia)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "Kiitalia (Uswisi)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "Kijapani"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "Kikashmir (Kashmir)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "Kikashmir (India)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "Kilatvia"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "Kimasedonia"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "Kimalei (Maleshia)"
+
+#: langtab.src
+msgid "Malay (Brunei Darussalam)"
+msgstr "Kimalei (Brunei Darusalam)"
+
+#: langtab.src
+msgid "Nepali (Nepal)"
+msgstr "Kinepali (Nepali)"
+
+#: langtab.src
+msgid "Nepali (India)"
+msgstr "Kinepali (India)"
+
+#: langtab.src
+msgid "Norwegian, Bokmål"
+msgstr "Kinorwe (Bokmål)"
+
+#: langtab.src
+msgid "Norwegian, Nynorsk"
+msgstr "Kinorwe (Nynorsk)"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "Kireno (Ureno)"
+
+#: langtab.src
+msgid "Russian"
+msgstr "Kirusi"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "Kislovenia"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "Kihispania (Hispania)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "Kihispania (Meksiko)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "Kihispania (Guatemala)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "Kihispania (Kosta Rika)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "Kihispania (Panama)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "Kihispania (Jam. ya Dom.)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "Kihispania (Venezuela)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "Kihispania (Kolombia)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "Kihispania (Peru)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "Kihispania (Ajentina)"
+
+#: langtab.src
+msgid "Spanish (Ecuador)"
+msgstr "Kihispania (Ekuado)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "Kihispania (Chile)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "Kihispania (Uruguai)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "Kihispania (Paraguai)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "Kihispania (Bolivia)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "Kihispania (El Salvado)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "Kihispania (Hunduras)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "Kihispania (Nikaragua)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "Kihispania (Puerto Riko)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "Kiswidi (Swiden)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "Kiswidi (Finland)"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "Kituruki"
+
+#: langtab.src
+msgid "Urdu (Pakistan)"
+msgstr "Kiurdu (Pakistani)"
+
+#: langtab.src
+msgid "Urdu (India)"
+msgstr "Kiurdu (India)"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "Kiukran"
+
+#: langtab.src
+msgid "Uzbek Latin"
+msgstr "Kiuzbeki (Latini)"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "Kiwelshi"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "Kiesperanto"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "Kitswana"
+
+#: langtab.src
+msgid "Ndebele, South"
+msgstr "Ndebele (South)"

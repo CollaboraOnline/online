@@ -1971,3 +1971,99 @@ msgstr "ລູກສອນ"
 #: GenericCommands.xcu
 msgid "Font Name:"
 msgstr "ຊື່ແບບຕົວອັກສອນ:"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[ບໍ່]"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "ບໍ່ຮູ້"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "ຈີນ(ດັ້ງເດີມ)"
+
+#: langtab.src
+msgid "Czech"
+msgstr "ເຊກ"
+
+#: langtab.src
+msgid "Danish"
+msgstr "ເດັນນິດ"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "ດັດ(ເນເທີແລນ)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "ອັງກິດ(ອາເມລິກາ)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "ເອັດສະໂຕເນຍ"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "ຟິນ"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "ຝະລັ່ງ"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "ເຢຍລະມັນ"
+
+#: langtab.src
+msgid "Greek"
+msgstr "ກີຼກ"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "ຢິວ"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "ຮົງກາລີ"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "ອີຕາລີ"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "ຍີ່ປຸ່ນ"
+
+#: langtab.src
+msgid "Polish"
+msgstr "ໂພລິດ"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "ປ໋ອກຕຸຍການ(ປ໋ອກຕຸຍການ)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "ໂປຕຸເກດ(ບຣາຊິວ)"
+
+#: langtab.src
+msgid "Russian"
+msgstr "ລັດເຊຍ"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "ສະເປນ"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "ສະວີດິດ(ສະວີເດັນ)"
+
+#: langtab.src
+msgid "Thai"
+msgstr "ໄທ"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "ເຕີກກີ"

@@ -1990,3 +1990,311 @@ msgstr "मंगोलियाइ"
 #: GenericCommands.xcu
 msgid "Font Name:"
 msgstr "फंट नाम:"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[केओ नहि]"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "अल्बानियाइ"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "अरेबिक"
+
+#: langtab.src
+msgid "Basque"
+msgstr "बास्क"
+
+#: langtab.src
+msgid "Bengali (India)"
+msgstr "बंगाली (भारत)"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "बेलारूसी"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "केटालान"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "चीनी (परम्परागत)"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "चीनी (सामान्य)"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "क्रोएशियाइ"
+
+#: langtab.src
+msgid "Czech"
+msgstr "चेक"
+
+#: langtab.src
+msgid "Danish"
+msgstr "डैनिश"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "डच (नीदरलैंड)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "अंग्रेजी (USA)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "अंग्रेजी (दक्षिण अफ्रीका)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "एस्तोनियाई"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "फिनिश"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "फ्रेन्च (फ्रान्स)"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "जर्मन (जर्मनी)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "ग्रीक"
+
+#: langtab.src
+msgid "Gujarati"
+msgstr "गुजराती"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "हिब्रू"
+
+#: langtab.src
+msgid "Hindi"
+msgstr "हिन्दी"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "हंगेरियाई"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "आइसलैंडिक"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "इंडोनेशियन"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "इटालियन (इटली)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "जापानी"
+
+#: langtab.src
+msgid "Kannada"
+msgstr "कन्नड"
+
+#: langtab.src
+msgid "Konkani"
+msgstr "कोंकणी"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "लातवियाइ"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "लिथुआनियाइ"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "मेसिडोनियाइ"
+
+#: langtab.src
+msgid "Malayalam"
+msgstr "मलयालम"
+
+#: langtab.src
+msgid "Manipuri"
+msgstr "मनीपुरी"
+
+#: langtab.src
+msgid "Marathi"
+msgstr "मराठी"
+
+#: langtab.src
+msgid "Polish"
+msgstr "पोलिश"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "पोर्चुगीस (पुर्तगाल)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "पुर्तगाली (ब्राज़िल)"
+
+#: langtab.src
+msgid "Punjabi"
+msgstr "पंजाबी"
+
+#: langtab.src
+msgid "Russian"
+msgstr "रूसी"
+
+#: langtab.src
+msgid "Sindhi"
+msgstr "सिन्धी"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "स्लोवाक"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "स्पेनिश (स्पेन)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "स्वीडिश (स्वीडन)"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "ताजिक"
+
+#: langtab.src
+msgid "Tamil"
+msgstr "तमिल"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "ततार"
+
+#: langtab.src
+msgid "Telugu"
+msgstr "तेलुगु"
+
+#: langtab.src
+msgid "Thai"
+msgstr "थाई"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "तुर्की"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "युक्रेनियन"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "वेल्श"
+
+#: langtab.src
+msgid "Esperanto"
+msgstr "एस्पेरांटो"
+
+#: langtab.src
+msgid "Galician"
+msgstr "गेलिसियन"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "उत्तरी सोथो"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "बोस्नियाइ"
+
+#: langtab.src
+msgid "Bengali (Bangladesh)"
+msgstr "बंगाली (बांग्लादेश)"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "ओकितन"
+
+#: langtab.src
+msgid "Khmer"
+msgstr "ख्मेर"
+
+#: langtab.src
+msgid "Lao"
+msgstr "लाओ"
+
+#: langtab.src
+msgid "Irish"
+msgstr "आइरिश"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "ज्यार्जियाइ"
+
+#: langtab.src
+msgid "Zulu"
+msgstr "जूलु"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "विएतनामी"
+
+#: langtab.src
+msgid "Breton"
+msgstr "ब्रेटन"
+
+#: langtab.src
+msgid "Swazi"
+msgstr "स्वाजी"
+
+#: langtab.src
+msgid "Tsonga"
+msgstr "त्सोंगा"
+
+#: langtab.src
+msgid "Venda"
+msgstr "वेंडा"
+
+#: langtab.src
+msgid "Xhosa"
+msgstr "झोसा"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "सिंहला"
+
+#: langtab.src
+msgid "Bodo"
+msgstr "बोडो"
+
+#: langtab.src
+msgid "Dogri"
+msgstr "डोगरी"
+
+#: langtab.src
+msgid "Maithili"
+msgstr "मैथिली"
+
+#: langtab.src
+msgid "Santali"
+msgstr "संथाली"
+
+#: langtab.src
+msgid "Oromo"
+msgstr "ओरोमो"
+
+#: langtab.src
+msgid "Asturian"
+msgstr "एस्ट्यूरियन"

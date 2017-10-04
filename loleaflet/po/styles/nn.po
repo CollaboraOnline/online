@@ -2783,3 +2783,1059 @@ msgstr "Heksadesimal:"
 #: asianphoneticguidedialog.ui
 msgid "Preview:"
 msgstr "Førehandsvising:"
+
+#: langtab.src
+msgid "[None]"
+msgstr "[Ingen]"
+
+#: langtab.src
+msgid "Unknown"
+msgstr "Ukjend"
+
+#: langtab.src
+msgid "Afrikaans (South Africa)"
+msgstr "Afrikaans (Sør-Afrika)"
+
+#: langtab.src
+msgid "Albanian"
+msgstr "Albansk"
+
+#: langtab.src
+msgid "Arabic"
+msgstr "Arabisk"
+
+#: langtab.src
+msgid "Arabic (Algeria)"
+msgstr "Arabisk (Algerie)"
+
+#: langtab.src
+msgid "Arabic (Bahrain)"
+msgstr "Arabisk (Bahrain)"
+
+#: langtab.src
+msgid "Arabic (Chad)"
+msgstr "Arabisk (Tsjad)"
+
+#: langtab.src
+msgid "Arabic (Comoros)"
+msgstr "Arabisk (Komorane)"
+
+#: langtab.src
+msgid "Arabic (Djibouti)"
+msgstr "Arabisk (Djibouti)"
+
+#: langtab.src
+msgid "Arabic (Egypt)"
+msgstr "Arabisk (Egypt)"
+
+#: langtab.src
+msgid "Arabic (Eritrea)"
+msgstr "Arabisk (Eritrea)"
+
+#: langtab.src
+msgid "Arabic (Iraq)"
+msgstr "Arabisk (Irak)"
+
+#: langtab.src
+msgid "Arabic (Israel)"
+msgstr "Arabisk (Israel)"
+
+#: langtab.src
+msgid "Arabic (Jordan)"
+msgstr "Arabisk (Jordan)"
+
+#: langtab.src
+msgid "Arabic (Kuwait)"
+msgstr "Arabisk (Kuwait)"
+
+#: langtab.src
+msgid "Arabic (Lebanon)"
+msgstr "Arabisk (Libanon)"
+
+#: langtab.src
+msgid "Arabic (Libya)"
+msgstr "Arabisk (Libya)"
+
+#: langtab.src
+msgid "Arabic (Mauritania)"
+msgstr "Arabisk (Mauritania)"
+
+#: langtab.src
+msgid "Arabic (Morocco)"
+msgstr "Arabisk (Marokko)"
+
+#: langtab.src
+msgid "Arabic (Oman)"
+msgstr "Arabisk (Oman)"
+
+#: langtab.src
+msgid "Arabic (Palestine)"
+msgstr "Arabisk (Palestina)"
+
+#: langtab.src
+msgid "Arabic (Qatar)"
+msgstr "Arabisk (Qatar)"
+
+#: langtab.src
+msgid "Arabic (Saudi Arabia)"
+msgstr "Arabisk (Saudi-Arabia)"
+
+#: langtab.src
+msgid "Arabic (Somalia)"
+msgstr "Arabisk (Somalia)"
+
+#: langtab.src
+msgid "Arabic (Sudan)"
+msgstr "Arabisk (Sudan)"
+
+#: langtab.src
+msgid "Arabic (Syria)"
+msgstr "Arabisk (Syria)"
+
+#: langtab.src
+msgid "Arabic (Tunisia)"
+msgstr "Arabisk (Tunisia)"
+
+#: langtab.src
+msgid "Arabic (UAE)"
+msgstr "Arabisk (Dei sameinte arabiske emirata)"
+
+#: langtab.src
+msgid "Arabic (Yemen)"
+msgstr "Arabisk (Jemen)"
+
+#: langtab.src
+msgid "Aragonese"
+msgstr "Aragonsk"
+
+#: langtab.src
+msgid "Armenian"
+msgstr "Armensk"
+
+#: langtab.src
+msgid "Assamese"
+msgstr "Assamesisk"
+
+#: langtab.src
+msgid "Azerbaijani Latin"
+msgstr "Aserbajdsjansk, latinsk"
+
+#: langtab.src
+msgid "Azerbaijani Cyrillic"
+msgstr "Aserbajdsjansk, kyrillisk"
+
+#: langtab.src
+msgid "Basque"
+msgstr "Baskisk"
+
+#: langtab.src
+msgid "Bulgarian"
+msgstr "Bulgarsk"
+
+#: langtab.src
+msgid "Belarusian"
+msgstr "Kviterussisk"
+
+#: langtab.src
+msgid "Catalan"
+msgstr "Katalansk"
+
+#: langtab.src
+msgid "Catalan (Valencian)"
+msgstr "Katalansk (valensisk)"
+
+#: langtab.src
+msgid "Chinese (traditional)"
+msgstr "Kinesisk (tradisjonell)"
+
+#: langtab.src
+msgid "Chinese (simplified)"
+msgstr "Kinesisk (forenkla)"
+
+#: langtab.src
+msgid "Chinese (Hong Kong)"
+msgstr "Kinesisk (Hong Kong)"
+
+#: langtab.src
+msgid "Chinese (Singapore)"
+msgstr "Kinesisk (Singapore)"
+
+#: langtab.src
+msgid "Chinese (Macau)"
+msgstr "Kinesisk (Macau)"
+
+#: langtab.src
+msgid "Church Slavic"
+msgstr "Kyrkjeslavisk"
+
+#: langtab.src
+msgid "Croatian"
+msgstr "Kroatisk"
+
+#: langtab.src
+msgid "Czech"
+msgstr "Tsjekkisk"
+
+#: langtab.src
+msgid "Danish"
+msgstr "Dansk"
+
+#: langtab.src
+msgid "Dutch (Netherlands)"
+msgstr "Nederlandsk (Nederland)"
+
+#: langtab.src
+msgid "Dutch (Belgium)"
+msgstr "Nederlandsk (Belgia)"
+
+#: langtab.src
+msgid "English (USA)"
+msgstr "Engelsk (USA)"
+
+#: langtab.src
+msgid "English (UK)"
+msgstr "Engelsk (Storbritannia)"
+
+#: langtab.src
+msgid "English, OED spelling (UK)"
+msgstr "Engelsk, OED-staving (UK)"
+
+#: langtab.src
+msgid "English (Australia)"
+msgstr "Engelsk (Australia)"
+
+#: langtab.src
+msgid "English (Canada)"
+msgstr "Engelsk (Canada)"
+
+#: langtab.src
+msgid "English (New Zealand)"
+msgstr "Engelsk (New Zealand)"
+
+#: langtab.src
+msgid "English (Ireland)"
+msgstr "Engelsk (Irland)"
+
+#: langtab.src
+msgid "English (South Africa)"
+msgstr "Engelsk (Sør-Afrika)"
+
+#: langtab.src
+msgid "English (Jamaica)"
+msgstr "Engelsk (Jamaica)"
+
+#: langtab.src
+msgid "English (Caribbean)"
+msgstr "Engelsk (Karibia)"
+
+#: langtab.src
+msgid "English (Belize)"
+msgstr "Engelsk (Belize)"
+
+#: langtab.src
+msgid "English (Trinidad)"
+msgstr "Engelsk (Trinidad)"
+
+#: langtab.src
+msgid "English (Zimbabwe)"
+msgstr "Engelsk (Zimbabwe)"
+
+#: langtab.src
+msgid "English (Philippines)"
+msgstr "Engelsk (Filippinane)"
+
+#: langtab.src
+msgid "English (India)"
+msgstr "Engelsk (India)"
+
+#: langtab.src
+msgid "Estonian"
+msgstr "Estisk"
+
+#: langtab.src
+msgid "Finnish"
+msgstr "Finsk"
+
+#: langtab.src
+msgid "Faroese"
+msgstr "Færøysk"
+
+#: langtab.src
+msgid "Persian"
+msgstr "Persisk"
+
+#: langtab.src
+msgid "French (France)"
+msgstr "Fransk (Frankrike)"
+
+#: langtab.src
+msgid "French (Belgium)"
+msgstr "Fransk (Belgia)"
+
+#: langtab.src
+msgid "French (Canada)"
+msgstr "Fransk (Canada)"
+
+#: langtab.src
+msgid "French (Switzerland)"
+msgstr "Fransk (Sveits)"
+
+#: langtab.src
+msgid "French (Luxembourg)"
+msgstr "Fransk (Luxembourg)"
+
+#: langtab.src
+msgid "French (Monaco)"
+msgstr "Fransk (Monaco)"
+
+#: langtab.src
+msgid "German (Germany)"
+msgstr "Tysk (Tyskland)"
+
+#: langtab.src
+msgid "German (Switzerland)"
+msgstr "Tysk (Sveits)"
+
+#: langtab.src
+msgid "German (Austria)"
+msgstr "Tysk (Austerrike)"
+
+#: langtab.src
+msgid "German (Luxembourg)"
+msgstr "Tysk (Luxembourg)"
+
+#: langtab.src
+msgid "German (Liechtenstein)"
+msgstr "Tysk (Liechtenstein)"
+
+#: langtab.src
+msgid "Greek"
+msgstr "Gresk"
+
+#: langtab.src
+msgid "Hebrew"
+msgstr "Hebraisk"
+
+#: langtab.src
+msgid "Hungarian"
+msgstr "Ungarsk"
+
+#: langtab.src
+msgid "Icelandic"
+msgstr "Islandsk"
+
+#: langtab.src
+msgid "Indonesian"
+msgstr "Indonesisk"
+
+#: langtab.src
+msgid "Italian (Italy)"
+msgstr "Italiensk (Italia)"
+
+#: langtab.src
+msgid "Italian (Switzerland)"
+msgstr "Italiensk (Sveits)"
+
+#: langtab.src
+msgid "Japanese"
+msgstr "Japansk"
+
+#: langtab.src
+msgid "Kashmiri (Kashmir)"
+msgstr "Kasjmiri (Kashmir)"
+
+#: langtab.src
+msgid "Kashmiri (India)"
+msgstr "Kasjmiri (India)"
+
+#: langtab.src
+msgid "Kazakh"
+msgstr "Kasakhisk"
+
+#: langtab.src
+msgid "Korean (RoK)"
+msgstr "Koreansk (Sør-Korea)"
+
+#: langtab.src
+msgid "Latvian"
+msgstr "Latvisk"
+
+#: langtab.src
+msgid "Lithuanian"
+msgstr "Litauisk"
+
+#: langtab.src
+msgid "Macedonian"
+msgstr "Makedonsk"
+
+#: langtab.src
+msgid "Malay (Malaysia)"
+msgstr "Malayisk (Malaysia)"
+
+#: langtab.src
+msgid "Malay (Brunei Darussalam)"
+msgstr "Malayisk (Brunei Darussalam)"
+
+#: langtab.src
+msgid "Norwegian, Bokmål"
+msgstr "Norsk bokmål"
+
+#: langtab.src
+msgid "Norwegian, Nynorsk"
+msgstr "Norsk nynorsk"
+
+#: langtab.src
+msgid "Odia"
+msgstr "Oriya"
+
+#: langtab.src
+msgid "Polish"
+msgstr "Polsk"
+
+#: langtab.src
+msgid "Portuguese (Angola)"
+msgstr "Portugisisk (Angola)"
+
+#: langtab.src
+msgid "Portuguese (Portugal)"
+msgstr "Portugisisk (Portugual)"
+
+#: langtab.src
+msgid "Portuguese (Brazil)"
+msgstr "Portugisisk (Brasil)"
+
+#: langtab.src
+msgid "Rhaeto-Romance"
+msgstr "Retoromansk"
+
+#: langtab.src
+msgid "Romanian (Romania)"
+msgstr "Rumensk (Romania)"
+
+#: langtab.src
+msgid "Romanian (Moldova)"
+msgstr "Rumensk (Moldavia)"
+
+#: langtab.src
+msgid "Russian"
+msgstr "Russisk"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia and Montenegro)"
+msgstr "Serbisk, kyrillisk (Serbia og Montenegro)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia and Montenegro)"
+msgstr "Serbisk, latinsk (Serbia og Montenegro)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Serbia)"
+msgstr "Serbisk, kyrillisk (Serbia)"
+
+#: langtab.src
+msgid "Serbian Latin (Serbia)"
+msgstr "Serbisk, latinsk (Serbia)"
+
+#: langtab.src
+msgid "Serbian Cyrillic (Montenegro)"
+msgstr "Serbisk, kyrillisk (Montenegro)"
+
+#: langtab.src
+msgid "Serbian Latin (Montenegro)"
+msgstr "Serbisk, latinsk (Montenegro)"
+
+#: langtab.src
+msgid "Serbian Latin"
+msgstr "Serbisk (latin)"
+
+#: langtab.src
+msgid "Slovak"
+msgstr "Slovakisk"
+
+#: langtab.src
+msgid "Slovenian"
+msgstr "Slovensk"
+
+#: langtab.src
+msgid "Spanish (Spain)"
+msgstr "Spansk (Spania)"
+
+#: langtab.src
+msgid "Spanish (Mexico)"
+msgstr "Spansk (Mexico)"
+
+#: langtab.src
+msgid "Spanish (Guatemala)"
+msgstr "Spansk (Guatemala)"
+
+#: langtab.src
+msgid "Spanish (Costa Rica)"
+msgstr "Spansk (Costa Rica)"
+
+#: langtab.src
+msgid "Spanish (Panama)"
+msgstr "Spansk (Panama)"
+
+#: langtab.src
+msgid "Spanish (Dom. Rep.)"
+msgstr "Spansk (Den dominikanske republikken)"
+
+#: langtab.src
+msgid "Spanish (Venezuela)"
+msgstr "Spansk (Venezuela)"
+
+#: langtab.src
+msgid "Spanish (Colombia)"
+msgstr "Spansk (Colombia)"
+
+#: langtab.src
+msgid "Spanish (Peru)"
+msgstr "Spansk (Peru)"
+
+#: langtab.src
+msgid "Spanish (Argentina)"
+msgstr "Spansk (Argentina)"
+
+#: langtab.src
+msgid "Spanish (Ecuador)"
+msgstr "Spansk (Ecuador)"
+
+#: langtab.src
+msgid "Spanish (Chile)"
+msgstr "Spansk (Chile)"
+
+#: langtab.src
+msgid "Spanish (Uruguay)"
+msgstr "Spansk (Uruguay)"
+
+#: langtab.src
+msgid "Spanish (Paraguay)"
+msgstr "Spansk (Paraguay)"
+
+#: langtab.src
+msgid "Spanish (Bolivia)"
+msgstr "Spansk (Bolivia)"
+
+#: langtab.src
+msgid "Spanish (El Salvador)"
+msgstr "Spansk (El Salvador)"
+
+#: langtab.src
+msgid "Spanish (Honduras)"
+msgstr "Spansk (Honduras)"
+
+#: langtab.src
+msgid "Spanish (Nicaragua)"
+msgstr "Spansk (Nicaragua)"
+
+#: langtab.src
+msgid "Spanish (Puerto Rico)"
+msgstr "Spansk (Puerto Rico)"
+
+#: langtab.src
+msgid "Swedish (Sweden)"
+msgstr "Svensk (Sverige)"
+
+#: langtab.src
+msgid "Swedish (Finland)"
+msgstr "Svensk (Finland)"
+
+#: langtab.src
+msgid "Tajik"
+msgstr "Tadsjikisk"
+
+#: langtab.src
+msgid "Tatar"
+msgstr "Tatarisk"
+
+#: langtab.src
+msgid "Turkish"
+msgstr "Tyrkisk"
+
+#: langtab.src
+msgid "Ukrainian"
+msgstr "Ukrainsk"
+
+#: langtab.src
+msgid "Uzbek Latin"
+msgstr "Usbekisk, latinsk"
+
+#: langtab.src
+msgid "Uzbek Cyrillic"
+msgstr "Usbekisk kyrillisk"
+
+#: langtab.src
+msgid "Welsh"
+msgstr "Walisisk"
+
+#: langtab.src
+msgid "Galician"
+msgstr "Galisisk"
+
+#: langtab.src
+msgid "Northern Sotho"
+msgstr "Nordsotho"
+
+#: langtab.src
+msgid "Gaelic (Scotland)"
+msgstr "Gælisk (Skottland)"
+
+#: langtab.src
+msgid "Mongolian Cyrillic"
+msgstr "Mongolsk kyrillisk"
+
+#: langtab.src
+msgid "Mongolian Mongolian"
+msgstr "Mongolsk mongolsk"
+
+#: langtab.src
+msgid "Bosnian"
+msgstr "Bosnisk"
+
+#: langtab.src
+msgid "Occitan"
+msgstr "Oksitansk"
+
+#: langtab.src
+msgid "Kurdish, Northern (Turkey)"
+msgstr "Kurdisk, nordleg (Tyrkia)"
+
+#: langtab.src
+msgid "Kurdish, Northern (Syria)"
+msgstr "Kurdisk, nordleg (Syria)"
+
+#: langtab.src
+msgid "Kurdish, Central (Iraq)"
+msgstr "Kurdisk, sentral (Irak)"
+
+#: langtab.src
+msgid "Kurdish, Central (Iran)"
+msgstr "Kurdisk, sentral (Iran)"
+
+#: langtab.src
+msgid "Kurdish, Southern (Iran)"
+msgstr "Kurdisk, sørleg (Iran)"
+
+#: langtab.src
+msgid "Kurdish, Southern (Iraq)"
+msgstr "Kurdisk, sørleg (Irak)"
+
+#: langtab.src
+msgid "Sardinian"
+msgstr "Sardisk"
+
+#: langtab.src
+msgid "Lao"
+msgstr "Laotisk"
+
+#: langtab.src
+msgid "Irish"
+msgstr "Irsk"
+
+#: langtab.src
+msgid "Tibetan (PR China)"
+msgstr "Tibetansk (Kina)"
+
+#: langtab.src
+msgid "Georgian"
+msgstr "Georgisk"
+
+#: langtab.src
+msgid "Frisian"
+msgstr "Frisisk"
+
+#: langtab.src
+msgid "Tswana (South Africa)"
+msgstr "Setswana (Sør-Afrika)"
+
+#: langtab.src
+msgid "Vietnamese"
+msgstr "Vietnamesisk"
+
+#: langtab.src
+msgid "Breton"
+msgstr "Bretonsk"
+
+#: langtab.src
+msgid "Kalaallisut"
+msgstr "Grønlandsk"
+
+#: langtab.src
+msgid "Ndebele, South"
+msgstr "Sørndebele"
+
+#: langtab.src
+msgid "Southern Sotho"
+msgstr "Sørsotho"
+
+#: langtab.src
+msgid "Tswana (Botswana)"
+msgstr "Setswana (Botswana)"
+
+#: langtab.src
+msgid "Sinhala"
+msgstr "Singalesisk"
+
+#: langtab.src
+msgid "Luxembourgish"
+msgstr "Luxembourgsk"
+
+#: langtab.src
+msgid "Friulian"
+msgstr "Friulisk"
+
+#: langtab.src
+msgid "Fijian"
+msgstr "Fijiansk"
+
+#: langtab.src
+msgid "English (Namibia)"
+msgstr "Engelsk (Namibia)"
+
+#: langtab.src
+msgid "Walloon"
+msgstr "Vallonsk"
+
+#: langtab.src
+msgid "Coptic"
+msgstr "Koptisk"
+
+#: langtab.src
+msgid "Tigrigna (Eritrea)"
+msgstr "Tigrinja (Eritrea)"
+
+#: langtab.src
+msgid "Tigrigna (Ethiopia)"
+msgstr "Tigrinja (Etiopia)"
+
+#: langtab.src
+msgid "Amharic"
+msgstr "Amharisk"
+
+#: langtab.src
+msgid "Kirghiz"
+msgstr "Kirgisisk"
+
+#: langtab.src
+msgid "German (Belgium)"
+msgstr "Tysk (Belgia)"
+
+#: langtab.src
+msgid "Chuvash"
+msgstr "Tsjuvasjisk"
+
+#: langtab.src
+msgid "Burmese"
+msgstr "Burmesisk"
+
+#: langtab.src
+msgid "English (Ghana)"
+msgstr "Engelsk (Ghana)"
+
+#: langtab.src
+msgid "Low German"
+msgstr "Lågtysk"
+
+#: langtab.src
+msgid "Kashubian"
+msgstr "Kashubisk"
+
+#: langtab.src
+msgid "Spanish (Cuba)"
+msgstr "Spansk (Cuba)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, North)"
+msgstr "Quechua (Nord-Bolivia)"
+
+#: langtab.src
+msgid "Quechua (Bolivia, South)"
+msgstr "Quechua (Sør-Bolivia)"
+
+#: langtab.src
+msgid "Sami, Inari (Finland)"
+msgstr "Enaresamisk (Finland)"
+
+#: langtab.src
+msgid "Sami, Lule (Norway)"
+msgstr "Lulesamisk (Noreg)"
+
+#: langtab.src
+msgid "Sami, Lule (Sweden)"
+msgstr "Lulesamisk (Sverige)"
+
+#: langtab.src
+msgid "Sami, Northern (Finland)"
+msgstr "Nordsamisk (Finland)"
+
+#: langtab.src
+msgid "Sami, Northern (Norway)"
+msgstr "Nordsamisk (Noreg)"
+
+#: langtab.src
+msgid "Sami, Northern (Sweden)"
+msgstr "Nordsamisk (Sverige)"
+
+#: langtab.src
+msgid "Sami, Skolt (Finland)"
+msgstr "Skoltesamisk (Finland)"
+
+#: langtab.src
+msgid "Sami, Southern (Norway)"
+msgstr "Sørsamisk (Noreg)"
+
+#: langtab.src
+msgid "Sami, Southern (Sweden)"
+msgstr "Sørsamisk (Sverige)"
+
+#: langtab.src
+msgid "Sami, Kildin (Russia)"
+msgstr "Kildinsamisk (Russland)"
+
+#: langtab.src
+msgid "Guarani (Paraguay)"
+msgstr "Guaraní (Paraguay)"
+
+#: langtab.src
+msgid "Tetun (Timor-Leste)"
+msgstr "Tetun (Aust-Timor)"
+
+#: langtab.src
+msgid "Turkmen"
+msgstr "Turkmensk"
+
+#: langtab.src
+msgid "Maltese"
+msgstr "Maltesisk"
+
+#: langtab.src
+msgid "Tok Pisin"
+msgstr "Tok pisin"
+
+#: langtab.src
+msgid "Greek, Ancient"
+msgstr "Gammalgresk"
+
+#: langtab.src
+msgid "Yiddish (Israel)"
+msgstr "Jiddisk (Israel)"
+
+#: langtab.src
+msgid "Uyghur"
+msgstr "Uighursk"
+
+#: langtab.src
+msgid "Asturian"
+msgstr "Asturisk"
+
+#: langtab.src
+msgid "Sorbian, Upper"
+msgstr "Høgsorbisk"
+
+#: langtab.src
+msgid "Sorbian, Lower"
+msgstr "Lågsorbisk"
+
+#: langtab.src
+msgid "Latgalian"
+msgstr "Latgælisk"
+
+#: langtab.src
+msgid "Maore"
+msgstr "Maori"
+
+#: langtab.src
+msgid "Tahitian"
+msgstr "Taitisk"
+
+#: langtab.src
+msgid "Papiamentu (Netherlands Antilles)"
+msgstr "Papiamentu (Nederland Antillene)"
+
+#: langtab.src
+msgid "Sardinian, Campidanese"
+msgstr "Sardinsk, Campidanese"
+
+#: langtab.src
+msgid "Sardinian, Gallurese"
+msgstr "Sardinsk, Gallurese"
+
+#: langtab.src
+msgid "Sardinian, Logudorese"
+msgstr "Sardinsk, Logudorese"
+
+#: langtab.src
+msgid "Sardinian, Sassarese"
+msgstr "Sardinsk, Sassarese"
+
+#: langtab.src
+msgid "Rusyn (Ukraine)"
+msgstr "Rusyn (Ukraina)"
+
+#: langtab.src
+msgid "Kabyle Latin"
+msgstr "Kabyle latin"
+
+#: langtab.src
+msgid "Yiddish (USA)"
+msgstr "Jiddisk (USA)"
+
+#: langtab.src
+msgid "Hawaiian"
+msgstr "Hawaiisk"
+
+#: langtab.src
+msgid "Haitian"
+msgstr "Haitisk"
+
+#: langtab.src
+msgid "KeyID"
+msgstr "Nøkkel-ID"
+
+#: langtab.src
+msgid "Pali Latin"
+msgstr "Pali-latin"
+
+#: langtab.src
+msgid "Kyrgyz (China)"
+msgstr "Kirgisk (Kina)"
+
+#: langtab.src
+msgid "English (Malawi)"
+msgstr "Engelsk (Malawi)"
+
+#: langtab.src
+msgid "Erzya"
+msgstr "Erza"
+
+#: langtab.src
+msgid "Mari, Meadow"
+msgstr "Austleg mari"
+
+#: langtab.src
+msgid "Aka (Congo)"
+msgstr "Aka (Kongo)"
+
+#: langtab.src
+msgid "Koongo (Congo)"
+msgstr "Koongo (Kongo)"
+
+#: langtab.src
+msgid "Njyem (Congo)"
+msgstr "Njyem (Kongo)"
+
+#: langtab.src
+msgid "Yombe (Congo)"
+msgstr "Yombe (Kongo)"
+
+#: langtab.src
+msgid "N'ko"
+msgstr "NKo"
+
+#: langtab.src
+msgid "Tibetan (India)"
+msgstr "Tibetansk (India)"
+
+#: langtab.src
+msgid "Cornish"
+msgstr "Kornisk"
+
+#: langtab.src
+msgid "Sami, Pite (Sweden)"
+msgstr "Samisk, Pite (Sverige)"
+
+#: langtab.src
+msgid "Kumyk"
+msgstr "Kumykisk"
+
+#: langtab.src
+msgid "Nogai"
+msgstr "Nogaiisk"
+
+#: langtab.src
+msgid "Karakalpak Latin"
+msgstr "Karakalpakisk (latin)"
+
+#: langtab.src
+msgid "Ladin"
+msgstr "Ladinisk"
+
+#: langtab.src
+msgid "French (Burkina Faso)"
+msgstr "Fransk (Burkina Faso)"
+
+#: langtab.src
+msgid "Maninkakan, Eastern, Latin"
+msgstr "Aust-maninka (latin)"
+
+#: langtab.src
+msgid "French (Côte d'Ivoire)"
+msgstr "Fransk (Elfenbeinkysten)"
+
+#: langtab.src
+msgid "French (Mali)"
+msgstr "Fransk (Mali)"
+
+#: langtab.src
+msgid "French (Senegal)"
+msgstr "Fransk (Senegal)"
+
+#: langtab.src
+msgid "French (Benin)"
+msgstr "Fransk (Benin)"
+
+#: langtab.src
+msgid "French (Niger)"
+msgstr "Fransk (Niger)"
+
+#: langtab.src
+msgid "French (Togo)"
+msgstr "Fransk (Togo)"
+
+#: langtab.src
+msgid "Kven Finnish"
+msgstr "Kven-Finsk"
+
+#: langtab.src
+msgid "Venetian"
+msgstr "Venetiansk"
+
+#: langtab.src
+msgid "English (Gambia)"
+msgstr "Engelsk (Gambia)"
+
+#: langtab.src
+msgid "Aranese"
+msgstr "Aranesisk"
+
+#: langtab.src
+msgid "Arpitan (France)"
+msgstr "Arpitansk (Frankrike)"
+
+#: langtab.src
+msgid "Arpitan (Italy)"
+msgstr "Arpitansk (Italia)"
+
+#: langtab.src
+msgid "Arpitan (Switzerland)"
+msgstr "Arpitansk (Sveits)"
+
+#: langtab.src
+msgid "English (Botswana)"
+msgstr "Engelsk (Botswana)"
+
+#: langtab.src
+msgid "English (Mauritius)"
+msgstr "Engelsk (Mauritius)"
+
+#: langtab.src
+msgid "French (Mauritius)"
+msgstr "Fransk (Mauritius)"
+
+#: langtab.src
+msgid "Silesian"
+msgstr "Silesisk"
+
+#: langtab.src
+msgid "Hungarian (Szekely-Hungarian Rovas)"
+msgstr "Ungarsk (Szekely-Hungarian Rovas)"
