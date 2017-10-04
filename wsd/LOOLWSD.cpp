@@ -563,6 +563,7 @@ Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 std::set<std::string> LOOLWSD::EditFileExtensions;
 unsigned LOOLWSD::MaxConnections;
 unsigned LOOLWSD::MaxDocuments;
+std::string LOOLWSD::OverrideWatermark;
 
 static std::string UnitTestLibrary;
 
@@ -790,6 +791,7 @@ void LOOLWSD::initialize(Application& self)
     {
         LOG_WRN("Support key not set, please use 'loolconfig set-support-key'.");
         std::cerr << "Support key not set, please use 'loolconfig set-support-key'." << std::endl;
+        LOOLWSD::OverrideWatermark = "Unsupported, the support key is missing.";
     }
     else
     {
@@ -799,6 +801,7 @@ void LOOLWSD::initialize(Application& self)
         {
             LOG_WRN("Invalid support key, please use 'loolconfig set-support-key'.");
             std::cerr << "Invalid support key, please use 'loolconfig set-support-key'." << std::endl;
+            LOOLWSD::OverrideWatermark = "Unsupported, the support key is invalid.";
         }
         else
         {
@@ -807,12 +810,14 @@ void LOOLWSD::initialize(Application& self)
             {
                 LOG_WRN("Your support key has expired, please ask for a new one, and use 'loolconfig set-support-key'.");
                 std::cerr << "Your support key has expired, please ask for a new one, and use 'loolconfig set-support-key'." << std::endl;
+                LOOLWSD::OverrideWatermark = "Unsupported, the support key has expired.";
             }
             else
             {
                 LOG_INF("Your support key is valid for " << validDays << " days");
                 LOOLWSD::MaxConnections = 1000;
                 LOOLWSD::MaxDocuments = 200;
+                LOOLWSD::OverrideWatermark = "";
             }
         }
     }

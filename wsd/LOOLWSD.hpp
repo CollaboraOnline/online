@@ -58,6 +58,7 @@ public:
     static std::set<std::string> EditFileExtensions;
     static unsigned MaxConnections;
     static unsigned MaxDocuments;
+    static std::string OverrideWatermark;
 
     static std::vector<int> getKitPids();
 

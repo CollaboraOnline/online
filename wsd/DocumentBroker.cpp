@@ -508,6 +508,11 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         }
     }
 
+#if ENABLE_SUPPORT_KEY
+    if (!LOOLWSD::OverrideWatermark.empty())
+        watermarkText = LOOLWSD::OverrideWatermark;
+#endif
+
     LOG_DBG("Setting username [" << username << "] and userId [" << userid << "] for session [" << sessionId << "]");
     session->setUserId(userid);
     session->setUserName(username);
