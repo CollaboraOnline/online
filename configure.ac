@@ -96,8 +96,8 @@ AC_ARG_ENABLE([ssl],
             AS_HELP_STRING([--disable-ssl],
                            [Compile without SSL support]))
 
-AC_ARG_WITH([support-key],
-            AS_HELP_STRING([--with-support-key=<support-key-name.pub>],
+AC_ARG_WITH([support-public-key],
+            AS_HELP_STRING([--with-support-public-key=<public-key-name.pub>],
                 [Implements signed key with expiration required for support. Almost certainly you don not want to use this.]))
 
 AC_ARG_WITH([max-connections],
@@ -294,13 +294,18 @@ fi
 
 AC_SUBST(ENABLE_SSL)
 
-SUPPORT_KEY_FILE=
-AS_IF([test "x$with_support_key" != "x"],
-      [AC_DEFINE([ENABLE_SUPPORT_KEY],1,[Whether to enable support key])
-       AC_DEFINE_UNQUOTED([SUPPORT_KEY_FILE],[["$with_support_key"]],[LibreOffice Online WebSocket server version])],
-      [AC_DEFINE([ENABLE_SUPPORT_KEY],0,[Whether to enable support key])])
+if test "x$with_support_public_key" != "x"; then
+    AC_DEFINE([ENABLE_SUPPORT_KEY],1,[Whether to enable support key])
+
+    # generate the public key include
+    echo -e "#ifndef INCLUDED_SUPPORT_PUBLIC_KEY_HPP\n#define INCLUDED_SUPPORT_PUBLIC_KEY_HPP\n#include <string>\nconst static std::string SUPPORT_PUBLIC_KEY(" > "${srcdir}/common/support-public-key.hpp"
+    sed 's/\(.*\)/"\1\\n"/' "$with_support_public_key" >> "${srcdir}/common/support-public-key.hpp"
+    echo -e ");\n#endif" >> "${srcdir}/common/support-public-key.hpp"
+else
+    AC_DEFINE([ENABLE_SUPPORT_KEY],0,[Whether to enable support key])
+    rm -f "${srcdir}/common/support-public-key.hpp"
+fi
 AC_SUBST(ENABLE_SUPPORT_KEY)
-AC_SUBST(SUPPORT_KEY_FILE)
 
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
 

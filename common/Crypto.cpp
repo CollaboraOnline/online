@@ -22,6 +22,7 @@
 
 #include "Log.hpp"
 #include "Crypto.hpp"
+#include "support-public-key.hpp"
 
 using namespace Poco;
 using namespace Poco::Crypto;
@@ -82,26 +83,8 @@ bool SupportKey::verify()
         return false;
     }
 
-    std::ifstream pubStream;
-    std::string supportKeyFilename =
-#if ENABLE_DEBUG
-        SUPPORT_KEY_FILE
-#else
-        LOOLWSD_CONFIGDIR "/" SUPPORT_KEY_FILE
-#endif
-        ;
+    std::istringstream pubStream(SUPPORT_PUBLIC_KEY);
 
-    try {
-        pubStream.open(supportKeyFilename, std::ifstream::in);
-        if (pubStream.fail())
-        {
-            LOG_ERR("Failed to open support public key '" << supportKeyFilename << "'.");
-            return false;
-        }
-    } catch (...) {
-        LOG_ERR("Exception opening public key '" << supportKeyFilename << "'.");
-        return false;
-    }
     try {
         RSAKey keyPub(&pubStream);
         RSADigestEngine rsaEngine(keyPub, RSADigestEngine::DigestType::DIGEST_SHA1);
