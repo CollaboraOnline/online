@@ -175,11 +175,11 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
 				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
 				{name: _('Language for selection'), type: 'menu', menu: [
-					{name: _('Reset to Default Language'), id: 'resetselection', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Current_RESET_LANGUAGES'}]},
+					{name: _('None (Do not check spelling)'), id: 'noneselection', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
 				{name: _('Language for paragraph'), type: 'menu', menu: [
-					{name: _('Reset to Default Language'), id: 'resetparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_RESET_LANGUAGES'}]},
+					{name: _('None (Do not check spelling)'), id: 'noneparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
 				{name: _('Language for entire document'), type: 'menu', menu: [
-					{name: _('Reset to Default Language'), id: 'resetlanguage', type: 'unocommand', uno:'.uno:LanguageStatus?Language:string=Default_RESET_LANGUAGES'}]}
+					{name: _('None (Do not check spelling)'), id: 'nonelanguage', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
@@ -363,14 +363,21 @@ L.Control.Menubar = L.Control.extend({
 
 	_onInitMenu: function (e) {
 		if (e.commandName === '.uno:LanguageStatus') {
-			$menuSelection = $('#menu-resetselection').parent();
-			$menuParagraph = $('#menu-resetparagraph').parent();
-			$menuDefault = $('#menu-resetlanguage').parent();
+			var resetLang = _('Reset to Default Language');
+			$menuSelection = $('#menu-noneselection').parent();
+			$menuParagraph = $('#menu-noneparagraph').parent();
+			$menuDefault = $('#menu-nonelanguage').parent();
 			for (var lang in e.commandValues) {
 				$menuSelection.append(this._createLangMenuItem(_(e.commandValues[lang]), encodeURIComponent('Current_' + e.commandValues[lang])));
 				$menuParagraph.append(this._createLangMenuItem(_(e.commandValues[lang]), encodeURIComponent('Paragraph_' + e.commandValues[lang])));
 				$menuDefault.append(this._createLangMenuItem(_(e.commandValues[lang]), encodeURIComponent('Default_' + e.commandValues[lang])));
 			}
+			$menuSelection.append(this._createMenu([{type: 'separator'}]));
+			$menuParagraph.append(this._createMenu[{type: 'separator'}]);
+			$menuDefault.append(this._createMenu([{type: 'separator'}]));
+			$menuSelection.append(this._createLangMenuItem(resetLang, 'Current_RESET_LANGUAGES'));
+			$menuParagraph.append(this._createLangMenuItem(resetLang, 'Paragraph_RESET_LANGUAGES'));
+			$menuDefault.append(this._createLangMenuItem(resetLang, 'Default_RESET_LANGUAGES'));
 		}
 	},
 
