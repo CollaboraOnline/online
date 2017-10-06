@@ -2953,7 +2953,7 @@ msgstr "Árabe (Comoros)"
 
 #: langtab.src
 msgid "Arabic (Djibouti)"
-msgstr "Árabe (Djibouti)"
+msgstr "Árabe (Yibuti)"
 
 #: langtab.src
 msgid "Arabic (Egypt)"
