@@ -268,6 +268,10 @@ bool handleSetrlimitCommand(const std::vector<std::string>& tokens)
             if (lim <= 0)
                 lim = RLIM_INFINITY;
 
+            /* FIXME Currently the RLIMIT_FSIZE handling is non-ideal, and can
+             * lead to crashes of the kit processes due to not handling signal
+             * 25 gracefully.  Let's disable for now before there's a more
+             * concrete plan.
             rlimit rlim = { lim, lim };
             if (setrlimit(RLIMIT_FSIZE, &rlim) != 0)
                 LOG_SYS("Failed to set RLIMIT_FSIZE to " << lim << " bytes.");
@@ -276,6 +280,8 @@ bool handleSetrlimitCommand(const std::vector<std::string>& tokens)
                 LOG_INF("RLIMIT_FSIZE is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
             else
                 LOG_SYS("Failed to get RLIMIT_FSIZE.");
+            */
+            LOG_SYS("Ignored setting RLIMIT_FSIZE to " << lim << " bytes.");
 
             return true;
         }
@@ -285,14 +291,19 @@ bool handleSetrlimitCommand(const std::vector<std::string>& tokens)
             if (lim <= 0)
                 lim = RLIM_INFINITY;
 
+            /* FIXME Currently the RLIMIT_ is non-ideal, and can lead to
+             * problems.  Let's disable for now before there's a more
+             * concrete plan.
             rlimit rlim = { lim, lim };
             if (setrlimit(RLIMIT_NOFILE, &rlim) != 0)
-                LOG_SYS("Failed to set RLIMIT_NOFILE to " << lim << " bytes.");
+                LOG_SYS("Failed to set RLIMIT_NOFILE to " << lim << " files.");
 
             if (getrlimit(RLIMIT_NOFILE, &rlim) == 0)
                 LOG_INF("RLIMIT_NOFILE is " << rlim.rlim_max << " files after setting it to " << lim << " files.");
             else
                 LOG_SYS("Failed to get RLIMIT_NOFILE.");
+            */
+            LOG_SYS("Ignored setting RLIMIT_NOFILE to " << lim << " files.");
 
             return true;
         }
