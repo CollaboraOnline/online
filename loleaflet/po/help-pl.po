@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:11+0000\n"
+"POT-Creation-Date: 2017-10-06 09:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,57 +10,57 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /pl/libo_online/loleaflet-help-pl.po\n"
-"X-Pootle-Revision: 826794\n"
+"X-Pootle-Revision: 2780641\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Skróty klawiszowe"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A27
 msgid "General Keyboard Shortcuts"
-msgstr ""
+msgstr "Globalne skróty klawiszowe"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Undo"
-msgstr ""
+msgstr "Cofnij"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Ctrl + Z"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
 msgid "Redo"
-msgstr ""
+msgstr "Ponów"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
 msgid "Ctrl + Y"
-msgstr ""
+msgstr "Ctrl + Y"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
 msgid "Cut"
-msgstr ""
+msgstr "Wytnij"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
 msgid "Ctrl + X"
-msgstr ""
+msgstr "Ctrl + X"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Paste as unformatted text"
-msgstr ""
+msgstr "Wklej jako niesformatowany tekst"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Ctrl + Alt + Shift + V"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + V"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "Drukuj (Pobierz jako PDF)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
 msgid "Ctrl + P"
-msgstr ""
+msgstr "Ctrl + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
 msgid "Display the Keyboard shortcuts help"
@@ -84,8 +84,9 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
+#, fuzzy
 msgid "Ctrl + B"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
@@ -96,8 +97,9 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
+#, fuzzy
 msgid "Ctrl + I"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
@@ -108,17 +110,19 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
+#, fuzzy
 msgid "Ctrl + U"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 msgid "Double Underline"
-msgstr ""
+msgstr "Podwójne podkreślenie"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
+#, fuzzy
 msgid "Ctrl + D"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
@@ -159,8 +163,9 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
+#, fuzzy
 msgid "Ctrl + M"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A49
 #: dist%2Floleaflet-help.html+div.div.h2%3A170
@@ -176,8 +181,9 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
+#, fuzzy
 msgid "Ctrl + E"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
@@ -188,8 +194,9 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
+#, fuzzy
 msgid "Ctrl + L"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
@@ -200,8 +207,9 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
+#, fuzzy
 msgid "Ctrl + R"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
@@ -212,61 +220,63 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
+#, fuzzy
 msgid "Ctrl + J"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Apply Default paragraph style"
-msgstr ""
+msgstr "Zastosuj domyślny styl akapitu"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Ctrl + 0"
-msgstr ""
+msgstr "Ctrl + 0"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Apply Heading 1 paragraph style"
-msgstr ""
+msgstr "Zastosuj styl akapitu Nagłówek 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Ctrl + 1"
-msgstr ""
+msgstr "Ctrl + 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Apply Heading 2 paragraph style"
-msgstr ""
+msgstr "Zastosuj styl akapitu Nagłówek 2"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Ctrl + 2"
-msgstr ""
+msgstr "Ctrl + 2"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 msgid "Apply Heading 3 paragraph style"
-msgstr ""
+msgstr "Zastosuj styl akapitu Nagłówek 3"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
+#, fuzzy
 msgid "Ctrl + 3"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Apply Heading 4 paragraph style"
-msgstr ""
+msgstr "Zastosuj styl akapitu Nagłówek 4"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Ctrl + 4"
-msgstr ""
+msgstr "Ctrl + 4"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Apply Heading 5 paragraph style"
-msgstr ""
+msgstr "Zastosuj styl akapitu Nagłówek 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Ctrl + 5"
-msgstr ""
+msgstr "Ctrl + 5"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A62
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "Zaznaczanie tekstu i nawigacja w dokumencie"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
@@ -281,8 +291,9 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
+#, fuzzy
 msgid "Ctrl + A"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
@@ -512,8 +523,9 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
+#, fuzzy
 msgid "Ctrl + End"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 msgid "Go and select text to end of document"
@@ -585,8 +597,9 @@ msgid "Delete to end of word"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
+#, fuzzy
 msgid "Ctrl + Del"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
 msgid "Delete to beginning of sentence"
@@ -748,8 +761,9 @@ msgid "Insert soft hyphen"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
+#, fuzzy
 msgid "Ctrl + -"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
 msgid "Insert non-breaking hyphen"
@@ -817,8 +831,9 @@ msgid "Display comment"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
+#, fuzzy
 msgid "Ctrl + F1"
-msgstr ""
+msgstr "Ctrl + 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Fill Down"
@@ -895,8 +910,9 @@ msgid "Shift + Tab"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A179
+#, fuzzy
 msgid "Text selection and navigation in a textbox"
-msgstr ""
+msgstr "Zaznaczanie tekstu i nawigacja w dokumencie"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
 msgid "Go and select text to start of textbox"

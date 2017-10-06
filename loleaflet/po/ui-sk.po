@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-17 08:01+0000\n"
+"POT-Creation-Date: 2017-10-05 08:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /sk/libo_online/loleaflet-ui-sk.po\n"
-"X-Pootle-Revision: 2565066\n"
+"X-Pootle-Revision: 2778246\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
 msgstr "Administrátorská konzola"
-
-#: admin.strings.js:6
-msgid "Toggle navigation"
-msgstr "Prepnúť navigáciu"
 
 #: admin.strings.js:7
 msgid "Settings"
@@ -38,6 +34,10 @@ msgstr "(aktuálny)"
 msgid "Analytics"
 msgstr "Analýza"
 
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "História"
+
 #: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Prehľad"
@@ -47,12 +47,28 @@ msgid "Users online"
 msgstr "Prihlásení používatelia"
 
 #: admin.strings.js:13
+msgid "User Name"
+msgstr "Meno používateľa"
+
+#: admin.strings.js:13
 msgid "Documents opened"
 msgstr "Otvorené dokumenty"
+
+#: admin.strings.js:15
+msgid "Number of Documents"
+msgstr "Počet dokumentov"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "Použitá pamäť"
+
+#: admin.strings.js:17
+msgid "Bytes sent"
+msgstr "Odoslané byty"
+
+#: admin.strings.js:18
+msgid "Bytes received"
+msgstr "Prijaté bajty"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -74,6 +90,10 @@ msgstr "Uplynutý čas"
 msgid "Idle time"
 msgstr "Čas nečinnosti"
 
+#: admin.strings.js:24
+msgid "Modified"
+msgstr "Zmenený"
+
 #: admin.strings.js:20
 msgid "Kill"
 msgstr "Ukončiť"
@@ -81,6 +101,18 @@ msgstr "Ukončiť"
 #: admin.strings.js:21
 msgid "Graphs"
 msgstr "Grafy"
+
+#: admin.strings.js:27
+msgid "Memory Graph"
+msgstr "Graf pamäte"
+
+#: admin.strings.js:28
+msgid "CPU Graph"
+msgstr "Graf procesora"
+
+#: admin.strings.js:29
+msgid "Network Graph"
+msgstr "Graf siete"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -107,6 +139,20 @@ msgstr "Štatistika veľkosti cache pamäte procesora"
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Časový interval pre štatistiku CPU (v ms)"
 
+#: admin.strings.js:35
+msgid "Maximum Document process virtual memory (in MB) - reduce only"
+msgstr ""
+"Maximálna virtuálna pamäť pre proces dokumentu (v MB) - možno len zmenšiť"
+
+#: admin.strings.js:36
+msgid "Maximum Document process stack memory (in KB) - reduce only"
+msgstr ""
+"Maximálna pamäť pre proces dokumentu v zásobníku (v kB) - možno len zmenšiť"
+
+#: admin.strings.js:37
+msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
+msgstr "Maximálna veľkosť súboru na zápis na disk (v MB) - možno len zmenšiť"
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Farby motívu vzhľadu"
@@ -122,10 +168,6 @@ msgstr "Ďalšie farby"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "Naspäť do palety"
-
-#: evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "História"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -294,17 +336,31 @@ msgstr ""
 
 #: dist/errormessages.js:13
 msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
 msgstr ""
-"Ukladanie dokumentu zlyhalo, lebo na serveri nie je dostatok diskového "
-"priestoru. Dokument bude ďalej v režime len na čítanie. Ak chcete v práci "
-"pokračovať, kontaktuje prosím administrátora."
+"Nepodarilo sa načítať dokument. Prosím kontaktujte správcu vášho sieťového "
+"úložiska (%storageserver)."
 
 #: dist/errormessages.js:14
 msgid ""
-"Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+"Ukladanie dokumentu zlyhalo, lebo na serveri nie je dostatok diskového "
+"priestoru. Dokument bude ďalej v režime len na čítanie. Ak chcete v práci "
+"pokračovať, kontaktuje prosím administrátora servera (%storageserver)."
+
+#: dist/errormessages.js:15
+msgid "Document cannot be saved due to expired or invalid access token."
+msgstr ""
+"Dokument nemožno uložiť pre expiráciu alebo neplatnosť prístupového tokenu"
+
+#: dist/errormessages.js:16
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
 msgstr ""
 "Dokument nemožno uložiť. Skontrolujte svoje prístupové práva alebo "
 "kontaktujte administrátora servera."
@@ -503,13 +559,6 @@ msgstr "Špeciálny znak"
 msgid "More"
 msgstr "Viac"
 
-#: dist/toolbar/toolbar.js:527
-#: src/control/Control.Menubar.js:170
-#: src/control/Control.Menubar.js:230
-#: src/control/Control.Menubar.js:277
-msgid "Close document"
-msgstr "Zavrieť dokument"
-
 #: dist/toolbar/toolbar.js:606
 msgid "Layout"
 msgstr "Rozloženie"
@@ -583,6 +632,10 @@ msgstr "Vyhľadať dopredu"
 #: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
 msgstr "Zrušiť vyhľadávanie"
+
+#: dist/toolbar/toolbar.js:680
+msgid "Text Language"
+msgstr "Jazyk textu"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -734,7 +787,12 @@ msgstr "Chyba spojenia"
 msgid "Are you sure you want to terminate this session?"
 msgstr "Naozaj chcete túto reláciu ukončiť?"
 
-#: src/admin/AdminSocketSettings.js:31
+#: src/admin/AdminSocketOverview.js:152
+#: src/admin/AdminSocketOverview.js:311
+msgid "Documents"
+msgstr "Dokumenty"
+
+#: src/admin/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
 msgstr "Naozaj chcete vypnúť tento server?"
 
@@ -1870,19 +1928,19 @@ msgstr "Optimálna šírka stĺpca"
 
 #: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "Vystrihnúť (interné)"
 
 #: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"
-msgstr ""
+msgstr "Kopírovať (interné)"
 
 #: src/control/Control.ContextMenu.js:141
 msgid "Internal Paste"
-msgstr ""
+msgstr "Vložiť (interné)"
 
 #: src/control/Control.ContextMenu.js:163
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Vložiť inak (interné)"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
@@ -1918,6 +1976,29 @@ msgstr "Prejsť na stav"
 #: src/control/Control.Menubar.js:234
 msgid "File"
 msgstr "Súbor"
+
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:184
+#: src/control/Control.Menubar.js:244
+msgid "Edit"
+msgstr "Upraviť"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:254
+msgid "View"
+msgstr "Zobraziť"
+
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:292
+msgid "Tools"
+msgstr "Nástroje"
+
+#: src/control/Control.Menubar.js:19
+msgid "Save As"
+msgstr "Uložiť ako"
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -1955,12 +2036,6 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:184
-#: src/control/Control.Menubar.js:244
-msgid "Edit"
-msgstr "Upraviť"
-
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
 msgstr "Opraviť"
@@ -1989,6 +2064,13 @@ msgstr "Vložiť"
 msgid "Select all"
 msgstr "Vybrať všetko"
 
+#: src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:207
+#: src/control/Control.Menubar.js:271
+#: src/control/Control.Menubar.js:518
+msgid "Find & Replace"
+msgstr "Nájsť a nahradiť"
+
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
 msgstr "Sledovať zmeny"
@@ -1999,22 +2081,15 @@ msgstr "Zaznamenávať"
 
 #: src/control/Control.Menubar.js:33
 msgid "Show"
-msgstr ""
+msgstr "Zobraziť"
 
 #: src/control/Control.Menubar.js:35
 msgid "Previous"
-msgstr ""
+msgstr "Predchádzajúci"
 
 #: src/control/Control.Menubar.js:36
-#, fuzzy
 msgid "Next"
-msgstr "Text"
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:194
-#: src/control/Control.Menubar.js:254
-msgid "View"
-msgstr "Zobraziť"
+msgstr "Nasledujúci"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:195
@@ -2023,9 +2098,8 @@ msgid "Full screen"
 msgstr "Na celú obrazovku"
 
 #: src/control/Control.Menubar.js:46
-#, fuzzy
 msgid "Formatting Marks"
-msgstr "Formátovacia značka"
+msgstr "Formátovacie značky"
 
 #: src/control/Control.Menubar.js:50
 #: src/control/Control.Menubar.js:202
@@ -2037,7 +2111,7 @@ msgstr "Obrázok"
 #: src/control/Control.Menubar.js:203
 #: src/control/Control.Menubar.js:259
 msgid "Comment..."
-msgstr ""
+msgstr "Poznámka..."
 
 #: src/control/Control.Menubar.js:53
 msgid "Footnote"
@@ -2375,6 +2449,20 @@ msgstr "Bunka"
 msgid "Merge cells"
 msgstr "Zlúčiť bunky"
 
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:293
+msgid "Automatic Spell Checking"
+msgstr "Automatická kontrola pravopisu"
+
+#: src/control/Control.Menubar.js:177
+msgid "Language"
+msgstr "Jazyk"
+
+#: src/control/Control.Menubar.js:178
+msgid "Reset to Default Language"
+msgstr "Nastaviť na predvolený jazyk"
+
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
 #: src/control/Control.Menubar.js:273
@@ -2392,6 +2480,13 @@ msgstr "Klávesové skratky"
 #: src/control/Control.Menubar.js:275
 msgid "About"
 msgstr "O programe"
+
+#: dist/toolbar/toolbar.js:527
+#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:277
+msgid "Close document"
+msgstr "Zavrieť dokument"
 
 #: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
@@ -2442,25 +2537,41 @@ msgstr "Vložiť stĺpec"
 msgid "Delete row"
 msgstr "Odstrániť riadok"
 
+#: src/control/Control.Menubar.js:497
+msgid "Find"
+msgstr "Nájsť"
+
+#: src/control/Control.Menubar.js:505
+msgid "Replace with"
+msgstr "Nahradiť za"
+
+#: src/control/Control.Menubar.js:522
+msgid "Replace"
+msgstr "Nahradiť"
+
+#: src/control/Control.Menubar.js:527
+msgid "Replace All"
+msgstr "Nahradiť všetko"
+
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
 msgstr "Naozaj chcete túto snímku odstrániť?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
-msgstr ""
+msgstr "(stotiny mm)"
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "
-msgstr ""
+msgstr "Pridať: "
 
 #: src/control/Control.MetricInput.js:61
 msgid "Default value"
-msgstr ""
+msgstr "Predvolená hodnota"
 
 #: src/control/Control.MetricInput.js:68
 msgid "Submit"
-msgstr ""
+msgstr "Odoslať"
 
 #: src/control/Control.RowHeader.js:37
 msgid "Insert row above"
@@ -2484,11 +2595,11 @@ msgstr "Optimálna výška riadka"
 
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Posunúť na komentár nahor"
 
 #: src/control/Control.Scroll.Annotation.js:11
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Posunúť na komentár nadol"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -2519,11 +2630,6 @@ msgstr "Zadajte nový názov hárku"
 msgid "Downloading..."
 msgstr "Preberá sa…"
 
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:939
-msgid "Saving..."
-msgstr "Prebieha ukladanie..."
-
 #: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "Táto verzia of %productName bola vytvorená"
@@ -2540,13 +2646,47 @@ msgstr "Nepodporovaná verzia servera."
 msgid "Session terminated by document owner"
 msgstr "Relácia ukončená vlastníkom dokumentu"
 
+#: src/core/Socket.js:261
+msgid "Idle document - please click to reload and resume editing"
+msgstr ""
+"Neaktívny dokument - kliknutím myšou dokument opätovne načítať a pokračovať "
+"v úprave "
+
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server sa vypína kvôli údržbe (zmeny budú automaticky uložené)"
 
+#: src/core/Socket.js:272
+msgid "Oops, there is a problem connecting the document"
+msgstr "Nastal problém pri spájaní sa s dokumentom"
+
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
 msgstr "Server bude reštartovaný a o chvíľu bude opäť dostupný"
+
+#: src/core/Socket.js:306
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+"Dokument v úložisku bol zmenený. Dokument sa načítava, vaša verzia bude "
+"uložená ako revízia."
+
+#: src/core/Socket.js:418
+msgid ""
+"Document has been changed in storage. Do you want to discard your changes, "
+"and load the document from the storage?"
+msgstr ""
+"Dokument v úložisku bol zmenený. Chcete zahodiť svoje zmeny a načítať "
+"dokument z úložiska? "
+
+#: src/core/Socket.js:420
+msgid "Discard changes"
+msgstr "Zahodiť zmeny"
+
+#: src/core/Socket.js:421
+msgid "Overwrite document"
+msgstr "Prepísať dokument"
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."
@@ -2576,23 +2716,23 @@ msgstr "Nepodarilo sa nadviazať spojenie s dokumentom. Prosím zopakujte."
 
 #: src/layer/marker/Annotation.js:156
 msgid "Accept change"
-msgstr ""
+msgstr "Akceptovať zmenu"
 
 #: src/layer/marker/Annotation.js:161
 msgid "Reject change"
-msgstr ""
+msgstr "Odmietnuť zmenu"
 
 #: src/layer/marker/Annotation.js:169
 msgid "Open menu"
-msgstr ""
+msgstr "Otvoriť menu"
 
 #: src/layer/tile/TileLayer.js:182
 msgid "Modify"
-msgstr ""
+msgstr "Upraviť"
 
 #: src/layer/tile/TileLayer.js:194
 msgid "Remove"
-msgstr ""
+msgstr "Odstrániť"
 
 #: src/map/Map.js:131
 msgid "Initializing..."
@@ -2601,6 +2741,11 @@ msgstr "Prebieha inicializácia..."
 #: src/map/Map.js:820
 msgid "Inactive document - please click to resume editing"
 msgstr "Neaktívny dokument - na pokračovanie kliknite myšou"
+
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:939
+msgid "Saving..."
+msgstr "Prebieha ukladanie..."
 
 #: src/map/Map.js:942
 msgid "Loading..."

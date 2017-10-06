@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-16 08:00+0000\n"
+"POT-Creation-Date: 2017-10-05 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-ui-da.po\n"
-"X-Pootle-Revision: 2561692\n"
+"X-Pootle-Revision: 2776498\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
 msgstr "Administratorkonsol"
-
-#: admin.strings.js:6
-msgid "Toggle navigation"
-msgstr "Slå navigation til/fra"
 
 #: admin.strings.js:7
 msgid "Settings"
@@ -38,6 +34,10 @@ msgstr "(aktuel)"
 msgid "Analytics"
 msgstr "Analyse"
 
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "Historik"
+
 #: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Instrumentbræt"
@@ -47,12 +47,29 @@ msgid "Users online"
 msgstr "Brugere tilkoblet"
 
 #: admin.strings.js:13
+#, fuzzy
+msgid "User Name"
+msgstr "Brugernavn"
+
+#: admin.strings.js:13
 msgid "Documents opened"
 msgstr "Dokumenter åbnet"
+
+#: admin.strings.js:15
+msgid "Number of Documents"
+msgstr ""
 
 #: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "Hukommelse opbrugt"
+
+#: admin.strings.js:17
+msgid "Bytes sent"
+msgstr ""
+
+#: admin.strings.js:18
+msgid "Bytes received"
+msgstr ""
 
 #: admin.strings.js:15
 msgid "PID"
@@ -74,6 +91,10 @@ msgstr "Forløbet tid"
 msgid "Idle time"
 msgstr "Tid uden aktivitet"
 
+#: admin.strings.js:24
+msgid "Modified"
+msgstr ""
+
 #: admin.strings.js:20
 msgid "Kill"
 msgstr "Dræb"
@@ -81,6 +102,18 @@ msgstr "Dræb"
 #: admin.strings.js:21
 msgid "Graphs"
 msgstr "Grafer"
+
+#: admin.strings.js:27
+msgid "Memory Graph"
+msgstr ""
+
+#: admin.strings.js:28
+msgid "CPU Graph"
+msgstr ""
+
+#: admin.strings.js:29
+msgid "Network Graph"
+msgstr ""
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -107,6 +140,18 @@ msgstr "Mellemlagerets størrelse i processorstatistikken"
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Tidsinterval i processorstatistikken (i ms)"
 
+#: admin.strings.js:35
+msgid "Maximum Document process virtual memory (in MB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:36
+msgid "Maximum Document process stack memory (in KB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:37
+msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
+msgstr ""
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Temafarver"
@@ -122,10 +167,6 @@ msgstr "Internetfarver"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "Tilbage til paletten"
-
-#: evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "Historik"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -294,17 +335,30 @@ msgstr ""
 
 #: dist/errormessages.js:13
 msgid ""
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
+msgstr ""
+
+#: dist/errormessages.js:14
+#, fuzzy
+msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
 msgstr ""
 "Gem mislykkedes fordi der ikke er plads på serveren. Dokumentet bliver nu "
 "kun læseadgang. Kontakt venligst serverens administrator for at fortsætte "
 "redigering."
 
-#: dist/errormessages.js:14
+#: dist/errormessages.js:15
+msgid "Document cannot be saved due to expired or invalid access token."
+msgstr ""
+
+#: dist/errormessages.js:16
+#, fuzzy
 msgid ""
-"Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
 msgstr ""
 "Dokumentet kan ikke gemmes på lager. Tjek dine rettigheder eller kontakt "
 "lagerets serveradministrator."
@@ -503,13 +557,6 @@ msgstr "Specialtegn"
 msgid "More"
 msgstr "Flere"
 
-#: dist/toolbar/toolbar.js:527
-#: src/control/Control.Menubar.js:170
-#: src/control/Control.Menubar.js:230
-#: src/control/Control.Menubar.js:277
-msgid "Close document"
-msgstr "Luk dokument"
-
 #: dist/toolbar/toolbar.js:606
 msgid "Layout"
 msgstr "Layout"
@@ -583,6 +630,10 @@ msgstr "Søg fremad"
 #: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
 msgstr "Annullerer søgning"
+
+#: dist/toolbar/toolbar.js:680
+msgid "Text Language"
+msgstr ""
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -724,7 +775,7 @@ msgstr "Dig"
 
 #: dist/toolbar/toolbar.js:1604
 msgid "Readonly"
-msgstr ""
+msgstr "Skrivebeskyttet"
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -734,9 +785,16 @@ msgstr "Forbindelsesfejl"
 msgid "Are you sure you want to terminate this session?"
 msgstr "Vil du virkelig afslutte denne session?"
 
-#: src/admin/AdminSocketSettings.js:31
+#: src/admin/AdminSocketOverview.js:152
+#: src/admin/AdminSocketOverview.js:311
+#, fuzzy
+msgid "Documents"
+msgstr "Dokument"
+
+#: src/admin/AdminSocketSettings.js:34
+#, fuzzy
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "Er du sikker på, at du vil stoppe denne server?"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -1870,19 +1928,19 @@ msgstr "Optimal kolonnebredde"
 
 #: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "Klip internt"
 
 #: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"
-msgstr ""
+msgstr "Kopier internt"
 
 #: src/control/Control.ContextMenu.js:141
 msgid "Internal Paste"
-msgstr ""
+msgstr "Indsæt internt"
 
 #: src/control/Control.ContextMenu.js:163
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Indsæt speciel internt"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
@@ -1918,6 +1976,29 @@ msgstr "Hop til tilstand"
 #: src/control/Control.Menubar.js:234
 msgid "File"
 msgstr "Fil"
+
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:184
+#: src/control/Control.Menubar.js:244
+msgid "Edit"
+msgstr "Rediger"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:254
+msgid "View"
+msgstr "Vis"
+
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:292
+msgid "Tools"
+msgstr ""
+
+#: src/control/Control.Menubar.js:19
+msgid "Save As"
+msgstr ""
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -1955,12 +2036,6 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:184
-#: src/control/Control.Menubar.js:244
-msgid "Edit"
-msgstr "Rediger"
-
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
 msgstr "Reparér"
@@ -1989,9 +2064,16 @@ msgstr "Indsæt"
 msgid "Select all"
 msgstr "Vælg alle"
 
+#: src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:207
+#: src/control/Control.Menubar.js:271
+#: src/control/Control.Menubar.js:518
+msgid "Find & Replace"
+msgstr ""
+
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
-msgstr ""
+msgstr "Registrer ændringer"
 
 #: src/control/Control.Menubar.js:32
 msgid "Record"
@@ -2006,15 +2088,8 @@ msgid "Previous"
 msgstr "Forrige"
 
 #: src/control/Control.Menubar.js:36
-#, fuzzy
 msgid "Next"
-msgstr "Tekst"
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:194
-#: src/control/Control.Menubar.js:254
-msgid "View"
-msgstr "Vis"
+msgstr "Næste"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:195
@@ -2374,6 +2449,20 @@ msgstr "Celle"
 msgid "Merge cells"
 msgstr "Flet celler"
 
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:293
+msgid "Automatic Spell Checking"
+msgstr ""
+
+#: src/control/Control.Menubar.js:177
+msgid "Language"
+msgstr ""
+
+#: src/control/Control.Menubar.js:178
+msgid "Reset to Default Language"
+msgstr ""
+
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
 #: src/control/Control.Menubar.js:273
@@ -2391,6 +2480,13 @@ msgstr "Genvejstaster"
 #: src/control/Control.Menubar.js:275
 msgid "About"
 msgstr "Om"
+
+#: dist/toolbar/toolbar.js:527
+#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:277
+msgid "Close document"
+msgstr "Luk dokument"
 
 #: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
@@ -2441,17 +2537,33 @@ msgstr "Indsæt kolonne"
 msgid "Delete row"
 msgstr "Slet række"
 
+#: src/control/Control.Menubar.js:497
+msgid "Find"
+msgstr ""
+
+#: src/control/Control.Menubar.js:505
+msgid "Replace with"
+msgstr ""
+
+#: src/control/Control.Menubar.js:522
+msgid "Replace"
+msgstr ""
+
+#: src/control/Control.Menubar.js:527
+msgid "Replace All"
+msgstr ""
+
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
 msgstr "Er du sikker på, at du vil slette dette dias?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
-msgstr ""
+msgstr "(100th/mm)"
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "
-msgstr ""
+msgstr "Tilføj:"
 
 #: src/control/Control.MetricInput.js:61
 msgid "Default value"
@@ -2483,11 +2595,11 @@ msgstr "Optimal rækkehøjde"
 
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Rul ned i kommentarer"
 
 #: src/control/Control.Scroll.Annotation.js:11
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Rul op i kommentarer"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -2518,11 +2630,6 @@ msgstr "Angiv et nyt arknavn"
 msgid "Downloading..."
 msgstr "Downloader..."
 
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:939
-msgid "Saving..."
-msgstr "Gemmer..."
-
 #: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "Denne version af %productName drives af"
@@ -2539,13 +2646,41 @@ msgstr "Ikke-understøttet serverversion."
 msgid "Session terminated by document owner"
 msgstr "Session afsluttet af dokumentejer"
 
+#: src/core/Socket.js:261
+msgid "Idle document - please click to reload and resume editing"
+msgstr ""
+
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server lukker ned for vedligeholdelse (auto-gem)"
 
+#: src/core/Socket.js:272
+msgid "Oops, there is a problem connecting the document"
+msgstr ""
+
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
 msgstr "Serveren genstarter og vil snart være til rådighed"
+
+#: src/core/Socket.js:306
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+
+#: src/core/Socket.js:418
+msgid ""
+"Document has been changed in storage. Do you want to discard your changes, "
+"and load the document from the storage?"
+msgstr ""
+
+#: src/core/Socket.js:420
+msgid "Discard changes"
+msgstr ""
+
+#: src/core/Socket.js:421
+msgid "Overwrite document"
+msgstr ""
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."
@@ -2602,6 +2737,11 @@ msgstr "Initialiserer..."
 #: src/map/Map.js:820
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktivt dikument - klik for at genoptage redigering"
+
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:939
+msgid "Saving..."
+msgstr "Gemmer..."
 
 #: src/map/Map.js:942
 msgid "Loading..."

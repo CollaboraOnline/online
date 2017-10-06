@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:10+0000\n"
+"POT-Creation-Date: 2017-10-05 08:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /gd/libo_online/loleaflet-ui-gd.po\n"
-"X-Pootle-Revision: 2438504\n"
+"X-Pootle-Revision: 2780561\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
 msgstr "Consoil na rianachd"
-
-#: admin.strings.js:6
-msgid "Toggle navigation"
-msgstr "Toglaich an t-seòladaireachd"
 
 #: admin.strings.js:7
 msgid "Settings"
@@ -38,6 +34,10 @@ msgstr "(làithreach)"
 msgid "Analytics"
 msgstr "Analytics"
 
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "An eachdraidh"
+
 #: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Deas-bhòrd"
@@ -47,12 +47,29 @@ msgid "Users online"
 msgstr "Luchd-cleachdaidh air loidhne"
 
 #: admin.strings.js:13
+#, fuzzy
+msgid "User Name"
+msgstr "Ainm-cleachdaiche"
+
+#: admin.strings.js:13
 msgid "Documents opened"
 msgstr "Sgrìobhainnean fosgailte"
+
+#: admin.strings.js:16
+msgid "Number of Documents"
+msgstr "Àireamh de sgrìobhainnean"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "Cuimhne air caitheamh"
+
+#: admin.strings.js:18
+msgid "Bytes sent"
+msgstr "Bytes a chaidh a chur"
+
+#: admin.strings.js:19
+msgid "Bytes received"
+msgstr "Bytes a fhuaradh"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -74,6 +91,10 @@ msgstr "An ùine a dh’fhalbh"
 msgid "Idle time"
 msgstr "Ùine ’na thàmh"
 
+#: admin.strings.js:25
+msgid "Modified"
+msgstr "Air atharrachadh"
+
 #: admin.strings.js:20
 msgid "Kill"
 msgstr "Marbh"
@@ -81,6 +102,18 @@ msgstr "Marbh"
 #: admin.strings.js:21
 msgid "Graphs"
 msgstr "Grafaichean"
+
+#: admin.strings.js:27
+msgid "Memory Graph"
+msgstr ""
+
+#: admin.strings.js:28
+msgid "CPU Graph"
+msgstr ""
+
+#: admin.strings.js:29
+msgid "Network Graph"
+msgstr ""
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -107,6 +140,18 @@ msgstr "Meud an tasgadain airson stats an CPU"
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Eadaramh ama airson stats an CPU (ann am ms)"
 
+#: admin.strings.js:35
+msgid "Maximum Document process virtual memory (in MB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:36
+msgid "Maximum Document process stack memory (in KB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:37
+msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
+msgstr ""
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Dathan an ùrlair"
@@ -122,10 +167,6 @@ msgstr "Dathan an lìn"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "Air ais dhan phailead"
-
-#: evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "An eachdraidh"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -297,20 +338,35 @@ msgstr ""
 
 #: dist/errormessages.js:13
 msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
 msgstr ""
-"Dh’fhàillig an sàbhaladh a chionn ’s nach eil àite air fhàgail air "
-"frithealaiche an stòrais. Bidh an sgrìobhainn dìreach ri leughadh. Cuir fios "
-"gu rianaire an fhrithealaiche mus lean thu air adhart ’ga dheasachadh."
+"Cha b’ urrainn dhuinn an sgrìobhainn a leughadh on stòras. Cuir fios gu "
+"rianaire frithealaiche an stòrais agad (%storageserver)."
 
 #: dist/errormessages.js:14
 msgid ""
-"Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+"Dh’fhàillig an sàbhaladh a chionn ’s nach eil àite air fhàgail air "
+"frithealaiche an stòrais. Bidh an sgrìobhainn dìreach ri leughadh. Cuir fios "
+"gu rianaire an fhrithealaiche (%storageserver) mus lean thu air adhart ’ga "
+"dheasachadh."
+
+#: dist/errormessages.js:15
+msgid "Document cannot be saved due to expired or invalid access token."
+msgstr ""
+
+#: dist/errormessages.js:16
+#, fuzzy
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
 msgstr ""
 "Cha ghabh an sgrìobhainn a shàbhaladh san stòras. Thoir sùil air na ceadan "
-"agad no cuir fios gu rianaire frithealaiche an stòrais."
+"agad no cuir fios gu rianaire frithealaiche an stòrais (%storageserver)."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -507,13 +563,6 @@ msgstr "Caractar sònraichte"
 msgid "More"
 msgstr "Barrachd"
 
-#: dist/toolbar/toolbar.js:527
-#: src/control/Control.Menubar.js:170
-#: src/control/Control.Menubar.js:230
-#: src/control/Control.Menubar.js:277
-msgid "Close document"
-msgstr "Dùin an sgrìobhainn"
-
 #: dist/toolbar/toolbar.js:606
 msgid "Layout"
 msgstr "Co-dhealbhachd"
@@ -587,6 +636,10 @@ msgstr "Lorg an comhair a bheòil"
 #: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
 msgstr "Sguir dhen lorg"
+
+#: dist/toolbar/toolbar.js:680
+msgid "Text Language"
+msgstr ""
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -728,7 +781,7 @@ msgstr "Thusa"
 
 #: dist/toolbar/toolbar.js:1604
 msgid "Readonly"
-msgstr ""
+msgstr "Ri leughadh a-mhàin"
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -739,9 +792,15 @@ msgid "Are you sure you want to terminate this session?"
 msgstr ""
 "A bheil thu cinnteach gu bheil thu airson crìoch a chur air an t-seisean seo?"
 
+#: src/admin/AdminSocketOverview.js:152
+#: src/admin/AdminSocketOverview.js:311
+#, fuzzy
+msgid "Documents"
+msgstr "Sgrìobhainn"
+
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "A bheil thu cinnteach gu bheil thu airson am frithealaiche a dhùnadh?"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -1875,19 +1934,19 @@ msgstr "Leud cuilbh as fhearr"
 
 #: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "Gearradh inntearnail"
 
 #: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"
-msgstr ""
+msgstr "Lethbhreac inntearnail"
 
 #: src/control/Control.ContextMenu.js:141
 msgid "Internal Paste"
-msgstr ""
+msgstr "Cur a-steach inntearnail"
 
 #: src/control/Control.ContextMenu.js:163
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Cur a-steach inntearnail air dòigh shònraichte"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
@@ -1923,6 +1982,29 @@ msgstr "Leum gun staid"
 #: src/control/Control.Menubar.js:234
 msgid "File"
 msgstr "Faidhle"
+
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:184
+#: src/control/Control.Menubar.js:244
+msgid "Edit"
+msgstr "Deasaich"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:254
+msgid "View"
+msgstr "Sealladh"
+
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:292
+msgid "Tools"
+msgstr ""
+
+#: src/control/Control.Menubar.js:19
+msgid "Save As"
+msgstr ""
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -1960,12 +2042,6 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:184
-#: src/control/Control.Menubar.js:244
-msgid "Edit"
-msgstr "Deasaich"
-
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
 msgstr "Càirich"
@@ -1995,31 +2071,29 @@ msgid "Select all"
 msgstr "Tagh na h-uile"
 
 #: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:459
+msgid "Find & Replace"
+msgstr "Lorg ⁊ cuir ’na àite"
+
+#: src/control/Control.Menubar.js:31
 msgid "Track Changes"
-msgstr ""
+msgstr "Tracaich na h-atharraichean"
 
 #: src/control/Control.Menubar.js:32
 msgid "Record"
-msgstr ""
+msgstr "Clàraich"
 
 #: src/control/Control.Menubar.js:33
 msgid "Show"
-msgstr ""
+msgstr "Seall"
 
 #: src/control/Control.Menubar.js:35
 msgid "Previous"
-msgstr ""
+msgstr "Air ais"
 
 #: src/control/Control.Menubar.js:36
-#, fuzzy
 msgid "Next"
-msgstr "Teacsa"
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:194
-#: src/control/Control.Menubar.js:254
-msgid "View"
-msgstr "Sealladh"
+msgstr "Air adhart"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:195
@@ -2028,9 +2102,8 @@ msgid "Full screen"
 msgstr "Làn-sgrìn"
 
 #: src/control/Control.Menubar.js:46
-#, fuzzy
 msgid "Formatting Marks"
-msgstr "Comharra fòrmataidh"
+msgstr "Comharran fòrmataidh"
 
 #: src/control/Control.Menubar.js:50
 #: src/control/Control.Menubar.js:202
@@ -2042,7 +2115,7 @@ msgstr "Dealbh"
 #: src/control/Control.Menubar.js:203
 #: src/control/Control.Menubar.js:259
 msgid "Comment..."
-msgstr ""
+msgstr "Beachd..."
 
 #: src/control/Control.Menubar.js:53
 msgid "Footnote"
@@ -2380,6 +2453,20 @@ msgstr "Cealla"
 msgid "Merge cells"
 msgstr "Co-aonaich na ceallan"
 
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:293
+msgid "Automatic Spell Checking"
+msgstr ""
+
+#: src/control/Control.Menubar.js:177
+msgid "Language"
+msgstr ""
+
+#: src/control/Control.Menubar.js:178
+msgid "Reset to Default Language"
+msgstr ""
+
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
 #: src/control/Control.Menubar.js:273
@@ -2397,6 +2484,13 @@ msgstr "Ath-ghoiridean a’ mheur-chlàir"
 #: src/control/Control.Menubar.js:275
 msgid "About"
 msgstr "Mu dhèidhinn"
+
+#: dist/toolbar/toolbar.js:527
+#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:277
+msgid "Close document"
+msgstr "Dùin an sgrìobhainn"
 
 #: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
@@ -2447,6 +2541,22 @@ msgstr "Cuir a-steach colbh"
 msgid "Delete row"
 msgstr "Sguab às an ràgh"
 
+#: src/control/Control.Menubar.js:497
+msgid "Find"
+msgstr ""
+
+#: src/control/Control.Menubar.js:505
+msgid "Replace with"
+msgstr ""
+
+#: src/control/Control.Menubar.js:463
+msgid "Replace"
+msgstr "Cuir ’na àite"
+
+#: src/control/Control.Menubar.js:468
+msgid "Replace All"
+msgstr "Cuir an àite na h-uile"
+
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
 msgstr ""
@@ -2454,19 +2564,19 @@ msgstr ""
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
-msgstr ""
+msgstr "(100mh/mm)"
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "
-msgstr ""
+msgstr "Cuir ris: "
 
 #: src/control/Control.MetricInput.js:61
 msgid "Default value"
-msgstr ""
+msgstr "Luach bunaiteach"
 
 #: src/control/Control.MetricInput.js:68
 msgid "Submit"
-msgstr ""
+msgstr "Cuir a-null"
 
 #: src/control/Control.RowHeader.js:37
 msgid "Insert row above"
@@ -2490,11 +2600,11 @@ msgstr "Àirde ràigh as fhearr"
 
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Sgrolaich suas sna nòtaichean"
 
 #: src/control/Control.Scroll.Annotation.js:11
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Sgrolaich sìos sna nòtaichean"
 
 #: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
@@ -2526,11 +2636,6 @@ msgstr "Cuir a-steach ainm ùr an t-siota"
 msgid "Downloading..."
 msgstr "'Ga luchdadh a-nuas ..."
 
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:939
-msgid "Saving..."
-msgstr "’Ga shàbhaladh..."
-
 #: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "An tionndadh seo de %productName le cumhachd"
@@ -2547,15 +2652,43 @@ msgstr "Chan eil taic ri tionndadh an fhrithealaiche."
 msgid "Session terminated by document owner"
 msgstr "Chuir sealbhadair na sgrìobhainn crìoch air an t-seisean"
 
+#: src/core/Socket.js:261
+msgid "Idle document - please click to reload and resume editing"
+msgstr ""
+
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Tha am frithealaiche a’ dùnadh airson obair-ghlèidhidh (fèin-sàbhaladh)"
+
+#: src/core/Socket.js:272
+msgid "Oops, there is a problem connecting the document"
+msgstr ""
 
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
 msgstr ""
 "Tha am frithealaiche ri ath-chuairteachadh agus bi e ri fhaighinn a "
 "dh’aithghearr"
+
+#: src/core/Socket.js:306
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+
+#: src/core/Socket.js:418
+msgid ""
+"Document has been changed in storage. Do you want to discard your changes, "
+"and load the document from the storage?"
+msgstr ""
+
+#: src/core/Socket.js:420
+msgid "Discard changes"
+msgstr ""
+
+#: src/core/Socket.js:421
+msgid "Overwrite document"
+msgstr ""
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."
@@ -2587,23 +2720,23 @@ msgstr ""
 
 #: src/layer/marker/Annotation.js:156
 msgid "Accept change"
-msgstr ""
+msgstr "Gabh ris an atharrachadh"
 
 #: src/layer/marker/Annotation.js:161
 msgid "Reject change"
-msgstr ""
+msgstr "Diùlt an t-atharrachadh"
 
 #: src/layer/marker/Annotation.js:169
 msgid "Open menu"
-msgstr ""
+msgstr "Fosgail an clàr-taice"
 
 #: src/layer/tile/TileLayer.js:182
 msgid "Modify"
-msgstr ""
+msgstr "Atharraich"
 
 #: src/layer/tile/TileLayer.js:194
 msgid "Remove"
-msgstr ""
+msgstr "Thoir air falbh"
 
 #: src/map/Map.js:131
 msgid "Initializing..."
@@ -2613,6 +2746,11 @@ msgstr "’Ga thòiseachadh..."
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 "Sgrìobhainn neo-ghnìomhach - dèan briogadh airson leantainn air an deasachadh"
+
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:939
+msgid "Saving..."
+msgstr "’Ga shàbhaladh..."
 
 #: src/map/Map.js:942
 msgid "Loading..."

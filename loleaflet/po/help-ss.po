@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:12+0000\n"
+"POT-Creation-Date: 2017-10-06 09:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /ss/libo_online/loleaflet-help-ss.po\n"
-"X-Pootle-Revision: 826818\n"
+"X-Pootle-Revision: 2776687\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -902,38 +902,8 @@ msgstr ""
 msgid "Go and select text to start of textbox"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:202"
-msgid "End"
-msgstr ""
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:203"
-msgid "Go and select to the end of a line"
-msgstr ""
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:203"
-msgid "Shift + End"
-msgstr ""
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:204"
-msgid "Go to end of document"
-msgstr ""
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:204"
-msgid "Ctrl + End"
-msgstr ""
-
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
 msgid "Go and select text to end of textbox"
-msgstr ""
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:205"
-msgid "Ctrl + Shift + End"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A207
@@ -954,34 +924,14 @@ msgstr ""
 msgid "Select objects in the order in which they were created"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:210"
-msgid "Tab"
-msgstr ""
-
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
 msgid "Select objects in the reverse order in which they were created"
-msgstr ""
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:211"
-msgid "Shift + Tab"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
 msgid "Move to next text object on slide / drawing page"
 msgstr ""
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:212"
-msgid "Ctrl + Enter"
-msgstr ""
-
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
 msgid "Select all in slide / drawing page"
-msgstr ""
-
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
-msgctxt "dist/loleaflet-help.html div.div.table.tr.td:213"
-msgid "Ctrl + A"
 msgstr ""

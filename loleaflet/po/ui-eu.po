@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-17 08:00+0000\n"
+"POT-Creation-Date: 2017-10-06 09:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-ui-eu.po\n"
-"X-Pootle-Revision: 2534367\n"
+"X-Pootle-Revision: 2780550\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
 msgstr "Administrazio kontsola"
-
-#: admin.strings.js:6
-msgid "Toggle navigation"
-msgstr "Txandakatu nabigazioa"
 
 #: admin.strings.js:7
 msgid "Settings"
@@ -38,6 +34,10 @@ msgstr "(unekoa)"
 msgid "Analytics"
 msgstr "Analitika"
 
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "Historia"
+
 #: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Aginte-mahaia"
@@ -47,12 +47,29 @@ msgid "Users online"
 msgstr "Konektatutako erabiltzaileak"
 
 #: admin.strings.js:13
+#, fuzzy
+msgid "User Name"
+msgstr "Erabiltzaileen izena"
+
+#: admin.strings.js:13
 msgid "Documents opened"
 msgstr "Irekitako dokumentuak"
+
+#: admin.strings.js:16
+msgid "Number of Documents"
+msgstr "Dokumentu kopurua"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "Erabilitako memoria"
+
+#: admin.strings.js:18
+msgid "Bytes sent"
+msgstr "Bidalitako byte-ak"
+
+#: admin.strings.js:19
+msgid "Bytes received"
+msgstr "Jasotako byte-ak"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -74,6 +91,10 @@ msgstr "Igarotako denbora"
 msgid "Idle time"
 msgstr "Inaktibitate denbora"
 
+#: admin.strings.js:25
+msgid "Modified"
+msgstr "Aldatua"
+
 #: admin.strings.js:20
 msgid "Kill"
 msgstr "Hil"
@@ -81,6 +102,18 @@ msgstr "Hil"
 #: admin.strings.js:21
 msgid "Graphs"
 msgstr "Grafikoak"
+
+#: admin.strings.js:27
+msgid "Memory Graph"
+msgstr ""
+
+#: admin.strings.js:28
+msgid "CPU Graph"
+msgstr ""
+
+#: admin.strings.js:29
+msgid "Network Graph"
+msgstr ""
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -107,6 +140,18 @@ msgstr "PUZ estatistiken katxearen tamaina"
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "PUZ eztatistiken denbora tartea (ms-tan)"
 
+#: admin.strings.js:35
+msgid "Maximum Document process virtual memory (in MB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:36
+msgid "Maximum Document process stack memory (in KB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:37
+msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
+msgstr ""
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Gaiaren koloreak"
@@ -122,10 +167,6 @@ msgstr "Web koloreak"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "Itzuli paletara"
-
-#: evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "Historia"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -294,20 +335,35 @@ msgstr ""
 
 #: dist/errormessages.js:13
 msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
 msgstr ""
-"Ezin izan da gorde diskoan edo biltegiratze zerbitzarian lekurik ez "
-"dagoelako. Dokumentua irakurtzeko soilik izango da orain. Kontaktatu "
-"zerbitzariaren administratzailearekin edizioarekin jarraitzeko."
+"Ezin izan da dokumentua irakurri biltegitik. Kontaktatu zure biltegiratze-"
+"zerbitzariaren (%storageserver) administratzailearekin."
 
 #: dist/errormessages.js:14
 msgid ""
-"Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+"Ezin izan da gorde, biltegiratze-zerbitzarian lekurik ez dagoelako. "
+"Dokumentua irakurtzeko soilik izango da orain. Kontaktatu zerbitzariaren "
+"(%storageserver) administratzailearekin edizioarekin jarraitzeko."
+
+#: dist/errormessages.js:15
+msgid "Document cannot be saved due to expired or invalid access token."
+msgstr ""
+
+#: dist/errormessages.js:16
+#, fuzzy
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
 msgstr ""
 "Ezin izan da dokumentua biltegiratzean gorde. Egiaztatu zure baimenak edo "
-"kontaktatu biltegiratze zerbitzariaren administratzailearekin."
+"kontaktatu biltegiratze zerbitzariaren (%storageserver) "
+"administratzailearekin."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -503,13 +559,6 @@ msgstr "Karaktere berezia"
 msgid "More"
 msgstr "Gehiago"
 
-#: dist/toolbar/toolbar.js:527
-#: src/control/Control.Menubar.js:170
-#: src/control/Control.Menubar.js:230
-#: src/control/Control.Menubar.js:277
-msgid "Close document"
-msgstr "Itxi dokumentua"
-
 #: dist/toolbar/toolbar.js:606
 msgid "Layout"
 msgstr "Diseinua"
@@ -583,6 +632,10 @@ msgstr "Bilatu aurrerantz"
 #: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
 msgstr "Utzi bilaketa"
+
+#: dist/toolbar/toolbar.js:680
+msgid "Text Language"
+msgstr ""
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -734,9 +787,15 @@ msgstr "Konexio-errorea"
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ziur zaude saio hau itxi nahi duzula?"
 
+#: src/admin/AdminSocketOverview.js:152
+#: src/admin/AdminSocketOverview.js:311
+#, fuzzy
+msgid "Documents"
+msgstr "Dokumentua"
+
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
-msgstr "Ziur zerbitzaria amatatu nahi duzula?"
+msgstr "Ziur zerbitzaria itzali nahi duzula?"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -1919,6 +1978,29 @@ msgstr "Jauzi egoerara"
 msgid "File"
 msgstr "Fitxategia"
 
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:184
+#: src/control/Control.Menubar.js:244
+msgid "Edit"
+msgstr "Editatu"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:254
+msgid "View"
+msgstr "Ikuspegia"
+
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:292
+msgid "Tools"
+msgstr ""
+
+#: src/control/Control.Menubar.js:19
+msgid "Save As"
+msgstr ""
+
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
 #: src/control/Control.Menubar.js:236
@@ -1955,12 +2037,6 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:184
-#: src/control/Control.Menubar.js:244
-msgid "Edit"
-msgstr "Editatu"
-
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
 msgstr "Konpondu"
@@ -1990,6 +2066,11 @@ msgid "Select all"
 msgstr "Hautatu guztia"
 
 #: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:459
+msgid "Find & Replace"
+msgstr "Bilatu eta ordeztu"
+
+#: src/control/Control.Menubar.js:31
 msgid "Track Changes"
 msgstr "Aldaketen segimendua"
 
@@ -2008,12 +2089,6 @@ msgstr "Aurrekoa"
 #: src/control/Control.Menubar.js:36
 msgid "Next"
 msgstr "Hurrengoa"
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:194
-#: src/control/Control.Menubar.js:254
-msgid "View"
-msgstr "Ikuspegia"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:195
@@ -2373,6 +2448,20 @@ msgstr "Gelaxka"
 msgid "Merge cells"
 msgstr "Bateratu gelaxkak"
 
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:293
+msgid "Automatic Spell Checking"
+msgstr ""
+
+#: src/control/Control.Menubar.js:177
+msgid "Language"
+msgstr ""
+
+#: src/control/Control.Menubar.js:178
+msgid "Reset to Default Language"
+msgstr ""
+
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
 #: src/control/Control.Menubar.js:273
@@ -2390,6 +2479,13 @@ msgstr "Laster-teklak"
 #: src/control/Control.Menubar.js:275
 msgid "About"
 msgstr "Honi buruz"
+
+#: dist/toolbar/toolbar.js:527
+#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:277
+msgid "Close document"
+msgstr "Itxi dokumentua"
 
 #: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
@@ -2440,13 +2536,29 @@ msgstr "Txertatu zutabea"
 msgid "Delete row"
 msgstr "Ezabatu errenkada"
 
+#: src/control/Control.Menubar.js:497
+msgid "Find"
+msgstr ""
+
+#: src/control/Control.Menubar.js:505
+msgid "Replace with"
+msgstr ""
+
+#: src/control/Control.Menubar.js:463
+msgid "Replace"
+msgstr "Ordeztu"
+
+#: src/control/Control.Menubar.js:468
+msgid "Replace All"
+msgstr "Ordeztu denak"
+
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ziur zaude diapositiba hau ezabatu nahi duzula?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
-msgstr ""
+msgstr "(1/100 mm)"
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "
@@ -2517,11 +2629,6 @@ msgstr "Sartu orriaren izen berria"
 msgid "Downloading..."
 msgstr "Deskargatzen..."
 
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:939
-msgid "Saving..."
-msgstr "Gordetzen..."
-
 #: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "%productName bertsio honen oinarria"
@@ -2538,13 +2645,41 @@ msgstr "Euskarririk gabeko zerbitzari bertsioa."
 msgid "Session terminated by document owner"
 msgstr "Dokumentuaren jabeak saioa amaitu du"
 
+#: src/core/Socket.js:261
+msgid "Idle document - please click to reload and resume editing"
+msgstr ""
+
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Zerbitzaria mantentzerako itzaltzen ari da (automatikoki gordetzen)"
 
+#: src/core/Socket.js:272
+msgid "Oops, there is a problem connecting the document"
+msgstr ""
+
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
 msgstr "Zerbitzaria birziklatzen ari da eta laster egongo da erabilgarri"
+
+#: src/core/Socket.js:306
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+
+#: src/core/Socket.js:418
+msgid ""
+"Document has been changed in storage. Do you want to discard your changes, "
+"and load the document from the storage?"
+msgstr ""
+
+#: src/core/Socket.js:420
+msgid "Discard changes"
+msgstr ""
+
+#: src/core/Socket.js:421
+msgid "Overwrite document"
+msgstr ""
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."
@@ -2601,6 +2736,11 @@ msgstr "Hasieratzen..."
 #: src/map/Map.js:820
 msgid "Inactive document - please click to resume editing"
 msgstr "Dokumentu ez aktiboa - Egin klik edizioari berrekiteko"
+
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:939
+msgid "Saving..."
+msgstr "Gordetzen..."
 
 #: src/map/Map.js:942
 msgid "Loading..."

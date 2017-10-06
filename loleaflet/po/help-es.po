@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:10+0000\n"
+"POT-Creation-Date: 2017-10-05 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
-"X-Pootle-Revision: 828409\n"
+"X-Pootle-Revision: 2788598\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -776,7 +776,7 @@ msgstr "Ctrl + Alt + C"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
 msgid "Insert soft hyphen"
-msgstr "Insertar un guion opcional"
+msgstr "Insertar un guion discrecional"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
 msgid "Ctrl + -"
@@ -792,7 +792,7 @@ msgstr "Ctrl + Mayús + -"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Insert non-breaking space"
-msgstr "Insertar un espacio duro"
+msgstr "Insertar un espacio indivisible"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Ctrl + Shift + Space"
@@ -800,7 +800,7 @@ msgstr "Ctrl + Mayús + Espacio"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Insert line break"
-msgstr "Insertar salto de renglón"
+msgstr "Insertar un salto de renglón"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Shift + Enter"

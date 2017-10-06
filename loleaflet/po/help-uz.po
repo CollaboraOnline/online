@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:12+0000\n"
+"POT-Creation-Date: 2017-10-05 08:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /uz/libo_online/loleaflet-help-uz.po\n"
-"X-Pootle-Revision: 2366032\n"
+"X-Pootle-Revision: 2713123\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -735,6 +735,9 @@ msgid ""
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
+"Agar bir yoki undan ortiq katak tanlansa, butun bir boshli satrdagi "
+"tanlovlar bekor qilinadi. Agar barcha qatorlar to'liq yoki qisman tanlansa, "
+"jadval to'laligicha olib tashlanadi."
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A117
 msgid "Word processor functions"
@@ -912,32 +915,28 @@ msgstr "Ichki oyna"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
 msgid "Promote list item (list item has to be selected)"
-msgstr ""
+msgstr "Elementni ro‘yxat yuqorisiga koʻtarish (tanlanishi kerak)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
-#, fuzzy
 msgid "Shift + Tab"
 msgstr "Shift + Tab"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A179
-#, fuzzy
 msgid "Text selection and navigation in a textbox"
 msgstr "Hujjatdagi matnni tanlash kuzatish"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
-#, fuzzy
 msgid "Go and select text to start of textbox"
 msgstr "Hujjat boshiga o‘tish va belgilash"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
-#, fuzzy
 msgid "Go and select text to end of textbox"
 msgstr "Hujjatning oxiriga o‘tish va belgilash"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A207
 msgid "Slide / draw page keyboard shortcuts"
-msgstr ""
+msgstr "Slaydlar / rasmlar sahifasi uchun tugmalar kombinatsiyasi"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
 msgid ""

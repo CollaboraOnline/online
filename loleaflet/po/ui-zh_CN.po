@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-15 08:03+0000\n"
+"POT-Creation-Date: 2017-10-05 08:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-ui-zh_CN.po\n"
-"X-Pootle-Revision: 2548681\n"
+"X-Pootle-Revision: 2776740\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
 msgstr "管理员控制台"
-
-#: admin.strings.js:6
-msgid "Toggle navigation"
-msgstr "导航切换"
 
 #: admin.strings.js:7
 msgid "Settings"
@@ -38,6 +34,10 @@ msgstr "(当前)"
 msgid "Analytics"
 msgstr "分析"
 
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "历史"
+
 #: admin.strings.js:11
 msgid "Dashboard"
 msgstr "控制台"
@@ -47,12 +47,29 @@ msgid "Users online"
 msgstr "在线的用户"
 
 #: admin.strings.js:13
+#, fuzzy
+msgid "User Name"
+msgstr "用户名"
+
+#: admin.strings.js:13
 msgid "Documents opened"
 msgstr "打开的文档"
+
+#: admin.strings.js:15
+msgid "Number of Documents"
+msgstr ""
 
 #: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "消耗的内存"
+
+#: admin.strings.js:17
+msgid "Bytes sent"
+msgstr ""
+
+#: admin.strings.js:18
+msgid "Bytes received"
+msgstr ""
 
 #: admin.strings.js:15
 msgid "PID"
@@ -74,6 +91,10 @@ msgstr "已用时间"
 msgid "Idle time"
 msgstr "空闲时间"
 
+#: admin.strings.js:24
+msgid "Modified"
+msgstr ""
+
 #: admin.strings.js:20
 msgid "Kill"
 msgstr "杀死"
@@ -81,6 +102,18 @@ msgstr "杀死"
 #: admin.strings.js:21
 msgid "Graphs"
 msgstr "图表"
+
+#: admin.strings.js:27
+msgid "Memory Graph"
+msgstr ""
+
+#: admin.strings.js:28
+msgid "CPU Graph"
+msgstr ""
+
+#: admin.strings.js:29
+msgid "Network Graph"
+msgstr ""
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:470
@@ -106,6 +139,18 @@ msgstr "CPU统计的缓存大小"
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "CPU统计的时间间隔（毫秒）"
 
+#: admin.strings.js:35
+msgid "Maximum Document process virtual memory (in MB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:36
+msgid "Maximum Document process stack memory (in KB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:37
+msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
+msgstr ""
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "主题颜色"
@@ -121,10 +166,6 @@ msgstr "网页颜色"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "返回调色板"
-
-#: evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "历史"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -273,14 +314,27 @@ msgstr "无法载入文件，请确认文件类型正确且文件并未受损，
 
 #: dist/errormessages.js:13
 msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
-msgstr "服务器上的存储空间不足，保存失败。文档现在将被设定为只读。要继续编辑，请联系服务器管理员。"
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
+msgstr ""
 
 #: dist/errormessages.js:14
+#, fuzzy
 msgid ""
-"Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr "服务器上的存储空间不足，保存失败。文档现在将被设定为只读。要继续编辑，请联系服务器管理员。"
+
+#: dist/errormessages.js:15
+msgid "Document cannot be saved due to expired or invalid access token."
+msgstr ""
+
+#: dist/errormessages.js:16
+#, fuzzy
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
 msgstr "无法将文档保存到存储服务器。请检查您的权限，或者联系存储服务器的管理员。"
 
 #: dist/toolbar/toolbar.js:105
@@ -477,13 +531,6 @@ msgstr "特殊字符"
 msgid "More"
 msgstr "更多"
 
-#: dist/toolbar/toolbar.js:524
-#: src/control/Control.Menubar.js:159
-#: src/control/Control.Menubar.js:218
-#: src/control/Control.Menubar.js:265
-msgid "Close document"
-msgstr "关闭文档"
-
 #: dist/toolbar/toolbar.js:603
 msgid "Layout"
 msgstr "布局"
@@ -556,6 +603,10 @@ msgstr "向前搜索"
 #: dist/toolbar/toolbar.js:679
 msgid "Cancel the search"
 msgstr "取消搜索"
+
+#: dist/toolbar/toolbar.js:680
+msgid "Text Language"
+msgstr ""
 
 #: dist/toolbar/toolbar.js:684
 msgid "No users"
@@ -705,7 +756,14 @@ msgstr "连接错误"
 msgid "Are you sure you want to terminate this session?"
 msgstr "您确定要停止此次会话吗？"
 
-#: src/admin/AdminSocketSettings.js:31
+#: src/admin/AdminSocketOverview.js:152
+#: src/admin/AdminSocketOverview.js:311
+#, fuzzy
+msgid "Documents"
+msgstr "文档"
+
+#: src/admin/AdminSocketSettings.js:34
+#, fuzzy
 msgid "Are you sure you want to shut down the server?"
 msgstr "您确定要关闭服务器吗？"
 
@@ -908,8 +966,9 @@ msgid "Currency Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:56
+#, fuzzy
 msgid "Combining Diacritical Symbols"
-msgstr ""
+msgstr "组合变音标记"
 
 #: src/control/Control.CharacterMap.js:57
 msgid "Letterlike Symbols"
@@ -1257,8 +1316,9 @@ msgid "CJK Strokes"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:160
+#, fuzzy
 msgid "Combining Diacritical Marks Supplement"
-msgstr ""
+msgstr "组合变音标记"
 
 #: src/control/Control.CharacterMap.js:161
 msgid "Coptic"
@@ -1325,12 +1385,14 @@ msgid "Balinese"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:177
+#, fuzzy
 msgid "Latin Extended-C"
-msgstr ""
+msgstr "拉丁文扩充-A"
 
 #: src/control/Control.CharacterMap.js:178
+#, fuzzy
 msgid "Latin Extended-D"
-msgstr ""
+msgstr "拉丁文扩充-A"
 
 #: src/control/Control.CharacterMap.js:179
 msgid "Phags-Pa"
@@ -1573,8 +1635,9 @@ msgid "CJK Unified Ideographs Extension D"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:247
+#, fuzzy
 msgid "Arabic Extended-A"
-msgstr ""
+msgstr "拉丁文扩充-A"
 
 #: src/control/Control.CharacterMap.js:248
 msgid "Arabic Mathematical Alphabetic Symbols"
@@ -1629,8 +1692,9 @@ msgid "Coptic Epact Numbers"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:261
+#, fuzzy
 msgid "Combining Diacritical Marks Extended"
-msgstr ""
+msgstr "组合变音标记"
 
 #: src/control/Control.CharacterMap.js:262
 msgid "Duployan"
@@ -1657,8 +1721,9 @@ msgid "Khudawadi"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:268
+#, fuzzy
 msgid "Latin Extended-E"
-msgstr ""
+msgstr "拉丁文扩充-A"
 
 #: src/control/Control.CharacterMap.js:270
 msgid "Linear A"
@@ -1891,6 +1956,29 @@ msgstr "跳转到状态"
 msgid "File"
 msgstr "文件"
 
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:173
+#: src/control/Control.Menubar.js:232
+msgid "Edit"
+msgstr "编辑"
+
+#: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:183
+#: src/control/Control.Menubar.js:242
+msgid "View"
+msgstr "查看"
+
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:292
+msgid "Tools"
+msgstr ""
+
+#: src/control/Control.Menubar.js:19
+msgid "Save As"
+msgstr ""
+
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:165
 #: src/control/Control.Menubar.js:224
@@ -1927,12 +2015,6 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:173
-#: src/control/Control.Menubar.js:232
-msgid "Edit"
-msgstr "编辑"
-
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
 msgstr "修复"
@@ -1961,6 +2043,13 @@ msgstr "粘贴"
 msgid "Select all"
 msgstr "全选"
 
+#: src/control/Control.Menubar.js:38
+#: src/control/Control.Menubar.js:207
+#: src/control/Control.Menubar.js:271
+#: src/control/Control.Menubar.js:518
+msgid "Find & Replace"
+msgstr ""
+
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
 msgstr "追踪修订"
@@ -1980,12 +2069,6 @@ msgstr "上一个"
 #: src/control/Control.Menubar.js:36
 msgid "Next"
 msgstr "下一个"
-
-#: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:183
-#: src/control/Control.Menubar.js:242
-msgid "View"
-msgstr "查看"
 
 #: src/control/Control.Menubar.js:32
 #: src/control/Control.Menubar.js:184
@@ -2067,9 +2150,10 @@ msgstr "从右到左标记"
 msgid "Format"
 msgstr ""
 
-#: src/control/Control.Menubar.js:59
+#: src/control/Control.Menubar.js:79
+#, fuzzy
 msgid "Text"
-msgstr ""
+msgstr "下一个"
 
 #: src/control/Control.Menubar.js:63
 msgid "Double underline"
@@ -2345,6 +2429,20 @@ msgstr "单元格"
 msgid "Merge cells"
 msgstr "合并单元格"
 
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:293
+msgid "Automatic Spell Checking"
+msgstr ""
+
+#: src/control/Control.Menubar.js:177
+msgid "Language"
+msgstr ""
+
+#: src/control/Control.Menubar.js:178
+msgid "Reset to Default Language"
+msgstr ""
+
 #: src/control/Control.Menubar.js:155
 #: src/control/Control.Menubar.js:214
 #: src/control/Control.Menubar.js:261
@@ -2362,6 +2460,13 @@ msgstr "键盘快捷键"
 #: src/control/Control.Menubar.js:263
 msgid "About"
 msgstr "关于"
+
+#: dist/toolbar/toolbar.js:524
+#: src/control/Control.Menubar.js:159
+#: src/control/Control.Menubar.js:218
+#: src/control/Control.Menubar.js:265
+msgid "Close document"
+msgstr "关闭文档"
 
 #: src/control/Control.Menubar.js:169
 msgid "ODF presentation (.odp)"
@@ -2411,6 +2516,22 @@ msgstr "插入列"
 #: src/control/Control.RowHeader.js:46
 msgid "Delete row"
 msgstr "删除行"
+
+#: src/control/Control.Menubar.js:497
+msgid "Find"
+msgstr ""
+
+#: src/control/Control.Menubar.js:505
+msgid "Replace with"
+msgstr ""
+
+#: src/control/Control.Menubar.js:522
+msgid "Replace"
+msgstr ""
+
+#: src/control/Control.Menubar.js:527
+msgid "Replace All"
+msgstr ""
 
 #: src/control/Control.Menubar.js:457
 msgid "Are you sure you want to delete this slide?"
@@ -2489,11 +2610,6 @@ msgstr "输入新的工作表名"
 msgid "Downloading..."
 msgstr "正在下载..."
 
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:913
-msgid "Saving..."
-msgstr "正在保存..."
-
 #: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "当前版本 %productName 的提供者为"
@@ -2510,12 +2626,40 @@ msgstr "不被支持的服务器版本。"
 msgid "Session terminated by document owner"
 msgstr ""
 
+#: src/core/Socket.js:261
+msgid "Idle document - please click to reload and resume editing"
+msgstr ""
+
 #: src/core/Socket.js:227
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 
+#: src/core/Socket.js:272
+msgid "Oops, there is a problem connecting the document"
+msgstr ""
+
 #: src/core/Socket.js:230
 msgid "Server is recycling and will be available shortly"
+msgstr ""
+
+#: src/core/Socket.js:306
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+
+#: src/core/Socket.js:418
+msgid ""
+"Document has been changed in storage. Do you want to discard your changes, "
+"and load the document from the storage?"
+msgstr ""
+
+#: src/core/Socket.js:420
+msgid "Discard changes"
+msgstr ""
+
+#: src/core/Socket.js:421
+msgid "Overwrite document"
 msgstr ""
 
 #: src/core/Socket.js:342
@@ -2571,6 +2715,11 @@ msgstr "正在初始化..."
 #: src/map/Map.js:794
 msgid "Inactive document - please click to resume editing"
 msgstr ""
+
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:913
+msgid "Saving..."
+msgstr "正在保存..."
 
 #: src/map/Map.js:916
 msgid "Loading..."

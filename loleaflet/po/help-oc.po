@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 08:01+0000\n"
+"POT-Creation-Date: 2017-10-06 09:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /oc/libo_online/loleaflet-help-oc.po\n"
-"X-Pootle-Revision: 2329631\n"
+"X-Pootle-Revision: 2776640\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -662,7 +662,7 @@ msgstr "Alt + Ctrl + las sagetas de direccion"
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "Coma Alt, mas actiu unicament se la cellula activa es modificada"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
 msgid "Ctrl + Alt + Shift + Arrow Keys"
@@ -769,7 +769,7 @@ msgstr "Ctrl + Maj + Espaci"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Insert line break"
-msgstr ""
+msgstr "Inserir un saut de linha"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Shift + Enter"
@@ -826,7 +826,7 @@ msgstr "Emplenar cap aval"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
 msgid "Set Optimal Column Width"
-msgstr ""
+msgstr "Definir una largor de colomna optimala"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
 msgid "Two decimal places, thousands separator"
@@ -899,12 +899,14 @@ msgid "Text selection and navigation in a textbox"
 msgstr "Seleccion de tèxte e navigacion dins un zòna de tèxte"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
+#, fuzzy
 msgid "Go and select text to start of textbox"
-msgstr ""
+msgstr "Anar e seleccionar lo tèxte al començament del document"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
+#, fuzzy
 msgid "Go and select text to end of textbox"
-msgstr ""
+msgstr "Anar e seleccionar lo tèxte a la fin del document"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A207
 msgid "Slide / draw page keyboard shortcuts"

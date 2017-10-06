@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 08:01+0000\n"
+"POT-Creation-Date: 2017-10-05 08:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /lt/libo_online/loleaflet-ui-lt.po\n"
-"X-Pootle-Revision: 2438535\n"
+"X-Pootle-Revision: 2776603\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
 msgstr "Administratoriaus pultas"
-
-#: admin.strings.js:6
-msgid "Toggle navigation"
-msgstr "Žvalgymas"
 
 #: admin.strings.js:7
 msgid "Settings"
@@ -38,6 +34,10 @@ msgstr "(veikiamasis)"
 msgid "Analytics"
 msgstr "Analitika"
 
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "Istorija"
+
 #: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Skydelis"
@@ -47,12 +47,28 @@ msgid "Users online"
 msgstr "Prisijungę naudotojai"
 
 #: admin.strings.js:13
+msgid "User Name"
+msgstr ""
+
+#: admin.strings.js:13
 msgid "Documents opened"
 msgstr "Atverti dokumentai"
+
+#: admin.strings.js:16
+msgid "Number of Documents"
+msgstr ""
 
 #: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "Naudojama atmintis"
+
+#: admin.strings.js:18
+msgid "Bytes sent"
+msgstr ""
+
+#: admin.strings.js:19
+msgid "Bytes received"
+msgstr ""
 
 #: admin.strings.js:15
 msgid "PID"
@@ -74,6 +90,10 @@ msgstr "Praėjęs laikas"
 msgid "Idle time"
 msgstr ""
 
+#: admin.strings.js:25
+msgid "Modified"
+msgstr ""
+
 #: admin.strings.js:20
 msgid "Kill"
 msgstr "Nutraukti"
@@ -81,6 +101,18 @@ msgstr "Nutraukti"
 #: admin.strings.js:21
 msgid "Graphs"
 msgstr "Grafikai"
+
+#: admin.strings.js:27
+msgid "Memory Graph"
+msgstr ""
+
+#: admin.strings.js:28
+msgid "CPU Graph"
+msgstr ""
+
+#: admin.strings.js:29
+msgid "Network Graph"
+msgstr ""
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -108,6 +140,18 @@ msgstr "Atminties podėlio dydžio statistika"
 msgid "Time interval of CPU statistics (in ms)"
 msgstr ""
 
+#: admin.strings.js:35
+msgid "Maximum Document process virtual memory (in MB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:36
+msgid "Maximum Document process stack memory (in KB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:37
+msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
+msgstr ""
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Apipavidalinimo spalvos"
@@ -123,10 +167,6 @@ msgstr "Žiniatinklio spalvos"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "Grįžti į paletę"
-
-#: evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "Istorija"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -278,14 +318,25 @@ msgstr ""
 
 #: dist/errormessages.js:13
 msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
 msgstr ""
 
 #: dist/errormessages.js:14
 msgid ""
-"Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+
+#: dist/errormessages.js:15
+msgid "Document cannot be saved due to expired or invalid access token."
+msgstr ""
+
+#: dist/errormessages.js:16
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
 msgstr ""
 
 #: dist/toolbar/toolbar.js:105
@@ -482,13 +533,6 @@ msgstr ""
 msgid "More"
 msgstr "Daugiau"
 
-#: dist/toolbar/toolbar.js:527
-#: src/control/Control.Menubar.js:170
-#: src/control/Control.Menubar.js:230
-#: src/control/Control.Menubar.js:277
-msgid "Close document"
-msgstr "Užverti dokumentą"
-
 #: dist/toolbar/toolbar.js:606
 msgid "Layout"
 msgstr "Maketas"
@@ -562,6 +606,10 @@ msgstr "Ieškoti pabaigos link"
 #: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
 msgstr "Nutraukti paiešką"
+
+#: dist/toolbar/toolbar.js:680
+msgid "Text Language"
+msgstr ""
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -710,6 +758,12 @@ msgstr "Ryšio klaida"
 #: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ar tikrai nutraukti šį seansą?"
+
+#: src/admin/AdminSocketOverview.js:152
+#: src/admin/AdminSocketOverview.js:311
+#, fuzzy
+msgid "Documents"
+msgstr "Dokumentas"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
@@ -1896,6 +1950,29 @@ msgstr ""
 msgid "File"
 msgstr "Failas"
 
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:184
+#: src/control/Control.Menubar.js:244
+msgid "Edit"
+msgstr "Taisa"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:254
+msgid "View"
+msgstr "Rodymas"
+
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:292
+msgid "Tools"
+msgstr ""
+
+#: src/control/Control.Menubar.js:19
+msgid "Save As"
+msgstr ""
+
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
 #: src/control/Control.Menubar.js:236
@@ -1932,12 +2009,6 @@ msgstr "„Microsoft Word 2003“ dokumentas (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "„Microsoft Word“ dokumentas (.docx)"
 
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:184
-#: src/control/Control.Menubar.js:244
-msgid "Edit"
-msgstr "Taisa"
-
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
 msgstr ""
@@ -1967,6 +2038,11 @@ msgid "Select all"
 msgstr "Pažymėti viską"
 
 #: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:459
+msgid "Find & Replace"
+msgstr ""
+
+#: src/control/Control.Menubar.js:31
 msgid "Track Changes"
 msgstr ""
 
@@ -1985,12 +2061,6 @@ msgstr ""
 #: src/control/Control.Menubar.js:36
 msgid "Next"
 msgstr ""
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:194
-#: src/control/Control.Menubar.js:254
-msgid "View"
-msgstr "Rodymas"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:195
@@ -2350,6 +2420,20 @@ msgstr "Langelis"
 msgid "Merge cells"
 msgstr "Sulieti langelius"
 
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:293
+msgid "Automatic Spell Checking"
+msgstr ""
+
+#: src/control/Control.Menubar.js:177
+msgid "Language"
+msgstr ""
+
+#: src/control/Control.Menubar.js:178
+msgid "Reset to Default Language"
+msgstr ""
+
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
 #: src/control/Control.Menubar.js:273
@@ -2367,6 +2451,13 @@ msgstr "Spartieji klavišai"
 #: src/control/Control.Menubar.js:275
 msgid "About"
 msgstr "Apie"
+
+#: dist/toolbar/toolbar.js:527
+#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:277
+msgid "Close document"
+msgstr "Užverti dokumentą"
 
 #: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
@@ -2416,6 +2507,22 @@ msgstr "Įterpti stulpelį"
 #: src/control/Control.RowHeader.js:44
 msgid "Delete row"
 msgstr "Šalinti eilutę"
+
+#: src/control/Control.Menubar.js:497
+msgid "Find"
+msgstr ""
+
+#: src/control/Control.Menubar.js:505
+msgid "Replace with"
+msgstr ""
+
+#: src/control/Control.Menubar.js:463
+msgid "Replace"
+msgstr ""
+
+#: src/control/Control.Menubar.js:468
+msgid "Replace All"
+msgstr ""
 
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
@@ -2494,11 +2601,6 @@ msgstr "Įveskite naują lakšto pavadinimą"
 msgid "Downloading..."
 msgstr "Siunčiama…"
 
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:939
-msgid "Saving..."
-msgstr "Įrašoma…"
-
 #: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr ""
@@ -2515,12 +2617,40 @@ msgstr "Nesuderinama serverio versija."
 msgid "Session terminated by document owner"
 msgstr ""
 
+#: src/core/Socket.js:261
+msgid "Idle document - please click to reload and resume editing"
+msgstr ""
+
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 
+#: src/core/Socket.js:272
+msgid "Oops, there is a problem connecting the document"
+msgstr ""
+
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
+msgstr ""
+
+#: src/core/Socket.js:306
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+
+#: src/core/Socket.js:418
+msgid ""
+"Document has been changed in storage. Do you want to discard your changes, "
+"and load the document from the storage?"
+msgstr ""
+
+#: src/core/Socket.js:420
+msgid "Discard changes"
+msgstr ""
+
+#: src/core/Socket.js:421
+msgid "Overwrite document"
 msgstr ""
 
 #: src/core/Socket.js:348
@@ -2576,6 +2706,11 @@ msgstr "Paleidžiama…"
 #: src/map/Map.js:820
 msgid "Inactive document - please click to resume editing"
 msgstr ""
+
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:939
+msgid "Saving..."
+msgstr "Įrašoma…"
 
 #: src/map/Map.js:942
 msgid "Loading..."

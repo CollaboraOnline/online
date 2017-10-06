@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:12+0000\n"
+"POT-Creation-Date: 2017-10-06 09:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /zh_TW/libo_online/loleaflet-help-zh_TW.po\n"
-"X-Pootle-Revision: 859926\n"
+"X-Pootle-Revision: 2779846\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -20,7 +20,7 @@ msgstr "鍵盤快捷鍵"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A27
 msgid "General Keyboard Shortcuts"
-msgstr "一般鍵盤快捷鍵"
+msgstr "常用快捷鍵"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Undo"
@@ -48,7 +48,7 @@ msgstr "Ctrl + X"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Paste as unformatted text"
-msgstr "以未格式化文字貼上"
+msgstr "貼上未設定格式的文字"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Ctrl + Alt + Shift + V"
@@ -266,7 +266,7 @@ msgstr "Ctrl + 5"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A62
 msgid "Text selection and navigation in document"
-msgstr "在文件中選取文字與文件導覽"
+msgstr "文字選取及文件助手"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
@@ -477,7 +477,7 @@ msgstr "Ctrl + Home"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 msgid "Go and select text to start of document"
-msgstr "前往並選取文字至文件的開頭"
+msgstr "往前選取至文件起始位置"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
@@ -517,7 +517,7 @@ msgstr "Ctrl + End"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 msgid "Go and select text to end of document"
-msgstr "前往並選取文字至文件的結尾"
+msgstr "往後選取至文件尾端"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205

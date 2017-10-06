@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 08:00+0000\n"
+"POT-Creation-Date: 2017-10-06 09:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /ab/libo_online/loleaflet-help-ab.po\n"
-"X-Pootle-Revision: 826586\n"
+"X-Pootle-Revision: 2780483\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -24,35 +24,35 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Undo"
-msgstr ""
+msgstr "Иаҟәыхтәуп"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Ctrl + Z"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
 msgid "Redo"
-msgstr ""
+msgstr "Ирхынҳәтәуп"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
 msgid "Ctrl + Y"
-msgstr ""
+msgstr "Ctrl + Y"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
 msgid "Cut"
-msgstr ""
+msgstr "Игәылҧҟатәуп"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
 msgid "Ctrl + X"
-msgstr ""
+msgstr "Ctrl + X"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Paste as unformatted text"
-msgstr ""
+msgstr "Ибжьаргылатәуп атеқст амацара"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Ctrl + Alt + Shift + V"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + V"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
 msgid "Print (Download as PDF)"
@@ -60,7 +60,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
 msgid "Ctrl + P"
-msgstr ""
+msgstr "Ctrl + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
 msgid "Display the Keyboard shortcuts help"
@@ -68,89 +68,89 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
 msgid "Ctrl + Shift + ?"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A38
 #: dist%2Floleaflet-help.html+div.div.h2%3A160
 msgid "Text formatting"
-msgstr ""
+msgstr "Атеқст аформат"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
 msgid "Bold"
-msgstr ""
+msgstr "Ибжажәпоу"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
 msgid "Ctrl + B"
-msgstr ""
+msgstr "Ctrl + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
 msgid "Italic"
-msgstr ""
+msgstr "Акурсив"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
 msgid "Ctrl + I"
-msgstr ""
+msgstr "Ctrl + I"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
 msgid "Underline"
-msgstr ""
+msgstr "Изыҵшьу"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
 msgid "Ctrl + U"
-msgstr ""
+msgstr "Ctrl + U"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 msgid "Double Underline"
-msgstr ""
+msgstr "Ҩынтәны аҵшьра"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Ctrl + D"
-msgstr ""
+msgstr "Ctrl + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
 msgid "Strikethrough"
-msgstr ""
+msgstr "Аҵәаӷәара"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
 msgid "Ctrl + Alt + 5"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
 msgid "Superscript"
-msgstr ""
+msgstr "Хыхьтәи аиндекс"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
 msgid "Ctrl + Shift + P"
-msgstr ""
+msgstr "Ctrl + Shift + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Subscript"
-msgstr ""
+msgstr "Ҵаҟатәи аиндекс"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Ctrl + Shift + B"
-msgstr ""
+msgstr "Ctrl + Shift + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
@@ -160,7 +160,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
 msgid "Ctrl + M"
-msgstr ""
+msgstr "Ctrl + M"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A49
 #: dist%2Floleaflet-help.html+div.div.h2%3A170
@@ -177,7 +177,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
 msgid "Ctrl + E"
-msgstr ""
+msgstr "Ctrl + E"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
@@ -189,7 +189,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
 msgid "Ctrl + L"
-msgstr ""
+msgstr "Ctrl + L"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
@@ -201,7 +201,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
 msgid "Ctrl + R"
-msgstr ""
+msgstr "Ctrl + R"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
@@ -213,7 +213,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
 msgid "Ctrl + J"
-msgstr ""
+msgstr "Ctrl + J"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Apply Default paragraph style"
@@ -221,7 +221,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Ctrl + 0"
-msgstr ""
+msgstr "Ctrl + 0"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Apply Heading 1 paragraph style"
@@ -229,7 +229,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Ctrl + 1"
-msgstr ""
+msgstr "Ctrl + 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Apply Heading 2 paragraph style"
@@ -237,7 +237,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Ctrl + 2"
-msgstr ""
+msgstr "Ctrl + 2"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 msgid "Apply Heading 3 paragraph style"
@@ -246,7 +246,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
 msgid "Ctrl + 3"
-msgstr ""
+msgstr "Ctrl + 3"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Apply Heading 4 paragraph style"
@@ -254,7 +254,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Ctrl + 4"
-msgstr ""
+msgstr "Ctrl + 4"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Apply Heading 5 paragraph style"
@@ -262,7 +262,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Ctrl + 5"
-msgstr ""
+msgstr "Ctrl + 5"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A62
 msgid "Text selection and navigation in document"
@@ -282,7 +282,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
 msgid "Ctrl + A"
-msgstr ""
+msgstr "Ctrl + A"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
@@ -292,7 +292,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
 msgid "Arrow Left"
-msgstr ""
+msgstr "Ахыц армарахь"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
@@ -302,7 +302,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
 msgid "Shift + Arrow Left"
-msgstr ""
+msgstr "Shift + Ахыц армарахь "
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
@@ -312,7 +312,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
 msgid "Ctrl + Arrow Left"
-msgstr ""
+msgstr "Ctrl + Ахыц армарахь"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
@@ -322,7 +322,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
 msgid "Ctrl + Shift + Arrow Left"
-msgstr ""
+msgstr "Ctrl + Shift +Ахыц армарахь "
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
@@ -332,7 +332,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
 msgid "Arrow Right"
-msgstr ""
+msgstr "Ахыц арӷьарахь"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
@@ -342,7 +342,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
 msgid "Shift + Arrow Right"
-msgstr ""
+msgstr "Shift + Ахыц арӷьарахь"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
@@ -352,7 +352,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
 msgid "Ctrl + Arrow Right"
-msgstr ""
+msgstr "Ctrl + Ахыц арӷьарахь"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
@@ -362,7 +362,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
 msgid "Ctrl + Shift + Arrow Right"
-msgstr ""
+msgstr "Ctrl + Shift +Ахыц арӷьарахь "
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
@@ -372,7 +372,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
 msgid "Arrow Up"
-msgstr ""
+msgstr "Ахыц аҩада"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
@@ -382,7 +382,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
 msgid "Shift + Arrow Up"
-msgstr ""
+msgstr "Shift + Ахыц аҩада"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
@@ -392,7 +392,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
 msgid "Ctrl + Arrow Up"
-msgstr ""
+msgstr "Ctrl + Ахыц аҩада"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
@@ -402,7 +402,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
 msgid "Ctrl + Shift + Arrow Up"
-msgstr ""
+msgstr "Ctrl + Shift + Ахыц аҩада"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
@@ -412,7 +412,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
 msgid "Arrow Down"
-msgstr ""
+msgstr "Ахыц алада"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
@@ -422,7 +422,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
 msgid "Shift + Arrow Down"
-msgstr ""
+msgstr "Shift + Ахыц алада"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
@@ -432,7 +432,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
 msgid "Ctrl + Arrow Down"
-msgstr ""
+msgstr "Shift + Ахыц алада"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
@@ -442,7 +442,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
 msgid "Ctrl + Shift + Arrow Down"
-msgstr ""
+msgstr "Ctrl + Shift + Ахыц алада"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
@@ -481,8 +481,9 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
+#, fuzzy
 msgid "Ctrl + Shift + Home"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
@@ -512,8 +513,9 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
+#, fuzzy
 msgid "Ctrl + End"
-msgstr ""
+msgstr "Ctrl + E"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 msgid "Go and select text to end of document"
@@ -521,8 +523,9 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
+#, fuzzy
 msgid "Ctrl + Shift + End"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
 msgid "Move the view up one page"
@@ -585,24 +588,27 @@ msgid "Delete to end of word"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
+#, fuzzy
 msgid "Ctrl + Del"
-msgstr ""
+msgstr "Ctrl + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
 msgid "Delete to beginning of sentence"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
+#, fuzzy
 msgid "Ctrl + Shift + Backspace"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A98
 msgid "Delete to end of sentence"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A98
+#, fuzzy
 msgid "Ctrl + Shift + Del"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A100
 msgid "Shortcut Keys for Tables"
@@ -722,16 +728,18 @@ msgid "Insert footnote"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
+#, fuzzy
 msgid "Ctrl + Alt + F"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
 msgid "Insert endnote"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
+#, fuzzy
 msgid "Ctrl + Alt + D"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
@@ -740,32 +748,36 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
+#, fuzzy
 msgid "Ctrl + Alt + C"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
 msgid "Insert soft hyphen"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
+#, fuzzy
 msgid "Ctrl + -"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
 msgid "Insert non-breaking hyphen"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
+#, fuzzy
 msgid "Ctrl + Shift + -"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
 msgid "Insert non-breaking space"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
+#, fuzzy
 msgid "Ctrl + Shift + Space"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
 msgid "Insert line break"
@@ -781,16 +793,18 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
+#, fuzzy
 msgid "Ctrl + Enter"
-msgstr ""
+msgstr "Ctrl + E"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
 msgid "Column break (in multicolumnar text)"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
+#, fuzzy
 msgid "Ctrl + Shift + Enter"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
 msgid ""
@@ -809,16 +823,18 @@ msgid ""
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A135
+#, fuzzy
 msgid "Cell formatting"
-msgstr ""
+msgstr "Атеқст аформат"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
 msgid "Display comment"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
+#, fuzzy
 msgid "Ctrl + F1"
-msgstr ""
+msgstr "Ctrl + 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Fill Down"
@@ -833,48 +849,54 @@ msgid "Two decimal places, thousands separator"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
+#, fuzzy
 msgid "Ctrl + Shift + 1"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
 msgid "Standard exponential format"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
+#, fuzzy
 msgid "Ctrl + Shift + 2"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
 msgid "Standard date format"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
+#, fuzzy
 msgid "Ctrl + Shift + 3"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
 msgid "Standard currency format"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
+#, fuzzy
 msgid "Ctrl + Shift + 4"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
 msgid "Standard percentage format (two decimal places)"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
+#, fuzzy
 msgid "Ctrl + Shift + 5"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
 msgid "Standard format"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
+#, fuzzy
 msgid "Ctrl + Shift + 6"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
 msgid "Demote list item (list item has to be selected)"

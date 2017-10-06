@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:10+0000\n"
+"POT-Creation-Date: 2017-10-06 09:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /hr/libo_online/loleaflet-ui-hr.po\n"
-"X-Pootle-Revision: 2438511\n"
+"X-Pootle-Revision: 2780572\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
 msgstr "Administratorova konzola"
-
-#: admin.strings.js:6
-msgid "Toggle navigation"
-msgstr "Izmjena navigacije"
 
 #: admin.strings.js:7
 msgid "Settings"
@@ -38,6 +34,10 @@ msgstr "(trenutno)"
 msgid "Analytics"
 msgstr "Analize"
 
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "Povijest"
+
 #: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Kontrolna ploča"
@@ -47,12 +47,29 @@ msgid "Users online"
 msgstr "Korisnici na mreži"
 
 #: admin.strings.js:13
+#, fuzzy
+msgid "User Name"
+msgstr "Korisničko ime"
+
+#: admin.strings.js:13
 msgid "Documents opened"
 msgstr "Otvoreni dokumenti"
+
+#: admin.strings.js:16
+msgid "Number of Documents"
+msgstr "Broj dokumenata"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "Iskorištena memorija"
+
+#: admin.strings.js:18
+msgid "Bytes sent"
+msgstr "Poslano bajtova"
+
+#: admin.strings.js:19
+msgid "Bytes received"
+msgstr "Primljeno bajtova"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -75,6 +92,10 @@ msgstr "Proteklo vrijeme"
 msgid "Idle time"
 msgstr "Vrijeme čekanja"
 
+#: admin.strings.js:25
+msgid "Modified"
+msgstr "Izmijenjeno"
+
 #: admin.strings.js:20
 msgid "Kill"
 msgstr "Uništi"
@@ -82,6 +103,18 @@ msgstr "Uništi"
 #: admin.strings.js:21
 msgid "Graphs"
 msgstr "Grafikoni"
+
+#: admin.strings.js:27
+msgid "Memory Graph"
+msgstr ""
+
+#: admin.strings.js:28
+msgid "CPU Graph"
+msgstr ""
+
+#: admin.strings.js:29
+msgid "Network Graph"
+msgstr ""
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -108,6 +141,18 @@ msgstr "Veličina priručne memorije statistike procesora"
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Vremenski interval statistike procesora (u ms)"
 
+#: admin.strings.js:35
+msgid "Maximum Document process virtual memory (in MB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:36
+msgid "Maximum Document process stack memory (in KB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:37
+msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
+msgstr ""
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Boje teme"
@@ -123,10 +168,6 @@ msgstr "Web boje"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "Natrag na paletu"
-
-#: evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "Povijest"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -190,7 +231,7 @@ msgstr "Omotaj poslije"
 
 #: unocommands.js:15
 msgid "Enable Contour"
-msgstr "Omogući brojač"
+msgstr "Pokreni brojač"
 
 #: unocommands.js:16
 msgid "Update Index or Table of Contents"
@@ -297,20 +338,34 @@ msgstr ""
 
 #: dist/errormessages.js:13
 msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
 msgstr ""
-"Dokument nije moguće spremiti jer poslužitelju za spremanje više nema "
-"mjesta. Dokument možete samo čitati. Kontaktirajte administratora kako biste "
-"mogli nastaviti uređivati dokument."
+"Neuspjelo čitanje dokumenta iz spremišta. Kontaktirajte administratora "
+"poslužitelja (%storageserver) koji koristite kao spremište."
 
 #: dist/errormessages.js:14
 msgid ""
-"Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+"Dokument nije moguće spremiti jer poslužitelju za spremanje više nema "
+"mjesta. Dokument možete samo čitati. Kontaktirajte administratora "
+"poslužitelja (%storageserver) kako biste mogli nastaviti uređivati dokument."
+
+#: dist/errormessages.js:15
+msgid "Document cannot be saved due to expired or invalid access token."
+msgstr ""
+
+#: dist/errormessages.js:16
+#, fuzzy
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
 msgstr ""
 "Dokument ne može biti spremljen na poslužitelj. Provjerite imate li potrebna "
-"dopuštenja ili kontaktirajte administratora."
+"dopuštenja ili kontaktirajte administratora poslužitelja (%storageserver)."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -506,13 +561,6 @@ msgstr "Posebni znak"
 msgid "More"
 msgstr "Više"
 
-#: dist/toolbar/toolbar.js:527
-#: src/control/Control.Menubar.js:170
-#: src/control/Control.Menubar.js:230
-#: src/control/Control.Menubar.js:277
-msgid "Close document"
-msgstr "Zatvori dokument"
-
 #: dist/toolbar/toolbar.js:606
 msgid "Layout"
 msgstr "Raspored"
@@ -586,6 +634,10 @@ msgstr "Traži ispred"
 #: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
 msgstr "Poništi pretraživanje"
+
+#: dist/toolbar/toolbar.js:680
+msgid "Text Language"
+msgstr ""
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -717,6 +769,8 @@ msgstr "Sljedeći slajd"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Kolizija značajki Ponovi/Vrati s drugim korisnicima. Koristite obnavljanje "
+"dokumenata radi razrješavanja kolizije."
 
 #: dist/toolbar/toolbar.js:1598
 #: src/control/Control.DocumentRepair.js:87
@@ -725,7 +779,7 @@ msgstr "Vi"
 
 #: dist/toolbar/toolbar.js:1604
 msgid "Readonly"
-msgstr ""
+msgstr "Samo za čitanje"
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -735,9 +789,15 @@ msgstr "Pogreška prilikom povezivanja"
 msgid "Are you sure you want to terminate this session?"
 msgstr "Sigurni ste da želite završiti sesiju?"
 
+#: src/admin/AdminSocketOverview.js:152
+#: src/admin/AdminSocketOverview.js:311
+#, fuzzy
+msgid "Documents"
+msgstr "Dokument"
+
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "Jeste li sigurni da želite isključiti poslužitelj?"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -992,7 +1052,7 @@ msgstr "Znakovi blokova"
 # Treba razmisliti je li bolje 'likovi' ili 'oblici'.
 #: src/control/Control.CharacterMap.js:67
 msgid "Geometric Shapes"
-msgstr "Geometrijski oblici"
+msgstr "Geometrijski likovi"
 
 # https://en.wikipedia.org/wiki/Miscellaneous_Symbols
 #: src/control/Control.CharacterMap.js:68
@@ -1011,292 +1071,292 @@ msgstr "Brailleovi znakovni uzorci"
 
 #: src/control/Control.CharacterMap.js:71
 msgid "CJK Radicals Supplement"
-msgstr ""
+msgstr "Nadomjestak CJK radikala"
 
 #: src/control/Control.CharacterMap.js:72
 msgid "Kangxi Radicals"
-msgstr ""
+msgstr "Kangxi radikali"
 
 #: src/control/Control.CharacterMap.js:73
 msgid "Ideographic Description Characters"
-msgstr ""
+msgstr "Ideografski opisni znakovi"
 
 #: src/control/Control.CharacterMap.js:74
 msgid "CJK Symbols and Punctuation"
-msgstr ""
+msgstr "CJK simboli i interpunkcija"
 
 #: src/control/Control.CharacterMap.js:75
 msgid "Hiragana"
-msgstr ""
+msgstr "Hiragana"
 
 #: src/control/Control.CharacterMap.js:76
 msgid "Katakana"
-msgstr ""
+msgstr "Katakana"
 
 #: src/control/Control.CharacterMap.js:77
 msgid "Bopomofo"
-msgstr ""
+msgstr "Bopomofo"
 
 #: src/control/Control.CharacterMap.js:78
 msgid "Hangul Compatibility Jamo"
-msgstr ""
+msgstr "Hangul kompatibilno Jamo"
 
 #: src/control/Control.CharacterMap.js:79
 msgid "Kanbun"
-msgstr ""
+msgstr "Kanbun"
 
 #: src/control/Control.CharacterMap.js:80
 msgid "Bopomofo Extended"
-msgstr ""
+msgstr "Bopomofo prošireni"
 
 #: src/control/Control.CharacterMap.js:81
 msgid "Enclosed CJK Letters and Months"
-msgstr ""
+msgstr "Omeđena CJK slova i mjeseci"
 
 #: src/control/Control.CharacterMap.js:82
 msgid "CJK Compatibility"
-msgstr ""
+msgstr "CJK kompatibilnost"
 
 #: src/control/Control.CharacterMap.js:84
 msgid "CJK Unified Ideographs Extension A"
-msgstr ""
+msgstr "CJK ujedinjeni ideogramski dodatak A"
 
 #: src/control/Control.CharacterMap.js:86
 msgid "CJK Unified Ideographs"
-msgstr ""
+msgstr "CJK unificirani ideogrami"
 
 #: src/control/Control.CharacterMap.js:88
 msgid "Yi Syllables"
-msgstr ""
+msgstr "Yi slogovi"
 
 #: src/control/Control.CharacterMap.js:90
 msgid "Yi Radicals"
-msgstr ""
+msgstr "Yi radikali"
 
 #: src/control/Control.CharacterMap.js:92
 msgid "Hangul"
-msgstr ""
+msgstr "Hangul"
 
 #: src/control/Control.CharacterMap.js:94
 msgid "High Surrogates"
-msgstr ""
+msgstr "Visoki surogati"
 
 #: src/control/Control.CharacterMap.js:95
 msgid "High Private Use Surrogates"
-msgstr ""
+msgstr "Često korišteni privatni surogati"
 
 #: src/control/Control.CharacterMap.js:97
 msgid "Low Surrogates"
-msgstr ""
+msgstr "Niski surogati"
 
 #: src/control/Control.CharacterMap.js:99
 msgid "Private Use Area"
-msgstr ""
+msgstr "Područje za privatno korištenje"
 
 #: src/control/Control.CharacterMap.js:101
 msgid "CJK Compatibility Ideographs"
-msgstr ""
+msgstr "CJK kompatibilni ideografi"
 
 #: src/control/Control.CharacterMap.js:102
 msgid "Alphabetic Presentation Forms"
-msgstr ""
+msgstr "Oblici abecednoga prikaza"
 
 #: src/control/Control.CharacterMap.js:104
 msgid "Arabic Presentation Forms-A"
-msgstr ""
+msgstr "Oblici arapskoga prikaza - A"
 
 #: src/control/Control.CharacterMap.js:105
 msgid "Combining Half Marks"
-msgstr ""
+msgstr "Kombinirane poluoznake"
 
 #: src/control/Control.CharacterMap.js:106
 msgid "CJK Compatibility Forms"
-msgstr ""
+msgstr "CJK kompatibilni oblici"
 
 #: src/control/Control.CharacterMap.js:107
 msgid "Small Form Variants"
-msgstr ""
+msgstr "Varijante malih oblika"
 
 #: src/control/Control.CharacterMap.js:108
 msgid "Arabic Presentation Forms-B"
-msgstr ""
+msgstr "Oblici arapskoga prikaza - B"
 
 #: src/control/Control.CharacterMap.js:109
 msgid "Specials"
-msgstr ""
+msgstr "Posebnosti"
 
 #: src/control/Control.CharacterMap.js:110
 msgid "Halfwidth and Fullwidth Forms"
-msgstr ""
+msgstr "Oblici poluširine i pune širine"
 
 #: src/control/Control.CharacterMap.js:111
 msgid "Old Italic"
-msgstr ""
+msgstr "Stari kurziv"
 
 #: src/control/Control.CharacterMap.js:112
 msgid "Gothic"
-msgstr ""
+msgstr "Gotsko pismo"
 
 #: src/control/Control.CharacterMap.js:113
 msgid "Deseret"
-msgstr ""
+msgstr "Deseret"
 
 #: src/control/Control.CharacterMap.js:114
 msgid "Byzantine Musical Symbols"
-msgstr ""
+msgstr "Bizantinski glazbeni znakovi"
 
 #: src/control/Control.CharacterMap.js:115
 #: src/control/Control.CharacterMap.js:116
 msgid "Musical Symbols"
-msgstr ""
+msgstr "Glazbeni znakovi"
 
 #: src/control/Control.CharacterMap.js:118
 msgid "CJK Unified Ideographs Extension B"
-msgstr ""
+msgstr "CJK ujedinjeni ideogramski proširak B"
 
 #: src/control/Control.CharacterMap.js:121
 msgid "CJK Compatibility Ideographs Supplement"
-msgstr ""
+msgstr "CJK kompatibilni ideogramski dodatak"
 
 #: src/control/Control.CharacterMap.js:122
 msgid "Tags"
-msgstr ""
+msgstr "Tagovi"
 
 #: src/control/Control.CharacterMap.js:123
 msgid "Cyrillic Supplement"
-msgstr ""
+msgstr "Ćirilični dodaci"
 
 #: src/control/Control.CharacterMap.js:124
 msgid "Tagalog"
-msgstr ""
+msgstr "Tagalog"
 
 #: src/control/Control.CharacterMap.js:125
 msgid "Hanunoo"
-msgstr ""
+msgstr "Hanunoo"
 
 #: src/control/Control.CharacterMap.js:126
 msgid "Buhid"
-msgstr ""
+msgstr "Buhid"
 
 #: src/control/Control.CharacterMap.js:127
 msgid "Tagbanwa"
-msgstr ""
+msgstr "Tagbanwa"
 
 #: src/control/Control.CharacterMap.js:128
 msgid "Miscellaneous Mathematical Symbols-A"
-msgstr ""
+msgstr "Razni matematički simboli - A"
 
 #: src/control/Control.CharacterMap.js:129
 msgid "Supplemental Arrows-A"
-msgstr ""
+msgstr "Dodatne strelice - A"
 
 #: src/control/Control.CharacterMap.js:130
 msgid "Supplemental Arrows-B"
-msgstr ""
+msgstr "Dodatne strelice - B"
 
 #: src/control/Control.CharacterMap.js:131
 msgid "Miscellaneous Mathematical Symbols-B"
-msgstr ""
+msgstr "Razni matematički simboli - B"
 
 #: src/control/Control.CharacterMap.js:132
 msgid "Supplemental Mathematical Operators"
-msgstr ""
+msgstr "Dodatni matematički operatori"
 
 #: src/control/Control.CharacterMap.js:133
 msgid "Katakana Phonetics Extensions"
-msgstr ""
+msgstr "Katakana fonetski proširci"
 
 #: src/control/Control.CharacterMap.js:134
 msgid "Variation Selectors"
-msgstr ""
+msgstr "Označitelji inačica"
 
 #: src/control/Control.CharacterMap.js:136
 msgid "Supplementary Private Use Area-A"
-msgstr ""
+msgstr "Dodatno područje A za privatno korištenje"
 
 #: src/control/Control.CharacterMap.js:139
 msgid "Supplementary Private Use Area-B"
-msgstr ""
+msgstr "Dodatno područje B za privatno korištenje"
 
 #: src/control/Control.CharacterMap.js:140
 msgid "Limbu"
-msgstr ""
+msgstr "Limbu"
 
 #: src/control/Control.CharacterMap.js:141
 msgid "Tai Le"
-msgstr ""
+msgstr "Tai Le"
 
 #: src/control/Control.CharacterMap.js:142
 msgid "Khmer Symbols"
-msgstr ""
+msgstr "Kmerski simboli"
 
 #: src/control/Control.CharacterMap.js:143
 msgid "Phonetic Extensions"
-msgstr ""
+msgstr "Fonetski proširci"
 
 #: src/control/Control.CharacterMap.js:144
 msgid "Miscellaneous Symbols And Arrows"
-msgstr ""
+msgstr "Razni simboli i strelice"
 
 #: src/control/Control.CharacterMap.js:145
 msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgstr "Yijing heksagramski simboli"
 
 #: src/control/Control.CharacterMap.js:146
 msgid "Linear B Syllabary"
-msgstr ""
+msgstr "Linearni B silabarij"
 
 #: src/control/Control.CharacterMap.js:147
 msgid "Linear B Ideograms"
-msgstr ""
+msgstr "Linearni B ideogrami"
 
 #: src/control/Control.CharacterMap.js:148
 msgid "Aegean Numbers"
-msgstr ""
+msgstr "Egejski brojevi"
 
 #: src/control/Control.CharacterMap.js:149
 msgid "Ugaritic"
-msgstr ""
+msgstr "Ugaritsko"
 
 #: src/control/Control.CharacterMap.js:150
 msgid "Shavian"
-msgstr ""
+msgstr "Shavian"
 
 #: src/control/Control.CharacterMap.js:151
 msgid "Osmanya"
-msgstr ""
+msgstr "Osmanski"
 
 #: src/control/Control.CharacterMap.js:152
 msgid "Cypriot Syllabary"
-msgstr ""
+msgstr "Ciparski silabarij"
 
 #: src/control/Control.CharacterMap.js:153
 msgid "Tai Xuan Jing Symbols"
-msgstr ""
+msgstr "Tai Xuan Jing simboli"
 
 #: src/control/Control.CharacterMap.js:154
 msgid "Variation Selectors Supplement"
-msgstr ""
+msgstr "Dodatak označiteljima inačica"
 
 #: src/control/Control.CharacterMap.js:155
 msgid "Ancient Greek Musical Notation"
-msgstr ""
+msgstr "Starogrčka glazbena notacija"
 
 #: src/control/Control.CharacterMap.js:156
 msgid "Ancient Greek Numbers"
-msgstr ""
+msgstr "Starogrčki brojevi"
 
 #: src/control/Control.CharacterMap.js:157
 msgid "Arabic Supplement"
-msgstr ""
+msgstr "Arapski dodatak"
 
 #: src/control/Control.CharacterMap.js:158
 msgid "Buginese"
-msgstr ""
+msgstr "Buginese"
 
 #: src/control/Control.CharacterMap.js:159
 msgid "CJK Strokes"
-msgstr ""
+msgstr "CJK linije"
 
 #: src/control/Control.CharacterMap.js:160
 #, fuzzy
@@ -1305,67 +1365,67 @@ msgstr "Kombiniranje dijakritičkih oznaka"
 
 #: src/control/Control.CharacterMap.js:161
 msgid "Coptic"
-msgstr ""
+msgstr "Coptički"
 
 #: src/control/Control.CharacterMap.js:162
 msgid "Ethiopic Extended"
-msgstr ""
+msgstr "Etiopsko pismo prošireno"
 
 #: src/control/Control.CharacterMap.js:163
 msgid "Ethiopic Supplement"
-msgstr ""
+msgstr "Etiopski dodaci"
 
 #: src/control/Control.CharacterMap.js:164
 msgid "Georgian Supplement"
-msgstr ""
+msgstr "Gruzijski dodaci"
 
 #: src/control/Control.CharacterMap.js:165
 msgid "Glagolitic"
-msgstr ""
+msgstr "Glagoljica"
 
 #: src/control/Control.CharacterMap.js:166
 msgid "Kharoshthi"
-msgstr ""
+msgstr "Kharoshthi"
 
 #: src/control/Control.CharacterMap.js:167
 msgid "Modifier Tone Letters"
-msgstr ""
+msgstr "Slova s modifikatorom tona"
 
 #: src/control/Control.CharacterMap.js:168
 msgid "New Tai Lue"
-msgstr ""
+msgstr "Novi Tai Lue"
 
 #: src/control/Control.CharacterMap.js:169
 msgid "Old Persian"
-msgstr ""
+msgstr "Staroperzijski"
 
 #: src/control/Control.CharacterMap.js:170
 msgid "Phonetic Extensions Supplement"
-msgstr ""
+msgstr "Proširak fonetskih dodataka"
 
 #: src/control/Control.CharacterMap.js:171
 msgid "Supplemental Punctuation"
-msgstr ""
+msgstr "Dodatni interpunkcijski znakovi"
 
 #: src/control/Control.CharacterMap.js:172
 msgid "Syloti Nagri"
-msgstr ""
+msgstr "Syloti Nagri"
 
 #: src/control/Control.CharacterMap.js:173
 msgid "Tifinagh"
-msgstr ""
+msgstr "Tifinagh"
 
 #: src/control/Control.CharacterMap.js:174
 msgid "Vertical Forms"
-msgstr ""
+msgstr "Okomiti oblici"
 
 #: src/control/Control.CharacterMap.js:175
 msgid "Nko"
-msgstr ""
+msgstr "Nko"
 
 #: src/control/Control.CharacterMap.js:176
 msgid "Balinese"
-msgstr ""
+msgstr "Balijski"
 
 #: src/control/Control.CharacterMap.js:177
 #, fuzzy
@@ -1379,119 +1439,120 @@ msgstr "Latinični prošireni-A"
 
 #: src/control/Control.CharacterMap.js:179
 msgid "Phags-Pa"
-msgstr ""
+msgstr "Phags-Pa"
 
 #: src/control/Control.CharacterMap.js:180
 msgid "Phoenician"
-msgstr ""
+msgstr "Feničanski"
 
 #: src/control/Control.CharacterMap.js:182
 msgid "Cuneiform"
-msgstr ""
+msgstr "Klinopis"
 
 #: src/control/Control.CharacterMap.js:183
 msgid "Cuneiform Numbers And Punctuation"
-msgstr ""
+msgstr "Klinopisni brojevi i interpunkcija"
 
 #: src/control/Control.CharacterMap.js:184
 msgid "Counting Rod Numerals"
-msgstr ""
+msgstr "Sustav štapića za brojanje"
 
 #: src/control/Control.CharacterMap.js:185
 msgid "Sundanese"
-msgstr ""
+msgstr "Sundanski"
 
 #: src/control/Control.CharacterMap.js:186
 msgid "Lepcha"
-msgstr ""
+msgstr "Lepcha"
 
 #: src/control/Control.CharacterMap.js:187
 msgid "Ol Chiki"
-msgstr ""
+msgstr "Ol Chiki"
 
 #: src/control/Control.CharacterMap.js:188
 msgid "Cyrillic Extended-A"
-msgstr ""
+msgstr "Ćirilični proširak - A"
 
 #: src/control/Control.CharacterMap.js:190
 msgid "Vai"
-msgstr ""
+msgstr "Vai"
 
 #: src/control/Control.CharacterMap.js:191
 msgid "Cyrillic Extended-B"
-msgstr ""
+msgstr "Ćirilični proširak - B"
 
 #: src/control/Control.CharacterMap.js:192
 msgid "Saurashtra"
-msgstr ""
+msgstr "Saurashtra"
 
 #: src/control/Control.CharacterMap.js:193
 msgid "Kayah Li"
-msgstr ""
+msgstr "Kayah Li"
 
 #: src/control/Control.CharacterMap.js:194
 msgid "Rejang"
-msgstr ""
+msgstr "Rejang"
 
 #: src/control/Control.CharacterMap.js:195
 msgid "Cham"
-msgstr ""
+msgstr "Cham"
 
 #: src/control/Control.CharacterMap.js:196
 msgid "Ancient Symbols"
-msgstr ""
+msgstr "Antički simboli"
 
 #: src/control/Control.CharacterMap.js:197
 msgid "Phaistos Disc"
-msgstr ""
+msgstr "Phaistos disk"
 
 #: src/control/Control.CharacterMap.js:198
 msgid "Lycian"
-msgstr ""
+msgstr "Lycian"
 
 #: src/control/Control.CharacterMap.js:199
 msgid "Carian"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:200
+#, fuzzy
 msgid "Lydian"
-msgstr ""
+msgstr "Lycian"
 
 #: src/control/Control.CharacterMap.js:201
 msgid "Mahjong Tiles"
-msgstr ""
+msgstr "Mahjong pločice"
 
 #: src/control/Control.CharacterMap.js:202
 msgid "Domino Tiles"
-msgstr ""
+msgstr "Domino pločice"
 
 #: src/control/Control.CharacterMap.js:203
 msgid "Samaritan"
-msgstr ""
+msgstr "Samaritanski"
 
 #: src/control/Control.CharacterMap.js:204
 msgid "Canadian Aboriginal Syllabics Extended"
-msgstr ""
+msgstr "Kanadski domorodački slogovi prošireni"
 
 #: src/control/Control.CharacterMap.js:205
 msgid "Tai Tham"
-msgstr ""
+msgstr "Tai Tham"
 
 #: src/control/Control.CharacterMap.js:206
 msgid "Vedic Extensions"
-msgstr ""
+msgstr "Vedski proširci"
 
 #: src/control/Control.CharacterMap.js:207
 msgid "Lisu"
-msgstr ""
+msgstr "Lisu"
 
 #: src/control/Control.CharacterMap.js:208
 msgid "Bamum"
-msgstr ""
+msgstr "Bamum"
 
 #: src/control/Control.CharacterMap.js:209
 msgid "Common Indic Number Forms"
-msgstr ""
+msgstr "Uobičajeni indijski oblici brojeva"
 
 #: src/control/Control.CharacterMap.js:210
 msgid "Devanagari Extended"
@@ -1566,8 +1627,9 @@ msgid "Enclosed Ideographic Supplement"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:230
+#, fuzzy
 msgid "CJK Unified Ideographs Extension C"
-msgstr ""
+msgstr "CJK ujedinjeni ideogramski dodatak A"
 
 #: src/control/Control.CharacterMap.js:231
 msgid "Mandaic"
@@ -1578,8 +1640,9 @@ msgid "Batak"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:233
+#, fuzzy
 msgid "Ethiopic Extended-A"
-msgstr ""
+msgstr "Etiopsko pismo prošireno"
 
 #: src/control/Control.CharacterMap.js:234
 msgid "Brahmi"
@@ -1598,8 +1661,9 @@ msgid "Playing Cards"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:240
+#, fuzzy
 msgid "Miscellaneous Symbols And Pictographs"
-msgstr ""
+msgstr "Razni simboli i strelice"
 
 #: src/control/Control.CharacterMap.js:241
 msgid "Emoticons"
@@ -1614,8 +1678,9 @@ msgid "Alchemical Symbols"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:245
+#, fuzzy
 msgid "CJK Unified Ideographs Extension D"
-msgstr ""
+msgstr "CJK ujedinjeni ideogramski dodatak A"
 
 #: src/control/Control.CharacterMap.js:247
 #, fuzzy
@@ -1781,8 +1846,9 @@ msgid "Sinhala Archaic Numbers"
 msgstr ""
 
 #: src/control/Control.CharacterMap.js:288
+#, fuzzy
 msgid "Supplemental Arrows-C"
-msgstr ""
+msgstr "Dodatne strelice - A"
 
 #: src/control/Control.CharacterMap.js:289
 msgid "Tirhuta"
@@ -1806,8 +1872,9 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:295
 #: src/control/Control.CharacterMap.js:296
+#, fuzzy
 msgid "CJK Unified Ideographs Extension E"
-msgstr ""
+msgstr "CJK ujedinjeni ideogramski dodatak A"
 
 #: src/control/Control.CharacterMap.js:298
 msgid "Early Dynastic Cuneiform"
@@ -1939,6 +2006,29 @@ msgstr ""
 msgid "File"
 msgstr "Datoteka"
 
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:184
+#: src/control/Control.Menubar.js:244
+msgid "Edit"
+msgstr "Uredi"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:254
+msgid "View"
+msgstr "Pogled"
+
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:292
+msgid "Tools"
+msgstr ""
+
+#: src/control/Control.Menubar.js:19
+msgid "Save As"
+msgstr ""
+
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
 #: src/control/Control.Menubar.js:236
@@ -1975,12 +2065,6 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:184
-#: src/control/Control.Menubar.js:244
-msgid "Edit"
-msgstr "Uredi"
-
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
 msgstr ""
@@ -2010,6 +2094,11 @@ msgid "Select all"
 msgstr "Označi sve"
 
 #: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:459
+msgid "Find & Replace"
+msgstr ""
+
+#: src/control/Control.Menubar.js:31
 msgid "Track Changes"
 msgstr ""
 
@@ -2028,12 +2117,6 @@ msgstr ""
 #: src/control/Control.Menubar.js:36
 msgid "Next"
 msgstr ""
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:194
-#: src/control/Control.Menubar.js:254
-msgid "View"
-msgstr "Pogled"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:195
@@ -2394,6 +2477,20 @@ msgstr "Ćelija"
 msgid "Merge cells"
 msgstr "Spoji ćelije"
 
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:293
+msgid "Automatic Spell Checking"
+msgstr ""
+
+#: src/control/Control.Menubar.js:177
+msgid "Language"
+msgstr ""
+
+#: src/control/Control.Menubar.js:178
+msgid "Reset to Default Language"
+msgstr ""
+
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
 #: src/control/Control.Menubar.js:273
@@ -2411,6 +2508,13 @@ msgstr "Tipkovničke kratice"
 #: src/control/Control.Menubar.js:275
 msgid "About"
 msgstr "O LibreOffice Online"
+
+#: dist/toolbar/toolbar.js:527
+#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:277
+msgid "Close document"
+msgstr "Zatvori dokument"
 
 #: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
@@ -2460,6 +2564,22 @@ msgstr "Umenti stupac"
 #: src/control/Control.RowHeader.js:44
 msgid "Delete row"
 msgstr "Izbriši redak"
+
+#: src/control/Control.Menubar.js:497
+msgid "Find"
+msgstr ""
+
+#: src/control/Control.Menubar.js:505
+msgid "Replace with"
+msgstr ""
+
+#: src/control/Control.Menubar.js:463
+msgid "Replace"
+msgstr ""
+
+#: src/control/Control.Menubar.js:468
+msgid "Replace All"
+msgstr ""
 
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
@@ -2538,11 +2658,6 @@ msgstr "Unesite ime novog radnog lista"
 msgid "Downloading..."
 msgstr "Preuzimanje..."
 
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:939
-msgid "Saving..."
-msgstr "Spremanje..."
-
 #: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "Ova %productName inačica je omogućena od"
@@ -2559,12 +2674,40 @@ msgstr "Nepodržana inačica poslužitelja."
 msgid "Session terminated by document owner"
 msgstr ""
 
+#: src/core/Socket.js:261
+msgid "Idle document - please click to reload and resume editing"
+msgstr ""
+
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 
+#: src/core/Socket.js:272
+msgid "Oops, there is a problem connecting the document"
+msgstr ""
+
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
+msgstr ""
+
+#: src/core/Socket.js:306
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+
+#: src/core/Socket.js:418
+msgid ""
+"Document has been changed in storage. Do you want to discard your changes, "
+"and load the document from the storage?"
+msgstr ""
+
+#: src/core/Socket.js:420
+msgid "Discard changes"
+msgstr ""
+
+#: src/core/Socket.js:421
+msgid "Overwrite document"
 msgstr ""
 
 #: src/core/Socket.js:348
@@ -2622,6 +2765,11 @@ msgstr "Inicijalizacija..."
 #: src/map/Map.js:820
 msgid "Inactive document - please click to resume editing"
 msgstr ""
+
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:939
+msgid "Saving..."
+msgstr "Spremanje..."
 
 #: src/map/Map.js:942
 msgid "Loading..."

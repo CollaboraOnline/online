@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:10+0000\n"
+"POT-Creation-Date: 2017-10-06 09:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /en_GB/libo_online/loleaflet-ui-en_GB.po\n"
-"X-Pootle-Revision: 2514467\n"
+"X-Pootle-Revision: 2788622\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
 msgstr "Admin console"
-
-#: admin.strings.js:6
-msgid "Toggle navigation"
-msgstr "Toggle navigation"
 
 #: admin.strings.js:7
 msgid "Settings"
@@ -38,6 +34,10 @@ msgstr "(current)"
 msgid "Analytics"
 msgstr "Analytics"
 
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "History"
+
 #: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Dashboard"
@@ -47,12 +47,28 @@ msgid "Users online"
 msgstr "Users online"
 
 #: admin.strings.js:13
+msgid "User Name"
+msgstr "User Name"
+
+#: admin.strings.js:13
 msgid "Documents opened"
 msgstr "Documents opened"
+
+#: admin.strings.js:16
+msgid "Number of Documents"
+msgstr "Number of Documents"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "Memory consumed"
+
+#: admin.strings.js:18
+msgid "Bytes sent"
+msgstr "Bytes sent"
+
+#: admin.strings.js:19
+msgid "Bytes received"
+msgstr "Bytes received"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -74,6 +90,10 @@ msgstr "Elapsed time"
 msgid "Idle time"
 msgstr "Idle time"
 
+#: admin.strings.js:25
+msgid "Modified"
+msgstr "Modified"
+
 #: admin.strings.js:20
 msgid "Kill"
 msgstr "Kill"
@@ -81,6 +101,18 @@ msgstr "Kill"
 #: admin.strings.js:21
 msgid "Graphs"
 msgstr "Graphs"
+
+#: admin.strings.js:27
+msgid "Memory Graph"
+msgstr "Memory Graph"
+
+#: admin.strings.js:28
+msgid "CPU Graph"
+msgstr "CPU Graph"
+
+#: admin.strings.js:29
+msgid "Network Graph"
+msgstr "Network Graph"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:470
@@ -106,6 +138,18 @@ msgstr "Cache size of CPU statistics"
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Time interval of CPU statistics (in ms)"
 
+#: admin.strings.js:35
+msgid "Maximum Document process virtual memory (in MB) - reduce only"
+msgstr "Maximum Document process virtual memory (in MB) - reduce only"
+
+#: admin.strings.js:36
+msgid "Maximum Document process stack memory (in KB) - reduce only"
+msgstr "Maximum Document process stack memory (in KB) - reduce only"
+
+#: admin.strings.js:37
+msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
+msgstr "Maximum file size allowed to write to disk (in MB) - reduce only"
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Theme Colours"
@@ -121,10 +165,6 @@ msgstr "Web Colours"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "Back to Palette"
-
-#: evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "History"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -292,19 +332,33 @@ msgstr ""
 
 #: dist/errormessages.js:13
 msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
 msgstr ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
 
 #: dist/errormessages.js:14
 msgid ""
-"Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
 msgstr ""
-"Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+
+#: dist/errormessages.js:15
+msgid "Document cannot be saved due to expired or invalid access token."
+msgstr "Document cannot be saved due to expired or invalid access token."
+
+#: dist/errormessages.js:16
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -500,13 +554,6 @@ msgstr "Special Character"
 msgid "More"
 msgstr "More"
 
-#: dist/toolbar/toolbar.js:524
-#: src/control/Control.Menubar.js:159
-#: src/control/Control.Menubar.js:218
-#: src/control/Control.Menubar.js:265
-msgid "Close document"
-msgstr "Close document"
-
 #: dist/toolbar/toolbar.js:603
 msgid "Layout"
 msgstr "Layout"
@@ -579,6 +626,10 @@ msgstr "Search forward"
 #: dist/toolbar/toolbar.js:679
 msgid "Cancel the search"
 msgstr "Cancel the search"
+
+#: dist/toolbar/toolbar.js:680
+msgid "Text Language"
+msgstr "Text Language"
 
 #: dist/toolbar/toolbar.js:684
 msgid "No users"
@@ -728,6 +779,11 @@ msgstr "Connection error"
 #: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
 msgstr "Are you sure you want to terminate this session?"
+
+#: src/admin/AdminSocketOverview.js:152
+#: src/admin/AdminSocketOverview.js:311
+msgid "Documents"
+msgstr "Documents"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
@@ -1915,6 +1971,29 @@ msgstr "Jump to state"
 msgid "File"
 msgstr "File"
 
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:173
+#: src/control/Control.Menubar.js:232
+msgid "Edit"
+msgstr "Edit"
+
+#: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:183
+#: src/control/Control.Menubar.js:242
+msgid "View"
+msgstr "View"
+
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:292
+msgid "Tools"
+msgstr "Tools"
+
+#: src/control/Control.Menubar.js:19
+msgid "Save As"
+msgstr "Save As"
+
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:165
 #: src/control/Control.Menubar.js:224
@@ -1951,12 +2030,6 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:173
-#: src/control/Control.Menubar.js:232
-msgid "Edit"
-msgstr "Edit"
-
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
 msgstr "Repair"
@@ -1986,6 +2059,11 @@ msgid "Select all"
 msgstr "Select all"
 
 #: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:459
+msgid "Find & Replace"
+msgstr "Find & Replace"
+
+#: src/control/Control.Menubar.js:31
 msgid "Track Changes"
 msgstr "Track Changes"
 
@@ -2004,12 +2082,6 @@ msgstr "Previous"
 #: src/control/Control.Menubar.js:36
 msgid "Next"
 msgstr "Next"
-
-#: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:183
-#: src/control/Control.Menubar.js:242
-msgid "View"
-msgstr "View"
 
 #: src/control/Control.Menubar.js:32
 #: src/control/Control.Menubar.js:184
@@ -2369,6 +2441,20 @@ msgstr "Cell"
 msgid "Merge cells"
 msgstr "Merge cells"
 
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:293
+msgid "Automatic Spell Checking"
+msgstr "Automatic Spell Checking"
+
+#: src/control/Control.Menubar.js:177
+msgid "Language"
+msgstr "Language"
+
+#: src/control/Control.Menubar.js:178
+msgid "Reset to Default Language"
+msgstr "Reset to Default Language"
+
 #: src/control/Control.Menubar.js:155
 #: src/control/Control.Menubar.js:214
 #: src/control/Control.Menubar.js:261
@@ -2386,6 +2472,13 @@ msgstr "Keyboard shortcuts"
 #: src/control/Control.Menubar.js:263
 msgid "About"
 msgstr "About"
+
+#: dist/toolbar/toolbar.js:524
+#: src/control/Control.Menubar.js:159
+#: src/control/Control.Menubar.js:218
+#: src/control/Control.Menubar.js:265
+msgid "Close document"
+msgstr "Close document"
 
 #: src/control/Control.Menubar.js:169
 msgid "ODF presentation (.odp)"
@@ -2435,6 +2528,22 @@ msgstr "Insert column"
 #: src/control/Control.RowHeader.js:46
 msgid "Delete row"
 msgstr "Delete row"
+
+#: src/control/Control.Menubar.js:497
+msgid "Find"
+msgstr "Find"
+
+#: src/control/Control.Menubar.js:505
+msgid "Replace with"
+msgstr "Replace with"
+
+#: src/control/Control.Menubar.js:463
+msgid "Replace"
+msgstr "Replace"
+
+#: src/control/Control.Menubar.js:468
+msgid "Replace All"
+msgstr "Replace All"
 
 #: src/control/Control.Menubar.js:457
 msgid "Are you sure you want to delete this slide?"
@@ -2513,11 +2622,6 @@ msgstr "Enter new sheet name"
 msgid "Downloading..."
 msgstr "Downloading..."
 
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:913
-msgid "Saving..."
-msgstr "Saving..."
-
 #: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "This version of %productName is powered by"
@@ -2534,13 +2638,45 @@ msgstr "Unsupported server version."
 msgid "Session terminated by document owner"
 msgstr "Session terminated by document owner"
 
+#: src/core/Socket.js:261
+msgid "Idle document - please click to reload and resume editing"
+msgstr "Idle document - please click to reload and resume editing"
+
 #: src/core/Socket.js:227
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server is shutting down for maintenance (auto-saving)"
 
+#: src/core/Socket.js:272
+msgid "Oops, there is a problem connecting the document"
+msgstr "Oops, there is a problem connecting the document"
+
 #: src/core/Socket.js:230
 msgid "Server is recycling and will be available shortly"
 msgstr "Server is recycling and will be available shortly"
+
+#: src/core/Socket.js:306
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+
+#: src/core/Socket.js:418
+msgid ""
+"Document has been changed in storage. Do you want to discard your changes, "
+"and load the document from the storage?"
+msgstr ""
+"Document has been changed in storage. Do you want to discard your changes, "
+"and load the document from the storage?"
+
+#: src/core/Socket.js:420
+msgid "Discard changes"
+msgstr "Discard changes"
+
+#: src/core/Socket.js:421
+msgid "Overwrite document"
+msgstr "Overwrite document"
 
 #: src/core/Socket.js:342
 msgid "Document requires password to view."
@@ -2597,6 +2733,11 @@ msgstr "Initialising…"
 #: src/map/Map.js:794
 msgid "Inactive document - please click to resume editing"
 msgstr "Inactive document - please click to resume editing"
+
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:913
+msgid "Saving..."
+msgstr "Saving..."
 
 #: src/map/Map.js:916
 msgid "Loading..."

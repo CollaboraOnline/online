@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:11+0000\n"
+"POT-Creation-Date: 2017-10-06 09:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.0.0\n"
+"X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-ui-nl.po\n"
-"X-Pootle-Revision: 2511679\n"
+"X-Pootle-Revision: 2788040\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
 msgstr "Beheerderspaneel"
-
-#: admin.strings.js:6
-msgid "Toggle navigation"
-msgstr "Navigatie aan/uit"
 
 #: admin.strings.js:7
 msgid "Settings"
@@ -38,6 +34,10 @@ msgstr "(huidige)"
 msgid "Analytics"
 msgstr "Analyse"
 
+#: evol.colorpicker.strings.js:6
+msgid "History"
+msgstr "Geschiedenis"
+
 #: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Dashboard"
@@ -47,12 +47,28 @@ msgid "Users online"
 msgstr "Aangemelde gebruikers"
 
 #: admin.strings.js:13
+msgid "User Name"
+msgstr "Gebruikersnaam"
+
+#: admin.strings.js:13
 msgid "Documents opened"
 msgstr "Geopende documenten"
+
+#: admin.strings.js:16
+msgid "Number of Documents"
+msgstr "Aantal documenten"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "Gebruikt geheugen"
+
+#: admin.strings.js:18
+msgid "Bytes sent"
+msgstr "Verzonden Bytes"
+
+#: admin.strings.js:19
+msgid "Bytes received"
+msgstr "Ontvangen Bytes"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -74,6 +90,10 @@ msgstr "Verstreken tijd"
 msgid "Idle time"
 msgstr "Inactiviteit"
 
+#: admin.strings.js:25
+msgid "Modified"
+msgstr "Gewijzigd"
+
 #: admin.strings.js:20
 msgid "Kill"
 msgstr "Beëindigen"
@@ -81,6 +101,18 @@ msgstr "Beëindigen"
 #: admin.strings.js:21
 msgid "Graphs"
 msgstr "Diagram"
+
+#: admin.strings.js:27
+msgid "Memory Graph"
+msgstr ""
+
+#: admin.strings.js:28
+msgid "CPU Graph"
+msgstr ""
+
+#: admin.strings.js:29
+msgid "Network Graph"
+msgstr ""
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -107,6 +139,18 @@ msgstr "Cachegrootte van CPU-statistieken"
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Tijdsinterval van CPU-statistieken (in ms)"
 
+#: admin.strings.js:35
+msgid "Maximum Document process virtual memory (in MB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:36
+msgid "Maximum Document process stack memory (in KB) - reduce only"
+msgstr ""
+
+#: admin.strings.js:37
+msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
+msgstr ""
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Themakleuren"
@@ -122,10 +166,6 @@ msgstr "Webkleuren"
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
 msgstr "Terug naar palet"
-
-#: evol.colorpicker.strings.js:6
-msgid "History"
-msgstr "Geschiedenis"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
@@ -295,20 +335,34 @@ msgstr ""
 
 #: dist/errormessages.js:13
 msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server administrator to continue editing."
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
 msgstr ""
-"Opslaan mislukt, omdat er geen schijfruimte op de opslagserver meer is. Het "
-"document zal nu alleen-lezen zijn. Neem contact op met de serverbeheerder om "
-"verder te kunnen gaan met bewerken."
+"Het document kon niet vanuit de opslag worden gelezen. Neem contact op met "
+"de beheerder van de opslagserver (%storageserver)."
 
 #: dist/errormessages.js:14
 msgid ""
-"Document cannot be saved to storage. Check your permissions or contact the "
-"storage server administrator."
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+"Opslaan mislukt, omdat er geen schijfruimte op de opslagserver meer is. Het "
+"document zal nu alleen-lezen zijn. Neem contact op met de serverbeheerder "
+"(%storageserver) om verder te kunnen gaan met bewerken."
+
+#: dist/errormessages.js:15
+msgid "Document cannot be saved due to expired or invalid access token."
+msgstr ""
+
+#: dist/errormessages.js:16
+#, fuzzy
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
 msgstr ""
 "Document kan niet in de opslagruimte worden opgeslagen. Controleer uw "
-"rechten of neem contact op met de serverbeheerder."
+"rechten of neem contact op met de serverbeheerder (%storageserver)."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -504,13 +558,6 @@ msgstr "Speciaal teken"
 msgid "More"
 msgstr "Meer"
 
-#: dist/toolbar/toolbar.js:527
-#: src/control/Control.Menubar.js:170
-#: src/control/Control.Menubar.js:230
-#: src/control/Control.Menubar.js:277
-msgid "Close document"
-msgstr "Document sluiten"
-
 #: dist/toolbar/toolbar.js:606
 msgid "Layout"
 msgstr "Lay-out"
@@ -584,6 +631,10 @@ msgstr "Voorwaarts zoeken"
 #: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
 msgstr "Zoekopdracht annuleren"
+
+#: dist/toolbar/toolbar.js:680
+msgid "Text Language"
+msgstr "Teksttaal"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -735,9 +786,14 @@ msgstr "Verbindingsfout"
 msgid "Are you sure you want to terminate this session?"
 msgstr "Weet u zeker dat u deze sessie wilt afbreken?"
 
+#: src/admin/AdminSocketOverview.js:152
+#: src/admin/AdminSocketOverview.js:311
+msgid "Documents"
+msgstr "Documenten"
+
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
-msgstr "Weet u zeker dat u deze server wenst af te sluiten?"
+msgstr "Weet u zeker dat u deze server wilt afsluiten?"
 
 #: src/admin/Util.js:13
 msgid "kB"
@@ -1920,6 +1976,29 @@ msgstr "Wissel naar status"
 msgid "File"
 msgstr "Bestand"
 
+#: src/control/Control.Menubar.js:20
+#: src/control/Control.Menubar.js:184
+#: src/control/Control.Menubar.js:244
+msgid "Edit"
+msgstr "Bewerken"
+
+#: src/control/Control.Menubar.js:39
+#: src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:254
+msgid "View"
+msgstr "Beeld"
+
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:292
+msgid "Tools"
+msgstr ""
+
+#: src/control/Control.Menubar.js:19
+msgid "Save As"
+msgstr "Opslaan als"
+
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
 #: src/control/Control.Menubar.js:236
@@ -1956,12 +2035,6 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:184
-#: src/control/Control.Menubar.js:244
-msgid "Edit"
-msgstr "Bewerken"
-
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
 msgstr "Herstellen"
@@ -1991,6 +2064,11 @@ msgid "Select all"
 msgstr "Alles selecteren"
 
 #: src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:459
+msgid "Find & Replace"
+msgstr "Zoeken en vervangen"
+
+#: src/control/Control.Menubar.js:31
 msgid "Track Changes"
 msgstr "Wijzigingen bijhouden"
 
@@ -2009,12 +2087,6 @@ msgstr "Vorige"
 #: src/control/Control.Menubar.js:36
 msgid "Next"
 msgstr "Volgende"
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:194
-#: src/control/Control.Menubar.js:254
-msgid "View"
-msgstr "Beeld"
 
 #: src/control/Control.Menubar.js:40
 #: src/control/Control.Menubar.js:195
@@ -2374,6 +2446,20 @@ msgstr "Cel"
 msgid "Merge cells"
 msgstr "Cellen samenvoegen"
 
+#: src/control/Control.Menubar.js:176
+#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:293
+msgid "Automatic Spell Checking"
+msgstr "Automatische spellingcontrole"
+
+#: src/control/Control.Menubar.js:177
+msgid "Language"
+msgstr "Taal"
+
+#: src/control/Control.Menubar.js:178
+msgid "Reset to Default Language"
+msgstr "Herstellen naar standaard taal"
+
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
 #: src/control/Control.Menubar.js:273
@@ -2391,6 +2477,13 @@ msgstr "Sneltoetsen"
 #: src/control/Control.Menubar.js:275
 msgid "About"
 msgstr "Over"
+
+#: dist/toolbar/toolbar.js:527
+#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:277
+msgid "Close document"
+msgstr "Document sluiten"
 
 #: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
@@ -2440,6 +2533,22 @@ msgstr "Kolom invoegen"
 #: src/control/Control.RowHeader.js:44
 msgid "Delete row"
 msgstr "Rij verwijderen"
+
+#: src/control/Control.Menubar.js:497
+msgid "Find"
+msgstr "Zoeken"
+
+#: src/control/Control.Menubar.js:505
+msgid "Replace with"
+msgstr "Vervangen door"
+
+#: src/control/Control.Menubar.js:463
+msgid "Replace"
+msgstr "Vervangen"
+
+#: src/control/Control.Menubar.js:468
+msgid "Replace All"
+msgstr "Alles vervangen"
 
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
@@ -2518,11 +2627,6 @@ msgstr "Voer een nieuwe bladnaam in."
 msgid "Downloading..."
 msgstr "Bezig met ophalen..."
 
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:939
-msgid "Saving..."
-msgstr "Opslaan..."
-
 #: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "Deze versie van %productName werk op basis van"
@@ -2539,14 +2643,42 @@ msgstr "Niet-ondersteunde serverversie"
 msgid "Session terminated by document owner"
 msgstr "Sessie beëindigd door document-eigenaar"
 
+#: src/core/Socket.js:261
+msgid "Idle document - please click to reload and resume editing"
+msgstr ""
+
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server wordt afgesloten voor onderhoud (automatische-opslag)"
+
+#: src/core/Socket.js:272
+msgid "Oops, there is a problem connecting the document"
+msgstr ""
 
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
 msgstr ""
 "De server wordt opnieuw opgestart en zal binnenkort weer beschikbaar zijn."
+
+#: src/core/Socket.js:306
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+
+#: src/core/Socket.js:418
+msgid ""
+"Document has been changed in storage. Do you want to discard your changes, "
+"and load the document from the storage?"
+msgstr ""
+
+#: src/core/Socket.js:420
+msgid "Discard changes"
+msgstr "Wijzigingen verwerpen"
+
+#: src/core/Socket.js:421
+msgid "Overwrite document"
+msgstr "Document overschrijven"
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."
@@ -2603,6 +2735,11 @@ msgstr "Initialiseren…"
 #: src/map/Map.js:820
 msgid "Inactive document - please click to resume editing"
 msgstr "Niet actief document - klik om het bewerken te hervatten"
+
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:939
+msgid "Saving..."
+msgstr "Opslaan..."
 
 #: src/map/Map.js:942
 msgid "Loading..."
