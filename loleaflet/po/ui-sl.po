@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-04 13:26+0200\n"
-"PO-Revision-Date: 2017-10-05 00:15+0200\n"
+"POT-Creation-Date: 2017-10-08 13:09+0200\n"
+"PO-Revision-Date: 2017-10-08 13:26+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
 "Language: sl\n"
@@ -119,8 +119,8 @@ msgid "Network Graph"
 msgstr "Grafikon rabe omrežja"
 
 #: admin.strings.js:30 dist/toolbar/toolbar.js:470
-#: src/control/Control.Menubar.js:18 src/control/Control.Menubar.js:195
-#: src/control/Control.Menubar.js:260 src/layer/marker/Annotation.js:198
+#: src/control/Control.Menubar.js:18 src/control/Control.Menubar.js:193
+#: src/control/Control.Menubar.js:258 src/layer/marker/Annotation.js:198
 msgid "Save"
 msgstr "Shrani"
 
@@ -420,12 +420,12 @@ msgid "Wrap through"
 msgstr "Oblij skozi"
 
 #: dist/toolbar/toolbar.js:472 src/control/Control.Menubar.js:30
-#: src/control/Control.Menubar.js:206 src/control/Control.Menubar.js:271
+#: src/control/Control.Menubar.js:204 src/control/Control.Menubar.js:269
 msgid "Undo"
 msgstr "Razveljavi"
 
 #: dist/toolbar/toolbar.js:473 src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:207 src/control/Control.Menubar.js:272
+#: src/control/Control.Menubar.js:205 src/control/Control.Menubar.js:270
 msgid "Redo"
 msgstr "Ponovi"
 
@@ -557,7 +557,7 @@ msgstr "Dodatno"
 msgid "Layout"
 msgstr "Postavitev"
 
-#: dist/toolbar/toolbar.js:620 dist/toolbar/toolbar.js:1030
+#: dist/toolbar/toolbar.js:620 dist/toolbar/toolbar.js:1038
 msgid "Sum"
 msgstr "Vsota"
 
@@ -590,7 +590,7 @@ msgstr "Naslednji delovni list"
 msgid "Last sheet"
 msgstr "Zadnji delovni list"
 
-#: dist/toolbar/toolbar.js:652 src/control/Control.Menubar.js:246
+#: dist/toolbar/toolbar.js:652 src/control/Control.Menubar.js:244
 msgid "Fullscreen presentation"
 msgstr "Celozaslonska predstavitev"
 
@@ -598,11 +598,11 @@ msgstr "Celozaslonska predstavitev"
 msgid "Insert slide"
 msgstr "Vstavi prosojnico"
 
-#: dist/toolbar/toolbar.js:655 src/control/Control.Menubar.js:243
+#: dist/toolbar/toolbar.js:655 src/control/Control.Menubar.js:241
 msgid "Duplicate slide"
 msgstr "Podvoji prosojnico"
 
-#: dist/toolbar/toolbar.js:656 src/control/Control.Menubar.js:244
+#: dist/toolbar/toolbar.js:656 src/control/Control.Menubar.js:242
 msgid "Delete slide"
 msgstr "Izbriši prosojnico"
 
@@ -635,17 +635,17 @@ msgid "Next page"
 msgstr "Naslednja stran"
 
 #: dist/toolbar/toolbar.js:695 src/control/Control.Menubar.js:53
-#: src/control/Control.Menubar.js:221
+#: src/control/Control.Menubar.js:219
 msgid "Reset zoom"
 msgstr "Ponastavi povečavo"
 
 #: dist/toolbar/toolbar.js:696 src/control/Control.Menubar.js:52
-#: src/control/Control.Menubar.js:220
+#: src/control/Control.Menubar.js:218
 msgid "Zoom out"
 msgstr "Približaj"
 
 #: dist/toolbar/toolbar.js:698 src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:219
+#: src/control/Control.Menubar.js:217
 msgid "Zoom in"
 msgstr "Oddalji"
 
@@ -657,106 +657,106 @@ msgstr "Pridružil se je uporabnik %user"
 msgid "%user has left"
 msgstr "Odšel je uporabnik %user"
 
-#: dist/toolbar/toolbar.js:849 dist/toolbar/toolbar.js:1404
+#: dist/toolbar/toolbar.js:857 dist/toolbar/toolbar.js:1414
 msgid "Size"
 msgstr "Velikost"
 
-#: dist/toolbar/toolbar.js:1011
+#: dist/toolbar/toolbar.js:1019
 msgid "Number of Sheets"
 msgstr "Število delovnih listov"
 
-#: dist/toolbar/toolbar.js:1014
+#: dist/toolbar/toolbar.js:1022
 msgid "Selected range of cells"
 msgstr "Izbran obseg celic"
 
-#: dist/toolbar/toolbar.js:1017 dist/toolbar/toolbar.js:1052
+#: dist/toolbar/toolbar.js:1025 dist/toolbar/toolbar.js:1060
 msgid "Entering text mode"
 msgstr "Vstopanje v besedilni način"
 
-#: dist/toolbar/toolbar.js:1020 dist/toolbar/toolbar.js:1055
+#: dist/toolbar/toolbar.js:1028 dist/toolbar/toolbar.js:1063
 msgid "Selection Mode"
 msgstr "Izbirni način"
 
-#: dist/toolbar/toolbar.js:1023
+#: dist/toolbar/toolbar.js:1031
 msgid "Choice of functions"
 msgstr "Izbor funkcij"
 
-#: dist/toolbar/toolbar.js:1025
+#: dist/toolbar/toolbar.js:1033
 msgid "Average"
 msgstr "Povprečno"
 
-#: dist/toolbar/toolbar.js:1026
+#: dist/toolbar/toolbar.js:1034
 msgid "CountA"
 msgstr "ŠtevecA"
 
-#: dist/toolbar/toolbar.js:1027
+#: dist/toolbar/toolbar.js:1035
 msgid "Count"
 msgstr "Števec"
 
-#: dist/toolbar/toolbar.js:1028
+#: dist/toolbar/toolbar.js:1036
 msgid "Maximum"
 msgstr "Največ"
 
-#: dist/toolbar/toolbar.js:1029
+#: dist/toolbar/toolbar.js:1037
 msgid "Minimum"
 msgstr "Najmanj"
 
-#: dist/toolbar/toolbar.js:1031
+#: dist/toolbar/toolbar.js:1039
 msgid "Selection count"
 msgstr "Seštevek izbora"
 
-#: dist/toolbar/toolbar.js:1032 src/control/Control.CharacterMap.js:11
+#: dist/toolbar/toolbar.js:1040 src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr "Brez"
 
-#: dist/toolbar/toolbar.js:1046
+#: dist/toolbar/toolbar.js:1054
 msgid "Number of Pages"
 msgstr "Število strani"
 
-#: dist/toolbar/toolbar.js:1049
+#: dist/toolbar/toolbar.js:1057
 msgid "Word Counter"
 msgstr "Števec besed"
 
-#: dist/toolbar/toolbar.js:1058
+#: dist/toolbar/toolbar.js:1066
 msgid "Text Language"
 msgstr "Jezik besedila"
 
-#: dist/toolbar/toolbar.js:1078
+#: dist/toolbar/toolbar.js:1086
 msgid "Number of Slides"
 msgstr "Število prosojnic"
 
-#: dist/toolbar/toolbar.js:1224
+#: dist/toolbar/toolbar.js:1233
 msgid "Document saved"
 msgstr "Dokument shranjen"
 
-#: dist/toolbar/toolbar.js:1374
+#: dist/toolbar/toolbar.js:1384
 msgid "Style"
 msgstr "Slog"
 
-#: dist/toolbar/toolbar.js:1396
+#: dist/toolbar/toolbar.js:1406
 msgid "Font"
 msgstr "Pisava"
 
-#: dist/toolbar/toolbar.js:1432
+#: dist/toolbar/toolbar.js:1442
 msgid "Previous slide"
 msgstr "Prejšnja prosojnica"
 
-#: dist/toolbar/toolbar.js:1433
+#: dist/toolbar/toolbar.js:1443
 msgid "Next slide"
 msgstr "Naslednja prosojnica"
 
-#: dist/toolbar/toolbar.js:1494
+#: dist/toolbar/toolbar.js:1504
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Spor razveljavljanja/ponavljanja med več uporabniki. Uporabite popravilo "
 "dokumenta za razrešitev težave."
 
-#: dist/toolbar/toolbar.js:1742 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1752 src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr "Vi"
 
-#: dist/toolbar/toolbar.js:1748
+#: dist/toolbar/toolbar.js:1758
 msgid "Readonly"
 msgstr "Samo za branje"
 
@@ -1872,8 +1872,8 @@ msgstr "Šestnajstiško:"
 
 #: src/control/Control.CharacterMap.js:424 src/control/Control.Menubar.js:13
 #: src/control/Control.Menubar.js:58 src/control/Control.Menubar.js:158
-#: src/control/Control.Menubar.js:223 src/control/Control.Menubar.js:230
-#: src/control/Control.Menubar.js:284
+#: src/control/Control.Menubar.js:221 src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:282
 msgid "Insert"
 msgstr "Vstavi"
 
@@ -1881,7 +1881,7 @@ msgstr "Vstavi"
 msgid "Insert column before"
 msgstr "Vstavi stolpec pred"
 
-#: src/control/Control.ColumnHeader.js:47 src/control/Control.Menubar.js:298
+#: src/control/Control.ColumnHeader.js:47 src/control/Control.Menubar.js:296
 msgid "Delete column"
 msgstr "Izbriši stolpec"
 
@@ -1946,47 +1946,47 @@ msgid "Jump to state"
 msgstr "Skoči na stanje"
 
 #: src/control/Control.Menubar.js:10 src/control/Control.Menubar.js:17
-#: src/control/Control.Menubar.js:194 src/control/Control.Menubar.js:259
+#: src/control/Control.Menubar.js:192 src/control/Control.Menubar.js:257
 msgid "File"
 msgstr "Datoteka"
 
 #: src/control/Control.Menubar.js:11 src/control/Control.Menubar.js:28
-#: src/control/Control.Menubar.js:205 src/control/Control.Menubar.js:270
+#: src/control/Control.Menubar.js:203 src/control/Control.Menubar.js:268
 msgid "Edit"
 msgstr "Uredi"
 
 #: src/control/Control.Menubar.js:12 src/control/Control.Menubar.js:48
-#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:281
+#: src/control/Control.Menubar.js:214 src/control/Control.Menubar.js:279
 msgid "View"
 msgstr "Pogled"
 
 #: src/control/Control.Menubar.js:14 src/control/Control.Menubar.js:175
-#: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:300
+#: src/control/Control.Menubar.js:246 src/control/Control.Menubar.js:298
 msgid "Tools"
 msgstr "Orodja"
 
-#: src/control/Control.Menubar.js:19 src/control/Control.Menubar.js:196
-#: src/control/Control.Menubar.js:261
+#: src/control/Control.Menubar.js:19 src/control/Control.Menubar.js:194
+#: src/control/Control.Menubar.js:259
 msgid "Save As"
 msgstr "Shrani kot"
 
-#: src/control/Control.Menubar.js:20 src/control/Control.Menubar.js:197
-#: src/control/Control.Menubar.js:262
+#: src/control/Control.Menubar.js:20 src/control/Control.Menubar.js:195
+#: src/control/Control.Menubar.js:260
 msgid "Print"
 msgstr "Natisni"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:198
-#: src/control/Control.Menubar.js:263
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:196
+#: src/control/Control.Menubar.js:261
 msgid "See revision history"
 msgstr "Glej zgodovino revizij"
 
-#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:199
-#: src/control/Control.Menubar.js:264
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:197
+#: src/control/Control.Menubar.js:262
 msgid "Download as"
 msgstr "Prenesi kot"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:200
-#: src/control/Control.Menubar.js:265
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:198
+#: src/control/Control.Menubar.js:263
 msgid "PDF Document (.pdf)"
 msgstr "Dokument PDF (.pdf)"
 
@@ -2006,28 +2006,28 @@ msgstr "Microsoft Word (.docx)"
 msgid "Repair"
 msgstr "Popravi"
 
-#: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:209
-#: src/control/Control.Menubar.js:274
+#: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:207
+#: src/control/Control.Menubar.js:272
 msgid "Cut"
 msgstr "Izreži"
 
-#: src/control/Control.Menubar.js:34 src/control/Control.Menubar.js:210
-#: src/control/Control.Menubar.js:275
+#: src/control/Control.Menubar.js:34 src/control/Control.Menubar.js:208
+#: src/control/Control.Menubar.js:273
 msgid "Copy"
 msgstr "Kopiraj"
 
-#: src/control/Control.Menubar.js:35 src/control/Control.Menubar.js:211
-#: src/control/Control.Menubar.js:276
+#: src/control/Control.Menubar.js:35 src/control/Control.Menubar.js:209
+#: src/control/Control.Menubar.js:274
 msgid "Paste"
 msgstr "Prilepi"
 
-#: src/control/Control.Menubar.js:36 src/control/Control.Menubar.js:212
-#: src/control/Control.Menubar.js:277
+#: src/control/Control.Menubar.js:36 src/control/Control.Menubar.js:210
+#: src/control/Control.Menubar.js:275
 msgid "Select all"
 msgstr "Izberi vse"
 
-#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:279 src/control/Control.Menubar.js:534
+#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:212
+#: src/control/Control.Menubar.js:277 src/control/Control.Menubar.js:539
 msgid "Find & Replace"
 msgstr "Najdi in zamenjaj"
 
@@ -2043,16 +2043,16 @@ msgstr "Zapiši"
 msgid "Show"
 msgstr "Pokaži"
 
-#: src/control/Control.Menubar.js:44 src/control/Control.Menubar.js:548
+#: src/control/Control.Menubar.js:44 src/control/Control.Menubar.js:553
 msgid "Previous"
 msgstr "Prejšnji"
 
-#: src/control/Control.Menubar.js:45 src/control/Control.Menubar.js:554
+#: src/control/Control.Menubar.js:45 src/control/Control.Menubar.js:559
 msgid "Next"
 msgstr "Naslednji"
 
-#: src/control/Control.Menubar.js:49 src/control/Control.Menubar.js:217
-#: src/control/Control.Menubar.js:282
+#: src/control/Control.Menubar.js:49 src/control/Control.Menubar.js:215
+#: src/control/Control.Menubar.js:280
 msgid "Full screen"
 msgstr "Cel zaslon"
 
@@ -2060,13 +2060,13 @@ msgstr "Cel zaslon"
 msgid "Formatting Marks"
 msgstr "Oblikovalne oznake"
 
-#: src/control/Control.Menubar.js:59 src/control/Control.Menubar.js:224
-#: src/control/Control.Menubar.js:285
+#: src/control/Control.Menubar.js:59 src/control/Control.Menubar.js:222
+#: src/control/Control.Menubar.js:283
 msgid "Image"
 msgstr "Slika"
 
-#: src/control/Control.Menubar.js:60 src/control/Control.Menubar.js:225
-#: src/control/Control.Menubar.js:286
+#: src/control/Control.Menubar.js:60 src/control/Control.Menubar.js:223
+#: src/control/Control.Menubar.js:284
 msgid "Comment..."
 msgstr "Komentar ..."
 
@@ -2086,8 +2086,8 @@ msgstr "Prelom strani"
 msgid "Column break"
 msgstr "Prelom stolpca"
 
-#: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:227
-#: src/control/Control.Menubar.js:291
+#: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:225
+#: src/control/Control.Menubar.js:289
 msgid "Special character..."
 msgstr "Poseben znak ..."
 
@@ -2333,35 +2333,35 @@ msgstr "Pokončno"
 msgid "Landscape"
 msgstr "Ležeče"
 
-#: src/control/Control.Menubar.js:157 src/control/Control.Menubar.js:229
+#: src/control/Control.Menubar.js:157 src/control/Control.Menubar.js:227
 msgid "Tables"
 msgstr "Tabele"
 
-#: src/control/Control.Menubar.js:159 src/control/Control.Menubar.js:231
+#: src/control/Control.Menubar.js:159 src/control/Control.Menubar.js:229
 msgid "Rows before"
 msgstr "Vrstice pred"
 
-#: src/control/Control.Menubar.js:160 src/control/Control.Menubar.js:232
+#: src/control/Control.Menubar.js:160 src/control/Control.Menubar.js:230
 msgid "Rows after"
 msgstr "Vrstice po"
 
-#: src/control/Control.Menubar.js:162 src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:162 src/control/Control.Menubar.js:232
 msgid "Columns left"
 msgstr "Stolpci levo"
 
-#: src/control/Control.Menubar.js:163 src/control/Control.Menubar.js:235
+#: src/control/Control.Menubar.js:163 src/control/Control.Menubar.js:233
 msgid "Columns right"
 msgstr "Stolpci desno"
 
-#: src/control/Control.Menubar.js:164 src/control/Control.Menubar.js:236
+#: src/control/Control.Menubar.js:164 src/control/Control.Menubar.js:234
 msgid "Delete"
 msgstr "Izbriši"
 
-#: src/control/Control.Menubar.js:165 src/control/Control.Menubar.js:237
+#: src/control/Control.Menubar.js:165 src/control/Control.Menubar.js:235
 msgid "Rows"
 msgstr "Vrstice"
 
-#: src/control/Control.Menubar.js:166 src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:166 src/control/Control.Menubar.js:236
 msgid "Columns"
 msgstr "Stolpci"
 
@@ -2373,11 +2373,11 @@ msgstr "Tabela"
 msgid "Select"
 msgstr "Izberi"
 
-#: src/control/Control.Menubar.js:170 src/control/Control.Menubar.js:288
+#: src/control/Control.Menubar.js:170 src/control/Control.Menubar.js:286
 msgid "Row"
 msgstr "Vrstica"
 
-#: src/control/Control.Menubar.js:171 src/control/Control.Menubar.js:289
+#: src/control/Control.Menubar.js:171 src/control/Control.Menubar.js:287
 msgid "Column"
 msgstr "Stolpec"
 
@@ -2385,121 +2385,121 @@ msgstr "Stolpec"
 msgid "Cell"
 msgstr "Celica"
 
-#: src/control/Control.Menubar.js:173 src/control/Control.Menubar.js:239
+#: src/control/Control.Menubar.js:173 src/control/Control.Menubar.js:237
 msgid "Merge cells"
 msgstr "Spoji celice"
 
-#: src/control/Control.Menubar.js:176 src/control/Control.Menubar.js:249
-#: src/control/Control.Menubar.js:301
-msgid "Automatic Spell Checking"
+#: src/control/Control.Menubar.js:176 src/control/Control.Menubar.js:247
+#: src/control/Control.Menubar.js:299
+msgid "Automatic spell checking"
 msgstr "Samodejno preverjanje črkovanja"
 
 #: src/control/Control.Menubar.js:177
-msgid "Language"
-msgstr "Jezik"
+msgid "Language for selection"
+msgstr "Jezik izbora"
 
-#: src/control/Control.Menubar.js:178
-msgid "For Selection"
-msgstr "Izbora"
-
-#: src/control/Control.Menubar.js:179 src/control/Control.Menubar.js:181
-#: src/control/Control.Menubar.js:183
-msgid "Reset to Default Language"
-msgstr "Ponastavi na privzeti jezik"
-
-#: src/control/Control.Menubar.js:180
-msgid "For Paragraph"
-msgstr "Odstavka"
-
+#: src/control/Control.Menubar.js:178 src/control/Control.Menubar.js:180
 #: src/control/Control.Menubar.js:182
-msgid "For all Text"
-msgstr "Celotnega besedila"
+msgid "None (Do not check spelling)"
+msgstr "Brez (ne preverjaj črkovanja)"
 
-#: src/control/Control.Menubar.js:186 src/control/Control.Menubar.js:251
-#: src/control/Control.Menubar.js:303
+#: src/control/Control.Menubar.js:179
+msgid "Language for paragraph"
+msgstr "Jezik odstavka"
+
+#: src/control/Control.Menubar.js:181
+msgid "Language for entire document"
+msgstr "Jezik celotnega dokumenta"
+
+#: src/control/Control.Menubar.js:184 src/control/Control.Menubar.js:249
+#: src/control/Control.Menubar.js:301
 msgid "Help"
 msgstr "Pomoč"
 
-#: src/control/Control.Menubar.js:187 src/control/Control.Menubar.js:252
-#: src/control/Control.Menubar.js:304
+#: src/control/Control.Menubar.js:185 src/control/Control.Menubar.js:250
+#: src/control/Control.Menubar.js:302
 msgid "Keyboard shortcuts"
 msgstr "Tipke za bližnjice"
 
-#: src/control/Control.Menubar.js:188 src/control/Control.Menubar.js:253
-#: src/control/Control.Menubar.js:305
+#: src/control/Control.Menubar.js:186 src/control/Control.Menubar.js:251
+#: src/control/Control.Menubar.js:303
 msgid "About"
 msgstr "O programu"
 
-#: src/control/Control.Menubar.js:190 src/control/Control.Menubar.js:255
-#: src/control/Control.Menubar.js:307
+#: src/control/Control.Menubar.js:188 src/control/Control.Menubar.js:253
+#: src/control/Control.Menubar.js:305
 msgid "Close document"
 msgstr "Zapri dokument"
 
-#: src/control/Control.Menubar.js:201
+#: src/control/Control.Menubar.js:199
 msgid "ODF presentation (.odp)"
 msgstr "Predstavitev ODF (.odp)"
 
-#: src/control/Control.Menubar.js:202
+#: src/control/Control.Menubar.js:200
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:203
+#: src/control/Control.Menubar.js:201
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:239
 msgid "Slide"
 msgstr "Prosojnica"
 
-#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:240
 msgid "New slide"
 msgstr "Nova prosojnica"
 
-#: src/control/Control.Menubar.js:266
+#: src/control/Control.Menubar.js:264
 msgid "ODF spreadsheet (.ods)"
 msgstr "Preglednica ODF (.ods)"
 
-#: src/control/Control.Menubar.js:267
+#: src/control/Control.Menubar.js:265
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:268
+#: src/control/Control.Menubar.js:266
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:293
+#: src/control/Control.Menubar.js:291
 msgid "Cells"
 msgstr "Celice"
 
-#: src/control/Control.Menubar.js:294
+#: src/control/Control.Menubar.js:292
 msgid "Insert row"
 msgstr "Vstavi vrstico"
 
-#: src/control/Control.Menubar.js:295
+#: src/control/Control.Menubar.js:293
 msgid "Insert column"
 msgstr "Vstavi stolpec"
 
-#: src/control/Control.Menubar.js:297 src/control/Control.RowHeader.js:44
+#: src/control/Control.Menubar.js:295 src/control/Control.RowHeader.js:44
 msgid "Delete row"
 msgstr "Izbriši vrstico"
 
-#: src/control/Control.Menubar.js:513
+#: src/control/Control.Menubar.js:362
+msgid "Reset to Default Language"
+msgstr "Ponastavi na privzeti jezik"
+
+#: src/control/Control.Menubar.js:518
 msgid "Find"
 msgstr "Najdi"
 
-#: src/control/Control.Menubar.js:521
+#: src/control/Control.Menubar.js:526
 msgid "Replace with"
 msgstr "Zamenjaj z"
 
-#: src/control/Control.Menubar.js:538
+#: src/control/Control.Menubar.js:543
 msgid "Replace"
 msgstr "Zamenjaj"
 
-#: src/control/Control.Menubar.js:543
+#: src/control/Control.Menubar.js:548
 msgid "Replace All"
 msgstr "Zamenjaj vse"
 
-#: src/control/Control.Menubar.js:693
+#: src/control/Control.Menubar.js:698
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ali ste prepričani, da želite izbrisati to prosojnico?"
 
