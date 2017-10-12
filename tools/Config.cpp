@@ -118,10 +118,12 @@ void Config::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("number"));
 
+#if ENABLE_SUPPORT_KEY
     optionSet.addOption(Option("support-key", "", "Specify the support key [set-support-key].")
                         .required(false)
                         .repeatable(false)
                         .argument("key"));
+#endif
 }
 
 void Config::handleOption(const std::string& optionName, const std::string& optionValue)
