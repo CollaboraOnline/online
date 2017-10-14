@@ -1084,6 +1084,9 @@ map.on('doclayerinit', function () {
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'PageStatus',
 				html: '<div id="PageStatus" class="loleaflet-font" title="'+_('Number of Slides')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'break', id:'break2'},
+			{type: 'html',  id: 'LanguageStatus',
+				html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' }
 		]);
 
 		// Remove irrelevant toolbars
