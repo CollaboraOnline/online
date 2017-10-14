@@ -245,7 +245,9 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			},
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
-				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'}
+				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
+				{name: _('Language for entire document'), type: 'menu', menu: [
+					{name: _('None (Do not check spelling)'), id: 'nonelanguage', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
