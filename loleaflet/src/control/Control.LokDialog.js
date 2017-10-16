@@ -50,7 +50,6 @@ L.Control.LokDialog = L.Control.extend({
 			}
 		});
 
-		that = this;
 		// attach the mouse/key events
 		$('#' + dialogId + ' > .lokdialog_content').on('mousedown', function(e) {
 			var buttons = 0;
