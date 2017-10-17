@@ -73,7 +73,7 @@ protected:
 };
 
 std::string Config::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
-std::string Config::SupportKeyString = "";
+std::string Config::SupportKeyString;
 bool Config::SupportKeyStringProvided = false;
 
 void Config::displayHelp()
