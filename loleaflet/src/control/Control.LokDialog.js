@@ -7,6 +7,7 @@ L.Control.LokDialog = L.Control.extend({
 	onAdd: function (map) {
 		map.on('dialogpaint', this._onDialogPaint, this);
 		map.on('dialog', this._onDialogMsg, this);
+		map.on('opendialog', this._openDialog, this);
 	},
 
 	_dialogs: {},
@@ -16,24 +17,38 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogMsg: function(e) {
-		if (e.action === 'invalidate') {
-			// FIXME: core sends a different id for spelling dialog in 'invalidate' cb
-			if (e.dialogId === 'SpellingDialog')
-				e.dialogId = 'SpellingAndGrammarDialog';
-			else if (e.dialogId === 'FindReplaceDialog')
-				e.dialogId = 'SearchDialog';
-			else if (e.dialogId === 'AcceptRejectChangesDialog')
-				e.dialogId = 'AcceptTrackedChanges';
+		// FIXME: core sends a different id for spelling dialog in cbs
+		if (e.dialogId === 'SpellingDialog')
+			e.dialogId = 'SpellingAndGrammarDialog';
+		else if (e.dialogId === 'FindReplaceDialog')
+			e.dialogId = 'SearchDialog';
+		else if (e.dialogId === 'AcceptRejectChangesDialog')
+			e.dialogId = 'AcceptTrackedChanges';
+		else if (e.dialogId === 'FieldDialog')
+			e.dialogId = 'InsertField';
+		else if (e.dialogId === 'BibliographyEntryDialog')
+			e.dialogId = 'InsertAuthoritiesEntry';
+		else if (e.dialogId === 'IndexEntryDialog')
+			e.dialogId = 'InsertIndexesEntry';
 
+		if (e.action === 'invalidate') {
 			// ignore any invalidate callbacks when we have closed the dialog
-			if (this._isOpen(e.dialogId))
+			if (this._isOpen(e.dialogId)) {
 				this._map.sendDialogCommand(e.dialogId);
+			}
 		} else if (e.action === 'close') {
 			this._onDialogClose(e.dialogId);
 		}
 	},
 
-	_openDialog: function(dialogId, width, height) {
+	_openDialog: function(e) {
+		e.dialogId = e.dialogId.replace('.uno:', '');
+		this._dialogs[e.dialogId] = true;
+
+		this._map.sendDialogCommand(e.dialogId);
+	},
+
+	_launchDialog: function(dialogId, width, height) {
 		var content = '<div class="lokdialog_container" id="' + dialogId + '">' +
 		    '<img class="lokdialog_content" width="' + width + '" height="' + height + '"></div>';
 		$(document.body).append(content);
@@ -87,7 +102,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogClose: function(dialogId) {
 		$('#' + dialogId).remove();
-		this._dialogs[dialogId] = false;
+		delete this._dialogs[dialogId];
 	},
 
 	_paintDialog: function(dialogId, img) {
@@ -97,10 +112,32 @@ L.Control.LokDialog = L.Control.extend({
 		$('#' + dialogId + ' > .lokdialog_content').attr('src', img);
 	},
 
+	_isSameSize: function(dialogId, newWidth, newHeight) {
+		var ret = false;
+		if (this._isOpen(dialogId))
+		{
+			var oldWidth = $('#' + dialogId + ' > .lokdialog_content').width();
+			var oldHeight = $('#' + dialogId + ' > .lokdialog_content').height();
+			if (oldWidth === newWidth && oldHeight === newHeight)
+				ret = true;
+		}
+
+		return ret;
+	},
+
+	// Binary dialog msg recvd from core
 	_onDialogPaint: function (e) {
 		var dialogId = e.id.replace('.uno:', '');
+		// is our request to open dialog still valid?
+		if (!this._dialogs[dialogId])
+			return;
+
 		if (!this._isOpen(dialogId)) {
-			this._openDialog(dialogId, e.width, e.height);
+			this._launchDialog(dialogId, e.width, e.height);
+		} else if (!this._isSameSize(dialogId, e.width, e.height)) {
+			// size changed - destroy the old sized dialog
+			this._onDialogClose(dialogId);
+			this._launchDialog(dialogId, e.width, e.height);
 		}
 
 		this._paintDialog(dialogId, e.dialog);
