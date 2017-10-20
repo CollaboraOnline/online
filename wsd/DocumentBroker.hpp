@@ -241,6 +241,11 @@ public:
 
     /// Save the document to Storage if it needs persisting.
     bool saveToStorage(const std::string& sesionId, bool success, const std::string& result = "", bool force = false);
+
+    /// Save As the document to Storage.
+    /// @param saveAsPath Absolute path to the jailed file.
+    bool saveAsToStorage(const std::string& sesionId, const std::string& saveAsPath, const std::string& saveAsFilename);
+
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
     /// Save the document if the document is modified.
@@ -355,7 +360,7 @@ private:
     void terminateChild(const std::string& closeReason);
 
     /// Saves the doc to the storage.
-    bool saveToStorageInternal(const std::string& sesionId, bool success, const std::string& result = "");
+    bool saveToStorageInternal(const std::string& sesionId, bool success, const std::string& result = "", const std::string& saveAsPath = std::string(), const std::string& saveAsFilename = std::string());
 
     /// Loads a new session and adds to the sessions container.
     size_t addSessionInternal(const std::shared_ptr<ClientSession>& session);

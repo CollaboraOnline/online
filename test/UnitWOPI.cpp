@@ -50,16 +50,6 @@ public:
         return _savingPhase == SavingPhase::Modified;
     }
 
-    void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/) override
-    {
-        // nothing to assert in CheckFileInfo
-    }
-
-    void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
-    {
-        // nothing to assert in GetFile
-    }
-
     void assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         if (_savingPhase == SavingPhase::Unmodified)

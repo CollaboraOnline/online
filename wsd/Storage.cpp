@@ -297,7 +297,7 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
 #endif
 }
 
-StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization& /*auth*/)
+StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::string& /*saveAsPath*/, const std::string& /*saveAsFilename*/)
 {
     try
     {
@@ -659,13 +659,15 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
     return "";
 }
 
-StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization& auth)
+StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename)
 {
     // TODO: Check if this URI has write permission (canWrite = true)
     const auto size = getFileSize(_jailedFilePath);
 
+    const bool isSaveAs = !saveAsPath.empty();
+
     Poco::URI uriObject(_uri);
-    uriObject.setPath(uriObject.getPath() + "/contents");
+    uriObject.setPath(isSaveAs? uriObject.getPath(): uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
 
     LOG_INF("Uploading URI via WOPI [" << uriObject.toString() << "] from [" << _jailedFilePath + "].");
@@ -677,30 +679,48 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
-        request.set("X-WOPI-Override", "PUT");
+        request.set("User-Agent", WOPI_AGENT_STRING);
         auth.authorizeRequest(request);
-        if (!_forceSave)
+
+        if (!isSaveAs)
         {
-            // Request WOPI host to not overwrite if timestamps mismatch
-            request.set("X-LOOL-WOPI-Timestamp",
-                        Poco::DateTimeFormatter::format(Poco::DateTime(_fileInfo._modifiedTime),
-                                                        Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
+            // normal save
+            request.set("X-WOPI-Override", "PUT");
+            request.set("X-LOOL-WOPI-IsModifiedByUser", _isUserModified? "true": "false");
+            request.set("X-LOOL-WOPI-IsAutosave", _isAutosave? "true": "false");
+
+            if (!_forceSave)
+            {
+                // Request WOPI host to not overwrite if timestamps mismatch
+                request.set("X-LOOL-WOPI-Timestamp",
+                            Poco::DateTimeFormatter::format(Poco::DateTime(_fileInfo._modifiedTime),
+                                                            Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
+            }
         }
-        request.set("X-LOOL-WOPI-IsModifiedByUser", _isUserModified? "true": "false");
-        request.set("X-LOOL-WOPI-IsAutosave", _isAutosave? "true": "false");
+        else
+        {
+            // save as
+            request.set("X-WOPI-Override", "PUT_RELATIVE");
+            request.set("X-WOPI-RelativeTarget", saveAsFilename);
+            request.set("X-WOPI-Size", std::to_string(size));
+        }
 
         request.setContentType("application/octet-stream");
         request.setContentLength(size);
         addStorageDebugCookie(request);
         std::ostream& os = psession->sendRequest(request);
-        std::ifstream ifs(_jailedFilePath);
+
+        const std::string filePath(isSaveAs? saveAsPath: _jailedFilePath);
+        std::ifstream ifs(filePath);
         Poco::StreamCopier::copyStream(ifs, os);
 
         Poco::Net::HTTPResponse response;
         std::istream& rs = psession->receiveResponse(response);
         Poco::StreamCopier::copyStream(rs, oss);
-        LOG_INF("WOPI::PutFile response: " << oss.str());
-        LOG_INF("WOPI::PutFile uploaded " << size << " bytes from [" << _jailedFilePath <<
+
+        std::string wopiLog(isSaveAs? "WOPI::PutFileRelative": "WOPI::PutFile");
+        LOG_INF(wopiLog << " response: " << oss.str());
+        LOG_INF(wopiLog << " uploaded " << size << " bytes from [" << filePath <<
                 "] -> [" << uriObject.toString() << "]: " <<
                 response.getStatus() << " " << response.getReason());
 
@@ -711,7 +731,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
             if (parseJSON(oss.str(), object))
             {
                 const std::string lastModifiedTime = getJSONValue<std::string>(object, "LastModifiedTime");
-                LOG_TRC("WOPI::PutFile returns LastModifiedTime [" << lastModifiedTime << "].");
+                LOG_TRC(wopiLog << " returns LastModifiedTime [" << lastModifiedTime << "].");
                 _fileInfo._modifiedTime = iso8601ToTimestamp(lastModifiedTime);
 
                 // Reset the force save flag now, if any, since we are done saving
@@ -720,7 +740,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
             }
             else
             {
-                LOG_WRN("Invalid/Missing JSON found in WOPI::PutFile response");
+                LOG_WRN("Invalid/Missing JSON found in " << wopiLog << " response");
             }
         }
         else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_REQUESTENTITYTOOLARGE)
@@ -745,7 +765,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
             }
             else
             {
-                LOG_WRN("Invalid/missing JSON in WOPI::PutFile response");
+                LOG_WRN("Invalid/missing JSON in " << wopiLog << " response");
             }
         }
     }
@@ -766,7 +786,7 @@ std::string WebDAVStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
     return _uri.toString();
 }
 
-StorageBase::SaveResult WebDAVStorage::saveLocalFileToStorage(const Authorization& /*auth*/)
+StorageBase::SaveResult WebDAVStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::string& /*saveAsPath*/, const std::string& /*saveAsFilename*/)
 {
     // TODO: implement webdav PUT.
     return StorageBase::SaveResult::OK;

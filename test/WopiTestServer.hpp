@@ -28,8 +28,13 @@ protected:
     /// Websocket to communicate.
     std::unique_ptr<UnitWebSocket> _ws;
 
+    /// Content of the file.
+    std::string _fileContent;
+
 public:
-    WopiTestServer() : UnitWSD()
+    WopiTestServer(std::string fileContent = "Hello, world")
+        : UnitWSD()
+        , _fileContent(fileContent)
     {
     }
 
@@ -47,24 +52,32 @@ public:
         assert(_ws.get());
     }
 
-    virtual void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& request) = 0;
+    virtual void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/)
+    {
+    }
 
-    virtual void assertGetFileRequest(const Poco::Net::HTTPRequest& request) = 0;
+    virtual void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/)
+    {
+    }
 
-    virtual void assertPutFileRequest(const Poco::Net::HTTPRequest& request) = 0;
+    virtual void assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/)
+    {
+    }
+
+    virtual void assertPutFileRelativeRequest(const Poco::Net::HTTPRequest& /*request*/)
+    {
+    }
 
 protected:
     /// Here we act as a WOPI server, so that we have a server that responds to
     /// the wopi requests without additional expensive setup.
     virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request, std::shared_ptr<StreamSocket>& socket) override
     {
-        static const std::string hello("Hello, world");
-
         Poco::URI uriReq(request.getURI());
         LOG_INF("Fake wopi host request: " << uriReq.toString());
 
         // CheckFileInfo
-        if (uriReq.getPath() == "/wopi/files/0" || uriReq.getPath() == "/wopi/files/1")
+        if (request.getMethod() == "GET" && (uriReq.getPath() == "/wopi/files/0" || uriReq.getPath() == "/wopi/files/1"))
         {
             LOG_INF("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
 
@@ -73,7 +86,7 @@ protected:
             Poco::LocalDateTime now;
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
             fileInfo->set("BaseFileName", "hello.txt");
-            fileInfo->set("Size", hello.size());
+            fileInfo->set("Size", _fileContent.size());
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
             fileInfo->set("UserId", "test");
@@ -115,10 +128,38 @@ protected:
             oss << "HTTP/1.1 200 OK\r\n"
                 << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "Content-Length: " << hello.size() << "\r\n"
+                << "Content-Length: " << _fileContent.size() << "\r\n"
                 << "Content-Type: " << mimeType << "\r\n"
                 << "\r\n"
-                << hello;
+                << _fileContent;
+
+            socket->send(oss.str());
+            socket->shutdown();
+
+            return true;
+        }
+        else if (request.getMethod() == "POST" && (uriReq.getPath() == "/wopi/files/0" || uriReq.getPath() == "/wopi/files/1"))
+        {
+            LOG_INF("Fake wopi host request, handling PutFileRelative: " << uriReq.getPath());
+
+            CPPUNIT_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
+
+            assertPutFileRelativeRequest(request);
+
+            Poco::URI wopiURL(helpers::getTestServerURI() + "/wopi/files/1");
+            std::string url;
+            Poco::URI::encode(wopiURL.toString(), ":/?", url);
+
+            std::string content = "{ \"Name\":\"hello world.txt\", \"Url\":\"" + url + "\" }";
+
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+                << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                << "Content-Length: " << content.size() << "\r\n"
+                << "Content-Type: application/json\r\n"
+                << "\r\n"
+                << content;
 
             socket->send(oss.str());
             socket->shutdown();

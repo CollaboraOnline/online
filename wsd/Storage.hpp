@@ -112,7 +112,8 @@ public:
     virtual std::string loadStorageFileToLocal(const Authorization& auth) = 0;
 
     /// Writes the contents of the file back to the source.
-    virtual SaveResult saveLocalFileToStorage(const Authorization& auth) = 0;
+    /// @param savedFile When the operation was saveAs, this is the path to the file that was saved.
+    virtual SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename) = 0;
 
     static size_t getFileSize(const std::string& filename);
 
@@ -184,7 +185,7 @@ public:
 
     std::string loadStorageFileToLocal(const Authorization& auth) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth) override;
+    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename) override;
 
 private:
     /// True if the jailed file is not linked but copied.
@@ -287,7 +288,7 @@ public:
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string loadStorageFileToLocal(const Authorization& auth) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth) override;
+    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename) override;
 
     /// Total time taken for making WOPI calls during load
     std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
@@ -317,7 +318,7 @@ public:
 
     std::string loadStorageFileToLocal(const Authorization& auth) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth) override;
+    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename) override;
 
 private:
     std::unique_ptr<AuthBase> _authAgent;

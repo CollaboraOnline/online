@@ -213,11 +213,11 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId === 'Action_SaveAs') {
 			/* TODO
 			if (msg.Values) {
-				if (msg.Values.name === null || msg.Values.name === undefined) {
-					msg.Values.name = '';
+				if (msg.Values.Filename === null || msg.Values.Filename === undefined) {
+					msg.Values.Filename = '';
 				}
 				this.showBusy(_('Creating copy...'), false);
-				map.saveAs(msg.Values.name, msg.Values.path);
+				map.saveAs(msg.Values.Filename);
 			}
 			*/
 		}

@@ -616,38 +616,64 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         int curPart;
         return getTokenInteger(tokens[1], "part", curPart);
     }
-    else if (tokens.size() == 2 && tokens[0] == "saveas:")
+    else if (tokens.size() == 3 && tokens[0] == "saveas:")
     {
-        std::string url;
-        if (!getTokenString(tokens[1], "url", url))
+        std::string encodedURL;
+        if (!getTokenString(tokens[1], "url", encodedURL))
         {
             LOG_ERR("Bad syntax for: " << firstLine);
             return false;
         }
 
-        // Save-as completed, inform the ClientSession.
-        const std::string filePrefix("file:///");
-        if (url.find(filePrefix) == 0)
+        std::string encodedWopiFilename;
+        if (!getTokenString(tokens[2], "wopifilename", encodedWopiFilename))
         {
+            LOG_ERR("Bad syntax for: " << firstLine);
+            return false;
+        }
+
+        std::string url, wopiFilename;
+        Poco::URI::decode(encodedURL, url);
+        Poco::URI::decode(encodedWopiFilename, wopiFilename);
+
+        // Save-as completed, inform the ClientSession.
+        Poco::URI resultURL(url);
+        if (resultURL.getScheme() == "file")
+        {
+            std::string relative(resultURL.getPath());
+            if (relative.size() > 0 && relative[0] == '/')
+                relative = relative.substr(1);
+
             // Rewrite file:// URLs, as they are visible to the outside world.
-            const Path path(docBroker->getJailRoot(), url.substr(filePrefix.length()));
+            const Path path(docBroker->getJailRoot(), relative);
             if (Poco::File(path).exists())
             {
-                url = filePrefix + path.toString().substr(1);
+                resultURL.setPath(path.toString());
             }
             else
             {
                 // Blank for failure.
-                LOG_DBG("SaveAs produced no output, producing blank url.");
-                url.clear();
+                LOG_DBG("SaveAs produced no output in '" << path.toString() << "', producing blank url.");
+                resultURL.clear();
             }
         }
 
-        if (_saveAsSocket)
-        {
-            Poco::URI resultURL(url);
-            LOG_TRC("Save-as URL: " << resultURL.toString());
+        LOG_TRC("Save-as URL: " << resultURL.toString());
 
+        if (!_saveAsSocket)
+        {
+            // Normal SaveAs - save to Storage and log result.
+            if (resultURL.getScheme() == "file" && !resultURL.getPath().empty())
+            {
+                docBroker->saveAsToStorage(getId(), resultURL.getPath(), wopiFilename);
+            }
+
+            if (!isCloseFrame())
+                forwardToClient(payload);
+        }
+        else
+        {
+            // using the convert-to REST API
             // TODO: Send back error when there is no output.
             if (!resultURL.getPath().empty())
             {

@@ -87,11 +87,6 @@ public:
             exitTest(TestResult::Ok);
     }
 
-    void assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
-    {
-        // nothing to assert
-    }
-
     void invokeTest() override
     {
         constexpr char testName[] = "UnitOAuth";

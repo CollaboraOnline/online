@@ -892,18 +892,37 @@ bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, const 
 
 bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
-    std::string url, format, filterOptions;
+    std::string wopiFilename, url, format, filterOptions;
 
-    if (tokens.size() < 4 ||
+    if (tokens.size() <= 1 ||
         !getTokenString(tokens[1], "url", url))
     {
         sendTextFrame("error: cmd=saveas kind=syntax");
         return false;
     }
 
-    getTokenString(tokens[2], "format", format);
+    // if the url is a 'wopi:///something/blah.odt', then save to a temporary
+    Poco::URI wopiURL(url);
+    if (wopiURL.getScheme() == "wopi")
+    {
+        std::vector<std::string> pathSegments;
+        wopiURL.getPathSegments(pathSegments);
 
-    if (getTokenString(tokens[3], "options", filterOptions))
+        if (pathSegments.size() == 0)
+        {
+            sendTextFrame("error: cmd=saveas kind=syntax");
+            return false;
+        }
+
+        // TODO do we need a tempdir here?
+        url = std::string("file://") + JAILED_DOCUMENT_ROOT + pathSegments[pathSegments.size() - 1];
+        wopiFilename = wopiURL.getPath();
+    }
+
+    if (tokens.size() > 2)
+        getTokenString(tokens[2], "format", format);
+
+    if (tokens.size() > 3 && getTokenString(tokens[3], "options", filterOptions))
     {
         if (tokens.size() > 4)
         {
@@ -922,7 +941,11 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
                 filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
     }
 
-    sendTextFrame("saveas: url=" + url);
+    std::string encodedURL, encodedWopiFilename;
+    Poco::URI::encode(url, "", encodedURL);
+    Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
+
+    sendTextFrame("saveas: url=" + encodedURL + " wopifilename=" + encodedWopiFilename);
     std::string successStr = success ? "true" : "false";
     sendTextFrame("unocommandresult: {"
             "\"commandName\":\"saveas\","
