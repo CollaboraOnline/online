@@ -136,6 +136,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "key" &&
              tokens[0] != "mouse" &&
              tokens[0] != "dialogmouse" &&
+             tokens[0] != "dialogchildmouse" &&
              tokens[0] != "partpagerectangles" &&
              tokens[0] != "ping" &&
              tokens[0] != "renderfont" &&
