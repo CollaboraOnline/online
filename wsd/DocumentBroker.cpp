@@ -1079,6 +1079,10 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
         {
             handleDialogPaintResponse(payload);
         }
+        else if (command == "dialogchildpaint:")
+        {
+            handleDialogChildPaintResponse(payload);
+        }
         else if (command == "errortoall:")
         {
             LOG_CHECK_RET(message->tokens().size() == 3, false);
@@ -1178,6 +1182,17 @@ void DocumentBroker::handleDialogRequest(const std::string& dialogId,
 
     LOG_DBG("Sending dialog render request for dialog " << dialogId);
     const std::string request = "dialog " + dialogId;
+    _childProcess->sendTextFrame(request);
+}
+
+void DocumentBroker::handleDialogChildRequest(const std::string& dialogId,
+                                              const std::shared_ptr<ClientSession>& /*session*/)
+{
+    assertCorrectThread();
+    std::unique_lock<std::mutex> lock(_mutex);
+
+    LOG_DBG("Sending dialog child render request for dialog " << dialogId);
+    const std::string request = "dialogchild " + dialogId;
     _childProcess->sendTextFrame(request);
 }
 
@@ -1285,6 +1300,31 @@ void DocumentBroker::handleDialogPaintResponse(const std::vector<char>& payload)
 {
     const std::string firstLine = getFirstLine(payload);
     LOG_DBG("Handling dialogpaint: " << firstLine);
+
+    const auto length = payload.size();
+    if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
+    {
+        const auto buffer = payload.data();
+        const auto offset = firstLine.size() + 1;
+
+        auto msgPayload = std::make_shared<Message>(firstLine,
+                                                    Message::Dir::Out,
+                                                    payload.size());
+        msgPayload->append("\n", 1);
+        msgPayload->append(buffer + offset, payload.size() - offset);
+
+        std::unique_lock<std::mutex> lock(_mutex);
+        for (const auto& sessionIt : _sessions)
+        {
+            sessionIt.second->enqueueSendMessage(msgPayload);
+        }
+    }
+}
+
+void DocumentBroker::handleDialogChildPaintResponse(const std::vector<char>& payload)
+{
+    const std::string firstLine = getFirstLine(payload);
+    LOG_DBG("Handling dialogchildpaint: " << firstLine);
 
     const auto length = payload.size();
     if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)

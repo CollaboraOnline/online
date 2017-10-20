@@ -154,7 +154,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "uno" &&
              tokens[0] != "useractive" &&
              tokens[0] != "userinactive" &&
-             tokens[0] != "dialog")
+             tokens[0] != "dialog" &&
+             tokens[0] != "dialogchild")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
@@ -221,6 +222,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "dialog")
     {
         return sendDialog(buffer, length, tokens, docBroker);
+    }
+    else if (tokens[0] == "dialogchild")
+    {
+        return sendDialogChild(buffer, length, tokens, docBroker);
     }
     else if (tokens[0] == "tilecombine")
     {
@@ -439,6 +444,22 @@ bool ClientSession::sendDialog(const char * /*buffer*/, int /*length*/, const st
     {
         LOG_ERR("Failed to process dialog command: " << exc.what());
         return sendTextFrame("error: cmd=dialog kind=invalid");
+    }
+
+    return true;
+}
+
+bool ClientSession::sendDialogChild(const char * /*buffer*/, int /*length*/, const std::vector<std::string>& tokens,
+                                    const std::shared_ptr<DocumentBroker>& docBroker)
+{
+    try
+    {
+        docBroker->handleDialogChildRequest(tokens[1], shared_from_this());
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_ERR("Failed to process dialogchild command: " << exc.what());
+        return sendTextFrame("error: cmd=dialogchild kind=invalid");
     }
 
     return true;

@@ -300,11 +300,14 @@ public:
                            const std::shared_ptr<ClientSession>& session);
     void handleDialogRequest(const std::string& dialogId,
                              const std::shared_ptr<ClientSession>& session);
+    void handleDialogChildRequest(const std::string& dialogId,
+                                  const std::shared_ptr<ClientSession>& session);
     void handleTileCombinedRequest(TileCombined& tileCombined,
                                    const std::shared_ptr<ClientSession>& session);
     void cancelTileRequests(const std::shared_ptr<ClientSession>& session);
     void handleTileResponse(const std::vector<char>& payload);
     void handleDialogPaintResponse(const std::vector<char>& payload);
+    void handleDialogChildPaintResponse(const std::vector<char>& payload);
     void handleTileCombinedResponse(const std::vector<char>& payload);
 
     void destroyIfLastEditor(const std::string& id);
