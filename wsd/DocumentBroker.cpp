@@ -621,10 +621,20 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId,
     return res;
 }
 
-bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
-                                           bool success, const std::string& result)
+bool DocumentBroker::saveAsToStorage(const std::string& sessionId, const std::string& saveAsPath, const std::string& saveAsFilename)
 {
     assertCorrectThread();
+
+    return saveToStorageInternal(sessionId, true, "", saveAsPath, saveAsFilename);
+}
+
+bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
+                                           bool success, const std::string& result,
+                                           const std::string& saveAsPath, const std::string& saveAsFilename)
+{
+    assertCorrectThread();
+
+    const bool isSaveAs = !saveAsPath.empty();
 
     // If save requested, but core didn't save because document was unmodified
     // notify the waiting thread, if any.
@@ -646,12 +656,12 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     }
 
     const Authorization auth = it->second->getAuthorization();
-    const auto uri = it->second->getPublicUri().toString();
+    const auto uri = isSaveAs? saveAsPath: it->second->getPublicUri().toString();
 
     // If we aren't destroying the last editable session just yet,
     // and the file timestamp hasn't changed, skip saving.
     const auto newFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
-    if (!_lastEditableSession && newFileModifiedTime == _lastFileModifiedTime)
+    if (!isSaveAs && !_lastEditableSession && newFileModifiedTime == _lastFileModifiedTime)
     {
         // Nothing to do.
         LOG_DBG("Skipping unnecessary saving to URI [" << uri << "] with docKey [" << _docKey <<
@@ -664,24 +674,32 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uri << "].");
 
     assert(_storage && _tileCache);
-    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(auth);
+    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(auth, saveAsPath, saveAsFilename);
     if (storageSaveResult == StorageBase::SaveResult::OK)
     {
-        setModified(false);
-        _lastFileModifiedTime = newFileModifiedTime;
-        _tileCache->saveLastModified(_lastFileModifiedTime);
-        _lastSaveTime = std::chrono::steady_clock::now();
-        _poll->wakeup();
+        if (!isSaveAs)
+        {
+            setModified(false);
+            _lastFileModifiedTime = newFileModifiedTime;
+            _tileCache->saveLastModified(_lastFileModifiedTime);
+            _lastSaveTime = std::chrono::steady_clock::now();
+            _poll->wakeup();
 
-        // So set _documentLastModifiedTime then
-        _documentLastModifiedTime = _storage->getFileInfo()._modifiedTime;
+            // So set _documentLastModifiedTime then
+            _documentLastModifiedTime = _storage->getFileInfo()._modifiedTime;
 
-        // After a successful save, we are sure that document in the storage is same as ours
-        _documentChangedInStorage = false;
+            // After a successful save, we are sure that document in the storage is same as ours
+            _documentChangedInStorage = false;
 
-        Log::debug() << "Saved docKey [" << _docKey << "] to URI [" << uri
-                     << "] and updated tile cache. Document modified timestamp: "
-                     << _documentLastModifiedTime << Log::end;
+            Log::debug() << "Saved docKey [" << _docKey << "] to URI [" << uri
+                         << "] and updated tile cache. Document modified timestamp: "
+                         << _documentLastModifiedTime << Log::end;
+        }
+        else
+        {
+            Log::debug() << "Saved As docKey [" << _docKey << "] to URI [" << uri
+                         << "] successfully.";
+        }
         return true;
     }
     else if (storageSaveResult == StorageBase::SaveResult::DISKFULL)
