@@ -3,6 +3,39 @@
 */
 /* global vex $ Util AdminSocketBase */
 /* eslint no-unused-vars:0 */
+
+function appendDocRow(document, $rowContainer, $userContainer, sPid, sName, sViews, sMem, sDocTime, sDocIdle, modified) {
+
+	var $pid = $(document.createElement('td')).text(sPid);
+	$pid.append($userContainer);
+	$rowContainer.append($pid);
+
+	var $name = $(document.createElement('td')).text(sName);
+	$rowContainer.append($name);
+
+	var $views = $(document.createElement('td')).attr('id', 'docview' + sPid)
+									.text(sViews);
+	$rowContainer.append($views);
+
+	var $mem = $(document.createElement('td')).attr('id', 'docmem' + sPid)
+	.text(Util.humanizeMem(parseInt(sMem)));
+	$rowContainer.append($mem);
+
+	var $docTime = $(document.createElement('td')).addClass('elapsed_time')
+	.val(parseInt(sDocTime))
+	.text(Util.humanizeSecs(sDocTime));
+	$rowContainer.append($docTime);
+
+	var $docIdle = $(document.createElement('td')).attr('id', 'docidle' + sPid)
+	.addClass('idle_time')
+	.val(parseInt(sDocIdle))
+	.text(Util.humanizeSecs(sDocIdle));
+	$rowContainer.append($docIdle);
+
+	var $mod = $(document.createElement('td')).attr('id', 'mod' + sPid).text(modified);
+	$rowContainer.append($mod);
+}
+
 var AdminSocketOverview = AdminSocketBase.extend({
 	constructor: function(host) {
 		this.base(host);
@@ -91,8 +124,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			textMsg = '';
 		}
 
-		var $rowContainer;
-		var $pid, $name, $views, $mem, $docTime, $docIdle, $doc, $a;
+		var $doc, $a, $rowContainer;
 		var nViews, nTotalViews;
 		var docProps, sPid, sName, sViews, sMem, sDocTime;
 		if (textMsg.startsWith('documents')) {
@@ -113,7 +145,6 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 				$doc = $('#doc' + sPid);
 				$rowContainer = $(document.createElement('tr')).attr('id', 'doc' + sPid);
-				$pid = $(document.createElement('td')).text(sPid);
 				$userContainer = $(document.createElement('div')).attr('id', 'ucontainer' + sPid)
 										  .addClass('userContainer dropdown');
 				$listContainer = $(document.createElement('ul')).addClass('dropdown-menu');
@@ -179,34 +210,8 @@ var AdminSocketOverview = AdminSocketBase.extend({
 					}
 				}
 				$userContainer.append($listContainer);
-				$pid.append($userContainer);
-				$rowContainer.append($pid);
 
-				$name = $(document.createElement('td')).text(sName);
-				$rowContainer.append($name);
-
-				$views = $(document.createElement('td')).attr('id', 'docview' + sPid)
-									    .text(sViews);
-				$rowContainer.append($views);
-
-				$mem = $(document.createElement('td')).attr('id', 'docmem' + sPid)
-						.text(Util.humanizeMem(parseInt(sMem)));
-				$rowContainer.append($mem);
-
-				$docTime = $(document.createElement('td')).addClass('elapsed_time')
-									      .val(parseInt(sDocTime))
-									      .text(Util.humanizeSecs(sDocTime));
-				$rowContainer.append($docTime);
-
-				$docIdle = $(document.createElement('td')).attr('id', 'docidle' + sPid)
-									      .addClass('idle_time')
-									      .val(parseInt(sDocIdle))
-									      .text(Util.humanizeSecs(sDocIdle));
-				$rowContainer.append($docIdle);
-
-				$mod = $(document.createElement('td')).attr('id', 'mod' + sPid)
-										  .text(modified);
-				$rowContainer.append($mod);
+				appendDocRow(document, $rowContainer, $userContainer, sPid, sName, sViews, sMem, sDocTime, sDocIdle, modified);
 
 				$('#doclist').append($rowContainer);
 			}
@@ -232,7 +237,6 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			if ($doc.length === 0) {
 				$rowContainer = $(document.createElement('tr')).attr('id', 'doc' + sPid);
 
-				$pid = $(document.createElement('td')).text(sPid);
 				$userContainer = $(document.createElement('div')).attr('id', 'ucontainer' + sPid)
 										  .addClass('userContainer dropdown');
 				$listContainer = $(document.createElement('ul')).addClass('dropdown-menu');
@@ -240,33 +244,8 @@ var AdminSocketOverview = AdminSocketBase.extend({
 													.text('Users');
 				$listContainer.append($listLabel);
 				$userContainer.append($listContainer);
-				$pid.append($userContainer);
-				$rowContainer.append($pid);
 
-				$name = $(document.createElement('td')).text(sName);
-				$rowContainer.append($name);
-
-				$views = $(document.createElement('td')).attr('id', 'docview' + sPid)
-					                                    .text(0);
-				$rowContainer.append($views);
-
-				$mem = $(document.createElement('td')).text(Util.humanizeMem(parseInt(sMem)));
-				$rowContainer.append($mem);
-
-				$docTime = $(document.createElement('td')).addClass('elapsed_time')
-					                                      .val(0)
-					                                      .text(Util.humanizeSecs(0));
-				$rowContainer.append($docTime);
-
-				$docIdle = $(document.createElement('td')).attr('id', 'docidle' + sPid)
-									      .addClass('idle_time')
-					                                      .val(0)
-					                                      .text(Util.humanizeSecs(0));
-				$rowContainer.append($docIdle);
-
-				$mod = $(document.createElement('td')).attr('id', 'mod' + sPid)
-										  .text('');
-				$rowContainer.append($mod);
+				appendDocRow(document, $rowContainer, $userContainer, sPid, sName, '0', sMem, '0', '0', '');
 
 				$('#doclist').append($rowContainer);
 
