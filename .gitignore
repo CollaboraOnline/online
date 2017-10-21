@@ -68,3 +68,6 @@ tags
 test/tags
 TAGS
 test/TAGS
+
+docker/instdir
+docker/builddir
