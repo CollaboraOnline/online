@@ -1306,12 +1306,19 @@ L.TileLayer = L.GridLayer.extend({
 
 			// FIXME; can we operate directly on the image ?
 			var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-			var oldData = new Uint8ClampedArray(imgData);
+			var oldData = new Uint8ClampedArray(imgData.data);
+
 			var delta = img;
 			var pixSize = canvas.width * canvas.height * 4;
 			var offset = 0;
 
 			console.log('Applying a delta of length ' + delta.length + ' pix size: ' + pixSize + '\nhex: ' + hex2string(delta));
+
+			// Green-tinge the old-Data ...
+//			for (var i = 0; i < pixSize; ++i)
+//			{
+//				oldData[i*4 + 1] = 128;
+//			}
 
 			// wipe to grey.
 //			for (var i = 0; i < pixSize * 4; ++i)
@@ -1325,15 +1332,19 @@ L.TileLayer = L.GridLayer.extend({
 				switch (delta[i])
 				{
 				case 99: // 'c': // copy row
-					var srcRow = delta[i+1];
-					var destRow = delta[i+2]
-					i+= 3;
-					console.log('copy row ' + srcRow + ' to ' + destRow);
-					var src = srcRow * canvas.width * 4;
-					var dest = destRow * canvas.width * 4;
-					for (var i = 0; i < canvas.width * 4; ++i)
+					var count = delta[i+1];
+					var srcRow = delta[i+2];
+					var destRow = delta[i+3];
+					i+= 4;
+					console.log('copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
+					for (var cnt = 0; cnt < count; ++cnt)
 					{
-						imgData.data[dest + i] = oldData[src + i];
+						var src = (srcRow + cnt) * canvas.width * 4;
+						var dest = (destRow + cnt) * canvas.width * 4;
+						for (var j = 0; j < canvas.width * 4; ++j)
+						{
+							imgData.data[dest + j] = oldData[src + j];
+						}
 					}
 					break;
 				case 100: // 'd': // new run
@@ -1351,7 +1362,8 @@ L.TileLayer = L.GridLayer.extend({
 					imgData.data[offset - 2] = 256; // debug - blue terminator
 					break;
 				default:
-					console.log('Unknown code ' + delta[i]);
+					console.log('ERROR: Unknown code ' + delta[i] +
+						    ' at offset ' + i);
 					i = delta.length;
 					break;
 				}

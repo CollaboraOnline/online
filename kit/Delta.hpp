@@ -64,6 +64,7 @@ class DeltaGenerator {
 
         // How do the rows look against each other ?
         size_t lastMatchOffset = 0;
+        size_t lastCopy = 0;
         for (int y = 0; y < prev._height; ++y)
         {
             // Life is good where rows match:
@@ -78,12 +79,25 @@ class DeltaGenerator {
                 if (prev._rows[match].identical(cur._rows[y]))
                 {
                     // TODO: if offsets are >256 - use 16bits?
+                    if (lastCopy > 0)
+                    {
+                        char cnt = output[lastCopy];
+                        if (output[lastCopy + 1] + cnt == (char)(match) &&
+                            output[lastCopy + 2] + cnt == (char)(y))
+                        {
+                            output[lastCopy]++;
+                            matched = true;
+                            continue;
+                        }
+                    }
 
-                    // hopefully find blocks of this.
                     lastMatchOffset = match - y;
-                    output.push_back('c'); // copy-row
+                    output.push_back('c');   // copy-row
+                    lastCopy = output.size();
+                    output.push_back(1);     // count
                     output.push_back(match); // src
-                    output.push_back(y); // dest
+                    output.push_back(y);     // dest
+
                     matched = true;
                     continue;
                 }

@@ -84,15 +84,19 @@ std::vector<char> DeltaTests::applyDelta(
         {
         case 'c': // copy row.
         {
-            int srcRow = (uint8_t)(delta[i+1]);
-            int destRow = (uint8_t)(delta[i+2]);
+            int count = (uint8_t)(delta[i+1]);
+            int srcRow = (uint8_t)(delta[i+2]);
+            int destRow = (uint8_t)(delta[i+3]);
 
-            std::cout << "copy row " << srcRow << " to " << destRow << "\n";
-            const char *src = &pixmap[width * srcRow * 4];
-            char *dest = &output[width * destRow * 4];
-            for (size_t j = 0; j < width * 4; ++j)
-                *dest++ = *src++;
-            i += 3;
+//            std::cout << "copy " << count <<" row(s) " << srcRow << " to " << destRow << "\n";
+            for (int cnt = 0; cnt < count; ++cnt)
+            {
+                const char *src = &pixmap[width * (srcRow + cnt) * 4];
+                char *dest = &output[width * (destRow + cnt) * 4];
+                for (size_t j = 0; j < width * 4; ++j)
+                    *dest++ = *src++;
+            }
+            i += 4;
             break;
         }
         case 'd': // new run
@@ -102,7 +106,7 @@ std::vector<char> DeltaTests::applyDelta(
             size_t length = (uint8_t)(delta[i+3]);
             i += 4;
 
-            std::cout << "new " << length << " at " << destCol << ", " << destRow << "\n";
+//            std::cout << "new " << length << " at " << destCol << ", " << destRow << "\n";
             CPPUNIT_ASSERT(length <= width - destCol);
 
             char *dest = &output[width * destRow * 4 + destCol * 4];
