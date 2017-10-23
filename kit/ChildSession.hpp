@@ -175,6 +175,7 @@ private:
     bool paste(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool insertFile(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool keyEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool dialogKeyEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool mouseEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool dialogMouseEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool dialogChildMouseEvent(const char* buffer, int length, const std::vector<std::string>& tokens);

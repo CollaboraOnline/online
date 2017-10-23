@@ -134,6 +134,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "paste" &&
              tokens[0] != "insertfile" &&
              tokens[0] != "key" &&
+             tokens[0] != "dialogkey" &&
              tokens[0] != "mouse" &&
              tokens[0] != "dialogmouse" &&
              tokens[0] != "dialogchildmouse" &&

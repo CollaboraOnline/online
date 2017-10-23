@@ -219,6 +219,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "paste" ||
                tokens[0] == "insertfile" ||
                tokens[0] == "key" ||
+               tokens[0] == "dialogkey" ||
                tokens[0] == "mouse" ||
                tokens[0] == "dialogmouse" ||
                tokens[0] == "dialogchildmouse" ||
@@ -261,6 +262,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "key")
         {
             return keyEvent(buffer, length, tokens);
+        }
+        else if (tokens[0] == "dialogkey")
+        {
+            return dialogKeyEvent(buffer, length, tokens);
         }
         else if (tokens[0] == "mouse")
         {
@@ -747,6 +752,38 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/, const std::v
     getLOKitDocument()->setView(_viewId);
 
     getLOKitDocument()->postKeyEvent(type, charcode, keycode);
+
+    return true;
+}
+
+bool ChildSession::dialogKeyEvent(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+{
+    int type, charcode, keycode;
+    std::string dialogId;
+    if (tokens.size() != 5 ||
+        !getTokenString(tokens[1], "dialogid", dialogId) ||
+        !getTokenKeyword(tokens[2], "type",
+                         {{"input", LOK_KEYEVENT_KEYINPUT}, {"up", LOK_KEYEVENT_KEYUP}},
+                         type) ||
+        !getTokenInteger(tokens[3], "char", charcode) ||
+        !getTokenInteger(tokens[4], "key", keycode))
+    {
+        sendTextFrame("error: cmd=dialogkey kind=syntax");
+        return false;
+    }
+
+    // Ctrl+Tab switching browser tabs,
+    // Doesn't insert tabs.
+    constexpr auto KEY_CTRL = 0x2000;
+    constexpr auto KEY_TAB = 0x0502;
+    if (keycode == (KEY_CTRL | KEY_TAB))
+    {
+        return true;
+    }
+
+    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+
+    getLOKitDocument()->postDialogKeyEvent(dialogId.c_str(), type, charcode, keycode);
 
     return true;
 }
