@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <cassert>
 #include <fstream>
+#include <iconv.h>
 #include <string>
 
 #include <Poco/DateTime.h>
@@ -664,7 +665,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
     // TODO: Check if this URI has write permission (canWrite = true)
     const auto size = getFileSize(_jailedFilePath);
 
-    const bool isSaveAs = !saveAsPath.empty();
+    const bool isSaveAs = !saveAsPath.empty() && !saveAsFilename.empty();
 
     Poco::URI uriObject(_uri);
     uriObject.setPath(isSaveAs? uriObject.getPath(): uriObject.getPath() + "/contents");
@@ -701,7 +702,36 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         {
             // save as
             request.set("X-WOPI-Override", "PUT_RELATIVE");
-            request.set("X-WOPI-RelativeTarget", saveAsFilename);
+
+            // the suggested target has to be in UTF-7; default to extension
+            // only when the conversion fails
+            std::string suggestedTarget = "." + Poco::Path(saveAsFilename).getExtension();
+
+            iconv_t cd = iconv_open("UTF-7", "UTF-8");
+            if (cd == (iconv_t) -1)
+                LOG_ERR("Failed to initialize iconv for UTF-7 conversion, using '" << suggestedTarget << "'.");
+            else
+            {
+                std::vector<char> input(saveAsFilename.begin(), saveAsFilename.end());
+                std::vector<char> buffer(8 * saveAsFilename.size());
+
+                char* in = &input[0];
+                size_t in_left = input.size();
+                char* out = &buffer[0];
+                size_t out_left = buffer.size();
+
+                if (iconv(cd, &in, &in_left, &out, &out_left) == (size_t) -1)
+                    LOG_ERR("Failed to convert '" << saveAsFilename << "' to UTF-7, using '" << suggestedTarget << "'.");
+                else
+                {
+                    // conversion succeeded
+                    suggestedTarget = std::string(&buffer[0], buffer.size() - out_left);
+                    LOG_TRC("Converted '" << saveAsFilename << "' to UTF-7 as '" << suggestedTarget << "'.");
+                }
+            }
+
+            request.set("X-WOPI-SuggestedTarget", suggestedTarget);
+
             request.set("X-WOPI-Size", std::to_string(size));
         }
 
