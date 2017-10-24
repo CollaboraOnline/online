@@ -33,7 +33,8 @@ public:
 
     void assertPutFileRelativeRequest(const Poco::Net::HTTPRequest& request) override
     {
-        CPPUNIT_ASSERT_EQUAL(std::string("/path/to/hello world.txt"), request.get("X-WOPI-RelativeTarget"));
+        // spec says UTF-7...
+        CPPUNIT_ASSERT_EQUAL(std::string("/jan/hole+AWE-ovsk+AP0-/hello world.txt"), request.get("X-WOPI-SuggestedTarget"));
 
         exitTest(TestResult::Ok);
     }
@@ -49,7 +50,7 @@ public:
                 initWebsocket("/wopi/files/0?access_token=anything");
 
                 helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "load url=" + _wopiSrc, testName);
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "saveas url=wopi:///path/to/hello%20world.txt", testName);
+                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "saveas url=wopi:///jan/hole%C5%A1ovsk%C3%BD/hello%20world.txt", testName);
                 SocketPoll::wakeupWorld();
 
                 _phase = Phase::Polling;
