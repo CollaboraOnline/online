@@ -362,7 +362,7 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_onInitMenu: function (e) {
-		if (e.commandName === '.uno:LanguageStatus') {
+		if (e.commandName === '.uno:LanguageStatus' && L.Util.isArray(e.commandValues)) {
 			var resetLang = _('Reset to Default Language');
 			$menuSelection = $('#menu-noneselection').parent();
 			$menuParagraph = $('#menu-noneparagraph').parent();
