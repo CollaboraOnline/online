@@ -50,7 +50,7 @@ static void handleSysSignal(int /* signal */,
                             siginfo_t *info,
                             void *context)
 {
-	ucontext_t *uctx = reinterpret_cast<ucontext_t *>(context);
+	ucontext_t *uctx = static_cast<ucontext_t *>(context);
 
     Log::signalLogPrefix();
     Log::signalLog("SIGSYS trapped with code: ");
