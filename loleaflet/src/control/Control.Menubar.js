@@ -212,6 +212,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Edit'), type: 'menu', menu: [
 				{name: _('Undo'), type: 'unocommand', uno: '.uno:Undo'},
 				{name: _('Redo'), type: 'unocommand', uno: '.uno:Redo'},
+				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
 				{name: _('Cut'), type: 'unocommand', uno: '.uno:Cut'},
 				{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
@@ -279,6 +280,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Edit'), type: 'menu', menu: [
 				{name: _('Undo'), type: 'unocommand', uno: '.uno:Undo'},
 				{name: _('Redo'), type: 'unocommand', uno: '.uno:Redo'},
+				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
 				{name: _('Cut'), type: 'unocommand', uno: '.uno:Cut'},
 				{name: _('Copy'), type: 'unocommand', uno: '.uno:Copy'},
