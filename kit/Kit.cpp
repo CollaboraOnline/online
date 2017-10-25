@@ -845,7 +845,7 @@ public:
         ws->sendFrame(output.data(), output.size(), WebSocket::FRAME_BINARY);
     }
 
-    void renderDialog(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
+    void renderDialog(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws, bool child)
     {
         assert(ws && "Expected a non-null websocket.");
 
@@ -870,14 +870,19 @@ public:
         int nWidth = nCanvasWidth;
         int nHeight = nCanvasHeight;
         Timestamp timestamp;
-        _loKitDocument->paintDialog(tokens[1].c_str(), pixmap.data(), nWidth, nHeight);
+        if (child)
+            _loKitDocument->paintActiveFloatingWindow(tokens[1].c_str(), pixmap.data(), nWidth, nHeight);
+        else
+            _loKitDocument->paintDialog(tokens[1].c_str(), pixmap.data(), nWidth, nHeight);
+
         const double area = nWidth * nHeight;
         const auto elapsed = timestamp.elapsed();
-        LOG_TRC("paintDialog for " << tokens[1] << " returned with size" << nWidth << "X" << nHeight
+        LOG_TRC((child ? std::string("paintActiveFloatingWindow") : std::string("paintDialog")) +
+                " for " << tokens[1] << " returned with size" << nWidth << "X" << nHeight
                 << " and rendered in " << (elapsed/1000.) <<
                 " ms (" << area / elapsed << " MP/s).");
 
-        const std::string response = "dialogpaint: id=" + tokens[1] + " width=" + std::to_string(nWidth) + " height=" + std::to_string(nHeight) + "\n";
+        const std::string response = std::string(child ? "dialogchildpaint:" : "dialogpaint:") + " id=" + tokens[1] + " width=" + std::to_string(nWidth) + " height=" + std::to_string(nHeight) + "\n";
         std::vector<char> output;
         output.reserve(response.size() + pixmapDataSize);
         output.resize(response.size());
@@ -886,66 +891,11 @@ public:
         // TODO: use png cache for dialogs too
         if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, nWidth, nHeight, nCanvasWidth, nCanvasHeight, output, LOK_TILEMODE_RGBA))
         {
-            //FIXME: Return error.
-            //sendTextFrame("error: cmd=tile kind=failure");
-
-            LOG_ERR("Failed to encode dialog into PNG.");
+            LOG_ERR("Failed to encode into PNG.");
             return;
         }
 
-        LOG_TRC("Sending render-dialog response (" << output.size() << " bytes) for: " << response);
-        ws->sendFrame(output.data(), output.size(), WebSocket::FRAME_BINARY);
-    }
-
-    void renderDialogChild(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
-    {
-        assert(ws && "Expected a non-null websocket.");
-
-        const int nCanvasWidth = 800;
-        const int nCanvasHeight = 600;
-        size_t pixmapDataSize = 4 * nCanvasWidth * nCanvasHeight;
-        std::vector<unsigned char> pixmap(pixmapDataSize);
-
-        std::unique_lock<std::mutex> lock(_documentMutex);
-        if (!_loKitDocument)
-        {
-            LOG_ERR("Dialog rendering requested before loading document.");
-            return;
-        }
-
-        if (_loKitDocument->getViewsCount() <= 0)
-        {
-            LOG_ERR("Dialog rendering requested without views.");
-            return;
-        }
-
-        int nWidth = nCanvasWidth;
-        int nHeight = nCanvasHeight;
-        Timestamp timestamp;
-        _loKitDocument->paintActiveFloatingWindow(tokens[1].c_str(), pixmap.data(), nWidth, nHeight);
-        const double area = nWidth * nHeight;
-        const auto elapsed = timestamp.elapsed();
-        LOG_TRC("paintActiveFloatingWindow for " << tokens[1] << " returned with size" << nWidth << "X" << nHeight
-                << " and rendered in " << (elapsed/1000.) <<
-                " ms (" << area / elapsed << " MP/s).");
-
-        const std::string response = "dialogchildpaint: id=" + tokens[1] + " width=" + std::to_string(nWidth) + " height=" + std::to_string(nHeight) + "\n";
-        std::vector<char> output;
-        output.reserve(response.size() + pixmapDataSize);
-        output.resize(response.size());
-        std::memcpy(output.data(), response.data(), response.size());
-
-        // TODO: use png cache for dialogs too
-        if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, nWidth, nHeight, nCanvasWidth, nCanvasHeight, output, LOK_TILEMODE_RGBA))
-        {
-            //FIXME: Return error.
-            //sendTextFrame("error: cmd=tile kind=failure");
-
-            LOG_ERR("Failed to encode dialog into PNG.");
-            return;
-        }
-
-        LOG_TRC("Sending render-dialogchild response (" << output.size() << " bytes) for: " << response);
+        LOG_TRC("Sending response (" << output.size() << " bytes) for: " << response);
         ws->sendFrame(output.data(), output.size(), WebSocket::FRAME_BINARY);
     }
 
@@ -1775,11 +1725,11 @@ private:
                 }
                 else if (tokens[0] == "dialog")
                 {
-                    renderDialog(tokens, _ws);
+                    renderDialog(tokens, _ws, false);
                 }
                 else if (tokens[0] == "dialogchild")
                 {
-                    renderDialogChild(tokens, _ws);
+                    renderDialog(tokens, _ws, true);
                 }
                 else if (LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
                 {
