@@ -286,9 +286,6 @@ public:
     /// which can then be obtained using getFileInfo()
     std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth);
 
-    /// returns
-    std::string createCopyFile(const Authorization& auth, const std::string& newFileName, const std::string& path);
-
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string loadStorageFileToLocal(const Authorization& auth) override;
 

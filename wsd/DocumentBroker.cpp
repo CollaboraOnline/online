@@ -724,29 +724,6 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     return false;
 }
 
-void DocumentBroker::saveFileAs(const std::string& sessionId, const std::string& newFileName, const std::string& path)
-{
-    const auto it = _sessions.find(sessionId);
-    if(it == _sessions.end())
-    {
-        return;
-    }
-
-    WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
-    if (wopiStorage != nullptr)
-    {
-        const std::string newUrl = wopiStorage->createCopyFile(it->second->getAuthorization(), newFileName, path);
-        if (!newUrl.empty())
-        {
-            it->second->sendTextFrame("saveas: " + newUrl + " " + newFileName);
-        }
-        else
-        {
-            it->second->sendTextFrame("error: cmd=saveas kind=saveasfailed");
-        }
-    }
-}
-
 void DocumentBroker::setLoaded()
 {
     if (!_isLoaded)

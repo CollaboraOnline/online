@@ -221,6 +221,7 @@ L.Map.WOPI = L.Handler.extend({
 			this._postMessage({msgId: 'Get_Export_Formats_Resp', args: exportFormatsResp});
 		}
 		else if (msg.MessageId === 'Action_SaveAs') {
+			/* TODO
 			if (msg.Values) {
 				if (msg.Values.name === null || msg.Values.name === undefined) {
 					msg.Values.name = '';
@@ -228,6 +229,7 @@ L.Map.WOPI = L.Handler.extend({
 				this.showBusy(_('Creating copy...'), false);
 				map.saveAs(msg.Values.name, msg.Values.path);
 			}
+			*/
 		}
 	},
 
