@@ -25,6 +25,13 @@
 
 class ChildSession;
 
+enum class LokEventTargetEnum
+{
+    Document,
+    Dialog,
+    DialogChild
+};
+
 /// An abstract interface that defines the
 /// DocumentManager interface and functionality.
 class IDocumentManager
@@ -174,11 +181,9 @@ private:
     bool getTextSelection(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool paste(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool insertFile(const char* buffer, int length, const std::vector<std::string>& tokens);
-    bool keyEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool keyEvent(const char* buffer, int length, const std::vector<std::string>& tokens, const LokEventTargetEnum target);
     bool dialogKeyEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
-    bool mouseEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
-    bool dialogMouseEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
-    bool dialogChildMouseEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool mouseEvent(const char* buffer, int length, const std::vector<std::string>& tokens, const LokEventTargetEnum target);
     bool unoCommand(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool selectText(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool selectGraphic(const char* buffer, int length, const std::vector<std::string>& tokens);
