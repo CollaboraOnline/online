@@ -324,7 +324,7 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
         return StorageBase::SaveResult::FAILED;
     }
 
-    return StorageBase::SaveResult::OK;
+    return StorageBase::SaveResult(StorageBase::SaveResult::OK);
 }
 
 namespace {
@@ -674,7 +674,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
     LOG_INF("Uploading URI via WOPI [" << uriObject.toString() << "] from [" << _jailedFilePath + "].");
 
     std::ostringstream oss;
-    StorageBase::SaveResult saveResult = StorageBase::SaveResult::FAILED;
+    StorageBase::SaveResult saveResult(StorageBase::SaveResult::FAILED);
     try
     {
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
@@ -748,7 +748,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         std::istream& rs = psession->receiveResponse(response);
         Poco::StreamCopier::copyStream(rs, oss);
 
-        std::string wopiLog(isSaveAs? "WOPI::PutFileRelative": "WOPI::PutFile");
+        std::string wopiLog(isSaveAs? "WOPI::PutRelativeFile": "WOPI::PutFile");
         LOG_INF(wopiLog << " response: " << oss.str());
         LOG_INF(wopiLog << " uploaded " << size << " bytes from [" << filePath <<
                 "] -> [" << uriObject.toString() << "]: " <<
@@ -756,7 +756,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
 
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
         {
-            saveResult = StorageBase::SaveResult::OK;
+            saveResult.setResult(StorageBase::SaveResult::OK);
             Poco::JSON::Object::Ptr object;
             if (parseJSON(oss.str(), object))
             {
@@ -764,38 +764,49 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
                 LOG_TRC(wopiLog << " returns LastModifiedTime [" << lastModifiedTime << "].");
                 _fileInfo._modifiedTime = iso8601ToTimestamp(lastModifiedTime);
 
+                if (isSaveAs)
+                {
+                    const std::string name = getJSONValue<std::string>(object, "Name");
+                    LOG_TRC(wopiLog << " returns Name [" << name << "].");
+
+                    const std::string url = getJSONValue<std::string>(object, "Url");
+                    LOG_TRC(wopiLog << " returns Url [" << url << "].");
+
+                    saveResult.setSaveAsResult(name, url);
+                }
+
                 // Reset the force save flag now, if any, since we are done saving
                 // Next saves shouldn't be saved forcefully unless commanded
                 _forceSave = false;
             }
             else
             {
-                LOG_WRN("Invalid/Missing JSON found in " << wopiLog << " response");
+                LOG_WRN("Invalid or missing JSON in " << wopiLog << " HTTP_OK response");
             }
         }
         else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_REQUESTENTITYTOOLARGE)
         {
-            saveResult = StorageBase::SaveResult::DISKFULL;
+            saveResult.setResult(StorageBase::SaveResult::DISKFULL);
         }
         else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED)
         {
-            saveResult = StorageBase::SaveResult::UNAUTHORIZED;
+            saveResult.setResult(StorageBase::SaveResult::UNAUTHORIZED);
         }
         else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_CONFLICT)
         {
-            saveResult = StorageBase::SaveResult::CONFLICT;
+            saveResult.setResult(StorageBase::SaveResult::CONFLICT);
             Poco::JSON::Object::Ptr object;
             if (parseJSON(oss.str(), object))
             {
                 const unsigned loolStatusCode = getJSONValue<unsigned>(object, "LOOLStatusCode");
                 if (loolStatusCode == static_cast<unsigned>(LOOLStatusCode::DOC_CHANGED))
                 {
-                    saveResult = StorageBase::SaveResult::DOC_CHANGED;
+                    saveResult.setResult(StorageBase::SaveResult::DOC_CHANGED);
                 }
             }
             else
             {
-                LOG_WRN("Invalid/missing JSON in " << wopiLog << " response");
+                LOG_WRN("Invalid or missing JSON in " << wopiLog << " HTTP_CONFLICT response");
             }
         }
     }
@@ -803,7 +814,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
     {
         LOG_ERR("Cannot save file to WOPI storage uri [" + uriObject.toString() + "]. Error: " << pexc.displayText() <<
                 (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));
-        saveResult = StorageBase::SaveResult::FAILED;
+        saveResult.setResult(StorageBase::SaveResult::FAILED);
     }
 
     return saveResult;
@@ -819,7 +830,7 @@ std::string WebDAVStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
 StorageBase::SaveResult WebDAVStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::string& /*saveAsPath*/, const std::string& /*saveAsFilename*/)
 {
     // TODO: implement webdav PUT.
-    return StorageBase::SaveResult::OK;
+    return StorageBase::SaveResult(StorageBase::SaveResult::OK);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

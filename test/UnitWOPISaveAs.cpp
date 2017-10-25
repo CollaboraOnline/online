@@ -31,7 +31,7 @@ public:
     {
     }
 
-    void assertPutFileRelativeRequest(const Poco::Net::HTTPRequest& request) override
+    void assertPutRelativeFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         // spec says UTF-7...
         CPPUNIT_ASSERT_EQUAL(std::string("/jan/hole+AWE-ovsk+AP0-/hello world.txt"), request.get("X-WOPI-SuggestedTarget"));

@@ -675,7 +675,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
     assert(_storage && _tileCache);
     StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(auth, saveAsPath, saveAsFilename);
-    if (storageSaveResult == StorageBase::SaveResult::OK)
+    if (storageSaveResult.getResult() == StorageBase::SaveResult::OK)
     {
         if (!isSaveAs)
         {
@@ -697,12 +697,21 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         }
         else
         {
-            Log::debug() << "Saved As docKey [" << _docKey << "] to URI [" << uri
-                         << "] successfully.";
+            // normalize the url (mainly to " " -> "%20")
+            std::string url = Poco::URI(storageSaveResult.getSaveAsUrl()).toString();
+
+            // encode the name
+            std::string encodedName;
+            Poco::URI::encode(storageSaveResult.getSaveAsName(), "", encodedName);
+
+            it->second->sendTextFrame("saveas: url=" + url + " filename=" + encodedName);
+
+            Log::debug() << "Saved As docKey [" << _docKey << "] to URI [" << url
+                         << " with name '" << encodedName << "'] successfully.";
         }
         return true;
     }
-    else if (storageSaveResult == StorageBase::SaveResult::DISKFULL)
+    else if (storageSaveResult.getResult() == StorageBase::SaveResult::DISKFULL)
     {
         LOG_WRN("Disk full while saving docKey [" << _docKey << "] to URI [" << uri <<
                 "]. Making all sessions on doc read-only and notifying clients.");
@@ -714,18 +723,18 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             sessionIt.second->sendTextFrame("error: cmd=storage kind=savediskfull");
         }
     }
-    else if (storageSaveResult == StorageBase::SaveResult::UNAUTHORIZED)
+    else if (storageSaveResult.getResult() == StorageBase::SaveResult::UNAUTHORIZED)
     {
         LOG_ERR("Cannot save docKey [" << _docKey << "] to storage URI [" << uri << "]. Invalid or expired access token. Notifying client.");
         it->second->sendTextFrame("error: cmd=storage kind=saveunauthorized");
     }
-    else if (storageSaveResult == StorageBase::SaveResult::FAILED)
+    else if (storageSaveResult.getResult() == StorageBase::SaveResult::FAILED)
     {
         //TODO: Should we notify all clients?
         LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << uri << "]. Notifying client.");
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
     }
-    else if (storageSaveResult == StorageBase::SaveResult::DOC_CHANGED)
+    else if (storageSaveResult.getResult() == StorageBase::SaveResult::DOC_CHANGED)
     {
         LOG_ERR("PutFile says that Document changed in storage");
         _documentChangedInStorage = true;

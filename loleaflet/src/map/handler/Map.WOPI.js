@@ -221,15 +221,12 @@ L.Map.WOPI = L.Handler.extend({
 			this._postMessage({msgId: 'Get_Export_Formats_Resp', args: exportFormatsResp});
 		}
 		else if (msg.MessageId === 'Action_SaveAs') {
-			/* TODO
 			if (msg.Values) {
-				if (msg.Values.Filename === null || msg.Values.Filename === undefined) {
-					msg.Values.Filename = '';
+				if (msg.Values.Filename !== null && msg.Values.Filename !== undefined) {
+					this._map.showBusy(_('Creating copy...'), false);
+					map.saveAs('wopi:' + msg.Values.Filename);
 				}
-				this.showBusy(_('Creating copy...'), false);
-				map.saveAs(msg.Values.Filename);
 			}
-			*/
 		}
 	},
 

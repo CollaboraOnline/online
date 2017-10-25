@@ -992,11 +992,10 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
     Poco::URI::encode(url, "", encodedURL);
     Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
 
-    sendTextFrame("saveas: url=" + encodedURL + " wopifilename=" + encodedWopiFilename);
-    std::string successStr = success ? "true" : "false";
-    sendTextFrame("unocommandresult: {"
-            "\"commandName\":\"saveas\","
-            "\"success\":\"" + successStr + "\"}");
+    if (success)
+        sendTextFrame("saveas: url=" + encodedURL + " filename=" + encodedWopiFilename);
+    else
+        sendTextFrame("error: cmd=storage kind=savefailed");
 
     return true;
 }

@@ -664,7 +664,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
 
         std::string encodedWopiFilename;
-        if (!getTokenString(tokens[2], "wopifilename", encodedWopiFilename))
+        if (!getTokenString(tokens[2], "filename", encodedWopiFilename))
         {
             LOG_ERR("Bad syntax for: " << firstLine);
             return false;
@@ -703,11 +703,11 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             // Normal SaveAs - save to Storage and log result.
             if (resultURL.getScheme() == "file" && !resultURL.getPath().empty())
             {
+                // this also sends the saveas: result
                 docBroker->saveAsToStorage(getId(), resultURL.getPath(), wopiFilename);
             }
-
-            if (!isCloseFrame())
-                forwardToClient(payload);
+            else
+                sendTextFrame("error: cmd=storage kind=savefailed");
         }
         else
         {

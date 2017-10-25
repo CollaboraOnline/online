@@ -562,10 +562,9 @@ L.Socket = L.Class.extend({
 			this._map._docLayer._debugRenderCount = command.rendercount;
 		}
 		else if (textMsg.startsWith('saveas:')) {
-			textMsg = (textMsg.substring(7)).trim();
-			// var url = textMsg.substring(0, textMsg.indexOf(' '));
-			// var fileName = textMsg.substring(textMsg.indexOf(' '));
-			/// redirect or not?
+			this._map.hideBusy();
+			// var url = command.url; // WOPI url - if needed at some stage
+			// var name = command.name; TODO dialog that the file was saved as "name"
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			//FIXME: We should get statusindicator when saving too, no?
@@ -792,6 +791,9 @@ L.Socket = L.Class.extend({
 			}
 			else if (tokens[i].substring(0, 5) === 'char=') {
 				command.char = tokens[i].substring(5);
+			}
+			else if (tokens[i].substring(0, 4) === 'url=') {
+				command.url = tokens[i].substring(4);
 			}
 			else if (tokens[i].substring(0, 7) === 'viewid=') {
 				command.viewid = tokens[i].substring(7);

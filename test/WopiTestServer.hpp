@@ -64,7 +64,7 @@ public:
     {
     }
 
-    virtual void assertPutFileRelativeRequest(const Poco::Net::HTTPRequest& /*request*/)
+    virtual void assertPutRelativeFileRequest(const Poco::Net::HTTPRequest& /*request*/)
     {
     }
 
@@ -140,17 +140,14 @@ protected:
         }
         else if (request.getMethod() == "POST" && (uriReq.getPath() == "/wopi/files/0" || uriReq.getPath() == "/wopi/files/1"))
         {
-            LOG_INF("Fake wopi host request, handling PutFileRelative: " << uriReq.getPath());
+            LOG_INF("Fake wopi host request, handling PutRelativeFile: " << uriReq.getPath());
 
             CPPUNIT_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
 
-            assertPutFileRelativeRequest(request);
+            assertPutRelativeFileRequest(request);
 
-            Poco::URI wopiURL(helpers::getTestServerURI() + "/wopi/files/1");
-            std::string url;
-            Poco::URI::encode(wopiURL.toString(), ":/?", url);
-
-            std::string content = "{ \"Name\":\"hello world.txt\", \"Url\":\"" + url + "\" }";
+            std::string wopiURL = helpers::getTestServerURI() + "/something wopi/files/1?access_token=anything";
+            std::string content = "{ \"Name\":\"hello world.txt\", \"Url\":\"" + wopiURL + "\" }";
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
