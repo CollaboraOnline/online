@@ -236,8 +236,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "saveas")
     {
         std::string newFileName, path;
-        getTokenString(tokens[1], "fileName", newFileName);
-        getTokenString(tokens[2], "path", path);
+        if (tokens.size() > 1)
+            getTokenString(tokens[1], "fileName", newFileName);
+
+        if (tokens.size() > 2)
+            getTokenString(tokens[2], "path", path);
+
         docBroker->saveFileAs(getId(), newFileName, path);
     }
     else if (tokens[0] == "save")
