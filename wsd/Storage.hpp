@@ -53,14 +53,53 @@ public:
         size_t _size;
     };
 
-    enum class SaveResult
+    class SaveResult
     {
-        OK,
-        DISKFULL,
-        UNAUTHORIZED,
-        DOC_CHANGED, /* Document changed in storage */
-        CONFLICT,
-        FAILED
+    public:
+        enum Result
+        {
+            OK,
+            DISKFULL,
+            UNAUTHORIZED,
+            DOC_CHANGED, /**< Document changed in storage */
+            CONFLICT,
+            FAILED
+        };
+
+        SaveResult(Result result) : _result(result)
+        {
+        }
+
+        void setResult(Result result)
+        {
+            _result = result;
+        }
+
+        Result getResult() const
+        {
+            return _result;
+        }
+
+        void setSaveAsResult(const std::string& name, const std::string& url)
+        {
+            _saveAsName = name;
+            _saveAsUrl = url;
+        }
+
+        const std::string& getSaveAsName() const
+        {
+            return _saveAsName;
+        }
+
+        const std::string& getSaveAsUrl() const
+        {
+            return _saveAsUrl;
+        }
+
+    private:
+        Result _result;
+        std::string _saveAsName;
+        std::string _saveAsUrl;
     };
 
     enum class LOOLStatusCode

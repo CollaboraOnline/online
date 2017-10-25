@@ -112,6 +112,8 @@ saveas url=<url> format=<format> options=<options>
 
     <url> is a URL, encoded. <format> is also URL-encoded, i.e. spaces as %20 and it can be empty
     options are the whole rest of the line, not URL-encoded, and can be empty
+    If <url> uses 'wopi:' as the protocol, the path is treated as the path on
+    the wopi host.
 
 selecttext type=<type> x=<x> y=<y>
 
@@ -307,6 +309,12 @@ pong rendercount=<num>
     sent in reply to a 'ping' message, where <num> is the total number
     of rendered tiles of the document.
 
+saveas: url=<url> name=<name>
+
+    <url> is a wopi URL of the newly created file, including the access token.
+    <name> is the resulting name (without path) that was created on the wopi
+    host. It can differ from what was requested in case the file already existed.
+
 status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height> viewid=<viewId> [partNames]
 
     <typeName> is 'text, 'spreadsheet', 'presentation', 'drawing' or 'other. Others are numbers.
@@ -449,10 +457,11 @@ nextmessage: size=<upperlimit>
     one doesn't need to use a pre-allocated buffer when receiving
     WebSocket messages, this will go away.
 
-saveas: url=<url>
+saveas: url=<url> filename=<filename>
 
     <url> is a URL of the destination, encoded. Sent from the child to the
     parent after a saveAs() completed.
+    <filename> is the resulting jailed filename of the newly created file.
 
 client-<sessionId> <Payload Message>
 

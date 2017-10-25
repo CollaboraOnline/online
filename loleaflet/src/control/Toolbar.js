@@ -93,13 +93,10 @@ L.Map.include({
 		}
 
 		this.showBusy(_('Saving...'), false);
-		// TakeOwnership: we are performing a 'real' save-as, the document
-		// is just getting a new place, ie. it will get the
-		// '.uno:ModifiedStatus' upon completion.
 		this._socket.sendMessage('saveas ' +
 			'url=' + url + ' ' +
 			'format=' + format + ' ' +
-			'options=TakeOwnership,' + options);
+			'options=' + options);
 	},
 
 	applyStyle: function (style, familyName) {
