@@ -223,11 +223,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "dialog")
     {
-        return sendDialog(buffer, length, tokens, docBroker);
+        return sendDialog(buffer, length, tokens, docBroker, false);
     }
     else if (tokens[0] == "dialogchild")
     {
-        return sendDialogChild(buffer, length, tokens, docBroker);
+        return sendDialog(buffer, length, tokens, docBroker, true);
     }
     else if (tokens[0] == "tilecombine")
     {
@@ -436,32 +436,20 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const std:
 }
 
 bool ClientSession::sendDialog(const char * /*buffer*/, int /*length*/, const std::vector<std::string>& tokens,
-                               const std::shared_ptr<DocumentBroker>& docBroker)
+                               const std::shared_ptr<DocumentBroker>& docBroker, bool child)
 {
+    const std::string dialogCmd = child ? "dialogchild" : "dialog";
     try
     {
-        docBroker->handleDialogRequest(tokens[1], shared_from_this());
+        if (child)
+            docBroker->handleDialogRequest(tokens[1], shared_from_this(), true);
+        else
+            docBroker->handleDialogRequest(tokens[1], shared_from_this(), false);
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Failed to process dialog command: " << exc.what());
-        return sendTextFrame("error: cmd=dialog kind=invalid");
-    }
-
-    return true;
-}
-
-bool ClientSession::sendDialogChild(const char * /*buffer*/, int /*length*/, const std::vector<std::string>& tokens,
-                                    const std::shared_ptr<DocumentBroker>& docBroker)
-{
-    try
-    {
-        docBroker->handleDialogChildRequest(tokens[1], shared_from_this());
-    }
-    catch (const std::exception& exc)
-    {
-        LOG_ERR("Failed to process dialogchild command: " << exc.what());
-        return sendTextFrame("error: cmd=dialogchild kind=invalid");
+        LOG_ERR("Failed to process " + dialogCmd + " command: " << exc.what());
+        return sendTextFrame("error: cmd=" + dialogCmd + " kind=invalid");
     }
 
     return true;

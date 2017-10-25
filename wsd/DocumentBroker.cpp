@@ -1077,11 +1077,11 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
         }
         else if (command == "dialogpaint:")
         {
-            handleDialogPaintResponse(payload);
+            handleDialogPaintResponse(payload, false);
         }
         else if (command == "dialogchildpaint:")
         {
-            handleDialogChildPaintResponse(payload);
+            handleDialogPaintResponse(payload, true);
         }
         else if (command == "errortoall:")
         {
@@ -1175,25 +1175,14 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
 }
 
 void DocumentBroker::handleDialogRequest(const std::string& dialogId,
-                                         const std::shared_ptr<ClientSession>& /*session*/)
+                                         const std::shared_ptr<ClientSession>& /*session*/,
+                                         bool child)
 {
     assertCorrectThread();
     std::unique_lock<std::mutex> lock(_mutex);
-
-    LOG_DBG("Sending dialog render request for dialog " << dialogId);
-    const std::string request = "dialog " + dialogId;
-    _childProcess->sendTextFrame(request);
-}
-
-void DocumentBroker::handleDialogChildRequest(const std::string& dialogId,
-                                              const std::shared_ptr<ClientSession>& /*session*/)
-{
-    assertCorrectThread();
-    std::unique_lock<std::mutex> lock(_mutex);
-
-    LOG_DBG("Sending dialog child render request for dialog " << dialogId);
-    const std::string request = "dialogchild " + dialogId;
-    _childProcess->sendTextFrame(request);
+    const std::string dialogCmd = child ? "dialogchild" : "dialog";
+    LOG_DBG("Sending " + dialogCmd +  " render request for dialog " << dialogId);
+    _childProcess->sendTextFrame(dialogCmd + " " + dialogId);
 }
 
 void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
@@ -1296,35 +1285,10 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
     }
 }
 
-void DocumentBroker::handleDialogPaintResponse(const std::vector<char>& payload)
+void DocumentBroker::handleDialogPaintResponse(const std::vector<char>& payload, bool child)
 {
     const std::string firstLine = getFirstLine(payload);
-    LOG_DBG("Handling dialogpaint: " << firstLine);
-
-    const auto length = payload.size();
-    if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
-    {
-        const auto buffer = payload.data();
-        const auto offset = firstLine.size() + 1;
-
-        auto msgPayload = std::make_shared<Message>(firstLine,
-                                                    Message::Dir::Out,
-                                                    payload.size());
-        msgPayload->append("\n", 1);
-        msgPayload->append(buffer + offset, payload.size() - offset);
-
-        std::unique_lock<std::mutex> lock(_mutex);
-        for (const auto& sessionIt : _sessions)
-        {
-            sessionIt.second->enqueueSendMessage(msgPayload);
-        }
-    }
-}
-
-void DocumentBroker::handleDialogChildPaintResponse(const std::vector<char>& payload)
-{
-    const std::string firstLine = getFirstLine(payload);
-    LOG_DBG("Handling dialogchildpaint: " << firstLine);
+    LOG_DBG("Handling " << (child ? "dialogchildpaint" : "dialogpaint") << " " << firstLine);
 
     const auto length = payload.size();
     if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
