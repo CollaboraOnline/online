@@ -480,9 +480,18 @@ L.Control.CharacterMap = L.Control.extend({
 
 	_onSymbolClick: function (e) {
 		var target = e.target || e.srcElement;
+		var realData;
+		if (typeof target.data !== 'undefined')
+		{
+			realData = target.data;
+		}
+		else if (target.childElementCount > 0)
+		{
+			realData = target.childNodes[0].data;
+		}
 		var encodedFont = window.encodeURIComponent(this._fontNames.options[this._fontNames.selectedIndex].value);
-		var encodedChar = window.encodeURIComponent(String.fromCharCode(target.data));
-		this._hexa.data = target.data;
+		var encodedChar = window.encodeURIComponent(String.fromCharCode(realData));
+		this._hexa.data = realData;
 		if (this.cacheGlyph[encodedFont + encodedChar]) {
 			this._preview.src = this.cacheGlyph[encodedFont + encodedChar].src;
 		} else {
