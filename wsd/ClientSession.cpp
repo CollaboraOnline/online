@@ -618,17 +618,26 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
     }
     else if (tokens.size() == 3 && tokens[0] == "saveas:")
     {
+        bool isConvertTo = static_cast<bool>(_saveAsSocket);
+
         std::string encodedURL;
         if (!getTokenString(tokens[1], "url", encodedURL))
         {
             LOG_ERR("Bad syntax for: " << firstLine);
-            return false;
+            // we must not return early with convert-to so that we clean up
+            // the session
+            if (!isConvertTo)
+            {
+                sendTextFrame("error: cmd=saveas kind=syntax");
+                return false;
+            }
         }
 
         std::string encodedWopiFilename;
-        if (!getTokenString(tokens[2], "filename", encodedWopiFilename))
+        if (!isConvertTo && !getTokenString(tokens[2], "filename", encodedWopiFilename))
         {
             LOG_ERR("Bad syntax for: " << firstLine);
+            sendTextFrame("error: cmd=saveas kind=syntax");
             return false;
         }
 
@@ -660,7 +669,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
         LOG_TRC("Save-as URL: " << resultURL.toString());
 
-        if (!_saveAsSocket)
+        if (!isConvertTo)
         {
             // Normal SaveAs - save to Storage and log result.
             if (resultURL.getScheme() == "file" && !resultURL.getPath().empty())

@@ -239,7 +239,11 @@ void HTTPServerTest::testConvertTo()
     form.set("format", "txt");
     form.addPart("data", new Poco::Net::FilePartSource(srcPath));
     form.prepareSubmit(request);
-    // If this results in a Poco::Net::ConnectionRefusedException, loolwsd is not running.
+
+    // FIXME From some reason we are getting Poco::Net::ConnectionRefusedException
+    // What happens is that the file is just partially transferred -
+    // ConvertToPartHandler::handlePart() gets just some 3.6k bytes; no idea
+    // why yet
     form.write(session->sendRequest(request));
 
     Poco::Net::HTTPResponse response;
