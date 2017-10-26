@@ -16,6 +16,13 @@
 
 #define ALLOW_UNALIGNED_READS true
 
+#if defined __clang__
+#define FALLTHROUGH [[clang::fallthrough]]
+#elif defined __GNUC__ && __GNUC__ >= 7
+#define FALLTHROUGH [[fallthrough]]
+#else
+#define FALLTHROUGH
+#endif
 //
 // short hash ... it could be used on any message,
 // but it's used by Spooky just for short messages.
@@ -80,36 +87,47 @@ void SpookyHash::Short(
     {
     case 15:
     d += ((uint64)u.p8[14]) << 48;
+    FALLTHROUGH;
     case 14:
         d += ((uint64)u.p8[13]) << 40;
+        FALLTHROUGH;
     case 13:
         d += ((uint64)u.p8[12]) << 32;
+        FALLTHROUGH;
     case 12:
         d += u.p32[2];
         c += u.p64[0];
         break;
     case 11:
         d += ((uint64)u.p8[10]) << 16;
+        FALLTHROUGH;
     case 10:
         d += ((uint64)u.p8[9]) << 8;
+        FALLTHROUGH;
     case 9:
         d += (uint64)u.p8[8];
+        FALLTHROUGH;
     case 8:
         c += u.p64[0];
         break;
     case 7:
         c += ((uint64)u.p8[6]) << 48;
+        FALLTHROUGH;
     case 6:
         c += ((uint64)u.p8[5]) << 40;
+        FALLTHROUGH;
     case 5:
         c += ((uint64)u.p8[4]) << 32;
+        FALLTHROUGH;
     case 4:
         c += u.p32[0];
         break;
     case 3:
         c += ((uint64)u.p8[2]) << 16;
+        FALLTHROUGH;
     case 2:
         c += ((uint64)u.p8[1]) << 8;
+        FALLTHROUGH;
     case 1:
         c += (uint64)u.p8[0];
         break;
