@@ -1997,7 +1997,7 @@ private:
                             URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
                             const std::string load = "load url=" + encodedFrom;
                             std::vector<char> loadRequest(load.begin(), load.end());
-                            clientSession->handleMessage(true, WebSocketHandler::WSOpCode::Text, loadRequest);
+                            clientSession->handleMessage(true, WSOpCode::Text, loadRequest);
 
                             // FIXME: Check for security violations.
                             Path toPath(docBroker->getPublicUri().getPath());
@@ -2009,7 +2009,7 @@ private:
                             // Convert it to the requested format.
                             const auto saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
                             std::vector<char> saveasRequest(saveas.begin(), saveas.end());
-                            clientSession->handleMessage(true, WebSocketHandler::WSOpCode::Text, saveasRequest);
+                            clientSession->handleMessage(true, WSOpCode::Text, saveasRequest);
                         });
                         });
 

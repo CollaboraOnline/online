@@ -15,7 +15,7 @@
 #include <string>
 
 #include <LOOLWebSocket.hpp>
-#include "net/WebSocketHandler.hpp"
+#include "net/Socket.hpp"
 
 class UnitBase;
 class UnitWSD;
@@ -23,6 +23,8 @@ class UnitKit;
 class UnitTimeout;
 class UnitHTTPServerRequest;
 class UnitHTTPServerResponse;
+
+class WebSocketHandler;
 
 // Forward declaration to avoid pulling the world here.
 namespace Poco
@@ -91,6 +93,12 @@ public:
     virtual bool filterSessionInput(Session *, const char */* buffer */,
                                     int /* length */,
                                     std::unique_ptr< std::vector<char> > & /* replace */)
+    {
+        return false;
+    }
+
+    /// Message that is about to be sent via the websocket.
+    virtual bool filterSendMessage(const char* /* data */, const size_t /* len */, const WSOpCode /* code */, const bool /* flush */, int& /*unitReturn*/)
     {
         return false;
     }

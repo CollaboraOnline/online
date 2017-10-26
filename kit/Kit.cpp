@@ -1453,7 +1453,7 @@ private:
                     vect.assign(data, data + size);
 
                     // TODO loolnb - this is probably wrong...
-                    session->handleMessage(/* fin = */ false, WebSocketHandler::WSOpCode::Binary, vect);
+                    session->handleMessage(/* fin = */ false, WSOpCode::Binary, vect);
                     return true;
                 }
             }
