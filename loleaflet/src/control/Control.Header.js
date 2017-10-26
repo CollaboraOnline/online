@@ -8,60 +8,77 @@ L.Control.Header = L.Control.extend({
 	},
 
 	initialize: function () {
+		this._headerCanvas = null;
 		this._clicks = 0;
 		this._current = -1;
 		this._selection = {start: -1, end: -1};
+		this._mouseOverIndex = undefined;
+		this._lastMouseOverIndex = undefined;
+		this._hitResizeArea = false;
+
+		// styles
+		this._backgroundColor = 'lightgray';
+		this._hoverColor = '#DDD';
+		this._borderColor = 'darkgray';
+		this._textColor = 'black';
+		this._font = '12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif';
+		this._cursor = 'pointer';
+		this._selectionTextColor = 'white';
+		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
 	},
 
 	mouseInit: function (element) {
 		L.DomEvent.on(element, 'mousedown', this._onMouseDown, this);
 	},
 
-	select: function (item) {
-		if (item && !L.DomUtil.hasClass(item, 'spreadsheet-header-selected')) {
-			L.DomUtil.addClass(item, 'spreadsheet-header-selected');
-		}
+	select: function (data, index) {
+		if (!data[index])
+			return;
+		data[index].selected = true;
+		this.drawHeaderEntry(index, false);
 	},
 
-	unselect: function (item) {
-		if (item && L.DomUtil.hasClass(item, 'spreadsheet-header-selected')) {
-			L.DomUtil.removeClass(item, 'spreadsheet-header-selected');
-		}
+	unselect: function (data, index) {
+		if (!data[index])
+			return;
+		data[index].selected = false;
+		this.drawHeaderEntry(index, false);
 	},
 
-	clearSelection: function (element) {
+	clearSelection: function (data) {
 		if (this._selection.start === -1 && this._selection.end === -1)
 			return;
-		var childs = element.children;
 		var start = (this._selection.start === -1) ? 0 : this._selection.start;
 		var end = this._selection.end + 1;
 		for (var iterator = start; iterator < end; iterator++) {
-			this.unselect(childs[iterator]);
+			this.unselect(data, iterator);
 		}
 
 		this._selection.start = this._selection.end = -1;
 		// after clearing selection, we need to select the header entry for the current cursor position,
 		// since we can't be sure that the selection clearing is due to click on a cell
 		// different from the one where the cursor is already placed
-		this.select(childs[this._current]);
+		this.select(data, this._current);
 	},
 
-	updateSelection: function(element, start, end) {
-		var childs = element.children;
+	updateSelection: function(data, start, end) {
+		if (!data)
+			return;
+
 		var x0 = 0, x1 = 0;
 		var itStart = -1, itEnd = -1;
 		var selected = false;
 		var iterator = 0;
-		for (var len = childs.length; iterator < len; iterator++) {
-			x0 = (iterator > 0 ? childs[iterator - 1].size : 0);
-			x1 = childs[iterator].size;
+		for (var len = data.length; iterator < len; iterator++) {
+			x0 = (iterator > 0 ? data[iterator - 1].pos : 0);
+			x1 = data[iterator].pos;
 			// 'start < x1' not '<=' or we get highlighted also the `start-row - 1` and `start-column - 1` headers
 			if (x0 <= start && start < x1) {
 				selected = true;
 				itStart = iterator;
 			}
 			if (selected) {
-				this.select(childs[iterator]);
+				this.select(data, iterator);
 			}
 			if (x0 <= end && end <= x1) {
 				itEnd = iterator;
@@ -72,7 +89,7 @@ L.Control.Header = L.Control.extend({
 		// if end is greater than the last fetched header position set itEnd to the max possible value
 		// without this hack selecting a whole row and then a whole column (or viceversa) leads to an incorrect selection
 		if (itStart !== -1 && itEnd === -1) {
-			itEnd = childs.length - 1;
+			itEnd = data.length - 1;
 		}
 
 		// we need to unselect the row (column) header entry for the current cell cursor position
@@ -80,48 +97,114 @@ L.Control.Header = L.Control.extend({
 		// does not start by clicking on a cell
 		if (this._current !== -1 && itStart !== -1 && itEnd !== -1) {
 			if (this._current < itStart || this._current > itEnd) {
-				this.unselect(childs[this._current]);
+				this.unselect(data, this._current);
 			}
 		}
 		if (this._selection.start !== -1 && itStart !== -1 && itStart > this._selection.start) {
 			for (iterator = this._selection.start; iterator < itStart; iterator++) {
-				this.unselect(childs[iterator]);
+				this.unselect(data, iterator);
 			}
 		}
 		if (this._selection.end !== -1 && itEnd !== -1 && itEnd < this._selection.end) {
 			for (iterator = itEnd + 1; iterator <= this._selection.end; iterator++) {
-				this.unselect(childs[iterator]);
+				this.unselect(data, iterator);
 			}
 		}
 		this._selection.start = itStart;
 		this._selection.end = itEnd;
 	},
 
-	updateCurrent: function (element, start) {
-		var childs = element.children;
+	updateCurrent: function (data, start) {
+		if (!data)
+			return;
 		if (start < 0) {
-			this.unselect(childs[this._current]);
+			this.unselect(data, this._current);
 			this._current = -1;
 			return;
 		}
 
 		var x0 = 0, x1 = 0;
-		for (var iterator = 0, len = childs.length; iterator < len; iterator++) {
-			x0 = (iterator > 0 ? childs[iterator - 1].size : 0);
-			x1 = childs[iterator].size;
-			if (x0 <= start && start <= x1) {
+		for (var iterator = 1, len = data.length; iterator < len; iterator++) {
+			x0 = (iterator > 0 ? data[iterator - 1].pos : 0);
+			x1 = data[iterator].pos;
+			if (x0 <= start && start < x1) {
 				// when a whole row (column) is selected the cell cursor is moved to the first column (row)
 				// but this action should not cause to select/unselect anything, on the contrary we end up
 				// with all column (row) header entries selected but the one where the cell cursor was
 				// previously placed
 				if (this._selection.start === -1 && this._selection.end === -1) {
-					this.unselect(childs[this._current]);
-					this.select(childs[iterator]);
+					this.unselect(data, this._current);
+					this.select(data, iterator);
 				}
 				this._current = iterator;
 				break;
 			}
 		}
+	},
+
+	_mouseEventToCanvasPos: function(canvas, evt) {
+		var rect = canvas.getBoundingClientRect();
+		return {
+			x: evt.clientX - rect.left,
+			y: evt.clientY - rect.top
+		};
+	},
+
+	_onMouseOut: function (e) {
+		if (this._mouseOverIndex) {
+			this.drawHeaderEntry(this._mouseOverIndex, false);
+			this._lastMouseOverIndex = this._mouseOverIndex; // used by context menu
+			this._mouseOverIndex = undefined;
+		}
+		this._hitResizeArea = false;
+		L.DomUtil.setStyle(this._headerCanvas, 'cursor', this._cursor);
+	},
+
+	_onCanvasMouseMove: function (e) {
+		var target = e.target || e.srcElement;
+
+		if (!target || this._dragging) {
+			return false;
+		}
+
+		var isMouseOverResizeArea = false;
+		var pos = this._getPos(this._mouseEventToCanvasPos(this._headerCanvas, e));
+		pos = pos - this._position;
+
+		var mouseOverIndex = this._mouseOverIndex;
+		for (var iterator = 1; iterator < this._data.length; ++iterator) {
+			var start = this._data[iterator - 1].pos;
+			var end = this._data[iterator].pos;
+			if (pos > start && pos <= end) {
+				mouseOverIndex = iterator;
+				var resizeAreaStart = Math.max(start, end - 3);
+				isMouseOverResizeArea = (pos > resizeAreaStart);
+				break;
+			}
+		}
+
+		if (mouseOverIndex !== this._mouseOverIndex) {
+			if (this._mouseOverIndex) {
+				this.drawHeaderEntry(this._mouseOverIndex, false);
+			}
+			if (mouseOverIndex) {
+				this.drawHeaderEntry(mouseOverIndex, true);
+			}
+		}
+
+		if (isMouseOverResizeArea !== this._hitResizeArea) {
+			if (isMouseOverResizeArea) {
+				L.DomEvent.off(this._headerCanvas, 'click', this._onHeaderClick, this);
+			}
+			else {
+				L.DomEvent.on(this._headerCanvas, 'click', this._onHeaderClick, this);
+			}
+			var cursor = isMouseOverResizeArea ? this.options.cursor : this._cursor;
+			L.DomUtil.setStyle(this._headerCanvas, 'cursor', cursor);
+			this._hitResizeArea = isMouseOverResizeArea;
+		}
+
+		this._mouseOverIndex = mouseOverIndex;
 	},
 
 	_onMouseDown: function (e) {
@@ -131,14 +214,21 @@ L.Control.Header = L.Control.extend({
 			return false;
 		}
 
+		if (!this._hitResizeArea)
+			return;
+
 		L.DomUtil.disableImageDrag();
 		L.DomUtil.disableTextSelection();
 
 		L.DomEvent.stopPropagation(e);
+
+		L.DomEvent.off(target, 'mousemove', this._onCanvasMouseMove, this);
+		L.DomEvent.off(target, 'mouseout', this._onMouseOut, this);
+
 		L.DomEvent.on(document, 'mousemove', this._onMouseMove, this);
 		L.DomEvent.on(document, 'mouseup', this._onMouseUp, this);
 
-		var rect = target.parentNode.getBoundingClientRect();
+		var rect = this.getHeaderEntryBoundingClientRect();
 		this._start = new L.Point(rect.left, rect.top);
 		this._offset = new L.Point(rect.right - e.clientX, rect.bottom - e.clientY);
 		this._item = target;
@@ -150,13 +240,6 @@ L.Control.Header = L.Control.extend({
 		this._dragging = true;
 		L.DomEvent.preventDefault(e);
 
-		var target = e.target || e.srcElement;
-		if (target.style.cursor !== this.options.cursor &&
-		   (L.DomUtil.hasClass(target, 'spreadsheet-header-column-text') ||
-		    L.DomUtil.hasClass(target, 'spreadsheet-header-row-text'))) {
-			target.style.cursor = this.options.cursor;
-		}
-
 		this.onDragMove(this._item, this._start, this._offset, e);
 	},
 
@@ -166,6 +249,9 @@ L.Control.Header = L.Control.extend({
 
 		L.DomUtil.enableImageDrag();
 		L.DomUtil.enableTextSelection();
+
+		L.DomEvent.on(this._item, 'mousemove', this._onCanvasMouseMove, this);
+		L.DomEvent.on(this._item, 'mouseout', this._onMouseOut, this);
 
 		if (this._dragging) {
 			this.onDragEnd(this._item, this._start, this._offset, e);
@@ -182,5 +268,8 @@ L.Control.Header = L.Control.extend({
 	onDragStart: function () {},
 	onDragMove: function () {},
 	onDragEnd: function () {},
-	onDragClick: function () {}
+	onDragClick: function () {},
+	getHeaderEntryBoundingClientRect: function () {},
+	drawHeaderEntry: function () {},
+	_getPos: function () {}
 });

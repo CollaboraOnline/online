@@ -25,50 +25,76 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var cornerHeader = L.DomUtil.create('div', 'spreadsheet-header-corner', rowColumnFrame);
 		L.DomEvent.on(cornerHeader, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.addListener(cornerHeader, 'click', this._onCornerHeaderClick, this);
-		var headersContainer = L.DomUtil.create('div', 'spreadsheet-header-columns-container', rowColumnFrame);
-		this._columns = L.DomUtil.create('div', 'spreadsheet-header-columns', headersContainer);
+		this._headersContainer = L.DomUtil.create('div', 'spreadsheet-header-columns-container', rowColumnFrame);
 
+		this._headerCanvas = L.DomUtil.create('canvas', 'spreadsheet-header-columns', this._headersContainer);
+		this._canvasContext = this._headerCanvas.getContext('2d');
+		this._headerCanvas.width = parseInt(L.DomUtil.getStyle(this._headersContainer, 'width'));
+		this._headerCanvas.height = parseInt(L.DomUtil.getStyle(this._headersContainer, 'height'));
+
+		L.DomUtil.setStyle(this._headerCanvas, 'cursor', this._cursor);
+
+		L.DomEvent.on(this._headerCanvas, 'mousemove', this._onCanvasMouseMove, this);
+		L.DomEvent.on(this._headerCanvas, 'mouseout', this._onMouseOut, this);
+		L.DomEvent.on(this._headerCanvas, 'click', this._onHeaderClick, this);
+
+		this._leftmostColumn = 0;
 		this._leftOffset = 0;
 		this._position = 0;
 
 		var colHeaderObj = this;
 		$.contextMenu({
-			selector: '.spreadsheet-header-column-text',
+			selector: '.spreadsheet-header-columns',
 			className: 'loleaflet-font',
 			items: {
 				'insertcolbefore': {
 					name: _('Insert column before'),
 					callback: function(key, options) {
-						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
-						colHeaderObj.insertColumn.call(colHeaderObj, colAlpha);
+						var index = colHeaderObj._lastMouseOverIndex;
+						if (index) {
+							var colAlpha = colHeaderObj._data[index].text;
+							colHeaderObj.insertColumn.call(colHeaderObj, colAlpha);
+						}
 					}
 				},
 				'deleteselectedcol': {
 					name: _('Delete column'),
 					callback: function(key, options) {
-						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
-						colHeaderObj.deleteColumn.call(colHeaderObj, colAlpha);
+						var index = colHeaderObj._lastMouseOverIndex;
+						if (index) {
+							var colAlpha = colHeaderObj._data[index].text;
+							colHeaderObj.deleteColumn.call(colHeaderObj, colAlpha);
+						}
 					}
 				},
 				'optimalwidth': {
 					name: _('Optimal Width') + '...',
 					callback: function(key, options) {
-						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
-						colHeaderObj.optimalWidth.call(colHeaderObj, colAlpha);
+						var index = colHeaderObj._lastMouseOverIndex;
+						if (index) {
+							var colAlpha = colHeaderObj._data[index].text;
+							colHeaderObj.optimalWidth.call(colHeaderObj, colAlpha);
+						}
 					}
 				},
 				'hideColumn': {
 					name: _('Hide Columns'),
 					callback: function(key, options) {
-						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
-						colHeaderObj.hideColumn.call(colHeaderObj, colAlpha);
+						var index = colHeaderObj._lastMouseOverIndex;
+						if (index) {
+							var colAlpha = colHeaderObj._data[index].text;
+							colHeaderObj.hideColumn.call(colHeaderObj, colAlpha);
+						}
 					}
 				},
 				'showColumn': {
 					name: _('Show Columns'),
 					callback: function(key, options) {
-						var colAlpha = options.$trigger.attr('rel').split('spreadsheet-column-')[1];
-						colHeaderObj.showColumn.call(colHeaderObj, colAlpha);
+						var index = colHeaderObj._lastMouseOverIndex;
+						if (index) {
+							var colAlpha = colHeaderObj._data[index].text;
+							colHeaderObj.showColumn.call(colHeaderObj, colAlpha);
+						}
 					}
 				}
 			},
@@ -136,71 +162,145 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	_onClearSelection: function (e) {
-		this.clearSelection(this._columns);
+		this.clearSelection(this._data);
 	},
 
 	_onUpdateSelection: function (e) {
-		this.updateSelection(this._columns, e.start.x, e.end.x);
+		var data = this._data;
+		if (!data)
+			return;
+		var start = e.start.x;
+		var end = e.end.x;
+		var twips;
+		if (start !== -1) {
+			twips = new L.Point(start, start);
+			start = Math.round(data.converter.call(data.context, twips).x);
+		}
+		if (end !== -1) {
+			twips = new L.Point(end, end);
+			end = Math.round(data.converter.call(data.context, twips).x);
+		}
+		this.updateSelection(data, start, end);
 	},
 
 	_onUpdateCurrentColumn: function (e) {
-		this.updateCurrent(this._columns, e.x);
+		var data = this._data;
+		if (!data)
+			return;
+		var x = e.x;
+		if (x !== -1) {
+			var twips = new L.Point(x, x);
+			x = Math.round(data.converter.call(data.context, twips).x);
+		}
+		this.updateCurrent(data, x);
 	},
 
 	_updateColumnHeader: function () {
 		this._map.fire('updaterowcolumnheaders', {x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
 	},
 
+	drawHeaderEntry: function (index, isOver) {
+		if (!index || index <= 0 || index >= this._data.length)
+			return;
+
+		var ctx = this._canvasContext;
+		var content = this._data[index].text;
+		var start = this._data[index - 1].pos - this._leftOffset;
+		var end = this._data[index].pos - this._leftOffset;
+		var width = end - start;
+		var height = this._headerCanvas.height;
+		var isHighlighted = this._data[index].selected;
+
+		if (width <= 0)
+			return;
+
+		ctx.save();
+		ctx.translate(this._position + this._leftOffset, 0);
+		// background gradient
+		var selectionBackgroundGradient = null;
+		if (isHighlighted) {
+			selectionBackgroundGradient = ctx.createLinearGradient(start, 0, start, height);
+			selectionBackgroundGradient.addColorStop(0, this._selectionBackgroundGradient[0]);
+			selectionBackgroundGradient.addColorStop(0.5, this._selectionBackgroundGradient[1]);
+			selectionBackgroundGradient.addColorStop(1, this._selectionBackgroundGradient[2]);
+		}
+		// clip mask
+		ctx.beginPath();
+		ctx.rect(start, 0, width, height);
+		ctx.clip();
+		// draw background
+		ctx.fillStyle = isHighlighted ? selectionBackgroundGradient : isOver ? this._hoverColor : this._backgroundColor;
+		ctx.fillRect(start, 0, width, height);
+		// draw text content
+		ctx.fillStyle = isHighlighted ? this._selectionTextColor : this._textColor;
+		ctx.font = this._font;
+		ctx.textAlign = 'center';
+		ctx.textBaseline = 'middle';
+		ctx.fillText(content, end - width / 2, height / 2);
+		// draw row separator
+		ctx.fillStyle = this._borderColor;
+		ctx.fillRect(end -1, 0, 1, height);
+		ctx.restore();
+	},
+
+	getHeaderEntryBoundingClientRect: function (index) {
+		if (!index)
+			index = this._mouseOverIndex; // use last mouse over position
+
+		if (!index || !this._data[index])
+			return;
+
+		var rect = this._headerCanvas.getBoundingClientRect();
+
+		var colStart = this._data[index - 1].pos + this._position;
+		var colEnd = this._data[index].pos + this._position;
+
+		var left = rect.left + colStart;
+		var right = rect.left + colEnd;
+		var top = rect.top;
+		var bottom = rect.bottom;
+		return { left: left, right: right, top: top, bottom: bottom };
+	},
+
 	viewRowColumnHeaders: function (e) {
 		if (e.data.columns && e.data.columns.length > 0) {
 			this.fillColumns(e.data.columns, e.converter, e.context);
-			L.DomUtil.setStyle(this._columns, 'left', (this._position + this._leftOffset) + 'px');
 		}
 	},
 
 	fillColumns: function (columns, converter, context) {
-		var iterator, twip, width, column, text, resize;
+		var iterator, twip, width;
 
-		L.DomUtil.empty(this._columns);
-		var leftOffset = new L.Point(columns[0].size, columns[0].size);
-		// column[0] is a dummy column header whose text attribute is set to the column index
-		var leftmostCol = parseInt(columns[0].text);
-		this._leftOffset = Math.round(converter.call(context, leftOffset).x);
+		this._data = new Array(columns.length);
+		this._data.converter = converter;
+		this._data.context = context;
+
+		var canvas = this._headerCanvas;
+		canvas.width = parseInt(L.DomUtil.getStyle(this._headersContainer, 'width'));
+		canvas.height = parseInt(L.DomUtil.getStyle(this._headersContainer, 'height'));
+
+		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+
+		var leftmostOffset = new L.Point(columns[0].size, columns[0].size);
+		this._leftmostColumn = parseInt(columns[0].text);
+		this._leftOffset = Math.round(converter.call(context, leftmostOffset).x);
+
+		this._data[0] = { pos: this._leftOffset, text: '', selected: false };
+
 		for (iterator = 1; iterator < columns.length; iterator++) {
-			width = columns[iterator].size - columns[iterator - 1].size;
-			twip = new L.Point(width, width);
-			column = L.DomUtil.create('div', 'spreadsheet-header-column', this._columns);
-			text = L.DomUtil.create('div', 'spreadsheet-header-column-text', column);
-			resize = L.DomUtil.create('div', 'spreadsheet-header-column-resize', column);
-			L.DomEvent.on(resize, 'contextmenu', L.DomEvent.preventDefault);
-			column.size = columns[iterator].size;
-			var content = columns[iterator].text;
-			text.setAttribute('rel', 'spreadsheet-column-' + content); // for easy addressing
-			text.innerHTML = content;
-			width = Math.round(converter.call(context, twip).x) - 1;
-			if (width <= 0) {
-				L.DomUtil.setStyle(column, 'display', 'none');
-			} else if (width < 10) {
-				text.column = iterator + leftmostCol;
-				text.width = width;
-				L.DomUtil.setStyle(column, 'width', width + 'px');
-				L.DomUtil.setStyle(column, 'cursor', 'col-resize');
-				L.DomUtil.setStyle(text, 'cursor', 'col-resize');
-				L.DomUtil.setStyle(resize, 'display', 'none');
-				this.mouseInit(text);
-			} else {
-				resize.column = iterator + leftmostCol;
-				resize.width = width;
-				L.DomUtil.setStyle(column, 'width', width + 'px');
-				L.DomUtil.setStyle(text, 'width', width - 3 + 'px');
-				L.DomUtil.setStyle(resize, 'width', '3px');
-				this.mouseInit(resize);
+			twip = new L.Point(columns[iterator].size, columns[iterator].size);
+			this._data[iterator] = { pos: Math.round(converter.call(context, twip).x), text: columns[iterator].text, selected: false };
+			width = this._data[iterator].pos - this._data[iterator - 1].pos;
+			if (width > 0) {
+				this.drawHeaderEntry(iterator, false);
 			}
-			L.DomEvent.addListener(text, 'click', this._onColumnHeaderClick, this);
 		}
 
-		if ($('.spreadsheet-header-column-text').length > 0) {
-			$('.spreadsheet-header-column-text').contextMenu(this._map._permission === 'edit');
+		this.mouseInit(canvas);
+
+		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
+		if ($('.spreadsheet-header-columns').length > 0) {
+			$('.spreadsheet-header-columns').contextMenu(this._map._permission === 'edit');
 		}
 	},
 
@@ -232,8 +332,11 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.sendUnoCommand('.uno:SelectColumn ', command);
 	},
 
-	_onColumnHeaderClick: function (e) {
-		var colAlpha = e.target.getAttribute('rel').split('spreadsheet-column-')[1];
+	_onHeaderClick: function (e) {
+		if (!this._mouseOverIndex)
+			return;
+
+		var colAlpha = this._data[this._mouseOverIndex].text;
 
 		var modifier = 0;
 		if (e.shiftKey) {
@@ -295,21 +398,31 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var end = new L.Point(e.clientX + offset.x, e.clientY);
 		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
 
-		if (item.width != distance.x) {
-			var command = {
-				ColumnWidth: {
-					type: 'unsigned short',
-					value: this._map._docLayer.twipsToHMM(Math.max(distance.x, 0))
-				},
-				Column: {
-					type: 'unsigned short',
-					value: item.parentNode && item.parentNode.nextSibling &&
-					       L.DomUtil.getStyle(item.parentNode.nextSibling, 'display') === 'none' ? item.column + 1 : item.column
-				}
-			};
+		if (this._mouseOverIndex) {
+			var clickedColumn = this._data[this._mouseOverIndex];
+			var width = clickedColumn.pos - this._data[this._mouseOverIndex - 1];
+			var column = this._mouseOverIndex + this._leftmostColumn;
 
-			this._map.sendUnoCommand('.uno:ColumnWidth', command);
-			this._updateColumnHeader();
+			if (this._data[this._mouseOverIndex + 1]
+				&& this._data[this._mouseOverIndex + 1].pos === clickedColumn.pos) {
+				column += 1;
+			}
+
+			if (width !== distance.x) {
+				var command = {
+					ColumnWidth: {
+						type: 'unsigned short',
+						value: this._map._docLayer.twipsToHMM(Math.max(distance.x, 0))
+					},
+					Column: {
+						type: 'unsigned short',
+						value: column
+					}
+				};
+
+				this._map.sendUnoCommand('.uno:ColumnWidth', command);
+				this._updateColumnHeader();
+			}
 		}
 
 		this._map.removeLayer(this._vertLine);
@@ -318,11 +431,15 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	onDragClick: function (item, clicks, e) {
 		this._map.removeLayer(this._vertLine);
 
+		if (!this._mouseOverIndex)
+			return;
+
 		if (clicks === 2) {
+			var column = this._mouseOverIndex + this._leftmostColumn;
 			var command = {
 				Col: {
 					type: 'unsigned short',
-					value: item.column - 1
+					value: column - 1
 				},
 				Modifier: {
 					type: 'unsigned short',
@@ -343,9 +460,13 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		if (!this._initialized) {
 			this._initialize();
 		}
-		if ($('.spreadsheet-header-column-text').length > 0) {
-			$('.spreadsheet-header-column-text').contextMenu(e.perm === 'edit');
+		if ($('.spreadsheet-header-columns').length > 0) {
+			$('.spreadsheet-header-columns').contextMenu(e.perm === 'edit');
 		}
+	},
+
+	_getPos: function (point) {
+		return point.x;
 	}
 });
 
