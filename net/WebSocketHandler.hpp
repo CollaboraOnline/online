@@ -213,6 +213,11 @@ public:
         case WSOpCode::Ping:
             LOG_ERR("#" << socket->getFD() << ": Clients should not send pings, only servers");
             // drop through
+#if defined __clang__
+            [[clang::fallthrough]];
+#elif defined __GNUC__ && __GNUC__ >= 7
+            [[fallthrough]];
+#endif
         case WSOpCode::Close:
             if (!_shuttingDown)
             {
