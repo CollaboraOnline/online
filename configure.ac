@@ -146,7 +146,7 @@ fi
 AC_SUBST(LOOLWSD_LOGFILE)
 
 MAX_CONNECTIONS=20
-AS_IF([test -n "$with_max_connections" -a "$with_max_connections" -gt "0"],
+AS_IF([test -n "$with_max_connections" && test "$with_max_connections" -gt "0"],
       [MAX_CONNECTIONS="$with_max_connections"])
 AS_IF([test "$MAX_CONNECTIONS" -lt "3"],
       [MAX_CONNECTIONS="3"])
@@ -154,7 +154,7 @@ AC_DEFINE_UNQUOTED([MAX_CONNECTIONS],[$MAX_CONNECTIONS],[Limit the maximum numbe
 AC_SUBST(MAX_CONNECTIONS)
 
 MAX_DOCUMENTS=10
-AS_IF([test -n "$with_max_documents" -a "$with_max_documents" -gt "0"],
+AS_IF([test -n "$with_max_documents" && test "$with_max_documents" -gt "0"],
       [MAX_DOCUMENTS="$with_max_documents"])
 AS_IF([test "$MAX_DOCUMENTS" -gt "$MAX_CONNECTIONS"],
       [MAX_DOCUMENTS="$MAX_CONNECTIONS"])
