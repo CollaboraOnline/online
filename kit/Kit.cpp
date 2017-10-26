@@ -19,6 +19,7 @@
 #include <sys/capability.h>
 #include <unistd.h>
 #include <utime.h>
+#include <sys/sysmacros.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 
