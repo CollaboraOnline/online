@@ -21,7 +21,7 @@
 #include <locale.h>
 
 #define MAP_SIZE 20
-#define PATH_SIZE 64
+#define PATH_SIZE 1000 // No harm in having it much larger than strictly necessary. Avoids compiler warning.
 #define BUFFER_SIZE 9600
 
 static int read_buffer(char *buffer, unsigned size,
