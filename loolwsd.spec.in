@@ -12,7 +12,7 @@ Name:           loolwsd%{name_suffix}
 Name:           loolwsd
 %endif
 Version:        @PACKAGE_VERSION@
-Release:        3%{?dist}
+Release:        1%{?dist}
 %if 0%{?suse_version} == 1110
 Group:          Productivity/Office/Suite
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -60,7 +60,7 @@ Requires:       atk avahi-glib avahi-libs bzip2-libs cairo cups-libs dbus-glib d
 # loolwsd dependencies
 Requires(post): libcap-progs
 Requires:       libcap2 libpng12-0 %{fillup_prereq}
-Requires:       libPocoCrypto48 >= 1.7.8 libPocoFoundation48 >= 1.7.8 libPocoJSON48 >= 1.7.8 libPocoNet48 >= 1.7.8 libPocoNetSSL48 >= 1.7.8 libPocoUtil48 >= 1.7.8 libPocoXML48 >= 1.7.8
+Requires:       libPocoCrypto49 >= 1.7.9 libPocoFoundation49 >= 1.7.9 libPocoJSON49 >= 1.7.9 libPocoNet49 >= 1.7.9 libPocoNetSSL49 >= 1.7.9 libPocoUtil49 >= 1.7.9 libPocoXML49 >= 1.7.9
 %endif
 
 %if 0%{?suse_version} >= 1300
