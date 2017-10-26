@@ -16,6 +16,7 @@
 
 #include "common/Common.hpp"
 #include "common/Log.hpp"
+#include "common/Unit.hpp"
 #include "Socket.hpp"
 
 #include <Poco/Net/HTTPRequest.h>
@@ -71,21 +72,6 @@ public:
         _socket = socket;
         LOG_TRC("#" << socket->getFD() << " Connected to WS Handler 0x" << std::hex << this << std::dec);
     }
-
-    enum WSOpCode {
-        Continuation, // 0x0
-        Text,         // 0x1
-        Binary,       // 0x2
-        Reserved1,    // 0x3
-        Reserved2,    // 0x4
-        Reserved3,    // 0x5
-        Reserved4,    // 0x6
-        Reserved5,    // 0x7
-        Close,        // 0x8
-        Ping,         // 0x9
-        Pong          // 0xa
-        // ... reserved
-    };
 
     /// Status codes sent to peer on shutdown.
     enum class StatusCodes : unsigned short
@@ -204,7 +190,7 @@ public:
         socket->_inBuffer.erase(socket->_inBuffer.begin(), socket->_inBuffer.begin() + headerLen + payloadLen);
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
-        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << code <<
+        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << static_cast<unsigned>(code) <<
                 ", fin? " << fin << ", mask? " << hasMask << ", payload length: " << _wsPayload.size() <<
                 ", residual socket data: " << socket->_inBuffer.size() << " bytes.");
 
@@ -329,11 +315,14 @@ public:
     /// 0 for closed/invalid socket, and -1 for other errors.
     int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush = true) const
     {
+        int unitReturn = -1;
+        if (UnitWSD::get().filterSendMessage(data, len, code, flush, unitReturn))
+            return unitReturn;
+
         //TODO: Support fragmented messages.
-        static const unsigned char Fin = static_cast<unsigned char>(WSFrameMask::Fin);
 
         auto socket = _socket.lock();
-        return sendFrame(socket, data, len, static_cast<unsigned char>(Fin | code), flush);
+        return sendFrame(socket, data, len, static_cast<unsigned char>(WSFrameMask::Fin) | static_cast<unsigned char>(code), flush);
     }
 
 protected:

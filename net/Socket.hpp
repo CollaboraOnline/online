@@ -983,6 +983,21 @@ protected:
     friend class SimpleResponseClient;
 };
 
+enum class WSOpCode : unsigned char {
+    Continuation = 0x0,
+    Text         = 0x1,
+    Binary       = 0x2,
+    Reserved1    = 0x3,
+    Reserved2    = 0x4,
+    Reserved3    = 0x5,
+    Reserved4    = 0x6,
+    Reserved5    = 0x7,
+    Close        = 0x8,
+    Ping         = 0x9,
+    Pong         = 0xa
+    // ... reserved
+};
+
 namespace HttpHelper
 {
     /// Sends file as HTTP response.

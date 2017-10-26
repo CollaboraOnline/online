@@ -35,8 +35,19 @@ public:
     {
         // spec says UTF-7...
         CPPUNIT_ASSERT_EQUAL(std::string("/jan/hole+AWE-ovsk+AP0-/hello world.txt"), request.get("X-WOPI-SuggestedTarget"));
+    }
 
-        exitTest(TestResult::Ok);
+    bool filterSendMessage(const char* data, const size_t len, const WSOpCode /* code */, const bool /* flush */, int& /*unitReturn*/) override
+    {
+        std::string message(data, len);
+        if (message == "saveas: url=https://127.0.0.1:9980/something%20wopi/files/1?access_token=anything filename=hello%20world.txt")
+        {
+            // successfully exit the test if we also got the outgoing message
+            // notifying about saving the file
+            exitTest(TestResult::Ok);
+        }
+
+        return false;
     }
 
     void invokeTest() override
