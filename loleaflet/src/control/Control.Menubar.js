@@ -384,7 +384,7 @@ L.Control.Menubar = L.Control.extend({
 				$menuDefault.append(this._createLangMenuItem(_(e.commandValues[lang]), encodeURIComponent('Default_' + e.commandValues[lang])));
 			}
 			$menuSelection.append(this._createMenu([{type: 'separator'}]));
-			$menuParagraph.append(this._createMenu[{type: 'separator'}]);
+			$menuParagraph.append(this._createMenu([{type: 'separator'}]));
 			$menuDefault.append(this._createMenu([{type: 'separator'}]));
 			$menuSelection.append(this._createLangMenuItem(resetLang, 'Current_RESET_LANGUAGES'));
 			$menuParagraph.append(this._createLangMenuItem(resetLang, 'Paragraph_RESET_LANGUAGES'));
