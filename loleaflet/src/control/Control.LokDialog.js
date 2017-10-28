@@ -166,10 +166,11 @@ L.Control.LokDialog = L.Control.extend({
 		delete this._dialogs[dialogId];
 	},
 
-	_paintDialog: function(dialogId, imgData) {
+	_paintDialog: function(dialogId, title, imgData) {
 		if (!this._isOpen(dialogId))
 			return;
 
+		$('#' + dialogId).dialog('option', 'title', decodeURIComponent(title));
 		var img = new Image();
 		var canvas = document.getElementById(dialogId + '-canvas');
 		var ctx = canvas.getContext('2d');
@@ -207,7 +208,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._launchDialog(dialogId, e.width, e.height);
 		}
 
-		this._paintDialog(dialogId, e.dialog);
+		this._paintDialog(dialogId, e.title, e.dialog);
 	},
 
 	_onDialogChildPaint: function(e) {

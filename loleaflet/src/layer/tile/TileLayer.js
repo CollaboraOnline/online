@@ -1200,6 +1200,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.fire('dialogpaint', {
 			id: command.id,
 			dialog: img,
+			title: command.title,
 			// TODO: add id too
 			width: dlgWidth,
 			height: dlgHeight

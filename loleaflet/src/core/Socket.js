@@ -745,6 +745,9 @@ L.Socket = L.Class.extend({
 			else if (tokens[i].substring(0, 6) === 'width=') {
 				command.width = parseInt(tokens[i].substring(6));
 			}
+			else if (tokens[i].substring(0, 6) === 'title=') {
+				command.title = tokens[i].substring(6);
+			}
 			else if (tokens[i].substring(0, 7) === 'height=') {
 				command.height = parseInt(tokens[i].substring(7));
 			}

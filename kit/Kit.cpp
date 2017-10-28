@@ -871,10 +871,11 @@ public:
         int nWidth = nCanvasWidth;
         int nHeight = nCanvasHeight;
         Timestamp timestamp;
+        char* pDialogTitle = nullptr;
         if (child)
             _loKitDocument->paintActiveFloatingWindow(tokens[1].c_str(), pixmap.data(), nWidth, nHeight);
         else
-            _loKitDocument->paintDialog(tokens[1].c_str(), pixmap.data(), nWidth, nHeight);
+            _loKitDocument->paintDialog(tokens[1].c_str(), pixmap.data(), &pDialogTitle, nWidth, nHeight);
 
         const double area = nWidth * nHeight;
         const auto elapsed = timestamp.elapsed();
@@ -883,7 +884,15 @@ public:
                 << " and rendered in " << (elapsed/1000.) <<
                 " ms (" << area / elapsed << " MP/s).");
 
-        const std::string response = std::string(child ? "dialogchildpaint:" : "dialogpaint:") + " id=" + tokens[1] + " width=" + std::to_string(nWidth) + " height=" + std::to_string(nHeight) + "\n";
+        std::string encodedDialogTitle;
+        if (pDialogTitle)
+        {
+            std::string aDialogTitle(pDialogTitle);
+            URI::encode(aDialogTitle, "", encodedDialogTitle);
+            free(pDialogTitle);
+        }
+        const std::string response = std::string(child ? "dialogchildpaint:" : "dialogpaint:") + " id=" + tokens[1] +
+            (!encodedDialogTitle.empty() ? " title=" + encodedDialogTitle : "") + " width=" + std::to_string(nWidth) + " height=" + std::to_string(nHeight) + "\n";
         std::vector<char> output;
         output.reserve(response.size() + pixmapDataSize);
         output.resize(response.size());
