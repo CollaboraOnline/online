@@ -18,27 +18,9 @@ L.Control.LokDialog = L.Control.extend({
 		return this._dialogs[dialogId];
 	},
 
-	_transformDialogId: function(dialogId) {
-		var ret = dialogId;
-		if (dialogId === 'SpellingDialog')
-			ret = 'SpellingAndGrammarDialog';
-		else if (dialogId === 'FindReplaceDialog')
-			ret = 'SearchDialog';
-		else if (dialogId === 'AcceptRejectChangesDialog')
-			ret = 'AcceptTrackedChanges';
-		else if (dialogId === 'FieldDialog')
-			ret = 'InsertField';
-		else if (dialogId === 'BibliographyEntryDialog')
-			ret = 'InsertAuthoritiesEntry';
-		else if (dialogId === 'IndexEntryDialog')
-			ret = 'InsertIndexesEntry';
-
-		return ret;
-	},
-
 	_onDialogMsg: function(e) {
 		// FIXME: core sends a different id for many dialogs in callbacks
-		e.dialogId = this._transformDialogId(e.dialogId);
+		e.dialogId = e.dialogId.replace('.uno:', '');
 		if (e.action === 'invalidate') {
 			// ignore any invalidate callbacks when we have closed the dialog
 			if (this._isOpen(e.dialogId)) {
@@ -291,7 +273,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogChildMsg: function(e) {
-		e.dialogId = this._transformDialogId(e.dialogId);
+		e.dialogId = e.dialogId.replace('.uno:', '');
 		if (e.action === 'invalidate') {
 			if (this._isOpen(e.dialogId))
 			{

@@ -1194,16 +1194,14 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onDialogPaintMsg: function(textMsg, img) {
 		var command = this._map._socket.parseServerCmd(textMsg);
-		var dlgWidth = command.width;
-		var dlgHeight = command.height;
 
 		this._map.fire('dialogpaint', {
 			id: command.id,
 			dialog: img,
 			title: command.title,
 			// TODO: add id too
-			width: dlgWidth,
-			height: dlgHeight
+			width: command.width,
+			height: command.height
 		});
 	},
 
