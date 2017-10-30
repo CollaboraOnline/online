@@ -501,12 +501,10 @@ typedef enum
      * The payload says if we are invalidating a row or column header.
      */
     LOK_CALLBACK_INVALIDATE_HEADER = 33,
-
     /**
      * The text content of the address field in Calc.
      */
     LOK_CALLBACK_CELL_ADDRESS = 34,
-
     /**
      * The key ruler related properties on change are reported by this.
      *
@@ -523,8 +521,30 @@ typedef enum
      *
      * Here all aproperties are same as described in svxruler.
      */
-    LOK_CALLBACK_RULER_UPDATE = 35
+    LOK_CALLBACK_RULER_UPDATE = 35,
+    /**
+     * Dialog invalidation
+     */
+    LOK_CALLBACK_DIALOG = 36,
 
+    /**
+     * Invalidation corresponding to dialog's children.
+     * Eg: Floating window etc.
+     *
+     * Payload example:
+     * {
+     *   "dialogID": "SpellDialog",
+     *   "action": "close"
+     * }
+     *
+     * - dialogID is the UNO command of the dialog
+     * - action can be
+     *   - close, means dialog child window is closed now
+     *   - invalidate, means dialog child window is invalidated
+     *     It also means that dialog child window is created if it's the first
+     *     invalidate
+     */
+    LOK_CALLBACK_DIALOG_CHILD = 37
 }
 LibreOfficeKitCallbackType;
 

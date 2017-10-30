@@ -12,10 +12,13 @@
 
 #include <stddef.h>
 
-#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 // the unstable API needs C99's bool
-#include <stdbool.h>
-#include <stdint.h>
+// TODO remove the C99 types from the API before making stable
+#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
+# ifndef _WIN32
+#  include <stdbool.h>
+# endif
+# include <stdint.h>
 #endif
 
 #include <LibreOfficeKit/LibreOfficeKitTypes.h>
@@ -60,26 +63,37 @@ struct _LibreOfficeKitClass
     /// @since LibreOffice 5.2
     void (*freeError) (char* pFree);
 
-#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
+    /// @since LibreOffice 6.0
     void (*registerCallback) (LibreOfficeKit* pThis,
                               LibreOfficeKitCallback pCallback,
                               void* pData);
 
-    /// @see lok::Office::getFilterTypes().
+    /** @see lok::Office::getFilterTypes().
+        @since LibreOffice 6.0
+     */
     char* (*getFilterTypes) (LibreOfficeKit* pThis);
 
-    /// @see lok::Office::setOptionalFeatures().
+    /** @see lok::Office::setOptionalFeatures().
+        @since LibreOffice 6.0
+     */
     void (*setOptionalFeatures)(LibreOfficeKit* pThis, unsigned long long features);
 
-    /// @see lok::Office::setDocumentPassword().
+    /** @see lok::Office::setDocumentPassword().
+        @since LibreOffice 6.0
+     */
     void (*setDocumentPassword) (LibreOfficeKit* pThis,
             char const* pURL,
             char const* pPassword);
 
-    /// @see lok::Office::getVersionInfo().
+    /** @see lok::Office::getVersionInfo().
+        @since LibreOffice 6.0
+     */
     char* (*getVersionInfo) (LibreOfficeKit* pThis);
-#endif
 
+    /** @see lok::Office::runMacro().
+        @since LibreOffice 6.0
+     */
+    int (*runMacro) (LibreOfficeKit *pThis, const char* pURL);
 };
 
 #define LIBREOFFICEKIT_DOCUMENT_HAS(pDoc,member) LIBREOFFICEKIT_HAS_MEMBER(LibreOfficeKitDocumentClass,member,(pDoc)->pClass->nSize)
@@ -100,10 +114,12 @@ struct _LibreOfficeKitDocumentClass
                    const char* pFormat,
                    const char* pFilterOptions);
 
-#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
-    /// @see lok::Document::getDocumentType().
+    /** @see lok::Document::getDocumentType().
+        @since LibreOffice 6.0
+     */
     int (*getDocumentType) (LibreOfficeKitDocument* pThis);
 
+#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
     /// @see lok::Document::getParts().
     int (*getParts) (LibreOfficeKitDocument* pThis);
 
@@ -250,15 +266,39 @@ struct _LibreOfficeKitDocumentClass
                        int* pArray,
                        size_t nSize);
 
-    /// Starts a batch of operations.
-    /// Events are emmitted only after ending the batch.
-    /// @see lok::Document::endBatch();
-    void (*beginBatch) (LibreOfficeKitDocument* pThis);
+    /// Paints dialog with given dialog id to the buffer
+    /// @see lok::Document::paintDialog().
+    void (*paintDialog) (LibreOfficeKitDocument* pThis, const char* pDialogId, unsigned char* pBuffer, char** pDialogTitle, int* nWidth, int* nHeight);
 
-    /// Ends a batch of operations.
-    /// @see lok::Document::beginBatch();
-    void (*endBatch) (LibreOfficeKitDocument* pThis);
+    /// @see lok::Document::paintActiveFloatingWindow().
+    void (*paintActiveFloatingWindow) (LibreOfficeKitDocument* pThis, const char* pDialogId, unsigned char* pBuffer, int* nWidth, int* nHeight);
 
+    /// @see lok::Document::postDialogKeyEvent().
+    void (*postDialogKeyEvent) (LibreOfficeKitDocument* pThis,
+                                const char* pDialogId,
+                                int nType,
+                                int nCharCode,
+                                int nKeyCode);
+
+    /// @see lok::Document::postDialogMouseEvent().
+    void (*postDialogMouseEvent) (LibreOfficeKitDocument* pThis,
+                                  const char* pDialogId,
+                                  int nType,
+                                  int nX,
+                                  int nY,
+                                  int nCount,
+                                  int nButtons,
+                                  int nModifier);
+
+    /// @see lok::Document::postDialogChildMouseEvent().
+    void (*postDialogChildMouseEvent) (LibreOfficeKitDocument* pThis,
+                                       const char* pDialogId,
+                                       int nType,
+                                       int nX,
+                                       int nY,
+                                       int nCount,
+                                       int nButtons,
+                                       int nModifier);
 
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
