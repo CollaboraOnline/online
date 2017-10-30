@@ -25,6 +25,12 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._headersContainer = L.DomUtil.create('div', 'spreadsheet-header-rows-container', rowColumnFrame);
 
 		this._headerCanvas = L.DomUtil.create('canvas', 'spreadsheet-header-rows', this._headersContainer);
+
+		this._initHeaderEntryStyles('spreadsheet-header-row');
+		this._initHeaderEntryHoverStyles('spreadsheet-header-row-hover');
+		this._initHeaderEntrySelectedStyles('spreadsheet-header-row-selected');
+		this._initHeaderEntryResizeStyles('spreadsheet-header-row-resize');
+
 		this._canvasContext = this._headerCanvas.getContext('2d');
 		this._headerCanvas.width = parseInt(L.DomUtil.getStyle(this._headersContainer, 'width'));
 		this._headerCanvas.height = parseInt(L.DomUtil.getStyle(this._headersContainer, 'height'));
@@ -230,7 +236,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		ctx.fillText(content, width / 2, end - (height / 2));
 		// draw row separator
 		ctx.fillStyle = this._borderColor;
-		ctx.fillRect(0, end -1, width, 1);
+		ctx.fillRect(0, end -1, width, this._borderWidth);
 		ctx.restore();
 	},
 

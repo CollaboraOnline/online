@@ -16,15 +16,61 @@ L.Control.Header = L.Control.extend({
 		this._lastMouseOverIndex = undefined;
 		this._hitResizeArea = false;
 
-		// styles
-		this._backgroundColor = 'lightgray';
-		this._hoverColor = '#DDD';
-		this._borderColor = 'darkgray';
-		this._textColor = 'black';
-		this._font = '12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif';
-		this._cursor = 'pointer';
-		this._selectionTextColor = 'white';
 		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
+	},
+
+	_initHeaderEntryStyles: function (className) {
+		var baseElem = document.getElementsByTagName('body')[0];
+		var elem = L.DomUtil.create('div', className, baseElem);
+		this._textColor = L.DomUtil.getStyle(elem, 'color');
+		this._backgroundColor = L.DomUtil.getStyle(elem, 'background-color');
+		this._font = L.DomUtil.getStyle(elem, 'font');
+		this._borderColor = L.DomUtil.getStyle(elem, 'border-color');
+		var borderWidth = L.DomUtil.getStyle(elem, 'border-width');
+		this._borderWidth = parseInt(borderWidth.slice(0, -2));
+		this._cursor = L.DomUtil.getStyle(elem, 'cursor');
+		L.DomUtil.remove(elem);
+	},
+
+	_initHeaderEntryHoverStyles: function (className) {
+		var baseElem = document.getElementsByTagName('body')[0];
+		var elem = L.DomUtil.create('div', className, baseElem);
+		this._hoverColor = L.DomUtil.getStyle(elem, 'background-color');
+		L.DomUtil.remove(elem);
+	},
+
+	_initHeaderEntrySelectedStyles: function (className) {
+		var baseElem = document.getElementsByTagName('body')[0];
+		var elem = L.DomUtil.create('div', className, baseElem);
+		this._selectionTextColor = L.DomUtil.getStyle(elem, 'color');
+
+		var selectionBackgroundGradient = [];
+		var gradientColors = L.DomUtil.getStyle(elem, 'background-image');
+		gradientColors = gradientColors.slice('linear-gradient('.length, -1);
+		while (gradientColors) {
+			var color = gradientColors.split(',', 3);
+			color = color.join(','); // color = 'rgb(r, g, b)'
+			selectionBackgroundGradient.push(color);
+			gradientColors = gradientColors.substr(color.length); // remove last parsed color
+			gradientColors = gradientColors.substr(gradientColors.indexOf('r')); // remove ', ' stuff
+		}
+
+		if (selectionBackgroundGradient.length) {
+			this._selectionBackgroundGradient = selectionBackgroundGradient;
+		}
+		L.DomUtil.remove(elem);
+	},
+
+	_initHeaderEntryResizeStyles: function (className) {
+		if (this.options.cursor) {
+			this._resizeCursor = this.options.cursor;
+		}
+		else {
+			var baseElem = document.getElementsByTagName('body')[0];
+			var elem = L.DomUtil.create('div', className, baseElem);
+			this._resizeCursor = L.DomUtil.getStyle(elem, 'cursor');
+			L.DomUtil.remove(elem);
+		}
 	},
 
 	mouseInit: function (element) {
@@ -199,7 +245,7 @@ L.Control.Header = L.Control.extend({
 			else {
 				L.DomEvent.on(this._headerCanvas, 'click', this._onHeaderClick, this);
 			}
-			var cursor = isMouseOverResizeArea ? this.options.cursor : this._cursor;
+			var cursor = isMouseOverResizeArea ? this._resizeCursor : this._cursor;
 			L.DomUtil.setStyle(this._headerCanvas, 'cursor', cursor);
 			this._hitResizeArea = isMouseOverResizeArea;
 		}

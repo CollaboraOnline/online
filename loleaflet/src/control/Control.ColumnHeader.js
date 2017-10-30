@@ -27,6 +27,11 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		L.DomEvent.addListener(cornerHeader, 'click', this._onCornerHeaderClick, this);
 		this._headersContainer = L.DomUtil.create('div', 'spreadsheet-header-columns-container', rowColumnFrame);
 
+		this._initHeaderEntryStyles('spreadsheet-header-column');
+		this._initHeaderEntryHoverStyles('spreadsheet-header-column-hover');
+		this._initHeaderEntrySelectedStyles('spreadsheet-header-column-selected');
+		this._initHeaderEntryResizeStyles('spreadsheet-header-column-resize');
+
 		this._headerCanvas = L.DomUtil.create('canvas', 'spreadsheet-header-columns', this._headersContainer);
 		this._canvasContext = this._headerCanvas.getContext('2d');
 		this._headerCanvas.width = parseInt(L.DomUtil.getStyle(this._headersContainer, 'width'));
@@ -239,7 +244,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		ctx.fillText(content, end - width / 2, height / 2);
 		// draw row separator
 		ctx.fillStyle = this._borderColor;
-		ctx.fillRect(end -1, 0, 1, height);
+		ctx.fillRect(end -1, 0, this._borderWidth, height);
 		ctx.restore();
 	},
 
