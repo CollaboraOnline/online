@@ -36,6 +36,7 @@ find etc/passwd etc/group etc/hosts \
      usr/lib/locale/locale_archive \
      usr/share/zoneinfo/* \
      usr/share/liblangtag \
+     usr/share/hyphen \
      usr/lib/libpng* usr/lib64/libpng* lib/*-linux-gnu/libpng* \
 	 -type f
 
