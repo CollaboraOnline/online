@@ -308,8 +308,6 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
         {
             LOG_INF("Copying " << _jailedFilePath << " to " << _uri.getPath());
             Poco::File(_jailedFilePath).copyTo(_uri.getPath());
-
-
         }
 
         // update its fileinfo object. This is used later to check if someone else changed the
@@ -477,8 +475,6 @@ Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time)
 
     return timestamp;
 }
-
-
 
 } // anonymous namespace
 
