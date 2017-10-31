@@ -8,6 +8,7 @@ L.Map.WOPI = L.Handler.extend({
 	// So use '*' because we still needs to send 'close' message to the parent frame which
 	// wouldn't be possible otherwise.
 	PostMessageOrigin: '*',
+	BaseFileName: '',
 	DocumentLoadedTime: false,
 	HidePrintOption: false,
 	HideSaveOption: false,
@@ -61,6 +62,7 @@ L.Map.WOPI = L.Handler.extend({
 			this.PostMessageOrigin = wopiInfo['PostMessageOrigin'];
 		}
 
+		this.BaseFileName = wopiInfo['BaseFileName'];
 		this.HidePrintOption = !!wopiInfo['HidePrintOption'];
 		this.HideSaveOption = !!wopiInfo['HideSaveOption'];
 		this.HideExportOption = !!wopiInfo['HideExportOption'];

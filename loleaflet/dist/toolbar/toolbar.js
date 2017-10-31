@@ -812,6 +812,27 @@ function onSearchKeyPress(e) {
 	}
 }
 
+function documentNameConfirm() {
+	var value = $('#document-name-input').val();
+	if (value !== null && value != '') {
+		map.saveAs(value);
+	}
+	map._onGotFocus();
+}
+
+function documentNameCancel() {
+	$('#document-name-input').val(map['wopi'].BaseFileName);
+	map._onGotFocus();
+}
+
+function onDocumentNameKeyPress(e) {
+	if (e.keyCode === 13) { // Enter key
+		documentNameConfirm();
+	} else if (e.keyCode === 27) { // Escape key
+		documentNameCancel();
+	}
+}
+
 function sortFontSizes() {
 	var oldVal = $('.fontsizes-select').val();
 	var selectList = $('.fontsizes-select option');
@@ -999,6 +1020,22 @@ map.on('wopiprops', function(e) {
 		$('input#addressInput').bind('copy', function(evt) {
 			evt.preventDefault();
 		});
+	}
+	if (e.BaseFileName !== null) {
+		// set the document name into the name field
+		$('#document-name-input').val(e.BaseFileName);
+	}
+	if (e.UserCanNotWriteRelative === false) {
+		// Save As allowed
+		$('#document-name-input').prop('disabled', false);
+		$('#document-name-input').addClass('editable');
+		$('#document-name-input').on('keypress', onDocumentNameKeyPress);
+		$('#document-name-input').on('focus', function() { map._onLostFocus(); /* hide the caret in the main document */ });
+		$('#document-name-input').on('blur', documentNameCancel);
+	} else {
+		$('#document-name-input').prop('disabled', true);
+		$('#document-name-input').removeClass('editable');
+		$('#document-name-input').off('keypress', onDocumentNameKeyPress);
 	}
 });
 
