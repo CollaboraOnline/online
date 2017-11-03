@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:13+0000\n"
+"POT-Creation-Date: 2017-11-03 11:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-ui-cs.po\n"
-"X-Pootle-Revision: 2780521\n"
+"X-Pootle-Revision: 2833093\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -47,7 +47,6 @@ msgid "Users online"
 msgstr "Přihlášení uživatelé"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
 msgstr "Uživatelské jméno"
 
@@ -105,15 +104,15 @@ msgstr "Grafy"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Graf paměti"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "Graf procesoru"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Graf sítě"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -142,15 +141,16 @@ msgstr "Časový interval statistiky procesoru (v ms)"
 
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Maximální virtuální paměť procesu dokumentu (v MB) - lze pouze zmenšit"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
+"Maximální paměť procesu dokumentu v zásobníku (v kB) - lze pouze zmenšit"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Maximální velikost souboru pro zápis na disk (v MB) - lze pouze zmenšit"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -354,16 +354,15 @@ msgstr ""
 
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
+msgstr "Dokument nelze uložit. Přístupový token vypršel nebo není platný."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Dokument nelze uložit. Ujistěte se, zda máte dostatečná oprávnění nebo se "
-"obraťte na správce síťového úložiště (%storageserver)."
+"Dokument nelze uložit. Ujistěte se, zda máte dostatečná oprávnění, nebo se "
+"obraťte na správce serveru."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -635,7 +634,7 @@ msgstr "Zrušit vyhledávání"
 
 #: dist/toolbar/toolbar.js:680
 msgid "Text Language"
-msgstr ""
+msgstr "Jazyk textu"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -789,9 +788,8 @@ msgstr "Opravdu si přejete ukončit tuto relaci?"
 
 #: src/admin/AdminSocketOverview.js:152
 #: src/admin/AdminSocketOverview.js:311
-#, fuzzy
 msgid "Documents"
-msgstr "Dokument"
+msgstr "Dokumenty"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
@@ -1995,11 +1993,11 @@ msgstr "Zobrazit"
 #: src/control/Control.Menubar.js:241
 #: src/control/Control.Menubar.js:292
 msgid "Tools"
-msgstr ""
+msgstr "Nástroje"
 
 #: src/control/Control.Menubar.js:19
 msgid "Save As"
-msgstr ""
+msgstr "Uložit jako"
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -2452,15 +2450,15 @@ msgstr "Sloučit buňky"
 #: src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:293
 msgid "Automatic Spell Checking"
-msgstr ""
+msgstr "Automatická kontrola pravopisu"
 
 #: src/control/Control.Menubar.js:177
 msgid "Language"
-msgstr ""
+msgstr "Jazyk"
 
 #: src/control/Control.Menubar.js:178
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Obnovit výchozí jazyk"
 
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
@@ -2538,11 +2536,11 @@ msgstr "Smazat řádek"
 
 #: src/control/Control.Menubar.js:497
 msgid "Find"
-msgstr ""
+msgstr "Najít"
 
 #: src/control/Control.Menubar.js:505
 msgid "Replace with"
-msgstr ""
+msgstr "Nahradit za"
 
 #: src/control/Control.Menubar.js:463
 msgid "Replace"
@@ -2648,6 +2646,8 @@ msgstr "Relace byla ukončena vlastníkem dokumentu"
 #: src/core/Socket.js:261
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
+"Neaktivní dokument - kliknutím jej znovu načtete a budete moci pokračovat v "
+"úpravách"
 
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -2655,7 +2655,7 @@ msgstr "Server bude vypnut z důvodu údržby (automatické ukládání)"
 
 #: src/core/Socket.js:272
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Došlo k problému při připojování k dokumentu"
 
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
@@ -2666,20 +2666,24 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Dokument byl v úložišti změněn. Načítá se nová verze, vaše verze bude "
+"dostupná jako revize."
 
 #: src/core/Socket.js:418
 msgid ""
 "Document has been changed in storage. Do you want to discard your changes, "
 "and load the document from the storage?"
 msgstr ""
+"Dokument byl v úložišti změněn. Přejete si zahodit své změny a načíst "
+"dokument z úložiště?"
 
 #: src/core/Socket.js:420
 msgid "Discard changes"
-msgstr ""
+msgstr "Zahodit změny"
 
 #: src/core/Socket.js:421
 msgid "Overwrite document"
-msgstr ""
+msgstr "Přepsat dokument"
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."

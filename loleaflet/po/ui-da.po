@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-05 08:00+0000\n"
+"POT-Creation-Date: 2017-11-03 11:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-ui-da.po\n"
-"X-Pootle-Revision: 2776498\n"
+"X-Pootle-Revision: 2823157\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -340,15 +340,14 @@ msgid ""
 msgstr ""
 
 #: dist/errormessages.js:14
-#, fuzzy
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
 "Gem mislykkedes fordi der ikke er plads på serveren. Dokumentet bliver nu "
-"kun læseadgang. Kontakt venligst serverens administrator for at fortsætte "
-"redigering."
+"kun læseadgang. Kontakt venligst serverens (%storageserver) administrator "
+"for at fortsætte redigering."
 
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."

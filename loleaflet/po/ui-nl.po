@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:15+0000\n"
+"POT-Creation-Date: 2017-11-02 23:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-ui-nl.po\n"
-"X-Pootle-Revision: 2788040\n"
+"X-Pootle-Revision: 2827938\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -104,15 +104,15 @@ msgstr "Diagram"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Geheugengrafiek"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "CPU-grafiek"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Netwerkgrafiek"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -142,14 +142,19 @@ msgstr "Tijdsinterval van CPU-statistieken (in ms)"
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
+"Maximaal virtueel geheugen (in MB) voor document-bewerking - alleen "
+"verkleinen"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
+"Maximaal stack geheugen (in KB) voor het document-proces - alleen verkleinen"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
+"Maximale grootte (in MB) van bestanden die naar schrijf mogen worden "
+"geschreven - alleen verkleinen"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -354,15 +359,16 @@ msgstr ""
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
+"Het document kan niet bewaard worden, als gevolg van een verlopen of "
+"ongeldig access-token."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Document kan niet in de opslagruimte worden opgeslagen. Controleer uw "
-"rechten of neem contact op met de serverbeheerder (%storageserver)."
+"Document kan niet worden opgeslagen. Controleer uw rechten of neem contact "
+"op met de serverbeheerder."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -1993,7 +1999,7 @@ msgstr "Beeld"
 #: src/control/Control.Menubar.js:241
 #: src/control/Control.Menubar.js:292
 msgid "Tools"
-msgstr ""
+msgstr "Extra"
 
 #: src/control/Control.Menubar.js:19
 msgid "Save As"
@@ -2645,7 +2651,7 @@ msgstr "Sessie beëindigd door document-eigenaar"
 
 #: src/core/Socket.js:261
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Niet actief document - klik om het bewerken te hervatten"
 
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -2653,7 +2659,7 @@ msgstr "Server wordt afgesloten voor onderhoud (automatische-opslag)"
 
 #: src/core/Socket.js:272
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Oeps, er is een probleem met de toegang tot het document"
 
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
@@ -2665,12 +2671,16 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Het document is in de opslag gewijzigd. Het document opnieuw laden. Uw "
+"versie is beschikbaar als revisie."
 
 #: src/core/Socket.js:418
 msgid ""
 "Document has been changed in storage. Do you want to discard your changes, "
 "and load the document from the storage?"
 msgstr ""
+"Het document is in de opslag gewijzigd. Wilt u uw wijzigingen verwerpen en "
+"het document vanuit de opslag laden?"
 
 #: src/core/Socket.js:420
 msgid "Discard changes"

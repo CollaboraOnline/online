@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:13+0000\n"
+"POT-Creation-Date: 2017-11-03 11:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /de/libo_online/loleaflet-ui-de.po\n"
-"X-Pootle-Revision: 2788436\n"
+"X-Pootle-Revision: 2815491\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -2476,7 +2476,7 @@ msgstr "Hilfe"
 #: src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:274
 msgid "Keyboard shortcuts"
-msgstr "Tastaturkürzel"
+msgstr "Tastenkombinationen"
 
 #: src/control/Control.Menubar.js:168
 #: src/control/Control.Menubar.js:228

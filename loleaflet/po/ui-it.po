@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-05 08:01+0000\n"
+"POT-Creation-Date: 2017-11-03 09:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /it/libo_online/loleaflet-ui-it.po\n"
-"X-Pootle-Revision: 2776567\n"
+"X-Pootle-Revision: 2797428\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -47,7 +47,6 @@ msgid "Users online"
 msgstr "Utenti collegati"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
 msgstr "Nome utente"
 
@@ -57,7 +56,7 @@ msgstr "Documenti aperti"
 
 #: admin.strings.js:15
 msgid "Number of Documents"
-msgstr ""
+msgstr "Numero di documenti"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
@@ -65,11 +64,11 @@ msgstr "Memoria consumata"
 
 #: admin.strings.js:17
 msgid "Bytes sent"
-msgstr ""
+msgstr "Byte inviati"
 
 #: admin.strings.js:18
 msgid "Bytes received"
-msgstr ""
+msgstr "Byte ricevuti"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -93,7 +92,7 @@ msgstr "Tempo di inattività"
 
 #: admin.strings.js:24
 msgid "Modified"
-msgstr ""
+msgstr "Modificato"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -105,15 +104,15 @@ msgstr "Grafici"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Grafico della memoria"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "Grafico CPU"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Grafico di rete"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -143,14 +142,20 @@ msgstr "Intervallo di tempo della statistica della CPU (in ms)"
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
+"Memoria virtuale massima per l'elaborazione dei documenti (in MB) - solo "
+"riduzione"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
+"Memoria massima dello stack per l'elaborazione dei documenti (in KB) - solo "
+"riduzione"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
+"Dimensione massima del file consentita per la scrittura sul disco (in MB) — "
+"solo riduzione"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -339,9 +344,10 @@ msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
+"Lettura del documento dallo spazio di archiviazione non riuscita. Contatta "
+"l'amministratore del server del tuo spazio di archiviazione (%storageserver)."
 
 #: dist/errormessages.js:14
-#, fuzzy
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
@@ -349,20 +355,22 @@ msgid ""
 msgstr ""
 "Il salvataggio non è riuscito a causa di mancanza di spazio nel server. Il "
 "documento ora sarà disponibile in sola lettura. Contatta l'amministratore "
-"del server per continuare le modifiche."
+"del server (%storageserver) per continuare le modifiche."
 
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
+"Impossibile salvare il documento a causa del token di accesso scaduto o non "
+"valido."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Impossibile salvare il documento. Verifica i tuoi permessi o contatta "
-"l'amministratore del server di memorizzazione."
+"Impossibile salvare il documento nello spazio di archiviazione. Verifica i "
+"tuoi permessi o contatta l'amministratore del server dello spazio di "
+"archiviazione."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -634,7 +642,7 @@ msgstr "Annulla la ricerca"
 
 #: dist/toolbar/toolbar.js:680
 msgid "Text Language"
-msgstr ""
+msgstr "Lingua del testo"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -788,12 +796,10 @@ msgstr "Vuoi davvero terminare questa sessione?"
 
 #: src/admin/AdminSocketOverview.js:152
 #: src/admin/AdminSocketOverview.js:311
-#, fuzzy
 msgid "Documents"
-msgstr "Documento"
+msgstr "Documenti"
 
 #: src/admin/AdminSocketSettings.js:34
-#, fuzzy
 msgid "Are you sure you want to shut down the server?"
 msgstr "Vuoi davvero spegnere il server?"
 
@@ -1995,11 +2001,11 @@ msgstr "Visualizza"
 #: src/control/Control.Menubar.js:241
 #: src/control/Control.Menubar.js:292
 msgid "Tools"
-msgstr ""
+msgstr "Strumenti"
 
 #: src/control/Control.Menubar.js:19
 msgid "Save As"
-msgstr ""
+msgstr "Salva come"
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -2070,7 +2076,7 @@ msgstr "Seleziona tutto"
 #: src/control/Control.Menubar.js:271
 #: src/control/Control.Menubar.js:518
 msgid "Find & Replace"
-msgstr ""
+msgstr "Trova e sostituisci"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
@@ -2454,15 +2460,15 @@ msgstr "Unisci celle"
 #: src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:293
 msgid "Automatic Spell Checking"
-msgstr ""
+msgstr "Controllo ortografico automatico"
 
 #: src/control/Control.Menubar.js:177
 msgid "Language"
-msgstr ""
+msgstr "Lingua"
 
 #: src/control/Control.Menubar.js:178
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Ripristina la lingua predefinita"
 
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
@@ -2540,19 +2546,19 @@ msgstr "Elimina riga"
 
 #: src/control/Control.Menubar.js:497
 msgid "Find"
-msgstr ""
+msgstr "Trova"
 
 #: src/control/Control.Menubar.js:505
 msgid "Replace with"
-msgstr ""
+msgstr "Sostituisci con"
 
 #: src/control/Control.Menubar.js:522
 msgid "Replace"
-msgstr ""
+msgstr "Sostituisci"
 
 #: src/control/Control.Menubar.js:527
 msgid "Replace All"
-msgstr ""
+msgstr "Sostituisci tutto"
 
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
@@ -2649,7 +2655,7 @@ msgstr "Sessione terminata dal possessore del documento"
 
 #: src/core/Socket.js:261
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Documento inattivo - fai clic per ricaricare e riprendere le modifiche"
 
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -2657,7 +2663,7 @@ msgstr "Il server si sta fermando per manutenzione (salvataggio automatico)"
 
 #: src/core/Socket.js:272
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Si è verificato un problema di connessione con il documento"
 
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
@@ -2668,20 +2674,24 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Il documento è stato modificato nello spazio di archiviazione. Sto caricando "
+"il nuovo documento. La tua versione è disponibile come revisione."
 
 #: src/core/Socket.js:418
 msgid ""
 "Document has been changed in storage. Do you want to discard your changes, "
 "and load the document from the storage?"
 msgstr ""
+"Il documento è stato modificato nello spazio di archiviazione. Vuoi scartare "
+"le modifiche e caricare il documento presente in archivio?"
 
 #: src/core/Socket.js:420
 msgid "Discard changes"
-msgstr ""
+msgstr "Scarta le modifiche"
 
 #: src/core/Socket.js:421
 msgid "Overwrite document"
-msgstr ""
+msgstr "Sovrascrivi il documento"
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."

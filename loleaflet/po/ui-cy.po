@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:13+0000\n"
+"POT-Creation-Date: 2017-11-02 23:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /cy/libo_online/loleaflet-ui-cy.po\n"
-"X-Pootle-Revision: 2776495\n"
+"X-Pootle-Revision: 2839702\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -47,9 +47,8 @@ msgid "Users online"
 msgstr "Defnyddwyr ar-lein"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
-msgstr "Enw defnyddiwr"
+msgstr "Enw Defnyddiwr"
 
 #: admin.strings.js:13
 msgid "Documents opened"
@@ -57,7 +56,7 @@ msgstr "Dogfennau wedi eu hagor"
 
 #: admin.strings.js:15
 msgid "Number of Documents"
-msgstr ""
+msgstr "Nifer y Dogfennau"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
@@ -65,11 +64,11 @@ msgstr "Cof wedi ei ddefnyddio"
 
 #: admin.strings.js:17
 msgid "Bytes sent"
-msgstr ""
+msgstr "Didau wedi'u hanfon"
 
 #: admin.strings.js:18
 msgid "Bytes received"
-msgstr ""
+msgstr "Didau wedi'u derbyn"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -93,7 +92,7 @@ msgstr "Amser oedi"
 
 #: admin.strings.js:24
 msgid "Modified"
-msgstr ""
+msgstr "Newidiwyd"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -105,15 +104,15 @@ msgstr "Graffiau"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Newidiwyd"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "Graff CPU"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Graff Rhwydwaith"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -142,11 +141,11 @@ msgstr "Cyfnod amser ystadegau CPU (mewn ms) "
 
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Cof rhithiol proses Dogfen Mwyaf (mewn MB) - lleihau'n unig."
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Cof stacproses Dogfen Mwyaf (mewn MB) - lleihau'n unig."
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
@@ -340,15 +339,14 @@ msgid ""
 msgstr ""
 
 #: dist/errormessages.js:14
-#, fuzzy
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
 "Methodd y cadw gan nad oedd lle ar ddisg ar y gweinydd cadw. Bydd y ddogfen "
-"yn un darllen yn unig, nawr. Cysylltwch â gweinyddwr y gweinydd er mwyn "
-"parhau i olygu."
+"yn un darllen yn unig, nawr. Cysylltwch â gweinyddwr y gweinydd "
+"(%storageserver) er mwyn parhau i olygu."
 
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
