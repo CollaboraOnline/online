@@ -226,7 +226,7 @@ L.Map.WOPI = L.Handler.extend({
 			if (msg.Values) {
 				if (msg.Values.Filename !== null && msg.Values.Filename !== undefined) {
 					this._map.showBusy(_('Creating copy...'), false);
-					map.saveAs('wopi:' + msg.Values.Filename);
+					map.saveAs(msg.Values.Filename);
 				}
 			}
 		}
