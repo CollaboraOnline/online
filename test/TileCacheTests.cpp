@@ -381,7 +381,7 @@ void TileCacheTests::testDisconnectMultiView()
         }
 
         // Should never get more than 4 tiles on socket2.
-        const auto res2 = getResponseString(socket2, "tile:", "disconnectMultiView-2 ", 500);
+        getResponseString(socket2, "tile:", "disconnectMultiView-2 ", 500);
     }
 }
 

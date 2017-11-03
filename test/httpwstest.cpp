@@ -2375,7 +2375,6 @@ void HTTPWSTest::testEachView(const std::string& doc, const std::string& type,
                               const std::string& testname)
 {
     const std::string view = testname + "view %d -> ";
-    const std::string load = testname + "view %d, cannot load the document ";
     const std::string error = testname + "view %d, did not receive a %s message as expected";
 
     try

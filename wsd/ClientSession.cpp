@@ -861,7 +861,6 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
 
 Authorization ClientSession::getAuthorization() const
 {
-    std::string accessToken;
     Poco::URI::QueryParameters queryParams = _uriPublic.getQueryParameters();
 
     // prefer the access_token

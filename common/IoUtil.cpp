@@ -113,7 +113,6 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
 
             LOG_CHECK(n > 0);
 
-            const std::string firstLine = LOOLProtocol::getFirstLine(payload);
             if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
             {
                 // One WS message split into multiple frames.

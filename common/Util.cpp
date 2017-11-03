@@ -164,7 +164,6 @@ namespace Util
             while (!isdigit(line[len]) && line[len] != '\0')
                 ++len;
 
-            const auto str = std::string(line + len, strlen(line + len) - 1);
             return line + len;
         }
 

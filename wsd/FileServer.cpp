@@ -132,7 +132,6 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     if (credentials.getUsername() == user &&
         userProvidedPwd == pass)
     {
-        const std::string htmlMimeType = "text/html";
         // generate and set the cookie
         JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
         const std::string jwtToken = authAgent.getAccessToken();

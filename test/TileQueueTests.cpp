@@ -119,7 +119,6 @@ void TileQueueTests::testTileCombinedRendering()
     const std::string req1 = "tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840";
     const std::string req2 = "tile part=0 width=256 height=256 tileposx=3840 tileposy=0 tilewidth=3840 tileheight=3840";
     const std::string req3 = "tile part=0 width=256 height=256 tileposx=0 tileposy=3840 tilewidth=3840 tileheight=3840";
-    const std::string req4 = "tile part=0 width=256 height=256 tileposx=3840 tileposy=3840 tilewidth=3840 tileheight=3840";
 
     const std::string resHor = "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 imgsize=0,0 tilewidth=3840 tileheight=3840 ver=-1,-1 oldwid=0,0 wid=0,0";
     const TileQueue::Payload payloadHor(resHor.data(), resHor.data() + resHor.size());
