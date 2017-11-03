@@ -85,6 +85,9 @@ L.Map.include({
 	},
 
 	saveAs: function (url, format, options) {
+		if (url === undefined || url == null) {
+			return;
+		}
 		if (format === undefined || format === null) {
 			format = '';
 		}
@@ -94,7 +97,7 @@ L.Map.include({
 
 		this.showBusy(_('Saving...'), false);
 		this._socket.sendMessage('saveas ' +
-			'url=' + url + ' ' +
+			'url=wopi:' + encodeURIComponent(url) + ' ' +
 			'format=' + format + ' ' +
 			'options=' + options);
 	},

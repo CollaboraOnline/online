@@ -119,6 +119,12 @@ L.Socket = L.Class.extend({
 		this.socket.send(msg);
 	},
 
+	_getParameterByName: function(url, name) {
+		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'), results = regex.exec(url);
+		return results === null ? '' : results[1].replace(/\+/g, ' ');
+	},
+
 	_onSocketOpen: function () {
 		console.debug('_onSocketOpen:');
 		this._map._serverRecycling = false;
@@ -560,8 +566,29 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('saveas:')) {
 			this._map.hideBusy();
-			// var url = command.url; // WOPI url - if needed at some stage
-			// var name = command.name; TODO dialog that the file was saved as "name"
+			if (command !== undefined && command.url !== undefined && command.url !== '') {
+				this.close();
+				var url = command.url;
+				var accessToken = this._getParameterByName(url, 'access_token');
+				var accessTokenTtl = this._getParameterByName(url, 'access_token_ttl');
+
+				if (accessToken !== undefined) {
+					if (accessTokenTtl === undefined) {
+						accessTokenTtl = 0;
+					}
+					this._map.options.docParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTtl };
+				}
+				else {
+					this._map.options.docParams = {};
+				}
+
+				// setup for loading the new document, and trigger the load
+				var docUrl = url.split('?')[0];
+				this._map.options.doc = docUrl;
+				this._map.options.wopiSrc = encodeURIComponent(docUrl);
+				this._map.loadDocument();
+			}
+			// var name = command.name; - ignored, we get the new name via the wopi's BaseFileName
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			//FIXME: We should get statusindicator when saving too, no?
