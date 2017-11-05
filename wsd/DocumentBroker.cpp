@@ -1178,15 +1178,11 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
     _debugRenderedTileCount++;
 }
 
-void DocumentBroker::handleDialogRequest(const std::string& dialogId,
-                                         const std::shared_ptr<ClientSession>& /*session*/,
-                                         bool child)
+void DocumentBroker::handleDialogRequest(const std::string& dialogCmd)
 {
     assertCorrectThread();
     std::unique_lock<std::mutex> lock(_mutex);
-    const std::string dialogCmd = child ? "dialogchild" : "dialog";
-    LOG_DBG("Sending " + dialogCmd +  " render request for dialog " << dialogId);
-    _childProcess->sendTextFrame(dialogCmd + " " + dialogId);
+    _childProcess->sendTextFrame(dialogCmd);
 }
 
 void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,

@@ -221,13 +221,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return sendTile(buffer, length, tokens, docBroker);
     }
-    else if (tokens[0] == "dialog")
+    else if (tokens[0] == "dialog" || tokens[0] == "dialogchild")
     {
-        return sendDialog(buffer, length, tokens, docBroker, false);
-    }
-    else if (tokens[0] == "dialogchild")
-    {
-        return sendDialog(buffer, length, tokens, docBroker, true);
+        docBroker->handleDialogRequest(std::string(buffer, length));
     }
     else if (tokens[0] == "tilecombine")
     {
@@ -423,26 +419,6 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const std:
     {
         LOG_ERR("Failed to process tile command: " << exc.what());
         return sendTextFrame("error: cmd=tile kind=invalid");
-    }
-
-    return true;
-}
-
-bool ClientSession::sendDialog(const char * /*buffer*/, int /*length*/, const std::vector<std::string>& tokens,
-                               const std::shared_ptr<DocumentBroker>& docBroker, bool child)
-{
-    const std::string dialogCmd = child ? "dialogchild" : "dialog";
-    try
-    {
-        if (child)
-            docBroker->handleDialogRequest(tokens[1], shared_from_this(), true);
-        else
-            docBroker->handleDialogRequest(tokens[1], shared_from_this(), false);
-    }
-    catch (const std::exception& exc)
-    {
-        LOG_ERR("Failed to process " + dialogCmd + " command: " << exc.what());
-        return sendTextFrame("error: cmd=" + dialogCmd + " kind=invalid");
     }
 
     return true;

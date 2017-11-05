@@ -19,12 +19,17 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogMsg: function(e) {
-		// FIXME: core sends a different id for many dialogs in callbacks
 		e.dialogId = e.dialogId.replace('.uno:', '');
 		if (e.action === 'invalidate') {
 			// ignore any invalidate callbacks when we have closed the dialog
 			if (this._isOpen(e.dialogId)) {
-				this._map.sendDialogCommand(e.dialogId);
+				var rect = e.rectangle.match(/\d+g/);
+				if (rect != null && rect.length == 4) {
+					var json = {
+						rectangle: e.rectangle
+					};
+				}
+				this._map.sendDialogCommand(e.dialogId, json);
 			}
 		} else if (e.action === 'close') {
 			this._onDialogClose(e.dialogId);

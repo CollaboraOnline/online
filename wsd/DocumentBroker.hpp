@@ -303,9 +303,7 @@ public:
     void invalidateTiles(const std::string& tiles);
     void handleTileRequest(TileDesc& tile,
                            const std::shared_ptr<ClientSession>& session);
-    void handleDialogRequest(const std::string& dialogId,
-                             const std::shared_ptr<ClientSession>& session,
-                             bool child);
+    void handleDialogRequest(const std::string& dialogCmd);
     void handleTileCombinedRequest(TileCombined& tileCombined,
                                    const std::shared_ptr<ClientSession>& session);
     void cancelTileRequests(const std::shared_ptr<ClientSession>& session);

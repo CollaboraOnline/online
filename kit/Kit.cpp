@@ -846,10 +846,11 @@ public:
         ws->sendFrame(output.data(), output.size(), WebSocket::FRAME_BINARY);
     }
 
-    void renderDialog(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws, bool child)
+    void renderDialog(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
     {
         assert(ws && "Expected a non-null websocket.");
 
+        const bool child = tokens[0] == "dialogchild";
         const int nCanvasWidth = 800;
         const int nCanvasHeight = 600;
         size_t pixmapDataSize = 4 * nCanvasWidth * nCanvasHeight;
@@ -1733,13 +1734,9 @@ private:
                 {
                     renderCombinedTiles(tokens, _ws);
                 }
-                else if (tokens[0] == "dialog")
+                else if (tokens[0] == "dialog" || tokens[0] == "dialogchild")
                 {
-                    renderDialog(tokens, _ws, false);
-                }
-                else if (tokens[0] == "dialogchild")
-                {
-                    renderDialog(tokens, _ws, true);
+                    renderDialog(tokens, _ws);
                 }
                 else if (LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
                 {
