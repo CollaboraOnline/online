@@ -39,7 +39,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_launchDialog: function(dialogId, width, height) {
-		var canvas = '<div style="padding: 0px; margin: 0px; overflow: hidden;" id="' + dialogId + '">' +
+		var canvas = '<div class="lokdialog" style="padding: 0px; margin: 0px; overflow: hidden;" id="' + dialogId + '">' +
 		    '<canvas tabindex="0" id="' + dialogId + '-canvas" width="' + width + 'px" height="' + height + 'px"></canvas>' +
 		    '</div>';
 		$(document.body).append(canvas);
@@ -51,6 +51,7 @@ L.Control.LokDialog = L.Control.extend({
 			modal: false,
 			closeOnEscape: true,
 			resizable: false,
+			dialogClass: 'lokdialog_container',
 			close: function() {
 				that._onDialogClose(dialogId);
 			}
@@ -78,6 +79,10 @@ L.Control.LokDialog = L.Control.extend({
 		$('#' + dialogId + '-canvas').on('keyup keypress keydown', function(e) {
 			e.dialogId = dialogId;
 			that._handleDialogKeyEvent(e);
+		});
+
+		$('#' + dialogId + '-canvas').on('contextmenu', function() {
+			return false;
 		});
 
 		this._dialogs[dialogId] = true;
@@ -241,7 +246,7 @@ L.Control.LokDialog = L.Control.extend({
 
 		// remove any existing floating element if there's any
 		$('#' + e.dialogId + '-floating').remove();
-		var floatingCanvas = '<canvas id="' + e.dialogId + '-floating"></canvas>';
+		var floatingCanvas = '<canvas class="lokdialogchild-canvas" id="' + e.dialogId + '-floating"></canvas>';
 		$('#' + e.dialogId).append(floatingCanvas);
 		$('#' + e.dialogId + '-floating').css({position: 'absolute', left: left, top: top});
 
@@ -270,6 +275,9 @@ L.Control.LokDialog = L.Control.extend({
 			that._postDialogChildMouseEvent('move', dialogId, e.offsetX, e.offsetY, 1, 0, 0);
 		});
 
+		$('#' + dialogId + '-floating').on('contextmenu', function() {
+			return false;
+		});
 	},
 
 	_onDialogChildMsg: function(e) {
