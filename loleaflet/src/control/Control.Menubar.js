@@ -375,14 +375,25 @@ L.Control.Menubar = L.Control.extend({
 
 	_onInitMenu: function (e) {
 		if (e.commandName === '.uno:LanguageStatus' && L.Util.isArray(e.commandValues)) {
-			var resetLang = _('Reset to Default Language');
+			var resetLang = _('Reset to Default Language'), translated, neutral;
+			var languages  = [];
+
+			e.commandValues.forEach(function(language) {
+				languages.push({translated: _(language), neutral: language});
+			});
+			languages.sort(function(a, b) {
+				return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
+			});
+
 			$menuSelection = $('#menu-noneselection').parent();
 			$menuParagraph = $('#menu-noneparagraph').parent();
 			$menuDefault = $('#menu-nonelanguage').parent();
-			for (var lang in e.commandValues) {
-				$menuSelection.append(this._createLangMenuItem(_(e.commandValues[lang]), encodeURIComponent('Current_' + e.commandValues[lang])));
-				$menuParagraph.append(this._createLangMenuItem(_(e.commandValues[lang]), encodeURIComponent('Paragraph_' + e.commandValues[lang])));
-				$menuDefault.append(this._createLangMenuItem(_(e.commandValues[lang]), encodeURIComponent('Default_' + e.commandValues[lang])));
+			for (var lang in languages) {
+				translated = languages[lang].translated;
+				neutral = languages[lang].neutral;
+				$menuSelection.append(this._createLangMenuItem(translated, encodeURIComponent('Current_' + neutral)));
+				$menuParagraph.append(this._createLangMenuItem(translated, encodeURIComponent('Paragraph_' + neutral)));
+				$menuDefault.append(this._createLangMenuItem(translated, encodeURIComponent('Default_' + neutral)));
 			}
 			$menuSelection.append(this._createMenu([{type: 'separator'}]));
 			$menuParagraph.append(this._createMenu([{type: 'separator'}]));
