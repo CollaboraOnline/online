@@ -689,6 +689,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             if (resultURL.getScheme() == "file" && !resultURL.getPath().empty())
             {
                 // this also sends the saveas: result
+                LOG_TRC("Save-as path: " << resultURL.getPath());
                 docBroker->saveAsToStorage(getId(), resultURL.getPath(), wopiFilename);
             }
             else

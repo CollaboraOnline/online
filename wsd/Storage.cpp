@@ -659,15 +659,17 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
 StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename)
 {
     // TODO: Check if this URI has write permission (canWrite = true)
-    const auto size = getFileSize(_jailedFilePath);
 
     const bool isSaveAs = !saveAsPath.empty() && !saveAsFilename.empty();
+    const std::string filePath(isSaveAs? saveAsPath: _jailedFilePath);
+
+    const auto size = getFileSize(filePath);
 
     Poco::URI uriObject(_uri);
     uriObject.setPath(isSaveAs? uriObject.getPath(): uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
 
-    LOG_INF("Uploading URI via WOPI [" << uriObject.toString() << "] from [" << _jailedFilePath + "].");
+    LOG_INF("Uploading URI via WOPI [" << uriObject.toString() << "] from [" << filePath + "].");
 
     std::ostringstream oss;
     StorageBase::SaveResult saveResult(StorageBase::SaveResult::FAILED);
@@ -736,7 +738,6 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         addStorageDebugCookie(request);
         std::ostream& os = psession->sendRequest(request);
 
-        const std::string filePath(isSaveAs? saveAsPath: _jailedFilePath);
         std::ifstream ifs(filePath);
         Poco::StreamCopier::copyStream(ifs, os);
 

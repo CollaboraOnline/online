@@ -34,13 +34,17 @@ public:
     void assertPutRelativeFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         // spec says UTF-7...
-        CPPUNIT_ASSERT_EQUAL(std::string("/jan/hole+AWE-ovsk+AP0-/hello world.txt"), request.get("X-WOPI-SuggestedTarget"));
+        CPPUNIT_ASSERT_EQUAL(std::string("/jan/hole+AWE-ovsk+AP0-/hello world.pdf"), request.get("X-WOPI-SuggestedTarget"));
+
+        // make sure it is a pdf - or at least that it is larger than what it
+        // used to be
+        CPPUNIT_ASSERT(std::stoul(request.get("X-WOPI-Size")) > _fileContent.size());
     }
 
     bool filterSendMessage(const char* data, const size_t len, const WSOpCode /* code */, const bool /* flush */, int& /*unitReturn*/) override
     {
         std::string message(data, len);
-        if (message == "saveas: url=" + helpers::getTestServerURI() + "/something%20wopi/files/1?access_token=anything filename=hello%20world.txt")
+        if (message == "saveas: url=" + helpers::getTestServerURI() + "/something%20wopi/files/1?access_token=anything filename=hello%20world.pdf")
         {
             // successfully exit the test if we also got the outgoing message
             // notifying about saving the file
@@ -61,7 +65,7 @@ public:
                 initWebsocket("/wopi/files/0?access_token=anything");
 
                 helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "load url=" + _wopiSrc, testName);
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "saveas url=wopi:///jan/hole%C5%A1ovsk%C3%BD/hello%20world.txt", testName);
+                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "saveas url=wopi:///jan/hole%C5%A1ovsk%C3%BD/hello%20world.pdf", testName);
                 SocketPoll::wakeupWorld();
 
                 _phase = Phase::Polling;
