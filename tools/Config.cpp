@@ -187,7 +187,7 @@ int Config::main(const std::vector<std::string>& args)
     bool changed = false;
     _loolConfig.load(ConfigFile);
 
-    for (unsigned i = 0; i < args.size(); i++)
+    for (unsigned long i = 0; i < args.size(); i++)
     {
         if (args[i] == "set-admin-password")
         {

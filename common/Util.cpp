@@ -124,7 +124,7 @@ namespace Util
         data.clear();
         std::stringstream stream;
         unsigned value;
-        for (unsigned offset = 0; offset < hexString.size(); offset += 2)
+        for (unsigned long offset = 0; offset < hexString.size(); offset += 2)
         {
             stream.clear();
             stream << std::hex << hexString.substr(offset, 2);

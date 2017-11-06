@@ -111,7 +111,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                           sizeof userProvidedPwdHash, userProvidedPwdHash);
 
         std::stringstream stream;
-        for (unsigned j = 0; j < sizeof userProvidedPwdHash; ++j)
+        for (unsigned long j = 0; j < sizeof userProvidedPwdHash; ++j)
             stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(userProvidedPwdHash[j]);
 
         userProvidedPwd = stream.str();
