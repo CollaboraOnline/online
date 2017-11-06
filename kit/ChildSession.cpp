@@ -610,6 +610,10 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
     {
         std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
 
+        LOG_DBG("Calling LOK's downloadAs with: '" << url.c_str() << "', '" <<
+                (format.size() == 0 ? "(nullptr)" : format.c_str()) << "', '" <<
+                (filterOptions.size() == 0 ? "(nullptr)" : filterOptions.c_str()) << "'.");
+
         getLOKitDocument()->saveAs(url.c_str(),
                 format.size() == 0 ? nullptr :format.c_str(),
                 filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
@@ -935,6 +939,10 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
         std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
 
         getLOKitDocument()->setView(_viewId);
+
+        LOG_DBG("Calling LOK's saveAs with: '" << url.c_str() << "', '" <<
+                (format.size() == 0 ? "(nullptr)" : format.c_str()) << "', '" <<
+                (filterOptions.size() == 0 ? "(nullptr)" : filterOptions.c_str()) << "'.");
 
         success = getLOKitDocument()->saveAs(url.c_str(),
                 format.size() == 0 ? nullptr :format.c_str(),
