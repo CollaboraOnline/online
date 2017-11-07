@@ -146,6 +146,9 @@ L.Map.include({
 			var dialogCmd = 'dialog';
 			if (child)
 				dialogCmd = 'dialogchild';
+			// make sure there are no spaces in rectangle
+			if (rectangle)
+				rectangle = rectangle.replace(/ /g, '');
 			this._socket.sendMessage(dialogCmd + ' ' + command + (rectangle ? ' rectangle=' + rectangle : ''));
 		}
 	},

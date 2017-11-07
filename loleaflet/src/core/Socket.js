@@ -745,9 +745,6 @@ L.Socket = L.Class.extend({
 			else if (tokens[i].substring(0, 6) === 'width=') {
 				command.width = parseInt(tokens[i].substring(6));
 			}
-			else if (tokens[i].substring(0, 6) === 'title=') {
-				command.title = tokens[i].substring(6);
-			}
 			else if (tokens[i].substring(0, 7) === 'height=') {
 				command.height = parseInt(tokens[i].substring(7));
 			}
@@ -812,6 +809,18 @@ L.Socket = L.Class.extend({
 			}
 			else if (tokens[i].startsWith('wid=')) {
 				command.wireId = this.getParameterValue(tokens[i]);
+			}
+			else if (tokens[i].substring(0, 6) === 'title=') {
+				command.title = tokens[i].substring(6);
+			}
+			else if (tokens[i].substring(0, 12) === 'dialogwidth=') {
+				command.dialogwidth = tokens[i].substring(12);
+			}
+			else if (tokens[i].substring(0, 13) === 'dialogheight=') {
+				command.dialogheight = tokens[i].substring(13);
+			}
+			else if (tokens[i].substring(0, 10) === 'rectangle=') {
+				command.rectangle = tokens[i].substring(10);
 			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {

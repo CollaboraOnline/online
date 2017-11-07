@@ -851,10 +851,6 @@ public:
         assert(ws && "Expected a non-null websocket.");
 
         const bool child = tokens[0] == "dialogchild";
-        const int nCanvasWidth = 800;
-        const int nCanvasHeight = 600;
-        size_t pixmapDataSize = 4 * nCanvasWidth * nCanvasHeight;
-        std::vector<unsigned char> pixmap(pixmapDataSize);
 
         std::unique_lock<std::mutex> lock(_documentMutex);
         if (!_loKitDocument)
@@ -869,38 +865,83 @@ public:
             return;
         }
 
-        int nWidth = nCanvasWidth;
-        int nHeight = nCanvasHeight;
-        Timestamp timestamp;
-        char* pDialogTitle = nullptr;
-        if (child)
-            _loKitDocument->paintActiveFloatingWindow(tokens[1].c_str(), pixmap.data(), nWidth, nHeight);
-        else
-            _loKitDocument->paintDialog(tokens[1].c_str(), pixmap.data(), &pDialogTitle, nWidth, nHeight);
-
-        const double area = nWidth * nHeight;
-        const auto elapsed = timestamp.elapsed();
-        LOG_TRC((child ? std::string("paintActiveFloatingWindow") : std::string("paintDialog")) +
-                " for " << tokens[1] << " returned with size" << nWidth << "X" << nHeight
-                << " and rendered in " << (elapsed/1000.) <<
-                " ms (" << area / elapsed << " MP/s).");
-
-        std::string encodedDialogTitle;
-        if (pDialogTitle)
+        int startX = 0, startY = 0;
+        int bufferWidth = 800, bufferHeight = 600; // hopefully, this is big enough
+        std::string paintRectangle;
+        // find the rectangle to paint, if specified
+        if (tokens.size() >= 3 && getTokenString(tokens[2], "rectangle", paintRectangle))
         {
-            std::string aDialogTitle(pDialogTitle);
-            URI::encode(aDialogTitle, "", encodedDialogTitle);
-            free(pDialogTitle);
+            const std::vector<std::string> rectParts = LOOLProtocol::tokenize(paintRectangle.c_str(), paintRectangle.length(), ',');
+            startX = std::atoi(rectParts[0].c_str());
+            startY = std::atoi(rectParts[1].c_str());
+            bufferWidth = std::atoi(rectParts[2].c_str());
+            bufferHeight = std::atoi(rectParts[3].c_str());
         }
-        const std::string response = std::string(child ? "dialogchildpaint:" : "dialogpaint:") + " id=" + tokens[1] +
-            (!encodedDialogTitle.empty() ? " title=" + encodedDialogTitle : "") + " width=" + std::to_string(nWidth) + " height=" + std::to_string(nHeight) + "\n";
+
+        size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
+        std::vector<unsigned char> pixmap(pixmapDataSize);
+
+        char* pDialogTitle = nullptr;
+        int width = bufferWidth;
+        int height = bufferHeight;
+        std::string response;
+        if (child)
+        {
+            Timestamp timestamp;
+            _loKitDocument->paintActiveFloatingWindow(tokens[1].c_str(), pixmap.data(), width, height);
+            const auto elapsed = timestamp.elapsed();
+            const double area = width * height;
+            LOG_TRC("paintActiveFloatingWindow for " << tokens[1] << " returned floating window "
+                    << width << "X" << height << " "
+                    << "rendered in " << (elapsed/1000.)
+                    << "ms (" << area / elapsed << " MP/s).");
+
+            response = "dialogchildpaint: id=" + tokens[1] + " width=" + std::to_string(width) + " height=" + std::to_string(height) + "\n";
+        }
+        else
+        {
+            Timestamp timestamp;
+            _loKitDocument->paintDialog(tokens[1].c_str(), pixmap.data(), startX, startY, width, height);
+            const auto elapsed = timestamp.elapsed();
+
+            int dialogWidth = 0;
+            int dialogHeight = 0;
+            _loKitDocument->getDialogInfo(tokens[1].c_str(), &pDialogTitle, dialogWidth, dialogHeight);
+
+            std::string encodedDialogTitle;
+            if (pDialogTitle)
+            {
+                std::string aDialogTitle(pDialogTitle);
+                URI::encode(aDialogTitle, "", encodedDialogTitle);
+                free(pDialogTitle);
+            }
+
+            // rendered width, height cannot be less than the dialog width, height
+            width = std::min(width, dialogWidth);
+            height = std::min(height, dialogHeight);
+            const double area = width * height;
+
+            LOG_TRC("paintDialog for " << tokens[1] << " returned " << width << "X" << height
+                    << "@(" << startX << "," << startY << ")"
+                    << "and rendered in " << (elapsed/1000.)
+                    << "ms (" << area / elapsed << " MP/s).");
+
+            response = "dialogpaint: id=" + tokens[1] + " title=" + encodedDialogTitle +
+                " dialogwidth=" + std::to_string(dialogWidth) + " dialogheight=" + std::to_string(dialogHeight);
+
+            if (!paintRectangle.empty())
+                response += " rectangle=" + paintRectangle;
+
+            response += "\n";
+        }
+
         std::vector<char> output;
         output.reserve(response.size() + pixmapDataSize);
         output.resize(response.size());
         std::memcpy(output.data(), response.data(), response.size());
 
         // TODO: use png cache for dialogs too
-        if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, nWidth, nHeight, nCanvasWidth, nCanvasHeight, output, LOK_TILEMODE_RGBA))
+        if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight, output, LOK_TILEMODE_RGBA))
         {
             LOG_ERR("Failed to encode into PNG.");
             return;

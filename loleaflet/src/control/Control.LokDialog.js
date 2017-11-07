@@ -23,13 +23,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (e.action === 'invalidate') {
 			// ignore any invalidate callbacks when we have closed the dialog
 			if (this._isOpen(e.dialogId)) {
-				var rect = e.rectangle.match(/\d+g/);
-				if (rect != null && rect.length == 4) {
-					var json = {
-						rectangle: e.rectangle
-					};
-				}
-				this._map.sendDialogCommand(e.dialogId, json);
+				this._map.sendDialogCommand(e.dialogId, e.rectangle);
 			}
 		} else if (e.action === 'close') {
 			this._onDialogClose(e.dialogId);
@@ -158,7 +152,7 @@ L.Control.LokDialog = L.Control.extend({
 		delete this._dialogs[dialogId];
 	},
 
-	_paintDialog: function(dialogId, title, imgData) {
+	_paintDialog: function(dialogId, title, rectangle, imgData) {
 		if (!this._isOpen(dialogId))
 			return;
 
@@ -167,7 +161,15 @@ L.Control.LokDialog = L.Control.extend({
 		var canvas = document.getElementById(dialogId + '-canvas');
 		var ctx = canvas.getContext('2d');
 		img.onload = function() {
-			ctx.drawImage(img, 0, 0);
+			var x = 0;
+			var y = 0;
+			if (rectangle) {
+				rectangle = rectangle.split(',');
+				x = parseInt(rectangle[0]);
+				y = parseInt(rectangle[1]);
+			}
+
+			ctx.drawImage(img, x, y);
 		};
 		img.src = imgData;
 	},
@@ -178,7 +180,7 @@ L.Control.LokDialog = L.Control.extend({
 		{
 			var oldWidth = $('#' + dialogId + '-canvas').width();
 			var oldHeight = $('#' + dialogId + '-canvas').height();
-			if (oldWidth === newWidth && oldHeight === newHeight)
+			if (oldWidth == newWidth && oldHeight == newHeight)
 				ret = true;
 		}
 
@@ -193,14 +195,14 @@ L.Control.LokDialog = L.Control.extend({
 			return;
 
 		if (!this._isOpen(dialogId)) {
-			this._launchDialog(dialogId, e.width, e.height);
-		} else if (!this._isSameSize(dialogId, e.width, e.height)) {
+			this._launchDialog(dialogId, e.dialogWidth, e.dialogHeight);
+		} else if (!this._isSameSize(dialogId, e.dialogWidth, e.dialogHeight)) {
 			// size changed - destroy the old sized dialog
 			this._onDialogClose(dialogId);
-			this._launchDialog(dialogId, e.width, e.height);
+			this._launchDialog(dialogId, e.dialogWidth, e.dialogHeight);
 		}
 
-		this._paintDialog(dialogId, e.title, e.dialog);
+		this._paintDialog(dialogId, e.title, e.rectangle, e.dialog);
 	},
 
 	_onDialogChildPaint: function(e) {
