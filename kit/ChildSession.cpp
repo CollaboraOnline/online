@@ -947,6 +947,27 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
         success = getLOKitDocument()->saveAs(url.c_str(),
                 format.size() == 0 ? nullptr :format.c_str(),
                 filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
+
+        if (!success)
+        {
+            // a desperate try - add an extension hoping that it'll help
+            bool retry = true;
+            switch (getLOKitDocument()->getDocumentType())
+            {
+                case LOK_DOCTYPE_TEXT:         url += ".odt"; wopiFilename += ".odt"; break;
+                case LOK_DOCTYPE_SPREADSHEET:  url += ".ods"; wopiFilename += ".ods"; break;
+                case LOK_DOCTYPE_PRESENTATION: url += ".odp"; wopiFilename += ".odp"; break;
+                case LOK_DOCTYPE_DRAWING:      url += ".odg"; wopiFilename += ".odg"; break;
+                default:                       retry = false; break;
+            }
+
+            if (retry)
+            {
+                success = getLOKitDocument()->saveAs(url.c_str(),
+                        format.size() == 0 ? nullptr :format.c_str(),
+                        filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
+            }
+        }
     }
 
     std::string encodedURL, encodedWopiFilename;
