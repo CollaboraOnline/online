@@ -12,10 +12,12 @@
 
 #include <atomic>
 #include <map>
+#include <set>
 #include <string>
 
 #include <Poco/Path.h>
 #include <Poco/Process.h>
+#include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
 
@@ -46,6 +48,7 @@ public:
     static std::string FuzzFileName;
     static std::string Cache;
     static std::string ConfigFile;
+    static std::string ConfigDir;
     static std::string SysTemplate;
     static std::string LoTemplate;
     static std::string ChildRoot;
@@ -59,6 +62,7 @@ public:
     static unsigned MaxConnections;
     static unsigned MaxDocuments;
     static std::string OverrideWatermark;
+    static std::set<const Poco::Util::AbstractConfiguration*> PluginConfigurations;
 
     static std::vector<int> getKitPids();
 
