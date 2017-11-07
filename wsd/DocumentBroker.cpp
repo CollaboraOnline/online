@@ -21,6 +21,7 @@
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
 #include <Poco/DigestStream.h>
+#include <Poco/Exception.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 
@@ -534,7 +535,58 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     // Let's load the document now, if not loaded.
     if (!_storage->isLoaded())
     {
-        const auto localPath = _storage->loadStorageFileToLocal(session->getAuthorization());
+        auto localPath = _storage->loadStorageFileToLocal(session->getAuthorization());
+
+        // Check if we have a prefilter "plugin" for this document format
+        for (const auto& plugin : LOOLWSD::PluginConfigurations)
+        {
+            try
+            {
+                std::string extension(plugin->getString("prefilter.extension"));
+                std::string newExtension(plugin->getString("prefilter.newextension"));
+                std::string commandLine(plugin->getString("prefilter.commandline"));
+
+                if (localPath.length() > extension.length()+1 &&
+                    strcasecmp(localPath.substr(localPath.length() - extension.length() -1).data(), (std::string(".") + extension).data()) == 0)
+                {
+                    // Extension matches, try the conversion. We convert the file to another one in
+                    // the same (jail) directory, with just the new extension tacked on.
+
+                    std::string newRootPath = _storage->getRootFilePath() + "." + newExtension;
+
+                    // The commandline must contain the space-separated substring @INPUT@ that is
+                    // replaced with the input file name, and @OUTPUT@ for the output file name.
+
+                    std::vector<std::string>args;
+
+                    Poco::StringTokenizer tokenizer(commandLine, " ");
+                    if (tokenizer.replace("@INPUT@", _storage->getRootFilePath()) != 1 ||
+                        tokenizer.replace("@OUTPUT@", newRootPath) != 1)
+                        throw Poco::NotFoundException();
+
+                    for (std::size_t i = 1; i < tokenizer.count(); i++)
+                        args.push_back(tokenizer[i]);
+
+                    Poco::ProcessHandle process = Poco::Process::launch(tokenizer[0], args);
+                    int rc = process.wait();
+                    if (rc != 0)
+                    {
+                        LOG_ERR("Conversion from " << extension << " to " << newExtension <<" failed");
+                        return false;
+                    }
+                    _storage->setRootFilePath(newRootPath);
+                    localPath += "." + newExtension;
+                }
+
+                // We successfully converted the file to something LO can use; break out of the for
+                // loop.
+                break;
+            }
+            catch (const Poco::NotFoundException&)
+            {
+                // This plugin is not a proper prefilter one
+            }
+        }
 
         std::ifstream istr(localPath, std::ios::binary);
         Poco::SHA1Engine sha1;

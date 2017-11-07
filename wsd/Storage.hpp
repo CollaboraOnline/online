@@ -129,6 +129,14 @@ public:
     /// Returns the root path to the jailed file.
     const std::string& getRootFilePath() const { return _jailedFilePath; };
 
+    /// Set the root path of the jailed file, only for use in cases where we actually have converted
+    /// it to another format, in the same directory
+    void setRootFilePath(const std::string& newPath)
+    {
+        // Could assert here that it is in the same directory?
+        _jailedFilePath = newPath;
+    };
+
     bool isLoaded() const { return _isLoaded; }
 
     /// Asks the storage object to force overwrite to storage upon next save
