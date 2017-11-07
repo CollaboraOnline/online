@@ -48,6 +48,7 @@
 #include <thread>
 
 #include <Poco/DateTimeFormatter.h>
+#include <Poco/DirectoryIterator.h>
 #include <Poco/DOM/AutoPtr.h>
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/DOMWriter.h>
@@ -78,12 +79,14 @@
 #include <Poco/TemporaryFile.h>
 #include <Poco/ThreadPool.h>
 #include <Poco/URI.h>
+#include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/MapConfiguration.h>
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionException.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
+#include <Poco/Util/XMLConfiguration.h>
 
 #include "Admin.hpp"
 #include "Auth.hpp"
@@ -121,6 +124,7 @@
 
 using namespace LOOLProtocol;
 
+using Poco::DirectoryIterator;
 using Poco::Environment;
 using Poco::Exception;
 using Poco::File;
@@ -153,6 +157,7 @@ using Poco::Util::MissingOptionException;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
+using Poco::Util::XMLConfiguration;
 using Poco::XML::AutoPtr;
 using Poco::XML::DOMParser;
 using Poco::XML::DOMWriter;
@@ -551,12 +556,14 @@ std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::LOKitVersion;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
+std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 std::set<std::string> LOOLWSD::EditFileExtensions;
 unsigned LOOLWSD::MaxConnections;
 unsigned LOOLWSD::MaxDocuments;
 std::string LOOLWSD::OverrideWatermark;
+std::set<const Poco::Util::AbstractConfiguration*> LOOLWSD::PluginConfigurations;
 
 static std::string UnitTestLibrary;
 
@@ -679,6 +686,22 @@ void LOOLWSD::initialize(Application& self)
     {
         // Fallback to the LOOLWSD_CONFIGDIR or --config-file path.
         loadConfiguration(ConfigFile, PRIO_DEFAULT);
+    }
+
+    // Load extra ("plug-in") configuration files, if present
+    File dir(ConfigDir);
+    if (dir.exists() && dir.isDirectory())
+    {
+        for (auto configFileIterator = DirectoryIterator(dir); configFileIterator != DirectoryIterator(); ++configFileIterator)
+        {
+            // Only accept configuration files ending in .xml
+            const std::string configFile = configFileIterator.path().getFileName();
+            if (configFile.length() > 4 && strcasecmp(configFile.substr(configFile.length() - 4).data(), ".xml") == 0)
+            {
+                const std::string fullFileName = dir.path() + "/" + configFile;
+                PluginConfigurations.insert(new XMLConfiguration(fullFileName));
+            }
+        }
     }
 
     // Override any settings passed on the command-line.
@@ -991,6 +1014,11 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("path"));
 
+    optionSet.addOption(Option("config-dir", "", "Override extra configuration directory path.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("path"));
+
 #if ENABLE_DEBUG
     optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
                         .required(false)
@@ -1043,6 +1071,8 @@ void LOOLWSD::handleOption(const std::string& optionName,
     }
     else if (optionName == "config-file")
         ConfigFile = value;
+    else if (optionName == "config-dir")
+        ConfigDir = value;
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
