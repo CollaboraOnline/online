@@ -630,6 +630,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         return false;
     }
 
+    // Check that we are actually about to upload a successfully saved document.
+    if (!success)
+    {
+        LOG_ERR("Cannot save docKey [" << _docKey << "], the .uno:Save has failed in LOK.");
+        it->second->sendTextFrame("error: cmd=storage kind=savefailed");
+        return false;
+    }
+
     const Authorization auth = it->second->getAuthorization();
     const auto uri = isSaveAs? saveAsPath: it->second->getPublicUri().toString();
 
