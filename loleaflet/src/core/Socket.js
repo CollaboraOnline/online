@@ -390,6 +390,7 @@ L.Socket = L.Class.extend({
 			return;
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'storage') {
+			this._map.hideBusy();
 			var storageError;
 			if (command.errorKind === 'savediskfull') {
 				storageError = errorMessages.storage.savediskfull;
@@ -405,7 +406,6 @@ L.Socket = L.Class.extend({
 				// Since this is a document load failure, wsd will disconnect the socket anyway,
 				// better we do it first so that another error message doesn't override this one
 				// upon socket close.
-				this._map.hideBusy();
 				this.close();
 			}
 			else if (command.errorKind === 'documentconflict')
@@ -451,12 +451,12 @@ L.Socket = L.Class.extend({
 			return;
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'internal') {
+			this._map.hideBusy();
 			this._map._fatal = true;
 			if (command.errorKind === 'diskfull') {
 				this._map.fire('error', {msg: errorMessages.diskfull});
 			}
 			else if (command.errorKind === 'unauthorized') {
-				this._map.hideBusy();
 				this._map.fire('error', {msg: errorMessages.unauthorized});
 			}
 
@@ -471,6 +471,7 @@ L.Socket = L.Class.extend({
 			this._map.hideBusy();
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'load') {
+			this._map.hideBusy();
 			this.close();
 
 			var errorKind = command.errorKind;
