@@ -42,6 +42,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Show'), type: 'unocommand', uno: '.uno:ShowTrackedChanges'},
 					{type: 'separator'},
 					{name: _('Manage Changes...'), id: '.uno:AcceptTrackedChanges', type: 'dialog'},
+					{name: _('Accept All'), type: 'unocommand', uno: '.uno:AcceptAllTrackedChanges'},
+					{name: _('Reject All'), type: 'unocommand', uno: '.uno:RejectAllTrackedChanges'},
 					{name: _('Previous'), type: 'unocommand', uno: '.uno:PreviousTrackedChange'},
 					{name: _('Next'), type: 'unocommand', uno: '.uno:NextTrackedChange'}
 				]},
