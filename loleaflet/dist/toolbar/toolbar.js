@@ -814,7 +814,7 @@ function onSearchKeyPress(e) {
 
 function documentNameConfirm() {
 	var value = $('#document-name-input').val();
-	if (value !== null && value != '') {
+	if (value !== null && value != '' && value != map['wopi'].BaseFileName) {
 		map.saveAs(value);
 	}
 	map._onGotFocus();
@@ -831,6 +831,11 @@ function onDocumentNameKeyPress(e) {
 	} else if (e.keyCode === 27) { // Escape key
 		documentNameCancel();
 	}
+}
+
+function onDocumentNameFocus() {
+	// hide the caret in the main document
+	map._onLostFocus();
 }
 
 function sortFontSizes() {
@@ -1029,9 +1034,9 @@ map.on('wopiprops', function(e) {
 		// Save As allowed
 		$('#document-name-input').prop('disabled', false);
 		$('#document-name-input').addClass('editable');
-		$('#document-name-input').on('keypress', onDocumentNameKeyPress);
-		$('#document-name-input').on('focus', function() { map._onLostFocus(); /* hide the caret in the main document */ });
-		$('#document-name-input').on('blur', documentNameCancel);
+		$('#document-name-input').off('keypress', onDocumentNameKeyPress).on('keypress', onDocumentNameKeyPress);
+		$('#document-name-input').off('focus', onDocumentNameFocus).on('focus', onDocumentNameFocus);
+		$('#document-name-input').off('blur', documentNameCancel).on('blur', documentNameCancel);
 	} else {
 		$('#document-name-input').prop('disabled', true);
 		$('#document-name-input').removeClass('editable');
