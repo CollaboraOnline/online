@@ -25,9 +25,9 @@
 #include "Common.hpp"
 #include "FileServer.hpp"
 #include "IoUtil.hpp"
-#include "Protocol.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
+#include "Protocol.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "Unit.hpp"
@@ -40,8 +40,8 @@
 
 using namespace LOOLProtocol;
 
-using Poco::StringTokenizer;
 using Poco::Net::HTTPResponse;
+using Poco::StringTokenizer;
 using Poco::Util::Application;
 
 /// Process incoming websocket messages

@@ -32,18 +32,18 @@
 
 #include "ClientSession.hpp"
 #include "Common.hpp"
-#include "common/FileUtil.hpp"
 #include "Protocol.hpp"
 #include "SenderQueue.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
+#include "common/FileUtil.hpp"
+
+using namespace LOOLProtocol;
 
 using Poco::DirectoryIterator;
 using Poco::File;
 using Poco::StringTokenizer;
 using Poco::Timestamp;
-
-using namespace LOOLProtocol;
 
 TileCache::TileCache(const std::string& docURL,
                      const Timestamp& modifiedTime,

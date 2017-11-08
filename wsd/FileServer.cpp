@@ -12,9 +12,10 @@
 #include <iomanip>
 #include <string>
 #include <vector>
-#include <unistd.h>
-#include <sys/stat.h>
+
 #include <dirent.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include <zlib.h>
 
 #include <openssl/evp.h>
@@ -24,11 +25,11 @@
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/Exception.h>
 #include <Poco/FileStream.h>
-#include <Poco/Net/HTTPCookie.h>
-#include <Poco/Net/HTTPBasicCredentials.h>
-#include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTMLForm.h>
+#include <Poco/Net/HTTPBasicCredentials.h>
+#include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Runnable.h>
@@ -39,15 +40,15 @@
 #include "Auth.hpp"
 #include "Common.hpp"
 #include "FileServer.hpp"
-#include "Protocol.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
+#include "Protocol.hpp"
 
 using Poco::Net::HTMLForm;
+using Poco::Net::HTTPBasicCredentials;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
 using Poco::Net::NameValueCollection;
-using Poco::Net::HTTPBasicCredentials;
 using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;

@@ -47,13 +47,13 @@
 #include <sstream>
 #include <thread>
 
-#include <Poco/DateTimeFormatter.h>
 #include <Poco/DOM/AutoPtr.h>
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/DOMWriter.h>
 #include <Poco/DOM/Document.h>
 #include <Poco/DOM/Element.h>
 #include <Poco/DOM/NodeList.h>
+#include <Poco/DateTimeFormatter.h>
 #include <Poco/Environment.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
@@ -90,10 +90,15 @@
 #include "ClientSession.hpp"
 #include "Common.hpp"
 #include "Crypto.hpp"
+#include "DelaySocket.hpp"
 #include "DocumentBroker.hpp"
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
+#include "FileUtil.hpp"
 #include "IoUtil.hpp"
+#ifdef KIT_IN_PROCESS
+#  include <Kit.hpp>
+#endif
 #include "Log.hpp"
 #include "Protocol.hpp"
 #include "ServerSocket.hpp"
@@ -101,18 +106,12 @@
 #if ENABLE_SSL
 #  include "SslSocket.hpp"
 #endif
-#include "DelaySocket.hpp"
 #include "Storage.hpp"
 #include "TraceFile.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
 #include "UserMessages.hpp"
 #include "Util.hpp"
-#include "FileUtil.hpp"
-
-#ifdef KIT_IN_PROCESS
-#  include <Kit.hpp>
-#endif
 
 #ifdef FUZZER
 #  include <tools/Replay.hpp>
@@ -159,8 +158,8 @@ using Poco::XML::DOMParser;
 using Poco::XML::DOMWriter;
 using Poco::XML::Element;
 using Poco::XML::InputSource;
-using Poco::XML::NodeList;
 using Poco::XML::Node;
+using Poco::XML::NodeList;
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;

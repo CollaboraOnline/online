@@ -18,10 +18,10 @@
 #include <fstream>
 #include <sstream>
 
+#include <Poco/DigestStream.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
-#include <Poco/DigestStream.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 

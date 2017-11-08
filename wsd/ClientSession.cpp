@@ -17,14 +17,14 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "common/Common.hpp"
 #include "DocumentBroker.hpp"
 #include "LOOLWSD.hpp"
+#include "common/Common.hpp"
 #include "common/Log.hpp"
 #include "common/Protocol.hpp"
 #include "common/Session.hpp"
-#include "common/Util.hpp"
 #include "common/Unit.hpp"
+#include "common/Util.hpp"
 
 using namespace LOOLProtocol;
 

@@ -34,19 +34,19 @@
 #include <Poco/Timestamp.h>
 
 // For residual Poco SSL usage.
-#include <Poco/Net/Context.h>
-#include <Poco/Net/SSLManager.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/Context.h>
 #include <Poco/Net/KeyConsoleHandler.h>
+#include <Poco/Net/SSLManager.h>
 
 #include "Auth.hpp"
 #include "Common.hpp"
 #include "Exceptions.hpp"
-#include "common/FileUtil.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
+#include "common/FileUtil.hpp"
 
 bool StorageBase::FilesystemEnabled;
 bool StorageBase::WopiEnabled;
