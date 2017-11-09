@@ -57,8 +57,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 					callback: function(key, options) {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
-							var colAlpha = colHeaderObj._data[index].text;
-							colHeaderObj.insertColumn.call(colHeaderObj, colAlpha);
+							colHeaderObj.insertColumn.call(colHeaderObj, index);
 						}
 					}
 				},
@@ -67,8 +66,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 					callback: function(key, options) {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
-							var colAlpha = colHeaderObj._data[index].text;
-							colHeaderObj.deleteColumn.call(colHeaderObj, colAlpha);
+							colHeaderObj.deleteColumn.call(colHeaderObj, index);
 						}
 					}
 				},
@@ -77,8 +75,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 					callback: function(key, options) {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
-							var colAlpha = colHeaderObj._data[index].text;
-							colHeaderObj.optimalWidth.call(colHeaderObj, colAlpha);
+							colHeaderObj.optimalWidth.call(colHeaderObj, index);
 						}
 					}
 				},
@@ -87,8 +84,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 					callback: function(key, options) {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
-							var colAlpha = colHeaderObj._data[index].text;
-							colHeaderObj.hideColumn.call(colHeaderObj, colAlpha);
+							colHeaderObj.hideColumn.call(colHeaderObj, index);
 						}
 					}
 				},
@@ -97,8 +93,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 					callback: function(key, options) {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
-							var colAlpha = colHeaderObj._data[index].text;
-							colHeaderObj.showColumn.call(colHeaderObj, colAlpha);
+							colHeaderObj.showColumn.call(colHeaderObj, index);
 						}
 					}
 				}
@@ -107,50 +102,50 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		});
 	},
 
-	optimalWidth: function(colAlpha) {
+	optimalWidth: function(index) {
 		if (!this._dialog) {
 			this._dialog = L.control.metricInput(this._onDialogResult, this,
 							     this._map._docLayer.twipsToHMM(this._map._docLayer.STD_EXTRA_WIDTH),
 							     {title: _('Optimal Column Width')});
 		}
 		if (this._map._docLayer._selections.getLayers().length === 0) {
-			this._selectColumn(colAlpha, 0);
+			this._selectColumn(index, 0);
 		}
 		this._dialog.addTo(this._map);
 		this._map.enable(false);
 		this._dialog.show();
 	},
 
-	insertColumn: function(colAlpha) {
+	insertColumn: function(index) {
 		// First select the corresponding column because
 		// .uno:InsertColumn doesn't accept any column number
 		// as argument and just inserts before the selected column
 		if (this._map._docLayer._selections.getLayers().length === 0) {
-			this._selectColumn(colAlpha, 0);
+			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertColumns');
 		this._updateColumnHeader();
 	},
 
-	deleteColumn: function(colAlpha) {
+	deleteColumn: function(index) {
 		if (this._map._docLayer._selections.getLayers().length === 0) {
-			this._selectColumn(colAlpha, 0);
+			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteColumns');
 		this._updateColumnHeader();
 	},
 
-	hideColumn: function(colAlpha) {
+	hideColumn: function(index) {
 		if (this._map._docLayer._selections.getLayers().length === 0) {
-			this._selectColumn(colAlpha, 0);
+			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideColumn');
 		this._updateColumnHeader();
 	},
 
-	showColumn: function(colAlpha) {
+	showColumn: function(index) {
 		if (this._map._docLayer._selections.getLayers().length === 0) {
-			this._selectColumn(colAlpha, 0);
+			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowColumn');
 		this._updateColumnHeader();
@@ -171,50 +166,44 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	_onUpdateSelection: function (e) {
-		var data = this._data;
-		if (!data)
-			return;
 		var start = e.start.x;
 		var end = e.end.x;
-		var twips;
 		if (start !== -1) {
-			twips = new L.Point(start, start);
-			start = Math.round(data.converter.call(data.context, twips).x);
+			start = this._twipsToPixels(start);
 		}
 		if (end !== -1) {
-			twips = new L.Point(end, end);
-			end = Math.round(data.converter.call(data.context, twips).x);
+			end = this._twipsToPixels(end);
 		}
-		this.updateSelection(data, start, end);
+		this.updateSelection(this._data, start, end);
 	},
 
 	_onUpdateCurrentColumn: function (e) {
-		var data = this._data;
-		if (!data)
-			return;
 		var x = e.x;
 		if (x !== -1) {
-			var twips = new L.Point(x, x);
-			x = Math.round(data.converter.call(data.context, twips).x);
+			x = this._twipsToPixels(x);
 		}
-		this.updateCurrent(data, x);
+		this.updateCurrent(this._data, x);
 	},
 
 	_updateColumnHeader: function () {
 		this._map.fire('updaterowcolumnheaders', {x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
 	},
 
-	drawHeaderEntry: function (index, isOver) {
-		if (!index || index <= 0 || index >= this._data.length)
+	drawHeaderEntry: function (entry, isOver, isHighlighted) {
+		if (!entry)
 			return;
 
 		var ctx = this._canvasContext;
-		var content = this._data[index].text;
-		var start = this._data[index - 1].pos - this._leftOffset;
-		var end = this._data[index].pos - this._leftOffset;
+		var content = this._colIndexToAlpha(entry.index + this._leftmostColumn);
+		var start = entry.pos - entry.size - this._leftOffset;
+		var end = entry.pos - this._leftOffset;
 		var width = end - start;
 		var height = this._headerCanvas.height;
-		var isHighlighted = this._data[index].selected;
+
+		if (isHighlighted !== true && isHighlighted !== false) {
+			isHighlighted = this.isHighlighted(entry.index);
+		}
+
 
 		if (width <= 0)
 			return;
@@ -249,22 +238,23 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	getHeaderEntryBoundingClientRect: function (index) {
-		if (!index)
-			index = this._mouseOverIndex; // use last mouse over position
+		var entry = this._mouseOverEntry;
+		if (index)
+			entry = this._data.get(index);
 
-		if (!index || !this._data[index])
+		if (!entry)
 			return;
 
 		var rect = this._headerCanvas.getBoundingClientRect();
 
-		var colStart = this._data[index - 1].pos + this._position;
-		var colEnd = this._data[index].pos + this._position;
+		var colStart = entry.pos - entry.size + this._position;
+		var colEnd = entry.pos + this._position;
 
 		var left = rect.left + colStart;
 		var right = rect.left + colEnd;
 		var top = rect.top;
 		var bottom = rect.bottom;
-		return { left: left, right: right, top: top, bottom: bottom };
+		return {left: left, right: right, top: top, bottom: bottom};
 	},
 
 	viewRowColumnHeaders: function (e) {
@@ -274,31 +264,57 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	fillColumns: function (columns, converter, context) {
-		var iterator, twip, width;
+		if (columns.length < 2)
+			return;
 
-		this._data = new Array(columns.length);
-		this._data.converter = converter;
-		this._data.context = context;
+		var entry, index, iterator, pos, width;
 
 		var canvas = this._headerCanvas;
 		canvas.width = parseInt(L.DomUtil.getStyle(this._headersContainer, 'width'));
 		canvas.height = parseInt(L.DomUtil.getStyle(this._headersContainer, 'height'));
-
 		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
-		var leftmostOffset = new L.Point(columns[0].size, columns[0].size);
+		// update first header index and reset no more valid variables
 		this._leftmostColumn = parseInt(columns[0].text);
-		this._leftOffset = Math.round(converter.call(context, leftmostOffset).x);
+		this._current = -1; // no more valid
+		this._selection.start = this._selection.end = -1; // no more valid
+		this._mouseOverEntry = null;
+		this._lastMouseOverIndex = undefined;
 
-		this._data[0] = { pos: this._leftOffset, text: '', selected: false };
+		// create header data handler instance
+		this._data = new L.Control.Header.DataImpl();
 
-		for (iterator = 1; iterator < columns.length; iterator++) {
-			twip = new L.Point(columns[iterator].size, columns[iterator].size);
-			this._data[iterator] = { pos: Math.round(converter.call(context, twip).x), text: columns[iterator].text, selected: false };
-			width = this._data[iterator].pos - this._data[iterator - 1].pos;
-			if (width > 0) {
-				this.drawHeaderEntry(iterator, false);
-			}
+		// setup conversion routine
+		this.converter = L.Util.bind(converter, context);
+		this._data.converter = L.Util.bind(this._twipsToPixels, this);
+
+		var startOffsetTw = parseInt(columns[0].size);
+		this._leftOffset = this._twipsToPixels(startOffsetTw);
+
+		this._data.pushBack(0, {pos: startOffsetTw, size: 0});
+		var prevPos = startOffsetTw;
+		var nextIndex = parseInt(columns[1].text);
+		var last = columns.length - 1;
+		for (iterator = 1; iterator < last; iterator++) {
+			index = nextIndex;
+			pos = parseInt(columns[iterator].size);
+			nextIndex = parseInt(columns[iterator+1].text);
+			width = pos - prevPos;
+			prevPos = Math.round(pos + width * (nextIndex - index - 1));
+			index = index - this._leftmostColumn;
+			entry = {pos: pos, size: width};
+			this._data.pushBack(index, entry);
+		}
+
+		// setup last header entry
+		pos = parseInt(columns[last].size);
+		this._data.pushBack(nextIndex - this._leftmostColumn, {pos: pos, size: pos - prevPos});
+
+		// draw header
+		entry = this._data.getFirst();
+		while (entry) {
+			this.drawHeaderEntry(entry, false);
+			entry = this._data.getNext();
 		}
 
 		this.mouseInit(canvas);
@@ -320,13 +336,26 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		return res;
 	},
 
-	_selectColumn: function(colAlpha, modifier) {
-		var colNumber = this._colAlphaToNumber(colAlpha);
+	_colIndexToAlpha: function(columnNumber) {
+		var offset = 'A'.charCodeAt();
+		var dividend = columnNumber;
+		var columnName = '';
+		var modulo;
 
+		while (dividend > 0) {
+			modulo = (dividend - 1) % 26;
+			columnName = String.fromCharCode(offset + modulo) + columnName;
+			dividend = Math.floor((dividend - modulo) / 26);
+		}
+
+		return columnName;
+	},
+
+	_selectColumn: function(colNumber, modifier) {
 		var command = {
 			Col: {
 				type: 'unsigned short',
-				value: parseInt(colNumber - 1)
+				value: colNumber - 1
 			},
 			Modifier: {
 				type: 'unsigned short',
@@ -338,10 +367,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	_onHeaderClick: function (e) {
-		if (!this._mouseOverIndex)
+		if (!this._mouseOverEntry)
 			return;
 
-		var colAlpha = this._data[this._mouseOverIndex].text;
+		var col = this._mouseOverEntry.index + this._leftmostColumn;
 
 		var modifier = 0;
 		if (e.shiftKey) {
@@ -351,7 +380,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			modifier += this._map.keyboard.keyModifier.ctrl;
 		}
 
-		this._selectColumn(colAlpha, modifier);
+		this._selectColumn(col, modifier);
 	},
 
 	_onCornerHeaderClick: function() {
@@ -403,14 +432,14 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var end = new L.Point(e.clientX + offset.x, e.clientY);
 		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
 
-		if (this._mouseOverIndex) {
-			var clickedColumn = this._data[this._mouseOverIndex];
-			var width = clickedColumn.pos - this._data[this._mouseOverIndex - 1];
-			var column = this._mouseOverIndex + this._leftmostColumn;
+		var clickedColumn = this._mouseOverEntry;
+		if (clickedColumn) {
+			var width = clickedColumn.size;
+			var column = clickedColumn.index + this._leftmostColumn;
 
-			if (this._data[this._mouseOverIndex + 1]
-				&& this._data[this._mouseOverIndex + 1].pos === clickedColumn.pos) {
+			if (this._data.isZeroSize(clickedColumn.index + 1)) {
 				column += 1;
+				width = 0;
 			}
 
 			if (width !== distance.x) {
@@ -436,11 +465,11 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	onDragClick: function (item, clicks, e) {
 		this._map.removeLayer(this._vertLine);
 
-		if (!this._mouseOverIndex)
+		if (!this._mouseOverEntry)
 			return;
 
 		if (clicks === 2) {
-			var column = this._mouseOverIndex + this._leftmostColumn;
+			var column = this._mouseOverEntry.index + this._leftmostColumn;
 			var command = {
 				Col: {
 					type: 'unsigned short',

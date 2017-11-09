@@ -8,11 +8,13 @@ L.Control.Header = L.Control.extend({
 	},
 
 	initialize: function () {
+		this.converter = null;
+
 		this._headerCanvas = null;
 		this._clicks = 0;
 		this._current = -1;
 		this._selection = {start: -1, end: -1};
-		this._mouseOverIndex = undefined;
+		this._mouseOverEntry = null;
 		this._lastMouseOverIndex = undefined;
 		this._hitResizeArea = false;
 
@@ -77,65 +79,82 @@ L.Control.Header = L.Control.extend({
 		L.DomEvent.on(element, 'mousedown', this._onMouseDown, this);
 	},
 
-	select: function (data, index) {
-		if (!data[index])
-			return;
-		data[index].selected = true;
-		this.drawHeaderEntry(index, false);
+	select: function (entry) {
+		this.drawHeaderEntry(entry, /*isOver=*/false, /*isHighlighted=*/true);
 	},
 
-	unselect: function (data, index) {
-		if (!data[index])
-			return;
-		data[index].selected = false;
-		this.drawHeaderEntry(index, false);
+	unselect: function (entry) {
+		this.drawHeaderEntry(entry, /*isOver=*/false, /*isHighlighted=*/false);
+	},
+
+	isHighlighted: function (index) {
+		if (this._selection.start === -1 && this._selection.end === -1) {
+			return index === this._current;
+		}
+		return (this._selection.start <= index && index <= this._selection.end);
 	},
 
 	clearSelection: function (data) {
 		if (this._selection.start === -1 && this._selection.end === -1)
 			return;
-		var start = (this._selection.start === -1) ? 0 : this._selection.start;
+		var start = (this._selection.start < 1) ? 1 : this._selection.start;
 		var end = this._selection.end + 1;
-		for (var iterator = start; iterator < end; iterator++) {
-			this.unselect(data, iterator);
+
+		var entry = data.getAt(start);
+
+		while (entry && entry.index < end) {
+			this.unselect(entry);
+			entry = data.getNext(start);
 		}
 
 		this._selection.start = this._selection.end = -1;
 		// after clearing selection, we need to select the header entry for the current cursor position,
 		// since we can't be sure that the selection clearing is due to click on a cell
 		// different from the one where the cursor is already placed
-		this.select(data, this._current);
+		this.select(data.get(this._current));
 	},
 
 	updateSelection: function(data, start, end) {
-		if (!data)
+		if (!data || data.isEmpty())
 			return;
 
 		var x0 = 0, x1 = 0;
 		var itStart = -1, itEnd = -1;
 		var selected = false;
-		var iterator = 0;
-		for (var len = data.length; iterator < len; iterator++) {
-			x0 = (iterator > 0 ? data[iterator - 1].pos : 0);
-			x1 = data[iterator].pos;
-			// 'start < x1' not '<=' or we get highlighted also the `start-row - 1` and `start-column - 1` headers
+
+		// if the start selection position is above/on the left of the first header entry,
+		// but the end selection position is below/on the right of it
+		// then we set the start selected entry to the first header entry.
+		var entry = data.getFirst();
+		if (entry) {
+			x0 = entry.pos - entry.size;
+			if (start < x0 && end > x0) {
+				selected = true;
+				itStart = 1;
+			}
+		}
+
+		while (entry) {
+			x0 = entry.pos - entry.size;
+			x1 = entry.pos;
 			if (x0 <= start && start < x1) {
 				selected = true;
-				itStart = iterator;
+				itStart = entry.index;
 			}
 			if (selected) {
-				this.select(data, iterator);
+				this.select(entry);
 			}
 			if (x0 <= end && end <= x1) {
-				itEnd = iterator;
+				itEnd = entry.index;
 				break;
 			}
+			entry = data.getNext();
 		}
 
 		// if end is greater than the last fetched header position set itEnd to the max possible value
 		// without this hack selecting a whole row and then a whole column (or viceversa) leads to an incorrect selection
 		if (itStart !== -1 && itEnd === -1) {
-			itEnd = data.length - 1;
+			itEnd = data.getLength() - 1;
 		}
 
 		// we need to unselect the row (column) header entry for the current cell cursor position
@@ -143,17 +162,22 @@ L.Control.Header = L.Control.extend({
 		// does not start by clicking on a cell
 		if (this._current !== -1 && itStart !== -1 && itEnd !== -1) {
 			if (this._current < itStart || this._current > itEnd) {
-				this.unselect(data, this._current);
+				this.unselect(data.get(this._current));
 			}
 		}
+
 		if (this._selection.start !== -1 && itStart !== -1 && itStart > this._selection.start) {
-			for (iterator = this._selection.start; iterator < itStart; iterator++) {
-				this.unselect(data, iterator);
+			entry = data.getAt(this._selection.start);
+			while (entry && entry.index < itStart) {
+				this.unselect(entry);
+				entry = data.getNext();
 			}
 		}
 		if (this._selection.end !== -1 && itEnd !== -1 && itEnd < this._selection.end) {
-			for (iterator = itEnd + 1; iterator <= this._selection.end; iterator++) {
-				this.unselect(data, iterator);
+			entry = data.getAt(itEnd + 1);
+			while (entry && entry.index <= this._selection.end) {
+				this.unselect(entry);
+				entry = data.getNext();
 			}
 		}
 		this._selection.start = itStart;
@@ -161,30 +185,33 @@ L.Control.Header = L.Control.extend({
 	},
 
 	updateCurrent: function (data, start) {
-		if (!data)
+		if (!data || data.isEmpty())
 			return;
+
 		if (start < 0) {
-			this.unselect(data, this._current);
+			this.unselect(data.get(this._current));
 			this._current = -1;
 			return;
 		}
 
 		var x0 = 0, x1 = 0;
-		for (var iterator = 1, len = data.length; iterator < len; iterator++) {
-			x0 = (iterator > 0 ? data[iterator - 1].pos : 0);
-			x1 = data[iterator].pos;
+		var entry = data.getFirst();
+		while (entry) {
+			x0 = entry.pos - entry.size;
+			x1 = entry.pos;
 			if (x0 <= start && start < x1) {
 				// when a whole row (column) is selected the cell cursor is moved to the first column (row)
 				// but this action should not cause to select/unselect anything, on the contrary we end up
 				// with all column (row) header entries selected but the one where the cell cursor was
 				// previously placed
 				if (this._selection.start === -1 && this._selection.end === -1) {
-					this.unselect(data, this._current);
-					this.select(data, iterator);
+					this.unselect(data.get(this._current));
+					this.select(entry);
 				}
-				this._current = iterator;
+				this._current = entry.index;
 				break;
 			}
+			entry = data.getNext();
 		}
 	},
 
@@ -197,10 +224,10 @@ L.Control.Header = L.Control.extend({
 	},
 
 	_onMouseOut: function (e) {
-		if (this._mouseOverIndex) {
-			this.drawHeaderEntry(this._mouseOverIndex, false);
-			this._lastMouseOverIndex = this._mouseOverIndex; // used by context menu
-			this._mouseOverIndex = undefined;
+		if (this._mouseOverEntry) {
+			this.drawHeaderEntry(this._mouseOverEntry, false);
+			this._lastMouseOverIndex = this._mouseOverEntry.index; // used by context menu
+			this._mouseOverEntry = null;
 		}
 		this._hitResizeArea = false;
 		L.DomUtil.setStyle(this._headerCanvas, 'cursor', this._cursor);
@@ -217,25 +244,24 @@ L.Control.Header = L.Control.extend({
 		var pos = this._getPos(this._mouseEventToCanvasPos(this._headerCanvas, e));
 		pos = pos - this._position;
 
-		var mouseOverIndex = this._mouseOverIndex;
-		for (var iterator = 1; iterator < this._data.length; ++iterator) {
-			var start = this._data[iterator - 1].pos;
-			var end = this._data[iterator].pos;
+		var mouseOverIndex = this._mouseOverEntry ? this._mouseOverEntry.index : undefined;
+		var entry = this._data.getFirst();
+		while (entry) {
+			var start = entry.pos - entry.size;
+			var end = entry.pos;
 			if (pos > start && pos <= end) {
-				mouseOverIndex = iterator;
+				mouseOverIndex = entry.index;
 				var resizeAreaStart = Math.max(start, end - 3);
 				isMouseOverResizeArea = (pos > resizeAreaStart);
 				break;
 			}
+			entry = this._data.getNext();
 		}
 
-		if (mouseOverIndex !== this._mouseOverIndex) {
-			if (this._mouseOverIndex) {
-				this.drawHeaderEntry(this._mouseOverIndex, false);
-			}
-			if (mouseOverIndex) {
-				this.drawHeaderEntry(mouseOverIndex, true);
-			}
+		if (mouseOverIndex && (!this._mouseOverEntry || mouseOverIndex !== this._mouseOverEntry.index)) {
+			this.drawHeaderEntry(this._mouseOverEntry, false);
+			this.drawHeaderEntry(entry, true);
+			this._mouseOverEntry = entry;
 		}
 
 		if (isMouseOverResizeArea !== this._hitResizeArea) {
@@ -249,8 +275,6 @@ L.Control.Header = L.Control.extend({
 			L.DomUtil.setStyle(this._headerCanvas, 'cursor', cursor);
 			this._hitResizeArea = isMouseOverResizeArea;
 		}
-
-		this._mouseOverIndex = mouseOverIndex;
 	},
 
 	_onMouseDown: function (e) {
@@ -311,6 +335,13 @@ L.Control.Header = L.Control.extend({
 		this._dragging = false;
 	},
 
+	_twipsToPixels: function (twips) {
+		if (!this.converter)
+			return 0;
+		var point = new L.Point(twips, twips);
+		return Math.round(this._getPos(this.converter(point)));
+	},
+
 	onDragStart: function () {},
 	onDragMove: function () {},
 	onDragEnd: function () {},
@@ -319,3 +350,154 @@ L.Control.Header = L.Control.extend({
 	drawHeaderEntry: function () {},
 	_getPos: function () {}
 });
+
+(function () {
+
+	L.Control.Header.DataImpl = L.Class.extend({
+		initialize: function () {
+			this.converter = null;
+
+			this._currentIndex = undefined;
+			this._currentRange = undefined;
+			this._dataMap = {};
+			this._indexes = [];
+			this._endIndex = -1;
+			this._skipZeroSize = true;
+		},
+
+		_get: function (index, setCurrentIndex) {
+			if (index < 1 || index > this._endIndex)
+				return null;
+
+			var range = this._getFirstIndexLessOrEqual(index);
+			if (range !== undefined) {
+				if (setCurrentIndex) {
+					this._currentRange = range;
+					this._currentIndex = index;
+				}
+				return this._computeEntry(this._indexes[range], index);
+			}
+		},
+
+		get: function (index) {
+			return this._get(index, false);
+		},
+
+		getAt: function (index) {
+			return this._get(index, true);
+		},
+
+		getFirst: function () {
+			this._currentRange = 0;
+			this._currentIndex = this._indexes[this._currentRange];
+			return this.getNext();
+		},
+
+		getNext: function () {
+			if (this._currentIndex === undefined || this._currentRange === undefined)
+				return null; // you need to call getFirst on initial step
+
+			this._currentIndex += 1;
+			if (this._currentIndex >= this._endIndex) {
+				// we iterated over all entries, reset everything
+				this._currentIndex = undefined;
+				this._currentRange = undefined;
+				this._skipZeroSize = false;
+				return null;
+			}
+
+			if (this._indexes[this._currentRange+1] === this._currentIndex) {
+				// new range
+				this._currentRange += 1;
+
+				if (this._skipZeroSize) {
+					var index, i, len = this._indexes.length;
+					for (i = this._currentRange; i < len; ++i) {
+						index = this._indexes[i];
+						if (this._dataMap[index].size > 0) {
+							break;
+						}
+					}
+					this._currentRange = i;
+					this._currentIndex = index;
+				}
+			}
+
+			var startIndex = this._indexes[this._currentRange];
+			return this._computeEntry(startIndex, this._currentIndex);
+		},
+
+		pushBack: function (index, value) {
+			if (index <= this._endIndex)
+				return;
+			this._dataMap[index] = value;
+			this._indexes.push(index);
+			this._endIndex = index;
+		},
+
+		isZeroSize: function (index) {
+			if (!(index > 0 && index < this._endIndex)) {
+				return true;
+			}
+
+			var range = this._getFirstIndexLessOrEqual(index);
+			return this._dataMap[this._indexes[range]].size === 0;
+		},
+
+		getLength: function () {
+			return this._endIndex;
+		},
+
+		isEmpty: function () {
+			return 	this._indexes.length === 0;
+		},
+
+		_binaryIndexOf: function (collection, searchElement) {
+			var minIndex = 0;
+			var maxIndex = collection.length - 1;
+			var currentIndex;
+			var currentElement;
+
+			while (minIndex <= maxIndex) {
+				currentIndex = (minIndex + maxIndex) / 2 | 0;
+				currentElement = collection[currentIndex];
+
+				if (currentElement < searchElement) {
+					minIndex = currentIndex + 1;
+				}
+				else if (currentElement > searchElement) {
+					maxIndex = currentIndex - 1;
+				}
+				else {
+					return currentIndex;
+				}
+			}
+
+			if (currentIndex > maxIndex)
+				return currentIndex - 1;
+			if (currentIndex < minIndex)
+				return currentIndex;
+		},
+
+		_getFirstIndexLessOrEqual: function (index) {
+			return this._binaryIndexOf(this._indexes, index);
+		},
+
+		_twipsToPixels: function (twips) {
+			if (!this.converter)
+				return 0;
+
+			return this.converter(twips);
+		},
+
+		_computeEntry: function (startIndex, index) {
+			var entry = this._dataMap[startIndex];
+			var pos = entry.pos + (index - startIndex) * entry.size;
+			pos = this._twipsToPixels(pos);
+			var size = this._twipsToPixels(entry.size);
+			return {index: index, pos: pos, size: size};
+		}
+
+	});
+
+})();
