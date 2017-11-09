@@ -12,8 +12,8 @@
 
 #include <cstddef>
 
-#include "LibreOfficeKit.h"
-#include "LibreOfficeKitInit.h"
+#include <LibreOfficeKit/LibreOfficeKit.h>
+#include <LibreOfficeKit/LibreOfficeKitInit.h>
 
 /*
  * The reasons this C++ code is not as pretty as it could be are:
@@ -162,19 +162,37 @@ public:
      *
      * @param pDialogId Unique dialog id to be painted
      * @param pBuffer Buffer with enough memory allocated to render any dialog
-     * @param pDialogTitle output parameter pointing to a dialog title
-     * string. Should be freed by the caller.
-     * @param nWidth output parameter returning the width of the rendered dialog.
-     * @param nHeight output parameter returning the height of the rendered dialog
+     * @param x x-coordinate from where the dialog should start painting
+     * @param y y-coordinate from where the dialog should start painting
+     * @param width The width of the dialog image to be painted
+     * @param height The height of the dialog image to be painted
      */
     void paintDialog(const char* pDialogId,
                      unsigned char* pBuffer,
-                     char** pDialogTitle,
-                     int& nWidth,
-                     int& nHeight)
+                     const int x,
+                     const int y,
+                     const int width,
+                     const int height)
     {
         return mpDoc->pClass->paintDialog(mpDoc, pDialogId, pBuffer,
-                                          pDialogTitle, &nWidth, &nHeight);
+                                          x, y, width, height);
+    }
+
+    /* Get info about dialog with given dialog id
+     *
+     * @param pDialogId Unique dialog id for which to get info about
+     * @param pDialogTitle Pointer to pointer pointing to string containing the
+     * dialog title. Caller should the pointer to allocated string themselves.
+     * @param pWidth The width of the dialog
+     * @param pHeight The height of the dialog
+     */
+    void getDialogInfo(const char* pDialogId,
+                       char** pDialogTitle,
+                       int& pWidth,
+                       int& pHeight)
+    {
+        return mpDoc->pClass->getDialogInfo(mpDoc, pDialogId, pDialogTitle, &pWidth, &pHeight);
+
     }
 
     /**

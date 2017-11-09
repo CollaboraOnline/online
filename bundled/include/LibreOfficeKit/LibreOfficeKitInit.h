@@ -10,7 +10,7 @@
 #ifndef INCLUDED_LIBREOFFICEKIT_LIBREOFFICEKITINIT_H
 #define INCLUDED_LIBREOFFICEKIT_LIBREOFFICEKITINIT_H
 
-#include "LibreOfficeKit.h"
+#include <LibreOfficeKit/LibreOfficeKit.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -28,7 +28,7 @@ extern "C"
 
 #ifndef _WIN32
 
-    #include "dlfcn.h"
+    #include <dlfcn.h>
 
     #ifdef  _AIX
     #  include <sys/ldr.h>
@@ -42,7 +42,7 @@ extern "C"
     #endif
     #define SEPARATOR         '/'
 
-#if !defined(TARGET_OS_IPHONE)
+#if !defined(IOS)
         static void *lok_loadlib(const char *pFN)
     {
         return dlopen(pFN, RTLD_LAZY
@@ -68,7 +68,7 @@ extern "C"
     {
         (void)pPath;
     }
-#endif // TARGET_OS_IPHONE
+#endif // IOS
 
     static void *lok_dlsym(void *Hnd, const char *pName)
     {
@@ -100,7 +100,8 @@ extern "C"
     static char *lok_dlerror(void)
     {
         LPSTR buf = NULL;
-        FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0, reinterpret_cast<LPSTR>(&buf), 0, NULL);
+        FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+            NULL, GetLastError(), 0, reinterpret_cast<LPSTR>(&buf), 0, NULL);
         return buf;
     }
 
@@ -169,7 +170,7 @@ static void *lok_dlopen( const char *install_path, char ** _imp_lib )
     char *imp_lib;
     void *dlhandle;
 
-#if !defined(TARGET_OS_IPHONE)
+#if !defined(IOS)
     size_t partial_length, imp_lib_size;
     struct stat dir_st;
 
