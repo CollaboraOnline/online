@@ -39,7 +39,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_launchDialog: function(dialogId, width, height) {
 		var canvas = '<div class="lokdialog" style="padding: 0px; margin: 0px; overflow: hidden;" id="' + dialogId + '">' +
-		    '<canvas tabindex="0" id="' + dialogId + '-canvas" width="' + width + 'px" height="' + height + 'px"></canvas>' +
+		    '<canvas class="lokdialog_canvas" tabindex="0" id="' + dialogId + '-canvas" width="' + width + 'px" height="' + height + 'px"></canvas>' +
 		    '</div>';
 		$(document.body).append(canvas);
 		var that = this;

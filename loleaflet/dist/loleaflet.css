@@ -344,3 +344,7 @@ body {
 .lokdialog.ui-dialog-content.ui-widget-content {
         padding: 0px;
 }
+
+.lokdialog_canvas {
+        display: block; /* required to remove all borders around canvas element */
+}
