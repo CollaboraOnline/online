@@ -55,8 +55,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 					callback: function(key, options) {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
-							var row = rowHeaderObj._data[index].text;
-							rowHeaderObj.insertRow.call(rowHeaderObj, row);
+							rowHeaderObj.insertRow.call(rowHeaderObj, index);
 						}
 					}
 				},
@@ -65,8 +64,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 					callback: function(key, options) {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
-							var row = rowHeaderObj._data[index].text;
-							rowHeaderObj.deleteRow.call(rowHeaderObj, row);
+							rowHeaderObj.deleteRow.call(rowHeaderObj, index);
 						}
 					}
 				},
@@ -75,8 +73,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 					callback: function(key, options) {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
-							var row = rowHeaderObj._data[index].text;
-							rowHeaderObj.optimalHeight.call(rowHeaderObj, row);
+							rowHeaderObj.optimalHeight.call(rowHeaderObj, index);
 						}
 					}
 				},
@@ -85,8 +82,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 					callback: function(key, options) {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
-							var row = rowHeaderObj._data[index].text;
-							rowHeaderObj.hideRow.call(rowHeaderObj, row);
+							rowHeaderObj.hideRow.call(rowHeaderObj, index);
 						}
 					}
 				},
@@ -95,8 +91,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 					callback: function(key, options) {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
-							var row = rowHeaderObj._data[index].text;
-							rowHeaderObj.showRow.call(rowHeaderObj, row);
+							rowHeaderObj.showRow.call(rowHeaderObj, index);
 						}
 					}
 				}
@@ -105,45 +100,45 @@ L.Control.RowHeader = L.Control.Header.extend({
 		});
 	},
 
-	optimalHeight: function(row) {
+	optimalHeight: function(index) {
 		if (!this._dialog) {
 			this._dialog = L.control.metricInput(this._onDialogResult, this, 0, {title: _('Optimal Row Height')});
 		}
 		if (this._map._docLayer._selections.getLayers().length === 0) {
-			this._selectRow(row, 0);
+			this._selectRow(index, 0);
 		}
 		this._dialog.addTo(this._map);
 		this._map.enable(false);
 		this._dialog.show();
 	},
 
-	insertRow: function(row) {
+	insertRow: function(index) {
 		// First select the corresponding row because
 		// .uno:InsertRows doesn't accept any row number
 		// as argument and just inserts before the selected row
 		if (this._map._docLayer._selections.getLayers().length === 0) {
-			this._selectRow(row, 0);
+			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertRows');
 	},
 
-	deleteRow: function(row) {
+	deleteRow: function(index) {
 		if (this._map._docLayer._selections.getLayers().length === 0) {
-			this._selectRow(row, 0);
+			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteRows');
 	},
 
-	hideRow: function(row) {
+	hideRow: function(index) {
 		if (this._map._docLayer._selections.getLayers().length === 0) {
-			this._selectRow(row, 0);
+			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideRow');
 	},
 
-	showRow: function(row) {
+	showRow: function(index) {
 		if (this._map._docLayer._selections.getLayers().length === 0) {
-			this._selectRow(row, 0);
+			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowRow');
 	},
@@ -163,50 +158,43 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	_onUpdateSelection: function (e) {
-		var data = this._data;
-		if (!data)
-			return;
 		var start = e.start.y;
 		var end = e.end.y;
-		var twips;
 		if (start !== -1) {
-			twips = new L.Point(start, start);
-			start = Math.round(data.converter.call(data.context, twips).y);
+			start = this._twipsToPixels(start);
 		}
 		if (end !== -1) {
-			twips = new L.Point(end, end);
-			end = Math.round(data.converter.call(data.context, twips).y);
+			end = this._twipsToPixels(end);
 		}
-		this.updateSelection(data, start, end);
+		this.updateSelection(this._data, start, end);
 	},
 
 	_onUpdateCurrentRow: function (e) {
-		var data = this._data;
-		if (!data)
-			return;
 		var y = e.y;
 		if (y !== -1) {
-			var twips = new L.Point(y, y);
-			y = Math.round(data.converter.call(data.context, twips).y);
+			y = this._twipsToPixels(y);
 		}
-		this.updateCurrent(data, y);
+		this.updateCurrent(this._data, y);
 	},
 
 	_updateRowHeader: function () {
 		this._map.fire('updaterowcolumnheaders', {x: 0, y: this._map._getTopLeftPoint().y, offset: {x: 0, y: undefined}});
 	},
 
-	drawHeaderEntry: function (index, isOver) {
-		if (!index || index <= 0 || index >= this._data.length)
+	drawHeaderEntry: function (entry, isOver, isHighlighted) {
+		if (!entry)
 			return;
 
 		var ctx = this._canvasContext;
-		var content = this._data[index].text;
-		var start = this._data[index - 1].pos - this._topOffset;
-		var end = this._data[index].pos - this._topOffset;
+		var content = entry.index + this._topRow;
+		var start = entry.pos - entry.size - this._topOffset;
+		var end = entry.pos - this._topOffset;
 		var height = end - start;
 		var width = this._headerCanvas.width;
-		var isHighlighted = this._data[index].selected;
+
+		if (isHighlighted !== true && isHighlighted !== false) {
+			isHighlighted = this.isHighlighted(entry.index);
+		}
 
 		if (height <= 0)
 			return;
@@ -241,22 +229,23 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	getHeaderEntryBoundingClientRect: function (index) {
-		if (!index)
-			index = this._mouseOverIndex; // use last mouse over position
+		var entry = this._mouseOverEntry;
+		if (index)
+			entry = this._data.get(index);
 
-		if (!index || !this._data[index])
+		if (!entry)
 			return;
 
 		var rect = this._headerCanvas.getBoundingClientRect();
 
-		var rowStart = this._data[index - 1].pos + this._position;
-		var rowEnd = this._data[index].pos + this._position;
+		var rowStart = entry.pos - entry.size + this._position;
+		var rowEnd = entry.pos + this._position;
 
 		var left = rect.left;
 		var right = rect.right;
 		var top = rect.top + rowStart;
 		var bottom = rect.top + rowEnd;
-		return { left: left, right: right, top: top, bottom: bottom };
+		return {left: left, right: right, top: top, bottom: bottom};
 	},
 
 	viewRowColumnHeaders: function (e) {
@@ -266,31 +255,60 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	fillRows: function (rows, converter, context) {
-		var iterator, twip, height;
+		if (rows.length < 2)
+			return;
 
-		this._data = new Array(rows.length);
-		this._data.converter = converter;
-		this._data.context = context;
+		var entry, index, iterator, height, pos;
 
 		var canvas = this._headerCanvas;
 		canvas.width = parseInt(L.DomUtil.getStyle(this._headersContainer, 'width'));
 		canvas.height = parseInt(L.DomUtil.getStyle(this._headersContainer, 'height'));
-
 		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
-		var topOffset = new L.Point(rows[0].size, rows[0].size);
+		// update first header index and reset no more valid variables
 		this._topRow = parseInt(rows[0].text);
-		this._topOffset = Math.round(converter.call(context, topOffset).y);
+		this._current = -1;
+		this._selection.start = this._selection.end = -1;
+		this._mouseOverEntry = null;
+		this._lastMouseOverIndex = undefined;
 
-		this._data[0] = { pos: this._topOffset, text: '', selected: false };
+		// create header data handler instance
+		this._data = new L.Control.Header.DataImpl();
 
-		for (iterator = 1; iterator < rows.length; iterator++) {
-			twip = new L.Point(rows[iterator].size, rows[iterator].size);
-			this._data[iterator] = { pos: Math.round(converter.call(context, twip).y), text: rows[iterator].text, selected: false };
-			height = this._data[iterator].pos - this._data[iterator - 1].pos;
-			if (height > 0) {
-				this.drawHeaderEntry(iterator, false);
-			}
+		// setup conversion routine
+		this.converter = L.Util.bind(converter, context);
+		this._data.converter = L.Util.bind(this._twipsToPixels, this);
+
+		var startOffsetTw = parseInt(rows[0].size);
+		this._topOffset = this._twipsToPixels(startOffsetTw);
+
+		this._data.pushBack(0, {pos: startOffsetTw, size: 0});
+		var prevPos = startOffsetTw;
+		var nextIndex = parseInt(rows[1].text);
+		var last = rows.length - 1;
+
+		for (iterator = 1; iterator < last; iterator++) {
+			index = nextIndex;
+			pos = parseInt(rows[iterator].size);
+			nextIndex = parseInt(rows[iterator+1].text);
+			height = pos - prevPos;
+			prevPos = Math.round(pos + height * (nextIndex - index - 1));
+			index = index - this._topRow;
+			entry = {pos: pos, size: height};
+			this._data.pushBack(index, entry);
+		}
+
+		// setup last header entry
+		index = nextIndex - this._topRow;
+		pos = parseInt(rows[last].size);
+		height = pos - prevPos;
+		this._data.pushBack(index, {pos: pos, size: height});
+
+		// draw header
+		entry = this._data.getFirst();
+		while (entry) {
+			this.drawHeaderEntry(entry, false);
+			entry = this._data.getNext();
 		}
 
 		this.mouseInit(canvas);
@@ -305,7 +323,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var command = {
 			Row: {
 				type: 'long',
-				value: parseInt(row - 1)
+				value: row - 1
 			},
 			Modifier: {
 				type: 'unsigned short',
@@ -317,10 +335,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	_onHeaderClick: function (e) {
-		if (!this._mouseOverIndex)
+		if (!this._mouseOverEntry)
 			return;
 
-		var row = this._mouseOverIndex + this._topRow;
+		var row = this._mouseOverEntry.index + this._topRow;
 
 		var modifier = 0;
 		if (e.shiftKey) {
@@ -378,14 +396,14 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var end = new L.Point(e.clientX, e.clientY + offset.y);
 		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
 
-		if (this._mouseOverIndex) {
-			var clickedRow = this._data[this._mouseOverIndex];
-			var height = clickedRow.pos - this._data[this._mouseOverIndex - 1];
-			var row = this._mouseOverIndex + this._topRow;
+		var clickedRow = this._mouseOverEntry;
+		if (clickedRow) {
+			var height = clickedRow.size;
+			var row = clickedRow.index + this._topRow;
 
-			if (this._data[this._mouseOverIndex + 1]
-				&& this._data[this._mouseOverIndex + 1].pos === clickedRow.pos) {
+			if (this._data.isZeroSize(clickedRow.index + 1)) {
 				row += 1;
+				height = 0;
 			}
 
 			if (height !== distance.y) {
@@ -410,11 +428,11 @@ L.Control.RowHeader = L.Control.Header.extend({
 	onDragClick: function (item, clicks, e) {
 		this._map.removeLayer(this._horzLine);
 
-		if (!this._mouseOverIndex)
+		if (!this._mouseOverEntry)
 			return;
 
 		if (clicks === 2) {
-			var row = this._mouseOverIndex + this._topRow;
+			var row = this._mouseOverEntry.index + this._topRow;
 			var command = {
 				Row: {
 					type: 'long',
