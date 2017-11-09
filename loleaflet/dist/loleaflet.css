@@ -339,6 +339,8 @@ body {
 	overflow: hidden;
 	width: auto;
 	height: auto;
+	border: none;
+	background-color: transparent;
 }
 
 .lokdialog.ui-dialog-content.ui-widget-content {

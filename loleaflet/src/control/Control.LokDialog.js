@@ -216,6 +216,14 @@ L.Control.LokDialog = L.Control.extend({
 			ctx.drawImage(img, 0, 0);
 		};
 		img.src = e.dialog;
+
+		// increase the height of the container,
+		// so that if the floating window goes out of the parent,
+		// it doesn't get stripped off
+		var height = parseInt(canvas.style.top) + canvas.height;
+		var currentHeight = parseInt($('#' + dialogId).css('height'));
+		if (height > currentHeight)
+			$('#' + dialogId).css('height', height + 'px');
 	},
 
 	_onDialogChildClose: function(dialogId) {
