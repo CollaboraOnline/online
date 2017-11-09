@@ -56,6 +56,9 @@ L.Control.LokDialog = L.Control.extend({
 			}
 		});
 
+		// don't make 'TAB' focus on this button; we want to cycle focus in the lok dialog with each TAB
+		$('.lokdialog_container button.ui-dialog-titlebar-close').attr('tabindex', '-1').blur();
+
 		// attach the mouse/key events
 		$('#' + dialogId + '-canvas').on('mousedown', function(e) {
 			var buttons = 0;
