@@ -15,7 +15,7 @@ L.Control.LokDialog = L.Control.extend({
 	_dialogs: {},
 
 	_isOpen: function(dialogId) {
-		return this._dialogs[dialogId];
+		return $('#' + dialogId).length > 0;
 	},
 
 	_onDialogMsg: function(e) {
@@ -197,9 +197,9 @@ L.Control.LokDialog = L.Control.extend({
 		if (!this._isOpen(dialogId)) {
 			this._launchDialog(dialogId, e.dialogWidth, e.dialogHeight);
 		} else if (!this._isSameSize(dialogId, e.dialogWidth, e.dialogHeight)) {
-			// size changed - destroy the old sized dialog
-			this._onDialogClose(dialogId);
-			this._launchDialog(dialogId, e.dialogWidth, e.dialogHeight);
+			var canvas = document.getElementById(dialogId + '-canvas');
+			canvas.width = e.dialogWidth;
+			canvas.height = e.dialogHeight;
 		}
 
 		this._paintDialog(dialogId, e.title, e.rectangle, e.dialog);
