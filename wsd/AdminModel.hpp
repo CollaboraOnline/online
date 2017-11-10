@@ -166,9 +166,8 @@ private:
 class Subscriber
 {
 public:
-    Subscriber(int sessionId, const std::weak_ptr<WebSocketHandler>& ws)
-        : _sessionId(sessionId),
-          _ws(ws),
+    Subscriber(const std::weak_ptr<WebSocketHandler>& ws)
+        : _ws(ws),
           _start(std::time(nullptr))
     {
         LOG_INF("Subscriber ctor.");
@@ -190,9 +189,6 @@ public:
     bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
 private:
-    /// Admin session Id
-    int _sessionId;
-
     /// The underlying AdminRequestHandler
     std::weak_ptr<WebSocketHandler> _ws;
 

@@ -312,7 +312,7 @@ void AdminModel::subscribe(int sessionId, const std::weak_ptr<WebSocketHandler>&
 {
     assertCorrectThread();
 
-    const auto ret = _subscribers.emplace(sessionId, Subscriber(sessionId, ws));
+    const auto ret = _subscribers.emplace(sessionId, Subscriber(ws));
     if (!ret.second)
     {
         LOG_WRN("Subscriber already exists");
