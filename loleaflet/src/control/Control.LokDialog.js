@@ -152,6 +152,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogClose: function(dialogId) {
 		$('#' + dialogId).remove();
+		this._map.focus();
 		delete this._dialogs[dialogId];
 	},
 
