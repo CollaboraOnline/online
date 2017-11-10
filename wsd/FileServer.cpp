@@ -164,10 +164,10 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
 
         std::vector<std::string> requestSegments;
         requestUri.getPathSegments(requestSegments);
-        if (requestSegments.size() < 1)
-        {
+        const std::string relPath = getRequestPathname(request);
+        // Is this a file we read at startup - if not; its not for serving.
+        if (requestSegments.size() < 1 || FileHash.find(relPath) == FileHash.end())
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
-        }
 
         const auto& config = Application::instance().config();
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
@@ -194,11 +194,6 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                 // No referrer-policy
                 response.add("Referrer-Policy", "no-referrer");
             }
-
-            const std::string relPath = getRequestPathname(request);
-            // Is this a file we read at startup - if not; its not for serving.
-            if (FileHash.find(relPath) == FileHash.end())
-                throw Poco::FileAccessDeniedException("Invalid or forbidden file path: [" + relPath + "].");
 
             // Do we have an extension.
             const std::size_t extPoint = endPoint.find_last_of('.');
@@ -441,21 +436,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     // Is this a file we read at startup - if not; its not for serving.
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
-    if (FileHash.find(relPath) == FileHash.end())
-    {
-        LOG_ERR("File [" << relPath << "] does not exist.");
-
-        // 404 not found
-        std::ostringstream oss;
-        oss << "HTTP/1.1 404\r\n"
-            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-            << "Content-Length: 0\r\n"
-            << "\r\n";
-        socket->send(oss.str());
-        return;
-    }
-
     std::string preprocess = *getUncompressedFile(relPath);
 
     HTMLForm form(request, message);
