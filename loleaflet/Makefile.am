@@ -14,9 +14,13 @@ L10N_JSON = $(patsubst po/%.po,dist/l10n/%.json,$(L10N_PO))
 L10N_STYLES_PO = $(wildcard po/styles/*.po)
 L10N_STYLES_JSON = $(patsubst po/styles/%.po,dist/l10n/styles/%.json,$(L10N_STYLES_PO))
 
+JQUERY_UI_IMAGE_PATH = node_modules/jquery-ui/themes/ui-lightness/images
+JQUERY_UI_IMAGES = $(wildcard $(JQUERY_UI_IMAGE_PATH)/*.png)
+JQUERY_UI_DIST_IMAGES = $(patsubst $(JQUERY_UI_IMAGE_PATH)/%.png,dist/$(JQUERY_UI_IMAGE_PATH)/%.png,$(JQUERY_UI_IMAGES))
+
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
-all-local: node_modules $(L10N_JSON) $(L10N_STYLES_JSON)
+all-local: node_modules $(L10N_JSON) $(L10N_STYLES_JSON) $(JQUERY_UI_DIST_IMAGES)
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) || true
 	mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
@@ -25,6 +29,10 @@ all-local: node_modules $(L10N_JSON) $(L10N_STYLES_JSON)
 node_modules: npm-shrinkwrap.json
 	npm install
 	touch node_modules
+
+dist/$(JQUERY_UI_IMAGE_PATH)/%.png: $(JQUERY_UI_IMAGE_PATH)/%.png
+	mkdir -p dist/$(JQUERY_UI_IMAGE_PATH)
+	cp -a $(JQUERY_UI_IMAGE_PATH)/* dist/$(JQUERY_UI_IMAGE_PATH)/
 
 dist/l10n/%.json: po/%.po
 	@util/po2json.py $< -o $@
@@ -35,12 +43,6 @@ dist/l10n/styles/%.json: po/styles/%.po
 install-data-hook:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/loleaflet; \
 	cp -ar dist/ $(DESTDIR)$(pkgdatadir)/loleaflet/;
-
-dist-hook:
-	chmod u+w $(distdir)/dist
-
-	mkdir -p $(distdir)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
-	cp -a "node_modules/jquery-ui/themes/ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png" $(distdir)/dist/node_modules/jquery-ui/themes/ui-lightness/images/
 
 pot:
 	xgettext --from-code=UTF-8 --keyword=_ --output=po/templates/loleaflet-ui.pot \
