@@ -82,13 +82,13 @@ public:
     {
         return _dummyStream;
     }
-#if POCO_VERSION < 0x02000000
+#if POCO_VERSION < 0x01080000
     virtual bool expectContinue() const override
     {
         return false;
     }
 #endif
-#if POCO_VERSION >= 0x02000000
+#if POCO_VERSION >= 0x01080000
     virtual bool secure() const override
     {
         return true;
