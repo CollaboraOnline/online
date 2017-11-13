@@ -15,7 +15,9 @@ L.Control.LokDialog = L.Control.extend({
 	_dialogs: {},
 
 	_isOpen: function(dialogId) {
-		return $('#' + dialogId).length > 0;
+		return this._dialogs[dialogId] &&
+			this._dialogs[dialogId].open &&
+			$('#' + dialogId).length > 0;
 	},
 
 	_onDialogMsg: function(e) {
@@ -25,6 +27,18 @@ L.Control.LokDialog = L.Control.extend({
 			if (this._isOpen(e.dialogId)) {
 				this._map.sendDialogCommand(e.dialogId, e.rectangle);
 			}
+		} else if (e.action === 'cursor_invalidate') {
+			if (this._isOpen(e.dialogId) && !!e.rectangle) {
+				var rectangle = e.rectangle.split(',');
+				var x = parseInt(rectangle[0]);
+				var y = parseInt(rectangle[1]);
+				var height = parseInt(rectangle[3]);
+
+				$('#' + e.dialogId + '-cursor').css({height: height});
+
+				// set the position of the lokdialog-cursor
+				$(this._dialogs[e.dialogId].cursor).css({left: x, top: y});
+			}
 		} else if (e.action === 'close') {
 			this._onDialogClose(e.dialogId);
 		}
@@ -32,9 +46,19 @@ L.Control.LokDialog = L.Control.extend({
 
 	_openDialog: function(e) {
 		e.dialogId = e.dialogId.replace('.uno:', '');
-		this._dialogs[e.dialogId] = true;
+		this._dialogs[e.dialogId] = {open: true};
 
 		this._map.sendDialogCommand(e.dialogId);
+	},
+
+	_launchDialogCursor: function(dialogId) {
+		if (!this._isOpen(dialogId))
+			return;
+
+		this._dialogs[dialogId].cursor = L.DomUtil.create('div', 'leaflet-cursor-container', L.DomUtil.get(dialogId));
+		var cursor = L.DomUtil.create('div', 'leaflet-cursor lokdialog-cursor', this._dialogs[dialogId].cursor);
+		cursor.id = dialogId + '-cursor';
+		L.DomUtil.addClass(cursor, 'blinking-cursor');
 	},
 
 	_launchDialog: function(dialogId, width, height) {
@@ -87,7 +111,11 @@ L.Control.LokDialog = L.Control.extend({
 			return false;
 		});
 
-		this._dialogs[dialogId] = true;
+		// set the dialog's cursor
+		this._launchDialogCursor(dialogId);
+
+		if (!this._dialogs[dialogId] || !this._dialogs[dialogId].open)
+			this._dialogs[dialogId] = { open: true };
 	},
 
 	_postDialogMouseEvent: function(type, dialogid, x, y, count, buttons, modifier) {
@@ -195,7 +223,7 @@ L.Control.LokDialog = L.Control.extend({
 	_onDialogPaint: function (e) {
 		var dialogId = e.id.replace('.uno:', '');
 		// is our request to open dialog still valid?
-		if (!this._dialogs[dialogId])
+		if (!this._dialogs[dialogId] || !this._dialogs[dialogId].open)
 			return;
 
 		if (!this._isOpen(dialogId)) {
