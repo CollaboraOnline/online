@@ -705,7 +705,6 @@ void LOOLWSD::initialize(Application& self)
             if (configFile.length() > 4 && strcasecmp(configFile.substr(configFile.length() - 4).data(), ".xml") == 0)
             {
                 const std::string fullFileName = dir.path() + "/" + configFile;
-                std::cerr << "Trying '" << fullFileName << "'" << std::endl;
                 PluginConfigurations.insert(new XMLConfiguration(fullFileName));
             }
         }
