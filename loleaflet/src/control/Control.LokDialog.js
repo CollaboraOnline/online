@@ -35,10 +35,15 @@ L.Control.LokDialog = L.Control.extend({
 				var height = parseInt(rectangle[3]);
 
 				$('#' + e.dialogId + '-cursor').css({height: height});
-
 				// set the position of the lokdialog-cursor
 				$(this._dialogs[e.dialogId].cursor).css({left: x, top: y});
 			}
+		} else if (e.action === 'cursor_visible') {
+			var visible = e.visible === 'true';
+			if (visible)
+				$('#' + e.dialogId + '-cursor').css({display: 'block'});
+			else
+				$('#' + e.dialogId + '-cursor').css({display: 'none'});
 		} else if (e.action === 'close') {
 			this._onDialogClose(e.dialogId);
 		}
