@@ -224,91 +224,60 @@ bool lockdown(Type type)
 #endif // DISABLE_SECCOMP == 0
 }
 
+void setRLimit(rlim_t confLim, int resource, const std::string &resourceText, const std::string &unitText)
+{
+    rlim_t lim = confLim;
+    if (lim <= 0)
+        lim = RLIM_INFINITY;
+    const std::string limTextWithUnit((lim == RLIM_INFINITY) ? "unlimited" : std::to_string(lim) + " " + unitText);
+    if (resource != RLIMIT_FSIZE && resource != RLIMIT_NOFILE)
+    {
+        /* FIXME Currently the RLIMIT_FSIZE handling is non-ideal, and can
+         * lead to crashes of the kit processes due to not handling signal
+         * 25 gracefully.  Let's disable for now before there's a more
+         * concrete plan.
+         * Similar issues with RLIMIT_NOFILE
+         */
+        rlimit rlim = { lim, lim };
+        if (setrlimit(resource, &rlim) != 0)
+            LOG_SYS("Failed to set " << resourceText << " to " << limTextWithUnit << ".");
+        if (getrlimit(resource, &rlim) == 0)
+        {
+            const std::string setLimTextWithUnit((rlim.rlim_max == RLIM_INFINITY) ? "unlimited" : std::to_string(rlim.rlim_max) + " " + unitText);
+            LOG_INF(resourceText << " is " << setLimTextWithUnit << " after setting it to " << limTextWithUnit << ".");
+        }
+        else
+            LOG_SYS("Failed to get " << resourceText << ".");
+    }
+    else
+        LOG_INF("Ignored setting " << resourceText << " to " << limTextWithUnit << ".");
+}
+
 bool handleSetrlimitCommand(const std::vector<std::string>& tokens)
 {
     if (tokens.size() == 3 && tokens[0] == "setconfig")
     {
         if (tokens[1] == "limit_virt_mem_mb")
         {
-            rlim_t lim = std::stoi(tokens[2]) * 1024 * 1024;
-            if (lim <= 0)
-                lim = RLIM_INFINITY;
-
-            rlimit rlim = { lim, lim };
-            if (setrlimit(RLIMIT_AS, &rlim) != 0)
-                LOG_SYS("Failed to set RLIMIT_AS to " << lim << " bytes.");
-
-            if (getrlimit(RLIMIT_AS, &rlim) == 0)
-                LOG_INF("RLIMIT_AS is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
-            else
-                LOG_SYS("Failed to get RLIMIT_AS.");
-
-            return true;
+            setRLimit(std::stoi(tokens[2]) * 1024 * 1024, RLIMIT_AS, "RLIMIT_AS", "bytes");
         }
         else if (tokens[1] == "limit_stack_mem_kb")
         {
-            rlim_t lim = std::stoi(tokens[2]) * 1024;
-            if (lim <= 0)
-                lim = RLIM_INFINITY;
-
-            rlimit rlim = { lim, lim };
-            if (setrlimit(RLIMIT_STACK, &rlim) != 0)
-                LOG_SYS("Failed to set RLIMIT_STACK to " << lim << " bytes.");
-
-            if (getrlimit(RLIMIT_STACK, &rlim) == 0)
-                LOG_INF("RLIMIT_STACK is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
-            else
-                LOG_SYS("Failed to get RLIMIT_STACK.");
-
-            return true;
+            setRLimit(std::stoi(tokens[2]) * 1024, RLIMIT_STACK, "RLIMIT_STACK", "bytes");
         }
         else if (tokens[1] == "limit_file_size_mb")
         {
-            rlim_t lim = std::stoi(tokens[2]) * 1024 * 1024;
-            if (lim <= 0)
-                lim = RLIM_INFINITY;
-
-            /* FIXME Currently the RLIMIT_FSIZE handling is non-ideal, and can
-             * lead to crashes of the kit processes due to not handling signal
-             * 25 gracefully.  Let's disable for now before there's a more
-             * concrete plan.
-            rlimit rlim = { lim, lim };
-            if (setrlimit(RLIMIT_FSIZE, &rlim) != 0)
-                LOG_SYS("Failed to set RLIMIT_FSIZE to " << lim << " bytes.");
-
-            if (getrlimit(RLIMIT_FSIZE, &rlim) == 0)
-                LOG_INF("RLIMIT_FSIZE is " << rlim.rlim_max << " bytes after setting it to " << lim << " bytes.");
-            else
-                LOG_SYS("Failed to get RLIMIT_FSIZE.");
-            */
-            LOG_SYS("Ignored setting RLIMIT_FSIZE to " << lim << " bytes.");
-
-            return true;
+            setRLimit(std::stoi(tokens[2]) * 1024 * 1024, RLIMIT_FSIZE, "RLIMIT_FSIZE", "bytes");
         }
         else if (tokens[1] == "limit_num_open_files")
         {
-            rlim_t lim = std::stoi(tokens[2]);
-            if (lim <= 0)
-                lim = RLIM_INFINITY;
-
-            /* FIXME Currently the RLIMIT_ is non-ideal, and can lead to
-             * problems.  Let's disable for now before there's a more
-             * concrete plan.
-            rlimit rlim = { lim, lim };
-            if (setrlimit(RLIMIT_NOFILE, &rlim) != 0)
-                LOG_SYS("Failed to set RLIMIT_NOFILE to " << lim << " files.");
-
-            if (getrlimit(RLIMIT_NOFILE, &rlim) == 0)
-                LOG_INF("RLIMIT_NOFILE is " << rlim.rlim_max << " files after setting it to " << lim << " files.");
-            else
-                LOG_SYS("Failed to get RLIMIT_NOFILE.");
-            */
-            LOG_SYS("Ignored setting RLIMIT_NOFILE to " << lim << " files.");
-
-            return true;
+            setRLimit(std::stoi(tokens[2]), RLIMIT_NOFILE, "RLIMIT_NOFILE", "files");
         }
-    }
+        else
+            return false;
 
+        return true;
+    }
     return false;
 }
 
