@@ -73,6 +73,16 @@ EnableOwnerTermination
 	If set to true, it allows the document owner (the one with OwnerId =
 	UserId) to send a 'closedocument' message (see protocol.txt)
 
+UserExtraInfo
+	JSON object that contains additional info about the user, namely the
+	avatar image.
+
+	Example: 'UserExtraInfo' => [ 'avatar' => 'http://url/to/user/avatar', 'mail' => 'user@server.com' ]
+
+	Note: There is strict Content Security Policy that restricts image
+	resources (img-src), therefore the avatar URL must not violate the
+	CSP,  otherwise it will show as broken images.
+
 WatermarkText
 	If set to a non-empty string, is used for rendering a watermark-like
 	text on each tile of the document
