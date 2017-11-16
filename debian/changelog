@@ -1,3 +1,9 @@
+loolwsd (3.0.0-1) unstable; urgency=medium
+
+  * see the git log: http://col.la/cool30
+
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 16 Nov 2017 17:20:00 +0100
+
 loolwsd (1.8.2-1) unstable; urgency=medium
 
   * Fix crash in Impress.
