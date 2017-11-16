@@ -12,10 +12,13 @@
 
 #include <stddef.h>
 
-#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 // the unstable API needs C99's bool
-#include <stdbool.h>
-#include <stdint.h>
+// TODO remove the C99 types from the API before making stable
+#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
+# ifndef _WIN32
+#  include <stdbool.h>
+# endif
+# include <stdint.h>
 #endif
 
 #include <LibreOfficeKit/LibreOfficeKitTypes.h>
@@ -69,7 +72,7 @@ struct _LibreOfficeKitClass
     char* (*getFilterTypes) (LibreOfficeKit* pThis);
 
     /// @see lok::Office::setOptionalFeatures().
-    void (*setOptionalFeatures)(LibreOfficeKit* pThis, uint64_t features);
+    void (*setOptionalFeatures)(LibreOfficeKit* pThis, unsigned long long features);
 
     /// @see lok::Office::setDocumentPassword().
     void (*setDocumentPassword) (LibreOfficeKit* pThis,
@@ -79,7 +82,7 @@ struct _LibreOfficeKitClass
     /// @see lok::Office::getVersionInfo().
     char* (*getVersionInfo) (LibreOfficeKit* pThis);
 
-    bool (*runMacro) (LibreOfficeKit *pThis, const char* pURL);
+    int (*runMacro) (LibreOfficeKit *pThis, const char* pURL);
 #endif
 
 };
@@ -252,15 +255,47 @@ struct _LibreOfficeKitDocumentClass
                        int* pArray,
                        size_t nSize);
 
-    /// Starts a batch of operations.
-    /// Events are emmitted only after ending the batch.
-    /// @see lok::Document::endBatch();
-    void (*beginBatch) (LibreOfficeKitDocument* pThis);
+    /// Paints dialog with given dialog id to the buffer
+    /// @see lok::Document::paintDialog().
+    void (*paintDialog) (LibreOfficeKitDocument* pThis, const char* pDialogId,
+                         unsigned char* pBuffer,
+                         const int x, const int y,
+                         const int width, const int height);
 
-    /// Ends a batch of operations.
-    /// @see lok::Document::beginBatch();
-    void (*endBatch) (LibreOfficeKitDocument* pThis);
+    /// Get info about dialog with given dialog id
+    /// @see lok::Document::getDialogInfo().
+    void (*getDialogInfo) (LibreOfficeKitDocument* pThis, const char* pDialogId,
+                           char** pDialogTitle, int* pWidth, int* pHeight);
 
+    /// @see lok::Document::paintActiveFloatingWindow().
+    void (*paintActiveFloatingWindow) (LibreOfficeKitDocument* pThis, const char* pDialogId, unsigned char* pBuffer, int* nWidth, int* nHeight);
+
+    /// @see lok::Document::postDialogKeyEvent().
+    void (*postDialogKeyEvent) (LibreOfficeKitDocument* pThis,
+                                const char* pDialogId,
+                                int nType,
+                                int nCharCode,
+                                int nKeyCode);
+
+    /// @see lok::Document::postDialogMouseEvent().
+    void (*postDialogMouseEvent) (LibreOfficeKitDocument* pThis,
+                                  const char* pDialogId,
+                                  int nType,
+                                  int nX,
+                                  int nY,
+                                  int nCount,
+                                  int nButtons,
+                                  int nModifier);
+
+    /// @see lok::Document::postDialogChildMouseEvent().
+    void (*postDialogChildMouseEvent) (LibreOfficeKitDocument* pThis,
+                                       const char* pDialogId,
+                                       int nType,
+                                       int nX,
+                                       int nY,
+                                       int nCount,
+                                       int nButtons,
+                                       int nModifier);
 
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
