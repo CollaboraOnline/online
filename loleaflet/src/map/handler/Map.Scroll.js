@@ -39,17 +39,13 @@ L.Map.Scroll = L.Handler.extend({
 		var left = Math.max(debounce - (+new Date() - this._startTime), 0);
 
 		clearTimeout(this._timer);
-		if (e.ctrlKey) {
-			this._timer = setTimeout(L.bind(this._performZoom, this), left);
-		}
-		else if (e.shiftKey) {
+		if (e.shiftKey) {
 			this._vertical = 0;
-			this._timer = setTimeout(L.bind(this._performScroll, this), left);
 		}
 		else {
 			this._vertical = 1;
-			this._timer = setTimeout(L.bind(this._performScroll, this), left);
 		}
+		this._timer = setTimeout(L.bind(this._performScroll, this), left);
 
 		L.DomEvent.stop(e);
 	},
@@ -64,29 +60,6 @@ L.Map.Scroll = L.Handler.extend({
 
 		if (!delta) { return; }
 		map.fire('scrollby', {x: (1 - this._vertical) * delta * scrollAmount, y: this._vertical * delta * scrollAmount});
-	},
-
-	_performZoom: function () {
-		var map = this._map,
-		    delta = this._delta,
-		    zoom = map.getZoom();
-
-		map.stop(); // stop panning and fly animations if any
-
-		delta = delta > 0 ? Math.ceil(delta) : Math.floor(delta);
-		delta = Math.max(Math.min(delta, 4), -4);
-		delta = map._limitZoom(zoom + delta) - zoom;
-
-		this._delta = 0;
-		this._startTime = null;
-
-		if (!delta) { return; }
-
-		if (map.options.scrollWheelZoom === 'center') {
-			map.setZoom(zoom + delta);
-		} else {
-			map.setZoomAround(this._lastMousePos, zoom + delta);
-		}
 	}
 });
 
