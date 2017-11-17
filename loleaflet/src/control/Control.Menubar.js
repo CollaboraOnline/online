@@ -494,8 +494,8 @@ L.Control.Menubar = L.Control.extend({
 					}
 					if (unoCommand.indexOf('.uno:LanguageStatus') !== -1) {
 						var lang = map['stateChangeHandler'].getItemValue('.uno:LanguageStatus');
-						var label = $(aItem).html();
-						if (label === lang) {
+						var data = decodeURIComponent($(aItem).data('uno'));
+						if (data.indexOf(lang) !== -1) {
 							$(aItem).addClass('lo-menu-item-checked');
 						} else {
 							$(aItem).removeClass('lo-menu-item-checked');
