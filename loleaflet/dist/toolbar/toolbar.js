@@ -1253,36 +1253,36 @@ map.on('commandstatechanged', function (e) {
 		}
 	}
 	else if (commandName === '.uno:LanguageStatus') {
-		updateToolbarItem(statusbar, 'LanguageStatus', $('#LanguageStatus').html(_(state)).html());
+		updateToolbarItem(statusbar, 'LanguageStatus', $('#LanguageStatus').html(_(state)).parent().html());
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
 		var modifiedStatus = e.state === 'true';
 		var html;
 		if (modifiedStatus) {
-			html = $('#modifiedstatuslabel').html('').html();
+			html = $('#modifiedstatuslabel').html('').parent().html();
 		}
 		else {
-			html = $('#modifiedstatuslabel').html(_('Document saved')).html();
+			html = $('#modifiedstatuslabel').html(_('Document saved')).parent().html();
 		}
 		updateToolbarItem(statusbar, 'modifiedstatuslabel', html);
 	}
 	else if (commandName === '.uno:StatusDocPos') {
 		state = toLocalePattern('Sheet %1 of %2', 'Sheet (\\d+) of (\\d+)', state, '%1', '%2');
-		updateToolbarItem(statusbar, 'StatusDocPos', $('#StatusDocPos').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
+		updateToolbarItem(statusbar, 'StatusDocPos', $('#StatusDocPos').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 	else if (commandName === '.uno:RowColSelCount') {
 		state = toLocalePattern('$1 rows, $2 columns selected', '(\\d+) rows, (\\d+) columns selected', state, '$1', '$2');
-		updateToolbarItem(statusbar, 'RowColSelCount', $('#RowColSelCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
+		updateToolbarItem(statusbar, 'RowColSelCount', $('#RowColSelCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 	else if (commandName === '.uno:InsertMode') {
-		updateToolbarItem(statusbar, 'InsertMode', $('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
+		updateToolbarItem(statusbar, 'InsertMode', $('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 	else if (commandName === '.uno:StatusSelectionMode' ||
 		 commandName === '.uno:SelectionMode') {
-		updateToolbarItem(statusbar, 'StatusSelectionMode', $('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
+		updateToolbarItem(statusbar, 'StatusSelectionMode', $('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 	else if (commandName == '.uno:StateTableCell') {
-		updateToolbarItem(statusbar, 'StateTableCell', $('#StateTableCell').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
+		updateToolbarItem(statusbar, 'StateTableCell', $('#StateTableCell').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 	else if (commandName === '.uno:StatusBarFunc') {
 		if (state) {
@@ -1291,15 +1291,15 @@ map.on('commandstatechanged', function (e) {
 	}
 	else if (commandName === '.uno:StatePageNumber') {
 		state = toLocalePattern('Page %1 of %2', 'Page (\\d+) of (\\d+)', state, '%1', '%2');
-		updateToolbarItem(statusbar, 'StatePageNumber', $('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
+		updateToolbarItem(statusbar, 'StatePageNumber', $('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 	else if (commandName === '.uno:StateWordCount') {
 		state = toLocalePattern('%1 words, %2 characters', '([\\d,]+) words, ([\\d,]+) characters', state, '%1', '%2');
-		updateToolbarItem(statusbar, 'StateWordCount', $('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
+		updateToolbarItem(statusbar, 'StateWordCount', $('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 	else if (commandName === '.uno:PageStatus') {
 		state = toLocalePattern('Slide %1 of %2', 'Slide (\\d+) of (\\d+)', state, '%1', '%2');
-		updateToolbarItem(statusbar, 'PageStatus', $('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').html());
+		updateToolbarItem(statusbar, 'PageStatus', $('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 
 	var id = unoCmdToToolbarId(commandName);
