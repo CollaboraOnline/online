@@ -10,8 +10,9 @@ LibreOffice Online WebSocket server has the following dependencies:
 * Poco library: http://pocoproject.org/index.html.
 * libcap-progs
 
-Poco can be built with ./configure --prefix=/opt/poco && make install, but
-distro packages exist too.
+If your Linux distro doesn't provide a Poco package (versions 1.7.x or
+1.8.x should work), you can build it yourself and install in a
+location of your choice.
 
 On openSUSE, you can use:
 
