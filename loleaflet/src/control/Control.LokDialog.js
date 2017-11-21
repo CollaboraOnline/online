@@ -147,7 +147,6 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_handleDialogKeyEvent: function(e) {
-		var docLayer = this._map._docLayer;
 		this.modifier = 0;
 		var shift = e.originalEvent.shiftKey ? this._map['keyboard'].keyModifier.shift : 0;
 		var ctrl = e.originalEvent.ctrlKey ? this._map['keyboard'].keyModifier.ctrl : 0;
