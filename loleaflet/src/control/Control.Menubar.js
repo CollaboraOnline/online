@@ -2,7 +2,7 @@
 * Control.Menubar
 */
 
-/* global $ _ map title vex revHistoryEnabled closebutton L */
+/* global $ _ map vex revHistoryEnabled closebutton L */
 L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
@@ -536,9 +536,8 @@ L.Control.Menubar = L.Control.extend({
 			map.print();
 		} else if (id.startsWith('downloadas-')) {
 			var format = id.substring('downloadas-'.length);
-			// remove the extension if any
-			var fileName = title.substr(0, title.lastIndexOf('.')) || title;
-			// check if it is empty
+			var fileName = map['wopi'].BaseFileName;
+			fileName = fileName.substr(0, fileName.lastIndexOf('.'));
 			fileName = fileName === '' ? 'document' : fileName;
 			map.downloadAs(fileName + '.' + format, format);
 		} else if (id === 'findandreplace') {

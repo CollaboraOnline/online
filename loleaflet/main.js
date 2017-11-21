@@ -65,11 +65,6 @@ else if (wopiSrc !== '' && access_header !== '') {
 }
 
 var filePath = getParameterByName('file_path');
-var title = getParameterByName('title');
-if (title === '') {
-    title = decodeURIComponent(filePath.substring(filePath.lastIndexOf('/')+1));
-}
-
 var permission = getParameterByName('permission') || 'edit';
 var timestamp = getParameterByName('timestamp');
 // Shows close button if non-zero value provided
@@ -91,7 +86,6 @@ if (host === '') {
 // TODO: Get rid of these globals
 global.closebutton = closebutton;
 global.revHistoryEnabled = revHistoryEnabled;
-global.title = title;
 global.errorMessages = errorMessages;
 var docURL, docParams;
 var isWopi = false;
@@ -104,7 +98,6 @@ if (wopiSrc != '') {
 	docParams = {};
 }
 
-document.title = title;
 var map = L.map('map', {
 	server: host,
 	doc: docURL,

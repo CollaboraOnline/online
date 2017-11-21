@@ -2,7 +2,7 @@
  * L.WOPI contains WOPI related logic
  */
 
-/* global title w2ui toolbarUpMobileItems resizeToolbar */
+/* global w2ui toolbarUpMobileItems resizeToolbar */
 L.Map.WOPI = L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
@@ -188,8 +188,9 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId === 'Action_Export') {
 			if (msg.Values) {
 				var format = msg.Values.Format;
-				var filename = title.substr(0, title.lastIndexOf('.')) || title;
-				filename = filename === '' ? 'document' : filename;
+				var fileName = this._map['wopi'].BaseFileName;
+				fileName = fileName.substr(0, fileName.lastIndexOf('.'));
+				fileName = fileName === '' ? 'document' : fileName;
 				this._map.downloadAs(filename + '.' + format, format);
 			}
 		}
