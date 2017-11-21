@@ -152,7 +152,6 @@ L.Control.LokDialog = L.Control.extend({
 		var ctrl = e.originalEvent.ctrlKey ? this._map['keyboard'].keyModifier.ctrl : 0;
 		var alt = e.originalEvent.altKey ? this._map['keyboard'].keyModifier.alt : 0;
 		var cmd = e.originalEvent.metaKey ? this._map['keyboard'].keyModifier.ctrl : 0;
-		var location = e.originalEvent.location;
 		this.modifier = shift | ctrl | alt | cmd;
 
 		var charCode = e.originalEvent.charCode;
