@@ -100,14 +100,8 @@
         wopiSrc += '?access_header=' + access_header;
     }
 
-
-    var filePath = getParameterByName('file_path');
-    var title = getParameterByName('title');
-    if (title === '') {
-        title = decodeURIComponent(filePath.substring(filePath.lastIndexOf('/')+1));
-    }
-
     var host = '%HOST%';
+    var filePath = getParameterByName('file_path');
     var permission = getParameterByName('permission') || 'edit';
     var timestamp = getParameterByName('timestamp');
     var closebutton = getParameterByName('closebutton');
