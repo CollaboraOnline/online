@@ -26,7 +26,7 @@ extern "C"
     };
 }
 
-#define DEFAULT_CIPHER_SET "ALL:!RC4:!SEED:!ADH:!LOW:!EXP:!MD5:@STRENGTH"
+#define DEFAULT_CIPHER_SET "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"
 
 std::unique_ptr<SslContext> SslContext::Instance(nullptr);
 
