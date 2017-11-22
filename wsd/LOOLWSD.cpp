@@ -927,11 +927,15 @@ void LOOLWSD::initializeSSL()
     const auto ssl_ca_file_path = getPathFromConfig("ssl.ca_file_path");
     LOG_INF("SSL CA file: " << ssl_ca_file_path);
 
+    const auto ssl_cipher_list = getPathFromConfig("ssl.cipher_list");
+    LOG_INF("SSL Cipher list: " << ssl_cipher_list);
+
 #if ENABLE_SSL
     // Initialize the non-blocking socket SSL.
     SslContext::initialize(ssl_cert_file_path,
                            ssl_key_file_path,
-                           ssl_ca_file_path);
+                           ssl_ca_file_path,
+                           ssl_cipher_list);
 #endif
 }
 

@@ -29,10 +29,11 @@ class SslContext
 public:
     static void initialize(const std::string& certFilePath,
                            const std::string& keyFilePath,
-                           const std::string& caFilePath)
+                           const std::string& caFilePath,
+                           const std::string& cipherList = "")
     {
         assert (!Instance);
-        Instance.reset(new SslContext(certFilePath, keyFilePath, caFilePath));
+        Instance.reset(new SslContext(certFilePath, keyFilePath, caFilePath, cipherList));
     }
 
     static void uninitialize();
@@ -47,7 +48,8 @@ public:
 private:
     SslContext(const std::string& certFilePath,
                const std::string& keyFilePath,
-               const std::string& caFilePath);
+               const std::string& caFilePath,
+               const std::string& cipherList);
 
     void initDH();
     void initECDH();
