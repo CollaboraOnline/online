@@ -154,6 +154,8 @@ class DeltaGenerator {
         assert (startX + width <= (size_t)bufferWidth);
         assert (startY + height <= (size_t)bufferHeight);
 
+        (void)bufferHeight;
+
         LOG_TRC("Converting pixel data to delta data of size "
                 << (width * height * 4) << " width " << width
                 << " height " << height);
