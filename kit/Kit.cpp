@@ -1088,22 +1088,27 @@ public:
         ws->sendFrame(response.data(), response.size(), WebSocket::FRAME_BINARY);
     }
 
-    bool sendTextFrame(const std::string& message) override
+    bool sendTextFrame(const std::string& message)
+    {
+        return sendFrame(message.data(), message.size());
+    }
+
+    bool sendFrame(const char* buffer, int length, int flags = Poco::Net::WebSocket::FRAME_TEXT) override
     {
         try
         {
             if (!_ws || _ws->poll(Poco::Timespan(0), Poco::Net::Socket::SelectMode::SELECT_ERROR))
             {
-                LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(message) << "].");
+                LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(buffer, length) << "].");
                 return false;
             }
 
-            _ws->sendFrame(message.data(), message.size());
+            _ws->sendFrame(buffer, length, flags);
             return true;
         }
         catch (const Exception& exc)
         {
-            LOG_ERR("Document::sendTextFrame: Exception: " << exc.displayText() <<
+            LOG_ERR("Document::sendFrame: Exception: " << exc.displayText() <<
                     (exc.nested() ? "( " + exc.nested()->displayText() + ")" : ""));
         }
 

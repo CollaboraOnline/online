@@ -384,7 +384,7 @@ public:
         return _tileQueue;
     }
 
-    bool sendTextFrame(const std::string& /*message*/) override
+    bool sendFrame(const char* /*buffer*/, int /*length*/, int /*flags*/) override
     {
         return true;
     }
