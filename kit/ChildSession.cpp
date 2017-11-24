@@ -202,6 +202,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         return getStatus(buffer, length);
     }
+    else if (tokens[0] == "dialog" || tokens[0] == "dialogchild")
+    {
+        return renderDialog(buffer, length, tokens);
+    }
     else if (tokens[0] == "tile" || tokens[0] == "tilecombine")
     {
         assert(false && "Tile traffic should go through the DocumentBroker-LoKit WS.");
@@ -726,16 +730,23 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
                             const LokEventTargetEnum target)
 {
     int type, charcode, keycode;
-    std::string dialogId;
+    unsigned dialogId = 0;
     unsigned counter = 1;
-    unsigned minTotal = 4; // cmdname, type, char, key are strictly required
+    unsigned expectedTokens = 4; // cmdname(key), type, char, key are strictly required
     if (target == LokEventTargetEnum::Dialog || target == LokEventTargetEnum::DialogChild)
     {
-        getTokenString(tokens[counter++], "dialogid", dialogId);
-        minTotal++; // other params still necessarily required
+        if (tokens.size() <= counter ||
+            !getTokenUInt32(tokens[counter++], "dialogid", dialogId))
+        {
+            LOG_ERR("Dialog key event expects a valid dialogid= attribute");
+            sendTextFrame("error: cmd=" + std::string(tokens[0]) + " kind=syntax");
+            return false;
+        }
+        else // dialogid= attribute is found
+            expectedTokens++;
     }
 
-    if (tokens.size() != minTotal ||
+    if (tokens.size() != expectedTokens ||
         !getTokenKeyword(tokens[counter++], "type",
                          {{"input", LOK_KEYEVENT_KEYINPUT}, {"up", LOK_KEYEVENT_KEYUP}},
                          type) ||
@@ -768,8 +779,8 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
         getLOKitDocument()->setView(_viewId);
         getLOKitDocument()->postKeyEvent(type, charcode, keycode);
     }
-    else if (!dialogId.empty())
-        getLOKitDocument()->postDialogKeyEvent(dialogId.c_str(), type, charcode, keycode);
+    else if (dialogId != 0)
+        getLOKitDocument()->postDialogKeyEvent(dialogId, type, charcode, keycode);
 
     return true;
 }
@@ -785,16 +796,22 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
     int buttons = 1; // left button
     int modifier = 0;
 
-    std::string dialogId;
+    unsigned dialogId = 0;
     unsigned counter = 1;
-    unsigned minTotal = 5; // cmdname, type, x, y, count are strictly required
+    unsigned minTokens = 5; // cmdname(mouse), type, x, y, count are strictly required
     if (target == LokEventTargetEnum::Dialog || target == LokEventTargetEnum::DialogChild)
     {
-        getTokenString(tokens[counter++], "dialogid", dialogId);
-        minTotal++; // other params still necessarily required
+        if (tokens.size() <= counter ||
+            !getTokenUInt32(tokens[counter++], "dialogid", dialogId))
+        {
+            LOG_ERR("Dialog mouse event expects a valid dialogid= attribute");
+            success = false;
+        }
+        else // dialogid= attribute is found
+            minTokens++;
     }
 
-    if (tokens.size() < minTotal ||
+    if (tokens.size() < minTokens ||
         !getTokenKeyword(tokens[counter++], "type",
                          {{"buttondown", LOK_MOUSEEVENT_MOUSEBUTTONDOWN},
                           {"buttonup", LOK_MOUSEEVENT_MOUSEBUTTONUP},
@@ -830,10 +847,10 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
         getLOKitDocument()->postMouseEvent(type, x, y, count, buttons, modifier);
         break;
     case LokEventTargetEnum::Dialog:
-        getLOKitDocument()->postDialogMouseEvent(dialogId.c_str(), type, x, y, count, buttons, modifier);
+        getLOKitDocument()->postDialogMouseEvent(dialogId, type, x, y, count, buttons, modifier);
         break;
     case LokEventTargetEnum::DialogChild:
-        getLOKitDocument()->postDialogChildMouseEvent(dialogId.c_str(), type, x, y, count, buttons, modifier);
+        getLOKitDocument()->postDialogChildMouseEvent(dialogId, type, x, y, count, buttons, modifier);
         break;
     default:
         assert(false && "Unsupported mouse target type");
@@ -897,6 +914,103 @@ bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, const std:
 
     getLOKitDocument()->setTextSelection(type, x, y);
 
+    return true;
+}
+
+bool ChildSession::renderDialog(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+{
+    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+    getLOKitDocument()->setView(_viewId);
+    const bool isChild = (tokens[0] == "dialogchild");
+
+    unsigned dialogId = 0;
+    if (tokens.size() > 1)
+    {
+        std::istringstream reader(tokens[1]);
+        reader >> dialogId;
+    }
+
+    int startX = 0, startY = 0;
+    int bufferWidth = 800, bufferHeight = 600;
+    std::string paintRectangle;
+    if (tokens.size() > 2 && getTokenString(tokens[2], "rectangle", paintRectangle))
+    {
+        const std::vector<std::string> rectParts = LOOLProtocol::tokenize(paintRectangle.c_str(), paintRectangle.length(), ',');
+        startX = std::atoi(rectParts[0].c_str());
+        startY = std::atoi(rectParts[1].c_str());
+        bufferWidth = std::atoi(rectParts[2].c_str());
+        bufferHeight = std::atoi(rectParts[3].c_str());
+    }
+    else
+        LOG_WRN("dialog command doesn't specify a rectangle= attribute.");
+
+    size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
+    std::vector<unsigned char> pixmap(pixmapDataSize);
+    int width = bufferWidth, height = bufferHeight;
+    char* pDialogTitle = nullptr;
+    std::string response;
+    if (isChild)
+    {
+        Timestamp timestamp;
+
+        getLOKitDocument()->paintActiveFloatingWindow(dialogId, pixmap.data(), width, height);
+        LOG_TRC("paintActiveFloatingWindow for dialogId [" << dialogId << "] returned floating window with size "
+                << width << "X" << height << " "
+                << "rendered in " << (timestamp.elapsed()/1000.)
+                << "ms (" << (width * height) / (timestamp.elapsed()) << " MP/s).");
+
+        response = "dialogchildpaint: id=" + tokens[1] + " width=" + std::to_string(width) + " height=" + std::to_string(height) + "\n";
+    }
+    else
+    {
+        Timestamp timestamp;
+        getLOKitDocument()->paintDialog(dialogId, pixmap.data(), startX, startY, width, height);
+
+        int dialogWidth = 0;
+        int dialogHeight = 0;
+        getLOKitDocument()->getDialogInfo(dialogId, &pDialogTitle, dialogWidth, dialogHeight);
+
+        std::string encodedDialogTitle;
+        if (pDialogTitle)
+        {
+            std::string aDialogTitle(pDialogTitle);
+            URI::encode(aDialogTitle, "", encodedDialogTitle);
+            free(pDialogTitle);
+        }
+
+        // rendered width, height cannot be less than the dialog width, height
+        width = std::min(width, dialogWidth);
+        height = std::min(height, dialogHeight);
+        const double area = width * height;
+
+        LOG_TRC("paintDialog for " << dialogId << " returned " << width << "X" << height
+                << "@(" << startX << "," << startY << ")"
+                << "and rendered in " << (timestamp.elapsed()/1000.)
+                << "ms (" << area / (timestamp.elapsed()) << " MP/s).");
+
+        response = "dialogpaint: id=" + tokens[1] + " title=" + encodedDialogTitle +
+            " dialogwidth=" + std::to_string(dialogWidth) + " dialogheight=" + std::to_string(dialogHeight);
+
+        if (!paintRectangle.empty())
+            response += " rectangle=" + paintRectangle;
+
+        response += "\n";
+    }
+
+    std::vector<char> output;
+    output.reserve(response.size() + pixmapDataSize);
+    output.resize(response.size());
+    std::memcpy(output.data(), response.data(), response.size());
+
+    // TODO: use png cache for dialogs too
+    if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight, output, LOK_TILEMODE_RGBA))
+    {
+        LOG_ERR("Failed to encode into PNG.");
+        return false;
+    }
+
+    LOG_TRC("Sending response (" << output.size() << " bytes) for: " << response);
+    sendBinaryFrame(output.data(), output.size());
     return true;
 }
 
