@@ -1200,8 +1200,8 @@ L.TileLayer = L.GridLayer.extend({
 			dialog: img,
 			title: command.title,
 			// TODO: add id too
-			dialogWidth: command.dialogwidth,
-			dialogHeight: command.dialogheight,
+			width: command.width,
+			height: command.height,
 			rectangle: command.rectangle
 		});
 	},

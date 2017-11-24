@@ -798,7 +798,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (type === 'action') {
 			self._executeAction(item);
 		} else if (type === 'dialog') {
-			map.fire('opendialog', {dialogId: $(item).data('id')});
+			map.fire('opendialog', {uno: $(item).data('id')});
 		}
 
 		if ($(item).data('id') !== 'insertcomment')

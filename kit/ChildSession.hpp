@@ -17,6 +17,7 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
+#include <Poco/Net/WebSocket.h>
 #include <Poco/Thread.h>
 
 #include "Common.hpp"
@@ -70,7 +71,7 @@ public:
 
     virtual std::shared_ptr<TileQueue>& getTileQueue() = 0;
 
-    virtual bool sendTextFrame(const std::string& message) = 0;
+    virtual bool sendFrame(const char* buffer, int length, int flags = Poco::Net::WebSocket::FRAME_TEXT) = 0;
 };
 
 struct RecordedEvent
@@ -157,13 +158,18 @@ public:
 
     void loKitCallback(const int type, const std::string& payload);
 
-    bool sendTextFrame(const char* buffer, const int length) override
+    bool sendTextFrame(const char* buffer, int length) override
     {
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
-
         const auto lock = getLock();
+        return _docManager.sendFrame(msg.data(), msg.size(), Poco::Net::WebSocket::FRAME_TEXT);
+    }
 
-        return _docManager.sendTextFrame(msg);
+    bool sendBinaryFrame(const char* buffer, int length) override
+    {
+        const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
+        const auto lock = getLock();
+        return _docManager.sendFrame(msg.data(), msg.size(), Poco::Net::WebSocket::FRAME_BINARY);
     }
 
     using Session::sendTextFrame;
@@ -188,6 +194,7 @@ private:
     bool unoCommand(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool selectText(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool selectGraphic(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool renderDialog(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool resetSelection(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool saveAs(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool setClientPart(const char* buffer, int length, const std::vector<std::string>& tokens);

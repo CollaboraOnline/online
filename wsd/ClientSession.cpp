@@ -222,10 +222,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return sendTile(buffer, length, tokens, docBroker);
     }
-    else if (tokens[0] == "dialog" || tokens[0] == "dialogchild")
-    {
-        docBroker->handleDialogRequest(std::string(buffer, length));
-    }
     else if (tokens[0] == "tilecombine")
     {
         return sendCombinedTiles(buffer, length, tokens, docBroker);

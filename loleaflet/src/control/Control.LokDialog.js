@@ -4,15 +4,26 @@
 
 /* global vex $ map */
 L.Control.LokDialog = L.Control.extend({
+
+	dialogIdPrefix: 'lokdialog-',
+
 	onAdd: function (map) {
 		map.on('dialogpaint', this._onDialogPaint, this);
 		map.on('dialogchildpaint', this._onDialogChildPaint, this);
 		map.on('dialogchild', this._onDialogChildMsg, this);
 		map.on('dialog', this._onDialogMsg, this);
 		map.on('opendialog', this._openDialog, this);
+		map.on('docloaded', this._docLoaded, this);
 	},
 
 	_dialogs: {},
+
+	_docLoaded: function(e) {
+		if (!e.status) {
+			$('.lokdialog_container').remove();
+			$('.lokdialogchild-canvas').remove();
+		}
+	},
 
 	_isOpen: function(dialogId) {
 		return this._dialogs[dialogId] &&
@@ -20,13 +31,71 @@ L.Control.LokDialog = L.Control.extend({
 			$('#' + dialogId).length > 0;
 	},
 
+	_toRawDlgId: function(dialogId) {
+		return dialogId.replace(this.dialogIdPrefix, '');
+	},
+
+	// Create a rectangle string of form "x,y,width,height"
+	// if params are missing, assumes 0,0,dialog width, dialog height
+	_createRectStr: function(x, y, width, height) {
+		if (!width)
+			width = this._width;
+		if (!height)
+			height = this._height;
+		if (!x)
+			x = 0;
+		if (!y)
+			y = 0;
+
+		return [x, y, width, height].join(',');
+	},
+
+	_sendDialogCommand: function(dialogId, rectangle, child) {
+		dialogId = dialogId.replace(this.dialogIdPrefix, '');
+
+		var dialogCmd = 'dialog';
+		if (child)
+			dialogCmd = 'dialogchild';
+
+		if (rectangle)
+			rectangle = rectangle.replace(/ /g, '');
+
+		this._map._socket.sendMessage(dialogCmd + ' ' + dialogId + (rectangle ? ' rectangle=' + rectangle : ''));
+	},
+
+	_isRectangleValid: function(rect) {
+		rect = rect.split(',');
+		if (parseInt(rect[0]) < 0 || parseInt(rect[1]) < 0 || parseInt(rect[2]) < 0 || parseInt(rect[3]) < 0)
+			return false;
+		return true;
+	},
+
 	_onDialogMsg: function(e) {
-		e.dialogId = e.dialogId.replace('.uno:', '');
-		if (e.action === 'invalidate') {
-			// ignore any invalidate callbacks when we have closed the dialog
+		e.dialogId = this.dialogIdPrefix + e.dialogId;
+		if (e.action === 'created') {
+			this._width = parseInt(e.size.split(',')[0]);
+			this._height = parseInt(e.size.split(',')[1]);
+			this._launchDialog(e.dialogId);
+			this._sendDialogCommand(e.dialogId, this._createRectStr());
+		} else if (e.action === 'invalidate') {
 			if (this._isOpen(e.dialogId)) {
-				this._map.sendDialogCommand(e.dialogId, e.rectangle);
+				if (!this._isRectangleValid(e.rectangle))
+					return;
+
+				if (!e.rectangle)
+					e.rectangle = '0,0,' + this._width + ',' + this._height;
+				this._sendDialogCommand(e.dialogId, e.rectangle);
 			}
+		} else if (e.action === 'size_changed') {
+			this._width = parseInt(e.size.split(',')[0]);
+			this._height = parseInt(e.size.split(',')[1]);
+
+			// FIXME: we don't really have to destroy and launch the dialog again but do it for
+			// now because the size sent to us previously in 'created' cb is not correct
+			$('#' + e.dialogId).remove();
+			this._launchDialog(e.dialogId);
+			$('#' + e.dialogId).dialog('option', 'title', this._title);
+			this._sendDialogCommand(e.dialogId, this._createRectStr());
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.dialogId) && !!e.rectangle) {
 				var rectangle = e.rectangle.split(',');
@@ -38,6 +107,9 @@ L.Control.LokDialog = L.Control.extend({
 				// set the position of the lokdialog-cursor
 				$(this._dialogs[e.dialogId].cursor).css({left: x, top: y});
 			}
+		} else if (e.action === 'title_changed') {
+			this._title = e.title;
+			$('#' + e.dialogId).dialog('option', 'title', e.title);
 		} else if (e.action === 'cursor_visible') {
 			var visible = e.visible === 'true';
 			if (visible)
@@ -50,31 +122,24 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_openDialog: function(e) {
-		e.dialogId = e.dialogId.replace('.uno:', '');
-		this._dialogs[e.dialogId] = {open: true};
-
-		this._map.sendDialogCommand(e.dialogId);
+		this._map.sendUnoCommand(e.uno);
 	},
 
 	_launchDialogCursor: function(dialogId) {
-		if (!this._isOpen(dialogId))
-			return;
-
 		this._dialogs[dialogId].cursor = L.DomUtil.create('div', 'leaflet-cursor-container', L.DomUtil.get(dialogId));
 		var cursor = L.DomUtil.create('div', 'leaflet-cursor lokdialog-cursor', this._dialogs[dialogId].cursor);
 		cursor.id = dialogId + '-cursor';
 		L.DomUtil.addClass(cursor, 'blinking-cursor');
 	},
 
-	_launchDialog: function(dialogId, width, height) {
+	_launchDialog: function(dialogId) {
 		var canvas = '<div class="lokdialog" style="padding: 0px; margin: 0px; overflow: hidden;" id="' + dialogId + '">' +
-		    '<canvas class="lokdialog_canvas" tabindex="0" id="' + dialogId + '-canvas" width="' + width + 'px" height="' + height + 'px"></canvas>' +
+		    '<canvas class="lokdialog_canvas" tabindex="0" id="' + dialogId + '-canvas" width="' + this._width + 'px" height="' + this._height + 'px"></canvas>' +
 		    '</div>';
 		$(document.body).append(canvas);
 		var that = this;
 		$('#' + dialogId).dialog({
-			width: width,
-			height: 'auto',
+			width: this._width,
 			title: 'LOK Dialog', // TODO: Get the 'real' dialog title from the backend
 			modal: false,
 			closeOnEscape: true,
@@ -85,10 +150,11 @@ L.Control.LokDialog = L.Control.extend({
 			}
 		});
 
+		this._dialogs[dialogId] = { open: true };
+
 		// don't make 'TAB' focus on this button; we want to cycle focus in the lok dialog with each TAB
 		$('.lokdialog_container button.ui-dialog-titlebar-close').attr('tabindex', '-1').blur();
 
-		// attach the mouse/key events
 		$('#' + dialogId + '-canvas').on('mousedown', function(e) {
 			var buttons = 0;
 			buttons |= e.button === map['mouse'].JSButtons.left ? map['mouse'].LOButtons.left : 0;
@@ -97,7 +163,6 @@ L.Control.LokDialog = L.Control.extend({
 			var modifier = 0;
 			that._postDialogMouseEvent('buttondown', dialogId, e.offsetX, e.offsetY, 1, buttons, modifier);
 		});
-
 		$('#' + dialogId + '-canvas').on('mouseup', function(e) {
 			var buttons = 0;
 			buttons |= e.button === map['mouse'].JSButtons.left ? map['mouse'].LOButtons.left : 0;
@@ -106,42 +171,30 @@ L.Control.LokDialog = L.Control.extend({
 			var modifier = 0;
 			that._postDialogMouseEvent('buttonup', dialogId, e.offsetX, e.offsetY, 1, buttons, modifier);
 		});
-
 		$('#' + dialogId + '-canvas').on('keyup keypress keydown', function(e) {
 			e.dialogId = dialogId;
 			that._handleDialogKeyEvent(e);
 		});
-
 		$('#' + dialogId + '-canvas').on('contextmenu', function() {
 			return false;
 		});
 
-		// set the dialog's cursor
 		this._launchDialogCursor(dialogId);
-
-		if (!this._dialogs[dialogId] || !this._dialogs[dialogId].open)
-			this._dialogs[dialogId] = { open: true };
 	},
 
 	_postDialogMouseEvent: function(type, dialogid, x, y, count, buttons, modifier) {
-		if (!dialogid.startsWith('.uno:'))
-			dialogid = '.uno:' + dialogid;
-
-		this._map._socket.sendMessage('dialogmouse dialogid=' + dialogid +  ' type=' + type +
+		this._map._socket.sendMessage('dialogmouse dialogid=' + this._toRawDlgId(dialogid) +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' count=' + count +
 		                              ' buttons=' + buttons + ' modifier=' + modifier);
 	},
 
 	_postDialogKeyboardEvent: function(type, dialogid, charcode, keycode) {
-		this._map._socket.sendMessage('dialogkey dialogid=' + dialogid + ' type=' + type +
+		this._map._socket.sendMessage('dialogkey dialogid=' + this._toRawDlgId(dialogid) + ' type=' + type +
 		                              ' char=' + charcode + ' key=' + keycode);
 	},
 
 	_postDialogChildMouseEvent: function(type, dialogid, x, y, count, buttons, modifier) {
-		if (!dialogid.startsWith('.uno:'))
-			dialogid = '.uno:' + dialogid;
-
-		this._map._socket.sendMessage('dialogchildmouse dialogid=' + dialogid +  ' type=' + type +
+		this._map._socket.sendMessage('dialogchildmouse dialogid=' + this._toRawDlgId(dialogid) +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' count=' + count +
 		                              ' buttons=' + buttons + ' modifier=' + modifier);
 	},
@@ -193,7 +246,6 @@ L.Control.LokDialog = L.Control.extend({
 		if (!this._isOpen(dialogId))
 			return;
 
-		$('#' + dialogId).dialog('option', 'title', decodeURIComponent(title));
 		var img = new Image();
 		var canvas = document.getElementById(dialogId + '-canvas');
 		var ctx = canvas.getContext('2d');
@@ -211,39 +263,42 @@ L.Control.LokDialog = L.Control.extend({
 		img.src = imgData;
 	},
 
-	_isSameSize: function(dialogId, newWidth, newHeight) {
-		var ret = false;
-		if (this._isOpen(dialogId))
-		{
-			var oldWidth = $('#' + dialogId + '-canvas').width();
-			var oldHeight = $('#' + dialogId + '-canvas').height();
-			if (oldWidth == newWidth && oldHeight == newHeight)
-				ret = true;
-		}
-
-		return ret;
-	},
-
 	// Binary dialog msg recvd from core
 	_onDialogPaint: function (e) {
-		var dialogId = e.id.replace('.uno:', '');
-		// is our request to open dialog still valid?
-		if (!this._dialogs[dialogId] || !this._dialogs[dialogId].open)
+		var dialogId = this.dialogIdPrefix + e.id;
+		if (!this._isOpen(dialogId))
 			return;
 
-		if (!this._isOpen(dialogId)) {
-			this._launchDialog(dialogId, e.dialogWidth, e.dialogHeight);
-		} else if (!this._isSameSize(dialogId, e.dialogWidth, e.dialogHeight)) {
-			var canvas = document.getElementById(dialogId + '-canvas');
-			canvas.width = e.dialogWidth;
-			canvas.height = e.dialogHeight;
+		// FIXME: as a precaution, if we get larger width or height here than what we got in 'created'
+		// callback, then adjust the dialog canvas size
+		var changed = false;
+		var canvas = document.getElementById(dialogId + '-canvas');
+		if (e.width > this._width) {
+			changed = true;
+			this._width = e.width;
+			canvas.width = e.width;
+			$('#' + dialogId).dialog('option', 'width', e.width);
+		}
+
+		if (e.height > this._height) {
+			changed = true;
+			this._height = e.height;
+			canvas.height = e.height;
+			$('#' + dialogId).dialog('option', 'height', e.height);
+		}
+
+		if (changed) {
+			this._sendDialogCommand(dialogId, this._createRectStr());
+			return;
 		}
 
 		this._paintDialog(dialogId, e.title, e.rectangle, e.dialog);
 	},
 
+	// Dialog Child Methods
+
 	_onDialogChildPaint: function(e) {
-		var dialogId = e.id.replace('.uno:', '');
+		var dialogId = this.dialogIdPrefix + e.id;
 		var img = new Image();
 		var canvas = document.getElementById(dialogId + '-floating');
 		canvas.width = e.width;
@@ -265,6 +320,9 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogChildClose: function(dialogId) {
 		$('#' + dialogId + '-floating').remove();
+		// remove any extra height allocated for the parent container
+		var canvasHeight = document.getElementById(dialogId + '-canvas').height;
+		$('#' + dialogId).height(canvasHeight + 'px');
 	},
 
 	_isDialogChildUnchanged: function(dialogId, left, top) {
@@ -286,24 +344,16 @@ L.Control.LokDialog = L.Control.extend({
 		return true;
 	},
 
-	_launchDialogChild: function(e) {
-		var positions = e.position.split(',');
-		var left = parseInt(positions[0]);
-		var top = parseInt(positions[1]);
-		// ignore spurious "0, 0" dialog child position recvd from backend
-		if (e.position === '0, 0' || this._isDialogChildUnchanged(e.dialogId, left, top)) {
-			// ignore
-			return;
-		}
+	_removeDialogChild: function(dialogId) {
+		$('#' + dialogId + '-floating').remove();
+	},
 
-		// remove any existing floating element if there's any
-		$('#' + e.dialogId + '-floating').remove();
-		var floatingCanvas = '<canvas class="lokdialogchild-canvas" id="' + e.dialogId + '-floating"></canvas>';
-		$('#' + e.dialogId).append(floatingCanvas);
-		$('#' + e.dialogId + '-floating').css({position: 'absolute', left: left, top: top});
+	_createDialogChild: function(dialogId, top, left) {
+		var floatingCanvas = '<canvas class="lokdialogchild-canvas" id="' + dialogId + '-floating"></canvas>';
+		$('#' + dialogId).append(floatingCanvas);
+		$('#' + dialogId + '-floating').css({position: 'absolute', left: left, top: top});
 
 		var that = this;
-		var dialogId = e.dialogId;
 		// attach events
 		$('#' + dialogId + '-floating').on('mousedown', function(e) {
 			var buttons = 0;
@@ -332,13 +382,26 @@ L.Control.LokDialog = L.Control.extend({
 		});
 	},
 
+	_launchDialogChildIfRequired: function(e) {
+		var positions = e.position.split(',');
+		var left = parseInt(positions[0]);
+		var top = parseInt(positions[1]);
+
+		if (e.position === '0, 0' || // FIXME: we get incorrect "0, 0" position for floating windows as first message
+		    this._isDialogChildUnchanged(e.dialogId, left, top)) // no need to create the html element; we can just repaint it
+			return;
+
+		this._removeDialogChild(e.dialogId);
+		this._createDialogChild(e.dialogId, top, left);
+	},
+
 	_onDialogChildMsg: function(e) {
-		e.dialogId = e.dialogId.replace('.uno:', '');
+		e.dialogId = this.dialogIdPrefix + e.dialogId;
 		if (e.action === 'invalidate') {
 			if (this._isOpen(e.dialogId))
 			{
-				this._map.sendDialogCommand(e.dialogId, false /* no json */, true /* dialog child*/);
-				this._launchDialogChild(e);
+				this._sendDialogCommand(e.dialogId, false /* no json */, true /* dialog child*/);
+				this._launchDialogChildIfRequired(e);
 			}
 		} else if (e.action === 'close') {
 			this._onDialogChildClose(e.dialogId);
