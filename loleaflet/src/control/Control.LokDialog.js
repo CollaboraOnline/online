@@ -45,10 +45,12 @@ L.Control.LokDialog = L.Control.extend({
 		if (e.action === 'created') {
 			var width = parseInt(e.size.split(',')[0]);
 			var height = parseInt(e.size.split(',')[1]);
-			// make sure there are no <spaces> in the following string
-			var boundsString = '0,0,' + width + ',' + height;
 			this._launchDialog(e.dialogId, width, height);
-			this._sendDialogCommand(e.dialogId, boundsString);
+			// var boundsString = '0,0,' + width + ',' + height; // no spaces in string
+			// FIXME: we should pass the rectangle here but we do not yet get the correct size
+			// of the dialog from the backend, so best not to mention any rectangle here
+			// for the first time
+			this._sendDialogCommand(e.dialogId);/* boundsString */
 		} else if (e.action === 'invalidate') {
 			// ignore any invalidate callbacks when we have closed the dialog
 			if (this._isOpen(e.dialogId)) {
