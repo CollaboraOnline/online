@@ -341,6 +341,7 @@ body {
 	height: auto;
 	border: none;
 	background-color: transparent;
+	z-index: 1105;
 }
 
 .lokdialog.ui-dialog-content.ui-widget-content {
