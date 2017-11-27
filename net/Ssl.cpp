@@ -47,8 +47,7 @@ SslContext::SslContext(const std::string& certFilePath,
 #endif
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100003L
-    SSL_CTX_set_options(nullptr, 0);
-    OPENSSL_init_ssl(OPENSSL_INIT_LOAD_CONFIG, NULL);
+    OPENSSL_init_ssl(OPENSSL_INIT_LOAD_CONFIG, nullptr);
 #else
     SSL_library_init();
     SSL_load_error_strings();
