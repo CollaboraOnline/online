@@ -95,7 +95,6 @@ L.Control.LokDialog = L.Control.extend({
 		var that = this;
 		$('#' + dialogId).dialog({
 			width: width,
-			height: 'auto',
 			title: 'LOK Dialog', // TODO: Get the 'real' dialog title from the backend
 			modal: false,
 			closeOnEscape: true,
@@ -241,6 +240,8 @@ L.Control.LokDialog = L.Control.extend({
 			var canvas = document.getElementById(dialogId + '-canvas');
 			canvas.width = e.dialogWidth;
 			canvas.height = e.dialogHeight;
+
+			$('#' + dialogId).dialog('option', 'width', e.dialogWidth);
 		}
 
 		this._paintDialog(dialogId, e.title, e.rectangle, e.dialog);
