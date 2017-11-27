@@ -1,3 +1,9 @@
+loolwsd (2.1.5-5) unstable; urgency=medium
+
+  * add collaboraofficebasis5.3-filter-data as dependency
+
+ -- Andras Timar <andras.timar@collabora.com>  Wed, 27 Nov 2017 18:10:00 +0100
+
 loolwsd (2.1.5-4) unstable; urgency=medium
 
   * see the git log: http://col.la/cool21
