@@ -43,17 +43,16 @@ L.Control.LokDialog = L.Control.extend({
 	_onDialogMsg: function(e) {
 		e.dialogId = this.dialogIdPrefix + e.dialogId;
 		if (e.action === 'created') {
-			var width = parseInt(e.size.split(',')[0]);
-			var height = parseInt(e.size.split(',')[1]);
-			this._launchDialog(e.dialogId, width, height);
-			// var boundsString = '0,0,' + width + ',' + height; // no spaces in string
-			// FIXME: we should pass the rectangle here but we do not yet get the correct size
-			// of the dialog from the backend, so best not to mention any rectangle here
-			// for the first time
-			this._sendDialogCommand(e.dialogId);/* boundsString */
+			this._width = parseInt(e.size.split(',')[0]);
+			this._height = parseInt(e.size.split(',')[1]);
+			this._launchDialog(e.dialogId);
+			var boundsString = '0,0,' + this._width + ',' + this._height; // no spaces in string
+			this._sendDialogCommand(e.dialogId, boundsString);
 		} else if (e.action === 'invalidate') {
 			// ignore any invalidate callbacks when we have closed the dialog
 			if (this._isOpen(e.dialogId)) {
+				if (!e.rectangle)
+					e.rectangle = '0,0' + this._width + ',' + this._height;
 				this._sendDialogCommand(e.dialogId, e.rectangle);
 			}
 		} else if (e.action === 'cursor_invalidate') {
