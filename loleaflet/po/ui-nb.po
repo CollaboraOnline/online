@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:14+0000\n"
+"POT-Creation-Date: 2017-11-27 13:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /nb/libo_online/loleaflet-ui-nb.po\n"
-"X-Pootle-Revision: 2780621\n"
+"X-Pootle-Revision: 2887268\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -47,7 +47,6 @@ msgid "Users online"
 msgstr "Påloggede brukere "
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
 msgstr "Brukernavn"
 
@@ -105,15 +104,15 @@ msgstr "Grafer"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Minnekart"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "Prosessorgraf"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Nettverksgraf"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -142,11 +141,11 @@ msgstr "Tidsintervall for CPU statistikk (u ms)"
 
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Maksimal dokumentprosess virtuelt minne (i MB) - kun reduser"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Maksimalt dokumentmagasinhukommelse (i KB) - kun reduser"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"

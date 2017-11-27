@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:14+0000\n"
+"POT-Creation-Date: 2017-11-26 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-ui-es.po\n"
-"X-Pootle-Revision: 2788490\n"
+"X-Pootle-Revision: 2905535\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -1142,7 +1142,7 @@ msgstr "Sustitutivos posteriores"
 
 #: src/control/Control.CharacterMap.js:99
 msgid "Private Use Area"
-msgstr "Área de uso privado"
+msgstr "Área de uso privativo"
 
 #: src/control/Control.CharacterMap.js:101
 msgid "CJK Compatibility Ideographs"
@@ -1202,9 +1202,8 @@ msgid "Musical Symbols"
 msgstr "Símbolos musicales"
 
 #: src/control/Control.CharacterMap.js:118
-#, fuzzy
 msgid "CJK Unified Ideographs Extension B"
-msgstr "Ideogramas CJK unificados, ampliación A"
+msgstr "Ideogramas CJK unificados, ampliación B"
 
 #: src/control/Control.CharacterMap.js:121
 msgid "CJK Compatibility Ideographs Supplement"
@@ -1412,7 +1411,7 @@ msgstr "Formas verticales"
 
 #: src/control/Control.CharacterMap.js:175
 msgid "Nko"
-msgstr ""
+msgstr "N’Ko"
 
 #: src/control/Control.CharacterMap.js:176
 msgid "Balinese"
@@ -1496,15 +1495,15 @@ msgstr "Disco de Festos"
 
 #: src/control/Control.CharacterMap.js:198
 msgid "Lycian"
-msgstr ""
+msgstr "Licio"
 
 #: src/control/Control.CharacterMap.js:199
 msgid "Carian"
-msgstr ""
+msgstr "Cario"
 
 #: src/control/Control.CharacterMap.js:200
 msgid "Lydian"
-msgstr ""
+msgstr "Lidio"
 
 #: src/control/Control.CharacterMap.js:201
 msgid "Mahjong Tiles"
@@ -1516,7 +1515,7 @@ msgstr "Fichas de dominó"
 
 #: src/control/Control.CharacterMap.js:203
 msgid "Samaritan"
-msgstr ""
+msgstr "Samaritano"
 
 #: src/control/Control.CharacterMap.js:204
 msgid "Canadian Aboriginal Syllabics Extended"
@@ -1528,11 +1527,11 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:206
 msgid "Vedic Extensions"
-msgstr ""
+msgstr "Extensiones védicas"
 
 #: src/control/Control.CharacterMap.js:207
 msgid "Lisu"
-msgstr ""
+msgstr "Lisu"
 
 #: src/control/Control.CharacterMap.js:208
 msgid "Bamum"
@@ -1587,9 +1586,8 @@ msgid "Inscriptional Parthian"
 msgstr "Parto inscripcional"
 
 #: src/control/Control.CharacterMap.js:221
-#, fuzzy
 msgid "Inscriptional Pahlavi"
-msgstr "Parto inscripcional"
+msgstr "Pahlaví inscripcional"
 
 #: src/control/Control.CharacterMap.js:222
 msgid "Old Turkic"
@@ -1616,9 +1614,8 @@ msgid "Enclosed Ideographic Supplement"
 msgstr "Ideográficos delimitados, suplemento"
 
 #: src/control/Control.CharacterMap.js:230
-#, fuzzy
 msgid "CJK Unified Ideographs Extension C"
-msgstr "Ideogramas CJK unificados, ampliación A"
+msgstr "Ideogramas CJK unificados, ampliación C"
 
 #: src/control/Control.CharacterMap.js:231
 msgid "Mandaic"
@@ -1718,7 +1715,7 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:259
 msgid "Caucasian Albanian"
-msgstr ""
+msgstr "Cáucaso-albanés"
 
 #: src/control/Control.CharacterMap.js:260
 msgid "Coptic Epact Numbers"

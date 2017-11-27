@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:13+0000\n"
+"POT-Creation-Date: 2017-11-25 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /ar/libo_online/loleaflet-ui-ar.po\n"
-"X-Pootle-Revision: 2780492\n"
+"X-Pootle-Revision: 2871032\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -47,7 +47,6 @@ msgid "Users online"
 msgstr "المستخدمون المتصلون"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
 msgstr "اسم المستخدم"
 
@@ -106,15 +105,15 @@ msgstr "الرسوم البيانية"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "رسم بياني للذاكرة"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "رسم بياني للمعالج"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "رسم بياني للشبكة"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -350,17 +349,15 @@ msgstr ""
 "رجاءً تواصل مع إدارة الخادوم (%storageserver) لمتابعة التحرير."
 
 #: dist/errormessages.js:15
+#, fuzzy
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
+msgstr "لا يمكن حفظ المستند بسبب انتهاء صلاحية رمز الوصول أو عدم صلاحيته."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
-msgstr ""
-"تعذر حفظ المستند إلى التخزين. تحقق من صلاحياتك أو تواصل مع إدارة خادوم "
-"التخزين (%storageserver)."
+msgstr "تعذر حفظ المستند. تحقق من صلاحياتك أو تواصل مع إدارة خادوم التخزين."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -632,7 +629,7 @@ msgstr "ألغِ البحث"
 
 #: dist/toolbar/toolbar.js:680
 msgid "Text Language"
-msgstr ""
+msgstr "لغة النص"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -786,9 +783,8 @@ msgstr "أمتأكد من إنهاء هذه الجلسة؟"
 
 #: src/admin/AdminSocketOverview.js:152
 #: src/admin/AdminSocketOverview.js:311
-#, fuzzy
 msgid "Documents"
-msgstr "المستند"
+msgstr "المستندات"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
@@ -1992,11 +1988,11 @@ msgstr "منظور"
 #: src/control/Control.Menubar.js:241
 #: src/control/Control.Menubar.js:292
 msgid "Tools"
-msgstr ""
+msgstr "الأدوات"
 
 #: src/control/Control.Menubar.js:19
 msgid "Save As"
-msgstr ""
+msgstr "احفظ ك‍"
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -2449,15 +2445,15 @@ msgstr "ادمج الخلايا"
 #: src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:293
 msgid "Automatic Spell Checking"
-msgstr ""
+msgstr "دقّق الإملاء تلقائيًّا"
 
 #: src/control/Control.Menubar.js:177
 msgid "Language"
-msgstr ""
+msgstr "اللغة"
 
 #: src/control/Control.Menubar.js:178
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "صفّر إلى اللغة المبدئيّة"
 
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
@@ -2535,11 +2531,11 @@ msgstr "احذف الصف"
 
 #: src/control/Control.Menubar.js:497
 msgid "Find"
-msgstr ""
+msgstr "ابحث"
 
 #: src/control/Control.Menubar.js:505
 msgid "Replace with"
-msgstr ""
+msgstr "استبدل ب‍"
 
 #: src/control/Control.Menubar.js:463
 msgid "Replace"
@@ -2644,7 +2640,7 @@ msgstr "أنهى مالك المستند الجلسة"
 
 #: src/core/Socket.js:261
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "المستند خامل - رجاءً انقر عليه لإعادة تحميله ومتابعة التحرير"
 
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -2652,7 +2648,7 @@ msgstr "الخادوم يُطفأ للصيانة (يحفظ آليًّا)"
 
 #: src/core/Socket.js:272
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "آخ، حدثت مشكلة في الاتصال بالمستند"
 
 # I think "the server is re-starting".
 #: src/core/Socket.js:232
@@ -2664,20 +2660,22 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"تغيّر المستند في التخزين. يُحمِّل المستند الجديد. إصدارتك متاحة كمراجعة."
 
 #: src/core/Socket.js:418
 msgid ""
 "Document has been changed in storage. Do you want to discard your changes, "
 "and load the document from the storage?"
 msgstr ""
+"تغيّر المستند في التخزين. أتريد إهمال التغييرات وتحميل المستند من التخزين؟"
 
 #: src/core/Socket.js:420
 msgid "Discard changes"
-msgstr ""
+msgstr "أهمل التغييرات"
 
 #: src/core/Socket.js:421
 msgid "Overwrite document"
-msgstr ""
+msgstr "يكتب على المستند"
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."

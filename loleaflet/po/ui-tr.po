@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:15+0000\n"
+"POT-Creation-Date: 2017-11-27 13:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /tr/libo_online/loleaflet-ui-tr.po\n"
-"X-Pootle-Revision: 2780680\n"
+"X-Pootle-Revision: 2805376\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -47,7 +47,6 @@ msgid "Users online"
 msgstr "Bağlı kullanıcılar"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
 msgstr "Kullanıcı Adı"
 
@@ -105,15 +104,15 @@ msgstr "Grafikler"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Bellek Grafiği"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "İşlemci Grafiği"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Ağ Grafiği"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -142,15 +141,16 @@ msgstr "İşlemci istatistiklerinin zaman aralığı (ms cinsinden)"
 
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "En Fazla Belge işlemi sanal belleği (MB olarak) - yalnızca azalt"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "En Fazla Belge işlem yığıtı belleği (KB olarak) - yalnızca azalt"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
+"Diske yazmaya izin verilen en büyük dosya boyutu (MB olarak) - yalnızca azalt"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -356,15 +356,16 @@ msgstr ""
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
+"Belge süresi geçtiğinden veya geçersiz erişim belirteci nedeniyle "
+"kaydedilemiyor."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Belge diske kaydedilemedi. İzinlerinizi kontrol edin ve sistem yöneticinize "
-"(%storageserver) başvurun."
+"Belge depolama alanına kaydedilemedi. İzinlerinizi kontrol edin veya sistem "
+"yöneticinize başvurun."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -636,7 +637,7 @@ msgstr "Aramayı iptal et"
 
 #: dist/toolbar/toolbar.js:680
 msgid "Text Language"
-msgstr ""
+msgstr "Metin Dili"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -790,9 +791,8 @@ msgstr "Bu oturumu kapatmak istediğinizden emin misiniz?"
 
 #: src/admin/AdminSocketOverview.js:152
 #: src/admin/AdminSocketOverview.js:311
-#, fuzzy
 msgid "Documents"
-msgstr "Belge"
+msgstr "Belgeler"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
@@ -1996,11 +1996,11 @@ msgstr "Görünüm"
 #: src/control/Control.Menubar.js:241
 #: src/control/Control.Menubar.js:292
 msgid "Tools"
-msgstr ""
+msgstr "Araçlar"
 
 #: src/control/Control.Menubar.js:19
 msgid "Save As"
-msgstr ""
+msgstr "Farklı Kaydet"
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -2453,15 +2453,15 @@ msgstr "Hücreleri birleştir"
 #: src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:293
 msgid "Automatic Spell Checking"
-msgstr ""
+msgstr "Otomatik Yazım Denetimi"
 
 #: src/control/Control.Menubar.js:177
 msgid "Language"
-msgstr ""
+msgstr "Dil"
 
 #: src/control/Control.Menubar.js:178
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Varsayılan Dile Sıfırla"
 
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
@@ -2539,11 +2539,11 @@ msgstr "Satır sil"
 
 #: src/control/Control.Menubar.js:497
 msgid "Find"
-msgstr ""
+msgstr "Bul"
 
 #: src/control/Control.Menubar.js:505
 msgid "Replace with"
-msgstr ""
+msgstr "Bununla değiştir"
 
 #: src/control/Control.Menubar.js:463
 msgid "Replace"
@@ -2648,7 +2648,7 @@ msgstr "Oturum belge sahibi tarafından sonlandırıldı"
 
 #: src/core/Socket.js:261
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Belge boşta - lütfen düzenlemeye devam etmek için tıklayın"
 
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -2656,7 +2656,7 @@ msgstr "Sunucu bakım için kapatılıyor (otomatik kaydetme etkin)"
 
 #: src/core/Socket.js:272
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Belgeye bağlanırken hata oluştu"
 
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
@@ -2667,20 +2667,24 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Belge depolandığı yerde değişti. Yeni belge yükleniyor. Kendi sürümünüze "
+"farklı bir sürüm olarak ulaşılabilirsiniz."
 
 #: src/core/Socket.js:418
 msgid ""
 "Document has been changed in storage. Do you want to discard your changes, "
 "and load the document from the storage?"
 msgstr ""
+"Belge depolandığı yerde değişti. Yaptığınız değişiklikleri yok sayarak "
+"belgeyi depodan yüklemek ister misiniz?"
 
 #: src/core/Socket.js:420
 msgid "Discard changes"
-msgstr ""
+msgstr "Değişiklikleri yoksay"
 
 #: src/core/Socket.js:421
 msgid "Overwrite document"
-msgstr ""
+msgstr "Belgenin üzerine yaz"
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."

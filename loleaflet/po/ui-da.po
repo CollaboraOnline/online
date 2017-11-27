@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-05 08:00+0000\n"
+"POT-Creation-Date: 2017-11-26 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-ui-da.po\n"
-"X-Pootle-Revision: 2776498\n"
+"X-Pootle-Revision: 2891930\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -47,7 +47,6 @@ msgid "Users online"
 msgstr "Brugere tilkoblet"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
 msgstr "Brugernavn"
 
@@ -57,7 +56,7 @@ msgstr "Dokumenter åbnet"
 
 #: admin.strings.js:15
 msgid "Number of Documents"
-msgstr ""
+msgstr "Antal dokumenter"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
@@ -65,11 +64,11 @@ msgstr "Hukommelse opbrugt"
 
 #: admin.strings.js:17
 msgid "Bytes sent"
-msgstr ""
+msgstr "Bytes sendt"
 
 #: admin.strings.js:18
 msgid "Bytes received"
-msgstr ""
+msgstr "Bytes modtaget"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -93,7 +92,7 @@ msgstr "Tid uden aktivitet"
 
 #: admin.strings.js:24
 msgid "Modified"
-msgstr ""
+msgstr "Ændret"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -105,15 +104,15 @@ msgstr "Grafer"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Hukommelsesgraf"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "CPU-graf"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Netværksgraf"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -142,15 +141,15 @@ msgstr "Tidsinterval i processorstatistikken (i ms)"
 
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Maksimum dokument processer virtuel hukommelse (i MB) - kun reducer"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Maksimum dokument processer stak hukommelse (i KB) - kun reducer"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Maksimum filstørrelse der kan skrives til disk (i MB) - kun reducer"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -338,30 +337,30 @@ msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
+"Kunne ikke læse dokument fra lager. Kontakt venligst din lager server "
+"(%storageserver) administrator."
 
 #: dist/errormessages.js:14
-#, fuzzy
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
 "Gem mislykkedes fordi der ikke er plads på serveren. Dokumentet bliver nu "
-"kun læseadgang. Kontakt venligst serverens administrator for at fortsætte "
-"redigering."
+"kun læseadgang. Kontakt venligst serverens (%storageserver) administrator "
+"for at fortsætte redigering."
 
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
+msgstr "Dokumentet kan ikke gemmes pga et udløbet eller ugyldigt adgangstegn."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Dokumentet kan ikke gemmes på lager. Tjek dine rettigheder eller kontakt "
-"lagerets serveradministrator."
+"Dokumentet kan ikke gemmes. Tjek dine rettigheder eller kontakt lagerets "
+"serveradministrator."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -633,7 +632,7 @@ msgstr "Annullerer søgning"
 
 #: dist/toolbar/toolbar.js:680
 msgid "Text Language"
-msgstr ""
+msgstr "Tekstsprog"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -787,12 +786,10 @@ msgstr "Vil du virkelig afslutte denne session?"
 
 #: src/admin/AdminSocketOverview.js:152
 #: src/admin/AdminSocketOverview.js:311
-#, fuzzy
 msgid "Documents"
-msgstr "Dokument"
+msgstr "Dokumenter"
 
 #: src/admin/AdminSocketSettings.js:34
-#, fuzzy
 msgid "Are you sure you want to shut down the server?"
 msgstr "Er du sikker på, at du vil stoppe denne server?"
 
@@ -1994,11 +1991,11 @@ msgstr "Vis"
 #: src/control/Control.Menubar.js:241
 #: src/control/Control.Menubar.js:292
 msgid "Tools"
-msgstr ""
+msgstr "Værktøjer"
 
 #: src/control/Control.Menubar.js:19
 msgid "Save As"
-msgstr ""
+msgstr "Gem som"
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -2069,7 +2066,7 @@ msgstr "Vælg alle"
 #: src/control/Control.Menubar.js:271
 #: src/control/Control.Menubar.js:518
 msgid "Find & Replace"
-msgstr ""
+msgstr "Søg og erstat"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
@@ -2453,15 +2450,15 @@ msgstr "Flet celler"
 #: src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:293
 msgid "Automatic Spell Checking"
-msgstr ""
+msgstr "Automatisk stavekontrol"
 
 #: src/control/Control.Menubar.js:177
 msgid "Language"
-msgstr ""
+msgstr "Sprog"
 
 #: src/control/Control.Menubar.js:178
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Nulstil til standardsprog"
 
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
@@ -2539,19 +2536,19 @@ msgstr "Slet række"
 
 #: src/control/Control.Menubar.js:497
 msgid "Find"
-msgstr ""
+msgstr "Find"
 
 #: src/control/Control.Menubar.js:505
 msgid "Replace with"
-msgstr ""
+msgstr "Erstat med"
 
 #: src/control/Control.Menubar.js:522
 msgid "Replace"
-msgstr ""
+msgstr "Erstat"
 
 #: src/control/Control.Menubar.js:527
 msgid "Replace All"
-msgstr ""
+msgstr "Erstat alle"
 
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
@@ -2649,6 +2646,7 @@ msgstr "Session afsluttet af dokumentejer"
 #: src/core/Socket.js:261
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
+"Ledigt dokument - klik venligst for at genindlæse og genoptage redigering"
 
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -2656,7 +2654,7 @@ msgstr "Server lukker ned for vedligeholdelse (auto-gem)"
 
 #: src/core/Socket.js:272
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Ups, der er et problem med at forbinde til dokumentet"
 
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
@@ -2667,20 +2665,24 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Dokumentet er ændret på lageret. Indlæser det nye dokument. Din version er "
+"tilgængelig som revision."
 
 #: src/core/Socket.js:418
 msgid ""
 "Document has been changed in storage. Do you want to discard your changes, "
 "and load the document from the storage?"
 msgstr ""
+"Dokumentet er ændret på lager. Ønsker du at forkaste dine ændringer, indlæse "
+"dokumentet fra lageret."
 
 #: src/core/Socket.js:420
 msgid "Discard changes"
-msgstr ""
+msgstr "Kassér ændringer"
 
 #: src/core/Socket.js:421
 msgid "Overwrite document"
-msgstr ""
+msgstr "Overskriv dokument"
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."
@@ -2736,7 +2738,7 @@ msgstr "Initialiserer..."
 
 #: src/map/Map.js:820
 msgid "Inactive document - please click to resume editing"
-msgstr "Inaktivt dikument - klik for at genoptage redigering"
+msgstr "Inaktivt dokument - klik for at genoptage redigering"
 
 #: src/control/Toolbar.js:95
 #: src/map/Map.js:939

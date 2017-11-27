@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:15+0000\n"
+"POT-Creation-Date: 2017-11-27 09:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,103 +12,103 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /pa_IN/libo_online/loleaflet-ui-pa_IN.po\n"
-"X-Pootle-Revision: 2776652\n"
+"X-Pootle-Revision: 2913461\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
-msgstr ""
+msgstr "ਪਰਸ਼ਾਸ਼ਕੀ ਕਨਸੋਲ"
 
 #: admin.strings.js:7
 msgid "Settings"
-msgstr ""
+msgstr "ਸੈਟਿੰਗਾਂ"
 
 #: admin.strings.js:8
 msgid "Overview"
-msgstr ""
+msgstr "ਸੰਖੇਪ"
 
 #: admin.strings.js:9
 msgid "(current)"
-msgstr ""
+msgstr "(ਮੌਜੂਦਾ)"
 
 #: admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "ਅੰਕੜੇ"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "ਅਤੀਤ"
 
 #: admin.strings.js:11
 msgid "Dashboard"
-msgstr ""
+msgstr "ਡੈਸ਼ਬੋਰਡ"
 
 #: admin.strings.js:12
 msgid "Users online"
-msgstr ""
+msgstr "ਆਨਲਾਈਨ ਵਰਤੋਂਕਾਰ"
 
 #: admin.strings.js:13
 msgid "User Name"
-msgstr ""
+msgstr "ਵਰਤੋਂਕਾਰ ਨਾਂ"
 
 #: admin.strings.js:13
 msgid "Documents opened"
-msgstr ""
+msgstr "ਖੋਲ੍ਹੇ ਗਏ ਦਸਤਾਵੇਜ਼"
 
 #: admin.strings.js:16
 msgid "Number of Documents"
-msgstr ""
+msgstr "ਦਸਤਾਵੇਜ਼ਾਂ ਦੀ ਗਿਣਤੀ"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
-msgstr ""
+msgstr "ਵਰਤੀ ਗਈ ਮੈਮੋਰੀ"
 
 #: admin.strings.js:18
 msgid "Bytes sent"
-msgstr ""
+msgstr "ਭੇਜੇ ਬਾਈਟ"
 
 #: admin.strings.js:19
 msgid "Bytes received"
-msgstr ""
+msgstr "ਮਿਲੇ ਬਾਈਟ"
 
 #: admin.strings.js:15
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: admin.strings.js:16
 msgid "Document"
-msgstr ""
+msgstr "ਦਸਤਾਵੇਜ਼"
 
 #: admin.strings.js:17
 msgid "Number of views"
-msgstr ""
+msgstr "ਵੇਖਣ ਦੀ ਗਿਣਤੀ"
 
 #: admin.strings.js:18
 msgid "Elapsed time"
-msgstr ""
+msgstr "ਲੱਗਾ ਸਮਾਂ"
 
 #: admin.strings.js:19
 msgid "Idle time"
-msgstr ""
+msgstr "ਵਿਹਲਾ ਸਮਾਂ"
 
 #: admin.strings.js:25
 msgid "Modified"
-msgstr ""
+msgstr "ਸੋਧ"
 
 #: admin.strings.js:20
 msgid "Kill"
-msgstr ""
+msgstr "ਖਤਮ"
 
 #: admin.strings.js:21
 msgid "Graphs"
-msgstr ""
+msgstr "ਗਰਾਫ਼"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "ਮੈਮੋਰੀ ਗਰਾਫ਼"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "CPU ਗਰਾਫ਼"
 
 #: admin.strings.js:29
 msgid "Network Graph"
@@ -120,7 +120,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:164
 #: src/control/Control.Menubar.js:223
 msgid "Save"
-msgstr ""
+msgstr "ਸੰਭਾਲੋ"
 
 #: admin.strings.js:23
 msgid "Cache size of memory statistics"
@@ -192,35 +192,35 @@ msgstr ""
 
 #: unocommands.js:6
 msgid "Merge"
-msgstr ""
+msgstr "ਮਿਲਾਓ"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
+msgstr "ਸੈੱਲਾਂ ਨੂੰ ਮਿਲਾਓ..."
 
 #: unocommands.js:8
 msgid "Bring Forward"
-msgstr ""
+msgstr "ਅੱਗੇ ਲਿਆਓ"
 
 #: unocommands.js:9
 msgid "Send Backward"
-msgstr ""
+msgstr "ਪਿੱਛੇ ਭੇਜੋ"
 
 #: unocommands.js:10
 msgid "Paste Special"
-msgstr ""
+msgstr "ਖਾਸ ਚੇਪੋ"
 
 #: unocommands.js:11
 msgid "Unformatted Text"
-msgstr ""
+msgstr "ਅਣ-ਫਾਰਮੈਟ ਕੀਤੀ ਲਿਖਤ"
 
 #: unocommands.js:12
 msgid "No Wrap"
-msgstr ""
+msgstr "ਸਮੇਟਣਾ ਨਹੀਂ"
 
 #: unocommands.js:13
 msgid "Wrap Before"
-msgstr ""
+msgstr "ਪਹਿਲਾਂ ਸਮੇਟੋ"
 
 #: unocommands.js:14
 msgid "Wrap After"
@@ -244,7 +244,7 @@ msgstr ""
 
 #: unocommands.js:19
 msgid "Refresh"
-msgstr ""
+msgstr "ਤਾਜ਼ਾ ਕਰੋ"
 
 #: dist/errormessages.js:1
 msgid ""
@@ -333,31 +333,31 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
-msgstr ""
+msgstr "%n ਵਰਤੋਂਕਾਰ"
 
 #: dist/toolbar/toolbar.js:106
 msgid "1 user"
-msgstr ""
+msgstr "1 ਵਰਤੋਂਕਾਰ"
 
 #: dist/toolbar/toolbar.js:107
 msgid "0 users"
-msgstr ""
+msgstr "0 ਵਰਤੋਂਕਾਰ"
 
 #: dist/toolbar/toolbar.js:261
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "ਕੀ ਤੁਸੀਂ ਇਸ ਸਫ਼ੇ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
 #: dist/toolbar/toolbar.js:461
 msgid "Textwrap"
-msgstr ""
+msgstr "ਲਿਖਤ-ਸਮੇਟੋ"
 
 #: dist/toolbar/toolbar.js:462
 msgid "No wrap"
-msgstr ""
+msgstr "ਲਿਖਤ-ਸਮੇਟੋ"
 
 #: dist/toolbar/toolbar.js:463
 msgid "Page wrap"
-msgstr ""
+msgstr "ਸਫ਼ਾ ਸਮੇਟੋ"
 
 #: dist/toolbar/toolbar.js:464
 msgid "Wrap anchor only"
@@ -384,37 +384,37 @@ msgstr ""
 #: src/control/Control.Menubar.js:174
 #: src/control/Control.Menubar.js:233
 msgid "Undo"
-msgstr ""
+msgstr "ਵਾਪਸ ਉਹੀ"
 
 #: dist/toolbar/toolbar.js:473
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:175
 #: src/control/Control.Menubar.js:234
 msgid "Redo"
-msgstr ""
+msgstr "ਪਰਤਾਓ"
 
 #: dist/toolbar/toolbar.js:474
 msgid "Document repair"
-msgstr ""
+msgstr "ਦਸਤਾਵੇਜ਼ ਦੀ ਮੁਰੰਮਤ"
 
 #: dist/toolbar/toolbar.js:480
 #: src/control/Control.Menubar.js:60
 msgid "Bold"
-msgstr ""
+msgstr "ਗੂੜ੍ਹੇ"
 
 #: dist/toolbar/toolbar.js:481
 #: src/control/Control.Menubar.js:61
 msgid "Italic"
-msgstr ""
+msgstr "ਗੂੜ੍ਹੇ"
 
 #: dist/toolbar/toolbar.js:482
 #: src/control/Control.Menubar.js:62
 msgid "Underline"
-msgstr ""
+msgstr "ਹੇਠਾਂ ਲਾਈਨ"
 
 #: dist/toolbar/toolbar.js:483
 msgid "Strikeout"
-msgstr ""
+msgstr "ਵਿੰਨੋ"
 
 #: dist/toolbar/toolbar.js:485
 msgid "Insert Footnote"
@@ -523,37 +523,37 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:522
 msgid "More"
-msgstr ""
+msgstr "ਹੋਰ"
 
 #: dist/toolbar/toolbar.js:603
 msgid "Layout"
-msgstr ""
+msgstr "ਖਾਕਾ"
 
 #: dist/toolbar/toolbar.js:628
 #: dist/toolbar/toolbar.js:975
 msgid "Sum"
-msgstr ""
+msgstr "ਜੋੜ"
 
 #: dist/toolbar/toolbar.js:629
 msgid "Function"
-msgstr ""
+msgstr "ਫੰਕਸ਼ਨ"
 
 #: dist/toolbar/toolbar.js:630
 #: src/control/Control.CharacterMap.js:428
 msgid "Cancel"
-msgstr ""
+msgstr "ਰੱਦ ਕਰੋ"
 
 #: dist/toolbar/toolbar.js:631
 msgid "Accept"
-msgstr ""
+msgstr "ਮਨਜ਼ੂਰ"
 
 #: dist/toolbar/toolbar.js:642
 msgid "First sheet"
-msgstr ""
+msgstr "ਪਹਿਲੀ ਸ਼ੀਟ"
 
 #: dist/toolbar/toolbar.js:643
 msgid "Previous sheet"
-msgstr ""
+msgstr "ਪਿਛਲੀ ਸ਼ੀਟ"
 
 #: dist/toolbar/toolbar.js:644
 msgid "Next sheet"
@@ -584,11 +584,11 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:672
 msgid "Search:"
-msgstr ""
+msgstr "ਖੋਜ:"
 
 #: dist/toolbar/toolbar.js:677
 msgid "Search backwards"
-msgstr ""
+msgstr "ਪਿੱਛੇ ਵੱਲ ਖੋਜ"
 
 #: dist/toolbar/toolbar.js:678
 msgid "Search forward"
@@ -710,15 +710,15 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:1159
 msgid "Document saved"
-msgstr ""
+msgstr "ਦਸਤਾਵੇਜ਼ ਸੰਭਾਲਿਆ ਗਿਆ"
 
 #: dist/toolbar/toolbar.js:1322
 msgid "Style"
-msgstr ""
+msgstr "ਸਟਾਈਲ"
 
 #: dist/toolbar/toolbar.js:1341
 msgid "Font"
-msgstr ""
+msgstr "ਫੋਂਟ"
 
 #: dist/toolbar/toolbar.js:1377
 msgid "Previous slide"
@@ -736,7 +736,7 @@ msgstr ""
 #: dist/toolbar/toolbar.js:1595
 #: src/control/Control.DocumentRepair.js:87
 msgid "You"
-msgstr ""
+msgstr "ਤੁਸੀਂ"
 
 #: dist/toolbar/toolbar.js:1604
 msgid "Readonly"
@@ -761,19 +761,19 @@ msgstr ""
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: src/admin/Util.js:13
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: src/admin/Util.js:13
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: src/admin/Util.js:13
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: src/admin/Util.js:42
 #: src/admin/Util.js:44
@@ -855,47 +855,47 @@ msgstr ""
 
 #: src/control/Control.CharacterMap.js:28
 msgid "Gurmukhi"
-msgstr ""
+msgstr "ਗੁਰਮੁਖੀ"
 
 #: src/control/Control.CharacterMap.js:29
 msgid "Gujarati"
-msgstr ""
+msgstr "ਗੁਜਰਾਤੀ"
 
 #: src/control/Control.CharacterMap.js:30
 msgid "Odia"
-msgstr ""
+msgstr "ਓੜੀਆ"
 
 #: src/control/Control.CharacterMap.js:31
 msgid "Tamil"
-msgstr ""
+msgstr "ਤਾਮਿਲ"
 
 #: src/control/Control.CharacterMap.js:32
 msgid "Telugu"
-msgstr ""
+msgstr "ਤੇਲਗੂ"
 
 #: src/control/Control.CharacterMap.js:33
 msgid "Kannada"
-msgstr ""
+msgstr "ਕੰਨੜ"
 
 #: src/control/Control.CharacterMap.js:34
 msgid "Malayalam"
-msgstr ""
+msgstr "ਮਲਿਆਲਮ"
 
 #: src/control/Control.CharacterMap.js:35
 msgid "Sinhala"
-msgstr ""
+msgstr "ਸਿੰਹਾਲਾ"
 
 #: src/control/Control.CharacterMap.js:36
 msgid "Thai"
-msgstr ""
+msgstr "ਥਾਈ"
 
 #: src/control/Control.CharacterMap.js:37
 msgid "Lao"
-msgstr ""
+msgstr "ਲਿਓ"
 
 #: src/control/Control.CharacterMap.js:38
 msgid "Tibetan"
-msgstr ""
+msgstr "ਤਿੱਬਤੀ"
 
 #: src/control/Control.CharacterMap.js:39
 msgid "Myanmar"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:13+0000\n"
+"POT-Creation-Date: 2017-11-27 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /ab/libo_online/loleaflet-ui-ab.po\n"
-"X-Pootle-Revision: 2780485\n"
+"X-Pootle-Revision: 2913844\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -510,7 +510,7 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:520
 msgid "Insert table"
-msgstr ""
+msgstr "Ибжьаргылатәуп атаблица"
 
 #: dist/toolbar/toolbar.js:518
 #, fuzzy
@@ -629,13 +629,13 @@ msgstr ""
 #: src/control/Control.Menubar.js:43
 #: src/control/Control.Menubar.js:198
 msgid "Zoom out"
-msgstr ""
+msgstr "Ирхәыҷны"
 
 #: dist/toolbar/toolbar.js:699
 #: src/control/Control.Menubar.js:42
 #: src/control/Control.Menubar.js:197
 msgid "Zoom in"
-msgstr ""
+msgstr "Ирдуны"
 
 #: dist/toolbar/toolbar.js:715
 msgid "%user has joined"
@@ -648,7 +648,7 @@ msgstr ""
 #: dist/toolbar/toolbar.js:825
 #: dist/toolbar/toolbar.js:1351
 msgid "Size"
-msgstr ""
+msgstr "Ашәагаа"
 
 #: dist/toolbar/toolbar.js:1014
 #, fuzzy
@@ -2179,11 +2179,11 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:85
 msgid "Increase size"
-msgstr ""
+msgstr "Еизырҳатәуп акегль"
 
 #: src/control/Control.Menubar.js:86
 msgid "Decrease size"
-msgstr ""
+msgstr "Еиҵатәтәуп акегль"
 
 #: src/control/Control.Menubar.js:88
 msgid "UPPERCASE"
@@ -2354,7 +2354,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:148
 #: src/control/Control.Menubar.js:207
 msgid "Tables"
-msgstr ""
+msgstr "Атаблицақәа"
 
 #: src/control/Control.Menubar.js:150
 #: src/control/Control.Menubar.js:209
@@ -2394,7 +2394,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:158
 #: src/control/Control.Menubar.js:160
 msgid "Table"
-msgstr ""
+msgstr "Атаблица"
 
 #: src/control/Control.Menubar.js:159
 msgid "Select"
@@ -2476,7 +2476,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:220
 msgid "New slide"
-msgstr ""
+msgstr "Иаҧҵатәуп аслаид"
 
 #: src/control/Control.Menubar.js:240
 msgid "ODF spreadsheet (.ods)"
@@ -2593,7 +2593,7 @@ msgstr ""
 
 #: src/control/Control.Tabs.js:65
 msgid "Enter new sheet name"
-msgstr ""
+msgstr "Иҭажәгал, абӷьыц ахьӡ ҿыц"
 
 #: src/control/Toolbar.js:74
 #: src/control/Toolbar.js:83

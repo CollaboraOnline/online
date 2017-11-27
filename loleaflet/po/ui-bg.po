@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:13+0000\n"
+"POT-Creation-Date: 2017-11-27 13:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /bg/libo_online/loleaflet-ui-bg.po\n"
-"X-Pootle-Revision: 2780504\n"
+"X-Pootle-Revision: 2887851\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -47,7 +47,6 @@ msgid "Users online"
 msgstr "Потребители онлайн"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
 msgstr "Потребителско име"
 
@@ -57,7 +56,7 @@ msgstr "Отворени документи"
 
 #: admin.strings.js:15
 msgid "Number of Documents"
-msgstr ""
+msgstr "Брой документи"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
@@ -65,11 +64,11 @@ msgstr "Използвана памет"
 
 #: admin.strings.js:17
 msgid "Bytes sent"
-msgstr ""
+msgstr "Изпратени байтове"
 
 #: admin.strings.js:18
 msgid "Bytes received"
-msgstr ""
+msgstr "Получени байтове"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -93,7 +92,7 @@ msgstr "Време на престой"
 
 #: admin.strings.js:24
 msgid "Modified"
-msgstr ""
+msgstr "Променен"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -105,15 +104,15 @@ msgstr "Графики"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Графика на паметта"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "Графика на ЦП"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Графика на мрежата"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -142,15 +141,15 @@ msgstr "Интервал за статистика на ЦП (мс)"
 
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Максимална виртуална памет за процес на документ (МБ) – само намаляване"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Максимална стекова памет за процес на документ (КБ) – само намаляване"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Максимален размер на файл за записване на диска (МБ) – само намаляване"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -339,9 +338,10 @@ msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
+"Прочитането на документа от хранилището бе неуспешно. Моля, свържете се с "
+"администратора на сървъра за съхранение (%storageserver)."
 
 #: dist/errormessages.js:14
-#, fuzzy
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
@@ -349,20 +349,21 @@ msgid ""
 msgstr ""
 "Записването бе неуспешно поради недостиг на място в сървъра за съхранение. "
 "Документът ще остане само за четене. Моля, свържете се с администратора на "
-"сървъра, за да продължите да редактирате."
+"сървъра (%storageserver), за да продължите да редактирате."
 
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
+"Документът не може да бъде записан поради изтекъл или невалиден код за "
+"достъп."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Документът не може да бъде записан за съхранение. Проверете правата си за "
-"достъп или се свържете с администратора на сървъра за съхранение."
+"Документът не може да бъде записан. Проверете правата си за достъп или се "
+"свържете с администратора на сървъра за съхранение."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -634,7 +635,7 @@ msgstr "Отказ от търсенето"
 
 #: dist/toolbar/toolbar.js:680
 msgid "Text Language"
-msgstr ""
+msgstr "Език на текста"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -788,12 +789,10 @@ msgstr "Наистина ли искате да приключите сесия�
 
 #: src/admin/AdminSocketOverview.js:152
 #: src/admin/AdminSocketOverview.js:311
-#, fuzzy
 msgid "Documents"
-msgstr "Документ"
+msgstr "Документи"
 
 #: src/admin/AdminSocketSettings.js:34
-#, fuzzy
 msgid "Are you sure you want to shut down the server?"
 msgstr "Наистина ли искате да спрете сървъра?"
 
@@ -1996,11 +1995,11 @@ msgstr "Изглед"
 #: src/control/Control.Menubar.js:241
 #: src/control/Control.Menubar.js:292
 msgid "Tools"
-msgstr ""
+msgstr "Инструменти"
 
 #: src/control/Control.Menubar.js:19
 msgid "Save As"
-msgstr ""
+msgstr "Записване като"
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -2071,7 +2070,7 @@ msgstr "Избиране на всичко"
 #: src/control/Control.Menubar.js:271
 #: src/control/Control.Menubar.js:518
 msgid "Find & Replace"
-msgstr ""
+msgstr "Търсене и замяна"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
@@ -2455,15 +2454,15 @@ msgstr "Сливане на клетки"
 #: src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:293
 msgid "Automatic Spell Checking"
-msgstr ""
+msgstr "Автоматична проверка на правописа"
 
 #: src/control/Control.Menubar.js:177
 msgid "Language"
-msgstr ""
+msgstr "Език"
 
 #: src/control/Control.Menubar.js:178
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Връщане на подразбирания език"
 
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
@@ -2541,19 +2540,19 @@ msgstr "Изтриване на ред"
 
 #: src/control/Control.Menubar.js:497
 msgid "Find"
-msgstr ""
+msgstr "Търсене"
 
 #: src/control/Control.Menubar.js:505
 msgid "Replace with"
-msgstr ""
+msgstr "Замяна с"
 
 #: src/control/Control.Menubar.js:522
 msgid "Replace"
-msgstr ""
+msgstr "Замяна"
 
 #: src/control/Control.Menubar.js:527
 msgid "Replace All"
-msgstr ""
+msgstr "Замяна на всички"
 
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
@@ -2650,7 +2649,7 @@ msgstr "Сесията е прекратена от собственика на 
 
 #: src/core/Socket.js:261
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Неактивен документ - щракнете за презареждане и редактиране"
 
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -2658,7 +2657,7 @@ msgstr "Сървърът спира за техническо обслужван
 
 #: src/core/Socket.js:272
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Възникна проблем при свързване с документа"
 
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
@@ -2669,20 +2668,24 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Документът е променен в хранилището. Новата версия се зарежда. Вашата версия "
+"е запазена като предишна редакция."
 
 #: src/core/Socket.js:418
 msgid ""
 "Document has been changed in storage. Do you want to discard your changes, "
 "and load the document from the storage?"
 msgstr ""
+"Документът е променен в хранилището. Искате ли да отхвърлите промените си и "
+"да заредите тамошната версия?"
 
 #: src/core/Socket.js:420
 msgid "Discard changes"
-msgstr ""
+msgstr "Отхвърляне на промените"
 
 #: src/core/Socket.js:421
 msgid "Overwrite document"
-msgstr ""
+msgstr "Замяна на документа"
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."

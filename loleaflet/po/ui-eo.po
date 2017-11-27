@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:14+0000\n"
+"POT-Creation-Date: 2017-11-26 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-ui-eo.po\n"
-"X-Pootle-Revision: 2780542\n"
+"X-Pootle-Revision: 2880204\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -47,9 +47,8 @@ msgid "Users online"
 msgstr "Uzantoj konektitaj"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
-msgstr "Uzantonomo"
+msgstr "Salutnomo"
 
 #: admin.strings.js:13
 msgid "Documents opened"
@@ -57,7 +56,7 @@ msgstr "Dokumentoj malfermitaj"
 
 #: admin.strings.js:15
 msgid "Number of Documents"
-msgstr ""
+msgstr "Nombro da dokumentoj"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
@@ -65,11 +64,11 @@ msgstr "Memoro konsumita"
 
 #: admin.strings.js:17
 msgid "Bytes sent"
-msgstr ""
+msgstr "Bajtoj senditaj"
 
 #: admin.strings.js:18
 msgid "Bytes received"
-msgstr ""
+msgstr "Bajtoj ricevitaj"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -93,7 +92,7 @@ msgstr "Senokupa tempo"
 
 #: admin.strings.js:24
 msgid "Modified"
-msgstr ""
+msgstr "Modifita"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -105,15 +104,15 @@ msgstr "Diagramoj"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Memora diagramo"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "CPU-diagramo"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Reta diagramo"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -142,15 +141,15 @@ msgstr "Intervalo de statistikaj statistikoj (en ms) "
 
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Maksimuma dokumenta procesa virtuala memoro (en MB) - nur redukti"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Maksimuma dokumenta procesa staka memoro (en MB) - nur redukti"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Maksimuma dosiergrando permesata skribi al disko (en MB) - nur redukti"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -339,29 +338,31 @@ msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
+"Malsukcesis legi dokumenton el konservejo. Bonvolu kontakti la "
+"administranton de via konserveja servilo (%storageserver) ."
 
 #: dist/errormessages.js:14
-#, fuzzy
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
 "Malsukcesis konservi ĉar mankas spaco en la konserva servilo. La dokumento "
-"nun estas nurlega. Bonvolu kontakti la administranton por daŭrigi redaktadon."
+"nun estas nurlega. Bonvolu kontakti la administranton de servilo "
+"(%storageserver) por daŭrigi redaktadon."
 
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
+"Ne eblas konservi dokumenton pro posttempolima aŭ nevalida alira ĵetono."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Ne povas konservi la dokumenton al la konservilo. Kontrolu viajn permesojn "
-"aŭ kontaktu la administranton de la konserva servilo."
+"Ne povas konservi la dokumenton. Kontrolu viajn permesojn aŭ kontaktu la "
+"administranton de la konserveja servilo."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -633,7 +634,7 @@ msgstr "Nuligi serĉon"
 
 #: dist/toolbar/toolbar.js:680
 msgid "Text Language"
-msgstr ""
+msgstr "Teksta lingvo"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -787,12 +788,10 @@ msgstr "Ĉe vi certe volas fini ĉi tiun seancon?"
 
 #: src/admin/AdminSocketOverview.js:152
 #: src/admin/AdminSocketOverview.js:311
-#, fuzzy
 msgid "Documents"
-msgstr "Dokumento"
+msgstr "Dokumentoj"
 
 #: src/admin/AdminSocketSettings.js:34
-#, fuzzy
 msgid "Are you sure you want to shut down the server?"
 msgstr "Ĉu vi estas certa ke vi volas haltigi la servilon?"
 
@@ -1994,11 +1993,11 @@ msgstr "Vido"
 #: src/control/Control.Menubar.js:241
 #: src/control/Control.Menubar.js:292
 msgid "Tools"
-msgstr ""
+msgstr "Iloj"
 
 #: src/control/Control.Menubar.js:19
 msgid "Save As"
-msgstr ""
+msgstr "Konservi kiel"
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -2069,7 +2068,7 @@ msgstr "Elekti ĉion"
 #: src/control/Control.Menubar.js:271
 #: src/control/Control.Menubar.js:518
 msgid "Find & Replace"
-msgstr ""
+msgstr "Serĉi kaj anstataŭigi"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
@@ -2453,15 +2452,15 @@ msgstr "Kunfandi ĉelojn"
 #: src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:293
 msgid "Automatic Spell Checking"
-msgstr ""
+msgstr "Aŭtomate kontroli literumadon"
 
 #: src/control/Control.Menubar.js:177
 msgid "Language"
-msgstr ""
+msgstr "Lingvo"
 
 #: src/control/Control.Menubar.js:178
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Reagordi al apriora lingvo"
 
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
@@ -2539,19 +2538,19 @@ msgstr "Forigi vicon"
 
 #: src/control/Control.Menubar.js:497
 msgid "Find"
-msgstr ""
+msgstr "Serĉi"
 
 #: src/control/Control.Menubar.js:505
 msgid "Replace with"
-msgstr ""
+msgstr "Anstataŭigi per"
 
 #: src/control/Control.Menubar.js:522
 msgid "Replace"
-msgstr ""
+msgstr "Anstataŭigi"
 
 #: src/control/Control.Menubar.js:527
 msgid "Replace All"
-msgstr ""
+msgstr "Anstataŭigi ĉiujn"
 
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
@@ -2648,7 +2647,7 @@ msgstr "Posedanto de la dokumento finis la seancon"
 
 #: src/core/Socket.js:261
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Neaktiva dokumento - bonvolu alklaki por reŝargi kaj daŭrigi redakti"
 
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -2656,7 +2655,7 @@ msgstr "La servilo aŭtomate malsaltiĝas por prizorgado"
 
 #: src/core/Socket.js:272
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Ho ve. Okazis problemo konekti al la dokumento"
 
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
@@ -2667,20 +2666,24 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"La dokumento ŝanĝiĝis en konservejo. Ŝargas la dokumenton. Via versio "
+"disponeblas kiel reviziaĵo."
 
 #: src/core/Socket.js:418
 msgid ""
 "Document has been changed in storage. Do you want to discard your changes, "
 "and load the document from the storage?"
 msgstr ""
+"La dokumento ŝanĝiĝis en konservejo. Ĉu vi volas forigi viajn ŝanĝojn, kaj "
+"ŝargi la dokumenton el la konservejo?"
 
 #: src/core/Socket.js:420
 msgid "Discard changes"
-msgstr ""
+msgstr "Forĵeti ŝanĝojn"
 
 #: src/core/Socket.js:421
 msgid "Overwrite document"
-msgstr ""
+msgstr "Anstataŭigi dokumenton"
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."

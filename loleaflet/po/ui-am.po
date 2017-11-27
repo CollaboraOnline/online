@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:13+0000\n"
+"POT-Creation-Date: 2017-11-26 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /am/libo_online/loleaflet-ui-am.po\n"
-"X-Pootle-Revision: 2788942\n"
+"X-Pootle-Revision: 2842260\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -141,15 +141,15 @@ msgstr "የ ሰአት ክፍተት ለ CPU statistics (በ ማሰ)"
 
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "ከፍተኛ የ ሰነድ ሂደት በ virtual memory (በ ሜባ) - መቀነሻ ብቻ"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "ከፍተኛ የ ሰነድ ሂደት በ stack memory (በ ሜባ) - መቀነሻ ብቻ"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "በ ዲስክ ላይ የሚጻፈው ከፍተኛ የ ፋይል መጠን (በ ሜባ) - መቀነሻ ብቻ"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -346,7 +346,7 @@ msgstr ""
 
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
+msgstr "ሰነድ ማስቀመጥ አልተቻለም ጊዜው ባለፈ ወይንም ዋጋ የሌለው ወኪል መድረሻ ምክንያት"
 
 #: dist/errormessages.js:16
 msgid ""
@@ -2652,12 +2652,14 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"ሰነዱ በ ማጠራቀሚያው ላይ ተቀይሯል: አዲሱን ሰነድ በ መጫን ላይ: የ እርስዎ እትም ዝግጁ የሚሆነው እንደ ክለሳ ነው"
 
 #: src/core/Socket.js:418
 msgid ""
 "Document has been changed in storage. Do you want to discard your changes, "
 "and load the document from the storage?"
 msgstr ""
+"ሰነዱ በ ማጠራቀሚያው ላይ ተቀይሯል: የ እርስዎን ለውጦች ማስወገድ እና ሰነዱን ከ ማጠራቀሚያው ላይ መጫን ይፈልጋሉ?"
 
 #: src/core/Socket.js:420
 msgid "Discard changes"

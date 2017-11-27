@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-05 08:00+0000\n"
+"POT-Creation-Date: 2017-11-26 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /ca/libo_online/loleaflet-ui-ca.po\n"
-"X-Pootle-Revision: 2776487\n"
+"X-Pootle-Revision: 2819929\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -47,7 +47,6 @@ msgid "Users online"
 msgstr "Usuaris connectats"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
 msgstr "Nom d'usuari"
 
@@ -105,15 +104,15 @@ msgstr "Gràfics"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Gràfic de memòria"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "Gràfic de CPU"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Gràfic de xarxa"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -143,14 +142,18 @@ msgstr "Interval de temps de les estadístiques de CPU (en ms)"
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
+"Màxima memòria virtual per a processament de documents (en MB) - només "
+"reducció"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
+"Màxima memòria de pila per a processament de documents (en KB) - només "
+"reducció"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Màxima mida de fitxer per a escriure en disc (en MB) - només reducció"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -354,16 +357,15 @@ msgstr ""
 
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
+msgstr "El document no es pot desar a causa d'un testimoni d'accés invàlid."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
 "El document no s'ha pogut desar en el magatzem. Comproveu els permisos o "
-"contacteu amb l'administrador del servidor d'emmagatzematge (%storageserver)."
+"contacteu amb l'administrador del servidor d'emmagatzematge."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -635,7 +637,7 @@ msgstr "Cancel·la la cerca"
 
 #: dist/toolbar/toolbar.js:680
 msgid "Text Language"
-msgstr ""
+msgstr "Llengua del text"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -789,9 +791,8 @@ msgstr "Esteu segur que voleu finalitzar aquesta sessió?"
 
 #: src/admin/AdminSocketOverview.js:152
 #: src/admin/AdminSocketOverview.js:311
-#, fuzzy
 msgid "Documents"
-msgstr "Document"
+msgstr "Documents"
 
 #: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
@@ -1995,11 +1996,11 @@ msgstr "Visualitza"
 #: src/control/Control.Menubar.js:241
 #: src/control/Control.Menubar.js:292
 msgid "Tools"
-msgstr ""
+msgstr "Eines"
 
 #: src/control/Control.Menubar.js:19
 msgid "Save As"
-msgstr ""
+msgstr "Anomena i desa"
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -2452,15 +2453,15 @@ msgstr "Fusiona les cel·les"
 #: src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:293
 msgid "Automatic Spell Checking"
-msgstr ""
+msgstr "Comprovació automàtica de l'ortografia"
 
 #: src/control/Control.Menubar.js:177
 msgid "Language"
-msgstr ""
+msgstr "Llengua"
 
 #: src/control/Control.Menubar.js:178
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Reinicialitza a la llengua predeterminada"
 
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
@@ -2538,11 +2539,11 @@ msgstr "Suprimeix la fila"
 
 #: src/control/Control.Menubar.js:497
 msgid "Find"
-msgstr ""
+msgstr "Cerca"
 
 #: src/control/Control.Menubar.js:505
 msgid "Replace with"
-msgstr ""
+msgstr "Reemplaça per"
 
 #: src/control/Control.Menubar.js:463
 msgid "Replace"
@@ -2650,6 +2651,7 @@ msgstr "El propietari del document ha finalitzat la sessió"
 #: src/core/Socket.js:261
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
+"Document inactiu, feu clic per a tornar a carregar-lo i continuar-ne l'edició"
 
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -2658,7 +2660,7 @@ msgstr ""
 
 #: src/core/Socket.js:272
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Ep, hi ha un problema en connectar al document"
 
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
@@ -2669,20 +2671,24 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"El document ha canviat en l'emmagatzematge. S'està carregant el document "
+"nou. La vostra versió és disponible com a versió."
 
 #: src/core/Socket.js:418
 msgid ""
 "Document has been changed in storage. Do you want to discard your changes, "
 "and load the document from the storage?"
 msgstr ""
+"El document ha canviat en l'emmagatzematge. Voleu descartar els vostres "
+"canvis i carregar el document de l'emmagatzematge?"
 
 #: src/core/Socket.js:420
 msgid "Discard changes"
-msgstr ""
+msgstr "Descarta els canvis"
 
 #: src/core/Socket.js:421
 msgid "Overwrite document"
-msgstr ""
+msgstr "Sobreescriu el document"
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."

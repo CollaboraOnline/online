@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:14+0000\n"
+"POT-Creation-Date: 2017-11-27 13:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,71 +12,71 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /ga/libo_online/loleaflet-ui-ga.po\n"
-"X-Pootle-Revision: 2776534\n"
+"X-Pootle-Revision: 2854682\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
-msgstr ""
+msgstr "Consól riaracháin"
 
 #: admin.strings.js:7
 msgid "Settings"
-msgstr ""
+msgstr "Socruithe"
 
 #: admin.strings.js:8
 msgid "Overview"
-msgstr ""
+msgstr "Foramharc"
 
 #: admin.strings.js:9
 msgid "(current)"
-msgstr ""
+msgstr "(reatha)"
 
 #: admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "Anailísíocht"
 
 #: evol.colorpicker.strings.js:6
 msgid "History"
-msgstr ""
+msgstr "Stair"
 
 #: admin.strings.js:11
 msgid "Dashboard"
-msgstr ""
+msgstr "Deais"
 
 #: admin.strings.js:12
 msgid "Users online"
-msgstr ""
+msgstr "Úsáideoirí ar líne"
 
 #: admin.strings.js:13
 msgid "User Name"
-msgstr ""
+msgstr "Ainm Úsáideora"
 
 #: admin.strings.js:13
 msgid "Documents opened"
-msgstr ""
+msgstr "Cáipéisí oscailte"
 
 #: admin.strings.js:16
 msgid "Number of Documents"
-msgstr ""
+msgstr "Líon na gCáipéisí"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
-msgstr ""
+msgstr "Cuimhne úsáidte"
 
 #: admin.strings.js:18
 msgid "Bytes sent"
-msgstr ""
+msgstr "Bearta seolta"
 
 #: admin.strings.js:19
 msgid "Bytes received"
-msgstr ""
+msgstr "Bearta faighte"
 
 #: admin.strings.js:15
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: admin.strings.js:16
 msgid "Document"
-msgstr ""
+msgstr "Cáipéis"
 
 #: admin.strings.js:17
 msgid "Number of views"
@@ -84,35 +84,35 @@ msgstr ""
 
 #: admin.strings.js:18
 msgid "Elapsed time"
-msgstr ""
+msgstr "Am caite"
 
 #: admin.strings.js:19
 msgid "Idle time"
-msgstr ""
+msgstr "Aga díomhaoin"
 
 #: admin.strings.js:25
 msgid "Modified"
-msgstr ""
+msgstr "Athraithe"
 
 #: admin.strings.js:20
 msgid "Kill"
-msgstr ""
+msgstr "Maraigh"
 
 #: admin.strings.js:21
 msgid "Graphs"
-msgstr ""
+msgstr "Graif"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Graf Cuimhne"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "Graf LAP"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Graf Líonra"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -121,7 +121,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:235
 #: src/layer/marker/Annotation.js:184
 msgid "Save"
-msgstr ""
+msgstr "Sábháil"
 
 #: admin.strings.js:23
 msgid "Cache size of memory statistics"
@@ -153,55 +153,55 @@ msgstr ""
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
-msgstr ""
+msgstr "Dathanna an Téama"
 
 #: evol.colorpicker.strings.js:3
 msgid "Standard Colors"
-msgstr ""
+msgstr "Dathanna Caighdeánacha"
 
 #: evol.colorpicker.strings.js:4
 msgid "Web Colors"
-msgstr ""
+msgstr "Dathanna Gréasáin"
 
 #: evol.colorpicker.strings.js:5
 msgid "Back to Palette"
-msgstr ""
+msgstr "Ar ais don Phailéad"
 
 #: evol.colorpicker.strings.js:7
 msgid "No history yet."
-msgstr ""
+msgstr "Níl aon stair fós."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
-msgstr ""
+msgstr "Cóipeáil an Hipearnasc"
 
 #: unocommands.js:2
 msgid "Down One Level"
-msgstr ""
+msgstr "An Leibhéal Thíos"
 
 #: unocommands.js:3
 msgid "Up One Level"
-msgstr ""
+msgstr "An Leibhéal Thuas"
 
 #: unocommands.js:4
 msgid "Edit Comment"
-msgstr ""
+msgstr "Cuir an Nóta in Eagar"
 
 #: unocommands.js:5
 msgid "Insert Comment"
-msgstr ""
+msgstr "Ionsáigh Nóta"
 
 #: unocommands.js:6
 msgid "Merge"
-msgstr ""
+msgstr "Cumaisc"
 
 #: unocommands.js:7
 msgid "Merge Cells..."
-msgstr ""
+msgstr "Cumaisc Cealla..."
 
 #: unocommands.js:8
 msgid "Bring Forward"
-msgstr ""
+msgstr "Tarraing Chun Tosaigh"
 
 #: unocommands.js:9
 msgid "Send Backward"
@@ -209,15 +209,15 @@ msgstr ""
 
 #: unocommands.js:10
 msgid "Paste Special"
-msgstr ""
+msgstr "Greamú Speisialta"
 
 #: unocommands.js:11
 msgid "Unformatted Text"
-msgstr ""
+msgstr "Téacs Neamhfhormáidithe"
 
 #: unocommands.js:12
 msgid "No Wrap"
-msgstr ""
+msgstr "Gan Timfhilleadh"
 
 #: unocommands.js:13
 msgid "Wrap Before"
@@ -233,21 +233,21 @@ msgstr ""
 
 #: unocommands.js:16
 msgid "Update Index or Table of Contents"
-msgstr ""
+msgstr "Nuashonraigh an tInnéacs nó Clár na nÁbhar"
 
 #: unocommands.js:17
 msgid "Delete Index or Table of Contents"
-msgstr ""
+msgstr "Scrios an tInnéacs nó Clár na nÁbhar"
 
 #: unocommands.js:18
 #: src/layer/marker/Annotation.js:187
 #: src/layer/tile/TileLayer.js:188
 msgid "Reply"
-msgstr ""
+msgstr "Freagair"
 
 #: unocommands.js:19
 msgid "Refresh"
-msgstr ""
+msgstr "Athnuaigh"
 
 #: dist/errormessages.js:1
 msgid ""
@@ -336,31 +336,31 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
-msgstr ""
+msgstr "%n úsáideoir"
 
 #: dist/toolbar/toolbar.js:106
 msgid "1 user"
-msgstr ""
+msgstr "1 úsáideoir"
 
 #: dist/toolbar/toolbar.js:107
 msgid "0 users"
-msgstr ""
+msgstr "0 úsáideoir"
 
 #: dist/toolbar/toolbar.js:264
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "An bhfuil tú cinnte gur mhaith leat an leathanach seo a scriosadh?"
 
 #: dist/toolbar/toolbar.js:464
 msgid "Textwrap"
-msgstr ""
+msgstr "Timfhilleadh téacs"
 
 #: dist/toolbar/toolbar.js:465
 msgid "No wrap"
-msgstr ""
+msgstr "Gan timfhilleadh"
 
 #: dist/toolbar/toolbar.js:466
 msgid "Page wrap"
-msgstr ""
+msgstr "Timfhilleadh leathanach"
 
 #: dist/toolbar/toolbar.js:467
 msgid "Wrap anchor only"
@@ -387,14 +387,14 @@ msgstr ""
 #: src/control/Control.Menubar.js:185
 #: src/control/Control.Menubar.js:245
 msgid "Undo"
-msgstr ""
+msgstr "Cealaigh"
 
 #: dist/toolbar/toolbar.js:476
 #: src/control/Control.Menubar.js:23
 #: src/control/Control.Menubar.js:186
 #: src/control/Control.Menubar.js:246
 msgid "Redo"
-msgstr ""
+msgstr "Athdhéan"
 
 #: dist/toolbar/toolbar.js:477
 msgid "Document repair"
@@ -403,82 +403,82 @@ msgstr ""
 #: dist/toolbar/toolbar.js:483
 #: src/control/Control.Menubar.js:71
 msgid "Bold"
-msgstr ""
+msgstr "Trom"
 
 #: dist/toolbar/toolbar.js:484
 #: src/control/Control.Menubar.js:72
 msgid "Italic"
-msgstr ""
+msgstr "Iodálach"
 
 #: dist/toolbar/toolbar.js:485
 #: src/control/Control.Menubar.js:73
 msgid "Underline"
-msgstr ""
+msgstr "Líne Faoi"
 
 #: dist/toolbar/toolbar.js:486
 msgid "Strikeout"
-msgstr ""
+msgstr "Scríoblíne"
 
 #: dist/toolbar/toolbar.js:488
 msgid "Insert Footnote"
-msgstr ""
+msgstr "Ionsáigh Fonóta"
 
 #: dist/toolbar/toolbar.js:491
 msgid "Font color"
-msgstr ""
+msgstr "Dath an chló"
 
 #: dist/toolbar/toolbar.js:493
 msgid "Highlighting"
-msgstr ""
+msgstr "Aibhsiú"
 
 #: dist/toolbar/toolbar.js:495
 msgid "Align left"
-msgstr ""
+msgstr "Ailínigh ar chlé"
 
 #: dist/toolbar/toolbar.js:496
 msgid "Center horizontally"
-msgstr ""
+msgstr "Láraigh go cothrománach"
 
 #: dist/toolbar/toolbar.js:497
 msgid "Align right"
-msgstr ""
+msgstr "Ailínigh ar dheis"
 
 #: dist/toolbar/toolbar.js:498
 #: src/control/Control.Menubar.js:112
 msgid "Justified"
-msgstr ""
+msgstr "Comhfhadaithe"
 
 #: dist/toolbar/toolbar.js:500
 msgid "Wrap Text"
-msgstr ""
+msgstr "Timfhilleadh Téacs"
 
 #: dist/toolbar/toolbar.js:501
 msgid "Merge and Center Cells"
-msgstr ""
+msgstr "Cumaisc agus Láraigh Cealla"
 
 #: dist/toolbar/toolbar.js:503
 msgid "Format as Currency"
-msgstr ""
+msgstr "Formáidigh mar Airgeadra"
 
 #: dist/toolbar/toolbar.js:504
 msgid "Format as Percent"
-msgstr ""
+msgstr "Formáidigh mar Chéatadán"
 
 #: dist/toolbar/toolbar.js:505
 msgid "Format as Number"
-msgstr ""
+msgstr "Formáidigh mar Uimhir"
 
 #: dist/toolbar/toolbar.js:506
 msgid "Format as Date"
-msgstr ""
+msgstr "Formáidigh mar Dháta"
 
 #: dist/toolbar/toolbar.js:507
 msgid "Add Decimal Place"
-msgstr ""
+msgstr "Cuir Ionad Deachúlach Leis"
 
 #: dist/toolbar/toolbar.js:508
 msgid "Delete Decimal Place"
-msgstr ""
+msgstr "Scrios Ionad Deachúlach"
 
 #: dist/toolbar/toolbar.js:510
 msgid "Sort Ascending"
@@ -491,12 +491,12 @@ msgstr ""
 #: dist/toolbar/toolbar.js:513
 #: src/control/Control.Menubar.js:118
 msgid "Bullets on/off"
-msgstr ""
+msgstr "Urchair ann/as"
 
 #: dist/toolbar/toolbar.js:514
 #: src/control/Control.Menubar.js:119
 msgid "Numbering on/off"
-msgstr ""
+msgstr "Uimhriú ann/as"
 
 #: dist/toolbar/toolbar.js:516
 #: src/control/Control.Menubar.js:106
@@ -510,109 +510,109 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:520
 msgid "Insert table"
-msgstr ""
+msgstr "Ionsáigh tábla"
 
 #: dist/toolbar/toolbar.js:521
 msgid "Insert comment"
-msgstr ""
+msgstr "Ionsáigh nóta"
 
 #: dist/toolbar/toolbar.js:522
 msgid "Insert graphic"
-msgstr ""
+msgstr "Ionsáigh grafaic"
 
 #: dist/toolbar/toolbar.js:523
 msgid "Special Character"
-msgstr ""
+msgstr "Carachtar Speisialta"
 
 #: dist/toolbar/toolbar.js:525
 msgid "More"
-msgstr ""
+msgstr "Tuilleadh"
 
 #: dist/toolbar/toolbar.js:606
 msgid "Layout"
-msgstr ""
+msgstr "Leagan Amach"
 
 #: dist/toolbar/toolbar.js:631
 #: dist/toolbar/toolbar.js:976
 msgid "Sum"
-msgstr ""
+msgstr "Suim"
 
 #: dist/toolbar/toolbar.js:632
 msgid "Function"
-msgstr ""
+msgstr "Feidhm"
 
 #: dist/toolbar/toolbar.js:633
 #: src/control/Control.CharacterMap.js:428
 #: src/layer/marker/Annotation.js:130
 msgid "Cancel"
-msgstr ""
+msgstr "Cealaigh"
 
 #: dist/toolbar/toolbar.js:634
 msgid "Accept"
-msgstr ""
+msgstr "Glac Leis"
 
 #: dist/toolbar/toolbar.js:649
 msgid "First sheet"
-msgstr ""
+msgstr "An chéad bhileog"
 
 #: dist/toolbar/toolbar.js:650
 msgid "Previous sheet"
-msgstr ""
+msgstr "An bhileog roimhe seo"
 
 #: dist/toolbar/toolbar.js:651
 msgid "Next sheet"
-msgstr ""
+msgstr "An chéad bhileog eile"
 
 #: dist/toolbar/toolbar.js:652
 msgid "Last sheet"
-msgstr ""
+msgstr "An bhileog dheireanach"
 
 #: dist/toolbar/toolbar.js:662
 #: src/control/Control.Menubar.js:224
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "Láithreoireacht lánscáileáin"
 
 #: dist/toolbar/toolbar.js:664
 msgid "Insert slide"
-msgstr ""
+msgstr "Ionsáigh sleamhnán"
 
 #: dist/toolbar/toolbar.js:665
 #: src/control/Control.Menubar.js:221
 msgid "Duplicate slide"
-msgstr ""
+msgstr "Cóipeáil an sleamhnán"
 
 #: dist/toolbar/toolbar.js:666
 #: src/control/Control.Menubar.js:222
 msgid "Delete slide"
-msgstr ""
+msgstr "Scrios an sleamhnán"
 
 #: dist/toolbar/toolbar.js:679
 msgid "Search:"
-msgstr ""
+msgstr "Cuardaigh:"
 
 #: dist/toolbar/toolbar.js:684
 msgid "Search backwards"
-msgstr ""
+msgstr "Cuardaigh ar gcúl"
 
 #: dist/toolbar/toolbar.js:685
 msgid "Search forward"
-msgstr ""
+msgstr "Cuardaigh ar aghaidh"
 
 #: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
-msgstr ""
+msgstr "Cealaigh an cuardach"
 
 #: dist/toolbar/toolbar.js:680
 msgid "Text Language"
-msgstr ""
+msgstr "Teanga an Téacs"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
-msgstr ""
+msgstr "Gan úsáideoir"
 
 #: dist/toolbar/toolbar.js:693
 msgid "Previous page"
-msgstr ""
+msgstr "An leathanach roimhe seo"
 
 #: dist/toolbar/toolbar.js:694
 msgid "Next page"

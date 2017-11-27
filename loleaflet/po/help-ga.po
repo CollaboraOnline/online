@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:14+0000\n"
+"POT-Creation-Date: 2017-11-26 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,208 +12,208 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /ga/libo_online/loleaflet-help-ga.po\n"
-"X-Pootle-Revision: 826682\n"
+"X-Pootle-Revision: 2854534\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Aicearraí Méarchláir"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A27
 msgid "General Keyboard Shortcuts"
-msgstr ""
+msgstr "Aicearraí Méarchláir Ginearálta"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Undo"
-msgstr ""
+msgstr "Cealaigh"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
 msgid "Ctrl + Z"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
 msgid "Redo"
-msgstr ""
+msgstr "Athdhéan"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
 msgid "Ctrl + Y"
-msgstr ""
+msgstr "Ctrl + Y"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
 msgid "Cut"
-msgstr ""
+msgstr "Gearr"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
 msgid "Ctrl + X"
-msgstr ""
+msgstr "Ctrl + X"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Paste as unformatted text"
-msgstr ""
+msgstr "Greamaigh mar théacs neamhfhormáidithe"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
 msgid "Ctrl + Alt + Shift + V"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + V"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "Priontáil (Íosluchtaigh mar PDF)"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
 msgid "Ctrl + P"
-msgstr ""
+msgstr "Ctrl + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "Taispeáin na haicearraí Méarchláir"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
 msgid "Ctrl + Shift + ?"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A38
 #: dist%2Floleaflet-help.html+div.div.h2%3A160
 msgid "Text formatting"
-msgstr ""
+msgstr "Formáidiú téacs"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
 msgid "Bold"
-msgstr ""
+msgstr "Trom"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
 msgid "Ctrl + B"
-msgstr ""
+msgstr "Ctrl + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
 msgid "Italic"
-msgstr ""
+msgstr "Iodálach"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
 msgid "Ctrl + I"
-msgstr ""
+msgstr "Ctrl + I"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
 msgid "Underline"
-msgstr ""
+msgstr "Líne Faoi"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
 msgid "Ctrl + U"
-msgstr ""
+msgstr "Líne Faoi"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 msgid "Double Underline"
-msgstr ""
+msgstr "Líne Dhúbailte Faoi"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
 msgid "Ctrl + D"
-msgstr ""
+msgstr "Ctrl + D"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
 msgid "Strikethrough"
-msgstr ""
+msgstr "Líne Tríd"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
 msgid "Ctrl + Alt + 5"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
 msgid "Superscript"
-msgstr ""
+msgstr "Forscript"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
 msgid "Ctrl + Shift + P"
-msgstr ""
+msgstr "Forscript"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Subscript"
-msgstr ""
+msgstr "Foscript"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Ctrl + Shift + B"
-msgstr ""
+msgstr "Ctrl + Shift + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
 msgid "Remove direct formatting"
-msgstr ""
+msgstr "Bain an formáidiú díreach"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
 msgid "Ctrl + M"
-msgstr ""
+msgstr "Ctrl + M"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A49
 #: dist%2Floleaflet-help.html+div.div.h2%3A170
 msgid "Paragraph formatting"
-msgstr ""
+msgstr "Formáidiú ailt"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
 msgid "Align Center"
-msgstr ""
+msgstr "Ailínigh sa Lár"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
 msgid "Ctrl + E"
-msgstr ""
+msgstr "Ctrl + E"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
 msgid "Align Left"
-msgstr ""
+msgstr "Ailínigh Ar Chlé"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
 msgid "Ctrl + L"
-msgstr ""
+msgstr "Ctrl + L"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
 msgid "Align Right"
-msgstr ""
+msgstr "Ailínigh Ar Dheis"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
 msgid "Ctrl + R"
-msgstr ""
+msgstr "Ctrl + R"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
 msgid "Justify"
-msgstr ""
+msgstr "Comhfhadaigh"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
 msgid "Ctrl + J"
-msgstr ""
+msgstr "Ctrl + J"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Apply Default paragraph style"
@@ -221,7 +221,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Ctrl + 0"
-msgstr ""
+msgstr "Ctrl + 0"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Apply Heading 1 paragraph style"
@@ -229,7 +229,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Ctrl + 1"
-msgstr ""
+msgstr "Ctrl + 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Apply Heading 2 paragraph style"
@@ -237,7 +237,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Ctrl + 2"
-msgstr ""
+msgstr "Ctrl + 2"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 msgid "Apply Heading 3 paragraph style"
@@ -246,7 +246,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
 msgid "Ctrl + 3"
-msgstr ""
+msgstr "Ctrl + 3"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Apply Heading 4 paragraph style"
@@ -254,7 +254,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Ctrl + 4"
-msgstr ""
+msgstr "Ctrl + 4"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Apply Heading 5 paragraph style"
@@ -262,7 +262,7 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Ctrl + 5"
-msgstr ""
+msgstr "Ctrl + 5"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A62
 msgid "Text selection and navigation in document"
@@ -273,7 +273,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 msgid "Select All"
-msgstr ""
+msgstr "Roghnaigh Uile"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
@@ -282,12 +282,12 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
 msgid "Ctrl + A"
-msgstr ""
+msgstr "Ctrl + A"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
 msgid "Move cursor to the left"
-msgstr ""
+msgstr "Bog an cúrsóir ar chlé"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182

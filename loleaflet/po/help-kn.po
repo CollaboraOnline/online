@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-05 08:01+0000\n"
+"POT-Creation-Date: 2017-11-27 13:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /kn/libo_online/loleaflet-help-kn.po\n"
-"X-Pootle-Revision: 2780598\n"
+"X-Pootle-Revision: 2846269\n"
 
 #: dist%2Floleaflet-help.html+div.h1%3A25
 msgid "Keyboard Shortcuts"
@@ -139,20 +139,18 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
-#, fuzzy
 msgid "Ctrl + Shift + P"
-msgstr "Ctrl + Shift + ?"
+msgstr "Ctrl + Shift + P"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
 msgid "Subscript"
-msgstr ""
+msgstr "ಅಡಿಲೇಖ"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
-#, fuzzy
 msgid "Ctrl + Shift + B"
-msgstr "Ctrl + Shift + ?"
+msgstr "Ctrl + Shift + B"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
@@ -161,9 +159,8 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
-#, fuzzy
 msgid "Ctrl + M"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + M"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A49
 #: dist%2Floleaflet-help.html+div.div.h2%3A170
@@ -179,75 +176,68 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
-#, fuzzy
 msgid "Ctrl + E"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + E"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
 msgid "Align Left"
-msgstr ""
+msgstr "ಎಡಕ್ಕೆ ಹೊಂದಿಸು"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
-#, fuzzy
 msgid "Ctrl + L"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + L"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
 msgid "Align Right"
-msgstr ""
+msgstr "ಬಲಕ್ಕೆ ಹೊಂದಿಸು"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
-#, fuzzy
 msgid "Ctrl + R"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + R"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
 msgid "Justify"
-msgstr ""
+msgstr "ಸರಿಹೊಂದಿಸು"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
-#, fuzzy
 msgid "Ctrl + J"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + J"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
 msgid "Apply Default paragraph style"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
-#, fuzzy
 msgid "Ctrl + 0"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 0"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
 msgid "Apply Heading 1 paragraph style"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
-#, fuzzy
 msgid "Ctrl + 1"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 1"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
 msgid "Apply Heading 2 paragraph style"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
-#, fuzzy
 msgid "Ctrl + 2"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 2"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 msgid "Apply Heading 3 paragraph style"
@@ -255,27 +245,24 @@ msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
-#, fuzzy
 msgid "Ctrl + 3"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 3"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
 msgid "Apply Heading 4 paragraph style"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
-#, fuzzy
 msgid "Ctrl + 4"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 4"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
 msgid "Apply Heading 5 paragraph style"
 msgstr ""
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
-#, fuzzy
 msgid "Ctrl + 5"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 5"
 
 #: dist%2Floleaflet-help.html+div.div.h2%3A62
 msgid "Text selection and navigation in document"
@@ -286,7 +273,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 msgid "Select All"
-msgstr ""
+msgstr "ಎಲ್ಲವನ್ನೂ ಅಯ್ಕೆಮಾಡು"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
@@ -294,9 +281,8 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
-#, fuzzy
 msgid "Ctrl + A"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + A"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
@@ -316,7 +302,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
 msgid "Shift + Arrow Left"
-msgstr ""
+msgstr "Shift + Arrow Left"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
@@ -326,7 +312,7 @@ msgstr ""
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
 msgid "Ctrl + Arrow Left"
-msgstr ""
+msgstr "Ctrl + Arrow Left"
 
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
 #: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185

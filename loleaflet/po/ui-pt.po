@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:15+0000\n"
+"POT-Creation-Date: 2017-11-25 09:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /pt/libo_online/loleaflet-ui-pt.po\n"
-"X-Pootle-Revision: 2776658\n"
+"X-Pootle-Revision: 2877615\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -47,7 +47,6 @@ msgid "Users online"
 msgstr "Utilizadores online"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
 msgstr "Nome de utilizador"
 
@@ -57,7 +56,7 @@ msgstr "Documentos abertos"
 
 #: admin.strings.js:15
 msgid "Number of Documents"
-msgstr ""
+msgstr "Número de documentos"
 
 #: admin.strings.js:14
 msgid "Memory consumed"
@@ -65,11 +64,11 @@ msgstr "Memória utilizada"
 
 #: admin.strings.js:17
 msgid "Bytes sent"
-msgstr ""
+msgstr "Bytes enviados"
 
 #: admin.strings.js:18
 msgid "Bytes received"
-msgstr ""
+msgstr "Bytes recebidos"
 
 #: admin.strings.js:15
 msgid "PID"
@@ -93,7 +92,7 @@ msgstr "Tempo de inatividade"
 
 #: admin.strings.js:24
 msgid "Modified"
-msgstr ""
+msgstr "Modificado"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -105,15 +104,15 @@ msgstr "Gráficos"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Gráfico de memoria"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "Gráfico de CPU"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Gráfico de rede"
 
 #: admin.strings.js:22
 #: dist/toolbar/toolbar.js:473
@@ -143,14 +142,18 @@ msgstr "Intervalo de tempo para estatísticas de CPU (ms)"
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
+"Memória virtual máxima para processamento de documentos (em MB) - apenas "
+"redução"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
+"Memória de pilha máxima para processamento de documentos (em MB) - apenas "
+"redução"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Tamanho máximo para criação de ficheiros (em MB) - apenas redução "
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -338,9 +341,10 @@ msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
+"Falhou ao ler o documento do armazenamento. Contacte o administrador do "
+"servidor (%storageserver)."
 
 #: dist/errormessages.js:14
-#, fuzzy
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
@@ -348,20 +352,21 @@ msgid ""
 msgstr ""
 "Não foi possível guardar devido à falta de espaço no disco do servidor. O "
 "documento será apenas de leitura. Por favor contacte o administrador do "
-"servidor para continuar."
+"servidor (%storageserver) para continuar a edição."
 
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
+"Não foi possível guardar o documento porque o 'token' de acesso expirou ou é "
+"inválido."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"O documento não pode ser guardado. Valide as suas permissões ou contacte o "
-"administrador de espaço do servidor."
+"Não foi possível guardar o documento. Valide as suas permissões ou contacte "
+"o administrador do servidor."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"
@@ -633,7 +638,7 @@ msgstr "Cancelar procura"
 
 #: dist/toolbar/toolbar.js:680
 msgid "Text Language"
-msgstr ""
+msgstr "Idioma do texto"
 
 #: dist/toolbar/toolbar.js:691
 msgid "No users"
@@ -787,12 +792,10 @@ msgstr "Tem a certeza de que deseja terminar esta sessão?"
 
 #: src/admin/AdminSocketOverview.js:152
 #: src/admin/AdminSocketOverview.js:311
-#, fuzzy
 msgid "Documents"
-msgstr "Documento"
+msgstr "Documentos"
 
 #: src/admin/AdminSocketSettings.js:34
-#, fuzzy
 msgid "Are you sure you want to shut down the server?"
 msgstr "Tem a certeza de que deseja encerrar este servidor?"
 
@@ -1124,15 +1127,15 @@ msgstr "Hangul"
 
 #: src/control/Control.CharacterMap.js:94
 msgid "High Surrogates"
-msgstr ""
+msgstr "Substitutos elevados"
 
 #: src/control/Control.CharacterMap.js:95
 msgid "High Private Use Surrogates"
-msgstr ""
+msgstr "Substitutos elevados de utilização privada"
 
 #: src/control/Control.CharacterMap.js:97
 msgid "Low Surrogates"
-msgstr ""
+msgstr "Substitutos baixos"
 
 #: src/control/Control.CharacterMap.js:99
 msgid "Private Use Area"
@@ -1285,55 +1288,55 @@ msgstr "Símbolos e setas diversos"
 
 #: src/control/Control.CharacterMap.js:145
 msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgstr "Símbolos de hexagramas Yijing"
 
 #: src/control/Control.CharacterMap.js:146
 msgid "Linear B Syllabary"
-msgstr ""
+msgstr "Sílabas lineares B"
 
 #: src/control/Control.CharacterMap.js:147
 msgid "Linear B Ideograms"
-msgstr ""
+msgstr "Ideogramas lineares B"
 
 #: src/control/Control.CharacterMap.js:148
 msgid "Aegean Numbers"
-msgstr ""
+msgstr "Números egeus"
 
 #: src/control/Control.CharacterMap.js:149
 msgid "Ugaritic"
-msgstr ""
+msgstr "Ugarítico"
 
 #: src/control/Control.CharacterMap.js:150
 msgid "Shavian"
-msgstr ""
+msgstr "Shavian"
 
 #: src/control/Control.CharacterMap.js:151
 msgid "Osmanya"
-msgstr ""
+msgstr "Osmania"
 
 #: src/control/Control.CharacterMap.js:152
 msgid "Cypriot Syllabary"
-msgstr ""
+msgstr "Sílabas cipriotas"
 
 #: src/control/Control.CharacterMap.js:153
 msgid "Tai Xuan Jing Symbols"
-msgstr ""
+msgstr "Símbolos Tai Xuan Jing"
 
 #: src/control/Control.CharacterMap.js:154
 msgid "Variation Selectors Supplement"
-msgstr ""
+msgstr "Suplemento de seletores de variação"
 
 #: src/control/Control.CharacterMap.js:155
 msgid "Ancient Greek Musical Notation"
-msgstr ""
+msgstr "Notação musical grega antiga"
 
 #: src/control/Control.CharacterMap.js:156
 msgid "Ancient Greek Numbers"
-msgstr ""
+msgstr "Números gregos antigos"
 
 #: src/control/Control.CharacterMap.js:157
 msgid "Arabic Supplement"
-msgstr ""
+msgstr "Arábico suplementar"
 
 #: src/control/Control.CharacterMap.js:158
 msgid "Buginese"
@@ -1460,13 +1463,12 @@ msgid "Vai"
 msgstr "Vai"
 
 #: src/control/Control.CharacterMap.js:191
-#, fuzzy
 msgid "Cyrillic Extended-B"
-msgstr "Cirílico expandido A"
+msgstr "Cirílico expandido B"
 
 #: src/control/Control.CharacterMap.js:192
 msgid "Saurashtra"
-msgstr ""
+msgstr "Saurashtra"
 
 #: src/control/Control.CharacterMap.js:193
 msgid "Kayah Li"
@@ -2005,11 +2007,11 @@ msgstr "Ver"
 #: src/control/Control.Menubar.js:241
 #: src/control/Control.Menubar.js:292
 msgid "Tools"
-msgstr ""
+msgstr "Ferramentas"
 
 #: src/control/Control.Menubar.js:19
 msgid "Save As"
-msgstr ""
+msgstr "Guardar como"
 
 #: src/control/Control.Menubar.js:12
 #: src/control/Control.Menubar.js:176
@@ -2080,7 +2082,7 @@ msgstr "Selecionar tudo"
 #: src/control/Control.Menubar.js:271
 #: src/control/Control.Menubar.js:518
 msgid "Find & Replace"
-msgstr ""
+msgstr "Localizar e substituir"
 
 #: src/control/Control.Menubar.js:31
 msgid "Track Changes"
@@ -2464,15 +2466,15 @@ msgstr "Unir células"
 #: src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:293
 msgid "Automatic Spell Checking"
-msgstr ""
+msgstr "Verificação ortográfica automática"
 
 #: src/control/Control.Menubar.js:177
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: src/control/Control.Menubar.js:178
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Repor idioma padrão"
 
 #: src/control/Control.Menubar.js:166
 #: src/control/Control.Menubar.js:226
@@ -2550,19 +2552,19 @@ msgstr "Eliminar linha"
 
 #: src/control/Control.Menubar.js:497
 msgid "Find"
-msgstr ""
+msgstr "Localizar"
 
 #: src/control/Control.Menubar.js:505
 msgid "Replace with"
-msgstr ""
+msgstr "Substituir por"
 
 #: src/control/Control.Menubar.js:522
 msgid "Replace"
-msgstr ""
+msgstr "Substituir"
 
 #: src/control/Control.Menubar.js:527
 msgid "Replace All"
-msgstr ""
+msgstr "Substituir tudo"
 
 #: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
@@ -2659,7 +2661,7 @@ msgstr "Sessão encerrada pelo proprietário do documento"
 
 #: src/core/Socket.js:261
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Documento inativo - clique para recarregar e continuar a edição"
 
 #: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -2667,7 +2669,7 @@ msgstr "O servidor está a ser desligado para manutenção (gravação automáti
 
 #: src/core/Socket.js:272
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Ocorreu um erro ao estabelecer a ligação ao documento"
 
 #: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
@@ -2678,20 +2680,24 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"O documento foi alterado no armazenamento e está a ser recarregado. A sua "
+"versão está disponível como revisão."
 
 #: src/core/Socket.js:418
 msgid ""
 "Document has been changed in storage. Do you want to discard your changes, "
 "and load the document from the storage?"
 msgstr ""
+"O documento foi alterado no armazenamento. Deseja descartar as alterações e "
+"carregar o documento do armazenamento?"
 
 #: src/core/Socket.js:420
 msgid "Discard changes"
-msgstr ""
+msgstr "Descartar alterações"
 
 #: src/core/Socket.js:421
 msgid "Overwrite document"
-msgstr ""
+msgstr "Substituir o documento"
 
 #: src/core/Socket.js:348
 msgid "Document requires password to view."

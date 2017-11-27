@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:13+0000\n"
+"POT-Creation-Date: 2017-11-26 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /de/libo_online/loleaflet-ui-de.po\n"
-"X-Pootle-Revision: 2788436\n"
+"X-Pootle-Revision: 2909347\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -2031,7 +2031,7 @@ msgstr "PDF Dokument (.pdf)"
 
 #: src/control/Control.Menubar.js:16
 msgid "ODF text document (.odt)"
-msgstr "ODF Textdokument (.odt)"
+msgstr "ODF-Textdokument (.odt)"
 
 #: src/control/Control.Menubar.js:17
 msgid "Microsoft Word 2003 (.doc)"
@@ -2476,7 +2476,7 @@ msgstr "Hilfe"
 #: src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:274
 msgid "Keyboard shortcuts"
-msgstr "Tastaturkürzel"
+msgstr "Tastenkombinationen"
 
 #: src/control/Control.Menubar.js:168
 #: src/control/Control.Menubar.js:228
@@ -2513,7 +2513,7 @@ msgstr "Neue Folie"
 
 #: src/control/Control.Menubar.js:240
 msgid "ODF spreadsheet (.ods)"
-msgstr "ODF Tabellendokument (.ods)"
+msgstr "ODF-Tabellendokument (.ods)"
 
 #: src/control/Control.Menubar.js:241
 msgid "Microsoft Excel 2003 (.xls)"
