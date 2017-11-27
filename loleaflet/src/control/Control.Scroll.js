@@ -275,6 +275,11 @@ L.Control.Scroll = L.Control.extend({
 		var payload = 'commandvalues command=.uno:ViewRowColumnHeaders?x=' + Math.round(pos.x) + '&y=' + Math.round(pos.y) +
 			'&width=' + Math.round(size.x) + '&height=' + Math.round(size.y);
 
+		if (e.outline) {
+			payload += '&columnOutline=' + e.outline.column + '&groupLevel=' + e.outline.level
+				+ '&groupIndex=' + e.outline.index + '&groupHidden=' + e.outline.hidden;
+		}
+
 		this._map._socket.sendMessage(payload);
 	}
 });

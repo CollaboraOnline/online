@@ -35,6 +35,18 @@ L.DomUtil = {
 		return el;
 	},
 
+	createWithId: function (tagName, id, container) {
+
+		var el = document.createElement(tagName);
+		el.id = id;
+
+		if (container) {
+			container.appendChild(el);
+		}
+
+		return el;
+	},
+
 	remove: function (el) {
 		var parent = el.parentNode;
 		if (parent) {

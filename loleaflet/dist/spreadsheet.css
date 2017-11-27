@@ -59,7 +59,7 @@
 	}
 
 #spreadsheet-row-column-frame {
-        position: absolute;
+	position: absolute;
 	left: 0;
 	right: 0;
 	top: 103px;
@@ -70,7 +70,7 @@
         top: 30px;
 }
 
-.spreadsheet-header-corner {
+#spreadsheet-header-corner-container {
 	border: 1px solid darkgrey;
 	background-color: lightgrey;
 	cursor: pointer;
@@ -84,7 +84,26 @@
 	height: 19px;
 	}
 
-.spreadsheet-header-columns-container {
+#spreadsheet-header-corner {
+	display: inline-block;
+	white-space: nowrap;
+	width: 100%;
+	height: 100%;
+	border-spacing: 0px !important;
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	}
+
+.spreadsheet-header-corner-styles {
+	border: 1px solid darkgray;
+	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+	color: black;
+	background-color: lightgray;
+	cursor: pointer;
+	}
+
+#spreadsheet-header-columns-container {
 	border: 1px solid darkgrey;
 	background-color: lightgrey;
 
@@ -130,7 +149,7 @@
 	cursor: col-resize;
 }
 
-.spreadsheet-header-rows-container {
+#spreadsheet-header-rows-container {
 	border: 1px solid darkgrey;
 	background-color: lightgrey;
 

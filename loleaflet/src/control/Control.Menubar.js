@@ -311,6 +311,15 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Delete row'), type: 'unocommand', uno: '.uno:DeleteRows'},
 				{name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
 			},
+			{name: _('Data'), type: 'menu', menu: [
+				{name: _('Group'), type: 'unocommand', uno: '.uno:Group'},
+				{name: _('Ungroup'), type: 'unocommand', uno: '.uno:Ungroup'},
+				{type: 'separator'},
+				{name: _('Remove Outline'), type: 'unocommand', uno: '.uno:ClearOutline'},
+				{type: 'separator'},
+				{name: _('Show Details'), type: 'unocommand', uno: '.uno:ShowDetail'},
+				{name: _('Hide Details'), type: 'unocommand', uno: '.uno:HideDetail'}]
+			},
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
 				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
 				{name: _('Language'), type: 'menu', menu: [

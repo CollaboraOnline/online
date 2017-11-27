@@ -356,10 +356,12 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 	_onUpdateCurrentHeader: function() {
 		var pos = new L.Point(-1, -1);
+		var size = new L.Point(-1, -1);
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
 			pos = this._cellCursorTwips.min.add([1, 1]);
+			size = this._cellCursorTwips.getSize();
 		}
-		this._map.fire('updatecurrentheader', pos);
+		this._map.fire('updatecurrentheader', new L.Bounds(pos, pos.add(size)));
 	},
 
 	_onUpdateSelectionHeader: function () {
