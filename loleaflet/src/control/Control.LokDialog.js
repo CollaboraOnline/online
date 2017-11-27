@@ -13,9 +13,17 @@ L.Control.LokDialog = L.Control.extend({
 		map.on('dialogchild', this._onDialogChildMsg, this);
 		map.on('dialog', this._onDialogMsg, this);
 		map.on('opendialog', this._openDialog, this);
+		map.on('docloaded', this._docLoaded, this);
 	},
 
 	_dialogs: {},
+
+	_docLoaded: function(e) {
+		if (!e.status) {
+			$('.lokdialog_container').remove();
+			$('.lokdialogchild-canvas').remove();
+		}
+	},
 
 	_isOpen: function(dialogId) {
 		return this._dialogs[dialogId] &&
