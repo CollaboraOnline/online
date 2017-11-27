@@ -27,6 +27,21 @@ L.Control.LokDialog = L.Control.extend({
 		return dialogId.replace(this.dialogIdPrefix, '');
 	},
 
+	// Create a rectangle string of form "x,y,width,height"
+	// if params are missing, assumes 0,0,dialog width, dialog height
+	_createRectStr: function(x, y, width, height) {
+		if (!width)
+			width = this._width;
+		if (!height)
+			height = this._height;
+		if (!x)
+			x = 0;
+		if (!y)
+			y = 0;
+
+		return [x, y, width, height].join(',');
+	},
+
 	_sendDialogCommand: function(dialogId, rectangle, child) {
 		dialogId = dialogId.replace(this.dialogIdPrefix, '');
 
@@ -45,16 +60,21 @@ L.Control.LokDialog = L.Control.extend({
 		if (e.action === 'created') {
 			this._width = parseInt(e.size.split(',')[0]);
 			this._height = parseInt(e.size.split(',')[1]);
+
 			this._launchDialog(e.dialogId);
-			var boundsString = '0,0,' + this._width + ',' + this._height; // no spaces in string
-			this._sendDialogCommand(e.dialogId, boundsString);
+			this._sendDialogCommand(e.dialogId, this._createRectStr());
 		} else if (e.action === 'invalidate') {
 			// ignore any invalidate callbacks when we have closed the dialog
 			if (this._isOpen(e.dialogId)) {
 				if (!e.rectangle)
-					e.rectangle = '0,0' + this._width + ',' + this._height;
+					e.rectangle = '0,0,' + this._width + ',' + this._height;
 				this._sendDialogCommand(e.dialogId, e.rectangle);
 			}
+		} else if (e.action === 'size_changed') {
+			this._width = parseInt(e.size.split(',')[0]);
+			this._height = parseInt(e.size.split(',')[1]);
+
+			this._sendDialogCommand(e.dialogId, this._createRectStr());
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.dialogId) && !!e.rectangle) {
 				var rectangle = e.rectangle.split(',');
@@ -88,14 +108,14 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.addClass(cursor, 'blinking-cursor');
 	},
 
-	_launchDialog: function(dialogId, width, height) {
+	_launchDialog: function(dialogId) {
 		var canvas = '<div class="lokdialog" style="padding: 0px; margin: 0px; overflow: hidden;" id="' + dialogId + '">' +
-		    '<canvas class="lokdialog_canvas" tabindex="0" id="' + dialogId + '-canvas" width="' + width + 'px" height="' + height + 'px"></canvas>' +
+		    '<canvas class="lokdialog_canvas" tabindex="0" id="' + dialogId + '-canvas" width="' + this._width + 'px" height="' + this._height + 'px"></canvas>' +
 		    '</div>';
 		$(document.body).append(canvas);
 		var that = this;
 		$('#' + dialogId).dialog({
-			width: width,
+			width: this._width,
 			title: 'LOK Dialog', // TODO: Get the 'real' dialog title from the backend
 			modal: false,
 			closeOnEscape: true,
