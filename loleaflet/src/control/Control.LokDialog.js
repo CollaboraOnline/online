@@ -272,6 +272,9 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogChildClose: function(dialogId) {
 		$('#' + dialogId + '-floating').remove();
+		// remove any extra height allocated for the parent container
+		var canvasHeight = document.getElementById(dialogId + '-canvas').height;
+		$('#' + dialogId).height(canvasHeight + 'px');
 	},
 
 	_isDialogChildUnchanged: function(dialogId, left, top) {
