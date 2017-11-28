@@ -176,6 +176,7 @@ private:
 
     bool clientZoom(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool clientVisibleArea(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool outlineState(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool downloadAs(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool getChildId();
     bool getTextSelection(const char* buffer, int length, const std::vector<std::string>& tokens);

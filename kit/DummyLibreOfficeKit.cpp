@@ -106,6 +106,7 @@ static void doc_setClientZoom(LibreOfficeKitDocument* pThis,
                                     int nTileTwipWidth,
                                     int nTileTwipHeight);
 static void doc_setClientVisibleArea(LibreOfficeKitDocument* pThis, int nX, int nY, int nWidth, int nHeight);
+static void doc_setOutlineState(LibreOfficeKitDocument* pThis, bool bColumn, int nLevel, int nIndex, bool bHidden);
 static int doc_createView(LibreOfficeKitDocument* pThis);
 static void doc_destroyView(LibreOfficeKitDocument* pThis, int nId);
 static void doc_setView(LibreOfficeKitDocument* pThis, int nId);
@@ -153,6 +154,7 @@ LibLODocument_Impl::LibLODocument_Impl()
         m_pDocumentClass->getCommandValues = doc_getCommandValues;
         m_pDocumentClass->setClientZoom = doc_setClientZoom;
         m_pDocumentClass->setClientVisibleArea = doc_setClientVisibleArea;
+        m_pDocumentClass->setOutlineState = doc_setOutlineState;
 
         m_pDocumentClass->createView = doc_createView;
         m_pDocumentClass->destroyView = doc_destroyView;
@@ -462,6 +464,15 @@ static void doc_setClientVisibleArea(LibreOfficeKitDocument* pThis, int nX, int 
     (void) nY;
     (void) nWidth;
     (void) nHeight;
+}
+
+static void doc_setOutlineState(LibreOfficeKitDocument* pThis, bool bColumn, int nLevel, int nIndex, bool bHidden)
+{
+    (void) pThis;
+    (void) bColumn;
+    (void) nLevel;
+    (void) nIndex;
+    (void) bHidden;
 }
 
 static int doc_createView(LibreOfficeKitDocument* /*pThis*/)
