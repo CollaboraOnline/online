@@ -947,7 +947,6 @@ bool ChildSession::renderDialog(const char* /*buffer*/, int /*length*/, const st
     size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
     std::vector<unsigned char> pixmap(pixmapDataSize);
     int width = bufferWidth, height = bufferHeight;
-    char* pDialogTitle = nullptr;
     std::string response;
     if (isChild)
     {
@@ -966,30 +965,14 @@ bool ChildSession::renderDialog(const char* /*buffer*/, int /*length*/, const st
         Timestamp timestamp;
         getLOKitDocument()->paintDialog(dialogId, pixmap.data(), startX, startY, width, height);
 
-        int dialogWidth = 0;
-        int dialogHeight = 0;
-        getLOKitDocument()->getDialogInfo(dialogId, &pDialogTitle, dialogWidth, dialogHeight);
-
-        std::string encodedDialogTitle;
-        if (pDialogTitle)
-        {
-            std::string aDialogTitle(pDialogTitle);
-            URI::encode(aDialogTitle, "", encodedDialogTitle);
-            free(pDialogTitle);
-        }
-
-        // rendered width, height cannot be less than the dialog width, height
-        width = std::min(width, dialogWidth);
-        height = std::min(height, dialogHeight);
         const double area = width * height;
-
         LOG_TRC("paintDialog for " << dialogId << " returned " << width << "X" << height
                 << "@(" << startX << "," << startY << ")"
                 << "and rendered in " << (timestamp.elapsed()/1000.)
                 << "ms (" << area / (timestamp.elapsed()) << " MP/s).");
 
-        response = "dialogpaint: id=" + tokens[1] + " title=" + encodedDialogTitle +
-            " dialogwidth=" + std::to_string(dialogWidth) + " dialogheight=" + std::to_string(dialogHeight);
+        response = "dialogpaint: id=" + tokens[1] +
+            " width=" + std::to_string(width) + " height=" + std::to_string(height);
 
         if (!paintRectangle.empty())
             response += " rectangle=" + paintRectangle;

@@ -63,17 +63,25 @@ L.Control.LokDialog = L.Control.extend({
 		this._map._socket.sendMessage(dialogCmd + ' ' + dialogId + (rectangle ? ' rectangle=' + rectangle : ''));
 	},
 
+	_isRectangleValid: function(rect) {
+		rect = rect.split(',');
+		if (parseInt(rect[0]) < 0 || parseInt(rect[1]) < 0 || parseInt(rect[2]) < 0 || parseInt(rect[3]) < 0)
+			return false;
+		return true;
+	},
+
 	_onDialogMsg: function(e) {
 		e.dialogId = this.dialogIdPrefix + e.dialogId;
 		if (e.action === 'created') {
 			this._width = parseInt(e.size.split(',')[0]);
 			this._height = parseInt(e.size.split(',')[1]);
-
 			this._launchDialog(e.dialogId);
 			this._sendDialogCommand(e.dialogId, this._createRectStr());
 		} else if (e.action === 'invalidate') {
-			// ignore any invalidate callbacks when we have closed the dialog
 			if (this._isOpen(e.dialogId)) {
+				if (!this._isRectangleValid(e.rectangle))
+					return;
+
 				if (!e.rectangle)
 					e.rectangle = '0,0,' + this._width + ',' + this._height;
 				this._sendDialogCommand(e.dialogId, e.rectangle);
@@ -82,6 +90,11 @@ L.Control.LokDialog = L.Control.extend({
 			this._width = parseInt(e.size.split(',')[0]);
 			this._height = parseInt(e.size.split(',')[1]);
 
+			// FIXME: we don't really have to destroy and launch the dialog again but do it for
+			// now because the size sent to us previously in 'created' cb is not correct
+			$('#' + e.dialogId).remove();
+			this._launchDialog(e.dialogId);
+			$('#' + e.dialogId).dialog('option', 'title', this._title);
 			this._sendDialogCommand(e.dialogId, this._createRectStr());
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.dialogId) && !!e.rectangle) {
@@ -94,6 +107,9 @@ L.Control.LokDialog = L.Control.extend({
 				// set the position of the lokdialog-cursor
 				$(this._dialogs[e.dialogId].cursor).css({left: x, top: y});
 			}
+		} else if (e.action === 'title_changed') {
+			this._title = e.title;
+			$('#' + e.dialogId).dialog('option', 'title', e.title);
 		} else if (e.action === 'cursor_visible') {
 			var visible = e.visible === 'true';
 			if (visible)
@@ -228,7 +244,6 @@ L.Control.LokDialog = L.Control.extend({
 		if (!this._isOpen(dialogId))
 			return;
 
-		$('#' + dialogId).dialog('option', 'title', decodeURIComponent(title));
 		var img = new Image();
 		var canvas = document.getElementById(dialogId + '-canvas');
 		var ctx = canvas.getContext('2d');
@@ -246,31 +261,33 @@ L.Control.LokDialog = L.Control.extend({
 		img.src = imgData;
 	},
 
-	_isSameSize: function(dialogId, newWidth, newHeight) {
-		var ret = false;
-		if (this._isOpen(dialogId))
-		{
-			var oldWidth = $('#' + dialogId + '-canvas').width();
-			var oldHeight = $('#' + dialogId + '-canvas').height();
-			if (oldWidth == newWidth && oldHeight == newHeight)
-				ret = true;
-		}
-
-		return ret;
-	},
-
 	// Binary dialog msg recvd from core
 	_onDialogPaint: function (e) {
 		var dialogId = this.dialogIdPrefix + e.id;
 		if (!this._isOpen(dialogId))
 			return;
 
-		if (!this._isSameSize(dialogId, e.dialogWidth, e.dialogHeight)) {
-			var canvas = document.getElementById(dialogId + '-canvas');
-			canvas.width = e.dialogWidth;
-			canvas.height = e.dialogHeight;
+		// FIXME: as a precaution, if we get larger width or height here than what we got in 'created'
+		// callback, then adjust the dialog canvas size
+		var changed = false;
+		var canvas = document.getElementById(dialogId + '-canvas');
+		if (e.width > this._width) {
+			changed = true;
+			this._width = e.width;
+			canvas.width = e.width;
+			$('#' + dialogId).dialog('option', 'width', e.width);
+		}
 
-			$('#' + dialogId).dialog('option', 'width', e.dialogWidth);
+		if (e.height > this._height) {
+			changed = true;
+			this._height = e.height;
+			canvas.height = e.height;
+			$('#' + dialogId).dialog('option', 'height', e.height);
+		}
+
+		if (changed) {
+			this._sendDialogCommand(dialogId, this._createRectStr());
+			return;
 		}
 
 		this._paintDialog(dialogId, e.title, e.rectangle, e.dialog);
