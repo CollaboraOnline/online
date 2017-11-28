@@ -81,7 +81,7 @@ static int read_buffer(char *buffer, unsigned size,
 }
 
 
-static void dump_unshared(unsigned proc_id, const std::vector<addr_t> &heapVAddresses)
+static void dump_unshared(unsigned proc_id, const std::vector<addr_t> &vaddrs)
 {
     char path_proc[PATH_SIZE];
     snprintf(path_proc, sizeof(path_proc), "/proc/%d/pagemap", proc_id);
@@ -91,7 +91,7 @@ static void dump_unshared(unsigned proc_id, const std::vector<addr_t> &heapVAddr
 
     printf("Sharing map:\n");
     addr_t numShared = 0, numOwn = 0;
-    for (auto p : heapVAddresses)
+    for (auto p : vaddrs)
     {
         if (lseek(fd, (p / 0x1000 * 8), SEEK_SET) < 0)
             error(EXIT_FAILURE, errno, "Failed to seek in pagemap");
@@ -133,7 +133,8 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
     addr_t smap_value;
     char smap_key[MAP_SIZE];
 
-    std::vector<addr_t> heapVAddresses;
+    std::vector<addr_t> heapVAddrs, anonVAddrs, fileVAddrs;
+    std::vector<addr_t> *pushTo = nullptr;
 
     if ((file_pointer = fopen(file, "r")) == nullptr)
         error(EXIT_FAILURE, errno, "%s", file);
@@ -142,13 +143,20 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
     {
         // collect heap page details
         if (strstr(buffer, "[heap]"))
+            pushTo = &heapVAddrs;
+        else if (strstr(buffer, "/"))
+            pushTo = &fileVAddrs;
+        else
+            pushTo = &anonVAddrs;
+
+        if (strstr(buffer, " rw-p "))
         {
             addr_t start, end;
             // 012d0000-0372f000 rw-p 00000000 00:00 0  [heap]
             if (sscanf(buffer, "%llx-%llx rw-p", &start, &end) == 2)
             {
                 for (addr_t p = start; p < end; p += 0x1000)
-                    heapVAddresses.push_back(p);
+                    pushTo->push_back(p);
             }
             else
                 fprintf (stderr, "malformed heap line '%s'\n", buffer);
@@ -193,9 +201,13 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
     printf("Shared        :%20lld kB\n", total_shared_clean + total_shared_dirty);
     printf("Private       :%20lld kB\n", total_private_clean + total_private_dirty);
     printf("--------------------------------------\n");
-    printf("Heap page cnt :%20lld\n", (addr_t)heapVAddresses.size());
+    printf("Heap page cnt :%20lld\n", (addr_t)heapVAddrs.size());
+    printf("Anon page cnt :%20lld\n", (addr_t)anonVAddrs.size());
+    printf("File page cnt :%20lld\n", (addr_t)fileVAddrs.size());
     printf("\n");
-    dump_unshared(proc_id, heapVAddresses);
+    dump_unshared(proc_id, heapVAddrs);
+    dump_unshared(proc_id, anonVAddrs);
+    dump_unshared(proc_id, fileVAddrs);
 }
 
 int main(int argc, char **argv)
