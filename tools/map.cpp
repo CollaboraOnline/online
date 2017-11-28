@@ -23,6 +23,7 @@
 #include <dirent.h>
 #include <locale.h>
 
+typedef unsigned long long addr_t;
 
 #define MAP_SIZE 20
 #define PATH_SIZE 1000 // No harm in having it much larger than strictly necessary. Avoids compiler warning.
@@ -79,12 +80,52 @@ static int read_buffer(char *buffer, unsigned size,
     return total_bytes;
 }
 
+
+static void dump_unshared(unsigned proc_id, const std::vector<addr_t> &heapVAddresses)
+{
+    char path_proc[PATH_SIZE];
+    snprintf(path_proc, sizeof(path_proc), "/proc/%d/pagemap", proc_id);
+    int fd = open(path_proc, 0);
+    if (fd < 0)
+        error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
+
+    printf("Sharing map:\n");
+    addr_t numShared = 0, numOwn = 0;
+    for (auto p : heapVAddresses)
+    {
+        if (lseek(fd, (p / 0x1000 * 8), SEEK_SET) < 0)
+            error(EXIT_FAILURE, errno, "Failed to seek in pagemap");
+        addr_t vaddrData;
+        if (read(fd, &vaddrData, 8) < 0)
+            error(EXIT_FAILURE, errno, "Failed to read vaddrdata");
+        {
+            // https://patchwork.kernel.org/patch/6787921/
+//            fprintf(stderr, "addr: 0x%8llx bits: 0x%8llx : %s\n", p, vaddrData,
+//                    (vaddrData & ((addr_t)1 << 56)) ? "unshared" : "shared");
+            if (vaddrData & ((addr_t)1 << 56))
+            {
+                numOwn++;
+                printf("*");
+            }
+            else
+            {
+                numShared++;
+                printf(".");
+            }
+        }
+        if (!((numShared + numOwn) % 128))
+            printf("\n");
+    }
+    printf ("\nTotals:\n");
+    printf ("\tshared   %5lld (%lldkB)\n", numShared, numShared * 4);
+    printf ("\tunshared %5lld (%lldkB)\n", numOwn, numOwn * 4);
+}
+
 static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
 {
     FILE *file_pointer;
     char buffer[BUFFER_SIZE];
 
-    typedef unsigned long long addr_t;
     addr_t total_private_dirty = 0ull;
     addr_t total_private_clean = 0ull;
     addr_t total_shared_dirty = 0ull;
@@ -154,6 +195,7 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
     printf("--------------------------------------\n");
     printf("Heap page cnt :%20lld\n", (addr_t)heapVAddresses.size());
     printf("\n");
+    dump_unshared(proc_id, heapVAddresses);
 }
 
 int main(int argc, char **argv)
