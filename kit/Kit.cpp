@@ -17,9 +17,6 @@
 #include <ftw.h>
 #include <malloc.h>
 #include <sys/capability.h>
-#ifdef __GLIBC__
-#include <sys/sysmacros.h>
-#endif
 #include <unistd.h>
 #include <utime.h>
 #include <sys/sysmacros.h>
