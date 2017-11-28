@@ -182,6 +182,7 @@ shared_headers += net/Ssl.hpp \
 endif
 
 kit_headers = kit/ChildSession.hpp \
+              kit/Delta.hpp \
               kit/DummyLibreOfficeKit.hpp \
               kit/Kit.hpp \
               kit/KitHelper.hpp
