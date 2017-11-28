@@ -126,6 +126,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] != "canceltiles" &&
              tokens[0] != "clientzoom" &&
              tokens[0] != "clientvisiblearea" &&
+             tokens[0] != "outlinestate" &&
              tokens[0] != "commandvalues" &&
              tokens[0] != "closedocument" &&
              tokens[0] != "downloadas" &&
