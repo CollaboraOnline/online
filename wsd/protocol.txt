@@ -177,6 +177,12 @@ clientvisiblearea x=<x> y=<y> width=<width> height=<height>
 
     Invokes lok::Document::setClientVisibleArea().
 
+outlinestate type=<type> level=<level> index=<index> state=<state>
+
+    <type> is 'column' or 'row', <level> and <index> are numbers, <state> is 'visible' or 'hidden'.
+
+    Invokes  lok::Document::setOutlineState().
+
 useractive
 
     Sent when the user regains focus or clicks within the active area to
