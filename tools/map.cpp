@@ -9,6 +9,9 @@
 
 #include "config.h"
 
+#include <vector>
+
+#include <stdint.h>
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
@@ -19,6 +22,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <locale.h>
+
 
 #define MAP_SIZE 20
 #define PATH_SIZE 1000 // No harm in having it much larger than strictly necessary. Avoids compiler warning.
@@ -80,18 +84,35 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
     FILE *file_pointer;
     char buffer[BUFFER_SIZE];
 
-    unsigned long long total_private_dirty = 0ull;
-    unsigned long long total_private_clean = 0ull;
-    unsigned long long total_shared_dirty = 0ull;
-    unsigned long long total_shared_clean = 0ull;
-    unsigned long long smap_value;
+    typedef unsigned long long addr_t;
+    addr_t total_private_dirty = 0ull;
+    addr_t total_private_clean = 0ull;
+    addr_t total_shared_dirty = 0ull;
+    addr_t total_shared_clean = 0ull;
+    addr_t smap_value;
     char smap_key[MAP_SIZE];
+
+    std::vector<addr_t> heapVAddresses;
 
     if ((file_pointer = fopen(file, "r")) == nullptr)
         error(EXIT_FAILURE, errno, "%s", file);
 
     while (fgets(buffer, sizeof(buffer), file_pointer))
     {
+        // collect heap page details
+        if (strstr(buffer, "[heap]"))
+        {
+            addr_t start, end;
+            // 012d0000-0372f000 rw-p 00000000 00:00 0  [heap]
+            if (sscanf(buffer, "%llx-%llx rw-p", &start, &end) == 2)
+            {
+                for (addr_t p = start; p < end; p += 0x1000)
+                    heapVAddresses.push_back(p);
+            }
+            else
+                fprintf (stderr, "malformed heap line '%s'\n", buffer);
+        }
+
         if (buffer[0] >= 'A' && buffer[0] <= 'Z')
         {
             if (sscanf(buffer, "%20[^:]: %llu", smap_key, &smap_value) == 2)
@@ -120,9 +141,6 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
         }
     }
 
-    if (errno)
-        error(EXIT_FAILURE, errno, "%s\n", cmdline);
-
     printf("%s\n", cmdline);
     printf("Process ID    :%20d\n", proc_id);
     printf("--------------------------------------\n");
@@ -132,7 +150,10 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
     printf("Private Dirty :%20lld kB\n", total_private_dirty);
     printf("--------------------------------------\n");
     printf("Shared        :%20lld kB\n", total_shared_clean + total_shared_dirty);
-    printf("Private       :%20lld kB\n\n", total_private_clean + total_private_dirty);
+    printf("Private       :%20lld kB\n", total_private_clean + total_private_dirty);
+    printf("--------------------------------------\n");
+    printf("Heap page cnt :%20lld\n", (addr_t)heapVAddresses.size());
+    printf("\n");
 }
 
 int main(int argc, char **argv)
@@ -140,15 +161,21 @@ int main(int argc, char **argv)
     DIR *root_proc;
     struct dirent *dir_proc;
 
-    unsigned pid_proc;
     char path_proc[PATH_SIZE];
     char cmdline[BUFFER_SIZE];
+    unsigned forPid = 0;
 
     setlocale (LC_ALL, "");
     getopt(argc, argv, "");
 
-    if (argc != 2)
-        error(EXIT_FAILURE, EINVAL, "incorrect arguments");
+    if (argc < 1 || strstr(argv[1], "--help"))
+    {
+        fprintf(stderr, "Usage: loolmap <name of process|pid>\n");
+        fprintf(stderr, "Dump memory map information for a given process\n");
+        return 0;
+    }
+
+    forPid = atoi(argv[1]);
 
     root_proc = opendir("/proc");
     if (!root_proc)
@@ -161,11 +188,10 @@ int main(int argc, char **argv)
 
         if (*dir_proc->d_name > '0' && *dir_proc->d_name <= '9')
         {
-            pid_proc = strtoul(dir_proc->d_name, nullptr, 10);
+            unsigned pid_proc = strtoul(dir_proc->d_name, nullptr, 10);
             snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "cmdline");
             if (read_buffer(cmdline, sizeof(cmdline), path_proc, ' ') &&
-                strstr(cmdline, argv[1]) &&
-                !strstr(cmdline, argv[0]))
+                (forPid == pid_proc || (forPid == 0 && strstr(cmdline, argv[1]) && !strstr(cmdline, argv[0]))))
             {
                 snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "smaps");
                 total_smaps(pid_proc, path_proc, cmdline);
@@ -173,10 +199,7 @@ int main(int argc, char **argv)
         }
     }
 
-    if (errno)
-        error(EXIT_FAILURE, errno, "fail");
-
-  return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
