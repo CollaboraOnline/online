@@ -35,9 +35,9 @@ L.Control.ContextMenu = L.Control.extend({
 				   'UpdateCurIndex','RemoveTableOf',
 				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes'],
 
-			spreadsheet: ['MergeCells', 'SplitCells', 'RecalcPivotTable'],
+			spreadsheet: ['MergeCells', 'SplitCells', 'RecalcPivotTable', 'FormatCellDialog'],
 
-			presentation: [],
+			presentation: ['EditStyle'],
 			drawing: []
 		}
 	},
