@@ -18,6 +18,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <memory.h>
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
@@ -130,6 +131,56 @@ namespace Util
 
     // Extract all json entries into a map.
     std::map<std::string, std::string> JsonToMap(const std::string& jsonString);
+
+    /// Dump data as hex and chars to stream
+    inline void dumpHex (std::ostream &os, const char *legend, const char *prefix,
+                         const std::vector<char> &buffer, const unsigned int width = 32)
+    {
+        unsigned int i, j;
+        char scratch[64];
+
+        os << legend;
+        for (j = 0; j < buffer.size() + width - 1; j += width)
+        {
+            int skip = 0;
+            while (j >= width && j < buffer.size() - width &&
+                   !memcmp(&buffer[j], &buffer[j-width], width))
+            {
+                skip++;
+                j += width;
+            }
+            if (skip > 1)
+            {
+                j -= width;
+                os << "... dup " << skip - 1 << "...\n";
+            }
+
+            sprintf (scratch, "%s0x%.4x  ", prefix, j);
+            os << scratch;
+            for (i = 0; i < width; i++)
+            {
+                if (i && (i % 8) == 0)
+                    os << " ";
+                if ((j + i) < buffer.size())
+                    sprintf (scratch, "%.2x ", (unsigned char)buffer[j+i]);
+                else
+                    sprintf (scratch, "   ");
+                os << scratch;
+            }
+            os << " | ";
+
+            for (i = 0; i < width; i++)
+            {
+                if ((j + i) < buffer.size() && ::isprint(buffer[j+i]))
+                    sprintf (scratch, "%c", buffer[j+i]);
+                else
+                    sprintf (scratch, ".");
+                os << scratch;
+            }
+            os << "\n";
+        }
+        os.flush();
+    }
 
     /// Trim spaces from the left. Just spaces.
     inline std::string& ltrim(std::string& s)

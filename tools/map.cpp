@@ -10,6 +10,7 @@
 #include "config.h"
 
 #include <vector>
+#include <iostream>
 
 #include <stdint.h>
 #include <string.h>
@@ -23,7 +24,11 @@
 #include <dirent.h>
 #include <locale.h>
 
+#include <Util.hpp>
+
 typedef unsigned long long addr_t;
+
+bool DumpHex = false;
 
 #define MAP_SIZE 20
 #define PATH_SIZE 1000 // No harm in having it much larger than strictly necessary. Avoids compiler warning.
@@ -80,6 +85,33 @@ static int read_buffer(char *buffer, unsigned size,
     return total_bytes;
 }
 
+static void dumpPages(unsigned proc_id, const char *type, const std::vector<addr_t> &pages)
+{
+    char path_proc[PATH_SIZE];
+    snprintf(path_proc, sizeof(path_proc), "/proc/%d/mem", proc_id);
+    int mem_fd = open(path_proc, 0);
+    if (mem_fd < 0)
+        error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
+
+    size_t cnt = 0;
+    for (auto page : pages)
+    {
+        printf ("%s page: 0x%.8llx (%d/%d)\n",
+                type, page, (int)++cnt, (int)pages.size());
+
+        std::vector<char> pageData;
+        pageData.resize(0x1000);
+
+        if (lseek(mem_fd, page, SEEK_SET) < 0)
+            error(EXIT_FAILURE, errno, "Failed to seek in /proc/<pid>/mem to %lld", page);
+        if (read(mem_fd, &pageData[0], 0x1000) != 0x1000)
+            error(EXIT_FAILURE, errno, "Failed to read page %lld from /proc/<pid>/mem", page);
+        Util::dumpHex(std::cout, "", "", pageData);
+    }
+
+    close (mem_fd);
+}
+
 static std::vector<char> compressBitmap(const std::vector<char> &bitmap)
 {
     size_t i;
@@ -117,6 +149,7 @@ static void dump_unshared(unsigned proc_id, const char *type, const std::vector<
         error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
 
     std::vector<char> bitmap;
+    std::vector<addr_t> vunshared;
     addr_t numShared = 0, numOwn = 0;
     for (auto p : vaddrs)
     {
@@ -133,6 +166,7 @@ static void dump_unshared(unsigned proc_id, const char *type, const std::vector<
             {
                 numOwn++;
                 bitmap.push_back('*');
+                vunshared.push_back(p);
             }
             else
             {
@@ -141,6 +175,7 @@ static void dump_unshared(unsigned proc_id, const char *type, const std::vector<
             }
         }
     }
+    close (fd);
 
     printf ("Totals for %s\n", type);
     printf ("\tshared   %5lld (%lldkB)\n", numShared, numShared * 4);
@@ -148,6 +183,12 @@ static void dump_unshared(unsigned proc_id, const char *type, const std::vector<
 
     std::vector<char> compressed = compressBitmap(bitmap);
     printf ("RLE sharing bitmap:\n%s\n\n", &compressed[0]);
+
+    if (DumpHex)
+    {
+        printf ("Un-shared data dump\n");
+        dumpPages(proc_id, type, vunshared);
+    }
 }
 
 static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
@@ -246,19 +287,35 @@ int main(int argc, char **argv)
 
     char path_proc[PATH_SIZE];
     char cmdline[BUFFER_SIZE];
+
+    bool help = false;
     unsigned forPid = 0;
+    const char *appOrPid = nullptr;
 
     setlocale (LC_ALL, "");
     getopt(argc, argv, "");
 
-    if (argc < 1 || strstr(argv[1], "--help"))
+    for (int i = 1; i < argc; ++i)
     {
-        fprintf(stderr, "Usage: loolmap <name of process|pid>\n");
+        const char *arg = argv[i];
+        if (strstr(arg, "--help"))
+            help = true;
+        else if (strstr(arg, "--hex"))
+            DumpHex = true;
+        else
+            appOrPid = arg;
+    }
+    if (appOrPid == NULL && forPid == 0)
+        help = true;
+
+    if (help)
+    {
+        fprintf(stderr, "Usage: loolmap --hex <name of process|pid>\n");
         fprintf(stderr, "Dump memory map information for a given process\n");
         return 0;
     }
 
-    forPid = atoi(argv[1]);
+    forPid = atoi(appOrPid);
 
     root_proc = opendir("/proc");
     if (!root_proc)
@@ -274,7 +331,7 @@ int main(int argc, char **argv)
             unsigned pid_proc = strtoul(dir_proc->d_name, nullptr, 10);
             snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "cmdline");
             if (read_buffer(cmdline, sizeof(cmdline), path_proc, ' ') &&
-                (forPid == pid_proc || (forPid == 0 && strstr(cmdline, argv[1]) && !strstr(cmdline, argv[0]))))
+                (forPid == pid_proc || (forPid == 0 && strstr(cmdline, appOrPid) && !strstr(cmdline, argv[0]))))
             {
                 snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "smaps");
                 total_smaps(pid_proc, path_proc, cmdline);
