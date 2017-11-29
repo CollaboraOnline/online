@@ -35,7 +35,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace'), id: 'findandreplace', type: 'action'},
+				{name: _('Find & Replace'), id: '.uno:SearchDialog', type: 'dialog'},
 				{type: 'separator'},
 				{name: _('Track Changes'), type: 'menu', menu: [
 					{name: _('Record'), type: 'unocommand', uno: '.uno:TrackChanges'},
@@ -47,7 +47,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Previous'), type: 'unocommand', uno: '.uno:PreviousTrackedChange'},
 					{name: _('Next'), type: 'unocommand', uno: '.uno:NextTrackedChange'}
 				]},
-				{name: _('ImageMap'), id: '.uno:ImageMapDialog', type: 'dialog'}
+				{name: _('Edit Style...'), id: '.uno:EditStyle', type: 'dialog'},
 			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
@@ -79,9 +79,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('No-width no break'), type: 'unocommand', uno: '.uno:InsertZWNBSP'},
 					{name: _('Left-to-right mark'), type: 'unocommand', uno: '.uno:InsertLRM'},
 					{name: _('Right-to-left mark'), type: 'unocommand', uno: '.uno:InsertRLM'}]},
-				{name: _('Field...'), id: '.uno:InsertField', type: 'dialog'},
-				{name: _('Index Entry...'), id: '.uno:InsertIndexesEntry', type: 'dialog'},
-				{name: _('Bibliography Entry...'), id: '.uno:InsertAuthoritiesEntry', type: 'dialog'}
+				{name: _('Index Entry...'), id: '.uno:InsertIndexesEntry', type: 'dialog'}
 			]
 			},
 			{name: _('Format'), type: 'menu', menu: [
@@ -152,6 +150,11 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('To next paragraph in level'), type: 'unocommand', uno: '.uno:JumpDownThisLevel'},
 					{name: _('To previous paragraph in level'), type: 'unocommand', uno: '.uno:JumpUpThisLevel'},
 					{name: _('Continue previous numbering'), type: 'unocommand', uno: '.uno:ContinueNumbering'}]},
+				{type: 'separator'},
+				{name: _('Character...'), id: '.uno:FontDialog', type: 'dialog'},
+				{name: _('Paragraph...'), id: '.uno:ParagraphDialog', type: 'dialog'},
+				{name: _('Bullets and Numbering...'), id: '.uno:OutlineBullet', type: 'dialog'},
+				{type: 'separator'},
 				{name: _('Clear direct formatting'), type: 'unocommand', uno: '.uno:ResetAttributes'},
 				{name: _('Page'), type: 'menu', menu: [
 					{name: 'A4, ' + _('Portrait'), type: 'action', id: 'a4portrait'},
@@ -179,8 +182,10 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Row'), type: 'unocommand', uno: '.uno:EntireRow'},
 					{name: _('Column'), type: 'unocommand', uno: '.uno:EntireColumn'},
 					{name: _('Cell'), type: 'unocommand', uno: '.uno:EntireCell'}]},
-					{name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'}]
-			},
+				{name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'},
+				{type: 'separator'},
+				{name: _('Properties'), id: '.uno:TableDialog', type: 'dialog'}
+			]},
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
 				{name: _('Spelling and Grammar'), id: '.uno:SpellingAndGrammarDialog', type: 'dialog'},
 				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
@@ -190,7 +195,6 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('None (Do not check spelling)'), id: 'noneparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
 				{name: _('Language for entire document'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
-				{name: _('Find & replace Dialog'), id: '.uno:SearchDialog', type: 'dialog'},
 				{name: _('Word count'), id: '.uno:WordCountDialog', type: 'dialog'}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
@@ -222,8 +226,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace'), id: 'findandreplace', type: 'action'}]
-			},
+				{name: _('Find & Replace'), id: '.uno:SearchDialog', type: 'dialog'}
+			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
 				{type: 'separator'},
@@ -290,7 +294,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace'), id: 'findandreplace', type: 'action'}]
+				{name: _('Find & Replace'), id: '.uno:SearchDialog', type: 'dialog'}]
 			},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'}]
@@ -547,130 +551,6 @@ L.Control.Menubar = L.Control.extend({
 		});
 	},
 
-	_onClickFindAndReplace: function() {
-		var findReplaceContent =
-		    '\
-			<table class="findreplacetable">\
-				<tr>\
-					<td>\
-						<label for="findthis">' + _('Find') + '</label>\
-					</td>\
-					<td>\
-						<input id="findthis" name="findthis">\
-					</td>\
-				</tr>\
-				<tr>\
-					<td>\
-						<label for="replacewith">' + _('Replace with') + '</label>\
-					</td>\
-					<td>\
-						<input name="replacewith">\
-					</td>\
-				</tr>\
-			</table>\
-			';
-		var mouseMoveFunc;
-		vex.dialog.open({
-			showCloseButton: true,
-			escapeButtonCloses: true,
-			className: 'vex-theme-plain findReplaceVex',
-			message: _('Find & Replace'),
-			input: findReplaceContent,
-			buttons: [
-				$.extend({}, vex.dialog.buttons.replace, {
-					text: _('Replace'),
-					click: function($vexContent, e) {
-						$vexContent.data().vex.option = 'replace';
-					}}),
-				$.extend({}, vex.dialog.buttons.replaceAll, {
-					text: _('Replace All'),
-					click: function($vexContent, e) {
-						$vexContent.data().vex.option = 'replaceAll';
-					}}),
-				$.extend({}, vex.dialog.buttons.findPrev, {
-					text: _('Previous'),
-					className: 'btnArrow',
-					click: function($vexContent, e) {
-						$vexContent.data().vex.option = 'previous';
-					}}),
-				$.extend({}, vex.dialog.buttons.findNext, {
-					text: _('Next'),
-					className: 'btnArrow',
-					click: function($vexContent, e) {
-						$vexContent.data().vex.option = 'next';
-					}})
-			],
-			afterOpen: function(e) {
-				$('.vex-overlay').remove();
-				$('.vex').css('position', 'static');
-				var selected = null;
-				var xPos = 0, yPos = 0;
-				var xElem = 0, yElem = 0;
-				var maxH = window.innerHeight, maxW = window.innerWidth;
-
-				if (map.getDocType() === 'text') {
-					$('#findthis').on('input', function() {
-						if (this.value.length != 0) {
-							map.search(this.value, false, '', 0, true);
-						}
-					});
-				}
-				$('.vex-content').on('mousedown', function(e) {
-					selected = this;
-					selected.style.cursor = 'move';
-					xElem = xPos - selected.offsetLeft;
-					yElem = yPos - selected.offsetTop;
-				});
-				$('.vex-content').on('mouseup', function(e) {
-					selected.style.cursor = 'default';
-					selected = null;
-				});
-				var mouseMoveFunc = function(e) {
-					xPos = e.pageX;
-					yPos = e.pageY;
-					if (selected !== null) {
-						var isOutVert = (yPos - yElem >= 0 && (yPos - yElem + selected.offsetHeight) <= maxH);
-						var isOutHor = (xPos - xElem >= 0 && (xPos - xElem + selected.offsetWidth) <= maxW);
-						if (isOutHor) {
-							selected.style.left = (xPos - xElem) + 'px';
-						}
-						if (isOutVert) {
-							selected.style.top = (yPos - yElem) + 'px';
-						}
-					}
-				};
-				$(document).on('mousemove', mouseMoveFunc);
-			},
-			afterClose: function(e) {
-				$(document).off('mousemove', mouseMoveFunc);
-			},
-			onSubmit: function(event) {
-				var $vexContent = $(this).parent();
-				event.preventDefault();
-				event.stopPropagation();
-
-				var opt = $vexContent.data().vex.option;
-				var findText = this.findthis.value;
-				var replaceText = this.replacewith.value;
-
-				if (findText.length != 0) {
-					if (opt === 'next') {
-						map.search(findText);
-					}
-					else if (opt === 'previous') {
-						map.search(findText, true);
-					}
-					else if (opt === 'replace') {
-						map.search(findText, false, replaceText, 2);
-					}
-					else if (opt === 'replaceAll') {
-						map.search(findText, false, replaceText, 3);
-					}
-				}
-			}
-		}, this);
-	},
-
 	_executeAction: function(item) {
 		var id = $(item).data('id');
 		if (id === 'save') {
@@ -685,8 +565,6 @@ L.Control.Menubar = L.Control.extend({
 			fileName = fileName.substr(0, fileName.lastIndexOf('.'));
 			fileName = fileName === '' ? 'document' : fileName;
 			map.downloadAs(fileName + '.' + format, format);
-		} else if (id === 'findandreplace') {
-			this._onClickFindAndReplace();
 		} else if (id === 'insertcomment') {
 			map.insertComment();
 		} else if (id === 'insertgraphic') {

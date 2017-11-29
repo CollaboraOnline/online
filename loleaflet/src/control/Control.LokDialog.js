@@ -79,7 +79,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._sendDialogCommand(e.dialogId, this._createRectStr());
 		} else if (e.action === 'invalidate') {
 			if (this._isOpen(e.dialogId)) {
-				if (!this._isRectangleValid(e.rectangle))
+				if (e.rectangle && !this._isRectangleValid(e.rectangle))
 					return;
 
 				if (!e.rectangle)
@@ -266,29 +266,6 @@ L.Control.LokDialog = L.Control.extend({
 		var dialogId = this.dialogIdPrefix + e.id;
 		if (!this._isOpen(dialogId))
 			return;
-
-		// FIXME: as a precaution, if we get larger width or height here than what we got in 'created'
-		// callback, then adjust the dialog canvas size
-		var changed = false;
-		var canvas = document.getElementById(dialogId + '-canvas');
-		if (e.width > this._width) {
-			changed = true;
-			this._width = e.width;
-			canvas.width = e.width;
-			$('#' + dialogId).dialog('option', 'width', e.width);
-		}
-
-		if (e.height > this._height) {
-			changed = true;
-			this._height = e.height;
-			canvas.height = e.height;
-			$('#' + dialogId).dialog('option', 'height', e.height);
-		}
-
-		if (changed) {
-			this._sendDialogCommand(dialogId, this._createRectStr());
-			return;
-		}
 
 		this._paintDialog(dialogId, e.title, e.rectangle, e.dialog);
 	},
