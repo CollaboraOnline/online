@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 #include <stdint.h>
 #include <string.h>
@@ -85,7 +86,54 @@ static int read_buffer(char *buffer, unsigned size,
     return total_bytes;
 }
 
-static void dumpPages(unsigned proc_id, const char *type, const std::vector<addr_t> &pages)
+
+static std::vector<std::string> lineBreak(std::string str)
+{
+    std::vector<std::string> lines;
+    while (str.size())
+    {
+        size_t idx = str.find('\n');
+        if (idx != std::string::npos) {
+            lines.push_back(str.substr(0,idx));
+            str = str.substr(idx+1);
+        }
+    }
+    lines.push_back(str);
+
+    return lines;
+}
+
+static void dumpDiff(const std::string &pageStr, const std::string &parentStr)
+{
+    if (pageStr == parentStr)
+    {
+        printf ("unusual: page identical to parent\n");
+        printf ("%s", pageStr.c_str());
+        return;
+    }
+    std::vector<std::string> page = lineBreak(pageStr);
+    std::vector<std::string> parent = lineBreak(parentStr);
+    assert(page.size() == parent.size());
+    for (size_t i = 0; i < page.size(); ++i)
+    {
+        printf("%s\n", page[i].c_str());
+        if (page[i] != parent[i])
+        {
+            printf ("----");
+            assert(page[i].length() == parent[i].length());
+            for (size_t j = 4; j < page[i].length(); ++j)
+            {
+                if (page[i][j] == parent[i][j])
+                    printf(" ");
+                else
+                    printf("%c", parent[i][j]);
+            }
+            printf("\n");
+        }
+    }
+}
+
+static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, const std::vector<addr_t> &pages)
 {
     char path_proc[PATH_SIZE];
     snprintf(path_proc, sizeof(path_proc), "/proc/%d/mem", proc_id);
@@ -93,23 +141,46 @@ static void dumpPages(unsigned proc_id, const char *type, const std::vector<addr
     if (mem_fd < 0)
         error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
 
+    snprintf(path_proc, sizeof(path_proc), "/proc/%d/mem", parent_id);
+    int parent_fd = open(path_proc, 0);
+    if (parent_fd < 0)
+        error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
+
     size_t cnt = 0;
     for (auto page : pages)
     {
-        printf ("%s page: 0x%.8llx (%d/%d)\n",
-                type, page, (int)++cnt, (int)pages.size());
-
-        std::vector<char> pageData;
+        std::vector<char> pageData, parentData;
         pageData.resize(0x1000);
+        parentData.resize(0x1000);
 
         if (lseek(mem_fd, page, SEEK_SET) < 0)
             error(EXIT_FAILURE, errno, "Failed to seek in /proc/<pid>/mem to %lld", page);
         if (read(mem_fd, &pageData[0], 0x1000) != 0x1000)
             error(EXIT_FAILURE, errno, "Failed to read page %lld from /proc/<pid>/mem", page);
-        Util::dumpHex(std::cout, "", "", pageData);
+
+        if (lseek(parent_fd, page, SEEK_SET) < 0)
+            parentData.resize(0);
+        else if (read(parent_fd, &parentData[0], 0x1000) != 0x1000)
+            parentData.resize(0); // missing equivalent page.
+
+        // Diff as ASCII
+        std::stringstream pageStr;
+        Util::dumpHex(pageStr, "", "", pageData, false);
+        std::stringstream parentStr;
+        Util::dumpHex(parentStr, "", "", parentData, false);
+
+        printf ("%s page: 0x%.8llx (%d/%d) %s\n",
+                type, page, (int)++cnt, (int)pages.size(),
+                parentData.size() == 0 ? "- unique" : "- was shared");
+
+        if (parentData.size() == 0)
+            printf("%s", pageStr.str().c_str());
+        else
+            dumpDiff(pageStr.str(), parentStr.str());
     }
 
     close (mem_fd);
+    close (parent_fd);
 }
 
 static std::vector<char> compressBitmap(const std::vector<char> &bitmap)
@@ -140,7 +211,8 @@ static std::vector<char> compressBitmap(const std::vector<char> &bitmap)
     return output;
 }
 
-static void dump_unshared(unsigned proc_id, const char *type, const std::vector<addr_t> &vaddrs)
+static void dump_unshared(unsigned proc_id, unsigned parent_id,
+                          const char *type, const std::vector<addr_t> &vaddrs)
 {
     char path_proc[PATH_SIZE];
     snprintf(path_proc, sizeof(path_proc), "/proc/%d/pagemap", proc_id);
@@ -187,11 +259,12 @@ static void dump_unshared(unsigned proc_id, const char *type, const std::vector<
     if (DumpHex)
     {
         printf ("Un-shared data dump\n");
-        dumpPages(proc_id, type, vunshared);
+        dumpPages(proc_id, parent_id, type, vunshared);
     }
 }
 
-static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
+static void total_smaps(unsigned proc_id, unsigned parent_id,
+                        const char *file, const char *cmdline)
 {
     FILE *file_pointer;
     char buffer[BUFFER_SIZE];
@@ -262,6 +335,7 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
 
     printf("%s\n", cmdline);
     printf("Process ID    :%20d\n", proc_id);
+    printf(" parent ID    :%20d\n", parent_id);
     printf("--------------------------------------\n");
     printf("Shared Clean  :%20lld kB\n", total_shared_clean);
     printf("Shared Dirty  :%20lld kB\n", total_shared_dirty);
@@ -275,9 +349,36 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
     printf("Anon page cnt :%20lld\n", (addr_t)anonVAddrs.size());
     printf("File page cnt :%20lld\n", (addr_t)fileVAddrs.size());
     printf("\n");
-    dump_unshared(proc_id, "heap", heapVAddrs);
-    dump_unshared(proc_id, "anon", anonVAddrs);
-    dump_unshared(proc_id, "file", fileVAddrs);
+    dump_unshared(proc_id, parent_id, "heap", heapVAddrs);
+    dump_unshared(proc_id, parent_id, "anon", anonVAddrs);
+    dump_unshared(proc_id, parent_id, "file", fileVAddrs);
+}
+
+static unsigned getParent(int proc_id)
+{
+    char path_proc[PATH_SIZE];
+    snprintf(path_proc, sizeof(path_proc), "/proc/%d/stat", proc_id);
+    int fd = open(path_proc, 0);
+    if (fd < 0)
+        error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
+    char buffer[4096];
+    int len;
+    if ((len = read(fd, buffer, sizeof (buffer))) < 0)
+        error(EXIT_FAILURE, errno, "Failed to read %s", path_proc);
+    close (fd);
+    buffer[len] = '\0';
+
+    char state, cmd[4096];
+    unsigned unused, ppid = 0;
+    if (sscanf(buffer, "%d %s %c %d", &unused, cmd, &state, &ppid) != 4 || ppid == 0)
+    {
+        fprintf(stderr, "Failed to locate parent from file '%s' : '%s'\n",
+                path_proc, buffer);
+        exit (1);
+    }
+    fprintf(stderr,"parent of %u is %u\n", proc_id, ppid);
+
+    return ppid;
 }
 
 int main(int argc, char **argv)
@@ -293,7 +394,7 @@ int main(int argc, char **argv)
     const char *appOrPid = nullptr;
 
     setlocale (LC_ALL, "");
-    getopt(argc, argv, "");
+    getopt(argc, argv, ""); // FIXME: Should use this properly.
 
     for (int i = 1; i < argc; ++i)
     {
@@ -329,12 +430,14 @@ int main(int argc, char **argv)
         if (*dir_proc->d_name > '0' && *dir_proc->d_name <= '9')
         {
             unsigned pid_proc = strtoul(dir_proc->d_name, nullptr, 10);
+
             snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "cmdline");
             if (read_buffer(cmdline, sizeof(cmdline), path_proc, ' ') &&
                 (forPid == pid_proc || (forPid == 0 && strstr(cmdline, appOrPid) && !strstr(cmdline, argv[0]))))
             {
+                unsigned parent_id = getParent(pid_proc);
                 snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "smaps");
-                total_smaps(pid_proc, path_proc, cmdline);
+                total_smaps(pid_proc, parent_id, path_proc, cmdline);
             }
         }
     }

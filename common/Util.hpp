@@ -18,6 +18,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+
 #include <memory.h>
 
 #include <Poco/File.h>
@@ -134,7 +135,8 @@ namespace Util
 
     /// Dump data as hex and chars to stream
     inline void dumpHex (std::ostream &os, const char *legend, const char *prefix,
-                         const std::vector<char> &buffer, const unsigned int width = 32)
+                         const std::vector<char> &buffer, bool skipDup = true,
+                         const unsigned int width = 32)
     {
         unsigned int i, j;
         char scratch[64];
@@ -142,17 +144,20 @@ namespace Util
         os << legend;
         for (j = 0; j < buffer.size() + width - 1; j += width)
         {
-            int skip = 0;
-            while (j >= width && j < buffer.size() - width &&
-                   !memcmp(&buffer[j], &buffer[j-width], width))
+            if (skipDup)
             {
-                skip++;
-                j += width;
-            }
-            if (skip > 1)
-            {
-                j -= width;
-                os << "... dup " << skip - 1 << "...\n";
+                int skip = 0;
+                while (j >= width && j < buffer.size() - width &&
+                       !memcmp(&buffer[j], &buffer[j-width], width))
+                {
+                    skip++;
+                    j += width;
+                }
+                if (skip > 1)
+                {
+                    j -= width;
+                    os << "... dup " << skip - 1 << "...\n";
+                }
             }
 
             sprintf (scratch, "%s0x%.4x  ", prefix, j);
