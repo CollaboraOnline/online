@@ -80,8 +80,35 @@ static int read_buffer(char *buffer, unsigned size,
     return total_bytes;
 }
 
+static std::vector<char> compressBitmap(const std::vector<char> &bitmap)
+{
+    size_t i;
+    std::vector<char> output;
+    for (i = 0; i < bitmap.size(); ++i)
+    {
+        char cur;
+        int cnt = 0;
+        size_t j = i;
+        for (cur = bitmap[j]; bitmap[j] == cur; ++j)
+            ++cnt;
+        output.push_back(cur);
+        if (cnt > 3)
+        {
+            char num[16];
+            output.push_back('[');
+            sprintf(num, "%d", cnt);
+            for (int cpy = 0; num[cpy] != '\0'; ++cpy)
+                output.push_back(num[cpy]);
+            output.push_back(']');
+            i += cnt - 1;
+        }
+    }
 
-static void dump_unshared(unsigned proc_id, const std::vector<addr_t> &vaddrs)
+    output.push_back('\0');
+    return output;
+}
+
+static void dump_unshared(unsigned proc_id, const char *type, const std::vector<addr_t> &vaddrs)
 {
     char path_proc[PATH_SIZE];
     snprintf(path_proc, sizeof(path_proc), "/proc/%d/pagemap", proc_id);
@@ -89,7 +116,7 @@ static void dump_unshared(unsigned proc_id, const std::vector<addr_t> &vaddrs)
     if (fd < 0)
         error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
 
-    printf("Sharing map:\n");
+    std::vector<char> bitmap;
     addr_t numShared = 0, numOwn = 0;
     for (auto p : vaddrs)
     {
@@ -105,20 +132,22 @@ static void dump_unshared(unsigned proc_id, const std::vector<addr_t> &vaddrs)
             if (vaddrData & ((addr_t)1 << 56))
             {
                 numOwn++;
-                printf("*");
+                bitmap.push_back('*');
             }
             else
             {
                 numShared++;
-                printf(".");
+                bitmap.push_back('.');
             }
         }
-        if (!((numShared + numOwn) % 128))
-            printf("\n");
     }
-    printf ("\nTotals:\n");
+
+    printf ("Totals for %s\n", type);
     printf ("\tshared   %5lld (%lldkB)\n", numShared, numShared * 4);
     printf ("\tunshared %5lld (%lldkB)\n", numOwn, numOwn * 4);
+
+    std::vector<char> compressed = compressBitmap(bitmap);
+    printf ("RLE sharing bitmap:\n%s\n\n", &compressed[0]);
 }
 
 static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
@@ -205,9 +234,9 @@ static void total_smaps(unsigned proc_id, const char *file, const char *cmdline)
     printf("Anon page cnt :%20lld\n", (addr_t)anonVAddrs.size());
     printf("File page cnt :%20lld\n", (addr_t)fileVAddrs.size());
     printf("\n");
-    dump_unshared(proc_id, heapVAddrs);
-    dump_unshared(proc_id, anonVAddrs);
-    dump_unshared(proc_id, fileVAddrs);
+    dump_unshared(proc_id, "heap", heapVAddrs);
+    dump_unshared(proc_id, "anon", anonVAddrs);
+    dump_unshared(proc_id, "file", fileVAddrs);
 }
 
 int main(int argc, char **argv)
