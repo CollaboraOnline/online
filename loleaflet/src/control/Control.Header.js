@@ -382,13 +382,15 @@ L.Control.Header = L.Control.extend({
 	},
 
 	_updateOutlineState: function (column, group) {
-		if (!group)
-			return;
-
-		var type = column ? 'column' : 'row';
-		var state = group.hidden ? 'visible' : 'hidden'; // we have to send the new state
-		var payload = 'outlinestate type='+ type + ' level=' + group.level + ' index=' + group.index + ' state=' + state;
-		this._map._socket.sendMessage(payload);
+		var e = {
+			x: this._map._getTopLeftPoint().x,
+			y: this._map._getTopLeftPoint().y,
+			offset: {x: undefined, y: undefined},
+			outline: {column: column, level: group.level, index: group.index, hidden: !group.hidden}
+		};
+		this._map.fire('updaterowcolumnheaders', e);
+		// TODO do we need this ?
+		//this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 	},
 
 	_onMouseDown: function (e) {

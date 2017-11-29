@@ -217,7 +217,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         assert(tokens[0] == "clientzoom" ||
                tokens[0] == "clientvisiblearea" ||
-               tokens[0] == "outlinestate" ||
                tokens[0] == "downloadas" ||
                tokens[0] == "getchildid" ||
                tokens[0] == "gettextselection" ||
@@ -243,10 +242,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "clientvisiblearea")
         {
             return clientVisibleArea(buffer, length, tokens);
-        }
-        else if (tokens[0] == "outlinestate")
-        {
-            return outlineState(buffer, length, tokens);
         }
         else if (tokens[0] == "downloadas")
         {
@@ -594,34 +589,6 @@ bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, con
     getLOKitDocument()->setView(_viewId);
 
     getLOKitDocument()->setClientVisibleArea(x, y, width, height);
-    return true;
-}
-
-bool ChildSession::outlineState(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
-{
-    std::string type, state;
-    int level, index;
-
-    if (tokens.size() != 5 ||
-        !getTokenString(tokens[1], "type", type) ||
-        (type != "column" && type != "row") ||
-        !getTokenInteger(tokens[2], "level", level) ||
-        !getTokenInteger(tokens[3], "index", index) ||
-        !getTokenString(tokens[4], "state", state) ||
-        (state != "visible" && state != "hidden"))
-    {
-        sendTextFrame("error: cmd=outlinestate kind=syntax");
-        return false;
-    }
-
-    bool column = type == "column";
-    bool hidden = state == "hidden";
-
-    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
-
-    getLOKitDocument()->setView(_viewId);
-
-    getLOKitDocument()->setOutlineState(column, level, index, hidden);
     return true;
 }
 
