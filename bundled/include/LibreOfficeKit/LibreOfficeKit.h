@@ -63,37 +63,28 @@ struct _LibreOfficeKitClass
     /// @since LibreOffice 5.2
     void (*freeError) (char* pFree);
 
-    /// @since LibreOffice 6.0
+#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
     void (*registerCallback) (LibreOfficeKit* pThis,
                               LibreOfficeKitCallback pCallback,
                               void* pData);
 
-    /** @see lok::Office::getFilterTypes().
-        @since LibreOffice 6.0
-     */
+    /// @see lok::Office::getFilterTypes().
     char* (*getFilterTypes) (LibreOfficeKit* pThis);
 
-    /** @see lok::Office::setOptionalFeatures().
-        @since LibreOffice 6.0
-     */
+    /// @see lok::Office::setOptionalFeatures().
     void (*setOptionalFeatures)(LibreOfficeKit* pThis, unsigned long long features);
 
-    /** @see lok::Office::setDocumentPassword().
-        @since LibreOffice 6.0
-     */
+    /// @see lok::Office::setDocumentPassword().
     void (*setDocumentPassword) (LibreOfficeKit* pThis,
             char const* pURL,
             char const* pPassword);
 
-    /** @see lok::Office::getVersionInfo().
-        @since LibreOffice 6.0
-     */
+    /// @see lok::Office::getVersionInfo().
     char* (*getVersionInfo) (LibreOfficeKit* pThis);
 
-    /** @see lok::Office::runMacro().
-        @since LibreOffice 6.0
-     */
     int (*runMacro) (LibreOfficeKit *pThis, const char* pURL);
+#endif
+
 };
 
 #define LIBREOFFICEKIT_DOCUMENT_HAS(pDoc,member) LIBREOFFICEKIT_HAS_MEMBER(LibreOfficeKitDocumentClass,member,(pDoc)->pClass->nSize)
@@ -114,12 +105,10 @@ struct _LibreOfficeKitDocumentClass
                    const char* pFormat,
                    const char* pFilterOptions);
 
-    /** @see lok::Document::getDocumentType().
-        @since LibreOffice 6.0
-     */
+#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
+    /// @see lok::Document::getDocumentType().
     int (*getDocumentType) (LibreOfficeKitDocument* pThis);
 
-#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
     /// @see lok::Document::getParts().
     int (*getParts) (LibreOfficeKitDocument* pThis);
 
@@ -268,29 +257,24 @@ struct _LibreOfficeKitDocumentClass
 
     /// Paints dialog with given dialog id to the buffer
     /// @see lok::Document::paintDialog().
-    void (*paintDialog) (LibreOfficeKitDocument* pThis, const char* pDialogId,
+    void (*paintDialog) (LibreOfficeKitDocument* pThis, unsigned nDialogId,
                          unsigned char* pBuffer,
                          const int x, const int y,
                          const int width, const int height);
 
-    /// Get info about dialog with given dialog id
-    /// @see lok::Document::getDialogInfo().
-    void (*getDialogInfo) (LibreOfficeKitDocument* pThis, const char* pDialogId,
-                           char** pDialogTitle, int* pWidth, int* pHeight);
-
     /// @see lok::Document::paintActiveFloatingWindow().
-    void (*paintActiveFloatingWindow) (LibreOfficeKitDocument* pThis, const char* pDialogId, unsigned char* pBuffer, int* nWidth, int* nHeight);
+    void (*paintActiveFloatingWindow) (LibreOfficeKitDocument* pThis, unsigned nDialogId, unsigned char* pBuffer, int* nWidth, int* nHeight);
 
     /// @see lok::Document::postDialogKeyEvent().
     void (*postDialogKeyEvent) (LibreOfficeKitDocument* pThis,
-                                const char* pDialogId,
+                                unsigned nDialogId,
                                 int nType,
                                 int nCharCode,
                                 int nKeyCode);
 
     /// @see lok::Document::postDialogMouseEvent().
     void (*postDialogMouseEvent) (LibreOfficeKitDocument* pThis,
-                                  const char* pDialogId,
+                                  unsigned nDialogId,
                                   int nType,
                                   int nX,
                                   int nY,
@@ -300,7 +284,7 @@ struct _LibreOfficeKitDocumentClass
 
     /// @see lok::Document::postDialogChildMouseEvent().
     void (*postDialogChildMouseEvent) (LibreOfficeKitDocument* pThis,
-                                       const char* pDialogId,
+                                       unsigned nDialogId,
                                        int nType,
                                        int nX,
                                        int nY,

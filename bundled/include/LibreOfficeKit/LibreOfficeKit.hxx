@@ -12,8 +12,8 @@
 
 #include <cstddef>
 
-#include <LibreOfficeKit/LibreOfficeKit.h>
-#include <LibreOfficeKit/LibreOfficeKitInit.h>
+#include "LibreOfficeKit.h"
+#include "LibreOfficeKitInit.h"
 
 /*
  * The reasons this C++ code is not as pretty as it could be are:
@@ -32,11 +32,11 @@ private:
 
 public:
     /// A lok::Document is typically created by the lok::Office::documentLoad() method.
-    Document(LibreOfficeKitDocument* pDoc) :
+    inline Document(LibreOfficeKitDocument* pDoc) :
         mpDoc(pDoc)
     {}
 
-    ~Document()
+    inline ~Document()
     {
         mpDoc->pClass->destroy(mpDoc);
     }
@@ -54,33 +54,32 @@ public:
      *        is triggered as with the "Save As..." in the UI.
      *        "TakeOwnership" mode must not be used when saving to PNG or PDF.
      */
-    bool saveAs(const char* pUrl, const char* pFormat = NULL, const char* pFilterOptions = NULL)
+    inline bool saveAs(const char* pUrl, const char* pFormat = NULL, const char* pFilterOptions = NULL)
     {
         return mpDoc->pClass->saveAs(mpDoc, pUrl, pFormat, pFilterOptions) != 0;
     }
 
     /// Gives access to the underlying C pointer.
-    LibreOfficeKitDocument *get() { return mpDoc; }
+    inline LibreOfficeKitDocument *get() { return mpDoc; }
 
+#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
     /**
      * Get document type.
      *
-     * @since LibreOffice 6.0
      * @return an element of the LibreOfficeKitDocumentType enum.
      */
-    int getDocumentType()
+    inline int getDocumentType()
     {
         return mpDoc->pClass->getDocumentType(mpDoc);
     }
 
-#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
     /**
      * Get number of part that the document contains.
      *
      * Part refers to either individual sheets in a Calc, or slides in Impress,
      * and has no relevance for Writer.
      */
-    int getParts()
+    inline int getParts()
     {
         return mpDoc->pClass->getParts(mpDoc);
     }
@@ -94,36 +93,36 @@ public:
      * @return a rectangle list, using the same format as
      * LOK_CALLBACK_TEXT_SELECTION.
      */
-    char* getPartPageRectangles()
+    inline char* getPartPageRectangles()
     {
         return mpDoc->pClass->getPartPageRectangles(mpDoc);
     }
 
     /// Get the current part of the document.
-    int getPart()
+    inline int getPart()
     {
         return mpDoc->pClass->getPart(mpDoc);
     }
 
     /// Set the current part of the document.
-    void setPart(int nPart)
+    inline void setPart(int nPart)
     {
         mpDoc->pClass->setPart(mpDoc, nPart);
     }
 
     /// Get the current part's name.
-    char* getPartName(int nPart)
+    inline char* getPartName(int nPart)
     {
         return mpDoc->pClass->getPartName(mpDoc, nPart);
     }
 
     /// Get the current part's hash.
-    char* getPartHash(int nPart)
+    inline char* getPartHash(int nPart)
     {
         return mpDoc->pClass->getPartHash(mpDoc, nPart);
     }
 
-    void setPartMode(int nMode)
+    inline void setPartMode(int nMode)
     {
         mpDoc->pClass->setPartMode(mpDoc, nMode);
     }
@@ -143,7 +142,7 @@ public:
      * @param nTileWidth logical width of the rendered rectangle, in TWIPs.
      * @param nTileHeight logical height of the rendered rectangle, in TWIPs.
      */
-    void paintTile(unsigned char* pBuffer,
+    inline void paintTile(unsigned char* pBuffer,
                           const int nCanvasWidth,
                           const int nCanvasHeight,
                           const int nTilePosX,
@@ -160,39 +159,22 @@ public:
      *
      * Client must truncate pBuffer according to the nWidth and nHeight returned after the call.
      *
-     * @param pDialogId Unique dialog id to be painted
+     * @param nDialogId Unique dialog id to be painted
      * @param pBuffer Buffer with enough memory allocated to render any dialog
      * @param x x-coordinate from where the dialog should start painting
      * @param y y-coordinate from where the dialog should start painting
      * @param width The width of the dialog image to be painted
      * @param height The height of the dialog image to be painted
      */
-    void paintDialog(const char* pDialogId,
+    void paintDialog(unsigned nDialogId,
                      unsigned char* pBuffer,
                      const int x,
                      const int y,
                      const int width,
                      const int height)
     {
-        return mpDoc->pClass->paintDialog(mpDoc, pDialogId, pBuffer,
+        return mpDoc->pClass->paintDialog(mpDoc, nDialogId, pBuffer,
                                           x, y, width, height);
-    }
-
-    /* Get info about dialog with given dialog id
-     *
-     * @param pDialogId Unique dialog id for which to get info about
-     * @param pDialogTitle Pointer to pointer pointing to string containing the
-     * dialog title. Caller should the pointer to allocated string themselves.
-     * @param pWidth The width of the dialog
-     * @param pHeight The height of the dialog
-     */
-    void getDialogInfo(const char* pDialogId,
-                       char** pDialogTitle,
-                       int& pWidth,
-                       int& pHeight)
-    {
-        return mpDoc->pClass->getDialogInfo(mpDoc, pDialogId, pDialogTitle, &pWidth, &pHeight);
-
     }
 
     /**
@@ -200,17 +182,17 @@ public:
      *
      * Client must truncate pBuffer according to the nWidth and nHeight returned after the call.
      *
-     * @param pDialogId Unique dialog id
+     * @param nDialogId Unique dialog id
      * @param pBuffer Buffer with enough memory allocated to render any dialog
      * @param nWidth output parameter returning the width of the rendered dialog.
      * @param nHeight output parameter returning the height of the rendered dialog
      */
-    void paintActiveFloatingWindow(const char* pDialogId,
+    void paintActiveFloatingWindow(unsigned nDialogId,
                                    unsigned char* pBuffer,
                                    int& nWidth,
                                    int& nHeight)
     {
-        return mpDoc->pClass->paintActiveFloatingWindow(mpDoc, pDialogId, pBuffer,
+        return mpDoc->pClass->paintActiveFloatingWindow(mpDoc, nDialogId, pBuffer,
                                                         &nWidth, &nHeight);
     }
 
@@ -219,13 +201,13 @@ public:
      *
      * @return an element of the LibreOfficeKitTileMode enum.
      */
-    int getTileMode()
+    inline int getTileMode()
     {
         return mpDoc->pClass->getTileMode(mpDoc);
     }
 
     /// Get the document sizes in TWIPs.
-    void getDocumentSize(long* pWidth, long* pHeight)
+    inline void getDocumentSize(long* pWidth, long* pHeight)
     {
         mpDoc->pClass->getDocumentSize(mpDoc, pWidth, pHeight);
     }
@@ -250,7 +232,7 @@ public:
      *
      * @param pArguments arguments of the rendering
      */
-    void initializeForRendering(const char* pArguments = NULL)
+    inline void initializeForRendering(const char* pArguments = NULL)
     {
         mpDoc->pClass->initializeForRendering(mpDoc, pArguments);
     }
@@ -262,7 +244,7 @@ public:
      * @param pCallback the callback to invoke
      * @param pData the user data, will be passed to the callback on invocation
      */
-    void registerCallback(LibreOfficeKitCallback pCallback, void* pData)
+    inline void registerCallback(LibreOfficeKitCallback pCallback, void* pData)
     {
         mpDoc->pClass->registerCallback(mpDoc, pCallback, pData);
     }
@@ -274,7 +256,7 @@ public:
      * @param nCharCode contains the Unicode character generated by this event or 0
      * @param nKeyCode contains the integer code representing the key of the event (non-zero for control keys)
      */
-    void postKeyEvent(int nType, int nCharCode, int nKeyCode)
+    inline void postKeyEvent(int nType, int nCharCode, int nKeyCode)
     {
         mpDoc->pClass->postKeyEvent(mpDoc, nType, nCharCode, nKeyCode);
     }
@@ -282,14 +264,14 @@ public:
     /**
      * Posts a keyboard event to the dialog
      *
-     * @param pDialogId Dialog id on which key event should be posted
+     * @param nDialogId Dialog id on which key event should be posted
      * @param nType Event type, like press or release.
      * @param nCharCode contains the Unicode character generated by this event or 0
      * @param nKeyCode contains the integer code representing the key of the event (non-zero for control keys)
      */
-    void postDialogKeyEvent(const char* pDialogId, int nType, int nCharCode, int nKeyCode)
+    void postDialogKeyEvent(unsigned nDialogId, int nType, int nCharCode, int nKeyCode)
     {
-        mpDoc->pClass->postDialogKeyEvent(mpDoc, pDialogId, nType, nCharCode, nKeyCode);
+        mpDoc->pClass->postDialogKeyEvent(mpDoc, nDialogId, nType, nCharCode, nKeyCode);
     }
 
     /**
@@ -300,9 +282,9 @@ public:
      * @param nY vertical position in document coordinates
      * @param nCount number of clicks: 1 for single click, 2 for double click
      * @param nButtons: which mouse buttons: 1 for left, 2 for middle, 4 right
-     * @param nModifier: which keyboard modifier: (see include/vcl/vclenum.hxx for possible values)
+     * @param nModifier: which keyboard modifier: (see include/rsc/rsc-vcl-shared-types.hxx for possible values)
      */
-    void postMouseEvent(int nType, int nX, int nY, int nCount, int nButtons, int nModifier)
+    inline void postMouseEvent(int nType, int nX, int nY, int nCount, int nButtons, int nModifier)
     {
         mpDoc->pClass->postMouseEvent(mpDoc, nType, nX, nY, nCount, nButtons, nModifier);
     }
@@ -310,7 +292,7 @@ public:
     /**
      * Posts a mouse event to the dialog with given id.
      *
-     * @param pDialogId Dialog id where mouse event is to be posted
+     * @param nDialogId Dialog id where mouse event is to be posted
      * @param nType Event type, like down, move or up.
      * @param nX horizontal position in document coordinates
      * @param nY vertical position in document coordinates
@@ -318,15 +300,15 @@ public:
      * @param nButtons: which mouse buttons: 1 for left, 2 for middle, 4 right
      * @param nModifier: which keyboard modifier: (see include/vcl/vclenum.hxx for possible values)
      */
-    void postDialogMouseEvent(const char* pDialogId, int nType, int nX, int nY, int nCount, int nButtons, int nModifier)
+    void postDialogMouseEvent(unsigned nDialogId, int nType, int nX, int nY, int nCount, int nButtons, int nModifier)
     {
-        mpDoc->pClass->postDialogMouseEvent(mpDoc, pDialogId, nType, nX, nY, nCount, nButtons, nModifier);
+        mpDoc->pClass->postDialogMouseEvent(mpDoc, nDialogId, nType, nX, nY, nCount, nButtons, nModifier);
     }
 
     /**
      * Posts a mouse event to the child of a dialog with given id.
      *
-     * @param aDialogId Dialog id
+     * @param nDialogId Dialog id
      * @param nType Event type, like down, move or up.
      * @param nX horizontal position in document coordinates
      * @param nY vertical position in document coordinates
@@ -334,9 +316,9 @@ public:
      * @param nButtons: which mouse buttons: 1 for left, 2 for middle, 4 right
      * @param nModifier: which keyboard modifier: (see include/vcl/vclenum.hxx for possible values)
      */
-    void postDialogChildMouseEvent(const char* pDialogId, int nType, int nX, int nY, int nCount, int nButtons, int nModifier)
+    void postDialogChildMouseEvent(unsigned nDialogId, int nType, int nX, int nY, int nCount, int nButtons, int nModifier)
     {
-        mpDoc->pClass->postDialogChildMouseEvent(mpDoc, pDialogId, nType, nX, nY, nCount, nButtons, nModifier);
+        mpDoc->pClass->postDialogChildMouseEvent(mpDoc, nDialogId, nType, nX, nY, nCount, nButtons, nModifier);
     }
 
 
@@ -361,7 +343,7 @@ public:
      * @param pCommand uno command to be posted to the document, like ".uno:Bold"
      * @param pArguments arguments of the uno command.
      */
-    void postUnoCommand(const char* pCommand, const char* pArguments = NULL, bool bNotifyWhenFinished = false)
+    inline void postUnoCommand(const char* pCommand, const char* pArguments = NULL, bool bNotifyWhenFinished = false)
     {
         mpDoc->pClass->postUnoCommand(mpDoc, pCommand, pArguments, bNotifyWhenFinished);
     }
@@ -373,7 +355,7 @@ public:
      * @param nX horizontal position in document coordinates
      * @param nY vertical position in document coordinates
      */
-    void setTextSelection(int nType, int nX, int nY)
+    inline void setTextSelection(int nType, int nX, int nY)
     {
         mpDoc->pClass->setTextSelection(mpDoc, nType, nX, nY);
     }
@@ -384,7 +366,7 @@ public:
      * @param pMimeType suggests the return format, for example text/plain;charset=utf-8.
      * @param pUsedMimeType output parameter to inform about the determined format (suggested one or plain text).
      */
-    char* getTextSelection(const char* pMimeType, char** pUsedMimeType = NULL)
+    inline char* getTextSelection(const char* pMimeType, char** pUsedMimeType = NULL)
     {
         return mpDoc->pClass->getTextSelection(mpDoc, pMimeType, pUsedMimeType);
     }
@@ -396,7 +378,7 @@ public:
      * @param pData the actual data to be pasted.
      * @return if the supplied data was pasted successfully.
      */
-    bool paste(const char* pMimeType, const char* pData, size_t nSize)
+    inline bool paste(const char* pMimeType, const char* pData, size_t nSize)
     {
         return mpDoc->pClass->paste(mpDoc, pMimeType, pData, nSize);
     }
@@ -408,7 +390,7 @@ public:
      * @param nX horizontal position in document coordinates
      * @param nY vertical position in document coordinates
      */
-    void setGraphicSelection(int nType, int nX, int nY)
+    inline void setGraphicSelection(int nType, int nX, int nY)
     {
         mpDoc->pClass->setGraphicSelection(mpDoc, nType, nX, nY);
     }
@@ -416,7 +398,7 @@ public:
     /**
      * Gets rid of any text or graphic selection.
      */
-    void resetSelection()
+    inline void resetSelection()
     {
         mpDoc->pClass->resetSelection(mpDoc);
     }
@@ -427,7 +409,7 @@ public:
      * @param pCommand a uno command for which the possible values are requested
      * @return {commandName: unoCmd, commandValues: {possible_values}}
      */
-    char* getCommandValues(const char* pCommand)
+    inline char* getCommandValues(const char* pCommand)
     {
         return mpDoc->pClass->getCommandValues(mpDoc, pCommand);
     }
@@ -440,7 +422,7 @@ public:
      * @param nTileTwipWidth - tile width in twips
      * @param nTileTwipHeight - tile height in twips
      */
-    void setClientZoom(
+    inline void setClientZoom(
             int nTilePixelWidth,
             int nTilePixelHeight,
             int nTileTwipWidth,
@@ -459,7 +441,7 @@ public:
      * @param nWidth - area width
      * @param nHeight - area height
      */
-    void setClientVisibleArea(int nX, int nY, int nWidth, int nHeight)
+    inline void setClientVisibleArea(int nX, int nY, int nWidth, int nHeight)
     {
         mpDoc->pClass->setClientVisibleArea(mpDoc, nX, nY, nWidth, nHeight);
     }
@@ -504,7 +486,7 @@ public:
     /**
      * Get number of views of this document.
      */
-    int getViewsCount()
+    inline int getViewsCount()
     {
         return mpDoc->pClass->getViewsCount(mpDoc);
     }
@@ -513,7 +495,7 @@ public:
      * Paints a font name or character if provided to be displayed in the font list
      * @param pFontName the font to be painted
      */
-    unsigned char* renderFont(const char *pFontName,
+    inline unsigned char* renderFont(const char *pFontName,
                           const char *pChar,
                           int *pFontWidth,
                           int *pFontHeight)
@@ -527,7 +509,7 @@ public:
      * @param nPart the part number of the document of which the tile is painted.
      * @see paintTile.
      */
-    void paintPartTile(unsigned char* pBuffer,
+    inline void paintPartTile(unsigned char* pBuffer,
                               const int nPart,
                               const int nCanvasWidth,
                               const int nCanvasHeight,
@@ -552,7 +534,7 @@ public:
      * @returns true if pArray was large enough and result is written, false
      * otherwise.
      */
-    bool getViewIds(int* pArray,
+    inline bool getViewIds(int* pArray,
                            size_t nSize)
     {
         return mpDoc->pClass->getViewIds(mpDoc, pArray, nSize);
@@ -569,11 +551,11 @@ private:
 
 public:
     /// A lok::Office is typically created by the lok_cpp_init() function.
-    Office(LibreOfficeKit* pThis) :
+    inline Office(LibreOfficeKit* pThis) :
         mpThis(pThis)
     {}
 
-    ~Office()
+    inline ~Office()
     {
         mpThis->pClass->destroy(mpThis);
     }
@@ -588,7 +570,7 @@ public:
      *        switches the language accordingly first.
      * @since pFilterOptions argument added in LibreOffice 5.0
      */
-    Document* documentLoad(const char* pUrl, const char* pFilterOptions = NULL)
+    inline Document* documentLoad(const char* pUrl, const char* pFilterOptions = NULL)
     {
         LibreOfficeKitDocument* pDoc = NULL;
 
@@ -604,7 +586,7 @@ public:
     }
 
     /// Returns the last error as a string, the returned pointer has to be freed by the caller.
-    char* getError()
+    inline char* getError()
     {
         return mpThis->pClass->getError(mpThis);
     }
@@ -614,20 +596,20 @@ public:
      *
      * @since LibreOffice 5.2
      */
-    void freeError(char* pFree)
+    inline void freeError(char* pFree)
     {
         mpThis->pClass->freeError(pFree);
     }
 
+#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
     /**
      * Registers a callback. LOK will invoke this function when it wants to
      * inform the client about events.
      *
-     * @since LibreOffice 6.0
      * @param pCallback the callback to invoke
      * @param pData the user data, will be passed to the callback on invocation
      */
-    void registerCallback(LibreOfficeKitCallback pCallback, void* pData)
+    inline void registerCallback(LibreOfficeKitCallback pCallback, void* pData)
     {
         mpThis->pClass->registerCallback(mpThis, pCallback, pData);
     }
@@ -645,10 +627,8 @@ public:
      *         "MediaType": "application/vnd.oasis.opendocument.spreadsheet"
      *     }
      * }
-     *
-     * @since LibreOffice 6.0
      */
-    char* getFilterTypes()
+    inline char* getFilterTypes()
     {
         return mpThis->pClass->getFilterTypes(mpThis);
     }
@@ -656,7 +636,6 @@ public:
     /**
      * Set bitmask of optional features supported by the client.
      *
-     * @since LibreOffice 6.0
      * @see LibreOfficeKitOptionalFeatures
      */
     void setOptionalFeatures(unsigned long long features)
@@ -672,20 +651,18 @@ public:
      * @param pURL      the URL of the document, as sent to the callback
      * @param pPassword the password, nullptr indicates no password
      *
-     * In response to LOK_CALLBACK_DOCUMENT_PASSWORD, a valid password
+     * In response to LOK_CALLBACK_DOCUMENT_PASSWORD, a vaild password
      * will continue loading the document, an invalid password will
      * result in another LOK_CALLBACK_DOCUMENT_PASSWORD request,
      * and a NULL password will abort loading the document.
      *
-     * In response to LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY, a valid
+     * In response to LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY, a vaild
      * password will continue loading the document, an invalid password will
      * result in another LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY request,
      * and a NULL password will continue loading the document in read-only
      * mode.
-     *
-     * @since LibreOffice 6.0
      */
-    void setDocumentPassword(char const* pURL, char const* pPassword)
+    inline void setDocumentPassword(char const* pURL, char const* pPassword)
     {
         mpThis->pClass->setDocumentPassword(mpThis, pURL, pPassword);
     }
@@ -693,7 +670,6 @@ public:
     /**
      * Get version information of the LOKit process
      *
-     * @since LibreOffice 6.0
      * @returns JSON string containing version information in format:
      * {ProductName: <>, ProductVersion: <>, ProductExtension: <>, BuildId: <>}
      *
@@ -702,7 +678,7 @@ public:
      * "ProductExtension": ".0.0.alpha0",
      * "BuildId": "<full 40 char git hash>"}
      */
-    char* getVersionInfo()
+    inline char* getVersionInfo()
     {
         return mpThis->pClass->getVersionInfo(mpThis);
     }
@@ -712,14 +688,14 @@ public:
      *
      * Same syntax as on command line is permissible (ie. the macro:// URI forms)
      *
-     * @since LibreOffice 6.0
      * @param pURL macro url to run
      */
 
-    bool runMacro( const char* pURL)
+    inline bool runMacro( const char* pURL)
     {
         return mpThis->pClass->runMacro( mpThis, pURL );
     }
+#endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
 
 /// Factory method to create a lok::Office instance.

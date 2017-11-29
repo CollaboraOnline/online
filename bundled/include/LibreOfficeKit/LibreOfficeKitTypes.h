@@ -17,10 +17,9 @@ extern "C"
 {
 #endif
 
-/** @see lok::Office::registerCallback().
-    @since LibreOffice 6.0
- */
+#if defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 typedef void (*LibreOfficeKitCallback)(int nType, const char* pPayload, void* pData);
+#endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 
 #ifdef __cplusplus
 }
