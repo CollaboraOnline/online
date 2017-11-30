@@ -128,7 +128,6 @@ map.addControl(L.control.columnHeader());
 map.addControl(L.control.rowHeader());
 map.addControl(L.control.contextMenu());
 map.addControl(L.control.menubar());
-map.loadDocument();
 
 window.addEventListener('beforeunload', function () {
 	if (global.map && global.map._socket) {

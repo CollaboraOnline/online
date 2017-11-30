@@ -19,10 +19,6 @@ L.Socket = L.Class.extend({
 		console.debug('socket.initialize:');
 		this._map = map;
 		this._msgQueue = [];
-	},
-
-	connect: function() {
-		var map = this._map;
 		try {
 			if (map.options.permission) {
 				map.options.docParams['permission'] = map.options.permission;
