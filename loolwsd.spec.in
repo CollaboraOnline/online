@@ -12,7 +12,7 @@ Name:           loolwsd%{name_suffix}
 Name:           loolwsd
 %endif
 Version:        @PACKAGE_VERSION@
-Release:        14%{?dist}
+Release:        15%{?dist}
 Vendor:         Collabora
 Summary:        LibreOffice On-Line WebSocket Daemon
 License:        MPL
@@ -26,7 +26,7 @@ BuildRequires:  libcap-progs systemd-rpm-macros
 %endif
 %endif
 
-Requires:       collaboraoffice5.3 >= 5.3.10.15 collaboraoffice5.3-ure >= 5.3.10.15 collaboraofficebasis5.3-core >= 5.3.10.15 collaboraofficebasis5.3-writer >= 5.3.10.15 collaboraofficebasis5.3-impress >= 5.3.10.15 collaboraofficebasis5.3-graphicfilter >= 5.3.10.15 collaboraofficebasis5.3-en-US >= 5.3.10.15 collaboraofficebasis5.3-calc >= 5.3.10.15 collaboraofficebasis5.3-en-US-res >= 5.3.10.15 collaboraofficebasis5.3-en-US-calc >= 5.3.10.15 collaboraofficebasis5.3-ooofonts >= 5.3.10.15 collaboraofficebasis5.3-images >= 5.3.10.15 collaboraofficebasis5.3-noto-fonts >= 5.3.10.15 collaboraofficebasis5.3-draw >= 5.3.10.15 collaboraofficebasis5.3-extension-pdf-import >= 5.3.10.15 collaboraofficebasis5.3-filter-data >= 5.3.10.15
+Requires:       collaboraoffice5.3 >= 5.3.10.25 collaboraoffice5.3-ure >= 5.3.10.25 collaboraofficebasis5.3-core >= 5.3.10.25 collaboraofficebasis5.3-writer >= 5.3.10.25 collaboraofficebasis5.3-impress >= 5.3.10.25 collaboraofficebasis5.3-graphicfilter >= 5.3.10.25 collaboraofficebasis5.3-en-US >= 5.3.10.25 collaboraofficebasis5.3-calc >= 5.3.10.25 collaboraofficebasis5.3-en-US-res >= 5.3.10.25 collaboraofficebasis5.3-en-US-calc >= 5.3.10.25 collaboraofficebasis5.3-ooofonts >= 5.3.10.25 collaboraofficebasis5.3-images >= 5.3.10.25 collaboraofficebasis5.3-noto-fonts >= 5.3.10.25 collaboraofficebasis5.3-draw >= 5.3.10.25 collaboraofficebasis5.3-extension-pdf-import >= 5.3.10.25 collaboraofficebasis5.3-filter-data >= 5.3.10.25
 Requires:       systemd
 Requires(post): coreutils grep sed
 %if 0%{?fedora} || 0%{?rhel} >= 7
