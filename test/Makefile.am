@@ -47,7 +47,6 @@ wsd_sources = \
 test_base_source = \
 	TileQueueTests.cpp \
 	WhiteBoxTests.cpp \
-	DeltaTests.cpp \
 	$(wsd_sources)
 
 test_all_source = \

@@ -66,7 +66,6 @@
 #include "Unit.hpp"
 #include "UserMessages.hpp"
 #include "Util.hpp"
-#include "Delta.hpp"
 
 #include "common/SigUtil.hpp"
 #include "common/Seccomp.hpp"
@@ -311,7 +310,6 @@ class PngCache
     size_t _cacheHits;
     size_t _cacheTests;
     TileWireId _nextId;
-    DeltaGenerator _deltaGen;
 
     std::map< TileBinaryHash, CacheEntry > _cache;
     std::map< TileWireId, TileBinaryHash > _wireToHash;
@@ -408,15 +406,9 @@ class PngCache
                                    int width, int height,
                                    int bufferWidth, int bufferHeight,
                                    std::vector<char>& output, LibreOfficeKitTileMode mode,
-                                   TileBinaryHash hash, TileWireId wid, TileWireId oldWid)
+                                   TileBinaryHash hash, TileWireId wid, TileWireId /* oldWid */)
     {
         LOG_DBG("PNG cache with hash " << hash << " missed.");
-        if (_deltaGen.createDelta(pixmap, startX, startY, width, height,
-                                  bufferWidth, bufferHeight,
-                                  output, wid, oldWid))
-            return true;
-
-        LOG_DBG("Encode a new png for this tile.");
         CacheEntry newEntry(bufferWidth * bufferHeight * 1, wid);
         if (Png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
                                       bufferWidth, bufferHeight,

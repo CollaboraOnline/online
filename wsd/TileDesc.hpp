@@ -20,7 +20,6 @@
 #include "Exceptions.hpp"
 #include "Protocol.hpp"
 
-#define TILE_WIRE_ID
 typedef uint32_t TileWireId;
 typedef uint64_t TileBinaryHash;
 

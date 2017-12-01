@@ -13,18 +13,6 @@ if (typeof String.prototype.startsWith !== 'function') {
 	};
 }
 
-function hex2string(inData)
-{
-	hexified = [];
-	data = new Uint8Array(inData);
-	for (var i = 0; i < data.length; i++) {
-		hex = data[i].toString(16);
-		paddedHex = ('00' + hex).slice(-2);
-		hexified.push(paddedHex);
-	}
-	return hexified.join('');
-}
-
 L.Compatibility = {
 	clipboardGet: function (event) {
 		var text = null;
@@ -1292,90 +1280,6 @@ L.TileLayer = L.GridLayer.extend({
 				part: command.part,
 				docType: this._docType
 			});
-		}
-		else if (tile && typeof(img) == 'object') {
-			// 'Uint8Array' delta
-			var canvas = document.createElement('canvas');
-			canvas.width = 256;
-			canvas.height = 256;
-			var ctx = canvas.getContext('2d');
-
-			oldImg = new Image();
-			oldImg.src = tile.el.src;
-			ctx.drawImage(oldImg, 0, 0);
-
-			// FIXME; can we operate directly on the image ?
-			var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-			var oldData = new Uint8ClampedArray(imgData.data);
-
-			var delta = img;
-			var pixSize = canvas.width * canvas.height * 4;
-			var offset = 0;
-
-			console.log('Applying a delta of length ' + delta.length + ' pix size: ' + pixSize + '\nhex: ' + hex2string(delta));
-
-			// Green-tinge the old-Data ...
-//			for (var i = 0; i < pixSize; ++i)
-//			{
-//				oldData[i*4 + 1] = 128;
-//			}
-
-			// wipe to grey.
-//			for (var i = 0; i < pixSize * 4; ++i)
-//			{
-//				imgData.data[i] = 128;
-//			}
-
-			// Apply delta.
-			for (var i = 1; i < delta.length;)
-			{
-				switch (delta[i])
-				{
-				case 99: // 'c': // copy row
-					var count = delta[i+1];
-					var srcRow = delta[i+2];
-					var destRow = delta[i+3];
-					i+= 4;
-					console.log('copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
-					for (var cnt = 0; cnt < count; ++cnt)
-					{
-						var src = (srcRow + cnt) * canvas.width * 4;
-						var dest = (destRow + cnt) * canvas.width * 4;
-						for (var j = 0; j < canvas.width * 4; ++j)
-						{
-							imgData.data[dest + j] = oldData[src + j];
-						}
-					}
-					break;
-				case 100: // 'd': // new run
-					var destRow = delta[i+1];
-					var destCol = delta[i+2];
-					var span = delta[i+3];
-					var offset = destRow * canvas.width * 4 + destCol * 4;
-					i += 4;
-					console.log('apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
-					span *= 4;
-					imgData.data[offset + 1] = 256; // debug - greener start
-					while (span-- > 0) {
-						imgData.data[offset++] = delta[i++];
-					}
-					imgData.data[offset - 2] = 256; // debug - blue terminator
-					break;
-				default:
-					console.log('ERROR: Unknown code ' + delta[i] +
-						    ' at offset ' + i);
-					i = delta.length;
-					break;
-				}
-			}
-
-			ctx.putImageData(imgData, 0, 0);
-
-			tile.oldWireId = tile.wireId;
-			tile.wireId = command.wireId;
-			tile.el.src = canvas.toDataURL('image/png');
-
-			console.log('set new image');
 		}
 		else if (tile) {
 			if (command.wireId != undefined) {
