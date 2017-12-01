@@ -30,6 +30,7 @@
 typedef unsigned long long addr_t;
 
 bool DumpHex = false;
+bool DumpAll = false;
 
 #define MAP_SIZE 20
 #define PATH_SIZE 1000 // No harm in having it much larger than strictly necessary. Avoids compiler warning.
@@ -105,12 +106,6 @@ static std::vector<std::string> lineBreak(std::string str)
 
 static void dumpDiff(const std::string &pageStr, const std::string &parentStr)
 {
-    if (pageStr == parentStr)
-    {
-        printf ("unusual: page identical to parent\n");
-        printf ("%s", pageStr.c_str());
-        return;
-    }
     std::vector<std::string> page = lineBreak(pageStr);
     std::vector<std::string> parent = lineBreak(parentStr);
     assert(page.size() == parent.size());
@@ -125,12 +120,21 @@ static void dumpDiff(const std::string &pageStr, const std::string &parentStr)
             {
                 if (page[i][j] == parent[i][j])
                     printf(" ");
-                else
+                else {
                     printf("%c", parent[i][j]);
+                }
             }
             printf("\n");
         }
     }
+}
+
+static bool pageIsZero(const std::vector<char> &page)
+{
+    for (char c : page)
+        if (c != 0)
+            return false;
+    return true;
 }
 
 static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, const std::vector<addr_t> &pages)
@@ -146,7 +150,11 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
     if (parent_fd < 0)
         error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
 
+    if (DumpHex)
+        printf ("\nUn-shared data dump\n");
+
     size_t cnt = 0;
+    long long int bytesTouched = 0;
     for (auto page : pages)
     {
         std::vector<char> pageData, parentData;
@@ -169,18 +177,59 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
         std::stringstream parentStr;
         Util::dumpHex(parentStr, "", "", parentData, false);
 
-        printf ("%s page: 0x%.8llx (%d/%d) %s\n",
-                type, page, (int)++cnt, (int)pages.size(),
-                parentData.size() == 0 ? "- unique" : "- was shared");
-
-        if (parentData.size() == 0)
-            printf("%s", pageStr.str().c_str());
+        bool matchesParent = pageStr == parentStr;
+        const char *style;
+        if (parentData.size() > 0)
+        {
+            if (pageIsZero(parentData))
+            {
+                style = "was shared with zeros";
+                parentData.resize(0);
+            }
+            if (matchesParent)
+            {
+                if (DumpAll)
+                    style = "dump unchanged";
+                else
+                    style = "un-shared but matches parent";
+                parentData.resize(0);
+            }
+            else
+                style = "was shared";
+        }
         else
-            dumpDiff(pageStr.str(), parentStr.str());
+            style = "unique";
+
+        int touched = 0;
+        if (parentData.size() > 0)
+        {
+            for (size_t i = 0; i < pageData.size(); ++i)
+            {
+                if (pageData[i] != parentData[i])
+                    touched++;
+            }
+        }
+
+        if (DumpHex)
+        {
+            printf ("%s page: 0x%.8llx (%d/%d) - touched: %d - %s\n",
+                    type, page, (int)++cnt, (int)pages.size(), touched,
+                    style);
+
+            if (parentData.size() == 0)
+                printf("%s", pageStr.str().c_str());
+            else
+                dumpDiff(pageStr.str(), parentStr.str());
+        }
+
+        bytesTouched += touched;
     }
 
     close (mem_fd);
     close (parent_fd);
+
+    printf ("\tdirtied bytes touched %5lld per page %.2f\n\n",
+            bytesTouched, (double)bytesTouched / pages.size());
 }
 
 static std::vector<char> compressBitmap(const std::vector<char> &bitmap)
@@ -244,6 +293,8 @@ static void dump_unshared(unsigned proc_id, unsigned parent_id,
             {
                 numShared++;
                 bitmap.push_back('.');
+                if (DumpAll)
+                    vunshared.push_back(p);
             }
         }
     }
@@ -254,13 +305,9 @@ static void dump_unshared(unsigned proc_id, unsigned parent_id,
     printf ("\tunshared %5lld (%lldkB)\n", numOwn, numOwn * 4);
 
     std::vector<char> compressed = compressBitmap(bitmap);
-    printf ("RLE sharing bitmap:\n%s\n\n", &compressed[0]);
+    printf ("\tRLE sharing bitmap:\n%s\n", &compressed[0]);
 
-    if (DumpHex)
-    {
-        printf ("Un-shared data dump\n");
-        dumpPages(proc_id, parent_id, type, vunshared);
-    }
+    dumpPages(proc_id, parent_id, type, vunshared);
 }
 
 static void total_smaps(unsigned proc_id, unsigned parent_id,
@@ -403,6 +450,8 @@ int main(int argc, char **argv)
             help = true;
         else if (strstr(arg, "--hex"))
             DumpHex = true;
+        else if (strstr(arg, "--all"))
+            DumpAll = true;
         else
             appOrPid = arg;
     }
@@ -413,6 +462,8 @@ int main(int argc, char **argv)
     {
         fprintf(stderr, "Usage: loolmap --hex <name of process|pid>\n");
         fprintf(stderr, "Dump memory map information for a given process\n");
+        fprintf(stderr, "    --hex    Hex dump relevant page contents and diff to parent process\n");
+        fprintf(stderr, "    --all    Hex dump all writable pages whether touched or not\n");
         return 0;
     }
 
