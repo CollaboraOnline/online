@@ -24,10 +24,14 @@ L.Control.Header = L.Control.extend({
 		var elem = L.DomUtil.create('div', className, baseElem);
 		this._textColor = L.DomUtil.getStyle(elem, 'color');
 		this._backgroundColor = L.DomUtil.getStyle(elem, 'background-color');
-		this._font = L.DomUtil.getStyle(elem, 'font');
-		this._borderColor = L.DomUtil.getStyle(elem, 'border-color');
-		var borderWidth = L.DomUtil.getStyle(elem, 'border-width');
-		this._borderWidth = parseInt(borderWidth.slice(0, -2));
+		var fontFamily = L.DomUtil.getStyle(elem, 'font-family');
+		var fontSize = parseInt(L.DomUtil.getStyle(elem, 'font-size'));
+		var fontHeight = parseInt(L.DomUtil.getStyle(elem, 'line-height'));
+		var rate = fontHeight / fontSize;
+		this._font = fontSize + 'px/' + rate + ' ' + fontFamily;
+		this._borderColor = L.DomUtil.getStyle(elem, 'border-top-color');
+		var borderWidth = L.DomUtil.getStyle(elem, 'border-top-width');
+		this._borderWidth = parseInt(borderWidth);
 		this._cursor = L.DomUtil.getStyle(elem, 'cursor');
 		L.DomUtil.remove(elem);
 	},
