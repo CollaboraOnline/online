@@ -129,14 +129,6 @@ static void dumpDiff(const std::string &pageStr, const std::string &parentStr)
     }
 }
 
-static bool pageIsZero(const std::vector<char> &page)
-{
-    for (char c : page)
-        if (c != 0)
-            return false;
-    return true;
-}
-
 static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, const std::vector<addr_t> &pages)
 {
     char path_proc[PATH_SIZE];
@@ -154,7 +146,8 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
         printf ("\nUn-shared data dump\n");
 
     size_t cnt = 0;
-    long long int bytesTouched = 0;
+    addr_t sameButUnshared = 0;
+    addr_t bytesTouched = 0;
     for (auto page : pages)
     {
         std::vector<char> pageData, parentData;
@@ -177,38 +170,38 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
         std::stringstream parentStr;
         Util::dumpHex(parentStr, "", "", parentData, false);
 
-        bool matchesParent = pageStr.str() == parentStr.str();
+        int touched = 0;
         const char *style;
         if (parentData.size() > 0)
         {
-            if (pageIsZero(parentData))
+            bool bZeroParent = true;
+            for (size_t i = 0; i < pageData.size(); ++i)
             {
-                style = "was shared with zeros";
-                parentData.resize(0);
+                if (pageData[i] != parentData[i])
+                    touched++;
+                if (parentData[i] != 0)
+                    bZeroParent = false;
             }
-            if (matchesParent)
+            if (bZeroParent)
+            {
+                style = "was shared with parent zeros";
+                parentData.resize(0); // diff un-interesting.
+            }
+            if (touched == 0)
             {
                 if (DumpAll)
                     style = "dump unchanged";
                 else
+                {
                     style = "un-shared but matches parent";
-                parentData.resize(0);
+                    sameButUnshared++;
+                }
             }
             else
                 style = "was shared";
         }
         else
             style = "unique";
-
-        int touched = 0;
-        if (parentData.size() > 0)
-        {
-            for (size_t i = 0; i < pageData.size(); ++i)
-            {
-                if (pageData[i] != parentData[i])
-                    touched++;
-            }
-        }
 
         if (DumpHex)
         {
@@ -228,7 +221,8 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
     close (mem_fd);
     close (parent_fd);
 
-    printf ("\tdirtied bytes touched %5lld per page %.2f\n\n",
+    printf ("\tsame but unshared     %6lld (%lldkB)\n", sameButUnshared, sameButUnshared * 4);
+    printf ("\tdirtied bytes touched %6lld per page %.2f\n\n",
             bytesTouched, (double)bytesTouched / pages.size());
 }
 
@@ -423,7 +417,6 @@ static unsigned getParent(int proc_id)
                 path_proc, buffer);
         exit (1);
     }
-    fprintf(stderr,"parent of %u is %u\n", proc_id, ppid);
 
     return ppid;
 }
