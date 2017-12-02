@@ -555,7 +555,7 @@ L.Control.Header = L.Control.extend({
 			var startPos = this._twipsToPixels(parseInt(groupData.startPos));
 			var endPos = this._twipsToPixels(parseInt(groupData.endPos));
 			var isHidden = !!parseInt(groupData.hidden);
-			if (isHidden) {
+			if (isHidden || startPos === endPos) {
 				startPos -= this._groupHeadSize / 2;
 				endPos = startPos + this._groupHeadSize;
 			}
@@ -699,7 +699,7 @@ L.Control.Header = L.Control.extend({
 				return null; // you need to call getFirst on initial step
 
 			this._currentIndex += 1;
-			if (this._currentIndex >= this._endIndex) {
+			if (this._currentIndex > this._endIndex) {
 				// we iterated over all entries, reset everything
 				this._currentIndex = undefined;
 				this._currentRange = undefined;
@@ -719,8 +719,17 @@ L.Control.Header = L.Control.extend({
 							break;
 						}
 					}
-					this._currentRange = i;
-					this._currentIndex = index;
+					if (i < len) {
+						this._currentRange = i;
+						this._currentIndex = index;
+					}
+					else {
+						// we iterated over all entries, reset everything
+						this._currentIndex = undefined;
+						this._currentRange = undefined;
+						this._skipZeroSize = false;
+						return null;
+					}
 				}
 			}
 

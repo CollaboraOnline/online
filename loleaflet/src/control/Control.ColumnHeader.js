@@ -406,11 +406,11 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			this._data.pushBack(index, headerEntry);
 		}
 
-		// setup last header headerEntry
+		// setup last header entry
 		index = nextIndex - this._startHeaderIndex;
 		pos = parseInt(columns[last].size);
 		width = pos - prevPos;
-		this._data.pushBack(index, {pos: pos, size: pos - width});
+		this._data.pushBack(index, {pos: pos, size: width});
 
 		// collect group controls data
 		if (colGroups !== undefined && this._groups) {
@@ -652,7 +652,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var deltaTop = height - this._canvas.height;
 		var rowHdrTop = parseInt(L.DomUtil.getStyle(rowHeader, 'top')) + deltaTop;
 		var docTop = parseInt(L.DomUtil.getStyle(document, 'top')) + deltaTop;
-		console.log('resize: height: ' + height + ', deltaTop: ' + deltaTop + ', rowHdrTop: ' + rowHdrTop + ', docTop: ' + docTop);
 		L.DomUtil.setStyle(rowHeader, 'top', rowHdrTop + 'px');
 		L.DomUtil.setStyle(document, 'top', docTop + 'px');
 
