@@ -619,7 +619,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var deltaLeft = width - this._canvas.width;
 		var colHdrLeft = parseInt(L.DomUtil.getStyle(columnHeader, 'left')) + deltaLeft;
 		var docLeft = parseInt(L.DomUtil.getStyle(document, 'left')) + deltaLeft;
-		console.log('resize: width: ' + width + ', deltaLeft: ' + deltaLeft + ', colHdrLeft: ' + colHdrLeft + ', docLeft: ' + docLeft);
 		L.DomUtil.setStyle(columnHeader, 'left', colHdrLeft + 'px');
 		L.DomUtil.setStyle(document, 'left', docLeft + 'px');
 
