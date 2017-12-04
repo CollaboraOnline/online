@@ -810,11 +810,9 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
     }
 
     std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+    getLOKitDocument()->setView(_viewId);
     if (target == LokEventTargetEnum::Document)
-    {
-        getLOKitDocument()->setView(_viewId);
         getLOKitDocument()->postKeyEvent(type, charcode, keycode);
-    }
     else if (winId != 0)
         getLOKitDocument()->postWindowKeyEvent(winId, type, charcode, keycode);
 
@@ -876,10 +874,10 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
 
     std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
 
+    getLOKitDocument()->setView(_viewId);
     switch (target)
     {
     case LokEventTargetEnum::Document:
-        getLOKitDocument()->setView(_viewId);
         getLOKitDocument()->postMouseEvent(type, x, y, count, buttons, modifier);
         break;
     case LokEventTargetEnum::Window:
@@ -1025,6 +1023,8 @@ bool ChildSession::sendWindowCommand(const char* /*buffer*/, int /*length*/, con
         std::istringstream reader(tokens[1]);
         reader >> winId;
     }
+
+    getLOKitDocument()->setView(_viewId);
 
     if (tokens.size() > 2 && tokens[2] == "close")
         getLOKitDocument()->postWindow(winId, LOK_WINDOW_CLOSE);
