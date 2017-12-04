@@ -226,7 +226,9 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace'), id: '.uno:SearchDialog', type: 'dialog'}
+				{name: _('Edit Style...'), type: 'dialog', id: '.uno:EditStyle'},
+				{type: 'separator'},
+				{name: _('Find & Replace'), id: '.uno:SearchDialog', id: 'dialog'}
 			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
@@ -313,8 +315,10 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Insert column'), type: 'unocommand', uno: '.uno:InsertColumns'},
 				{type: 'separator'},
 				{name: _('Delete row'), type: 'unocommand', uno: '.uno:DeleteRows'},
-				{name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'}]
-			},
+				{name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'},
+				{type: 'separator'},
+				{name: _('Format'), type: 'dialog', id: '.uno:FormatCellDialog'},
+			]},
 			{name: _('Data'), type: 'menu', menu: [
 				{name: _('Group'), type: 'unocommand', uno: '.uno:Group'},
 				{name: _('Ungroup'), type: 'unocommand', uno: '.uno:Ungroup'},
