@@ -113,11 +113,8 @@ namespace LOKitHelper
             return "INVALIDATE_HEADER";
         case LOK_CALLBACK_CELL_ADDRESS:
             return "CELL_ADDRESS";
-        case LOK_CALLBACK_DIALOG:
-            return "DIALOG";
-        case LOK_CALLBACK_DIALOG_CHILD:
-            return "DIALOG_CHILD";
-
+        case LOK_CALLBACK_WINDOW:
+            return "WINDOW";
        }
 
         return std::to_string(type);
