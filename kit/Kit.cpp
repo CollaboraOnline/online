@@ -2134,7 +2134,7 @@ void lokit_main(const std::string& childRoot,
                         TerminationFlag = true;
                     }
                     else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
-                             tokens[0] == "dialog" || tokens[0] == "dialogchild" ||
+                             tokens[0] == "paintwindow" ||
                              LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
                     {
                         if (document)
