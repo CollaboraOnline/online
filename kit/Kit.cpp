@@ -411,10 +411,14 @@ class PngCache
                                    TileBinaryHash hash, TileWireId wid, TileWireId oldWid)
     {
         LOG_DBG("PNG cache with hash " << hash << " missed.");
+/*
+ *Disable for now - pushed in error.
+ *
         if (_deltaGen.createDelta(pixmap, startX, startY, width, height,
                                   bufferWidth, bufferHeight,
                                   output, wid, oldWid))
             return true;
+*/
 
         LOG_DBG("Encode a new png for this tile.");
         CacheEntry newEntry(bufferWidth * bufferHeight * 1, wid);
