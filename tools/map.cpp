@@ -177,7 +177,7 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
         std::stringstream parentStr;
         Util::dumpHex(parentStr, "", "", parentData, false);
 
-        bool matchesParent = pageStr == parentStr;
+        bool matchesParent = pageStr.str() == parentStr.str();
         const char *style;
         if (parentData.size() > 0)
         {
