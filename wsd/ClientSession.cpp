@@ -156,7 +156,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "uno" &&
              tokens[0] != "useractive" &&
              tokens[0] != "userinactive" &&
-             tokens[0] != "paintwindow")
+             tokens[0] != "paintwindow" &&
+             tokens[0] != "windowcommand")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
