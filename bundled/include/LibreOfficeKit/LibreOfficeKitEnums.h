@@ -40,6 +40,12 @@ typedef enum
 }
 LibreOfficeKitTileMode;
 
+typedef enum
+{
+    LOK_WINDOW_CLOSE
+}
+LibreOfficeKitWindowAction;
+
 /** Optional features of LibreOfficeKit, in particular callbacks that block
  *  LibreOfficeKit until the corresponding reply is received, which would
  *  deadlock if the client does not support the feature.
@@ -525,26 +531,7 @@ typedef enum
     /**
      * Dialog invalidation
      */
-    LOK_CALLBACK_DIALOG = 36,
-
-    /**
-     * Invalidation corresponding to dialog's children.
-     * Eg: Floating window etc.
-     *
-     * Payload example:
-     * {
-     *   "dialogID": "SpellDialog",
-     *   "action": "close"
-     * }
-     *
-     * - dialogID is the UNO command of the dialog
-     * - action can be
-     *   - close, means dialog child window is closed now
-     *   - invalidate, means dialog child window is invalidated
-     *     It also means that dialog child window is created if it's the first
-     *     invalidate
-     */
-    LOK_CALLBACK_DIALOG_CHILD = 37
+    LOK_CALLBACK_WINDOW = 36,
 }
 LibreOfficeKitCallbackType;
 
