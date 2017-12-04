@@ -61,11 +61,15 @@ L.Control.LokDialog = L.Control.extend({
 		return [x, y, width, height].join(',');
 	},
 
-	_sendWindowCommand: function(id, rectangle) {
+	_sendPaintWindow: function(id, rectangle) {
 		if (rectangle)
 			rectangle = rectangle.replace(/ /g, '');
 
 		this._map._socket.sendMessage('paintwindow ' + id + (rectangle ? ' rectangle=' + rectangle : ''));
+	},
+
+	_sendCloseWindow: function(id) {
+		this._map._socket.sendMessage('windowcommand ' + id + ' close');
 	},
 
 	_isRectangleValid: function(rect) {
@@ -84,7 +88,7 @@ L.Control.LokDialog = L.Control.extend({
 				this._width = width;
 				this._height = height;
 				this._launchDialog(this._toDlgPrefix(e.id));
-				this._sendWindowCommand(e.id, this._createRectStr());
+				this._sendPaintWindow(e.id, this._createRectStr());
 			} else if (e.winType === 'child') {
 				if (!this._isOpen(e.parentId))
 					return;
@@ -100,7 +104,7 @@ L.Control.LokDialog = L.Control.extend({
 				this._dialogs[parentId].childx = left;
 				this._dialogs[parentId].childy = top;
 				this._createDialogChild(e.id, parentId, top, left);
-				this._sendWindowCommand(e.id, this._createRectStr(0, 0, width, height));
+				this._sendPaintWindow(e.id, this._createRectStr(0, 0, width, height));
 			}
 		} else if (e.action === 'invalidate') {
 			var parent = this._getParentDialog(e.id);
@@ -114,7 +118,7 @@ L.Control.LokDialog = L.Control.extend({
 				if (!rectangle)
 					rectangle = '0,0,' + this._width + ',' + this._height;
 			}
-			this._sendWindowCommand(e.id, rectangle);
+			this._sendPaintWindow(e.id, rectangle);
 		} else if (e.action === 'size_changed') {
 			this._width = parseInt(e.size.split(',')[0]);
 			this._height = parseInt(e.size.split(',')[1]);
@@ -125,7 +129,7 @@ L.Control.LokDialog = L.Control.extend({
 			$('#' + strDlgId).remove();
 			this._launchDialog(strDlgId);
 			$('#' + strDlgId).dialog('option', 'title', this._title);
-			this._sendWindowCommand(e.id, this._createRectStr());
+			this._sendPaintWindow(e.id, this._createRectStr());
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.id) && !!e.rectangle) {
 				var rectangle = e.rectangle.split(',');
@@ -151,7 +155,7 @@ L.Control.LokDialog = L.Control.extend({
 			if (parent)
 				this._onDialogChildClose(this._toDlgPrefix(parent));
 			else
-				this._onDialogClose(e.id);
+				this._onDialogClose(e.id, false);
 		}
 	},
 
@@ -181,7 +185,7 @@ L.Control.LokDialog = L.Control.extend({
 			resizable: false,
 			dialogClass: 'lokdialog_container',
 			close: function() {
-				that._onDialogClose(strDlgId);
+				that._onDialogClose(that._toRawDlgId(strDlgId), true);
 			}
 		});
 
@@ -263,7 +267,9 @@ L.Control.LokDialog = L.Control.extend({
 		}
 	},
 
-	_onDialogClose: function(dialogId) {
+	_onDialogClose: function(dialogId, notifyBackend) {
+		if (notifyBackend)
+			this._sendCloseWindow(dialogId);
 		$('#' + this._toDlgPrefix(dialogId)).remove();
 		this._map.focus();
 		delete this._dialogs[dialogId];

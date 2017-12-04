@@ -13,6 +13,9 @@
 
 #include <sstream>
 
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/WebSocket.h>
@@ -233,7 +236,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "resetselection" ||
                tokens[0] == "saveas" ||
                tokens[0] == "useractive" ||
-               tokens[0] == "userinactive");
+               tokens[0] == "userinactive" ||
+               tokens[0] == "windowcommand");
 
         if (tokens[0] == "clientzoom")
         {
@@ -310,6 +314,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "userinactive")
         {
             setIsActive(false);
+        }
+        else if (tokens[0] == "windowcommand")
+        {
+            sendWindowCommand(buffer, length, tokens);
         }
         else
         {
@@ -1002,6 +1010,25 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
 
     LOG_TRC("Sending response (" << output.size() << " bytes) for: " << response);
     sendBinaryFrame(output.data(), output.size());
+    return true;
+}
+
+
+bool ChildSession::sendWindowCommand(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+{
+    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+    getLOKitDocument()->setView(_viewId);
+
+    unsigned winId = 0;
+    if (tokens.size() > 1)
+    {
+        std::istringstream reader(tokens[1]);
+        reader >> winId;
+    }
+
+    if (tokens.size() > 2 && tokens[2] == "close")
+        getLOKitDocument()->postWindow(winId, LOK_WINDOW_CLOSE);
+
     return true;
 }
 
