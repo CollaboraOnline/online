@@ -213,6 +213,7 @@ struct _LibreOfficeKitDocumentClass
             int nTilePixelHeight,
             int nTileTwipWidth,
             int nTileTwipHeight);
+
     /// @see lok::Document::setVisibleArea).
     void (*setClientVisibleArea) (LibreOfficeKitDocument* pThis, int nX, int nY, int nWidth, int nHeight);
 
@@ -258,42 +259,32 @@ struct _LibreOfficeKitDocumentClass
                        int* pArray,
                        size_t nSize);
 
-    /// Paints dialog with given dialog id to the buffer
-    /// @see lok::Document::paintDialog().
-    void (*paintDialog) (LibreOfficeKitDocument* pThis, unsigned nDialogId,
+    /// Paints window with given id to the buffer
+    /// @see lok::Document::paintWindow().
+    void (*paintWindow) (LibreOfficeKitDocument* pThis, unsigned nWindowId,
                          unsigned char* pBuffer,
                          const int x, const int y,
                          const int width, const int height);
 
-    /// @see lok::Document::paintActiveFloatingWindow().
-    void (*paintActiveFloatingWindow) (LibreOfficeKitDocument* pThis, unsigned nDialogId, unsigned char* pBuffer, int* nWidth, int* nHeight);
+    /// @see lok::Document::postWindow().
+    void (*postWindow) (LibreOfficeKitDocument* pThis, unsigned nWindowId, int nAction);
 
-    /// @see lok::Document::postDialogKeyEvent().
-    void (*postDialogKeyEvent) (LibreOfficeKitDocument* pThis,
-                                unsigned nDialogId,
+    /// @see lok::Document::postWindowKeyEvent().
+    void (*postWindowKeyEvent) (LibreOfficeKitDocument* pThis,
+                                unsigned nWindowId,
                                 int nType,
                                 int nCharCode,
                                 int nKeyCode);
 
-    /// @see lok::Document::postDialogMouseEvent().
-    void (*postDialogMouseEvent) (LibreOfficeKitDocument* pThis,
-                                  unsigned nDialogId,
+    /// @see lok::Document::postWindowMouseEvent().
+    void (*postWindowMouseEvent) (LibreOfficeKitDocument* pThis,
+                                  unsigned nWindowId,
                                   int nType,
                                   int nX,
                                   int nY,
                                   int nCount,
                                   int nButtons,
                                   int nModifier);
-
-    /// @see lok::Document::postDialogChildMouseEvent().
-    void (*postDialogChildMouseEvent) (LibreOfficeKitDocument* pThis,
-                                       unsigned nDialogId,
-                                       int nType,
-                                       int nX,
-                                       int nY,
-                                       int nCount,
-                                       int nButtons,
-                                       int nModifier);
 
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
