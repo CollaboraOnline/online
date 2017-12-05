@@ -208,9 +208,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 	layoutAnnotations: function () {
 		var annotations = this._annotations[this._partHashes[this._selectedPart]];
-		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
-		var topRight = this._map.latLngToLayerPoint(this._map.options.maxBounds.getNorthEast())
-			.subtract(this.extraSize.multiplyBy(scale))
+		var topRight = this._map.latLngToLayerPoint(this._map.options.docBounds.getNorthEast())
 			.add(L.point((this._selectedAnnotation ? 3 : 2) * this.options.marginX, this.options.marginY));
 		var topAnnotation = this._topAnnotation[this._selectedPart];
 		var bounds, annotation;
