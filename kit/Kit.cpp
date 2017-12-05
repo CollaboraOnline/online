@@ -408,7 +408,7 @@ class PngCache
                                    int width, int height,
                                    int bufferWidth, int bufferHeight,
                                    std::vector<char>& output, LibreOfficeKitTileMode mode,
-                                   TileBinaryHash hash, TileWireId wid, TileWireId oldWid)
+                                   TileBinaryHash hash, TileWireId wid, TileWireId /*oldWid*/)
     {
         LOG_DBG("PNG cache with hash " << hash << " missed.");
 /*
