@@ -226,8 +226,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Edit Style...'), type: 'dialog', id: '.uno:EditStyle'},
-				{type: 'separator'},
 				{name: _('Find & Replace'), id: '.uno:SearchDialog', id: 'dialog'}
 			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
@@ -243,6 +241,9 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _('Special character...'), id: 'specialcharacter', type: 'action'}]
 			},
+			{name: _('Format'), type: 'menu', menu: [
+				{name: _('Edit Style...'), id: '.uno:EditStyle', type: 'dialog'}
+			]},
 			{name: _('Tables'), type: 'menu', menu: [
 				{name: _('Insert'), type: 'menu', menu: [
 					{name: _('Rows before'), type: 'unocommand', uno: '.uno:InsertRowsBefore'},
@@ -284,8 +285,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
 					{name: _('ODF spreadsheet (.ods)'), id: 'downloadas-ods', type: 'action'},
 					{name: _('Microsoft Excel 2003 (.xls)'), id: 'downloadas-xls', type: 'action'},
-					{name: _('Microsoft Excel (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}]}]
-			},
+					{name: _('Microsoft Excel (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}]}
+			]},
 			{name: _('Edit'), type: 'menu', menu: [
 				{name: _('Undo'), type: 'unocommand', uno: '.uno:Undo'},
 				{name: _('Redo'), type: 'unocommand', uno: '.uno:Redo'},
@@ -296,11 +297,11 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace'), id: '.uno:SearchDialog', type: 'dialog'}]
-			},
+				{name: _('Find & Replace'), id: '.uno:SearchDialog', type: 'dialog'}
+			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
-				{name: _('Full screen'), id: 'fullscreen', type: 'action'}]
-			},
+				{name: _('Full screen'), id: 'fullscreen', type: 'action'}
+			]},
 			{name: _('Insert'), type: 'menu', menu: [
 				{name: _('Image'), id: 'insertgraphic', type: 'action'},
 				{name: _('Comment...'), id: 'insertcomment', type: 'action'},
@@ -308,16 +309,18 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Row'), type: 'unocommand', uno: '.uno:InsertRows'},
 				{name: _('Column'), type: 'unocommand', uno: '.uno:InsertColumns'},
 				{type: 'separator'},
-				{name: _('Special character...'), id: 'specialcharacter', type: 'action'}]
-			},
-			{name: _('Cells'), type: 'menu', menu: [
+				{name: _('Special character...'), id: 'specialcharacter', type: 'action'}
+			]},
+			{name: _('Format'), type: 'menu', menu: [
+				{name: _('Clear direct formatting'), type: 'unocommand', uno: '.uno:ResetAttributes'},
+				{name: _('Cells...'), type: 'dialog', id: '.uno:FormatCellDialog'}
+			]},
+			{name: _('Sheet'), type: 'menu', menu: [
 				{name: _('Insert row'), type: 'unocommand', uno: '.uno:InsertRows'},
 				{name: _('Insert column'), type: 'unocommand', uno: '.uno:InsertColumns'},
 				{type: 'separator'},
 				{name: _('Delete row'), type: 'unocommand', uno: '.uno:DeleteRows'},
-				{name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'},
-				{type: 'separator'},
-				{name: _('Format'), type: 'dialog', id: '.uno:FormatCellDialog'},
+				{name: _('Delete column'), type: 'unocommand', uno: '.uno:DeleteColumns'}
 			]},
 			{name: _('Data'), type: 'menu', menu: [
 				{name: _('Group'), type: 'unocommand', uno: '.uno:Group'},
@@ -326,8 +329,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Remove Outline'), type: 'unocommand', uno: '.uno:ClearOutline'},
 				{type: 'separator'},
 				{name: _('Show Details'), type: 'unocommand', uno: '.uno:ShowDetail'},
-				{name: _('Hide Details'), type: 'unocommand', uno: '.uno:HideDetail'}]
-			},
+				{name: _('Hide Details'), type: 'unocommand', uno: '.uno:HideDetail'}
+			]},
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
 				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
 				{name: _('Language'), type: 'menu', menu: [
