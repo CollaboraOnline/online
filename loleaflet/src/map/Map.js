@@ -343,6 +343,11 @@ L.Map = L.Evented.extend({
 		return this.on('moveend', this._panInsideMaxBounds);
 	},
 
+	setDocBounds: function (bounds) {
+		bounds = L.latLngBounds(bounds);
+		this.options.docBounds = bounds;
+	},
+
 	panInsideBounds: function (bounds, options) {
 		var center = this.getCenter(),
 		    newCenter = this._limitCenter(center, this._zoom, bounds);
@@ -498,6 +503,16 @@ L.Map = L.Evented.extend({
 		return this.options.maxZoom === undefined ?
 			(this._layersMaxZoom === undefined ? Infinity : this._layersMaxZoom) :
 			this.options.maxZoom;
+	},
+
+	getLayerMaxBounds: function () {
+		return L.bounds(this.latLngToLayerPoint(this.options.maxBounds.getNorthWest()),
+			this.latLngToLayerPoint(this.options.maxBounds.getSouthEast()));
+	},
+
+	getLayerDocBounds: function () {
+		return L.bounds(this.latLngToLayerPoint(this.options.docBounds.getNorthWest()),
+			this.latLngToLayerPoint(this.options.docBounds.getSouthEast()));
 	},
 
 	getBoundsZoom: function (bounds, inside, padding) { // (LatLngBounds[, Boolean, Point]) -> Number

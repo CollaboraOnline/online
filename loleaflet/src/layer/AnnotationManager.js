@@ -128,7 +128,7 @@ L.AnnotationManager = L.Class.extend({
 			if (comment.author in this._map._viewInfoByUserName) {
 				comment.avatar = this._map._viewInfoByUserName[comment.author].userextrainfo.avatar;
 			}
-			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
+			this._items.push(L.annotation(this._map.options.docBounds.getSouthEast(), comment).addTo(this._map));
 		}
 		if (this._items.length > 0) {
 			if (!ordered) {
@@ -137,7 +137,6 @@ L.AnnotationManager = L.Class.extend({
 						Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
 				});
 			}
-			this._map._docLayer._updateMaxBounds(true);
 			this.layout();
 		}
 	},
@@ -156,7 +155,7 @@ L.AnnotationManager = L.Class.extend({
 			if (changecomment.author in this._map._viewInfoByUserName) {
 				changecomment.avatar = this._map._viewInfoByUserName[changecomment.author].userextrainfo.avatar;
 			}
-			this._items.push(L.annotation(this._map.options.maxBounds.getSouthEast(), changecomment).addTo(this._map));
+			this._items.push(L.annotation(this._map.options.docBounds.getSouthEast(), changecomment).addTo(this._map));
 		}
 		if (this._items.length > 0) {
 			if (!ordered) {
@@ -165,7 +164,6 @@ L.AnnotationManager = L.Class.extend({
 						Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
 				});
 			}
-			this._map._docLayer._updateMaxBounds(true);
 			this.layout();
 		}
 	},
@@ -250,8 +248,7 @@ L.AnnotationManager = L.Class.extend({
 	update: function () {
 		if (this._selected) {
 			var point;
-			var scale = this._map.getZoomScale(this._map.getZoom(), 10);
-			var docRight = this._map.project(this._map.options.maxBounds.getNorthEast()).subtract(this.options.extraSize.multiplyBy(scale));
+			var docRight = this._map.project(this._map.options.docBounds.getNorthEast());
 			point = this._map._docLayer._twipsToPixels(this._selected._data.anchorPos.min);
 			this._arrow.setLatLngs([this._map.unproject(point), map.unproject(L.point(docRight.x, point.y))]);
 			this._map.addLayer(this._arrow);
@@ -261,9 +258,9 @@ L.AnnotationManager = L.Class.extend({
 		this.layout();
 	},
 
-	updateDocBounds: function (count, extraSize) {
-		if (this._items.length === count) {
-			this._map._docLayer._updateMaxBounds(true, extraSize);
+	updateDocBounds: function () {
+		if (this._items.length === 0) {
+			this._map.fire('updatemaxbounds', {sizeChanged: true});
 		}
 	},
 
@@ -338,8 +335,7 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	layout: function (zoom) {
-		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
-		var docRight = this._map.project(this._map.options.maxBounds.getNorthEast()).subtract(this.options.extraSize.multiplyBy(scale));
+		var docRight = this._map.project(this._map.options.docBounds.getNorthEast());
 		var topRight = docRight.add(L.point(this.options.marginX, this.options.marginY));
 		var latlng, layoutBounds, point, idx;
 		if (this._selected) {
@@ -358,7 +354,6 @@ L.AnnotationManager = L.Class.extend({
 				if (zoom) {
 					this._items[idx]._data.anchorPix = this._map._docLayer._twipsToPixels(this._items[idx]._data.anchorPos.min);
 				}
-
 				latlng = this._map.layerPointToLatLng(layoutBounds.getBottomLeft());
 				(new L.PosAnimation()).run(this._items[idx]._container, layoutBounds.getBottomLeft());
 				this._items[idx].setLatLng(latlng);
@@ -550,7 +545,6 @@ L.AnnotationManager = L.Class.extend({
 			if (this._selected && !this._selected.isEdit()) {
 				this._map.focus();
 			}
-			this.updateDocBounds(1);
 			this.layout();
 		} else if (action === 'Remove') {
 			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
@@ -558,13 +552,13 @@ L.AnnotationManager = L.Class.extend({
 			if (removed) {
 				this.adjustParentRemove(removed);
 				this._map.removeLayer(this.removeItem(id));
-				this.updateDocBounds(0);
 				if (this._selected === removed) {
 					this.unselect();
 				} else {
 					this.layout();
 				}
 			}
+			this.updateDocBounds();
 		} else if (action === 'Modify') {
 			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
 			var modified = this.getItem(id);
@@ -590,7 +584,7 @@ L.AnnotationManager = L.Class.extend({
 	_onAnnotationCancel: function (e) {
 		if (e.annotation._data.id === 'new') {
 			this._map.removeLayer(this.removeItem(e.annotation._data.id));
-			this.updateDocBounds(0);
+			this.updateDocBounds();
 		}
 		if (this._selected === e.annotation) {
 			this.unselect();
@@ -665,6 +659,7 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	_onAnnotationZoom: function (e) {
+		this._map.fire('updatemaxbounds', {sizeChanged: true});
 		this.layout(true);
 	}
 });

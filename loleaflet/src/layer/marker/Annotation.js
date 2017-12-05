@@ -9,6 +9,7 @@ L.Annotation = L.Layer.extend({
 		minWidth: 160,
 		maxHeight: 50,
 		imgSize: L.point([32, 32]),
+		margin: L.point([40, 40]),
 		noMenu: false
 	},
 
@@ -57,8 +58,8 @@ L.Annotation = L.Layer.extend({
 	},
 
 	setLatLng: function (latlng) {
-		this._latlng = L.latLng(latlng);
-		if (this._map) {
+		if (this._latlng != latlng) {
+			this._latlng = latlng;
 			this._updatePosition();
 		}
 		return this;
@@ -68,6 +69,7 @@ L.Annotation = L.Layer.extend({
 		var point = this._map.latLngToLayerPoint(this._latlng);
 		return L.bounds(point, point.add(L.point(this._container.offsetWidth, this._container.offsetHeight)));
 	},
+
 
 	show: function () {
 		this._container.style.visibility = '';
@@ -117,6 +119,28 @@ L.Annotation = L.Layer.extend({
 
 	parentOf: function(comment) {
 		return this._data.id === comment._data.parent;
+	},
+
+	_checkBounds: function () {
+		if (!this._map || this._map.animatingZoom || !this._container.style || this._container.style.visibility !== '') {
+			return;
+		}
+		var maxBounds = this._map.getLayerMaxBounds();
+		var thisBounds = this.getBounds();
+		if (!maxBounds.contains(thisBounds)) {
+			var docBounds = this._map.getLayerDocBounds();
+			var delta = L.point(Math.max(thisBounds.max.x - docBounds.max.x, 0), Math.max(thisBounds.max.y - docBounds.max.y, 0));
+			if (delta.x > 0) {
+				delta.x += this.options.margin.x;
+			}
+			if (delta.y > 0) {
+				delta.y += this.options.margin.y;
+			}
+			this._map.fire('updatemaxbounds', {
+				sizeChanged: true,
+				extraSize: delta
+			});
+		}
 	},
 
 	_createButton: function(container, value, handler) {
@@ -227,6 +251,7 @@ L.Annotation = L.Layer.extend({
 		this._data.text = this._nodeModifyText.value;
 		this._updateContent();
 		this.show();
+		this._checkBounds();
 		this._map.fire('AnnotationSave', {annotation: this});
 	},
 
@@ -279,6 +304,7 @@ L.Annotation = L.Layer.extend({
 		// Better to assign '' here instead of null to keep the behavior same for all
 		this._nodeReplyText.value = '';
 		this.show();
+		this._checkBounds();
 		this._map.fire('AnnotationReply', {annotation: this});
 	},
 
@@ -314,8 +340,11 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_updatePosition: function () {
-		var pos = this._map.latLngToLayerPoint(this._latlng);
-		L.DomUtil.setPosition(this._container, pos);
+		if (this._map) {
+			var pos = this._map.latLngToLayerPoint(this._latlng);
+			L.DomUtil.setPosition(this._container, pos);
+		}
+		this._checkBounds();
 	}
 });
 
