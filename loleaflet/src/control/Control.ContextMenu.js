@@ -10,6 +10,8 @@ L.Control.ContextMenu = L.Control.extend({
 		 * Enter UNO commands that should appear in the context menu.
 		 * Entering a UNO command under `general' would enable it for all types
 		 * of documents. If you do not want that, whitelist it in document specific filter.
+		 *
+		 * UNOCOMMANDS_EXTRACT_START <- don't remove this line, it's used by unocommands.py
 		 */
 		whitelist: {
 			/*
@@ -40,6 +42,7 @@ L.Control.ContextMenu = L.Control.extend({
 			presentation: ['EditStyle'],
 			drawing: []
 		}
+		// UNOCOMMANDS_EXTRACT_END <- don't remove this line, it's used by unocommands.py
 	},
 
 
