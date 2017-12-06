@@ -35,7 +35,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace'), id: '.uno:SearchDialog', type: 'dialog'},
+				{name: _('Find & Replace...'), id: '.uno:SearchDialog', type: 'dialog'},
 				{type: 'separator'},
 				{name: _('Track Changes'), type: 'menu', menu: [
 					{name: _('Record'), type: 'unocommand', uno: '.uno:TrackChanges'},
@@ -69,7 +69,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Page break'), type: 'unocommand', uno: '.uno:InsertPageBreak'},
 				{name: _('Column break'), type: 'unocommand', uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
-				{name: _('Hyperlink'), id: '.uno:HyperlinkDialog', type: 'dialog'},
+				{name: _('Hyperlink...'), id: '.uno:HyperlinkDialog', type: 'dialog'},
 				{name: _('Special character...'), id: 'specialcharacter', type: 'action'},
 				{name: _('Formatting mark'), type: 'menu', menu: [
 					{name: _('Non-breaking space'), type: 'unocommand', uno: '.uno:InsertNonBreakingSpace'},
@@ -184,10 +184,10 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Cell'), type: 'unocommand', uno: '.uno:EntireCell'}]},
 				{name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'},
 				{type: 'separator'},
-				{name: _('Properties'), id: '.uno:TableDialog', type: 'dialog'}
+				{name: _('Properties...'), id: '.uno:TableDialog', type: 'dialog'}
 			]},
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
-				{name: _('Spelling and Grammar'), id: '.uno:SpellingAndGrammarDialog', type: 'dialog'},
+				{name: _('Spelling...'), id: '.uno:SpellingAndGrammarDialog', type: 'dialog'},
 				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
 				{name: _('Language for selection'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'noneselection', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
@@ -195,7 +195,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('None (Do not check spelling)'), id: 'noneparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
 				{name: _('Language for entire document'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
-				{name: _('Word count'), id: '.uno:WordCountDialog', type: 'dialog'}
+				{name: _('Word Count...'), id: '.uno:WordCountDialog', type: 'dialog'}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
@@ -226,7 +226,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace'), id: '.uno:SearchDialog', id: 'dialog'}
+				{name: _('Find & Replace...'), id: '.uno:SearchDialog', id: 'dialog'}
 			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
@@ -297,7 +297,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace'), id: '.uno:SearchDialog', type: 'dialog'}
+				{name: _('Find & Replace...'), id: '.uno:SearchDialog', type: 'dialog'}
 			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'}
