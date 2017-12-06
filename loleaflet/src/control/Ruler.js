@@ -24,6 +24,7 @@ L.Control.Ruler = L.Control.extend({
 		map.on('rulerupdate', this._updateOptions, this);
 		map.on('docsize', this._updatePaintTimer, this);
 		map.on('scrolloffset resize', this._fixOffset, this);
+		map.on('updatepermission', this._changeInteractions, this);
 		this._map = map;
 
 		return this._initLayout();
@@ -34,6 +35,22 @@ L.Control.Ruler = L.Control.extend({
 		this.options.timer = setTimeout(L.bind(this._updateBreakPoints, this), 300);
 	},
 
+	_changeInteractions: function(e) {
+		if (e.perm === 'edit') {
+			this._lMarginDrag.style.cursor = 'e-resize';
+			this._rMarginDrag.style.cursor = 'w-resize';
+
+			L.DomEvent.on(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
+			L.DomEvent.on(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
+		}
+		else {
+			this._lMarginDrag.style.cursor = 'default';
+			this._rMarginDrag.style.cursor = 'default';
+
+			L.DomEvent.off(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
+			L.DomEvent.off(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
+		}
+	},
 
 	_initLayout: function() {
 		this._rWrapper = L.DomUtil.create('div', 'loleaflet-ruler leaflet-bar leaflet-control leaflet-control-custom');
@@ -112,28 +129,25 @@ L.Control.Ruler = L.Control.extend({
 			this._lMarginMarker = L.DomUtil.create('div', classMargin + ' ' + leftComp, this._rFace);
 			this._rMarginMarker =  L.DomUtil.create('div', classMargin + ' ' + rightComp, this._rFace);
 
-			if (this.options.interactive) {
-				this._lMarginDrag = L.DomUtil.create('div', classDraggable + ' ' + leftComp, this._rMarginWrapper);
-				this._lToolTip = L.DomUtil.create('div', lToolTip, this._lMarginDrag)
-				this._rMarginDrag = L.DomUtil.create('div', classDraggable + ' ' + rightComp, this._rMarginWrapper);
-				this._rToolTip = L.DomUtil.create('div', rToolTip, this._rMarginDrag)
-				this._lMarginDrag.style.cursor = 'e-resize';
-				this._rMarginDrag.style.cursor = 'w-resize';
-				this._lMarginDrag.title = leftMarginStr;
-				this._rMarginDrag.title = rightMarginStr;
-			}
+			this._lMarginDrag = L.DomUtil.create('div', classDraggable + ' ' + leftComp, this._rMarginWrapper);
+			this._lToolTip = L.DomUtil.create('div', lToolTip, this._lMarginDrag)
+			this._rMarginDrag = L.DomUtil.create('div', classDraggable + ' ' + rightComp, this._rMarginWrapper);
+			this._rToolTip = L.DomUtil.create('div', rToolTip, this._rMarginDrag)
+			this._lMarginDrag.title = leftMarginStr;
+			this._rMarginDrag.title = rightMarginStr;
 		}
 
 		this._lMarginMarker.style.width = (DraggableConvertRatio*lMargin) + 'px';
 		this._rMarginMarker.style.width = (DraggableConvertRatio*rMargin) + 'px';
+		this._lMarginDrag.style.width = (DraggableConvertRatio*lMargin) + 'px';
+		this._rMarginDrag.style.width = (DraggableConvertRatio*rMargin) + 'px';
 
 		if (this.options.interactive) {
-			this._lMarginDrag.style.width = (DraggableConvertRatio*lMargin) + 'px';
-			this._rMarginDrag.style.width = (DraggableConvertRatio*rMargin) + 'px';
+			this._changeInteractions({perm:'edit'});
 		}
-
-		L.DomEvent.on(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
-		L.DomEvent.on(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
+		else {
+			this._changeInteractions({perm:'readonly'});
+		}
 	},
 
 	_fixOffset: function() {
