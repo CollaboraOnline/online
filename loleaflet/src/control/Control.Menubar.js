@@ -35,19 +35,19 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace...'), id: '.uno:SearchDialog', type: 'dialog'},
+				{name: _('Find & Replace...'), uno: '.uno:SearchDialog', type: 'unocommand'},
 				{type: 'separator'},
 				{name: _('Track Changes'), type: 'menu', menu: [
 					{name: _('Record'), type: 'unocommand', uno: '.uno:TrackChanges'},
 					{name: _('Show'), type: 'unocommand', uno: '.uno:ShowTrackedChanges'},
 					{type: 'separator'},
-					{name: _('Manage Changes...'), id: '.uno:AcceptTrackedChanges', type: 'dialog'},
+					{name: _('Manage Changes...'), uno: '.uno:AcceptTrackedChanges', type: 'unocommand'},
 					{name: _('Accept All'), type: 'unocommand', uno: '.uno:AcceptAllTrackedChanges'},
 					{name: _('Reject All'), type: 'unocommand', uno: '.uno:RejectAllTrackedChanges'},
 					{name: _('Previous'), type: 'unocommand', uno: '.uno:PreviousTrackedChange'},
 					{name: _('Next'), type: 'unocommand', uno: '.uno:NextTrackedChange'}
 				]},
-				{name: _('Edit Style...'), id: '.uno:EditStyle', type: 'dialog'},
+				{name: _('Edit Style...'), uno: '.uno:EditStyle', type: 'unocommand'},
 			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
@@ -69,7 +69,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Page break'), type: 'unocommand', uno: '.uno:InsertPageBreak'},
 				{name: _('Column break'), type: 'unocommand', uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
-				{name: _('Hyperlink...'), id: '.uno:HyperlinkDialog', type: 'dialog'},
+				{name: _('Hyperlink...'), uno: '.uno:HyperlinkDialog', type: 'unocommand'},
 				{name: _('Special character...'), id: 'specialcharacter', type: 'action'},
 				{name: _('Formatting mark'), type: 'menu', menu: [
 					{name: _('Non-breaking space'), type: 'unocommand', uno: '.uno:InsertNonBreakingSpace'},
@@ -79,7 +79,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('No-width no break'), type: 'unocommand', uno: '.uno:InsertZWNBSP'},
 					{name: _('Left-to-right mark'), type: 'unocommand', uno: '.uno:InsertLRM'},
 					{name: _('Right-to-left mark'), type: 'unocommand', uno: '.uno:InsertRLM'}]},
-				{name: _('Index Entry...'), id: '.uno:InsertIndexesEntry', type: 'dialog'}
+				{name: _('Index Entry...'), uno: '.uno:InsertIndexesEntry', type: 'unocommand'}
 			]
 			},
 			{name: _('Format'), type: 'menu', menu: [
@@ -151,9 +151,9 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('To previous paragraph in level'), type: 'unocommand', uno: '.uno:JumpUpThisLevel'},
 					{name: _('Continue previous numbering'), type: 'unocommand', uno: '.uno:ContinueNumbering'}]},
 				{type: 'separator'},
-				{name: _('Character...'), id: '.uno:FontDialog', type: 'dialog'},
-				{name: _('Paragraph...'), id: '.uno:ParagraphDialog', type: 'dialog'},
-				{name: _('Bullets and Numbering...'), id: '.uno:OutlineBullet', type: 'dialog'},
+				{name: _('Character...'), uno: '.uno:FontDialog', type: 'unocommand'},
+				{name: _('Paragraph...'), uno: '.uno:ParagraphDialog', type: 'unocommand'},
+				{name: _('Bullets and Numbering...'), uno: '.uno:OutlineBullet', type: 'unocommand'},
 				{type: 'separator'},
 				{name: _('Clear direct formatting'), type: 'unocommand', uno: '.uno:ResetAttributes'},
 				{name: _('Page'), type: 'menu', menu: [
@@ -184,10 +184,10 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Cell'), type: 'unocommand', uno: '.uno:EntireCell'}]},
 				{name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'},
 				{type: 'separator'},
-				{name: _('Properties...'), id: '.uno:TableDialog', type: 'dialog'}
+				{name: _('Properties...'), uno: '.uno:TableDialog', type: 'unocommand'}
 			]},
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
-				{name: _('Spelling...'), id: '.uno:SpellingAndGrammarDialog', type: 'dialog'},
+				{name: _('Spelling...'), uno: '.uno:SpellingAndGrammarDialog', type: 'unocommand'},
 				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
 				{name: _('Language for selection'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'noneselection', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
@@ -195,7 +195,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('None (Do not check spelling)'), id: 'noneparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
 				{name: _('Language for entire document'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
-				{name: _('Word Count...'), id: '.uno:WordCountDialog', type: 'dialog'}
+				{name: _('Word Count...'), uno: '.uno:WordCountDialog', type: 'unocommand'}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
@@ -226,7 +226,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace...'), id: '.uno:SearchDialog', id: 'dialog'}
+				{name: _('Find & Replace...'), uno: '.uno:SearchDialog', type: 'unocommand'}
 			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
@@ -242,7 +242,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Special character...'), id: 'specialcharacter', type: 'action'}]
 			},
 			{name: _('Format'), type: 'menu', menu: [
-				{name: _('Edit Style...'), id: '.uno:EditStyle', type: 'dialog'}
+				{name: _('Edit Style...'), uno: '.uno:EditStyle', type: 'unocommand'}
 			]},
 			{name: _('Tables'), type: 'menu', menu: [
 				{name: _('Insert'), type: 'menu', menu: [
@@ -297,7 +297,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Paste'), type: 'unocommand', uno: '.uno:Paste'},
 				{name: _('Select all'), type: 'unocommand', uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{name: _('Find & Replace...'), id: '.uno:SearchDialog', type: 'dialog'}
+				{name: _('Find & Replace...'), uno: '.uno:SearchDialog', type: 'unocommand'}
 			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'}
@@ -313,7 +313,7 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _('Format'), type: 'menu', menu: [
 				{name: _('Clear direct formatting'), type: 'unocommand', uno: '.uno:ResetAttributes'},
-				{name: _('Cells...'), type: 'dialog', id: '.uno:FormatCellDialog'}
+				{name: _('Cells...'), type: 'unocommand', uno: '.uno:FormatCellDialog'}
 			]},
 			{name: _('Sheet'), type: 'menu', menu: [
 				{name: _('Insert row'), type: 'unocommand', uno: '.uno:InsertRows'},
@@ -682,8 +682,6 @@ L.Control.Menubar = L.Control.extend({
 			map.sendUnoCommand(unoCommand);
 		} else if (type === 'action') {
 			self._executeAction(item);
-		} else if (type === 'dialog') {
-			map.fire('opendialog', {uno: $(item).data('id')});
 		}
 
 		if ($(item).data('id') !== 'insertcomment')
@@ -763,9 +761,6 @@ L.Control.Menubar = L.Control.extend({
 			} else if (menu[i].type === 'unocommand') {
 				$(aItem).data('type', 'unocommand');
 				$(aItem).data('uno', menu[i].uno);
-			} else if (menu[i].type === 'dialog') {
-				$(aItem).data('type', 'dialog');
-				$(aItem).data('id', menu[i].id);
 			} else if (menu[i].type === 'separator') {
 				$(aItem).addClass('separator');
 			} else if (menu[i].type === 'action') {
