@@ -40,6 +40,7 @@ vex.defaultOptions.className = 'vex-theme-plain';
 global.vex = vex;
 
 var errorMessages = require('./dist/errormessages');
+require('./unocommands');
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");

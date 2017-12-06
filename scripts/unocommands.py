@@ -1,4 +1,12 @@
 #!/usr/bin/env python
+# -*- tab-width: 4; indent-tabs-mode: nil; py-indent-offset: 4 -*-
+#
+# This file is part of the LibreOffice project.
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
 
 import os
 import re
@@ -20,7 +28,7 @@ def commandsFromLine(line):
             inCommand = not inCommand
             # command ended, collect it
             if not inCommand and command != '':
-                commands += [ '.uno:' + command ]
+                commands += [ command ]
                 command = ''
         elif inCommand:
             command += c
@@ -31,7 +39,7 @@ def commandsFromLine(line):
 def commandFromMenuLine(line):
     commands = []
 
-    m = re.search(r"\buno: *'([^']*)'", line)
+    m = re.search(r"\buno: *'\.uno:([^']*)'", line)
     if m:
         commands = [ m.group(1) ]
 
@@ -67,7 +75,7 @@ def extractCommands(path):
 
 # Create mapping between the commands and appropriate strings
 def printCommandsFromXCU(xcu, commands):
-    usedCommands = []
+    descriptions = {}
 
     root = etree.parse(xcu)
     nodes = root.xpath("/oor:component-data/node/node/node", namespaces = {
@@ -76,6 +84,7 @@ def printCommandsFromXCU(xcu, commands):
     for node in nodes:
         # extract the uno command name
         unoCommand = node.get('{http://openoffice.org/2001/registry}name')
+        unoCommand = unoCommand[5:]
 
         if unoCommand in commands:
             textElement = node.xpath('prop[@oor:name="Label"]/value', namespaces = {
@@ -85,11 +94,9 @@ def printCommandsFromXCU(xcu, commands):
             if len(textElement) == 1:
                 # extract the uno command's English text
                 text = ''.join(textElement[0].itertext())
-                print ('    ' + unoCommand[5:] + ": _('" + text + "'),").encode('utf-8')
+                descriptions[unoCommand] = text
 
-		usedCommands += [ unoCommand ]
-
-    return usedCommands
+    return descriptions
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
@@ -98,19 +105,32 @@ if __name__ == "__main__":
 
     commands = extractCommands(sys.argv[2])
 
+    # build the uno descriptions from all the xcu files
+    descriptions = {}
+    dir = sys.argv[1] + '/officecfg/registry/data/org/openoffice/Office/UI'
+    for file in os.listdir(dir):
+        if file.endswith(".xcu"):
+            descriptions.update(printCommandsFromXCU(os.path.join(dir, file), commands))
+
+    # output the unocommands.js
     print '''// Don't modify, generated using unocommands.py
 
 var unoCommandsArray = {'''
 
-    # try all xcu files
-    usedCommands = []
-    dir = sys.argv[1] + '/officecfg/registry/data/org/openoffice/Office/UI'
-    for file in os.listdir(dir):
-        if file.endswith(".xcu"):
-            usedCommands += printCommandsFromXCU(os.path.join(dir, file), commands)
+    for key in sorted(descriptions.keys()):
+        print ('    ' + key + ": _('" + descriptions[key] + "'),").encode('utf-8')
 
-    print '};'
+    print '''};
 
-    dif = commands - set(usedCommands)
+global._UNO = function(string) {
+        var text = unoCommandsArray[string.substr(5)];
+        text = text.replace('~', '');
+        return text;
+}'''
+
+    # check that we have translations for everything
+    dif = commands - set(descriptions.keys())
     if len(dif) > 0:
-	sys.stderr.write("ERROR: The following commands are not covered:\n\n" + '\n'.join(dif) + "\n")
+        sys.stderr.write("ERROR: The following commands are not covered:\n\n.uno:" + '\n.uno:'.join(dif) + "\n")
+
+# vim: set shiftwidth=4 softtabstop=4 expandtab:

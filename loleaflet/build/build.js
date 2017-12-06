@@ -13,6 +13,7 @@ var JSBundleFiles = [
 	'main.js',
 	'dist/leaflet-src.js',
 	'dist/errormessages.js',
+	'unocommands.js',
 	'dist/plugins/draw-0.2.4/dist/leaflet.draw.js'
 ];
 
