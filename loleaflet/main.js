@@ -52,6 +52,7 @@ if (lang) {
     String.locale = lang;
 }
 
+require('./unocommands');
 var L = require('loleaflet');
 require('./dist/plugins/draw-0.2.4/dist/leaflet.draw.js');
 

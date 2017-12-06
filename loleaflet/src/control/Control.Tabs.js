@@ -45,7 +45,7 @@ L.Control.Tabs = L.Control.extend({
 			items: {
 				'insertsheetbefore': {name: _('Insert sheet before this')},
 				'insertsheetafter': {name: _('Insert sheet after this')},
-				'deletesheet': {name: _('Delete sheet'),
+				'deletesheet': {name: _UNO('.uno:Remove', 'spreadsheet', true),
 						callback: function(key, options) {
 							var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
 							vex.dialog.confirm({
@@ -58,7 +58,7 @@ L.Control.Tabs = L.Control.extend({
 							});
 						}
 				 },
-				'renamesheet': {name: _('Rename sheet'),
+				'renamesheet': {name: _UNO('.uno:RenameTable', 'spreadsheet', true),
 							callback: function(key, options) {
 								var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
 								vex.dialog.open({

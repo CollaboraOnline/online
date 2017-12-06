@@ -18,6 +18,7 @@ JQUERY_UI_DIST_IMAGES = $(patsubst $(JQUERY_UI_IMAGE_PATH)/%.png,dist/$(JQUERY_U
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
 all-local: node_modules $(L10N_JSON) $(JQUERY_UI_DIST_IMAGES)
+	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
 	jake build debug=$(ENABLE_DEBUG) minify=$(MINIFY)
@@ -41,7 +42,6 @@ pot:
 	xgettext --from-code=UTF-8 --keyword=_ --output=po/templates/loleaflet-ui.pot \
 		admin.strings.js \
 		evol.colorpicker.strings.js \
-		unocommands.js \
 		dist/errormessages.js \
 		dist/toolbar/toolbar.js \
 		src/admin/AdminSocketAnalytics.js \

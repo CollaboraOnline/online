@@ -37,6 +37,9 @@ L.Control.DocumentRepair = L.Control.extend({
 		var tbody = this._tbody = L.DomUtil.create('tbody', '', table);
 		var tr = L.DomUtil.create('tr', '', tbody);
 		var th = L.DomUtil.create('th', '', tr);
+		L.DomUtil.setStyle(th, 'display', 'none');
+		th.appendChild(document.createTextNode(''));
+		th = L.DomUtil.create('th', '', tr);
 		th.appendChild(document.createTextNode(_('Type')));
 		th = L.DomUtil.create('th', '', tr);
 		th.appendChild(document.createTextNode(_('Index')));
@@ -59,7 +62,10 @@ L.Control.DocumentRepair = L.Control.extend({
 	createAction: function (type, index, comment, viewId, dateTime) {
 		var row = L.DomUtil.create('tr', '', this._tbody);
 		var td = L.DomUtil.create('td', '', row);
+		L.DomUtil.setStyle(td, 'display', 'none');
 		td.appendChild(document.createTextNode(type));
+		td = L.DomUtil.create('td', '', row);
+		td.appendChild(document.createTextNode(_UNO('.uno:'+type)));
 		td = L.DomUtil.create('td', '', row);
 		td.appendChild(document.createTextNode(index));
 		td = L.DomUtil.create('td', '', row);
@@ -125,7 +131,7 @@ L.Control.DocumentRepair = L.Control.extend({
 	_onJumpClick: function () {
 		if (this._selected) {
 			var action = this._selected.childNodes[0].innerHTML;
-			var index = parseInt(this._selected.childNodes[1].innerHTML);
+			var index = parseInt(this._selected.childNodes[2].innerHTML);
 			var command = {
 				Repair: {
 					type: 'boolean',

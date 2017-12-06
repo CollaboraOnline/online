@@ -2,7 +2,7 @@
 * Control.ContextMenu
 */
 
-/* global $ map _ */
+/* global $ map _ _UNO */
 L.Control.ContextMenu = L.Control.extend({
 	options: {
 		SEPARATOR: '---------',
@@ -10,6 +10,8 @@ L.Control.ContextMenu = L.Control.extend({
 		 * Enter UNO commands that should appear in the context menu.
 		 * Entering a UNO command under `general' would enable it for all types
 		 * of documents. If you do not want that, whitelist it in document specific filter.
+		 *
+		 * UNOCOMMANDS_EXTRACT_START <- don't remove this line, it's used by unocommands.py
 		 */
 		whitelist: {
 			/*
@@ -31,15 +33,16 @@ L.Control.ContextMenu = L.Control.extend({
 				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
 				   'TableDeleteMenu',
 				   'DeleteRows', 'DeleteColumns', 'DeleteTable',
-				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowWidth',
+				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowHeight',
 				   'UpdateCurIndex','RemoveTableOf',
 				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes'],
 
-			spreadsheet: ['MergeCells', 'SplitCells', 'RecalcPivotTable', 'FormatCellDialog'],
+			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'FormatCellDialog'],
 
 			presentation: ['EditStyle'],
 			drawing: []
 		}
+		// UNOCOMMANDS_EXTRACT_END <- don't remove this line, it's used by unocommands.py
 	},
 
 
@@ -118,15 +121,8 @@ L.Control.ContextMenu = L.Control.extend({
 					continue;
 				}
 
-				itemName = item.text.replace('~', '');
-				itemName = itemName.replace('Â°', '°'); // bccu#1813 double encoding in cp-5.0 branch only
-				if (commandName === 'DeleteAuthor') {
-					// In some versions of libreoffice, context menu callback returns 'Delete All Comments by $1'
-					// while in some it returns the actual username replacing $1.
-					// Also, the translations in LO core are for 'Delete All Comments by This Author'
-					// Lets use the later for simplicity and to leverage the core translations in online
-					itemName = itemName.replace(itemName.substring('Delete All Comments by '.length), 'This Author');
-				}
+				// Get the translated text associated with the command
+				itemName = _UNO(item.command, docType, true);
 
 				switch (commandName) {
 				case 'Cut':

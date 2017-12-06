@@ -59,7 +59,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			className: 'loleaflet-font',
 			items: {
 				'insertcolbefore': {
-					name: _('Insert column before'),
+					name: _UNO('.uno:InsertColumnsBefore', 'spreadsheet', true),
 					callback: function() {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
@@ -68,7 +68,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 					}
 				},
 				'deleteselectedcol': {
-					name: _('Delete column'),
+					name: _UNO('.uno:DeleteColumns', 'spreadsheet', true),
 					callback: function() {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
@@ -77,7 +77,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 					}
 				},
 				'optimalwidth': {
-					name: _('Optimal Width') + '...',
+					name: _UNO('.uno:SetOptimalColumnWidth', 'spreadsheet', true),
 					callback: function() {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
@@ -86,7 +86,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 					}
 				},
 				'hideColumn': {
-					name: _('Hide Columns'),
+					name: _UNO('.uno:HideColumn', 'spreadsheet', true),
 					callback: function() {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
@@ -95,7 +95,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 					}
 				},
 				'showColumn': {
-					name: _('Show Columns'),
+					name: _UNO('.uno:ShowColumn', 'spreadsheet', true),
 					callback: function() {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
@@ -112,7 +112,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		if (!this._dialog) {
 			this._dialog = L.control.metricInput(this._onDialogResult, this,
 							     this._map._docLayer.twipsToHMM(this._map._docLayer.STD_EXTRA_WIDTH),
-							     {title: _('Optimal Column Width')});
+							     {title: _UNO('.uno:SetOptimalColumnWidth', 'spreadsheet', true).replace('...', '')});
 		}
 		if (this._map._docLayer._selections.getLayers().length === 0) {
 			this._selectColumn(index, 0);
