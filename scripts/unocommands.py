@@ -35,7 +35,7 @@ def commandsFromLine(line):
 
     return commands
 
-# Extract uno commands name from lines like "  type: 'unocommand', uno: '.uno:Command3',"
+# Extract uno commands name from lines like "  {uno: '.uno:Command3',"
 def commandFromMenuLine(line):
     commands = []
 
@@ -67,7 +67,7 @@ def extractCommands(path):
     # extract from the menu specifications
     f = open(path + '/loleaflet/src/control/Control.Menubar.js', 'r')
     for line in f:
-        if line.find("'unocommand'") >= 0:
+        if line.find("uno:") >= 0:
             commands += commandFromMenuLine(line)
 
     # may the list unique
@@ -124,7 +124,13 @@ var unoCommandsArray = {'''
 
 global._UNO = function(string) {
         var text = unoCommandsArray[string.substr(5)];
-        text = text.replace('~', '');
+        if (text !== undefined) {
+            text = text.replace('~', '');
+        } else {
+            // we should avoid this, but when it happens, present at least
+            // somehow reasonable text
+            text = string.substr(5);
+        }
         return text;
 }'''
 

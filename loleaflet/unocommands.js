@@ -149,6 +149,12 @@ var unoCommandsArray = {
 
 global._UNO = function(string) {
         var text = unoCommandsArray[string.substr(5)];
-        text = text.replace('~', '');
+        if (text !== undefined) {
+            text = text.replace('~', '');
+        } else {
+            // we should avoid this, but when it happens, present at least
+            // somehow reasonable text
+            text = string.substr(5);
+        }
         return text;
 }
