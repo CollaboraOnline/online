@@ -14,7 +14,18 @@ import sys
 from lxml import etree
 
 def usage():
-    message = """usage: {program} loffice_srcdir online_srcdir"""
+    message = """usage: {program} [--check] online_srcdir [loffice_srcdir]
+
+Extracts .uno: command descriptions from the LibreOffice XCU files.
+Also it is used during build to check consistency of unocommands.js.
+
+loffice_srcdir does not have to be provided when --check param is
+specified.
+
+Example:
+    {program} --check /path/to/online
+    {program} /path/to/online /path/to/loffice > unocommands.js
+"""
     print(message.format(program = os.path.basename(sys.argv[0])))
 
 # Extract uno commands name from lines like "  'Command1', 'Command2',"
@@ -98,16 +109,10 @@ def printCommandsFromXCU(xcu, commands):
 
     return descriptions
 
-if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        usage()
-        exit(1)
-
-    commands = extractCommands(sys.argv[2])
-
-    # build the uno descriptions from all the xcu files
+# Print commands from all the XCU files, and collect them too
+def printCommands(lofficeDir, commands):
     descriptions = {}
-    dir = sys.argv[1] + '/officecfg/registry/data/org/openoffice/Office/UI'
+    dir = lofficeDir + '/officecfg/registry/data/org/openoffice/Office/UI'
     for file in os.listdir(dir):
         if file.endswith(".xcu"):
             descriptions.update(printCommandsFromXCU(os.path.join(dir, file), commands))
@@ -123,20 +128,62 @@ var unoCommandsArray = {'''
     print '''};
 
 global._UNO = function(string) {
-        var text = unoCommandsArray[string.substr(5)];
-        if (text !== undefined) {
-            text = text.replace('~', '');
-        } else {
-            // we should avoid this, but when it happens, present at least
-            // somehow reasonable text
-            text = string.substr(5);
-        }
-        return text;
+    var text = unoCommandsArray[string.substr(5)];
+    if (text !== undefined) {
+        text = text.replace('~', '');
+    } else {
+        // we should avoid this, but when it happens, present at least
+        // somehow reasonable text
+        text = string.substr(5);
+    }
+    return text;
 }'''
+
+    return descriptions
+
+# Read the uno commands present in the unocommands.js for checking
+def parseUnocommandsJS(onlineDir):
+    descriptions = {}
+
+    f = open(onlineDir + '/loleaflet/unocommands.js', 'r')
+    readingCommands = False
+    for line in f:
+        m = re.match(r"    ([^:]*): _\('([^']*)'\),", line)
+        if m:
+            command = m.group(1)
+            text = m.group(2)
+            descriptions[command] = text
+
+    return descriptions
+
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        usage()
+        exit(1)
+
+    check = False
+    onlineDir = ''
+    lofficeDir = ''
+    if (sys.argv[1] == '--check'):
+        check = True
+        onlineDir = sys.argv[2]
+    else:
+        onlineDir = sys.argv[1]
+        lofficeDir = sys.argv[2]
+
+    commands = extractCommands(onlineDir)
+
+    # build the uno descriptions from all the xcu files
+    descriptions = {}
+    if (check):
+        descriptions = parseUnocommandsJS(onlineDir)
+    else:
+        descriptions = printCommands(lofficeDir, commands)
 
     # check that we have translations for everything
     dif = commands - set(descriptions.keys())
     if len(dif) > 0:
-        sys.stderr.write("ERROR: The following commands are not covered:\n\n.uno:" + '\n.uno:'.join(dif) + "\n")
+        sys.stderr.write("ERROR: The following commands are not covered in unocommands.js:\n\n.uno:" + '\n.uno:'.join(dif) + "\n\n")
+        exit(1)
 
 # vim: set shiftwidth=4 softtabstop=4 expandtab:
