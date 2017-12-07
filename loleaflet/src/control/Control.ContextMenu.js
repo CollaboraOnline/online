@@ -33,11 +33,11 @@ L.Control.ContextMenu = L.Control.extend({
 				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
 				   'TableDeleteMenu',
 				   'DeleteRows', 'DeleteColumns', 'DeleteTable',
-				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowWidth',
+				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowHeight',
 				   'UpdateCurIndex','RemoveTableOf',
 				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes'],
 
-			spreadsheet: ['MergeCells', 'SplitCells', 'RecalcPivotTable', 'FormatCellDialog'],
+			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'FormatCellDialog'],
 
 			presentation: ['EditStyle'],
 			drawing: []
