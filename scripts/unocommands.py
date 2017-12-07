@@ -67,7 +67,7 @@ def extractCommands(path):
     # extract from the menu specifications
     f = open(path + '/loleaflet/src/control/Control.Menubar.js', 'r')
     for line in f:
-        if line.find("uno:") >= 0:
+        if line.find("uno:") >= 0 and line.find("name:") < 0:
             commands += commandFromMenuLine(line)
 
     # may the list unique
