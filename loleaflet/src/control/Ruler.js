@@ -162,6 +162,7 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_initiateDrag: function(e) {
+		this._map.rulerActive = true;
 
 		var dragableElem = e.srcElement || e.target;
 		L.DomEvent.on(this._rFace, 'mousemove', this._moveMargin, this);
@@ -200,6 +201,8 @@ L.Control.Ruler = L.Control.extend({
 
 
 	_endDrag: function(e) {
+		this._map.rulerActive = false;
+
 		var posChange = e.originalEvent.clientX - this._initialposition;
 		var unoObj = {}, marginType, fact;
 
