@@ -48,13 +48,15 @@ def commandsFromLine(line):
 
 # Extract uno commands name from lines like "  {uno: '.uno:Command3',"
 def commandFromMenuLine(line):
-    commands = []
-
     m = re.search(r"\buno: *'\.uno:([^']*)'", line)
     if m:
-        commands = [ m.group(1) ]
+        return [ m.group(1) ]
 
-    return commands
+    m = re.search(r"\b_UNO\('.uno:([^']*)'", line)
+    if m:
+        return [ m.group(1) ]
+
+    return []
 
 # Extract all the uno commands we are using in the Online
 def extractCommands(path):
@@ -79,6 +81,8 @@ def extractCommands(path):
     f = open(path + '/loleaflet/src/control/Control.Menubar.js', 'r')
     for line in f:
         if line.find("uno:") >= 0 and line.find("name:") < 0:
+            commands += commandFromMenuLine(line)
+        elif line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
     # may the list unique
