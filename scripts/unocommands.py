@@ -24,7 +24,7 @@ specified.
 
 Example:
     {program} --check /path/to/online
-    {program} /path/to/online /path/to/loffice > unocommands.js
+    {program} /path/to/online /path/to/loffice
 """
     print(message.format(program = os.path.basename(sys.argv[0])))
 
@@ -114,7 +114,7 @@ def printCommandsFromXCU(xcu, commands):
     return descriptions
 
 # Print commands from all the XCU files, and collect them too
-def printCommands(lofficeDir, commands):
+def printCommands(onlineDir, lofficeDir, commands):
     descriptions = {}
     dir = lofficeDir + '/officecfg/registry/data/org/openoffice/Office/UI'
     for file in os.listdir(dir):
@@ -122,14 +122,15 @@ def printCommands(lofficeDir, commands):
             descriptions.update(printCommandsFromXCU(os.path.join(dir, file), commands))
 
     # output the unocommands.js
-    print '''// Don't modify, generated using unocommands.py
+    f = open(onlineDir + '/loleaflet/unocommands.js', 'w')
+    f.write('''// Don't modify, generated using unocommands.py
 
-var unoCommandsArray = {'''
+var unoCommandsArray = {\n''')
 
     for key in sorted(descriptions.keys()):
-        print ('    ' + key + ": _('" + descriptions[key] + "'),").encode('utf-8')
+        f.write(('    ' + key + ": _('" + descriptions[key] + "'),\n").encode('utf-8'))
 
-    print '''};
+    f.write('''};
 
 global._UNO = function(string) {
     var text = unoCommandsArray[string.substr(5)];
@@ -141,7 +142,7 @@ global._UNO = function(string) {
         text = string.substr(5);
     }
     return text;
-}'''
+}\n''')
 
     return descriptions
 
@@ -182,7 +183,7 @@ if __name__ == "__main__":
     if (check):
         descriptions = parseUnocommandsJS(onlineDir)
     else:
-        descriptions = printCommands(lofficeDir, commands)
+        descriptions = printCommands(onlineDir, lofficeDir, commands)
 
     # check that we have translations for everything
     dif = commands - set(descriptions.keys())
