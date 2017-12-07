@@ -9,24 +9,35 @@
 #
 
 import os
+import polib
 import re
 import sys
 from lxml import etree
 
-def usage():
-    message = """usage: {program} [--check] online_srcdir [loffice_srcdir]
+def usageAndExit():
+    message = """usage: {program} [--check|--update|--translate] online_dir [...]
 
-Extracts .uno: command descriptions from the LibreOffice XCU files.
-Also it is used during build to check consistency of unocommands.js.
+Checks, extracts, or translates .uno: command descriptions from the
+LibreOffice XCU files.
 
-loffice_srcdir does not have to be provided when --check param is
-specified.
+Check whether all the commands in the menus have their descriptions in
+unocommands.js:
 
-Example:
     {program} --check /path/to/online
-    {program} /path/to/online /path/to/loffice
+
+Update the unocommands.js by fetching the .uno: commands descriptions from the
+core.git.  This is what you want to do after you add new .uno: commands or
+dialogs to the menus:
+
+    {program} --update /path/to/online /path/to/loffice
+
+Update the translations of unocommands.js before releasing:
+
+    {program} --translate /path/to/online /path/to/translations
+
 """
     print(message.format(program = os.path.basename(sys.argv[0])))
+    exit(1)
 
 # Extract uno commands name from lines like "  'Command1', 'Command2',"
 def commandsFromLine(line):
@@ -114,7 +125,7 @@ def printCommandsFromXCU(xcu, commands):
     return descriptions
 
 # Print commands from all the XCU files, and collect them too
-def printCommands(onlineDir, lofficeDir, commands):
+def writeUnocommandsJS(onlineDir, lofficeDir, commands):
     descriptions = {}
     dir = lofficeDir + '/officecfg/registry/data/org/openoffice/Office/UI'
     for file in os.listdir(dir):
@@ -157,38 +168,92 @@ def parseUnocommandsJS(onlineDir):
         if m:
             command = m.group(1)
             text = m.group(2)
-            descriptions[command] = text
+            descriptions[command] = text.decode('utf-8')
 
     return descriptions
 
+# Generate translation JSONs for the .uno: commands
+def writeTranslations(onlineDir, translationsDir, descriptions):
+    keys = set(descriptions.keys())
+
+    dir = translationsDir + '/source/'
+    for lang in os.listdir(dir):
+        poFile = dir + lang + '/officecfg/registry/data/org/openoffice/Office/UI.po'
+        if not os.path.isfile(poFile):
+            continue
+
+        sys.stderr.write('Generating ' + lang + '...\n')
+
+        po = polib.pofile(poFile, autodetect_encoding=False, encoding="utf-8", wrapwidth=-1)
+
+        translations = {}
+        for entry in po.translated_entries():
+            m = re.search(r"\.uno:([^\n]*)\n", entry.msgctxt)
+            if m:
+                command = m.group(1)
+                if command in keys and descriptions[command] == entry.msgid:
+                    translations[entry.msgid] = entry.msgstr
+
+        f = open(onlineDir + '/loleaflet/dist/l10n/uno/' + lang + '.json', 'w')
+        f.write('{\n')
+
+        writeComma = False
+        for key in sorted(translations.keys()):
+            if writeComma:
+                f.write(',\n')
+            else:
+                writeComma = True
+            f.write(('"' + key + '":"' + translations[key] + '"').encode('utf-8'))
+
+        f.write('\n}\n')
+
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        usage()
-        exit(1)
+    if len(sys.argv) < 1:
+        usageAndExit()
 
     check = False
+    translate = False
     onlineDir = ''
     lofficeDir = ''
+    translationsDir = ''
     if (sys.argv[1] == '--check'):
+        if len(sys.argv) != 3:
+            usageAndExit()
+
         check = True
         onlineDir = sys.argv[2]
+    elif (sys.argv[1] == '--translate'):
+        translate = True
+        if len(sys.argv) != 4:
+            usageAndExit()
+
+        onlineDir = sys.argv[2]
+        translationsDir = sys.argv[3]
+    elif (sys.argv[1] == "--update"):
+        if len(sys.argv) != 4:
+            usageAndExit()
+
+        onlineDir = sys.argv[2]
+        lofficeDir = sys.argv[3]
     else:
-        onlineDir = sys.argv[1]
-        lofficeDir = sys.argv[2]
+        usageAndExit()
 
     commands = extractCommands(onlineDir)
 
     # build the uno descriptions from all the xcu files
     descriptions = {}
-    if (check):
+    if (check or translate):
         descriptions = parseUnocommandsJS(onlineDir)
     else:
-        descriptions = printCommands(onlineDir, lofficeDir, commands)
+        descriptions = writeUnocommandsJS(onlineDir, lofficeDir, commands)
 
     # check that we have translations for everything
     dif = commands - set(descriptions.keys())
     if len(dif) > 0:
-        sys.stderr.write("ERROR: The following commands are not covered in unocommands.js:\n\n.uno:" + '\n.uno:'.join(dif) + "\n\n")
+        sys.stderr.write("ERROR: The following commands are not covered in unocommands.js, run scripts/unocommands.py --update:\n\n.uno:" + '\n.uno:'.join(dif) + "\n\n")
         exit(1)
+
+    if (translate):
+        writeTranslations(onlineDir, translationsDir, descriptions)
 
 # vim: set shiftwidth=4 softtabstop=4 expandtab:
