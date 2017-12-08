@@ -69,24 +69,9 @@ def commandFromMenuLine(line):
 
     return []
 
-# Extract all the uno commands we are using in the Online
-def extractCommands(path):
+# Extract all the uno commands we are using in the Online menu
+def extractMenuCommands(path):
     commands = []
-
-    #files = { path + '/loleaflet/src/control/Control.ContextMenu.js',
-    #    path + '/loleaflet/src/control/Control.Menubar.js'
-    #}
-
-    # extract from the comments whitelist
-    f = open(path + '/loleaflet/src/control/Control.ContextMenu.js', 'r')
-    readingCommands = False
-    for line in f:
-        if line.find('UNOCOMMANDS_EXTRACT_START') >= 0:
-            readingCommands = True
-        elif line.find('UNOCOMMANDS_EXTRACT_END') >= 0:
-            readingCommands = False
-        elif readingCommands:
-            commands += commandsFromLine(line)
 
     # extract from the menu specifications
     f = open(path + '/loleaflet/src/control/Control.Menubar.js', 'r')
@@ -99,10 +84,26 @@ def extractCommands(path):
     # may the list unique
     return set(commands)
 
-# Create mapping between the commands and appropriate strings
-def printCommandsFromXCU(xcu, commands):
-    descriptions = {}
+# Extract all the uno commands we are using in the Online context menu
+def extractContextCommands(path):
+    commands = []
 
+    # extract from the comments whitelist
+    f = open(path + '/loleaflet/src/control/Control.ContextMenu.js', 'r')
+    readingCommands = False
+    for line in f:
+        if line.find('UNOCOMMANDS_EXTRACT_START') >= 0:
+            readingCommands = True
+        elif line.find('UNOCOMMANDS_EXTRACT_END') >= 0:
+            readingCommands = False
+        elif readingCommands:
+            commands += commandsFromLine(line)
+
+    # may the list unique
+    return set(commands)
+
+# Create mapping between the commands and appropriate strings
+def collectCommandsFromXCU(xcu, descriptions, commands, label, type):
     root = etree.parse(xcu)
     nodes = root.xpath("/oor:component-data/node/node/node", namespaces = {
         'oor': 'http://openoffice.org/2001/registry',
@@ -113,24 +114,58 @@ def printCommandsFromXCU(xcu, commands):
         unoCommand = unoCommand[5:]
 
         if unoCommand in commands:
-            textElement = node.xpath('prop[@oor:name="Label"]/value', namespaces = {
+            # normal labels
+            textElement = node.xpath('prop[@oor:name="' + label + '"]/value', namespaces = {
                 'oor': 'http://openoffice.org/2001/registry',
                 })
 
             if len(textElement) == 1:
                 # extract the uno command's English text
                 text = ''.join(textElement[0].itertext())
-                descriptions[unoCommand] = text
+                command = {}
+                if unoCommand in descriptions.keys():
+                    command = descriptions[unoCommand]
+
+                if not type in command:
+                    command[type] = {}
+
+                menuType = 'menu'
+                if label == 'PopupLabel':
+                    menuType = 'context'
+
+                if menuType in command[type]:
+                    continue
+
+                command[type][menuType] = text
+
+                descriptions[unoCommand] = command
 
     return descriptions
 
 # Print commands from all the XCU files, and collect them too
-def writeUnocommandsJS(onlineDir, lofficeDir, commands):
+def writeUnocommandsJS(onlineDir, lofficeDir, menuCommands, contextCommands):
     descriptions = {}
     dir = lofficeDir + '/officecfg/registry/data/org/openoffice/Office/UI'
     for file in os.listdir(dir):
-        if file.endswith(".xcu"):
-            descriptions.update(printCommandsFromXCU(os.path.join(dir, file), commands))
+        if file.endswith('.xcu'):
+            type = 'global';
+            if file.startswith('Writer'):
+                type = 'text'
+            elif file.startswith('Calc'):
+                type = 'spreadsheet'
+            elif file.startswith('DrawImpress'):
+                type = 'presentation'
+
+            # main menu
+            descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, menuCommands, 'ContextLabel', type)
+            descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, contextCommands, 'ContextLabel', type)
+
+            # right-click menu
+            descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, contextCommands, 'PopupLabel', type)
+
+            # fallbacks
+            descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, menuCommands, 'Label', type)
+            descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, contextCommands, 'Label', type)
 
     # output the unocommands.js
     f = open(onlineDir + '/loleaflet/unocommands.js', 'w')
@@ -139,42 +174,68 @@ def writeUnocommandsJS(onlineDir, lofficeDir, commands):
 var unoCommandsArray = {\n''')
 
     for key in sorted(descriptions.keys()):
-        f.write(('    ' + key + ": _('" + descriptions[key] + "'),\n").encode('utf-8'))
+        #f.write(('    ' + key + ": _('" + descriptions[key] + "'),\n").encode('utf-8'))
+        f.write(('\t' + key + ':{').encode('utf-8'))
+        for type in sorted(descriptions[key].keys()):
+            f.write((type + ':{').encode('utf-8'))
+            for menuType in sorted(descriptions[key][type].keys()):
+                f.write((menuType + ":_('" + descriptions[key][type][menuType] + "'),").encode('utf-8'))
+            f.write(('},').encode('utf-8'))
+        f.write(('},\n').encode('utf-8'))
 
     f.write('''};
 
-global._UNO = function(string) {
-    var text = unoCommandsArray[string.substr(5)];
-    if (text !== undefined) {
-        text = text.replace('~', '');
-    } else {
-        // we should avoid this, but when it happens, present at least
-        // somehow reasonable text
-        text = string.substr(5);
-    }
-    return text;
+global._UNO = function(string, component, isContext) {
+\tvar command = string.substr(5);
+\tvar context = 'menu';
+\tif (isContext === true) {
+\t\tcontext = 'context';
+\t}
+\tvar entry = unoCommandsArray[command];
+\tif (entry === undefined) {
+\t\treturn command;
+\t}
+\tvar componentEntry = entry[component];
+\tif (componentEntry === undefined) {
+\t\tcomponentEntry = entry['global'];
+\t\tif (componentEntry === undefined) {
+\t\t\treturn command;
+\t\t}
+\t}
+\tvar text = componentEntry[context];
+\tif (text === undefined) {
+\t\ttext = componentEntry['menu'];
+\t\tif (text === undefined) {
+\t\t\treturn command;
+\t\t}
+\t}
+
+\treturn text.replace('~', '');
 }\n''')
 
     return descriptions
 
 # Read the uno commands present in the unocommands.js for checking
 def parseUnocommandsJS(onlineDir):
-    descriptions = {}
+    strings = {}
 
     f = open(onlineDir + '/loleaflet/unocommands.js', 'r')
     readingCommands = False
     for line in f:
-        m = re.match(r"    ([^:]*): _\('([^']*)'\),", line)
+        line = line.decode('utf-8')
+        m = re.match(r"\t([^:]*):.*", line)
         if m:
             command = m.group(1)
-            text = m.group(2)
-            descriptions[command] = text.decode('utf-8')
 
-    return descriptions
+            n = re.findall(r"_\('([^']*)'\)", line)
+            if n:
+                strings[command] = n
+
+    return strings
 
 # Generate translation JSONs for the .uno: commands
-def writeTranslations(onlineDir, translationsDir, descriptions):
-    keys = set(descriptions.keys())
+def writeTranslations(onlineDir, translationsDir, strings):
+    keys = set(strings.keys())
 
     dir = translationsDir + '/source/'
     for lang in os.listdir(dir):
@@ -191,8 +252,10 @@ def writeTranslations(onlineDir, translationsDir, descriptions):
             m = re.search(r"\.uno:([^\n]*)\n", entry.msgctxt)
             if m:
                 command = m.group(1)
-                if command in keys and descriptions[command] == entry.msgid:
-                    translations[entry.msgid] = entry.msgstr
+                if command in keys:
+                    for text in strings[command]:
+                        if text == entry.msgid:
+                            translations[entry.msgid] = entry.msgstr
 
         f = open(onlineDir + '/loleaflet/dist/l10n/uno/' + lang + '.json', 'w')
         f.write('{\n')
@@ -238,22 +301,25 @@ if __name__ == "__main__":
     else:
         usageAndExit()
 
-    commands = extractCommands(onlineDir)
+    menuCommands = extractMenuCommands(onlineDir)
+    contextCommands = extractContextCommands(onlineDir)
 
-    # build the uno descriptions from all the xcu files
-    descriptions = {}
+    processedCommands = set([])
+    parsed = {}
     if (check or translate):
-        descriptions = parseUnocommandsJS(onlineDir)
+        parsed = parseUnocommandsJS(onlineDir)
+        processedCommands = set(parsed.keys())
     else:
-        descriptions = writeUnocommandsJS(onlineDir, lofficeDir, commands)
+        written = writeUnocommandsJS(onlineDir, lofficeDir, menuCommands, contextCommands)
+        processedCommands = set(written.keys())
 
     # check that we have translations for everything
-    dif = commands - set(descriptions.keys())
+    dif = (menuCommands | contextCommands) - processedCommands
     if len(dif) > 0:
         sys.stderr.write("ERROR: The following commands are not covered in unocommands.js, run scripts/unocommands.py --update:\n\n.uno:" + '\n.uno:'.join(dif) + "\n\n")
         exit(1)
 
     if (translate):
-        writeTranslations(onlineDir, translationsDir, descriptions)
+        writeTranslations(onlineDir, translationsDir, parsed)
 
 # vim: set shiftwidth=4 softtabstop=4 expandtab:

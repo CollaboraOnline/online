@@ -14,10 +14,10 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:ToolsMenu'), disabled: true},
 		],
 		text:  [
-			{name: _UNO('.uno:PickList'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs'), id: 'saveas', type: 'action'},
-				{name: _UNO('.uno:Print'), id: 'print', type: 'action'},
+			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
+				{name: _UNO('.uno:Save', 'text'), id: 'save', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:Print', 'text'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: _('Download as'), id: 'downloadas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
@@ -25,7 +25,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Microsoft Word 2003 (.doc)'), id: 'downloadas-doc', type: 'action'},
 					{name: _('Microsoft Word (.docx)'), id: 'downloadas-docx', type: 'action'}]}]
 			},
-			{name: _UNO('.uno:EditMenu'), type: 'menu', menu: [
+			{name: _UNO('.uno:EditMenu', 'text'), type: 'menu', menu: [
 				{uno: '.uno:Undo'},
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
@@ -37,7 +37,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'},
 				{type: 'separator'},
-				{name: _UNO('.uno:ChangesMenu'), type: 'menu', menu: [
+				{name: _UNO('.uno:ChangesMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:TrackChanges'},
 					{uno: '.uno:ShowTrackedChanges'},
 					{type: 'separator'},
@@ -49,19 +49,19 @@ L.Control.Menubar = L.Control.extend({
 				]},
 				{uno: '.uno:EditStyle'},
 			]},
-			{name: _UNO('.uno:ViewMenu'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen'), id: 'fullscreen', type: 'action'},
+			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
+				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:ZoomPlus'), id: 'zoomin', type: 'action'},
-				{name: _UNO('.uno:ZoomMinus'), id: 'zoomout', type: 'action'},
+				{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
+				{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:ControlCodes'},
 			]
 			},
-			{name: _UNO('.uno:InsertMenu'), type: 'menu', menu: [
-				{name: _UNO('.uno:InsertGraphic'), id: 'insertgraphic', type: 'action'},
-				{name: _UNO('.uno:InsertAnnotation'), id: 'insertcomment', type: 'action'},
+			{name: _UNO('.uno:InsertMenu', 'text'), type: 'menu', menu: [
+				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphic', type: 'action'},
+				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:InsertFootnote'},
 				{uno: '.uno:InsertEndnote'},
@@ -70,8 +70,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
 				{uno: '.uno:HyperlinkDialog'},
-				{name: _UNO('.uno:InsertSymbol'), id: 'specialcharacter', type: 'action'},
-				{name: _UNO('.uno:FormattingMarkMenu'), type: 'menu', menu: [
+				{name: _UNO('.uno:InsertSymbol', 'text'), id: 'specialcharacter', type: 'action'},
+				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertNonBreakingSpace'},
 					{uno: '.uno:InsertHardHyphen'},
 					{uno: '.uno:InsertSoftHyphen'},
@@ -82,8 +82,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertIndexesEntry'}
 			]
 			},
-			{name: _UNO('.uno:FormatMenu'), type: 'menu', menu: [
-				{name: _UNO('.uno:FormatTextMenu'), type: 'menu', menu: [
+			{name: _UNO('.uno:FormatMenu', 'text'), type: 'menu', menu: [
+				{name: _UNO('.uno:FormatTextMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:Bold'},
 					{uno: '.uno:Italic'},
 					{uno: '.uno:Underline'},
@@ -111,7 +111,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Text orientation'), type: 'menu', menu: [
 					{uno: '.uno:ParaLeftToRight'},
 					{uno: '.uno:ParaRightToLeft'}]},
-				{name: _UNO('.uno:FormatSpacingMenu'), type: 'menu', menu: [
+				{name: _UNO('.uno:FormatSpacingMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:SpacePara1'},
 					{uno: '.uno:SpacePara15'},
 					{uno: '.uno:SpacePara2'},
@@ -121,7 +121,7 @@ L.Control.Menubar = L.Control.extend({
 					{type: 'separator'},
 					{uno: '.uno:IncrementIndent'},
 					{uno: '.uno:DecrementIndent'}]},
-				{name: _UNO('.uno:TextAlign'), type: 'menu', menu: [
+				{name: _UNO('.uno:TextAlign', 'text'), type: 'menu', menu: [
 					{uno: '.uno:CommonAlignLeft'},
 					{uno: '.uno:CommonAlignHorizontalCenter'},
 					{uno: '.uno:CommonAlignRight'},
@@ -130,7 +130,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:CommonAlignTop'},
 					{uno: '.uno:CommonAlignVerticalCenter'},
 					{uno: '.uno:CommonAlignBottom'}]},
-				{name: _UNO('.uno:FormatBulletsMenu'), type: 'menu', menu: [
+				{name: _UNO('.uno:FormatBulletsMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:DefaultBullet'},
 					{uno: '.uno:DefaultNumbering'},
 					{type: 'separator'},
@@ -166,18 +166,18 @@ L.Control.Menubar = L.Control.extend({
 					{name: 'Legal, ' + _('Portrait'), type: 'action', id: 'legalportrait'},
 					{name: 'Legal, ' + _('Landscape'), type: 'action', id: 'legallandscape'}]}]
 			},
-			{name: _UNO('.uno:TableMenu'), type: 'menu', menu: [
-				{name: _UNO('.uno:TableInsertMenu'), type: 'menu', menu: [
+			{name: _UNO('.uno:TableMenu', 'text'), type: 'menu', menu: [
+				{name: _UNO('.uno:TableInsertMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
 					{uno: '.uno:InsertRowsAfter'},
 					{type: 'separator'},
 					{uno: '.uno:InsertColumnsBefore'},
 					{uno: '.uno:InsertColumnsAfter'}]},
-				{name: _UNO('.uno:TableDeleteMenu'), type: 'menu', menu: [
+				{name: _UNO('.uno:TableDeleteMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:DeleteRows'},
 					{uno: '.uno:DeleteColumns'},
 					{uno: '.uno:DeleteTable'}]},
-				{name: _UNO('.uno:TableSelectMenu'), type: 'menu', menu: [
+				{name: _UNO('.uno:TableSelectMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:SelectTable'},
 					{uno: '.uno:EntireRow'},
 					{uno: '.uno:EntireColumn'},
@@ -186,7 +186,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:TableDialog'}
 			]},
-			{name: _UNO('.uno:ToolsMenu'), id: 'tools', type: 'menu', menu: [
+			{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellingAndGrammarDialog'},
 				{uno: '.uno:SpellOnline'},
 				{name: _('Language for selection'), type: 'menu', menu: [
@@ -197,7 +197,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 				{uno: '.uno:WordCountDialog'}
 			]},
-			{name: _UNO('.uno:HelpMenu'), id: 'help', type: 'menu', menu: [
+			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
@@ -205,10 +205,10 @@ L.Control.Menubar = L.Control.extend({
 		],
 
 		presentation: [
-			{name: _UNO('.uno:PickList'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs'), id: 'saveas', type: 'action'},
-				{name: _UNO('.uno:Print'), id: 'print', type: 'action'},
+			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
+				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: _('Download as'), id: 'downloadas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
@@ -216,7 +216,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Microsoft Powerpoint 2003 (.ppt)'), id: 'downloadas-ppt', type: 'action'},
 					{name: _('Microsoft Powerpoint (.pptx)'), id: 'downloadas-pptx', type: 'action'}]}]
 			},
-			{name: _UNO('.uno:EditMenu'), type: 'menu', menu: [
+			{name: _UNO('.uno:EditMenu', 'presentation'), type: 'menu', menu: [
 				{uno: '.uno:Undo'},
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
@@ -228,47 +228,47 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
-			{name: _UNO('.uno:ViewMenu'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen'), id: 'fullscreen', type: 'action'},
+			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu', menu: [
+				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:ZoomPlus'), id: 'zoomin', type: 'action'},
-				{name: _UNO('.uno:ZoomMinus'), id: 'zoomout', type: 'action'},
+				{name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action'},
+				{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
 			},
-			{name: _UNO('.uno:InsertMenu'), type: 'menu', menu: [
-				{name: _UNO('.uno:InsertGraphic'), id: 'insertgraphic', type: 'action'},
-				{name: _UNO('.uno:InsertAnnotation'), id: 'insertcomment', type: 'action'},
+			{name: _UNO('.uno:InsertMenu', 'presentation'), type: 'menu', menu: [
+				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphic', type: 'action'},
+				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:InsertSymbol'), id: 'specialcharacter', type: 'action'}]
+				{name: _UNO('.uno:InsertSymbol', 'presentation'), id: 'specialcharacter', type: 'action'}]
 			},
-			{name: _UNO('.uno:FormatMenu'), type: 'menu', menu: [
+			{name: _UNO('.uno:FormatMenu', 'presentation'), type: 'menu', menu: [
 				{uno: '.uno:EditStyle'}
 			]},
-			{name: _UNO('.uno:TableMenu'), type: 'menu', menu: [
-				{name: _UNO('.uno:TableInsertMenu'), type: 'menu', menu: [
+			{name: _UNO('.uno:TableMenu', 'presentation'), type: 'menu', menu: [
+				{name: _UNO('.uno:TableInsertMenu', 'presentation'), type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
 					{uno: '.uno:InsertRowsAfter'},
 					{type: 'separator'},
 					{uno: '.uno:InsertColumnsBefore'},
 					{uno: '.uno:InsertColumnsAfter'}]},
-				{name: _UNO('.uno:TableDeleteMenu'), type: 'menu', menu: [
+				{name: _UNO('.uno:TableDeleteMenu', 'presentation'), type: 'menu', menu: [
 					{uno: '.uno:DeleteRows'},
 					{uno: '.uno:DeleteColumns'}]},
 				{uno: '.uno:MergeCells'}]
 			},
-			{name: _UNO('.uno:SlideMenu'), type: 'menu', menu: [
-				{name: _UNO('.uno:InsertSlide'), id: 'insertpage', type: 'action'},
-				{name: _UNO('.uno:DuplicateSlide'), id: 'duplicatepage', type: 'action'},
-				{name: _UNO('.uno:DeleteSlide'), id: 'deletepage', type: 'action'},
+			{name: _UNO('.uno:SlideMenu', 'presentation'), type: 'menu', menu: [
+				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
+				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
+				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'},
 				{type: 'separator', id: 'fullscreen-presentation-separator'},
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			},
-			{name: _UNO('.uno:ToolsMenu'), id: 'tools', type: 'menu', menu: [
+			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellOnline'},
 				{name: _('Language'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 			]},
-			{name: _UNO('.uno:HelpMenu'), id: 'help', type: 'menu', menu: [
+			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
@@ -276,10 +276,10 @@ L.Control.Menubar = L.Control.extend({
 		],
 
 		spreadsheet: [
-			{name: _UNO('.uno:PickList'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs'), id: 'saveas', type: 'action'},
-				{name: _UNO('.uno:Print'), id: 'print', type: 'action'},
+			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
+				{name: _UNO('.uno:Save', 'spreadsheet'), id: 'save', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:Print', 'spreadsheet'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: _('Download as'), id:'downloadas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
@@ -287,7 +287,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Microsoft Excel 2003 (.xls)'), id: 'downloadas-xls', type: 'action'},
 					{name: _('Microsoft Excel (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}]}
 			]},
-			{name: _UNO('.uno:EditMenu'), type: 'menu', menu: [
+			{name: _UNO('.uno:EditMenu', 'spreadsheet'), type: 'menu', menu: [
 				{uno: '.uno:Undo'},
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
@@ -299,43 +299,43 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
-			{name: _UNO('.uno:ViewMenu'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen'), id: 'fullscreen', type: 'action'}
+			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', menu: [
+				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'}
 			]},
-			{name: _UNO('.uno:InsertMenu'), type: 'menu', menu: [
-				{name: _UNO('.uno:InsertGraphic'), id: 'insertgraphic', type: 'action'},
-				{name: _UNO('.uno:InsertAnnotation'), id: 'insertcomment', type: 'action'},
+			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), type: 'menu', menu: [
+				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphic', type: 'action'},
+				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:InsertRows'},
 				{uno: '.uno:InsertColumns'},
 				{type: 'separator'},
-				{name: _UNO('.uno:InsertSymbol'), id: 'specialcharacter', type: 'action'}
+				{name: _UNO('.uno:InsertSymbol', 'spreadsheet'), id: 'specialcharacter', type: 'action'}
 			]},
-			{name: _UNO('.uno:FormatMenu'), type: 'menu', menu: [
+			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), type: 'menu', menu: [
 				{uno: '.uno:ResetAttributes'},
 				{uno: '.uno:FormatCellDialog'}
 			]},
-			{name: _UNO('.uno:SheetMenu'), type: 'menu', menu: [
+			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), type: 'menu', menu: [
 				{uno: '.uno:InsertRows'},
 				{uno: '.uno:InsertColumns'},
 				{type: 'separator'},
 				{uno: '.uno:DeleteRows'},
 				{uno: '.uno:DeleteColumns'}
 			]},
-			{name: _UNO('.uno:DataMenu'), type: 'menu', menu: [
+			{name: _UNO('.uno:DataMenu', 'spreadsheet'), type: 'menu', menu: [
 				{uno: '.uno:DataSort'},
 				{uno: '.uno:SortAscending'},
 				{uno: '.uno:SortDescending'},
 				{type: 'separator'},
 				{uno: '.uno:DataFilterAutoFilter'},
-				{name: _UNO('.uno:FilterMenu'), type: 'menu', menu: [
+				{name: _UNO('.uno:FilterMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:DataFilterStandardFilter'},
 					{uno: '.uno:DataFilterSpecialFilter'},
 					{type: 'separator'},
 					{uno: '.uno:DataFilterRemoveFilter'},
 					{uno: '.uno:DataFilterHideAutoFilter'}]},
 				{type: 'separator'},
-				{name: _UNO('.uno:GroupOutlineMenu'), type: 'menu', menu: [
+				{name: _UNO('.uno:GroupOutlineMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:Group'},
 					{uno: '.uno:Ungroup'},
 					{type: 'separator'},
@@ -344,12 +344,12 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:HideDetail'},
 					{uno: '.uno:ShowDetail'}]}
 			]},
-			{name: _UNO('.uno:ToolsMenu'), id: 'tools', type: 'menu', menu: [
+			{name: _UNO('.uno:ToolsMenu', 'spreadsheet'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellOnline'},
 				{name: _('Language'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 			]},
-			{name: _UNO('.uno:HelpMenu'), id: 'help', type: 'menu', menu: [
+			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
@@ -703,6 +703,7 @@ L.Control.Menubar = L.Control.extend({
 
 	_createMenu: function(menu) {
 		var itemList = [];
+		var docType = this._map.getDocType();
 		for (var i in menu) {
 			if (menu[i].id === 'about' && (L.DomUtil.get('about-dialog') === null)) {
 				continue;
@@ -763,7 +764,7 @@ L.Control.Menubar = L.Control.extend({
 			if (menu[i].name !== undefined) {
 				aItem.innerHTML = menu[i].name;
 			} else if (menu[i].uno !== undefined) {
-				aItem.innerHTML = _UNO(menu[i].uno);
+				aItem.innerHTML = _UNO(menu[i].uno, docType);
 			} else {
 				aItem.innerHTML = '';
 			}

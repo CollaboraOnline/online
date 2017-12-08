@@ -122,7 +122,7 @@ L.Control.ContextMenu = L.Control.extend({
 				}
 
 				// Get the translated text associated with the command
-				itemName = _UNO(item.command);
+				itemName = _UNO(item.command, docType, true);
 
 				switch (commandName) {
 				case 'Cut':
