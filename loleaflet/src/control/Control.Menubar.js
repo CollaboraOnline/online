@@ -244,14 +244,14 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:FormatMenu', 'presentation'), type: 'menu', menu: [
 				{uno: '.uno:EditStyle'}
 			]},
-			{name: _UNO('.uno:TableMenu', 'presentation'), type: 'menu', menu: [
-				{name: _UNO('.uno:TableInsertMenu', 'presentation'), type: 'menu', menu: [
+			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
+				{name: _UNO('.uno:TableInsertMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
 					{uno: '.uno:InsertRowsAfter'},
 					{type: 'separator'},
 					{uno: '.uno:InsertColumnsBefore'},
 					{uno: '.uno:InsertColumnsAfter'}]},
-				{name: _UNO('.uno:TableDeleteMenu', 'presentation'), type: 'menu', menu: [
+				{name: _UNO('.uno:TableDeleteMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 					{uno: '.uno:DeleteRows'},
 					{uno: '.uno:DeleteColumns'}]},
 				{uno: '.uno:MergeCells'}]
