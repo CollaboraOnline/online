@@ -323,13 +323,26 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:DeleteColumns'}
 			]},
 			{name: _UNO('.uno:DataMenu'), type: 'menu', menu: [
-				{uno: '.uno:Group'},
-				{uno: '.uno:Ungroup'},
+				{uno: '.uno:DataSort'},
+				{uno: '.uno:SortAscending'},
+				{uno: '.uno:SortDescending'},
 				{type: 'separator'},
-				{uno: '.uno:ClearOutline'},
+				{uno: '.uno:DataFilterAutoFilter'},
+				{name: _UNO('.uno:FilterMenu'), type: 'menu', menu: [
+					{uno: '.uno:DataFilterStandardFilter'},
+					{uno: '.uno:DataFilterSpecialFilter'},
+					{type: 'separator'},
+					{uno: '.uno:DataFilterRemoveFilter'},
+					{uno: '.uno:DataFilterHideAutoFilter'}]},
 				{type: 'separator'},
-				{uno: '.uno:ShowDetail'},
-				{uno: '.uno:HideDetail'}
+				{name: _UNO('.uno:GroupOutlineMenu'), type: 'menu', menu: [
+					{uno: '.uno:Group'},
+					{uno: '.uno:Ungroup'},
+					{type: 'separator'},
+					{uno: '.uno:ClearOutline'},
+					{type: 'separator'},
+					{uno: '.uno:HideDetail'},
+					{uno: '.uno:ShowDetail'}]}
 			]},
 			{name: _UNO('.uno:ToolsMenu'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellOnline'},
