@@ -129,7 +129,27 @@ static void dumpDiff(const std::string &pageStr, const std::string &parentStr)
     }
 }
 
-static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, const std::vector<addr_t> &pages)
+struct Map {
+    addr_t _start;
+    addr_t _end;
+    std::string _name;
+};
+
+struct AddrSpace {
+    std::vector<Map> _maps;
+
+    std::string findName(addr_t page) const
+    {
+        for (const Map &i : _maps)
+        {
+            if (i._start <= page && i._end > page)
+                return i._name;
+        }
+        return std::string("");
+    }
+};
+
+static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, const std::vector<addr_t> &pages, const AddrSpace &space)
 {
     char path_proc[PATH_SIZE];
     snprintf(path_proc, sizeof(path_proc), "/proc/%d/mem", proc_id);
@@ -204,11 +224,11 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
 
         if (DumpHex)
         {
-            printf ("%s page: 0x%.8llx (%d/%d) - touched: %d - %s\n",
+            printf ("%s page: 0x%.8llx (%d/%d) - touched: %d - %s - from %s\n",
                     type, page, (int)++cnt, (int)pages.size(), touched,
-                    style);
+                    style, space.findName(page).c_str());
 
-            if (parentData.size() == 0)
+            if (touched == 0)
                 printf("%s", pageStr.str().c_str());
             else
                 dumpDiff(pageStr.str(), parentStr.str());
@@ -254,7 +274,8 @@ static std::vector<char> compressBitmap(const std::vector<char> &bitmap)
 }
 
 static void dump_unshared(unsigned proc_id, unsigned parent_id,
-                          const char *type, const std::vector<addr_t> &vaddrs)
+                          const char *type, const std::vector<addr_t> &vaddrs,
+                          const AddrSpace & space)
 {
     char path_proc[PATH_SIZE];
     snprintf(path_proc, sizeof(path_proc), "/proc/%d/pagemap", proc_id);
@@ -300,7 +321,7 @@ static void dump_unshared(unsigned proc_id, unsigned parent_id,
     std::vector<char> compressed = compressBitmap(bitmap);
     printf ("\tRLE sharing bitmap:\n%s\n", &compressed[0]);
 
-    dumpPages(proc_id, parent_id, type, vunshared);
+    dumpPages(proc_id, parent_id, type, vunshared, space);
 }
 
 static void total_smaps(unsigned proc_id, unsigned parent_id,
@@ -315,6 +336,8 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
     addr_t total_shared_clean = 0ull;
     addr_t smap_value;
     char smap_key[MAP_SIZE];
+
+    AddrSpace space;
 
     std::vector<addr_t> heapVAddrs, anonVAddrs, fileVAddrs;
     std::vector<addr_t> *pushTo = nullptr;
@@ -338,6 +361,15 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
             // 012d0000-0372f000 rw-p 00000000 00:00 0  [heap]
             if (sscanf(buffer, "%llx-%llx rw-p", &start, &end) == 2)
             {
+                Map map;
+                map._start = start;
+                map._end = end;
+                const char *name = strchr(buffer, '[');
+                if (!name)
+                    name = strchr(buffer, '/');
+                if (name)
+                    map._name = std::string(name);
+                space._maps.push_back(map);
                 for (addr_t p = start; p < end; p += 0x1000)
                     pushTo->push_back(p);
             }
@@ -389,9 +421,10 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
     printf("Anon page cnt :%20lld\n", (addr_t)anonVAddrs.size());
     printf("File page cnt :%20lld\n", (addr_t)fileVAddrs.size());
     printf("\n");
-    dump_unshared(proc_id, parent_id, "heap", heapVAddrs);
-    dump_unshared(proc_id, parent_id, "anon", anonVAddrs);
-    dump_unshared(proc_id, parent_id, "file", fileVAddrs);
+
+    dump_unshared(proc_id, parent_id, "heap", heapVAddrs, space);
+    dump_unshared(proc_id, parent_id, "anon", anonVAddrs, space);
+    dump_unshared(proc_id, parent_id, "file", fileVAddrs, space);
 }
 
 static unsigned getParent(int proc_id)
