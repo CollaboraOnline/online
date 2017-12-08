@@ -140,13 +140,14 @@ L.Control.LokDialog = L.Control.extend({
 				$('#' + strDlgId + '-cursor').css({height: height});
 				// set the position of the lokdialog-cursor
 				$(this._dialogs[e.id].cursor).css({left: x, top: y});
+				$('#' + strDlgId + '-cursor').css({display: this._dialogs[e.id].cursorVisible ? 'block' : 'none'});
 			}
 		} else if (e.action === 'title_changed') {
 			this._title = e.title;
 			$('#' + strDlgId).dialog('option', 'title', e.title);
 		} else if (e.action === 'cursor_visible') {
-			var visible = e.visible === 'true';
-			if (visible)
+			this._dialogs[e.id].cursorVisible = e.visible === 'true';
+			if (this._dialogs[e.id].cursorVisible)
 				$('#' + strDlgId + '-cursor').css({display: 'block'});
 			else
 				$('#' + strDlgId + '-cursor').css({display: 'none'});
