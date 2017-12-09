@@ -189,12 +189,14 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellingAndGrammarDialog'},
 				{uno: '.uno:SpellOnline'},
-				{name: _('Language for selection'), type: 'menu', menu: [
-					{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
-				{name: _('Language for paragraph'), type: 'menu', menu: [
-					{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
-				{name: _('Language for entire document'), type: 'menu', menu: [
-					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
+				{name: _UNO('.uno:LanguageMenu', 'text'), type: 'menu', menu: [
+					{name: _UNO('.uno:SetLanguageSelectionMenu', 'text'), type: 'menu', menu: [
+						{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
+					{name: _UNO('.uno:SetLanguageParagraphMenu', 'text'), type: 'menu', menu: [
+						{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
+					{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
+						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
+				]},
 				{uno: '.uno:WordCountDialog'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
