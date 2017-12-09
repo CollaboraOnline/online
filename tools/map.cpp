@@ -31,6 +31,7 @@ typedef unsigned long long addr_t;
 
 bool DumpHex = false;
 bool DumpAll = false;
+bool DumpStrings = false;
 
 #define MAP_SIZE 20
 #define PATH_SIZE 1000 // No harm in having it much larger than strictly necessary. Avoids compiler warning.
@@ -138,20 +139,44 @@ static void dumpDiff(const std::string &pageStr, const std::string &parentStr)
     }
 }
 
+struct AddrSpace;
+
 struct Map {
     addr_t _start;
     addr_t _end;
     std::string _name;
+    size_t size() { return _end - _start; }
+};
+
+struct StringData {
+    size_t _count;
+    size_t _chars;
+    StringData() :
+        _count(0),
+        _chars(0)
+    {}
 };
 
 struct AddrSpace {
     unsigned _proc_id;
     std::vector<Map> _maps;
+    StringData _strings[3];
 
     AddrSpace(unsigned proc_id) :
         _proc_id(proc_id)
     {
     }
+    void printStats()
+    {
+        char prefixes[] = { 'S', 'U', 'c' };
+        for (int i = 0; i < 2; ++i)
+        {
+            printf("%cStrings      :%20lld, %lld chars\n",
+                   prefixes[i], (addr_t)_strings[i]._count,
+                   (addr_t)_strings[i]._chars);
+       }
+    }
+
     std::string findName(addr_t page) const
     {
         for (const Map &i : _maps)
@@ -162,6 +187,81 @@ struct AddrSpace {
         return std::string("");
     }
 
+    void insert(addr_t start, addr_t end, const char *name)
+    {
+        Map map;
+        map._start = start;
+        map._end = end;
+        map._name = std::string(name);
+        _maps.push_back(map);
+    }
+
+    // Normal OUString:
+    // 20 00 00 00 00 00 00 00  02 00 00 00 05 00 00 00  4b 00 45 00 59 00 5f 00  55 00 00 00 00 00 00 00  |  ...............K.E.Y._.U......
+    // 20 00 00 00 00 00 00 00  02 00 00 00 05 00 00 00  4b 45 59 5f 55 00 00 00  00 00 00 00 00 00 00 00  |  ...............KEY_U..........
+
+    bool isStringAtOffset(const std::vector<unsigned char> &data, size_t i,
+                          uint32_t len, bool isUnicode, std::string &str)
+    {
+        str = isUnicode ? "U_" : "S_";
+        int step = isUnicode ? 2 : 1;
+        for (size_t j = i; j < i + len*step && j < data.size(); j += step)
+        {
+            if (isascii(data[j]) && !iscntrl(data[j]))
+                str += static_cast<char>(data[j]);
+            else
+                return false;
+        }
+        return true;
+    }
+
+    void scanForSalStrings(Map &map, const std::vector<unsigned char> &data)
+    {
+        for (size_t i = 0; i < data.size() - 24; i += 4)
+        {
+            const uint32_t *p = reinterpret_cast<const uint32_t *>(&data[i]);
+            uint32_t len;
+            if ((p[0] & 0xffffff) < 0x1000 && // plausible max ref-count
+                (len = p[1]) < 0x100 &&     // plausible max string length
+                len <= (data.size() - i) &&
+                len > 0)
+            {
+                std::string str;
+                bool isUnicode = data[i+1] == 0 && data[i+3] == 0;
+                if (isStringAtOffset(data, i + 8, len, isUnicode, str))
+                {
+                    StringData &sdata = _strings[isUnicode ? 1 : 0];
+                    sdata._count ++;
+                    sdata._chars += len;
+                    if (DumpStrings)
+                        printf("string address 0x%.8llx %s\n",
+                               map._start + i, str.c_str());
+                }
+                i += 8;
+            }
+        }
+    }
+
+    void scanMapsForStrings()
+    {
+        int mem_fd = openPid(_proc_id, "mem");
+        if (DumpStrings)
+            printf("String dump:\n");
+        for (auto &map : _maps)
+        {
+            std::vector<unsigned char> data;
+            data.resize (map.size());
+            if (lseek(mem_fd, map._start, SEEK_SET) < 0 ||
+                read(mem_fd, &data[0], map.size()) != (int)map.size())
+                error(EXIT_FAILURE, errno, "Failed to seek in /proc/%d/mem to %lld",
+                      _proc_id, map._start);
+
+            scanForSalStrings(map, data);
+        }
+        if (DumpStrings)
+            printf("String dump ends.\n");
+        close (mem_fd);
+    }
 };
 
 static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, const std::vector<addr_t> &pages, const AddrSpace &space)
@@ -190,12 +290,6 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
             parentData.resize(0);
         else if (read(parent_fd, &parentData[0], 0x1000) != 0x1000)
             parentData.resize(0); // missing equivalent page.
-
-        // Diff as ASCII
-        std::stringstream pageStr;
-        Util::dumpHex(pageStr, "", "", pageData, false);
-        std::stringstream parentStr;
-        Util::dumpHex(parentStr, "", "", parentData, false);
 
         int touched = 0;
         const char *style;
@@ -231,6 +325,12 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
 
         if (DumpHex)
         {
+            // Diff as ASCII
+            std::stringstream pageStr;
+            Util::dumpHex(pageStr, "", "", pageData, false);
+            std::stringstream parentStr;
+            Util::dumpHex(parentStr, "", "", parentData, false);
+
             printf ("%s page: 0x%.8llx (%d/%d) - touched: %d - %s - from %s\n",
                     type, page, (int)++cnt, (int)pages.size(), touched,
                     style, space.findName(page).c_str());
@@ -364,17 +464,12 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
             // 012d0000-0372f000 rw-p 00000000 00:00 0  [heap]
             if (sscanf(buffer, "%llx-%llx rw-p", &start, &end) == 2)
             {
-                Map map;
-                map._start = start;
-                map._end = end;
                 const char *name = strchr(buffer, '[');
                 if (!name)
                     name = strchr(buffer, '/');
-                if (name)
-                    map._name = std::string(name);
-                else
-                    map._name = std::string("[anon]");
-                space._maps.push_back(map);
+                if (!name)
+                    name = "[anon]";
+                space.insert(start, end, name);
                 for (addr_t p = start; p < end; p += 0x1000)
                     pushTo->push_back(p);
             }
@@ -409,6 +504,7 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
             }
         }
     }
+    space.scanMapsForStrings();
 
     printf("%s\n", cmdline);
     printf("Process ID    :%20d\n", proc_id);
@@ -425,6 +521,8 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
     printf("Heap page cnt :%20lld\n", (addr_t)heapVAddrs.size());
     printf("Anon page cnt :%20lld\n", (addr_t)anonVAddrs.size());
     printf("File page cnt :%20lld\n", (addr_t)fileVAddrs.size());
+    printf("--------------------------------------\n");
+    space.printStats();
     printf("\n");
 
     dump_unshared(proc_id, parent_id, "heap", heapVAddrs, space);
@@ -463,6 +561,7 @@ int main(int argc, char **argv)
     char path_proc[PATH_SIZE];
     char cmdline[BUFFER_SIZE];
 
+    bool found = false;
     bool help = false;
     unsigned forPid = 0;
     const char *appOrPid = nullptr;
@@ -479,6 +578,8 @@ int main(int argc, char **argv)
             DumpHex = true;
         else if (strstr(arg, "--all"))
             DumpAll = true;
+        else if (strstr(arg, "--strings"))
+            DumpStrings = true;
         else
             appOrPid = arg;
     }
@@ -489,8 +590,9 @@ int main(int argc, char **argv)
     {
         fprintf(stderr, "Usage: loolmap --hex <name of process|pid>\n");
         fprintf(stderr, "Dump memory map information for a given process\n");
-        fprintf(stderr, "    --hex    Hex dump relevant page contents and diff to parent process\n");
-        fprintf(stderr, "    --all    Hex dump all writable pages whether touched or not\n");
+        fprintf(stderr, "    --hex     Hex dump relevant page contents and diff to parent process\n");
+        fprintf(stderr, "    --strings Print all detected strings\n");
+        fprintf(stderr, "    --all     Hex dump all writable pages whether touched or not\n");
         return 0;
     }
 
@@ -516,9 +618,13 @@ int main(int argc, char **argv)
                 unsigned parent_id = getParent(pid_proc);
                 snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "smaps");
                 total_smaps(pid_proc, parent_id, path_proc, cmdline);
+                found = true;
             }
         }
     }
+
+    if (!found)
+        fprintf(stderr, "Failed to find process %s\n", appOrPid);
 
     return EXIT_SUCCESS;
 }
