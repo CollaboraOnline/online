@@ -40,7 +40,6 @@ vex.defaultOptions.className = 'vex-theme-plain';
 global.vex = vex;
 
 var errorMessages = require('./dist/errormessages');
-require('./unocommands');
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -53,6 +52,7 @@ if (lang) {
     String.locale = lang;
 }
 
+require('./unocommands');
 var L = require('loleaflet');
 require('./dist/plugins/draw-0.2.4/dist/leaflet.draw.js');
 
