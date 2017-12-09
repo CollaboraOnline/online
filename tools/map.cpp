@@ -87,6 +87,15 @@ static int read_buffer(char *buffer, unsigned size,
     return total_bytes;
 }
 
+static int openPid(unsigned proc_id, const char *name)
+{
+    char path_proc[PATH_SIZE];
+    snprintf(path_proc, sizeof(path_proc), "/proc/%d/%s", proc_id, name);
+    int fd = open(path_proc, 0);
+    if (fd < 0)
+        error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
+    return fd;
+}
 
 static std::vector<std::string> lineBreak(std::string str)
 {
@@ -136,8 +145,13 @@ struct Map {
 };
 
 struct AddrSpace {
+    unsigned _proc_id;
     std::vector<Map> _maps;
 
+    AddrSpace(unsigned proc_id) :
+        _proc_id(proc_id)
+    {
+    }
     std::string findName(addr_t page) const
     {
         for (const Map &i : _maps)
@@ -147,20 +161,13 @@ struct AddrSpace {
         }
         return std::string("");
     }
+
 };
 
 static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, const std::vector<addr_t> &pages, const AddrSpace &space)
 {
-    char path_proc[PATH_SIZE];
-    snprintf(path_proc, sizeof(path_proc), "/proc/%d/mem", proc_id);
-    int mem_fd = open(path_proc, 0);
-    if (mem_fd < 0)
-        error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
-
-    snprintf(path_proc, sizeof(path_proc), "/proc/%d/mem", parent_id);
-    int parent_fd = open(path_proc, 0);
-    if (parent_fd < 0)
-        error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
+    int mem_fd = openPid(proc_id, "mem");
+    int parent_fd = openPid(parent_id, "mem");
 
     if (DumpHex)
         printf ("\nUn-shared data dump\n");
@@ -277,11 +284,7 @@ static void dump_unshared(unsigned proc_id, unsigned parent_id,
                           const char *type, const std::vector<addr_t> &vaddrs,
                           const AddrSpace & space)
 {
-    char path_proc[PATH_SIZE];
-    snprintf(path_proc, sizeof(path_proc), "/proc/%d/pagemap", proc_id);
-    int fd = open(path_proc, 0);
-    if (fd < 0)
-        error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
+    int fd = openPid(proc_id, "pagemap");
 
     std::vector<char> bitmap;
     std::vector<addr_t> vunshared;
@@ -337,7 +340,7 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
     addr_t smap_value;
     char smap_key[MAP_SIZE];
 
-    AddrSpace space;
+    AddrSpace space(proc_id);
 
     std::vector<addr_t> heapVAddrs, anonVAddrs, fileVAddrs;
     std::vector<addr_t> *pushTo = nullptr;
@@ -369,6 +372,8 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
                     name = strchr(buffer, '/');
                 if (name)
                     map._name = std::string(name);
+                else
+                    map._name = std::string("[anon]");
                 space._maps.push_back(map);
                 for (addr_t p = start; p < end; p += 0x1000)
                     pushTo->push_back(p);
@@ -429,15 +434,12 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
 
 static unsigned getParent(int proc_id)
 {
-    char path_proc[PATH_SIZE];
-    snprintf(path_proc, sizeof(path_proc), "/proc/%d/stat", proc_id);
-    int fd = open(path_proc, 0);
-    if (fd < 0)
-        error(EXIT_FAILURE, errno, "Failed to open %s", path_proc);
+    int fd = openPid(proc_id, "stat");
+
     char buffer[4096];
     int len;
     if ((len = read(fd, buffer, sizeof (buffer))) < 0)
-        error(EXIT_FAILURE, errno, "Failed to read %s", path_proc);
+        error(EXIT_FAILURE, errno, "Failed to read /proc/%d/stat", proc_id);
     close (fd);
     buffer[len] = '\0';
 
@@ -445,8 +447,8 @@ static unsigned getParent(int proc_id)
     unsigned unused, ppid = 0;
     if (sscanf(buffer, "%d %s %c %d", &unused, cmd, &state, &ppid) != 4 || ppid == 0)
     {
-        fprintf(stderr, "Failed to locate parent from file '%s' : '%s'\n",
-                path_proc, buffer);
+        fprintf(stderr, "Failed to locate parent from "
+                "/proc/%d/stat : '%s'\n", proc_id, buffer);
         exit (1);
     }
 
