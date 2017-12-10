@@ -391,10 +391,10 @@ L.GridLayer = L.Layer.extend({
 
 		var scrollPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
 			this._docHeightTwips / this._tileHeightTwips);
-		scrollPixelLimits = extraSize ? scrollPixelLimits.multiplyBy(this._tileSize).add(extraSize) :
+		scrollPixelLimits = extraSize ? scrollPixelLimits.multiplyBy(this._tileSize).add(extraSize.multiplyBy(scale)) :
 			scrollPixelLimits.multiplyBy(this._tileSize);
 		this._docPixelSize = {x: scrollPixelLimits.x, y: scrollPixelLimits.y};
-		this._map.fire('docsize', {x: scrollPixelLimits.x, y: scrollPixelLimits.y});
+		this._map.fire('docsize', {x: scrollPixelLimits.x, y: scrollPixelLimits.y, extraSize: extraSize});
 	},
 
 	_checkSpreadSheetBounds: function (newZoom) {

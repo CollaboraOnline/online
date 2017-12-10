@@ -30,7 +30,9 @@ L.Control.Ruler = L.Control.extend({
 		return this._initLayout();
 	},
 
-	_updatePaintTimer: function() {
+	_updatePaintTimer: function(e) {
+		if (e.extraSize)
+			this.options.extraSize = e.extraSize.x;
 		clearTimeout(this.options.timer);
 		this.options.timer = setTimeout(L.bind(this._updateBreakPoints, this), 300);
 	},
@@ -79,11 +81,8 @@ L.Control.Ruler = L.Control.extend({
 		if (this.options.margin1 == null || this.options.margin2 == null)
 			return;
 
-		if (this._map._docLayer._annotations._items.length === 0)
+		if (this._map._docLayer._annotations._items.length === 0 || !this.options.marginSet)
 			this.options.extraSize = 0;
-		else
-			this.options.extraSize = 290;
-		/// as used for the size of actual comments
 
 		var classMajorSep = 'loleaflet-ruler-maj',
 		classMargin = 'loleaflet-ruler-margin',
@@ -153,12 +152,24 @@ L.Control.Ruler = L.Control.extend({
 	_fixOffset: function() {
 		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		var mapPane = this._map._mapPane;
-		var fTile = mapPane.getElementsByClassName('leaflet-tile')[0];
+
+		/// The rulerOffset depends on the leftmost tile's position
+		/// sometimes the leftmost tile is not available and we need to calculate
+		/// from the tiles that we have already.
+		var tiles = this._map._docLayer._tiles;
+		var firstTileKey = Object.keys(tiles)[0];
+		var columnNumber = parseInt(firstTileKey.match(/(\d*):/)[1]);
+		var firstTile = tiles[firstTileKey].el;
+		var firstTileXTranslate = parseInt(firstTile.style.left) - this._map._docLayer._tileWidthPx * columnNumber;
+
 		var tileContainer = mapPane.getElementsByClassName('leaflet-tile-container');
 		tileContainer = tileContainer[tileContainer.length - 1];
-		var mapPaneOffset = parseInt(mapPane.style.transform.match(/\(([-0-9]*)/)[1]) + parseInt(fTile.style.left) + parseInt(tileContainer.style.transform.match(/\(([-0-9]*)/)[1]) + 18 * scale;
+		var tileContainerXTranslate = parseInt(tileContainer.style.transform.match(/\(([-0-9]*)/)[1]);
+		var mapPaneXTranslate = parseInt(mapPane.style.transform.match(/\(([-0-9]*)/)[1]);
 
-		this._rFace.style.marginLeft = mapPaneOffset + 'px';
+		var rulerOffset = mapPaneXTranslate + firstTileXTranslate + tileContainerXTranslate + (this.options.tileMargin * scale);
+
+		this._rFace.style.marginLeft = rulerOffset + 'px';
 	},
 
 	_initiateDrag: function(e) {
