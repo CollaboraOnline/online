@@ -1701,12 +1701,12 @@ function editorUpdate(e) {
 		$('.selected-user').removeClass('selected-user');
 		if ($(userlistItem.html).find('.selected-user').length !== 0)
 			userlistItem.html = $(userlistItem.html).find('.selected-user').removeClass('selected-user').parent().parent().parent()[0].outerHTML;
-		$('#tb_toolbar-down_item_userlist').w2overlay('');
 	}
 	else {
 		docLayer._followEditor = false;
 		docLayer._followThis = -1;
 	}
+	$('#tb_toolbar-down_item_userlist').w2overlay('');
 }
 
 function selectUser(viewId) {
