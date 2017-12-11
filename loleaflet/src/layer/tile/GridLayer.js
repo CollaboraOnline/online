@@ -538,7 +538,13 @@ L.GridLayer = L.Layer.extend({
 				// so we're able to cancel the previous requests that are being processed
 				this._map._socket.sendMessage('canceltiles');
 				for (key in this._tiles) {
-					if (!this._tiles[key].loaded) {
+					// When _invalidCount > 0 the tile has been invalidated, however the new tile content
+					// has not yet been fetched and because of `canceltiles` message it will never be
+					// so we need to remove the tile, or when the tile is back inside the visible area
+					// its content would be the old invalidated one;
+					// example: a tile is invalidated but a sudden scroll to the cell cursor position causes
+					// to move the tile out of the visible area before the new content is fetched
+					if (!this._tiles[key].loaded || this._tiles[key]._invalidCount > 0) {
 						L.DomUtil.remove(this._tiles[key].el);
 						delete this._tiles[key];
 						if (this._debug) {
@@ -611,7 +617,13 @@ L.GridLayer = L.Layer.extend({
 				this._map._socket.sendMessage('canceltiles');
 				for (key in this._tiles) {
 					tile = this._tiles[key];
-					if (!tile.loaded) {
+					// When _invalidCount > 0 the tile has been invalidated, however the new tile content
+					// has not yet been fetched and because of `canceltiles` message it will never be
+					// so we need to remove the tile, or when the tile is back inside the visible area
+					// its content would be the old invalidated one;
+					// example: a tile is invalidated but a sudden scroll to the cell cursor position causes
+					// to move the tile out of the visible area before the new content is fetched
+					if (!tile.loaded || tile._invalidCount > 0) {
 						L.DomUtil.remove(tile.el);
 						delete this._tiles[key];
 						if (this._debug && this._debugDataCancelledTiles) {
