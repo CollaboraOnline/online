@@ -184,7 +184,6 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
             }
             if (bZeroParent)
             {
-                style = "was shared with parent zeros";
                 parentData.resize(0); // diff un-interesting.
             }
             if (touched == 0)
