@@ -316,7 +316,7 @@ public:
     int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush = true) const
     {
         int unitReturn = -1;
-        if (UnitWSD::get().filterSendMessage(data, len, code, flush, unitReturn))
+        if (UnitBase::get().filterSendMessage(data, len, code, flush, unitReturn))
             return unitReturn;
 
         //TODO: Support fragmented messages.
