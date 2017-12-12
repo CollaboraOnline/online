@@ -305,9 +305,10 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
             }
             if (bZeroParent)
             {
-                parentData.resize(0); // diff un-interesting.
+                style = "zero parent page";
+                touched = 0; // ignore tedious diff.
             }
-            if (touched == 0)
+            else if (touched == 0)
             {
                 if (DumpAll)
                     style = "dump unchanged";
