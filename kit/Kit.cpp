@@ -1407,7 +1407,8 @@ private:
             const auto flags = LOK_FEATURE_DOCUMENT_PASSWORD
                              | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY
                              | LOK_FEATURE_PART_IN_INVALIDATION_CALLBACK
-                             | LOK_FEATURE_NO_TILED_ANNOTATIONS;
+                             | LOK_FEATURE_NO_TILED_ANNOTATIONS
+                             | LOK_FEATURE_RANGE_HEADERS;
             _loKit->setOptionalFeatures(flags);
 
             // Save the provided password with us and the jailed url
@@ -2172,7 +2173,8 @@ void lokit_main(const std::string& childRoot,
         const auto flags = LOK_FEATURE_DOCUMENT_PASSWORD
                            | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY
                            | LOK_FEATURE_PART_IN_INVALIDATION_CALLBACK
-                           | LOK_FEATURE_NO_TILED_ANNOTATIONS;
+                           | LOK_FEATURE_NO_TILED_ANNOTATIONS
+                           | LOK_FEATURE_RANGE_HEADERS;
         loKit->setOptionalFeatures(flags);
         loKitDoc.reset(loKit->documentLoad(uri.c_str()));
         if (!loKitDoc || !loKitDoc->get())
