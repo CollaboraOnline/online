@@ -98,6 +98,7 @@ public:
     static const int DefaultSendBufferSize = 16 * 1024;
     static const int MaximumSendBufferSize = 128 * 1024;
     static std::atomic<bool> InhibitThreadChecks;
+    std::string _clientAddress;
 
     enum Type { IPv4, IPv6, All };
 
@@ -877,6 +878,11 @@ public:
     {
         sent = _bytesSent;
         recv = _bytesRecvd;
+    }
+
+    const std::string clientAddress()
+    {
+        return _clientAddress;
     }
 
 protected:
