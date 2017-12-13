@@ -649,6 +649,13 @@ L.TileLayer = L.GridLayer.extend({
 		if (!this._prevCellCursor) {
 			this._prevCellCursor = L.LatLngBounds.createDefault();
 		}
+		if (!this._cellCursorXY) {
+			this._cellCursorXY = new L.Point(-1, -1);
+		}
+		if (!this._prevCellCursorXY) {
+			this._prevCellCursorXY = new L.Point(-1, -1);
+		}
+
 		if (textMsg.match('EMPTY')) {
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
@@ -662,6 +669,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._cellCursor = new L.LatLngBounds(
 							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+			this._cellCursorXY = new L.Point(parseInt(strTwips[4]), parseInt(strTwips[5]));
 		}
 
 		var horizontalDirection = 0;
@@ -1671,7 +1679,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn) {
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
 			var mapBounds = this._map.getBounds();
-			if (!mapBounds.contains(this._cellCursor)) {
+			if (!mapBounds.contains(this._cellCursor) && !this._cellCursorXY.equals(this._prevCellCursorXY)) {
 				var scrollX = 0, scrollY = 0;
 				if (onPgUpDn) {
 					var mapHalfHeight = (mapBounds.getNorth() - mapBounds.getSouth()) / 2;
@@ -1709,6 +1717,7 @@ L.TileLayer = L.GridLayer.extend({
 					center.y = Math.round(center.y < 0 ? 0 : center.y);
 					this._map.fire('scrollto', {x: center.x, y: center.y});
 				}
+				this._prevCellCursorXY = this._cellCursorXY;
 			}
 
 			if (onPgUpDn) {
