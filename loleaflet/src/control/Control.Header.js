@@ -213,42 +213,31 @@ L.Control.Header = L.Control.extend({
 		this._selection.end = itEnd;
 	},
 
-	updateCurrent: function (data, start, size) {
+	updateCurrent: function (data, cursorPos, slim) {
 		if (!data || data.isEmpty())
 			return;
 
-		if (start < 0) {
+		if (cursorPos < 0) {
 			this.unselect(data.get(this._current));
 			this._current = -1;
 			return;
 		}
 
-		var x0 = 0, x1 = 0;
-		var prevEntry = null;
-		var entry = data.getFirst();
-		var zeroSizeEntry = false;
-		while (entry) {
-			x0 = entry.pos - entry.size;
-			x1 = entry.pos;
-			if (x0 <= start && start < x1) {
-				// we have a slim cursor because of a zero size entry ?
-				zeroSizeEntry = size <= 1 && prevEntry && prevEntry.size === 0;
-				// when a whole row (column) is selected the cell cursor is moved to the first column (row)
-				// but this action should not cause to select/unselect anything, on the contrary we end up
-				// with all column (row) header entries selected but the one where the cell cursor was
-				// previously placed
-				if (this._selection.start === -1 && this._selection.end === -1) {
-					this.unselect(data.get(this._current));
-					// no selection when the cell cursor is slim
-					if (!zeroSizeEntry)
-						this.select(entry);
-				}
-				this._current = zeroSizeEntry ? -1 : entry.index;
-				break;
-			}
-			prevEntry = entry;
-			entry = data.getNext();
+		var prevEntry = cursorPos > 0 ? data.get(cursorPos - 1) : null;
+		var zeroSizeEntry = slim && prevEntry && prevEntry.size === 0;
+
+		var entry = data.get(cursorPos);
+		if (this._selection.start === -1 && this._selection.end === -1) {
+			// when a whole row (column) is selected the cell cursor is moved to the first column (row)
+			// but this action should not cause to select/unselect anything, on the contrary we end up
+			// with all column (row) header entries selected but the one where the cell cursor was
+			// previously placed
+			this.unselect(data.get(this._current));
+			// no selection when the cell cursor is slim
+			if (entry && !zeroSizeEntry)
+				this.select(entry);
 		}
+		this._current = entry && !zeroSizeEntry ? entry.index : -1;
 	},
 
 	_mouseEventToCanvasPos: function(canvas, evt) {

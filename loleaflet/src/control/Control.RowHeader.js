@@ -175,13 +175,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	_onUpdateCurrentRow: function (e) {
-		var y = e.min.y;
-		var h = e.getSize().y;
-		if (y !== -1) {
-			y = this._twipsToPixels(y);
-			h = this._twipsToPixels(h);
-		}
-		this.updateCurrent(this._data, y, h);
+		var y = e.curY - this._startHeaderIndex;
+		var h = this._twipsToPixels(e.height);
+		var slim = h <= 1;
+		this.updateCurrent(this._data, y, slim);
 	},
 
 	_updateRowHeader: function () {

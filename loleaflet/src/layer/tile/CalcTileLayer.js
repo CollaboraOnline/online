@@ -355,13 +355,16 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onUpdateCurrentHeader: function() {
-		var pos = new L.Point(-1, -1);
-		var size = new L.Point(-1, -1);
+		var x = -1, y = -1;
+		if (this._cellCursorXY) {
+			x = this._cellCursorXY.x + 1;
+			y = this._cellCursorXY.y + 1;
+		}
+		var size = new L.Point(0, 0);
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
-			pos = this._cellCursorTwips.min.add([1, 1]);
 			size = this._cellCursorTwips.getSize();
 		}
-		this._map.fire('updatecurrentheader', new L.Bounds(pos, pos.add(size)));
+		this._map.fire('updatecurrentheader', {curX: x, curY: y, width: size.x, height: size.y});
 	},
 
 	_onUpdateSelectionHeader: function () {
