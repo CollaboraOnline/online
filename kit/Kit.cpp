@@ -1500,8 +1500,11 @@ private:
 
         const int viewId = _loKitDocument->getView();
         session->setViewId(viewId);
+
         _sessionUserInfo[viewId] = UserInfo(session->getViewUserId(), session->getViewUserName(),
                                             session->getViewUserExtraInfo(), session->isReadOnly());
+
+        _loKitDocument->setViewLanguage(viewId, lang.c_str());
 
         _viewIdToCallbackDescr.emplace(viewId,
                                        std::unique_ptr<CallbackDescriptor>(new CallbackDescriptor({ this, viewId })));
