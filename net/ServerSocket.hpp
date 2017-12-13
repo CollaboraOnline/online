@@ -60,13 +60,22 @@ public:
     std::shared_ptr<Socket> accept()
     {
         // Accept a connection (if any) and set it to non-blocking.
-        // We don't care about the client's address, so ignored.
-        const int rc = ::accept4(getFD(), nullptr, nullptr, SOCK_NONBLOCK);
+        // There still need the client's address to filter request from POST(call from REST) here.
+        struct sockaddr_in clientInfo;
+        socklen_t addrlen = sizeof(struct sockaddr_in);
+        const int rc = ::accept4(getFD(), (struct sockaddr *)&clientInfo, &addrlen, SOCK_NONBLOCK);
         LOG_DBG("Accepted socket #" << rc << ", creating socket object.");
         try
         {
             // Create a socket object using the factory.
-            return rc != -1 ? _sockFactory->create(rc) : std::shared_ptr<Socket>(nullptr);
+            if (rc != -1)
+            {
+                std::string ip = inet_ntoa(clientInfo.sin_addr);
+                std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
+                _socket->_clientAddress = ip;
+                return _socket;
+            }
+            return std::shared_ptr<Socket>(nullptr);
         }
         catch (const std::exception& ex)
         {
