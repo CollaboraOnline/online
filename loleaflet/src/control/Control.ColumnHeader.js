@@ -245,7 +245,11 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		ctx.font = this._font;
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
-		ctx.fillText(content, endPar - (width / 2), startOrt + (height / 2));
+		// The '+ 1' below is a hack - it's currently not possible to measure
+		// the exact bounding box in html5's canvas, and the textBaseline
+		// 'middle' measures everything including the descent etc.
+		// '+ 1' looks visually fine, and seems safe enough
+		ctx.fillText(content, endPar - (width / 2), startOrt + (height / 2) + 1);
 		// draw row separator
 		ctx.fillStyle = this._borderColor;
 		ctx.fillRect(endPar -1, startOrt, this._borderWidth, height);
