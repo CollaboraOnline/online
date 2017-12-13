@@ -56,7 +56,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			className: 'loleaflet-font',
 			items: {
 				'insertrowabove': {
-					name: _('Insert row above'),
+					name: _UNO('.uno:InsertRows', 'spreadsheet', true),
 					callback: function(key, options) {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
@@ -65,7 +65,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 					}
 				},
 				'deleteselectedrow': {
-					name: _('Delete row'),
+					name: _UNO('.uno:DeleteRows', 'spreadsheet', true),
 					callback: function(key, options) {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
@@ -74,7 +74,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 					}
 				},
 				'optimalheight': {
-					name: _('Optimal Height') + '...',
+					name: _UNO('.uno:SetOptimalRowHeight', 'spreadsheet', true),
 					callback: function(key, options) {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
@@ -83,7 +83,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 					}
 				},
 				'hideRow': {
-					name: _('Hide Rows'),
+					name: _UNO('.uno:HideRow', 'spreadsheet', true),
 					callback: function(key, options) {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
@@ -92,7 +92,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 					}
 				},
 				'showRow': {
-					name: _('Show Rows'),
+					name: _UNO('.uno:ShowRow', 'spreadsheet', true),
 					callback: function(key, options) {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
@@ -107,7 +107,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 	optimalHeight: function(index) {
 		if (!this._dialog) {
-			this._dialog = L.control.metricInput(this._onDialogResult, this, 0, {title: _('Optimal Row Height')});
+			this._dialog = L.control.metricInput(this._onDialogResult, this, 0, {title: _UNO('.uno:SetOptimalRowHeight', 'spreadsheet', true).replace('...','')});
 		}
 		if (this._map._docLayer._selections.getLayers().length === 0) {
 			this._selectRow(index, 0);

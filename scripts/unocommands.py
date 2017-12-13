@@ -99,6 +99,21 @@ def extractContextCommands(path):
         elif readingCommands:
             commands += commandsFromLine(line)
 
+    f = open(path + '/loleaflet/src/control/Control.ColumnHeader.js', 'r')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
+    f = open(path + '/loleaflet/src/control/Control.RowHeader.js', 'r')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
+    f = open(path + '/loleaflet/src/control/Control.Tabs.js', 'r')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
     # may the list unique
     return set(commands)
 
