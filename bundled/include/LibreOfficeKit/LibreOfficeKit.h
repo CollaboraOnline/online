@@ -217,9 +217,6 @@ struct _LibreOfficeKitDocumentClass
     /// @see lok::Document::setVisibleArea).
     void (*setClientVisibleArea) (LibreOfficeKitDocument* pThis, int nX, int nY, int nWidth, int nHeight);
 
-    /// @see lok::Document::setOutlineState).
-    void (*setOutlineState) (LibreOfficeKitDocument* pThis, bool bColumn, int nLevel, int nIndex, bool bHidden);
-
     /// @see lok::Document::createView().
     int (*createView) (LibreOfficeKitDocument* pThis);
     /// @see lok::Document::destroyView().
@@ -259,6 +256,9 @@ struct _LibreOfficeKitDocumentClass
                        int* pArray,
                        size_t nSize);
 
+    /// @see lok::Document::setOutlineState).
+    void (*setOutlineState) (LibreOfficeKitDocument* pThis, bool bColumn, int nLevel, int nIndex, bool bHidden);
+
     /// Paints window with given id to the buffer
     /// @see lok::Document::paintWindow().
     void (*paintWindow) (LibreOfficeKitDocument* pThis, unsigned nWindowId,
@@ -285,6 +285,9 @@ struct _LibreOfficeKitDocumentClass
                                   int nCount,
                                   int nButtons,
                                   int nModifier);
+
+    /// @see lok::Document::setViewLanguage().
+    void (*setViewLanguage) (LibreOfficeKitDocument* pThis, int nId, const char* language);
 
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
