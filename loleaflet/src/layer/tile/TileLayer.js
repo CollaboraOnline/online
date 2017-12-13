@@ -671,6 +671,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (textMsg.match('EMPTY')) {
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
+			this._cellCursorXY = new L.Point(-1, -1);
 		}
 		else {
 			var strTwips = textMsg.match(/\d+/g);

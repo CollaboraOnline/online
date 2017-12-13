@@ -184,13 +184,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	_onUpdateCurrentColumn: function (e) {
-		var x = e.min.x;
-		var w = e.getSize().x;
-		if (x !== -1) {
-			x = this._twipsToPixels(x);
-			w = this._twipsToPixels(w);
-		}
-		this.updateCurrent(this._data, x, w);
+		var x = e.curX - this._startHeaderIndex;
+		var w = this._twipsToPixels(e.width);
+		var slim = w <= 1;
+		this.updateCurrent(this._data, x, slim);
 	},
 
 	_updateColumnHeader: function () {
