@@ -73,7 +73,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Column break'), type: 'unocommand', uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
 				{name: _('Hyperlink...'), uno: '.uno:HyperlinkDialog', type: 'unocommand'},
-				{name: _('Special character...'), id: 'specialcharacter', type: 'action'},
+				{name: _('Special character...'), uno: '.uno:InsertSymbol', type: 'unocommand'},
 				{name: _('Formatting mark'), type: 'menu', menu: [
 					{name: _('Non-breaking space'), type: 'unocommand', uno: '.uno:InsertNonBreakingSpace'},
 					{name: _('Non-breaking hyphen'), type: 'unocommand', uno: '.uno:InsertHardHyphen'},
@@ -83,8 +83,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Left-to-right mark'), type: 'unocommand', uno: '.uno:InsertLRM'},
 					{name: _('Right-to-left mark'), type: 'unocommand', uno: '.uno:InsertRLM'}]},
 				{name: _('Index Entry...'), uno: '.uno:InsertIndexesEntry', type: 'unocommand'}
-			]
-			},
+			]},
 			{name: _('Format'), type: 'menu', menu: [
 				{name: _('Text'), type: 'menu', menu: [
 					{name: _('Bold'), type: 'unocommand', uno: '.uno:Bold'},
@@ -242,7 +241,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Image'), id: 'insertgraphic', type: 'action'},
 				{name: _('Comment...'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
-				{name: _('Special character...'), id: 'specialcharacter', type: 'action'}]
+				{name: _('Special character...'), uno: '.uno:InsertSymbol', type: 'unocommand'}]
 			},
 			{name: _('Format'), type: 'menu', menu: [
 				{name: _('Edit Style...'), uno: '.uno:EditStyle', type: 'unocommand'}
@@ -312,7 +311,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Row'), type: 'unocommand', uno: '.uno:InsertRows'},
 				{name: _('Column'), type: 'unocommand', uno: '.uno:InsertColumns'},
 				{type: 'separator'},
-				{name: _('Special character...'), id: 'specialcharacter', type: 'action'}
+				{name: _('Special character...'), uno: '.uno:InsertSymbol', type: 'unocommand'}
 			]},
 			{name: _('Format'), type: 'menu', menu: [
 				{name: _('Clear direct formatting'), type: 'unocommand', uno: '.uno:ResetAttributes'},
@@ -579,10 +578,6 @@ L.Control.Menubar = L.Control.extend({
 			map.insertComment();
 		} else if (id === 'insertgraphic') {
 			L.DomUtil.get('insertgraphic').click();
-		} else if (id === 'specialcharacter') {
-			var fontList = $('.fonts-select option');
-			var selectedIndex = $('.fonts-select').prop('selectedIndex');
-			map._docLayer._onSpecialChar(fontList, selectedIndex);
 		} else if (id === 'zoomin' && map.getZoom() < map.getMaxZoom()) {
 			map.zoomIn(1);
 		} else if (id === 'zoomout' && map.getZoom() > map.getMinZoom()) {

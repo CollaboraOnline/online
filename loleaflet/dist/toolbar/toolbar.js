@@ -345,11 +345,6 @@ function onClick(id, item, subItem) {
 		w2ui['toolbar-up-more'].render();
 		resizeToolbar();
 	}
-	else if (id === 'specialcharacter') {
-		var fontList = $('.fonts-select option');
-		var selectedIndex = $('.fonts-select').prop('selectedIndex');
-		map._docLayer._onSpecialChar(fontList, selectedIndex);
-	}
 }
 
 function insertTable() {
@@ -517,7 +512,7 @@ $(function () {
 			{type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table')},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _('Insert comment')},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _('Insert graphic')},
-			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _('Special Character')},
+			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _('Special Character'), uno: '.uno:InsertSymbol'},
 			{type: 'html', id: 'right'},
 			{type: 'button',  id: 'more', img: 'more', hint: _('More')},
 			{type: 'html', id: 'rightmenupadding'}

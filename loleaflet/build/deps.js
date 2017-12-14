@@ -306,13 +306,6 @@ var deps = {
 		desc: 'Document Repair'
 	},
 
-	ControlCharacterMap: {
-		src: ['control/Control.js',
-		      'control/Control.CharacterMap.js'],
-		heading: 'Controls',
-		desc: 'Character Map'
-	},
-
 	ControlContextmenu: {
 		src: ['control/Control.js',
 		      'control/Control.ContextMenu.js'],
