@@ -1,4 +1,6 @@
 {
+"Align Left":"Сул як буенча",
+"Align Right":"Уң як буенча",
 "Arrange":"Урнаштыру",
 "As C~haracter":"Тамга рәвешендә",
 "A~rrange":"Урын",
@@ -13,6 +15,7 @@
 "Delete Column":"Баганаларны бетерү",
 "Delete Comment":"Искәрмәне бетерү",
 "Delete Row":"Юлны бетерү",
+"Font Color":"Хәрефнең төсе",
 "Formatting Mark":"Форматлаштыру тамгасы",
 "F~ormat":"Рәвеш",
 "F~ull Screen":"Бөтен экранга",

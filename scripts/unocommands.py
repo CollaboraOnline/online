@@ -117,6 +117,19 @@ def extractContextCommands(path):
     # may the list unique
     return set(commands)
 
+# Extract all the uno commands we are using in the Online toolbar
+def extractToolbarCommands(path):
+    commands = []
+
+    # extract from the menu specifications
+    f = open(path + '/loleaflet/dist/toolbar/toolbar.js', 'r')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
+    # may the list unique
+    return set(commands)
+
 # Create mapping between the commands and appropriate strings
 def collectCommandsFromXCU(xcu, descriptions, commands, label, type):
     root = etree.parse(xcu)
@@ -145,7 +158,7 @@ def collectCommandsFromXCU(xcu, descriptions, commands, label, type):
                     command[type] = {}
 
                 menuType = 'menu'
-                if label == 'PopupLabel':
+                if label == 'PopupLabel' or label == 'TooltipLabel':
                     menuType = 'context'
 
                 if menuType in command[type]:
@@ -158,7 +171,7 @@ def collectCommandsFromXCU(xcu, descriptions, commands, label, type):
     return descriptions
 
 # Print commands from all the XCU files, and collect them too
-def writeUnocommandsJS(onlineDir, lofficeDir, menuCommands, contextCommands):
+def writeUnocommandsJS(onlineDir, lofficeDir, menuCommands, contextCommands, toolbarCommands):
     descriptions = {}
     dir = lofficeDir + '/officecfg/registry/data/org/openoffice/Office/UI'
     for file in os.listdir(dir):
@@ -178,9 +191,14 @@ def writeUnocommandsJS(onlineDir, lofficeDir, menuCommands, contextCommands):
             # right-click menu
             descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, contextCommands, 'PopupLabel', type)
 
+            # toolbar
+            descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, toolbarCommands, 'PopupLabel', type)
+            descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, toolbarCommands, 'TooltipLabel', type)
+
             # fallbacks
             descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, menuCommands, 'Label', type)
             descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, contextCommands, 'Label', type)
+            descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, toolbarCommands, 'Label', type)
 
     # output the unocommands.js
     f = open(onlineDir + '/loleaflet/unocommands.js', 'w')
@@ -318,6 +336,7 @@ if __name__ == "__main__":
 
     menuCommands = extractMenuCommands(onlineDir)
     contextCommands = extractContextCommands(onlineDir)
+    toolbarCommands = extractToolbarCommands(onlineDir)
 
     processedCommands = set([])
     parsed = {}
@@ -325,11 +344,11 @@ if __name__ == "__main__":
         parsed = parseUnocommandsJS(onlineDir)
         processedCommands = set(parsed.keys())
     else:
-        written = writeUnocommandsJS(onlineDir, lofficeDir, menuCommands, contextCommands)
+        written = writeUnocommandsJS(onlineDir, lofficeDir, menuCommands, contextCommands, toolbarCommands)
         processedCommands = set(written.keys())
 
     # check that we have translations for everything
-    dif = (menuCommands | contextCommands) - processedCommands
+    dif = (menuCommands | contextCommands | toolbarCommands) - processedCommands
     if len(dif) > 0:
         sys.stderr.write("ERROR: The following commands are not covered in unocommands.js, run scripts/unocommands.py --update:\n\n.uno:" + '\n.uno:'.join(dif) + "\n\n")
         exit(1)
