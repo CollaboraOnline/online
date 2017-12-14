@@ -39,7 +39,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'FormatCellDialog'],
 
-			presentation: ['EditStyle'],
+			presentation: ['TransformDialog', 'FormatLine', 'FormatArea'],
 			drawing: []
 		}
 		// UNOCOMMANDS_EXTRACT_END <- don't remove this line, it's used by unocommands.py
