@@ -70,7 +70,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
 				{uno: '.uno:HyperlinkDialog'},
-				{name: _UNO('.uno:InsertSymbol', 'text'), id: 'specialcharacter', type: 'action'},
+				{uno: '.uno:InsertSymbol'},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertNonBreakingSpace'},
 					{uno: '.uno:InsertHardHyphen'},
@@ -241,7 +241,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:InsertSymbol', 'presentation'), id: 'specialcharacter', type: 'action'}]
+				{uno: '.uno:InsertSymbol'}]
 			},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), type: 'menu', menu: [
 				{name: _UNO('.uno:FormatObjectMenu', 'presentation'), type: 'menu', menu: [
@@ -315,7 +315,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertRows'},
 				{uno: '.uno:InsertColumns'},
 				{type: 'separator'},
-				{name: _UNO('.uno:InsertSymbol', 'spreadsheet'), id: 'specialcharacter', type: 'action'}
+				{uno: '.uno:InsertSymbol'}
 			]},
 			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), type: 'menu', menu: [
 				{uno: '.uno:ResetAttributes'},
@@ -595,10 +595,6 @@ L.Control.Menubar = L.Control.extend({
 			map.insertComment();
 		} else if (id === 'insertgraphic') {
 			L.DomUtil.get('insertgraphic').click();
-		} else if (id === 'specialcharacter') {
-			var fontList = $('.fonts-select option');
-			var selectedIndex = $('.fonts-select').prop('selectedIndex');
-			map._docLayer._onSpecialChar(fontList, selectedIndex);
 		} else if (id === 'zoomin' && map.getZoom() < map.getMaxZoom()) {
 			map.zoomIn(1);
 		} else if (id === 'zoomout' && map.getZoom() > map.getMinZoom()) {
