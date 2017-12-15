@@ -12,6 +12,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <unordered_map>
 
 #include <stdint.h>
 #include <string.h>
@@ -98,49 +99,6 @@ static int openPid(unsigned proc_id, const char *name)
     return fd;
 }
 
-static std::vector<std::string> lineBreak(std::string str)
-{
-    std::vector<std::string> lines;
-    while (str.size())
-    {
-        size_t idx = str.find('\n');
-        if (idx != std::string::npos) {
-            lines.push_back(str.substr(0,idx));
-            str = str.substr(idx+1);
-        }
-    }
-    lines.push_back(str);
-
-    return lines;
-}
-
-static void dumpDiff(const std::string &pageStr, const std::string &parentStr)
-{
-    std::vector<std::string> page = lineBreak(pageStr);
-    std::vector<std::string> parent = lineBreak(parentStr);
-    assert(page.size() == parent.size());
-    for (size_t i = 0; i < page.size(); ++i)
-    {
-        printf("%s\n", page[i].c_str());
-        if (page[i] != parent[i])
-        {
-            printf ("----");
-            assert(page[i].length() == parent[i].length());
-            for (size_t j = 4; j < page[i].length(); ++j)
-            {
-                if (page[i][j] == parent[i][j])
-                    printf(" ");
-                else {
-                    printf("%c", parent[i][j]);
-                }
-            }
-            printf("\n");
-        }
-    }
-}
-
-struct AddrSpace;
-
 struct Map {
     addr_t _start;
     addr_t _end;
@@ -160,6 +118,7 @@ struct StringData {
 struct AddrSpace {
     unsigned _proc_id;
     std::vector<Map> _maps;
+    std::unordered_map<addr_t, std::string> _addrToStr;
     StringData _strings[3];
 
     AddrSpace(unsigned proc_id) :
@@ -236,6 +195,7 @@ struct AddrSpace {
                     if (DumpStrings)
                         printf("string address 0x%.8llx %s\n",
                                map._start + i, str.c_str());
+                    _addrToStr[map._start + i] = str;
                 }
                 i += 8;
             }
@@ -263,6 +223,59 @@ struct AddrSpace {
         close (mem_fd);
     }
 };
+
+
+static void dumpDiff(const AddrSpace &space,
+                     const std::vector<char> &pageData,
+                     const std::vector<char> &parentData)
+{
+    assert(pageData.size() == parentData.size());
+
+    const unsigned int width = 32;
+
+    for (unsigned int i = 0; i < pageData.size(); i += width)
+    {
+        std::string page = Util::stringifyHexLine(pageData, i, width);
+        std::string parent = Util::stringifyHexLine(parentData, i, width);
+
+        // page
+        printf("0x%.4x  %s\n", i, page.c_str());
+
+        // strings
+        const addr_t *ptrs = reinterpret_cast<const addr_t *>(&pageData[i]);
+        std::stringstream annots;
+        bool haveAnnots = false;
+        for (unsigned int j = 0; j < width/8; j++)
+        {
+            std::string str;
+            auto it = space._addrToStr.find(ptrs[j]);
+            if (it != space._addrToStr.end())
+            {
+                str = it->second;
+                haveAnnots = true;
+            }
+            str.resize(24, ' ');
+            annots << str << " ";
+        }
+        if (haveAnnots)
+            printf ("annot:  %s\n", annots.str().c_str());
+
+        // parent
+        if (page != parent)
+        {
+            printf ("-par't- ");
+            assert(page.length() == parent.length());
+            for (size_t j = 0; j < page.length(); ++j)
+            {
+                if (page[j] == parent[j] && page[j] != '|')
+                    printf(" ");
+                else
+                    printf("%c", parent[j]);
+            }
+            printf("\n");
+        }
+    }
+}
 
 static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, const std::vector<addr_t> &pages, const AddrSpace &space)
 {
@@ -326,20 +339,18 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
 
         if (DumpHex)
         {
-            // Diff as ASCII
-            std::stringstream pageStr;
-            Util::dumpHex(pageStr, "", "", pageData, false);
-            std::stringstream parentStr;
-            Util::dumpHex(parentStr, "", "", parentData, false);
-
             printf ("%s page: 0x%.8llx (%d/%d) - touched: %d - %s - from %s\n",
                     type, page, (int)++cnt, (int)pages.size(), touched,
                     style, space.findName(page).c_str());
 
             if (touched == 0)
+            {
+                std::stringstream pageStr;
+                Util::dumpHex(pageStr, "", "", pageData, false);
                 printf("%s", pageStr.str().c_str());
+            }
             else
-                dumpDiff(pageStr.str(), parentStr.str());
+                dumpDiff(space, pageData, parentData);
         }
 
         bytesTouched += touched;

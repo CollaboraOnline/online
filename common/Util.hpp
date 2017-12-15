@@ -133,55 +133,69 @@ namespace Util
     // Extract all json entries into a map.
     std::map<std::string, std::string> JsonToMap(const std::string& jsonString);
 
+    /// Dump a lineof data as hex
+    inline std::string stringifyHexLine(
+                            const std::vector<char> &buffer,
+                            unsigned int offset,
+                            const unsigned int width = 32)
+    {
+        char scratch[64];
+        std::stringstream os;
+
+        for (unsigned int i = 0; i < width; i++)
+        {
+            if (i && (i % 8) == 0)
+                os << " ";
+            if ((offset + i) < buffer.size())
+                sprintf (scratch, "%.2x ", (unsigned char)buffer[offset+i]);
+            else
+                sprintf (scratch, "   ");
+            os << scratch;
+        }
+        os << " | ";
+
+        for (unsigned int i = 0; i < width; i++)
+        {
+            if ((offset + i) < buffer.size() && ::isprint(buffer[offset+i]))
+                sprintf (scratch, "%c", buffer[offset+i]);
+            else
+                sprintf (scratch, ".");
+            os << scratch;
+        }
+
+        return os.str();
+    }
+
     /// Dump data as hex and chars to stream
     inline void dumpHex (std::ostream &os, const char *legend, const char *prefix,
                          const std::vector<char> &buffer, bool skipDup = true,
                          const unsigned int width = 32)
     {
-        unsigned int i, j;
+        unsigned int j;
         char scratch[64];
+        int skip = 0;
+        std::string lastLine;
 
         os << legend;
         for (j = 0; j < buffer.size() + width - 1; j += width)
         {
-            if (skipDup)
-            {
-                int skip = 0;
-                while (j >= width && j < buffer.size() - width &&
-                       !memcmp(&buffer[j], &buffer[j-width], width))
-                {
-                    skip++;
-                    j += width;
-                }
-                if (skip > 1)
-                {
-                    j -= width;
-                    os << "... dup " << skip - 1 << "...\n";
-                }
-            }
-
             sprintf (scratch, "%s0x%.4x  ", prefix, j);
             os << scratch;
-            for (i = 0; i < width; i++)
-            {
-                if (i && (i % 8) == 0)
-                    os << " ";
-                if ((j + i) < buffer.size())
-                    sprintf (scratch, "%.2x ", (unsigned char)buffer[j+i]);
-                else
-                    sprintf (scratch, "   ");
-                os << scratch;
-            }
-            os << " | ";
 
-            for (i = 0; i < width; i++)
-            {
-                if ((j + i) < buffer.size() && ::isprint(buffer[j+i]))
-                    sprintf (scratch, "%c", buffer[j+i]);
+            std::string line = stringifyHexLine(buffer, j, width);
+            if (skipDup && lastLine == line)
+                skip++;
+            else {
+                if (skip > 0)
+                {
+                    os << "... dup " << skip - 1 << "...";
+                    skip = 0;
+                }
                 else
-                    sprintf (scratch, ".");
-                os << scratch;
+                    os << line;
             }
+            lastLine.swap(line);
+
             os << "\n";
         }
         os.flush();
