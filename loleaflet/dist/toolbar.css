@@ -79,7 +79,7 @@
     top: 2px;
     width: 200px;
     font-size: 16px;
-    //font-weight: bold;
+    padding-right: 20px;
     border: 1px solid transparent;
     background-color: transparent;
 }
@@ -95,6 +95,7 @@
     background-image: url('../images/lc_editdoc.svg');
     background-position: right;
     background-repeat: no-repeat;
+    padding-right: 20px;
 }
 
 #closebuttonwrapper {
