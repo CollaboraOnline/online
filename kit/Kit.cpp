@@ -537,7 +537,7 @@ public:
     }
 
 private:
-    /// Alpha blend 'pixel_count' pixels from 'from' over the 'to'.
+    /// Alpha blend pixels from 'from' over the 'to'.
     void alphaBlend(const unsigned char* from, int from_width, int from_height, int from_offset_x, int from_offset_y,
             unsigned char* to, int to_width, int to_height)
     {
@@ -568,6 +568,7 @@ private:
             }
     }
 
+    /// Create bitmap that we later use as the watermark for every tile.
     const unsigned char* getPixmap(int width, int height)
     {
         if (_pixmap && width == _width && height == _height)
@@ -597,38 +598,24 @@ private:
         }
 
         const unsigned int pixel_count = width * height * 4;
-
-        // Create the blurred background; first a white text
         _pixmap = static_cast<unsigned char*>(malloc(pixel_count));
-        unsigned char* from = text;
-        unsigned char* to = _pixmap;
-        for (; to < _pixmap + pixel_count; from += 4, to += 4)
-        {
-            // Pre-multiplied alpha!
-            const double alpha = from[3] / 255.0;
-            to[0] = 0xff * alpha;
-            to[1] = 0xff * alpha;
-            to[2] = 0xff * alpha;
-            to[3] = from[3];
-        }
 
-        // Use box blur, which is fast, though crude.
-        unsigned char* buffer = static_cast<unsigned char*>(malloc(pixel_count));
-        memcpy(buffer, _pixmap, pixel_count);
-
-        // Repeat an even number of times to smooth out.
+        // Create the white blurred background
+        // Use box blur, it's enough for our purposes
         const int r = 2;
         const double weight = (r+1) * (r+1);
-        for (int y = r; y < height - r; ++y)
+        for (int y = 0; y < height; ++y)
         {
-            for (int x = r; x < width - r; ++x)
+            for (int x = 0; x < width; ++x)
             {
                 double t = 0;
-                for (int ky = y - r; ky <= y + r; ++ky)
+                for (int ky = std::max(y - r, 0); ky <= std::min(y + r, height - 1); ++ky)
                 {
-                    for (int kx = x - r; kx <= x + r; ++kx)
+                    for (int kx = std::max(x - r, 0); kx <= std::min(x + r, width - 1); ++kx)
                     {
-                        t += buffer[4 * (ky * width + kx) + 3];
+                        // Pre-multiplied alpha; the text is black, so all the
+                        // information is only in the alpha channel
+                        t += text[4 * (ky * width + kx) + 3];
                     }
                 }
 
@@ -636,19 +623,20 @@ private:
                 double avg = t / weight;
                 if (avg > 255.0)
                     avg = 255.0;
+
+                // Pre-multiplied alpha, but use white for the resulting color
                 const double alpha = avg / 255.0;
                 _pixmap[4 * (y * width + x) + 0] = 0xff * alpha;
                 _pixmap[4 * (y * width + x) + 1] = 0xff * alpha;
                 _pixmap[4 * (y * width + x) + 2] = 0xff * alpha;
-                _pixmap[4 * (y * width + x) + 3] = static_cast<unsigned char>(avg < 255.0 ? avg : 255);
+                _pixmap[4 * (y * width + x) + 3] = avg;
             }
         }
 
-        // Now copy text over the blur
+        // Now copy the (black) text over the (white) blur
         alphaBlend(text, _width, _height, 0, 0, _pixmap, _width, _height);
 
         // No longer needed.
-        std::free(buffer);
         std::free(text);
 
         // Make the resulting pixmap semi-transparent
