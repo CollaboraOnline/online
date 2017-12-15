@@ -24,6 +24,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_getParentDialog: function(id) {
+		id = parseInt(id);
 		for (var winId in this._dialogs) {
 			if (this._dialogs[winId].childid && this._dialogs[winId].childid === id) {
 				return winId;
@@ -39,7 +40,9 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_toRawDlgId: function(dialogId) {
-		return dialogId.replace(this.dialogIdPrefix, '');
+		if (typeof(dialogId) === 'string')
+			return parseInt(dialogId.replace(this.dialogIdPrefix, ''));
+		return dialogId;
 	},
 
 	_toDlgPrefix: function(id) {
@@ -48,11 +51,11 @@ L.Control.LokDialog = L.Control.extend({
 
 	// Create a rectangle string of form "x,y,width,height"
 	// if params are missing, assumes 0,0,dialog width, dialog height
-	_createRectStr: function(x, y, width, height) {
+	_createRectStr: function(id, x, y, width, height) {
 		if (!width)
-			width = this._width;
+			width = this._dialogs[parseInt(id)].width;
 		if (!height)
-			height = this._height;
+			height = this._dialogs[parseInt(id)].height;
 		if (!x)
 			x = 0;
 		if (!y)
@@ -80,15 +83,18 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogMsg: function(e) {
+		e.id = parseInt(e.id);
 		var strDlgId = this._toDlgPrefix(e.id);
 		if (e.action === 'created') {
 			var width = parseInt(e.size.split(',')[0]);
 			var height = parseInt(e.size.split(',')[1]);
 			if (e.winType === 'dialog') {
-				this._width = width;
-				this._height = height;
-				this._launchDialog(this._toDlgPrefix(e.id));
-				this._sendPaintWindow(e.id, this._createRectStr());
+				this._launchDialog(this._toDlgPrefix(e.id), width, height, e.title);
+				this._sendPaintWindow(e.id, this._createRectStr(e.id));
+				if (e.title) {
+					this._dialogs[e.id].title = e.title;
+					$('#' + strDlgId).dialog('option', 'title', e.title);
+				}
 			} else if (e.winType === 'child') {
 				if (!this._isOpen(e.parentId))
 					return;
@@ -104,7 +110,7 @@ L.Control.LokDialog = L.Control.extend({
 				this._dialogs[parentId].childx = left;
 				this._dialogs[parentId].childy = top;
 				this._createDialogChild(e.id, parentId, top, left);
-				this._sendPaintWindow(e.id, this._createRectStr(0, 0, width, height));
+				this._sendPaintWindow(e.id, this._createRectStr(null, 0, 0, width, height));
 			}
 		} else if (e.action === 'invalidate') {
 			var parent = this._getParentDialog(e.id);
@@ -116,20 +122,19 @@ L.Control.LokDialog = L.Control.extend({
 					return;
 
 				if (!rectangle)
-					rectangle = '0,0,' + this._width + ',' + this._height;
+					rectangle = '0,0,' + this._dialogs[e.id].width + ',' + this._dialogs[e.id].height;
 			}
 			this._sendPaintWindow(e.id, rectangle);
 		} else if (e.action === 'size_changed') {
-			this._width = parseInt(e.size.split(',')[0]);
-			this._height = parseInt(e.size.split(',')[1]);
+			width = parseInt(e.size.split(',')[0]);
+			height = parseInt(e.size.split(',')[1]);
 
 			strDlgId = this._toDlgPrefix(e.id);
 			// FIXME: we don't really have to destroy and launch the dialog again but do it for
 			// now because the size sent to us previously in 'created' cb is not correct
 			$('#' + strDlgId).remove();
-			this._launchDialog(strDlgId);
-			$('#' + strDlgId).dialog('option', 'title', this._title);
-			this._sendPaintWindow(e.id, this._createRectStr());
+			this._launchDialog(strDlgId, width, height, this._dialogs[parseInt(e.id)].title);
+			this._sendPaintWindow(e.id, this._createRectStr(e.id));
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.id) && !!e.rectangle) {
 				rectangle = e.rectangle.split(',');
@@ -143,8 +148,10 @@ L.Control.LokDialog = L.Control.extend({
 				$('#' + strDlgId + '-cursor').css({display: this._dialogs[e.id].cursorVisible ? 'block' : 'none'});
 			}
 		} else if (e.action === 'title_changed') {
-			this._title = e.title;
-			$('#' + strDlgId).dialog('option', 'title', e.title);
+			if (e.title && this._dialogs[parseInt(e.id)]) {
+				this._dialogs[parseInt(e.id)].title = e.title;
+				$('#' + strDlgId).dialog('option', 'title', e.title);
+			}
 		} else if (e.action === 'cursor_visible') {
 			this._dialogs[e.id].cursorVisible = e.visible === 'true';
 			if (this._dialogs[e.id].cursorVisible)
@@ -172,15 +179,15 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.addClass(cursor, 'blinking-cursor');
 	},
 
-	_launchDialog: function(strDlgId) {
+	_launchDialog: function(strDlgId, width, height, title) {
 		var canvas = '<div class="lokdialog" style="padding: 0px; margin: 0px; overflow: hidden;" id="' + strDlgId + '">' +
-		    '<canvas class="lokdialog_canvas" tabindex="0" id="' + strDlgId + '-canvas" width="' + this._width + 'px" height="' + this._height + 'px"></canvas>' +
+		    '<canvas class="lokdialog_canvas" tabindex="0" id="' + strDlgId + '-canvas" width="' + width + 'px" height="' + height + 'px"></canvas>' +
 		    '</div>';
 		$(document.body).append(canvas);
 		var that = this;
 		$('#' + strDlgId).dialog({
-			width: this._width,
-			title: 'LOK Dialog', // TODO: Get the 'real' dialog title from the backend
+			width: width,
+			title: title ? title : '',
 			modal: false,
 			closeOnEscape: true,
 			resizable: false,
@@ -190,7 +197,12 @@ L.Control.LokDialog = L.Control.extend({
 			}
 		});
 
-		this._dialogs[this._toRawDlgId(strDlgId)] = { open: true };
+		this._dialogs[this._toRawDlgId(strDlgId)] = {
+			open: true,
+			width: width,
+			height: height,
+			title: title
+		};
 
 		// don't make 'TAB' focus on this button; we want to cycle focus in the lok dialog with each TAB
 		$('.lokdialog_container button.ui-dialog-titlebar-close').attr('tabindex', '-1').blur();
