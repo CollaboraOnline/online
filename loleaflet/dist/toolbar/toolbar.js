@@ -74,6 +74,8 @@ function _mobilify() {
 	oneUser = '1';
 	noUser = '0';
 	updateUserListCount();
+
+	$('#document-name-input').hide();
 }
 
 function _unmobilify() {
@@ -105,6 +107,8 @@ function _unmobilify() {
 	oneUser = _('1 user');
 	noUser = _('0 users');
 	updateUserListCount();
+
+	$('#document-name-input').show();
 }
 
 function resizeToolbar() {
