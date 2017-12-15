@@ -447,7 +447,9 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
         return sendTextFrame(output.data(), output.size());
     }
 
-    if (Png::encodeBufferToPNG(ptrFont, width, height, output, LOK_TILEMODE_RGBA))
+    const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
+
+    if (Png::encodeBufferToPNG(ptrFont, width, height, output, mode))
     {
         bSuccess = sendTextFrame(output.data(), output.size());
     }
@@ -999,8 +1001,10 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
+    const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
+
     // TODO: use png cache for dialogs too
-    if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight, output, LOK_TILEMODE_RGBA))
+    if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight, output, mode))
     {
         LOG_ERR("Failed to encode into PNG.");
         return false;
