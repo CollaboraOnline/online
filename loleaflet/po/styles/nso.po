@@ -3266,3 +3266,7 @@ msgstr "Se-Sorbia, Godingwana"
 #: langtab.src
 msgid "Sorbian, Lower"
 msgstr "Se-Sorbia, Tlasana"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Ga e gona (O se ke wa lekola mopeleto)"

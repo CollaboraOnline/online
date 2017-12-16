@@ -4573,3 +4573,7 @@ msgstr "Унгарски (унгарски руни)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "Английски (Малайзия)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Няма (без проверка на правописа)"

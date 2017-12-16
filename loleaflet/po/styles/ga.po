@@ -3926,3 +3926,7 @@ msgstr "Fraincis (An Nígir)"
 #: langtab.src
 msgid "French (Togo)"
 msgstr "Fraincis (Tóga)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Faic (Ná seiceáil an litriú)"

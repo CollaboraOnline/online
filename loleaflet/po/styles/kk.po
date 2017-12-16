@@ -4565,3 +4565,7 @@ msgstr "Венгрлық (венгрлық руналар)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "Ағылшын (Малайзия)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Ешнәрсе (емлені тексермеу)"

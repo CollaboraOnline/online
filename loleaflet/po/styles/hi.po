@@ -4093,3 +4093,7 @@ msgstr "याका"
 #: langtab.src
 msgid "Yombe (Congo)"
 msgstr "योंबे (कांगो)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "कोई नहीं (हिज्जे नहीं जाँचें)"

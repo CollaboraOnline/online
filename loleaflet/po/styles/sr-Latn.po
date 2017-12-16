@@ -3540,3 +3540,7 @@ msgstr "engleski (Malavi)"
 #: langtab.src
 msgid "Papiamento (Curaçao)"
 msgstr "papiamentu (Curaçao)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Nijedan (bez provere pisanja)"

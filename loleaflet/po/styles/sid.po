@@ -4067,3 +4067,7 @@ msgstr "Yombe (Kongo)"
 #: langtab.src
 msgid "Udmurt"
 msgstr "Udmurte"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Mitturino (fidalishsha buuxxooti)"

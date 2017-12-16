@@ -3839,3 +3839,7 @@ msgstr "Silesisk"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "Ungarsk (Szekely-Hungarian Rovas)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Ingen (ikkje sjekk stavinga)"

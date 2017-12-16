@@ -3078,3 +3078,7 @@ msgstr "Yombe (คองโก)"
 #: langtab.src
 msgid "Tibetan (India)"
 msgstr "ธิเบต (อินเดีย)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "ไม่มี (ไม่ตรวจสอบการสะกดคำ)"

@@ -3288,3 +3288,7 @@ msgstr "Afaan Sorbiyaanii, Lower"
 #: langtab.src
 msgid "Maore"
 msgstr "Afaan Moorii"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Homaa (Qubeeffannoo hin mirkaneessin)"

@@ -4014,3 +4014,7 @@ msgstr "Silezyaca"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "Macarca (Szekely-Macarca Rovas)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Hiçbiri (İmla denetimi yok)"

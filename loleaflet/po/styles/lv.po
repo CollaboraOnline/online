@@ -4350,3 +4350,7 @@ msgstr "Silēziešu"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "Ungāru (Senungāru rūnas)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Nav (nepārbaudīt pareizrakstību)"

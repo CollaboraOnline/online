@@ -3868,3 +3868,7 @@ msgstr "파피아멘토어 (쿠라카오)"
 #: langtab.src
 msgid "Papiamento (Bonaire)"
 msgstr "파피아멘토어 (보네르)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "없음 (맞춤법 검사 안함)"

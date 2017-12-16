@@ -4550,3 +4550,7 @@ msgstr "Ουγγρικά (Szekely-Hungarian Rovas)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "Αγγλικά (Μαλαισία)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Καμία (χωρίς ορθογραφικό έλεγχο)"

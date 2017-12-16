@@ -4257,3 +4257,7 @@ msgstr "Slezština"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "Maďarština (staromaďarské písmo)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Žádný (bez kontroly pravopisu)"

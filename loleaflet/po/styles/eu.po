@@ -4186,3 +4186,7 @@ msgstr "Silesiera"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "Hungariera (Szekely-Hungariar Runak)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Bat ere ez (ez zuzendu ortografia)"

@@ -3449,3 +3449,7 @@ msgstr "isi-Teke-Tyee"
 #: langtab.src
 msgid "Vili"
 msgstr "isi-Vili"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Akunalutho (ungahloli ukupeletwa)"

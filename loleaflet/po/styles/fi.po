@@ -4310,3 +4310,7 @@ msgstr "sleesia"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "unkari (unkarilaiset riimut)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Ei mikään (ei oikolukua)"

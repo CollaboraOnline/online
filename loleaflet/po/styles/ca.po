@@ -4370,3 +4370,7 @@ msgstr "hongarès (alfabet rúnic)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "anglès (Malàisia)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Cap (no verifiquis l'ortografia)"

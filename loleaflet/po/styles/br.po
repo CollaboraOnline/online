@@ -4230,3 +4230,7 @@ msgstr "Saozneg (Enez Maoris)"
 #: langtab.src
 msgid "French (Mauritius)"
 msgstr "Galleg (Enez Maoris)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Tra ebet (Na gwirañ ar reizhskrivadur)"
