@@ -1,6 +1,7 @@
 {
 "As C~haracter":"ಅಕ್ಷರವಾಗಿ (~h)",
 "Auto~Filter":"ಸ್ವಯಂ ಶೋಧಕ (~F)",
+"A~rea...":"ಕ್ಷೇತ್ರ (~r)...",
 "A~rrange":"ವ್ಯವಸ್ಥಿತವಾಗಿ ಜೋಡಿಸು (~r)",
 "Back One":"ಹಿಂದಕ್ಕೆ ಒಂದು",
 "Background Color":"ಹಿನ್ನೆಲೆಯ ಬಣ್ಣ",
@@ -50,6 +51,7 @@
 "Left":"ಎಡ",
 "Left-To-Right":"ಎಡದಿಂದ ಬಲಕ್ಕೆ",
 "Line Spacing: 1":"ಸಾಲುಗಳ ಅಂತರ: 1",
+"L~ine...":"ರೇಖೆ (~i)...",
 "Merge Cells":"ಕೋಶಗಳನ್ನು ವಿಲೀನಗೊಳಿಸು",
 "Move Down":"ಕೆಳಕ್ಕೆ ಚಲಿಸು",
 "Move Down with Subpoints":"ಉಪಬಿಂದುಗಳ ಜೊತೆ ಕೆಳಕ್ಕೆ ಚಲಿಸು",
@@ -67,6 +69,7 @@
 "Outline":"ಹೊರರೇಖೆ",
 "Overline":"ಮೇಲಿನಗೆರೆ",
 "Paste Unformatted Text":"ರೂಪಿಸದ ಪಠ್ಯವನ್ನು ಅಂಟಿಸು",
+"Position and Si~ze...":"ಸ್ಥಾನ ಮತ್ತು ಗಾತ್ರ (~z)...",
 "Promote One Level":"ಒಂದು ಹಂತ ಮೇಲೇರಿಸು",
 "Promote One Level With Subpoints":"ಉಪಬಿಂದುಗಳೊಂದಿಗೆ ಒಂದು ಹಂತ ಮೇಲೇರಿಸು",
 "P~aragraph...":"ಪ್ಯಾರಾಗ್ರಾಫ್‌ (~a)...",

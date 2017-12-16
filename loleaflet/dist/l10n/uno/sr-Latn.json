@@ -1,6 +1,7 @@
 {
 "As C~haracter":"Kao z~nak",
 "Auto~Filter":"Automatski ~filter",
+"A~rea...":"Pod~ručje...",
 "A~rrange":"~Redosled",
 "Back One":"Jedan unazad",
 "Background Color":"Boja pozadine",
@@ -49,6 +50,7 @@
 "Left":"Levo",
 "Left-To-Right":"Sleva udesno",
 "Line Spacing: 1":"Prored: 1",
+"L~ine...":"L~inija...",
 "Merge Cells":"Spoji ćelije",
 "Move Down":"Pomeri nadole",
 "Move Down with Subpoints":"Pomeri naniže sa podtačkama",
@@ -65,6 +67,7 @@
 "Optimal Row Height":"Optimalna visina reda",
 "Outline":"Kontura",
 "Overline":"Nadvučeno",
+"Position and Si~ze...":"Mesto i ~veličina...",
 "Promote One Level":"Jedan nivo gore",
 "Promote One Level With Subpoints":"Pomeri naviše sa podtačkama",
 "P~aragraph...":"~Pasus...",

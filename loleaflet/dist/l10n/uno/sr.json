@@ -1,6 +1,7 @@
 {
 "As C~haracter":"Као з~нак",
 "Auto~Filter":"Аутоматски ~филтер",
+"A~rea...":"Под~ручје...",
 "A~rrange":"~Редослед",
 "Back One":"Један уназад",
 "Background Color":"Боја позадине",
@@ -49,6 +50,7 @@
 "Left":"Лево",
 "Left-To-Right":"Слева удесно",
 "Line Spacing: 1":"Проред: 1",
+"L~ine...":"Л~инија...",
 "Merge Cells":"Споји ћелије",
 "Move Down":"Помери надоле",
 "Move Down with Subpoints":"Помери наниже са подтачкама",
@@ -65,6 +67,7 @@
 "Optimal Row Height":"Оптимална висина реда",
 "Outline":"Контура",
 "Overline":"Надвучено",
+"Position and Si~ze...":"Место и ~величина...",
 "Promote One Level":"Један ниво горе",
 "Promote One Level With Subpoints":"Помери навише са подтачкама",
 "P~aragraph...":"~Пасус...",
