@@ -3286,3 +3286,7 @@ msgstr "Anh (Ca-na-đa)"
 #: langtab.src
 msgid "Papiamento (Curaçao)"
 msgstr "Papiamento (Aruba)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Không có (Không kiểm tra chính tả)"

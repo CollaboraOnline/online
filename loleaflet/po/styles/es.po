@@ -4114,3 +4114,7 @@ msgstr "Húngaro (alfabeto rúnico)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "Inglés (Malasia)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Ninguno (no revisar la ortografía)"

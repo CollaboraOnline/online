@@ -3750,3 +3750,7 @@ msgstr "Franceză (Mauritius)"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "Maghiară (Szekely-Hungarian Rovas)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Niciuna (nu verifica ortografierea)"

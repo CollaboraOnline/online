@@ -3833,3 +3833,7 @@ msgstr "Ungherese antico (Szekely-Hungarian Rovas)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "Inglese (Malesia)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Nessuna (non eseguire il controllo ortografico)"

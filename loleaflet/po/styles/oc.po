@@ -3732,3 +3732,7 @@ msgstr "Arpitan (Soïssa)"
 #: langtab.src
 msgid "English (Botswana)"
 msgstr "Anglés (Botswana)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Non (pas de verificacion ortografica)"

@@ -4328,3 +4328,7 @@ msgstr "ئىنگلىزچە (ماۋرىتىئۇس)"
 #: langtab.src
 msgid "French (Mauritius)"
 msgstr "فىرانسۇزچە (ماۋرىتىئۇس)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "يوق (ئىملا تەكشۈرمە)"

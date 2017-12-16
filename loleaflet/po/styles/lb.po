@@ -2238,3 +2238,7 @@ msgstr "Uiguresch"
 #: langtab.src
 msgid "Asturian"
 msgstr "Asturesch"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Keng (Orthographie net kontrolléieren) "

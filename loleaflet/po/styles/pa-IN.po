@@ -3526,3 +3526,7 @@ msgstr "ਮਾਰੀ, ਮਿੱਡੋ"
 #: langtab.src
 msgid "Papiamento (Curaçao)"
 msgstr "ਪਾਪੀਆਮੇਨਟੋ (ਅਰੁਬਾ)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "ਕੋਈ ਨਹੀਂ (ਸਪੈਲਿੰਗ ਚੈੱਕ ਨਾ ਕਰੋ)"

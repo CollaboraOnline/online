@@ -3310,3 +3310,7 @@ msgstr "ලැට්වියානු"
 #: langtab.src
 msgid "English (Malawi)"
 msgstr "ඉංග්‍රීසි (කැනඩා)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "කිසිවක් නැත (අක්ෂර වින්‍යාසය පරීක්ෂා කරන්න)"

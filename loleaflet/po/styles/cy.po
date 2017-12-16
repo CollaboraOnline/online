@@ -3622,3 +3622,7 @@ msgstr "Hwngareg (Szekely-Hungarian Rovas)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "Saesneg (Malaysia)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Dim (Peidio gwirio sillafu)"

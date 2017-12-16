@@ -3465,3 +3465,7 @@ msgstr "টেলে-টাই"
 #: langtab.src
 msgid "Vili"
 msgstr "ভিলি"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "কোনটি না (বানান পরীক্ষা করা হবে না)"

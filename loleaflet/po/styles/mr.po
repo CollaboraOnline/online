@@ -4146,3 +4146,7 @@ msgstr "न्को"
 #: langtab.src
 msgid "Udmurt"
 msgstr "उड्मुर्ट"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "काहीही नाही (शब्दलेखन तपासू नका)"

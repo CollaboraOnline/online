@@ -3897,3 +3897,7 @@ msgstr "Hongrois (runes Hongrois-Szekely)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "Anglais (Malaisie)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Aucune (pas de vérification orthographique)"

@@ -2930,3 +2930,7 @@ msgstr "Ток писин"
 #: langtab.src
 msgid "Shuswap"
 msgstr "шусвап"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Ниеден (Не проверувај за правописни грешки)"

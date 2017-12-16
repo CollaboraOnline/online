@@ -3954,3 +3954,7 @@ msgstr "បារាំង (Niger)"
 #: langtab.src
 msgid "French (Togo)"
 msgstr "បារាំង (Togo)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "គ្មាន (កុំពិនិត្យ​អក្ខរាវិរុទ្ធ)"

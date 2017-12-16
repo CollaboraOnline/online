@@ -4078,3 +4078,7 @@ msgstr "śląski"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "węgierski (rowasz)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Brak (nie sprawdzaj pisowni)"

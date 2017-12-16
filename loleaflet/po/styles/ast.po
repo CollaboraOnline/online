@@ -3722,3 +3722,7 @@ msgstr "Ladinu"
 #: langtab.src
 msgid "French (Burkina Faso)"
 msgstr "Francés (Burkina Faso)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Dengún (Nun igua la ortografía)"

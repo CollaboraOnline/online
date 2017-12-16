@@ -3766,3 +3766,7 @@ msgstr "Ungarsk (Szekely-Hungarian Rovas)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "Engelsk (Malaysia)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Ingen (kontroller ikke stavning)"

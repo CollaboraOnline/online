@@ -3196,3 +3196,7 @@ msgstr "Apataní"
 #: langtab.src
 msgid "English (Mauritius)"
 msgstr "Inglés (Mauricio)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Avave (Ehecha'ỹ kuatiangatu)"

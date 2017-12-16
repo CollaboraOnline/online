@@ -2273,3 +2273,7 @@ msgstr "ኢንግልዝኛ (ሞሪሸስ)"
 #: langtab.src
 msgid "French (Mauritius)"
 msgstr "ፈረንሳይኛ (ሞሪሸስ)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "ምንም (ፊደሉን አታርም)"

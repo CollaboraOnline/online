@@ -4238,3 +4238,7 @@ msgstr "ফরাসি (টঙ্গো)"
 #: langtab.src
 msgid "Kven Finnish"
 msgstr "কাভেন ফিনিশ"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "কোনটি না (বানান পরীক্ষা করা হবে না)"

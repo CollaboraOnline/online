@@ -4145,3 +4145,7 @@ msgstr "നകോ"
 #: langtab.src
 msgid "Udmurt"
 msgstr "ഉഡ്മോര്‍ട്ട്"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "ഒന്നുമില്ല (അക്ഷരത്തെറ്റ് പരിശോധിക്കേണ്ട)"

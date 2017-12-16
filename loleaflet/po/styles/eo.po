@@ -4470,3 +4470,7 @@ msgstr "Silezia"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "Hungara runoskribo"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Neniu (Ne kontroli literumadon)"

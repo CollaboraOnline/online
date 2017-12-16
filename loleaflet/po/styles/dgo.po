@@ -3431,3 +3431,7 @@ msgstr "विली"
 #: langtab.src
 msgid "KeyID"
 msgstr "कीऽID"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "कोई नेईं( शब्द-जोड़ मत जाचो)"

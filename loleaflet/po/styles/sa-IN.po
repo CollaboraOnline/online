@@ -3446,3 +3446,7 @@ msgstr "विलि"
 #: langtab.src
 msgid "KeyID"
 msgstr "कुञ्चिका ID"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "न किमपि (वर्णविन्यासान् मा परीक्षस्व)"

@@ -3994,3 +3994,7 @@ msgstr "Magyar (Székely-magyar rovás)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "Angol (Malajzia)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Nincs (nincs helyesírás-ellenőrzés)"

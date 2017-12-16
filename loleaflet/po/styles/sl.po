@@ -4558,3 +4558,7 @@ msgstr "madžarski, runski"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "angleški (Malezija)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Brez (ne preverjaj črkovanja)"

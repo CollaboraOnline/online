@@ -3085,3 +3085,7 @@ msgstr "Shusvap"
 #: langtab.src
 msgid "Maore"
 msgstr "Mur"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Yoʻq (Imlo tekshirilmaydi)"

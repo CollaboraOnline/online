@@ -3886,3 +3886,7 @@ msgstr "Engelska (Mauritius)"
 #: langtab.src
 msgid "French (Mauritius)"
 msgstr "Franska (Mauritius)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Inget (gör ingen stavningskontroll)"
