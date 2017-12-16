@@ -3942,3 +3942,7 @@ msgstr "Šleski"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "Mađarski (Szekely-Hungarian Rovas)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Ništa (bez provjere pravopisa)"

@@ -2900,3 +2900,7 @@ msgstr "Туркмен"
 #: langtab.src
 msgid "Maltese"
 msgstr "Малтес хэл"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Байхгүй (зөв бичгийн дүрмийг шалгахгүй)"

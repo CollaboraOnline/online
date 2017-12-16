@@ -3161,3 +3161,7 @@ msgstr "ཧྲུའུ་ཧྲེ་ཝུའི་སྐད།"
 #: langtab.src
 msgid "Maore"
 msgstr "མུ་འར་སྐད།"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "མེད་པ(སྦྱོར་འབྲི་ཞིབ་བཤེར་མི་བྱེད་པ)"

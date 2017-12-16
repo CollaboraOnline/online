@@ -2659,3 +2659,7 @@ msgstr "دوغری"
 #: langtab.src
 msgid "Asturian"
 msgstr "آستوریان"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "هیچ‌کدام (بدون بررسی املائی)"

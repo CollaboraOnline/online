@@ -4322,3 +4322,7 @@ msgstr "الإنجليزية (موريشيوس)"
 #: langtab.src
 msgid "French (Mauritius)"
 msgstr "الفرنسية (موريشيوس)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "بلا (لا تدقّق الإملاء)"

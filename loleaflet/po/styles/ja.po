@@ -4401,3 +4401,7 @@ msgstr "アルピタン語 (スイス)"
 #: langtab.src
 msgid "English (Botswana)"
 msgstr "英語 (ボツワナ)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "なし(スペルチェックを行わない)"

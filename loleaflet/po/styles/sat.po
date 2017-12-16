@@ -3387,3 +3387,7 @@ msgstr "विली"
 #: langtab.src
 msgid "KeyID"
 msgstr "का़ठीID"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "जाहानाक् बाङ  (बानान आलोम ञेंला )"

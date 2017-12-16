@@ -3096,3 +3096,7 @@ msgstr "अङ्ग्रेजी (क्यानाडा)"
 #: langtab.src
 msgid "Papiamento (Curaçao)"
 msgstr "(अरूबा)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "कुनै पनि होइन (हिज्जे जाँच नगर्नुहोस्)"

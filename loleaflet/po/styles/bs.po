@@ -3952,3 +3952,7 @@ msgstr "Karakalpak latinica"
 #: langtab.src
 msgid "French (Burkina Faso)"
 msgstr "Fracuski (Burkina Faso)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Bez jezika (isključi provjeru pravopisa)"

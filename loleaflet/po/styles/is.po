@@ -3998,3 +3998,7 @@ msgstr "Sílesíska"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "Ungverska (Szekely-Hungarian Rovas)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Ekkert (ekki yfirfara stafsetningu)"

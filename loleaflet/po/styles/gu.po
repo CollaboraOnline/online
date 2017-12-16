@@ -4298,3 +4298,7 @@ msgstr "ફ્રેંચ (બેનિન)"
 #: langtab.src
 msgid "French (Togo)"
 msgstr "ફ્રેંચ (ટોગો)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "કંઇ નહિં (જોડણી ને ચકાસો નહિં)"

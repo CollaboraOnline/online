@@ -4310,3 +4310,7 @@ msgstr "ফ্ৰেঞ্চ (নাইজাৰ)"
 #: langtab.src
 msgid "French (Togo)"
 msgstr "ফ্ৰেঞ্চ (টগ')"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "কোনো নহয় (বানান নিৰীক্ষন নকৰিব)"

@@ -3364,3 +3364,7 @@ msgstr "လာဗီးယန်း"
 #: langtab.src
 msgid "English (Malawi)"
 msgstr "အင်္ဂလိပ်(ကနေဒါ)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "မလုပ်ပါ (စာလုံးပေါင်းစစ်ဆေးမှု မလုပ်ပါ)"

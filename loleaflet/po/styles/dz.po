@@ -2615,3 +2615,7 @@ msgstr "ཏ་ག་ལོག"
 #: langtab.src
 msgid "Maltese"
 msgstr "མཱལ་ཊི་སི།"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "ཅི་མེད་ (ཡིག་སྡེབ་ཞིབ་དཔྱད་མ་འབད)"

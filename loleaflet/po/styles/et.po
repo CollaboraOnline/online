@@ -4278,3 +4278,7 @@ msgstr "Sileesia"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "Ungari (vanaungari ruunikirjas)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Puudub (õigekirja ei kontrollita)"

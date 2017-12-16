@@ -2759,3 +2759,7 @@ msgstr "Frënge (Niger)"
 #: langtab.src
 msgid "French (Togo)"
 msgstr "Frënge (Togo)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Asnjë (Mos kontrollo ortografinë)"

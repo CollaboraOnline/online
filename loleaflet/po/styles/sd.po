@@ -3465,3 +3465,7 @@ msgstr "ولي"
 #: langtab.src
 msgid "KeyID"
 msgstr "ڪي آءِ ڊيءَ"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "ڪجهہ بہ نہ (هجي نہ چڪاسيو)"

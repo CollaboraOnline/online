@@ -4554,3 +4554,7 @@ msgstr "அரபிதான் (சுவிட்சிலாந்து)"
 #: langtab.src
 msgid "English (Botswana)"
 msgstr "ஆங்கிலம் (போட்சுவானா)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "ஏதுமில்லை (சொல்திருத்தவேண்டாம்)"

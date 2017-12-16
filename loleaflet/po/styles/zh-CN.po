@@ -4358,3 +4358,7 @@ msgstr "西丽西亚语 [Silesian]"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "匈牙利语 (Szekely-Hungarian Rovas)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "无（不检查拼写）"

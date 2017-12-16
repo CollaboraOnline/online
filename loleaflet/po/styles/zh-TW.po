@@ -4570,3 +4570,7 @@ msgstr "西利西亞文"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "匈牙利文 (賽楷伊字母)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "無 (請勿檢查拼字)"

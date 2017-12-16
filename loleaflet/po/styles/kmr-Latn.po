@@ -3077,3 +3077,7 @@ msgstr "Rûsî (Ukrayna)"
 #: langtab.src
 msgid "Rusyn (Slovakia)"
 msgstr "Rûsî (Slovakya)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Tune (Kontrola rastnivîsê neke)"

@@ -3977,3 +3977,7 @@ msgstr "Ungarisch (Szekler Kerbschrift - Rovásírás)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "Englisch (Malaysia)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Keine (Rechtschreibung nicht prüfen)"

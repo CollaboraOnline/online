@@ -4346,3 +4346,7 @@ msgstr "interlingue"
 #: langtab.src
 msgid "Apatani"
 msgstr "apatani"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Cap (no verifiquis l'ortografia)"

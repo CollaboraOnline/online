@@ -3910,3 +3910,7 @@ msgstr "Hongaars (Szekely-Hongaarse Rovas)"
 #: langtab.src
 msgid "English (Malaysia)"
 msgstr "Engels (Maleisië)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Geen (geen spellingcontrole)"

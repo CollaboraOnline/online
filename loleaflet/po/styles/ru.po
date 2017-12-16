@@ -4550,3 +4550,7 @@ msgstr "Силезский"
 #: langtab.src
 msgid "Hungarian (Szekely-Hungarian Rovas)"
 msgstr "Венгерский (венгерские руны)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Нет (не проверять орфографию)"

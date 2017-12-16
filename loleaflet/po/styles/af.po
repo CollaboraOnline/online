@@ -3066,3 +3066,7 @@ msgstr "Sorbies, Bo"
 #: langtab.src
 msgid "Sorbian, Lower"
 msgstr "Sorbies, Onder"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Geen (moenie spelling kontroleer nie)"

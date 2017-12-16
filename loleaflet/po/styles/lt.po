@@ -3670,3 +3670,7 @@ msgstr "Anglų (Mauricijus)"
 #: langtab.src
 msgid "French (Mauritius)"
 msgstr "Prancūzų (Mauricijus)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Jokios (netikrinti rašybos)"

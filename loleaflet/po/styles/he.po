@@ -3906,3 +3906,7 @@ msgstr "ארפיטנית (איטליה)"
 #: langtab.src
 msgid "Arpitan (Switzerland)"
 msgstr "ארפיטנית (שווייץ)‏"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "ללא (לא לבדוק איות)"

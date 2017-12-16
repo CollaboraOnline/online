@@ -3119,3 +3119,7 @@ msgstr "Марыйская нізінная*"
 #: langtab.src
 msgid "Papiamento (Curaçao)"
 msgstr "Papiamento (Aruba)"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "Няма (без праверкі правапісу)"

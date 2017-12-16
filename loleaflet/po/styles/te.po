@@ -4136,3 +4136,7 @@ msgstr "యోంబె (కాంగో)"
 #: langtab.src
 msgid "Udmurt"
 msgstr "ఉద్‌మర్ట్"
+
+#: resource.src
+msgid "None (Do not check spelling)"
+msgstr "ఏదీకాదు (స్పెల్లింగ్‌ను పరీక్షించవద్దు)"
