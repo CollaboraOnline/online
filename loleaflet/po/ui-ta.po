@@ -2,39 +2,39 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:15+0000\n"
+"POT-Creation-Date: 2017-12-16 09:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: ta\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
-"X-Pootle-Path: /ta/libo_online/loleaflet-ui-ta.po\n"
 "X-Pootle-Revision: 2776699\n"
+"X-Pootle-Path: /ta/libo_online/loleaflet-ui-ta.po\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
 msgstr ""
 
-#: admin.strings.js:7
+#: admin.strings.js:6
 msgid "Settings"
 msgstr "அமைவுகள்"
 
-#: admin.strings.js:8
+#: admin.strings.js:7
 msgid "Overview"
 msgstr ""
 
-#: admin.strings.js:9
+#: admin.strings.js:8
 msgid "(current)"
 msgstr "(நடப்பு)"
 
-#: admin.strings.js:10
+#: admin.strings.js:9
 msgid "Analytics"
 msgstr ""
 
-#: evol.colorpicker.strings.js:6
+#: admin.strings.js:10 evol.colorpicker.strings.js:6
 msgid "History"
 msgstr "வரலாறு"
 
@@ -50,55 +50,55 @@ msgstr "இணைநிலை பயனர்கள்"
 msgid "User Name"
 msgstr ""
 
-#: admin.strings.js:13
+#: admin.strings.js:14
 msgid "Documents opened"
 msgstr "ஆவணங்கள் திறந்துள்ளன"
 
-#: admin.strings.js:16
+#: admin.strings.js:15
 msgid "Number of Documents"
 msgstr ""
 
-#: admin.strings.js:14
+#: admin.strings.js:16
 msgid "Memory consumed"
 msgstr "நினைவு பயன்படுத்தப்பட்டுள்ளது"
 
-#: admin.strings.js:18
+#: admin.strings.js:17
 msgid "Bytes sent"
 msgstr ""
 
-#: admin.strings.js:19
+#: admin.strings.js:18
 msgid "Bytes received"
 msgstr ""
 
-#: admin.strings.js:15
+#: admin.strings.js:19
 msgid "PID"
 msgstr "PID"
 
-#: admin.strings.js:16
+#: admin.strings.js:20
 msgid "Document"
 msgstr "ஆவணம்"
 
-#: admin.strings.js:17
+#: admin.strings.js:21
 msgid "Number of views"
 msgstr "பார்வை எண்ணிக்கை"
 
-#: admin.strings.js:18
+#: admin.strings.js:22
 msgid "Elapsed time"
 msgstr "கடந்த நேரம்"
 
-#: admin.strings.js:19
+#: admin.strings.js:23
 msgid "Idle time"
 msgstr ""
 
-#: admin.strings.js:25
+#: admin.strings.js:24
 msgid "Modified"
 msgstr ""
 
-#: admin.strings.js:20
+#: admin.strings.js:25
 msgid "Kill"
 msgstr "கொல்"
 
-#: admin.strings.js:21
+#: admin.strings.js:26
 msgid "Graphs"
 msgstr ""
 
@@ -114,28 +114,23 @@ msgstr ""
 msgid "Network Graph"
 msgstr ""
 
-#: admin.strings.js:22
-#: dist/toolbar/toolbar.js:473
-#: src/control/Control.Menubar.js:11
-#: src/control/Control.Menubar.js:175
-#: src/control/Control.Menubar.js:235
-#: src/layer/marker/Annotation.js:184
+#: admin.strings.js:30 src/layer/marker/Annotation.js:222
 msgid "Save"
 msgstr "சேமி"
 
-#: admin.strings.js:23
+#: admin.strings.js:31
 msgid "Cache size of memory statistics"
 msgstr ""
 
-#: admin.strings.js:24
+#: admin.strings.js:32
 msgid "Time interval of memory statistics (in ms)"
 msgstr ""
 
-#: admin.strings.js:25
+#: admin.strings.js:33
 msgid "Cache size of CPU statistics"
 msgstr ""
 
-#: admin.strings.js:26
+#: admin.strings.js:34
 msgid "Time interval of CPU statistics (in ms)"
 msgstr ""
 
@@ -171,157 +166,54 @@ msgstr ""
 msgid "No history yet."
 msgstr "இன்னும் வரலாறில்லை."
 
-#: unocommands.js:1
-msgid "Copy Hyperlink"
-msgstr "மீத்தொடுப்பைப் படியெடு"
-
-#: unocommands.js:2
-msgid "Down One Level"
-msgstr "ஒரு மட்டம் கீழ்"
-
-#: unocommands.js:3
-msgid "Up One Level"
-msgstr "ஒரு மட்டம் மேல்"
-
-#: unocommands.js:4
-msgid "Edit Comment"
-msgstr "கருத்துரையைத் தொகு"
-
-#: unocommands.js:5
-msgid "Insert Comment"
-msgstr "கருத்துரை நுழை"
-
-#: unocommands.js:6
-msgid "Merge"
-msgstr "ஒன்றாக்கு"
-
-#: unocommands.js:7
-msgid "Merge Cells..."
-msgstr "கலங்களை ஒன்றாக்கு..."
-
-#: unocommands.js:8
-msgid "Bring Forward"
-msgstr "முன் கொண்டுவா"
-
-#: unocommands.js:9
-msgid "Send Backward"
-msgstr "பின்னால் அனுப்பு"
-
-#: unocommands.js:10
-msgid "Paste Special"
-msgstr "சிறப்பு ஒட்டு"
-
-#: unocommands.js:11
-msgid "Unformatted Text"
-msgstr "வடிவூட்டா உரை"
-
-#: unocommands.js:12
-msgid "No Wrap"
-msgstr ""
-
-#: unocommands.js:13
-msgid "Wrap Before"
-msgstr ""
-
-#: unocommands.js:14
-msgid "Wrap After"
-msgstr ""
-
-#: unocommands.js:15
-msgid "Enable Contour"
-msgstr ""
-
-#: unocommands.js:16
-msgid "Update Index or Table of Contents"
-msgstr ""
-
-#: unocommands.js:17
-msgid "Delete Index or Table of Contents"
-msgstr ""
-
-#: unocommands.js:18
-#: src/layer/marker/Annotation.js:187
-#: src/layer/tile/TileLayer.js:188
-msgid "Reply"
-msgstr ""
-
-#: unocommands.js:19
-msgid "Refresh"
-msgstr ""
-
 #: dist/errormessages.js:1
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
+msgid "No disk space left on server, please contact the server administrator to continue."
 msgstr ""
 
 #: dist/errormessages.js:2
-msgid ""
-"The host URL is empty. The loolwsd server is probably misconfigured, please "
-"contact the administrator."
+msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
 msgstr ""
 
 #: dist/errormessages.js:3
-msgid ""
-"This development build is limited to %0 documents, and %1 connections - to "
-"avoid the impression that it is suitable for deployment in large "
-"enterprises. To find out more about deploying and scaling %2 check out: "
-"<br/><a href=\"%3\">%3</a>."
+msgid "This development build is limited to %0 documents, and %1 connections - to avoid the impression that it is suitable for deployment in large enterprises. To find out more about deploying and scaling %2 check out: <br/><a href=\"%3\">%3</a>."
 msgstr ""
 
 #: dist/errormessages.js:4
-msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
-"admin. This limit has been reached. Please try again later."
+msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
 msgstr ""
 
 #: dist/errormessages.js:5
-msgid ""
-"Service is unavailable. Please try again later and report to your "
-"administrator if the issue persists."
+msgid "Service is unavailable. Please try again later and report to your administrator if the issue persists."
 msgstr ""
 
 #: dist/errormessages.js:6
-msgid ""
-"Unauthorized WOPI host. Please try again later and report to your "
-"administrator if the issue persists."
+msgid "Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists."
 msgstr ""
 
 #: dist/errormessages.js:7
-msgid ""
-"Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
-"file_path=/path/to/doc/"
+msgid "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: file_path=/path/to/doc/"
 msgstr ""
 
 #: dist/errormessages.js:8
-msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
-"session (or webpage) to continue."
+msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
 msgstr ""
 
 #: dist/errormessages.js:9
-msgid ""
-"Your session has been expired. Further changes to document might not be "
-"saved. Please refresh the session (or webpage) to continue."
+msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
 msgstr ""
 
 #: dist/errormessages.js:10
-msgid ""
-"Failed to load the document. Please ensure the file type is supported and "
-"not corrupted, and try again."
+msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
 msgstr ""
 
 #: dist/errormessages.js:13
-msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
+#, javascript-format
+msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
 msgstr ""
 
 #: dist/errormessages.js:14
-msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server (%storageserver) administrator to "
-"continue editing."
+#, javascript-format
+msgid "Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing."
 msgstr ""
 
 #: dist/errormessages.js:15
@@ -329,420 +221,216 @@ msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 
 #: dist/errormessages.js:16
-msgid ""
-"Document cannot be saved. Check your permissions or contact the storage "
-"server administrator."
+msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
 msgstr ""
 
-#: dist/toolbar/toolbar.js:105
+#: dist/toolbar/toolbar.js:104
 msgid "%n users"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:106
+#: dist/toolbar/toolbar.js:105
 msgid "1 user"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:107
+#: dist/toolbar/toolbar.js:106
 msgid "0 users"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:264
+#: dist/toolbar/toolbar.js:270
 msgid "Are you sure you want to delete this page?"
 msgstr "உறுதியாக இப்பக்கத்தை அழிக்க வேண்டுகிறீரா?"
 
-#: dist/toolbar/toolbar.js:464
-msgid "Textwrap"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:465
-msgid "No wrap"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:466
-msgid "Page wrap"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:467
-msgid "Wrap anchor only"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:468
-msgid "Ideal wrap"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:469
-msgid "Left wrap"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:470
-msgid "Right wrap"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:471
-msgid "Wrap through"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:475
-#: src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:185
-#: src/control/Control.Menubar.js:245
-msgid "Undo"
-msgstr "செயல்நீக்கு"
-
-#: dist/toolbar/toolbar.js:476
-#: src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:186
-#: src/control/Control.Menubar.js:246
-msgid "Redo"
-msgstr "திரும்பச்செய்"
-
-#: dist/toolbar/toolbar.js:477
+#: dist/toolbar/toolbar.js:455
 msgid "Document repair"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:483
-#: src/control/Control.Menubar.js:71
-msgid "Bold"
-msgstr "தனிமன்"
-
-#: dist/toolbar/toolbar.js:484
-#: src/control/Control.Menubar.js:72
-msgid "Italic"
-msgstr "சாய்வு"
-
-#: dist/toolbar/toolbar.js:485
-#: src/control/Control.Menubar.js:73
-msgid "Underline"
-msgstr "அடிக்கோடு"
-
-#: dist/toolbar/toolbar.js:486
-msgid "Strikeout"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:488
-msgid "Insert Footnote"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:491
-msgid "Font color"
-msgstr "எழுத்துரு நிறம்"
-
-#: dist/toolbar/toolbar.js:493
-msgid "Highlighting"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:495
-msgid "Align left"
-msgstr "இடது சீரமைப்பு"
-
 #: dist/toolbar/toolbar.js:496
-msgid "Center horizontally"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:497
-msgid "Align right"
-msgstr "வலது சீரமைப்பு"
-
-#: dist/toolbar/toolbar.js:498
-#: src/control/Control.Menubar.js:112
-msgid "Justified"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:500
-msgid "Wrap Text"
-msgstr "உரையை மடி"
-
-#: dist/toolbar/toolbar.js:501
-msgid "Merge and Center Cells"
-msgstr "கலங்களை ஒன்றாக்கி நடுவாக்கு"
-
-#: dist/toolbar/toolbar.js:503
-msgid "Format as Currency"
-msgstr "நாணயமாக வடிவூட்டு"
-
-#: dist/toolbar/toolbar.js:504
-msgid "Format as Percent"
-msgstr "விழுகாடாக வடிவூட்டு"
-
-#: dist/toolbar/toolbar.js:505
-msgid "Format as Number"
-msgstr "எண்ணாக வடிவூட்டு"
-
-#: dist/toolbar/toolbar.js:506
-msgid "Format as Date"
-msgstr "தேதியாக வடிவூட்டு"
-
-#: dist/toolbar/toolbar.js:507
-msgid "Add Decimal Place"
-msgstr "தசம இடத்தைச் சேர்"
-
-#: dist/toolbar/toolbar.js:508
-msgid "Delete Decimal Place"
-msgstr "தசம இடத்தை அழி"
-
-#: dist/toolbar/toolbar.js:510
-msgid "Sort Ascending"
-msgstr "ஏற்றமாக வரிசைபடுத்து"
-
-#: dist/toolbar/toolbar.js:511
-msgid "Sort Descending"
-msgstr "இறக்கமாக வரிசைபடுத்து"
-
-#: dist/toolbar/toolbar.js:513
-#: src/control/Control.Menubar.js:118
-msgid "Bullets on/off"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:514
-#: src/control/Control.Menubar.js:119
-msgid "Numbering on/off"
-msgstr "எண்ணிடல் திற/அடை"
-
-#: dist/toolbar/toolbar.js:516
-#: src/control/Control.Menubar.js:106
-msgid "Increase indent"
-msgstr "உள்தள்ளை அதிகரி"
-
-#: dist/toolbar/toolbar.js:517
-#: src/control/Control.Menubar.js:107
-msgid "Decrease indent"
-msgstr "உள்தள்ளைக் குறை"
-
-#: dist/toolbar/toolbar.js:520
 msgid "Insert table"
 msgstr "அட்டைவணை நுழை"
 
-#: dist/toolbar/toolbar.js:521
-msgid "Insert comment"
-msgstr "கருத்துரை நுழை"
-
-#: dist/toolbar/toolbar.js:522
-msgid "Insert graphic"
-msgstr "வரைகலை நுழை"
-
-#: dist/toolbar/toolbar.js:523
-msgid "Special Character"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:525
+#: dist/toolbar/toolbar.js:501
 msgid "More"
 msgstr "மேலும்"
 
-#: dist/toolbar/toolbar.js:606
+#: dist/toolbar/toolbar.js:581
 msgid "Layout"
 msgstr "தளக்கோலம்"
 
-#: dist/toolbar/toolbar.js:631
-#: dist/toolbar/toolbar.js:976
+#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1059
 msgid "Sum"
 msgstr "தொகை"
 
-#: dist/toolbar/toolbar.js:632
+#: dist/toolbar/toolbar.js:600
 msgid "Function"
 msgstr "செயலாற்றி"
 
-#: dist/toolbar/toolbar.js:633
-#: src/control/Control.CharacterMap.js:428
-#: src/layer/marker/Annotation.js:130
+#: dist/toolbar/toolbar.js:601 src/layer/marker/Annotation.js:161
 msgid "Cancel"
 msgstr "ரத்து"
 
-#: dist/toolbar/toolbar.js:634
+#: dist/toolbar/toolbar.js:602
 msgid "Accept"
 msgstr "ஏற்றுக்கொள்"
 
-#: dist/toolbar/toolbar.js:649
+#: dist/toolbar/toolbar.js:618
 msgid "First sheet"
 msgstr "முதல் தாள்"
 
-#: dist/toolbar/toolbar.js:650
+#: dist/toolbar/toolbar.js:619
 msgid "Previous sheet"
 msgstr "முந்தைய தாள்"
 
-#: dist/toolbar/toolbar.js:651
+#: dist/toolbar/toolbar.js:620
 msgid "Next sheet"
 msgstr "அடுத்த தாள்"
 
-#: dist/toolbar/toolbar.js:652
+#: dist/toolbar/toolbar.js:621
 msgid "Last sheet"
 msgstr "கடைசி தாள்"
 
-#: dist/toolbar/toolbar.js:662
-#: src/control/Control.Menubar.js:224
+#: dist/toolbar/toolbar.js:631 src/control/Control.Menubar.js:270
 msgid "Fullscreen presentation"
 msgstr "முழுத்திரை வழங்கல்"
 
-#: dist/toolbar/toolbar.js:664
-msgid "Insert slide"
-msgstr "படவில்லையை நுழை"
-
-#: dist/toolbar/toolbar.js:665
-#: src/control/Control.Menubar.js:221
-msgid "Duplicate slide"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:666
-#: src/control/Control.Menubar.js:222
-msgid "Delete slide"
-msgstr "படவில்லையை அழி"
-
-#: dist/toolbar/toolbar.js:679
+#: dist/toolbar/toolbar.js:648
 msgid "Search:"
 msgstr "தேடு:"
 
-#: dist/toolbar/toolbar.js:684
-msgid "Search backwards"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:685
-msgid "Search forward"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:686
+#: dist/toolbar/toolbar.js:655
 msgid "Cancel the search"
 msgstr "தேடலை ரத்துசெய்"
 
-#: dist/toolbar/toolbar.js:680
-msgid "Text Language"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:691
+#: dist/toolbar/toolbar.js:660
 msgid "No users"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:693
+#: dist/toolbar/toolbar.js:671
 msgid "Previous page"
 msgstr "முந்தைய பக்கம்"
 
-#: dist/toolbar/toolbar.js:694
+#: dist/toolbar/toolbar.js:672
 msgid "Next page"
 msgstr "அடுத்த பக்கம்"
 
-#: dist/toolbar/toolbar.js:696
-#: src/control/Control.Menubar.js:44
-#: src/control/Control.Menubar.js:199
+#: dist/toolbar/toolbar.js:674 src/control/Control.Menubar.js:57
+#: src/control/Control.Menubar.js:238
 msgid "Reset zoom"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:697
-#: src/control/Control.Menubar.js:43
-#: src/control/Control.Menubar.js:198
+#: dist/toolbar/toolbar.js:675
 msgid "Zoom out"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:699
-#: src/control/Control.Menubar.js:42
-#: src/control/Control.Menubar.js:197
+#: dist/toolbar/toolbar.js:677
 msgid "Zoom in"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:715
+#: dist/toolbar/toolbar.js:706
 msgid "%user has joined"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:716
+#: dist/toolbar/toolbar.js:707
 msgid "%user has left"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:825
-#: dist/toolbar/toolbar.js:1351
+#: dist/toolbar/toolbar.js:859 dist/toolbar/toolbar.js:1438
 msgid "Size"
 msgstr "அளவு"
 
-#: dist/toolbar/toolbar.js:957
+#: dist/toolbar/toolbar.js:1037
 msgid "Number of Sheets"
 msgstr "தாள் எண்ணிக்கை"
 
-#: dist/toolbar/toolbar.js:960
+#: dist/toolbar/toolbar.js:1040
 msgid "Selected range of cells"
 msgstr "தேர்ந்த கலங்களின் வீச்சு"
 
-#: dist/toolbar/toolbar.js:963
-#: dist/toolbar/toolbar.js:998
+#: dist/toolbar/toolbar.js:1043 dist/toolbar/toolbar.js:1081
 msgid "Entering text mode"
 msgstr "உரை முறையில் நுழைகிறது"
 
-#: dist/toolbar/toolbar.js:966
-#: dist/toolbar/toolbar.js:1001
+#: dist/toolbar/toolbar.js:1046 dist/toolbar/toolbar.js:1087
+#: dist/toolbar/toolbar.js:1110
+msgid "Text Language"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:1049 dist/toolbar/toolbar.js:1084
 msgid "Selection Mode"
 msgstr "தேர்வு முறை"
 
-#: dist/toolbar/toolbar.js:969
+#: dist/toolbar/toolbar.js:1052
 msgid "Choice of functions"
 msgstr "செயலாற்றிகளின் தேர்வு"
 
-#: dist/toolbar/toolbar.js:971
+#: dist/toolbar/toolbar.js:1054
 msgid "Average"
 msgstr "சராசரி"
 
-#: dist/toolbar/toolbar.js:972
+#: dist/toolbar/toolbar.js:1055
 msgid "CountA"
 msgstr "CountA"
 
-#: dist/toolbar/toolbar.js:973
+#: dist/toolbar/toolbar.js:1056
 msgid "Count"
 msgstr "எண்ணிக்கை"
 
-#: dist/toolbar/toolbar.js:974
+#: dist/toolbar/toolbar.js:1057
 msgid "Maximum"
 msgstr "கூடியபட்சம்"
 
-#: dist/toolbar/toolbar.js:975
+#: dist/toolbar/toolbar.js:1058
 msgid "Minimum"
 msgstr "குறைந்தபட்சம்"
 
-#: dist/toolbar/toolbar.js:977
+#: dist/toolbar/toolbar.js:1060
 msgid "Selection count"
 msgstr "தேர்வு எண்ணிக்கை"
 
-#: dist/toolbar/toolbar.js:978
-#: src/control/Control.CharacterMap.js:11
+#: dist/toolbar/toolbar.js:1061
 msgid "None"
 msgstr "ஏதுமில்லை"
 
-#: dist/toolbar/toolbar.js:992
+#: dist/toolbar/toolbar.js:1075
 msgid "Number of Pages"
 msgstr "பக்கங்களின் எண்ணிக்கை"
 
-#: dist/toolbar/toolbar.js:995
+#: dist/toolbar/toolbar.js:1078
 msgid "Word Counter"
 msgstr "சொல் எண்ணி"
 
-#: dist/toolbar/toolbar.js:1018
+#: dist/toolbar/toolbar.js:1107
 msgid "Number of Slides"
 msgstr "படவில்லைகளின் எண்ணிக்கை"
 
-#: dist/toolbar/toolbar.js:1161
+#: dist/toolbar/toolbar.js:1257
 msgid "Document saved"
 msgstr "ஆவணம் சேமிக்கப்பட்டது"
 
-#: dist/toolbar/toolbar.js:1324
+#: dist/toolbar/toolbar.js:1408
 msgid "Style"
 msgstr "பாணி"
 
-#: dist/toolbar/toolbar.js:1343
+#: dist/toolbar/toolbar.js:1430
 msgid "Font"
 msgstr "எழுத்துரு"
 
-#: dist/toolbar/toolbar.js:1379
+#: dist/toolbar/toolbar.js:1466
 msgid "Previous slide"
 msgstr "முந்தைய படவில்லை"
 
-#: dist/toolbar/toolbar.js:1380
+#: dist/toolbar/toolbar.js:1467
 msgid "Next slide"
 msgstr "அடுத்த படவில்லை"
 
-#: dist/toolbar/toolbar.js:1433
-msgid ""
-"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
+#: dist/toolbar/toolbar.js:1528
+msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1598
-#: src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1776 src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1604
+#: dist/toolbar/toolbar.js:1782
 msgid "Readonly"
 msgstr ""
 
@@ -750,18 +438,17 @@ msgstr ""
 msgid "Connection error"
 msgstr "இணைப்புப் பிழை"
 
-#: src/admin/AdminSocketOverview.js:66
+#: src/admin/AdminSocketOverview.js:101
 #, fuzzy
 msgid "Are you sure you want to terminate this session?"
 msgstr "உறுதியாக இப்படவில்லையை அழிக்க வேண்டுகிறீரா?"
 
-#: src/admin/AdminSocketOverview.js:152
-#: src/admin/AdminSocketOverview.js:311
+#: src/admin/AdminSocketOverview.js:183 src/admin/AdminSocketOverview.js:290
 #, fuzzy
 msgid "Documents"
 msgstr "ஆவணம்"
 
-#: src/admin/AdminSocketSettings.js:31
+#: src/admin/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
 msgstr ""
 
@@ -781,13 +468,11 @@ msgstr "GB"
 msgid "TB"
 msgstr "TB"
 
-#: src/admin/Util.js:42
-#: src/admin/Util.js:44
+#: src/admin/Util.js:42 src/admin/Util.js:44
 msgid " hrs"
 msgstr "மணி"
 
-#: src/admin/Util.js:48
-#: src/admin/Util.js:50
+#: src/admin/Util.js:48 src/admin/Util.js:50
 msgid " mins"
 msgstr "நிமி"
 
@@ -795,1119 +480,19 @@ msgstr "நிமி"
 msgid " s"
 msgstr "வி"
 
-#: src/control/Control.CharacterMap.js:12
-msgid "Basic Latin"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:13
-msgid "Latin-1"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:14
-msgid "Latin Extended-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:15
-msgid "Latin Extended-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:16
-msgid "IPA Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:17
-msgid "Spacing Modifier Letters"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:18
-msgid "Combining Diacritical Marks"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:19
-msgid "Basic Greek"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:20
-msgid "Cyrillic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:21
-msgid "Armenian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:22
-msgid "Basic Hebrew"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:23
-msgid "Basic Arabic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:24
-msgid "Syriac"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:25
-msgid "Thaana"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:26
-msgid "Devanagari"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:27
-msgid "Bengali"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:28
-msgid "Gurmukhi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:29
-msgid "Gujarati"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:30
-msgid "Odia"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:31
-msgid "Tamil"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:32
-msgid "Telugu"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:33
-msgid "Kannada"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:34
-msgid "Malayalam"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:35
-msgid "Sinhala"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:36
-msgid "Thai"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:37
-msgid "Lao"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:38
-msgid "Tibetan"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:39
-msgid "Myanmar"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:40
-msgid "Basic Georgian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:41
-msgid "Hangul Jamo"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:43
-msgid "Ethiopic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:44
-msgid "Cherokee"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:46
-msgid "Canadian Aboriginal Syllables"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:47
-msgid "Ogham"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:48
-msgid "Runic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:49
-msgid "Khmer"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:50
-msgid "Mongolian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:51
-msgid "Latin Extended Additional"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:52
-msgid "Greek Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:53
-msgid "General Punctuation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:54
-msgid "Superscripts and Subscripts"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:55
-msgid "Currency Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:56
-msgid "Combining Diacritical Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:57
-msgid "Letterlike Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:58
-msgid "Number Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:59
-msgid "Arrows"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:60
-msgid "Mathematical Operators"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:61
-msgid "Miscellaneous Technical"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:62
-msgid "Control Pictures"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:63
-msgid "Optical Character Recognition"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:64
-msgid "Enclosed Alphanumerics"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:65
-msgid "Box Drawing"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:66
-msgid "Block Elements"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:67
-msgid "Geometric Shapes"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:68
-msgid "Miscellaneous Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:69
-msgid "Dingbats"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:70
-msgid "Braille Patterns"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:71
-msgid "CJK Radicals Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:72
-msgid "Kangxi Radicals"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:73
-msgid "Ideographic Description Characters"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:74
-msgid "CJK Symbols and Punctuation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:75
-msgid "Hiragana"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:76
-msgid "Katakana"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:77
-msgid "Bopomofo"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:78
-msgid "Hangul Compatibility Jamo"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:79
-msgid "Kanbun"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:80
-msgid "Bopomofo Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:81
-msgid "Enclosed CJK Letters and Months"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:82
-msgid "CJK Compatibility"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:84
-msgid "CJK Unified Ideographs Extension A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:86
-msgid "CJK Unified Ideographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:88
-msgid "Yi Syllables"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:90
-msgid "Yi Radicals"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:92
-msgid "Hangul"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:94
-msgid "High Surrogates"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:95
-msgid "High Private Use Surrogates"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:97
-msgid "Low Surrogates"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:99
-msgid "Private Use Area"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:101
-msgid "CJK Compatibility Ideographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:102
-msgid "Alphabetic Presentation Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:104
-msgid "Arabic Presentation Forms-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:105
-msgid "Combining Half Marks"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:106
-msgid "CJK Compatibility Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:107
-msgid "Small Form Variants"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:108
-msgid "Arabic Presentation Forms-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:109
-msgid "Specials"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:110
-msgid "Halfwidth and Fullwidth Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:111
-msgid "Old Italic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:112
-msgid "Gothic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:113
-msgid "Deseret"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:114
-msgid "Byzantine Musical Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:115
-#: src/control/Control.CharacterMap.js:116
-msgid "Musical Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:118
-msgid "CJK Unified Ideographs Extension B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:121
-msgid "CJK Compatibility Ideographs Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:122
-msgid "Tags"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:123
-msgid "Cyrillic Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:124
-msgid "Tagalog"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:125
-msgid "Hanunoo"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:126
-msgid "Buhid"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:127
-msgid "Tagbanwa"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:128
-msgid "Miscellaneous Mathematical Symbols-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:129
-msgid "Supplemental Arrows-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:130
-msgid "Supplemental Arrows-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:131
-msgid "Miscellaneous Mathematical Symbols-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:132
-msgid "Supplemental Mathematical Operators"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:133
-msgid "Katakana Phonetics Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:134
-msgid "Variation Selectors"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:136
-msgid "Supplementary Private Use Area-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:139
-msgid "Supplementary Private Use Area-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:140
-msgid "Limbu"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:141
-msgid "Tai Le"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:142
-msgid "Khmer Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:143
-msgid "Phonetic Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:144
-msgid "Miscellaneous Symbols And Arrows"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:145
-msgid "Yijing Hexagram Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:146
-msgid "Linear B Syllabary"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:147
-msgid "Linear B Ideograms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:148
-msgid "Aegean Numbers"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:149
-msgid "Ugaritic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:150
-msgid "Shavian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:151
-msgid "Osmanya"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:152
-msgid "Cypriot Syllabary"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:153
-msgid "Tai Xuan Jing Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:154
-msgid "Variation Selectors Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:155
-msgid "Ancient Greek Musical Notation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:156
-msgid "Ancient Greek Numbers"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:157
-msgid "Arabic Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:158
-msgid "Buginese"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:159
-msgid "CJK Strokes"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:160
-msgid "Combining Diacritical Marks Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:161
-msgid "Coptic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:162
-msgid "Ethiopic Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:163
-msgid "Ethiopic Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:164
-msgid "Georgian Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:165
-msgid "Glagolitic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:166
-msgid "Kharoshthi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:167
-msgid "Modifier Tone Letters"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:168
-msgid "New Tai Lue"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:169
-msgid "Old Persian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:170
-msgid "Phonetic Extensions Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:171
-msgid "Supplemental Punctuation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:172
-msgid "Syloti Nagri"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:173
-msgid "Tifinagh"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:174
-msgid "Vertical Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:175
-msgid "Nko"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:176
-msgid "Balinese"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:177
-msgid "Latin Extended-C"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:178
-msgid "Latin Extended-D"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:179
-msgid "Phags-Pa"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:180
-msgid "Phoenician"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:182
-msgid "Cuneiform"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:183
-msgid "Cuneiform Numbers And Punctuation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:184
-msgid "Counting Rod Numerals"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:185
-msgid "Sundanese"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:186
-msgid "Lepcha"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:187
-msgid "Ol Chiki"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:188
-msgid "Cyrillic Extended-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:190
-msgid "Vai"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:191
-msgid "Cyrillic Extended-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:192
-msgid "Saurashtra"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:193
-msgid "Kayah Li"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:194
-msgid "Rejang"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:195
-msgid "Cham"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:196
-msgid "Ancient Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:197
-msgid "Phaistos Disc"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:198
-msgid "Lycian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:199
-msgid "Carian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:200
-msgid "Lydian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:201
-msgid "Mahjong Tiles"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:202
-msgid "Domino Tiles"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:203
-msgid "Samaritan"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:204
-msgid "Canadian Aboriginal Syllabics Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:205
-msgid "Tai Tham"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:206
-msgid "Vedic Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:207
-msgid "Lisu"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:208
-msgid "Bamum"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:209
-msgid "Common Indic Number Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:210
-msgid "Devanagari Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:211
-msgid "Hangul Jamo Extended-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:212
-msgid "Javanese"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:213
-msgid "Myanmar Extended-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:214
-msgid "Tai Viet"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:215
-msgid "Meetei Mayek"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:216
-msgid "Hangul Jamo Extended-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:217
-msgid "Imperial Aramaic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:218
-msgid "Old South Arabian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:219
-msgid "Avestan"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:220
-msgid "Inscriptional Parthian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:221
-msgid "Inscriptional Pahlavi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:222
-msgid "Old Turkic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:223
-msgid "Rumi Numeral Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:224
-msgid "Kaithi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:226
-msgid "Egyptian Hieroglyphs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:227
-msgid "Enclosed Alphanumeric Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:228
-msgid "Enclosed Ideographic Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:230
-msgid "CJK Unified Ideographs Extension C"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:231
-msgid "Mandaic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:232
-msgid "Batak"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:233
-msgid "Ethiopic Extended-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:234
-msgid "Brahmi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:236
-msgid "Bamum Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:237
-msgid "Kana Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:238
-msgid "Playing Cards"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:240
-msgid "Miscellaneous Symbols And Pictographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:241
-msgid "Emoticons"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:242
-msgid "Transport And Map Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:243
-msgid "Alchemical Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:245
-msgid "CJK Unified Ideographs Extension D"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:247
-msgid "Arabic Extended-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:248
-msgid "Arabic Mathematical Alphabetic Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:249
-msgid "Chakma"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:250
-msgid "Meetei Mayek Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:251
-msgid "Meroitic Cursive"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:252
-msgid "Meroitic Hieroglyphs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:253
-msgid "Miao"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:254
-msgid "Sharada"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:255
-msgid "Sora Sompeng"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:256
-msgid "Sundanese Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:257
-msgid "Takri"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:258
-msgid "Bassa Vah"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:259
-msgid "Caucasian Albanian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:260
-msgid "Coptic Epact Numbers"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:261
-msgid "Combining Diacritical Marks Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:262
-msgid "Duployan"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:263
-msgid "Elbasan"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:264
-msgid "Geometric Shapes Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:265
-msgid "Grantha"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:266
-msgid "Khojki"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:267
-msgid "Khudawadi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:268
-msgid "Latin Extended-E"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:270
-msgid "Linear A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:271
-msgid "Mahajani"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:272
-msgid "Manichaean"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:273
-msgid "Mende Kikakui"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:274
-msgid "Modi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:275
-msgid "Mro"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:276
-msgid "Myanmar Extended-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:277
-msgid "Nabataean"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:278
-msgid "Old North Arabian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:279
-msgid "Old Permic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:280
-msgid "Ornamental Dingbats"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:281
-msgid "Pahawh Hmong"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:282
-msgid "Palmyrene"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:283
-msgid "Pau Cin Hau"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:284
-msgid "Psalter Pahlavi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:285
-msgid "Shorthand Format Controls"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:286
-msgid "Siddham"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:287
-msgid "Sinhala Archaic Numbers"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:288
-msgid "Supplemental Arrows-C"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:289
-msgid "Tirhuta"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:290
-msgid "Warang Citi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:291
-msgid "Ahom"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:293
-msgid "Anatolian Hieroglyphs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:294
-msgid "Cherokee Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:295
-#: src/control/Control.CharacterMap.js:296
-msgid "CJK Unified Ideographs Extension E"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:298
-msgid "Early Dynastic Cuneiform"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:299
-msgid "Hatran"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:300
-msgid "Multani"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:301
-msgid "Old Hungarian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:302
-msgid "Supplemental Symbols And Pictographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:304
-msgid "Sutton Signwriting"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:390
-msgid "Special Characters"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:395
-msgid "Font Name:"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:402
-msgid "Subset:"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:413
-msgid "Selected Character:"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:418
-msgid "Hexadecimal:"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:424
-#: src/control/Control.Menubar.js:49
-#: src/control/Control.Menubar.js:149
-#: src/control/Control.Menubar.js:201
-#: src/control/Control.Menubar.js:208
-#: src/control/Control.Menubar.js:257
-msgid "Insert"
-msgstr "நுழை"
-
-#: src/control/Control.ColumnHeader.js:39
-msgid "Insert column before"
-msgstr ""
-
-#: src/control/Control.ColumnHeader.js:46
-#: src/control/Control.Menubar.js:271
-msgid "Delete column"
-msgstr "நிரலை அழி"
-
-#: src/control/Control.ColumnHeader.js:53
-msgid "Optimal Width"
-msgstr ""
-
-#: src/control/Control.ColumnHeader.js:60
-msgid "Hide Columns"
-msgstr ""
-
-#: src/control/Control.ColumnHeader.js:67
-msgid "Show Columns"
-msgstr ""
-
-#: src/control/Control.ColumnHeader.js:82
-msgid "Optimal Column Width"
-msgstr ""
-
-#: src/control/Control.ContextMenu.js:135
+#: src/control/Control.ContextMenu.js:129
 msgid "Internal Cut"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:138
+#: src/control/Control.ContextMenu.js:132
 msgid "Internal Copy"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:141
+#: src/control/Control.ContextMenu.js:135
 msgid "Internal Paste"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:163
+#: src/control/Control.ContextMenu.js:157
 msgid "Internal Paste Special"
 msgstr ""
 
@@ -1923,8 +508,7 @@ msgstr ""
 msgid "Index"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:44
-#: src/layer/tile/TileLayer.js:215
+#: src/control/Control.DocumentRepair.js:44 src/layer/tile/TileLayer.js:221
 msgid "Comment"
 msgstr "கருத்துரை"
 
@@ -1940,587 +524,106 @@ msgstr ""
 msgid "Jump to state"
 msgstr ""
 
-#: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:174
-#: src/control/Control.Menubar.js:234
-msgid "File"
-msgstr "கோப்பு"
-
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:184
-#: src/control/Control.Menubar.js:244
-msgid "Edit"
-msgstr "தொகு"
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:194
-#: src/control/Control.Menubar.js:254
-msgid "View"
-msgstr "பார்வை"
-
-#: src/control/Control.Menubar.js:14
-#: src/control/Control.Menubar.js:175
-#: src/control/Control.Menubar.js:241
-#: src/control/Control.Menubar.js:292
-msgid "Tools"
-msgstr ""
-
-#: src/control/Control.Menubar.js:19
-msgid "Save As"
-msgstr ""
-
-#: src/control/Control.Menubar.js:12
-#: src/control/Control.Menubar.js:176
-#: src/control/Control.Menubar.js:236
-msgid "Print"
-msgstr "அச்சிடு"
-
-#: src/control/Control.Menubar.js:13
-#: src/control/Control.Menubar.js:177
-#: src/control/Control.Menubar.js:237
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:289
 msgid "See revision history"
 msgstr ""
 
-#: src/control/Control.Menubar.js:14
-#: src/control/Control.Menubar.js:178
-#: src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:215
+#: src/control/Control.Menubar.js:290
 msgid "Download as"
 msgstr "இவ்வாறு பதிவிறக்கு"
 
-#: src/control/Control.Menubar.js:15
-#: src/control/Control.Menubar.js:179
-#: src/control/Control.Menubar.js:239
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:216
+#: src/control/Control.Menubar.js:291
 msgid "PDF Document (.pdf)"
 msgstr "PDF ஆவணம் (.pdf)"
 
-#: src/control/Control.Menubar.js:16
+#: src/control/Control.Menubar.js:24
 msgid "ODF text document (.odt)"
 msgstr "ODF உரை ஆவணம் (.odt)"
 
-#: src/control/Control.Menubar.js:17
+#: src/control/Control.Menubar.js:25
 msgid "Microsoft Word 2003 (.doc)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:18
+#: src/control/Control.Menubar.js:26
 msgid "Microsoft Word (.docx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:21
+#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:224
+#: src/control/Control.Menubar.js:299
 msgid "Repair"
 msgstr ""
 
-#: src/control/Control.Menubar.js:25
-#: src/control/Control.Menubar.js:188
-#: src/control/Control.Menubar.js:248
-msgid "Cut"
-msgstr "வெட்டு"
-
-#: src/control/Control.Menubar.js:26
-#: src/control/Control.Menubar.js:189
-#: src/control/Control.Menubar.js:249
-msgid "Copy"
-msgstr "நகலெடு"
-
-#: src/control/Control.Menubar.js:27
-#: src/control/Control.Menubar.js:190
-#: src/control/Control.Menubar.js:250
-msgid "Paste"
-msgstr "ஒட்டு"
-
-#: src/control/Control.Menubar.js:29
-#: src/control/Control.Menubar.js:192
-#: src/control/Control.Menubar.js:252
-msgid "Select all"
-msgstr "அனைத்தும் தேர்"
-
-#: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:459
-msgid "Find & Replace"
-msgstr ""
-
-#: src/control/Control.Menubar.js:31
-msgid "Track Changes"
-msgstr ""
-
-#: src/control/Control.Menubar.js:32
-msgid "Record"
-msgstr ""
-
-#: src/control/Control.Menubar.js:33
-msgid "Show"
-msgstr ""
-
-#: src/control/Control.Menubar.js:35
-msgid "Previous"
-msgstr ""
-
-#: src/control/Control.Menubar.js:36
-msgid "Next"
-msgstr ""
-
-#: src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:195
-#: src/control/Control.Menubar.js:255
-msgid "Full screen"
-msgstr "முழுத்திரை"
-
-#: src/control/Control.Menubar.js:46
-msgid "Formatting Marks"
-msgstr ""
-
-#: src/control/Control.Menubar.js:50
-#: src/control/Control.Menubar.js:202
-#: src/control/Control.Menubar.js:258
-msgid "Image"
-msgstr "பிம்பம்"
-
-#: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:203
-#: src/control/Control.Menubar.js:259
-msgid "Comment..."
-msgstr ""
-
-#: src/control/Control.Menubar.js:53
-msgid "Footnote"
-msgstr ""
-
-#: src/control/Control.Menubar.js:54
-msgid "Endnote"
-msgstr ""
-
-#: src/control/Control.Menubar.js:56
-msgid "Page break"
-msgstr ""
-
-#: src/control/Control.Menubar.js:57
-msgid "Column break"
-msgstr ""
-
-#: src/control/Control.Menubar.js:59
-#: src/control/Control.Menubar.js:205
-#: src/control/Control.Menubar.js:264
-msgid "Special character..."
-msgstr ""
-
-#: src/control/Control.Menubar.js:60
-msgid "Formatting mark"
-msgstr ""
-
-#: src/control/Control.Menubar.js:61
-msgid "Non-breaking space"
-msgstr ""
-
-#: src/control/Control.Menubar.js:62
-msgid "Non-breaking hyphen"
-msgstr ""
-
-#: src/control/Control.Menubar.js:63
-msgid "Soft hyphen"
-msgstr ""
-
-#: src/control/Control.Menubar.js:64
-msgid "No-width optional break"
-msgstr ""
-
-#: src/control/Control.Menubar.js:65
-msgid "No-width no break"
-msgstr ""
-
-#: src/control/Control.Menubar.js:66
-msgid "Left-to-right mark"
-msgstr ""
-
-#: src/control/Control.Menubar.js:67
-msgid "Right-to-left mark"
-msgstr ""
-
-#: src/control/Control.Menubar.js:69
-msgid "Format"
-msgstr ""
-
-#: src/control/Control.Menubar.js:70
-msgid "Text"
-msgstr ""
-
-#: src/control/Control.Menubar.js:74
-msgid "Double underline"
-msgstr ""
-
-#: src/control/Control.Menubar.js:75
-msgid "Strikethrough"
-msgstr ""
-
-#: src/control/Control.Menubar.js:76
-msgid "Overline"
-msgstr ""
-
-#: src/control/Control.Menubar.js:78
-msgid "Superscript"
-msgstr ""
-
-#: src/control/Control.Menubar.js:79
-msgid "Subscript"
-msgstr ""
-
-#: src/control/Control.Menubar.js:80
-msgid "ꜱᴍᴀʟʟ ᴄᴀᴘꜱ"
-msgstr ""
-
-#: src/control/Control.Menubar.js:82
-msgid "Shadow"
-msgstr ""
-
-#: src/control/Control.Menubar.js:83
-msgid "Outline"
-msgstr ""
-
-#: src/control/Control.Menubar.js:85
-msgid "Increase size"
-msgstr ""
-
-#: src/control/Control.Menubar.js:86
-msgid "Decrease size"
-msgstr ""
-
-#: src/control/Control.Menubar.js:88
-msgid "UPPERCASE"
-msgstr ""
-
-#: src/control/Control.Menubar.js:89
-msgid "lowercase"
-msgstr ""
-
-#: src/control/Control.Menubar.js:90
-msgid "Cycle case"
-msgstr ""
-
-#: src/control/Control.Menubar.js:92
-msgid "Sentence case"
-msgstr ""
-
-#: src/control/Control.Menubar.js:93
-msgid "Capitalize Every Word"
-msgstr ""
-
-#: src/control/Control.Menubar.js:94
-msgid "tOGGLE cASE"
-msgstr ""
-
-#: src/control/Control.Menubar.js:95
+#: src/control/Control.Menubar.js:111
 msgid "Text orientation"
 msgstr ""
 
-#: src/control/Control.Menubar.js:96
-msgid "Set paragraph left-to-right"
-msgstr ""
-
-#: src/control/Control.Menubar.js:97
-msgid "Set paragraph right-to-left"
-msgstr ""
-
-#: src/control/Control.Menubar.js:98
-msgid "Spacing"
-msgstr ""
-
-#: src/control/Control.Menubar.js:99
-msgid "Line spacing: 1"
-msgstr ""
-
-#: src/control/Control.Menubar.js:100
-msgid "Line spacing: 1.5"
-msgstr ""
-
-#: src/control/Control.Menubar.js:101
-msgid "Line spacing: 2"
-msgstr ""
-
-#: src/control/Control.Menubar.js:103
-msgid "Increase paragraph spacing"
-msgstr ""
-
-#: src/control/Control.Menubar.js:104
-msgid "Decrease paragraph spacing"
-msgstr ""
-
-#: src/control/Control.Menubar.js:108
-msgid "Align"
-msgstr ""
-
-#: src/control/Control.Menubar.js:109
-msgid "Left"
-msgstr ""
-
-#: src/control/Control.Menubar.js:110
-msgid "Centered"
-msgstr ""
-
-#: src/control/Control.Menubar.js:111
-msgid "Right"
-msgstr ""
-
-#: src/control/Control.Menubar.js:114
-msgid "Top"
-msgstr ""
-
-#: src/control/Control.Menubar.js:115
-msgid "Center"
-msgstr ""
-
-#: src/control/Control.Menubar.js:116
-msgid "Bottom"
-msgstr ""
-
-#: src/control/Control.Menubar.js:117
-msgid "Lists"
-msgstr ""
-
-#: src/control/Control.Menubar.js:121
-msgid "Demote one level"
-msgstr ""
-
-#: src/control/Control.Menubar.js:122
-msgid "Promote one level"
-msgstr ""
-
-#: src/control/Control.Menubar.js:123
-msgid "Demote one level with subpoints"
-msgstr ""
-
-#: src/control/Control.Menubar.js:124
-msgid "Promote one level with subpoints"
-msgstr ""
-
-#: src/control/Control.Menubar.js:126
-msgid "Move down"
-msgstr ""
-
-#: src/control/Control.Menubar.js:127
-msgid "Move up"
-msgstr ""
-
-#: src/control/Control.Menubar.js:128
-msgid "Move down with subpoints"
-msgstr ""
-
-#: src/control/Control.Menubar.js:129
-msgid "Move up with subpoints"
-msgstr ""
-
-#: src/control/Control.Menubar.js:131
-msgid "Insert unnumbered entry"
-msgstr ""
-
-#: src/control/Control.Menubar.js:132
-msgid "Restart numbering"
-msgstr ""
-
-#: src/control/Control.Menubar.js:134
-msgid "To next paragraph in level"
-msgstr ""
-
-#: src/control/Control.Menubar.js:135
-msgid "To previous paragraph in level"
-msgstr ""
-
-#: src/control/Control.Menubar.js:136
-msgid "Continue previous numbering"
-msgstr ""
-
-#: src/control/Control.Menubar.js:137
-msgid "Clear direct formatting"
-msgstr ""
-
-#: src/control/Control.Menubar.js:138
+#: src/control/Control.Menubar.js:159
 msgid "Page"
 msgstr ""
 
-#: src/control/Control.Menubar.js:139
-#: src/control/Control.Menubar.js:141
-#: src/control/Control.Menubar.js:143
-#: src/control/Control.Menubar.js:145
+#: src/control/Control.Menubar.js:160 src/control/Control.Menubar.js:162
+#: src/control/Control.Menubar.js:164 src/control/Control.Menubar.js:166
 msgid "Portrait"
 msgstr ""
 
-#: src/control/Control.Menubar.js:140
-#: src/control/Control.Menubar.js:142
-#: src/control/Control.Menubar.js:144
-#: src/control/Control.Menubar.js:146
+#: src/control/Control.Menubar.js:161 src/control/Control.Menubar.js:163
+#: src/control/Control.Menubar.js:165 src/control/Control.Menubar.js:167
 msgid "Landscape"
 msgstr ""
 
-#: src/control/Control.Menubar.js:148
-#: src/control/Control.Menubar.js:207
-msgid "Tables"
-msgstr "அட்டவணைகள்"
-
-#: src/control/Control.Menubar.js:150
-#: src/control/Control.Menubar.js:209
-msgid "Rows before"
-msgstr "நிரைகளுக்கு முன்"
-
-#: src/control/Control.Menubar.js:151
-#: src/control/Control.Menubar.js:210
-msgid "Rows after"
-msgstr "நிரைகளுக்குப் பின்"
-
-#: src/control/Control.Menubar.js:153
-#: src/control/Control.Menubar.js:212
-msgid "Columns left"
-msgstr "நிரல்களுக்கு இடப்புறம்"
-
-#: src/control/Control.Menubar.js:154
-#: src/control/Control.Menubar.js:213
-msgid "Columns right"
-msgstr "நிரல்களுக்கு வலப்புறம்"
-
-#: src/control/Control.Menubar.js:155
-#: src/control/Control.Menubar.js:214
-msgid "Delete"
-msgstr "அழி"
-
-#: src/control/Control.Menubar.js:156
-#: src/control/Control.Menubar.js:215
-msgid "Rows"
-msgstr "நிரைகள்"
-
-#: src/control/Control.Menubar.js:157
-#: src/control/Control.Menubar.js:216
-msgid "Columns"
-msgstr "நிரல்கள்"
-
-#: src/control/Control.Menubar.js:158
-#: src/control/Control.Menubar.js:160
-msgid "Table"
-msgstr "அட்டவணை"
-
-#: src/control/Control.Menubar.js:159
-msgid "Select"
-msgstr "தேர்"
-
-#: src/control/Control.Menubar.js:161
-#: src/control/Control.Menubar.js:261
-msgid "Row"
-msgstr "நிரை"
-
-#: src/control/Control.Menubar.js:162
-#: src/control/Control.Menubar.js:262
-msgid "Column"
-msgstr "நிரல்"
-
-#: src/control/Control.Menubar.js:163
-msgid "Cell"
-msgstr "கலம்"
-
-#: src/control/Control.Menubar.js:164
-#: src/control/Control.Menubar.js:217
-msgid "Merge cells"
-msgstr "கலங்களை ஒன்றாக்கு"
-
-#: src/control/Control.Menubar.js:176
-#: src/control/Control.Menubar.js:242
-#: src/control/Control.Menubar.js:293
-msgid "Automatic Spell Checking"
+#: src/control/Control.Menubar.js:194 src/control/Control.Menubar.js:196
+#: src/control/Control.Menubar.js:198 src/control/Control.Menubar.js:275
+#: src/control/Control.Menubar.js:356
+msgid "None (Do not check spelling)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:177
-msgid "Language"
-msgstr ""
-
-#: src/control/Control.Menubar.js:178
-msgid "Reset to Default Language"
-msgstr ""
-
-#: src/control/Control.Menubar.js:166
-#: src/control/Control.Menubar.js:226
-#: src/control/Control.Menubar.js:273
-msgid "Help"
-msgstr "உதவி"
-
-#: src/control/Control.Menubar.js:167
-#: src/control/Control.Menubar.js:227
-#: src/control/Control.Menubar.js:274
+#: src/control/Control.Menubar.js:203 src/control/Control.Menubar.js:278
+#: src/control/Control.Menubar.js:359
 msgid "Keyboard shortcuts"
 msgstr "விசைப்பலகை குறுக்குவழிகள்"
 
-#: src/control/Control.Menubar.js:168
-#: src/control/Control.Menubar.js:228
-#: src/control/Control.Menubar.js:275
+#: src/control/Control.Menubar.js:204 src/control/Control.Menubar.js:279
+#: src/control/Control.Menubar.js:360
 msgid "About"
 msgstr "பற்றி"
 
-#: dist/toolbar/toolbar.js:527
-#: src/control/Control.Menubar.js:170
-#: src/control/Control.Menubar.js:230
-#: src/control/Control.Menubar.js:277
+#: src/control/Control.Menubar.js:206 src/control/Control.Menubar.js:281
+#: src/control/Control.Menubar.js:362
 msgid "Close document"
 msgstr "ஆவணத்தை மூடு"
 
-#: src/control/Control.Menubar.js:180
+#: src/control/Control.Menubar.js:217
 msgid "ODF presentation (.odp)"
 msgstr "ODF வழங்கல் (.odp)"
 
-#: src/control/Control.Menubar.js:181
+#: src/control/Control.Menubar.js:218
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:182
+#: src/control/Control.Menubar.js:219
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:219
-msgid "Slide"
-msgstr "படவில்லை"
-
-#: src/control/Control.Menubar.js:220
-msgid "New slide"
-msgstr "புதிய படவில்லை"
-
-#: src/control/Control.Menubar.js:240
+#: src/control/Control.Menubar.js:292
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF விரிதாள் (.ods)"
 
-#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:293
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:294
 msgid "Microsoft Excel (.xlsx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:266
-msgid "Cells"
-msgstr "கலங்கள்"
-
-#: src/control/Control.Menubar.js:267
-msgid "Insert row"
-msgstr "நிரையை நுழை"
-
-#: src/control/Control.Menubar.js:268
-msgid "Insert column"
-msgstr "நிரலை நுழை"
-
-#: src/control/Control.Menubar.js:270
-#: src/control/Control.RowHeader.js:44
-msgid "Delete row"
-msgstr "நிரையை அழி"
-
-#: src/control/Control.Menubar.js:497
-msgid "Find"
+#: src/control/Control.Menubar.js:419
+msgid "Reset to Default Language"
 msgstr ""
 
-#: src/control/Control.Menubar.js:505
-msgid "Replace with"
-msgstr ""
-
-#: src/control/Control.Menubar.js:463
-msgid "Replace"
-msgstr ""
-
-#: src/control/Control.Menubar.js:468
-msgid "Replace All"
-msgstr ""
-
-#: src/control/Control.Menubar.js:477
+#: src/control/Control.Menubar.js:635
 msgid "Are you sure you want to delete this slide?"
 msgstr "உறுதியாக இப்படவில்லையை அழிக்க வேண்டுகிறீரா?"
 
@@ -2540,26 +643,6 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: src/control/Control.RowHeader.js:37
-msgid "Insert row above"
-msgstr "நிரையை மேல் நுழை"
-
-#: src/control/Control.RowHeader.js:51
-msgid "Optimal Height"
-msgstr ""
-
-#: src/control/Control.RowHeader.js:58
-msgid "Hide Rows"
-msgstr ""
-
-#: src/control/Control.RowHeader.js:65
-msgid "Show Rows"
-msgstr ""
-
-#: src/control/Control.RowHeader.js:78
-msgid "Optimal Row Height"
-msgstr ""
-
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
 msgstr ""
@@ -2576,146 +659,132 @@ msgstr "தாளை இதன்முன் நுழை"
 msgid "Insert sheet after this"
 msgstr "தாளை இதன்பின் நுழை"
 
-#: src/control/Control.Tabs.js:48
-msgid "Delete sheet"
-msgstr "தாளை அழி"
-
 #: src/control/Control.Tabs.js:52
 #, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "உறுதியாக இத்தாளை அழிக்க வேண்டுகிறீரா?"
 
-#: src/control/Control.Tabs.js:61
-msgid "Rename sheet"
-msgstr "தாளுக்கு மறுபெயரிடு"
-
 #: src/control/Control.Tabs.js:65
 msgid "Enter new sheet name"
 msgstr "புதிய தாளின் பெயரை உள்ளிடுக"
 
-#: src/control/Toolbar.js:74
-#: src/control/Toolbar.js:83
+#: src/control/Toolbar.js:74 src/control/Toolbar.js:83
 msgid "Downloading..."
 msgstr "பதிவிறக்குகிறது..."
 
-#: src/control/Toolbar.js:246
-msgid "This version of %productName is powered by"
-msgstr "%productName இன் இப்பதிப்பை இயக்குவது"
-
-#: src/core/Socket.js:30
-msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "ஐயோ, லிப்ரெஓபிஸ் ஒன்லைனுடன் இணைவதில் சிக்கல் :  "
-
-#: src/core/Socket.js:188
-msgid "Unsupported server version."
-msgstr "ஆதரிக்கப்படாத சேவையகப் பதிப்பு."
-
-#: src/core/Socket.js:226
-msgid "Session terminated by document owner"
-msgstr ""
-
-#: src/core/Socket.js:261
-msgid "Idle document - please click to reload and resume editing"
-msgstr ""
-
-#: src/core/Socket.js:229
-msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
-
-#: src/core/Socket.js:272
-msgid "Oops, there is a problem connecting the document"
-msgstr ""
-
-#: src/core/Socket.js:232
-msgid "Server is recycling and will be available shortly"
-msgstr ""
-
-#: src/core/Socket.js:306
-msgid ""
-"Document has changed in storage. Loading the new document. Your version is "
-"available as revision."
-msgstr ""
-
-#: src/core/Socket.js:418
-msgid ""
-"Document has been changed in storage. Do you want to discard your changes, "
-"and load the document from the storage?"
-msgstr ""
-
-#: src/core/Socket.js:420
-msgid "Discard changes"
-msgstr ""
-
-#: src/core/Socket.js:421
-msgid "Overwrite document"
-msgstr ""
-
-#: src/core/Socket.js:348
-msgid "Document requires password to view."
-msgstr "ஆவணத்தைப் பார்க்க கடவுச்சொல் தேவை."
-
-#: src/core/Socket.js:351
-msgid "Document requires password to modify."
-msgstr "ஆவணத்தை மாற்றியமைக்க கடவுச்சொல் தேவை."
-
-#: src/core/Socket.js:353
-msgid "Hit Cancel to open in view-only mode."
-msgstr "பார்க்கமட்டுமான முறையில் திறக்க ரத்தை அழுத்துக."
-
-#: src/core/Socket.js:357
-msgid "Wrong password provided. Please try again."
-msgstr "தவறான கடவுச்சொல். மீண்டும் முயல்க."
-
-#: src/core/Socket.js:420
-msgid "Connecting..."
-msgstr ""
-
-#: src/core/Socket.js:542
-msgid ""
-"Well, this is embarrassing, we cannot connect to your document. Please try "
-"again."
-msgstr ""
-"வெட்கப்படுகிறோம். எங்களால் உங்கள் ஆவணத்துடன் இணைய முடியவில்லை. மீண்டும் "
-"முயல்க."
-
-#: src/layer/marker/Annotation.js:156
-msgid "Accept change"
-msgstr ""
-
-#: src/layer/marker/Annotation.js:161
-msgid "Reject change"
-msgstr ""
-
-#: src/layer/marker/Annotation.js:169
-msgid "Open menu"
-msgstr ""
-
-#: src/layer/tile/TileLayer.js:182
-msgid "Modify"
-msgstr ""
-
-#: src/layer/tile/TileLayer.js:194
-msgid "Remove"
-msgstr ""
-
-#: src/map/Map.js:131
-msgid "Initializing..."
-msgstr ""
-
-#: src/map/Map.js:820
-msgid "Inactive document - please click to resume editing"
-msgstr ""
-
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:939
+#: src/control/Toolbar.js:98 src/map/Map.js:1025
 msgid "Saving..."
 msgstr "சேமிக்கிறது..."
 
-#: src/map/Map.js:942
+#: src/control/Toolbar.js:238
+msgid "This version of %productName is powered by"
+msgstr "%productName இன் இப்பதிப்பை இயக்குவது"
+
+#: src/core/Socket.js:37
+msgid "Oops, there is a problem connecting to LibreOffice Online : "
+msgstr "ஐயோ, லிப்ரெஓபிஸ் ஒன்லைனுடன் இணைவதில் சிக்கல் :  "
+
+#: src/core/Socket.js:213
+msgid "Unsupported server version."
+msgstr "ஆதரிக்கப்படாத சேவையகப் பதிப்பு."
+
+#: src/core/Socket.js:263
+msgid "Session terminated by document owner"
+msgstr ""
+
+#: src/core/Socket.js:267
+msgid "Idle document - please click to reload and resume editing"
+msgstr ""
+
+#: src/core/Socket.js:274
+msgid "Server is shutting down for maintenance (auto-saving)"
+msgstr ""
+
+#: src/core/Socket.js:278
+msgid "Oops, there is a problem connecting the document"
+msgstr ""
+
+#: src/core/Socket.js:282
+msgid "Server is recycling and will be available shortly"
+msgstr ""
+
+#: src/core/Socket.js:312
+msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
+msgstr ""
+
+#: src/core/Socket.js:424
+msgid "Document has been changed in storage. Do you want to discard your changes, and load the document from the storage?"
+msgstr ""
+
+#: src/core/Socket.js:426
+msgid "Discard changes"
+msgstr ""
+
+#: src/core/Socket.js:427
+msgid "Overwrite document"
+msgstr ""
+
+#: src/core/Socket.js:484
+msgid "Document requires password to view."
+msgstr "ஆவணத்தைப் பார்க்க கடவுச்சொல் தேவை."
+
+#: src/core/Socket.js:487
+msgid "Document requires password to modify."
+msgstr "ஆவணத்தை மாற்றியமைக்க கடவுச்சொல் தேவை."
+
+#: src/core/Socket.js:489
+msgid "Hit Cancel to open in view-only mode."
+msgstr "பார்க்கமட்டுமான முறையில் திறக்க ரத்தை அழுத்துக."
+
+#: src/core/Socket.js:493
+msgid "Wrong password provided. Please try again."
+msgstr "தவறான கடவுச்சொல். மீண்டும் முயல்க."
+
+#: src/core/Socket.js:599
+msgid "Connecting..."
+msgstr ""
+
+#: src/core/Socket.js:738
+msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
+msgstr "வெட்கப்படுகிறோம். எங்களால் உங்கள் ஆவணத்துடன் இணைய முடியவில்லை. மீண்டும் முயல்க."
+
+#: src/layer/marker/Annotation.js:191
+msgid "Accept change"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:196
+msgid "Reject change"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:205
+msgid "Open menu"
+msgstr ""
+
+#: src/layer/marker/Annotation.js:225 src/layer/tile/TileLayer.js:194
+msgid "Reply"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:188
+msgid "Modify"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:200
+msgid "Remove"
+msgstr ""
+
+#: src/map/Map.js:138
+msgid "Initializing..."
+msgstr ""
+
+#: src/map/Map.js:889
+msgid "Inactive document - please click to resume editing"
+msgstr ""
+
+#: src/map/Map.js:1028
 msgid "Loading..."
 msgstr "ஏற்றப்படுகிறது..."
 
-#: src/map/handler/Map.FileInserter.js:54
+#: src/map/handler/Map.FileInserter.js:58
 #, fuzzy
 msgid "Uploading..."
 msgstr "ஏற்றப்படுகிறது..."
