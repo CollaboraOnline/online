@@ -423,6 +423,10 @@ L.Control.Header = L.Control.extend({
 		this.onDragMove(this._item, this._start, this._offset, e);
 	},
 
+	_resetClickCount: function () {
+		this._clicks = 0;
+	},
+
 	_onMouseUp: function (e) {
 		// disable mouse events used on dragging
 		L.DomEvent.off(document, 'mousemove', this._onMouseMoveForDragging, this);
@@ -439,7 +443,7 @@ L.Control.Header = L.Control.extend({
 			this._clicks = 0;
 		} else {
 			this.onDragClick(this._item, ++this._clicks, e);
-			setTimeout(L.bind(this.initialize, this), 400);
+			setTimeout(L.bind(this._resetClickCount, this), 400);
 		}
 
 		this._item = this._start = this._offset = null;
