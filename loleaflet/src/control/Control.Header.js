@@ -503,24 +503,6 @@ L.Control.Header = L.Control.extend({
 		}
 	},
 
-	_getGroupLevelHeader: function (pos) {
-		if (!this._groups)
-			return;
-
-		var levels = this._groups.length + 1;
-		var size = this._levelSpacing + this._groupHeadSize;
-
-		var level = (pos + 1) / size | 0;
-		var relPos = pos % size;
-
-		if (level < this._groups.length && relPos > this._levelSpacing) {
-			return level;
-		}
-		else {
-			return -1;
-		}
-	},
-
 	_computeOutlineWidth: function () {
 		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
 	},
