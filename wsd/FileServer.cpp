@@ -439,10 +439,10 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     std::string preprocess = *getUncompressedFile(relPath);
 
     HTMLForm form(request, message);
-    const std::string& accessToken = form.get("access_token", "");
-    const std::string& accessTokenTtl = form.get("access_token_ttl", "");
+    const std::string accessToken = form.get("access_token", "");
+    const std::string accessTokenTtl = form.get("access_token_ttl", "");
     LOG_TRC("access_token=" << accessToken << ", access_token_ttl=" << accessTokenTtl);
-    const std::string& accessHeader = form.get("access_header", "");
+    const std::string accessHeader = form.get("access_header", "");
     LOG_TRC("access_header=" << accessHeader);
 
     // Escape bad characters in access token.
