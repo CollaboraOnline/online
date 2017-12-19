@@ -1,7 +1,7 @@
 /*
  * L.Control.DocumentRepair.
  */
-
+/* global $ _ */
 L.Control.DocumentRepair = L.Control.extend({
 	options: {
 		position: 'topright'
@@ -11,7 +11,7 @@ L.Control.DocumentRepair = L.Control.extend({
 		L.setOptions(this, options);
 	},
 
-	onAdd: function (map) {
+	onAdd: function () {
 		this._initLayout();
 
 		return this._container;
@@ -69,7 +69,7 @@ L.Control.DocumentRepair = L.Control.extend({
 
 		// Show relative date by default, absolute one as tooltip.
 		td = L.DomUtil.create('td', '', row);
-		var relativeDateTime = jQuery.timeago(dateTime.replace(/,.*/, 'Z'));
+		var relativeDateTime = $.timeago(dateTime.replace(/,.*/, 'Z'));
 		var span = document.createElement('span');
 		span.title = dateTime;
 		span.appendChild(document.createTextNode(relativeDateTime));
@@ -110,7 +110,7 @@ L.Control.DocumentRepair = L.Control.extend({
 		L.DomUtil.addClass(this._selected, 'leaflet-popup-selected');
 	},
 
-	_onCloseClick: function (e) {
+	_onCloseClick: function () {
 		this._map.enable(true);
 		this._refocusOnMap();
 		this.remove();
@@ -122,7 +122,7 @@ L.Control.DocumentRepair = L.Control.extend({
 		}
 	},
 
-	_onJumpClick: function (e) {
+	_onJumpClick: function () {
 		if (this._selected) {
 			var action = this._selected.childNodes[0].innerHTML;
 			var index = parseInt(this._selected.childNodes[1].innerHTML);

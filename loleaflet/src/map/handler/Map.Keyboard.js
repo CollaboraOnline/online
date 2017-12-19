@@ -2,6 +2,8 @@
  * L.Map.Keyboard is handling keyboard interaction with the map, enabled by default.
  */
 
+/* global map */
+
 L.Map.mergeOptions({
 	keyboard: true,
 	keyboardPanOffset: 20,
@@ -373,9 +375,9 @@ L.Map.Keyboard = L.Handler.extend({
 				if (!this._keyHandled && this._bufferedTextInputEvent) {
 					var textInputData = this._bufferedTextInputEvent.originalEvent.data;
 					charCode = e.originalEvent.keyCode;
-					var compCharCodes = [];
-					for (var i = 0; i < textInputData.length; i++) {
-						compCharCodes.push(textInputData[i].charCodeAt());
+					compCharCodes = [];
+					for (var idx = 0; i < textInputData.length; i++) {
+						compCharCodes.push(textInputData[idx].charCodeAt());
 					}
 					docLayer._postKeyboardEvents('input', compCharCodes, Array.apply(null, Array(compCharCodes.length)).map(Number.prototype.valueOf, 0));
 				}

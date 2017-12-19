@@ -2,6 +2,8 @@
  * L.Map.FileInserter is handling the fileInserter action
  */
 
+/* global _ */
+
 L.Map.mergeOptions({
 	fileInserter: true
 });

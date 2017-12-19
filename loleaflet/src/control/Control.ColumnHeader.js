@@ -60,7 +60,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			items: {
 				'insertcolbefore': {
 					name: _('Insert column before'),
-					callback: function(key, options) {
+					callback: function() {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
 							colHeaderObj.insertColumn.call(colHeaderObj, index);
@@ -69,7 +69,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 				},
 				'deleteselectedcol': {
 					name: _('Delete column'),
-					callback: function(key, options) {
+					callback: function() {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
 							colHeaderObj.deleteColumn.call(colHeaderObj, index);
@@ -78,7 +78,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 				},
 				'optimalwidth': {
 					name: _('Optimal Width') + '...',
-					callback: function(key, options) {
+					callback: function() {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
 							colHeaderObj.optimalWidth.call(colHeaderObj, index);
@@ -87,7 +87,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 				},
 				'hideColumn': {
 					name: _('Hide Columns'),
-					callback: function(key, options) {
+					callback: function() {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
 							colHeaderObj.hideColumn.call(colHeaderObj, index);
@@ -96,7 +96,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 				},
 				'showColumn': {
 					name: _('Show Columns'),
-					callback: function(key, options) {
+					callback: function() {
 						var index = colHeaderObj._lastMouseOverIndex;
 						if (index) {
 							colHeaderObj.showColumn.call(colHeaderObj, index);
@@ -167,7 +167,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._position = Math.min(0, this._position- offset);
 	},
 
-	_onClearSelection: function (e) {
+	_onClearSelection: function () {
 		this.clearSelection(this._data);
 	},
 
@@ -594,7 +594,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.removeLayer(this._vertLine);
 	},
 
-	onDragClick: function (item, clicks, e) {
+	onDragClick: function (item, clicks/*, e*/) {
 		this._map.removeLayer(this._vertLine);
 
 		if (!this._mouseOverEntry)

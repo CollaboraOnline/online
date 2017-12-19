@@ -1,8 +1,7 @@
 /*
 	Socket to be intialized on opening the overview page in Admin console
 */
-/* global vex $ Util AdminSocketBase */
-/* eslint no-unused-vars:0 */
+/* global _ vex $ Util AdminSocketBase Admin */
 
 function appendDocRow(document, $rowContainer, $userContainer, sPid, sName, sViews, sMem, sDocTime, sDocIdle, modified) {
 
@@ -128,11 +127,11 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 		var $doc, $a, $rowContainer;
 		var nViews, nTotalViews;
-		var docProps, sPid, sName, sViews, sMem, sDocTime;
+		var docProps, sPid, sName, sViews, sMem, sDocTime, sDocIdle, modified, userListJson;
 		if (textMsg.startsWith('documents')) {
-			jsonStart = textMsg.indexOf('{');
-			jsonMsg = JSON.parse(textMsg.substr(jsonStart).trim());
-			docList = jsonMsg['documents'];
+			var jsonStart = textMsg.indexOf('{');
+			var jsonMsg = JSON.parse(textMsg.substr(jsonStart).trim());
+			var docList = jsonMsg['documents'];
 			for (var i = 0; i < docList.length; i++) {
 
 				docProps = docList[i];
@@ -147,44 +146,43 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 				$doc = $('#doc' + sPid);
 				$rowContainer = $(document.createElement('tr')).attr('id', 'doc' + sPid);
-				$userContainer = $(document.createElement('div')).attr('id', 'ucontainer' + sPid)
+				var $userContainer = $(document.createElement('div')).attr('id', 'ucontainer' + sPid)
 										  .addClass('userContainer dropdown');
-				$listContainer = $(document.createElement('ul')).addClass('dropdown-menu');
-				$listLabel = $(document.createElement('li')).addClass('dropdown-header')
+				var $listContainer = $(document.createElement('ul')).addClass('dropdown-menu');
+				var $listLabel = $(document.createElement('li')).addClass('dropdown-header')
 															.text('Users');
 				$listContainer.append($listLabel);
 
 				for (var j = 0; j < userListJson.length; j++) {
-					$user = $(document.createElement('li')).attr('id', 'user' + userListJson[j]['sessionid']);
-					$userA = $(document.createElement('a')).text(userListJson[j]['userName']);
+					var $user = $(document.createElement('li')).attr('id', 'user' + userListJson[j]['sessionid']);
+					var $userA = $(document.createElement('a')).text(userListJson[j]['userName']);
 					$user.append($userA);
 					$listContainer.append($user);
 
-					sessionid = userListJson[j]['sessionid'];
-					UName = userListJson[j]['userName'];
-					encodedUId = encodeURI(userListJson[j]['userId']);
+					var sessionid = userListJson[j]['sessionid'];
+					var encodedUId = encodeURI(userListJson[j]['userId']);
 
-					$userListRow = $(document.getElementById('usr' + encodedUId));
+					var $userListRow = $(document.getElementById('usr' + encodedUId));
 
 					if ($userListRow.length == 0) {
 
 						$userListRow = $(document.createElement('tr')).attr('id', 'usr' + encodedUId);
 
-						$uName = $(document.createElement('td')).text(userListJson[j]['userName']);
+						var $uName = $(document.createElement('td')).text(userListJson[j]['userName']);
 						$userListRow.append($uName);
 
 						$number = $(document.createElement('div')).addClass('doc_number').attr('id', 'num' + encodedUId).text(1);
-						$noOfDocuments = $(document.createElement('td')).append($number);
+						var $noOfDocuments = $(document.createElement('td')).append($number);
 						// Document List
-						$docListContainer = $(document.createElement('div')).addClass('dropdown docContainer');
-						$docDropDown = $(document.createElement('ul')).addClass('dropdown-menu')
-												.attr('id', 'docListContainer_' + encodedUId);
-						$docListHeader = $(document.createElement('li')).addClass('dropdown-header')
-												.text(_('Documents'));
-						$name = $(document.createElement('a')).text(sName);
-						$docentry = $(document.createElement('li')).addClass('docentry')
-												.attr('id', sessionid + '_' + sPid)
-												.append($name);
+						var $docListContainer = $(document.createElement('div')).addClass('dropdown docContainer');
+						var $docDropDown = $(document.createElement('ul')).addClass('dropdown-menu')
+						    .attr('id', 'docListContainer_' + encodedUId);
+						var $docListHeader = $(document.createElement('li')).addClass('dropdown-header')
+						    .text(_('Documents'));
+						var $name = $(document.createElement('a')).text(sName);
+						var $docentry = $(document.createElement('li')).addClass('docentry')
+						    .attr('id', sessionid + '_' + sPid)
+						    .append($name);
 						$docDropDown.append($docListHeader);
 						$docDropDown.append($docentry);
 						$docListContainer.append($docDropDown);
@@ -195,14 +193,9 @@ var AdminSocketOverview = AdminSocketBase.extend({
 						$('#userlist').append($userListRow);
 					}
 					else {
-						userListChildren = $userListRow[0].childNodes;
-
 						var $number = $(document.getElementById('num' + encodedUId));
-						docCount = parseInt($number.text())
+						var docCount = parseInt($number.text());
 						$number.text(docCount + 1);
-
-						$docParent = $(userListChildren[1]);
-
 						$name = $(document.createElement('a')).text(sName);
 						$docentry = $(document.createElement('li')).addClass('docentry')
 												.attr('id', sessionid + '_' + sPid)
@@ -231,7 +224,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			sPid = docProps[0];
 			sName = decodeURI(docProps[1]);
 			sessionid = docProps[2];
-			uName = decodeURI(docProps[3]);
+			var uName = decodeURI(docProps[3]);
 			encodedUId = encodeURI(docProps[4]);
 			sMem = docProps[5];
 
@@ -255,12 +248,12 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				$a.text(parseInt($a.text()) + 1);
 			}
 
-			$views = $(document.getElementById('docview' + sPid));
+			var $views = $(document.getElementById('docview' + sPid));
 			nViews = parseInt($views.text());
 			$views.text(nViews + 1);
 
 			$userContainer = $(document.getElementById('ucontainer' + sPid));
-			$list = $('ul', $userContainer)
+			var $list = $('ul', $userContainer);
 			$user = $(document.createElement('li')).attr('id', 'user' + sessionid);
 			$userA = $(document.createElement('a')).text(uName);
 			$user.append($userA);
@@ -302,14 +295,9 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				$('#userlist').append($userListRow);
 			}
 			else {
-				userListChildren = $userListRow[0].childNodes;
-
-				var $number = $(document.getElementById('num' + encodedUId));
-				docCount = parseInt($number.text())
+				$number = $(document.getElementById('num' + encodedUId));
+				docCount = parseInt($number.text());
 				$number.text(docCount + 1);
-
-				$docParent = $(userListChildren[1]);
-
 				$name = $(document.createElement('a')).text(sName);
 				$docentry = $(document.createElement('li')).addClass('docentry')
 										.attr('id', sessionid + '_' + sPid)
@@ -356,9 +344,9 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				$a.text(nTotalViews - 1);
 			}
 
-			$docEntry = $('#' + sessionid + '_' + sPid);
+			var $docEntry = $('#' + sessionid + '_' + sPid);
 			$user = $docEntry.parent().parent().parent();
-			$nDocs = $('.doc_number', $user.parent());
+			var $nDocs = $('.doc_number', $user.parent());
 			docCount = parseInt($nDocs.text());
 			if (docCount == 1) {
 				$user.parent().remove();
@@ -372,13 +360,13 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			textMsg = textMsg.substring('propchange'.length);
 			docProps = textMsg.trim().split(' ');
 			sPid = docProps[0];
-			sProp = docProps[1];
-			sValue = docProps[2];
+			var sProp = docProps[1];
+			var sValue = docProps[2];
 
 			$doc = $('#doc' + sPid);
 			if ($doc.length !== 0) {
 				if (sProp == 'mem') {
-					$mem = $('#docmem' + sPid);
+					var $mem = $('#docmem' + sPid);
 					$mem.text(Util.humanizeMem(parseInt(sValue)));
 				}
 			}
@@ -387,9 +375,9 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			textMsg = textMsg.substring('modifications'.length);
 			docProps = textMsg.trim().split(' ');
 			sPid = docProps[0];
-			value = docProps[1];
+			var value = docProps[1];
 
-			$mod = $(document.getElementById('mod' + sPid));
+			var $mod = $(document.getElementById('mod' + sPid));
 			$mod.text(value);
 		}
 	},

@@ -1,7 +1,7 @@
 /*
  * L.Control.Scroll.Annotation
  */
-
+/* global _ */
 L.Control.Scroll.Annotation = L.Control.extend({
 	options: {
 		position: 'topright',
@@ -27,14 +27,11 @@ L.Control.Scroll.Annotation = L.Control.extend({
 		return container;
 	},
 
-	onRemove: function (map) {
-	},
-
-	_onScrollUp: function (e) {
+	_onScrollUp: function () {
 		this._map.fire('AnnotationScrollUp');
 	},
 
-	_onScrollDown: function (e) {
+	_onScrollDown: function () {
 		this._map.fire('AnnotationScrollDown');
 	},
 

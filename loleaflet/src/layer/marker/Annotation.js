@@ -2,7 +2,7 @@
  * L.Annotation
  */
 
-/* global $ Autolinker L */
+/* global $ Autolinker L _ */
 
 L.Annotation = L.Layer.extend({
 	options: {

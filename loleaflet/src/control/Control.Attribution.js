@@ -12,7 +12,7 @@ L.Control.Attribution = L.Control.extend({
 		L.setOptions(this, options);
 	},
 
-	onAdd: function (map) {
+	onAdd: function () {
 		if (!this._container) {
 			this._container = L.DomUtil.create('div', 'leaflet-control-attribution');
 			L.DomEvent.disableClickPropagation(this._container);

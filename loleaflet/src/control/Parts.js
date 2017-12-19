@@ -66,11 +66,11 @@ L.Map.include({
 			return;
 		}
 		else {
-			part = index;
-			tilePosX = 0;
-			tilePosY = 0;
-			tileWidth = docLayer._docWidthTwips;
-			tileHeight = docLayer._docHeightTwips;
+			var part = index;
+			var tilePosX = 0;
+			var tilePosY = 0;
+			var tileWidth = docLayer._docWidthTwips;
+			var tileHeight = docLayer._docHeightTwips;
 		}
 		var docRatio = tileWidth / tileHeight;
 		var imgRatio = maxWidth / maxHeight;

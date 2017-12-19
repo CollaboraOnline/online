@@ -44,7 +44,7 @@ L.Path.include({
 		return this;
 	},
 
-	firstPopup: function (e) {
+	firstPopup: function () {
 		if (this._popup) {
 			this._openPopup({latlng: this._bounds.getCenter()});
 		}

@@ -368,7 +368,7 @@ L.GridLayer = L.Layer.extend({
 			return;
 		}
 		if (!zoom) {
-			var zoom = this._map.getZoom();
+			zoom = this._map.getZoom();
 		}
 		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
 			this._docHeightTwips / this.options.tileHeightTwips);

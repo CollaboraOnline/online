@@ -328,5 +328,5 @@ L.Styles = {
 		'Extending selection',
 		'Adding selection',
 		'Block selection'
-	],
+	]
 };

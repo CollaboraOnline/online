@@ -2,7 +2,7 @@
  * Ruler Handler
  */
 
-/* global $ L */
+/* global $ L _ */
 L.Control.Ruler = L.Control.extend({
 	options: {
 		interactive: true,
@@ -191,7 +191,7 @@ L.Control.Ruler = L.Control.extend({
 			this._rMarginDrag.style.width = newPos + 'px';
 		}
 		else {
-			var newPos = this.options.DraggableConvertRatio*this.options.nullOffset + posChange;
+			newPos = this.options.DraggableConvertRatio*this.options.nullOffset + posChange;
 			this._lToolTip.style.display = 'block';
 			this._lToolTip.style.left = newPos - 25 + 'px';
 			this._lToolTip.innerText = (Math.round(newPos / (this.options.DraggableConvertRatio * 100)) / 10).toString() + unit;

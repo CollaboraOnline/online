@@ -3,8 +3,7 @@
 	containing various graphs to show to the user on specified interval
 */
 
-/* global d3 Util AdminSocketBase */
-/* eslint no-unused-vars:0 */
+/* global d3 Util AdminSocketBase $ Admin */
 var AdminSocketAnalytics = AdminSocketBase.extend({
 	constructor: function(host) {
 		this.base(host);
@@ -120,9 +119,11 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		d3XAxis = d3.svg.axis()
 			.scale(xScale)
 			.tickFormat(function(d) {
-				var d = Math.abs(d / 1000), sUnit;
+				d = Math.abs(d / 1000);
+				var sUnit = 0;
+				var i = 0;
 				var units = ['s', 'min', 'hr'];
-				for (var i = 0; i < units.length && Math.abs(d) >= 60; i++) {
+				for (i  = 0; i < units.length && Math.abs(d) >= 60; i++) {
 					sUnit = parseInt(d % 60);
 					d = parseInt(d / 60);
 				}
@@ -393,9 +394,9 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		}
 
 		if (reset) {
-			for (i = 0; i <= this._netStatsSize - this._netAvgSize; i++) {
+			for (var i = 0; i <= this._netStatsSize - this._netAvgSize; i++) {
 				tempSum = 0;
-				for (j = 0; j < this._netAvgSize; j++) {
+				for (var j = 0; j < this._netAvgSize; j++) {
 					tempSum += data[i + j].value;
 				}
 				tempSum /= this._netAvgSize;

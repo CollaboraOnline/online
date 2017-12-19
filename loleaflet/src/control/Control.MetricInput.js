@@ -1,7 +1,7 @@
 /*
  * L.Control.MetricInput.
  */
-
+/* global _ */
 L.Control.MetricInput = L.Control.extend({
 	options: {
 		position: 'topmiddle',
@@ -16,7 +16,7 @@ L.Control.MetricInput = L.Control.extend({
 		this._default = value;
 	},
 
-	onAdd: function (map) {
+	onAdd: function () {
 		this._initLayout();
 
 		return this._container;
@@ -71,7 +71,7 @@ L.Control.MetricInput = L.Control.extend({
 		content.appendChild(inputButton);
 	},
 
-	onRemove: function (map) {
+	onRemove: function () {
 		this._input = null;
 	},
 
@@ -81,17 +81,17 @@ L.Control.MetricInput = L.Control.extend({
 		this._input.focus();
 	},
 
-	_onDefaultClick: function (e) {
+	_onDefaultClick: function () {
 		this._input.value = this._default;
 	},
 
-	_onOKButtonClick: function (e) {
+	_onOKButtonClick: function () {
 		var data = parseFloat(this._input.value);
 		this.remove();
 		this._callback.call(this._context, {type: 'submit', value: data});
 	},
 
-	_onCloseButtonClick: function (e) {
+	_onCloseButtonClick: function () {
 		this.remove();
 		this._callback.call(this._context, {type : 'close'});
 	}

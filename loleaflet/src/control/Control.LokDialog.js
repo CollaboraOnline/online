@@ -2,7 +2,7 @@
  * L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global vex $ map */
+/* global $ map */
 L.Control.LokDialog = L.Control.extend({
 
 	dialogIdPrefix: 'lokdialog-',
@@ -132,10 +132,10 @@ L.Control.LokDialog = L.Control.extend({
 			this._sendPaintWindow(e.id, this._createRectStr());
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.id) && !!e.rectangle) {
-				var rectangle = e.rectangle.split(',');
+				rectangle = e.rectangle.split(',');
 				var x = parseInt(rectangle[0]);
 				var y = parseInt(rectangle[1]);
-				var height = parseInt(rectangle[3]);
+				height = parseInt(rectangle[3]);
 
 				$('#' + strDlgId + '-cursor').css({height: height});
 				// set the position of the lokdialog-cursor

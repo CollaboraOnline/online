@@ -255,7 +255,7 @@ L.Control.Header = L.Control.extend({
 		this._onHeaderMouseOut(e);
 	},
 
-	_onHeaderMouseOut: function (e) {
+	_onHeaderMouseOut: function () {
 		if (!this._overHeaderArea)
 			return;
 		this._overHeaderArea = false;

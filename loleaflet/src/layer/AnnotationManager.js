@@ -91,16 +91,13 @@ L.AnnotationManager = L.Class.extend({
 			return false;
 		}
 
-		var rectangles, color, viewId;
 		// transform change tracking index into an id
 		redline.id = 'change-' + redline.index;
 		redline.anchorPos = L.LOUtil.stringToBounds(redline.textRange);
 		redline.anchorPix = this._map._docLayer._twipsToPixels(redline.anchorPos.min);
 		redline.trackchange = true;
 		redline.text = redline.comment;
-		rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(redline.textRange), this._map._docLayer);
-		viewId = this._map.getViewId(redline.author);
-		color = viewId >= 0 ? L.LOUtil.rgbToHex(this._map.getViewColor(viewId)) : '#43ACE8';
+		var rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(redline.textRange), this._map._docLayer);
 		if (rectangles.length > 0) {
 			redline.textSelected = L.polygon(rectangles, {
 				pointerEvents: 'all',
@@ -257,7 +254,7 @@ L.AnnotationManager = L.Class.extend({
 			var point;
 			var docRight = this._map.project(this._map.options.docBounds.getNorthEast());
 			point = this._map._docLayer._twipsToPixels(this._selected._data.anchorPos.min);
-			this._arrow.setLatLngs([this._map.unproject(point), map.unproject(L.point(docRight.x, point.y))]);
+			this._arrow.setLatLngs([this._map.unproject(point), this._map.unproject(L.point(docRight.x, point.y))]);
 			this._map.addLayer(this._arrow);
 		} else {
 			this._map.removeLayer(this._arrow);
@@ -665,7 +662,7 @@ L.AnnotationManager = L.Class.extend({
 		this._map.focus();
 	},
 
-	_onAnnotationZoom: function (e) {
+	_onAnnotationZoom: function () {
 		this._map.fire('updatemaxbounds', {sizeChanged: true});
 		this.layout(true);
 	}

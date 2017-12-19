@@ -11,7 +11,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Edit'), disabled: true},
 			{name: _('View'), disabled: true},
 			{name: _('Insert'), disabled: true},
-			{name: _('Tools'), disabled: true},
+			{name: _('Tools'), disabled: true}
 		],
 		text:  [
 			{name: _('File'), id: 'file', type: 'menu', menu: [
@@ -47,7 +47,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Previous'), type: 'unocommand', uno: '.uno:PreviousTrackedChange'},
 					{name: _('Next'), type: 'unocommand', uno: '.uno:NextTrackedChange'}
 				]},
-				{name: _('Edit Style...'), uno: '.uno:EditStyle', type: 'unocommand'},
+				{name: _('Edit Style...'), uno: '.uno:EditStyle', type: 'unocommand'}
 			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
@@ -56,7 +56,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Zoom out'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				{type: 'separator'},
-				{name: _('Formatting Marks'), type: 'unocommand', uno: '.uno:ControlCodes'},
+				{name: _('Formatting Marks'), type: 'unocommand', uno: '.uno:ControlCodes'}
 			]
 			},
 			{name: _('Insert'), type: 'menu', menu: [
@@ -409,9 +409,9 @@ L.Control.Menubar = L.Control.extend({
 				return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
 			});
 
-			$menuSelection = $('#menu-noneselection').parent();
-			$menuParagraph = $('#menu-noneparagraph').parent();
-			$menuDefault = $('#menu-nonelanguage').parent();
+			var $menuSelection = $('#menu-noneselection').parent();
+			var $menuParagraph = $('#menu-noneparagraph').parent();
+			var $menuDefault = $('#menu-nonelanguage').parent();
 			for (var lang in languages) {
 				translated = languages[lang].translated;
 				neutral = languages[lang].neutral;
@@ -467,7 +467,7 @@ L.Control.Menubar = L.Control.extend({
 			var $mainMenuState = $('#main-menu-state');
 			if ($mainMenuState.length) {
 				// animate mobile menu
-				$mainMenuState.change(function(e) {
+				$mainMenuState.change(function() {
 					var $menu = $('#main-menu');
 					if (this.checked) {
 						$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
@@ -773,8 +773,8 @@ L.Control.Menubar = L.Control.extend({
 				if (!subitemList.length) {
 					continue;
 				}
-				for (var j in subitemList) {
-					ulItem.appendChild(subitemList[j]);
+				for (var idx in subitemList) {
+					ulItem.appendChild(subitemList[idx]);
 				}
 			} else if (menu[i].type === 'unocommand') {
 				$(aItem).data('type', 'unocommand');

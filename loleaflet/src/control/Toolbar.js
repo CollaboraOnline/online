@@ -2,7 +2,7 @@
  * Toolbar handler
  */
 
-/* global $ window vex brandProductName */
+/* global $ window vex brandProductName _ map */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items

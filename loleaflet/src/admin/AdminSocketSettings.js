@@ -1,8 +1,7 @@
 /*
 	Socket to be intialized on opening the settings page in Admin console
 */
-/* global $ AdminSocketBase */
-/* eslint no-unused-vars:0 */
+/* global vex $ AdminSocketBase Admin _ */
 var AdminSocketSettings = AdminSocketBase.extend({
 	constructor: function(host) {
 		this.base(host);
@@ -32,7 +31,7 @@ var AdminSocketSettings = AdminSocketBase.extend({
 			$('#btnShutdown').click(function() {
 				vex.dialog.confirm({
 					message: _('Are you sure you want to shut down the server?'),
-					callback: function(value) {
+					callback: function() {
 						// TODO: Prompt for reason.
 						socketSettings.send('shutdown maintenance');
 					}
@@ -82,7 +81,7 @@ var AdminSocketSettings = AdminSocketBase.extend({
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
 			var lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			var h = lokitVersionObj.BuildId.substring(0, 7);
+			h = lokitVersionObj.BuildId.substring(0, 7);
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a target="_blank" href="https://hub.libreoffice.org/git-core/' + h + '">' + h + '</a>';
 			}

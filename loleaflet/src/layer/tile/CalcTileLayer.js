@@ -434,6 +434,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 			return;
 		}
 
+		var comment;
 		if (values.commandName === '.uno:ViewRowColumnHeaders') {
 			this._map.fire('viewrowcolumnheaders', {
 				data: values,
@@ -443,7 +444,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this._onUpdateCurrentHeader();
 			this._onUpdateSelectionHeader();
 		} else if (values.comments) {
-			var comment;
 			this.clearAnnotations();
 			for (var index in values.comments) {
 				comment = values.comments[index];
@@ -458,9 +458,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 			}
 			this.showAnnotations();
 		} else if (values.commentsPos) {
-			var comment;
 			this.hideAnnotations();
-			for (var index in values.commentsPos) {
+			for (index in values.commentsPos) {
 				comment = values.commentsPos[index];
 				comment.tab = parseInt(comment.tab);
 				comment.cellPos = L.LOUtil.stringToBounds(comment.cellPos);

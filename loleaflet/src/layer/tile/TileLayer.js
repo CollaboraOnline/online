@@ -2,7 +2,7 @@
 /*
  * L.TileLayer is used for standard xyz-numbered tile layers.
  */
-
+/* global $ _ map Uint8ClampedArray Uint8Array */
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
@@ -15,11 +15,11 @@ if (typeof String.prototype.startsWith !== 'function') {
 
 function hex2string(inData)
 {
-	hexified = [];
-	data = new Uint8Array(inData);
+	var hexified = [];
+	var data = new Uint8Array(inData);
 	for (var i = 0; i < data.length; i++) {
-		hex = data[i].toString(16);
-		paddedHex = ('00' + hex).slice(-2);
+		var hex = data[i].toString(16);
+		var paddedHex = ('00' + hex).slice(-2);
 		hexified.push(paddedHex);
 	}
 	return hexified.join('');
@@ -1283,7 +1283,7 @@ L.TileLayer = L.GridLayer.extend({
 			canvas.height = 256;
 			var ctx = canvas.getContext('2d');
 
-			oldImg = new Image();
+			var oldImg = new Image();
 			oldImg.src = tile.el.src;
 			ctx.drawImage(oldImg, 0, 0);
 
@@ -1331,10 +1331,10 @@ L.TileLayer = L.GridLayer.extend({
 					}
 					break;
 				case 100: // 'd': // new run
-					var destRow = delta[i+1];
+					destRow = delta[i+1];
 					var destCol = delta[i+2];
 					var span = delta[i+3];
-					var offset = destRow * canvas.width * 4 + destCol * 4;
+					offset = destRow * canvas.width * 4 + destCol * 4;
 					i += 4;
 					console.log('apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 					span *= 4;
@@ -1526,7 +1526,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	// enable or disable blinking cursor and  the cursor overlay depending on
 	// the state of the document (if the falgs are set)
-	_updateCursorAndOverlay: function (update) {
+	_updateCursorAndOverlay: function (/*update*/) {
 		if (this._map._permission === 'edit'
 		&& this._isCursorVisible
 		&& this._isCursorOverlayVisible
@@ -2301,10 +2301,10 @@ L.TileLayer = L.GridLayer.extend({
 					rect.setStyle({fillOpacity: opac - 0.04});
 				}
 			}
-			for (var key in this._debugTiles) {
-				var rect = this._debugTiles[key];
+			for (key in this._debugTiles) {
+				rect = this._debugTiles[key];
 				var col = rect.options.fillColor;
-				var opac = rect.options.fillOpacity;
+				opac = rect.options.fillOpacity;
 				if (col === 'blue' && opac >= 0.04 && rect.date + 1000 < +new Date()) {
 					rect.setStyle({fillOpacity: opac - 0.04});
 				}

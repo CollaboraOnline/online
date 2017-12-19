@@ -57,7 +57,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			items: {
 				'insertrowabove': {
 					name: _('Insert row above'),
-					callback: function(key, options) {
+					callback: function() {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
 							rowHeaderObj.insertRow.call(rowHeaderObj, index);
@@ -66,7 +66,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 				},
 				'deleteselectedrow': {
 					name: _('Delete row'),
-					callback: function(key, options) {
+					callback: function() {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
 							rowHeaderObj.deleteRow.call(rowHeaderObj, index);
@@ -75,7 +75,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 				},
 				'optimalheight': {
 					name: _('Optimal Height') + '...',
-					callback: function(key, options) {
+					callback: function() {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
 							rowHeaderObj.optimalHeight.call(rowHeaderObj, index);
@@ -84,7 +84,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 				},
 				'hideRow': {
 					name: _('Hide Rows'),
-					callback: function(key, options) {
+					callback: function() {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
 							rowHeaderObj.hideRow.call(rowHeaderObj, index);
@@ -93,7 +93,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 				},
 				'showRow': {
 					name: _('Show Rows'),
-					callback: function(key, options) {
+					callback: function() {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
 							rowHeaderObj.showRow.call(rowHeaderObj, index);
@@ -158,7 +158,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._position = Math.min(0, this._position - offset);
 	},
 
-	_onClearSelection: function (e) {
+	_onClearSelection: function () {
 		this.clearSelection(this._data);
 	},
 
@@ -552,7 +552,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._map.removeLayer(this._horzLine);
 	},
 
-	onDragClick: function (item, clicks, e) {
+	onDragClick: function (item, clicks/*, e*/) {
 		this._map.removeLayer(this._horzLine);
 
 		if (!this._mouseOverEntry)

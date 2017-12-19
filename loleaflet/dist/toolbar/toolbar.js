@@ -3,7 +3,7 @@
  */
 
 /* global $ map closebutton w2ui w2utils vex _ */
-
+/* exported onUseritemClicked editorUpdate */
 var mobileWidth = 768;
 
 function onDelete(e) {
@@ -169,7 +169,7 @@ function _cancelSearch() {
 function onClick(id, item, subItem) {
 	if (w2ui['toolbar-up'].get(id) !== null) {
 		var toolbar = w2ui['toolbar-up'];
-		var item = toolbar.get(id);
+		item = toolbar.get(id);
 	}
 	else if (w2ui.formulabar.get(id) !== null) {
 		toolbar = w2ui.formulabar;
@@ -621,7 +621,7 @@ $(function () {
 		onClick: function (e) {
 			onClick(e.target);
 		},
-		onRefresh: function(e) {
+		onRefresh: function() {
 			$('#addressInput').off('keyup', onAddressInput).on('keyup', onAddressInput);
 			$('#formulaInput').off('keyup', onFormulaInput).on('keyup', onFormulaInput);
 			$('#formulaInput').off('blur', onFormulaBarBlur).on('blur', onFormulaBarBlur);
@@ -711,7 +711,7 @@ $(function () {
 			}
 			onClick(e.target, e.item, e.subItem);
 		},
-		onRefresh: function(e) {
+		onRefresh: function() {
 			$('#tb_toolbar-down_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
 			$('#search-input').off('input', onSearch).on('input', onSearch);
 			$('#search-input').off('keypress', onSearchKeyPress).on('keypress', onSearchKeyPress);
@@ -774,7 +774,7 @@ function selectItem(item, func)
 	}
 }
 
-function onSearch(e) {
+function onSearch() {
 	var toolbar = w2ui['toolbar-down'];
 	// conditionally disabling until, we find a solution for tdf#108577
 	if (L.DomUtil.get('search-input').value === '') {
@@ -1065,8 +1065,8 @@ map.on('doclayerinit', function () {
 				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break8'},
 			{type: 'html',  id: 'StateTableCell',
-				html: '<div id="StateTableCell" class="loleaflet-font" title="'+_('Choice of functions')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-		        {type: 'menu', id: 'StateTableCellMenu', caption: '', current: 5, items: [
+			 html: '<div id="StateTableCell" class="loleaflet-font" title="'+_('Choice of functions')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+			{type: 'menu', id: 'StateTableCellMenu', caption: '', current: 5, items: [
 				{ func: '2', text: _('Average'), icon: ''},
 				{ func: '8', text: _('CountA'), icon: ''},
 				{ func: '4', text: _('Count'), icon: ''},
@@ -1074,8 +1074,8 @@ map.on('doclayerinit', function () {
 				{ func: '32', text: _('Minimum'), icon: ''},
 				{ func: '512', text: _('Sum'), icon: 'selected'},
 				{ func: '8192', text: _('Selection count'), icon: ''},
-				{ func: '1', text: _('None'), icon: ''},
-		]},
+				{ func: '1', text: _('None'), icon: ''}
+			]}
 		]);
 
 		// Remove irrelevant toolbars
@@ -1156,7 +1156,6 @@ map.on('commandstatechanged', function (e) {
 	var state = e.state;
 	var found = false;
 	var value, color, div;
-	var matches;
 
 	if (commandName === '.uno:AssignLayout') {
 		$('.styles-select').val(state).trigger('change');
@@ -1464,7 +1463,7 @@ function updateCommandValues() {
 	}
 }
 
-map.on('updatetoolbarcommandvalues', function(e) {
+map.on('updatetoolbarcommandvalues', function() {
 	w2ui['toolbar-up'].refresh();
 });
 
@@ -1830,11 +1829,11 @@ map.on('removeview', function(e) {
 });
 
 map.on('updateEditorName', function(e) {
-	$('#currently-msg').show()
+	$('#currently-msg').show();
 	$('#current-editor').text(e.username);
 });
 
-map.on('setFollowOff', function(e) {
+map.on('setFollowOff', function() {
 	var docLayer = map._docLayer;
 	var viewId = docLayer._followThis;
 	if (viewId !== -1 && map._viewInfo[viewId]) {
@@ -1850,11 +1849,10 @@ $(window).resize(function() {
 });
 
 $(document).ready(function() {
-	var toolbar = w2ui['toolbar-up'];
 	if (!closebutton) {
 		$('#closebuttonwrapper').hide();
 	} else {
-		$('#closebutton').click(function(e) {
+		$('#closebutton').click(function() {
 			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
 			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
 			map.remove();

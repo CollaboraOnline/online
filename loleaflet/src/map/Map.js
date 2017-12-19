@@ -3,7 +3,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global vex $ */
+/* global vex $ _ */
 L.Map = L.Evented.extend({
 
 	options: {
@@ -906,7 +906,7 @@ L.Map = L.Evented.extend({
 			vex: options
 		});
 
-		options.$vex.bind('click.vex', function(e) {
+		options.$vex.bind('click.vex', function() {
 			console.debug('_dim: click.vex function');
 			return map._activate();
 		});

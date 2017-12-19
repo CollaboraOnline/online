@@ -2,7 +2,7 @@
  * L.Control.PartsPreview
  */
 
-/* global $ map */
+/* global $ */
 L.Control.PartsPreview = L.Control.extend({
 	options: {
 		autoUpdate: true

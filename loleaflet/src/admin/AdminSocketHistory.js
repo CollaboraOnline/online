@@ -1,8 +1,7 @@
 /*
 	Socket to be intialized on opening the history page in Admin console
 */
-/* global $ nodejson2html Util AdminSocketBase */
-/* eslint no-unused-vars:0 */
+/* global Admin $ AdminSocketBase */
 var AdminSocketHistory = AdminSocketBase.extend({
 	constructor: function(host) {
 		this.base(host);
@@ -48,4 +47,3 @@ var AdminSocketHistory = AdminSocketBase.extend({
 Admin.History = function(host) {
 	return new AdminSocketHistory(host);
 };
-

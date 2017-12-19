@@ -70,7 +70,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		this._draft = null;
 	},
 
-	onAnnotationCancel: function (e) {
+	onAnnotationCancel: function () {
 		if (this._draft) {
 			this._map.removeLayer(this._draft);
 			this._draft = null;
@@ -137,7 +137,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		this._map.focus();
 	},
 
-	_onAnnotationZoom: function (e) {
+	_onAnnotationZoom: function () {
 		this.onAnnotationCancel();
 	},
 
@@ -157,12 +157,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		this._map.focus();
 	},
 
-	onAnnotationScrollDown: function (e) {
+	onAnnotationScrollDown: function () {
 		this._topAnnotation[this._selectedPart] = Math.min(++this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
 		this.onAnnotationCancel();
 	},
 
-	onAnnotationScrollUp: function (e) {
+	onAnnotationScrollUp: function () {
 		if (this._topAnnotation[this._selectedPart] === 0) {
 			this._map.fire('scrollby', {x: 0, y: -100});
 		}
@@ -170,7 +170,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		this.onAnnotationCancel();
 	},
 
-	onUpdateParts: function (e) {
+	onUpdateParts: function () {
 		if (typeof this._prevSelectedPart === 'number') {
 			this.hideAnnotations(this._prevSelectedPart);
 			if (this.hasAnnotations(this._selectedPart)) {
@@ -235,13 +235,13 @@ L.ImpressTileLayer = L.TileLayer.extend({
 						bounds.extend(L.point(bounds.max.x, bounds.max.y + 2 * this.options.marginY));
 					}
 					var offsetX = L.point(2 * this.options.marginX, 0);
-					var topLeft = (bounds ? bounds.getBottomLeft() : topRight).subtract(offsetX);
+					topLeft = (bounds ? bounds.getBottomLeft() : topRight).subtract(offsetX);
 					annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
 					bounds = annotation.getBounds();
 					bounds = L.bounds(bounds.getBottomLeft().add(offsetX), bounds.getTopRight().add(offsetX));
 					bounds.extend(L.point(bounds.max.x, bounds.max.y + 3 * this.options.marginY));
 				} else {
-					var topLeft = bounds ? bounds.getBottomLeft() : topRight;
+					topLeft = bounds ? bounds.getBottomLeft() : topRight;
 					annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
 					annotation.show();
 					bounds = annotation.getBounds();
@@ -277,7 +277,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		if (values.comments) {
 			this._annotations = {};
 			for (var index in values.comments) {
-				comment = values.comments[index];
+				var comment = values.comments[index];
 				if (!this._annotations[comment.parthash]) {
 					this._annotations[comment.parthash] = [];
 				}

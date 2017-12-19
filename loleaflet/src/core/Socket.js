@@ -3,7 +3,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global _ vex $ errorMessages */
+/* global _ vex $ errorMessages Uint8Array brandProductName brandProductFAQURL */
 L.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
 	ReconnectCount: 0,
@@ -215,7 +215,7 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
 			var lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			var h = lokitVersionObj.BuildId.substring(0, 7);
+			h = lokitVersionObj.BuildId.substring(0, 7);
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a target="_blank" href="https://hub.libreoffice.org/git-core/' + h + '">' + h + '</a>';
 			}
@@ -288,7 +288,7 @@ L.Socket = L.Class.extend({
 				var max = 10000;
 				var timeoutMs = Math.floor(Math.random() * (max - min) + min);
 
-				socket = this;
+				var socket = this;
 				map = this._map;
 				vex.timer = setInterval(function() {
 					if (socket.connected()) {
@@ -305,6 +305,7 @@ L.Socket = L.Class.extend({
 					try {
 						map.loadDocument(map);
 					} catch (error) {
+						console.warn('Cannot load document.');
 					}
 				}, timeoutMs);
 			}
@@ -326,13 +327,14 @@ L.Socket = L.Class.extend({
 						// Activate and cancel timer and dialogs.
 						map._activate();
 					} catch (error) {
+						console.warn('Cannot activate map');
 					}
 				}, 3000);
 			}
 
 			// Close any open dialogs first.
 			if (vex.dialogID > 0) {
-				var id = vex.dialogID;
+				id = vex.dialogID;
 				vex.dialogID = -1;
 				vex.close(id);
 			}
@@ -368,7 +370,7 @@ L.Socket = L.Class.extend({
 
 			if (textMsg === 'idle' || textMsg === 'oom') {
 				var map = this._map;
-				options.$vex.bind('click.vex', function(e) {
+				options.$vex.bind('click.vex', function() {
 					console.debug('idleness: reactivating');
 					map._documentIdle = false;
 					return map._activate();
@@ -415,7 +417,7 @@ L.Socket = L.Class.extend({
 				// TODO: We really really need to factor this out duplicate dialog code logic everywhere
 				// Close any open dialogs first.
 				if (vex.dialogID > 0) {
-					var id = vex.dialogID;
+					id = vex.dialogID;
 					vex.dialogID = -1;
 					vex.close(id);
 				}
@@ -509,6 +511,7 @@ L.Socket = L.Class.extend({
 						// Activate and cancel timer and dialogs.
 						map._activate();
 					} catch (error) {
+						console.warn('Cannot activate map');
 					}
 				}, 1000);
 			}
@@ -602,7 +605,7 @@ L.Socket = L.Class.extend({
 				this.ReconnectCount = 0;
 				clearTimeout(vex.timer);
 				if (vex.dialogID > 0) {
-					var id = vex.dialogID;
+					id = vex.dialogID;
 					vex.dialogID = -1;
 					vex.close(id);
 				}
@@ -642,7 +645,7 @@ L.Socket = L.Class.extend({
 				for (var i = 0; i < data.length; i++) {
 					strBytes += String.fromCharCode(data[i]);
 				}
-				var img = 'data:image/png;base64,' + window.btoa(strBytes);
+				img = 'data:image/png;base64,' + window.btoa(strBytes);
 			}
 		}
 
@@ -733,7 +736,7 @@ L.Socket = L.Class.extend({
 		// Let onclose (_onSocketClose) report errors.
 	},
 
-	_onSocketClose: function (e) {
+	_onSocketClose: function () {
 		console.debug('_onSocketClose:');
 		var isActive = this._map._active;
 		this._map.hideBusy();
