@@ -224,7 +224,8 @@ EXTRA_DIST = discovery.xml \
              debian/loolwsd.postrm \
              etc/key.pem \
              etc/cert.pem \
-             etc/ca-chain.cert.pem
+             etc/ca-chain.cert.pem \
+             scripts/unocommands.py
 
 if HAVE_LO_PATH
 
