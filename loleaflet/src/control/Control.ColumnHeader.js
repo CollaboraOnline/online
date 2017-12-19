@@ -516,6 +516,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		if (pos.x <= rowOutlineWidth) {
 			// empty rectangle on the left select all
 			this._map.sendUnoCommand('.uno:SelectAll');
+			return;
 		}
 
 		var level = this._getGroupLevel(pos.y);

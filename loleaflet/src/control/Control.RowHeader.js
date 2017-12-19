@@ -471,6 +471,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		if (pos.x > this.getOutlineWidth()) {
 			// empty rectangle on the right select all
 			this._map.sendUnoCommand('.uno:SelectAll');
+			return;
 		}
 
 		var level = this._getGroupLevel(pos.x);
