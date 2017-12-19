@@ -334,29 +334,6 @@ body {
 	text-indent: 1px;
 }
 
-.lokdialog_container .ui-dialog-titlebar.ui-widget-header {
-	background: #5c3dcc;
-	border: none;
-}
-
-.lokdialog_container.ui-dialog .ui-dialog-title {
-	margin-bottom: 0;
-}
-
-.lokdialog_container .ui-state-default .ui-icon {
-	background-image: url(../node_modules/jquery-ui/themes/ui-lightness/images/ui-icons_ffffff_256x240.png);
-	border: none;
-}
-
-.lokdialog_container.ui-dialog .ui-state-default {
-	background: none;
-	border: none;
-}
-
-.lokdialog_container.ui-dialog .ui-state-default.ui-state-hover {
-	border: 1px solid #fff;
-}
-
 .lokdialog_container.ui-dialog.ui-widget-content {
 	padding: 0px;
 	overflow: hidden;
