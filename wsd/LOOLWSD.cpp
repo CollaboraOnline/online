@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "LOOLWSD.hpp"
 
@@ -91,36 +91,36 @@
 #include "Admin.hpp"
 #include "Auth.hpp"
 #include "ClientSession.hpp"
-#include "Common.hpp"
-#include "Crypto.hpp"
-#include "DelaySocket.hpp"
+#include <Common.hpp>
+#include <Crypto.hpp>
+#include <DelaySocket.hpp>
 #include "DocumentBroker.hpp"
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
-#include "FileUtil.hpp"
-#include "IoUtil.hpp"
+#include <FileUtil.hpp>
+#include <IoUtil.hpp>
 #ifdef KIT_IN_PROCESS
 #  include <Kit.hpp>
 #endif
-#include "Log.hpp"
-#include "Protocol.hpp"
-#include "ServerSocket.hpp"
-#include "Session.hpp"
+#include <Log.hpp>
+#include <Protocol.hpp>
+#include <ServerSocket.hpp>
+#include <Session.hpp>
 #if ENABLE_SSL
-#  include "SslSocket.hpp"
+#  include <SslSocket.hpp>
 #endif
 #include "Storage.hpp"
 #include "TraceFile.hpp"
-#include "Unit.hpp"
-#include "UnitHTTP.hpp"
+#include <Unit.hpp>
+#include <UnitHTTP.hpp>
 #include "UserMessages.hpp"
-#include "Util.hpp"
+#include <Util.hpp>
 
 #ifdef FUZZER
 #  include <tools/Replay.hpp>
 #endif
 
-#include "common/SigUtil.hpp"
+#include <common/SigUtil.hpp>
 
 using namespace LOOLProtocol;
 

@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <errno.h>
 #include <signal.h>
@@ -40,9 +40,9 @@
 #include <Util.hpp>
 #include <Protocol.hpp>
 #include <LOOLWebSocket.hpp>
-#include "helpers.hpp"
-#include "countloolkits.hpp"
-#include "test.hpp"
+#include <helpers.hpp>
+#include <countloolkits.hpp>
+#include <test.hpp>
 
 using namespace helpers;
 

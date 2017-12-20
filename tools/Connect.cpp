@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <cstdlib>
 #include <cstring>
@@ -32,11 +32,11 @@
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
-#include "Common.hpp"
-#include "Protocol.hpp"
+#include <Common.hpp>
+#include <Protocol.hpp>
 #include <LOOLWebSocket.hpp>
-#include "Log.hpp"
-#include "Util.hpp"
+#include <Log.hpp>
+#include <Util.hpp>
 
 using namespace LOOLProtocol;
 

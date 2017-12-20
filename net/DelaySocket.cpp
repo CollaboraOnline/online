@@ -7,9 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
-#include "net/DelaySocket.hpp"
+#include <net/DelaySocket.hpp>
 
 #define DELAY_LOG(X) std::cerr << X << "\n";
 

@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "ChildSession.hpp"
 
@@ -22,11 +22,11 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "common/FileUtil.hpp"
+#include <common/FileUtil.hpp>
 #include "KitHelper.hpp"
-#include "Log.hpp"
-#include "Png.hpp"
-#include "Util.hpp"
+#include <Log.hpp>
+#include <Png.hpp>
+#include <Util.hpp>
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;

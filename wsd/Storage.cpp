@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "Storage.hpp"
 
@@ -40,13 +40,13 @@
 #include <Poco/Net/SSLManager.h>
 
 #include "Auth.hpp"
-#include "Common.hpp"
+#include <Common.hpp>
 #include "Exceptions.hpp"
 #include "LOOLWSD.hpp"
-#include "Log.hpp"
-#include "Unit.hpp"
-#include "Util.hpp"
-#include "common/FileUtil.hpp"
+#include <Log.hpp>
+#include <Unit.hpp>
+#include <Util.hpp>
+#include <common/FileUtil.hpp>
 
 bool StorageBase::FilesystemEnabled;
 bool StorageBase::WopiEnabled;

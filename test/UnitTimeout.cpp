@@ -7,15 +7,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <cassert>
 
 #include <Poco/Util/Application.h>
 
-#include "Log.hpp"
-#include "Util.hpp"
-#include "Unit.hpp"
+#include <Log.hpp>
+#include <Util.hpp>
+#include <Unit.hpp>
 
 using Poco::Timestamp;
 

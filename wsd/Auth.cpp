@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "Auth.hpp"
 
@@ -30,8 +30,8 @@
 #include <Poco/Timestamp.h>
 #include <Poco/URI.h>
 
-#include "Log.hpp"
-#include "Util.hpp"
+#include <Log.hpp>
+#include <Util.hpp>
 
 using Poco::Base64Decoder;
 using Poco::Base64Encoder;

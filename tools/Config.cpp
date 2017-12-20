@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <iostream>
 #include <iomanip>
@@ -24,8 +24,8 @@
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/XMLConfiguration.h>
 
-#include "Util.hpp"
-#include "Crypto.hpp"
+#include <Util.hpp>
+#include <Crypto.hpp>
 
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;

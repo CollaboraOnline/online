@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <vector>
 #include <string>
@@ -24,11 +24,11 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "Common.hpp"
-#include "Protocol.hpp"
+#include <Common.hpp>
+#include <Protocol.hpp>
 #include <LOOLWebSocket.hpp>
-#include "helpers.hpp"
-#include "countloolkits.hpp"
+#include <helpers.hpp>
+#include <countloolkits.hpp>
 
 using namespace helpers;
 

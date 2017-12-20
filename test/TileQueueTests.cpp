@@ -7,16 +7,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "Common.hpp"
-#include "Protocol.hpp"
-#include "Message.hpp"
-#include "MessageQueue.hpp"
-#include "SenderQueue.hpp"
-#include "Util.hpp"
+#include <Common.hpp>
+#include <Protocol.hpp>
+#include <Message.hpp>
+#include <MessageQueue.hpp>
+#include <SenderQueue.hpp>
+#include <Util.hpp>
 
 namespace CPPUNIT_NS
 {

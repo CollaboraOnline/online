@@ -11,7 +11,7 @@
  * spawn lots of kits as children.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <sys/capability.h>
 #include <sys/stat.h>
@@ -29,17 +29,17 @@
 #include <Poco/Thread.h>
 #include <Poco/Util/Application.h>
 
-#include "Common.hpp"
-#include "IoUtil.hpp"
+#include <Common.hpp>
+#include <IoUtil.hpp>
 #include "Kit.hpp"
-#include "Log.hpp"
-#include "Unit.hpp"
-#include "Util.hpp"
+#include <Log.hpp>
+#include <Unit.hpp>
+#include <Util.hpp>
 
-#include "common/FileUtil.hpp"
-#include "common/Seccomp.hpp"
-#include "common/SigUtil.hpp"
-#include "security.h"
+#include <common/FileUtil.hpp>
+#include <common/Seccomp.hpp>
+#include <common/SigUtil.hpp>
+#include <security.h>
 
 using Poco::Process;
 using Poco::Thread;

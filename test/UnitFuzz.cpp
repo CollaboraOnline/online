@@ -7,18 +7,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <cassert>
 #include <iostream>
 #include <random>
 
-#include "Common.hpp"
-#include "IoUtil.hpp"
-#include "Protocol.hpp"
+#include <Common.hpp>
+#include <IoUtil.hpp>
+#include <Protocol.hpp>
 #include <LOOLWebSocket.hpp>
-#include "Unit.hpp"
-#include "Util.hpp"
+#include <Unit.hpp>
+#include <Util.hpp>
 
 #include <Poco/Timestamp.h>
 #include <Poco/StringTokenizer.h>

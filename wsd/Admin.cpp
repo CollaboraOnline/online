@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <cassert>
 #include <mutex>
@@ -22,21 +22,21 @@
 #include "Admin.hpp"
 #include "AdminModel.hpp"
 #include "Auth.hpp"
-#include "Common.hpp"
+#include <Common.hpp>
 #include "FileServer.hpp"
-#include "IoUtil.hpp"
+#include <IoUtil.hpp>
 #include "LOOLWSD.hpp"
-#include "Log.hpp"
-#include "Protocol.hpp"
+#include <Log.hpp>
+#include <Protocol.hpp>
 #include "Storage.hpp"
 #include "TileCache.hpp"
-#include "Unit.hpp"
-#include "Util.hpp"
+#include <Unit.hpp>
+#include <Util.hpp>
 
-#include "net/Socket.hpp"
-#include "net/WebSocketHandler.hpp"
+#include <net/Socket.hpp>
+#include <net/WebSocketHandler.hpp>
 
-#include "common/SigUtil.hpp"
+#include <common/SigUtil.hpp>
 
 using namespace LOOLProtocol;
 

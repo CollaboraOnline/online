@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <stdio.h>
 #include <ctype.h>
@@ -19,7 +19,7 @@
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/Net/HTTPResponse.h>
 
-#include "SigUtil.hpp"
+#include <SigUtil.hpp>
 #include "Socket.hpp"
 #include "ServerSocket.hpp"
 #include "WebSocketHandler.hpp"

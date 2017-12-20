@@ -7,14 +7,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <assert.h>
 #include "Ssl.hpp"
 
 #include <sys/syscall.h>
 
-#include "Util.hpp"
+#include <Util.hpp>
 
 extern "C"
 {

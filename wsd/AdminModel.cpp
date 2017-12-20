@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "AdminModel.hpp"
 
@@ -20,11 +20,11 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "Protocol.hpp"
-#include "net/WebSocketHandler.hpp"
-#include "Log.hpp"
-#include "Unit.hpp"
-#include "Util.hpp"
+#include <Protocol.hpp>
+#include <net/WebSocketHandler.hpp>
+#include <Log.hpp>
+#include <Unit.hpp>
+#include <Util.hpp>
 
 void Document::addView(const std::string& sessionId, const std::string& userName, const std::string& userId)
 {

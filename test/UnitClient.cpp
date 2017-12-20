@@ -9,12 +9,12 @@
 
 // Runs client tests in their own thread inside a WSD process.
 
-#include "config.h"
+#include <config.h>
 
-#include "Unit.hpp"
-#include "wsd/LOOLWSD.hpp"
+#include <Unit.hpp>
+#include <wsd/LOOLWSD.hpp>
 
-#include "test.hpp"
+#include <test.hpp>
 
 // Inside the WSD process
 class UnitClient : public UnitWSD
@@ -71,6 +71,6 @@ UnitBase *unit_create_wsd(void)
 
 // Allows re-use of UnitClient in test.cpp impls.
 #define UNIT_CLIENT_TESTS
-#include "test.cpp"
+#include <test.cpp>
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <condition_variable>
 #include <mutex>
@@ -21,12 +21,12 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
-#include "Common.hpp"
-#include "Log.hpp"
-#include "Unit.hpp"
-#include "UnitHTTP.hpp"
-#include "Util.hpp"
-#include "helpers.hpp"
+#include <Common.hpp>
+#include <Log.hpp>
+#include <Unit.hpp>
+#include <UnitHTTP.hpp>
+#include <Util.hpp>
+#include <helpers.hpp>
 
 #define UNIT_URI "/loolwsd/unit-admin"
 

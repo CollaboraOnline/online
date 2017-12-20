@@ -7,10 +7,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
-#include "Unit.hpp"
-#include "wsd/LOOLWSD.hpp"
+#include <Unit.hpp>
+#include <wsd/LOOLWSD.hpp>
 
 const int NumToPrefork = 20;
 

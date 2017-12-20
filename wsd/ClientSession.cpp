@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "ClientSession.hpp"
 
@@ -19,12 +19,12 @@
 
 #include "DocumentBroker.hpp"
 #include "LOOLWSD.hpp"
-#include "common/Common.hpp"
-#include "common/Log.hpp"
-#include "common/Protocol.hpp"
-#include "common/Session.hpp"
-#include "common/Unit.hpp"
-#include "common/Util.hpp"
+#include <common/Common.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/Session.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
 
 using namespace LOOLProtocol;
 

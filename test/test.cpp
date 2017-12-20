@@ -7,9 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "test.hpp"
+#include <test.hpp>
 
-#include "config.h"
+#include <config.h>
 
 #include <cstdlib>
 #include <iostream>

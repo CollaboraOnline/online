@@ -11,7 +11,7 @@
  * Stub missing symbols required for unit tests ...
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "DocumentBroker.hpp"
 

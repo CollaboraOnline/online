@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <cassert>
 #include <cstdlib>
@@ -27,9 +27,9 @@
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
-#include "KitHelper.hpp"
-#include "Png.hpp"
-#include "Util.hpp"
+#include <KitHelper.hpp>
+#include <Png.hpp>
+#include <Util.hpp>
 
 using Poco::StringTokenizer;
 using Poco::TemporaryFile;

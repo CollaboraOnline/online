@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <iostream>
 #include "Unit.hpp"
@@ -23,7 +23,7 @@
 #include "Log.hpp"
 #include "Util.hpp"
 
-#include "common/SigUtil.hpp"
+#include <common/SigUtil.hpp>
 
 UnitBase *UnitBase::Global = nullptr;
 

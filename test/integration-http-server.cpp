@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/FilePartSource.h>
@@ -26,11 +26,11 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <Common.hpp>
-#include "common/FileUtil.hpp"
+#include <common/FileUtil.hpp>
 #include <Util.hpp>
 
-#include "countloolkits.hpp"
-#include "helpers.hpp"
+#include <countloolkits.hpp>
+#include <helpers.hpp>
 
 /// Tests the HTTP GET API of loolwsd.
 class HTTPServerTest : public CPPUNIT_NS::TestFixture

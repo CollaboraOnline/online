@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <iomanip>
 #include <string>
@@ -38,11 +38,11 @@
 #include <Poco/URI.h>
 
 #include "Auth.hpp"
-#include "Common.hpp"
+#include <Common.hpp>
 #include "FileServer.hpp"
 #include "LOOLWSD.hpp"
-#include "Log.hpp"
-#include "Protocol.hpp"
+#include <Log.hpp>
+#include <Protocol.hpp>
 
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPBasicCredentials;

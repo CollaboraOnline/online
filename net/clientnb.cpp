@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <atomic>
 #include <cerrno>
@@ -37,7 +37,7 @@
 #include <Poco/Runnable.h>
 #include <Poco/Thread.h>
 
-#include "Util.hpp"
+#include <Util.hpp>
 
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;

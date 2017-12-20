@@ -7,13 +7,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
-#include "WopiTestServer.hpp"
-#include "Log.hpp"
-#include "Unit.hpp"
-#include "UnitHTTP.hpp"
-#include "helpers.hpp"
+#include <WopiTestServer.hpp>
+#include <Log.hpp>
+#include <Unit.hpp>
+#include <UnitHTTP.hpp>
+#include <helpers.hpp>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Util/LayeredConfiguration.h>
 

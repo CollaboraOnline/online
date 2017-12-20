@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "DocumentBroker.hpp"
 
@@ -33,10 +33,10 @@
 #include "SenderQueue.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
-#include "common/Log.hpp"
-#include "common/Message.hpp"
-#include "common/Protocol.hpp"
-#include "common/Unit.hpp"
+#include <common/Log.hpp>
+#include <common/Message.hpp>
+#include <common/Protocol.hpp>
+#include <common/Unit.hpp>
 
 using namespace LOOLProtocol;
 

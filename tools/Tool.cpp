@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <unistd.h>
 
@@ -34,9 +34,9 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 
-#include "Common.hpp"
-#include "Protocol.hpp"
-#include "Util.hpp"
+#include <Common.hpp>
+#include <Protocol.hpp>
+#include <Util.hpp>
 
 /// Simple command-line tool for file format conversion.
 class Tool: public Poco::Util::Application

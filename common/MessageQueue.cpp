@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "MessageQueue.hpp"
 
@@ -18,8 +18,8 @@
 #include <Poco/JSON/Parser.h>
 #include <Poco/StringTokenizer.h>
 
-#include <Protocol.hpp>
-#include <Log.hpp>
+#include "Protocol.hpp"
+#include "Log.hpp"
 #include <TileDesc.hpp>
 
 using Poco::StringTokenizer;

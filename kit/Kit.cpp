@@ -11,7 +11,7 @@
  * a document editing session.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <dlfcn.h>
 #include <ftw.h>
@@ -53,23 +53,23 @@
 #include <Poco/Util/Application.h>
 
 #include "ChildSession.hpp"
-#include "Common.hpp"
-#include "IoUtil.hpp"
+#include <Common.hpp>
+#include <IoUtil.hpp>
 #include "KitHelper.hpp"
 #include "Kit.hpp"
-#include "Protocol.hpp"
-#include "LOOLWebSocket.hpp"
-#include "Log.hpp"
-#include "Png.hpp"
-#include "Rectangle.hpp"
-#include "TileDesc.hpp"
-#include "Unit.hpp"
-#include "UserMessages.hpp"
-#include "Util.hpp"
+#include <Protocol.hpp>
+#include <LOOLWebSocket.hpp>
+#include <Log.hpp>
+#include <Png.hpp>
+#include <Rectangle.hpp>
+#include <TileDesc.hpp>
+#include <Unit.hpp>
+#include <UserMessages.hpp>
+#include <Util.hpp>
 #include "Delta.hpp"
 
-#include "common/SigUtil.hpp"
-#include "common/Seccomp.hpp"
+#include <common/SigUtil.hpp>
+#include <common/Seccomp.hpp>
 
 #ifdef FUZZER
 #include <kit/DummyLibreOfficeKit.hpp>

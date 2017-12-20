@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <unistd.h>
 
@@ -30,8 +30,8 @@
 #include <Poco/Util/OptionSet.h>
 
 #include "Replay.hpp"
-#include "TraceFile.hpp"
-#include "test/helpers.hpp"
+#include <TraceFile.hpp>
+#include <test/helpers.hpp>
 
 /// Stress testing and performance/scalability benchmarking tool.
 class Stress: public Poco::Util::Application

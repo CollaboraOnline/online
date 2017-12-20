@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "Session.hpp"
 
@@ -36,7 +36,7 @@
 #include "IoUtil.hpp"
 #include "Protocol.hpp"
 #include "Log.hpp"
-#include "TileCache.hpp"
+#include <TileCache.hpp>
 #include "Util.hpp"
 #include "Unit.hpp"
 

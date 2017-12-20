@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
@@ -15,18 +15,18 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "Common.hpp"
-#include "Protocol.hpp"
+#include <Common.hpp>
+#include <Protocol.hpp>
 #include <LOOLWebSocket.hpp>
-#include "MessageQueue.hpp"
-#include "Png.hpp"
-#include "TileCache.hpp"
-#include "Unit.hpp"
-#include "Util.hpp"
+#include <MessageQueue.hpp>
+#include <Png.hpp>
+#include <TileCache.hpp>
+#include <Unit.hpp>
+#include <Util.hpp>
 
-#include "countloolkits.hpp"
-#include "helpers.hpp"
-#include "test.hpp"
+#include <countloolkits.hpp>
+#include <helpers.hpp>
+#include <test.hpp>
 
 using namespace helpers;
 
