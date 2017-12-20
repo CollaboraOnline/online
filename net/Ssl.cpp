@@ -80,7 +80,7 @@ SslContext::SslContext(const std::string& certFilePath,
         int errCode = 0;
         if (!caFilePath.empty())
         {
-            errCode = SSL_CTX_load_verify_locations(_ctx, caFilePath.c_str(), 0);
+            errCode = SSL_CTX_load_verify_locations(_ctx, caFilePath.c_str(), nullptr);
             if (errCode != 1)
             {
                 std::string msg = getLastErrorMsg();
@@ -248,9 +248,9 @@ void SslContext::initDH()
     // OpenSSL v1.1.0 has public API changes
     // p, g and length of the Diffie-Hellman param can't be set directly anymore,
     // instead DH_set0_pqg and DH_set_length are used
-    BIGNUM* p = BN_bin2bn(dh1024_p, sizeof(dh1024_p), 0);
-    BIGNUM* g = BN_bin2bn(dh1024_g, sizeof(dh1024_g), 0);
-    if ((DH_set0_pqg(dh, p, NULL, g) == 0) || (DH_set_length(dh, 160) == 0))
+    BIGNUM* p = BN_bin2bn(dh1024_p, sizeof(dh1024_p), nullptr);
+    BIGNUM* g = BN_bin2bn(dh1024_g, sizeof(dh1024_g), nullptr);
+    if ((DH_set0_pqg(dh, p, nullptr, g) == 0) || (DH_set_length(dh, 160) == 0))
 #else
     dh->p = BN_bin2bn(dh1024_p, sizeof(dh1024_p), 0);
     dh->g = BN_bin2bn(dh1024_g, sizeof(dh1024_g), 0);

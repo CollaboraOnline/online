@@ -225,7 +225,7 @@ struct Client : public Poco::Util::Application
 
         std::vector<char> res;
 
-        std::srand(std::time(0));
+        std::srand(std::time(nullptr));
 
         std::vector<char> data;
         for (size_t i = 1; i < (1 << 14); ++i)

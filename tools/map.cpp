@@ -595,7 +595,7 @@ int main(int argc, char **argv)
         else
             appOrPid = arg;
     }
-    if (appOrPid == NULL && forPid == 0)
+    if (appOrPid == nullptr && forPid == 0)
         help = true;
 
     if (help)
