@@ -4562,3 +4562,7 @@ msgstr "angleški (Malezija)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Brez (ne preverjaj črkovanja)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "Najdenih $1 od $2 zapisov"

@@ -4326,3 +4326,7 @@ msgstr "الفرنسية (موريشيوس)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "بلا (لا تدقّق الإملاء)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "وُجد $1 من أصل $2 من السجلات"

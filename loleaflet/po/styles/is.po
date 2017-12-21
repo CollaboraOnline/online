@@ -4002,3 +4002,7 @@ msgstr "Ungverska (Szekely-Hungarian Rovas)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Ekkert (ekki yfirfara stafsetningu)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1 af $2 færslum fundust"

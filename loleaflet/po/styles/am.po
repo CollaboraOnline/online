@@ -2277,3 +2277,7 @@ msgstr "ፈረንሳይኛ (ሞሪሸስ)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "ምንም (ፊደሉን አታርም)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1 ከ $2 መዝገቦች ተገኝተዋል"

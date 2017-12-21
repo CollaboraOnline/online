@@ -3946,3 +3946,7 @@ msgstr "Mađarski (Szekely-Hungarian Rovas)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Ništa (bez provjere pravopisa)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "Pronađeno je $1 od $2 zapisa"

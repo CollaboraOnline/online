@@ -4558,3 +4558,7 @@ msgstr "ஆங்கிலம் (போட்சுவானா)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "ஏதுமில்லை (சொல்திருத்தவேண்டாம்)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$2 இல் $1 பதிவேடுகள் கிடைத்தன"

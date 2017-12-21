@@ -4354,3 +4354,7 @@ msgstr "Ungāru (Senungāru rūnas)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Nav (nepārbaudīt pareizrakstību)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1 no $2 ierakstiem atrasti"

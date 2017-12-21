@@ -4190,3 +4190,7 @@ msgstr "Hungariera (Szekely-Hungariar Runak)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Bat ere ez (ez zuzendu ortografia)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1 / $2 erregistro aurkituta"

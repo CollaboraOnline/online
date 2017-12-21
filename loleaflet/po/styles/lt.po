@@ -3674,3 +3674,7 @@ msgstr "Prancūzų (Mauricijus)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Jokios (netikrinti rašybos)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "Rasta įrašų: $1 iš $2"

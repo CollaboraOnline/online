@@ -4018,3 +4018,7 @@ msgstr "Macarca (Szekely-Macarca Rovas)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Hiçbiri (İmla denetimi yok)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$2 kaydın $1 kadarı bulundu"

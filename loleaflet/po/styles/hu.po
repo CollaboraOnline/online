@@ -3998,3 +3998,7 @@ msgstr "Angol (Malajzia)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Nincs (nincs helyesírás-ellenőrzés)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$2 rekordból $1 megtalálva"

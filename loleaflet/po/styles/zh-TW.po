@@ -4574,3 +4574,7 @@ msgstr "匈牙利文 (賽楷伊字母)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "無 (請勿檢查拼字)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "找到 $2 筆記錄中的 $1 筆"

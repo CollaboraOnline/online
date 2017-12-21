@@ -4350,3 +4350,7 @@ msgstr "apatani"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Cap (no verifiquis l'ortografia)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "S'ha trobat $1 de $2 registres"

@@ -4474,3 +4474,7 @@ msgstr "Hungara runoskribo"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Neniu (Ne kontroli literumadon)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1 el $2 rikordoj trovitaj"
