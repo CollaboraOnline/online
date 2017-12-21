@@ -3236,3 +3236,7 @@ msgstr "Inglés (Malasia)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Ninguno (no revisar la ortografía)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "Se encontraron $1 de $2 registros"

@@ -3412,3 +3412,7 @@ msgstr "匈牙利语 (Szekely-Hungarian Rovas)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "无（不检查拼写）"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "在 $1 条记录中找到了 $2 条"

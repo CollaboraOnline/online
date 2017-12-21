@@ -2986,3 +2986,7 @@ msgstr "Anglés (Botswana)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Non (pas de verificacion ortografica)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1 dels $2 enregistraments trobats"

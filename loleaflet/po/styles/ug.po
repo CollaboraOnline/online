@@ -3458,3 +3458,7 @@ msgstr "فىرانسۇزچە (ماۋرىتىئۇس)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "يوق (ئىملا تەكشۈرمە)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1 خاتىرىدىن $2 سى تېپىلدى"

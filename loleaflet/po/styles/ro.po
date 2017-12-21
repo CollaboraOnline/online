@@ -3080,3 +3080,7 @@ msgstr "Maghiară (Szekely-Hungarian Rovas)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Niciuna (nu verifica ortografierea)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1 din $2 înregistrări găsite"

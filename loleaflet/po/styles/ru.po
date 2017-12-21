@@ -3528,3 +3528,7 @@ msgstr "Венгерский (венгерские руны)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Нет (не проверять орфографию)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1 из $2 найденных"

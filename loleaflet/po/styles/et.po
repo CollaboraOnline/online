@@ -3324,3 +3324,7 @@ msgstr "Ungari (vanaungari ruunikirjas)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Puudub (õigekirja ei kontrollita)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1 kirjet $2-st nähtaval"

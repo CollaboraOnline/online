@@ -3077,3 +3077,7 @@ msgstr "Ungarsk (Szekely-Hungarian Rovas)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Ingen (ikkje sjekk stavinga)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "Funne $1 av $2 postar"

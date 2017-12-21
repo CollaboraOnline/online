@@ -3352,3 +3352,7 @@ msgstr "maďarčina (staromaďarské písmo)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Žiadny (nekontrolovať pravopis)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "nájdený $1 z $2 záznamov"

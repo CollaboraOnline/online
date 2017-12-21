@@ -3527,3 +3527,7 @@ msgstr "Англійська (Малайзія)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Немає (не перевіряти орфографію)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "знайдено $1 із $2 записів"

@@ -3523,3 +3523,7 @@ msgstr "Ағылшын (Малайзия)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Ешнәрсе (емлені тексермеу)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1, табылған $2 ішінен"

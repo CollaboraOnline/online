@@ -3140,3 +3140,7 @@ msgstr "Franska (Mauritius)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Inget (gör ingen stavningskontroll)"
+
+#: globstr.src
+msgid "$1 of $2 records found"
+msgstr "$1 av $2 uppgifter hittade"
