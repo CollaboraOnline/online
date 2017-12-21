@@ -437,18 +437,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('tile:')) {
 			this._onTileMsg(textMsg, img);
 		}
-		else if (textMsg.startsWith('dialogpaint:')) {
-			this._onDialogPaintMsg(textMsg, img);
-		}
-		else if (textMsg.startsWith('dialogchildpaint:')) {
-			this._onDialogChildPaintMsg(textMsg, img);
-		}
-		else if (textMsg.startsWith('dialog:')) {
-			this._onDialogMsg(textMsg);
-		}
-		else if (textMsg.startsWith('dialogchild:')) {
-			this._onDialogChildMsg(textMsg);
-		}
 		else if (textMsg.startsWith('unocommandresult:')) {
 			this._onUnoCommandResultMsg(textMsg);
 		}
@@ -1190,46 +1178,6 @@ L.TileLayer = L.GridLayer.extend({
 			this._textSelectionStart = null;
 		}
 
-	},
-
-	_onDialogPaintMsg: function(textMsg, img) {
-		var command = this._map._socket.parseServerCmd(textMsg);
-
-		this._map.fire('dialogpaint', {
-			id: command.id,
-			dialog: img,
-			title: command.title,
-			// TODO: add id too
-			dialogWidth: command.dialogwidth,
-			dialogHeight: command.dialogheight,
-			rectangle: command.rectangle
-		});
-	},
-
-	_onDialogChildPaintMsg: function(textMsg, img) {
-		var command = this._map._socket.parseServerCmd(textMsg);
-		var width = command.width;
-		var height = command.height;
-
-		this._map.fire('dialogchildpaint', {
-			id: command.id,
-			dialog: img,
-			// TODO: add id too
-			width: width,
-			height: height
-		});
-	},
-
-	_onDialogMsg: function(textMsg) {
-		textMsg = textMsg.substring('dialog: '.length);
-		var dialogMsg = JSON.parse(textMsg);
-		this._map.fire('dialog', dialogMsg);
-	},
-
-	_onDialogChildMsg: function(textMsg) {
-		textMsg = textMsg.substring('dialogchild: '.length);
-		var dialogMsg = JSON.parse(textMsg);
-		this._map.fire('dialogchild', dialogMsg);
 	},
 
 	_onTileMsg: function (textMsg, img) {

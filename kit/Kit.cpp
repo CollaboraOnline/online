@@ -846,111 +846,6 @@ public:
         ws->sendFrame(output.data(), output.size(), WebSocket::FRAME_BINARY);
     }
 
-    void renderDialog(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
-    {
-        assert(ws && "Expected a non-null websocket.");
-
-        const bool child = tokens[0] == "dialogchild";
-
-        std::unique_lock<std::mutex> lock(_documentMutex);
-        if (!_loKitDocument)
-        {
-            LOG_ERR("Dialog rendering requested before loading document.");
-            return;
-        }
-
-        if (_loKitDocument->getViewsCount() <= 0)
-        {
-            LOG_ERR("Dialog rendering requested without views.");
-            return;
-        }
-
-        int startX = 0, startY = 0;
-        int bufferWidth = 800, bufferHeight = 600; // hopefully, this is big enough
-        std::string paintRectangle;
-        // find the rectangle to paint, if specified
-        if (tokens.size() >= 3 && getTokenString(tokens[2], "rectangle", paintRectangle))
-        {
-            const std::vector<std::string> rectParts = LOOLProtocol::tokenize(paintRectangle.c_str(), paintRectangle.length(), ',');
-            startX = std::atoi(rectParts[0].c_str());
-            startY = std::atoi(rectParts[1].c_str());
-            bufferWidth = std::atoi(rectParts[2].c_str());
-            bufferHeight = std::atoi(rectParts[3].c_str());
-        }
-
-        size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
-        std::vector<unsigned char> pixmap(pixmapDataSize);
-
-        char* pDialogTitle = nullptr;
-        int width = bufferWidth;
-        int height = bufferHeight;
-        std::string response;
-        if (child)
-        {
-            Timestamp timestamp;
-            _loKitDocument->paintActiveFloatingWindow(tokens[1].c_str(), pixmap.data(), width, height);
-            const auto elapsed = timestamp.elapsed();
-            const double area = width * height;
-            LOG_TRC("paintActiveFloatingWindow for " << tokens[1] << " returned floating window "
-                    << width << "X" << height << " "
-                    << "rendered in " << (elapsed/1000.)
-                    << "ms (" << area / elapsed << " MP/s).");
-
-            response = "dialogchildpaint: id=" + tokens[1] + " width=" + std::to_string(width) + " height=" + std::to_string(height) + "\n";
-        }
-        else
-        {
-            Timestamp timestamp;
-            _loKitDocument->paintDialog(tokens[1].c_str(), pixmap.data(), startX, startY, width, height);
-            const auto elapsed = timestamp.elapsed();
-
-            int dialogWidth = 0;
-            int dialogHeight = 0;
-            _loKitDocument->getDialogInfo(tokens[1].c_str(), &pDialogTitle, dialogWidth, dialogHeight);
-
-            std::string encodedDialogTitle;
-            if (pDialogTitle)
-            {
-                std::string aDialogTitle(pDialogTitle);
-                URI::encode(aDialogTitle, "", encodedDialogTitle);
-                free(pDialogTitle);
-            }
-
-            // rendered width, height cannot be less than the dialog width, height
-            width = std::min(width, dialogWidth);
-            height = std::min(height, dialogHeight);
-            const double area = width * height;
-
-            LOG_TRC("paintDialog for " << tokens[1] << " returned " << width << "X" << height
-                    << "@(" << startX << "," << startY << ")"
-                    << "and rendered in " << (elapsed/1000.)
-                    << "ms (" << area / elapsed << " MP/s).");
-
-            response = "dialogpaint: id=" + tokens[1] + " title=" + encodedDialogTitle +
-                " dialogwidth=" + std::to_string(dialogWidth) + " dialogheight=" + std::to_string(dialogHeight);
-
-            if (!paintRectangle.empty())
-                response += " rectangle=" + paintRectangle;
-
-            response += "\n";
-        }
-
-        std::vector<char> output;
-        output.reserve(response.size() + pixmapDataSize);
-        output.resize(response.size());
-        std::memcpy(output.data(), response.data(), response.size());
-
-        // TODO: use png cache for dialogs too
-        if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight, output, LOK_TILEMODE_RGBA))
-        {
-            LOG_ERR("Failed to encode into PNG.");
-            return;
-        }
-
-        LOG_TRC("Sending response (" << output.size() << " bytes) for: " << response);
-        ws->sendFrame(output.data(), output.size(), WebSocket::FRAME_BINARY);
-    }
-
     void renderCombinedTiles(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
     {
         assert(ws && "Expected a non-null websocket.");
@@ -1011,7 +906,7 @@ public:
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
         std::vector<char> output;
-        output.reserve(pixmapSize);
+        output.reserve(pixmapWidth * pixmapHeight * 4);
 
         size_t tileIndex = 0;
         for (Util::Rectangle& tileRect : tileRecs)
@@ -1775,10 +1670,6 @@ private:
                 {
                     renderCombinedTiles(tokens, _ws);
                 }
-                else if (tokens[0] == "dialog" || tokens[0] == "dialogchild")
-                {
-                    renderDialog(tokens, _ws);
-                }
                 else if (LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
                 {
                     forwardToChild(tokens[0], input);
@@ -2230,7 +2121,6 @@ void lokit_main(const std::string& childRoot,
                         TerminationFlag = true;
                     }
                     else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
-                             tokens[0] == "dialog" || tokens[0] == "dialogchild" ||
                              LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
                     {
                         if (document)

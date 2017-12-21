@@ -134,10 +134,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "paste" &&
              tokens[0] != "insertfile" &&
              tokens[0] != "key" &&
-             tokens[0] != "dialogkey" &&
              tokens[0] != "mouse" &&
-             tokens[0] != "dialogmouse" &&
-             tokens[0] != "dialogchildmouse" &&
              tokens[0] != "partpagerectangles" &&
              tokens[0] != "ping" &&
              tokens[0] != "renderfont" &&
@@ -155,9 +152,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "tilecombine" &&
              tokens[0] != "uno" &&
              tokens[0] != "useractive" &&
-             tokens[0] != "userinactive" &&
-             tokens[0] != "dialog" &&
-             tokens[0] != "dialogchild")
+             tokens[0] != "userinactive")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
@@ -220,10 +215,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "tile")
     {
         return sendTile(buffer, length, tokens, docBroker);
-    }
-    else if (tokens[0] == "dialog" || tokens[0] == "dialogchild")
-    {
-        docBroker->handleDialogRequest(std::string(buffer, length));
     }
     else if (tokens[0] == "tilecombine")
     {

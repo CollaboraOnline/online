@@ -142,20 +142,6 @@ L.Map.include({
 		}
 	},
 
-	sendDialogCommand: function (command, rectangle, child) {
-		if (this._permission === 'edit') {
-			if (!command.startsWith('.uno:'))
-				command = '.uno:' + command;
-			var dialogCmd = 'dialog';
-			if (child)
-				dialogCmd = 'dialogchild';
-			// make sure there are no spaces in rectangle
-			if (rectangle)
-				rectangle = rectangle.replace(/ /g, '');
-			this._socket.sendMessage(dialogCmd + ' ' + command + (rectangle ? ' rectangle=' + rectangle : ''));
-		}
-	},
-
 	toggleCommandState: function (unoState) {
 		if (this._permission === 'edit') {
 			if (!unoState.startsWith('.uno:')) {

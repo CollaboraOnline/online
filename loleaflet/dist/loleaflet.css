@@ -333,20 +333,3 @@ body {
 	font: bold 18px 'Lucida Console', Monaco, monospace;
 	text-indent: 1px;
 }
-
-.lokdialog_container.ui-dialog.ui-widget-content {
-        padding: 0px;
-	overflow: hidden;
-	width: auto;
-	height: auto;
-	border: none;
-	background-color: transparent;
-}
-
-.lokdialog.ui-dialog-content.ui-widget-content {
-        padding: 0px;
-}
-
-.lokdialog_canvas {
-        display: block; /* required to remove all borders around canvas element */
-}

@@ -79,8 +79,6 @@ extern "C"
             CASE(INVALIDATE_HEADER);
             CASE(CELL_ADDRESS);
             CASE(RULER_UPDATE);
-            CASE(DIALOG);
-            CASE(DIALOG_CHILD);
 #undef CASE
         }
         std::cout << " payload: " << payload << std::endl;

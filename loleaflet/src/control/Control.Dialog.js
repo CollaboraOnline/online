@@ -3,7 +3,7 @@
  */
 
 /* global vex */
-L.Control.AlertDialog = L.Control.extend({
+L.Control.Dialog = L.Control.extend({
 	onAdd: function (map) {
 		// TODO: Better distinction between warnings and errors
 		map.on('error', this._onError, this);
@@ -47,6 +47,6 @@ L.Control.AlertDialog = L.Control.extend({
 	}
 });
 
-L.control.alertDialog = function (options) {
-	return new L.Control.AlertDialog(options);
+L.control.dialog = function (options) {
+	return new L.Control.Dialog(options);
 };

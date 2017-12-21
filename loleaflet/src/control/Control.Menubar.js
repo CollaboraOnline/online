@@ -41,13 +41,11 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Record'), type: 'unocommand', uno: '.uno:TrackChanges'},
 					{name: _('Show'), type: 'unocommand', uno: '.uno:ShowTrackedChanges'},
 					{type: 'separator'},
-					{name: _('Manage Changes...'), id: '.uno:AcceptTrackedChanges', type: 'dialog'},
 					{name: _('Accept All'), type: 'unocommand', uno: '.uno:AcceptAllTrackedChanges'},
 					{name: _('Reject All'), type: 'unocommand', uno: '.uno:RejectAllTrackedChanges'},
 					{name: _('Previous'), type: 'unocommand', uno: '.uno:PreviousTrackedChange'},
 					{name: _('Next'), type: 'unocommand', uno: '.uno:NextTrackedChange'}
-				]},
-				{name: _('ImageMap'), id: '.uno:ImageMapDialog', type: 'dialog'}
+				]}
 			]},
 			{name: _('View'), id: 'view', type: 'menu', menu: [
 				{name: _('Full screen'), id: 'fullscreen', type: 'action'},
@@ -69,7 +67,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Page break'), type: 'unocommand', uno: '.uno:InsertPageBreak'},
 				{name: _('Column break'), type: 'unocommand', uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
-				{name: _('Hyperlink'), id: '.uno:HyperlinkDialog', type: 'dialog'},
 				{name: _('Special character...'), id: 'specialcharacter', type: 'action'},
 				{name: _('Formatting mark'), type: 'menu', menu: [
 					{name: _('Non-breaking space'), type: 'unocommand', uno: '.uno:InsertNonBreakingSpace'},
@@ -78,11 +75,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('No-width optional break'), type: 'unocommand', uno: '.uno:InsertZWSP'},
 					{name: _('No-width no break'), type: 'unocommand', uno: '.uno:InsertZWNBSP'},
 					{name: _('Left-to-right mark'), type: 'unocommand', uno: '.uno:InsertLRM'},
-					{name: _('Right-to-left mark'), type: 'unocommand', uno: '.uno:InsertRLM'}]},
-				{name: _('Field...'), id: '.uno:InsertField', type: 'dialog'},
-				{name: _('Index Entry...'), id: '.uno:InsertIndexesEntry', type: 'dialog'},
-				{name: _('Bibliography Entry...'), id: '.uno:InsertAuthoritiesEntry', type: 'dialog'}
-			]
+					{name: _('Right-to-left mark'), type: 'unocommand', uno: '.uno:InsertRLM'}]}]
 			},
 			{name: _('Format'), type: 'menu', menu: [
 				{name: _('Text'), type: 'menu', menu: [
@@ -182,16 +175,13 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Merge cells'), type: 'unocommand', uno: '.uno:MergeCells'}]
 			},
 			{name: _('Tools'), id: 'tools', type: 'menu', menu: [
-				{name: _('Spelling and Grammar'), id: '.uno:SpellingAndGrammarDialog', type: 'dialog'},
 				{name: _('Automatic spell checking'), type: 'unocommand', uno: '.uno:SpellOnline'},
 				{name: _('Language for selection'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'noneselection', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
 				{name: _('Language for paragraph'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'noneparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
 				{name: _('Language for entire document'), type: 'menu', menu: [
-					{name: _('None (Do not check spelling)'), id: 'nonelanguage', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
-				{name: _('Find & replace Dialog'), id: '.uno:SearchDialog', type: 'dialog'},
-				{name: _('Word count'), id: '.uno:WordCountDialog', type: 'dialog'}
+					{name: _('None (Do not check spelling)'), id: 'nonelanguage', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
@@ -788,8 +778,6 @@ L.Control.Menubar = L.Control.extend({
 			map.sendUnoCommand(unoCommand);
 		} else if (type === 'action') {
 			self._executeAction(item);
-		} else if (type === 'dialog') {
-			map.fire('opendialog', {dialogId: $(item).data('id')});
 		}
 
 		if ($(item).data('id') !== 'insertcomment')
@@ -869,9 +857,6 @@ L.Control.Menubar = L.Control.extend({
 			} else if (menu[i].type === 'unocommand') {
 				$(aItem).data('type', 'unocommand');
 				$(aItem).data('uno', menu[i].uno);
-			} else if (menu[i].type === 'dialog') {
-				$(aItem).data('type', 'dialog');
-				$(aItem).data('id', menu[i].id);
 			} else if (menu[i].type === 'separator') {
 				$(aItem).addClass('separator');
 			} else if (menu[i].type === 'action') {

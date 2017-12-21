@@ -219,10 +219,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "paste" ||
                tokens[0] == "insertfile" ||
                tokens[0] == "key" ||
-               tokens[0] == "dialogkey" ||
                tokens[0] == "mouse" ||
-               tokens[0] == "dialogmouse" ||
-               tokens[0] == "dialogchildmouse" ||
                tokens[0] == "uno" ||
                tokens[0] == "selecttext" ||
                tokens[0] == "selectgraphic" ||
@@ -261,23 +258,11 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens[0] == "key")
         {
-            return keyEvent(buffer, length, tokens, LokEventTargetEnum::Document);
-        }
-        else if (tokens[0] == "dialogkey")
-        {
-            return keyEvent(buffer, length, tokens, LokEventTargetEnum::Dialog);
+            return keyEvent(buffer, length, tokens);
         }
         else if (tokens[0] == "mouse")
         {
-            return mouseEvent(buffer, length, tokens, LokEventTargetEnum::Document);
-        }
-        else if (tokens[0] == "dialogmouse")
-        {
-            return mouseEvent(buffer, length, tokens, LokEventTargetEnum::Dialog);
-        }
-        else if (tokens[0] == "dialogchildmouse")
-        {
-            return mouseEvent(buffer, length, tokens, LokEventTargetEnum::DialogChild);
+            return mouseEvent(buffer, length, tokens);
         }
         else if (tokens[0] == "uno")
         {
@@ -721,28 +706,17 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
     return true;
 }
 
-bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
-                            const std::vector<std::string>& tokens,
-                            const LokEventTargetEnum target)
+bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int type, charcode, keycode;
-    std::string dialogId;
-    unsigned counter = 1;
-    unsigned minTotal = 4; // cmdname, type, char, key are strictly required
-    if (target == LokEventTargetEnum::Dialog || target == LokEventTargetEnum::DialogChild)
-    {
-        getTokenString(tokens[counter++], "dialogid", dialogId);
-        minTotal++; // other params still necessarily required
-    }
-
-    if (tokens.size() != minTotal ||
-        !getTokenKeyword(tokens[counter++], "type",
+    if (tokens.size() != 4 ||
+        !getTokenKeyword(tokens[1], "type",
                          {{"input", LOK_KEYEVENT_KEYINPUT}, {"up", LOK_KEYEVENT_KEYUP}},
                          type) ||
-        !getTokenInteger(tokens[counter++], "char", charcode) ||
-        !getTokenInteger(tokens[counter++], "key", keycode))
+        !getTokenInteger(tokens[2], "char", charcode) ||
+        !getTokenInteger(tokens[3], "key", keycode))
     {
-        sendTextFrame("error: cmd=" + std::string(tokens[0]) + "  kind=syntax");
+        sendTextFrame("error: cmd=key kind=syntax");
         return false;
     }
 
@@ -763,20 +737,15 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
     }
 
     std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
-    if (target == LokEventTargetEnum::Document)
-    {
-        getLOKitDocument()->setView(_viewId);
-        getLOKitDocument()->postKeyEvent(type, charcode, keycode);
-    }
-    else if (!dialogId.empty())
-        getLOKitDocument()->postDialogKeyEvent(dialogId.c_str(), type, charcode, keycode);
+
+    getLOKitDocument()->setView(_viewId);
+
+    getLOKitDocument()->postKeyEvent(type, charcode, keycode);
 
     return true;
 }
 
-bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
-                              const std::vector<std::string>& tokens,
-                              const LokEventTargetEnum target)
+bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int type, x, y, count;
     bool success = true;
@@ -785,59 +754,38 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
     int buttons = 1; // left button
     int modifier = 0;
 
-    std::string dialogId;
-    unsigned counter = 1;
-    unsigned minTotal = 5; // cmdname, type, x, y, count are strictly required
-    if (target == LokEventTargetEnum::Dialog || target == LokEventTargetEnum::DialogChild)
-    {
-        getTokenString(tokens[counter++], "dialogid", dialogId);
-        minTotal++; // other params still necessarily required
-    }
-
-    if (tokens.size() < minTotal ||
-        !getTokenKeyword(tokens[counter++], "type",
+    if (tokens.size() < 5 ||
+        !getTokenKeyword(tokens[1], "type",
                          {{"buttondown", LOK_MOUSEEVENT_MOUSEBUTTONDOWN},
                           {"buttonup", LOK_MOUSEEVENT_MOUSEBUTTONUP},
                           {"move", LOK_MOUSEEVENT_MOUSEMOVE}},
                          type) ||
-        !getTokenInteger(tokens[counter++], "x", x) ||
-        !getTokenInteger(tokens[counter++], "y", y) ||
-        !getTokenInteger(tokens[counter++], "count", count))
+        !getTokenInteger(tokens[2], "x", x) ||
+        !getTokenInteger(tokens[3], "y", y) ||
+        !getTokenInteger(tokens[4], "count", count))
     {
         success = false;
     }
 
     // compatibility with older loleaflets
-    if (success && tokens.size() > counter && !getTokenInteger(tokens[counter++], "buttons", buttons))
+    if (success && tokens.size() > 5 && !getTokenInteger(tokens[5], "buttons", buttons))
         success = false;
 
     // compatibility with older loleaflets
-    if (success && tokens.size() > counter && !getTokenInteger(tokens[counter++], "modifier", modifier))
+    if (success && tokens.size() > 6 && !getTokenInteger(tokens[6], "modifier", modifier))
         success = false;
 
     if (!success)
     {
-        sendTextFrame("error: cmd=" +  std::string(tokens[0]) + " kind=syntax");
+        sendTextFrame("error: cmd=mouse kind=syntax");
         return false;
     }
 
     std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
 
-    switch (target)
-    {
-    case LokEventTargetEnum::Document:
-        getLOKitDocument()->setView(_viewId);
-        getLOKitDocument()->postMouseEvent(type, x, y, count, buttons, modifier);
-        break;
-    case LokEventTargetEnum::Dialog:
-        getLOKitDocument()->postDialogMouseEvent(dialogId.c_str(), type, x, y, count, buttons, modifier);
-        break;
-    case LokEventTargetEnum::DialogChild:
-        getLOKitDocument()->postDialogChildMouseEvent(dialogId.c_str(), type, x, y, count, buttons, modifier);
-        break;
-    default:
-        assert(false && "Unsupported mouse target type");
-    }
+    getLOKitDocument()->setView(_viewId);
+
+    getLOKitDocument()->postMouseEvent(type, x, y, count, buttons, modifier);
 
     return true;
 }
@@ -1350,12 +1298,6 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_RULER_UPDATE:
         sendTextFrame("rulerupdate: " + payload);
-        break;
-    case LOK_CALLBACK_DIALOG:
-        sendTextFrame("dialog: " + payload);
-        break;
-    case LOK_CALLBACK_DIALOG_CHILD:
-        sendTextFrame("dialogchild: " + payload);
         break;
     default:
         LOG_ERR("Unknown callback event (" << type << "): " << payload);
