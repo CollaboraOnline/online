@@ -10,11 +10,11 @@
  * This is a very tiny helper to allow overlay mounting.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <sys/mount.h>
 
-#include "security.h"
+#include <security.h>
 
 int main(int argc, char **argv)
 {

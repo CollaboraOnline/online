@@ -11,7 +11,7 @@
  * exotic or un-necessary system calls to be used to break containment.
  */
 
-#include "config.h"
+#include <config.h>
 #include <dlfcn.h>
 #include <ftw.h>
 #include <linux/audit.h>
@@ -30,7 +30,7 @@
 
 #include <common/Log.hpp>
 #include <common/SigUtil.hpp>
-#include <Seccomp.hpp>
+#include "Seccomp.hpp"
 
 #ifndef SYS_SECCOMP
 #  define SYS_SECCOMP 1
