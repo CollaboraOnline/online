@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-25 09:01+0000\n"
+"POT-Creation-Date: 2017-12-21 09:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /pt/libo_online/loleaflet-ui-pt.po\n"
-"X-Pootle-Revision: 2877615\n"
+"X-Pootle-Revision: 2971371\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -1472,157 +1472,155 @@ msgstr "Saurashtra"
 
 #: src/control/Control.CharacterMap.js:193
 msgid "Kayah Li"
-msgstr ""
+msgstr "Kayah Li"
 
 #: src/control/Control.CharacterMap.js:194
 msgid "Rejang"
-msgstr ""
+msgstr "Rejang"
 
 #: src/control/Control.CharacterMap.js:195
 msgid "Cham"
-msgstr ""
+msgstr "Cham"
 
 #: src/control/Control.CharacterMap.js:196
 msgid "Ancient Symbols"
-msgstr ""
+msgstr "Símbolos ancestrais"
 
 #: src/control/Control.CharacterMap.js:197
 msgid "Phaistos Disc"
-msgstr ""
+msgstr "Discos de Phaistos"
 
 #: src/control/Control.CharacterMap.js:198
 msgid "Lycian"
-msgstr ""
+msgstr "Lício"
 
 #: src/control/Control.CharacterMap.js:199
 msgid "Carian"
-msgstr ""
+msgstr "Carian"
 
 #: src/control/Control.CharacterMap.js:200
 msgid "Lydian"
-msgstr ""
+msgstr "Lídio"
 
 #: src/control/Control.CharacterMap.js:201
 msgid "Mahjong Tiles"
-msgstr ""
+msgstr "Peças de Mahjong"
 
 #: src/control/Control.CharacterMap.js:202
 msgid "Domino Tiles"
-msgstr ""
+msgstr "Peças de dominó"
 
 #: src/control/Control.CharacterMap.js:203
 msgid "Samaritan"
-msgstr ""
+msgstr "Samaritano"
 
 #: src/control/Control.CharacterMap.js:204
 msgid "Canadian Aboriginal Syllabics Extended"
-msgstr ""
+msgstr "Sílabas aborígenes canadenses"
 
 #: src/control/Control.CharacterMap.js:205
 msgid "Tai Tham"
-msgstr ""
+msgstr "Tai Tham"
 
 #: src/control/Control.CharacterMap.js:206
 msgid "Vedic Extensions"
-msgstr ""
+msgstr "Extensões védicas"
 
 #: src/control/Control.CharacterMap.js:207
 msgid "Lisu"
-msgstr ""
+msgstr "Lisu"
 
 #: src/control/Control.CharacterMap.js:208
 msgid "Bamum"
-msgstr ""
+msgstr "Bamum"
 
 #: src/control/Control.CharacterMap.js:209
 msgid "Common Indic Number Forms"
-msgstr ""
+msgstr "Formas comuns de números índicos"
 
 #: src/control/Control.CharacterMap.js:210
 msgid "Devanagari Extended"
-msgstr ""
+msgstr "Devanagari expandido"
 
 #: src/control/Control.CharacterMap.js:211
 msgid "Hangul Jamo Extended-A"
-msgstr ""
+msgstr "Hangul Jamo expandido A"
 
 #: src/control/Control.CharacterMap.js:212
 msgid "Javanese"
-msgstr ""
+msgstr "Javanês"
 
 #: src/control/Control.CharacterMap.js:213
-#, fuzzy
 msgid "Myanmar Extended-A"
-msgstr "Birmanês expandido B"
+msgstr "Birmanês expandido A"
 
 #: src/control/Control.CharacterMap.js:214
 msgid "Tai Viet"
-msgstr ""
+msgstr "Tailandês vietnamita"
 
 #: src/control/Control.CharacterMap.js:215
 msgid "Meetei Mayek"
-msgstr ""
+msgstr "Meetei Mayek"
 
 #: src/control/Control.CharacterMap.js:216
 msgid "Hangul Jamo Extended-B"
-msgstr ""
+msgstr "Hangul Jamo expandido B"
 
 #: src/control/Control.CharacterMap.js:217
 msgid "Imperial Aramaic"
-msgstr ""
+msgstr "Aramaico imperial"
 
 #: src/control/Control.CharacterMap.js:218
 msgid "Old South Arabian"
-msgstr ""
+msgstr "Árabe do sul antigo"
 
 #: src/control/Control.CharacterMap.js:219
 msgid "Avestan"
-msgstr ""
+msgstr "Avestan"
 
 #: src/control/Control.CharacterMap.js:220
 msgid "Inscriptional Parthian"
-msgstr ""
+msgstr "Parthian de inscrições"
 
 #: src/control/Control.CharacterMap.js:221
 msgid "Inscriptional Pahlavi"
-msgstr ""
+msgstr "Pahlavi de inscrições"
 
 #: src/control/Control.CharacterMap.js:222
 msgid "Old Turkic"
-msgstr ""
+msgstr "Turco ancestral"
 
 #: src/control/Control.CharacterMap.js:223
 msgid "Rumi Numeral Symbols"
-msgstr ""
+msgstr "Símbolos numéricos Rumi"
 
 #: src/control/Control.CharacterMap.js:224
 msgid "Kaithi"
-msgstr ""
+msgstr "Kaithi"
 
 #: src/control/Control.CharacterMap.js:226
 msgid "Egyptian Hieroglyphs"
-msgstr ""
+msgstr "Hieróglifos egípcios"
 
 #: src/control/Control.CharacterMap.js:227
 msgid "Enclosed Alphanumeric Supplement"
-msgstr ""
+msgstr "Suplemento alfanumérico incluso"
 
 #: src/control/Control.CharacterMap.js:228
 msgid "Enclosed Ideographic Supplement"
-msgstr ""
+msgstr "Suplemento ideográfico incluso"
 
 #: src/control/Control.CharacterMap.js:230
-#, fuzzy
 msgid "CJK Unified Ideographs Extension C"
-msgstr "Ideogramas unificados CJK extensão B"
+msgstr "Ideogramas unificados CJK extensão C"
 
 #: src/control/Control.CharacterMap.js:231
 msgid "Mandaic"
-msgstr ""
+msgstr "Mandaico"
 
 #: src/control/Control.CharacterMap.js:232
 msgid "Batak"
-msgstr ""
+msgstr "Batak"
 
 #: src/control/Control.CharacterMap.js:233
 #, fuzzy
@@ -1631,28 +1629,27 @@ msgstr "Etíope estendido"
 
 #: src/control/Control.CharacterMap.js:234
 msgid "Brahmi"
-msgstr ""
+msgstr "Brahmi"
 
 #: src/control/Control.CharacterMap.js:236
 msgid "Bamum Supplement"
-msgstr ""
+msgstr "Suplemento Bamum"
 
 #: src/control/Control.CharacterMap.js:237
 msgid "Kana Supplement"
-msgstr ""
+msgstr "Suplemento Kana"
 
 #: src/control/Control.CharacterMap.js:238
 msgid "Playing Cards"
-msgstr ""
+msgstr "Cartas de jogo"
 
 #: src/control/Control.CharacterMap.js:240
-#, fuzzy
 msgid "Miscellaneous Symbols And Pictographs"
-msgstr "Símbolos e setas diversos"
+msgstr "Símbolos e pictogramas diversos"
 
 #: src/control/Control.CharacterMap.js:241
 msgid "Emoticons"
-msgstr ""
+msgstr "Ícone expressivo"
 
 #: src/control/Control.CharacterMap.js:242
 msgid "Transport And Map Symbols"
@@ -1663,26 +1660,24 @@ msgid "Alchemical Symbols"
 msgstr "Símbolos de alquimia"
 
 #: src/control/Control.CharacterMap.js:245
-#, fuzzy
 msgid "CJK Unified Ideographs Extension D"
-msgstr "Ideogramas unificados CJK extensão B"
+msgstr "Ideogramas unificados CJK extensão D"
 
 #: src/control/Control.CharacterMap.js:247
-#, fuzzy
 msgid "Arabic Extended-A"
-msgstr "Latino expandido A"
+msgstr "Árabe expandido A"
 
 #: src/control/Control.CharacterMap.js:248
 msgid "Arabic Mathematical Alphabetic Symbols"
-msgstr ""
+msgstr "Símbolos alfabéticos matemáticos árabes"
 
 #: src/control/Control.CharacterMap.js:249
 msgid "Chakma"
-msgstr ""
+msgstr "Chakma"
 
 #: src/control/Control.CharacterMap.js:250
 msgid "Meetei Mayek Extensions"
-msgstr ""
+msgstr "Extensões Meetei Mayek"
 
 #: src/control/Control.CharacterMap.js:251
 msgid "Meroitic Cursive"

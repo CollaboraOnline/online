@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:15+0000\n"
+"POT-Creation-Date: 2017-12-21 09:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /zh_TW/libo_online/loleaflet-ui-zh_TW.po\n"
-"X-Pootle-Revision: 2780166\n"
+"X-Pootle-Revision: 2916543\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -2087,11 +2087,11 @@ msgstr "尾註"
 
 #: src/control/Control.Menubar.js:45
 msgid "Page break"
-msgstr "斷頁"
+msgstr "分頁符"
 
 #: src/control/Control.Menubar.js:46
 msgid "Column break"
-msgstr "斷欄"
+msgstr "斷欄符"
 
 #: src/control/Control.Menubar.js:48
 #: src/control/Control.Menubar.js:193

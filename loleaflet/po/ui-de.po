@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-26 09:00+0000\n"
+"POT-Creation-Date: 2017-12-21 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /de/libo_online/loleaflet-ui-de.po\n"
-"X-Pootle-Revision: 2909347\n"
+"X-Pootle-Revision: 2939289\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -142,14 +142,17 @@ msgstr "Zeitintervall der CPU-Statistik (in ms)"
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
+"Maximaler virtueller Speicher für Dokumentenprozess (in MB) - nur reduzieren"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Maximaler Stapelspeicher für Dokumentenprozess (in MB) - nur reduzieren"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
+"Maximal erlaubte Dateigröße zum Schreiben auf die Festplatte (in MB) - nur "
+"reduzieren"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -173,7 +176,7 @@ msgstr "Kein Verlauf bisher."
 
 #: unocommands.js:1
 msgid "Copy Hyperlink"
-msgstr "Verknüpfung kopieren"
+msgstr "Hyperlink kopieren"
 
 #: unocommands.js:2
 msgid "Down One Level"

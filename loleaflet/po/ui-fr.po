@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:14+0000\n"
+"POT-Creation-Date: 2017-12-21 10:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /fr/libo_online/loleaflet-ui-fr.po\n"
-"X-Pootle-Revision: 2788711\n"
+"X-Pootle-Revision: 2935872\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -437,7 +437,7 @@ msgstr "Rétablir"
 
 #: dist/toolbar/toolbar.js:477
 msgid "Document repair"
-msgstr "Réparation du document"
+msgstr "Restauration du document"
 
 #: dist/toolbar/toolbar.js:483
 #: src/control/Control.Menubar.js:71
@@ -776,7 +776,7 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Il y a un conflit d'annulation/restauration avec plusieurs utilisateurs. "
-"Veuillez utiliser la réparation du document pour le résoudre."
+"Veuillez utiliser la restauration du document pour le résoudre."
 
 #: dist/toolbar/toolbar.js:1598
 #: src/control/Control.DocumentRepair.js:87
@@ -1952,7 +1952,7 @@ msgstr "Collage spécial interne"
 
 #: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
-msgstr "Réparer le document"
+msgstr "Restaurer le document"
 
 #: src/control/Control.DocumentRepair.js:40
 msgid "Type"
@@ -2046,7 +2046,7 @@ msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:21
 msgid "Repair"
-msgstr "Réparer"
+msgstr "Restaurer"
 
 #: src/control/Control.Menubar.js:25
 #: src/control/Control.Menubar.js:188

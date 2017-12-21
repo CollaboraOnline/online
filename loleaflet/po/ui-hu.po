@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-05 08:01+0000\n"
+"POT-Creation-Date: 2017-12-19 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /hu/libo_online/loleaflet-ui-hu.po\n"
-"X-Pootle-Revision: 2788015\n"
+"X-Pootle-Revision: 2958079\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -2623,7 +2623,7 @@ msgstr "Munkalap átnevezése"
 
 #: src/control/Control.Tabs.js:65
 msgid "Enter new sheet name"
-msgstr "Adja meg az munkalapnevet"
+msgstr "Adja meg az új munkalapnevet"
 
 #: src/control/Toolbar.js:74
 #: src/control/Toolbar.js:83

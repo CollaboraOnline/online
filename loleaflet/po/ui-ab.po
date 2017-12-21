@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-27 09:00+0000\n"
+"POT-Creation-Date: 2017-12-20 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /ab/libo_online/loleaflet-ui-ab.po\n"
-"X-Pootle-Revision: 2913844\n"
+"X-Pootle-Revision: 2917831\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -491,7 +491,7 @@ msgstr ""
 #: dist/toolbar/toolbar.js:513
 #: src/control/Control.Menubar.js:118
 msgid "Bullets on/off"
-msgstr ""
+msgstr "Амаркерқәа"
 
 #: dist/toolbar/toolbar.js:514
 #: src/control/Control.Menubar.js:119

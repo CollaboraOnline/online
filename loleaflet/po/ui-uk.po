@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-05 08:02+0000\n"
+"POT-Creation-Date: 2017-12-21 09:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
-"X-Pootle-Revision: 2779157\n"
+"X-Pootle-Revision: 2926069\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -356,13 +356,12 @@ msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
 "Документ не можна зберегти на носії. Перевірте ваші права або зв'яжіться з "
-"адміністратором сервера (%storageserver)."
+"адміністратором сервера."
 
 #: dist/toolbar/toolbar.js:105
 msgid "%n users"

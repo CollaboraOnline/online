@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-26 09:00+0000\n"
+"POT-Creation-Date: 2017-12-20 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1845,7 +1845,7 @@ msgstr "Ĉeroka suplemento"
 #: src/control/Control.CharacterMap.js:295
 #: src/control/Control.CharacterMap.js:296
 msgid "CJK Unified Ideographs Extension E"
-msgstr "ĈJK unuigitaj ideografiaĵoj, etendo-A"
+msgstr "ĈJK unuigitaj ideografiaĵoj, etendo-E"
 
 #: src/control/Control.CharacterMap.js:298
 msgid "Early Dynastic Cuneiform"
