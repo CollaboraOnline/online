@@ -1973,12 +1973,6 @@ msgstr "ময়ুং ওইবা মিংথোল, তেক্স, চার
 msgid "Vertical Title, Vertical Text"
 msgstr "ময়ুং ওইবা মিংথোল,  ময়ুং ওইবা তেক্স"
 
-# Translations of Unicode subsets from LibreOffice core
-
-#: ucsubset.src
-msgid "Thai"
-msgstr "থাই"
-
 # Translation of Special Characters dialog from LibreOffice core
 
 #: GenericCommands.xcu

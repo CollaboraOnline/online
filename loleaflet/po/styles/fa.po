@@ -1984,60 +1984,6 @@ msgstr "عنوان عمودی، متن، نمودار"
 msgid "Vertical Title, Vertical Text"
 msgstr "عنوان عمودی، متن عمودی"
 
-# Translations of Unicode subsets from LibreOffice core
-
-#: ucsubset.src
-msgid "Armenian"
-msgstr "ارمنی"
-
-#: ucsubset.src
-msgid "Bengali"
-msgstr "بنگالی"
-
-#: ucsubset.src
-msgid "Gujarati"
-msgstr "گجراتی"
-
-#: ucsubset.src
-msgid "Tamil"
-msgstr "تامیلی"
-
-#: ucsubset.src
-msgid "Telugu"
-msgstr "تلوگویی"
-
-#: ucsubset.src
-msgid "Kannada"
-msgstr "کناده‌ای"
-
-#: ucsubset.src
-msgid "Malayalam"
-msgstr "مالایامی"
-
-#: ucsubset.src
-msgid "Thai"
-msgstr "تایلندی"
-
-#: ucsubset.src
-msgid "Lao"
-msgstr "لائوسی"
-
-#: ucsubset.src
-msgid "Arrows"
-msgstr "پیکان‌ها"
-
-#: ucsubset.src
-msgid "Tibetan"
-msgstr "تبتی"
-
-#: ucsubset.src
-msgid "Khmer"
-msgstr "خمری"
-
-#: ucsubset.src
-msgid "Mongolian"
-msgstr "مغولی"
-
 # Translation of Special Characters dialog from LibreOffice core
 
 #: GenericCommands.xcu

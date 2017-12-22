@@ -1952,16 +1952,6 @@ msgstr "Mada Wima, Matini, Chati"
 msgid "Vertical Title, Vertical Text"
 msgstr "Mada Wima, Matini Wima"
 
-# Translations of Unicode subsets from LibreOffice core
-
-#: ucsubset.src
-msgid "Armenian"
-msgstr "Kiarmenia"
-
-#: ucsubset.src
-msgid "Mongolian"
-msgstr "Kimongolia"
-
 # Translation of Special Characters dialog from LibreOffice core
 
 #: GenericCommands.xcu
