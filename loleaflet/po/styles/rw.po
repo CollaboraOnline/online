@@ -1967,44 +1967,6 @@ msgstr "Umutwe Uhagaze, Umwandiko, Igishushanyo"
 msgid "Vertical Title, Vertical Text"
 msgstr "Umutwe Uhagaze, Umwandiko Uhagaze"
 
-# Translations of Unicode subsets from LibreOffice core
-
-#: ucsubset.src
-msgid "Armenian"
-msgstr "Nyarumeniya"
-
-#: ucsubset.src
-msgid "Bengali"
-msgstr "Ikibengali"
-
-#: ucsubset.src
-msgid "Tamil"
-msgstr "Tamili"
-
-#: ucsubset.src
-msgid "Telugu"
-msgstr "Tegulu"
-
-#: ucsubset.src
-msgid "Malayalam"
-msgstr "Malayalamu"
-
-#: ucsubset.src
-msgid "Thai"
-msgstr "Tayi"
-
-#: ucsubset.src
-msgid "Lao"
-msgstr "Lawo"
-
-#: ucsubset.src
-msgid "Khmer"
-msgstr "Kumeri"
-
-#: ucsubset.src
-msgid "Mongolian"
-msgstr "Nyamongoliya"
-
 # Translation of Special Characters dialog from LibreOffice core
 
 #: GenericCommands.xcu

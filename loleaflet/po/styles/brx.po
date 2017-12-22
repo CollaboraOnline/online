@@ -1929,12 +1929,6 @@ msgstr "थोंगोरै थानाय बिमुं, फराय ब�
 msgid "Vertical Title, Vertical Text"
 msgstr "थोंगोरै थानाय बिमुं, थोंगोरै थानाय फराय बिजाब"
 
-# Translations of Unicode subsets from LibreOffice core
-
-#: ucsubset.src
-msgid "Thai"
-msgstr "थाइ"
-
 # Translation of Special Characters dialog from LibreOffice core
 
 #: GenericCommands.xcu

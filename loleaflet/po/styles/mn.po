@@ -1957,56 +1957,6 @@ msgstr "Босоо Гарчиг, Бичвэр, Диаграмм"
 msgid "Vertical Title, Vertical Text"
 msgstr "Босоо Гарчиг, Босоо Бичвэр"
 
-# Translations of Unicode subsets from LibreOffice core
-
-#: ucsubset.src
-msgid "Armenian"
-msgstr "Армен хэл"
-
-#: ucsubset.src
-msgid "Bengali"
-msgstr "Бангладеш хэл"
-
-#: ucsubset.src
-msgid "Gujarati"
-msgstr "Гужарат хэл"
-
-#: ucsubset.src
-msgid "Tamil"
-msgstr "Тамил хэл"
-
-#: ucsubset.src
-msgid "Telugu"
-msgstr "Телүгү хэл"
-
-#: ucsubset.src
-msgid "Kannada"
-msgstr "Канад хэл"
-
-#: ucsubset.src
-msgid "Malayalam"
-msgstr "Малайлам хэл"
-
-#: ucsubset.src
-msgid "Lao"
-msgstr "Лао хэл"
-
-#: ucsubset.src
-msgid "Sinhala"
-msgstr "Синхала хэл"
-
-#: ucsubset.src
-msgid "Khmer"
-msgstr "Кампучи хэл"
-
-#: ucsubset.src
-msgid "Mongolian"
-msgstr "Монгол хэл"
-
-#: ucsubset.src
-msgid "Tagalog"
-msgstr "Тагалог хэл"
-
 # Translation of Special Characters dialog from LibreOffice core
 
 #: GenericCommands.xcu
