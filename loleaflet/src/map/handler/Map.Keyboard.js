@@ -239,11 +239,15 @@ L.Map.Keyboard = L.Handler.extend({
 		return this.keymap[keyCode] || keyCode;
 	},
 
-	_onKeyDown: function (e) {
+	_onKeyDown: function (e, postEventFn) {
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
 			return;
 		}
 		var docLayer = this._map._docLayer;
+		if (!postEventFn) {
+			// default is to post keyboard events on the document
+			postEventFn = docLayer._postKeyboardEvent;
+		}
 		this.modifier = 0;
 		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;
 		var ctrl = e.originalEvent.ctrlKey ? this.keyModifier.ctrl : 0;
@@ -313,7 +317,7 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this.modifier) {
 			unoKeyCode |= this.modifier;
 			if (e.type !== 'keyup' && (this.modifier !== shift || (keyCode === 32 && !docLayer._isCursorVisible))) {
-				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+				postEventFn.call(this, 'input', charCode, unoKeyCode);
 				e.originalEvent.preventDefault();
 				return;
 			}
@@ -327,7 +331,7 @@ L.Map.Keyboard = L.Handler.extend({
 				this._bufferedTextInputEvent = null;
 
 				if (this._handleOnKeyDown(keyCode, this.modifier) && charCode === 0) {
-					docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+					postEventFn.call(this, 'input', charCode, unoKeyCode);
 				}
 			}
 			else if ((e.type === 'keypress' || e.type === 'compositionend') &&
@@ -344,9 +348,11 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 				if (e.type === 'compositionend') {
 					// Set all keycodes to zero
-					docLayer._postKeyboardEvents('input', compCharCodes, Array.apply(null, Array(compCharCodes.length)).map(Number.prototype.valueOf, 0));
+					for (var idx = 0; i < compCharCodes.length; ++i) {
+						postEventFn.call(this, 'input', compCharCodes[idx], 0);
+					}
 				} else {
-					docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+					postEventFn.call(this, 'input', charCode, unoKeyCode);
 				}
 
 				this._keyHandled = true;
@@ -375,13 +381,11 @@ L.Map.Keyboard = L.Handler.extend({
 				if (!this._keyHandled && this._bufferedTextInputEvent) {
 					var textInputData = this._bufferedTextInputEvent.originalEvent.data;
 					charCode = e.originalEvent.keyCode;
-					compCharCodes = [];
-					for (var idx = 0; i < textInputData.length; i++) {
-						compCharCodes.push(textInputData[idx].charCodeAt());
+					for (idx = 0; i < textInputData.length; i++) {
+						postEventFn.call(this, 'input', textInputData[idx].charCodeAt(), 0);
 					}
-					docLayer._postKeyboardEvents('input', compCharCodes, Array.apply(null, Array(compCharCodes.length)).map(Number.prototype.valueOf, 0));
 				}
-				docLayer._postKeyboardEvent('up', charCode, unoKeyCode);
+				postEventFn.call(this, 'up', charCode, unoKeyCode);
 
 				this._keyHandled = true;
 				this._bufferedTextInputEvent = null;
@@ -407,7 +411,7 @@ L.Map.Keyboard = L.Handler.extend({
 			else if (key in this._panKeys && e.originalEvent.shiftKey &&
 					docLayer._selections.getLayers().length !== 0) {
 				// if there is a selection and the user wants to modify it
-				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+				postEventFn.call(this, 'input', charCode, unoKeyCode);
 			}
 			else if (key in this._zoomKeys) {
 				map.setZoom(map.getZoom() + (e.shiftKey ? 3 : 1) * this._zoomKeys[key]);

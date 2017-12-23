@@ -224,7 +224,9 @@ L.Control.LokDialog = L.Control.extend({
 			this._postWindowMouseEvent(lokEventType, this._toRawDlgId(strDlgId), e.offsetX, e.offsetY, 1, buttons, 0);
 		}, this);
 		L.DomEvent.on(dialogCanvas, 'keyup keypress keydown', function(e) {
-			this._handleDialogKeyEvent(e, this._toRawDlgId(strDlgId));
+			// _onKeyDown fn below requires this kind of structure but leaflet DomEvent.on doesn't pass it
+			e.originalEvent = e;
+			map['keyboard']._onKeyDown(e, L.bind(this._postWindowKeyboardEvent, this, this._toRawDlgId(strDlgId)));
 		}, this);
 		L.DomEvent.on(dialogCanvas, 'contextmenu', function() {
 			return false;
@@ -242,42 +244,6 @@ L.Control.LokDialog = L.Control.extend({
 	_postWindowKeyboardEvent: function(winid, type, charcode, keycode) {
 		this._map._socket.sendMessage('windowkey id=' + winid + ' type=' + type +
 		                              ' char=' + charcode + ' key=' + keycode);
-	},
-
-	_handleDialogKeyEvent: function(e, winid) {
-		var docLayer = this._map._docLayer;
-		this.modifier = 0;
-		var shift = e.shiftKey ? this._map['keyboard'].keyModifier.shift : 0;
-		var ctrl = e.ctrlKey ? this._map['keyboard'].keyModifier.ctrl : 0;
-		var alt = e.altKey ? this._map['keyboard'].keyModifier.alt : 0;
-		var cmd = e.metaKey ? this._map['keyboard'].keyModifier.ctrl : 0;
-		this.modifier = shift | ctrl | alt | cmd;
-
-		var charCode = e.charCode;
-		var keyCode = e.keyCode;
-		var unoKeyCode = this._map['keyboard']._toUNOKeyCode(keyCode);
-
-		if (this.modifier) {
-			unoKeyCode |= this.modifier;
-			if (e.type !== 'keyup') {
-				this._postWindowKeyboardEvent(winid, 'input', charCode, unoKeyCode);
-				return;
-			}
-		}
-
-		if (e.type === 'keydown' && this._map['keyboard'].handleOnKeyDownKeys[keyCode]) {
-			this._postWindowKeyboardEvent(winid, 'input', charCode, unoKeyCode);
-		}
-		else if (e.type === 'keypress' && (!this._map['keyboard'].handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
-			if (charCode === keyCode && charCode !== 13) {
-				keyCode = 0;
-				unoKeyCode = this._map['keyboard']._toUNOKeyCode(keyCode);
-			}
-			this._postWindowKeyboardEvent(winid, 'input', charCode, unoKeyCode);
-		}
-		else if (e.type === 'keyup') {
-			this._postWindowKeyboardEvent(winid, 'up', charCode, unoKeyCode);
-		}
 	},
 
 	_onDialogClose: function(dialogId, notifyBackend) {
