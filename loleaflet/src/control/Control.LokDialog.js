@@ -189,6 +189,7 @@ L.Control.LokDialog = L.Control.extend({
 		dialogCanvas.width = width;
 		dialogCanvas.height = height;
 		dialogCanvas.tabIndex = '0';
+		dialogCanvas.contentEditable = true;
 		dialogCanvas.id = strDlgId + '-canvas';
 
 		var that = this;
