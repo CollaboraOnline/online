@@ -349,5 +349,6 @@ body {
 }
 
 .lokdialog_canvas {
+        cursor: default;
         display: block; /* required to remove all borders around canvas element */
 }
