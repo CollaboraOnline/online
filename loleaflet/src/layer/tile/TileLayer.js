@@ -1334,20 +1334,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	_postKeyboardEvents: function(type, charcodes, keycodes) {
-		// Both are arrays
-		if (typeof(charcodes.length) !== 'number' && typeof(keycodes.length) !== 'number')
-			return;
-
-		// both have same length
-		if (charcodes.length !== keycodes.length)
-			return;
-
-		for (var i = 0; i < charcodes.length; i++) {
-			this._postKeyboardEvent(type, charcodes[i], keycodes[i]);
-		}
-	},
-
 	_postKeyboardEvent: function(type, charcode, keycode) {
 		if (this._docType === 'spreadsheet' && this._prevCellCursor && type === 'input') {
 			if (keycode === 1030) { // PgUp
