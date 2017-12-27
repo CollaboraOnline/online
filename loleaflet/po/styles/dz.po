@@ -2245,3 +2245,23 @@ msgstr "མཱལ་ཊི་སི།"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "ཅི་མེད་ (ཡིག་སྡེབ་ཞིབ་དཔྱད་མ་འབད)"
+
+#: globstr.src
+msgid "Count"
+msgstr "གྱང་ཁ་རྐྱབས།"
+
+#: globstr.src
+msgid "Average"
+msgstr "ཆ་སྙོམས།"
+
+#: globstr.src
+msgid "Max"
+msgstr "མང་མཐའ།"
+
+#: globstr.src
+msgid "Min"
+msgstr "ཉུང་མཐའ།"
+
+#: globstr.src
+msgid "Product"
+msgstr "ཐོན་སྐྱེད།"

@@ -3272,3 +3272,31 @@ msgstr "បារាំង (Togo)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "គ្មាន (កុំពិនិត្យ​អក្ខរាវិរុទ្ធ)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "ផលបូក"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "គណនី​ជម្រើស"
+
+#: globstr.src
+msgid "Count"
+msgstr "រាប់"
+
+#: globstr.src
+msgid "Average"
+msgstr "មធ្យម"
+
+#: globstr.src
+msgid "Max"
+msgstr "អតិបរមា"
+
+#: globstr.src
+msgid "Min"
+msgstr "អប្បបរមា"
+
+#: globstr.src
+msgid "Product"
+msgstr "ផលគុណ"

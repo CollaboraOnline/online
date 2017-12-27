@@ -3228,3 +3228,47 @@ msgstr "Jokios (netikrinti rašybos)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "Rasta įrašų: $1 iš $2"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Suma"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Atrankų kiekis"
+
+#: globstr.src
+msgid "Count"
+msgstr "Kiekis"
+
+#: globstr.src
+msgid "CountA"
+msgstr "KiekisR"
+
+#: globstr.src
+msgid "Average"
+msgstr "Vidurkis"
+
+#: globstr.src
+msgid "Median"
+msgstr "Mediana"
+
+#: globstr.src
+msgid "Max"
+msgstr "Maksimumas"
+
+#: globstr.src
+msgid "Min"
+msgstr "Minimumas"
+
+#: globstr.src
+msgid "Product"
+msgstr "Sandauga"
+
+#: globstr.src
+msgid "StDev"
+msgstr "Standartinis nuokrypis"
+
+#: globstr.src
+msgid "Var"
+msgstr "Dispersija"

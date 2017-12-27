@@ -2884,3 +2884,39 @@ msgstr "шусвап"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Ниеден (Не проверувај за правописни грешки)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Сума"
+
+#: globstr.src
+msgid "Count"
+msgstr "Преброј"
+
+#: globstr.src
+msgid "CountA"
+msgstr "ПребројА"
+
+#: globstr.src
+msgid "Average"
+msgstr "Просек"
+
+#: globstr.src
+msgid "Max"
+msgstr "Макс"
+
+#: globstr.src
+msgid "Min"
+msgstr "Мин"
+
+#: globstr.src
+msgid "Product"
+msgstr "Производ"
+
+#: globstr.src
+msgid "StDev"
+msgstr "Стдев"
+
+#: globstr.src
+msgid "Var"
+msgstr "Вар"

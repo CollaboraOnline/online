@@ -2916,3 +2916,7 @@ msgstr "Se-Sorbia, Tlasana"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Ga e gona (O se ke wa lekola mopeleto)"
+
+#: globstr.src
+msgid "CountA"
+msgstr "BalelaA"

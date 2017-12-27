@@ -2561,3 +2561,15 @@ msgstr "Frënge (Togo)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Asnjë (Mos kontrollo ortografinë)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Shuma"
+
+#: globstr.src
+msgid "Count"
+msgstr "Numëro"
+
+#: globstr.src
+msgid "Product"
+msgstr "Prodhimi"

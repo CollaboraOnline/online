@@ -2252,3 +2252,27 @@ msgstr "ओरोमो"
 #: langtab.src
 msgid "Asturian"
 msgstr "एस्ट्यूरियन"
+
+#: globstr.src
+msgid "Sum"
+msgstr "जोड़"
+
+#: globstr.src
+msgid "Count"
+msgstr "गिनती"
+
+#: globstr.src
+msgid "Average"
+msgstr "औसत"
+
+#: globstr.src
+msgid "Max"
+msgstr "अधिकतम"
+
+#: globstr.src
+msgid "Min"
+msgstr "न्यूनतम"
+
+#: globstr.src
+msgid "Product"
+msgstr "उत्पाद"

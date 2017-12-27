@@ -2964,3 +2964,31 @@ msgstr "ඉංග්‍රීසි (කැනඩා)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "කිසිවක් නැත (අක්ෂර වින්‍යාසය පරීක්ෂා කරන්න)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "එකතුව"
+
+#: globstr.src
+msgid "Count"
+msgstr "ගණන් කරන්න"
+
+#: globstr.src
+msgid "CountA"
+msgstr "ගැණීමA"
+
+#: globstr.src
+msgid "Average"
+msgstr "සාමාන්‍ය"
+
+#: globstr.src
+msgid "Max"
+msgstr "උපරිම"
+
+#: globstr.src
+msgid "Min"
+msgstr "අවම"
+
+#: globstr.src
+msgid "Product"
+msgstr "නිෂ්පාදනය"

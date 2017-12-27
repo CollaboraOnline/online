@@ -2041,3 +2041,35 @@ msgstr "تھائی لینڈ"
 #: langtab.src
 msgid "Turkish"
 msgstr "ترکی"
+
+#: globstr.src
+msgid "Sum"
+msgstr "جوڑ"
+
+#: globstr.src
+msgid "Count"
+msgstr "شمار"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Aشمار "
+
+#: globstr.src
+msgid "Average"
+msgstr "اوسط"
+
+#: globstr.src
+msgid "Max"
+msgstr "زیادئ  ہوتئ زیادئ"
+
+#: globstr.src
+msgid "Min"
+msgstr "کم ازکم"
+
+#: globstr.src
+msgid "Product"
+msgstr "پیداوار"
+
+#: globstr.src
+msgid "Var"
+msgstr "VAR"

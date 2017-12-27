@@ -2057,3 +2057,27 @@ msgstr "ໄທ"
 #: langtab.src
 msgid "Turkish"
 msgstr "ເຕີກກີ"
+
+#: globstr.src
+msgid "Sum"
+msgstr "ຜົນລວມ"
+
+#: globstr.src
+msgid "Count"
+msgstr "ນັບ"
+
+#: globstr.src
+msgid "Average"
+msgstr "ສະເລ່ຍ"
+
+#: globstr.src
+msgid "Max"
+msgstr "ໃຫ່ຍສຸດ"
+
+#: globstr.src
+msgid "Min"
+msgstr "ນ້ອຍສຸດ"
+
+#: globstr.src
+msgid "Product"
+msgstr "ຜົນຄູນ"

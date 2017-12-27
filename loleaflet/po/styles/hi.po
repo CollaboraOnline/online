@@ -3215,3 +3215,19 @@ msgstr "योंबे (कांगो)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "कोई नहीं (हिज्जे नहीं जाँचें)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "जोड़"
+
+#: globstr.src
+msgid "Count"
+msgstr "गिनती"
+
+#: globstr.src
+msgid "Average"
+msgstr "औसत"
+
+#: globstr.src
+msgid "Product"
+msgstr "उत्पाद"

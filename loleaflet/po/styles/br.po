@@ -3300,3 +3300,43 @@ msgstr "Tra ebet (Na gwirañ ar reizhskrivadur)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$1 e-touez $2 enrolladur bet kavet"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Sammad"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Kont an diuzad"
+
+#: globstr.src
+msgid "Count"
+msgstr "Kont"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Kont2"
+
+#: globstr.src
+msgid "Average"
+msgstr "Keitad"
+
+#: globstr.src
+msgid "Max"
+msgstr "Uc'hek"
+
+#: globstr.src
+msgid "Min"
+msgstr "Izek"
+
+#: globstr.src
+msgid "Product"
+msgstr "Aozad"
+
+#: globstr.src
+msgid "StDev"
+msgstr "Forc'hadrizh"
+
+#: globstr.src
+msgid "Var"
+msgstr "Arg"

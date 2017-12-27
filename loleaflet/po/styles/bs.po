@@ -3194,3 +3194,31 @@ msgstr "Fracuski (Burkina Faso)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Bez jezika (isključi provjeru pravopisa)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Suma"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Broj izbora"
+
+#: globstr.src
+msgid "Count"
+msgstr "Broj"
+
+#: globstr.src
+msgid "Average"
+msgstr "Prosjek"
+
+#: globstr.src
+msgid "Max"
+msgstr "Maksimum"
+
+#: globstr.src
+msgid "Min"
+msgstr "Minimum"
+
+#: globstr.src
+msgid "Product"
+msgstr "Proizvod"

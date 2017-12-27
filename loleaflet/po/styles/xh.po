@@ -2577,3 +2577,15 @@ msgstr "IsiSinhala"
 #: langtab.src
 msgid "Tagalog"
 msgstr "IsiTagalog"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Bala ku-A"
+
+#: globstr.src
+msgid "StDev"
+msgstr "I-StDev"
+
+#: globstr.src
+msgid "Var"
+msgstr "I-Var"

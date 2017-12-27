@@ -2570,3 +2570,15 @@ msgstr "Xitswana (Botswana)"
 #: langtab.src
 msgid "Xhosa"
 msgstr "Xixhosa"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Hlayela A"
+
+#: globstr.src
+msgid "StDev"
+msgstr "Ku hambuka eka ntolovelo"
+
+#: globstr.src
+msgid "Var"
+msgstr "Ku hambana"

@@ -3508,3 +3508,39 @@ msgstr "ஏதுமில்லை (சொல்திருத்தவேண�
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$2 இல் $1 பதிவேடுகள் கிடைத்தன"
+
+#: globstr.src
+msgid "Sum"
+msgstr "தொகை"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "தெரிவு எண்ணிக்கை"
+
+#: globstr.src
+msgid "Count"
+msgstr "எண்ணிக்கை"
+
+#: globstr.src
+msgid "CountA"
+msgstr "எண்ணிக்கைA"
+
+#: globstr.src
+msgid "Average"
+msgstr "சராசரி"
+
+#: globstr.src
+msgid "Median"
+msgstr "இடைநிலை"
+
+#: globstr.src
+msgid "Max"
+msgstr "அதிகபட்சம்"
+
+#: globstr.src
+msgid "Min"
+msgstr "குறைந்தபட்சம்"
+
+#: globstr.src
+msgid "Product"
+msgstr "மென்பொருள்"

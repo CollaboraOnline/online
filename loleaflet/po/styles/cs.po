@@ -3375,3 +3375,39 @@ msgstr "Žádný (bez kontroly pravopisu)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "Nalezeno $1 z $2 záznamů"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Součet"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Počet vybraných"
+
+#: globstr.src
+msgid "Count"
+msgstr "Počet čísel"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Počet hodnot"
+
+#: globstr.src
+msgid "Average"
+msgstr "Průměr"
+
+#: globstr.src
+msgid "Median"
+msgstr "Medián"
+
+#: globstr.src
+msgid "Product"
+msgstr "Součin (produkt)"
+
+#: globstr.src
+msgid "StDev"
+msgstr "SměrOdch"
+
+#: globstr.src
+msgid "Var"
+msgstr "Rozptyl"

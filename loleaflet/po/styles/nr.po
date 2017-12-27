@@ -2481,3 +2481,7 @@ msgstr "i-Sinhala"
 #: langtab.src
 msgid "Tagalog"
 msgstr "i-Tagalog"
+
+#: globstr.src
+msgid "CountA"
+msgstr "BalaA"

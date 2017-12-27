@@ -3193,3 +3193,35 @@ msgstr "Udmurte"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Mitturino (fidalishsha buuxxooti)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Su'ma"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Doorshu kiiro"
+
+#: globstr.src
+msgid "Count"
+msgstr "Kiiri"
+
+#: globstr.src
+msgid "Average"
+msgstr "Mereerima"
+
+#: globstr.src
+msgid "Max"
+msgstr "Bati'ra"
+
+#: globstr.src
+msgid "Min"
+msgstr "Shiimiidi"
+
+#: globstr.src
+msgid "Product"
+msgstr "Guma"
+
+#: globstr.src
+msgid "Var"
+msgstr "Soorramaancho"

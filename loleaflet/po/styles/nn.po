@@ -3081,3 +3081,31 @@ msgstr "Ingen (ikkje sjekk stavinga)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "Funne $1 av $2 postar"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Talet på markeringar"
+
+#: globstr.src
+msgid "Count"
+msgstr "Tal"
+
+#: globstr.src
+msgid "CountA"
+msgstr "TalA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Gjennomsnitt"
+
+#: globstr.src
+msgid "Max"
+msgstr "Maks"
+
+#: globstr.src
+msgid "Product"
+msgstr "Produkt"
+
+#: globstr.src
+msgid "StDev"
+msgstr "StdAvvik"

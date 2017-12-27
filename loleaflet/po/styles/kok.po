@@ -2979,3 +2979,31 @@ msgstr "वीली"
 #: langtab.src
 msgid "KeyID"
 msgstr "KeyidMukhel-ID"
+
+#: globstr.src
+msgid "Sum"
+msgstr "बेरीज"
+
+#: globstr.src
+msgid "Count"
+msgstr "गणन"
+
+#: globstr.src
+msgid "CountA"
+msgstr "मेजातA"
+
+#: globstr.src
+msgid "Average"
+msgstr "सरासरी"
+
+#: globstr.src
+msgid "Max"
+msgstr "कमाल"
+
+#: globstr.src
+msgid "Min"
+msgstr "किमान"
+
+#: globstr.src
+msgid "Product"
+msgstr "उत्पादन"

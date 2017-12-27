@@ -3444,3 +3444,11 @@ msgstr "কাভেন ফিনিশ"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "কোনটি না (বানান পরীক্ষা করা হবে না)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "সমষ্টি"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "নির্বাচন গণনা"

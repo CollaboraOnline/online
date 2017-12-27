@@ -3462,3 +3462,43 @@ msgstr "يوق (ئىملا تەكشۈرمە)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$1 خاتىرىدىن $2 سى تېپىلدى"
+
+#: globstr.src
+msgid "Sum"
+msgstr "يىغىندا"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "تاللاش سانى"
+
+#: globstr.src
+msgid "Count"
+msgstr "ساناق"
+
+#: globstr.src
+msgid "CountA"
+msgstr "ساناقA"
+
+#: globstr.src
+msgid "Average"
+msgstr "ئوتتۇرىچە"
+
+#: globstr.src
+msgid "Max"
+msgstr "ئەڭ چوڭ قىممەت"
+
+#: globstr.src
+msgid "Min"
+msgstr "ئەڭ كىچىك قىممەت"
+
+#: globstr.src
+msgid "Product"
+msgstr "كۆپەيتمە"
+
+#: globstr.src
+msgid "StDev"
+msgstr "ئۆلچەملىك پەرق"
+
+#: globstr.src
+msgid "Var"
+msgstr "كۋادراتلىق پەرق"

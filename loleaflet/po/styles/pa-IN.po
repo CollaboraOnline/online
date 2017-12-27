@@ -3144,3 +3144,27 @@ msgstr "ਪਾਪੀਆਮੇਨਟੋ (ਅਰੁਬਾ)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "ਕੋਈ ਨਹੀਂ (ਸਪੈਲਿੰਗ ਚੈੱਕ ਨਾ ਕਰੋ)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "ਜੋੜ"
+
+#: globstr.src
+msgid "Count"
+msgstr "ਗਿਣਤੀ"
+
+#: globstr.src
+msgid "Average"
+msgstr "ਔਸਤ"
+
+#: globstr.src
+msgid "Max"
+msgstr "ਅਧਿਕ"
+
+#: globstr.src
+msgid "Min"
+msgstr "ਨਿਊਨ"
+
+#: globstr.src
+msgid "Product"
+msgstr "ਉਤਪਾਦ"

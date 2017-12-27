@@ -3491,3 +3491,43 @@ msgstr "英語 (ボツワナ)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "なし(スペルチェックを行わない)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "合計"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "選択範囲のセル数"
+
+#: globstr.src
+msgid "Count"
+msgstr "総数"
+
+#: globstr.src
+msgid "CountA"
+msgstr "総数2"
+
+#: globstr.src
+msgid "Average"
+msgstr "平均"
+
+#: globstr.src
+msgid "Max"
+msgstr "最大"
+
+#: globstr.src
+msgid "Min"
+msgstr "最小"
+
+#: globstr.src
+msgid "Product"
+msgstr "積"
+
+#: globstr.src
+msgid "StDev"
+msgstr "標準偏差(標本)"
+
+#: globstr.src
+msgid "Var"
+msgstr "分散"

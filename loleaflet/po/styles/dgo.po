@@ -3073,3 +3073,39 @@ msgstr "कीऽID"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "कोई नेईं( शब्द-जोड़ मत जाचो)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "जमा जोड़ "
+
+#: globstr.src
+msgid "Count"
+msgstr "गिनतरी"
+
+#: globstr.src
+msgid "CountA"
+msgstr "गिनतरी A "
+
+#: globstr.src
+msgid "Average"
+msgstr "औसत "
+
+#: globstr.src
+msgid "Max"
+msgstr "बद्धोबद्ध "
+
+#: globstr.src
+msgid "Min"
+msgstr "घट्टोघट्ट "
+
+#: globstr.src
+msgid "Product"
+msgstr "उत्पादन"
+
+#: globstr.src
+msgid "StDev"
+msgstr "इस स्थिति च कोई चार्ट नेईं लब्भा. "
+
+#: globstr.src
+msgid "Var"
+msgstr "इस स्थिति च कोई डेटा पायलट टेबल नेईं लब्भा."

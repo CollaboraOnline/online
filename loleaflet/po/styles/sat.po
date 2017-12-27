@@ -3037,3 +3037,35 @@ msgstr "का़ठीID"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "जाहानाक् बाङ  (बानान आलोम ञेंला )"
+
+#: globstr.src
+msgid "Sum"
+msgstr "जोड़एलेख"
+
+#: globstr.src
+msgid "Count"
+msgstr " लेखाएलखा"
+
+#: globstr.src
+msgid "CountA"
+msgstr "लेखा A"
+
+#: globstr.src
+msgid "Average"
+msgstr "गोड़पोड़ताबाराबारी तेयाक्"
+
+#: globstr.src
+msgid "Max"
+msgstr "ढेर उता़र.ढेर उता़र,"
+
+#: globstr.src
+msgid "Min"
+msgstr "कोम उतार - कोम उता़र,"
+
+#: globstr.src
+msgid "Product"
+msgstr "तेयार ओडोक्आरजा़व"
+
+#: globstr.src
+msgid "Var"
+msgstr "Var (नामूना)Var (ना़मूना)"

@@ -2920,3 +2920,39 @@ msgstr "Papiamento (Aruba)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Không có (Không kiểm tra chính tả)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Tổng"
+
+#: globstr.src
+msgid "Count"
+msgstr "Đếm"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Đếm A"
+
+#: globstr.src
+msgid "Average"
+msgstr "Trung bình"
+
+#: globstr.src
+msgid "Max"
+msgstr "Đại"
+
+#: globstr.src
+msgid "Min"
+msgstr "Tiểu"
+
+#: globstr.src
+msgid "Product"
+msgstr "Tích"
+
+#: globstr.src
+msgid "StDev"
+msgstr "Lệch Chuẩn"
+
+#: globstr.src
+msgid "Var"
+msgstr "Phương Sai"

@@ -2768,3 +2768,27 @@ msgstr "Sorbies, Onder"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Geen (moenie spelling kontroleer nie)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Som"
+
+#: globstr.src
+msgid "Count"
+msgstr "Tel"
+
+#: globstr.src
+msgid "CountA"
+msgstr "TelA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Gemiddelde"
+
+#: globstr.src
+msgid "Max"
+msgstr "Maks"
+
+#: globstr.src
+msgid "Product"
+msgstr "Produk"

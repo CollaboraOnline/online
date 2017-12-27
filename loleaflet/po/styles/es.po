@@ -3240,3 +3240,43 @@ msgstr "Ninguno (no revisar la ortografía)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "Se encontraron $1 de $2 registros"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Suma"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Recuento de selección"
+
+#: globstr.src
+msgid "Count"
+msgstr "Cantidad"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Cantidad2"
+
+#: globstr.src
+msgid "Average"
+msgstr "Promedio"
+
+#: globstr.src
+msgid "Median"
+msgstr "Mediana"
+
+#: globstr.src
+msgid "Max"
+msgstr "Máx"
+
+#: globstr.src
+msgid "Min"
+msgstr "Mín"
+
+#: globstr.src
+msgid "Product"
+msgstr "Producto"
+
+#: globstr.src
+msgid "StDev"
+msgstr "DesvEst"

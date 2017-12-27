@@ -3204,3 +3204,43 @@ msgstr "Ekkert (ekki yfirfara stafsetningu)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$1 af $2 færslum fundust"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Summa"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Fjöldi í vali"
+
+#: globstr.src
+msgid "Count"
+msgstr "Fjöldi"
+
+#: globstr.src
+msgid "CountA"
+msgstr "FjöldiA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Meðaltal"
+
+#: globstr.src
+msgid "Median"
+msgstr "Miðgildi"
+
+#: globstr.src
+msgid "Max"
+msgstr "Hámark"
+
+#: globstr.src
+msgid "Min"
+msgstr "Lágmark"
+
+#: globstr.src
+msgid "Product"
+msgstr "Margfeldi"
+
+#: globstr.src
+msgid "StDev"
+msgstr "Staðalfrávik"

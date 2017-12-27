@@ -2188,3 +2188,7 @@ msgstr "Уйгур"
 #: langtab.src
 msgid "Asturian"
 msgstr "Австрия"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Сумма"

@@ -3532,3 +3532,47 @@ msgstr "無 (請勿檢查拼字)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "找到 $2 筆記錄中的 $1 筆"
+
+#: globstr.src
+msgid "Sum"
+msgstr "總和"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "選取計數"
+
+#: globstr.src
+msgid "Count"
+msgstr "數計數"
+
+#: globstr.src
+msgid "CountA"
+msgstr "全計數"
+
+#: globstr.src
+msgid "Average"
+msgstr "平均"
+
+#: globstr.src
+msgid "Median"
+msgstr "中位數"
+
+#: globstr.src
+msgid "Max"
+msgstr "最大"
+
+#: globstr.src
+msgid "Min"
+msgstr "最小"
+
+#: globstr.src
+msgid "Product"
+msgstr "乘積"
+
+#: globstr.src
+msgid "StDev"
+msgstr "標準差 (樣本)"
+
+#: globstr.src
+msgid "Var"
+msgstr "變異數"

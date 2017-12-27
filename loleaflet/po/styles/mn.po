@@ -2854,3 +2854,27 @@ msgstr "Малтес хэл"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Байхгүй (зөв бичгийн дүрмийг шалгахгүй)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Нийлбэр"
+
+#: globstr.src
+msgid "Count"
+msgstr "Тоо"
+
+#: globstr.src
+msgid "Average"
+msgstr "Дундаж"
+
+#: globstr.src
+msgid "Max"
+msgstr "Х/и"
+
+#: globstr.src
+msgid "Min"
+msgstr "Х/б"
+
+#: globstr.src
+msgid "Product"
+msgstr "Үржвэр"

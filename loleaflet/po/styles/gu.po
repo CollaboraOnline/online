@@ -3416,3 +3416,31 @@ msgstr "ફ્રેંચ (ટોગો)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "કંઇ નહિં (જોડણી ને ચકાસો નહિં)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "સરવાળો"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "પસંદગી ગણતરી"
+
+#: globstr.src
+msgid "Count"
+msgstr "ગણતરી"
+
+#: globstr.src
+msgid "Average"
+msgstr "સરેરાશ"
+
+#: globstr.src
+msgid "Max"
+msgstr "મહત્તમ"
+
+#: globstr.src
+msgid "Min"
+msgstr "ન્યૂનતમ"
+
+#: globstr.src
+msgid "Product"
+msgstr "ઉત્પાદન"

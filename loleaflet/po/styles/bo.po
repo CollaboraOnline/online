@@ -2791,3 +2791,39 @@ msgstr "མུ་འར་སྐད།"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "མེད་པ(སྦྱོར་འབྲི་ཞིབ་བཤེར་མི་བྱེད་པ)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "མཐུན་ཐབས།"
+
+#: globstr.src
+msgid "Count"
+msgstr "གྲངས་ཀ"
+
+#: globstr.src
+msgid "CountA"
+msgstr "གྲངས་ཀ་2"
+
+#: globstr.src
+msgid "Average"
+msgstr "ཆ་སྙོམས་ཐང་།"
+
+#: globstr.src
+msgid "Max"
+msgstr "ཆེ་ཤོས།"
+
+#: globstr.src
+msgid "Min"
+msgstr "ཆུང་ཤོས།"
+
+#: globstr.src
+msgid "Product"
+msgstr "སྒྱུར་ཐོབ།"
+
+#: globstr.src
+msgid "StDev"
+msgstr "ཚད་ལྡན་གྱི་ཡོ་ཁྱད།(དཔེ་འདེམས།)"
+
+#: globstr.src
+msgid "Var"
+msgstr "ཁྱད་སྒྱུར།"

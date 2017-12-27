@@ -2377,3 +2377,35 @@ msgstr "Kitswana"
 #: langtab.src
 msgid "Ndebele, South"
 msgstr "Ndebele (South)"
+
+#: globstr.src
+msgid "Count"
+msgstr "Hesabu"
+
+#: globstr.src
+msgid "CountA"
+msgstr "HesabuA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Wastani"
+
+#: globstr.src
+msgid "Max"
+msgstr "Upeju"
+
+#: globstr.src
+msgid "Min"
+msgstr "Upechi"
+
+#: globstr.src
+msgid "Product"
+msgstr "Zao"
+
+#: globstr.src
+msgid "StDev"
+msgstr "MuachaDifu"
+
+#: globstr.src
+msgid "Var"
+msgstr "Mchepu"

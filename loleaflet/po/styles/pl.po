@@ -3224,3 +3224,43 @@ msgstr "Brak (nie sprawdzaj pisowni)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "znaleziono $1 z $2 rekordów"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Suma"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Zlicz zaznaczone"
+
+#: globstr.src
+msgid "Count"
+msgstr "Zlicz"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Niepuste"
+
+#: globstr.src
+msgid "Average"
+msgstr "Średnia"
+
+#: globstr.src
+msgid "Median"
+msgstr "Mediana"
+
+#: globstr.src
+msgid "Max"
+msgstr "Maks"
+
+#: globstr.src
+msgid "Product"
+msgstr "Iloczyn"
+
+#: globstr.src
+msgid "StDev"
+msgstr "OdchStd"
+
+#: globstr.src
+msgid "Var"
+msgstr "Wariancja"

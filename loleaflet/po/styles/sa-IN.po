@@ -3088,3 +3088,35 @@ msgstr "कुञ्चिका ID"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "न किमपि (वर्णविन्यासान् मा परीक्षस्व)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "योगः"
+
+#: globstr.src
+msgid "Count"
+msgstr "गणय"
+
+#: globstr.src
+msgid "CountA"
+msgstr "A गणय "
+
+#: globstr.src
+msgid "Average"
+msgstr "औसतः"
+
+#: globstr.src
+msgid "Max"
+msgstr "अधिकतम"
+
+#: globstr.src
+msgid "Min"
+msgstr "न्यूनतम"
+
+#: globstr.src
+msgid "Product"
+msgstr "उत्पादः"
+
+#: globstr.src
+msgid "Var"
+msgstr "चरः"

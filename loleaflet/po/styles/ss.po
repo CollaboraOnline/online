@@ -2572,3 +2572,7 @@ msgstr "Sisinala"
 #: langtab.src
 msgid "Tagalog"
 msgstr "Umtagalogi"
+
+#: globstr.src
+msgid "CountA"
+msgstr "BalaA"

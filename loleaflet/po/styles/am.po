@@ -2059,3 +2059,39 @@ msgstr "ምንም (ፊደሉን አታርም)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$1 ከ $2 መዝገቦች ተገኝተዋል"
+
+#: globstr.src
+msgid "Sum"
+msgstr "ድምር"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "የምርጫ መቁጠሪያ"
+
+#: globstr.src
+msgid "Count"
+msgstr "መቁጠሪያ"
+
+#: globstr.src
+msgid "CountA"
+msgstr "ክርክር መቁጠሪያ"
+
+#: globstr.src
+msgid "Average"
+msgstr "መካከለኛ"
+
+#: globstr.src
+msgid "Median"
+msgstr "መካከለኛ"
+
+#: globstr.src
+msgid "Max"
+msgstr "ከፍተኛ"
+
+#: globstr.src
+msgid "Min"
+msgstr "ዝቅተኛ"
+
+#: globstr.src
+msgid "Product"
+msgstr "ውጤት"

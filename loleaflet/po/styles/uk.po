@@ -3531,3 +3531,47 @@ msgstr "Немає (не перевіряти орфографію)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "знайдено $1 із $2 записів"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Сума"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Число вибраних діапазонів"
+
+#: globstr.src
+msgid "Count"
+msgstr "Кількість"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Кількість2"
+
+#: globstr.src
+msgid "Average"
+msgstr "Середнє значення"
+
+#: globstr.src
+msgid "Median"
+msgstr "Медіана"
+
+#: globstr.src
+msgid "Max"
+msgstr "Максимум"
+
+#: globstr.src
+msgid "Min"
+msgstr "Мінімум"
+
+#: globstr.src
+msgid "Product"
+msgstr "Добуток"
+
+#: globstr.src
+msgid "StDev"
+msgstr "Зміщене відхилення"
+
+#: globstr.src
+msgid "Var"
+msgstr "Зміщена дісперсія"
