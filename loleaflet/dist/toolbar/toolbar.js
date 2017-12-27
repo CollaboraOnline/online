@@ -707,6 +707,20 @@ var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
 var userLeftPopupMessage = '<div>' + _('%user has left') + '</div>';
 var userPopupTimeout = null;
 
+function localizeStateTableCell (text) {
+	var stateArray = text.split(';');
+	var stateArrayLength = stateArray.length;
+	var localizedText = '';
+	for (var i = 0; i < stateArrayLength; i++) {
+		var labelValuePair = stateArray[i].split(':');
+		localizedText += _(labelValuePair[0].trim()) + ':' + labelValuePair[1];
+		if (stateArrayLength > 1 && i < stateArrayLength - 1) {
+			localizedText += '; ';
+		}
+	}
+	return localizedText;
+}
+
 function toLocalePattern (pattern, regex, text, sub1, sub2) {
 	var matches = new RegExp(regex, 'g').exec(text);
 	if (matches) {
@@ -1275,7 +1289,7 @@ map.on('commandstatechanged', function (e) {
 		updateToolbarItem(statusbar, 'StatusSelectionMode', $('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 	else if (commandName == '.uno:StateTableCell') {
-		updateToolbarItem(statusbar, 'StateTableCell', $('#StateTableCell').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
+		updateToolbarItem(statusbar, 'StateTableCell', $('#StateTableCell').html(state ? localizeStateTableCell(state) : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 	else if (commandName === '.uno:StatusBarFunc') {
 		if (state) {
