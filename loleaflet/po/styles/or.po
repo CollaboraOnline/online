@@ -3294,3 +3294,39 @@ msgstr "ଉଦମୁଟ"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "କିଛି ନାହିଁ"
+
+#: globstr.src
+msgid "Sum"
+msgstr "ସମଷ୍ଟି"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "ଚୟନ ସଂଖ୍ୟା"
+
+#: globstr.src
+msgid "Count"
+msgstr "ଗଣନା"
+
+#: globstr.src
+msgid "CountA"
+msgstr "ଗଣନାA"
+
+#: globstr.src
+msgid "Average"
+msgstr "ହାରାହାରି"
+
+#: globstr.src
+msgid "Max"
+msgstr "ସର୍ବାଧିକ"
+
+#: globstr.src
+msgid "Min"
+msgstr "ସର୍ବନିମ୍ନ"
+
+#: globstr.src
+msgid "Product"
+msgstr "ଦ୍ରବ୍ଯ"
+
+#: globstr.src
+msgid "Var"
+msgstr "VAR"

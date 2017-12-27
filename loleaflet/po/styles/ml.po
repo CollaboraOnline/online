@@ -3267,3 +3267,23 @@ msgstr "ഉഡ്മോര്‍ട്ട്"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "ഒന്നുമില്ല (അക്ഷരത്തെറ്റ് പരിശോധിക്കേണ്ട)"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "തെരഞ്ഞെടുക്കുന്നതിനുള്ള എണ്ണം"
+
+#: globstr.src
+msgid "Count"
+msgstr "എണ്ണം"
+
+#: globstr.src
+msgid "CountA"
+msgstr "എണ്ണംA"
+
+#: globstr.src
+msgid "Average"
+msgstr "ശരാശരി"
+
+#: globstr.src
+msgid "Var"
+msgstr "VAR"

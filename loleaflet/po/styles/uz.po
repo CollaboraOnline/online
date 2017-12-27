@@ -2823,3 +2823,27 @@ msgstr "Mur"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Yoʻq (Imlo tekshirilmaydi)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Yigʻindi"
+
+#: globstr.src
+msgid "Count"
+msgstr "Miqdor"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Miqdor A"
+
+#: globstr.src
+msgid "Average"
+msgstr "Oʻrtacha qiymat"
+
+#: globstr.src
+msgid "Max"
+msgstr "Maksimum"
+
+#: globstr.src
+msgid "Min"
+msgstr "Minimum"

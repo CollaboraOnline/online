@@ -3156,3 +3156,31 @@ msgstr "Geen (geen spellingcontrole)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$1 van $2 records gevonden"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Som"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Selectie tellen"
+
+#: globstr.src
+msgid "Count"
+msgstr "Aantal"
+
+#: globstr.src
+msgid "CountA"
+msgstr "AantalArg"
+
+#: globstr.src
+msgid "Average"
+msgstr "Gemiddelde"
+
+#: globstr.src
+msgid "Median"
+msgstr "Mediaan"
+
+#: globstr.src
+msgid "Var"
+msgstr "Variantie"

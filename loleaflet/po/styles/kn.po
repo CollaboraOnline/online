@@ -3440,3 +3440,31 @@ msgstr "ಕ್ವೆನ್‌ ಫಿನ್ನಿಶ್‌"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "ಏನೂ ಇಲ್ಲ (ಕಾಗುಣಿತ ಪರೀಕ್ಷೆಯನ್ನು ಮಾಡಬೇಡ)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "ಮೊತ್ತ"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "ಆಯ್ಕೆಯ ಎಣಿಕೆ"
+
+#: globstr.src
+msgid "Count"
+msgstr "ಗಣನೆ"
+
+#: globstr.src
+msgid "Average"
+msgstr "ಸರಾಸರಿ"
+
+#: globstr.src
+msgid "Max"
+msgstr "ಗರಿಷ್ಟ"
+
+#: globstr.src
+msgid "Min"
+msgstr "ಕನಿಷ್ಟ"
+
+#: globstr.src
+msgid "Product"
+msgstr "ಗುಣಕ"

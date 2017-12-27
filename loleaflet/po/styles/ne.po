@@ -3002,3 +3002,31 @@ msgstr "(अरूबा)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "कुनै पनि होइन (हिज्जे जाँच नगर्नुहोस्)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "योगफल"
+
+#: globstr.src
+msgid "Count"
+msgstr "गणना"
+
+#: globstr.src
+msgid "CountA"
+msgstr "गणना A"
+
+#: globstr.src
+msgid "Average"
+msgstr "औसत"
+
+#: globstr.src
+msgid "Max"
+msgstr "अधिक"
+
+#: globstr.src
+msgid "Min"
+msgstr "न्यून"
+
+#: globstr.src
+msgid "Product"
+msgstr "उत्पादन"

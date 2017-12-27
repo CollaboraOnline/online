@@ -2986,3 +2986,31 @@ msgstr "အင်္ဂလိပ်(ကနေဒါ)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "မလုပ်ပါ (စာလုံးပေါင်းစစ်ဆေးမှု မလုပ်ပါ)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "ပုစ္ဆာ"
+
+#: globstr.src
+msgid "Count"
+msgstr "ရေတွက်ပါ"
+
+#: globstr.src
+msgid "CountA"
+msgstr "A ကိုရေတွက်ပါ"
+
+#: globstr.src
+msgid "Average"
+msgstr "ပျမ်းမျှ"
+
+#: globstr.src
+msgid "Max"
+msgstr "အများဆုံး"
+
+#: globstr.src
+msgid "Min"
+msgstr "အနည်းဆုံး"
+
+#: globstr.src
+msgid "Product"
+msgstr "ထုတ်ကုန်"

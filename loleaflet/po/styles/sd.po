@@ -3099,3 +3099,35 @@ msgstr "ڪي آءِ ڊيءَ"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "ڪجهہ بہ نہ (هجي نہ چڪاسيو)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "حساب"
+
+#: globstr.src
+msgid "Count"
+msgstr "ڳڻيو"
+
+#: globstr.src
+msgid "CountA"
+msgstr " ڳڻيو A"
+
+#: globstr.src
+msgid "Average"
+msgstr "سراسر"
+
+#: globstr.src
+msgid "Max"
+msgstr "وڌِ ۾ وَڌِ"
+
+#: globstr.src
+msgid "Min"
+msgstr "گهِٽِ ۾ گهَٽِ"
+
+#: globstr.src
+msgid "Product"
+msgstr "اُپت"
+
+#: globstr.src
+msgid "Var"
+msgstr "VAR"

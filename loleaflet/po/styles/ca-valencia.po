@@ -3512,3 +3512,39 @@ msgstr "Cap (no verifiquis l'ortografia)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "S'ha trobat $1 de $2 registres"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Suma"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Compta la selecció"
+
+#: globstr.src
+msgid "Count"
+msgstr "Compta"
+
+#: globstr.src
+msgid "CountA"
+msgstr "ComptaA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Mitjana"
+
+#: globstr.src
+msgid "Max"
+msgstr "Màx"
+
+#: globstr.src
+msgid "Min"
+msgstr "Mín"
+
+#: globstr.src
+msgid "Product"
+msgstr "Producte"
+
+#: globstr.src
+msgid "StDev"
+msgstr "DesvEst"

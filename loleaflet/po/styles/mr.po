@@ -3268,3 +3268,11 @@ msgstr "उड्मुर्ट"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "काहीही नाही (शब्दलेखन तपासू नका)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "बेरीज"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "निवड प्रमाण"

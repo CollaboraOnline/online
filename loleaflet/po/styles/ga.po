@@ -3200,3 +3200,43 @@ msgstr "Fraincis (Tóga)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Faic (Ná seiceáil an litriú)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Suim"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Líon na roghnúchán"
+
+#: globstr.src
+msgid "Count"
+msgstr "Líon"
+
+#: globstr.src
+msgid "CountA"
+msgstr "LíonA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Meán"
+
+#: globstr.src
+msgid "Max"
+msgstr "Uas"
+
+#: globstr.src
+msgid "Min"
+msgstr "Íos"
+
+#: globstr.src
+msgid "Product"
+msgstr "Iolrach"
+
+#: globstr.src
+msgid "StDev"
+msgstr "DiallCaighd"
+
+#: globstr.src
+msgid "Var"
+msgstr "Athr"

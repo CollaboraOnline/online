@@ -3024,3 +3024,39 @@ msgstr "Francés (Burkina Faso)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Dengún (Nun igua la ortografía)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Suma"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Cuenta de la seleición"
+
+#: globstr.src
+msgid "Count"
+msgstr "Cuenta"
+
+#: globstr.src
+msgid "CountA"
+msgstr "CuntadorA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Promediu"
+
+#: globstr.src
+msgid "Max"
+msgstr "Máx"
+
+#: globstr.src
+msgid "Min"
+msgstr "Mín"
+
+#: globstr.src
+msgid "Product"
+msgstr "Productu"
+
+#: globstr.src
+msgid "StDev"
+msgstr "DesvEst"

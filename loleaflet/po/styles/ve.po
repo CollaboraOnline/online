@@ -2545,3 +2545,7 @@ msgstr "TshiXhosa"
 #: langtab.src
 msgid "Tagalog"
 msgstr "Tagalogo"
+
+#: globstr.src
+msgid "CountA"
+msgstr "VhalelaniA"

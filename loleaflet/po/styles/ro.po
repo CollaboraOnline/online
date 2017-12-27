@@ -3084,3 +3084,39 @@ msgstr "Niciuna (nu verifica ortografierea)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$1 din $2 înregistrări găsite"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Sumă"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Numărul selecției"
+
+#: globstr.src
+msgid "Count"
+msgstr "Numără"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Numărare.Valori"
+
+#: globstr.src
+msgid "Average"
+msgstr "Media"
+
+#: globstr.src
+msgid "Max"
+msgstr "Maxim"
+
+#: globstr.src
+msgid "Min"
+msgstr "Minim"
+
+#: globstr.src
+msgid "Product"
+msgstr "Produs"
+
+#: globstr.src
+msgid "StDev"
+msgstr "DevStd"

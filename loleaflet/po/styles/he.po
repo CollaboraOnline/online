@@ -3428,3 +3428,7 @@ msgstr "ארפיטנית (שווייץ)‏"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "ללא (לא לבדוק איות)"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "ספירת הבחירה"

@@ -3508,3 +3508,47 @@ msgstr "Καμία (χωρίς ορθογραφικό έλεγχο)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "βρέθηκε $1 από $2 εγγραφές"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Άθροισμα"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Απαρίθμηση επιλογής"
+
+#: globstr.src
+msgid "Count"
+msgstr "Πλήθος"
+
+#: globstr.src
+msgid "CountA"
+msgstr "ΠλήθοςA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Μέσος όρος"
+
+#: globstr.src
+msgid "Median"
+msgstr "Διάμεση τιμή"
+
+#: globstr.src
+msgid "Max"
+msgstr "Μέγιστο"
+
+#: globstr.src
+msgid "Min"
+msgstr "Ελάχιστο"
+
+#: globstr.src
+msgid "Product"
+msgstr "Γινόμενο"
+
+#: globstr.src
+msgid "StDev"
+msgstr "Τυπική απόκλιση"
+
+#: globstr.src
+msgid "Var"
+msgstr "Διακύμανση"

@@ -2704,3 +2704,31 @@ msgstr "Ilingala"
 #: langtab.src
 msgid "Maltese"
 msgstr "Ikimalite"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Igiteranyo"
+
+#: globstr.src
+msgid "Count"
+msgstr "Ibara"
+
+#: globstr.src
+msgid "CountA"
+msgstr "IbaraA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Impuzandengo"
+
+#: globstr.src
+msgid "Max"
+msgstr "Kinini"
+
+#: globstr.src
+msgid "Min"
+msgstr "Gito"
+
+#: globstr.src
+msgid "Product"
+msgstr "IGIKUBO"

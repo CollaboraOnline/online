@@ -2729,3 +2729,23 @@ msgstr "Papiamento (Aruba)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Няма (без праверкі правапісу)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Сума"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Колькасць у пазначаным"
+
+#: globstr.src
+msgid "Count"
+msgstr "Колькасць"
+
+#: globstr.src
+msgid "Average"
+msgstr "Сярэдняе"
+
+#: globstr.src
+msgid "Product"
+msgstr "Вынік"

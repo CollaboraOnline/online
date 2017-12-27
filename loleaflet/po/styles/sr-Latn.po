@@ -3186,3 +3186,27 @@ msgstr "papiamentu (Curaçao)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Nijedan (bez provere pisanja)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Zbir"
+
+#: globstr.src
+msgid "Count"
+msgstr "Prebroji"
+
+#: globstr.src
+msgid "CountA"
+msgstr "PrebrojiA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Prosek"
+
+#: globstr.src
+msgid "Max"
+msgstr "Maks"
+
+#: globstr.src
+msgid "Product"
+msgstr "Proizvod"

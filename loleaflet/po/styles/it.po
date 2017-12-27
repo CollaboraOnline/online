@@ -3083,3 +3083,39 @@ msgstr "Nessuna (non eseguire il controllo ortografico)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "Trovato $1 di $2 record"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Somma"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Conteggio selezione"
+
+#: globstr.src
+msgid "Count"
+msgstr "ContaNumeri"
+
+#: globstr.src
+msgid "CountA"
+msgstr "ContaValori"
+
+#: globstr.src
+msgid "Average"
+msgstr "Media"
+
+#: globstr.src
+msgid "Median"
+msgstr "Mediana"
+
+#: globstr.src
+msgid "Product"
+msgstr "Prodotto"
+
+#: globstr.src
+msgid "StDev"
+msgstr "Dev.St"
+
+#: globstr.src
+msgid "Var"
+msgstr "Varianza"

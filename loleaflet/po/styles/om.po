@@ -2922,3 +2922,27 @@ msgstr "Afaan Moorii"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Homaa (Qubeeffannoo hin mirkaneessin)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Ida'ama"
+
+#: globstr.src
+msgid "Count"
+msgstr "Baay'ina"
+
+#: globstr.src
+msgid "Average"
+msgstr "Jidduugaleessa"
+
+#: globstr.src
+msgid "Max"
+msgstr "Olaantoo"
+
+#: globstr.src
+msgid "Min"
+msgstr "Gadaantoo"
+
+#: globstr.src
+msgid "Product"
+msgstr "Baay'isuu"

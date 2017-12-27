@@ -3484,3 +3484,39 @@ msgstr "Neniu (Ne kontroli literumadon)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$1 el $2 rikordoj trovitaj"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Sumo"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Nombro de la elektaĵo"
+
+#: globstr.src
+msgid "Count"
+msgstr "Nombri"
+
+#: globstr.src
+msgid "CountA"
+msgstr "NombriA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Mezumo"
+
+#: globstr.src
+msgid "Median"
+msgstr "Mediano"
+
+#: globstr.src
+msgid "Max"
+msgstr "Maks"
+
+#: globstr.src
+msgid "Product"
+msgstr "Produto"
+
+#: globstr.src
+msgid "StDev"
+msgstr "Var.Rad"

@@ -2256,3 +2256,7 @@ msgstr "Urkranian"
 #: langtab.src
 msgid "Irish"
 msgstr "Turkish"
+
+#: globstr.src
+msgid "CountA"
+msgstr "BalaA"

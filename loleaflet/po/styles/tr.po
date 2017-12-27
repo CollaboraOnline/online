@@ -3256,3 +3256,47 @@ msgstr "Hiçbiri (İmla denetimi yok)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$2 kaydın $1 kadarı bulundu"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Toplam"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Seçim sayısı"
+
+#: globstr.src
+msgid "Count"
+msgstr "Say"
+
+#: globstr.src
+msgid "CountA"
+msgstr "SayA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Ortalama"
+
+#: globstr.src
+msgid "Median"
+msgstr "Ortanca"
+
+#: globstr.src
+msgid "Max"
+msgstr "Mak"
+
+#: globstr.src
+msgid "Min"
+msgstr "En Az"
+
+#: globstr.src
+msgid "Product"
+msgstr "Çarpım"
+
+#: globstr.src
+msgid "StDev"
+msgstr "StSapma"
+
+#: globstr.src
+msgid "Var"
+msgstr "Değişken"

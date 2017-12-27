@@ -2034,3 +2034,35 @@ msgstr "थाइ"
 #: langtab.src
 msgid "Turkish"
 msgstr "टार्किश"
+
+#: globstr.src
+msgid "Sum"
+msgstr "दाजाबगासै"
+
+#: globstr.src
+msgid "Count"
+msgstr "साननाय"
+
+#: globstr.src
+msgid "CountA"
+msgstr "साननायA"
+
+#: globstr.src
+msgid "Average"
+msgstr "गड़"
+
+#: globstr.src
+msgid "Max"
+msgstr "बांसिन बिबां"
+
+#: globstr.src
+msgid "Min"
+msgstr "एसे बिबां"
+
+#: globstr.src
+msgid "Product"
+msgstr "दिहुनथाय"
+
+#: globstr.src
+msgid "Var"
+msgstr "VAR"

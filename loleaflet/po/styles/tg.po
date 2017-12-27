@@ -2691,3 +2691,31 @@ msgstr "Чувашӣ"
 #: langtab.src
 msgid "Maltese"
 msgstr "Малтагӣ"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Ҳамагӣ"
+
+#: globstr.src
+msgid "Count"
+msgstr "Шумора"
+
+#: globstr.src
+msgid "CountA"
+msgstr "ШумораиА"
+
+#: globstr.src
+msgid "Average"
+msgstr "Арзиши миёна"
+
+#: globstr.src
+msgid "Max"
+msgstr "Макс"
+
+#: globstr.src
+msgid "Min"
+msgstr "Мин"
+
+#: globstr.src
+msgid "Product"
+msgstr "Ҳосил"

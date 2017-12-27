@@ -2848,3 +2848,35 @@ msgstr "ธิเบต (อินเดีย)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "ไม่มี (ไม่ตรวจสอบการสะกดคำ)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "ผลรวม"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "จำนวนสิ่งที่เลือก"
+
+#: globstr.src
+msgid "Count"
+msgstr "นับ"
+
+#: globstr.src
+msgid "CountA"
+msgstr "COUNTA"
+
+#: globstr.src
+msgid "Average"
+msgstr "เฉลี่ย"
+
+#: globstr.src
+msgid "Max"
+msgstr "มากที่สุด"
+
+#: globstr.src
+msgid "Min"
+msgstr "น้อยที่สุด"
+
+#: globstr.src
+msgid "Product"
+msgstr "ผลิตภัณฑ์"

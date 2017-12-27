@@ -3432,3 +3432,39 @@ msgstr "ফ্ৰেঞ্চ (টগ')"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "কোনো নহয় (বানান নিৰীক্ষন নকৰিব)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "যোগফল"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "নিৰ্বাচন গণনা"
+
+#: globstr.src
+msgid "Count"
+msgstr "গণনা"
+
+#: globstr.src
+msgid "CountA"
+msgstr "গণনাA"
+
+#: globstr.src
+msgid "Average"
+msgstr "গড়"
+
+#: globstr.src
+msgid "Max"
+msgstr "সৰ্বাধিক"
+
+#: globstr.src
+msgid "Min"
+msgstr "সৰ্বনিম্ন"
+
+#: globstr.src
+msgid "Product"
+msgstr "প্ৰডাক্ট"
+
+#: globstr.src
+msgid "Var"
+msgstr "চলক"

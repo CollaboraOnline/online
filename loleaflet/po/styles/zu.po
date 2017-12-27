@@ -3103,3 +3103,15 @@ msgstr "isi-Vili"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Akunalutho (ungahloli ukupeletwa)"
+
+#: globstr.src
+msgid "CountA"
+msgstr "BalaA"
+
+#: globstr.src
+msgid "StDev"
+msgstr "UmehlukoOlingene"
+
+#: globstr.src
+msgid "Var"
+msgstr "Umehluko"

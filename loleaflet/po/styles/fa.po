@@ -2609,3 +2609,39 @@ msgstr "آستوریان"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "هیچ‌کدام (بدون بررسی املائی)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "مجموع"
+
+#: globstr.src
+msgid "Count"
+msgstr "تعداد"
+
+#: globstr.src
+msgid "CountA"
+msgstr "تعداد کل"
+
+#: globstr.src
+msgid "Average"
+msgstr "میانگین"
+
+#: globstr.src
+msgid "Max"
+msgstr "حداکثر"
+
+#: globstr.src
+msgid "Min"
+msgstr "حداقل"
+
+#: globstr.src
+msgid "Product"
+msgstr "حاصل"
+
+#: globstr.src
+msgid "StDev"
+msgstr "انحراف‌معیار استاندارد"
+
+#: globstr.src
+msgid "Var"
+msgstr "واریانس"

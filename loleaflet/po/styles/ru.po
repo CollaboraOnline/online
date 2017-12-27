@@ -3532,3 +3532,47 @@ msgstr "Нет (не проверять орфографию)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$1 из $2 найденных"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Сумма"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Выделено диапазонов"
+
+#: globstr.src
+msgid "Count"
+msgstr "Количество"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Количество2"
+
+#: globstr.src
+msgid "Average"
+msgstr "Среднее значение"
+
+#: globstr.src
+msgid "Median"
+msgstr "Медиана"
+
+#: globstr.src
+msgid "Max"
+msgstr "Максимум"
+
+#: globstr.src
+msgid "Min"
+msgstr "Минимум"
+
+#: globstr.src
+msgid "Product"
+msgstr "Произведение"
+
+#: globstr.src
+msgid "StDev"
+msgstr "Стандартное отклонение"
+
+#: globstr.src
+msgid "Var"
+msgstr "Дисперсия"

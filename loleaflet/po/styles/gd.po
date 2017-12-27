@@ -3160,3 +3160,35 @@ msgstr "Chan eil gin (Na dearbhaich an litreachadh)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "Chaidh $1 à $2 reacordan a lorg"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Suim"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Cunnt an taghaidh"
+
+#: globstr.src
+msgid "Count"
+msgstr "Àireamh"
+
+#: globstr.src
+msgid "Average"
+msgstr "Cuibheas"
+
+#: globstr.src
+msgid "Median"
+msgstr "Cuibheas-meadhanach"
+
+#: globstr.src
+msgid "Max"
+msgstr "As motha"
+
+#: globstr.src
+msgid "Min"
+msgstr "As lugha"
+
+#: globstr.src
+msgid "Product"
+msgstr "Bathar"

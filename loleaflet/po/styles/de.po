@@ -3147,3 +3147,35 @@ msgstr "Keine (Rechtschreibung nicht prüfen)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$1 von $2 Datensätzen gefunden"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Summe"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Anzahl Zellen"
+
+#: globstr.src
+msgid "Count"
+msgstr "Anzahl"
+
+#: globstr.src
+msgid "CountA"
+msgstr "Anzahl2"
+
+#: globstr.src
+msgid "Average"
+msgstr "Mittelwert"
+
+#: globstr.src
+msgid "Product"
+msgstr "Produkt"
+
+#: globstr.src
+msgid "StDev"
+msgstr "StAbw"
+
+#: globstr.src
+msgid "Var"
+msgstr "Varianz"

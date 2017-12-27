@@ -2871,3 +2871,35 @@ msgstr "Rûsî (Slovakya)"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "Tune (Kontrola rastnivîsê neke)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Serhev"
+
+#: globstr.src
+msgid "Count"
+msgstr "Bihijmêre"
+
+#: globstr.src
+msgid "CountA"
+msgstr "HejmarA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Navendkirin"
+
+#: globstr.src
+msgid "Max"
+msgstr "Pirtirîn"
+
+#: globstr.src
+msgid "Min"
+msgstr "Hindiktirîn"
+
+#: globstr.src
+msgid "Product"
+msgstr "Carandin"
+
+#: globstr.src
+msgid "Var"
+msgstr "Guherbar"

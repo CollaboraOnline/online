@@ -3266,3 +3266,39 @@ msgstr "ఉద్‌మర్ట్"
 #: resource.src
 msgid "None (Do not check spelling)"
 msgstr "ఏదీకాదు (స్పెల్లింగ్‌ను పరీక్షించవద్దు)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "మొత్తము"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "ఎంపిక లెక్క"
+
+#: globstr.src
+msgid "Count"
+msgstr "లెక్క"
+
+#: globstr.src
+msgid "CountA"
+msgstr "లెక్క A"
+
+#: globstr.src
+msgid "Average"
+msgstr "సగటు"
+
+#: globstr.src
+msgid "Max"
+msgstr "గరిష్ట"
+
+#: globstr.src
+msgid "Min"
+msgstr "కనిష్ట"
+
+#: globstr.src
+msgid "Product"
+msgstr "లబ్దము"
+
+#: globstr.src
+msgid "Var"
+msgstr "చర రాశి"

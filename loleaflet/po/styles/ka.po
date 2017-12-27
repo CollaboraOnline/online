@@ -2110,3 +2110,31 @@ msgstr "ბუშტტები"
 #: langtab.src
 msgid "Yiddish (USA)"
 msgstr "ინგლისური (აშშ)"
+
+#: globstr.src
+msgid "Sum"
+msgstr "ჯამი"
+
+#: globstr.src
+msgid "Count"
+msgstr "დათვლაA"
+
+#: globstr.src
+msgid "CountA"
+msgstr "დათვლაA"
+
+#: globstr.src
+msgid "Average"
+msgstr "საშუალო"
+
+#: globstr.src
+msgid "Max"
+msgstr "მაქს."
+
+#: globstr.src
+msgid "Min"
+msgstr "მინ."
+
+#: globstr.src
+msgid "Product"
+msgstr "პროდუქტი"

@@ -2928,3 +2928,43 @@ msgstr "Dim (Peidio gwirio sillafu)"
 #: globstr.src
 msgid "$1 of $2 records found"
 msgstr "$1 o $2 cofnod wedi eu canfod"
+
+#: globstr.src
+msgid "Sum"
+msgstr "Swm"
+
+#: globstr.src
+msgid "Selection count"
+msgstr "Cyfrif dewis"
+
+#: globstr.src
+msgid "Count"
+msgstr "Cyfrif"
+
+#: globstr.src
+msgid "CountA"
+msgstr "CyfrifA"
+
+#: globstr.src
+msgid "Average"
+msgstr "Cyfartaledd"
+
+#: globstr.src
+msgid "Median"
+msgstr "Canolrif"
+
+#: globstr.src
+msgid "Max"
+msgstr "Mwyaf"
+
+#: globstr.src
+msgid "Min"
+msgstr "Lleiaf"
+
+#: globstr.src
+msgid "Product"
+msgstr "Cynnyrch"
+
+#: globstr.src
+msgid "Var"
+msgstr "Amr"

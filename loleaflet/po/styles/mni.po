@@ -2074,3 +2074,35 @@ msgstr "থাই"
 #: langtab.src
 msgid "Turkish"
 msgstr "তৰ্কী লোন"
+
+#: globstr.src
+msgid "Sum"
+msgstr "তিনশিনবগী অতাবা মশিং"
+
+#: globstr.src
+msgid "Count"
+msgstr "মশিং থীবা"
+
+#: globstr.src
+msgid "CountA"
+msgstr "মশিং থীবাA"
+
+#: globstr.src
+msgid "Average"
+msgstr "চাংচত"
+
+#: globstr.src
+msgid "Max"
+msgstr "খ্বাইদগী য়াম্বা"
+
+#: globstr.src
+msgid "Min"
+msgstr "খ্বাইদগী য়ামদবা"
+
+#: globstr.src
+msgid "Product"
+msgstr "পোত্থোক"
+
+#: globstr.src
+msgid "Var"
+msgstr "VAR"
