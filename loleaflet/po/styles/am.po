@@ -2010,20 +2010,6 @@ msgstr "%1 ቃላቶች, %2 ባህሪዎች"
 msgid "Slide %1 of %2"
 msgstr "ተንሸራታች %1 ከ %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "የፊደሉ ስም:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "የተለዩ ባህሪዎች"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "ቅድመ እይታ:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[ምንም]"

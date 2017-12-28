@@ -2010,24 +2010,6 @@ msgstr "%1 сөз, %2 таңба"
 msgid "Slide %1 of %2"
 msgstr "Слайд %1, барлығы %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Қаріп аты:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Арнайы таңбалар"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Оналтылық:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Алдын-ала қарау:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Жоқ]"

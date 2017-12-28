@@ -1973,12 +1973,6 @@ msgstr "ময়ুং ওইবা মিংথোল, তেক্স, চার
 msgid "Vertical Title, Vertical Text"
 msgstr "ময়ুং ওইবা মিংথোল,  ময়ুং ওইবা তেক্স"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ফোন্ত মমিং:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[অমত্তা নত্তে]"

@@ -1939,12 +1939,6 @@ msgstr "Вертикален наслов, текст, графикон"
 msgid "Vertical Title, Vertical Text"
 msgstr "Вертикален наслов, вертикален текст"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Име на фонт:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Ниеден]"

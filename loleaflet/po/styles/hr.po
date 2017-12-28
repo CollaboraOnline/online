@@ -2019,24 +2019,6 @@ msgstr "%1 riječi, %2 znakova"
 msgid "Slide %1 of %2"
 msgstr "Slajd %1 od %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Naziv fonta:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Posebni znakovi"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Heksadecimalno:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Pregled:"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "Nepoznato"

@@ -2019,24 +2019,6 @@ msgstr "%1 λέξεις, %2 χαρακτήρες"
 msgid "Slide %1 of %2"
 msgstr "Διαφάνεια %1 από %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Όνομα γραμματοσειράς:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Ειδικοί χαρακτήρες"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Δεκαεξαδικό:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Προεπισκόπηση:"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "Άγνωστο"

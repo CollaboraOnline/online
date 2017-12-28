@@ -1957,12 +1957,6 @@ msgstr "Босоо Гарчиг, Бичвэр, Диаграмм"
 msgid "Vertical Title, Vertical Text"
 msgstr "Босоо Гарчиг, Босоо Бичвэр"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Фонтын нэр:"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "Тодорхойгүй"

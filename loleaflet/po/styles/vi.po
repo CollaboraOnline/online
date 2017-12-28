@@ -1991,16 +1991,6 @@ msgstr "~Ghi đè"
 msgid "Insert"
 msgstr "Chèn"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Tên phông:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Ký tự đặc biệt"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Không có]"

@@ -1981,16 +1981,6 @@ msgstr "⁠~အချက်အလက်သစ်များထပ်မံဖ�
 msgid "Insert"
 msgstr "ထပ်ထည့်ပါ"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ဖောင့်အမည်:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "အထူး အက္ခရာ၊သင်္ကေတများ"
-
 #: langtab.src
 msgid "[None]"
 msgstr "(ဘာမျှမရှိပါ)"

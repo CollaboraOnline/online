@@ -1980,12 +1980,6 @@ msgstr "खड़ोतमां शीर्शक, इबारत, चार�
 msgid "Vertical Title, Vertical Text"
 msgstr "खड़ोतमां शीर्शक, खड़ोतमीं इबारत"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "फॉट-नांऽ	:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "कोई नेईं "

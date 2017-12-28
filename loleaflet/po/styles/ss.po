@@ -1987,16 +1987,6 @@ msgstr "Sihloko lesimile, Umbhalo, Lishati"
 msgid "Vertical Title, Vertical Text"
 msgstr "Sihloko lesimile, Umbhalo lomile"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Libito lefonti:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Tinhlavu letisipeshali"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Kute]"

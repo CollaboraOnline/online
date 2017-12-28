@@ -2019,24 +2019,6 @@ msgstr "%1 個字，%2 個字元"
 msgid "Slide %1 of %2"
 msgstr "投影片 %1 / %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "字型名稱:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "特殊字元"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "十六進制："
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "預覽："
-
 #: langtab.src
 msgid "[None]"
 msgstr "[無]"

@@ -1980,16 +1980,6 @@ msgstr "Hunte-borreessi"
 msgid "Insert"
 msgstr "Surki"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Borrangichu Su'ma:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Baxxino fikiima"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Mitturino]"

@@ -2003,16 +2003,6 @@ msgstr "সুমুৱাওক"
 msgid "%1 words, %2 characters"
 msgstr "%1 শব্দ, %2 আখৰ"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ফন্টৰ নাম:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "বিশেষ আখৰসমূহ"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "অজ্ঞাত"

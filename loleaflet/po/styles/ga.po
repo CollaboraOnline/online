@@ -1995,20 +1995,6 @@ msgstr "Leathanach %1 as %2"
 msgid "%1 words, %2 characters"
 msgstr "%1 focal, %2 carachtar"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Ainm an Chló:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Carachtair Speisialta"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Réamhamharc:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Neamhní]"

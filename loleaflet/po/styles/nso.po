@@ -1951,12 +1951,6 @@ msgstr "Sehlogo se tsepamego, sengwalwa, tšhate"
 msgid "Vertical Title, Vertical Text"
 msgstr "Sehlogo se tsepamego, sengwalwa se tsepamego"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Leina la fonte:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Ga go na selo]"

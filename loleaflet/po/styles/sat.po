@@ -1940,8 +1940,6 @@ msgctxt ""
 msgid "Last column"
 msgstr "लेंगा कांधा"
 
-# Translation of Special Characters dialog from LibreOffice core
-
 #: langtab.src
 msgid "[None]"
 msgstr "ओका हों बाङ[ओका हो बाङ]"

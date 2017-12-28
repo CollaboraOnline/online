@@ -1941,16 +1941,6 @@ msgstr "Mataduree Sarjaa, Barruu, Taattoo"
 msgid "Vertical Title, Vertical Text"
 msgstr "Mataduree Sarjaa, Barruu Sarjaa"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Maqaa bocquu:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Arfiilee Addaa"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Homaa]"

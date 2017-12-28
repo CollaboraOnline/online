@@ -1914,12 +1914,6 @@ msgstr "उबो मथळो, मजकूर, तक्तो"
 msgid "Vertical Title, Vertical Text"
 msgstr "उबो मथळो, उबो मजकूर"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "अक्षरसंच नांव:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[कोण ना]    "

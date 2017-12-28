@@ -2019,24 +2019,6 @@ msgstr "%1 sõna (%2 märki)"
 msgid "Slide %1 of %2"
 msgstr "Slaid %1 / %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Fondi nimi:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Erimärgid"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "16ndkood:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Eelvaade:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Puudub]"

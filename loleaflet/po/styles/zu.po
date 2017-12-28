@@ -2010,16 +2010,6 @@ msgstr "Isihloko esime ngobude, Umbhalo, Ishathi"
 msgid "Vertical Title, Vertical Text"
 msgstr "Isihloko esime ngobude, Umbhalo ome ngobude"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Igama lohlobo lwamagama:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Izimpawu Zekhethelo"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Lutho]"

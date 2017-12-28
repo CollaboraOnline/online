@@ -1911,8 +1911,6 @@ msgstr ""
 msgid "Layout"
 msgstr "Билгеләү"
 
-# Translation of Special Characters dialog from LibreOffice core
-
 #: langtab.src
 msgid "Unknown"
 msgstr "Билгесез"

@@ -1955,16 +1955,6 @@ msgstr "උඩින් ලියන්න (~O)"
 msgid "Insert"
 msgstr "ඇතුල් කරන්න"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "අකුරු නාමය:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "විශේෂ අකුරු"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[කිසිවක් නැත]"

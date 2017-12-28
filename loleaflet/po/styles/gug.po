@@ -1989,20 +1989,6 @@ msgstr "%1 ñe'ẽkuéra, %2 caracteres"
 msgid "Slide %1 of %2"
 msgstr "Diapositiva %1 de %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Téra Letra Háicha:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Teko Poravopyre kuéra"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Techauka Mboyve:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Mavave]"

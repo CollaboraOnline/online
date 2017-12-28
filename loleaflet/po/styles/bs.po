@@ -1993,16 +1993,6 @@ msgstr "Ubaci"
 msgid "%1 words, %2 characters"
 msgstr "%1 riječi, %2 znakova"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Vrsta slova:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Posebni znakovi"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Ništa]"

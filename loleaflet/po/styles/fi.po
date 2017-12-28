@@ -2019,24 +2019,6 @@ msgstr "%1 sanaa, %2 merkkiä"
 msgid "Slide %1 of %2"
 msgstr "Dia %1 / %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Fontin nimi:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Lisää erikoismerkki"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Heksadesimaali:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Esikatselu:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Ei mikään]"

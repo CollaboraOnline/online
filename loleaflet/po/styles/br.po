@@ -2019,24 +2019,6 @@ msgstr "%1 a c'herioù, %2 arouezenn"
 msgid "Slide %1 of %2"
 msgstr "Treyonenn %1 eus %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Anv an nodrezh:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Arouezennoù arbennik"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "C'hwezekredel :"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Alberz :"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Tra ebet]"

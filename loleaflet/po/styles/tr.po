@@ -2019,24 +2019,6 @@ msgstr "%1 kelime, %2 karakter"
 msgid "Slide %1 of %2"
 msgstr "Slayt %1 / %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Yazı Tipi Adı:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Özel Karakterler"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Onaltılık:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Önizleme:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Hiçbiri]"

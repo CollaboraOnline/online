@@ -1963,16 +1963,6 @@ msgstr "Tsamaisomolema Setlhogo Kago, Chate"
 msgid "Vertical Title, Vertical Text"
 msgstr "Tsamaisomolema,Setlhogo,Tsamaisomolema Kago"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Mokwalo Leina:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Kgetheile Sediragatsi"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Sepe]"

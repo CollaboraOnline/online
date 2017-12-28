@@ -1927,8 +1927,6 @@ msgctxt ""
 msgid "Last column"
 msgstr "Lescht Kolonne"
 
-# Translation of Special Characters dialog from LibreOffice core
-
 #: langtab.src
 msgid "Unknown"
 msgstr "Onbekannt"

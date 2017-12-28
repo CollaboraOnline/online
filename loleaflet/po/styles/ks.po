@@ -1940,12 +1940,6 @@ msgstr " كھڈا عنوان،مواد  ،چارٹ "
 msgid "Vertical Title, Vertical Text"
 msgstr "كھڈا عنوان، كھڈا مواد"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "فانٹ نام:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[کوئی نہیں]"

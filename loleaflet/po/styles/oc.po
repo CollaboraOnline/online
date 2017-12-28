@@ -2009,24 +2009,6 @@ msgstr "%1 mots, %2 caractèrs"
 msgid "Slide %1 of %2"
 msgstr "Diapositiva %1 sus %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Nom de poliça:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Caractèrs especials"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Exadecimal :"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Apercebut :"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "Desconegut"

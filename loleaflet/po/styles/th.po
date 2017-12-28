@@ -1987,16 +1987,6 @@ msgstr "ชื่อแนวตั้ง, ข้อความ, แผนภ�
 msgid "Vertical Title, Vertical Text"
 msgstr "ชื่อแนวตั้ง, ข้อความแนวตั้ง"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ชื่อแบบอักษร:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "อักขระพิเศษ"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[ไม่มี]"

@@ -1992,16 +1992,6 @@ msgstr "Isihloko Ngokobude, Isiqendu, Itshati"
 msgid "Vertical Title, Vertical Text"
 msgstr "Isihloko Ngokobude, Isiqendu Ngokobude"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Igama Lefonti:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Imibhalo Enjengonobumba Yohlobo Olulodwa"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Akukho]"

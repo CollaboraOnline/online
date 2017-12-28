@@ -1920,16 +1920,6 @@ msgstr "Isihloko Esijame rwe, Itheksithi, Ikliphathi"
 msgid "Vertical Title, Vertical Text"
 msgstr "Isihloko esijame rwe, Itheksithi ejame rwe"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Gama Lefonti:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Amakharektha Akhethekileko"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Ayikho]"

@@ -1994,16 +1994,6 @@ msgstr "উল্লম্ব শিরোনাম, টেক্সট, লে�
 msgid "Vertical Title, Vertical Text"
 msgstr "উল্লম্ব শিরোনাম, উল্লম্ব টেক্সট"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ফন্টের নাম:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "বিশেষ অক্ষর"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[একটিও না]"

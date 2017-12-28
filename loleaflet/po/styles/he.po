@@ -2019,20 +2019,6 @@ msgstr "%1 מילים, %2 תווים"
 msgid "Slide %1 of %2"
 msgstr "שקופית %1 מתוך %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "שם גופן:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "תווים מיוחדים"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "תצוגה מקדימה:"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "לא מוכרת"

@@ -1946,12 +1946,6 @@ msgstr "Сарлавҳаи амудӣ, матн, диаграмма"
 msgid "Vertical Title, Vertical Text"
 msgstr "Сарлавҳаи амудӣ, матни амудӣ"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Номи ҳуруфот:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Ҳеҷ]"

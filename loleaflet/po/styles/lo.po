@@ -1956,12 +1956,6 @@ msgstr "ຫົວຂໍ້ແນວຕ້ັງ, ຕົວອັກສອນ,ຮ
 msgid "Vertical Title, Vertical Text"
 msgstr "ຫົວຂໍ້ແນວຕັ້ງ, ຕົວອັກສອນແນວຕັ້ງ"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ຊື່ແບບຕົວອັກສອນ:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[ບໍ່]"

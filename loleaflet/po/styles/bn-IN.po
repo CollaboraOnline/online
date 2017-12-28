@@ -1999,20 +1999,6 @@ msgstr "প্রতিস্থাপন"
 msgid "Insert"
 msgstr "সন্নিবেশ"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ফন্টের নাম:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "বিশেষ অক্ষর"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "প্রাকদর্শন:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[একটিও না]"

@@ -2003,16 +2003,6 @@ msgstr "បញ្ចូល​"
 msgid "%1 words, %2 characters"
 msgstr "%1 ពាក្យ, %2 តួអក្សរ"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ឈ្មោះ​ពុម្ពអក្សរ:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "តួអក្សរ​ពិសេស"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[គ្មាន]"

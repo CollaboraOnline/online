@@ -1984,16 +1984,6 @@ msgstr "عنوان عمودی، متن، نمودار"
 msgid "Vertical Title, Vertical Text"
 msgstr "عنوان عمودی، متن عمودی"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "نام قلم:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "نویسه‌های ویژه"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[هیچ‌کدام]"

@@ -1989,16 +1989,6 @@ msgstr "ନବଲିଖନ"
 msgid "Insert"
 msgstr "ଭର୍ତ୍ତି କରନ୍ତୁ"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ଅକ୍ଷରରୂପ ନାମ:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "ବିଶେଷ ଅକ୍ଷରଗୁଡିକ"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[କିଛି ନାହିଁ]"
