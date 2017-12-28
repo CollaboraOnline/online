@@ -1939,12 +1939,6 @@ msgstr "लंबरूप शीर्षक, पाठ, चार्ट"
 msgid "Vertical Title, Vertical Text"
 msgstr "लंबरूप शीर्षक, लंबरूप पाठ "
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "फंट नाम:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[केओ नहि]"

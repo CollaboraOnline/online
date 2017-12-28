@@ -2019,24 +2019,6 @@ msgstr "%1 ord, %2 tegn"
 msgid "Slide %1 of %2"
 msgstr "Lysbilde %1 of %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Skriftnavn:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Spesialtegn"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Heksadesimal:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Forhåndsvisning:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Ingen]"

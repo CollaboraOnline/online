@@ -2019,24 +2019,6 @@ msgstr "%1 vortoj, %2 signoj"
 msgid "Slide %1 of %2"
 msgstr "Lumbildo %1 el %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Tipara nomo:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Specialaj signoj"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Deksesuma:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Antaŭvido:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Neniu]"

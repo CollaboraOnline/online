@@ -1967,12 +1967,6 @@ msgstr "Umutwe Uhagaze, Umwandiko, Igishushanyo"
 msgid "Vertical Title, Vertical Text"
 msgstr "Umutwe Uhagaze, Umwandiko Uhagaze"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Izina ry'Umukono:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Ntacyo]"

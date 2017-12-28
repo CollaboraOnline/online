@@ -1989,16 +1989,6 @@ msgstr "వోవర్‌రైట్"
 msgid "Insert"
 msgstr "ప్రవేశపెట్టు"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "అక్షరశైలి పేరు:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "ప్రత్యేకమైన అక్షరములు"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[ఎమి లేదు]"

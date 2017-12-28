@@ -2019,24 +2019,6 @@ msgstr "%1 orð, %2 stafir"
 msgid "Slide %1 of %2"
 msgstr "Skyggna %1 af %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Heiti leturgerðar:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Sértákn"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Sextándakerfis:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Forskoðun:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Ekkert]"

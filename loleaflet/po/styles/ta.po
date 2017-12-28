@@ -2019,24 +2019,6 @@ msgstr "%1 சொற்கள், %2 எழுத்துக்கள்"
 msgid "Slide %1 of %2"
 msgstr "படவில்லை %2 இல் %1"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "எழுத்துரு பெயர்:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "சிறப்பு வரியுருக்கள்"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "பதின்அறுமம்:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "முன்னோட்டம்"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "அறியாதது"

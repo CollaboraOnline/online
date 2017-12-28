@@ -1998,12 +1998,6 @@ msgstr "عمودي عنوان، متن، تختي"
 msgid "Vertical Title, Vertical Text"
 msgstr "عمودي عنوان، عمودي متن "
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "فانٽ جو نالو:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[ڪجهہ نہ]"

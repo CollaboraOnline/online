@@ -1999,16 +1999,6 @@ msgstr "ਓਵਰਰਾਇਟ"
 msgid "Insert"
 msgstr "ਸ਼ਾਮਲ"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ਫੋਂਟ ਨਾਂ:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "ਖਾਸ ਅੱਖਰ"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "ਅਣਜਾਣ"

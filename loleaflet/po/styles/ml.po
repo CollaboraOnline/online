@@ -1994,16 +1994,6 @@ msgstr "ചേര്ക്കുക"
 msgid "%1 words, %2 characters"
 msgstr "%1 വാക്കുകള്‍, %2 അക്ഷരങ്ങള്‍"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ഫോണ്ഡിന്റെ പേര‌്:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "പ്രത്യേക അക്ഷരങ്ങള്‍"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "അപരിചിതം"

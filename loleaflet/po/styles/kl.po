@@ -1903,4 +1903,3 @@ msgctxt ""
 msgid "Last column"
 msgstr ""
 
-# Translation of Special Characters dialog from LibreOffice core

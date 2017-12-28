@@ -1956,12 +1956,6 @@ msgstr "མགོ་མིང་ཀེར་ཕྲང་།  ཚིག་ཡི�
 msgid "Vertical Title, Vertical Text"
 msgstr "མགོ་མིང་ཀེར་ཕྲང་། ཚིག་ཡིག་ཀེར་ཕྲང་།"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ཡིག་གཟུགས་མིང་།:"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "མ་ཤེསཔ།"

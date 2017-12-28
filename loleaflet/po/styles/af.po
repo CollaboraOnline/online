@@ -1959,16 +1959,6 @@ msgstr "Vertikale titel, teks, grafiek"
 msgid "Vertical Title, Vertical Text"
 msgstr "Vertical titel, vertikale teks"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Fontnaam:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Spesiale karakters"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Geen]"

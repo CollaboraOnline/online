@@ -2019,24 +2019,6 @@ msgstr "%1 gair, %2 nod"
 msgid "Slide %1 of %2"
 msgstr "Sleid %1 o %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Enw Ffont:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Nodau Arbennig"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Hecsadegol:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Rhagolwg:"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "Anhysbys"

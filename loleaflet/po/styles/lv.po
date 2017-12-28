@@ -2019,24 +2019,6 @@ msgstr "%1 vārdi, %2 rakstzīmes"
 msgid "Slide %1 of %2"
 msgstr "Slaids %1 no %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Fonta nosaukums:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Īpašās rakstzīmes"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Heksadecimālais:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Priekšskatījums:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[nav]"

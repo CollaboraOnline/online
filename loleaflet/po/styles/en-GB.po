@@ -1907,4 +1907,3 @@ msgstr "Last column"
 msgid "Centered Text"
 msgstr "Centred Text"
 
-# Translation of Special Characters dialog from LibreOffice core

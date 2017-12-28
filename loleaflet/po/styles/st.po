@@ -1992,16 +1992,6 @@ msgstr "Sehlooho se Tsepameng, Mongolo, Tjhate"
 msgid "Vertical Title, Vertical Text"
 msgstr "Sehlooho se Tsepameng, Mongolo o Tsepameng"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Lebitso la Fonto:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Dicharektara tse Ikgethileng"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Letho]"

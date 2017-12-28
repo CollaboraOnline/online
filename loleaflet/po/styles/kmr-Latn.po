@@ -1946,16 +1946,6 @@ msgstr "Sernavê Serdirêjahiyê, Nivîs, Xanxank"
 msgid "Vertical Title, Vertical Text"
 msgstr "Sernavê Serdirêjahiyê, Nivîsa Serdirêjahiyê"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Navê Fontê:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Tîpa Taybet"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Ne yek]"

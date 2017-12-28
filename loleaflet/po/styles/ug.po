@@ -1981,16 +1981,6 @@ msgstr "تاللاش قوشۇۋاتىدۇ"
 msgid "Block selection"
 msgstr "بۆلەك تاللاش"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "خەت نۇسخا ئاتى:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "ئالاھىدە ھەرپلەر"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[يوق]"

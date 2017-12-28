@@ -2003,16 +2003,6 @@ msgstr "Inxertar"
 msgid "%1 words, %2 characters"
 msgstr "%1 pallabres, %2 caráuteres"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Nome de fonte:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Caráuteres especiales"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "Desconocíu"

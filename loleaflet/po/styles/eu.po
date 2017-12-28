@@ -2019,24 +2019,6 @@ msgstr "%1 hitza, %2 karaktere"
 msgid "Slide %1 of %2"
 msgstr "Diapositiba: %1 / %2"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Letra-tipoaren izena:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Karaktere bereziak"
-
-#: specialcharacters.ui
-msgid "Hexadecimal:"
-msgstr "Hexadezimala:"
-
-#: asianphoneticguidedialog.ui
-msgid "Preview:"
-msgstr "Aurrebista:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Bat ere ez]"

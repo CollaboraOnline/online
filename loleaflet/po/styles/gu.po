@@ -2003,16 +2003,6 @@ msgstr "દાખલ કરો"
 msgid "%1 words, %2 characters"
 msgstr "%1 શબ્દો, %2 અક્ષરો"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ફોન્ટનું નામ:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "વિશિષ્ટ અક્ષરો"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[કંઇ નહિં]"

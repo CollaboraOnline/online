@@ -1968,12 +1968,6 @@ msgstr "Паўзверх"
 msgid "Insert"
 msgstr "Уставіць"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Адмысловыя знакі"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "Невядома"

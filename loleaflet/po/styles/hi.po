@@ -1962,16 +1962,6 @@ msgstr "मिटाकर लिखें"
 msgid "Insert"
 msgstr "जोड़ें"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "फ़ॉन्ट नाम:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "विशिष्ट अक्षर"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[कोई नहीं]"

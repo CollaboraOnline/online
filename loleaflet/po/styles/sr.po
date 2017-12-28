@@ -2025,16 +2025,6 @@ msgstr "Препиши"
 msgid "Insert"
 msgstr "Уметни"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Име фонта:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Посебни знаци"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[Није изабран]"

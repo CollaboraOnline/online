@@ -1999,16 +1999,6 @@ msgstr "ತಿದ್ದಿಬರೆ"
 msgid "Insert"
 msgstr "ಸೇರಿಸು"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "ಅಕ್ಷರ ಶೈಲಿ ಹೆಸರು:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "ವಿಶೇಷ ಅಕ್ಷರಗಳು"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[ಏನೂ ಇಲ್ಲ]"

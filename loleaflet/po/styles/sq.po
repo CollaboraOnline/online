@@ -2000,16 +2000,6 @@ msgstr "Faqja %1 ndër %2"
 msgid "%1 words, %2 characters"
 msgstr "%1 fjalë, %2 germa"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "Emri i shkronjave:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "Shkronja të veçanta"
-
 #: langtab.src
 msgid "Unknown"
 msgstr "I panjohur"

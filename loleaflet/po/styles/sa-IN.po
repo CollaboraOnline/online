@@ -1999,12 +1999,6 @@ msgstr "ऊर्ध्वाधर-शीर्षकम्, पाठः, त�
 msgid "Vertical Title, Vertical Text"
 msgstr "ऊर्ध्वाधर-शीर्षकम्, ऊर्ध्वाधर-पाठः"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "अक्षरगणनाम:"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[न कोऽपि]"

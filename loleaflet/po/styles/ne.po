@@ -1937,16 +1937,6 @@ msgstr "अधिलेखन"
 msgid "Insert"
 msgstr "घुसाउनुहोस्"
 
-# Translation of Special Characters dialog from LibreOffice core
-
-#: GenericCommands.xcu
-msgid "Font Name:"
-msgstr "फन्ट नाम:"
-
-#: specialcharacters.ui
-msgid "Special Characters"
-msgstr "विशेष क्यारेक्टरहरू"
-
 #: langtab.src
 msgid "[None]"
 msgstr "[कुनै पनि होइन]"
