@@ -726,7 +726,7 @@ var userPopupTimeout = null;
 function localizeStateTableCell (text) {
 	var stateArray = text.split(';');
 	var stateArrayLength = stateArray.length;
-	var localizedText = "";
+	var localizedText = '';
 	for (var i = 0; i < stateArrayLength; i++) {
 		var labelValuePair = stateArray[i].split(':');
 		localizedText += _(labelValuePair[0].trim()) + ':' + labelValuePair[1];
