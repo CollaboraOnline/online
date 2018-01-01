@@ -328,7 +328,6 @@ static bool cleanupChildren()
 }
 
 /// Decides how many children need spawning and spanws.
-/// When force is true, no check of elapsed time since last request is done.
 /// Returns the number of children requested to spawn,
 /// -1 for error.
 static int rebalanceChildren(int balance)
@@ -792,12 +791,14 @@ void LOOLWSD::initialize(Application& self)
         LOG_WRN("Invalid num_prespawn_children in config (" << NumPreSpawnedChildren << "). Resetting to 1.");
         NumPreSpawnedChildren = 1;
     }
+    LOG_INF("NumPreSpawnedChildren set to " << NumPreSpawnedChildren << ".");
 
     const auto maxConcurrency = getConfigValue<int>(conf, "per_document.max_concurrency", 4);
     if (maxConcurrency > 0)
     {
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
     }
+    LOG_INF("MAX_CONCURRENCY set to " << maxConcurrency << ".");
 
     // Otherwise we profile the soft-device at jail creation time.
     setenv("SAL_DISABLE_OPENCL", "true", 1);
