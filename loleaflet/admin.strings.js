@@ -35,6 +35,9 @@ l10nstrings.strCpuStatsInterval = _('Time interval of CPU statistics (in ms)');
 l10nstrings.strLimitVirtMemMb = _('Maximum Document process virtual memory (in MB) - reduce only');
 l10nstrings.strLimitStackMemKb = _('Maximum Document process stack memory (in KB) - reduce only');
 l10nstrings.strLimitFileSizeMb = _('Maximum file size allowed to write to disk (in MB) - reduce only');
+l10nstrings.strDocuments = _('Documents:');
+l10nstrings.strExpired = _('Expired:');
+l10nstrings.strRefresh = _('Refresh');
 
 if (module) {
 	module.exports = l10nstrings;
