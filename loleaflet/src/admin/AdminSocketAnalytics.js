@@ -215,11 +215,11 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 
 			var legendData = [
 				{
-					text: 'Recieved',
+					text: _('Received'),
 					color: 'red'
 				},
 				{
-					text: 'Sent',
+					text: _('Sent'),
 					color: 'green'
 				}
 			];

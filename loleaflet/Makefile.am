@@ -50,6 +50,7 @@ pot:
 		unocommands.js \
 		dist/errormessages.js \
 		dist/toolbar/toolbar.js \
+		src/admin/AdminSocketAnalytics.js \
 		src/admin/AdminSocketBase.js \
 		src/admin/AdminSocketOverview.js \
 		src/admin/AdminSocketHistory.js \
