@@ -578,7 +578,7 @@ $(function () {
 
 					$('.styles-select').select2({
 						data: data,
-						placeholder: _('Layout')
+						placeholder: _UNO('.uno:LayoutStatus', 'presentation')
 					});
 					$('.styles-select').on('select2:select', onStyleSelect);
 				}
@@ -668,13 +668,13 @@ $(function () {
 				'</div>'
 			},
 			{type: 'break', id: 'userlistbreak'},
-			{type: 'button',  id: 'prev', img: 'prev', hint: _('Previous page')},
-			{type: 'button',  id: 'next', img: 'next', hint: _('Next page')},
+			{type: 'button',  id: 'prev', img: 'prev', hint: _UNO('.uno:PageUp', 'text')},
+			{type: 'button',  id: 'next', img: 'next', hint: _UNO('.uno:PageDown', 'text')},
 			{type: 'break', id: 'prevnextbreak'},
 			{type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _('Reset zoom')},
-			{type: 'button',  id: 'zoomout', img: 'zoomout', hint: _('Zoom out')},
+			{type: 'button',  id: 'zoomout', img: 'zoomout', hint: _UNO('.uno:ZoomMinus')},
 			{type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>'},
-			{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _('Zoom in')}
+			{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _UNO('.uno:ZoomPlus')}
 		],
 		onClick: function (e) {
 			if (e.item.id === 'userlist') {
