@@ -24,4 +24,3 @@ coverage/
 *.tar.gz
 dist/l10n/ui-*json
 dist/l10n/help-*.json
-dist/l10n/styles/
