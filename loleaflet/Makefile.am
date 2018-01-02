@@ -11,16 +11,13 @@ MINIFY=false
 L10N_PO = $(wildcard po/*.po)
 L10N_JSON = $(patsubst po/%.po,dist/l10n/%.json,$(L10N_PO))
 
-L10N_STYLES_PO = $(wildcard po/styles/*.po)
-L10N_STYLES_JSON = $(patsubst po/styles/%.po,dist/l10n/styles/%.json,$(L10N_STYLES_PO))
-
 JQUERY_UI_IMAGE_PATH = node_modules/jquery-ui/themes/ui-lightness/images
 JQUERY_UI_IMAGES = $(wildcard $(JQUERY_UI_IMAGE_PATH)/*.png)
 JQUERY_UI_DIST_IMAGES = $(patsubst $(JQUERY_UI_IMAGE_PATH)/%.png,dist/$(JQUERY_UI_IMAGE_PATH)/%.png,$(JQUERY_UI_IMAGES))
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
-all-local: node_modules $(L10N_JSON) $(L10N_STYLES_JSON) $(JQUERY_UI_DIST_IMAGES)
+all-local: node_modules $(L10N_JSON) $(JQUERY_UI_DIST_IMAGES)
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
 	jake build debug=$(ENABLE_DEBUG) minify=$(MINIFY)
@@ -34,9 +31,6 @@ dist/$(JQUERY_UI_IMAGE_PATH)/%.png: $(JQUERY_UI_IMAGE_PATH)/%.png
 	cp -a $(JQUERY_UI_IMAGE_PATH)/* dist/$(JQUERY_UI_IMAGE_PATH)/
 
 dist/l10n/%.json: po/%.po
-	@util/po2json.py $< -o $@
-
-dist/l10n/styles/%.json: po/styles/%.po
 	@util/po2json.py $< -o $@
 
 install-data-hook:
