@@ -449,10 +449,8 @@ void AdminModel::modificationAlert(const std::string& docKey, Poco::Process::PID
     assertCorrectThread();
 
     auto doc = _documents.find(docKey);
-    if(doc != _documents.end())
-    {
+    if (doc != _documents.end())
         doc->second.setModified(value);
-    }
 
     std::ostringstream oss;
     oss << "modifications "

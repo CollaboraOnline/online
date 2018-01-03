@@ -428,11 +428,11 @@ public:
                 std::swap(_newCallbacks, invoke);
             }
 
-            for (size_t i = 0; i < invoke.size(); ++i)
+            for (const auto& callback : invoke)
             {
                 try
                 {
-                    invoke[i]();
+                    callback();
                 }
                 catch (const std::exception& exc)
                 {
