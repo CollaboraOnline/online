@@ -58,10 +58,10 @@ struct DocProcSettings
 /// Containing basic information about document
 struct DocBasicInfo
 {
-    std::string _docKey;
-    std::time_t _idleTime;
-    bool _saved;
-    int _mem;
+    const std::string _docKey;
+    const std::time_t _idleTime;
+    const bool _saved;
+    const int _mem;
 
     DocBasicInfo(const std::string& docKey, std::time_t idleTime, bool saved, int mem)
         : _docKey(docKey),
@@ -80,13 +80,16 @@ public:
              const std::string& filename)
         : _docKey(docKey),
           _pid(pid),
+          _activeViews(0),
           _filename(filename),
           _memoryDirty(0),
           _lastJiffy(0),
           _start(std::time(nullptr)),
           _lastActivity(_start),
+          _end(0),
           _sentBytes(0),
-          _recvBytes(0)
+          _recvBytes(0),
+          _isModified(false)
     {
     }
 
@@ -136,13 +139,12 @@ public:
     std::string to_string() const;
 
 private:
-    bool _isModified;
     const std::string _docKey;
     const Poco::Process::PID _pid;
     /// SessionId mapping to View object
     std::map<std::string, View> _views;
     /// Total number of active views
-    unsigned _activeViews = 0;
+    unsigned _activeViews;
     /// Hosted filename
     std::string _filename;
     /// The dirty (ie. un-shared) memory of the document's Kit process.
@@ -152,7 +154,7 @@ private:
 
     std::time_t _start;
     std::time_t _lastActivity;
-    std::time_t _end = 0;
+    std::time_t _end;
     std::map<std::time_t,std::string> _snapshots;
 
     /// Total bytes sent and recv'd by this document.
@@ -160,6 +162,7 @@ private:
 
     /// Per-doc kit process settings.
     DocProcSettings _docProcSettings;
+    bool _isModified;
 };
 
 /// An Admin session subscriber.
