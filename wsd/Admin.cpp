@@ -430,27 +430,24 @@ void Admin::pollingThread()
 }
 
 void Admin::modificationAlert(const std::string& dockey, Poco::Process::PID pid, bool value){
-    addCallback([this, dockey, pid, value]
-                { _model.modificationAlert(dockey, pid, value); });
+    addCallback([=] { _model.modificationAlert(dockey, pid, value); });
 }
 
 void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename,
         const std::string& sessionId, const std::string& userName, const std::string& userId)
 {
-    addCallback([this, docKey, pid, filename, sessionId, userName, userId]
-                 { _model.addDocument(docKey, pid, filename, sessionId, userName, userId); });
+    addCallback([=] { _model.addDocument(docKey, pid, filename, sessionId, userName, userId); });
 }
 
 void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
 {
-    addCallback([this, docKey, sessionId]
-                 { _model.removeDocument(docKey, sessionId); });
+    addCallback([=] { _model.removeDocument(docKey, sessionId); });
 }
 
 void Admin::rmDoc(const std::string& docKey)
 {
     LOG_INF("Removing complete doc [" << docKey << "] from Admin.");
-    addCallback([this, docKey]{ _model.removeDocument(docKey); });
+    addCallback([=]{ _model.removeDocument(docKey); });
 }
 
 void Admin::rescheduleMemTimer(unsigned interval)
@@ -521,19 +518,17 @@ AdminModel& Admin::getModel()
 
 void Admin::updateLastActivityTime(const std::string& docKey)
 {
-    addCallback([this, docKey]{ _model.updateLastActivityTime(docKey); });
+    addCallback([=]{ _model.updateLastActivityTime(docKey); });
 }
 
 void Admin::updateMemoryDirty(const std::string& docKey, int dirty)
 {
-    addCallback([this, docKey, dirty]
-                 { _model.updateMemoryDirty(docKey, dirty); });
+    addCallback([=] { _model.updateMemoryDirty(docKey, dirty); });
 }
 
 void Admin::addBytes(const std::string& docKey, uint64_t sent, uint64_t recv)
 {
-    addCallback([this, docKey, sent, recv]
-                 { _model.addBytes(docKey, sent, recv); });
+    addCallback([=] { _model.addBytes(docKey, sent, recv); });
 }
 
 void Admin::notifyForkit()
