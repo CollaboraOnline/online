@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-16 09:52+0100\n"
+"POT-Creation-Date: 2018-01-03 21:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,6 +147,19 @@ msgstr ""
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
 
+#: admin.strings.js:38
+#, fuzzy
+msgid "Documents:"
+msgstr "Sgrìobhainn"
+
+#: admin.strings.js:39
+msgid "Expired:"
+msgstr ""
+
+#: admin.strings.js:40
+msgid "Refresh"
+msgstr ""
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Dathan an ùrlair"
@@ -254,11 +267,7 @@ msgstr "Cuir a-steach clàr"
 msgid "More"
 msgstr "Barrachd"
 
-#: dist/toolbar/toolbar.js:581
-msgid "Layout"
-msgstr "Co-dhealbhachd"
-
-#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1059
+#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1073
 msgid "Sum"
 msgstr "Suim"
 
@@ -306,26 +315,10 @@ msgstr "Sguir dhen lorg"
 msgid "No users"
 msgstr "Gun chleachdaiche"
 
-#: dist/toolbar/toolbar.js:671
-msgid "Previous page"
-msgstr "An duilleag roimhpe"
-
-#: dist/toolbar/toolbar.js:672
-msgid "Next page"
-msgstr "An ath-dhuilleag"
-
 #: dist/toolbar/toolbar.js:674 src/control/Control.Menubar.js:57
 #: src/control/Control.Menubar.js:238
 msgid "Reset zoom"
 msgstr "Ath-shuidhich an sùm"
-
-#: dist/toolbar/toolbar.js:675
-msgid "Zoom out"
-msgstr "Sùm a-mach"
-
-#: dist/toolbar/toolbar.js:677
-msgid "Zoom in"
-msgstr "Sùm a-steach"
 
 #: dist/toolbar/toolbar.js:706
 msgid "%user has joined"
@@ -335,106 +328,114 @@ msgstr "Thàinig %user"
 msgid "%user has left"
 msgstr "Dh’fhalbh %user"
 
-#: dist/toolbar/toolbar.js:859 dist/toolbar/toolbar.js:1438
+#: dist/toolbar/toolbar.js:873 dist/toolbar/toolbar.js:1453
 msgid "Size"
 msgstr "Meud"
 
-#: dist/toolbar/toolbar.js:1037
+#: dist/toolbar/toolbar.js:1051
 msgid "Number of Sheets"
 msgstr "Àireamh de shiotaichean"
 
-#: dist/toolbar/toolbar.js:1040
+#: dist/toolbar/toolbar.js:1054
 msgid "Selected range of cells"
 msgstr "An rainse de cheallan a thagh thu"
 
-#: dist/toolbar/toolbar.js:1043 dist/toolbar/toolbar.js:1081
+#: dist/toolbar/toolbar.js:1057 dist/toolbar/toolbar.js:1095
 msgid "Entering text mode"
 msgstr "A’ tòiseachadh modh an teacsa"
 
-#: dist/toolbar/toolbar.js:1046 dist/toolbar/toolbar.js:1087
-#: dist/toolbar/toolbar.js:1110
+#: dist/toolbar/toolbar.js:1060 dist/toolbar/toolbar.js:1101
+#: dist/toolbar/toolbar.js:1124
 msgid "Text Language"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1049 dist/toolbar/toolbar.js:1084
+#: dist/toolbar/toolbar.js:1063 dist/toolbar/toolbar.js:1098
 msgid "Selection Mode"
 msgstr "Am modh taghaidh"
 
-#: dist/toolbar/toolbar.js:1052
+#: dist/toolbar/toolbar.js:1066
 msgid "Choice of functions"
 msgstr "Taghadh de dh’fhoincseanan"
 
-#: dist/toolbar/toolbar.js:1054
+#: dist/toolbar/toolbar.js:1068
 msgid "Average"
 msgstr "Cuibheas"
 
-#: dist/toolbar/toolbar.js:1055
+#: dist/toolbar/toolbar.js:1069
 msgid "CountA"
 msgstr "CountA"
 
-#: dist/toolbar/toolbar.js:1056
+#: dist/toolbar/toolbar.js:1070
 msgid "Count"
 msgstr "Cunnt"
 
-#: dist/toolbar/toolbar.js:1057
+#: dist/toolbar/toolbar.js:1071
 msgid "Maximum"
 msgstr "As motha"
 
-#: dist/toolbar/toolbar.js:1058
+#: dist/toolbar/toolbar.js:1072
 msgid "Minimum"
 msgstr "As lugha"
 
-#: dist/toolbar/toolbar.js:1060
+#: dist/toolbar/toolbar.js:1074
 msgid "Selection count"
 msgstr "Cunnt an taghaidh"
 
-#: dist/toolbar/toolbar.js:1061
+#: dist/toolbar/toolbar.js:1075
 msgid "None"
 msgstr "Chan eil gin"
 
-#: dist/toolbar/toolbar.js:1075
+#: dist/toolbar/toolbar.js:1089
 msgid "Number of Pages"
 msgstr "Àireamh nan duilleagan"
 
-#: dist/toolbar/toolbar.js:1078
+#: dist/toolbar/toolbar.js:1092
 msgid "Word Counter"
 msgstr "Cunntas nam faclan"
 
-#: dist/toolbar/toolbar.js:1107
+#: dist/toolbar/toolbar.js:1121
 msgid "Number of Slides"
 msgstr "Àireamh de shleamhnagan"
 
-#: dist/toolbar/toolbar.js:1257
+#: dist/toolbar/toolbar.js:1271
 msgid "Document saved"
 msgstr "Sgrìobhainn air a sàbhaladh"
 
-#: dist/toolbar/toolbar.js:1408
+#: dist/toolbar/toolbar.js:1423
 msgid "Style"
 msgstr "Stoidhle"
 
-#: dist/toolbar/toolbar.js:1430
+#: dist/toolbar/toolbar.js:1445
 msgid "Font"
 msgstr "Cruth-clò"
 
-#: dist/toolbar/toolbar.js:1466
+#: dist/toolbar/toolbar.js:1481
 msgid "Previous slide"
 msgstr "An t-sleamhnag roimhpe"
 
-#: dist/toolbar/toolbar.js:1467
+#: dist/toolbar/toolbar.js:1482
 msgid "Next slide"
 msgstr "An ath-shleamhnag"
 
-#: dist/toolbar/toolbar.js:1528
+#: dist/toolbar/toolbar.js:1543
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Còmhstri neo-dhèanamh/ath-dhèanamh eadar iomadh cleachdaiche. Cleachd gleus càradh sgrìobhainnean airson a rèiteachadh."
 
-#: dist/toolbar/toolbar.js:1776 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1791 src/control/Control.DocumentRepair.js:93
 msgid "You"
 msgstr "Thusa"
 
-#: dist/toolbar/toolbar.js:1782
+#: dist/toolbar/toolbar.js:1797
 msgid "Readonly"
 msgstr "Ri leughadh a-mhàin"
+
+#: src/admin/AdminSocketAnalytics.js:217
+msgid "Received"
+msgstr ""
+
+#: src/admin/AdminSocketAnalytics.js:221
+msgid "Sent"
+msgstr ""
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -501,27 +502,27 @@ msgstr "Cur a-steach inntearnail air dòigh shònraichte"
 msgid "Repair Document"
 msgstr "Càraich an sgrìobhainn"
 
-#: src/control/Control.DocumentRepair.js:40
+#: src/control/Control.DocumentRepair.js:43
 msgid "Type"
 msgstr "Seòrsa"
 
-#: src/control/Control.DocumentRepair.js:42
+#: src/control/Control.DocumentRepair.js:45
 msgid "Index"
 msgstr "Clàr-amais"
 
-#: src/control/Control.DocumentRepair.js:44 src/layer/tile/TileLayer.js:221
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:221
 msgid "Comment"
 msgstr "Beachd"
 
-#: src/control/Control.DocumentRepair.js:46
+#: src/control/Control.DocumentRepair.js:49
 msgid "User name"
 msgstr "Ainm-cleachdaiche"
 
-#: src/control/Control.DocumentRepair.js:48
+#: src/control/Control.DocumentRepair.js:51
 msgid "Timestamp"
 msgstr "Stampa-ama"
 
-#: src/control/Control.DocumentRepair.js:52
+#: src/control/Control.DocumentRepair.js:55
 msgid "Jump to state"
 msgstr "Leum gun staid"
 

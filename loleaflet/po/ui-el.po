@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-16 09:52+0100\n"
+"POT-Creation-Date: 2018-01-03 21:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,6 +146,19 @@ msgstr "Μέγιστη μνήμη στοίβας επεξεργασίας εγγ
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "Μέγιστο επιτρεπόμενο μέγεθος αρχείου για εγγραφή στον δίσκο (σε MB) - μόνο μείωση"
 
+#: admin.strings.js:38
+#, fuzzy
+msgid "Documents:"
+msgstr "Έγγραφα"
+
+#: admin.strings.js:39
+msgid "Expired:"
+msgstr ""
+
+#: admin.strings.js:40
+msgid "Refresh"
+msgstr ""
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Χρώματα θέματος"
@@ -252,11 +265,7 @@ msgstr "Εισαγωγή πίνακα"
 msgid "More"
 msgstr "Περισσότερα"
 
-#: dist/toolbar/toolbar.js:581
-msgid "Layout"
-msgstr "Διάταξη"
-
-#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1059
+#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1073
 msgid "Sum"
 msgstr "Άθροισμα"
 
@@ -304,26 +313,10 @@ msgstr "Ακύρωση αναζήτησης"
 msgid "No users"
 msgstr "Κανένας χρήστης"
 
-#: dist/toolbar/toolbar.js:671
-msgid "Previous page"
-msgstr "Προηγούμενη σελίδα"
-
-#: dist/toolbar/toolbar.js:672
-msgid "Next page"
-msgstr "Επόμενη σελίδα"
-
 #: dist/toolbar/toolbar.js:674 src/control/Control.Menubar.js:57
 #: src/control/Control.Menubar.js:238
 msgid "Reset zoom"
 msgstr "Επαναφορά εστίασης"
-
-#: dist/toolbar/toolbar.js:675
-msgid "Zoom out"
-msgstr "Σμίκρυνση"
-
-#: dist/toolbar/toolbar.js:677
-msgid "Zoom in"
-msgstr "Μεγέθυνση"
 
 #: dist/toolbar/toolbar.js:706
 msgid "%user has joined"
@@ -333,106 +326,114 @@ msgstr "Ο %user συμμετέχει"
 msgid "%user has left"
 msgstr "Ο %user έφυγε"
 
-#: dist/toolbar/toolbar.js:859 dist/toolbar/toolbar.js:1438
+#: dist/toolbar/toolbar.js:873 dist/toolbar/toolbar.js:1453
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: dist/toolbar/toolbar.js:1037
+#: dist/toolbar/toolbar.js:1051
 msgid "Number of Sheets"
 msgstr "Αριθμός φύλλων"
 
-#: dist/toolbar/toolbar.js:1040
+#: dist/toolbar/toolbar.js:1054
 msgid "Selected range of cells"
 msgstr "Επιλεγμένη περιοχή κελιών"
 
-#: dist/toolbar/toolbar.js:1043 dist/toolbar/toolbar.js:1081
+#: dist/toolbar/toolbar.js:1057 dist/toolbar/toolbar.js:1095
 msgid "Entering text mode"
 msgstr "Εκκινεί τη λειτουργία κειμένου"
 
-#: dist/toolbar/toolbar.js:1046 dist/toolbar/toolbar.js:1087
-#: dist/toolbar/toolbar.js:1110
+#: dist/toolbar/toolbar.js:1060 dist/toolbar/toolbar.js:1101
+#: dist/toolbar/toolbar.js:1124
 msgid "Text Language"
 msgstr "Γλώσσα Κειμένου"
 
-#: dist/toolbar/toolbar.js:1049 dist/toolbar/toolbar.js:1084
+#: dist/toolbar/toolbar.js:1063 dist/toolbar/toolbar.js:1098
 msgid "Selection Mode"
 msgstr "Κατάσταση επιλογής"
 
-#: dist/toolbar/toolbar.js:1052
+#: dist/toolbar/toolbar.js:1066
 msgid "Choice of functions"
 msgstr "Επιλογή λειτουργιών"
 
-#: dist/toolbar/toolbar.js:1054
+#: dist/toolbar/toolbar.js:1068
 msgid "Average"
 msgstr "Μέσος όρος"
 
-#: dist/toolbar/toolbar.js:1055
+#: dist/toolbar/toolbar.js:1069
 msgid "CountA"
 msgstr "ΠλήθοςA"
 
-#: dist/toolbar/toolbar.js:1056
+#: dist/toolbar/toolbar.js:1070
 msgid "Count"
 msgstr "Πλήθος"
 
-#: dist/toolbar/toolbar.js:1057
+#: dist/toolbar/toolbar.js:1071
 msgid "Maximum"
 msgstr "Μέγιστο"
 
-#: dist/toolbar/toolbar.js:1058
+#: dist/toolbar/toolbar.js:1072
 msgid "Minimum"
 msgstr "Ελάχιστο"
 
-#: dist/toolbar/toolbar.js:1060
+#: dist/toolbar/toolbar.js:1074
 msgid "Selection count"
 msgstr "Πλήθος επιλογών"
 
-#: dist/toolbar/toolbar.js:1061
+#: dist/toolbar/toolbar.js:1075
 msgid "None"
 msgstr "Καμία"
 
-#: dist/toolbar/toolbar.js:1075
+#: dist/toolbar/toolbar.js:1089
 msgid "Number of Pages"
 msgstr "Αριθμός σελίδων"
 
-#: dist/toolbar/toolbar.js:1078
+#: dist/toolbar/toolbar.js:1092
 msgid "Word Counter"
 msgstr "Καταμέτρηση λέξεων"
 
-#: dist/toolbar/toolbar.js:1107
+#: dist/toolbar/toolbar.js:1121
 msgid "Number of Slides"
 msgstr "Αριθμός διαφανειών"
 
-#: dist/toolbar/toolbar.js:1257
+#: dist/toolbar/toolbar.js:1271
 msgid "Document saved"
 msgstr "Το έγγραφο αποθηκεύτηκε"
 
-#: dist/toolbar/toolbar.js:1408
+#: dist/toolbar/toolbar.js:1423
 msgid "Style"
 msgstr "Τεχνοτροπία"
 
-#: dist/toolbar/toolbar.js:1430
+#: dist/toolbar/toolbar.js:1445
 msgid "Font"
 msgstr "Γραμματοσειρά"
 
-#: dist/toolbar/toolbar.js:1466
+#: dist/toolbar/toolbar.js:1481
 msgid "Previous slide"
 msgstr "Προηγούμενη διαφάνεια"
 
-#: dist/toolbar/toolbar.js:1467
+#: dist/toolbar/toolbar.js:1482
 msgid "Next slide"
 msgstr "Επόμενη διαφάνεια"
 
-#: dist/toolbar/toolbar.js:1528
+#: dist/toolbar/toolbar.js:1543
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Σύγκρουση αναίρεσης/ακύρωσης αναίρεσης για πολλαπλούς χρήστες. Παρακαλούμε, χρησιμοποιήστε την επιδιόρθωση του εγγράφου για να το επιλύσετε."
 
-#: dist/toolbar/toolbar.js:1776 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1791 src/control/Control.DocumentRepair.js:93
 msgid "You"
 msgstr "Εσείς"
 
-#: dist/toolbar/toolbar.js:1782
+#: dist/toolbar/toolbar.js:1797
 msgid "Readonly"
 msgstr "Μόνο για ανάγνωση"
+
+#: src/admin/AdminSocketAnalytics.js:217
+msgid "Received"
+msgstr ""
+
+#: src/admin/AdminSocketAnalytics.js:221
+msgid "Sent"
+msgstr ""
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -498,27 +499,27 @@ msgstr "Εσωτερική ειδική επικόλληση"
 msgid "Repair Document"
 msgstr "Επισκευή εγγράφου"
 
-#: src/control/Control.DocumentRepair.js:40
+#: src/control/Control.DocumentRepair.js:43
 msgid "Type"
 msgstr "Τύπος"
 
-#: src/control/Control.DocumentRepair.js:42
+#: src/control/Control.DocumentRepair.js:45
 msgid "Index"
 msgstr "Ευρετήριο"
 
-#: src/control/Control.DocumentRepair.js:44 src/layer/tile/TileLayer.js:221
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:221
 msgid "Comment"
 msgstr "Σχόλιο"
 
-#: src/control/Control.DocumentRepair.js:46
+#: src/control/Control.DocumentRepair.js:49
 msgid "User name"
 msgstr "Όνομα χρήστη"
 
-#: src/control/Control.DocumentRepair.js:48
+#: src/control/Control.DocumentRepair.js:51
 msgid "Timestamp"
 msgstr "Χρονική σφραγίδα"
 
-#: src/control/Control.DocumentRepair.js:52
+#: src/control/Control.DocumentRepair.js:55
 msgid "Jump to state"
 msgstr "Μετάβαση στην κατάσταση"
 

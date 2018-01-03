@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-16 09:52+0100\n"
+"POT-Creation-Date: 2018-01-03 21:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,6 +147,19 @@ msgstr ""
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
 
+#: admin.strings.js:38
+#, fuzzy
+msgid "Documents:"
+msgstr "Dokument"
+
+#: admin.strings.js:39
+msgid "Expired:"
+msgstr ""
+
+#: admin.strings.js:40
+msgid "Refresh"
+msgstr ""
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Temafärger"
@@ -254,11 +267,7 @@ msgstr "Infoga tabell"
 msgid "More"
 msgstr "Fler"
 
-#: dist/toolbar/toolbar.js:581
-msgid "Layout"
-msgstr "Layout"
-
-#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1059
+#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1073
 msgid "Sum"
 msgstr "Summa"
 
@@ -306,26 +315,10 @@ msgstr "Avbryt sökning"
 msgid "No users"
 msgstr "Inga användare"
 
-#: dist/toolbar/toolbar.js:671
-msgid "Previous page"
-msgstr "Föregående sida"
-
-#: dist/toolbar/toolbar.js:672
-msgid "Next page"
-msgstr "Nästa sida"
-
 #: dist/toolbar/toolbar.js:674 src/control/Control.Menubar.js:57
 #: src/control/Control.Menubar.js:238
 msgid "Reset zoom"
 msgstr "Återställ zoomning"
-
-#: dist/toolbar/toolbar.js:675
-msgid "Zoom out"
-msgstr "Zooma ut"
-
-#: dist/toolbar/toolbar.js:677
-msgid "Zoom in"
-msgstr "Zooma in"
 
 #: dist/toolbar/toolbar.js:706
 msgid "%user has joined"
@@ -335,106 +328,114 @@ msgstr "%user deltar nu"
 msgid "%user has left"
 msgstr "%user har lämnat"
 
-#: dist/toolbar/toolbar.js:859 dist/toolbar/toolbar.js:1438
+#: dist/toolbar/toolbar.js:873 dist/toolbar/toolbar.js:1453
 msgid "Size"
 msgstr "Storlek"
 
-#: dist/toolbar/toolbar.js:1037
+#: dist/toolbar/toolbar.js:1051
 msgid "Number of Sheets"
 msgstr "Antal kalkylblad"
 
-#: dist/toolbar/toolbar.js:1040
+#: dist/toolbar/toolbar.js:1054
 msgid "Selected range of cells"
 msgstr "Markerat cellområde"
 
-#: dist/toolbar/toolbar.js:1043 dist/toolbar/toolbar.js:1081
+#: dist/toolbar/toolbar.js:1057 dist/toolbar/toolbar.js:1095
 msgid "Entering text mode"
 msgstr "Textläge aktiverat"
 
-#: dist/toolbar/toolbar.js:1046 dist/toolbar/toolbar.js:1087
-#: dist/toolbar/toolbar.js:1110
+#: dist/toolbar/toolbar.js:1060 dist/toolbar/toolbar.js:1101
+#: dist/toolbar/toolbar.js:1124
 msgid "Text Language"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1049 dist/toolbar/toolbar.js:1084
+#: dist/toolbar/toolbar.js:1063 dist/toolbar/toolbar.js:1098
 msgid "Selection Mode"
 msgstr "Markeringsläge"
 
-#: dist/toolbar/toolbar.js:1052
+#: dist/toolbar/toolbar.js:1066
 msgid "Choice of functions"
 msgstr "Urval av funktioner"
 
-#: dist/toolbar/toolbar.js:1054
+#: dist/toolbar/toolbar.js:1068
 msgid "Average"
 msgstr "Medelvärde"
 
-#: dist/toolbar/toolbar.js:1055
+#: dist/toolbar/toolbar.js:1069
 msgid "CountA"
 msgstr "AntalA"
 
-#: dist/toolbar/toolbar.js:1056
+#: dist/toolbar/toolbar.js:1070
 msgid "Count"
 msgstr "Antal"
 
-#: dist/toolbar/toolbar.js:1057
+#: dist/toolbar/toolbar.js:1071
 msgid "Maximum"
 msgstr "Max"
 
-#: dist/toolbar/toolbar.js:1058
+#: dist/toolbar/toolbar.js:1072
 msgid "Minimum"
 msgstr "Min"
 
-#: dist/toolbar/toolbar.js:1060
+#: dist/toolbar/toolbar.js:1074
 msgid "Selection count"
 msgstr "Antal i markering"
 
-#: dist/toolbar/toolbar.js:1061
+#: dist/toolbar/toolbar.js:1075
 msgid "None"
 msgstr "Ingen"
 
-#: dist/toolbar/toolbar.js:1075
+#: dist/toolbar/toolbar.js:1089
 msgid "Number of Pages"
 msgstr "Antal sidor"
 
-#: dist/toolbar/toolbar.js:1078
+#: dist/toolbar/toolbar.js:1092
 msgid "Word Counter"
 msgstr "Antal ord"
 
-#: dist/toolbar/toolbar.js:1107
+#: dist/toolbar/toolbar.js:1121
 msgid "Number of Slides"
 msgstr "Antal bilder"
 
-#: dist/toolbar/toolbar.js:1257
+#: dist/toolbar/toolbar.js:1271
 msgid "Document saved"
 msgstr "Dokument sparat"
 
-#: dist/toolbar/toolbar.js:1408
+#: dist/toolbar/toolbar.js:1423
 msgid "Style"
 msgstr "Format"
 
-#: dist/toolbar/toolbar.js:1430
+#: dist/toolbar/toolbar.js:1445
 msgid "Font"
 msgstr "Teckensnitt"
 
-#: dist/toolbar/toolbar.js:1466
+#: dist/toolbar/toolbar.js:1481
 msgid "Previous slide"
 msgstr "Föregående bild"
 
-#: dist/toolbar/toolbar.js:1467
+#: dist/toolbar/toolbar.js:1482
 msgid "Next slide"
 msgstr "Nästa bild"
 
-#: dist/toolbar/toolbar.js:1528
+#: dist/toolbar/toolbar.js:1543
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:1776 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1791 src/control/Control.DocumentRepair.js:93
 msgid "You"
 msgstr "Du"
 
-#: dist/toolbar/toolbar.js:1782
+#: dist/toolbar/toolbar.js:1797
 msgid "Readonly"
 msgstr "Skrivskyddad"
+
+#: src/admin/AdminSocketAnalytics.js:217
+msgid "Received"
+msgstr ""
+
+#: src/admin/AdminSocketAnalytics.js:221
+msgid "Sent"
+msgstr ""
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -502,27 +503,27 @@ msgstr "Internt klistra in special"
 msgid "Repair Document"
 msgstr "Reparera dokument"
 
-#: src/control/Control.DocumentRepair.js:40
+#: src/control/Control.DocumentRepair.js:43
 msgid "Type"
 msgstr "Typ"
 
-#: src/control/Control.DocumentRepair.js:42
+#: src/control/Control.DocumentRepair.js:45
 msgid "Index"
 msgstr "Förteckning"
 
-#: src/control/Control.DocumentRepair.js:44 src/layer/tile/TileLayer.js:221
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:221
 msgid "Comment"
 msgstr "Kommentar"
 
-#: src/control/Control.DocumentRepair.js:46
+#: src/control/Control.DocumentRepair.js:49
 msgid "User name"
 msgstr "Användarnamn"
 
-#: src/control/Control.DocumentRepair.js:48
+#: src/control/Control.DocumentRepair.js:51
 msgid "Timestamp"
 msgstr "Tidsstämpel"
 
-#: src/control/Control.DocumentRepair.js:52
+#: src/control/Control.DocumentRepair.js:55
 msgid "Jump to state"
 msgstr "Hoppa till tillstånd"
 

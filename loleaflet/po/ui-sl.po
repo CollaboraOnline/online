@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-16 09:52+0100\n"
-"PO-Revision-Date: 2017-10-08 13:26+0200\n"
+"POT-Creation-Date: 2018-01-03 21:47+0100\n"
+"PO-Revision-Date: 2018-01-03 17:01+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
 "Language: \n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin.strings.js:5
@@ -147,6 +147,18 @@ msgstr "Največji skladovni pomnilnik za proces dokumenta (v kB) – zgolj zmanj
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "Največja dovoljena velikost datoteke za pisanje na disk (v MB) – zgolj zmanjšajte"
 
+#: admin.strings.js:38
+msgid "Documents:"
+msgstr "Dokumenti:"
+
+#: admin.strings.js:39
+msgid "Expired:"
+msgstr "Preteklo:"
+
+#: admin.strings.js:40
+msgid "Refresh"
+msgstr "Osveži"
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "Barve teme"
@@ -253,11 +265,7 @@ msgstr "Vstavi tabelo"
 msgid "More"
 msgstr "Dodatno"
 
-#: dist/toolbar/toolbar.js:581
-msgid "Layout"
-msgstr "Postavitev"
-
-#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1059
+#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1073
 msgid "Sum"
 msgstr "Vsota"
 
@@ -305,26 +313,10 @@ msgstr "Prekliči iskanje"
 msgid "No users"
 msgstr "Ni uporabnikov"
 
-#: dist/toolbar/toolbar.js:671
-msgid "Previous page"
-msgstr "Prejšnja stran"
-
-#: dist/toolbar/toolbar.js:672
-msgid "Next page"
-msgstr "Naslednja stran"
-
 #: dist/toolbar/toolbar.js:674 src/control/Control.Menubar.js:57
 #: src/control/Control.Menubar.js:238
 msgid "Reset zoom"
 msgstr "Ponastavi povečavo"
-
-#: dist/toolbar/toolbar.js:675
-msgid "Zoom out"
-msgstr "Približaj"
-
-#: dist/toolbar/toolbar.js:677
-msgid "Zoom in"
-msgstr "Oddalji"
 
 #: dist/toolbar/toolbar.js:706
 msgid "%user has joined"
@@ -334,106 +326,114 @@ msgstr "Pridružil se je uporabnik %user"
 msgid "%user has left"
 msgstr "Odšel je uporabnik %user"
 
-#: dist/toolbar/toolbar.js:859 dist/toolbar/toolbar.js:1438
+#: dist/toolbar/toolbar.js:873 dist/toolbar/toolbar.js:1453
 msgid "Size"
 msgstr "Velikost"
 
-#: dist/toolbar/toolbar.js:1037
+#: dist/toolbar/toolbar.js:1051
 msgid "Number of Sheets"
 msgstr "Število delovnih listov"
 
-#: dist/toolbar/toolbar.js:1040
+#: dist/toolbar/toolbar.js:1054
 msgid "Selected range of cells"
 msgstr "Izbran obseg celic"
 
-#: dist/toolbar/toolbar.js:1043 dist/toolbar/toolbar.js:1081
+#: dist/toolbar/toolbar.js:1057 dist/toolbar/toolbar.js:1095
 msgid "Entering text mode"
 msgstr "Vstopanje v besedilni način"
 
-#: dist/toolbar/toolbar.js:1046 dist/toolbar/toolbar.js:1087
-#: dist/toolbar/toolbar.js:1110
+#: dist/toolbar/toolbar.js:1060 dist/toolbar/toolbar.js:1101
+#: dist/toolbar/toolbar.js:1124
 msgid "Text Language"
 msgstr "Jezik besedila"
 
-#: dist/toolbar/toolbar.js:1049 dist/toolbar/toolbar.js:1084
+#: dist/toolbar/toolbar.js:1063 dist/toolbar/toolbar.js:1098
 msgid "Selection Mode"
 msgstr "Izbirni način"
 
-#: dist/toolbar/toolbar.js:1052
+#: dist/toolbar/toolbar.js:1066
 msgid "Choice of functions"
 msgstr "Izbor funkcij"
 
-#: dist/toolbar/toolbar.js:1054
+#: dist/toolbar/toolbar.js:1068
 msgid "Average"
 msgstr "Povprečno"
 
-#: dist/toolbar/toolbar.js:1055
+#: dist/toolbar/toolbar.js:1069
 msgid "CountA"
 msgstr "ŠtevecA"
 
-#: dist/toolbar/toolbar.js:1056
+#: dist/toolbar/toolbar.js:1070
 msgid "Count"
 msgstr "Števec"
 
-#: dist/toolbar/toolbar.js:1057
+#: dist/toolbar/toolbar.js:1071
 msgid "Maximum"
 msgstr "Največ"
 
-#: dist/toolbar/toolbar.js:1058
+#: dist/toolbar/toolbar.js:1072
 msgid "Minimum"
 msgstr "Najmanj"
 
-#: dist/toolbar/toolbar.js:1060
+#: dist/toolbar/toolbar.js:1074
 msgid "Selection count"
 msgstr "Seštevek izbora"
 
-#: dist/toolbar/toolbar.js:1061
+#: dist/toolbar/toolbar.js:1075
 msgid "None"
 msgstr "Brez"
 
-#: dist/toolbar/toolbar.js:1075
+#: dist/toolbar/toolbar.js:1089
 msgid "Number of Pages"
 msgstr "Število strani"
 
-#: dist/toolbar/toolbar.js:1078
+#: dist/toolbar/toolbar.js:1092
 msgid "Word Counter"
 msgstr "Števec besed"
 
-#: dist/toolbar/toolbar.js:1107
+#: dist/toolbar/toolbar.js:1121
 msgid "Number of Slides"
 msgstr "Število prosojnic"
 
-#: dist/toolbar/toolbar.js:1257
+#: dist/toolbar/toolbar.js:1271
 msgid "Document saved"
 msgstr "Dokument shranjen"
 
-#: dist/toolbar/toolbar.js:1408
+#: dist/toolbar/toolbar.js:1423
 msgid "Style"
 msgstr "Slog"
 
-#: dist/toolbar/toolbar.js:1430
+#: dist/toolbar/toolbar.js:1445
 msgid "Font"
 msgstr "Pisava"
 
-#: dist/toolbar/toolbar.js:1466
+#: dist/toolbar/toolbar.js:1481
 msgid "Previous slide"
 msgstr "Prejšnja prosojnica"
 
-#: dist/toolbar/toolbar.js:1467
+#: dist/toolbar/toolbar.js:1482
 msgid "Next slide"
 msgstr "Naslednja prosojnica"
 
-#: dist/toolbar/toolbar.js:1528
+#: dist/toolbar/toolbar.js:1543
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Spor razveljavljanja/ponavljanja med več uporabniki. Uporabite popravilo dokumenta za razrešitev težave."
 
-#: dist/toolbar/toolbar.js:1776 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1791 src/control/Control.DocumentRepair.js:93
 msgid "You"
 msgstr "Vi"
 
-#: dist/toolbar/toolbar.js:1782
+#: dist/toolbar/toolbar.js:1797
 msgid "Readonly"
 msgstr "Samo za branje"
+
+#: src/admin/AdminSocketAnalytics.js:217
+msgid "Received"
+msgstr "prejeto"
+
+#: src/admin/AdminSocketAnalytics.js:221
+msgid "Sent"
+msgstr "poslano"
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -499,27 +499,27 @@ msgstr "Posebno lepljenje, notranje"
 msgid "Repair Document"
 msgstr "Popravi dokument"
 
-#: src/control/Control.DocumentRepair.js:40
+#: src/control/Control.DocumentRepair.js:43
 msgid "Type"
 msgstr "Vrsta"
 
-#: src/control/Control.DocumentRepair.js:42
+#: src/control/Control.DocumentRepair.js:45
 msgid "Index"
 msgstr "Kazalo"
 
-#: src/control/Control.DocumentRepair.js:44 src/layer/tile/TileLayer.js:221
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:221
 msgid "Comment"
 msgstr "Komentar"
 
-#: src/control/Control.DocumentRepair.js:46
+#: src/control/Control.DocumentRepair.js:49
 msgid "User name"
 msgstr "Uporabniško ime"
 
-#: src/control/Control.DocumentRepair.js:48
+#: src/control/Control.DocumentRepair.js:51
 msgid "Timestamp"
 msgstr "Časovni žig"
 
-#: src/control/Control.DocumentRepair.js:52
+#: src/control/Control.DocumentRepair.js:55
 msgid "Jump to state"
 msgstr "Skoči na stanje"
 

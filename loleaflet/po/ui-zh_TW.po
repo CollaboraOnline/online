@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-16 09:52+0100\n"
+"POT-Creation-Date: 2018-01-03 21:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,6 +146,19 @@ msgstr "最大文件程序堆疊記憶體 (以 MB 計) - 僅減少"
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "寫入磁碟的最大允許檔案大小 (以 MB 計) - 僅減少"
 
+#: admin.strings.js:38
+#, fuzzy
+msgid "Documents:"
+msgstr "文件"
+
+#: admin.strings.js:39
+msgid "Expired:"
+msgstr ""
+
+#: admin.strings.js:40
+msgid "Refresh"
+msgstr ""
+
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
 msgstr "主題色"
@@ -252,11 +265,7 @@ msgstr "插入表格"
 msgid "More"
 msgstr "更多"
 
-#: dist/toolbar/toolbar.js:581
-msgid "Layout"
-msgstr "版面配置"
-
-#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1059
+#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1073
 msgid "Sum"
 msgstr "總和"
 
@@ -304,26 +313,10 @@ msgstr "取消搜尋"
 msgid "No users"
 msgstr "無使用者"
 
-#: dist/toolbar/toolbar.js:671
-msgid "Previous page"
-msgstr "上一頁"
-
-#: dist/toolbar/toolbar.js:672
-msgid "Next page"
-msgstr "下一頁"
-
 #: dist/toolbar/toolbar.js:674 src/control/Control.Menubar.js:57
 #: src/control/Control.Menubar.js:238
 msgid "Reset zoom"
 msgstr "重設遠近"
-
-#: dist/toolbar/toolbar.js:675
-msgid "Zoom out"
-msgstr "拉遠"
-
-#: dist/toolbar/toolbar.js:677
-msgid "Zoom in"
-msgstr "拉近"
 
 #: dist/toolbar/toolbar.js:706
 msgid "%user has joined"
@@ -333,106 +326,114 @@ msgstr "%user 已加入"
 msgid "%user has left"
 msgstr "%user 已離開"
 
-#: dist/toolbar/toolbar.js:859 dist/toolbar/toolbar.js:1438
+#: dist/toolbar/toolbar.js:873 dist/toolbar/toolbar.js:1453
 msgid "Size"
 msgstr "大小"
 
-#: dist/toolbar/toolbar.js:1037
+#: dist/toolbar/toolbar.js:1051
 msgid "Number of Sheets"
 msgstr "工作表數量"
 
-#: dist/toolbar/toolbar.js:1040
+#: dist/toolbar/toolbar.js:1054
 msgid "Selected range of cells"
 msgstr "所選的儲存格範圍"
 
-#: dist/toolbar/toolbar.js:1043 dist/toolbar/toolbar.js:1081
+#: dist/toolbar/toolbar.js:1057 dist/toolbar/toolbar.js:1095
 msgid "Entering text mode"
 msgstr "輸入文字模式"
 
-#: dist/toolbar/toolbar.js:1046 dist/toolbar/toolbar.js:1087
-#: dist/toolbar/toolbar.js:1110
+#: dist/toolbar/toolbar.js:1060 dist/toolbar/toolbar.js:1101
+#: dist/toolbar/toolbar.js:1124
 msgid "Text Language"
 msgstr "文字語言"
 
-#: dist/toolbar/toolbar.js:1049 dist/toolbar/toolbar.js:1084
+#: dist/toolbar/toolbar.js:1063 dist/toolbar/toolbar.js:1098
 msgid "Selection Mode"
 msgstr "選取模式"
 
-#: dist/toolbar/toolbar.js:1052
+#: dist/toolbar/toolbar.js:1066
 msgid "Choice of functions"
 msgstr "函式選擇"
 
-#: dist/toolbar/toolbar.js:1054
+#: dist/toolbar/toolbar.js:1068
 msgid "Average"
 msgstr "平均值"
 
-#: dist/toolbar/toolbar.js:1055
+#: dist/toolbar/toolbar.js:1069
 msgid "CountA"
 msgstr "全計數"
 
-#: dist/toolbar/toolbar.js:1056
+#: dist/toolbar/toolbar.js:1070
 msgid "Count"
 msgstr "數計數"
 
-#: dist/toolbar/toolbar.js:1057
+#: dist/toolbar/toolbar.js:1071
 msgid "Maximum"
 msgstr "最大"
 
-#: dist/toolbar/toolbar.js:1058
+#: dist/toolbar/toolbar.js:1072
 msgid "Minimum"
 msgstr "最小"
 
-#: dist/toolbar/toolbar.js:1060
+#: dist/toolbar/toolbar.js:1074
 msgid "Selection count"
 msgstr "選取計數"
 
-#: dist/toolbar/toolbar.js:1061
+#: dist/toolbar/toolbar.js:1075
 msgid "None"
 msgstr "無"
 
-#: dist/toolbar/toolbar.js:1075
+#: dist/toolbar/toolbar.js:1089
 msgid "Number of Pages"
 msgstr "頁數"
 
-#: dist/toolbar/toolbar.js:1078
+#: dist/toolbar/toolbar.js:1092
 msgid "Word Counter"
 msgstr "字數統計"
 
-#: dist/toolbar/toolbar.js:1107
+#: dist/toolbar/toolbar.js:1121
 msgid "Number of Slides"
 msgstr "投影片數"
 
-#: dist/toolbar/toolbar.js:1257
+#: dist/toolbar/toolbar.js:1271
 msgid "Document saved"
 msgstr "文件已儲存"
 
-#: dist/toolbar/toolbar.js:1408
+#: dist/toolbar/toolbar.js:1423
 msgid "Style"
 msgstr "樣式"
 
-#: dist/toolbar/toolbar.js:1430
+#: dist/toolbar/toolbar.js:1445
 msgid "Font"
 msgstr "字型"
 
-#: dist/toolbar/toolbar.js:1466
+#: dist/toolbar/toolbar.js:1481
 msgid "Previous slide"
 msgstr "上一張投影片"
 
-#: dist/toolbar/toolbar.js:1467
+#: dist/toolbar/toolbar.js:1482
 msgid "Next slide"
 msgstr "下一張投影片"
 
-#: dist/toolbar/toolbar.js:1528
+#: dist/toolbar/toolbar.js:1543
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "多位使用者間取消動作/再次動作發生衝突。請使用文件修復來解決問題"
 
-#: dist/toolbar/toolbar.js:1776 src/control/Control.DocumentRepair.js:87
+#: dist/toolbar/toolbar.js:1791 src/control/Control.DocumentRepair.js:93
 msgid "You"
 msgstr "您"
 
-#: dist/toolbar/toolbar.js:1782
+#: dist/toolbar/toolbar.js:1797
 msgid "Readonly"
 msgstr "唯讀"
+
+#: src/admin/AdminSocketAnalytics.js:217
+msgid "Received"
+msgstr ""
+
+#: src/admin/AdminSocketAnalytics.js:221
+msgid "Sent"
+msgstr ""
 
 #: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
@@ -498,27 +499,27 @@ msgstr "內部選擇性貼上"
 msgid "Repair Document"
 msgstr "修復文件"
 
-#: src/control/Control.DocumentRepair.js:40
+#: src/control/Control.DocumentRepair.js:43
 msgid "Type"
 msgstr "類型"
 
-#: src/control/Control.DocumentRepair.js:42
+#: src/control/Control.DocumentRepair.js:45
 msgid "Index"
 msgstr "索引"
 
-#: src/control/Control.DocumentRepair.js:44 src/layer/tile/TileLayer.js:221
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:221
 msgid "Comment"
 msgstr "評註"
 
-#: src/control/Control.DocumentRepair.js:46
+#: src/control/Control.DocumentRepair.js:49
 msgid "User name"
 msgstr "使用者名稱"
 
-#: src/control/Control.DocumentRepair.js:48
+#: src/control/Control.DocumentRepair.js:51
 msgid "Timestamp"
 msgstr "時間戳記"
 
-#: src/control/Control.DocumentRepair.js:52
+#: src/control/Control.DocumentRepair.js:55
 msgid "Jump to state"
 msgstr "跳回狀態"
 
