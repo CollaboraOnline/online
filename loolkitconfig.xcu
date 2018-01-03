@@ -10,4 +10,7 @@
 <!-- Save memory by avoiding collecting autocompletion words  -->
 <item oor:path="/org.openoffice.Office.Writer/AutoFunction/Completion"><prop oor:name="Enable" oor:op="fuse"><value>false</value></prop></item>
 
+<!-- Set a work path which is valid in chroot -->
+<item oor:path="/org.openoffice.Office.Paths/Variables"><prop oor:name="Work" oor:op="fuse"><value>file:///home</value></prop></item>
+
 </oor:items>
