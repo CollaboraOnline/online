@@ -775,7 +775,6 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         oss << "}";
 
         assert(_storage);
-        _storage->setUserModified(_isModified);
 
         const auto saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);
@@ -1255,6 +1254,7 @@ void DocumentBroker::setModified(const bool value)
         Admin::instance().modificationAlert(_docKey, getPid(), value);
     }
 
+    _storage->setUserModified(value);
     _tileCache->setUnsavedChanges(value);
 }
 
