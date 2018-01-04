@@ -248,6 +248,7 @@ public:
 
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
+
     /// Save the document if the document is modified.
     /// @param force when true, will force saving if there
     /// has been any recent activity after the last save.

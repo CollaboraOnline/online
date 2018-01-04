@@ -1401,7 +1401,7 @@ void DocumentBroker::destroyIfLastEditor(const std::string& id)
 
 void DocumentBroker::setModified(const bool value)
 {
-    if(_isModified != value)
+    if (_isModified != value)
     {
         _isModified = value;
         Admin::instance().modificationAlert(_docKey, getPid(), value);
