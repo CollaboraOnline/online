@@ -416,7 +416,6 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             LOG_ERR("Failed to create Storage instance for [" << _docKey << "] in " << jailPath.toString());
             return false;
         }
-
         firstInstance = true;
     }
 
@@ -926,7 +925,6 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         oss << "}";
 
         assert(_storage);
-        _storage->setUserModified(_isModified);
         _storage->setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
 
         const auto saveArgs = oss.str();
@@ -1409,6 +1407,7 @@ void DocumentBroker::setModified(const bool value)
         Admin::instance().modificationAlert(_docKey, getPid(), value);
     }
 
+    _storage->setUserModified(value);
     _tileCache->setUnsavedChanges(value);
 }
 
