@@ -38,7 +38,22 @@ mkdir -p "$INSTDIR"
 # libreoffice repo
 if test ! -d libreoffice ; then
     git clone git://anongit.freedesktop.org/libreoffice/core libreoffice || exit 1
-    cat > libreoffice/autogen.input << EOF
+fi
+
+( cd libreoffice && git checkout master && git pull -r ) || exit 1
+
+# online repo
+if test ! -d online ; then
+    git clone git://anongit.freedesktop.org/libreoffice/online online || exit 1
+    ( cd online && ./autogen.sh ) || exit 1
+fi
+
+( cd online && git checkout -f master && git pull -r ) || exit 1
+
+##### LibreOffice #####
+
+# build LibreOffice
+cat > libreoffice/autogen.input << EOF
 --disable-cups
 --disable-dbus
 --disable-dconf
@@ -92,22 +107,7 @@ if test ! -d libreoffice ; then
 --without-system-postgresql
 EOF
 
-    ( cd libreoffice && ./autogen.sh ) || exit 1
-fi
-
-( cd libreoffice && git checkout master && git pull -r ) || exit 1
-
-# online repo
-if test ! -d online ; then
-    git clone git://anongit.freedesktop.org/libreoffice/online online || exit 1
-    ( cd online && ./autogen.sh ) || exit 1
-fi
-
-( cd online && git checkout -f master && git pull -r ) || exit 1
-
-##### LibreOffice #####
-
-# build LibreOffice
+( cd libreoffice && ./autogen.sh ) || exit 1
 ( cd libreoffice && make ) || exit 1
 
 # copy stuff
