@@ -82,6 +82,7 @@ if test ! -d libreoffice ; then
 --without-junit
 --without-myspell-dicts
 --without-package-format
+--without-system-cairo
 --without-system-jars
 --without-system-jpeg
 --without-system-libpng
