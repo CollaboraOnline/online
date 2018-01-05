@@ -71,7 +71,7 @@ if test ! -d libreoffice ; then
 --with-external-thes-dir=/usr/share/mythes
 --with-fonts
 --with-galleries=no
---with-lang=
+--with-lang=ALL
 --with-linker-hash-style=both
 --with-system-dicts
 --with-system-zlib
