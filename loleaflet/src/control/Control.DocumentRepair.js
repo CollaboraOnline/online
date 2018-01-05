@@ -1,7 +1,7 @@
 /*
  * L.Control.DocumentRepair.
  */
-/* global $ _ */
+/* global $ _ _UNO */
 L.Control.DocumentRepair = L.Control.extend({
 	options: {
 		position: 'topright'

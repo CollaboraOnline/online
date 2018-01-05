@@ -11,7 +11,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:EditMenu'), disabled: true},
 			{name: _UNO('.uno:ViewMenu'), disabled: true},
 			{name: _UNO('.uno:InsertMenu'), disabled: true},
-			{name: _UNO('.uno:ToolsMenu'), disabled: true},
+			{name: _UNO('.uno:ToolsMenu'), disabled: true}
 		],
 		text:  [
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
@@ -47,7 +47,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:PreviousTrackedChange'},
 					{uno: '.uno:NextTrackedChange'}
 				]},
-				{uno: '.uno:EditStyle'},
+				{uno: '.uno:EditStyle'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
 				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
@@ -56,7 +56,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:ControlCodes'},
+				{uno: '.uno:ControlCodes'}
 			]
 			},
 			{name: _UNO('.uno:InsertMenu', 'text'), type: 'menu', menu: [
@@ -198,7 +198,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:SetLanguageParagraphMenu', 'text'), type: 'menu', menu: [
 						{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
 					{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
-						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
+						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 				]},
 				{uno: '.uno:WordCountDialog'}
 			]},
@@ -251,7 +251,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:TransformDialog'},
 					{uno: '.uno:FormatLine'},
 					{uno: '.uno:FormatArea'}
-				]},
+				]}
 			]},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 				{name: _UNO('.uno:TableInsertMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [

@@ -2,7 +2,7 @@
 * Control.ColumnHeader
 */
 
-/* global $ _ */
+/* global $ _UNO */
 L.Control.ColumnHeader = L.Control.Header.extend({
 	options: {
 		cursor: 'col-resize'
