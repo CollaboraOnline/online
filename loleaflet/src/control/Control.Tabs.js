@@ -2,7 +2,7 @@
  * L.Control.Tabs is used to switch sheets in Calc
  */
 
-/* global $ vex _ map */
+/* global $ vex _ _UNO map */
 L.Control.Tabs = L.Control.extend({
 	onAdd: function(map) {
 		map.on('updatepermission', this._onUpdatePermission, this);

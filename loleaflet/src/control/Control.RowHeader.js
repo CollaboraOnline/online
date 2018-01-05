@@ -2,7 +2,7 @@
  * L.Control.RowHeader
 */
 
-/* global $ _ */
+/* global $ _UNO */
 L.Control.RowHeader = L.Control.Header.extend({
 	options: {
 		cursor: 'row-resize'

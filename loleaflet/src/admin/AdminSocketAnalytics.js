@@ -3,8 +3,7 @@
 	containing various graphs to show to the user on specified interval
 */
 
-/* global d3 Util AdminSocketBase */
-/* eslint no-unused-vars:0 */
+/* global _ d3 Util AdminSocketBase $ Admin */
 var AdminSocketAnalytics = AdminSocketBase.extend({
 	constructor: function(host) {
 		this.base(host);

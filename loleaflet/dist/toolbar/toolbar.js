@@ -2,8 +2,7 @@
  * LibreOffice Online toolbar
  */
 
-/* global $ map closebutton w2ui w2utils vex _ */
-
+/* global $ map closebutton w2ui w2utils vex _ _UNO */
 var mobileWidth = 768;
 
 function onDelete(e) {
@@ -1072,8 +1071,8 @@ map.on('doclayerinit', function () {
 				{ func: '32', text: _('Minimum'), icon: ''},
 				{ func: '512', text: _('Sum'), icon: 'selected'},
 				{ func: '8192', text: _('Selection count'), icon: ''},
-				{ func: '1', text: _('None'), icon: ''},
-		]},
+				{ func: '1', text: _('None'), icon: ''}
+		]}
 		]);
 
 		// Remove irrelevant toolbars
