@@ -40,7 +40,7 @@ if test ! -d libreoffice ; then
     git clone git://anongit.freedesktop.org/libreoffice/core libreoffice || exit 1
 fi
 
-( cd libreoffice && git checkout master && git pull -r ) || exit 1
+( cd libreoffice && git checkout master && ./g pull -r ) || exit 1
 
 # online repo
 if test ! -d online ; then
