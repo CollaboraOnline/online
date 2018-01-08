@@ -600,6 +600,7 @@ std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::LOKitVersion;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
+std::string LOOLWSD::LogLevel = "trace";
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 std::set<std::string> LOOLWSD::EditFileExtensions;
@@ -759,8 +760,9 @@ void LOOLWSD::initialize(Application& self)
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(config());
 
-    const auto logLevel = getConfigValue<std::string>(conf, "logging.level", "trace");
-    setenv("LOOL_LOGLEVEL", logLevel.c_str(), true);
+    // Set the log-level after complete initialization to force maximum details at startup.
+    LogLevel = getConfigValue<std::string>(conf, "logging.level", "trace");
+    setenv("LOOL_LOGLEVEL", LogLevel.c_str(), true);
     const auto withColor = getConfigValue<bool>(conf, "logging.color", true) && isatty(fileno(stderr));
     if (withColor)
     {
@@ -798,7 +800,12 @@ void LOOLWSD::initialize(Application& self)
         }
     }
 
-    Log::initialize("wsd", logLevel, withColor, logToFile, logProperties);
+    // Log at trace level until we complete the initialization.
+    Log::initialize("wsd", "trace", withColor, logToFile, logProperties);
+    if (LogLevel != "trace")
+    {
+        LOG_INF("Setting log-level to [trace] and delaying setting to requested [" << LogLevel << "].");
+    }
 
     {
         std::string proto = getConfigValue<std::string>(conf, "net.proto", "");
@@ -2738,6 +2745,12 @@ int LOOLWSD::innerMain()
         assert(NewChildren.size() > 0);
     }
 #endif
+
+    if (LogLevel != "trace")
+    {
+        LOG_INF("Setting log-level to [" << LogLevel << "].");
+        Log::logger().setLevel(LogLevel);
+    }
 
     // Start the server.
     srv.start(ClientPortNumber);
