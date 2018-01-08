@@ -52,6 +52,7 @@ static bool NoCapsForKit = false;
 #endif
 static bool DisplayVersion = false;
 static std::string UnitTestLibrary;
+static std::string LogLevel;
 static std::atomic<unsigned> ForkCounter(0);
 
 static std::map<Process::PID, std::string> childJails;
@@ -245,6 +246,12 @@ static int createLibreOfficeKit(const std::string& childRoot,
 
     LOG_DBG("Forking a loolkit process with jailId: " << jailId << ".");
 
+    if (LogLevel != "trace")
+    {
+        LOG_INF("Setting log-level to [" << LogLevel << "].");
+        Log::logger().setLevel(LogLevel);
+    }
+
     const Process::PID pid = fork();
     if (!pid)
     {
@@ -376,7 +383,12 @@ int main(int argc, char** argv)
         logProperties["path"] = std::string(logFilename);
     }
 
-    Log::initialize("frk", logLevel ? logLevel : "", logColor != nullptr, logToFile, logProperties);
+    Log::initialize("frk", "trace", logColor != nullptr, logToFile, logProperties);
+    LogLevel = logLevel ? logLevel : "trace";
+    if (LogLevel != "trace")
+    {
+        LOG_INF("Setting log-level to [trace] and delaying setting to requested [" << LogLevel << "].");
+    }
 
     std::string childRoot;
     std::string loSubPath;
@@ -478,7 +490,7 @@ int main(int argc, char** argv)
     }
 
     // Setup & check environment
-    std::string layers(
+    const std::string layers(
         "xcsxcu:${BRAND_BASE_DIR}/share/registry "
         "res:${BRAND_BASE_DIR}/share/registry "
         "bundledext:${${BRAND_BASE_DIR}/program/lounorc:BUNDLED_EXTENSIONS_USER}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "

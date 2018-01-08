@@ -55,6 +55,7 @@ public:
     static std::string ServerName;
     static std::string FileServerRoot;
     static std::string LOKitVersion;
+    static std::string LogLevel;
     static std::atomic<unsigned> NumConnections;
     static bool TileCachePersistent;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
