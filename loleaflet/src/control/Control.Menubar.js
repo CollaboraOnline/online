@@ -315,9 +315,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:InsertRows'},
-				{uno: '.uno:InsertColumns'},
-				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'}
 			]},
 			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), type: 'menu', menu: [
@@ -325,11 +322,21 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FormatCellDialog'}
 			]},
 			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), type: 'menu', menu: [
-				{uno: '.uno:InsertRows'},
-				{uno: '.uno:InsertColumns'},
+				{name: _UNO('.uno:InsertRowsMenu', 'spreadsheet'), type: 'menu', menu: [
+					{uno: '.uno:InsertRowsBefore'},
+					{uno: '.uno:InsertRowsAfter'}]},
+				{name: _UNO('.uno:InsertColumnsMenu', 'spreadsheet'), type: 'menu', menu: [
+					{uno: '.uno:InsertColumnsBefore'},
+					{uno: '.uno:InsertColumnsAfter'}]},
+				{name: _UNO('.uno:InsertBreakMenu', 'spreadsheet'), type: 'menu', menu: [
+					{uno: '.uno:InsertRowBreak'},
+					{uno: '.uno:InsertColumnBreak'}]},
 				{type: 'separator'},
 				{uno: '.uno:DeleteRows'},
-				{uno: '.uno:DeleteColumns'}
+				{uno: '.uno:DeleteColumns'},
+				{name: _UNO('.uno:DelBreakMenu', 'spreadsheet'), type: 'menu', menu: [
+					{uno: '.uno:DeleteRowbreak'},
+					{uno: '.uno:DeleteColumnbreak'}]}
 			]},
 			{name: _UNO('.uno:DataMenu', 'spreadsheet'), type: 'menu', menu: [
 				{uno: '.uno:DataSort'},
