@@ -1966,8 +1966,14 @@ void lokit_main(const std::string& childRoot,
         logProperties["path"] = std::string(logFilename);
     }
 
-    Log::initialize("kit", logLevel ? logLevel : "", logColor != nullptr, logToFile, logProperties);
     Util::rng::reseed();
+    const std::string LogLevel = logLevel ? logLevel : "trace";
+    const bool bTraceStartup = (std::getenv("LOOL_TRACE_STARTUP") != nullptr);
+    Log::initialize("kit", bTraceStartup ? "trace" : logLevel, logColor != nullptr, logToFile, logProperties);
+    if (bTraceStartup && LogLevel != "trace")
+    {
+        LOG_INF("Setting log-level to [trace] and delaying setting to requested [" << LogLevel << "].");
+    }
 
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
@@ -2187,6 +2193,12 @@ void lokit_main(const std::string& childRoot,
         ws->setReceiveTimeout(0);
 
         auto queue = std::make_shared<TileQueue>();
+
+        if (bTraceStartup && LogLevel != "trace")
+        {
+            LOG_INF("Setting log-level to [" << LogLevel << "].");
+            Log::logger().setLevel(LogLevel);
+        }
 
         const std::string socketName = "child_ws_" + pid;
         IoUtil::SocketProcessor(ws, socketName,

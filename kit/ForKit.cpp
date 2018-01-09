@@ -524,12 +524,21 @@ int main(int argc, char** argv)
     LOG_INF("Preinit stage OK.");
 
     // We must have at least one child, more are created dynamically.
-    // Ask this first child to send version information to master process
+    // Ask this first child to send version information to master process and trace startup.
+    ::setenv("LOOL_TRACE_STARTUP", "1", 1);
     Process::PID forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, true);
     if (forKitPid < 0)
     {
         LOG_FTL("Failed to create a kit process.");
         std::_Exit(Application::EXIT_SOFTWARE);
+    }
+
+    // No need to trace subsequent children.
+    ::unsetenv("LOOL_TRACE_STARTUP");
+    if (LogLevel != "trace")
+    {
+        LOG_INF("Setting log-level to [" << LogLevel << "].");
+        Log::logger().setLevel(LogLevel);
     }
 
     CommandDispatcher commandDispatcher(0);
