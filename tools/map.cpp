@@ -13,6 +13,7 @@
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
+#include <unordered_set>
 
 #include <stdint.h>
 #include <string.h>
@@ -127,8 +128,8 @@ struct AddrSpace {
     }
     void printStats()
     {
-        char prefixes[] = { 'S', 'U', 'c' };
-        for (int i = 0; i < 2; ++i)
+        char prefixes[] = { 'S', 'U', 'C' };
+        for (int i = 0; i < 3; ++i)
         {
             printf("%cStrings      :%20lld, %lld chars\n",
                    prefixes[i], (addr_t)_strings[i]._count,
@@ -166,12 +167,27 @@ struct AddrSpace {
         int step = isUnicode ? 2 : 1;
         for (size_t j = i; j < i + len*step && j < data.size(); j += step)
         {
-            if (isascii(data[j]) && !iscntrl(data[j]))
+            if (isascii(data[j]) && !iscntrl(data[j]) &&
+                (step == 1 || data[j+1] == 0))
                 str += static_cast<char>(data[j]);
             else
                 return false;
         }
         return true;
+    }
+
+    bool isCStringAtOffset(const std::vector<unsigned char> &data, size_t i,
+                           std::string &str)
+    {
+        str = "C_";
+        for (size_t j = i; j < data.size(); j++)
+        {
+            if (isascii(data[j]) && !iscntrl(data[j]))
+                str += static_cast<char>(data[j]);
+            else
+                return data[j] == '\0' && str.length() > 7;
+        }
+        return false;
     }
 
     void scanForSalStrings(Map &map, const std::vector<unsigned char> &data)
@@ -180,24 +196,29 @@ struct AddrSpace {
         {
             const uint32_t *p = reinterpret_cast<const uint32_t *>(&data[i]);
             uint32_t len;
+            std::string str;
             if ((p[0] & 0xffffff) < 0x1000 && // plausible max ref-count
                 (len = p[1]) < 0x100 &&     // plausible max string length
                 len <= (data.size() - i) &&
-                len > 0)
+                len > 2)
             {
-                std::string str;
                 bool isUnicode = data[i+1] == 0 && data[i+3] == 0;
                 if (isStringAtOffset(data, i + 8, len, isUnicode, str))
                 {
                     StringData &sdata = _strings[isUnicode ? 1 : 0];
                     sdata._count ++;
                     sdata._chars += len;
-                    if (DumpStrings)
-                        printf("string address 0x%.8llx %s\n",
-                               map._start + i, str.c_str());
                     _addrToStr[map._start + i] = str;
+                    i += ((4 + str.length() * (isUnicode ? 2 : 1)) >>2 ) * 4;
                 }
-                i += 8;
+            }
+            if ((i%8 == 0) && isCStringAtOffset(data, i, str))
+            {
+                StringData &sdata = _strings[2];
+                sdata._count ++;
+                sdata._chars += str.length();
+                _addrToStr[map._start + i] = str;
+                i += (str.length() >> 2) * 4;
             }
         }
     }
@@ -205,8 +226,6 @@ struct AddrSpace {
     void scanMapsForStrings()
     {
         int mem_fd = openPid(_proc_id, "mem");
-        if (DumpStrings)
-            printf("String dump:\n");
         for (auto &map : _maps)
         {
             std::vector<unsigned char> data;
@@ -218,8 +237,6 @@ struct AddrSpace {
 
             scanForSalStrings(map, data);
         }
-        if (DumpStrings)
-            printf("String dump ends.\n");
         close (mem_fd);
     }
 };
@@ -437,6 +454,23 @@ static void dump_unshared(unsigned proc_id, unsigned parent_id,
     printf ("\tRLE sharing bitmap:\n%s\n", &compressed[0]);
 
     dumpPages(proc_id, parent_id, type, vunshared, space);
+
+    std::unordered_set<addr_t> unShared;
+    for (auto addr : vunshared)
+        unShared.insert(addr);
+
+    if (DumpStrings)
+    {
+        printf("String dump:\n");
+        for (auto addr : space._addrToStr)
+        {
+            if (DumpAll ||
+                unShared.find((addr.first & ~0x1fff)) != unShared.end())
+                printf("0x%.16llx %s\n", addr.first, addr.second.c_str());
+        }
+
+        printf("String dump ends.\n");
+    }
 }
 
 static void total_smaps(unsigned proc_id, unsigned parent_id,
