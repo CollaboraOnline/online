@@ -73,7 +73,7 @@ L.Map.include({
 
 		this.showBusy(_('Downloading...'), false);
 		this._socket.sendMessage('downloadas ' +
-			'name=' + name + ' ' +
+			'name=' + encodeURIComponent(name) + ' ' +
 			'id=' + id + ' ' +
 			'format=' + format + ' ' +
 			'options=' + options);
