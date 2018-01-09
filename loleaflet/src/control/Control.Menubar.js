@@ -157,18 +157,10 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FontDialog'},
 				{uno: '.uno:ParagraphDialog'},
 				{uno: '.uno:OutlineBullet'},
+				{uno: '.uno:PageDialog'},
 				{type: 'separator'},
-				{uno: '.uno:ResetAttributes'},
-				{name: _('Page'), type: 'menu', menu: [
-					{name: 'A4, ' + _('Portrait'), type: 'action', id: 'a4portrait'},
-					{name: 'A4, ' + _('Landscape'), type: 'action', id: 'a4landscape'},
-					{name: 'A5, ' + _('Portrait'), type: 'action', id: 'a5portrait'},
-					{name: 'A5, ' + _('Landscape'), type: 'action', id: 'a5landscape'},
-					{name: 'Letter, ' + _('Portrait'), type: 'action', id: 'letterportrait'},
-					{name: 'Letter, ' + _('Landscape'), type: 'action', id: 'letterlandscape'},
-					{name: 'Legal, ' + _('Portrait'), type: 'action', id: 'legalportrait'},
-					{name: 'Legal, ' + _('Landscape'), type: 'action', id: 'legallandscape'}]}]
-			},
+				{uno: '.uno:ResetAttributes'}
+			]},
 			{name: _UNO('.uno:TableMenu', 'text'), type: 'menu', menu: [
 				{name: _UNO('.uno:TableInsertMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
@@ -658,35 +650,9 @@ L.Control.Menubar = L.Control.extend({
 			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
 			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
 			map.remove();
-		}
-		else if (id === 'repair') {
+		} else if (id === 'repair') {
 			map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
-		} else if (id === 'a4portrait') {
-			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21000"},"AttributePageSize.Height":{"type":"long", "value": "29700"}}');
-			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "false"}}');
-		} else if (id === 'a4landscape') {
-			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Height":{"type":"long", "value": "21000"},"AttributePageSize.Width":{"type":"long", "value": "29700"}}');
-			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "true"}}');
-		} else if (id === 'a5portrait') {
-			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "14800"},"AttributePageSize.Height":{"type":"long", "value": "21000"}}');
-			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "false"}}');
-		} else if (id === 'a5landscape') {
-			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Height":{"type":"long", "value": "14800"},"AttributePageSize.Width":{"type":"long", "value": "21000"}}');
-			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "true"}}');
-		} else if (id === 'letterportrait') {
-			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21950"},"AttributePageSize.Height":{"type":"long", "value": "27940"}}');
-			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "false"}}');
-		} else if (id === 'letterlandscape') {
-			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Height":{"type":"long", "value": "21950"},"AttributePageSize.Width":{"type":"long", "value": "27940"}}');
-			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "true"}}');
-		} else if (id === 'legalportrait') {
-			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Width":{"type":"long", "value": "21590"},"AttributePageSize.Height":{"type":"long", "value": "35560"}}');
-			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "false"}}');
-		} else if (id === 'legallandscape') {
-			map.sendUnoCommand('.uno:AttributePageSize {"AttributePageSize.Height":{"type":"long", "value": "21590"},"AttributePageSize.Width":{"type":"long", "value": "35560"}}');
-			map.sendUnoCommand('.uno:AttributePage {"AttributePage.Landscape":{"type":"boolean", "value": "true"}}');
 		}
-
 		// Inform the host if asked
 		if ($(item).data('postmessage') === 'true') {
 			map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: id} });

@@ -139,6 +139,7 @@ var unoCommandsArray = {
 	OutlineBullet:{global:{menu:_('~Bullets and Numbering...'),},},
 	OutlineFont:{global:{menu:_('Outline'),},},
 	Overline:{global:{menu:_('Overline'),},},
+	PageDialog:{global:{menu:_('~Page...'),},text:{menu:_('~Page...'),},},
 	PageDown:{text:{menu:_('Next Page'),},},
 	PageUp:{text:{menu:_('Previous Page'),},},
 	ParaLeftToRight:{global:{menu:_('Left-To-Right'),},},
