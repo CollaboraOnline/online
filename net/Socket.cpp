@@ -28,6 +28,12 @@ int SocketPoll::DefaultPollTimeoutMs = 5000;
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
+int Socket::createSocket(Socket::Type type)
+{
+    int domain = type == Type::IPv4 ? AF_INET : AF_INET6;
+    return socket(domain, SOCK_STREAM | SOCK_NONBLOCK, 0);
+}
+
 // help with initialization order
 namespace {
     std::vector<int> &getWakeupsArray()
@@ -182,6 +188,56 @@ void SocketPoll::dumpState(std::ostream& os)
     for (auto &i : _pollSockets)
         i->dumpState(os);
 }
+
+/// Returns true on success only.
+bool ServerSocket::bind(Type type, int port)
+{
+    // Enable address reuse to avoid stalling after
+    // recycling, when previous socket is TIME_WAIT.
+    //TODO: Might be worth refactoring out.
+    const int reuseAddress = 1;
+    constexpr unsigned int len = sizeof(reuseAddress);
+    ::setsockopt(getFD(), SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len);
+
+    int rc;
+
+    if (_type == Socket::Type::IPv4)
+    {
+        struct sockaddr_in addrv4;
+        std::memset(&addrv4, 0, sizeof(addrv4));
+        addrv4.sin_family = AF_INET;
+        addrv4.sin_port = htons(port);
+        if (type == Type::Public)
+            addrv4.sin_addr.s_addr = type == htonl(INADDR_ANY);
+        else
+            addrv4.sin_addr.s_addr = type == htonl(INADDR_LOOPBACK);
+
+        rc = ::bind(getFD(), (const sockaddr *)&addrv4, sizeof(addrv4));
+    }
+    else
+    {
+        struct sockaddr_in6 addrv6;
+        std::memset(&addrv6, 0, sizeof(addrv6));
+        addrv6.sin6_family = AF_INET6;
+        addrv6.sin6_port = htons(port);
+        if (type == Type::Public)
+            addrv6.sin6_addr = in6addr_any;
+        else
+            addrv6.sin6_addr = in6addr_loopback;
+
+        int ipv6only = _type == Socket::Type::All ? 0 : 1;
+        if (::setsockopt(getFD(), IPPROTO_IPV6, IPV6_V6ONLY, (char*)&ipv6only, sizeof(ipv6only)) == -1)
+            LOG_SYS("Failed set ipv6 socket to %d" << ipv6only);
+
+        rc = ::bind(getFD(), (const sockaddr *)&addrv6, sizeof(addrv6));
+    }
+
+    if (rc)
+        LOG_SYS("Failed to bind to: " << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6") << " port: " << port);
+
+    return rc == 0;
+}
+
 
 namespace HttpHelper
 {

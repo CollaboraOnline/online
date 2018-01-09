@@ -166,7 +166,12 @@ using Poco::XML::InputSource;
 using Poco::XML::Node;
 using Poco::XML::NodeList;
 
+/// Port for external clients to connect to
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
+/// Protocols to listen on
+Socket::Type ClientPortProto = Socket::Type::All;
+
+/// Port for prisoners to connect to
 int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 
 /// New LOK child processes ready to host documents.
@@ -655,6 +660,7 @@ void LOOLWSD::initialize(Application& self)
             { "logging.color", "true" },
             { "logging.level", "trace" },
             { "loleaflet_logging", "false" },
+            { "net.proto", "all" },
             { "ssl.enable", "true" },
             { "ssl.termination", "true" },
             { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
@@ -762,6 +768,18 @@ void LOOLWSD::initialize(Application& self)
     if (LogLevel != "trace")
     {
         LOG_INF("Setting log-level to [trace] and delaying setting to requested [" << LogLevel << "].");
+    }
+
+    {
+        std::string proto = getConfigValue<std::string>(conf, "net.proto", "");
+        if (!Poco::icompare(proto, "ipv4"))
+            ClientPortProto = Socket::Type::IPv4;
+        else if (!Poco::icompare(proto, "ipv6"))
+            ClientPortProto = Socket::Type::IPv6;
+        else if (!Poco::icompare(proto, "all"))
+            ClientPortProto = Socket::Type::All;
+        else
+            LOG_WRN("Invalid protocol: " << proto);
     }
 
 #if ENABLE_SSL
@@ -2526,40 +2544,39 @@ private:
 
     /// Create a new server socket - accepted sockets will be added
     /// to the @clientSockets' poll when created with @factory.
-    std::shared_ptr<ServerSocket> getServerSocket(const Poco::Net::SocketAddress& addr,
+    std::shared_ptr<ServerSocket> getServerSocket(ServerSocket::Type type, int port,
                                                   SocketPoll &clientSocket,
                                                   std::shared_ptr<SocketFactory> factory)
     {
-        std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(clientSocket, factory);
+        auto serverSocket = std::make_shared<ServerSocket>(
+            type == ServerSocket::Type::Local ? Socket::Type::IPv4 : ClientPortProto,
+            clientSocket, factory);
 
-        if (!serverSocket->bind(addr))
-        {
-            LOG_SYS("Failed to bind to: " << addr.toString());
+        if (!serverSocket->bind(type, port))
             return nullptr;
-        }
 
         if (serverSocket->listen())
             return serverSocket;
 
-        LOG_SYS("Failed to listen on: " << addr.toString());
         return nullptr;
     }
 
+    /// Create the internal only, local socket for forkit / kits prisoners to talk to.
     std::shared_ptr<ServerSocket> findPrisonerServerPort(int& port)
     {
         std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
 
         LOG_INF("Trying to listen on prisoner port " << port << ".");
-        std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress("127.0.0.1", port),
-                                                               PrisonerPoll, factory);
+        std::shared_ptr<ServerSocket> socket = getServerSocket(
+            ServerSocket::Type::Local, port, PrisonerPoll, factory);
 
         // If we fail, try the next 100 ports.
         for (int i = 0; i < 100 && !socket; ++i)
         {
             ++port;
             LOG_INF("Prisoner port " << (port - 1) << " is busy, trying " << port << ".");
-            socket = getServerSocket(SocketAddress("127.0.0.1", port),
-                                     PrisonerPoll, factory);
+            socket = getServerSocket(
+            ServerSocket::Type::Local, port, PrisonerPoll, factory);
         }
 
         if (!UnitWSD::isUnitTesting() && !socket)
@@ -2573,6 +2590,7 @@ private:
         return socket;
     }
 
+    /// Create the externally listening public socket
     std::shared_ptr<ServerSocket> findServerPort(int port)
     {
         LOG_INF("Trying to listen on client port " << port << ".");
@@ -2584,14 +2602,14 @@ private:
 #endif
             factory = std::make_shared<PlainSocketFactory>();
 
-        std::shared_ptr<ServerSocket> socket = getServerSocket(SocketAddress(port),
-                                                               WebServerPoll, factory);
+        std::shared_ptr<ServerSocket> socket = getServerSocket(
+            ServerSocket::Type::Public, port, WebServerPoll, factory);
         while (!socket)
         {
             ++port;
             LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << ".");
-            socket = getServerSocket(SocketAddress(port),
-                                     WebServerPoll, factory);
+            socket = getServerSocket(
+                ServerSocket::Type::Public, port, WebServerPoll, factory);
         }
 
         LOG_INF("Listening to client connections on port " << port);

@@ -60,6 +60,10 @@
         </outgoing>
     </trace>
 
+    <net desc="Network settings">
+      <proto type="string" default="all" desc="Protocol to use IPv4, IPv6 or all for both">all</proto>
+    </net>
+
     <ssl desc="SSL settings">
         <enable type="bool" default="true">true</enable>
         <termination desc="Connection via proxy where loolwsd acts as working via https, but actually uses http." type="bool" default="true">false</termination>

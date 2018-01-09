@@ -96,8 +96,10 @@ public:
     static const int MaximumSendBufferSize = 128 * 1024;
     static std::atomic<bool> InhibitThreadChecks;
 
-    Socket() :
-        _fd(socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0)),
+    enum Type { IPv4, IPv6, All };
+
+    Socket(Type type) :
+        _fd(createSocket(type)),
         _sendBufferSize(DefaultSendBufferSize),
         _owner(std::this_thread::get_id())
     {
@@ -111,6 +113,9 @@ public:
         // Doesn't block on sockets; no error handling needed.
         close(_fd);
     }
+
+    /// Create socket of the given type.
+    int createSocket(Type type);
 
     /// Returns the OS native socket fd.
     int getFD() const { return _fd; }
