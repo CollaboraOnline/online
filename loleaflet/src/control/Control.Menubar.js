@@ -538,6 +538,8 @@ L.Control.Menubar = L.Control.extend({
 						var data = decodeURIComponent($(aItem).data('uno'));
 						if (data.indexOf(lang) !== -1) {
 							$(aItem).addClass('lo-menu-item-checked');
+						} else if (data.indexOf('LANGUAGE_NONE') !== -1 && lang === '[None]') {
+							$(aItem).addClass('lo-menu-item-checked');
 						} else {
 							$(aItem).removeClass('lo-menu-item-checked');
 						}
