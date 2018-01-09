@@ -26,6 +26,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <locale.h>
+#include <math.h>
 
 #include <Util.hpp>
 
@@ -34,6 +35,7 @@ typedef unsigned long long addr_t;
 bool DumpHex = false;
 bool DumpAll = false;
 bool DumpStrings = false;
+int  DumpWidth = 32;
 
 #define MAP_SIZE 20
 #define PATH_SIZE 1000 // No harm in having it much larger than strictly necessary. Avoids compiler warning.
@@ -152,7 +154,7 @@ struct AddrSpace {
         Map map;
         map._start = start;
         map._end = end;
-        map._name = std::string(name);
+        map._name = std::string(name, 0, strlen(name) - 1);
         _maps.push_back(map);
     }
 
@@ -248,7 +250,7 @@ static void dumpDiff(const AddrSpace &space,
 {
     assert(pageData.size() == parentData.size());
 
-    const unsigned int width = 32;
+    const unsigned int width = DumpWidth;
 
     for (unsigned int i = 0; i < pageData.size(); i += width)
     {
@@ -356,14 +358,14 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
 
         if (DumpHex)
         {
-            printf ("%s page: 0x%.8llx (%d/%d) - touched: %d - %s - from %s\n",
+            printf ("\n%s page: 0x%.8llx (%d/%d) - touched: %d - %s - from %s\n",
                     type, page, (int)++cnt, (int)pages.size(), touched,
                     style, space.findName(page).c_str());
 
             if (touched == 0)
             {
                 std::stringstream pageStr;
-                Util::dumpHex(pageStr, "", "", pageData, false);
+                Util::dumpHex(pageStr, "", "", pageData, false, DumpWidth);
                 printf("%s", pageStr.str().c_str());
             }
             else
@@ -514,7 +516,7 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
                 if (!name)
                     name = strchr(buffer, '/');
                 if (!name)
-                    name = "[anon]";
+                    name = "[anon]\n";
                 space.insert(start, end, name);
                 for (addr_t p = start; p < end; p += 0x1000)
                     pushTo->push_back(p);
@@ -613,7 +615,6 @@ int main(int argc, char **argv)
     const char *appOrPid = nullptr;
 
     setlocale (LC_ALL, "");
-    getopt(argc, argv, ""); // FIXME: Should use this properly.
 
     for (int i = 1; i < argc; ++i)
     {
@@ -626,6 +627,10 @@ int main(int argc, char **argv)
             DumpAll = true;
         else if (strstr(arg, "--strings"))
             DumpStrings = true;
+        else if (strstr(arg, "--width"))
+        {
+            DumpWidth = std::max((int)pow(2, round(log(atoi(argv[++i]))/log(2))), 8);
+        }
         else
             appOrPid = arg;
     }
@@ -636,9 +641,10 @@ int main(int argc, char **argv)
     {
         fprintf(stderr, "Usage: loolmap --hex <name of process|pid>\n");
         fprintf(stderr, "Dump memory map information for a given process\n");
-        fprintf(stderr, "    --hex     Hex dump relevant page contents and diff to parent process\n");
-        fprintf(stderr, "    --strings Print all detected strings\n");
-        fprintf(stderr, "    --all     Hex dump all writable pages whether touched or not\n");
+        fprintf(stderr, "    --hex           Hex dump relevant page contents and diff to parent process\n");
+        fprintf(stderr, "    --strings       Print all detected strings\n");
+        fprintf(stderr, "    --all           Hex dump all writable pages whether touched or not\n");
+        fprintf(stderr, "    --width <bytes> Define width of hex dump in bytes, rounded to a power of 2\n");
         return 0;
     }
 
