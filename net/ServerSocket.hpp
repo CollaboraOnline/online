@@ -27,27 +27,20 @@ public:
 class ServerSocket : public Socket
 {
 public:
-    ServerSocket(SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory) :
+    ServerSocket(Socket::Type type, SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory) :
+        Socket(type),
+        _type(type),
         _clientPoller(clientPoller),
         _sockFactory(std::move(sockFactory))
     {
     }
 
+    enum Type { Local, Public };
+
     /// Binds to a local address (Servers only).
     /// Does not retry on error.
-    /// Returns true on success only.
-    bool bind(const Poco::Net::SocketAddress& address)
-    {
-        // Enable address reuse to avoid stalling after
-        // recycling, when previous socket is TIME_WAIT.
-        //TODO: Might be worth refactoring out.
-        const int reuseAddress = 1;
-        constexpr unsigned int len = sizeof(reuseAddress);
-        ::setsockopt(getFD(), SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len);
-
-        const int rc = ::bind(getFD(), address.addr(), address.length());
-        return rc == 0;
-    }
+    /// Returns true only on success.
+    bool bind(Type type, int port);
 
     /// Listen to incoming connections (Servers only).
     /// Does not retry on error.
@@ -55,6 +48,9 @@ public:
     bool listen(const int backlog = 64)
     {
         const int rc = ::listen(getFD(), backlog);
+
+        if (rc)
+            LOG_SYS("Failed to listen");
         return rc == 0;
     }
 
@@ -107,6 +103,7 @@ public:
     }
 
 private:
+    Socket::Type _type;
     SocketPoll& _clientPoller;
     std::shared_ptr<SocketFactory> _sockFactory;
 };
