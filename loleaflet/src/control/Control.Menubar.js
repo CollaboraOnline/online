@@ -541,7 +541,7 @@ L.Control.Menubar = L.Control.extend({
 					} else {
 						$(aItem).removeClass('disabled');
 					}
-					if (unoCommand.indexOf('.uno:LanguageStatus') !== -1) {
+					if (unoCommand.indexOf('.uno:LanguageStatus?Language:string=Current_') !== -1) {
 						var lang = map['stateChangeHandler'].getItemValue('.uno:LanguageStatus');
 						var data = decodeURIComponent($(aItem).data('uno'));
 						if (data.indexOf(lang) !== -1) {
