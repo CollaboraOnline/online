@@ -2078,8 +2078,14 @@ void lokit_main(const std::string& childRoot,
         logProperties["path"] = std::string(logFilename);
     }
 
-    Log::initialize("kit", logLevel ? logLevel : "", logColor != nullptr, logToFile, logProperties);
     Util::rng::reseed();
+    const std::string LogLevel = logLevel ? logLevel : "trace";
+    const bool bTraceStartup = (std::getenv("LOOL_TRACE_STARTUP") != nullptr);
+    Log::initialize("kit", bTraceStartup ? "trace" : logLevel, logColor != nullptr, logToFile, logProperties);
+    if (bTraceStartup && LogLevel != "trace")
+    {
+        LOG_INF("Setting log-level to [trace] and delaying setting to requested [" << LogLevel << "].");
+    }
 
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
@@ -2289,6 +2295,12 @@ void lokit_main(const std::string& childRoot,
                 std::cout << "office version details: " << versionString << std::endl;
             uri.addQueryParameter("version", versionString);
             free(versionInfo);
+        }
+
+        if (bTraceStartup && LogLevel != "trace")
+        {
+            LOG_INF("Setting log-level to [" << LogLevel << "].");
+            Log::logger().setLevel(LogLevel);
         }
 
         SocketPoll mainKit("kit");
