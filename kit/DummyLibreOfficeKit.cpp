@@ -279,8 +279,7 @@ static char* doc_getPartName(LibreOfficeKitDocument* pThis, int nPart)
     (void) pThis;
     (void) nPart;
 
-    char* pMemory = static_cast<char*>(malloc(11));
-    strncpy(pMemory, "Dummy part", 10);
+    char* pMemory = strdup("Dummy part");
     return pMemory;
 
 }
@@ -402,13 +401,11 @@ static char* doc_getTextSelection(LibreOfficeKitDocument* pThis, const char* pMi
     (void) pMimeType;
     (void) pUsedMimeType;
 
-    char* pMemory = static_cast<char*>(malloc(11));
-    strncpy(pMemory, "Dummy text", 10);
+    char* pMemory = strdup("Dummy text");
 
     if (pUsedMimeType)
     {
-        *pUsedMimeType = static_cast<char*>(malloc(25));
-        strncpy(*pUsedMimeType, "text/plain;charset=utf-8", 24);
+        *pUsedMimeType = strdup("text/plain;charset=utf-8");
     }
 
     return pMemory;
@@ -442,8 +439,7 @@ static char* doc_getCommandValues(LibreOfficeKitDocument* pThis, const char* pCo
     (void) pThis;
     (void) pCommand;
 
-    char* pMemory = static_cast<char*>(malloc(1));
-    strncpy(pMemory, "", 0);
+    char* pMemory = strdup("");
     return pMemory;
 }
 
@@ -527,8 +523,7 @@ static char* lo_getError (LibreOfficeKit *pThis)
 {
     (void) pThis;
 
-    char* pMemory = static_cast<char*>(malloc(12));
-    strncpy(pMemory, "Dummy error", 11);
+    char* pMemory = strdup("Dummy error");
     return pMemory;
 }
 
@@ -569,8 +564,7 @@ static char* lo_getVersionInfo(LibreOfficeKit* /*pThis*/)
         "\"BuildId\": \"1\" "
         "}";
 
-    char* pVersion = static_cast<char*>(malloc(sizeof(version)));
-    strncpy(pVersion, version, sizeof(version) - 1);
+    char* pVersion = strdup(version);
     return pVersion;
 }
 
