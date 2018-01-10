@@ -1637,7 +1637,7 @@ private:
                     std::vector<char> vect(size);
                     vect.assign(data, data + size);
 
-                    // TODO loolnb - this is probably wrong...
+                    // TODO this is probably wrong...
                     session->handleMessage(/* fin = */ false, WSOpCode::Binary, vect);
                     return true;
                 }

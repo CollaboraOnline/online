@@ -2902,12 +2902,6 @@ void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& /* requ
     switch (type)
     {
     case TestRequest::Client:
-#if 0 // loolnb
-        ClientRequestHandler::handleClientRequest(request, response, LOOLWSD::GenSessionId());
-        break;
-    case TestRequest::Prisoner:
-        PrisonerRequestHandler::handlePrisonerRequest(request, response);
-#endif
         break;
     default:
         assert(false);

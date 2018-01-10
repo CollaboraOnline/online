@@ -124,13 +124,6 @@ public:
         SocketDisposition & /* disposition */,
         WebSocketHandler & /* socket */) override
     {
-#if 0 // loolnb
-        if (_dist(_mt) < 10) // 1%
-        {
-            std::cerr << "Mangle request URI\n";
-            request.setURI(corruptString(request.getURI()));
-        }
-#endif
         return false;
     }
 };
