@@ -225,7 +225,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
                 {
                     _admin->rescheduleMemTimer(settingVal);
                     model.clearMemStats();
-                    model.notify("settings mem_stats_interval=" + std::to_string(settingVal));
+                    model.notify("settings mem_stats_interval=" + std::to_string(_admin->getMemStatsInterval()));
                 }
             }
             else if (settingName == "cpu_stats_size")
@@ -241,7 +241,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
                 {
                     _admin->rescheduleCpuTimer(settingVal);
                     model.clearCpuStats();
-                    model.notify("settings cpu_stats_interval=" + std::to_string(settingVal));
+                    model.notify("settings cpu_stats_interval=" + std::to_string(_admin->getCpuStatsInterval()));
                 }
             }
             else if (LOOLProtocol::matchPrefix("limit_", settingName))
@@ -375,9 +375,9 @@ void Admin::pollingThread()
 
         int cpuWait = _cpuStatsTaskIntervalMs -
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCPU).count();
-        if (cpuWait <= 0)
+        if (cpuWait <= MinStatsIntervalMs / 2) // Close enough
         {
-            size_t currentJiffies = getTotalCpuUsage();
+            const size_t currentJiffies = getTotalCpuUsage();
             auto cpuPercent = 100 * 1000 * currentJiffies / (sysconf (_SC_CLK_TCK) * _cpuStatsTaskIntervalMs);
             _model.addCpuStats(cpuPercent);
 
@@ -387,7 +387,7 @@ void Admin::pollingThread()
 
         int memWait = _memStatsTaskIntervalMs -
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastMem).count();
-        if (memWait <= 0)
+        if (memWait <= MinStatsIntervalMs / 2) // Close enough
         {
             const auto totalMem = getTotalMemoryUsage();
             if (totalMem != _lastTotalMemory)
@@ -407,7 +407,7 @@ void Admin::pollingThread()
 
         int netWait = _networkStatsIntervalMs -
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastNet).count();
-        if(netWait <= 0)
+        if (netWait <= MinStatsIntervalMs / 2) // Close enough
         {
             uint64_t sentCount = _model.getSentBytesTotal();
             uint64_t recvCount = _model.getRecvBytesTotal();
@@ -422,9 +422,10 @@ void Admin::pollingThread()
             lastNet = now;
             netWait += _networkStatsIntervalMs;
         }
+
         // Handle websockets & other work.
-        int timeout = std::min(std::min(cpuWait, memWait), netWait);
-        LOG_TRC("Admin poll for " << timeout << "ms");
+        const int timeout = std::max(std::min(std::min(cpuWait, memWait), netWait), MinStatsIntervalMs);
+        LOG_TRC("Admin poll for " << timeout << "ms.");
         poll(timeout);
     }
 }
@@ -452,15 +453,15 @@ void Admin::rmDoc(const std::string& docKey)
 
 void Admin::rescheduleMemTimer(unsigned interval)
 {
-    _memStatsTaskIntervalMs = interval;
-    LOG_INF("Memory stats interval changed - New interval: " << interval);
+    _memStatsTaskIntervalMs = std::max<int>(interval, MinStatsIntervalMs);
+    LOG_INF("Memory stats interval changed - New interval: " << _memStatsTaskIntervalMs);
     wakeup();
 }
 
 void Admin::rescheduleCpuTimer(unsigned interval)
 {
-    _cpuStatsTaskIntervalMs = interval;
-    LOG_INF("CPU stats interval changed - New interval: " << interval);
+    _cpuStatsTaskIntervalMs = std::max<int>(interval, MinStatsIntervalMs);
+    LOG_INF("CPU stats interval changed - New interval: " << _cpuStatsTaskIntervalMs);
     wakeup();
 }
 
@@ -547,15 +548,17 @@ void Admin::notifyForkit()
 
 void Admin::triggerMemoryCleanup(size_t totalMem)
 {
-    LOG_TRC("Total memory we are consuming (in kB): " << totalMem);
     // Trigger mem cleanup when we are consuming too much memory (as configured by sysadmin)
     const auto memLimit = LOOLWSD::getConfigValue<double>("memproportion", 0.0);
-    LOG_TRC("Mem proportion for LOOL configured : " << memLimit);
     if (memLimit == 0.0 || _totalSysMem == 0)
     {
-        LOG_TRC("Not configured to do memory cleanup. Skipping memory cleanup.");
+        LOG_TRC("Total memory we are consuming (in kB): " << totalMem <<
+                ". Not configured to do memory cleanup. Skipping memory cleanup.");
         return;
     }
+
+    LOG_TRC("Total memory we are consuming (in kB): " << totalMem <<
+            ". Mem proportion for LOOL configured : " << memLimit);
 
     float memToFreePercentage = 0;
     if ( (memToFreePercentage = (totalMem/static_cast<double>(_totalSysMem)) - memLimit/100.) > 0.0 )
