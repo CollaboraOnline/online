@@ -66,8 +66,9 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
 				{name: _UNO('.uno:InsertHeaderFooterMenu', 'text'), type: 'menu', menu: [
-					{uno: '.uno:InsertPageHeader'},
-					{uno: '.uno:InsertPageFooter'}]},
+					{uno: '.uno:InsertPageHeader', type: 'menu', menu: [{name: _('All'), disabled: true, id: 'insertheader', tag: '_ALL_', uno: '.uno:InsertPageHeader?'}]},
+					{uno: '.uno:InsertPageFooter', type: 'menu', menu: [{name: _('All'), disabled: true, id: 'insertfooter', tag: '_ALL_', uno: '.uno:InsertPageFooter?'}]}
+				]},
 				{uno: '.uno:InsertFootnote'},
 				{uno: '.uno:InsertEndnote'},
 				{type: 'separator'},
@@ -392,6 +393,7 @@ L.Control.Menubar = L.Control.extend({
 		map.on('doclayerinit', this._onDocLayerInit, this);
 		map.on('addmenu', this._addMenu, this);
 		map.on('commandvalues', this._onInitMenu, this);
+		map.on('updatetoolbarcommandvalues', this._onStyleMenu, this);
 	},
 
 	_addMenu: function (e) {
@@ -412,19 +414,26 @@ L.Control.Menubar = L.Control.extend({
 		this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
 	},
 
-	_createLangMenuItem: function (lang, command) {
+	_createUnoMenuItem: function (caption, command, tag) {
 		var liItem, aItem;
 		liItem = L.DomUtil.create('li', '');
 		aItem = L.DomUtil.create('a', '', liItem);
-		$(aItem).text(lang);
+		$(aItem).text(caption);
 		$(aItem).data('type', 'unocommand');
-		$(aItem).data('uno', '.uno:LanguageStatus?Language:string=' + command);
+		$(aItem).data('uno', command);
+		$(aItem).data('tag', tag);
 		return liItem;
 	},
 
+
 	_onInitMenu: function (e) {
 		if (e.commandName === '.uno:LanguageStatus' && L.Util.isArray(e.commandValues)) {
-			var resetLang = _('Reset to Default Language'), translated, neutral;
+			var translated, neutral;
+			var constDefa = 'Default_RESET_LANGUAGES';
+			var constCurr = 'Current_RESET_LANGUAGES';
+			var constPara = 'Paragraph_RESET_LANGUAGES';
+			var constLang = '.uno:LanguageStatus?Language:string=';
+			var resetLang = _('Reset to Default Language');
 			var languages  = [];
 
 			e.commandValues.forEach(function(language) {
@@ -440,16 +449,33 @@ L.Control.Menubar = L.Control.extend({
 			for (var lang in languages) {
 				translated = languages[lang].translated;
 				neutral = languages[lang].neutral;
-				$menuSelection.append(this._createLangMenuItem(translated, encodeURIComponent('Current_' + neutral)));
-				$menuParagraph.append(this._createLangMenuItem(translated, encodeURIComponent('Paragraph_' + neutral)));
-				$menuDefault.append(this._createLangMenuItem(translated, encodeURIComponent('Default_' + neutral)));
+				$menuSelection.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Current_' + neutral)));
+				$menuParagraph.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Paragraph_' + neutral)));
+				$menuDefault.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Default_' + neutral)));
 			}
 			$menuSelection.append(this._createMenu([{type: 'separator'}]));
 			$menuParagraph.append(this._createMenu([{type: 'separator'}]));
 			$menuDefault.append(this._createMenu([{type: 'separator'}]));
-			$menuSelection.append(this._createLangMenuItem(resetLang, 'Current_RESET_LANGUAGES'));
-			$menuParagraph.append(this._createLangMenuItem(resetLang, 'Paragraph_RESET_LANGUAGES'));
-			$menuDefault.append(this._createLangMenuItem(resetLang, 'Default_RESET_LANGUAGES'));
+			$menuSelection.append(this._createUnoMenuItem(resetLang, constLang + constCurr));
+			$menuParagraph.append(this._createUnoMenuItem(resetLang, constLang + constPara));
+			$menuDefault.append(this._createUnoMenuItem(resetLang, constLang + constDefa));
+		}
+	},
+
+	_onStyleMenu: function (e) {
+		if (e.commandName === '.uno:StyleApply') {
+			var style;
+			var constArg = '&';
+			var constHeader = '.uno:InsertPageHeader?PageStyle:string=';
+			var constFooter = '.uno:InsertPageFooter?PageStyle:string=';
+			var $menuHeader = $('#menu-insertheader').parent();
+			var $menuFooter = $('#menu-insertfooter').parent();
+			var pageStyles = e.commandValues['HeaderFooter'];
+			for (var iterator in pageStyles) {
+				style = pageStyles[iterator];
+				$menuHeader.append(this._createUnoMenuItem(_(style), constHeader + encodeURIComponent(style) + constArg, style));
+				$menuFooter.append(this._createUnoMenuItem(_(style), constFooter + encodeURIComponent(style) + constArg, style));
+			}
 		}
 	},
 
@@ -523,6 +549,18 @@ L.Control.Menubar = L.Control.extend({
 		}
 	},
 
+	_checkedMenu: function(uno, item) {
+		var constChecked = 'lo-menu-item-checked';
+		var state = map['stateChangeHandler'].getItemValue(uno);
+		var data = $(item).data('tag');
+		state = state[data] || false;
+		if (state) {
+			$(item).addClass(constChecked);
+		} else {
+			$(item).removeClass(constChecked);
+		}
+	},
+
 	_beforeShow: function(e, menu) {
 		var self = e.data.self;
 		var items = $(menu).children().children('a').not('.has-submenu');
@@ -532,28 +570,44 @@ L.Control.Menubar = L.Control.extend({
 			var id = $(aItem).data('id');
 			if (map._permission === 'edit') {
 				if (type === 'unocommand') { // enable all depending on stored commandStates
-					var unoCommand = $(aItem).data('uno');
-					var itemState = map['stateChangeHandler'].getItemValue(unoCommand);
+					var data, lang;
+					var constUno = 'uno';
+					var constState = 'stateChangeHandler';
+					var constChecked = 'lo-menu-item-checked';
+					var constLanguage = '.uno:LanguageStatus';
+					var constPageHeader = '.uno:InsertPageHeader';
+					var constPageFooter = '.uno:InsertPageFooter';
+					var unoCommand = $(aItem).data(constUno);
+					var itemState = map[constState].getItemValue(unoCommand);
 					if (itemState === 'disabled') {
 						$(aItem).addClass('disabled');
 					} else {
 						$(aItem).removeClass('disabled');
 					}
-					if (unoCommand.indexOf('.uno:LanguageStatus?Language:string=Current_') !== -1) {
-						var lang = map['stateChangeHandler'].getItemValue('.uno:LanguageStatus');
-						var data = decodeURIComponent($(aItem).data('uno'));
+					if (unoCommand.startsWith(constLanguage)) {
+						unoCommand = constLanguage;
+						lang = map[constState].getItemValue(unoCommand);
+						data = decodeURIComponent($(aItem).data(constUno));
 						if (data.indexOf(lang) !== -1) {
-							$(aItem).addClass('lo-menu-item-checked');
+							$(aItem).addClass(constChecked);
 						} else if (data.indexOf('LANGUAGE_NONE') !== -1 && lang === '[None]') {
-							$(aItem).addClass('lo-menu-item-checked');
+							$(aItem).addClass(constChecked);
 						} else {
-							$(aItem).removeClass('lo-menu-item-checked');
+							$(aItem).removeClass(constChecked);
 						}
 					}
+					else if (unoCommand.startsWith(constPageHeader)) {
+						unoCommand = constPageHeader;
+						self._checkedMenu(unoCommand, this);
+					}
+					else if (unoCommand.startsWith(constPageFooter)) {
+						unoCommand = constPageFooter;
+						self._checkedMenu(unoCommand, this);
+					}
 					else if (itemState === 'true') {
-						$(aItem).addClass('lo-menu-item-checked');
+						$(aItem).addClass(constChecked);
 					} else {
-						$(aItem).removeClass('lo-menu-item-checked');
+						$(aItem).removeClass(constChecked);
 					}
 				} else if (type === 'action') { // enable all except fullscreen on windows
 					if (id === 'fullscreen' && (L.Browser.ie || L.Browser.edge)) { // Full screen works weirdly on IE 11 and on Edge
@@ -669,23 +723,10 @@ L.Control.Menubar = L.Control.extend({
 
 	_sendCommand: function (item) {
 		var unoCommand = $(item).data('uno');
-		if (unoCommand == '.uno:InsertPageHeader' || unoCommand == '.uno:InsertPageFooter') {
-			if (map['stateChangeHandler'].getItemValue(unoCommand) === 'true') {
-				vex.dialog.confirm({
-					message: (unoCommand.endsWith('Header') ? _('Are you sure you want to delete the header?') :
-						_('Are you sure you want to delete the footer?')),
-					callback: function(value) {
-						if (value) {
-							map.sendUnoCommand(unoCommand + '?On:bool=false');
-						}
-					}
-				});
-			} else {
-				map.sendUnoCommand(unoCommand + '?On:bool=true');
-			}
-		} else {
-			map.sendUnoCommand(unoCommand);
+		if (unoCommand.startsWith('.uno:InsertPageHeader') || unoCommand.startsWith('.uno:InsertPageFooter')) {
+			unoCommand = unoCommand + ($(item).hasClass('lo-menu-item-checked') ? 'On:bool=false' : 'On:bool=true');
 		}
+		map.sendUnoCommand(unoCommand);
 	},
 
 	_onDeleteSlide: function(e) {
@@ -787,6 +828,7 @@ L.Control.Menubar = L.Control.extend({
 			} else if (menu[i].type === 'unocommand' || menu[i].uno !== undefined) {
 				$(aItem).data('type', 'unocommand');
 				$(aItem).data('uno', menu[i].uno);
+				$(aItem).data('tag', menu[i].tag);
 			} else if (menu[i].type === 'separator') {
 				$(aItem).addClass('separator');
 			} else if (menu[i].type === 'action') {
