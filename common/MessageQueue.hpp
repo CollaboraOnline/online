@@ -95,7 +95,6 @@ public:
 protected:
     virtual void put_impl(const Payload& value)
     {
-        const auto msg = std::string(value.data(), value.size());
         _queue.push_back(value);
     }
 
