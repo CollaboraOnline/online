@@ -141,8 +141,11 @@ private:
 
     std::atomic<int> _memStatsTaskIntervalMs;
     std::atomic<int> _cpuStatsTaskIntervalMs;
-    DocProcSettings _defDocProcSettings;
     std::atomic<int> _networkStatsIntervalMs;
+    DocProcSettings _defDocProcSettings;
+
+    // Don't update any more frequently than this since it's excessive.
+    static const int MinStatsIntervalMs = 50;
 };
 
 #endif
