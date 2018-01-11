@@ -269,6 +269,7 @@ void DocumentBroker::pollThread()
 
         if (ShutdownRequestFlag)
         {
+            autoSave(true);
             _closeReason = "recycling";
             _stop = true;
         }
@@ -295,7 +296,7 @@ void DocumentBroker::pollThread()
 
     LOG_INF("Finished polling doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
             _poll->continuePolling() << ", ShutdownRequestFlag: " << ShutdownRequestFlag <<
-            ", TerminationFlag: " << TerminationFlag << ".");
+            ", TerminationFlag: " << TerminationFlag << ", closeReason: " << _closeReason << ". Flushing socket.");
 
     // Flush socket data first.
     const int flushTimeoutMs = POLL_TIMEOUT_MS * 2; // ~1000ms
@@ -309,6 +310,10 @@ void DocumentBroker::pollThread()
 
         _poll->poll(std::min(flushTimeoutMs - elapsedMs, POLL_TIMEOUT_MS / 5));
     }
+
+    LOG_INF("Finished flushing socket for doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
+            _poll->continuePolling() << ", ShutdownRequestFlag: " << ShutdownRequestFlag <<
+            ", TerminationFlag: " << TerminationFlag << ". Terminating child with reason: [" << _closeReason << "].");
 
     // Terminate properly while we can.
     terminateChild(_closeReason);
@@ -859,7 +864,8 @@ bool DocumentBroker::autoSave(const bool force)
     if (force)
     {
         LOG_TRC("Sending forced save command for [" << _docKey << "].");
-        sent = sendUnoSave(savingSessionId);
+        // Don't terminate editing as this can be invoked by the admin OOM, but otherwise force saving anyway.
+        sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/ true, /*dontSaveIfUnmodified=*/ false, /*isAutosave=*/ false);
     }
     else if (_isModified)
     {
