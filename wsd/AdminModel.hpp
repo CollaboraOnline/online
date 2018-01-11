@@ -58,17 +58,18 @@ struct DocProcSettings
 /// Containing basic information about document
 struct DocBasicInfo
 {
-    const std::string _docKey;
-    const std::time_t _idleTime;
-    const bool _saved;
-    const int _mem;
+    std::string DocKey;
+    std::time_t IdleTime;
+    int Mem;
+    bool Saved;
 
-    DocBasicInfo(const std::string& docKey, std::time_t idleTime, bool saved, int mem)
-        : _docKey(docKey),
-          _idleTime(idleTime),
-          _saved(saved),
-          _mem(mem)
-        { }
+    DocBasicInfo(const std::string& docKey, std::time_t idleTime, int mem, bool saved) :
+        DocKey(docKey),
+        IdleTime(idleTime),
+        Mem(mem),
+        Saved(saved)
+    {
+    }
 };
 
 /// A document in Admin controller.
@@ -266,7 +267,7 @@ public:
     uint64_t getRecvBytesTotal() { return _recvBytesTotal; }
 
     /// Document basic info list sorted by most idle time
-    std::list<DocBasicInfo> getDocumentsSortedByIdle() const;
+    std::vector<DocBasicInfo> getDocumentsSortedByIdle() const;
 
 private:
     std::string getMemStats();

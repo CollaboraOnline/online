@@ -98,7 +98,7 @@ namespace Util
     }
 
     /// Returns the total physical memory (in kB) available in the system
-    size_t getTotalSystemMemory();
+    size_t getTotalSystemMemoryKb();
 
     /// Returns the process PSS in KB (works only when we have perms for /proc/pid/smaps).
     size_t getMemoryUsagePSS(const Poco::Process::PID pid);

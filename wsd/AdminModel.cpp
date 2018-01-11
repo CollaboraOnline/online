@@ -627,23 +627,26 @@ unsigned AdminModel::getTotalActiveViews()
     return numTotalViews;
 }
 
-std::list<DocBasicInfo> AdminModel::getDocumentsSortedByIdle() const
+std::vector<DocBasicInfo> AdminModel::getDocumentsSortedByIdle() const
 {
-    std::list<DocBasicInfo> docList;
+    std::vector<DocBasicInfo> docs;
+    docs.reserve(_documents.size());
     for (const auto& it: _documents)
     {
-        docList.emplace_back(it.second.getDocKey(),
-                             it.second.getIdleTime(),
-                             !it.second.getModifiedStatus(),
-                             it.second.getMemoryDirty());
+        docs.emplace_back(it.second.getDocKey(),
+                          it.second.getIdleTime(),
+                          it.second.getMemoryDirty(),
+                          !it.second.getModifiedStatus());
     }
 
     // Sort the list by idle times;
-    docList.sort([](const DocBasicInfo& a, const DocBasicInfo& b) {
-            return a._idleTime > b._idleTime;
-        });
+    std::sort(std::begin(docs), std::end(docs),
+              [](const DocBasicInfo& a, const DocBasicInfo& b)
+              {
+                return a.IdleTime >= b.IdleTime;
+              });
 
-    return docList;
+    return docs;
 }
 
 std::string AdminModel::getDocuments() const

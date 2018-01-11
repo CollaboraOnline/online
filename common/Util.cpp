@@ -170,7 +170,7 @@ namespace Util
         return nullptr;
     }
 
-    size_t getTotalSystemMemory()
+    size_t getTotalSystemMemoryKb()
     {
         size_t totalMemKb = 0;
         FILE* file = fopen("/proc/meminfo", "r");

@@ -72,7 +72,7 @@ public:
     size_t getTotalMemoryUsage();
     /// Takes into account the 'memproportion' property in config file to find the amount of memory
     /// available to us.
-    size_t getTotalAvailableMemory() { return _totalAvailMem; }
+    size_t getTotalAvailableMemory() { return _totalAvailMemKb; }
     size_t getTotalCpuUsage();
 
     void modificationAlert(const std::string& dockey, Poco::Process::PID pid, bool value);
@@ -136,8 +136,8 @@ private:
     size_t _lastJiffies;
     uint64_t _lastSentCount;
     uint64_t _lastRecvCount;
-    size_t _totalSysMem;
-    size_t _totalAvailMem;
+    size_t _totalSysMemKb;
+    size_t _totalAvailMemKb;
 
     std::atomic<int> _memStatsTaskIntervalMs;
     std::atomic<int> _cpuStatsTaskIntervalMs;
