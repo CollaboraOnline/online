@@ -298,6 +298,13 @@ void DocumentBroker::pollThread()
             _poll->continuePolling() << ", ShutdownRequestFlag: " << ShutdownRequestFlag <<
             ", TerminationFlag: " << TerminationFlag << ", closeReason: " << _closeReason << ". Flushing socket.");
 
+    if (_isModified)
+    {
+        std::stringstream state;
+        dumpState(state);
+        LOG_ERR("DocumentBroker stopping although modified " << state.str());
+    }
+
     // Flush socket data first.
     const int flushTimeoutMs = POLL_TIMEOUT_MS * 2; // ~1000ms
     const auto flushStartTime = std::chrono::steady_clock::now();
