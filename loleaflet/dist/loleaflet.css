@@ -352,4 +352,9 @@ body {
         cursor: default;
         display: block; /* required to remove all borders around canvas element */
         caret-color: transparent; /* firefox shows a caret otherwise on top-left of the canvas */
+        user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
 }
