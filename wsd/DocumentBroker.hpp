@@ -364,6 +364,9 @@ private:
     /// Saves the doc to the storage.
     bool saveToStorageInternal(const std::string& sesionId, bool success, const std::string& result = "", const std::string& saveAsPath = std::string(), const std::string& saveAsFilename = std::string());
 
+    /// True iff a save is in progress (requested but not completed).
+    bool isSaving() const { return _lastSaveResponseTime < _lastSaveRequestTime; }
+
     /// True iff there is at least one non-readonly session other than the given.
     /// Since only editable sessions can save, we need to use the last to
     /// save modified documents, otherwise we'll potentially have to save on
@@ -408,14 +411,19 @@ private:
     /// document was modified and saved or not.
     std::chrono::steady_clock::time_point _lastSaveTime;
 
-    /// The last time we sent a save request.
+    /// The last time we sent a save request to lokit.
     std::chrono::steady_clock::time_point _lastSaveRequestTime;
+
+    /// The last time we received a response for a save request from lokit.
+    std::chrono::steady_clock::time_point _lastSaveResponseTime;
 
     /// The document's last-modified time on storage.
     Poco::Timestamp _documentLastModifiedTime;
 
     /// The jailed file last-modified time.
     Poco::Timestamp _lastFileModifiedTime;
+
+    /// All session of this DocBroker by ID.
     std::map<std::string, std::shared_ptr<ClientSession> > _sessions;
 
     std::unique_ptr<StorageBase> _storage;

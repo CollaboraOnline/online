@@ -137,7 +137,7 @@ public:
     {
         // Could assert here that it is in the same directory?
         _jailedFilePath = newPath;
-    };
+    }
 
     bool isLoaded() const { return _isLoaded; }
 
