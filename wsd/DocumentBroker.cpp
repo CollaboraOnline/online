@@ -258,7 +258,7 @@ void DocumentBroker::pollThread()
             adminRecv = recv;
         }
 
-        if (_lastSaveTime < _lastSaveRequestTime &&
+        if (isSaving() &&
             std::chrono::duration_cast<std::chrono::milliseconds>
                     (now - _lastSaveRequestTime).count() <= COMMAND_TIMEOUT_MS)
         {
@@ -693,6 +693,9 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 {
     assertCorrectThread();
 
+    // Record that we got a response to avoid timeing out on saving.
+    _lastSaveResponseTime = std::chrono::steady_clock::now();
+
     const bool isSaveAs = !saveAsPath.empty();
 
     // If save requested, but core didn't save because document was unmodified
@@ -732,7 +735,6 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         // Nothing to do.
         LOG_DBG("Skipping unnecessary saving to URI [" << uri << "] with docKey [" << _docKey <<
                 "]. File last modified " << _lastFileModifiedTime.elapsed() / 1000000 << " seconds ago.");
-        _lastSaveTime = std::chrono::steady_clock::now();
         _poll->wakeup();
         return true;
     }
@@ -745,13 +747,13 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     {
         if (!isSaveAs)
         {
+            // Saved and stored; update flags.
             setModified(false);
             _lastFileModifiedTime = newFileModifiedTime;
             _tileCache->saveLastModified(_lastFileModifiedTime);
             _lastSaveTime = std::chrono::steady_clock::now();
-            _poll->wakeup();
 
-            // So set _documentLastModifiedTime then
+            // Save the storage timestamp.
             _documentLastModifiedTime = _storage->getFileInfo()._modifiedTime;
 
             // After a successful save, we are sure that document in the storage is same as ours
@@ -760,6 +762,9 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             Log::debug() << "Saved docKey [" << _docKey << "] to URI [" << uri
                          << "] and updated tile cache. Document modified timestamp: "
                          << _documentLastModifiedTime << Log::end;
+
+            // Resume polling.
+            _poll->wakeup();
         }
         else
         {
