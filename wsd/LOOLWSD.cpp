@@ -1412,7 +1412,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
     std::shared_ptr<DocumentBroker> docBroker;
 
     // Lookup this document.
-    auto it = DocBrokers.find(docKey);
+    const auto it = DocBrokers.find(docKey);
     if (it != DocBrokers.end() && it->second)
     {
         // Get the DocumentBroker from the Cache.

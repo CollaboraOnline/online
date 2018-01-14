@@ -177,7 +177,7 @@ void DocumentBroker::startThread()
     _poll->startThread();
 }
 
-void DocumentBroker::assertCorrectThread()
+void DocumentBroker::assertCorrectThread() const
 {
     _poll->assertCorrectThread();
 }
@@ -226,15 +226,15 @@ void DocumentBroker::pollThread()
     _childProcess->setDocumentBroker(shared_from_this());
     LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
 
-    auto last30SecCheckTime = std::chrono::steady_clock::now();
-
     static const bool AutoSaveEnabled = !std::getenv("LOOL_NO_AUTOSAVE");
     static const size_t IdleDocTimeoutSecs = LOOLWSD::getConfigValue<int>(
                                                       "per_document.idle_timeout_secs", 3600);
+
     // Used to accumulate B/W deltas.
     uint64_t adminSent = 0;
     uint64_t adminRecv = 0;
     auto lastBWUpdateTime = std::chrono::steady_clock::now();
+    auto last30SecCheckTime = std::chrono::steady_clock::now();
 
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
@@ -254,7 +254,7 @@ void DocumentBroker::pollThread()
                                        // connection drop transiently reduces this.
                                        (sent > adminSent ? (sent - adminSent): uint64_t(0)),
                                        (recv > adminRecv ? (recv - adminRecv): uint64_t(0)));
-            LOG_INF("Doc [" << _docKey << "] added sent: " << sent << " recv: " << recv << " bytes to totals");
+            LOG_DBG("Doc [" << _docKey << "] added sent: " << sent << " recv: " << recv << " bytes to totals");
             adminSent = sent;
             adminRecv = recv;
         }
@@ -263,7 +263,7 @@ void DocumentBroker::pollThread()
             std::chrono::duration_cast<std::chrono::milliseconds>
                     (now - _lastSaveRequestTime).count() <= COMMAND_TIMEOUT_MS)
         {
-            // We are saving, nothing more to do but wait.
+            // We are saving, nothing more to do but wait (until we save or we timeout).
             continue;
         }
 
@@ -663,6 +663,7 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId,
         LOG_TRC("Document will be saved forcefully to storage.");
         _storage->forceSave();
     }
+
     const bool res = saveToStorageInternal(sessionId, success, result);
 
     // If marked to destroy, or session is disconnected, remove.
@@ -1065,14 +1066,18 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
             // Remove. The caller must have a reference to the session
             // in question, lest we destroy from underneith them.
             _sessions.erase(it);
-
             const auto count = _sessions.size();
-            LOG_TRC("Removed " << (readonly ? "readonly" : "non-readonly") <<
-                    " session [" << id << "] from docKey [" <<
-                    _docKey << "] to have " << count << " sessions.");
-            for (const auto& pair : _sessions)
+
+            auto logger = Log::trace();
+            if (logger.enabled())
             {
-                LOG_TRC("Session: " << pair.second->getName());
+                logger << "Removed " << (readonly ? "readonly" : "non-readonly")
+                       << " session [" << id << "] from docKey ["
+                       << _docKey << "] to have " << count << " sessions:";
+                for (const auto& pair : _sessions)
+                    logger << pair.second->getId() << ' ';
+
+                LOG_END(logger);
             }
 
             // Let the child know the client has disconnected.
@@ -1635,7 +1640,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
     os << "\n  last editable?: " << _lastEditableSession;
-    std::time_t t = std::chrono::system_clock::to_time_t(
+    const std::time_t t = std::chrono::system_clock::to_time_t(
         std::chrono::system_clock::now()
         + (_lastSaveTime - std::chrono::steady_clock::now()));
     os << "\n  last saved: " << std::ctime(&t);

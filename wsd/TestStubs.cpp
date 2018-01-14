@@ -15,6 +15,6 @@
 
 #include "DocumentBroker.hpp"
 
-void DocumentBroker::assertCorrectThread() {}
+void DocumentBroker::assertCorrectThread() const {}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
