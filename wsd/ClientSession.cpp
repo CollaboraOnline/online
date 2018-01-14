@@ -872,9 +872,7 @@ void ClientSession::onDisconnect()
         // Connection terminated. Destroy session.
         LOG_DBG(getName() << " on docKey [" << docKey << "] terminated. Cleaning up.");
 
-        // We issue a force-save when last editable (non-readonly) session is going away
-        // and defer destroying the last session and the docBroker.
-        docBroker->removeSession(getId(), true);
+        docBroker->removeSession(getId());
     }
     catch (const UnauthorizedRequestException& exc)
     {

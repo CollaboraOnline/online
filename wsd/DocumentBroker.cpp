@@ -152,7 +152,6 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _lastSaveTime(std::chrono::steady_clock::now()),
     _lastSaveRequestTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(COMMAND_TIMEOUT_MS)),
     _markToDestroy(false),
-    _lastEditableSession(false),
     _isLoaded(false),
     _isModified(false),
     _cursorPosX(0),
@@ -726,10 +725,9 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     const Authorization auth = it->second->getAuthorization();
     const auto uri = isSaveAs? saveAsPath: it->second->getPublicUri().toString();
 
-    // If we aren't destroying the last editable session just yet,
-    // and the file timestamp hasn't changed, skip saving.
+    // If the file timestamp hasn't changed, skip saving.
     const auto newFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
-    if (!isSaveAs && !_lastEditableSession && newFileModifiedTime == _lastFileModifiedTime)
+    if (!isSaveAs && newFileModifiedTime == _lastFileModifiedTime)
     {
         // Nothing to do.
         LOG_DBG("Skipping unnecessary saving to URI [" << uri << "] with docKey [" << _docKey <<
@@ -998,12 +996,6 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
         throw;
     }
 
-    // Below values are recalculated when destroyIfLastEditor() is called (before destroying the
-    // document). It is safe to reset their values to their defaults whenever a new session is added.
-    _lastEditableSession = false;
-    _markToDestroy = false;
-    _stop = false;
-
     const auto id = session->getId();
 
     // Request a new session from the child kit.
@@ -1025,21 +1017,31 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
     return count;
 }
 
-size_t DocumentBroker::removeSession(const std::string& id, bool destroyIfLast)
+size_t DocumentBroker::removeSession(const std::string& id)
 {
     assertCorrectThread();
 
-    if (destroyIfLast)
-        destroyIfLastEditor(id);
-
     try
     {
+        const auto it = _sessions.find(id);
+        if (it == _sessions.end())
+        {
+            LOG_ERR("Invalid or unknown session [" << id << "] to remove.");
+            return _sessions.size();
+        }
+
+        // Last view going away, can destroy.
+        _markToDestroy = (_sessions.size() <= 1);
+
+        const bool lastEditableSession = !it->second->isReadOnly() && !haveAnotherEditableSession(id);
+
         LOG_INF("Removing session [" << id << "] on docKey [" << _docKey <<
                 "]. Have " << _sessions.size() << " sessions. markToDestroy: " << _markToDestroy <<
-                ", LastEditableSession: " << _lastEditableSession);
+                ", LastEditableSession: " << lastEditableSession);
 
-        if (!_lastEditableSession || !autoSave(true))
-            return removeSessionInternal(id);
+        // If last editable, save and don't remove until after uploading to storage.
+        if (!lastEditableSession || !autoSave(true))
+            removeSessionInternal(id);
     }
     catch (const std::exception& ex)
     {
@@ -1375,40 +1377,23 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
     }
 }
 
-void DocumentBroker::destroyIfLastEditor(const std::string& id)
+bool DocumentBroker::haveAnotherEditableSession(const std::string& id) const
 {
     assertCorrectThread();
 
-    const auto currentSession = _sessions.find(id);
-    if (currentSession == _sessions.end())
+    for (const auto& it : _sessions)
     {
-        // We could be called before adding any sessions.
-        // For example when a socket disconnects before loading.
-        return;
-    }
-
-    // Check if the session being destroyed is the last non-readonly session or not.
-    _lastEditableSession = !currentSession->second->isReadOnly();
-    if (_lastEditableSession && !_sessions.empty())
-    {
-        for (const auto& it : _sessions)
+        if (it.second->getId() != id &&
+            it.second->isViewLoaded() &&
+            !it.second->isReadOnly())
         {
-            if (it.second->getId() != id &&
-                it.second->isViewLoaded() &&
-                !it.second->isReadOnly())
-            {
-                // Found another editable.
-                _lastEditableSession = false;
-                break;
-            }
+            // This is a loaded session that is non-readonly.
+            return true;
         }
     }
 
-    // Last view going away, can destroy.
-    _markToDestroy = (_sessions.size() <= 1);
-    LOG_DBG("startDestroy on session [" << id << "] on docKey [" << _docKey <<
-            "], sessions: " << _sessions.size() << " markToDestroy: " << _markToDestroy <<
-            ", lastEditableSession: " << _lastEditableSession);
+    // None found.
+    return false;
 }
 
 void DocumentBroker::setModified(const bool value)
@@ -1527,7 +1512,7 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
             session->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, closeReason);
 
             // Remove session, save, and mark to destroy.
-            removeSession(session->getId(), true);
+            removeSession(session->getId());
         }
         catch (const std::exception& exc)
         {
@@ -1639,7 +1624,6 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
-    os << "\n  last editable?: " << _lastEditableSession;
     const std::time_t t = std::chrono::system_clock::to_time_t(
         std::chrono::system_clock::now()
         + (_lastSaveTime - std::chrono::steady_clock::now()));

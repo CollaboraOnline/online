@@ -277,7 +277,7 @@ public:
     size_t addSession(const std::shared_ptr<ClientSession>& session);
 
     /// Removes a session by ID. Returns the new number of sessions.
-    size_t removeSession(const std::string& id, bool destroyIfLast = false);
+    size_t removeSession(const std::string& id);
 
     /// Add a callback to be invoked in our polling thread.
     void addCallback(const SocketPoll::CallbackFn& fn);
@@ -312,7 +312,6 @@ public:
     void handleDialogPaintResponse(const std::vector<char>& payload, bool child);
     void handleTileCombinedResponse(const std::vector<char>& payload);
 
-    void destroyIfLastEditor(const std::string& id);
     bool isMarkedToDestroy() const { return _markToDestroy || _stop; }
 
     bool handleInput(const std::vector<char>& payload);
@@ -365,6 +364,12 @@ private:
     /// Saves the doc to the storage.
     bool saveToStorageInternal(const std::string& sesionId, bool success, const std::string& result = "", const std::string& saveAsPath = std::string(), const std::string& saveAsFilename = std::string());
 
+    /// True iff there is at least one non-readonly session other than the given.
+    /// Since only editable sessions can save, we need to use the last to
+    /// save modified documents, otherwise we'll potentially have to save on
+    /// every editable session disconnect, lest we lose data due to racing.
+    bool haveAnotherEditableSession(const std::string& id) const;
+
     /// Loads a new session and adds to the sessions container.
     size_t addSessionInternal(const std::shared_ptr<ClientSession>& session);
 
@@ -416,7 +421,6 @@ private:
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _markToDestroy;
-    std::atomic<bool> _lastEditableSession;
     std::atomic<bool> _isLoaded;
     std::atomic<bool> _isModified;
     int _cursorPosX;
