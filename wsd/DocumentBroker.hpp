@@ -367,6 +367,11 @@ private:
     /// True iff a save is in progress (requested but not completed).
     bool isSaving() const { return _lastSaveResponseTime < _lastSaveRequestTime; }
 
+    /// True if we know the doc is modified or
+    /// if there has been activity from a client after we last *requested* saving,
+    /// since there are race conditions vis-a-vis user activity while saving.
+    bool isPossiblyModified() const { return _isModified || (_lastSaveRequestTime < _lastActivityTime); }
+
     /// True iff there is at least one non-readonly session other than the given.
     /// Since only editable sessions can save, we need to use the last to
     /// save modified documents, otherwise we'll potentially have to save on
