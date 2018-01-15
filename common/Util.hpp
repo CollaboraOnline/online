@@ -12,6 +12,7 @@
 
 #include <atomic>
 #include <cassert>
+#include <cstring>
 #include <functional>
 #include <memory>
 #include <mutex>
@@ -221,6 +222,11 @@ namespace Util
     inline std::string trimmed(const char* s)
     {
         return trimmed(std::string(s));
+    }
+
+    inline bool startsWith(const std::string& s, const std::string& t)
+    {
+        return s.length() >= t.length() && memcmp(s.c_str(), t.c_str(), t.length()) == 0;
     }
 
     /// Check for the URI scheme validity.
