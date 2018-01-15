@@ -22,6 +22,13 @@
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/Logger.h>
 
+inline std::ostream& operator<< (std::ostream& os, const Poco::Timestamp& ts)
+{
+    os << Poco::DateTimeFormatter::format(Poco::DateTime(ts),
+                                          Poco::DateTimeFormat::ISO8601_FRAC_FORMAT);
+    return os;
+}
+
 namespace Log
 {
     void initialize(const std::string& name,
@@ -32,15 +39,6 @@ namespace Log
     Poco::Logger& logger();
 
     char* prefix(char* buffer, const char* level, bool sigSafe);
-
-    void trace(const std::string& msg);
-    void debug(const std::string& msg);
-    void info(const std::string& msg);
-    void warn(const std::string& msg);
-    void error(const std::string& msg);
-    void syserror(const std::string& msg);
-    void fatal(const std::string& msg);
-    void sysfatal(const std::string& msg);
 
     inline bool traceEnabled() { return logger().trace(); }
     inline bool debugEnabled() { return logger().debug(); }
@@ -177,8 +175,8 @@ namespace Log
     {
         if (lhs.enabled())
         {
-            lhs._stream <<  Poco::DateTimeFormatter::format(Poco::DateTime(rhs),
-                                                            Poco::DateTimeFormat::ISO8601_FRAC_FORMAT);
+            lhs._stream << Poco::DateTimeFormatter::format(Poco::DateTime(rhs),
+                                                           Poco::DateTimeFormat::ISO8601_FRAC_FORMAT);
         }
 
         return lhs;
