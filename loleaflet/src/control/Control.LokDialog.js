@@ -202,6 +202,8 @@ L.Control.LokDialog = L.Control.extend({
 				that._onDialogClose(that._toRawDlgId(strDlgId), true);
 			}
 		});
+		// don't show the dialog surround until we have the dialog content
+		$(dialogContainer).parent().hide();
 
 		this._dialogs[this._toRawDlgId(strDlgId)] = {
 			open: true,
@@ -270,6 +272,10 @@ L.Control.LokDialog = L.Control.extend({
 			}
 
 			ctx.drawImage(img, x, y);
+
+			// if dialog is hidden, show it
+			var dialogContainer = L.DomUtil.get(strDlgId);
+			$(dialogContainer).parent().show();
 		};
 		img.src = imgData;
 	},
