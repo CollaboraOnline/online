@@ -1528,7 +1528,7 @@ public:
         if (docBroker)
         {
             // FIXME: No need to notify if asked to stop.
-            docBroker->stop();
+            docBroker->stop("Request dispatcher destroyed.");
         }
     }
 
@@ -1556,7 +1556,7 @@ private:
             auto lock = docBroker->getLock();
             docBroker->assertCorrectThread();
             docBroker->setCloseReason("docdisconnected");
-            docBroker->stop();
+            docBroker->stop("Lost connection with LOKit.");
         }
     }
 

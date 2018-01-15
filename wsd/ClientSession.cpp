@@ -716,7 +716,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             docBroker->removeSession(getId());
 
             // Now terminate.
-            docBroker->stop();
+            docBroker->stop("Finished saveas handler.");
         }
 
         return true;

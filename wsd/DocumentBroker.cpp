@@ -198,7 +198,7 @@ void DocumentBroker::pollThread()
                                                                   _threadStart).count() > timeoutMs)
             break;
 
-        // Nominal time between retries, lest we  busy-loop. getNewChild could also wait, so don't double that here.
+        // Nominal time between retries, lest we busy-loop. getNewChild could also wait, so don't double that here.
         std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS / 10));
     }
     while (!_stop && _poll->continuePolling() && !TerminationFlag && !ShutdownRequestFlag);
@@ -209,14 +209,21 @@ void DocumentBroker::pollThread()
         LOG_ERR("Failed to get new child.");
 
         // FIXME: need to notify all clients and shut this down ...
+        // FIXME: return something good down the websocket ...
 #if 0
         const std::string msg = SERVICE_UNAVAILABLE_INTERNAL_ERROR;
         ws.sendMessage(msg);
         // abnormal close frame handshake
         ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
 #endif
-        // FIXME: return something good down the websocket ...
-        _stop = true;
+        stop("Failed to get new child.");
+
+        // Stop to mark it done and cleanup.
+        _poll->stop();
+        _poll->removeSockets();
+
+        // Async cleanup.
+        LOOLWSD::doHousekeeping();
 
         LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
         return;
@@ -269,8 +276,7 @@ void DocumentBroker::pollThread()
         if (ShutdownRequestFlag)
         {
             autoSave(true);
-            _closeReason = "recycling";
-            _stop = true;
+            stop("recycling");
         }
         else if (AutoSaveEnabled && !_stop &&
                  std::chrono::duration_cast<std::chrono::seconds>(now - last30SecCheckTime).count() >= 30)
@@ -288,8 +294,7 @@ void DocumentBroker::pollThread()
         {
             LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
                     " DocumentBroker for docKey [" << getDocKey() << "].");
-            _closeReason = (idle ? "idle" : "dead");
-            _stop = true;
+            stop(idle ? "idle" : "dead");
         }
     }
 
@@ -374,8 +379,10 @@ void DocumentBroker::joinThread()
     _poll->joinThread();
 }
 
-void DocumentBroker::stop()
+void DocumentBroker::stop(const std::string& reason)
 {
+    LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
+    _closeReason = reason; // used later in the polling loop
     _stop = true;
     _poll->wakeup();
 }
@@ -1553,7 +1560,7 @@ void DocumentBroker::terminateChild(const std::string& closeReason)
 
     LOG_INF("Terminating doc [" << _docKey << "] with reason: " << closeReason);
 
-    // Close all running sessions
+    // Close all running sessions first.
     shutdownClients(closeReason);
 
     if (_childProcess)
@@ -1566,7 +1573,7 @@ void DocumentBroker::terminateChild(const std::string& closeReason)
         _childProcess->close(false);
     }
 
-    _stop = true;
+    stop(closeReason);
 }
 
 void DocumentBroker::closeDocument(const std::string& reason)
@@ -1574,8 +1581,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
     assertCorrectThread();
 
     LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
-    _closeReason = reason; // used later in the polling loop
-    stop();
+    stop(reason);
 }
 
 void DocumentBroker::broadcastMessage(const std::string& message)
