@@ -86,7 +86,9 @@ void Session::parseDocOptions(const std::vector<std::string>& tokens, int& part,
 
     for (size_t i = offset; i < tokens.size(); ++i)
     {
-        // FIXME use any kind of startsWith() instead of find(...) == 0
+        // FIXME use Util::startsWith() instead of all these find(...) == 0
+        // FIXME or use the getToken* functions, isn't this exactly what they are for?
+
         if (tokens[i].find("url=") == 0)
         {
             _docURL = tokens[i].substr(strlen("url="));
