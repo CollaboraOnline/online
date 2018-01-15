@@ -275,8 +275,12 @@ void DocumentBroker::pollThread()
 
         if (ShutdownRequestFlag)
         {
-            autoSave(true);
-            stop("recycling");
+            LOG_INF("Autosaving DocumentBroker for docKey [" << getDocKey() << "] to recycle server.");
+            if (!autoSave(isPossiblyModified()))
+            {
+                LOG_INF("Terminating DocumentBroker for docKey [" << getDocKey() << "] to recycle server.");
+                stop("recycling");
+            }
         }
         else if (AutoSaveEnabled && !_stop &&
                  std::chrono::duration_cast<std::chrono::seconds>(now - last30SecCheckTime).count() >= 30)
@@ -287,14 +291,22 @@ void DocumentBroker::pollThread()
         }
 
         // Remove idle documents after 1 hour.
-        const bool idle = (getIdleTimeSecs() >= IdleDocTimeoutSecs);
-
-        // If all sessions have been removed, no reason to linger.
-        if ((isLoaded() || _markToDestroy) && (_sessions.empty() || idle))
+        const bool idle = (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs);
+        if (idle)
         {
-            LOG_INF("Terminating " << (idle ? "idle" : "dead") <<
-                    " DocumentBroker for docKey [" << getDocKey() << "].");
-            stop(idle ? "idle" : "dead");
+            // Stop if there is nothing to save.
+            LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey() << "] to kill.");
+            if (!autoSave(isPossiblyModified()))
+            {
+                LOG_INF("Terminating idle DocumentBroker for docKey [" << getDocKey() << "].");
+                stop("idle");
+            }
+        }
+        else if (_sessions.empty() && (isLoaded() || _markToDestroy))
+        {
+            // If all sessions have been removed, no reason to linger.
+            LOG_INF("Terminating dead DocumentBroker for docKey [" << getDocKey() << "].");
+            stop("dead");
         }
     }
 
@@ -864,8 +876,8 @@ bool DocumentBroker::autoSave(const bool force)
     std::string savingSessionId;
     for (auto& sessionIt : _sessions)
     {
-        // Save the document using first session available ...
-        if (savingSessionId.empty())
+        // Save the document using an editable session, or first ...
+        if (savingSessionId.empty() || !sessionIt.second->isReadOnly())
         {
             savingSessionId = sessionIt.second->getId();
         }
@@ -1058,7 +1070,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
                 ", LastEditableSession: " << lastEditableSession);
 
         // If last editable, save and don't remove until after uploading to storage.
-        if (!lastEditableSession || !autoSave(true))
+        if (!lastEditableSession || !autoSave(isPossiblyModified()))
             removeSessionInternal(id);
     }
     catch (const std::exception& ex)
