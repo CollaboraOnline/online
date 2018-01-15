@@ -933,7 +933,10 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const std:
     }
 
     // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
-    const bool bNotify = (tokens[1] == ".uno:Save" || tokens[1] == ".uno:Undo" || tokens[1] == ".uno:Redo");
+    const bool bNotify = (tokens[1] == ".uno:Save" ||
+                          tokens[1] == ".uno:Undo" ||
+                          tokens[1] == ".uno:Redo" ||
+                          Util::startsWith(tokens[1], "vnd.sun.star.script:"));
 
     std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
 
