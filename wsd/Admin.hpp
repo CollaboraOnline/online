@@ -145,7 +145,7 @@ private:
     DocProcSettings _defDocProcSettings;
 
     // Don't update any more frequently than this since it's excessive.
-    static const int MinStatsIntervalMs = 50;
+    const int MinStatsIntervalMs = 50;
 };
 
 #endif
