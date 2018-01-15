@@ -227,7 +227,7 @@ public:
     void startThread();
 
     /// Flag for termination.
-    void stop();
+    void stop(const std::string& reason);
 
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();
