@@ -285,6 +285,11 @@ namespace Util
         return trimmed(std::string(s));
     }
 
+    inline bool startsWith(const std::string& s, const std::string& t)
+    {
+        return s.length() >= t.length() && memcmp(s.c_str(), t.c_str(), t.length()) == 0;
+    }
+
     /// Given one or more patterns to allow, and one or more to deny,
     /// the match member will return true if, and only if, the subject
     /// matches the allowed list, but not the deny.
