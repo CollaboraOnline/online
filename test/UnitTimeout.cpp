@@ -37,7 +37,7 @@ public:
     {
         if (!_timedOut)
         {
-            Log::info("Failed to timeout");
+            LOG_INF("Failed to timeout");
             retValue = Poco::Util::Application::EXIT_SOFTWARE;
         }
         else

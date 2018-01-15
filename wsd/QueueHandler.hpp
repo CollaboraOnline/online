@@ -31,7 +31,7 @@ public:
     {
         Util::setThreadName(_name);
 
-        Log::debug("Thread started.");
+        LOG_DBG("Thread started.");
 
         try
         {
@@ -40,23 +40,23 @@ public:
                 const auto input = _queue->get();
                 if (LOOLProtocol::getFirstToken(input) == "eof")
                 {
-                    Log::info("Received EOF. Finishing.");
+                    LOG_INF("Received EOF. Finishing.");
                     break;
                 }
 
                 if (!_session->handleInput(input.data(), input.size()))
                 {
-                    Log::info("Socket handler flagged for finishing.");
+                    LOG_INF("Socket handler flagged for finishing.");
                     break;
                 }
             }
         }
         catch (const std::exception& exc)
         {
-            Log::error(std::string("QueueHandler::run: Exception: ") + exc.what());
+            LOG_ERR("QueueHandler::run: Exception: " << exc.what());
         }
 
-        Log::debug("Thread finished.");
+        LOG_DBG("Thread finished.");
     }
 
 private:

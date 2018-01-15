@@ -313,7 +313,7 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
         // update its fileinfo object. This is used later to check if someone else changed the
         // document while we are/were editing it
         _fileInfo._modifiedTime = Poco::File(_uri.getPath()).getLastModified();
-        Log::trace() << "New FileInfo modified time in storage " << _fileInfo._modifiedTime << Log::end;
+        LOG_TRC("New FileInfo modified time in storage " << _fileInfo._modifiedTime);
     }
     catch (const Poco::Exception& exc)
     {

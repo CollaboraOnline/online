@@ -182,52 +182,12 @@ namespace Log
         }
 
         oss <<  " Log level is [" << logger.getLevel() << "].";
-        info(oss.str());
+        LOG_INF(oss.str());
     }
 
     Poco::Logger& logger()
     {
         return Poco::Logger::get(Source.inited ? Source.name : std::string());
-    }
-
-    void trace(const std::string& msg)
-    {
-        LOG_TRC(msg);
-    }
-
-    void debug(const std::string& msg)
-    {
-        LOG_DBG(msg);
-    }
-
-    void info(const std::string& msg)
-    {
-        LOG_INF(msg);
-    }
-
-    void warn(const std::string& msg)
-    {
-        LOG_WRN(msg);
-    }
-
-    void error(const std::string& msg)
-    {
-        LOG_ERR(msg);
-    }
-
-    void syserror(const std::string& msg)
-    {
-        LOG_SYS(msg);
-    }
-
-    void fatal(const std::string& msg)
-    {
-        LOG_FTL(msg);
-    }
-
-    void sysfatal(const std::string& msg)
-    {
-        LOG_SFL(msg);
     }
 }
 

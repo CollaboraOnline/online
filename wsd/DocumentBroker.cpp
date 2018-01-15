@@ -544,7 +544,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         watermarkText = LOOLWSD::OverrideWatermark;
 #endif
 
-    LOG_DBG("Setting username [" << username << "] and userId [" << userid << "] for session [" << sessionId << "]");
+    LOG_DBG("Setting username [" << username << "] and userId [" <<
+            userid << "] for session [" << sessionId << "]");
     session->setUserId(userid);
     session->setUserName(username);
     session->setUserExtraInfo(userExtraInfo);
@@ -561,20 +562,20 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     if (firstInstance)
     {
         _documentLastModifiedTime = fileInfo._modifiedTime;
-        Log::debug() << "Document timestamp: " << _documentLastModifiedTime << Log::end;
+        LOG_DBG("Document timestamp: " << _documentLastModifiedTime);
     }
     else
     {
         // Check if document has been modified by some external action
-        Log::trace() << "Document modified time: " << fileInfo._modifiedTime << Log::end;
+        LOG_TRC("Document modified time: " << fileInfo._modifiedTime);
         static const Poco::Timestamp Zero(Poco::Timestamp::fromEpochTime(0));
         if (_documentLastModifiedTime != Zero &&
             fileInfo._modifiedTime != Zero &&
             _documentLastModifiedTime != fileInfo._modifiedTime)
         {
-            Log::trace() << "Document " << _docKey << "] has been modified behind our back. Informing all clients."
-                         << "Expected: " << _documentLastModifiedTime
-                         << "Actual: " << fileInfo._modifiedTime << Log::end;
+            LOG_TRC("Document " << _docKey << "] has been modified behind our back. " <<
+                    "Informing all clients. Expected: " << _documentLastModifiedTime <<
+                    ", Actual: " << fileInfo._modifiedTime);
 
             _documentChangedInStorage = true;
             std::string message = "close: documentconflict";
@@ -596,9 +597,9 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         {
             try
             {
-                std::string extension(plugin->getString("prefilter.extension"));
-                std::string newExtension(plugin->getString("prefilter.newextension"));
-                std::string commandLine(plugin->getString("prefilter.commandline"));
+                const std::string extension(plugin->getString("prefilter.extension"));
+                const std::string newExtension(plugin->getString("prefilter.newextension"));
+                const std::string commandLine(plugin->getString("prefilter.commandline"));
 
                 if (localPath.length() > extension.length()+1 &&
                     strcasecmp(localPath.substr(localPath.length() - extension.length() -1).data(), (std::string(".") + extension).data()) == 0)
@@ -606,28 +607,28 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                     // Extension matches, try the conversion. We convert the file to another one in
                     // the same (jail) directory, with just the new extension tacked on.
 
-                    std::string newRootPath = _storage->getRootFilePath() + "." + newExtension;
+                    const std::string newRootPath = _storage->getRootFilePath() + "." + newExtension;
 
                     // The commandline must contain the space-separated substring @INPUT@ that is
                     // replaced with the input file name, and @OUTPUT@ for the output file name.
-
-                    std::vector<std::string>args;
-
                     Poco::StringTokenizer tokenizer(commandLine, " ");
                     if (tokenizer.replace("@INPUT@", _storage->getRootFilePath()) != 1 ||
                         tokenizer.replace("@OUTPUT@", newRootPath) != 1)
                         throw Poco::NotFoundException();
 
-                    for (std::size_t i = 1; i < tokenizer.count(); i++)
-                        args.push_back(tokenizer[i]);
+
+                    std::vector<std::string> args;
+                    for (std::size_t i = 1; i < tokenizer.count(); ++i)
+                        args.emplace_back(tokenizer[i]);
 
                     Poco::ProcessHandle process = Poco::Process::launch(tokenizer[0], args);
-                    int rc = process.wait();
+                    const int rc = process.wait();
                     if (rc != 0)
                     {
-                        LOG_ERR("Conversion from " << extension << " to " << newExtension <<" failed");
+                        LOG_ERR("Conversion from " << extension << " to " << newExtension << " failed (" << rc << ").");
                         return false;
                     }
+
                     _storage->setRootFilePath(newRootPath);
                     localPath += "." + newExtension;
                 }
@@ -783,9 +784,8 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             // After a successful save, we are sure that document in the storage is same as ours
             _documentChangedInStorage = false;
 
-            Log::debug() << "Saved docKey [" << _docKey << "] to URI [" << uri
-                         << "] and updated tile cache. Document modified timestamp: "
-                         << _documentLastModifiedTime << Log::end;
+            LOG_DBG("Saved docKey [" << _docKey << "] to URI [" << uri << "] and updated timestamps. " <<
+                    " Document modified timestamp: " << _documentLastModifiedTime);
 
             // Resume polling.
             _poll->wakeup();
@@ -801,8 +801,8 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
             it->second->sendTextFrame("saveas: url=" + url + " filename=" + encodedName);
 
-            Log::debug() << "Saved As docKey [" << _docKey << "] to URI [" << url
-                         << " with name '" << encodedName << "'] successfully.";
+            LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << url <<
+                    " with name '" << encodedName << "'] successfully.");
         }
         return true;
     }
