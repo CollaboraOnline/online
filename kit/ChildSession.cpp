@@ -917,8 +917,25 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const std:
     }
     else
     {
+        std::string arguments;
+        if (tokens[1] == ".uno:Save" && tokens[2] == "{}")
+        {
+            // Save and no arguments, provide our default.
+            std::ostringstream oss;
+            oss << "{"
+                << "\"NoFileSync\":"
+                << "{"
+                << "\"type\":\"boolean\","
+                << "\"value\":true"
+                << "}"
+                << "}";
+            arguments = oss.str();
+        }
+        else
+            arguments = Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end());
+
         getLOKitDocument()->postUnoCommand(tokens[1].c_str(),
-                                       Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(),
+                                       arguments.c_str(),
                                        bNotify);
     }
 
