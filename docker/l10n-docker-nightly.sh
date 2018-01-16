@@ -143,6 +143,7 @@ cp -a libreoffice/instdir/share/extensions/dict-de/de_DE_frami.aff "$INSTDIR"/us
 # build
 ( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --with-lokit-path="$BUILDDIR"/libreoffice/include --with-lo-path="$INSTDIR"/opt/libreoffice ) || exit 1
 ( cd online/loleaflet/po && ../../scripts/downloadpootle.sh )
+( cd online/loleaflet && make l10n) || exit 1
 ( cd online && make -j 8) || exit 1
 
 # copy stuff
