@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-09 15:54+0100\n"
+"POT-Creation-Date: 2018-01-16 15:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -374,6 +374,10 @@ msgstr ""
 
 #: dist/toolbar/toolbar.js:676
 msgid "No users"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:680
+msgid "Always follow the editor"
 msgstr ""
 
 #: dist/toolbar/toolbar.js:690 src/control/Control.Menubar.js:59

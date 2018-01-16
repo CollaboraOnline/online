@@ -677,7 +677,7 @@ $(function () {
 				'<hr><table class="loleaflet-font" id="editor-btn">' +
 				'<tr>' +
 				'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
-				'<td>Always follow the editor</td>' +
+				'<td>' + _('Always follow the editor') + '</td>' +
 				'</tr>' +
 				'</table>' +
 				'<p id="currently-msg">Current - <b><span id="current-editor">Dewan</span></b></p>' +
