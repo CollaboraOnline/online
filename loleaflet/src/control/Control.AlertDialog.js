@@ -2,7 +2,7 @@
  * L.Control.Dialog used for displaying alerts
  */
 
-/* global vex */
+/* global _ vex */
 L.Control.AlertDialog = L.Control.extend({
 	onAdd: function (map) {
 		// TODO: Better distinction between warnings and errors
@@ -25,8 +25,9 @@ L.Control.AlertDialog = L.Control.extend({
 			// Handled by transparently retrying.
 			return;
 		} else if (e.cmd && e.kind) {
-			var msg = 'The server encountered a \'' + e.kind + '\' error while' +
-						' parsing the \'' + e.cmd + '\' command.';
+			var msg = _('The server encountered a %0 error while parsing the %1 command.');
+			msg.replace('%0', e.kind);
+			msg.replace('%1', e.cmd);
 			vex.dialog.alert(msg);
 		}
 
@@ -37,7 +38,7 @@ L.Control.AlertDialog = L.Control.extend({
 	_onPrint: function (e) {
 		var url = e.url;
 		vex.dialog.confirm({
-			message: 'Download PDF export?',
+			message: _('Download PDF export?'),
 			callback: L.bind(function (value) {
 				if (value) {
 					this._map._fileDownloader.src = url;
