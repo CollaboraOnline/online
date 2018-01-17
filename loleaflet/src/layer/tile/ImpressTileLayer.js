@@ -222,15 +222,19 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	layoutAnnotations: function () {
+		var topAnnotation;
 		var annotations = this._annotations[this._partHashes[this._selectedPart]];
 		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		var topRight = this._map.latLngToLayerPoint(this._map.options.maxBounds.getNorthEast())
 			.subtract(this.extraSize.multiplyBy(scale))
 			.add(L.point((this._selectedAnnotation ? 3 : 2) * this.options.marginX, this.options.marginY));
-		var topAnnotation = this._topAnnotation[this._selectedPart];
 		var bounds, annotation;
 		for (var index in annotations) {
 			annotation = annotations[index];
+			if (!this._topAnnotation[this._selectedPart]) {
+				this._topAnnotation[this._selectedPart] = 0;
+			}
+			topAnnotation = this._topAnnotation[this._selectedPart];
 			if (topAnnotation > 0 && parseInt(index) === topAnnotation - 1) {
 				// if the top annotation is not the first one, show a bit of the bottom of the previous annotation
 				// so that the user gets aware that there are more annotations above.
