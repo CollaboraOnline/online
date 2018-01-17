@@ -1308,7 +1308,7 @@ int ChildSession::getSpeed() {
 void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
     const auto typeName = LOKitHelper::kitCallbackTypeToString(type);
-    LOG_TRC("CallbackWorker::callback [" << getName() << "]: " <<
+    LOG_TRC("ChildSession::loKitCallback [" << getName() << "]: " <<
             typeName << " [" << payload << "].");
 
     if (isCloseFrame())
