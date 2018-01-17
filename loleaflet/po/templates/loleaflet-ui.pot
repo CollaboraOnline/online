@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-09 15:54+0100\n"
+"POT-Creation-Date: 2018-01-16 15:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -513,6 +513,14 @@ msgstr ""
 
 #: src/admin/Util.js:53
 msgid " s"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:28
+msgid "The server encountered a %0 error while parsing the %1 command."
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:41
+msgid "Download PDF export?"
 msgstr ""
 
 #: src/control/Control.ContextMenu.js:129

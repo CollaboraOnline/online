@@ -50,6 +50,7 @@ pot:
 		src/admin/AdminSocketHistory.js \
 		src/admin/AdminSocketSettings.js \
 		src/admin/Util.js \
+		src/control/Control.AlertDialog.js \
 		src/control/Control.ColumnHeader.js \
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentRepair.js \
