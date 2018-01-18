@@ -192,6 +192,8 @@ L.Control.LokDialog = L.Control.extend({
 		dialogCanvas.contentEditable = true;
 		dialogCanvas.id = strDlgId + '-canvas';
 
+		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
+
 		var that = this;
 		$(dialogContainer).dialog({
 			width: width,
