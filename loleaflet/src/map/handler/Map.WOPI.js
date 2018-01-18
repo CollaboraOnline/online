@@ -18,6 +18,7 @@ L.Map.WOPI = L.Handler.extend({
 	DisableCopy: false,
 	DisableInactiveMessages: false,
 	UserCanNotWriteRelative: true,
+	SetCellColorSource: null,
 
 	_appLoadedConditions: {
 		docloaded: false,
@@ -243,6 +244,10 @@ L.Map.WOPI = L.Handler.extend({
 			if (msg.Values.Status === 'Pre_Restore') {
 				this._map._socket.sendMessage('versionrestore prerestore');
 			}
+		}
+		else if (msg.MessageId === 'SetCellColor') {
+			this._map.SetCellColorSource = e.source;
+			this._map.sendUnoCommand('vnd.sun.star.script:SetCellColor.py$SetCellColor?language=Python&location=share', msg.Values);
 		}
 	},
 

@@ -1083,6 +1083,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onUnoCommandResultMsg: function (textMsg) {
+		// console.log('_onUnoCommandResultMsg: "' + textMsg + '"');
 		textMsg = textMsg.substring(18);
 		var obj = JSON.parse(textMsg);
 		var commandName = obj.commandName;
@@ -1096,6 +1097,14 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.hideBusy();
 		this._map.fire('commandresult', {commandName: commandName, success: success, result: obj.result});
 
+		if (this._map.SetCellColorSource != null) {
+			this._map.SetCellColorSource.postMessage(JSON.stringify({'MessageId': 'SetCellColor-Result',
+										 'SendTime': Date.now(),
+										 'Values': obj
+										}),
+								 '*');
+			this._map.SetCellColorSource = null;
+		}
 	},
 
 	_onRulerUpdate: function (textMsg) {
