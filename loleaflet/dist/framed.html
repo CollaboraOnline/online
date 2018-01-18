@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<!-- Proof of concept of running loleaflet.html in an iframe.
+
+     The top part of this page has a form with three input fields:
+     "x", "y", and "color", a submit button, and a "result" field used
+     for output only.
+
+     When the submit button is pressed, the input fields are passed as
+     a postMessage to the iframe, with the MessageId of
+     'SetCellColor'. That is then in our JavaScript passed on to a
+     Python script that sets the background colour of the
+     corresponding cell of the spreadsheet document open in the
+     loleaflet iframe. The Python script return a value, which gets
+     passed to loleaflet in a unocommandresult: message, and passed on
+     to the event listener on this page, which writes it to the output
+     field.
+
+
+     For this to work, the following patch is needed to the C++ code:
+--- a/wsd/FileServer.cpp
++++ b/wsd/FileServer.cpp
+@@ -172,7 +172,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
+         const auto& config = Application::instance().config();
+         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
+         const std::string endPoint = requestSegments[requestSegments.size() - 1];
+-        if (endPoint == loleafletHtml)
++        if (endPoint == loleafletHtml || endPoint == "framed.html")
+         {
+             preprocessFile(request, message, socket);
+             return;
+@@ -548,7 +548,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
+         LOG_TRC("Denied frame ancestor: " << frameAncestor);
+ 
+         cspOss << "img-src 'self' data: ;";
+-        oss << "X-Frame-Options: deny\r\n";
++        oss << "X-Frame-Options: sameorigin\r\n";
+     }
+ 
+     cspOss << "\r\n";
+
+
+-->
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Online Editor</title>
+
+    <script>
+      function foobar() {
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+        var x = document.forms[0].elements['x'].value;
+        var y = document.forms[0].elements['y'].value;
+        var color = document.forms[0].elements['color'].value;
+        console.log('x=' + x + ' y=' + y + ' color=' + color);
+        color = parseInt('0x' + color.substring(1));
+        console.log('x=' + x + ' y=' + y + ' color=' + color);
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'SetCellColor',
+                                                     'SendTime': Date.now(),
+                                                     'Values': {'x': {'type': 'long', 'value': x },
+                                                                'y': { 'type': 'long', 'value': y },
+                                                                'color': { 'type': 'long', 'value': color }
+                                                                }
+                                                     }),
+                                     '*');
+      }
+
+      function receiveMessage(event) {
+        var msg = JSON.parse(event.data);
+        console.log('==== framed.html receiveMessage: ' + event.data);
+        console.log('                                 ' + msg);
+        if (msg.hasOwnProperty('MessageId') &&
+            msg.MessageId === 'SetCellColor-Result' &&
+            msg.hasOwnProperty('Values') &&
+            msg.Values.hasOwnProperty('commandName') &&
+	    msg.Values.commandName === 'vnd.sun.star.script:SetCellColor.py$SetCellColor?language=Python&location=share' &&
+	    msg.Values.hasOwnProperty('success') &&
+	    msg.Values.success == 'true' &&
+	    msg.Values.hasOwnProperty('result') &&
+	    msg.Values.result.hasOwnProperty('value')) {
+          document.forms[0].elements['result'].readOnly = false;
+          document.forms[0].elements['result'].value = msg.Values.result.value;
+          document.forms[0].elements['result'].readOnly = true;
+        }
+      }
+      window.addEventListener("message", receiveMessage, false);
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+
+  <body style="user-select: none;">
+
+    <p>
+      <form id="frm1">
+	Cell: (<input type="number" name="x" min="0" max="20" value="0">, <input type="number" name="y" min="0" max="20" value="0">),
+	colour: <input type="text" name="color" value="#008000">
+	<br>
+	Click <button onclick="foobar(); return false;">here</button>
+	to send message to iframe below. It returned <input type="text" name="result" value="" readonly>.
+      </form>
+    </p>
+
+    <iframe src="http://snorken.local:9980/loleaflet/94781ec6/loleaflet.html?file_path=file:///home/tml/lo/internal-online/test/data/empty.ods&NotWOPIButIframe=true" height="1000" width="1000"></iframe>
+  </body>
+</html>
