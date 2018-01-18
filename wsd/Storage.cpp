@@ -600,6 +600,7 @@ std::string WopiStorage::loadStorageFileToLocal(const std::string& accessToken)
             std::copy(std::istreambuf_iterator<char>(rs),
                       std::istreambuf_iterator<char>(),
                       std::ostreambuf_iterator<char>(ofs));
+            ofs.close();
             LOG_INF("WOPI::GetFile downloaded " << getFileSize(_jailedFilePath) << " bytes from [" << uriObject.toString() <<
                     "] -> " << _jailedFilePath << " in " << diff.count() << "s");
 
