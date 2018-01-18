@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * L.Map is the central class of the API - it is used to create a map.
  */
@@ -421,6 +421,13 @@ L.Map = L.Evented.extend({
 
 		if (this.options[name]) {
 			handler.enable();
+		}
+
+		// Check for the special proof-of-concept case where no WOPI is involved but we
+		// still run loleaflet in an iframe of its own and thus need to receive the
+		// postMessage things.
+		if (name === 'wopi' && this.options['notWopiButIframe']) {
+			handler.addHooks();
 		}
 
 		return this;
