@@ -244,6 +244,8 @@ L.Control.LokDialog = L.Control.extend({
 		dialogCanvas.height = height;
 		dialogCanvas.id = strDlgId + '-canvas';
 
+		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
+
 		var that = this;
 		$(dialogContainer).dialog({
 			minWidth: width,
