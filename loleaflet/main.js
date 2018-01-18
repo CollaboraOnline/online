@@ -99,6 +99,8 @@ if (wopiSrc != '') {
 	docParams = {};
 }
 
+var notWopiButIframe = getParameterByName('NotWOPIButIframe') != '';
+
 var map = L.map('map', {
 	server: host,
 	doc: docURL,
@@ -107,8 +109,10 @@ var map = L.map('map', {
 	timestamp: timestamp,
 	documentContainer: 'document-container',
 	debug: debugMode,
+	// the wopi and wopiSrc properties are in sync: false/true : empty/non-empty
 	wopi: isWopi,
 	wopiSrc: wopiSrc,
+	notWopiButIframe: notWopiButIframe,
 	alwaysActive: alwaysActive,
 	idleTimeoutSecs: idleTimeoutSecs,  // Dim when user is idle.
 	outOfFocusTimeoutSecs: outOfFocusTimeoutSecs // Dim after switching tabs.
