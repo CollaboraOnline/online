@@ -50,7 +50,7 @@
     <title>Online Editor</title>
 
     <script>
-      function callPythonScript() {
+      function callSetCellColor() {
         window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
         var x = document.forms[0].elements['x'].value;
         var y = document.forms[0].elements['y'].value;
@@ -70,6 +70,17 @@
                                      '*');
       }
 
+      function callGetNamedRanges() {
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'CallPythonScript',
+                                                     'SendTime': Date.now(),
+                                                     'ScriptFile': 'NamedRanges.py',
+                                                     'Function': 'GetNamedRanges',
+                                                     'Values': null
+                                                     }),
+                                     '*');
+      }
+
       function receiveMessage(event) {
         var msg = JSON.parse(event.data);
         console.log('==== framed.html receiveMessage: ' + event.data);
@@ -78,14 +89,26 @@
             msg.MessageId === 'CallPythonScript-Result' &&
             msg.hasOwnProperty('Values') &&
             msg.Values.hasOwnProperty('commandName') &&
-	    msg.Values.commandName === 'vnd.sun.star.script:SetCellColor.py$SetCellColor?language=Python&location=share' &&
 	    msg.Values.hasOwnProperty('success') &&
 	    msg.Values.success == 'true' &&
 	    msg.Values.hasOwnProperty('result') &&
 	    msg.Values.result.hasOwnProperty('value')) {
-          document.forms[0].elements['result'].readOnly = false;
-          document.forms[0].elements['result'].value = msg.Values.result.value;
-          document.forms[0].elements['result'].readOnly = true;
+          if (msg.Values.commandName === 'vnd.sun.star.script:SetCellColor.py$SetCellColor?language=Python&location=share') {
+	    document.forms['cell-colour-form'].elements['result'].readOnly = false;
+	    document.forms['cell-colour-form'].elements['result'].value = msg.Values.result.value;
+	    document.forms['cell-colour-form'].elements['result'].readOnly = true;
+          }
+          else if (msg.Values.commandName === 'vnd.sun.star.script:NamedRanges.py$GetNamedRanges?language=Python&location=share') {
+	    document.forms['get-named-ranges-form'].elements['result'].readOnly = false;
+            var index = 0;
+            var result = '';
+            while (msg.Values.result.value.hasOwnProperty(index.toString())) {
+              result += msg.Values.result.value[index.toString()].value + "\n";
+              index++;
+            }
+	    document.forms['get-named-ranges-form'].elements['result'].value = result;
+	    document.forms['get-named-ranges-form'].elements['result'].readOnly = true;
+          }
         }
       }
       window.addEventListener("message", receiveMessage, false);
@@ -98,14 +121,19 @@
   <body style="user-select: none;">
 
     <p>
-      <form id="frm1">
+      <form id="cell-colour-form">
 	Cell: (<input type="number" name="x" min="0" max="20" value="0">, <input type="number" name="y" min="0" max="20" value="0">),
 	colour: <input type="text" name="color" value="#008000">
 	<br>
-	Click <button onclick="callPythonScript(); return false;">here</button>
+	Click <button onclick="callSetCellColor(); return false;">here</button>
 	to send message to iframe below. It returned <input type="text" name="result" value="" readonly>.
       </form>
     </p>
+
+    <form id="get-named-ranges-form">
+      Click <button onclick="callGetNamedRanges(); return false;">here</button> to get a list of named ranges in the document:
+      <textarea name="result" value="" rows="10" "cols="80"></textarea>
+    </form>
 
     <!-- The hostname and pathnames below are obviously specific to my
     personal environment and need to be changed appropriately. Also
