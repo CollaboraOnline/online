@@ -81,6 +81,24 @@
                                      '*');
       }
 
+      function callAddNamedRange() {
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+        // FIXME: Add parameters for the position, size, and name of the range
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'CallPythonScript',
+                                                     'SendTime': Date.now(),
+                                                     'ScriptFile': 'NamedRanges.py',
+                                                     'Function': 'DefineNamedRange',
+                                                     'Values': {'sheet': {'type': 'string', 'value': 'Sheet1'},
+								'x0': {'type': 'long', 'value': '2'},
+								'y0': {'type': 'long', 'value': '3'},
+								'width': {'type': 'long', 'value': '2'},
+								'height': {'type': 'long', 'value': '2'},
+								'name': {'type': 'string', 'value': 'N' + Date.now().toString()}
+                                                               }
+                                                     }),
+                                     '*');
+      }
+
       function receiveMessage(event) {
         var msg = JSON.parse(event.data);
         console.log('==== framed.html receiveMessage: ' + event.data);
@@ -132,7 +150,12 @@
 
     <form id="get-named-ranges-form">
       Click <button onclick="callGetNamedRanges(); return false;">here</button> to get a list of named ranges in the document:
-      <textarea name="result" value="" rows="10" "cols="80"></textarea>
+      <textarea name="result" value="" rows="10" cols="80"></textarea>
+    </form>
+
+    <form id="get-named-ranges-form">
+      <!-- FIXME: Add input fields for the position, size, and name of the range -->
+      Click <button onclick="callAddNamedRange(); return false;">here</button> to add a new named range.
     </form>
 
     <!-- The hostname and pathnames below are obviously specific to my
