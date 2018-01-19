@@ -1097,13 +1097,13 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.hideBusy();
 		this._map.fire('commandresult', {commandName: commandName, success: success, result: obj.result});
 
-		if (this._map.SetCellColorSource != null) {
-			this._map.SetCellColorSource.postMessage(JSON.stringify({'MessageId': 'SetCellColor-Result',
-										 'SendTime': Date.now(),
-										 'Values': obj
-										}),
-								 '*');
-			this._map.SetCellColorSource = null;
+		if (this._map.CallPythonScriptSource != null) {
+			this._map.CallPythonScriptSource.postMessage(JSON.stringify({'MessageId': 'CallPythonScript-Result',
+										     'SendTime': Date.now(),
+										     'Values': obj
+										    }),
+								     '*');
+			this._map.CallPythonScriptSource = null;
 		}
 	},
 

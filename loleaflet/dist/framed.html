@@ -7,17 +7,20 @@
      for output only.
 
      When the submit button is pressed, the input fields are passed as
-     a postMessage to the iframe, with the MessageId of
-     'SetCellColor'. That is then in our JavaScript passed on to a
-     Python script that sets the background colour of the
-     corresponding cell of the spreadsheet document open in the
-     loleaflet iframe. The Python script return a value, which gets
-     passed to loleaflet in a unocommandresult: message, and passed on
-     to the event listener on this page, which writes it to the output
-     field.
+     a postMessage to the iframe. The message also specifies what
+     Python script to call. (In this demo case, the 'SetCellColor'
+     script in scripting/examples/python/SetCellColor.py in
+     LibreOffice core.) The parameters are then in our JavaScript
+     passed on to the Python script that acts on the document open in
+     the iframe. The Python script returns a value, which gets passed
+     to loleaflet in a unocommandresult: message, and passed on to the
+     event listener on this page, which writes it to the output field.
 
+     For this to work, in the trivial proof of concept case of 'make
+     run', the below patch is needed to the C++ code. It is probably
+     not necessary in a "real" WOPI-based setup where iframes are
+     already used and things work fine.
 
-     For this to work, the following patch is needed to the C++ code:
 --- a/wsd/FileServer.cpp
 +++ b/wsd/FileServer.cpp
 @@ -172,7 +172,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
@@ -39,7 +42,6 @@
  
      cspOss << "\r\n";
 
-
 -->
 
 <html>
@@ -48,7 +50,7 @@
     <title>Online Editor</title>
 
     <script>
-      function foobar() {
+      function callPythonScript() {
         window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
         var x = document.forms[0].elements['x'].value;
         var y = document.forms[0].elements['y'].value;
@@ -56,11 +58,13 @@
         console.log('x=' + x + ' y=' + y + ' color=' + color);
         color = parseInt('0x' + color.substring(1));
         console.log('x=' + x + ' y=' + y + ' color=' + color);
-        window.frames[0].postMessage(JSON.stringify({'MessageId': 'SetCellColor',
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'CallPythonScript',
                                                      'SendTime': Date.now(),
-                                                     'Values': {'x': {'type': 'long', 'value': x },
-                                                                'y': { 'type': 'long', 'value': y },
-                                                                'color': { 'type': 'long', 'value': color }
+                                                     'ScriptFile': 'SetCellColor.py',
+                                                     'Function': 'SetCellColor',
+                                                     'Values': {'x': {'type': 'long', 'value': x},
+                                                                'y': {'type': 'long', 'value': y},
+                                                                'color': {'type': 'long', 'value': color}
                                                                 }
                                                      }),
                                      '*');
@@ -71,7 +75,7 @@
         console.log('==== framed.html receiveMessage: ' + event.data);
         console.log('                                 ' + msg);
         if (msg.hasOwnProperty('MessageId') &&
-            msg.MessageId === 'SetCellColor-Result' &&
+            msg.MessageId === 'CallPythonScript-Result' &&
             msg.hasOwnProperty('Values') &&
             msg.Values.hasOwnProperty('commandName') &&
 	    msg.Values.commandName === 'vnd.sun.star.script:SetCellColor.py$SetCellColor?language=Python&location=share' &&
@@ -98,7 +102,7 @@
 	Cell: (<input type="number" name="x" min="0" max="20" value="0">, <input type="number" name="y" min="0" max="20" value="0">),
 	colour: <input type="text" name="color" value="#008000">
 	<br>
-	Click <button onclick="foobar(); return false;">here</button>
+	Click <button onclick="callPythonScript(); return false;">here</button>
 	to send message to iframe below. It returned <input type="text" name="result" value="" readonly>.
       </form>
     </p>

@@ -18,7 +18,7 @@ L.Map.WOPI = L.Handler.extend({
 	DisableCopy: false,
 	DisableInactiveMessages: false,
 	UserCanNotWriteRelative: true,
-	SetCellColorSource: null,
+	CallPythonScriptSource: null,
 
 	_appLoadedConditions: {
 		docloaded: false,
@@ -245,9 +245,11 @@ L.Map.WOPI = L.Handler.extend({
 				this._map._socket.sendMessage('versionrestore prerestore');
 			}
 		}
-		else if (msg.MessageId === 'SetCellColor') {
-			this._map.SetCellColorSource = e.source;
-			this._map.sendUnoCommand('vnd.sun.star.script:SetCellColor.py$SetCellColor?language=Python&location=share', msg.Values);
+		else if (msg.MessageId === 'CallPythonScript' &&
+			 msg.hasOwnProperty('ScriptFile') &&
+			 msg.hasOwnProperty('Function')) {
+			this._map.CallPythonScriptSource = e.source;
+			this._map.sendUnoCommand('vnd.sun.star.script:' + msg.ScriptFile + '$' + msg.Function + '?language=Python&location=share', msg.Values);
 		}
 	},
 
