@@ -2246,27 +2246,6 @@ void lokit_main(const std::string& childRoot,
                     return TerminationFlag.load();
                 });
 
-#if 0
-        std::string uri = "file://$HOME/docs/basic-presentation.pptx";
-        std::shared_ptr<lok::Document> loKitDoc;
-
-        const auto flags = LOK_FEATURE_DOCUMENT_PASSWORD
-                           | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY
-                           | LOK_FEATURE_PART_IN_INVALIDATION_CALLBACK
-                           | LOK_FEATURE_NO_TILED_ANNOTATIONS
-                           | LOK_FEATURE_RANGE_HEADERS;
-        loKit->setOptionalFeatures(flags);
-        loKitDoc.reset(loKit->documentLoad(uri.c_str()));
-        if (!loKitDoc || !loKitDoc->get())
-        {
-            LOG_ERR("Failed to load: " << uri << ", error: " << loKit->getError());
-            std::_Exit(Application::EXIT_OK);
-        }
-
-        // specific case to debug
-        // ...
-#endif
-
         // Let forkit handle the jail cleanup.
     }
     catch (const Exception& exc)
