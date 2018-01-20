@@ -183,6 +183,21 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	clearAnnotations: function () {
+		var annotation;
+		var annotations;
+		for (var key in this._annotations) {
+			annotations = this._annotations[key];
+			while (annotations.length > 0) {
+				annotation = annotations.pop();
+				if (annotation) {
+					this._map.removeLayer(annotation);
+				}
+			}
+		}
+		this._annotations = {};
+	},
+
 	removeAnnotation: function (id) {
 		var annotations = this._annotations[this._partHashes[this._selectedPart]];
 		for (var index in annotations) {
@@ -279,7 +294,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		}
 
 		if (values.comments) {
-			this._annotations = {};
+			this.clearAnnotations();
 			for (var index in values.comments) {
 				var comment = values.comments[index];
 				if (!this._annotations[comment.parthash]) {
