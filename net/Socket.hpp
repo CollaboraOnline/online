@@ -242,8 +242,8 @@ public:
     {
         if (id != _owner)
         {
-            LOG_DBG("#" << _fd << " Thread affinity set to 0x" << std::hex <<
-                    id << " (was 0x" << _owner << ")." << std::dec);
+            LOG_DBG("#" << _fd << " Thread affinity set to " << Log::to_string(id) <<
+                    " (was " << Log::to_string(_owner) << ").");
             _owner = id;
         }
     }
@@ -261,9 +261,9 @@ public:
         // 0 owner means detached and can be invoked by any thread.
         const bool sameThread = (_owner == std::thread::id(0) || std::this_thread::get_id() == _owner);
         if (!sameThread)
-            LOG_ERR("#" << _fd << " Invoked from foreign thread. Expected: 0x" << std::hex <<
-                    _owner << " but called from 0x" << std::this_thread::get_id() << " (" <<
-                    std::dec << Util::getThreadId() << ").");
+            LOG_ERR("#" << _fd << " Invoked from foreign thread. Expected: " <<
+                    Log::to_string(_owner) << " but called from " <<
+                    std::this_thread::get_id() << " (" << Util::getThreadId() << ").");
 
         assert(sameThread);
     }
@@ -283,8 +283,7 @@ protected:
         setNoDelay();
         _sendBufferSize = DefaultSendBufferSize;
         _owner = std::this_thread::get_id();
-        LOG_DBG("#" << _fd << " Thread affinity set to 0x" << std::hex <<
-                _owner << "." << std::dec);
+        LOG_DBG("#" << _fd << " Thread affinity set to " << _owner << ".");
 
 #if ENABLE_DEBUG
         if (std::getenv("LOOL_ZERO_BUFFER_SIZE"))
@@ -381,9 +380,9 @@ public:
         // 0 owner means detached and can be invoked by any thread.
         const bool sameThread = (!isAlive() || _owner == std::thread::id(0) || std::this_thread::get_id() == _owner);
         if (!sameThread)
-            LOG_ERR("Incorrect thread affinity for " << _name << ". Expected: 0x" << std::hex <<
-                    _owner << " (" << std::dec << Util::getThreadId() << ") but called from 0x" <<
-                    std::hex << std::this_thread::get_id() << std::dec << ", stop: " << _stop);
+            LOG_ERR("Incorrect thread affinity for " << _name << ". Expected: " <<
+                    Log::to_string(_owner) << " (" << Util::getThreadId() <<
+                    ") but called from " << std::this_thread::get_id() << ", stop: " << _stop);
 
         assert(_stop || sameThread);
     }
@@ -615,8 +614,8 @@ private:
             LOG_INF("Starting polling thread [" << _name << "].");
 
             _owner = std::this_thread::get_id();
-            LOG_DBG("Thread affinity of " << _name << " set to 0x" <<
-                    std::hex << _owner << "." << std::dec);
+            LOG_DBG("Thread affinity of " << _name << " set to " <<
+                    Log::to_string(_owner) << ".");
 
             // Invoke the virtual implementation.
             pollingThread();

@@ -537,9 +537,9 @@ void TileCache::assertCorrectThread()
 {
     const bool correctThread = _owner == std::thread::id(0) || std::this_thread::get_id() == _owner;
     if (!correctThread)
-        LOG_ERR("TileCache method invoked from foreign thread. Expected: 0x" << std::hex <<
-                _owner << " but called from 0x" << std::this_thread::get_id() << " (" <<
-                std::dec << Util::getThreadId() << ").");
+        LOG_ERR("TileCache method invoked from foreign thread. Expected: " <<
+                Log::to_string(_owner) << " but called from " <<
+                std::this_thread::get_id() << " (" << Util::getThreadId() << ").");
     assert (correctThread);
 }
 

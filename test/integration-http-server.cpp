@@ -78,12 +78,16 @@ public:
 
     void setUp()
     {
+        helpers::resetTestStartTime();
         testCountHowManyLoolkits();
+        helpers::resetTestStartTime();
     }
 
     void tearDown()
     {
+        helpers::resetTestStartTime();
         testNoExtraLoolKitsLeft();
+        helpers::resetTestStartTime();
     }
 };
 

@@ -14,6 +14,7 @@
 #include <unistd.h>
 
 #include <functional>
+#include <thread>
 #include <sstream>
 #include <string>
 
@@ -187,6 +188,30 @@ namespace Log
         (void)end;
         lhs.flush();
     }
+
+    /// Dump the invalid id as 0, otherwise dump in hex.
+    inline std::string to_string(const std::thread::id& id)
+    {
+        if (id != std::thread::id())
+        {
+            std::ostringstream os;
+            os << std::hex << "0x" << id << std::dec;
+            return os.str();
+        }
+
+        return "0";
+    }
+
+    inline StreamLogger& operator<<(StreamLogger& lhs, const std::thread::id& rhs)
+    {
+        if (lhs.enabled())
+        {
+            lhs._stream << Log::to_string(rhs);
+        }
+
+        return lhs;
+    }
+
 }
 
 #define LOG_BODY_(PRIO, LVL, X) Poco::Message m_(l_.name(), "", Poco::Message::PRIO_##PRIO); char b_[1024]; std::ostringstream oss_(Log::prefix(b_, LVL, false), std::ostringstream::ate); oss_ << std::boolalpha << X << "| " << __FILE__ << ':' << __LINE__; m_.setText(oss_.str()); l_.log(m_);

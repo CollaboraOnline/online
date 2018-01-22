@@ -169,9 +169,9 @@ void AdminModel::assertCorrectThread() const
     // FIXME: share this code [!]
     const bool sameThread = std::this_thread::get_id() == _owner;
     if (!sameThread)
-        LOG_ERR("Admin command invoked from foreign thread. Expected: 0x" << std::hex <<
-        _owner << " but called from 0x" << std::this_thread::get_id() << " (" <<
-        std::dec << Util::getThreadId() << ").");
+        LOG_ERR("Admin command invoked from foreign thread. Expected: " <<
+        Log::to_string(_owner) << " but called from " <<
+        std::this_thread::get_id() << " (" << Util::getThreadId() << ").");
 
     assert(sameThread);
 }

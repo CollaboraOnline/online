@@ -74,12 +74,16 @@ public:
 
     void setUp()
     {
+        resetTestStartTime();
         testCountHowManyLoolkits();
+        resetTestStartTime();
     }
 
     void tearDown()
     {
+        resetTestStartTime();
         testNoExtraLoolKitsLeft();
+        resetTestStartTime();
     }
 };
 

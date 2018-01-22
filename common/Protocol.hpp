@@ -12,6 +12,7 @@
 
 #include <cstdint>
 #include <cstring>
+#include <iomanip>
 #include <map>
 #include <sstream>
 #include <string>
@@ -320,7 +321,7 @@ namespace LOOLProtocol
             result << Poco::format("%#x", flags);
             break;
         }
-        result << " " << length << " bytes";
+        result << " " << std::setw(3) << length << " bytes";
 
         if (length > 0 &&
             ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_TEXT ||

@@ -179,7 +179,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                      const size_t thread_count,
                      const size_t max_jitter_ms);
 
-    void getPartHashCodes(const std::string response,
+    void getPartHashCodes(const std::string& testname,
+                          const std::string& response,
                           std::vector<std::string>& parts);
 
     void getCursor(const std::string& message,
@@ -225,12 +226,16 @@ public:
 
     void setUp()
     {
+        resetTestStartTime();
         testCountHowManyLoolkits();
+        resetTestStartTime();
     }
 
     void tearDown()
     {
+        resetTestStartTime();
         testNoExtraLoolKitsLeft();
+        resetTestStartTime();
     }
 };
 
@@ -279,17 +284,17 @@ void HTTPWSTest::testHandshake()
         int flags = 0;
         char buffer[1024] = {0};
         int bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
+        TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
         CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: find"), std::string(buffer, bytes));
 
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
+        TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
         if (bytes > 0 && !std::strstr(buffer, "error:"))
         {
             CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: connect"), std::string(buffer, bytes));
 
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
+            TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
             if (!std::strstr(buffer, "error:"))
             {
                 CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: ready"), std::string(buffer, bytes));
@@ -301,7 +306,7 @@ void HTTPWSTest::testHandshake()
 
                 // close frame message
                 bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-                std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
+                TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
                 CPPUNIT_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE);
             }
         }
@@ -312,7 +317,7 @@ void HTTPWSTest::testHandshake()
 
             // close frame message
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
+            TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
             CPPUNIT_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE);
         }
     }
@@ -327,11 +332,11 @@ void HTTPWSTest::testCloseAfterClose()
     const char* testname = "closeAfterClose ";
     try
     {
-        std::cerr << testname << "Connecting and loading." << std::endl;
+        TST_LOG("Connecting and loading.");
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
 
         // send normal socket shutdown
-        std::cerr << testname << "Disconnecting." << std::endl;
+        TST_LOG("Disconnecting.");
         socket->shutdown();
 
         // 5 seconds timeout
@@ -344,17 +349,17 @@ void HTTPWSTest::testCloseAfterClose()
         do
         {
             bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
-            std::cerr << testname << "Received [" << std::string(buffer, bytes) << "], flags: "<< std::hex << flags << std::dec << std::endl;
+            TST_LOG("Received [" << std::string(buffer, bytes) << "], flags: "<< std::hex << flags << std::dec);
         }
         while (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
-        std::cerr << testname << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
+        TST_LOG("Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec);
 
         try
         {
             // no more messages is received.
             bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
-            std::cerr << testname << "Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec << std::endl;
+            TST_LOG("Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec);
             CPPUNIT_ASSERT_EQUAL(0, bytes);
             CPPUNIT_ASSERT_EQUAL(0, flags);
         }
@@ -363,7 +368,7 @@ void HTTPWSTest::testCloseAfterClose()
             // This is not unexpected, since WSD will close the socket after
             // echoing back the shutdown status code. However, if it doesn't
             // we assert above that it doesn't send any more data.
-            std::cerr << testname << "Error: " << exc.displayText() << std::endl;
+            TST_LOG("Error: " << exc.displayText());
 
         }
     }
@@ -402,31 +407,31 @@ void HTTPWSTest::testConnectNoLoad()
 
     // Connect and disconnect without loading.
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-    std::cerr << testname1 << "Connecting first to disconnect without loading." << std::endl;
+    TST_LOG_NAME(testname1, "Connecting first to disconnect without loading.");
     std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname1);
     CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket);
-    std::cerr << testname1 << "Disconnecting first." << std::endl;
+    TST_LOG_NAME(testname1, "Disconnecting first.");
     socket.reset();
 
     // Connect and load first view.
-    std::cerr << testname2 << "Connecting second to load first view." << std::endl;
+    TST_LOG_NAME(testname2, "Connecting second to load first view.");
     std::shared_ptr<LOOLWebSocket> socket1 = connectLOKit(_uri, request, _response, testname2);
     CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket1);
     sendTextFrame(socket1, "load url=" + documentURL, testname2);
     CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket1));
 
     // Connect but don't load second view.
-    std::cerr << testname3 << "Connecting third to disconnect without loading." << std::endl;
+    TST_LOG_NAME(testname3, "Connecting third to disconnect without loading.");
     std::shared_ptr<LOOLWebSocket> socket2 = connectLOKit(_uri, request, _response, testname3);
     CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket2);
-    std::cerr << testname3 << "Disconnecting third." << std::endl;
+    TST_LOG_NAME(testname3, "Disconnecting third.");
     socket2.reset();
 
-    std::cerr << testname2 << "Getting status from first view." << std::endl;
+    TST_LOG_NAME(testname2, "Getting status from first view.");
     sendTextFrame(socket1, "status", testname2);
     assertResponseString(socket1, "status:");
 
-    std::cerr << testname2 << "Disconnecting second." << std::endl;
+    TST_LOG_NAME(testname2, "Disconnecting second.");
     socket1.reset();
 }
 
@@ -462,7 +467,7 @@ int HTTPWSTest::loadTorture(const std::string& testname,
             oss << std::hex << std::this_thread::get_id();
             const std::string id = oss.str();
 
-            std::cerr << testname << ": #" << id << ", views: " << num_of_views << ", to load: " << num_to_load << std::endl;
+            TST_LOG(": #" << id << ", views: " << num_of_views << ", to load: " << num_to_load);
             try
             {
                 // Load a document and wait for the status.
@@ -478,14 +483,14 @@ int HTTPWSTest::loadTorture(const std::string& testname,
                 ++num_of_views;
                 --num_to_load;
 
-                std::cerr << testname << ": #" << id << ", loaded views: " << num_of_views << ", to load: " << num_to_load << std::endl;
+                TST_LOG(": #" << id << ", loaded views: " << num_of_views << ", to load: " << num_to_load);
 
                 while (true)
                 {
                     if (num_to_load == 0)
                     {
                         // Unload at once, nothing more left to do.
-                        std::cerr << testname << ": #" << id << ", no more to load, unloading." << std::endl;
+                        TST_LOG(": #" << id << ", no more to load, unloading.");
                         break;
                     }
 
@@ -497,7 +502,7 @@ int HTTPWSTest::loadTorture(const std::string& testname,
                     // Unload only when we aren't the last/only.
                     if (--num_of_views > 0)
                     {
-                        std::cerr << testname << ": #" << id << ", views: " << num_of_views << " not the last/only, unloading." << std::endl;
+                        TST_LOG(": #" << id << ", views: " << num_of_views << " not the last/only, unloading.");
                         break;
                     }
                     else
@@ -509,7 +514,7 @@ int HTTPWSTest::loadTorture(const std::string& testname,
             }
             catch (const std::exception& exc)
             {
-                std::cerr << testname << ": #" << id << ", Exception: " << exc.what() << std::endl;
+                TST_LOG(": #" << id << ", Exception: " << exc.what());
                 --num_to_load;
             }
         });
@@ -523,7 +528,7 @@ int HTTPWSTest::loadTorture(const std::string& testname,
         }
         catch (const std::exception& exc)
         {
-            std::cerr << testname << ": Exception: " << exc.what() << std::endl;
+            TST_LOG(": Exception: " << exc.what());
         }
     }
 
@@ -627,7 +632,7 @@ void HTTPWSTest::testReload()
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
     for (int i = 0; i < 3; ++i)
     {
-        std::cerr << testname << "loading #" << (i+1) << std::endl;
+        TST_LOG("loading #" << (i+1));
         loadDoc(documentURL, testname);
     }
 }
@@ -659,7 +664,7 @@ void HTTPWSTest::testSaveOnDisconnect()
     const char* testname = "saveOnDisconnect ";
 
     const std::string text = helpers::genRandomString(40);
-    std::cerr << "Test string: [" << text << "]." << std::endl;
+    TST_LOG("Test string: [" << text << "].");
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
@@ -676,6 +681,8 @@ void HTTPWSTest::testSaveOnDisconnect()
         sendTextFrame(socket, "uno .uno:Delete", testname);
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
 
+        TST_LOG("Validating what we sent before disconnecting.");
+
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
@@ -690,7 +697,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         kitcount = getLoolKitProcessCount();
 
         // Shutdown abruptly.
-        std::cerr << "Closing connection after pasting." << std::endl;
+        TST_LOG("Closing connection after pasting.");
         socket->shutdown();
         socket2->shutdown();
     }
@@ -701,7 +708,7 @@ void HTTPWSTest::testSaveOnDisconnect()
 
     // Allow time to save and destroy before we connect again.
     testNoExtraLoolKitsLeft();
-    std::cerr << "Loading again." << std::endl;
+    TST_LOG("Loading again.");
     try
     {
         // Load the same document and check that the last changes (pasted text) is saved.
@@ -727,7 +734,7 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
     const char* testname = "saveOnPassiveDisconnect ";
 
     const std::string text = helpers::genRandomString(40);
-    std::cerr << "Test string: [" << text << "]." << std::endl;
+    TST_LOG("Test string: [" << text << "].");
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
@@ -758,7 +765,7 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
         kitcount = getLoolKitProcessCount();
 
         // Shutdown abruptly.
-        std::cerr << "Closing connection after pasting." << std::endl;
+        TST_LOG("Closing connection after pasting.");
         socket->shutdown(); // Should trigger saving.
         socket2->shutdown();
     }
@@ -769,7 +776,7 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
 
     // Allow time to save and destroy before we connect again.
     testNoExtraLoolKitsLeft();
-    std::cerr << "Loading again." << std::endl;
+    TST_LOG("Loading again.");
     try
     {
         // Load the same document and check that the last changes (pasted text) is saved.
@@ -812,11 +819,11 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         const int kitcount = getLoolKitProcessCount();
 
         // Shutdown abruptly.
-        std::cerr << "Closing connection after pasting." << std::endl;
+        TST_LOG("Closing connection after pasting.");
         socket->shutdown();
 
         // Load the same document and check that the last changes (pasted text) is saved.
-        std::cerr << "Loading again." << std::endl;
+        TST_LOG("Loading again.");
         socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
         // Should have no new instances.
@@ -858,26 +865,28 @@ void HTTPWSTest::testExcelLoad()
 void HTTPWSTest::testPaste()
 {
     const char* testname = "paste ";
-    try
-    {
-        // Load a document and make it empty, then paste some text into it.
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
 
+    // Load a document and make it empty, then paste some text into it.
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
+
+    for (int i = 0; i < 5; ++i)
+    {
+        const std::string text = std::to_string(i + 1) + "_sh9le[;\"CFD7U[#B+_nW=$kXgx{sv9QE#\"l1y\"hr_" + Util::encodeId(Util::rng::getNext());
+        TST_LOG("Pasting text #" << i + 1 << ": " << text);
+
+        // Always delete everything to have an empty doc.
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "uno .uno:Delete", testname);
 
         // Paste some text into it.
-        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc", testname);
+        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
+        const std::string expected = "textselectioncontent: " + text;
 
         // Check if the document contains the pasted text.
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
         const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
-        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
+        CPPUNIT_ASSERT_EQUAL(expected, selection);
     }
 }
 
@@ -926,7 +935,7 @@ void HTTPWSTest::testLargePaste()
         }
 
         const std::string documentContents = oss.str();
-        std::cerr << "Pasting " << documentContents.size() << " characters into document." << std::endl;
+        TST_LOG("Pasting " << documentContents.size() << " characters into document.");
         sendTextFrame(socket, "paste mimetype=text/html\n" + documentContents, testname);
 
         // Check if the server is still alive.
@@ -1130,23 +1139,23 @@ void HTTPWSTest::testInsertDelete()
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
 
         // check total slides 1
-        std::cerr << "Expecting 1 slide." << std::endl;
+        TST_LOG("Expecting 1 slide.");
         sendTextFrame(socket, "status");
         response = getResponseString(socket, "status:");
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        getPartHashCodes(response.substr(7), parts);
+        getPartHashCodes(testname, response.substr(7), parts);
         CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
 
         const std::string slide1Hash = parts[0];
 
         // insert 10 slides
-        std::cerr << "Inserting 10 slides." << std::endl;
+        TST_LOG("Inserting 10 slides.");
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:InsertPage");
             response = getResponseString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(response.substr(7), parts);
+            getPartHashCodes(testname, response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
         }
 
@@ -1154,7 +1163,7 @@ void HTTPWSTest::testInsertDelete()
         const std::vector<std::string> parts_after_insert(parts.begin(), parts.end());
 
         // delete 10 slides
-        std::cerr << "Deleting 10 slides." << std::endl;
+        TST_LOG("Deleting 10 slides.");
         for (size_t it = 1; it <= 10; it++)
         {
             // Explicitly delete the nth slide.
@@ -1162,20 +1171,20 @@ void HTTPWSTest::testInsertDelete()
             sendTextFrame(socket, "uno .uno:DeletePage");
             response = getResponseString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(response.substr(7), parts);
+            getPartHashCodes(testname, response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
         }
 
         CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after deleting extra slides.", parts[0] == slide1Hash);
 
         // undo delete slides
-        std::cerr << "Undoing 10 slide deletes." << std::endl;
+        TST_LOG("Undoing 10 slide deletes.");
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Undo");
             response = getResponseString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(response.substr(7), parts);
+            getPartHashCodes(testname, response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
         }
 
@@ -1184,24 +1193,24 @@ void HTTPWSTest::testInsertDelete()
         CPPUNIT_ASSERT_MESSAGE("Hash codes changed between deleting and undo.", parts_after_insert == parts_after_undo);
 
         // redo inserted slides
-        std::cerr << "Redoing 10 slide deletes." << std::endl;
+        TST_LOG("Redoing 10 slide deletes.");
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Redo");
             response = getResponseString(socket, "status:");
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(response.substr(7), parts);
+            getPartHashCodes(testname, response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
         }
 
         CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after redoing slide delete.", parts[0] == slide1Hash);
 
         // check total slides 1
-        std::cerr << "Expecting 1 slide." << std::endl;
+        TST_LOG("Expecting 1 slide.");
         sendTextFrame(socket, "status");
         response = getResponseString(socket, "status:");
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        getPartHashCodes(response.substr(7), parts);
+        getPartHashCodes(testname, response.substr(7), parts);
         CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
     }
     catch (const Poco::Exception& exc)
@@ -1276,7 +1285,7 @@ void HTTPWSTest::testSlideShow()
         std::istream& rs = session->receiveResponse(responseSVG);
         CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseSVG.getStatus());
         CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
-        std::cerr << "SVG file size: " << responseSVG.getContentLength() << std::endl;
+        TST_LOG("SVG file size: " << responseSVG.getContentLength());
 
 //        std::ofstream ofs("/tmp/slide.svg");
 //        Poco::StreamCopier::copyStream(rs, ofs);
@@ -1315,7 +1324,7 @@ void HTTPWSTest::testInactiveClient()
         std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-1 ");
 
         // Connect another and go inactive.
-        std::cerr << "Connecting second client." << std::endl;
+        TST_LOG("Connecting second client.");
         std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-2 ", true);
         sendTextFrame(socket2, "userinactive", "inactiveClient-2 ");
 
@@ -1349,7 +1358,7 @@ void HTTPWSTest::testInactiveClient()
                     return (token != "statechanged:");
                 });
 
-        std::cerr << "Second client finished." << std::endl;
+        TST_LOG("Second client finished.");
         socket1->shutdown();
         socket2->shutdown();
     }
@@ -1437,14 +1446,15 @@ void HTTPWSTest::testMaxRow()
     }
 }
 
-void HTTPWSTest::getPartHashCodes(const std::string status,
+void HTTPWSTest::getPartHashCodes(const std::string& testname,
+                                  const std::string& response,
                                   std::vector<std::string>& parts)
 {
     std::string line;
-    std::istringstream istr(status);
+    std::istringstream istr(response);
     std::getline(istr, line);
 
-    std::cerr << "Reading parts from [" << status << "]." << std::endl;
+    TST_LOG("Reading parts from [" << response << "].");
 
     // Expected format is something like 'type= parts= current= width= height= viewid='.
     Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
@@ -1455,7 +1465,7 @@ void HTTPWSTest::getPartHashCodes(const std::string status,
                            type == "presentation" || type == "spreadsheet");
 
     const int totalParts = std::stoi(tokens[1].substr(std::string("parts=").size()));
-    std::cerr << "Status reports " << totalParts << " parts." << std::endl;
+    TST_LOG("Status reports " << totalParts << " parts.");
 
     Poco::RegularExpression endLine("[^\n\r]+");
     Poco::RegularExpression number("^[0-9]+$");
@@ -1463,10 +1473,10 @@ void HTTPWSTest::getPartHashCodes(const std::string status,
     int offset = 0;
 
     parts.clear();
-    while (endLine.match(status, offset, matches) > 0)
+    while (endLine.match(response, offset, matches) > 0)
     {
         CPPUNIT_ASSERT_EQUAL(1, (int)matches.size());
-        const std::string str = status.substr(matches[0].offset, matches[0].length);
+        const std::string str = response.substr(matches[0].offset, matches[0].length);
         if (number.match(str, 0))
         {
             parts.push_back(str);
@@ -1475,7 +1485,7 @@ void HTTPWSTest::getPartHashCodes(const std::string status,
         offset = static_cast<int>(matches[0].offset + matches[0].length);
     }
 
-    std::cerr << "Found " << parts.size() << " part names/codes." << std::endl;
+    TST_LOG("Found " << parts.size() << " part names/codes.");
 
     // Validate that Core is internally consistent when emitting status messages.
     CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
@@ -1617,7 +1627,7 @@ void HTTPWSTest::testInsertAnnotationWriter()
     // Make sure the document is fully unloaded.
     testNoExtraLoolKitsLeft();
 
-    std::cerr << "Reloading " << std::endl;
+    TST_LOG("Reloading ");
     socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
     // Confirm that the text is in the comment and not doc body.
@@ -1682,10 +1692,10 @@ void HTTPWSTest::testEditAnnotationWriter()
     const int kitcount = getLoolKitProcessCount();
 
     // Close and reopen the same document and test again.
-    std::cerr << "Closing connection after pasting." << std::endl;
+    TST_LOG("Closing connection after pasting.");
     socket->shutdown();
 
-    std::cerr << "Reloading " << std::endl;
+    TST_LOG("Reloading ");
     socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
     // Should have no new instances.
@@ -1751,7 +1761,7 @@ void HTTPWSTest::testCalcEditRendering()
     sendTextFrame(socket, req, testname);
 
     const std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
-    std::cerr << "size: " << tile.size() << std::endl;
+    TST_LOG("size: " << tile.size());
 
     // Return early for now when on LO >= 5.2.
     int major = 0;
@@ -1793,7 +1803,7 @@ void HTTPWSTest::testCalcEditRendering()
             // This is a very strict test that breaks often/easily due to slight rendering
             // differences. So for now just keep it informative only.
             //CPPUNIT_ASSERT_MESSAGE("Tile not rendered as expected @ row #" + std::to_string(itRow), eq);
-            std::cerr << "\nFAILURE: Tile not rendered as expected @ row #" << itRow << std::endl;
+            TST_LOG("\nFAILURE: Tile not rendered as expected @ row #" << itRow);
             break;
         }
     }
@@ -1817,8 +1827,8 @@ void HTTPWSTest::testCalcRenderAfterNewView51()
     getServerVersion(socket, major, minor, testname);
     if (major != 5 || minor != 1)
     {
-        std::cerr << testname << "Skipping test on incompatible client ["
-                  << major << '.' << minor << "], expected [5.1]." << std::endl;
+        TST_LOG("Skipping test on incompatible client ["
+                  << major << '.' << minor << "], expected [5.1].");
         return;
     }
 
@@ -1838,12 +1848,12 @@ void HTTPWSTest::testCalcRenderAfterNewView51()
 
 
     // Connect second client, which will load at the top.
-    std::cerr << testname << "Connecting second client." << std::endl;
+    TST_LOG("Connecting second client.");
     std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
 
 
     // Up one row on the first view to trigger the bug.
-    std::cerr << testname << "Up." << std::endl;
+    TST_LOG("Up.");
     sendTextFrame(socket, "key type=input char=0 key=1025", testname);
     assertResponseString(socket, "invalidatetiles:", testname); // Up invalidates.
 
@@ -1868,8 +1878,8 @@ void HTTPWSTest::testCalcRenderAfterNewView53()
     getServerVersion(socket, major, minor, testname);
     if (major < 5 || minor < 3)
     {
-        std::cerr << testname << "Skipping test on incompatible client ["
-                  << major << '.' << minor << "], expected [>=5.3]." << std::endl;
+        TST_LOG("Skipping test on incompatible client ["
+                  << major << '.' << minor << "], expected [>=5.3].");
         return;
     }
 
@@ -1882,11 +1892,11 @@ void HTTPWSTest::testCalcRenderAfterNewView53()
 
 
     // Connect second client, which will load at the top.
-    std::cerr << testname << "Connecting second client." << std::endl;
+    TST_LOG("Connecting second client.");
     std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
 
 
-    std::cerr << testname << "Waiting for cellviewcursor of second on first." << std::endl;
+    TST_LOG("Waiting for cellviewcursor of second on first.");
     assertResponseString(socket, "cellviewcursor:", testname);
 
     // Get same tile again.

@@ -22,10 +22,12 @@
 
 #include <Common.hpp>
 #include "test.hpp"
+#include "helpers.hpp"
 
 static int countLoolKitProcesses(const int expected)
 {
-    std::cerr << "Waiting until loolkit processes are exactly " << expected << ". Loolkits: ";
+    const auto testname = "countLoolKitProcesses ";
+    TST_LOG_BEGIN("Waiting until loolkit processes are exactly " << expected << ". Loolkits: ");
 
     // This does not need to depend on any constant from Common.hpp.
     // The shorter the better (the quicker the test runs).
@@ -36,7 +38,7 @@ static int countLoolKitProcesses(const int expected)
     int count = getLoolKitProcessCount();
     for (size_t i = 0; i < repeat; ++i)
     {
-        std::cerr << count << ' ';
+        TST_LOG_APPEND(count << ' ');
         if (count == expected)
         {
             break;
@@ -54,10 +56,10 @@ static int countLoolKitProcesses(const int expected)
         }
     }
 
-    std::cerr << std::endl;
+    TST_LOG_END;
     if (expected != count)
     {
-        std::cerr << "Found " << count << " LoKit processes but was expecting " << expected << "." << std::endl;
+        TST_LOG("Found " << count << " LoKit processes but was expecting " << expected << ".");
     }
 
     return count;
@@ -84,13 +86,14 @@ static void testCountHowManyLoolkits()
 
 static void testNoExtraLoolKitsLeft()
 {
+    const char* testname = "noExtraLoolKitsLeft ";
     const int countNow = countLoolKitProcesses(InitialLoolKitCount);
     CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
 
     const auto duration = (std::chrono::steady_clock::now() - TestStartTime);
     const std::chrono::milliseconds::rep durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
 
-    std::cout << " (" << durationMs << " ms)";
+    TST_LOG(" (" << durationMs << " ms)");
 }
 
 #endif

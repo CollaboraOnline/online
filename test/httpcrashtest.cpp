@@ -93,12 +93,16 @@ public:
 
     void setUp()
     {
+        resetTestStartTime();
         testCountHowManyLoolkits();
+        resetTestStartTime();
     }
 
     void tearDown()
     {
+        resetTestStartTime();
         testNoExtraLoolKitsLeft();
+        resetTestStartTime();
     }
 };
 
@@ -111,7 +115,7 @@ void HTTPCrashTest::testBarren()
         killLoKitProcesses();
         countLoolKitProcesses(0);
 
-        std::cerr << "Loading after kill." << std::endl;
+        TST_LOG("Loading after kill.");
 
         // Load a document and get its status.
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
@@ -132,14 +136,14 @@ void HTTPCrashTest::testCrashKit()
     {
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
-        std::cerr << "Killing loolkit instances." << std::endl;
+        TST_LOG("Killing loolkit instances.");
 
         killLoKitProcesses();
         countLoolKitProcesses(0);
 
         // We expect the client connection to close.
         // In the future we might restore the kit, but currently we don't.
-        std::cerr << "Reading after kill." << std::endl;
+        TST_LOG("Reading after kill.");
 
         // Drain the socket.
         getResponseMessage(socket, "", testname, 1000);
@@ -149,16 +153,16 @@ void HTTPCrashTest::testCrashKit()
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY), statusCode);
 
         // respond close frame
-        std::cerr << "Shutting down socket." << std::endl;
+        TST_LOG("Shutting down socket.");
         socket->shutdown();
 
-        std::cerr << "Reading after shutdown." << std::endl;
+        TST_LOG("Reading after shutdown.");
 
         // no more messages is received.
         int flags;
         char buffer[READ_BUFFER_SIZE];
         const int bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
-        std::cerr << testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags) << std::endl;
+        TST_LOG(testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
 
         // While we expect no more messages after shutdown call, apparently
         // sometimes we _do_ get data. Even when the receiveFrame in the loop
@@ -181,13 +185,13 @@ void HTTPCrashTest::testRecoverAfterKitCrash()
     {
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
-        std::cerr << "Killing loolkit instances." << std::endl;
+        TST_LOG("Killing loolkit instances.");
 
         killLoKitProcesses();
         countLoolKitProcesses(0);
 
         // We expect the client connection to close.
-        std::cerr << "Reconnect after kill." << std::endl;
+        TST_LOG("Reconnect after kill.");
 
         std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket("empty.odt", _uri, testname);
         sendTextFrame(socket2, "status", testname);
@@ -206,9 +210,9 @@ void HTTPCrashTest::testCrashForkit()
     {
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
-        std::cerr << "Killing forkit." << std::endl;
+        TST_LOG("Killing forkit.");
         killForkitProcess();
-        std::cerr << "Communicating after kill." << std::endl;
+        TST_LOG("Communicating after kill.");
 
         sendTextFrame(socket, "status", testname);
         assertResponseString(socket, "status:", testname);
@@ -216,10 +220,10 @@ void HTTPCrashTest::testCrashForkit()
         // respond close frame
         socket->shutdown();
 
-        std::cerr << "Killing loolkit." << std::endl;
+        TST_LOG("Killing loolkit.");
         killLoKitProcesses();
         countLoolKitProcesses(0);
-        std::cerr << "Communicating after kill." << std::endl;
+        TST_LOG("Communicating after kill.");
         loadDocAndGetSocket("empty.odt", _uri, testname);
     }
     catch (const Poco::Exception& exc)
@@ -228,26 +232,27 @@ void HTTPCrashTest::testCrashForkit()
     }
 }
 
-void killPids(const std::vector<int> &pids)
+static void killPids(const std::vector<int> &pids, const std::string& testname)
 {
-    std::cout << "kill pids " << pids.size() << "\n";
+    TST_LOG("kill pids " << pids.size());
     // Now kill them
     for (int pid : pids)
     {
-        std::cerr << "Killing " << pid << std::endl;
+        TST_LOG_BEGIN("Killing " << pid);
         if (kill(pid, SIGKILL) == -1)
-            std::cerr << "kill(" << pid << ", SIGKILL) failed: " << std::strerror(errno) << std::endl;
+            TST_LOG_APPEND("kill(" << pid << ", SIGKILL) failed: " << std::strerror(errno));
+        TST_LOG_END;
     }
 }
 
 void HTTPCrashTest::killLoKitProcesses()
 {
-    killPids(getKitPids());
+    killPids(getKitPids(), "killLoKitProcesses ");
 }
 
 void HTTPCrashTest::killForkitProcess()
 {
-    killPids(getForKitPids());
+    killPids(getForKitPids(), "killForkitProcess ");
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPCrashTest);
