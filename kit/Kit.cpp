@@ -146,6 +146,39 @@ namespace
         }
     }
 
+    bool shouldLinkFile(const char *path)
+    {
+        static bool avoidCode = getenv("LINK_NO_CODE");
+
+        if (!avoidCode)
+            return true;
+
+        switch (linkOrCopyType)
+        {
+        case LinkOrCopyType::LO:
+        {
+            const char *dot = strrchr(path, '.');
+            if (!dot)
+                return true;
+            if (!strcmp(dot, ".dbg") ||
+                !strcmp(dot, ".so"))
+                return false;
+            const char *vers;
+            if ((vers = strstr(path, ".so."))) // .so.[digit]+
+            {
+                for(int i = sizeof (".so."); vers[i] != '\0'; ++i)
+                    if (!isdigit(vers[i]) && vers[i] != '.')
+                        return true;
+                return false;
+            }
+            return true;
+        }
+        case LinkOrCopyType::NoUsr:
+        default: // LinkOrCopyType::All
+            return true;
+        }
+    }
+
     int linkOrCopyFunction(const char *fpath,
                            const struct stat* /*sb*/,
                            int typeflag,
@@ -176,21 +209,24 @@ namespace
         case FTW_SLN:
             File(newPath.parent()).createDirectories();
 
-            if (linkOrCopyVerboseLogging)
-                LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath.toString() << "\"");
-            if (link(fpath, newPath.toString().c_str()) == -1)
+            if (shouldLinkFile(relativeOldPath))
             {
-                LOG_SYS("link(\"" << fpath << "\", \"" <<
-                        newPath.toString() << "\") failed. Will copy.");
-                try
+                if (linkOrCopyVerboseLogging)
+                    LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath.toString() << "\"");
+                if (link(fpath, newPath.toString().c_str()) == -1)
                 {
-                    File(fpath).copyTo(newPath.toString());
-                }
-                catch (const std::exception& exc)
-                {
-                    LOG_ERR("Copying of '" << fpath << "' to " << newPath.toString() <<
-                            " failed: " << exc.what() << ". Exiting.");
-                    std::_Exit(Application::EXIT_SOFTWARE);
+                    LOG_SYS("link(\"" << fpath << "\", \"" <<
+                            newPath.toString() << "\") failed. Will copy.");
+                    try
+                    {
+                        File(fpath).copyTo(newPath.toString());
+                    }
+                    catch (const std::exception& exc)
+                    {
+                        LOG_ERR("Copying of '" << fpath << "' to " << newPath.toString() <<
+                                " failed: " << exc.what() << ". Exiting.");
+                        std::_Exit(Application::EXIT_SOFTWARE);
+                    }
                 }
             }
             break;
@@ -2039,7 +2075,7 @@ void lokit_main(const std::string& childRoot,
                 const auto etcPathString = etcPath.toString();
                 if (File(filename).exists() && !File(etcPathString).exists() )
                 {
-                    linkOrCopy( filename, etcPath, LinkOrCopyType::LO );
+                    linkOrCopy( filename, etcPath, LinkOrCopyType::All );
                 }
             }
 
