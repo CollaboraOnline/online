@@ -121,7 +121,12 @@
             var index = 0;
             var result = '';
             while (msg.Values.result.value.hasOwnProperty(index.toString())) {
-              result += msg.Values.result.value[index.toString()].value + "\n";
+              if (msg.Values.result.value[index.toString()].value.hasOwnProperty('0') &&
+                  msg.Values.result.value[index.toString()].value['0'].hasOwnProperty('value') &&
+                  msg.Values.result.value[index.toString()].value.hasOwnProperty('1') &&
+                  msg.Values.result.value[index.toString()].value['1'].hasOwnProperty('value'))
+              result += msg.Values.result.value[index.toString()].value[0].value + ": " +
+                        msg.Values.result.value[index.toString()].value[1].value + "\n";
               index++;
             }
 	    document.forms['get-named-ranges-form'].elements['result'].value = result;
