@@ -209,6 +209,7 @@ var unoCommandsArray = {
 	TableSelectMenu:{text:{menu:_('~Select'),},},
 	TaskPaneInsertPage:{presentation:{menu:_('Insert Slide'),},},
 	TextAlign:{global:{menu:_('Alig~n'),},},
+	ThesaurusDialog:{global:{menu:_('~Thesaurus...'),},text:{menu:_('~Thesaurus...'),},},
 	ToggleMergeCells:{spreadsheet:{menu:_('M~erge and Center Cells'),},},
 	ToolsMenu:{global:{menu:_('~Tools'),},},
 	TrackChanges:{text:{menu:_('~Record'),},},
