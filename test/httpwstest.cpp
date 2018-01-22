@@ -568,7 +568,7 @@ void HTTPWSTest::testLoadTortureODP()
 
     // For ODP the view-id is always odd, and we expect not to skip any ids.
     const int number_of_loads = thread_count;
-    const int exp_sum_view_ids = number_of_loads * number_of_loads; // Odd view-ids only.
+    const int exp_sum_view_ids = number_of_loads * (number_of_loads - 1) / 2; // 0-based view-ids.
     CPPUNIT_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids);
 }
 
