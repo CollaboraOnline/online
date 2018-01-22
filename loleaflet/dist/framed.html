@@ -83,16 +83,24 @@
 
       function callAddNamedRange() {
         window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
-        // FIXME: Add parameters for the position, size, and name of the range
+        // Our form below takes input in A1 format, the Python script wants zero-based indexes and width and height
+        var abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var x0 = document.forms['add-named-range-form'].elements['x0'].value;
+        var x1 = document.forms['add-named-range-form'].elements['x1'].value;
+        var y0 = parseInt(document.forms['add-named-range-form'].elements['y0'].value);
+        var y1 = parseInt(document.forms['add-named-range-form'].elements['y1'].value);
+        console.log('x0=' + x0 + ', x1=' + x1)
+        x0 = abc.indexOf(x0);
+        x1 = abc.indexOf(x1);
         window.frames[0].postMessage(JSON.stringify({'MessageId': 'CallPythonScript',
                                                      'SendTime': Date.now(),
                                                      'ScriptFile': 'NamedRanges.py',
                                                      'Function': 'DefineNamedRange',
                                                      'Values': {'sheet': {'type': 'string', 'value': 'Sheet1'},
-								'x0': {'type': 'long', 'value': '2'},
-								'y0': {'type': 'long', 'value': '3'},
-								'width': {'type': 'long', 'value': '2'},
-								'height': {'type': 'long', 'value': '2'},
+								'x0': {'type': 'long', 'value': x0},
+								'y0': {'type': 'long', 'value': y0-1},
+								'width': {'type': 'long', 'value': x1-x0+1},
+								'height': {'type': 'long', 'value': y1-y0+1},
 								'name': {'type': 'string', 'value': 'N' + Date.now().toString()}
                                                                }
                                                      }),
@@ -158,9 +166,11 @@
       <textarea name="result" value="" rows="10" cols="80"></textarea>
     </form>
 
-    <form id="get-named-ranges-form">
+    <form id="add-named-range-form">
       <!-- FIXME: Add input fields for the position, size, and name of the range -->
-      Click <button onclick="callAddNamedRange(); return false;">here</button> to add a new named range.
+      Click <button onclick="callAddNamedRange(); return false;">here</button> to add a new named range on Sheet1 from (A1 syntax)
+      <input type="text" name="x0" value="A" size="1" pattern="[A-Z]{1}"> <input type="number" name="y0", min="1" max="999" value="1"> to
+      <input type="text" name="x1" value="B" size="1" pattern="[A-Z]{1}"> <input type="number" name="y1", min="1" max="999" value="3">.
     </form>
 
     <!-- The hostname and pathnames below are obviously specific to my
