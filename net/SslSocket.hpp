@@ -251,8 +251,8 @@ private:
                 {
                     if (rc == 0)
                     {
-                        // Socket closed.
-                        LOG_ERR("Socket #" << getFD() << " SSL BIO error: closed (0).");
+                        // Socket closed. Not an error.
+                        LOG_INF("Socket #" << getFD() << " SSL BIO error: closed (0).");
                         return 0;
                     }
                     else if (rc == -1)

@@ -337,6 +337,9 @@ protected:
         if (!socket || data == nullptr || len == 0)
             return -1;
 
+        if (socket->isClosed())
+            return 0;
+
         socket->assertCorrectThread();
         std::vector<char>& out = socket->_outBuffer;
         const size_t oldSize = out.size();

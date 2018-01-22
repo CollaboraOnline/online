@@ -730,6 +730,8 @@ public:
         }
     }
 
+    bool isClosed() const { return _closed; }
+
     /// Just trigger the async shutdown.
     virtual void shutdown() override
     {
