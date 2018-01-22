@@ -83,6 +83,7 @@
 
       function callAddNamedRange() {
         window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+        // Our form below takes input in A1 format, the Python script wants zero-based indexes and width and height
         var abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var x0 = document.forms['add-named-range-form'].elements['x0'].value;
         var x1 = document.forms['add-named-range-form'].elements['x1'].value;
@@ -91,8 +92,6 @@
         console.log('x0=' + x0 + ', x1=' + x1)
         x0 = abc.indexOf(x0);
         x1 = abc.indexOf(x1);
-        console.log('x0=' + x0 + ', x1=' + x1)
-        console.log('y0=' + y0 + ', y1=' + y1)
         window.frames[0].postMessage(JSON.stringify({'MessageId': 'CallPythonScript',
                                                      'SendTime': Date.now(),
                                                      'ScriptFile': 'NamedRanges.py',
