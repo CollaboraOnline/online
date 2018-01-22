@@ -17,6 +17,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <zlib.h>
+#include <security/pam_appl.h>
 
 #include <openssl/evp.h>
 
@@ -53,6 +54,62 @@ using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
+namespace {
+
+int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
+                         struct pam_response **reply, void *appdata_ptr)
+{
+    *reply = (struct pam_response *)malloc(sizeof(struct pam_response));
+    (*reply)[0].resp = strdup(static_cast<char *>(appdata_ptr));
+    (*reply)[0].resp_retcode = 0;
+
+    return PAM_SUCCESS;
+}
+
+bool isPamAuthOk(const std::string user, const std::string pass)
+{
+    struct pam_conv localConversation { functionConversation, nullptr };
+    pam_handle_t *localAuthHandle = NULL;
+    int retval;
+
+    localConversation.appdata_ptr = const_cast<char *>(pass.c_str());
+
+    retval = pam_start("loolwsd", user.c_str(), &localConversation, &localAuthHandle);
+
+    if (retval != PAM_SUCCESS)
+    {
+        LOG_ERR("pam_start returned " << retval);
+        return false;
+    }
+
+    retval = pam_authenticate(localAuthHandle, 0);
+
+    if (retval != PAM_SUCCESS)
+    {
+       if (retval == PAM_AUTH_ERR)
+       {
+           LOG_ERR("PAM authentication failure for user \"" << user << "\".");
+       }
+       else
+       {
+           LOG_ERR("pam_authenticate returned " << retval);
+       }
+       return false;
+    }
+
+    LOG_INF("PAM authentication success for user \"" << user << "\".");
+
+    retval = pam_end(localAuthHandle, retval);
+
+    if (retval != PAM_SUCCESS)
+    {
+        LOG_WRN("pam_end returned " << retval);
+    }
+
+    return true;
+}
+}
+
 bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                                                HTTPResponse &response)
 {
@@ -81,10 +138,12 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 
     HTTPBasicCredentials credentials(request);
     std::string userProvidedPwd = credentials.getPassword();
+    std::string userProvidedUsr = credentials.getUsername();
 
     // If no cookie found, or is invalid, let admin re-login
     const std::string user = config.getString("admin_console.username", "");
     std::string pass = config.getString("admin_console.password", "");
+    const bool pam = config.getBool("admin_console.enable_pam", "true");
 
     if (config.has("admin_console.secure_password"))
     {
@@ -99,9 +158,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             !Util::dataFromHexString(tokens[3], saltData))
         {
             LOG_ERR("Incorrect format detected for secure_password in config file."
-                    << "Denying access until correctly set."
                     << "Use loolconfig to configure admin password.");
-            return false;
         }
 
         unsigned char userProvidedPwdHash[tokens[4].size() / 2];
@@ -120,18 +177,29 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 #else
         LOG_ERR("The config file has admin_console.secure_password setting, "
                 << "but this application was compiled with old OpenSSL version, "
-                << "and this setting cannot be used. Falling back to plain text password, if it is set.");
+                << "and this setting cannot be used. Falling back to plain text password or to PAM, if it is set.");
 #endif
     }
 
-    if (user.empty() || pass.empty())
+    if (!pam && (user.empty() || pass.empty()))
     {
         LOG_ERR("Admin Console credentials missing. Denying access until set.");
         return false;
     }
 
-    if (credentials.getUsername() == user &&
-        userProvidedPwd == pass)
+    bool authenticated = false;
+
+    if (userProvidedUsr == user && userProvidedPwd == pass)
+    {
+        authenticated = true;
+    }
+
+    if (!authenticated && pam)
+    {
+        authenticated = isPamAuthOk(userProvidedUsr, userProvidedPwd);
+    }
+
+    if (authenticated)
     {
         // generate and set the cookie
         JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
@@ -143,12 +211,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
         cookie.setSecure(LOOLWSD::isSSLEnabled() ||
                          LOOLWSD::isSSLTermination());
         response.addCookie(cookie);
-
-        return true;
+    }
+    else
+    {
+        LOG_INF("Wrong admin credentials.");
     }
 
-    LOG_INF("Wrong admin credentials.");
-    return false;
+    return authenticated;
 }
 
 void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::MemoryInputStream& message,

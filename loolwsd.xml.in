@@ -100,8 +100,9 @@
     <tile_cache_persistent desc="Should the tiles persist between two editing sessions of the given document?" type="bool" default="true">true</tile_cache_persistent>
 
     <admin_console desc="Web admin console settings.">
-        <username desc="The username of the admin console. Must be set."></username>
-        <password desc="The password of the admin console. Must be set."></password>
+        <enable_pam desc="Enable admin user authentication with PAM" type="bool" default="true">true</enable_pam>
+        <username desc="The username of the admin console. Must be set, if PAM is not enabled, otherwise it's optional."></username>
+        <password desc="The password of the admin console. Deprecated on most platforms. Instead, use loolconfig to set up a secure password."></password>
     </admin_console>
 
 </config>
