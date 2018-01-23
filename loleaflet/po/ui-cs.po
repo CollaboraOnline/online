@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-03 21:47+0100\n"
+"POT-Creation-Date: 2018-01-23 11:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
-"X-Pootle-Revision: 2780521\n"
+"X-Pootle-Revision: 3065590\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-ui-cs.po\n"
 
 #: admin.strings.js:5
@@ -47,7 +47,6 @@ msgid "Users online"
 msgstr "Přihlášení uživatelé"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
 msgstr "Uživatelské jméno"
 
@@ -105,15 +104,15 @@ msgstr "Grafy"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Graf paměti"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "Graf procesoru"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Graf sítě"
 
 #: admin.strings.js:30 src/layer/marker/Annotation.js:222
 msgid "Save"
@@ -137,20 +136,19 @@ msgstr "Časový interval statistiky procesoru (v ms)"
 
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Maximální virtuální paměť procesu dokumentu (v MB) - lze pouze zmenšit"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Maximální paměť procesu dokumentu v zásobníku (v kB) - lze pouze zmenšit"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Maximální velikost souboru pro zápis na disk (v MB) - lze pouze zmenšit"
 
 #: admin.strings.js:38
-#, fuzzy
 msgid "Documents:"
-msgstr "Dokument"
+msgstr "Dokumenty:"
 
 #: admin.strings.js:39
 msgid "Expired:"
@@ -158,7 +156,7 @@ msgstr ""
 
 #: admin.strings.js:40
 msgid "Refresh"
-msgstr ""
+msgstr "Obnovit"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -232,172 +230,179 @@ msgstr "Z důvodu nedostatku volného místa na serveru se nepodařilo dokument 
 
 #: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
+msgstr "Dokument nelze uložit. Přístupový token vypršel nebo není platný."
 
 #: dist/errormessages.js:16
-#, fuzzy
 msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
-msgstr "Dokument nelze uložit. Ujistěte se, zda máte dostatečná oprávnění nebo se obraťte na správce síťového úložiště (%storageserver)."
+msgstr "Dokument nelze uložit. Ujistěte se, zda máte dostatečná oprávnění, nebo se obraťte na správce serveru."
 
-#: dist/toolbar/toolbar.js:104
+#: dist/toolbar/toolbar.js:103
 msgid "%n users"
 msgstr "%n uživatelů"
 
-#: dist/toolbar/toolbar.js:105
+#: dist/toolbar/toolbar.js:104
 msgid "1 user"
 msgstr "1 uživatel"
 
-#: dist/toolbar/toolbar.js:106
+#: dist/toolbar/toolbar.js:105
 msgid "0 users"
 msgstr "Žádný uživatel"
 
-#: dist/toolbar/toolbar.js:270
+#: dist/toolbar/toolbar.js:269
 msgid "Are you sure you want to delete this page?"
 msgstr "Opravdu si přejete smazat tuto stránku?"
 
-#: dist/toolbar/toolbar.js:455
+#: dist/toolbar/toolbar.js:454
 msgid "Document repair"
 msgstr "Obnovit dokument"
 
-#: dist/toolbar/toolbar.js:496
+#: dist/toolbar/toolbar.js:495
 msgid "Insert table"
 msgstr "Vložit tabulku"
 
-#: dist/toolbar/toolbar.js:501
+#: dist/toolbar/toolbar.js:500
 msgid "More"
 msgstr "Více"
 
-#: dist/toolbar/toolbar.js:599 dist/toolbar/toolbar.js:1073
+#: dist/toolbar/toolbar.js:598 dist/toolbar/toolbar.js:1072
 msgid "Sum"
 msgstr "Součet"
 
-#: dist/toolbar/toolbar.js:600
+#: dist/toolbar/toolbar.js:599
 msgid "Function"
 msgstr "Funkce"
 
-#: dist/toolbar/toolbar.js:601 src/layer/marker/Annotation.js:161
+#: dist/toolbar/toolbar.js:600 src/layer/marker/Annotation.js:161
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: dist/toolbar/toolbar.js:602
+#: dist/toolbar/toolbar.js:601
 msgid "Accept"
 msgstr "Přijmout"
 
-#: dist/toolbar/toolbar.js:618
+#: dist/toolbar/toolbar.js:617
 msgid "First sheet"
 msgstr "První list"
 
-#: dist/toolbar/toolbar.js:619
+#: dist/toolbar/toolbar.js:618
 msgid "Previous sheet"
 msgstr "Předchozí list"
 
-#: dist/toolbar/toolbar.js:620
+#: dist/toolbar/toolbar.js:619
 msgid "Next sheet"
 msgstr "Následující list"
 
-#: dist/toolbar/toolbar.js:621
+#: dist/toolbar/toolbar.js:620
 msgid "Last sheet"
 msgstr "Poslední list"
 
-#: dist/toolbar/toolbar.js:631 src/control/Control.Menubar.js:270
+#: dist/toolbar/toolbar.js:630 src/control/Control.Menubar.js:265
 msgid "Fullscreen presentation"
 msgstr "Prezentace na celou obrazovku"
 
-#: dist/toolbar/toolbar.js:648
+#: dist/toolbar/toolbar.js:647
 msgid "Search:"
 msgstr "Hledat:"
 
-#: dist/toolbar/toolbar.js:655
+#: dist/toolbar/toolbar.js:654
 msgid "Cancel the search"
 msgstr "Zrušit vyhledávání"
 
-#: dist/toolbar/toolbar.js:660
+#: dist/toolbar/toolbar.js:659
 msgid "No users"
 msgstr "Žádný uživatel"
 
-#: dist/toolbar/toolbar.js:674 src/control/Control.Menubar.js:57
-#: src/control/Control.Menubar.js:238
+#: dist/toolbar/toolbar.js:663
+msgid "Always follow the editor"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:666
+msgid "Current"
+msgstr ""
+
+#: dist/toolbar/toolbar.js:673 src/control/Control.Menubar.js:57
+#: src/control/Control.Menubar.js:233
 msgid "Reset zoom"
 msgstr "Obnovit přiblížení"
 
-#: dist/toolbar/toolbar.js:706
+#: dist/toolbar/toolbar.js:705
 msgid "%user has joined"
 msgstr "%user se připojil"
 
-#: dist/toolbar/toolbar.js:707
+#: dist/toolbar/toolbar.js:706
 msgid "%user has left"
 msgstr "%user se odpojil"
 
-#: dist/toolbar/toolbar.js:873 dist/toolbar/toolbar.js:1453
+#: dist/toolbar/toolbar.js:872 dist/toolbar/toolbar.js:1453
 msgid "Size"
 msgstr "Velikost"
 
-#: dist/toolbar/toolbar.js:1051
+#: dist/toolbar/toolbar.js:1050
 msgid "Number of Sheets"
 msgstr "Počet listů"
 
-#: dist/toolbar/toolbar.js:1054
+#: dist/toolbar/toolbar.js:1053
 msgid "Selected range of cells"
 msgstr "Vybraná oblast buněk"
 
-#: dist/toolbar/toolbar.js:1057 dist/toolbar/toolbar.js:1095
+#: dist/toolbar/toolbar.js:1056 dist/toolbar/toolbar.js:1094
 msgid "Entering text mode"
 msgstr "Přepínání do textového režimu"
 
-#: dist/toolbar/toolbar.js:1060 dist/toolbar/toolbar.js:1101
-#: dist/toolbar/toolbar.js:1124
+#: dist/toolbar/toolbar.js:1059 dist/toolbar/toolbar.js:1100
+#: dist/toolbar/toolbar.js:1123
 msgid "Text Language"
-msgstr ""
+msgstr "Jazyk textu"
 
-#: dist/toolbar/toolbar.js:1063 dist/toolbar/toolbar.js:1098
+#: dist/toolbar/toolbar.js:1062 dist/toolbar/toolbar.js:1097
 msgid "Selection Mode"
 msgstr "Režim výběru"
 
-#: dist/toolbar/toolbar.js:1066
+#: dist/toolbar/toolbar.js:1065
 msgid "Choice of functions"
 msgstr "Volba funkcí"
 
-#: dist/toolbar/toolbar.js:1068
+#: dist/toolbar/toolbar.js:1067
 msgid "Average"
 msgstr "Průměr"
 
-#: dist/toolbar/toolbar.js:1069
+#: dist/toolbar/toolbar.js:1068
 msgid "CountA"
 msgstr "Počet hodnot"
 
-#: dist/toolbar/toolbar.js:1070
+#: dist/toolbar/toolbar.js:1069
 msgid "Count"
 msgstr "Počet čísel"
 
-#: dist/toolbar/toolbar.js:1071
+#: dist/toolbar/toolbar.js:1070
 msgid "Maximum"
 msgstr "Maximum"
 
-#: dist/toolbar/toolbar.js:1072
+#: dist/toolbar/toolbar.js:1071
 msgid "Minimum"
 msgstr "Minimum"
 
-#: dist/toolbar/toolbar.js:1074
+#: dist/toolbar/toolbar.js:1073
 msgid "Selection count"
 msgstr "Počet vybraných"
 
-#: dist/toolbar/toolbar.js:1075
+#: dist/toolbar/toolbar.js:1074
 msgid "None"
 msgstr "Žádná"
 
-#: dist/toolbar/toolbar.js:1089
+#: dist/toolbar/toolbar.js:1088
 msgid "Number of Pages"
 msgstr "Počet stránek"
 
-#: dist/toolbar/toolbar.js:1092
+#: dist/toolbar/toolbar.js:1091
 msgid "Word Counter"
 msgstr "Počet slov"
 
-#: dist/toolbar/toolbar.js:1121
+#: dist/toolbar/toolbar.js:1120
 msgid "Number of Slides"
 msgstr "Počet snímků"
 
-#: dist/toolbar/toolbar.js:1271
+#: dist/toolbar/toolbar.js:1270
 msgid "Document saved"
 msgstr "Dokument uložen"
 
@@ -421,7 +426,7 @@ msgstr "Následující snímek"
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Konflikt použití Zpět/Znovu s více uživateli. Pro vyřešení prosím použijte opravu dokumentu"
 
-#: dist/toolbar/toolbar.js:1791 src/control/Control.DocumentRepair.js:93
+#: dist/toolbar/toolbar.js:1791 src/control/Control.DocumentRepair.js:94
 msgid "You"
 msgstr "Vy"
 
@@ -429,11 +434,11 @@ msgstr "Vy"
 msgid "Readonly"
 msgstr "Pouze pro čtení"
 
-#: src/admin/AdminSocketAnalytics.js:217
+#: src/admin/AdminSocketAnalytics.js:216
 msgid "Received"
 msgstr ""
 
-#: src/admin/AdminSocketAnalytics.js:221
+#: src/admin/AdminSocketAnalytics.js:220
 msgid "Sent"
 msgstr ""
 
@@ -446,9 +451,8 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Opravdu si přejete ukončit tuto relaci?"
 
 #: src/admin/AdminSocketOverview.js:183 src/admin/AdminSocketOverview.js:290
-#, fuzzy
 msgid "Documents"
-msgstr "Dokument"
+msgstr "Dokumenty"
 
 #: src/admin/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
@@ -482,6 +486,14 @@ msgstr " min"
 msgid " s"
 msgstr " s"
 
+#: src/control/Control.AlertDialog.js:28
+msgid "The server encountered a %0 error while parsing the %1 command."
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:41
+msgid "Download PDF export?"
+msgstr ""
+
 #: src/control/Control.ContextMenu.js:129
 msgid "Internal Cut"
 msgstr "Vyjmout (interní)"
@@ -498,46 +510,46 @@ msgstr "Vložit (interní)"
 msgid "Internal Paste Special"
 msgstr "Vložit jinak (interní)"
 
-#: src/control/Control.DocumentRepair.js:32
+#: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
 msgstr "Opravit dokument"
 
-#: src/control/Control.DocumentRepair.js:43
+#: src/control/Control.DocumentRepair.js:44
 msgid "Type"
 msgstr "Typ"
 
-#: src/control/Control.DocumentRepair.js:45
+#: src/control/Control.DocumentRepair.js:46
 msgid "Index"
 msgstr "Index"
 
-#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:221
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:221
 msgid "Comment"
 msgstr "Komentář"
 
-#: src/control/Control.DocumentRepair.js:49
+#: src/control/Control.DocumentRepair.js:50
 msgid "User name"
 msgstr "Uživatelské jméno"
 
-#: src/control/Control.DocumentRepair.js:51
+#: src/control/Control.DocumentRepair.js:52
 msgid "Timestamp"
 msgstr "Čas změny"
 
-#: src/control/Control.DocumentRepair.js:55
+#: src/control/Control.DocumentRepair.js:56
 msgid "Jump to state"
 msgstr "Přejít na stav"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:289
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:209
+#: src/control/Control.Menubar.js:284
 msgid "See revision history"
 msgstr "Zobrazit historii revizí"
 
-#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:215
-#: src/control/Control.Menubar.js:290
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:210
+#: src/control/Control.Menubar.js:285
 msgid "Download as"
 msgstr "Stáhnout jako"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:216
-#: src/control/Control.Menubar.js:291
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:211
+#: src/control/Control.Menubar.js:286
 msgid "PDF Document (.pdf)"
 msgstr "Dokument PDF (.pdf)"
 
@@ -553,81 +565,75 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:224
-#: src/control/Control.Menubar.js:299
+#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:219
+#: src/control/Control.Menubar.js:294
 msgid "Repair"
 msgstr "Opravit"
 
-#: src/control/Control.Menubar.js:111
+#: src/control/Control.Menubar.js:114
 msgid "Text orientation"
 msgstr "Orientace textu"
 
-#: src/control/Control.Menubar.js:159
-msgid "Page"
-msgstr "Stránka"
-
-#: src/control/Control.Menubar.js:160 src/control/Control.Menubar.js:162
-#: src/control/Control.Menubar.js:164 src/control/Control.Menubar.js:166
-msgid "Portrait"
-msgstr "Na výšku"
-
-#: src/control/Control.Menubar.js:161 src/control/Control.Menubar.js:163
-#: src/control/Control.Menubar.js:165 src/control/Control.Menubar.js:167
-msgid "Landscape"
-msgstr "Na šířku"
-
-#: src/control/Control.Menubar.js:194 src/control/Control.Menubar.js:196
-#: src/control/Control.Menubar.js:198 src/control/Control.Menubar.js:275
-#: src/control/Control.Menubar.js:356
+#: src/control/Control.Menubar.js:189 src/control/Control.Menubar.js:191
+#: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:270
+#: src/control/Control.Menubar.js:358
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Žádný (bez kontroly pravopisu)"
 
-#: src/control/Control.Menubar.js:203 src/control/Control.Menubar.js:278
-#: src/control/Control.Menubar.js:359
+#: src/control/Control.Menubar.js:198 src/control/Control.Menubar.js:273
+#: src/control/Control.Menubar.js:361
 msgid "Keyboard shortcuts"
 msgstr "Klávesové zkratky"
 
-#: src/control/Control.Menubar.js:204 src/control/Control.Menubar.js:279
-#: src/control/Control.Menubar.js:360
+#: src/control/Control.Menubar.js:199 src/control/Control.Menubar.js:274
+#: src/control/Control.Menubar.js:362
 msgid "About"
 msgstr "O aplikaci"
 
-#: src/control/Control.Menubar.js:206 src/control/Control.Menubar.js:281
-#: src/control/Control.Menubar.js:362
+#: src/control/Control.Menubar.js:201 src/control/Control.Menubar.js:276
+#: src/control/Control.Menubar.js:364
 msgid "Close document"
 msgstr "Zavřít dokument"
 
-#: src/control/Control.Menubar.js:217
+#: src/control/Control.Menubar.js:212
 msgid "ODF presentation (.odp)"
 msgstr "Prezentace ODF (.odp)"
 
-#: src/control/Control.Menubar.js:218
+#: src/control/Control.Menubar.js:213
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:219
+#: src/control/Control.Menubar.js:214
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:292
+#: src/control/Control.Menubar.js:287
 msgid "ODF spreadsheet (.ods)"
 msgstr "Sešit ODF (.ods)"
 
-#: src/control/Control.Menubar.js:293
+#: src/control/Control.Menubar.js:288
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:294
+#: src/control/Control.Menubar.js:289
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:419
+#: src/control/Control.Menubar.js:421
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Obnovit výchozí jazyk"
 
-#: src/control/Control.Menubar.js:635
+#: src/control/Control.Menubar.js:639
 msgid "Are you sure you want to delete this slide?"
 msgstr "Opravdu si přejete smazat tento snímek?"
+
+#: src/control/Control.Menubar.js:669
+msgid "Are you sure you want to delete the header?"
+msgstr "Opravdu chcete smazat záhlaví?"
+
+#: src/control/Control.Menubar.js:670
+msgid "Are you sure you want to delete the footer?"
+msgstr "Opravdu chcete smazat zápatí?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
@@ -695,7 +701,7 @@ msgstr "Relace byla ukončena vlastníkem dokumentu"
 
 #: src/core/Socket.js:267
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Neaktivní dokument - kliknutím jej znovu načtete a budete moci pokračovat v úpravách"
 
 #: src/core/Socket.js:274
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -703,7 +709,7 @@ msgstr "Server bude vypnut z důvodu údržby (automatické ukládání)"
 
 #: src/core/Socket.js:278
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Došlo k problému při připojování k dokumentu"
 
 #: src/core/Socket.js:282
 msgid "Server is recycling and will be available shortly"
@@ -711,19 +717,19 @@ msgstr "Server je obnovován a bude brzy dostupný"
 
 #: src/core/Socket.js:312
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
-msgstr ""
+msgstr "Dokument byl v úložišti změněn. Načítá se nová verze, vaše verze bude dostupná jako revize."
 
 #: src/core/Socket.js:424
 msgid "Document has been changed in storage. Do you want to discard your changes, and load the document from the storage?"
-msgstr ""
+msgstr "Dokument byl v úložišti změněn. Přejete si zahodit své změny a načíst dokument z úložiště?"
 
 #: src/core/Socket.js:426
 msgid "Discard changes"
-msgstr ""
+msgstr "Zahodit změny"
 
 #: src/core/Socket.js:427
 msgid "Overwrite document"
-msgstr ""
+msgstr "Přepsat dokument"
 
 #: src/core/Socket.js:484
 msgid "Document requires password to view."

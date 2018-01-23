@@ -1,4 +1,5 @@
 {
+"Accept All":"接受全部",
 "Add Decimal Place":"加入小數點",
 "Align Left":"左側對齊",
 "Align Right":"右側對齊",
@@ -54,6 +55,7 @@
 "Find Next":"找下一個",
 "Find Previous":"找上一個",
 "Font Color":"字元色彩",
+"Foote~r":"頁尾(~R)",
 "For Paragraph":"段落",
 "For Selection":"選取",
 "For all Text":"所有文字",
@@ -66,6 +68,8 @@
 "For~matting Marks":"格式設定標記(~M)",
 "F~ormat":"格式(~O)",
 "F~ull Screen":"全螢幕(~U)",
+"He~ader":"頁首(~A)",
+"He~ader and Footer":"頁首與頁尾(~A)",
 "H~ide":"隱藏(~I)",
 "H~ide Columns":"隱藏欄(~I)",
 "H~ide Rows":"隱藏列(~I)",
@@ -135,6 +139,7 @@
 "Promote One Level With Subpoints":"連同子點升一層級",
 "Pr~evious":"上一個(~E)",
 "P~aragraph...":"段落(~A)...",
+"Reject All":"拒絕全部",
 "Remove Link":"移除連結",
 "Reply Comment":"回覆評註",
 "Restart Numbering":"重新開始編號",
@@ -229,6 +234,7 @@
 "~Optimal Width...":"最適寬度(~O)...",
 "~Page Break":"斷頁(~P)",
 "~Page Wrap":"頁面環繞(~P)",
+"~Page...":"頁面(~P)...",
 "~Paste":"貼上(~P)",
 "~Print...":"列印(~P)...",
 "~Properties...":"屬性(~P)...",
@@ -263,5 +269,5 @@
 "~Wrap":"環繞(~W)",
 "~Wrap Through":"穿過環繞(~W)",
 "~lowercase":"小寫字母(~L)",
-"~tOGGLE cASE":"轉換大小寫(~T)"
+"~tOGGLE cASE":"反轉大小寫(~T)"
 }
