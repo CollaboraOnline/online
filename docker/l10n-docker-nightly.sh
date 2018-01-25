@@ -116,6 +116,7 @@ cp -a libreoffice/instdir "$INSTDIR"/opt/libreoffice
 mkdir -p "$INSTDIR"/usr/share/hunspell
 mkdir -p "$INSTDIR"/usr/share/hyphen
 mkdir -p "$INSTDIR"/opt/lool/systemplate/usr/share/hyphen
+mkdir -p "$INSTDIR"/usr/share/mythes
 for i in `find libreoffice/instdir/share/extensions/ -name hyph*.dic`;do cp -a $i "$INSTDIR"/opt/lool/systemplate/usr/share/hyphen;done
 for i in `find libreoffice/instdir/share/extensions/ -name hyph*.dic`;do cp -a $i "$INSTDIR"/usr/share/hyphen;done
 cp -a libreoffice/instdir/share/extensions/dict-en/en_US.* "$INSTDIR"/usr/share/hunspell
@@ -136,6 +137,7 @@ cp -a libreoffice/instdir/share/extensions/dict-de/de_CH_frami.dic "$INSTDIR"/us
 cp -a libreoffice/instdir/share/extensions/dict-de/de_CH_frami.aff "$INSTDIR"/usr/share/hunspell/de_CH.aff
 cp -a libreoffice/instdir/share/extensions/dict-de/de_DE_frami.dic "$INSTDIR"/usr/share/hunspell/de_DE.dic
 cp -a libreoffice/instdir/share/extensions/dict-de/de_DE_frami.aff "$INSTDIR"/usr/share/hunspell/de_DE.aff
+for i in de en fr it pl pt-PT ru;do cp -a libreoffice/instdir/share/extensions/dict-$i/th_* "$INSTDIR"/usr/share/mythes;done
 
 
 ##### loolwsd & loleaflet #####
