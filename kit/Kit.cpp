@@ -153,7 +153,7 @@ namespace
             File(newPath.parent()).createDirectories();
             if (link(fpath, newPath.toString().c_str()) == -1)
             {
-                LOG_SYS("link(\"" << fpath << "\", \"" <<
+                LOG_INF("link(\"" << fpath << "\", \"" <<
                         newPath.toString() << "\") failed. Will copy.");
                 try
                 {
