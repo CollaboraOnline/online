@@ -111,7 +111,13 @@ L.Control.LokDialog = L.Control.extend({
 				this._createDialogChild(e.id, parentId, top, left);
 				this._sendPaintWindow(e.id, this._createRectStr(null, 0, 0, width, height));
 			}
-		} else if (e.action === 'invalidate') {
+		}
+
+		// all other callbacks doens't make sense without an active dialog
+		if (!(this._isOpen(e.id) || this._getParentDialog(e.id)))
+			return;
+
+		if (e.action === 'invalidate') {
 			var parent = this._getParentDialog(e.id);
 			var rectangle = e.rectangle;
 			if (parent) { // this is a floating window
