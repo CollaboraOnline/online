@@ -297,7 +297,10 @@ L.Control.LokDialog = L.Control.extend({
 	_paintDialogChild: function(dialogId, width, height, rectangle, imgData) {
 		var strDlgId = this._toDlgPrefix(dialogId);
 		var img = new Image();
-		var canvas = document.getElementById(strDlgId + '-floating');
+		var canvas = L.DomUtil.get(strDlgId + '-floating');
+		if (!canvas)
+			return; // no floating window to paint to
+
 		canvas.width = width;
 		canvas.height = height;
 		var ctx = canvas.getContext('2d');
