@@ -72,7 +72,14 @@ protected:
     int main(const std::vector<std::string>&) override;
 };
 
-std::string Config::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
+std::string Config::ConfigFile =
+#if ENABLE_DEBUG
+    DEBUG_ABSSRCDIR
+#else
+    LOOLWSD_CONFIGDIR
+#endif
+    "/loolwsd.xml";
+
 std::string Config::SupportKeyString;
 bool Config::SupportKeyStringProvided = false;
 
@@ -80,17 +87,22 @@ void Config::displayHelp()
 {
     HelpFormatter helpFormatter(options());
     helpFormatter.setCommand(commandName());
-
-    std::string usage = "set-admin-password";
-#if ENABLE_SUPPORT_KEY
-    usage = "(set-admin-password|set-support-key)";
-#endif
-
-    helpFormatter.setUsage(usage + " OPTIONS");
+    helpFormatter.setUsage("COMMAND [OPTIONS]");
     helpFormatter.setHeader("loolconfig - Configuration tool for LibreOffice Online.\n"
                             "\n"
-                            "Some options make sense only with a concrete command, in that case the command name is specified in brackets.");
+                            "Some options make sense only with a specific command.\n\n"
+                            "Options:");
+
     helpFormatter.format(std::cout);
+
+    // Command list
+    std::cout << std::endl
+              << "Commands: " << std::endl
+              << "    set-admin-password\n"
+#if ENABLE_SUPPORT_KEY
+              << "    set-support-key\n"
+#endif
+              << "    set-raw-config <key> <value>" << std::endl;
 }
 
 void Config::defineOptions(OptionSet& optionSet)
@@ -187,109 +199,135 @@ int Config::main(const std::vector<std::string>& args)
     bool changed = false;
     _loolConfig.load(ConfigFile);
 
-    for (unsigned long i = 0; i < args.size(); i++)
+    if (args[0] == "set-admin-password")
     {
-        if (args[i] == "set-admin-password")
-        {
 #if HAVE_PKCS5_PBKDF2_HMAC
-            unsigned char pwdhash[_adminConfig.pwdHashLength];
-            unsigned char salt[_adminConfig.pwdSaltLength];
-            RAND_bytes(salt, _adminConfig.pwdSaltLength);
-            std::stringstream stream;
+        unsigned char pwdhash[_adminConfig.pwdHashLength];
+        unsigned char salt[_adminConfig.pwdSaltLength];
+        RAND_bytes(salt, _adminConfig.pwdSaltLength);
+        std::stringstream stream;
 
-            // Ask for user password
-            termios oldTermios;
-            tcgetattr(STDIN_FILENO, &oldTermios);
-            termios newTermios = oldTermios;
-            // Disable user input mirroring on console for password input
-            newTermios.c_lflag &= ~ECHO;
-            tcsetattr(STDIN_FILENO, TCSANOW, &newTermios);
-            std::string adminPwd;
-            std::cout << "Enter admin password: ";
-            std::getline(std::cin, adminPwd);
-            std::string reAdminPwd;
-            std::cout << std::endl << "Confirm admin password: ";
-            std::getline(std::cin, reAdminPwd);
-            std::cout << std::endl;
-            // Set the termios to old state
-            tcsetattr(STDIN_FILENO, TCSANOW, &oldTermios);
-            if (adminPwd != reAdminPwd)
-            {
-                std::cout << "Password mismatch." << std::endl;
-                return Application::EXIT_DATAERR;
-            }
-
-            // Do the magic !
-            PKCS5_PBKDF2_HMAC(adminPwd.c_str(), -1,
-                              salt, _adminConfig.pwdSaltLength,
-                              _adminConfig.pwdIterations,
-                              EVP_sha512(),
-                              _adminConfig.pwdHashLength, pwdhash);
-
-            // Make salt randomness readable
-            for (unsigned j = 0; j < _adminConfig.pwdSaltLength; ++j)
-                stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(salt[j]);
-            const std::string saltHash = stream.str();
-
-            // Clear our used hex stream to make space for password hash
-            stream.str("");
-            stream.clear();
-
-            // Make the hashed password readable
-            for (unsigned j = 0; j < _adminConfig.pwdHashLength; ++j)
-                stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(pwdhash[j]);
-            const std::string passwordHash = stream.str();
-
-            std::stringstream pwdConfigValue("pbkdf2.sha512.", std::ios_base::in | std::ios_base::out | std::ios_base::ate);
-            pwdConfigValue << std::to_string(_adminConfig.pwdIterations) << ".";
-            pwdConfigValue << saltHash << "." << passwordHash;
-            _loolConfig.setString("admin_console.secure_password[@desc]",
-                                  "Salt and password hash combination generated using PBKDF2 with SHA512 digest.");
-            _loolConfig.setString("admin_console.secure_password", pwdConfigValue.str());
-
-            changed = true;
-#else
-            std::cerr << "This application was compiled with old OpenSSL. Operation not supported. You can use plain text password in /etc/loolwsd/loolwsd.xml." << std::endl;
-            return Application::EXIT_UNAVAILABLE;
-#endif
-        }
-#if ENABLE_SUPPORT_KEY
-        else if (args[i] == "set-support-key")
+        // Ask for user password
+        termios oldTermios;
+        tcgetattr(STDIN_FILENO, &oldTermios);
+        termios newTermios = oldTermios;
+        // Disable user input mirroring on console for password input
+        newTermios.c_lflag &= ~ECHO;
+        tcsetattr(STDIN_FILENO, TCSANOW, &newTermios);
+        std::string adminPwd;
+        std::cout << "Enter admin password: ";
+        std::getline(std::cin, adminPwd);
+        std::string reAdminPwd;
+        std::cout << std::endl << "Confirm admin password: ";
+        std::getline(std::cin, reAdminPwd);
+        std::cout << std::endl;
+        // Set the termios to old state
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldTermios);
+        if (adminPwd != reAdminPwd)
         {
-            std::string supportKeyString;
-            if (SupportKeyStringProvided)
-                supportKeyString = SupportKeyString;
-            else
-            {
-                std::cout << "Enter support key: ";
-                std::getline(std::cin, supportKeyString);
-            }
-
-            if (!supportKeyString.empty())
-            {
-                SupportKey key(supportKeyString);
-                if (!key.verify())
-                    std::cerr << "Invalid key\n";
-                else {
-                    int validDays =  key.validDaysRemaining();
-                    if (validDays <= 0)
-                        std::cerr << "Valid but expired key\n";
-                    else
-                    {
-                        std::cerr << "Valid for " << validDays << " days - setting to config\n";
-                        _loolConfig.setString("support_key", supportKeyString);
-                    }
-                }
-            }
-            else
-            {
-                std::cerr << "Removing empty support key\n";
-                _loolConfig.remove("support_key");
-            }
-            changed = true;
+            std::cout << "Password mismatch." << std::endl;
+            return Application::EXIT_DATAERR;
         }
+
+        // Do the magic !
+        PKCS5_PBKDF2_HMAC(adminPwd.c_str(), -1,
+                          salt, _adminConfig.pwdSaltLength,
+                          _adminConfig.pwdIterations,
+                          EVP_sha512(),
+                          _adminConfig.pwdHashLength, pwdhash);
+
+        // Make salt randomness readable
+        for (unsigned j = 0; j < _adminConfig.pwdSaltLength; ++j)
+            stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(salt[j]);
+        const std::string saltHash = stream.str();
+
+        // Clear our used hex stream to make space for password hash
+        stream.str("");
+        stream.clear();
+
+        // Make the hashed password readable
+        for (unsigned j = 0; j < _adminConfig.pwdHashLength; ++j)
+            stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(pwdhash[j]);
+        const std::string passwordHash = stream.str();
+
+        std::stringstream pwdConfigValue("pbkdf2.sha512.", std::ios_base::in | std::ios_base::out | std::ios_base::ate);
+        pwdConfigValue << std::to_string(_adminConfig.pwdIterations) << ".";
+        pwdConfigValue << saltHash << "." << passwordHash;
+        _loolConfig.setString("admin_console.secure_password[@desc]",
+                              "Salt and password hash combination generated using PBKDF2 with SHA512 digest.");
+        _loolConfig.setString("admin_console.secure_password", pwdConfigValue.str());
+
+        changed = true;
+#else
+        std::cerr << "This application was compiled with old OpenSSL. Operation not supported. You can use plain text password in /etc/loolwsd/loolwsd.xml." << std::endl;
+        return Application::EXIT_UNAVAILABLE;
 #endif
     }
+#if ENABLE_SUPPORT_KEY
+    else if (args[0] == "set-support-key")
+    {
+        std::string supportKeyString;
+        if (SupportKeyStringProvided)
+            supportKeyString = SupportKeyString;
+        else
+        {
+            std::cout << "Enter support key: ";
+            std::getline(std::cin, supportKeyString);
+        }
+
+        if (!supportKeyString.empty())
+        {
+            SupportKey key(supportKeyString);
+            if (!key.verify())
+                std::cerr << "Invalid key\n";
+            else {
+                int validDays =  key.validDaysRemaining();
+                if (validDays <= 0)
+                    std::cerr << "Valid but expired key\n";
+                else
+                {
+                    std::cerr << "Valid for " << validDays << " days - setting to config\n";
+                    _loolConfig.setString("support_key", supportKeyString);
+                }
+            }
+        }
+        else
+        {
+            std::cerr << "Removing empty support key\n";
+            _loolConfig.remove("support_key");
+        }
+        changed = true;
+    }
+#endif
+    else if (args[0] == "set-raw-config")
+    {
+        if (args.size() == 3)
+        {
+            // args[1] = key
+            // args[2] = value
+            if (_loolConfig.has(args[1]))
+            {
+                const std::string val = _loolConfig.getString(args[1]);
+                std::cout << "Previous value found in config file: \""  << val << "\"" << std::endl;
+                std::cout << "Changing value to: \"" << args[2] << "\"" << std::endl;
+                _loolConfig.setString(args[1], args[2]);
+                changed = true;
+            }
+            else
+                std::cerr << "No property, \"" << args[1] << "\"," << " found in config file." << std::endl;
+        }
+        else
+            std::cerr << "set-raw-config expects a key and value as arguments" << std::endl
+                      << "Eg: " << std::endl
+                      << "    set-raw-config logging.level trace" << std::endl;
+
+    }
+    else
+    {
+        std::cerr << "No such command, \"" << args[0]  << "\"" << std::endl;
+        displayHelp();
+    }
+
     if (changed)
     {
         std::cout << "Saving configuration to : " << ConfigFile << " ..." << std::endl;
