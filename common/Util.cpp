@@ -170,6 +170,32 @@ namespace Util
         return nullptr;
     }
 
+    std::string getHumanizedBytes(unsigned long nBytes)
+    {
+        constexpr unsigned factor = 1024;
+        short count = 0;
+        float val = nBytes;
+        while (val >= factor && count < 4) {
+            val /= factor;
+            count++;
+        }
+        std::string unit;
+        switch (count)
+        {
+        case 0: unit = ""; break;
+        case 1: unit = "ki"; break;
+        case 2: unit = "Mi"; break;
+        case 3: unit = "Gi"; break;
+        case 4: unit = "Ti"; break;
+        default: assert(false);
+        }
+
+        unit += "B";
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(1) << val << ' ' << unit;
+        return ss.str();
+    }
+
     size_t getTotalSystemMemoryKb()
     {
         size_t totalMemKb = 0;

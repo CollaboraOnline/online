@@ -2103,17 +2103,17 @@ void lokit_main(const std::string& childRoot,
 
         rlimit rlim = { 0, 0 };
         if (getrlimit(RLIMIT_AS, &rlim) == 0)
-            LOG_INF("RLIMIT_AS is " << rlim.rlim_max << " bytes.");
+            LOG_INF("RLIMIT_AS is " << Util::getHumanizedBytes(rlim.rlim_max) << " (" << rlim.rlim_max << " bytes)");
         else
             LOG_SYS("Failed to get RLIMIT_AS.");
 
         if (getrlimit(RLIMIT_STACK, &rlim) == 0)
-            LOG_INF("RLIMIT_STACK is " << rlim.rlim_max << " bytes.");
+            LOG_INF("RLIMIT_STACK is " << Util::getHumanizedBytes(rlim.rlim_max) << " (" << rlim.rlim_max << " bytes)");
         else
             LOG_SYS("Failed to get RLIMIT_STACK.");
 
         if (getrlimit(RLIMIT_FSIZE, &rlim) == 0)
-            LOG_INF("RLIMIT_FSIZE is " << rlim.rlim_max << " bytes.");
+            LOG_INF("RLIMIT_FSIZE is " << Util::getHumanizedBytes(rlim.rlim_max) << " (" << rlim.rlim_max << " bytes)");
         else
             LOG_SYS("Failed to get RLIMIT_FSIZE.");
 
