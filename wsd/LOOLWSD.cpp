@@ -2587,6 +2587,7 @@ private:
             _exit(Application::EXIT_SOFTWARE);
         }
 
+        MasterPortNumber = port;
         LOG_INF("Listening to prisoner connections on port " << port);
         return socket;
     }
@@ -2613,6 +2614,7 @@ private:
                 ServerSocket::Type::Public, port, WebServerPoll, factory);
         }
 
+        ClientPortNumber = port;
         LOG_INF("Listening to client connections on port " << port);
         return socket;
     }
@@ -2751,7 +2753,7 @@ int LOOLWSD::innerMain()
     /// The main-poll does next to nothing:
     SocketPoll mainWait("main");
 #if ENABLE_DEBUG
-    std::cerr << "Ready to accept connections.\n" << std::endl;
+    std::cerr << "Ready to accept connections on port " << ClientPortNumber <<  ".\n" << std::endl;
 #endif
 
     const auto startStamp = std::chrono::steady_clock::now();
