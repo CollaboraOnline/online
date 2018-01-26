@@ -626,7 +626,8 @@ void LOOLWSD::initialize(Application& self)
 
     // Add default values of new entries here.
     static const std::map<std::string, std::string> DefAppConfig
-        = { { "tile_cache_path", LOOLWSD_CACHEDIR },
+        = { { "allowed_languages", "de_DE en_GB en_US es_ES fr_FR it pt_BR pt_PT ru" },
+            { "tile_cache_path", LOOLWSD_CACHEDIR },
             { "tile_cache_persistent", "true" },
             { "sys_template_path", "systemplate" },
             { "lo_template_path", LO_PATH },
@@ -772,6 +773,9 @@ void LOOLWSD::initialize(Application& self)
 #else
     LOOLWSD::SSLTermination.set(false);
 #endif
+
+    std::string allowedLanguages(config().getString("allowed_languages"));
+    setenv("LOK_WHITELIST_LANGUAGES", allowedLanguages.c_str(), 1);
 
     Cache = getPathFromConfig("tile_cache_path");
     SysTemplate = getPathFromConfig("sys_template_path");

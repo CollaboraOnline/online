@@ -3,6 +3,8 @@
     <!-- Note: 'default' attributes are used to document a setting's default value as well as to use as fallback. -->
     <!-- Note: When adding a new entry, a default must be set in WSD in case the entry is missing upon deployment. -->
 
+    <allowed_languages desc="List of supported languages on this instance." default="de_DE en_GB en_US es_ES fr_FR it pt_BR pt_PT ru">de_DE en_GB en_US es_ES fr_FR it pt_BR pt_PT ru</allowed_languages>
+
     <tile_cache_path desc="Path to a directory where to keep the tile cache." type="path" relative="false" default="@LOOLWSD_CACHEDIR@"></tile_cache_path>
     <sys_template_path desc="Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes." type="path" relative="true" default="systemplate"></sys_template_path>
     <lo_template_path desc="Path to a LibreOffice installation tree to be copied (linked) into the jails for child processes. Should be on the same file system as systemplate." type="path" relative="false" default="@LO_PATH@"></lo_template_path>
