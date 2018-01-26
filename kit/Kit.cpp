@@ -119,6 +119,9 @@ namespace
     LinkOrCopyType linkOrCopyType;
     std::string sourceForLinkOrCopy;
     Path destinationForLinkOrCopy;
+    std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
+    bool linkOrCopyVerboseLogging = false;
+    unsigned slowLinkOrCopyLimitInSecs = 10; // after this much seconds, start spamming the logs
 
     bool shouldCopyDir(const char *path)
     {
@@ -150,6 +153,18 @@ namespace
         if (strcmp(fpath, sourceForLinkOrCopy.c_str()) == 0)
             return 0;
 
+        if (!linkOrCopyVerboseLogging)
+        {
+            const auto durationInSecs = std::chrono::duration_cast<std::chrono::seconds>(
+                std::chrono::steady_clock::now() - linkOrCopyStartTime);
+            if (durationInSecs.count() > slowLinkOrCopyLimitInSecs)
+            {
+                LOG_WRN("Linking/copying files from " << sourceForLinkOrCopy << " to " << destinationForLinkOrCopy.toString() <<
+                        " is taking too much time. Enabling verbose link/copy logging at information level.");
+                linkOrCopyVerboseLogging = true;
+            }
+        }
+
         assert(fpath[strlen(sourceForLinkOrCopy.c_str())] == '/');
         const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy.c_str()) + 1;
         Path newPath(destinationForLinkOrCopy, Path(relativeOldPath));
@@ -159,6 +174,9 @@ namespace
         case FTW_F:
         case FTW_SLN:
             File(newPath.parent()).createDirectories();
+
+            if (linkOrCopyVerboseLogging)
+                LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath.toString() << "\"");
             if (link(fpath, newPath.toString().c_str()) == -1)
             {
                 LOG_SYS("link(\"" << fpath << "\", \"" <<
@@ -222,9 +240,15 @@ namespace
         if (sourceForLinkOrCopy.back() == '/')
             sourceForLinkOrCopy.pop_back();
         destinationForLinkOrCopy = destination;
+        linkOrCopyStartTime = std::chrono::steady_clock::now();
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL) == -1)
         {
             LOG_ERR("linkOrCopy: nftw() failed for '" << source << "'");
+        }
+        if (linkOrCopyVerboseLogging)
+        {
+            LOG_INF("Linking/Copying of files to " << destinationForLinkOrCopy.toString() << " finished.");
+            linkOrCopyVerboseLogging = false;
         }
     }
 
