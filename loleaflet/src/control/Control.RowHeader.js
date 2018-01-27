@@ -56,7 +56,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			className: 'loleaflet-font',
 			items: {
 				'insertrowabove': {
-					name: _UNO('.uno:InsertRows', 'spreadsheet', true),
+					name: _UNO('.uno:InsertRowsBefore', 'spreadsheet', true),
 					callback: function() {
 						var index = rowHeaderObj._lastMouseOverIndex;
 						if (index) {
