@@ -87,6 +87,7 @@
 "Labels":"लेबेलफोर",
 "Landscape":"लेण्डस्केप",
 "Left Page":"आगसि बिखं",
+"Line Numbering":"सारि अनजिमा होनाय",
 "List":"फारिलाइ",
 "List 1":"फारिलाइ 1",
 "List 1 Cont.":"फारिलाइ 1 थाबावनाय",
@@ -108,6 +109,8 @@
 "List 5 Cont.":"फारिलाइ 5 थाबावनाय",
 "List 5 End":"फारिलाइ 5 जोबथा",
 "List 5 Start":"फारिलाइ 5 जागायनाय",
+"List Contents":"फारिलाइ आयदाफोर",
+"List Heading":"फारिलाइ लिरबिदांनि बिमुं",
 "List Indent":"फारिलाइ इन्डेन्ट",
 "Marginalia":"मार्जिनालिया",
 "Max":"बांसिन बिबां",
@@ -163,7 +166,9 @@
 "StDev":"StDev",
 "Strong Emphasis":"गोरायै जर होनाय",
 "Subtitle":"दालाय बिमुं",
+"Sum":"दाजाबगासै",
 "Swedish (Sweden)":"स्विडिश (स्विडेन)",
+"Table":"फारिलाइ",
 "Table Contents":"फारिलाइ आयदाफोर",
 "Table Heading":"फारिलाइ लिरबिदांनि बिमुं",
 "Teletype":"टेलिटाइप",
@@ -200,5 +205,6 @@
 "Vertical Title, Text, Chart":"थोंगोरै थानाय बिमुं, फराय बिजाब,चार्ट",
 "Vertical Title, Vertical Text":"थोंगोरै थानाय बिमुं, थोंगोरै थानाय फराय बिजाब",
 "Visited Internet Link":"थांखांनाय इन्टारनेट सोमोन्दो",
-"Watermark":"दैनि सिन"
+"Watermark":"दैनि सिन",
+"[None]":"रावबो नङा"
 }

@@ -245,6 +245,7 @@
 "Latvian":"แลตเวีย (Latvian)",
 "Left Page":"หน้าซ้าย",
 "Limbu":"Limbu",
+"Line Numbering":"ลำดับเลขบรรทัด",
 "Lingala":"Lingala",
 "List":"รายการ",
 "List 1":"รายการ 1",
@@ -305,6 +306,7 @@
 "Ngungwel":"Ngungwel",
 "Nine Slides":"เก้าภาพนิ่ง",
 "Njyem (Congo)":"Njyem (คองโก)",
+"None (Do not check spelling)":"ไม่มี (ไม่ตรวจสอบการสะกดคำ)",
 "Northern Sotho":"Northern Sotho",
 "Norwegian, Bokmål":"นอร์เวย์, Bokmål",
 "Norwegian, Nynorsk":"นอร์เวย์, Nynorsk",
@@ -437,6 +439,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"เน้นหนัก",
 "Subtitle":"ชื่อเรื่องย่อย",
+"Sum":"ผลรวม",
 "Suundi":"Suundi",
 "Swahili (Kenya)":"Swahili (เคนยา)",
 "Swahili (Tanzania)":"Swahili (แทนซาเนีย)",
@@ -535,5 +538,6 @@
 "Yombe (Congo)":"Yombe (คองโก)",
 "Yoruba":"Yoruba",
 "Zulu":"ซูลู",
+"[None]":"[ไม่มี]",
 "Éwé":"Éwé"
 }

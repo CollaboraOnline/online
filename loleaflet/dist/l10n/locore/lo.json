@@ -86,6 +86,7 @@
 "Labels":"ປ້າຍ",
 "Landscape":"ແນວນອນ",
 "Left Page":"ໜ້າທາງຊ້າຍ",
+"Line Numbering":"ການລຽງຕົວເລກເສັ້ນ",
 "List":"ລາຍການ",
 "List 1":"ລາຍການ 1",
 "List 1 Cont.":"ລາຍການ 1 ສຶບຕໍ່",
@@ -164,6 +165,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"ເນັ້ນໜັກ",
 "Subtitle":"ຫົວຂໍ້ຍ່ອຍ",
+"Sum":"ຜົນລວມ",
 "Swedish (Sweden)":"ສະວີດິດ(ສະວີເດັນ)",
 "Table":"ຕາຕະລາງ",
 "Table Contents":"ຕາຕະລາງເນື້ອໃນ",
@@ -202,5 +204,6 @@
 "Vertical Title, Text, Chart":"ຫົວຂໍ້ແນວຕ້ັງ, ຕົວອັກສອນ,ຮູບແຜນການ",
 "Vertical Title, Vertical Text":"ຫົວຂໍ້ແນວຕັ້ງ, ຕົວອັກສອນແນວຕັ້ງ",
 "Visited Internet Link":"ໄປກວດເບິ່ງການເຊື່ອມຕໍອິນເຕີເນັດ",
-"Watermark":"ລາຍນ້ຳ"
+"Watermark":"ລາຍນ້ຳ",
+"[None]":"[ບໍ່]"
 }

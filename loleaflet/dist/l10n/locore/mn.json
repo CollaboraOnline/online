@@ -75,6 +75,7 @@
 "Dhivehi":"Дивэхи хэл",
 "Dimension Line":"Хэмжээсийн шугам",
 "Dogri":"Догри",
+"Drawing":"Дүрслэл",
 "Drop Caps":"Шад үсэг",
 "Dutch (Belgium)":"Датч (Бельги)",
 "Dutch (Netherlands)":"Датч (Недерланд)",
@@ -235,6 +236,7 @@
 "Nepali (India)":"Непал хэл (Энэтхэг)",
 "Nepali (Nepal)":"Непал хэл",
 "Nine Slides":"Есөн слайд",
+"None (Do not check spelling)":"Байхгүй (зөв бичгийн дүрмийг шалгахгүй)",
 "Northern Sotho":"Умард сото хэл",
 "Norwegian, Bokmål":"Норвеги хэл, Бүкмал",
 "Norwegian, Nynorsk":"Норвег хэл, Нунорск",
@@ -244,6 +246,7 @@
 "Numbering 1 End":"Дугаарлалт 1-н төгсгөл",
 "Numbering 1 Start":"Дугаарлах 1 Эхлэл",
 "Numbering 2":"Дугаарлалт 2",
+"Numbering 2 Cont.":"Дугаарлалт 1-н үргэлж.",
 "Numbering 2 End":"Дугаарлалт 2-н төгсгөл",
 "Numbering 2 Start":"Дугаарлалт 2-н эхлэл",
 "Numbering 3":"Дугаарлалт 3",
@@ -337,6 +340,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"Хатуу цохон тэмдэглэх",
 "Subtitle":"Дэд гарчиг",
+"Sum":"Нийлбэр",
 "Swahili (Kenya)":"Свахили хэл (Кени)",
 "Swahili (Tanzania)":"Свахили хэл (Танзаан)",
 "Swazi":"Свази хэл",
@@ -413,5 +417,6 @@
 "Welsh":"Вэлш хэл",
 "Xhosa":"Хоса хэл",
 "Zulu":"Зулу хэл",
+"[None]":"[None]",
 "Éwé":"Éwé хэл"
 }

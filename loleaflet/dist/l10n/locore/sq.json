@@ -149,6 +149,7 @@
 "Heading 9":"Titullimi 9",
 "Heading1":"Titullimi1",
 "Hebrew":"Hebraike",
+"Hindi":"Hindi",
 "Horizontal Line":"Linjë Horizontale",
 "Hungarian":"Hungareze",
 "Icelandic":"Islandeze",
@@ -168,6 +169,7 @@
 "Italian (Italy)":"Italiane (Itali)",
 "Italian (Switzerland)":"Italiane (Zvicër)",
 "Japanese":"Japoneze",
+"Khmer":"Khmer",
 "Korean (RoK)":"Koreane (RoK)",
 "Kurdish, Central (Iran)":"Kurde, Qendrore (Iran)",
 "Kurdish, Central (Iraq)":"Kurde, Qendrore (Irak)",
@@ -207,6 +209,7 @@
 "List Contents":"Listo Përmbajtjet",
 "List Heading":"Kreu i Listës",
 "List Indent":"Kryerresht i listës",
+"Lithuanian":"Lituane",
 "Macedonian":"Maqedonase",
 "Main Index Entry":"Indeks i të dhënave kryesore",
 "Maltese":"Malteze",
@@ -298,6 +301,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"Theksim i Fuqishëm",
 "Subtitle":"Nëntitull",
+"Sum":"Shuma",
 "Swedish (Finland)":"Suedeze (Finlanda)",
 "Swedish (Sweden)":"Suedeze (Suedi)",
 "Table":"Tabela",
@@ -349,5 +353,6 @@
 "Vertical Title, Vertical Text":"Titull Vertikal, Tekst Vertikal",
 "Vietnamese":"Vietnameze",
 "Visited Internet Link":"Link i vizituar i internetit",
-"Watermark":"Shenjë uji"
+"Watermark":"Shenjë uji",
+"[None]":"[None]"
 }

@@ -248,6 +248,7 @@
 "Nepali (India)":"Afaan Neeppaal (Hindi)",
 "Nepali (Nepal)":"Afaan Neeppaal",
 "Nine Slides":"Islaayidoota Sagal",
+"None (Do not check spelling)":"Homaa (Qubeeffannoo hin mirkaneessin)",
 "Northern Sotho":"Afaan Soottoo Kaabaa",
 "Norwegian, Bokmål":"Afaan Noorweey Bokamaal",
 "Norwegian, Nynorsk":"Afaan Noorweey Ninorsik",
@@ -356,6 +357,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"Gadjabeessa Cimaa ",
 "Subtitle":"Mataduree xiqqaa",
+"Sum":"Ida'ama",
 "Swahili (Kenya)":"Afaan Suwaahilii",
 "Swahili (Tanzania)":"Afaan Suwaahilii (Taanizaaniyaa)",
 "Swazi":"Afaan Suwaaz",
@@ -426,5 +428,6 @@
 "Welsh":"Afaan Weelisii",
 "Xhosa":"Afaan Xuhoosii",
 "Zulu":"Afaan Zuuluu",
+"[None]":"[Homaa]",
 "Éwé":"Afaan Éwé"
 }

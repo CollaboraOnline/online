@@ -135,7 +135,9 @@
 "HTML":"HTML",
 "Hausa (Ghana)":"Igihawusa (Gana)",
 "Hausa (Nigeria)":"Igihawusa (Nigeriya)",
+"Header":"Umutwempangano",
 "Heading":"Umutwempangano",
+"Heading 1":"Umutwe 1",
 "Heading 10":"Umutwe 10",
 "Heading 2":"Umutwe 2",
 "Heading 3":"Umutwe 3",
@@ -317,6 +319,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"Gushimangira cyane",
 "Subtitle":"Umutwe wungirije",
+"Sum":"Igiteranyo",
 "Swahili (Kenya)":"Igiswayili (Kenya)",
 "Swahili (Tanzania)":"Ikigiswayili",
 "Swazi":"Ikinyaswazilandi",
@@ -381,5 +384,6 @@
 "Welsh":"Ikigaruwa",
 "Xhosa":"Ikigisosa",
 "Zulu":"Ikizulu",
+"[None]":"[Ntacyo]",
 "Éwé":"Éwé"
 }

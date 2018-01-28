@@ -92,6 +92,7 @@
 "Drop Caps":"Drop Caps",
 "Dutch (Belgium)":"Dutch (Belgium)",
 "Dutch (Netherlands)":"Dutch (Netherlands)",
+"Dzongkha":"Dzongkha",
 "Emphasis":"Emphasis",
 "Endnote":"Endnote",
 "Endnote Characters":"Endnote Characters",
@@ -253,6 +254,7 @@
 "Nepali (India)":"Nepali (India)",
 "Nepali (Nepal)":"Nepali (Nepal)",
 "Nine Slides":"Nine Slides",
+"None (Do not check spelling)":"None (Do not check spelling)",
 "Northern Sotho":"Northern Sotho",
 "Norwegian, Bokmål":"Norwegian, Bokmål",
 "Norwegian, Nynorsk":"Norwegian, Nynorsk",
@@ -369,6 +371,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"Strong Emphasis",
 "Subtitle":"Subtitle",
+"Sum":"Sum",
 "Swahili (Kenya)":"Swahili (Kenya)",
 "Swahili (Tanzania)":"Swahili (Tanzania)",
 "Swazi":"Swazi",
@@ -450,5 +453,6 @@
 "Yiddish (USA)":"Yiddish (USA)",
 "Yoruba":"Yoruba",
 "Zulu":"Zulu",
+"[None]":"[None]",
 "Éwé":"Éwé"
 }

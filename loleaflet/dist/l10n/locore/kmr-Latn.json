@@ -182,6 +182,7 @@
 "Index Link":"Lînka pêristê",
 "Index Separator":"Dabirra Pêrista Alfabetîk",
 "Indonesian":"Endonezî",
+"Insert":"Têxe Nav",
 "Interlingua":"Interlingua",
 "Internet Link":"Lînka Înternetê",
 "Irish":"Îrlandî",
@@ -250,6 +251,7 @@
 "Nepali (India)":"Nepalî (Hîndistan)",
 "Nepali (Nepal)":"Nepalî (Nepal)",
 "Nine Slides":"Neh Slayt",
+"None (Do not check spelling)":"Tune (Kontrola rastnivîsê neke)",
 "Northern Sotho":"Sothoya Bakur",
 "Norwegian, Bokmål":"Norveçî (Bokmål)",
 "Norwegian, Nynorsk":"Norwecî (Nynorsk)",
@@ -366,6 +368,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"Kirpandina bihêz",
 "Subtitle":"Sernava Binî",
+"Sum":"Serhev",
 "Swahili (Kenya)":"Swahîlî (Kenya)",
 "Swahili (Tanzania)":"Swahîlî (Tanzanya)",
 "Swazi":"Swazi",
@@ -438,5 +441,6 @@
 "Xhosa":"Xhosa",
 "Yoruba":"Yoruba",
 "Zulu":"Zûlû",
+"[None]":"[Ne yek]",
 "Éwé":"Éwé"
 }
