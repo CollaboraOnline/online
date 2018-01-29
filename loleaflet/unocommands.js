@@ -104,7 +104,6 @@ var unoCommandsArray = {
 	InsertPagebreak:{text:{menu:_('~Page Break'),},},
 	InsertRLM:{global:{menu:_('~Right-to-left mark'),},},
 	InsertRowBreak:{spreadsheet:{menu:_('~Row Break'),},},
-	InsertRows:{presentation:{menu:_('Insert Row'),},spreadsheet:{menu:_('Rows ~Above'),},text:{menu:_('Insert Row'),},},
 	InsertRowsAfter:{presentation:{menu:_('Insert Row Below'),},spreadsheet:{context:_('Insert Rows ~Below'),menu:_('Rows ~Below'),},text:{menu:_('Rows ~Below'),},},
 	InsertRowsBefore:{presentation:{menu:_('Insert Row Above'),},spreadsheet:{context:_('Insert Rows ~Above'),menu:_('Rows ~Above'),},text:{menu:_('Rows ~Above'),},},
 	InsertRowsMenu:{spreadsheet:{menu:_('Insert ~Rows'),},},
