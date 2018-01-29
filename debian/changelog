@@ -1,8 +1,14 @@
+loolwsd (3.0.0-7) unstable; urgency=medium
+
+  * see the git log: http://col.la/cool30
+
+ -- Andras Timar <andras.timar@collabora.com>  Mon, 29 Jan 2018 10:00:00 +0100
+
 loolwsd (3.0.0-6) unstable; urgency=medium
 
   * see the git log: http://col.la/cool30
 
- -- Andras Timar <andras.timar@collabora.com>  Tue, 24 Jan 2018 21:00:00 +0100
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 24 Jan 2018 21:00:00 +0100
 
 loolwsd (3.0.0-5) unstable; urgency=medium
 
