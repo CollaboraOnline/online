@@ -38,6 +38,9 @@
 #include "common/Protocol.hpp"
 #include "common/Unit.hpp"
 
+#include <sys/types.h>
+#include <sys/wait.h>
+
 using namespace LOOLProtocol;
 
 using Poco::JSON::Object;
@@ -621,8 +624,9 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                     for (std::size_t i = 1; i < tokenizer.count(); ++i)
                         args.emplace_back(tokenizer[i]);
 
-                    Poco::ProcessHandle process = Poco::Process::launch(tokenizer[0], args);
-                    const int rc = process.wait();
+                    int process = Util::spawnProcess(tokenizer[0], args);
+                    int status = -1;
+                    const int rc = ::waitpid(process, &status, 0);
                     if (rc != 0)
                     {
                         LOG_ERR("Conversion from " << extension << " to " << newExtension << " failed (" << rc << ").");

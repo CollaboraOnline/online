@@ -140,9 +140,6 @@ using Poco::Path;
 using Poco::Pipe;
 #endif
 using Poco::Process;
-#ifndef KIT_IN_PROCESS
-using Poco::ProcessHandle;
-#endif
 using Poco::StreamCopier;
 using Poco::StringTokenizer;
 using Poco::TemporaryFile;
@@ -1312,7 +1309,7 @@ bool LOOLWSD::createForKit()
 
     std::unique_lock<std::mutex> newChildrenLock(NewChildrenMutex);
 
-    Process::Args args;
+    std::vector<std::string> args;
     args.push_back("--losubpath=" + std::string(LO_JAIL_SUBPATH));
     args.push_back("--systemplate=" + SysTemplate);
     args.push_back("--lotemplate=" + LoTemplate);
@@ -1368,13 +1365,11 @@ bool LOOLWSD::createForKit()
             Poco::cat(std::string(" "), args.begin(), args.end()));
 
     LastForkRequestTime = std::chrono::steady_clock::now();
-    Pipe inPipe;
-    ProcessHandle child = Process::launch(forKitPath, args, &inPipe, nullptr, nullptr);
+    int childStdin = -1;
+    int child = Util::spawnProcess(forKitPath, args, &childStdin);
 
-    // The Pipe dtor closes the fd, so dup it.
-    ForKitWritePipe = dup(inPipe.writeHandle());
-
-    ForKitProcId = child.id();
+    ForKitWritePipe = childStdin;
+    ForKitProcId = child;
 
     LOG_INF("Forkit process launched: " << ForKitProcId);
 
