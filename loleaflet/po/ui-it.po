@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-23 11:12+0100\n"
+"POT-Creation-Date: 2018-01-29 10:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.3\n"
-"X-Pootle-Revision: 3069330\n"
+"X-Pootle-Revision: 3070996\n"
 "X-Pootle-Path: /it/libo_online/loleaflet-ui-it.po\n"
 
 #: admin.strings.js:5
@@ -296,7 +296,7 @@ msgstr "Foglio successivo"
 msgid "Last sheet"
 msgstr "Ultimo foglio"
 
-#: dist/toolbar/toolbar.js:630 src/control/Control.Menubar.js:265
+#: dist/toolbar/toolbar.js:630 src/control/Control.Menubar.js:266
 msgid "Fullscreen presentation"
 msgstr "Presentazione a schermo intero"
 
@@ -314,14 +314,14 @@ msgstr "Nessun utente"
 
 #: dist/toolbar/toolbar.js:663
 msgid "Always follow the editor"
-msgstr ""
+msgstr "Segui sempre il cursore"
 
 #: dist/toolbar/toolbar.js:666
 msgid "Current"
 msgstr "Corrente"
 
 #: dist/toolbar/toolbar.js:673 src/control/Control.Menubar.js:57
-#: src/control/Control.Menubar.js:233
+#: src/control/Control.Menubar.js:234
 msgid "Reset zoom"
 msgstr "Azzera ingrandimento"
 
@@ -538,18 +538,18 @@ msgstr "Data e ora"
 msgid "Jump to state"
 msgstr "Passa allo stato"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:209
-#: src/control/Control.Menubar.js:284
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:210
+#: src/control/Control.Menubar.js:285
 msgid "See revision history"
 msgstr "Vedi la cronologia delle revisioni"
 
-#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:210
-#: src/control/Control.Menubar.js:285
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:211
+#: src/control/Control.Menubar.js:286
 msgid "Download as"
 msgstr "Scarica come"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:211
-#: src/control/Control.Menubar.js:286
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:212
+#: src/control/Control.Menubar.js:287
 msgid "PDF Document (.pdf)"
 msgstr "Documento PDF (.pdf)"
 
@@ -565,8 +565,8 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:219
-#: src/control/Control.Menubar.js:294
+#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:220
+#: src/control/Control.Menubar.js:295
 msgid "Repair"
 msgstr "Ripara"
 
@@ -574,64 +574,64 @@ msgstr "Ripara"
 msgid "Text orientation"
 msgstr "Orientazione del testo"
 
-#: src/control/Control.Menubar.js:189 src/control/Control.Menubar.js:191
-#: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:270
-#: src/control/Control.Menubar.js:358
+#: src/control/Control.Menubar.js:190 src/control/Control.Menubar.js:192
+#: src/control/Control.Menubar.js:194 src/control/Control.Menubar.js:271
+#: src/control/Control.Menubar.js:359
 msgid "None (Do not check spelling)"
 msgstr "Nessuno (non eseguire il controllo ortografico)"
 
-#: src/control/Control.Menubar.js:198 src/control/Control.Menubar.js:273
-#: src/control/Control.Menubar.js:361
+#: src/control/Control.Menubar.js:199 src/control/Control.Menubar.js:274
+#: src/control/Control.Menubar.js:362
 msgid "Keyboard shortcuts"
 msgstr "Scorciatoie da tastiera"
 
-#: src/control/Control.Menubar.js:199 src/control/Control.Menubar.js:274
-#: src/control/Control.Menubar.js:362
+#: src/control/Control.Menubar.js:200 src/control/Control.Menubar.js:275
+#: src/control/Control.Menubar.js:363
 msgid "About"
 msgstr "Informazioni su"
 
-#: src/control/Control.Menubar.js:201 src/control/Control.Menubar.js:276
-#: src/control/Control.Menubar.js:364
+#: src/control/Control.Menubar.js:202 src/control/Control.Menubar.js:277
+#: src/control/Control.Menubar.js:365
 msgid "Close document"
 msgstr "Chiudi il documento"
 
-#: src/control/Control.Menubar.js:212
+#: src/control/Control.Menubar.js:213
 msgid "ODF presentation (.odp)"
 msgstr "Presentazione ODF (.odp)"
 
-#: src/control/Control.Menubar.js:213
+#: src/control/Control.Menubar.js:214
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:215
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:287
+#: src/control/Control.Menubar.js:288
 msgid "ODF spreadsheet (.ods)"
 msgstr "Foglio di calcolo ODF (.ods)"
 
-#: src/control/Control.Menubar.js:288
+#: src/control/Control.Menubar.js:289
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:289
+#: src/control/Control.Menubar.js:290
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:421
+#: src/control/Control.Menubar.js:422
 msgid "Reset to Default Language"
 msgstr "Ripristina la lingua predefinita"
 
-#: src/control/Control.Menubar.js:639
+#: src/control/Control.Menubar.js:640
 msgid "Are you sure you want to delete this slide?"
 msgstr "Vuoi davvero eliminare questa diapositiva?"
 
-#: src/control/Control.Menubar.js:669
+#: src/control/Control.Menubar.js:670
 msgid "Are you sure you want to delete the header?"
 msgstr "Eliminare veramente l'intestazione?"
 
-#: src/control/Control.Menubar.js:670
+#: src/control/Control.Menubar.js:671
 msgid "Are you sure you want to delete the footer?"
 msgstr "Eliminare veramente il piè di pagina?"
 
