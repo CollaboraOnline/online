@@ -44,6 +44,11 @@ namespace Util
         std::string getFilename(const size_t length);
     }
 
+    /// Spawn a process if stdInput is non-NULL it contains a writable descriptor
+    /// to send data to the child.
+    int spawnProcess(const std::string &cmd, const std::vector<std::string> &args,
+                     int *stdInput = nullptr);
+
     /// Hex to unsigned char
     bool dataFromHexString(const std::string& hexString, std::vector<unsigned char>& data);
     /// Encode an integral ID into a string, with padding support.

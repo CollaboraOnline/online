@@ -18,7 +18,9 @@
 #include <sys/stat.h>
 #include <sys/uio.h>
 #include <sys/vfs.h>
+#include <sys/types.h>
 #include <unistd.h>
+#include <dirent.h>
 
 #include <atomic>
 #include <cassert>
@@ -112,6 +114,96 @@ namespace Util
                      s.end());
             return s.substr(0, length);
         }
+    }
+
+    // close what we have - far faster than going up to a 1m open_max eg.
+    static bool closeFdsFromProc()
+    {
+          DIR *fdDir = opendir("/proc/self/fd");
+          if (!fdDir)
+              return false;
+
+          struct dirent *i;
+
+          while ((i = readdir(fdDir))) {
+              if (i->d_name[0] == '.')
+                  continue;
+
+              char *e = NULL;
+              errno = 0;
+              long fd = strtol(i->d_name, &e, 10);
+              if (errno != 0 || !e || *e)
+                  continue;
+
+              if (fd == dirfd(fdDir))
+                  continue;
+
+              if (fd < 3)
+                  continue;
+
+              if (close(fd) < 0)
+                  LOG_WRN("Unexpected failure to close fd " << fd);
+              else
+                  LOG_TRC("Closed fd " << fd);
+          }
+
+          closedir(fdDir);
+          return true;
+    }
+
+    static void closeFds()
+    {
+        if (!closeFdsFromProc())
+        {
+            LOG_WRN("Couldn't close fds efficiently from /proc");
+            for (int fd = 3; fd < sysconf(_SC_OPEN_MAX); ++fd)
+                close(fd);
+        }
+    }
+
+    int spawnProcess(const std::string &cmd, const std::vector<std::string> &args, int *stdInput)
+    {
+        int pipeFds[2] = { -1, -1 };
+        if (stdInput)
+        {
+            if (pipe(pipeFds) < 0)
+            {
+                LOG_ERR("Out of file descriptors spawning " << cmd);
+                throw Poco::SystemException("Out of file descriptors");
+            }
+        }
+
+        std::vector<char *> params;
+        params.push_back(const_cast<char *>(cmd.c_str()));
+        for (auto i : args)
+            params.push_back(const_cast<char *>(i.c_str()));
+        params.push_back(nullptr);
+
+        int pid = fork();
+        if (pid < 0)
+        {
+            LOG_ERR("Failed to fork for command '" << cmd);
+            throw Poco::SystemException("Failed to fork for command ", cmd);
+        }
+        else if (pid == 0) // child
+        {
+            if (stdInput)
+                dup2(pipeFds[0], STDIN_FILENO);
+
+            closeFds();
+
+            int ret = execvp(params[0], &params[0]);
+            if (ret < 0)
+                std::cerr << "Failed to exec command '" << cmd << "' with error '" << strerror(errno) << "'\n";
+            _exit(42);
+        }
+        // else spawning process still
+        if (stdInput)
+        {
+            close(pipeFds[0]);
+            *stdInput = pipeFds[1];
+        }
+        return pid;
     }
 
     bool dataFromHexString(const std::string& hexString, std::vector<unsigned char>& data)
