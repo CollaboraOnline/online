@@ -348,6 +348,8 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.setStyle(floatingCanvas, 'left', left + 'px'); // yes, it's necessary to append 'px'
 		L.DomUtil.setStyle(floatingCanvas, 'top', top + 'px');
 
+		L.DomEvent.on(floatingCanvas, 'contextmenu', L.DomEvent.preventDefault);
+
 		// attach events
 		L.DomEvent.on(floatingCanvas, 'mousedown mouseup', function(e) {
 			var buttons = 0;
