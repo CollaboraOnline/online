@@ -17,7 +17,8 @@ L10N_STYLES_JSON = $(patsubst po/styles/%.po,dist/l10n/styles/%.json,$(L10N_STYL
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
 all-local: node_modules $(L10N_JSON) $(L10N_STYLES_JSON)
-	rm -rf dist/plugins/draw-$(DRAW_VERSION) && mkdir -p dist/plugins/draw-$(DRAW_VERSION)
+	rm -rf dist/plugins/draw-$(DRAW_VERSION) || true
+	mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
 	jake build debug=$(ENABLE_DEBUG) minify=$(MINIFY)
 
