@@ -173,7 +173,7 @@ namespace Util
 
         std::vector<char *> params;
         params.push_back(const_cast<char *>(cmd.c_str()));
-        for (auto i : args)
+        for (const auto& i : args)
             params.push_back(const_cast<char *>(i.c_str()));
         params.push_back(nullptr);
 
