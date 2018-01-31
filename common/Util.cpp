@@ -142,9 +142,7 @@ namespace Util
                   continue;
 
               if (close(fd) < 0)
-                  LOG_WRN("Unexpected failure to close fd " << fd);
-              else
-                  LOG_TRC("Closed fd " << fd);
+                  std::cerr << "Unexpected failure to close fd " << fd << std::endl;
           }
 
           closedir(fdDir);
