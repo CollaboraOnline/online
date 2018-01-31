@@ -283,9 +283,12 @@ function onClick(id, item, subItem) {
 		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() + 60);
 	}
 	else if (id === 'prevrecord') {
-		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() - 60);
+		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() - 30);
 	}
 	else if (id === 'lastrecord') {
+		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() + 120);
+	}
+	else if (id === 'insertpage') {
 		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').prop('scrollWidth'));
 	}
 	else if (id.startsWith('menu:wrap:wrap-'))
@@ -638,7 +641,8 @@ $(function () {
 			{type: 'button',  id: 'firstrecord',  img: 'firstrecord', hidden: true, hint: _('First sheet')},
 			{type: 'button',  id: 'prevrecord',  img: 'prevrecord', hidden: true, hint: _('Previous sheet')},
 			{type: 'button',  id: 'nextrecord',  img: 'nextrecord', hidden: true, hint: _('Next sheet')},
-			{type: 'button',  id: 'lastrecord',  img: 'lastrecord', hidden: true, hint: _('Last sheet')}
+			{type: 'button',  id: 'lastrecord',  img: 'lastrecord', hidden: true, hint: _('Last sheet')},
+			{type: 'button',  id: 'insertpage', img: 'insertpage', hidden:true, hint: _('Insert sheet')}
 		],
 		onClick: function (e) {
 			onClick(e.target);
@@ -1537,6 +1541,7 @@ map.on('updateparts pagenumberchanged', function (e) {
 		toolbar.show('nextrecord');
 		toolbar.show('prevrecord');
 		toolbar.show('lastrecord');
+		toolbar.show('insertpage');
 	}
 });
 
@@ -1609,7 +1614,7 @@ map.on('updatepermission', function (e) {
 		}
 	}
 
-	var spreadsheetButtons = ['firstrecord', 'prevrecord', 'nextrecord', 'lastrecord'];
+	var spreadsheetButtons = ['firstrecord', 'prevrecord', 'nextrecord', 'lastrecord', 'insertpage'];
 	var formulaBarButtons = ['sum', 'function'];
 	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
 	var toolbarDownButtons = ['next', 'prev'];
