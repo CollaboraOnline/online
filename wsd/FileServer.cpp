@@ -66,7 +66,7 @@ int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
     return PAM_SUCCESS;
 }
 
-bool isPamAuthOk(const std::string user, const std::string pass)
+bool isPamAuthOk(const std::string& user, const std::string& pass)
 {
     struct pam_conv localConversation { functionConversation, nullptr };
     pam_handle_t *localAuthHandle = NULL;
@@ -138,7 +138,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 
     HTTPBasicCredentials credentials(request);
     std::string userProvidedPwd = credentials.getPassword();
-    std::string userProvidedUsr = credentials.getUsername();
+    const std::string& userProvidedUsr = credentials.getUsername();
 
     // If no cookie found, or is invalid, let admin re-login
     const std::string user = config.getString("admin_console.username", "");
