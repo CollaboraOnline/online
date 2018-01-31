@@ -153,7 +153,7 @@ namespace Util
     {
         if (!closeFdsFromProc())
         {
-            LOG_WRN("Couldn't close fds efficiently from /proc");
+            std::cerr << "Couldn't close fds efficiently from /proc" << std::endl;
             for (int fd = 3; fd < sysconf(_SC_OPEN_MAX); ++fd)
                 close(fd);
         }
