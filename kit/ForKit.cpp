@@ -509,6 +509,7 @@ int main(int argc, char** argv)
     if (!NoCapsForKit && !haveCorrectCapabilities())
     {
         std::cerr << "FATAL: Capabilities are not set for the loolforkit program." << std::endl;
+        std::cerr << "Please make sure that the current partition was *not* mounted with the 'nosuid' option." << std::endl;
         std::cerr << "If you are on SLES11, please set 'file_caps=1' as kernel boot option." << std::endl << std::endl;
         return Application::EXIT_SOFTWARE;
     }
