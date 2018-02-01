@@ -899,7 +899,7 @@ bool DocumentBroker::autoSave(const bool force)
     {
         LOG_TRC("Sending forced save command for [" << _docKey << "].");
         // Don't terminate editing as this can be invoked by the admin OOM, but otherwise force saving anyway.
-        sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/ true, /*dontSaveIfUnmodified=*/ false, /*isAutosave=*/ false);
+        sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/ true, /*dontSaveIfUnmodified=*/ true, /*isAutosave=*/ false);
     }
     else if (_isModified)
     {
