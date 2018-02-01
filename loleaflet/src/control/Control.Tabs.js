@@ -68,7 +68,19 @@ L.Control.Tabs = L.Control.extend({
 										map.renamePage(data.sheetname, nPos);
 									}
 								});
-							}}
+							}},
+				'showsheets': {
+					name: _UNO('.uno:Show', 'spreadsheet', true),
+					callback: function() {
+						map.showPage();
+					}
+				},
+				'hiddensheets': {
+					name: _UNO('.uno:Hide', 'spreadsheet', true),
+					callback: function() {
+						map.hidePage();
+					}
+				}
 			},
 			zIndex: 1000
 		});
@@ -103,6 +115,8 @@ L.Control.Tabs = L.Control.extend({
 				ssTabScroll.id = 'spreadsheet-tab-scroll';
 
 				for (var i = 0; i < parts; i++) {
+					if (e.hiddenParts.indexOf(i) !== -1)
+						continue;
 					var id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('div', 'spreadsheet-tab', ssTabScroll);
 					tab.innerHTML = e.partNames[i];

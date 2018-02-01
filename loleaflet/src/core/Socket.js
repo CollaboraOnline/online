@@ -862,6 +862,13 @@ L.Socket = L.Class.extend({
 			else if (tokens[i].substring(0, 10) === 'rectangle=') {
 				command.rectangle = tokens[i].substring(10);
 			}
+			else if (tokens[i].substring(0, 12) === 'hiddenparts=') {
+				var hiddenparts = tokens[i].substring(12).split(',');
+				command.hiddenparts = [];
+				hiddenparts.forEach(function (item) {
+					command.hiddenparts.push(parseInt(item));
+				});
+			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
 			var defaultZoom = this._map.options.zoom;
