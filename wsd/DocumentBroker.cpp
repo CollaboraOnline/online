@@ -839,14 +839,11 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     {
         LOG_ERR("PutFile says that Document changed in storage");
         _documentChangedInStorage = true;
+        std::string message = "close: documentconflict";
         if (_isModified)
-        {
-            broadcastMessage("error: cmd=storage kind=documentconflict");
-        }
-        else
-        {
-            closeDocument("documentconflict");
-        }
+            message = "error: cmd=storage kind=documentconflict";
+
+        broadcastMessage(message);
     }
 
     return false;
