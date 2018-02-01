@@ -13,6 +13,8 @@
 #include <sstream>
 #include <string>
 
+#include <Util.hpp>
+
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
@@ -140,6 +142,34 @@ namespace LOKitHelper
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION)
         {
+            if (type == LOK_DOCTYPE_SPREADSHEET)
+            {
+                std::ostringstream hposs;
+                for (int i = 0; i < parts; ++i)
+                {
+
+                    ptrValue = loKitDocument->pClass->getPartInfo(loKitDocument, i);
+                    std::string partinfo(ptrValue);
+                    std::free(ptrValue);
+                    const auto aPartInfo = Util::JsonToMap(partinfo);
+                    for (const auto prop: aPartInfo)
+                    {
+                        const std::string& name = prop.first;
+                        if (name == "visible")
+                        {
+                            if (prop.second == "0")
+                                hposs << i << ",";
+                        }
+                    }
+                }
+                std::string hiddenparts = hposs.str();
+                if (!hiddenparts.empty())
+                {
+                    hiddenparts.pop_back();
+                    oss << " hiddenparts=" << hiddenparts;
+                }
+            }
+
             for (int i = 0; i < parts; ++i)
             {
                 oss << "\n";

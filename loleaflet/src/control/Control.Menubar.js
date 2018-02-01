@@ -364,6 +364,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:DataSort'},
 				{uno: '.uno:SortAscending'},
 				{uno: '.uno:SortDescending'},
+				{uno: '.uno:Validation'},
 				{type: 'separator'},
 				{uno: '.uno:DataFilterAutoFilter'},
 				{name: _UNO('.uno:FilterMenu', 'spreadsheet'), type: 'menu', menu: [

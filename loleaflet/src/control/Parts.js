@@ -233,6 +233,10 @@ L.Map.include({
 			return;
 		}
 
+		if (this.getDocType() === 'spreadsheet' && docLayer._parts <= docLayer.hiddenParts() + 1) {
+			return;
+		}
+
 		this.fire('deletepage', {
 			selectedPart: docLayer._selectedPart,
 			parts:        docLayer._parts
@@ -269,12 +273,50 @@ L.Map.include({
 		}
 	},
 
+	showPage: function () {
+		if (this.getDocType() === 'spreadsheet' && this.hasAnyHiddenPart()) {
+			this._socket.sendMessage('uno .uno:Show');
+		}
+	},
+
+	hidePage: function () {
+		if (this.getDocType() === 'spreadsheet' && this.getNumberOfVisibleParts() > 1) {
+			this._socket.sendMessage('uno .uno:Hide');
+		}
+	},
+
+	isHiddenPart: function (part) {
+		if (this.getDocType() !== 'spreadsheet')
+			return false;
+		return this._docLayer.isHiddenPart(part);
+	},
+
+	hasAnyHiddenPart: function () {
+		if (this.getDocType() !== 'spreadsheet')
+			return false;
+		return this._docLayer.hasAnyHiddenPart();
+	},
+
 	getNumberOfPages: function () {
 		return this._docLayer._pages;
 	},
 
 	getNumberOfParts: function () {
 		return this._docLayer._parts;
+	},
+
+	getNumberOfVisibleParts: function () {
+		return this.getNumberOfParts() - this._docLayer.hiddenParts();
+	},
+
+	getHiddenPartNames: function () {
+		var partNames = this._docLayer._partNames;
+		var names = [];
+		for (var i = 0; i < partNames.length; ++i) {
+			if (this.isHiddenPart(i))
+				names.push(partNames[i]);
+		}
+		return names.join(',');
 	},
 
 	getCurrentPageNumber: function () {
