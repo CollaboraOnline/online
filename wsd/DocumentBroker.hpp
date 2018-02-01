@@ -349,9 +349,6 @@ public:
     /// Sends a message to all sessions
     void broadcastMessage(const std::string& message);
 
-    /// Sets the reason for closing document;
-    void setCloseReason(const std::string& closeReason) { _closeReason = closeReason; }
-
 private:
 
     /// Shutdown all client connections with the given reason.

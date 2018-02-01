@@ -1555,8 +1555,7 @@ private:
         {
             auto lock = docBroker->getLock();
             docBroker->assertCorrectThread();
-            docBroker->setCloseReason("docdisconnected");
-            docBroker->stop("Lost connection with LOKit.");
+            docBroker->stop("docisdisconnected");
         }
     }
 
