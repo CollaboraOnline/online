@@ -222,7 +222,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
         {
             return std::unique_ptr<StorageBase>(new WopiStorage(uri, jailRoot, jailPath));
         }
-
+        LOG_ERR("No acceptable WOPI hosts found matching the target host [" << targetHost << "] in config.");
         throw UnauthorizedRequestException("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
     }
 
