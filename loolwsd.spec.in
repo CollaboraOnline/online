@@ -65,17 +65,18 @@ Obsoletes:      loleaflet <= 1.5.8
 	--enable-silent-rules \
 	--with-lokit-path=bundled/include \
 	--with-lo-path=%{loroot} \
+	--disable-setcap \
 %if 0%{?config_options:1}
 	%{config_options}
 %endif
 
-env BUILDING_FROM_RPMBUILD=yes make %{?_smp_mflags}
+make %{?_smp_mflags}
 
 %check
-#env BUILDING_FROM_RPMBUILD=yes make check
+#make check
 
 %install
-env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
+make install DESTDIR=%{buildroot}
 %__install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -d -m 755 %{buildroot}/var/adm/fillup-templates
 %if 0%{?fedora} || 0%{?rhel} >= 7

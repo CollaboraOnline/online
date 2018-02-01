@@ -113,6 +113,10 @@ AC_ARG_WITH([compiler-plugins],
                 [Experimental! Unlikely to work for anyone except Noel! Enable compiler plugins that will perform additional checks during
                  building.]))
 
+AC_ARG_ENABLE([setcap],
+            AS_HELP_STRING([--disable-setcap],
+                          [Do not set capabilities on files. For packaging builds]))
+
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -395,6 +399,22 @@ AC_SUBST(LOOLWSD_CONFIGDIR)
 LOOLWSD_DATADIR=${datadir}/${PACKAGE}
 AC_SUBST(LOOLWSD_DATADIR)
 
+AS_IF([test "$enable_setcap" != "no"],
+      [AC_DEFINE([ENABLE_SETCAP],1,[Whether to enable setting of capabilities])],
+      [AC_DEFINE([ENABLE_SETCAP],0,[Whether to enable setting of capabilities])])
+
+AM_CONDITIONAL([ENABLE_SETCAP], [test "$enable_setcap" != "no"])
+
+ENABLE_SETCAP=
+if test "$enable_setcap" != "no"; then
+    ENABLE_SETCAP=true
+    setcap_msg="setcap enabled"
+else
+    setcap_msg="setcap disabled"
+fi
+
+AC_SUBST(ENABLE_SETCAP)
+
 AC_CONFIG_FILES([Makefile
                  test/Makefile
                  loleaflet/Makefile
@@ -414,6 +434,7 @@ Configuration:
     LO integration tests    ${lo_msg}
     SSL support             $ssl_msg
     Debug & low security    $debug_msg
+    Set capabilities        $setcap_msg
 
     \$ make # to compile"
 if test -n "$with_lo_path"; then
