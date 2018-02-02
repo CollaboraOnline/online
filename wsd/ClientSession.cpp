@@ -190,7 +190,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             LOG_DBG("Document marked as changed in storage and user ["
                     << getUserId() << ", " << getUserName()
                     << "] wants to refresh the document for all.");
-            docBroker->closeDocument("documentconflict " + getUserName());
+            docBroker->stop("documentconflict " + getUserName());
         }
 
         return true;
