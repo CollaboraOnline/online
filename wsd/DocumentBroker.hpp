@@ -431,6 +431,7 @@ private:
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _markToDestroy;
+    std::atomic<bool> _closeRequest;
     std::atomic<bool> _isLoaded;
     std::atomic<bool> _isModified;
     int _cursorPosX;

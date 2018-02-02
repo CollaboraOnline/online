@@ -155,6 +155,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _lastSaveTime(std::chrono::steady_clock::now()),
     _lastSaveRequestTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(COMMAND_TIMEOUT_MS)),
     _markToDestroy(false),
+    _closeRequest(false),
     _isLoaded(false),
     _isModified(false),
     _cursorPosX(0),
@@ -276,13 +277,14 @@ void DocumentBroker::pollThread()
             continue;
         }
 
-        if (ShutdownRequestFlag)
+        if (ShutdownRequestFlag || _closeRequest)
         {
-            LOG_INF("Autosaving DocumentBroker for docKey [" << getDocKey() << "] to recycle server.");
+            const std::string reason = ShutdownRequestFlag ? "recycling" : _closeReason;
+            LOG_INF("Autosaving DocumentBroker for docKey [" << getDocKey() << "] for " << reason);
             if (!autoSave(isPossiblyModified()))
             {
-                LOG_INF("Terminating DocumentBroker for docKey [" << getDocKey() << "] to recycle server.");
-                stop("recycling");
+                LOG_INF("Terminating DocumentBroker for docKey [" << getDocKey() << "].");
+                stop(reason);
             }
         }
         else if (AutoSaveEnabled && !_stop &&
@@ -862,6 +864,7 @@ bool DocumentBroker::autoSave(const bool force)
 {
     assertCorrectThread();
 
+    LOG_TRC("autoSave(): forceful? " << force);
     if (_sessions.empty() || _storage == nullptr || !_isLoaded ||
         !_childProcess->isAlive() || (!_isModified && !force))
     {
@@ -1594,7 +1597,8 @@ void DocumentBroker::closeDocument(const std::string& reason)
     assertCorrectThread();
 
     LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
-    stop(reason);
+    _closeReason = reason;
+    _closeRequest = true;
 }
 
 void DocumentBroker::broadcastMessage(const std::string& message)
