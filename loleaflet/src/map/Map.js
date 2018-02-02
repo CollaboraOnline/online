@@ -166,6 +166,9 @@ L.Map = L.Evented.extend({
 				} else {
 					this._activate();
 				}
+			} else {
+				// remove the comments and changes
+				this._docLayer.clearAnnotations();
 			}
 		}, this);
 	},

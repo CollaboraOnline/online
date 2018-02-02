@@ -298,6 +298,10 @@ L.TileLayer = L.GridLayer.extend({
 		map.fire('statusindicator', {statusType: 'loleafletloaded'});
 	},
 
+	clearAnnotations: function() {
+		console.debug('Implemented in child  classes');
+	},
+
 	getEvents: function () {
 		var events = {
 			viewreset: this._viewReset,

@@ -48,9 +48,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 	clearAnnotations: function () {
 		for (var tab in this._annotations) {
-			for (var key in this._annotations[tab]) {
-				this.hideAnnotation(this._annotations[tab][key]);
-			}
+			this.hideAnnotations(tab);
 		}
 		this._annotations = {};
 	},
@@ -99,7 +97,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	hideAnnotations: function (part) {
-
 		var annotations = this._annotations[part];
 		for (var key in annotations) {
 			this.hideAnnotation(annotations[key]);
