@@ -129,6 +129,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "outlinestate" &&
              tokens[0] != "commandvalues" &&
              tokens[0] != "closedocument" &&
+             tokens[0] != "versionrestore" &&
              tokens[0] != "downloadas" &&
              tokens[0] != "getchildid" &&
              tokens[0] != "gettextselection" &&
@@ -194,6 +195,13 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         }
 
         return true;
+    }
+    else if (tokens[0] == "versionrestore") {
+        if (tokens[1] == "prerestore") {
+            // green signal to WOPI host to restore the version *after* saving
+            // any unsaved changes, if any, to the storage
+            docBroker->closeDocument("versionrestore: prerestore_ack");
+        }
     }
     else if (tokens[0] == "partpagerectangles")
     {

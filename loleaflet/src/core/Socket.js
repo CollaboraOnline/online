@@ -258,6 +258,7 @@ L.Socket = L.Class.extend({
 			textMsg = textMsg.substring('close: '.length);
 			msg = '';
 			var postMsgData = {};
+			var showMsgAndReload = false;
 			// This is due to document owner terminating the session
 			if (textMsg === 'ownertermination') {
 				msg = _('Session terminated by document owner');
@@ -311,7 +312,18 @@ L.Socket = L.Class.extend({
 			}
 			else if (textMsg.startsWith('documentconflict')) {
 				msg = _('Document has changed in storage. Loading the new document. Your version is available as revision.');
+				showMsgAndReload = true;
+			}
+			else if (textMsg.startsWith('versionrestore:')) {
+				textMsg = textMsg.substring('versionrestore:'.length).trim();
+				if (textMsg === 'prerestore_ack') {
+					msg = _('Restoring older revision. Any unsaved changes will be available in version history');
+					this._map.fire('postMessage', {msgId: 'App_VersionRestore', args: {Status: 'Pre_Restore_Ack'}});
+					showMsgAndReload = true;
+				}
+			}
 
+			if (showMsgAndReload) {
 				if (this._map._docLayer) {
 					this._map._docLayer.removeAllViews();
 				}

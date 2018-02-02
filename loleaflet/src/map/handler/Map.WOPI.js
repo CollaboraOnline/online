@@ -72,7 +72,15 @@ L.Map.WOPI = L.Handler.extend({
 		this.DisableInactiveMessages = !!wopiInfo['DisableInactiveMessages'];
 		this.UserCanNotWriteRelative = !!wopiInfo['UserCanNotWriteRelative'];
 
-		this._map.fire('postMessage', {msgId: 'App_LoadingStatus', args: {Status: 'Frame_Ready'}});
+		this._map.fire('postMessage', {
+			msgId: 'App_LoadingStatus',
+			args: {
+				Status: 'Frame_Ready',
+				Features: {
+					VersionStates: true
+				}
+			}
+		});
 	},
 
 	resetAppLoaded: function() {
@@ -229,6 +237,11 @@ L.Map.WOPI = L.Handler.extend({
 					this._map.showBusy(_('Creating copy...'), false);
 					this._map.saveAs(msg.Values.Filename);
 				}
+			}
+		}
+		else if (msg.MessageId === 'Host_VersionRestore') {
+			if (msg.Values.Status === 'Pre_Restore') {
+				this._map._socket.sendMessage('versionrestore prerestore');
 			}
 		}
 	},
