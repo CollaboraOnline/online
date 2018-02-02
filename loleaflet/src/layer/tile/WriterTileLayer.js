@@ -16,6 +16,13 @@ L.WriterTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	clearAnnotations: function() {
+		if (this._annotations) {
+			this._annotations.clear();
+			this._annotations.clearChanges();
+		}
+	},
+
 	onRemove: function (map) {
 		map.off('updatemaxbounds', this._onUpdateMaxBounds, this);
 	},
