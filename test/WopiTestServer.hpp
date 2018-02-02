@@ -94,6 +94,7 @@ protected:
             fileInfo->set("UserCanWrite", "true");
             fileInfo->set("PostMessageOrigin", "localhost");
             fileInfo->set("LastModifiedTime", Poco::DateTimeFormatter::format(now, Poco::DateTimeFormat::ISO8601_FORMAT));
+            fileInfo->set("EnableOwnerTermination", "true");
 
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
