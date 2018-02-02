@@ -204,6 +204,14 @@ closedocument
     having that document opened. This functionality is enabled only in case WOPI
     host mentions 'EnableOwnerTermination' flag in its CheckFileInfo response
 
+versionrestore <action>
+
+    Version restore related messages.
+
+    <action> can take following values:
+    - prerestore: The storage is about restore the document to an earlier
+    revision.
+
 server -> client
 ================
 
@@ -291,6 +299,9 @@ close: <reason>
     * documentconflict - All sessions of this document are going down
     because file was changed in storage and we want to load the new document
     from the storage.
+
+    * versionrestore payload - Version restore message is also sent as part of
+      the close frame. See `versionrestore:` message for details.
 
 getchildid: id=<id>
 
@@ -443,6 +454,13 @@ wopi: <JSON>
      + HidePrintOption: (boolean): If loleaflet should hide print options
      + HideExportOption: (boolean): If loleaflet should hide the export options
        this implies 'Download as' options in file menu
+
+versionrestore: <action>
+
+     Possible values for <action>:
+
+     - prerestore_ack: The host can go ahead with restoring the document to an
+       earlier revision.
 
 child -> parent
 ===============
