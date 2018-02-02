@@ -1399,7 +1399,12 @@ function updateCommandValues() {
 			data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
 
 			commands.forEach(function (command) {
-				data = data.concat({id: command.id, text: L.Styles.styleMappings[command.text].toLocaleString()});
+				var translated = command.text;
+				if (L.Styles.styleMappings[command.text]) {
+					// if it's in English, translate it
+					translated = L.Styles.styleMappings[command.text].toLocaleString();
+				}
+				data = data.concat({id: command.id, text: translated });
 			}, this);
 		}
 
