@@ -226,7 +226,7 @@ public:
     /// Start processing events
     void startThread();
 
-    /// Flag for termination.
+    /// Flag for termination. Note that this doesn't save any unsaved changes in the document
     void stop(const std::string& reason);
 
     /// Thread safe termination of this broker if it has a lingering thread
@@ -321,6 +321,7 @@ public:
 
     int getRenderedTileCount() { return _debugRenderedTileCount; }
 
+    /// Ask the document broker to close. Makes sure that the document is saved.
     void closeDocument(const std::string& reason);
 
     /// Called by the ChildProcess object to notify
