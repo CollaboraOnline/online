@@ -396,6 +396,10 @@ L.Control.Header = L.Control.extend({
 		if (!this._hitResizeArea)
 			return;
 
+		var rect = this.getHeaderEntryBoundingClientRect();
+		if (!rect)
+			return;
+
 		L.DomUtil.disableImageDrag();
 		L.DomUtil.disableTextSelection();
 
@@ -408,7 +412,7 @@ L.Control.Header = L.Control.extend({
 		L.DomEvent.on(document, 'mousemove', this._onMouseMoveForDragging, this);
 		L.DomEvent.on(document, 'mouseup', this._onMouseUp, this);
 
-		var rect = this.getHeaderEntryBoundingClientRect();
+
 		this._start = new L.Point(rect.left, rect.top);
 		this._offset = new L.Point(rect.right - e.clientX, rect.bottom - e.clientY);
 		this._item = target;
