@@ -41,12 +41,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		return null;
 	},
 
-	clearAnnotations: function() {
-		for (var part in this._partHashes) {
-			this.hideAnnotations(part);
-		}
-	},
-
 	hideAnnotations: function (part) {
 		this._selectedAnnotation = undefined;
 		var annotations = this._annotations[this._partHashes[part]];
