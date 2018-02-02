@@ -166,7 +166,7 @@ L.Map = L.Evented.extend({
 				} else {
 					this._activate();
 				}
-			} else {
+			} else if (this._docLayer) {
 				// remove the comments and changes
 				this._docLayer.clearAnnotations();
 			}
