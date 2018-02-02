@@ -37,7 +37,8 @@ L.Annotation = L.Layer.extend({
 	onRemove: function (map) {
 		map._panes.popupPane.removeChild(this._container);
 		if (this._data.textSelected) {
-			this._map.removeLayer(this._data.textSelected);
+			this._data.textSelected.removeEventParent(map);
+			map.removeLayer(this._data.textSelected);
 		}
 		this._map = null;
 	},
@@ -52,6 +53,7 @@ L.Annotation = L.Layer.extend({
 
 	setData: function (data) {
 		if (this._data.textSelected) {
+			this._data.textSelected.removeEventParent(this._map);
 			this._map.removeLayer(this._data.textSelected);
 		}
 		this._data = data;
