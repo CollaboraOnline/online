@@ -134,11 +134,7 @@ using Poco::Net::HTTPResponse;
 using Poco::Net::MessageHeader;
 using Poco::Net::NameValueCollection;
 using Poco::Net::PartHandler;
-using Poco::Net::SocketAddress;
 using Poco::Path;
-#ifndef KIT_IN_PROCESS
-using Poco::Pipe;
-#endif
 using Poco::Process;
 using Poco::StreamCopier;
 using Poco::StringTokenizer;
