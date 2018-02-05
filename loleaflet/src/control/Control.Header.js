@@ -58,7 +58,7 @@ L.Control.Header = L.Control.extend({
 		this._font = fontSize + 'px/' + rate + ' ' + fontFamily;
 		this._borderColor = L.DomUtil.getStyle(elem, 'border-top-color');
 		var borderWidth = L.DomUtil.getStyle(elem, 'border-top-width');
-		this._borderWidth = parseInt(borderWidth);
+		this._borderWidth = Math.round(parseFloat(borderWidth));
 		this._cursor = L.DomUtil.getStyle(elem, 'cursor');
 		L.DomUtil.remove(elem);
 	},
