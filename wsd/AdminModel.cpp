@@ -66,7 +66,7 @@ std::pair<std::time_t, std::string> Document::getSnapshot() const
 
     oss << "\"views\"" << ":[";
     std::string separator;
-    for (auto view : getViews())
+    for (const auto& view : getViews())
     {
         oss << separator << "\"";
         if(view.second.isExpired())
@@ -94,7 +94,7 @@ const std::string Document::getHistory() const
     oss << "\"pid\"" << ":" << getPid() << ",";
     oss << "\"snapshots\"" << ":[";
     std::string separator;
-    for (auto s : _snapshots)
+    for (const auto& s : _snapshots)
     {
         oss << separator << s.second;
         separator = ",";
