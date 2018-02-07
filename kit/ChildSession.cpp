@@ -227,6 +227,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "paste" ||
                tokens[0] == "insertfile" ||
                tokens[0] == "key" ||
+               tokens[0] == "textinput" ||
                tokens[0] == "windowkey" ||
                tokens[0] == "mouse" ||
                tokens[0] == "windowmouse" ||
@@ -274,6 +275,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "key")
         {
             return keyEvent(buffer, length, tokens, LokEventTargetEnum::Document);
+        }
+        else if (tokens[0] == "textinput")
+        {
+            return extTextInputEvent(buffer, length, tokens);
         }
         else if (tokens[0] == "windowkey")
         {
@@ -759,6 +764,28 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
 
         getLOKitDocument()->postUnoCommand(command.c_str(), arguments.c_str(), false);
     }
+
+    return true;
+}
+
+bool ChildSession::extTextInputEvent(const char* /*buffer*/, int /*length*/,
+                                     const std::vector<std::string>& tokens)
+{
+    int type;
+    std::string text;
+    if (tokens.size() < 3 ||
+        !getTokenKeyword(tokens[1], "type",
+                        {{"input", LOK_EXT_TEXTINPUT}, {"end", LOK_EXT_TEXTINPUT_END}},
+                         type) ||
+        !getTokenString(tokens[2], "text", text))
+    {
+        sendTextFrame("error: cmd=" + std::string(tokens[0]) + " kind=syntax");
+        return false;
+    }
+
+    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+    getLOKitDocument()->setView(_viewId);
+    getLOKitDocument()->postExtTextInputEvent(type, text.c_str());
 
     return true;
 }

@@ -58,6 +58,9 @@ void WhiteBoxTests::testLOOLProtocolFunctions()
     CPPUNIT_ASSERT(LOOLProtocol::getTokenString("bar=hello-sailor", "bar", bar));
     CPPUNIT_ASSERT_EQUAL(std::string("hello-sailor"), bar);
 
+    CPPUNIT_ASSERT(LOOLProtocol::getTokenString("bar=", "bar", bar));
+    CPPUNIT_ASSERT_EQUAL(std::string(""), bar);
+
     int mumble;
     std::map<std::string, int> map { { "hello", 1 }, { "goodbye", 2 }, { "adieu", 3 } };
 

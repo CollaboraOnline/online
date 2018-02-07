@@ -294,15 +294,18 @@ L.Map.Keyboard = L.Handler.extend({
 
 		if (e.type === 'compositionstart' || e.type === 'compositionupdate') {
 			this._isComposing = true; // we are starting composing with IME
+			var txt = '';
+			for (var i = 0; i < e.originalEvent.data.length; i++) {
+				txt += e.originalEvent.data[i];
+			}
+			if (txt) {
+				this._map._socket.sendMessage('textinput type=input text=' + txt);
+			}
 		}
 
 		if (e.type === 'compositionend') {
 			this._isComposing = false; // stop of composing with IME
 			// get the composited char codes
-			var compCharCodes = [];
-			for (var i = 0; i < e.originalEvent.data.length; i++) {
-				compCharCodes.push(e.originalEvent.data[i].charCodeAt());
-			}
 			// clear the input now - best to do this ASAP so the input
 			// is clear for the next word
 			this._map._textArea.value = '';
@@ -350,9 +353,7 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 				if (e.type === 'compositionend') {
 					// Set all keycodes to zero
-					for (var idx = 0; i < compCharCodes.length; ++i) {
-						postEventFn.call(eventObject, 'input', compCharCodes[idx], 0);
-					}
+					this._map._socket.sendMessage('textinput type=end text=void');
 				} else {
 					postEventFn.call(eventObject, 'input', charCode, unoKeyCode);
 				}
