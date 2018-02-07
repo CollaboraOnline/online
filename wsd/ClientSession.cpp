@@ -68,7 +68,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     const std::string firstLine = getFirstLine(buffer, length);
     const std::vector<std::string> tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
-    auto docBroker = getDocumentBroker();
+    std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     if (!docBroker)
     {
         LOG_ERR("No DocBroker found. Terminating session " << getName());
@@ -91,7 +91,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        const auto versionTuple = ParseVersion(tokens[1]);
+        const std::tuple<int, int, std::string> versionTuple = ParseVersion(tokens[1]);
         if (std::get<0>(versionTuple) != ProtocolMajorVersionNumber ||
             std::get<1>(versionTuple) != ProtocolMinorVersionNumber)
         {
@@ -408,7 +408,7 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const std:
 {
     try
     {
-        auto tileDesc = TileDesc::parse(tokens);
+        TileDesc tileDesc = TileDesc::parse(tokens);
         docBroker->handleTileRequest(tileDesc, shared_from_this());
     }
     catch (const std::exception& exc)
@@ -425,7 +425,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
 {
     try
     {
-        auto tileCombined = TileCombined::parse(tokens);
+        TileCombined tileCombined = TileCombined::parse(tokens);
         docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
     }
     catch (const std::exception& exc)
@@ -552,7 +552,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
     LOG_TRC(getName() << ": handling kit-to-client [" << payload->abbr() << "].");
     const std::string& firstLine = payload->firstLine();
 
-    const auto docBroker = _docBroker.lock();
+    const std::shared_ptr<DocumentBroker> docBroker = _docBroker.lock();
     if (!docBroker)
     {
         LOG_ERR("No DocBroker to handle kit-to-client message: " << firstLine);
@@ -566,12 +566,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
     {
         const std::string stringMsg(buffer, length);
         LOG_INF(getName() << ": Command: " << stringMsg);
-        const auto index = stringMsg.find_first_of('{');
+        const size_t index = stringMsg.find_first_of('{');
         if (index != std::string::npos)
         {
             const std::string stringJSON = stringMsg.substr(index);
             Poco::JSON::Parser parser;
-            const auto parsedJSON = parser.parse(stringJSON);
+            const Poco::Dynamic::Var parsedJSON = parser.parse(stringJSON);
             const auto& object = parsedJSON.extract<Poco::JSON::Object::Ptr>();
             if (object->get("commandName").toString() == ".uno:Save")
             {
@@ -579,7 +579,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 std::string result;
                 if (object->has("result"))
                 {
-                    const auto parsedResultJSON = object->get("result");
+                    const Poco::Dynamic::Var parsedResultJSON = object->get("result");
                     const auto& resultObj = parsedResultJSON.extract<Poco::JSON::Object::Ptr>();
                     if (resultObj->get("type").toString() == "string")
                         result = resultObj->get("value").toString();
@@ -747,12 +747,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         else if (tokens[0] == "commandvalues:")
         {
             const std::string stringMsg(buffer, length);
-            const auto index = stringMsg.find_first_of('{');
+            const size_t index = stringMsg.find_first_of('{');
             if (index != std::string::npos)
             {
                 const std::string stringJSON = stringMsg.substr(index);
                 Poco::JSON::Parser parser;
-                const auto result = parser.parse(stringJSON);
+                const Poco::Dynamic::Var result = parser.parse(stringJSON);
                 const auto& object = result.extract<Poco::JSON::Object::Ptr>();
                 const std::string commandName = object->has("commandName") ? object->get("commandName").toString() : "";
                 if (commandName == ".uno:CharFontName" ||
@@ -862,10 +862,10 @@ void ClientSession::onDisconnect()
 {
     LOG_INF(getName() << " Disconnected, current number of connections: " << LOOLWSD::NumConnections);
 
-    const auto docBroker = getDocumentBroker();
+    const std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
     docBroker->assertCorrectThread();
-    const auto docKey = docBroker->getDocKey();
+    const std::string docKey = docBroker->getDocKey();
 
     try
     {

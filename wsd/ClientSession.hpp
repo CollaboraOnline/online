@@ -73,7 +73,7 @@ public:
 
     void enqueueSendMessage(const std::shared_ptr<Message>& data)
     {
-        const auto docBroker = _docBroker.lock();
+        const std::shared_ptr<DocumentBroker> docBroker = _docBroker.lock();
         // If in the correct thread - no need for wakeups.
         if (docBroker)
             docBroker->assertCorrectThread();

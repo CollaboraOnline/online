@@ -74,7 +74,7 @@ Poco::URI DocumentBroker::sanitizeURI(const std::string& uri)
     // The URI of the document should be url-encoded.
     std::string decodedUri;
     Poco::URI::decode(uri, decodedUri);
-    auto uriPublic = Poco::URI(decodedUri);
+    Poco::URI uriPublic(decodedUri);
 
     if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
     {
@@ -429,7 +429,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     // We need to map it to a jailed path and copy the file there.
 
     // user/doc/jailId
-    const auto jailPath = Poco::Path(JAILED_DOCUMENT_ROOT, jailId);
+    const Poco::Path jailPath(JAILED_DOCUMENT_ROOT, jailId);
     std::string jailRoot = getJailRoot();
 
     LOG_INF("jailPath: " << jailPath.toString() << ", jailRoot: " << jailRoot);
@@ -555,7 +555,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     session->setWatermarkText(watermarkText);
 
     // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
-    const auto fileInfo = _storage->getFileInfo();
+    const StorageBase::FileInfo fileInfo = _storage->getFileInfo();
     if (!fileInfo.isValid())
     {
         LOG_ERR("Invalid fileinfo for URI [" << session->getPublicUri().toString() << "].");
@@ -593,7 +593,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     // Let's load the document now, if not loaded.
     if (!_storage->isLoaded())
     {
-        auto localPath = _storage->loadStorageFileToLocal(session->getAuthorization());
+        std::string localPath = _storage->loadStorageFileToLocal(session->getAuthorization());
 
         // Check if we have a prefilter "plugin" for this document format
         for (const auto& plugin : LOOLWSD::PluginConfigurations)
@@ -755,10 +755,10 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     }
 
     const Authorization auth = it->second->getAuthorization();
-    const auto uri = isSaveAs? saveAsPath: it->second->getPublicUri().toString();
+    const std::string uri = isSaveAs? saveAsPath: it->second->getPublicUri().toString();
 
     // If the file timestamp hasn't changed, skip saving.
-    const auto newFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
+    const Poco::Timestamp newFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
     if (!isSaveAs && newFileModifiedTime == _lastFileModifiedTime)
     {
         // Nothing to do.
@@ -903,14 +903,14 @@ bool DocumentBroker::autoSave(const bool force)
     }
     else if (_isModified)
     {
-        const auto now = std::chrono::steady_clock::now();
-        const auto inactivityTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime).count();
-        const auto timeSinceLastSaveMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastSaveTime).count();
+        const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+        const std::chrono::milliseconds::rep inactivityTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime).count();
+        const std::chrono::milliseconds::rep timeSinceLastSaveMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastSaveTime).count();
         LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSaveMs <<
                 "ms and most recent activity was " << inactivityTimeMs << "ms ago.");
 
-        static const auto idleSaveDurationMs = LOOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30) * 1000;
-        static const auto autoSaveDurationMs = LOOLWSD::getConfigValue<int>("per_document.autosave_duration_secs", 300) * 1000;
+        static const int idleSaveDurationMs = LOOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30) * 1000;
+        static const int autoSaveDurationMs = LOOLWSD::getConfigValue<int>("per_document.autosave_duration_secs", 300) * 1000;
         // Either we've been idle long enough, or it's auto-save time.
         if (inactivityTimeMs >= idleSaveDurationMs ||
             timeSinceLastSaveMs >= autoSaveDurationMs)
@@ -967,7 +967,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         assert(_storage);
         _storage->setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
 
-        const auto saveArgs = oss.str();
+        const std::string saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);
         const auto command = "uno .uno:Save " + saveArgs;
         forwardToChild(sessionId, command);
@@ -1030,7 +1030,7 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
         throw;
     }
 
-    const auto id = session->getId();
+    const std::string id = session->getId();
 
     // Request a new session from the child kit.
     const std::string aMessage = "session " + id + ' ' + _docKey + ' ' + _docId;
@@ -1043,7 +1043,7 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
     _sessions.emplace(session->getId(), session);
     session->setAttached();
 
-    const auto count = _sessions.size();
+    const size_t count = _sessions.size();
     LOG_TRC("Added " << (session->isReadOnly() ? "readonly" : "non-readonly") <<
             " session [" << id << "] to docKey [" <<
             _docKey << "] to have " << count << " sessions.");
@@ -1097,14 +1097,14 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
         {
             LOOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 
-            const auto readonly = (it->second ? it->second->isReadOnly() : false);
+            const bool readonly = (it->second ? it->second->isReadOnly() : false);
 
             // Remove. The caller must have a reference to the session
             // in question, lest we destroy from underneith them.
             _sessions.erase(it);
-            const auto count = _sessions.size();
+            const size_t count = _sessions.size();
 
-            auto logger = Log::trace();
+            Log::StreamLogger logger = Log::trace();
             if (logger.enabled())
             {
                 logger << "Removed " << (readonly ? "readonly" : "non-readonly")
@@ -1227,7 +1227,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
     std::unique_lock<std::mutex> lock(_mutex);
 
     tile.setVersion(++_tileVersion);
-    const auto tileMsg = tile.serialize();
+    const std::string tileMsg = tile.serialize();
     LOG_TRC("Tile request for " << tileMsg);
 
     std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
@@ -1246,7 +1246,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
 
         assert(cachedTile->is_open());
         cachedTile->seekg(0, std::ios_base::end);
-        const auto pos = output.size();
+        const size_t pos = output.size();
         std::streamsize size = cachedTile->tellg();
         output.resize(pos + size);
         cachedTile->seekg(0, std::ios_base::beg);
@@ -1305,7 +1305,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 
             assert(cachedTile->is_open());
             cachedTile->seekg(0, std::ios_base::end);
-            const auto pos = output.size();
+            const size_t pos = output.size();
             std::streamsize size = cachedTile->tellg();
             output.resize(pos + size);
             cachedTile->seekg(0, std::ios_base::beg);
@@ -1326,10 +1326,10 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 
     if (!tiles.empty())
     {
-        auto newTileCombined = TileCombined::create(tiles);
+        TileCombined newTileCombined = TileCombined::create(tiles);
 
         // Forward to child to render.
-        const auto req = newTileCombined.serialize("tilecombine");
+        const std::string req = newTileCombined.serialize("tilecombine");
         LOG_DBG("Sending residual tilecombine: " << req);
         _childProcess->sendTextFrame(req);
     }
@@ -1339,7 +1339,7 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    const auto canceltiles = tileCache().cancelTiles(session);
+    const std::string canceltiles = tileCache().cancelTiles(session);
     if (!canceltiles.empty())
     {
         LOG_DBG("Forwarding canceltiles request: " << canceltiles);
@@ -1354,12 +1354,12 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 
     try
     {
-        const auto length = payload.size();
+        const size_t length = payload.size();
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
-            const auto tile = TileDesc::parse(firstLine);
-            const auto buffer = payload.data();
-            const auto offset = firstLine.size() + 1;
+            const TileDesc tile = TileDesc::parse(firstLine);
+            const char* buffer = payload.data();
+            const size_t offset = firstLine.size() + 1;
 
             std::unique_lock<std::mutex> lock(_mutex);
 
@@ -1384,12 +1384,12 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
 
     try
     {
-        const auto length = payload.size();
+        const size_t length = payload.size();
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
-            const auto tileCombined = TileCombined::parse(firstLine);
-            const auto buffer = payload.data();
-            auto offset = firstLine.size() + 1;
+            const TileCombined tileCombined = TileCombined::parse(firstLine);
+            const char* buffer = payload.data();
+            size_t offset = firstLine.size() + 1;
 
             std::unique_lock<std::mutex> lock(_mutex);
 

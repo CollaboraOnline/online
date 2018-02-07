@@ -73,7 +73,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         std::string jwtToken;
         LOOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
         const auto& config = Application::instance().config();
-        const auto sslKeyPath = config.getString("ssl.key_file_path", "");
+        const std::string sslKeyPath = config.getString("ssl.key_file_path", "");
 
         LOG_INF("Verifying JWT token: " << jwtToken);
         JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
@@ -158,7 +158,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     {
         try
         {
-            const auto pid = std::stoi(tokens[1]);
+            const int pid = std::stoi(tokens[1]);
             LOG_INF("Admin request to kill PID: " << pid);
             SigUtil::killChild(pid);
         }
@@ -291,10 +291,10 @@ bool AdminSocketHandler::handleInitialRequest(
     const std::weak_ptr<StreamSocket> &socketWeak,
     const Poco::Net::HTTPRequest& request)
 {
-    auto socket = socketWeak.lock();
+    std::shared_ptr<StreamSocket> socket = socketWeak.lock();
 
     // Different session id pool for admin sessions (?)
-    const auto sessionId = Util::decodeId(LOOLWSD::GenSessionId());
+    const size_t sessionId = Util::decodeId(LOOLWSD::GenSessionId());
 
     const std::string& requestURI = request.getURI();
     StringTokenizer pathTokens(requestURI, "/", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -349,7 +349,7 @@ Admin::Admin() :
 
     LOG_TRC("Total available memory: " << _totalAvailMemKb << " KB (memproportion: " << memLimit << "%).");
 
-    const auto totalMem = getTotalMemoryUsage();
+    const size_t totalMem = getTotalMemoryUsage();
     LOG_TRC("Total memory used: " << totalMem << " KB.");
     _model.addMemStats(totalMem);
 }
@@ -378,7 +378,7 @@ void Admin::pollingThread()
         if (cpuWait <= MinStatsIntervalMs / 2) // Close enough
         {
             const size_t currentJiffies = getTotalCpuUsage();
-            auto cpuPercent = 100 * 1000 * currentJiffies / (sysconf (_SC_CLK_TCK) * _cpuStatsTaskIntervalMs);
+            size_t cpuPercent = 100 * 1000 * currentJiffies / (sysconf (_SC_CLK_TCK) * _cpuStatsTaskIntervalMs);
             _model.addCpuStats(cpuPercent);
 
             lastCPU = now;
@@ -389,7 +389,7 @@ void Admin::pollingThread()
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastMem).count();
         if (memWait <= MinStatsIntervalMs / 2) // Close enough
         {
-            const auto totalMem = getTotalMemoryUsage();
+            const size_t totalMem = getTotalMemoryUsage();
             if (totalMem != _lastTotalMemory)
             {
                 LOG_TRC("Total memory used: " << totalMem << " KB.");

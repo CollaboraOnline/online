@@ -54,7 +54,7 @@ Util::RegexListMatcher StorageBase::WopiHosts;
 
 std::string StorageBase::getLocalRootPath() const
 {
-    auto localPath = _jailPath;
+    std::string localPath = _jailPath;
     if (localPath[0] == '/')
     {
         // Remove the leading /
@@ -62,7 +62,7 @@ std::string StorageBase::getLocalRootPath() const
     }
 
     // /chroot/jailId/user/doc/childId
-    const auto rootPath = Poco::Path(_localStorePath, localPath);
+    const Poco::Path rootPath = Poco::Path(_localStorePath, localPath);
     Poco::File(rootPath).createDirectories();
 
     return rootPath.toString();
@@ -86,7 +86,7 @@ void StorageBase::initialize()
         for (size_t i = 0; ; ++i)
         {
             const std::string path = "storage.wopi.host[" + std::to_string(i) + "]";
-            const auto host = app.config().getString(path, "");
+            const std::string host = app.config().getString(path, "");
             if (!host.empty())
             {
                 if (app.config().getBool(path + "[@allow]", false))
@@ -233,13 +233,13 @@ std::atomic<unsigned> LocalStorage::LastLocalStorageId;
 
 std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
 {
-    const auto path = Poco::Path(_uri.getPath());
+    const Poco::Path path = Poco::Path(_uri.getPath());
     LOG_DBG("Getting info for local uri [" << _uri.toString() << "], path [" << path.toString() << "].");
 
     const auto& filename = path.getFileName();
-    const auto file = Poco::File(path);
-    const auto lastModified = file.getLastModified();
-    const auto size = file.getSize();
+    const Poco::File file = Poco::File(path);
+    const Poco::Timestamp lastModified = file.getLastModified();
+    const size_t size = file.getSize();
 
     _fileInfo = FileInfo({filename, "localhost", lastModified, size});
 
@@ -250,13 +250,13 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
 std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
 {
     // /chroot/jailId/user/doc/childId/file.ext
-    const auto filename = Poco::Path(_uri.getPath()).getFileName();
+    const std::string filename = Poco::Path(_uri.getPath()).getFileName();
     _jailedFilePath = Poco::Path(getLocalRootPath(), filename).toString();
     LOG_INF("Public URI [" << _uri.getPath() <<
             "] jailed to [" << _jailedFilePath << "].");
 
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
-    const auto publicFilePath = _uri.getPath();
+    const std::string publicFilePath = _uri.getPath();
 
     if (!FileUtil::checkDiskSpace(_jailedFilePath))
     {
@@ -426,12 +426,12 @@ void getWOPIValue(const Poco::JSON::Object::Ptr &object, const std::string& key,
 bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
 {
     bool success = false;
-    const auto index = json.find_first_of('{');
+    const size_t index = json.find_first_of('{');
     if (index != std::string::npos)
     {
         const std::string stringJSON = json.substr(index);
         Poco::JSON::Parser parser;
-        const auto result = parser.parse(stringJSON);
+        const Poco::Dynamic::Var result = parser.parse(stringJSON);
         object = result.extract<Poco::JSON::Object::Ptr>();
         success = true;
     }
@@ -503,7 +503,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         std::istream& rs = psession->receiveResponse(response);
         callDuration = (std::chrono::steady_clock::now() - startTime);
 
-        auto logger = Log::trace();
+        Log::StreamLogger logger = Log::trace();
         if (logger.enabled())
         {
             logger << "WOPI::CheckFileInfo header for URI [" << uriObject.toString() << "]:\n";
@@ -614,7 +614,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
         const std::chrono::duration<double> diff = (std::chrono::steady_clock::now() - startTime);
         _wopiLoadDuration += diff;
 
-        auto logger = Log::trace();
+        Log::StreamLogger logger = Log::trace();
         if (logger.enabled())
         {
             logger << "WOPI::GetFile header for URI [" << uriObject.toString() << "]:\n";
@@ -664,7 +664,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
     const bool isSaveAs = !saveAsPath.empty() && !saveAsFilename.empty();
     const std::string filePath(isSaveAs? saveAsPath: _jailedFilePath);
 
-    const auto size = getFileSize(filePath);
+    const size_t size = getFileSize(filePath);
 
     Poco::URI uriObject(_uri);
     uriObject.setPath(isSaveAs? uriObject.getPath(): uriObject.getPath() + "/contents");

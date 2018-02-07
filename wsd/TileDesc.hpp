@@ -208,11 +208,11 @@ public:
         const bool broadcast = (LOOLProtocol::getTokenString(tokens, "broadcast", s) &&
                                 s == "yes");
 
-        auto result = TileDesc(pairs["part"], pairs["width"], pairs["height"],
-                               pairs["tileposx"], pairs["tileposy"],
-                               pairs["tilewidth"], pairs["tileheight"],
-                               pairs["ver"],
-                               pairs["imgsize"], pairs["id"], broadcast);
+        TileDesc result(pairs["part"], pairs["width"], pairs["height"],
+                        pairs["tileposx"], pairs["tileposy"],
+                        pairs["tilewidth"], pairs["tileheight"],
+                        pairs["ver"],
+                        pairs["imgsize"], pairs["id"], broadcast);
         result.setOldWireId(oldWireId);
         result.setWireId(wireId);
 
@@ -276,7 +276,7 @@ private:
         Poco::StringTokenizer oldWireIdTokens(oldWireIds, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         Poco::StringTokenizer wireIdTokens(wireIds, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
 
-        const auto numberOfPositions = positionXtokens.count();
+        const size_t numberOfPositions = positionXtokens.count();
 
         // check that the comma-separated strings have the same number of elements
         if (numberOfPositions != positionYtokens.count() ||

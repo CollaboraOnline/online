@@ -103,7 +103,7 @@ public:
         {
             std::string decodedUri;
             Poco::URI::decode(uri, decodedUri);
-            const auto url = Poco::URI(decodedUri).getPath();
+            const std::string url = Poco::URI(decodedUri).getPath();
             const auto it = _urlToSnapshot.find(url);
             if (it != _urlToSnapshot.end())
             {
@@ -139,7 +139,7 @@ public:
 
         std::string snapshot = uri;
 
-        const auto url = Poco::URI(uri).getPath();
+        const std::string url = Poco::URI(uri).getPath();
         const auto it = _urlToSnapshot.find(url);
         if (it != _urlToSnapshot.end())
         {
@@ -177,7 +177,7 @@ public:
             // Remap the URL to the snapshot.
             if (LOOLProtocol::matchPrefix("load", data))
             {
-                auto tokens = LOOLProtocol::tokenize(data);
+                std::vector<std::string> tokens = LOOLProtocol::tokenize(data);
                 if (tokens.size() >= 2)
                 {
                     std::string url;
@@ -185,7 +185,7 @@ public:
                     {
                         std::string decodedUrl;
                         Poco::URI::decode(url, decodedUrl);
-                        auto uriPublic = Poco::URI(decodedUrl);
+                        Poco::URI uriPublic = Poco::URI(decodedUrl);
                         if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
                         {
                             uriPublic.normalize();
@@ -266,7 +266,7 @@ private:
 
     static std::string processPath(const std::string& path)
     {
-        const auto pos = path.find('%');
+        const size_t pos = path.find('%');
         if (pos == std::string::npos)
         {
             return path;

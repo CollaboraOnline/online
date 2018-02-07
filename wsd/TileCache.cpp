@@ -154,7 +154,7 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
 
     // Save to disk.
-    const auto cachedName = (tileBeingRendered ? tileBeingRendered->getCacheName()
+    const std::string cachedName = (tileBeingRendered ? tileBeingRendered->getCacheName()
                                                : cacheFileName(tile));
 
     // Ignore if we can't save the tile, things will work anyway, but slower.
@@ -168,7 +168,7 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     // Notify subscribers, if any.
     if (tileBeingRendered)
     {
-        const auto subscriberCount = tileBeingRendered->_subscribers.size();
+        const size_t subscriberCount = tileBeingRendered->_subscribers.size();
         if (subscriberCount > 0)
         {
             std::string response = tile.serialize("tile:");
@@ -182,7 +182,7 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
             payload->append(data, size);
 
             auto& firstSubscriber = tileBeingRendered->_subscribers[0];
-            auto firstSession = firstSubscriber.lock();
+            std::shared_ptr<ClientSession> firstSession = firstSubscriber.lock();
             if (firstSession)
                 firstSession->enqueueSendMessage(payload);
 
@@ -201,7 +201,7 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
                 for (size_t i = 1; i < subscriberCount; ++i)
                 {
                     auto& subscriber = tileBeingRendered->_subscribers[i];
-                    auto session = subscriber.lock();
+                    std::shared_ptr<ClientSession> session = subscriber.lock();
                     if (session)
                     {
                         session->enqueueSendMessage(payload);
@@ -443,7 +443,7 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
 {
     std::ostringstream oss;
     oss << '(' << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ')';
-    const auto name = oss.str();
+    const std::string name = oss.str();
 
     assertCorrectThread();
 
@@ -494,7 +494,7 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
 
     assertCorrectThread();
 
-    const auto sub = subscriber.get();
+    const ClientSession* sub = subscriber.get();
 
     std::ostringstream oss;
 
@@ -529,7 +529,7 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
         ++it;
     }
 
-    const auto canceltiles = oss.str();
+    const std::string canceltiles = oss.str();
     return canceltiles.empty() ? canceltiles : "canceltiles " + canceltiles;
 }
 

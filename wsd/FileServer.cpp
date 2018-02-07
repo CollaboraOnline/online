@@ -114,7 +114,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                                                HTTPResponse &response)
 {
     const auto& config = Application::instance().config();
-    const auto sslKeyPath = config.getString("ssl.key_file_path", "");
+    const std::string sslKeyPath = config.getString("ssl.key_file_path", "");
 
     NameValueCollection cookies;
     request.getCookies(cookies);
@@ -318,7 +318,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             {
                 // Useful to not serve from memory sometimes especially during loleaflet development
                 // Avoids having to restart loolwsd everytime you make a change in loleaflet
-                const auto filePath = Poco::Path(LOOLWSD::FileServerRoot, relPath).absolute().toString();
+                const std::string filePath = Poco::Path(LOOLWSD::FileServerRoot, relPath).absolute().toString();
                 HttpHelper::sendFile(socket, filePath, mimeType, response, noCache);
                 return;
             }
@@ -423,7 +423,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             strm.opaque = Z_NULL;
             deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
 
-            auto buf = std::unique_ptr<char[]>(new char[fileStat.st_size]);
+            std::unique_ptr<char[]> buf(new char[fileStat.st_size]);
             std::string compressedFile;
             compressedFile.reserve(fileStat.st_size);
             std::string uncompressedFile;
@@ -500,7 +500,7 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
 {
     const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
-    const auto params = Poco::URI(request.getURI()).getQueryParameters();
+    const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
 
     // Is this a file we read at startup - if not; its not for serving.
     const std::string relPath = getRequestPathname(request);
@@ -548,11 +548,11 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
 
     const auto& config = Application::instance().config();
-    const auto loleafletLogging = config.getString("loleaflet_logging", "false");
+    const std::string loleafletLogging = config.getString("loleaflet_logging", "false");
     Poco::replaceInPlace(preprocess, std::string("%LOLEAFLET_LOGGING%"), loleafletLogging);
-    const auto outOfFocusTimeoutSecs= config.getString("per_view.out_of_focus_timeout_secs", "60");
+    const std::string outOfFocusTimeoutSecs= config.getString("per_view.out_of_focus_timeout_secs", "60");
     Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), outOfFocusTimeoutSecs);
-    const auto idleTimeoutSecs= config.getString("per_view.idle_timeout_secs", "900");
+    const std::string idleTimeoutSecs= config.getString("per_view.idle_timeout_secs", "900");
     Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), idleTimeoutSecs);
 
     const std::string mimeType = "text/html";
@@ -633,7 +633,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         bool keysPinned = false;
         while (config.has(pinPath))
         {
-            const auto pin = config.getString(pinPath, "");
+            const std::string pin = config.getString(pinPath, "");
             if (!pin.empty())
             {
                 hpkpOss << "pin-sha256=\"" << pin << "\"; ";

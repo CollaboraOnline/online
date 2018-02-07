@@ -238,10 +238,10 @@ void cleanupDocBrokers()
 {
     Util::assertIsLocked(DocBrokersMutex);
 
-    const auto count = DocBrokers.size();
+    const size_t count = DocBrokers.size();
     for (auto it = DocBrokers.begin(); it != DocBrokers.end(); )
     {
-        auto docBroker = it->second;
+        std::shared_ptr<DocumentBroker> docBroker = it->second;
 
         // Remove only when not alive.
         if (!docBroker->isAlive())
@@ -256,7 +256,7 @@ void cleanupDocBrokers()
 
     if (count != DocBrokers.size())
     {
-        auto logger = Log::trace();
+        Log::StreamLogger logger = Log::trace();
         if (logger.enabled())
         {
             logger << "Have " << DocBrokers.size() << " DocBrokers after cleanup.\n";
@@ -338,7 +338,7 @@ static int rebalanceChildren(int balance)
     const bool rebalance = cleanupChildren();
 
     const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTime);
-    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+    const std::chrono::milliseconds::rep durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
     if (OutstandingForks != 0 && durationMs >= CHILD_TIMEOUT_MS)
     {
         // Children taking too long to spawn.
@@ -348,7 +348,7 @@ static int rebalanceChildren(int balance)
         OutstandingForks = 0;
     }
 
-    const auto available = NewChildren.size();
+    const size_t available = NewChildren.size();
     balance -= available;
     balance -= OutstandingForks;
 
@@ -383,7 +383,7 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
         ++OutstandingForks;
 
     NewChildren.emplace_back(child);
-    const auto count = NewChildren.size();
+    const size_t count = NewChildren.size();
     LOG_INF("Have " << count << " spare " <<
             (count == 1 ? "child" : "children") << " after adding [" << child->getPid() << "].");
     lock.unlock();
@@ -421,9 +421,9 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks()
     // there are some on the way already. And if the system is slow already, that wouldn't help.
     if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
     {
-        auto child = NewChildren.back();
+        std::shared_ptr<ChildProcess> child = NewChildren.back();
         NewChildren.pop_back();
-        const auto available = NewChildren.size();
+        const size_t available = NewChildren.size();
 
         // Validate before returning.
         if (child && child->isAlive())
@@ -721,7 +721,7 @@ void LOOLWSD::initialize(Application& self)
     // Set the log-level after complete initialization to force maximum details at startup.
     LogLevel = getConfigValue<std::string>(conf, "logging.level", "trace");
     setenv("LOOL_LOGLEVEL", LogLevel.c_str(), true);
-    const auto withColor = getConfigValue<bool>(conf, "logging.color", true) && isatty(fileno(stderr));
+    const bool withColor = getConfigValue<bool>(conf, "logging.color", true) && isatty(fileno(stderr));
     if (withColor)
     {
         setenv("LOOL_LOGCOLOR", "1", true);
@@ -732,10 +732,10 @@ void LOOLWSD::initialize(Application& self)
     for (size_t i = 0; ; ++i)
     {
         const std::string confPath = "logging.file.property[" + std::to_string(i) + "]";
-        const auto confName = config().getString(confPath + "[@name]", "");
+        const std::string confName = config().getString(confPath + "[@name]", "");
         if (!confName.empty())
         {
-            const auto value = config().getString(confPath, "");
+            const std::string value = config().getString(confPath, "");
             logProperties.emplace(confName, value);
         }
         else if (!config().has(confPath))
@@ -897,7 +897,7 @@ void LOOLWSD::initialize(Application& self)
         for (size_t i = 0; ; ++i)
         {
             const std::string confPath = "trace.filter.message[" + std::to_string(i) + "]";
-            const auto regex = config().getString(confPath, "");
+            const std::string regex = config().getString(confPath, "");
             if (!regex.empty())
             {
                 filters.push_back(regex);
@@ -942,16 +942,16 @@ void LOOLWSD::initializeSSL()
     if (!LOOLWSD::isSSLEnabled())
         return;
 
-    const auto ssl_cert_file_path = getPathFromConfig("ssl.cert_file_path");
+    const std::string ssl_cert_file_path = getPathFromConfig("ssl.cert_file_path");
     LOG_INF("SSL Cert file: " << ssl_cert_file_path);
 
-    const auto ssl_key_file_path = getPathFromConfig("ssl.key_file_path");
+    const std::string ssl_key_file_path = getPathFromConfig("ssl.key_file_path");
     LOG_INF("SSL Key file: " << ssl_key_file_path);
 
-    const auto ssl_ca_file_path = getPathFromConfig("ssl.ca_file_path");
+    const std::string ssl_ca_file_path = getPathFromConfig("ssl.ca_file_path");
     LOG_INF("SSL CA file: " << ssl_ca_file_path);
 
-    const auto ssl_cipher_list = config().getString("ssl.cipher_list", "");
+    const std::string ssl_cipher_list = config().getString("ssl.cipher_list", "");
     LOG_INF("SSL Cipher list: " << ssl_cipher_list);
 
 #if ENABLE_SSL
@@ -1519,8 +1519,8 @@ public:
     ~PrisonerRequestDispatcher()
     {
         // Notify the broker that we're done.
-        auto child = _childProcess.lock();
-        auto docBroker = child ? child->getDocumentBroker() : nullptr;
+        std::shared_ptr<ChildProcess> child = _childProcess.lock();
+        std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
         {
             // FIXME: No need to notify if asked to stop.
@@ -1538,18 +1538,18 @@ private:
 
     void onDisconnect() override
     {
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
             LOG_TRC("#" << socket->getFD() << " Prisoner connection disconnected.");
         else
             LOG_WRN("Prisoner connection disconnected but without valid socket.");
 
         // Notify the broker that we're done.
-        auto child = _childProcess.lock();
-        auto docBroker = child ? child->getDocumentBroker() : nullptr;
+        std::shared_ptr<ChildProcess> child = _childProcess.lock();
+        std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
         {
-            auto lock = docBroker->getLock();
+            std::unique_lock<std::mutex> lock = docBroker->getLock();
             docBroker->assertCorrectThread();
             docBroker->stop("docisdisconnected");
         }
@@ -1569,7 +1569,7 @@ private:
             return;
         }
 
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         std::vector<char>& in = socket->_inBuffer;
 
         // Find the end of the header, if any.
@@ -1591,7 +1591,7 @@ private:
         {
             request.read(message);
 
-            auto logger = Log::info();
+            Log::StreamLogger logger = Log::info();
             if (logger.enabled())
             {
                 logger << "#" << socket->getFD() << ": Prisoner HTTP Request: "
@@ -1615,7 +1615,7 @@ private:
             }
 
             // New Child is spawned.
-            const auto params = Poco::URI(request.getURI()).getQueryParameters();
+            const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
             Poco::Process::PID pid = -1;
             std::string jailId;
             for (const auto& param : params)
@@ -1677,14 +1677,14 @@ private:
             return;
 
         const std::string abbr = getAbbreviatedMessage(data);
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
             LOG_TRC("#" << socket->getFD() << " Prisoner message [" << abbr << "].");
         else
             LOG_WRN("Message handler called but without valid socket.");
 
-        auto child = _childProcess.lock();
-        auto docBroker = child ? child->getDocumentBroker() : nullptr;
+        std::shared_ptr<ChildProcess> child = _childProcess.lock();
+        std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
             docBroker->handleInput(data);
         else
@@ -1729,7 +1729,7 @@ private:
     /// Called after successful socket reads.
     void handleIncomingMessage(SocketDisposition &disposition) override
     {
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         std::vector<char>& in = socket->_inBuffer;
         LOG_TRC("#" << socket->getFD() << " handling incoming " << in.size() << " bytes.");
 
@@ -1752,7 +1752,7 @@ private:
         {
             request.read(message);
 
-            auto logger = Log::info();
+            Log::StreamLogger logger = Log::info();
             if (logger.enabled())
             {
                 logger << "#" << socket->getFD() << ": Client HTTP Request: "
@@ -1893,7 +1893,7 @@ private:
 
     void handleFileServerRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
     {
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         FileServerRequestHandler::handleRequest(request, message, socket);
         socket->shutdown();
     }
@@ -1917,7 +1917,7 @@ private:
             oss << responseString;
         }
 
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent / response successfully.");
@@ -1933,7 +1933,7 @@ private:
             faviconPath = LOOLWSD::FileServerRoot + "/favicon.ico";
         }
 
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         Poco::Net::HTTPResponse response;
         HttpHelper::sendFile(socket, faviconPath, mimeType, response);
         socket->shutdown();
@@ -1958,7 +1958,7 @@ private:
             << "\r\n"
             << xml;
 
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent discovery.xml successfully.");
@@ -1996,7 +1996,7 @@ private:
         LOG_INF("Post request: [" << request.getURI() << "]");
 
         Poco::Net::HTTPResponse response;
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
 
         StringTokenizer tokens(request.getURI(), "/?");
         if (tokens.count() > 2 && tokens[2] == "convert-to")
@@ -2018,8 +2018,8 @@ private:
                 {
                     LOG_INF("Conversion request for URI [" << fromPath << "].");
 
-                    auto uriPublic = DocumentBroker::sanitizeURI(fromPath);
-                    const auto docKey = DocumentBroker::getDocKey(uriPublic);
+                    Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
+                    const std::string docKey = DocumentBroker::getDocKey(uriPublic);
 
                     // This lock could become a bottleneck.
                     // In that case, we can use a pool and index by publicPath.
@@ -2037,7 +2037,7 @@ private:
                     // Load the document.
                     // TODO: Move to DocumentBroker.
                     const bool isReadOnly = true;
-                    auto clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker, isReadOnly);
+                    std::shared_ptr<ClientSession> clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker, isReadOnly);
                     if (clientSession)
                     {
                         disposition.setMove([docBroker, clientSession, format]
@@ -2113,7 +2113,7 @@ private:
                 std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
                 std::string decodedUri;
                 URI::decode(tokens[2], decodedUri);
-                const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+                const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
                 auto docBrokerIt = DocBrokers.find(docKey);
 
                 // Maybe just free the client from sending childid in form ?
@@ -2146,7 +2146,7 @@ private:
             // 1. Validate the dockey
             std::string decodedUri;
             URI::decode(tokens[2], decodedUri);
-            const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+            const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
             auto docBrokerIt = DocBrokers.find(docKey);
             if (docBrokerIt == DocBrokers.end())
@@ -2211,7 +2211,7 @@ private:
     void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url,
                                SocketDisposition &disposition)
     {
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!socket)
         {
             LOG_WRN("No socket to handle client WS upgrade for request: " << request.getURI() << ", url: " << url);
@@ -2240,8 +2240,8 @@ private:
             LOG_TRC("Sending to Client [" << status << "].");
             ws.sendMessage(status);
 
-            const auto uriPublic = DocumentBroker::sanitizeURI(url);
-            const auto docKey = DocumentBroker::getDocKey(uriPublic);
+            const Poco::URI uriPublic = DocumentBroker::sanitizeURI(url);
+            const std::string docKey = DocumentBroker::getDocKey(uriPublic);
             LOG_INF("Sanitized URI [" << url << "] to [" << uriPublic.toString() <<
                     "] and mapped to docKey [" << docKey << "] for session [" << _id << "].");
 
@@ -2259,10 +2259,10 @@ private:
             LOG_INF("URL [" << url << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
 
             // Request a kit process for this doc.
-            auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
+            std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
             if (docBroker)
             {
-                auto clientSession = createNewClientSession(&ws, _id, uriPublic, docBroker, isReadOnly);
+                std::shared_ptr<ClientSession> clientSession = createNewClientSession(&ws, _id, uriPublic, docBroker, isReadOnly);
                 if (clientSession)
                 {
                     // Transfer the client socket to the DocumentBroker when we get back to the poll:
@@ -2717,12 +2717,12 @@ int LOOLWSD::innerMain()
         }
         else
         {
-            const auto timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 150 : 50);
+            const long timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 150 : 50);
             const auto timeout = std::chrono::milliseconds(timeoutMs);
             LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
             if (!NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
             {
-                const auto msg = "Failed to fork child processes.";
+                const char* msg = "Failed to fork child processes.";
                 LOG_FTL(msg);
                 std::cerr << "FATAL: " << msg << std::endl;
                 throw std::runtime_error(msg);
@@ -2765,7 +2765,7 @@ int LOOLWSD::innerMain()
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll.wakeup();
 
-        const auto timeSinceStartMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+        const std::chrono::milliseconds::rep timeSinceStartMs = std::chrono::duration_cast<std::chrono::milliseconds>(
                                             std::chrono::steady_clock::now() - startStamp).count();
 
         // Unit test timeout

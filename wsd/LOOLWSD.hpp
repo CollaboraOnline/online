@@ -210,7 +210,7 @@ private:
     /// Converts relative paths to absolute.
     std::string getPathFromConfig(const std::string& property) const
     {
-        auto path = config().getString(property);
+        std::string path = config().getString(property);
         if (path.empty() && config().hasProperty(property + "[@default]"))
         {
             // Use the default value if empty and a default provided.

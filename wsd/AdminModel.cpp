@@ -105,7 +105,7 @@ const std::string Document::getHistory() const
 
 void Document::takeSnapshot()
 {
-    auto p = getSnapshot();
+    std::pair<std::time_t, std::string> p = getSnapshot();
     auto insPoint = _snapshots.upper_bound(p.first);
     _snapshots.insert(insPoint, p);
 }
@@ -128,7 +128,7 @@ bool Subscriber::notify(const std::string& message)
 {
     // If there is no socket, then return false to
     // signify we're disconnected.
-    auto webSocket = _ws.lock();
+    std::shared_ptr<WebSocketHandler> webSocket = _ws.lock();
     if (webSocket)
     {
         if (_subscriptions.find(LOOLProtocol::getFirstToken(message)) == _subscriptions.end())
@@ -265,7 +265,7 @@ unsigned AdminModel::getKitsMemoryUsage()
     {
         if (!it.second.isExpired())
         {
-            const auto bytes = it.second.getMemoryDirty();
+            const int bytes = it.second.getMemoryDirty();
             if (bytes > 0)
             {
                 totalMem += bytes;
@@ -292,7 +292,7 @@ size_t AdminModel::getKitsJiffies()
     {
         if (!it.second.isExpired())
         {
-            const auto pid = it.second.getPid();
+            const int pid = it.second.getPid();
             if (pid > 0)
             {
                 unsigned newJ = Util::getCpuUsage(pid);

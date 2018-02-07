@@ -127,9 +127,9 @@ private:
             // if any, and use most recent (incoming).
             const std::string newMsg = item->jsonString();
             Poco::JSON::Parser newParser;
-            const auto newResult = newParser.parse(newMsg);
+            const Poco::Dynamic::Var newResult = newParser.parse(newMsg);
             const auto& newJson = newResult.extract<Poco::JSON::Object::Ptr>();
-            const auto viewId = newJson->get("viewId").toString();
+            const std::string viewId = newJson->get("viewId").toString();
             const auto& pos = std::find_if(_queue.begin(), _queue.end(),
                 [command, viewId](const queue_item_t& cur)
                 {
@@ -137,7 +137,7 @@ private:
                     {
                         const std::string msg = cur->jsonString();
                         Poco::JSON::Parser parser;
-                        const auto result = parser.parse(msg);
+                        const Poco::Dynamic::Var result = parser.parse(msg);
                         const auto& json = result.extract<Poco::JSON::Object::Ptr>();
                         return viewId == json->get("viewId").toString();
                     }
