@@ -94,7 +94,7 @@ public:
     /// Sends WS shutdown message to the peer.
     void shutdown(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE, const std::string& statusMessage = "")
     {
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket == nullptr)
         {
             LOG_ERR("No socket associated with WebSocketHandler 0x" << std::hex << this << std::dec);
@@ -247,7 +247,7 @@ public:
     /// Implementation of the SocketHandlerInterface.
     virtual void handleIncomingMessage(SocketDisposition&) override
     {
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket == nullptr)
         {
             LOG_ERR("No socket associated with WebSocketHandler 0x" << std::hex << this << std::dec);
@@ -321,7 +321,7 @@ public:
 
         //TODO: Support fragmented messages.
 
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         return sendFrame(socket, data, len, static_cast<unsigned char>(WSFrameMask::Fin) | static_cast<unsigned char>(code), flush);
     }
 
@@ -401,7 +401,7 @@ protected:
     /// Upgrade the http(s) connection to a websocket.
     void upgradeToWebSocket(const Poco::Net::HTTPRequest& req)
     {
-        auto socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket == nullptr)
             throw std::runtime_error("Invalid socket while upgrading to WebSocket. Request: " + req.getURI());
 
