@@ -148,9 +148,9 @@ private:
 public:
     void updateCursorPosition(int viewId, int part, int x, int y, int width, int height)
     {
-        const auto cursorPosition = CursorPosition({ part, x, y, width, height });
+        const TileQueue::CursorPosition cursorPosition = CursorPosition({ part, x, y, width, height });
 
-        auto lock = getLock();
+        std::unique_lock<std::mutex> lock = getLock();
 
         auto it = _cursorPositions.lower_bound(viewId);
         if (it != _cursorPositions.end() && it->first == viewId)
@@ -175,7 +175,7 @@ public:
 
     void removeCursorPosition(int viewId)
     {
-        auto lock = getLock();
+        std::unique_lock<std::mutex> lock = getLock();
 
         const auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
         if (view != _viewOrder.end())

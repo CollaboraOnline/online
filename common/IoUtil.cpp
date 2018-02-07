@@ -146,7 +146,7 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             LOG_CHECK(n > 0);
 
             // Call the handler.
-            const auto success = handler(payload);
+            const bool success = handler(payload);
             payload.resize(0);
 
             if (!success)
@@ -188,7 +188,7 @@ ssize_t writeToPipe(int pipe, const char* buffer, ssize_t size)
     for (;;)
     {
         LOG_TRC("Writing to pipe. Data: [" << Util::formatLinesForLog(std::string(buffer, size)) << "].");
-        const auto bytes = write(pipe, buffer + count, size - count);
+        const ssize_t bytes = write(pipe, buffer + count, size - count);
         if (bytes < 0)
         {
             if (errno == EINTR || errno == EAGAIN)
@@ -244,8 +244,8 @@ int PipeReader::readLine(std::string& line,
     }
 
     // Poll in short intervals to check for stop condition.
-    const auto pollTimeoutMs = 500;
-    auto maxPollCount = std::max<int>(POLL_TIMEOUT_MS / pollTimeoutMs, 1);
+    const int pollTimeoutMs = 500;
+    int maxPollCount = std::max<int>(POLL_TIMEOUT_MS / pollTimeoutMs, 1);
     while (maxPollCount-- > 0)
     {
         if (stopPredicate())
@@ -277,7 +277,7 @@ int PipeReader::readLine(std::string& line,
         else if (pipe.revents & (POLLIN | POLLPRI))
         {
             char buffer[READ_BUFFER_SIZE];
-            const auto bytes = readFromPipe(_pipe, buffer, sizeof(buffer));
+            const ssize_t bytes = readFromPipe(_pipe, buffer, sizeof(buffer));
             LOG_TRC("readFromPipe for pipe: " << _name << " returned: " << bytes);
             if (bytes < 0)
             {
@@ -289,7 +289,7 @@ int PipeReader::readLine(std::string& line,
             {
                 // Got end of line.
                 line = _data;
-                const auto tail = std::string(static_cast<const char*>(buffer), endOfLine);
+                const std::string tail(static_cast<const char*>(buffer), endOfLine);
                 line += tail;
                 _data = std::string(endOfLine + 1, bytes - tail.size() - 1); // Exclude the '\n'.
                 LOG_TRC("Read line from pipe: " << _name << ", line: [" << line <<

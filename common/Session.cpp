@@ -214,7 +214,7 @@ void Session::handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &
 
 void Session::getIOStats(uint64_t &sent, uint64_t &recv)
 {
-    auto socket = _socket.lock();
+    std::shared_ptr<StreamSocket> socket = _socket.lock();
     if (socket)
         socket->getIOStats(sent, recv);
     else

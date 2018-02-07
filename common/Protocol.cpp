@@ -214,14 +214,14 @@ namespace LOOLProtocol
     {
         if (message.size() > name.size() + 1)
         {
-            auto pos = message.find(name);
+            size_t pos = message.find(name);
             while (pos != std::string::npos)
             {
                 bool spaceBefore = pos == 0 || message[pos-1] == ' ';
-                const auto beg = pos + name.size();
+                const size_t beg = pos + name.size();
                 if (spaceBefore && message[beg] == '=')
                 {
-                    const auto end = message.find_first_of(" \n", beg);
+                    const size_t end = message.find_first_of(" \n", beg);
                     value = message.substr(beg + 1, end - beg - 1);
                     return true;
                 }

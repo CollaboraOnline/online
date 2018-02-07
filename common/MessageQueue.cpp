@@ -26,13 +26,13 @@ using Poco::StringTokenizer;
 
 void TileQueue::put_impl(const Payload& value)
 {
-    const auto msg = std::string(value.data(), value.size());
+    const std::string msg = std::string(value.data(), value.size());
     const std::string firstToken = LOOLProtocol::getFirstToken(value);
 
     if (firstToken == "canceltiles")
     {
         LOG_TRC("Processing [" << msg << "]. Before canceltiles have " << _queue.size() << " in queue.");
-        const auto seqs = msg.substr(12);
+        const std::string seqs = msg.substr(12);
         StringTokenizer tokens(seqs, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         _queue.erase(std::remove_if(_queue.begin(), _queue.end(),
                 [&tokens](const Payload& v)
@@ -62,7 +62,7 @@ void TileQueue::put_impl(const Payload& value)
     {
         // Breakup tilecombine and deduplicate (we are re-combining the tiles
         // in the get_impl() again)
-        const auto tileCombined = TileCombined::parse(msg);
+        const TileCombined tileCombined = TileCombined::parse(msg);
         for (auto& tile : tileCombined.getTiles())
         {
             const std::string newMsg = tile.serialize("tile");
@@ -107,7 +107,7 @@ void TileQueue::removeTileDuplicate(const std::string& tileMsg)
     // return back to clients the last rendered version of a tile
     // in case there are new invalidations and requests while rendering.
     // Here we compare duplicates without 'ver' since that's irrelevant.
-    auto newMsgPos = tileMsg.find(" ver");
+    size_t newMsgPos = tileMsg.find(" ver");
     if (newMsgPos == std::string::npos)
     {
         newMsgPos = tileMsg.size() - 1;
@@ -135,7 +135,7 @@ std::string extractViewId(const std::string& origMsg, const std::vector<std::str
     std::string jsonString(origMsg.data() + nonJson, origMsg.size() - nonJson);
 
     Poco::JSON::Parser parser;
-    const auto result = parser.parse(jsonString);
+    const Poco::Dynamic::Var result = parser.parse(jsonString);
     const auto& json = result.extract<Poco::JSON::Object::Ptr>();
     return json->get("viewId").toString();
 }
@@ -395,7 +395,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
 
 int TileQueue::priority(const std::string& tileMsg)
 {
-    auto tile = TileDesc::parse(tileMsg); //FIXME: Expensive, avoid.
+    TileDesc tile = TileDesc::parse(tileMsg); //FIXME: Expensive, avoid.
 
     for (int i = static_cast<int>(_viewOrder.size()) - 1; i >= 0; --i)
     {
@@ -411,7 +411,7 @@ void TileQueue::deprioritizePreviews()
 {
     for (size_t i = 0; i < _queue.size(); ++i)
     {
-        const auto front = _queue.front();
+        const Payload front = _queue.front();
         const std::string message(front.data(), front.size());
 
         // stop at the first non-tile or non-'id' (preview) message
@@ -431,9 +431,9 @@ TileQueue::Payload TileQueue::get_impl()
 {
     LOG_TRC("MessageQueue depth: " << _queue.size());
 
-    const auto front = _queue.front();
+    const Payload front = _queue.front();
 
-    auto msg = std::string(front.data(), front.size());
+    std::string msg(front.data(), front.size());
 
     std::string id;
     bool isTile = LOOLProtocol::matchPrefix("tile", msg);
@@ -503,7 +503,7 @@ TileQueue::Payload TileQueue::get_impl()
             continue;
         }
 
-        auto tile2 = TileDesc::parse(msg);
+        TileDesc tile2 = TileDesc::parse(msg);
         LOG_TRC("Combining candidate: " << msg);
 
         // Check if it's on the same row.
@@ -527,7 +527,7 @@ TileQueue::Payload TileQueue::get_impl()
         return Payload(msg.data(), msg.data() + msg.size());
     }
 
-    auto tileCombined = TileCombined::create(tiles).serialize("tilecombine");
+    std::string tileCombined = TileCombined::create(tiles).serialize("tilecombine");
     LOG_TRC("MessageQueue res: " << tileCombined);
     return Payload(tileCombined.data(), tileCombined.data() + tileCombined.size());
 }

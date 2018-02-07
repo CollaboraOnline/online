@@ -42,7 +42,7 @@ namespace FileUtil
 {
     std::string createRandomDir(const std::string& path)
     {
-        const auto name = Util::rng::getFilename(64);
+        const std::string name = Util::rng::getFilename(64);
         Poco::File(Poco::Path(path, name)).createDirectories();
         return name;
     }

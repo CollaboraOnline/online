@@ -295,8 +295,8 @@ namespace SigUtil
 
         LOG_SYS("Error when trying to kill PID: " << pid << ". Will wait for termination.");
 
-        const auto sleepMs = 50;
-        const auto count = std::max(CHILD_REBALANCE_INTERVAL_MS / sleepMs, 2);
+        const int sleepMs = 50;
+        const int count = std::max(CHILD_REBALANCE_INTERVAL_MS / sleepMs, 2);
         for (int i = 0; i < count; ++i)
         {
             if (kill(pid, 0) == 0 || errno == ESRCH)

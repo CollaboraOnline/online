@@ -55,7 +55,7 @@ public:
         _type(detectType())
     {
         _data.resize(message.size());
-        const auto offset = skipWhitespace(message.data() + _forwardToken.size());
+        const char* offset = skipWhitespace(message.data() + _forwardToken.size());
         std::memcpy(_data.data(), offset, message.size() - (offset - message.data()));
         LOG_TRC("Message " << _abbr);
     }
@@ -99,7 +99,7 @@ public:
     {
         if (_tokens.size() > 1 && _tokens[1] == "{")
         {
-            const auto firstTokenSize = _tokens[0].size();
+            const size_t firstTokenSize = _tokens[0].size();
             return std::string(_data.data() + firstTokenSize, _data.size() - firstTokenSize);
         }
 
@@ -109,7 +109,7 @@ public:
     /// Append more data to the message.
     void append(const char* p, const size_t len)
     {
-        const auto curSize = _data.size();
+        const size_t curSize = _data.size();
         _data.resize(curSize + len);
         std::memcpy(_data.data() + curSize, p, len);
     }
@@ -147,7 +147,7 @@ private:
 
     std::string getForwardToken(const char* buffer, int length)
     {
-        auto forward = LOOLProtocol::getFirstToken(buffer, length);
+        std::string forward = LOOLProtocol::getFirstToken(buffer, length);
         return (forward.find('-') != std::string::npos ? forward : std::string());
     }
 

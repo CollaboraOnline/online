@@ -247,7 +247,7 @@ std::vector<png_bytep> decodePNG(std::stringstream& stream, png_uint_32& height,
     // rows
     for (png_uint_32 itRow = 0; itRow < height; itRow++)
     {
-        const auto index = height + (itRow * rowBytes + sizeof(png_bytep) - 1) / sizeof(png_bytep);
+        const size_t index = height + (itRow * rowBytes + sizeof(png_bytep) - 1) / sizeof(png_bytep);
         rows[itRow] = reinterpret_cast<png_bytep>(&rows[index]);
     }
 

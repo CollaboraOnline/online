@@ -335,7 +335,7 @@ namespace Util
 
     std::string getMemoryStats(FILE* file)
     {
-        const auto pssAndDirtyKb = getPssAndDirtyFromSMaps(file);
+        const std::pair<size_t, size_t> pssAndDirtyKb = getPssAndDirtyFromSMaps(file);
         std::ostringstream oss;
         oss << "procmemstats: pid=" << getpid()
             << " pss=" << pssAndDirtyKb.first
@@ -352,7 +352,7 @@ namespace Util
             FILE* fp = fopen(cmd.c_str(), "r");
             if (fp != nullptr)
             {
-                const auto pss = getPssAndDirtyFromSMaps(fp).first;
+                const size_t pss = getPssAndDirtyFromSMaps(fp).first;
                 fclose(fp);
                 return pss;
             }
@@ -363,7 +363,7 @@ namespace Util
 
     size_t getMemoryUsageRSS(const Poco::Process::PID pid)
     {
-        static const auto pageSizeBytes = getpagesize();
+        static const int pageSizeBytes = getpagesize();
         size_t rss = 0;
 
         if (pid > 0)
@@ -401,7 +401,7 @@ namespace Util
                 {
                     const std::string s(line);
                     int index = 1;
-                    auto pos = s.find(' ');
+                    size_t pos = s.find(' ');
                     while (pos != std::string::npos)
                     {
                         if (index == ind)
@@ -501,7 +501,7 @@ namespace Util
     std::map<std::string, std::string> JsonToMap(const std::string& jsonString)
     {
         Poco::JSON::Parser parser;
-        const auto result = parser.parse(jsonString);
+        const Poco::Dynamic::Var result = parser.parse(jsonString);
         const auto& json = result.extract<Poco::JSON::Object::Ptr>();
 
         std::vector<std::string> names;

@@ -212,7 +212,7 @@ namespace Util
     /// Trim spaces from the left. Just spaces.
     inline std::string& ltrim(std::string& s)
     {
-        const auto pos = s.find_first_not_of(' ');
+        const size_t pos = s.find_first_not_of(' ');
         if (pos != std::string::npos)
         {
             s = s.substr(pos);
@@ -224,7 +224,7 @@ namespace Util
     /// Trim spaces from the left and copy. Just spaces.
     inline std::string ltrimmed(const std::string& s)
     {
-        const auto pos = s.find_first_not_of(' ');
+        const size_t pos = s.find_first_not_of(' ');
         if (pos != std::string::npos)
         {
             return s.substr(pos);
@@ -236,8 +236,8 @@ namespace Util
     /// Trim spaces from both left and right. Just spaces.
     inline std::string& trim(std::string& s)
     {
-        const auto first = s.find_first_not_of(' ');
-        const auto last = s.find_last_not_of(' ');
+        const size_t first = s.find_first_not_of(' ');
+        const size_t last = s.find_last_not_of(' ');
         if (first != std::string::npos)
         {
             if (last != std::string::npos)
@@ -267,8 +267,8 @@ namespace Util
     /// Trim spaces from both left and right and copy. Just spaces.
     inline std::string trimmed(const std::string& s)
     {
-        const auto first = s.find_first_not_of(' ');
-        const auto last = s.find_last_not_of(' ');
+        const size_t first = s.find_first_not_of(' ');
+        const size_t last = s.find_last_not_of(' ');
         if (first != std::string::npos)
         {
             if (last != std::string::npos)

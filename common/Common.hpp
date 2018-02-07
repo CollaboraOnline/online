@@ -29,16 +29,16 @@ constexpr long READ_BUFFER_SIZE = 64 * 1024;
 /// or as intentionally flooding the server.
 constexpr int MAX_MESSAGE_SIZE = 2 * 1024 * READ_BUFFER_SIZE;
 
-constexpr auto JAILED_DOCUMENT_ROOT = "/user/docs/";
-constexpr auto CHILD_URI = "/loolws/child?";
-constexpr auto NEW_CHILD_URI = "/loolws/newchild?";
-constexpr auto LO_JAIL_SUBPATH = "lo";
+constexpr const char* JAILED_DOCUMENT_ROOT = "/user/docs/";
+constexpr const char* CHILD_URI = "/loolws/child?";
+constexpr const char* NEW_CHILD_URI = "/loolws/newchild?";
+constexpr const char* LO_JAIL_SUBPATH = "lo";
 
 /// The HTTP response User-Agent.
-constexpr auto HTTP_AGENT_STRING = "LOOLWSD HTTP Agent " LOOLWSD_VERSION;
+constexpr const char* HTTP_AGENT_STRING = "LOOLWSD HTTP Agent " LOOLWSD_VERSION;
 
 /// The WOPI User-Agent.
-constexpr auto WOPI_AGENT_STRING = "LOOLWSD WOPI Agent " LOOLWSD_VERSION;
+constexpr const char* WOPI_AGENT_STRING = "LOOLWSD WOPI Agent " LOOLWSD_VERSION;
 
 // The client port number, both loolwsd and the kits have this.
 extern int ClientPortNumber;

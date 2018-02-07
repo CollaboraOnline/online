@@ -48,7 +48,7 @@ namespace LOOLProtocol
     inline
     bool parseNameValuePair(const std::string& token, std::string& name, std::string& value, const char delim = '=')
     {
-        const auto mid = token.find_first_of(delim);
+        const size_t mid = token.find_first_of(delim);
         if (mid != std::string::npos)
         {
             name = token.substr(0, mid);
@@ -149,7 +149,7 @@ namespace LOOLProtocol
         if (message && length > 0)
         {
             const char *founddelim = static_cast<const char *>(std::memchr(message, delim, length));
-            const auto size = (founddelim == nullptr ? length : founddelim - message);
+            const size_t size = (founddelim == nullptr ? length : founddelim - message);
             return size;
         }
 
@@ -159,7 +159,7 @@ namespace LOOLProtocol
     inline
     std::string getDelimitedInitialSubstring(const char *message, const int length, const char delim)
     {
-        const auto size = getDelimiterPosition(message, length, delim);
+        const size_t size = getDelimiterPosition(message, length, delim);
         return std::string(message, size);
     }
 
@@ -167,7 +167,7 @@ namespace LOOLProtocol
     inline
     std::pair<std::string, std::string> split(const char* s, const int length, const char delimeter = ' ')
     {
-        const auto size = getDelimiterPosition(s, length, delimeter);
+        const size_t size = getDelimiterPosition(s, length, delimeter);
         return std::make_pair(std::string(s, size), std::string(s+size+1));
     }
 
@@ -210,8 +210,8 @@ namespace LOOLProtocol
     {
         if (ignoreWhitespace)
         {
-            const auto posPre = prefix.find_first_not_of(' ');
-            const auto posMsg = message.find_first_not_of(' ');
+            const size_t posPre = prefix.find_first_not_of(' ');
+            const size_t posMsg = message.find_first_not_of(' ');
 
             return matchPrefix(posPre == std::string::npos ? prefix : prefix.substr(posPre),
                                posMsg == std::string::npos ? message : message.substr(posMsg));
@@ -269,7 +269,7 @@ namespace LOOLProtocol
             return std::string();
         }
 
-        const auto firstLine = getFirstLine(message, std::min(length, 500));
+        const std::string firstLine = getFirstLine(message, std::min(length, 500));
 
         // If first line is less than the length (minus newline), add ellipsis.
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
@@ -282,7 +282,7 @@ namespace LOOLProtocol
 
     inline std::string getAbbreviatedMessage(const std::string& message)
     {
-        const auto pos = getDelimiterPosition(message.data(), std::min(message.size(), 500UL), '\n');
+        const size_t pos = getDelimiterPosition(message.data(), std::min(message.size(), 500UL), '\n');
 
         // If first line is less than the length (minus newline), add ellipsis.
         if (pos < static_cast<std::string::size_type>(message.size()) - 1)
