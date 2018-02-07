@@ -61,7 +61,7 @@ long percentile(std::vector<long>& v, const double percentile)
 {
     std::sort(v.begin(), v.end());
 
-    const auto N = v.size();
+    const size_t N = v.size();
     const double n = (N - 1) * percentile / 100.0 + 1;
     if (n <= 1)
     {
@@ -80,8 +80,8 @@ long percentile(std::vector<long>& v, const double percentile)
 std::mutex Connection::Mutex;
 
 //static constexpr auto FIRST_ROW_TILES = "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840";
-static constexpr auto FIRST_PAGE_TILES = "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840";
-static constexpr auto FIRST_PAGE_TILE_COUNT = 16;
+static constexpr const char* FIRST_PAGE_TILES = "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840";
+static constexpr int FIRST_PAGE_TILE_COUNT = 16;
 
 /// Main thread class to replay a trace file.
 class Worker: public Replay
@@ -131,7 +131,7 @@ private:
         const bool success = !con->recv("invalidatetiles:").empty();
 
         const auto now = std::chrono::steady_clock::now();
-        const auto deltaModify = std::chrono::duration_cast<std::chrono::microseconds>(now - startModify).count();
+        const std::chrono::microseconds::rep deltaModify = std::chrono::duration_cast<std::chrono::microseconds>(now - startModify).count();
         _latencyStats.push_back(deltaModify);
 
         return success;
@@ -143,7 +143,7 @@ private:
 
         const auto start = std::chrono::steady_clock::now();
 
-        const auto expectedTilesCount = FIRST_PAGE_TILE_COUNT;
+        const int expectedTilesCount = FIRST_PAGE_TILE_COUNT;
         con->send(FIRST_PAGE_TILES);
         for (int i = 0; i < expectedTilesCount; ++i)
         {
@@ -154,7 +154,7 @@ private:
         }
 
         const auto now = std::chrono::steady_clock::now();
-        const auto delta = std::chrono::duration_cast<std::chrono::microseconds>(now - start).count();
+        const std::chrono::microseconds::rep delta = std::chrono::duration_cast<std::chrono::microseconds>(now - start).count();
         _renderingStats.push_back(delta / expectedTilesCount);
 
         return true;
@@ -164,7 +164,7 @@ private:
     {
         const auto start = std::chrono::steady_clock::now();
 
-        const auto expectedTilesCount = FIRST_PAGE_TILE_COUNT;
+        const int expectedTilesCount = FIRST_PAGE_TILE_COUNT;
         con->send(FIRST_PAGE_TILES);
         for (int i = 0; i < expectedTilesCount; ++i)
         {
@@ -175,7 +175,7 @@ private:
         }
 
         const auto now = std::chrono::steady_clock::now();
-        const auto delta = std::chrono::duration_cast<std::chrono::microseconds>(now - start).count();
+        const std::chrono::microseconds::rep delta = std::chrono::duration_cast<std::chrono::microseconds>(now - start).count();
         _cacheStats.push_back(delta / expectedTilesCount);
 
         return true;
@@ -190,8 +190,8 @@ private:
         _renderingStats.reserve(Stress::Iterations * 4);
 
         static std::atomic<unsigned> SessionId;
-        const auto sessionId = ++SessionId;
-        auto connection = Connection::create(_serverUri, _uri, std::to_string(sessionId));
+        const size_t sessionId = ++SessionId;
+        std::shared_ptr<Connection> connection = Connection::create(_serverUri, _uri, std::to_string(sessionId));
 
         connection->load();
 
@@ -315,13 +315,13 @@ int Stress::main(const std::vector<std::string>& args)
 
         for (const auto& worker : workers)
         {
-            const auto latencyStat = worker->getLatencyStats();
+            const std::vector<long> latencyStat = worker->getLatencyStats();
             latencyStats.insert(latencyStats.end(), latencyStat.begin(), latencyStat.end());
 
-            const auto renderingStat = worker->getRenderingStats();
+            const std::vector<long> renderingStat = worker->getRenderingStats();
             renderingStats.insert(renderingStats.end(), renderingStat.begin(), renderingStat.end());
 
-            const auto cachedStat = worker->getCacheStats();
+            const std::vector<long> cachedStat = worker->getCacheStats();
             cachedStats.insert(cachedStats.end(), cachedStat.begin(), cachedStat.end());
         }
 
@@ -336,12 +336,12 @@ int Stress::main(const std::vector<std::string>& args)
 
             const auto renderingTime = std::accumulate(renderingStats.begin(), renderingStats.end(), 0L);
             const double renderedPixels = 256 * 256 * renderingStats.size();
-            const auto pixelsPerSecRendered = renderedPixels / renderingTime;
+            const double pixelsPerSecRendered = renderedPixels / renderingTime;
             std::cerr << "Rendering power: " << pixelsPerSecRendered << " MPixels/sec." << std::endl;
 
             const auto cacheTime = std::accumulate(cachedStats.begin(), cachedStats.end(), 0L);
             const double cachePixels = 256 * 256 * cachedStats.size();
-            const auto pixelsPerSecCached = cachePixels / cacheTime;
+            const double pixelsPerSecCached = cachePixels / cacheTime;
             std::cerr << "Cache power: " << pixelsPerSecCached << " MPixels/sec." << std::endl;
         }
     }

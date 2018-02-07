@@ -307,7 +307,7 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
     size_t cnt = 0;
     addr_t sameButUnshared = 0;
     addr_t bytesTouched = 0;
-    for (auto page : pages)
+    for (addr_t page : pages)
     {
         std::vector<char> pageData, parentData;
         pageData.resize(0x1000);
@@ -420,7 +420,7 @@ static void dump_unshared(unsigned proc_id, unsigned parent_id,
     std::vector<char> bitmap;
     std::vector<addr_t> vunshared;
     addr_t numShared = 0, numOwn = 0;
-    for (auto p : vaddrs)
+    for (addr_t p : vaddrs)
     {
         if (lseek(fd, (p / 0x1000 * 8), SEEK_SET) < 0)
             error(EXIT_FAILURE, errno, "Failed to seek in pagemap");
@@ -458,13 +458,13 @@ static void dump_unshared(unsigned proc_id, unsigned parent_id,
     dumpPages(proc_id, parent_id, type, vunshared, space);
 
     std::unordered_set<addr_t> unShared;
-    for (auto addr : vunshared)
+    for (addr_t addr : vunshared)
         unShared.insert(addr);
 
     if (DumpStrings)
     {
         printf("String dump:\n");
-        for (auto addr : space._addrToStr)
+        for (const auto& addr : space._addrToStr)
         {
             if (DumpAll ||
                 unShared.find((addr.first & ~0x1fff)) != unShared.end())

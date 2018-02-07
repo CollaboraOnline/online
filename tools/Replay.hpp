@@ -38,7 +38,7 @@ public:
             Poco::URI::encode(documentURL, ":/?", encodedUri);
             Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/" + encodedUri + "/ws");
             Poco::Net::HTTPResponse response;
-            auto ws = helpers::connectLOKit(uri, request, response, sessionId + ' ');
+            std::shared_ptr<LOOLWebSocket> ws = helpers::connectLOKit(uri, request, response, sessionId + ' ');
             std::cout << "Connected to " << serverURI << ".\n";
             return std::shared_ptr<Connection>(new Connection(documentURL, sessionId, ws));
         }
@@ -133,24 +133,24 @@ protected:
     {
         TraceFileReader traceFile(_uri);
 
-        auto epochFile(traceFile.getEpochStart());
-        auto epochCurrent(std::chrono::steady_clock::now());
+        Poco::Int64 epochFile(traceFile.getEpochStart());
+        auto epochCurrent = std::chrono::steady_clock::now();
 
-        const auto replayDuration = (traceFile.getEpochEnd() - epochFile);
+        const Poco::Int64 replayDuration = (traceFile.getEpochEnd() - epochFile);
         std::cout << "Replaying file [" << _uri << "] of " << replayDuration / 1000000. << " second length." << std::endl;
 
         for (;;)
         {
-            const auto rec = traceFile.getNextRecord();
+            const TraceFileRecord rec = traceFile.getNextRecord();
             if (rec.Dir == TraceFileRecord::Direction::Invalid)
             {
                 // End of trace file.
                 break;
             }
 
-            const auto deltaCurrent = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - epochCurrent).count();
-            const auto deltaFile = rec.TimestampNs - epochFile;
-            const auto delay = (_ignoreTiming ? 0 : deltaFile - deltaCurrent);
+            const std::chrono::microseconds::rep deltaCurrent = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - epochCurrent).count();
+            const unsigned deltaFile = rec.TimestampNs - epochFile;
+            const unsigned delay = (_ignoreTiming ? 0 : deltaFile - deltaCurrent);
             if (delay > 0)
             {
                 if (delay > 1e6)
@@ -171,7 +171,7 @@ protected:
 
                 if (rec.Payload.find(NewSession) == 0)
                 {
-                    const auto uriOrig = rec.Payload.substr(NewSession.size());
+                    const std::string uriOrig = rec.Payload.substr(NewSession.size());
                     std::string uri;
                     Poco::URI::decode(uriOrig, uri);
                     auto it = _sessions.find(uri);
@@ -184,7 +184,7 @@ protected:
                         }
                         else
                         {
-                            auto connection = Connection::create(_serverUri, uri, rec.SessionId);
+                            std::shared_ptr<Connection> connection = Connection::create(_serverUri, uri, rec.SessionId);
                             if (connection)
                             {
                                 it->second.emplace(rec.SessionId, connection);
@@ -195,7 +195,7 @@ protected:
                     {
                         std::cout << "New Document: " << uri << "\n";
                         _childToDoc.emplace(rec.Pid, uri);
-                        auto connection = Connection::create(_serverUri, uri, rec.SessionId);
+                        std::shared_ptr<Connection> connection = Connection::create(_serverUri, uri, rec.SessionId);
                         if (connection)
                         {
                             _sessions[uri].emplace(rec.SessionId, connection);
@@ -204,7 +204,7 @@ protected:
                 }
                 else if (rec.Payload.find(EndSession) == 0)
                 {
-                    const auto uriOrig = rec.Payload.substr(EndSession.size());
+                    const std::string uriOrig = rec.Payload.substr(EndSession.size());
                     std::string uri;
                     Poco::URI::decode(uriOrig, uri);
                     auto it = _sessions.find(uri);
