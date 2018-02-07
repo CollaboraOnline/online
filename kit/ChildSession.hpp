@@ -160,14 +160,14 @@ public:
     bool sendTextFrame(const char* buffer, int length) override
     {
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
-        const auto lock = getLock();
+        const std::unique_lock<std::mutex> lock = getLock();
         return _docManager.sendFrame(msg.data(), msg.size(), Poco::Net::WebSocket::FRAME_TEXT);
     }
 
     bool sendBinaryFrame(const char* buffer, int length) override
     {
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
-        const auto lock = getLock();
+        const std::unique_lock<std::mutex> lock = getLock();
         return _docManager.sendFrame(msg.data(), msg.size(), Poco::Net::WebSocket::FRAME_BINARY);
     }
 

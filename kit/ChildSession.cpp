@@ -80,7 +80,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC(getName() << ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
-    const auto tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
+    const std::vector<std::string> tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
     if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
     {
@@ -379,7 +379,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
 
     // Respond by the document status
     LOG_DBG("Sending status after loading view " << _viewId << ".");
-    const auto status = LOKitHelper::documentStatus(getLOKitDocument()->get());
+    const std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
     if (status.empty() || !sendTextFrame("status: " + status))
     {
         LOG_ERR("Failed to get/forward document status [" << status << "].");
@@ -489,17 +489,17 @@ namespace
 void insertUserNames(const std::map<int, UserInfo>& viewInfo, std::string& json)
 {
     Poco::JSON::Parser parser;
-    auto root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+    const Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
     std::vector<std::string> directions { "Undo", "Redo" };
     for (auto& directionName : directions)
     {
-        auto direction = root->get(directionName).extract<Poco::JSON::Object::Ptr>();
+        Poco::JSON::Object::Ptr direction = root->get(directionName).extract<Poco::JSON::Object::Ptr>();
         if (direction->get("actions").type() == typeid(Poco::JSON::Array::Ptr))
         {
-            auto actions = direction->get("actions").extract<Poco::JSON::Array::Ptr>();
+            Poco::JSON::Array::Ptr actions = direction->get("actions").extract<Poco::JSON::Array::Ptr>();
             for (auto& actionVar : *actions)
             {
-                auto action = actionVar.extract<Poco::JSON::Object::Ptr>();
+                Poco::JSON::Object::Ptr action = actionVar.extract<Poco::JSON::Object::Ptr>();
                 int viewId = action->getValue<int>("viewId");
                 auto it = viewInfo.find(viewId);
                 if (it != viewInfo.end())
@@ -653,7 +653,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
     }
 
     // The file is removed upon downloading.
-    const auto tmpDir = FileUtil::createRandomDir(JAILED_DOCUMENT_ROOT);
+    const std::string tmpDir = FileUtil::createRandomDir(JAILED_DOCUMENT_ROOT);
     // Prevent user inputting anything funny here.
     // A "name" should always be a name, not a path
     const Poco::Path filenameParam(name);
@@ -796,8 +796,8 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
     }
 
     // Don't close LO window!
-    constexpr auto KEY_CTRL = 0x2000;
-    constexpr auto KEY_W = 0x0216;
+    constexpr int KEY_CTRL = 0x2000;
+    constexpr int KEY_W = 0x0216;
     if (keycode == (KEY_CTRL | KEY_W))
     {
         return true;
@@ -805,7 +805,7 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
 
     // Ctrl+Tab switching browser tabs,
     // Doesn't insert tabs.
-    constexpr auto KEY_TAB = 0x0502;
+    constexpr int KEY_TAB = 0x0502;
     if (keycode == (KEY_CTRL | KEY_TAB))
     {
         return true;
@@ -1229,7 +1229,7 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
 {
     if (type == LOK_CALLBACK_INVALIDATE_TILES)
     {
-        auto lock(getLock());
+        std::unique_lock<std::mutex> lock(getLock());
         _stateRecorder.recordInvalidate(); // TODO remember the area, not just a bool ('true' invalidates everything)
     }
     else if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
@@ -1244,7 +1244,7 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
              type == LOK_CALLBACK_INVALIDATE_HEADER ||
              type == LOK_CALLBACK_CELL_ADDRESS)
     {
-        auto lock(getLock());
+        std::unique_lock<std::mutex> lock(getLock());
         _stateRecorder.recordEvent(type, payload);
     }
     else if (type == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
@@ -1254,10 +1254,10 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
              type == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
              type == LOK_CALLBACK_VIEW_LOCK)
     {
-        auto lock(getLock());
+        std::unique_lock<std::mutex> lock(getLock());
         Poco::JSON::Parser parser;
 
-        auto root = parser.parse(payload).extract<Poco::JSON::Object::Ptr>();
+        Poco::JSON::Object::Ptr root = parser.parse(payload).extract<Poco::JSON::Object::Ptr>();
         int viewId = root->getValue<int>("viewId");
         _stateRecorder.recordViewEvent(viewId, type, payload);
     }
@@ -1267,7 +1267,7 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
         std::string value;
         if (LOOLProtocol::parseNameValuePair(payload, name, value, '='))
         {
-            auto lock(getLock());
+            std::unique_lock<std::mutex> lock(getLock());
             _stateRecorder.recordState(name, payload);
         }
     }
@@ -1275,7 +1275,7 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
              type == LOK_CALLBACK_REDLINE_TABLE_ENTRY_MODIFIED ||
              type == LOK_CALLBACK_COMMENT)
     {
-        auto lock(getLock());
+        std::unique_lock<std::mutex> lock(getLock());
         _stateRecorder.recordEventSequence(type, payload);
     }
 }
@@ -1307,7 +1307,7 @@ int ChildSession::getSpeed() {
 
 void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
-    const auto typeName = LOKitHelper::kitCallbackTypeToString(type);
+    const std::string typeName = LOKitHelper::kitCallbackTypeToString(type);
     LOG_TRC("ChildSession::loKitCallback [" << getName() << "]: " <<
             typeName << " [" << payload << "].");
 

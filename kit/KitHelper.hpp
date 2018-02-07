@@ -126,7 +126,7 @@ namespace LOKitHelper
         assert(loKitDocument && "null loKitDocument");
         const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
 
-        const auto parts = loKitDocument->pClass->getParts(loKitDocument);
+        const int parts = loKitDocument->pClass->getParts(loKitDocument);
         std::ostringstream oss;
         oss << "type=" << documentTypeToString(type)
             << " parts=" << parts
@@ -140,7 +140,7 @@ namespace LOKitHelper
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION)
         {
-            for (auto i = 0; i < parts; ++i)
+            for (int i = 0; i < parts; ++i)
             {
                 oss << "\n";
                 ptrValue = loKitDocument->pClass->getPartName(loKitDocument, i);
@@ -150,7 +150,7 @@ namespace LOKitHelper
 
             if (type == LOK_DOCTYPE_PRESENTATION)
             {
-                for (auto i = 0; i < parts; ++i)
+                for (int i = 0; i < parts; ++i)
                 {
                     oss << "\n";
                     ptrValue = loKitDocument->pClass->getPartHash(loKitDocument, i);

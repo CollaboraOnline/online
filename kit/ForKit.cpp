@@ -76,7 +76,7 @@ public:
     bool pollAndDispatch()
     {
         std::string message;
-        const auto ready = readLine(message, [](){ return TerminationFlag.load(); });
+        const int ready = readLine(message, [](){ return TerminationFlag.load(); });
         if (ready <= 0)
         {
             // Termination is done via SIGTERM, which breaks the wait.
@@ -101,7 +101,7 @@ public:
             std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
             if (tokens.size() == 2 && tokens[0] == "spawn")
             {
-                const auto count = std::stoi(tokens[1]);
+                const int count = std::stoi(tokens[1]);
                 if (count > 0)
                 {
                     LOG_INF("Setting to spawn " << tokens[1] << " child" << (count == 1 ? "" : "ren") << " per request.");
@@ -260,7 +260,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
 
         if (std::getenv("SLEEPKITFORDEBUGGER"))
         {
-            const auto delaySecs = std::stoul(std::getenv("SLEEPKITFORDEBUGGER"));
+            const size_t delaySecs = std::stoul(std::getenv("SLEEPKITFORDEBUGGER"));
             if (delaySecs > 0)
             {
                 std::cerr << "Sleeping " << delaySecs
@@ -349,7 +349,7 @@ int main(int argc, char** argv)
 
     if (std::getenv("SLEEPFORDEBUGGER"))
     {
-        const auto delaySecs = std::stoul(std::getenv("SLEEPFORDEBUGGER"));
+        const size_t delaySecs = std::stoul(std::getenv("SLEEPFORDEBUGGER"));
         if (delaySecs > 0)
         {
             std::cerr << "Sleeping " << delaySecs
@@ -446,7 +446,7 @@ int main(int argc, char** argv)
             std::vector<std::string> tokens = LOOLProtocol::tokenize(rlimits, ';');
             for (const std::string& cmdLimit : tokens)
             {
-                const auto pair = LOOLProtocol::split(cmdLimit, ':');
+                const std::pair<std::string, std::string> pair = LOOLProtocol::split(cmdLimit, ':');
                 std::vector<std::string> tokensLimit = { "setconfig", pair.first, pair.second };
                 if (!Rlimit::handleSetrlimitCommand(tokensLimit))
                 {

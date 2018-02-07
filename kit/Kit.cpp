@@ -332,7 +332,7 @@ namespace
         File(symlinkSource.parent()).createDirectories();
 
         std::string symlinkTarget;
-        for (auto i = 0; i < Path(loTemplate).depth(); i++)
+        for (int i = 0; i < Path(loTemplate).depth(); i++)
             symlinkTarget += "../";
         symlinkTarget += loSubPath;
 
@@ -900,7 +900,7 @@ public:
     void renderTile(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
     {
         assert(ws && "Expected a non-null websocket.");
-        auto tile = TileDesc::parse(tokens);
+        TileDesc tile = TileDesc::parse(tokens);
 
         size_t pixmapDataSize = 4 * tile.getWidth() * tile.getHeight();
         std::vector<unsigned char> pixmap;
@@ -925,7 +925,7 @@ public:
                                       tile.getWidth(), tile.getHeight(),
                                       tile.getTilePosX(), tile.getTilePosY(),
                                       tile.getTileWidth(), tile.getTileHeight());
-        const auto elapsed = timestamp.elapsed();
+        const Poco::Timestamp::TimeDiff elapsed = timestamp.elapsed();
         LOG_TRC("paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() <<
                 ") " << "ver: " << tile.getVersion() << " rendered in " << (elapsed/1000.) <<
                 " ms (" << area / elapsed << " MP/s).");
@@ -974,7 +974,7 @@ public:
     void renderCombinedTiles(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
     {
         assert(ws && "Expected a non-null websocket.");
-        auto tileCombined = TileCombined::parse(tokens);
+        TileCombined tileCombined = TileCombined::parse(tokens);
         auto& tiles = tileCombined.getTiles();
 
         Util::Rectangle renderArea;
@@ -1039,9 +1039,9 @@ public:
             const size_t positionX = (tileRect.getLeft() - renderArea.getLeft()) / tileCombined.getTileWidth();
             const size_t positionY = (tileRect.getTop() - renderArea.getTop()) / tileCombined.getTileHeight();
 
-            const auto oldSize = output.size();
-            const auto pixelWidth = tileCombined.getWidth();
-            const auto pixelHeight = tileCombined.getHeight();
+            const size_t oldSize = output.size();
+            const int pixelWidth = tileCombined.getWidth();
+            const int pixelHeight = tileCombined.getHeight();
 
             const int offsetX = positionX * pixelWidth;
             const int offsetY = positionY * pixelHeight;
@@ -1076,7 +1076,7 @@ public:
                 return;
             }
 
-            const auto imgSize = output.size() - oldSize;
+            const size_t imgSize = output.size() - oldSize;
             LOG_TRC("Encoded tile #" << tileIndex << " at (" << positionX << "," << positionY << ") with oldWireId=" <<
                     tiles[tileIndex].getOldWireId() << ", hash=" << hash << " wireId: " << wireId << " in " << imgSize << " bytes.");
             tiles[tileIndex].setWireId(wireId);
@@ -1161,7 +1161,7 @@ public:
         assert(descriptor && "Null callback data.");
         assert(descriptor->Doc && "Null Document instance.");
 
-        auto tileQueue = descriptor->Doc->getTileQueue();
+        std::shared_ptr<TileQueue> tileQueue = descriptor->Doc->getTileQueue();
         assert(tileQueue && "Null TileQueue.");
 
         const std::string payload = p ? p : "(nil)";
@@ -1179,10 +1179,10 @@ public:
             // Payload may be 'EMPTY'.
             if (tokens.count() == 4)
             {
-                auto cursorX = std::stoi(tokens[0]);
-                auto cursorY = std::stoi(tokens[1]);
-                auto cursorWidth = std::stoi(tokens[2]);
-                auto cursorHeight = std::stoi(tokens[3]);
+                int cursorX = std::stoi(tokens[0]);
+                int cursorY = std::stoi(tokens[1]);
+                int cursorWidth = std::stoi(tokens[2]);
+                int cursorHeight = std::stoi(tokens[3]);
 
                 tileQueue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
             }
@@ -1191,19 +1191,19 @@ public:
                  type == LOK_CALLBACK_CELL_VIEW_CURSOR)
         {
             Poco::JSON::Parser parser;
-            const auto result = parser.parse(payload);
+            const Poco::Dynamic::Var result = parser.parse(payload);
             const auto& command = result.extract<Poco::JSON::Object::Ptr>();
             targetViewId = command->get("viewId").toString();
-            auto part = command->get("part").toString();
-            auto text = command->get("rectangle").toString();
+            std::string part = command->get("part").toString();
+            std::string text = command->get("rectangle").toString();
             Poco::StringTokenizer tokens(text, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             // Payload may be 'EMPTY'.
             if (tokens.count() == 4)
             {
-                auto cursorX = std::stoi(tokens[0]);
-                auto cursorY = std::stoi(tokens[1]);
-                auto cursorWidth = std::stoi(tokens[2]);
-                auto cursorHeight = std::stoi(tokens[3]);
+                int cursorX = std::stoi(tokens[0]);
+                int cursorY = std::stoi(tokens[1]);
+                int cursorWidth = std::stoi(tokens[2]);
+                int cursorHeight = std::stoi(tokens[3]);
 
                 tileQueue->updateCursorPosition(std::stoi(targetViewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
             }
@@ -1265,7 +1265,7 @@ private:
             return false;
         }
 
-        auto session = it->second;
+        std::shared_ptr<ChildSession> session = it->second;
 
         // Flag and release lock.
         ++_isLoading;
@@ -1296,7 +1296,7 @@ private:
         const auto& sessionId = session.getId();
         LOG_INF("Unloading session [" << sessionId << "] on url [" << _url << "].");
 
-        const auto viewId = session.getViewId();
+        const int viewId = session.getViewId();
         _tileQueue->removeCursorPosition(viewId);
 
         std::unique_lock<std::mutex> lockLokDoc(_documentMutex);
@@ -1400,11 +1400,11 @@ private:
             else
             {
                 oss << "\"userid\":\"" << itView->second.UserId << "\",";
-                const auto username = itView->second.Username;
+                const std::string username = itView->second.Username;
                 oss << "\"username\":\"" << username << "\",";
                 if (!itView->second.UserExtraInfo.empty())
                     oss << "\"userextrainfo\":" << itView->second.UserExtraInfo << ",";
-                const auto readonly = itView->second.IsReadOnly;
+                const bool readonly = itView->second.IsReadOnly;
                 oss << "\"readonly\":\"" << readonly << "\",";
                 const auto it = viewColorsMap.find(username);
                 if (it != viewColorsMap.end())
@@ -1418,7 +1418,7 @@ private:
 
         oss.seekp(-1, std::ios_base::cur); // Remove last comma.
         oss << "]";
-        const auto msg = oss.str();
+        const std::string msg = oss.str();
 
         // Broadcast updated viewinfo to all clients.
         sendTextFrame("client-all " + msg);
@@ -1434,11 +1434,11 @@ private:
 
         for (const auto& it : _sessions)
         {
-            const auto session = it.second;
+            const std::shared_ptr<ChildSession> session = it.second;
             int sessionId = session->getViewId();
 
             auto duration = (_lastUpdatedAt[id] - now);
-            auto durationInMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+            std::chrono::milliseconds::rep durationInMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
             if (_speedCount[sessionId] != 0 && durationInMs > 5000)
             {
                 _speedCount[sessionId] = session->getSpeed();
@@ -1486,15 +1486,15 @@ private:
             if (!colorValues.empty())
             {
                 Poco::JSON::Parser parser;
-                auto root = parser.parse(colorValues).extract<Poco::JSON::Object::Ptr>();
+                Poco::JSON::Object::Ptr root = parser.parse(colorValues).extract<Poco::JSON::Object::Ptr>();
                 if (root->get("authors").type() == typeid(Poco::JSON::Array::Ptr))
                 {
-                    auto authorsArray = root->get("authors").extract<Poco::JSON::Array::Ptr>();
+                    Poco::JSON::Array::Ptr authorsArray = root->get("authors").extract<Poco::JSON::Array::Ptr>();
                     for (auto& authorVar: *authorsArray)
                     {
-                        auto authorObj = authorVar.extract<Poco::JSON::Object::Ptr>();
-                        auto authorName = authorObj->get("name").convert<std::string>();
-                        auto colorValue = authorObj->get("color").convert<int>();
+                        Poco::JSON::Object::Ptr authorObj = authorVar.extract<Poco::JSON::Object::Ptr>();
+                        std::string authorName = authorObj->get("name").convert<std::string>();
+                        int colorValue = authorObj->get("color").convert<int>();
                         viewColors[authorName] = colorValue;
                     }
                 }
@@ -1529,7 +1529,7 @@ private:
 
             _loKit->registerCallback(GlobalCallback, this);
 
-            const auto flags = LOK_FEATURE_DOCUMENT_PASSWORD
+            const int flags = LOK_FEATURE_DOCUMENT_PASSWORD
                              | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY
                              | LOK_FEATURE_PART_IN_INVALIDATION_CALLBACK
                              | LOK_FEATURE_NO_TILED_ANNOTATIONS
@@ -1657,8 +1657,8 @@ private:
             }
         }
 
-        auto data = payload.data() + index;
-        auto size = payload.size() - index;
+        const char* data = payload.data() + index;
+        size_t size = payload.size() - index;
 
         std::string name;
         std::string sessionId;
@@ -1669,7 +1669,7 @@ private:
             const auto it = _sessions.find(sessionId);
             if (it != _sessions.end())
             {
-                auto session = it->second;
+                std::shared_ptr<ChildSession> session = it->second;
 
                 static const std::string disconnect("disconnect");
                 if (size == disconnect.size() &&
@@ -1680,7 +1680,7 @@ private:
                     }
                     LOG_DBG("Removing ChildSession [" << sessionId << "].");
                     _sessions.erase(it);
-                    const auto count = _sessions.size();
+                    const size_t count = _sessions.size();
                     LOG_DBG("Have " << count << " child" << (count == 1 ? "" : "ren") <<
                             " after removing ChildSession [" << sessionId << "].");
 
@@ -1703,7 +1703,7 @@ private:
                 }
             }
 
-            const auto abbrMessage = getAbbreviatedMessage(data, size);
+            const std::string abbrMessage = getAbbreviatedMessage(data, size);
             LOG_WRN("Child session [" << sessionId << "] not found to forward message: " << abbrMessage);
         }
         else
@@ -1759,7 +1759,7 @@ private:
         LOG_DBG("Thread started.");
 
         // Update memory stats and editor every 5 seconds.
-        const auto memStatsPeriodMs = 5000;
+        const int memStatsPeriodMs = 5000;
         auto lastMemStatsTime = std::chrono::steady_clock::now();
         sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
 
@@ -1771,7 +1771,7 @@ private:
                 if (input.empty())
                 {
                     auto duration = (std::chrono::steady_clock::now() - lastMemStatsTime);
-                    auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+                    std::chrono::milliseconds::rep durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
                     if (durationMs > memStatsPeriodMs)
                     {
                         sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
@@ -1788,7 +1788,7 @@ private:
                     break;
                 }
 
-                const auto tokens = LOOLProtocol::tokenize(input.data(), input.size());
+                const std::vector<std::string> tokens = LOOLProtocol::tokenize(input.data(), input.size());
 
                 if (tokens[0] == "eof")
                 {
@@ -1834,7 +1834,7 @@ private:
                         const int type = std::stoi(tokens[2]);
 
                         // payload is the rest of the message
-                        const auto offset = tokens[0].length() + tokens[1].length() + tokens[2].length() + 3; // + delims
+                        const size_t offset = tokens[0].length() + tokens[1].length() + tokens[2].length() + 3; // + delims
                         const std::string payload(input.data() + offset, input.size() - offset);
 
                         // Forward the callback to the same view, demultiplexing is done by the LibreOffice core.
@@ -1842,7 +1842,7 @@ private:
                         bool isFound = false;
                         for (auto& it : _sessions)
                         {
-                            auto session = it.second;
+                            std::shared_ptr<ChildSession> session = it.second;
                             if (session && ((broadcast && (session->getViewId() != exceptViewId)) || (!broadcast && (session->getViewId() == viewId))))
                             {
                                 if (!it.second->isCloseFrame())
@@ -2068,11 +2068,11 @@ void lokit_main(const std::string& childRoot,
             linkOrCopy(loTemplate, jailLOInstallation, LinkOrCopyType::LO);
 
             // We need this because sometimes the hostname is not resolved
-            const auto networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
+            const std::initializer_list<const char*> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
             for (const auto& filename : networkFiles)
             {
-                const auto etcPath = Path(jailPath, filename);
-                const auto etcPathString = etcPath.toString();
+                const Poco::Path etcPath = Path(jailPath, filename);
+                const std::string etcPathString = etcPath.toString();
                 if (File(filename).exists() && !File(etcPathString).exists() )
                 {
                     linkOrCopy( filename, etcPath, LinkOrCopyType::All );
