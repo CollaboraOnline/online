@@ -391,3 +391,14 @@ The style is roughly as follows, in rough order of importance:
 
 - return - is not a function; but a statement - it doesn't need extra ()
 
+- Use 'auto' in the following cases only:
+
+  - iterators
+
+  - range-based for loops
+
+  - the type is spelled out in the same line already (e.g. initializing from a
+    cast or a function that has a single type parameter)
+
+  In other cases it makes the code more readable to still spell out the type
+  explicitly.
