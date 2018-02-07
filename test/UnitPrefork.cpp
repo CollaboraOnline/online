@@ -42,7 +42,7 @@ public:
         {
             Poco::Timestamp::TimeDiff elapsed = _startTime.elapsed();
 
-            const auto totalTime = (1000. * elapsed)/Poco::Timestamp::resolution();
+            const double totalTime = (1000. * elapsed)/Poco::Timestamp::resolution();
             LOG_INF("Launched " << _childSockets << " in " << totalTime);
             std::cerr << "Launch time total   " << totalTime << " ms" << std::endl;
             std::cerr << "Launch time average " << (totalTime / _childSockets) << " ms" << std::endl;

@@ -47,7 +47,7 @@ std::vector<char> genRandomData(const size_t size)
 {
     std::vector<char> v(size);
     v.resize(size);
-    auto data = v.data();
+    char* data = v.data();
     for (size_t i = 0; i < size; ++i)
     {
         data[i] = static_cast<char>(Util::rng::getNext());
@@ -335,7 +335,7 @@ connectLOKit(const Poco::URI& uri,
         {
             std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
             auto ws = std::make_shared<LOOLWebSocket>(*session, request, response);
-            const auto expected_response = "statusindicator: ready";
+            const char* expected_response = "statusindicator: ready";
             if (getResponseString(ws, expected_response, name) == expected_response)
             {
                 return ws;
@@ -364,7 +364,7 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const s
         // Load a document and get its status.
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::HTTPResponse response;
-        auto socket = connectLOKit(uri, request, response, name);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(uri, request, response, name);
 
         sendTextFrame(socket, "load url=" + documentURL, name);
         CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socket, name, isView));
@@ -462,7 +462,7 @@ std::vector<char> getTileMessage(LOOLWebSocket& ws, const std::string& name = ""
 inline
 std::vector<char> assertTileMessage(LOOLWebSocket& ws, const std::string& name = "")
 {
-    const auto response = getTileMessage(ws, name);
+    const std::vector<char> response = getTileMessage(ws, name);
 
     const std::string firstLine = LOOLProtocol::getFirstLine(response);
     Poco::StringTokenizer tileTokens(firstLine, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
@@ -552,7 +552,7 @@ inline std::vector<char> getTileAndSave(std::shared_ptr<LOOLWebSocket>& socket,
     std::cerr << testname << "Requesting: " << req << std::endl;
     sendTextFrame(socket, req, testname);
 
-    const auto tile = getResponseMessage(socket, "tile:", testname);
+    const std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
     std::cerr << testname << " Tile PNG size: " << tile.size() << std::endl;
 
     const std::string firstLine = LOOLProtocol::getFirstLine(tile);

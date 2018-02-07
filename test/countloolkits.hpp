@@ -29,11 +29,11 @@ static int countLoolKitProcesses(const int expected)
 
     // This does not need to depend on any constant from Common.hpp.
     // The shorter the better (the quicker the test runs).
-    const auto sleepMs = 50;
+    const int sleepMs = 50;
 
     // This has to cause waiting for at least COMMAND_TIMEOUT_MS. Add one second for safety.
     const size_t repeat = ((COMMAND_TIMEOUT_MS + 1000) / sleepMs);
-    auto count = getLoolKitProcessCount();
+    int count = getLoolKitProcessCount();
     for (size_t i = 0; i < repeat; ++i)
     {
         std::cerr << count << ' ';
@@ -45,7 +45,7 @@ static int countLoolKitProcesses(const int expected)
         // Give polls in the lool processes time to time out etc
         std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
 
-        const auto newCount = getLoolKitProcessCount();
+        const int newCount = getLoolKitProcessCount();
         if (count != newCount)
         {
             // Allow more time until the number settles.
@@ -84,11 +84,11 @@ static void testCountHowManyLoolkits()
 
 static void testNoExtraLoolKitsLeft()
 {
-    const auto countNow = countLoolKitProcesses(InitialLoolKitCount);
+    const int countNow = countLoolKitProcesses(InitialLoolKitCount);
     CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
 
     const auto duration = (std::chrono::steady_clock::now() - TestStartTime);
-    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+    const std::chrono::milliseconds::rep durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
 
     std::cout << " (" << durationMs << " ms)";
 }

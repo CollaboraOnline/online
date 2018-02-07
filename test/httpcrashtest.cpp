@@ -105,7 +105,7 @@ public:
 void HTTPCrashTest::testBarren()
 {
     // Kill all kit processes and try loading a document.
-    const auto testname = "barren ";
+    const char* testname = "barren ";
     try
     {
         killLoKitProcesses();
@@ -114,7 +114,7 @@ void HTTPCrashTest::testBarren()
         std::cerr << "Loading after kill." << std::endl;
 
         // Load a document and get its status.
-        auto socket = loadDocAndGetSocket("hello.odt", _uri, testname);
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
 
         sendTextFrame(socket, "status", testname);
         assertResponseString(socket, "status:", testname);
@@ -127,10 +127,10 @@ void HTTPCrashTest::testBarren()
 
 void HTTPCrashTest::testCrashKit()
 {
-    const auto testname = "crashKit ";
+    const char* testname = "crashKit ";
     try
     {
-        auto socket = loadDocAndGetSocket("empty.odt", _uri, testname);
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
         std::cerr << "Killing loolkit instances." << std::endl;
 
@@ -145,7 +145,7 @@ void HTTPCrashTest::testCrashKit()
         getResponseMessage(socket, "", testname, 1000);
 
         std::string message;
-        const auto statusCode = getErrorCode(socket, message, testname);
+        const int statusCode = getErrorCode(socket, message, testname);
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY), statusCode);
 
         // respond close frame
@@ -176,10 +176,10 @@ void HTTPCrashTest::testCrashKit()
 
 void HTTPCrashTest::testRecoverAfterKitCrash()
 {
-    const auto testname = "recoverAfterKitCrash ";
+    const char* testname = "recoverAfterKitCrash ";
     try
     {
-        auto socket = loadDocAndGetSocket("empty.odt", _uri, testname);
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
         std::cerr << "Killing loolkit instances." << std::endl;
 
@@ -189,7 +189,7 @@ void HTTPCrashTest::testRecoverAfterKitCrash()
         // We expect the client connection to close.
         std::cerr << "Reconnect after kill." << std::endl;
 
-        auto socket2 = loadDocAndGetSocket("empty.odt", _uri, testname);
+        std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket("empty.odt", _uri, testname);
         sendTextFrame(socket2, "status", testname);
         assertResponseString(socket2, "status:", testname);
     }
@@ -201,10 +201,10 @@ void HTTPCrashTest::testRecoverAfterKitCrash()
 
 void HTTPCrashTest::testCrashForkit()
 {
-    const auto testname = "crashForkit ";
+    const char* testname = "crashForkit ";
     try
     {
-        auto socket = loadDocAndGetSocket("empty.odt", _uri, testname);
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
         std::cerr << "Killing forkit." << std::endl;
         killForkitProcess();

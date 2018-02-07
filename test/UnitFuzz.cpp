@@ -76,7 +76,7 @@ public:
         if (_dist(_mt) < 875)
             return false;
 
-        auto fuzzed = new std::vector<char>();
+        std::unique_ptr<std::vector<char>> fuzzed(new std::vector<char>());
         fuzzed->assign(buffer, buffer+length);
 
         int resize = _dist(_mt);
@@ -114,7 +114,7 @@ public:
                 c |= 0x80;
         }
 
-        replace.reset(fuzzed);
+        replace.reset(fuzzed.release());
 
         return true;
     }

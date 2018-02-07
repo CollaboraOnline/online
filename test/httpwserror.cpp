@@ -86,14 +86,14 @@ public:
 void HTTPWSError::testBadDocLoadFail()
 {
     // Load corrupted document and validate error.
-    const auto testname = "docLoadFail ";
+    const char* testname = "docLoadFail ";
     try
     {
         std::string documentPath, documentURL;
         getDocumentPathAndURL("corrupted.odt", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        auto socket = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response);
 
         // Send a load request with incorrect password
         sendTextFrame(socket, "load url=" + documentURL);
@@ -118,7 +118,7 @@ void HTTPWSError::testBadDocLoadFail()
 void HTTPWSError::testMaxDocuments()
 {
     static_assert(MAX_DOCUMENTS >= 2, "MAX_DOCUMENTS must be at least 2");
-    const auto testname = "maxDocuments ";
+    const char* testname = "maxDocuments ";
 
     if (MAX_DOCUMENTS > 20)
     {
@@ -155,7 +155,7 @@ void HTTPWSError::testMaxDocuments()
         assertResponseString(socket, "error:", testname);
 
         std::string message;
-        const auto statusCode = getErrorCode(socket, message, testname);
+        const int statusCode = getErrorCode(socket, message, testname);
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
 
         socket->shutdown();
@@ -169,7 +169,7 @@ void HTTPWSError::testMaxDocuments()
 void HTTPWSError::testMaxConnections()
 {
     static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
-    const auto testname = "maxConnections ";
+    const char* testname = "maxConnections ";
 
     if (MAX_CONNECTIONS > 40)
     {
@@ -188,7 +188,7 @@ void HTTPWSError::testMaxConnections()
 
         getDocumentPathAndURL("empty.odt", docPath, docURL, testname);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-        auto socket = loadDocAndGetSocket(_uri, docURL, testname);
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, docURL, testname);
         std::cerr << "Opened connection #1 of " << MAX_CONNECTIONS << std::endl;
 
         std::vector<std::shared_ptr<LOOLWebSocket>> views;
@@ -210,7 +210,7 @@ void HTTPWSError::testMaxConnections()
         sendTextFrame(socketN, "load url=" + docURL, testname);
 
         std::string message;
-        const auto statusCode = getErrorCode(socketN, message, testname);
+        const int statusCode = getErrorCode(socketN, message, testname);
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
 
         socketN->shutdown();
@@ -224,7 +224,7 @@ void HTTPWSError::testMaxConnections()
 void HTTPWSError::testMaxViews()
 {
     static_assert(MAX_CONNECTIONS >= 3, "MAX_CONNECTIONS must be at least 3");
-    const auto testname = "maxViews ";
+    const char* testname = "maxViews ";
 
     if (MAX_CONNECTIONS > 40)
     {
@@ -243,7 +243,7 @@ void HTTPWSError::testMaxViews()
 
         getDocumentPathAndURL("empty.odt", docPath, docURL, testname);
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-        auto socket = loadDocAndGetSocket(_uri, docURL, testname);
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, docURL, testname);
         std::cerr << "Opened view #1 of " << MAX_CONNECTIONS << std::endl;
 
         std::vector<std::shared_ptr<LOOLWebSocket>> views;
@@ -263,7 +263,7 @@ void HTTPWSError::testMaxViews()
         sendTextFrame(socketN, "load url=" + docURL, testname);
 
         std::string message;
-        const auto statusCode = getErrorCode(socketN, message, testname);
+        const int statusCode = getErrorCode(socketN, message, testname);
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION), statusCode);
     }
     catch (const Poco::Exception& exc)

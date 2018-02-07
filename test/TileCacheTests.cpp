@@ -174,18 +174,18 @@ void TileCacheTests::testSimple()
     TileDesc tile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, -1, 0, -1, false);
 
     // No Cache
-    auto file = tc.lookupTile(tile);
+    std::unique_ptr<std::fstream> file = tc.lookupTile(tile);
     CPPUNIT_ASSERT_MESSAGE("found tile when none was expected", !file);
 
     // Cache Tile
-    const auto size = 1024;
-    const auto data = genRandomData(size);
+    const int size = 1024;
+    const std::vector<char> data = genRandomData(size);
     tc.saveTileAndNotify(tile, data.data(), size);
 
     // Find Tile
     file = tc.lookupTile(tile);
     CPPUNIT_ASSERT_MESSAGE("tile not found when expected", file && file->is_open());
-    const auto tileData = readDataFromFile(file);
+    const std::vector<char> tileData = readDataFromFile(file);
     CPPUNIT_ASSERT_MESSAGE("cached tile corrupted", data == tileData);
 
     // Invalidate Tiles
@@ -198,18 +198,18 @@ void TileCacheTests::testSimple()
 
 void TileCacheTests::testSimpleCombine()
 {
-    const auto testname = "simpleCombine ";
+    const char* testname = "simpleCombine ";
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
     // First.
-    auto socket1 = loadDocAndGetSocket(_uri, documentURL, "simpleCombine-1 ");
+    std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "simpleCombine-1 ");
 
     sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
-    auto tile1a = getResponseMessage(socket1, "tile:");
+    std::vector<char> tile1a = getResponseMessage(socket1, "tile:");
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
-    auto tile1b = getResponseMessage(socket1, "tile:");
+    std::vector<char> tile1b = getResponseMessage(socket1, "tile:");
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
     sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
@@ -220,27 +220,27 @@ void TileCacheTests::testSimpleCombine()
 
     // Second.
     std::cerr << "Connecting second client." << std::endl;
-    auto socket2 = loadDocAndGetSocket(_uri, documentURL, "simpleCombine-2 ", true);
+    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "simpleCombine-2 ", true);
 
     sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
-    auto tile2a = getResponseMessage(socket2, "tile:");
+    std::vector<char> tile2a = getResponseMessage(socket2, "tile:");
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2a.empty());
-    auto tile2b = getResponseMessage(socket2, "tile:");
+    std::vector<char> tile2b = getResponseMessage(socket2, "tile:");
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2b.empty());
 }
 
 void TileCacheTests::testPerformance()
 {
-    auto socket = loadDocAndGetSocket("hello.odt", _uri, "performance ");
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, "performance ");
 
     Poco::Timestamp timestamp;
-    for (auto x = 0; x < 5; ++x)
+    for (int x = 0; x < 5; ++x)
     {
         sendTextFrame(socket, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
-        for (auto i = 0; i < 8; ++i)
+        for (int i = 0; i < 8; ++i)
         {
-            auto tile = getResponseMessage(socket, "tile:", "tile-performance ");
+            std::vector<char> tile = getResponseMessage(socket, "tile:", "tile-performance ");
             CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile.empty());
         }
     }
@@ -255,7 +255,7 @@ void TileCacheTests::testPerformance()
 
 void TileCacheTests::testCancelTiles()
 {
-    const auto testName = "cancelTiles ";
+    const char* testName = "cancelTiles ";
 
     // The tile response can race past the canceltiles,
     // so be forgiving to avoid spurious failures.
@@ -267,7 +267,7 @@ void TileCacheTests::testCancelTiles()
         // Wait to clear previous sessions.
         countLoolKitProcesses(InitialLoolKitCount);
 
-        auto socket = loadDocAndGetSocket("setclientpart.ods", _uri, testName);
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("setclientpart.ods", _uri, testName);
 
         // Request a huge tile, and cancel immediately.
         sendTextFrame(socket, "tilecombine part=0 width=2560 height=2560 tileposx=0 tileposy=0 tilewidth=38400 tileheight=38400");
@@ -306,8 +306,8 @@ void TileCacheTests::testCancelTilesMultiView()
         countLoolKitProcesses(InitialLoolKitCount);
 
         // Request a huge tile, and cancel immediately.
-        auto socket1 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-1 ");
-        auto socket2 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-2 ", true);
+        std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-1 ");
+        std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-2 ", true);
 
         sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-1 ");
         sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
@@ -325,7 +325,7 @@ void TileCacheTests::testCancelTilesMultiView()
             continue;
         }
 
-        for (auto i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i)
         {
             getTileMessage(*socket2, "cancelTilesMultiView-2 ");
         }
@@ -367,15 +367,15 @@ void TileCacheTests::testDisconnectMultiView()
         countLoolKitProcesses(InitialLoolKitCount);
 
         // Request a huge tile, and cancel immediately.
-        auto socket1 = loadDocAndGetSocket(_uri, documentURL, "disconnectMultiView-1 ");
-        auto socket2 = loadDocAndGetSocket(_uri, documentURL, "disconnectMultiView-2 ", true);
+        std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "disconnectMultiView-1 ");
+        std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "disconnectMultiView-2 ", true);
 
         sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-1 ");
         sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
 
         socket1->shutdown();
 
-        for (auto i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i)
         {
             getTileMessage(*socket2, "disconnectMultiView-2 ");
         }
@@ -391,23 +391,23 @@ void TileCacheTests::testUnresponsiveClient()
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, "unresponsiveClient ");
 
     std::cerr << "Connecting first client." << std::endl;
-    auto socket1 = loadDocAndGetSocket(_uri, documentURL, "unresponsiveClient-1 ");
+    std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "unresponsiveClient-1 ");
 
     std::cerr << "Connecting second client." << std::endl;
-    auto socket2 = loadDocAndGetSocket(_uri, documentURL, "unresponsiveClient-2 ");
+    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "unresponsiveClient-2 ");
 
     // Pathologically request tiles and fail to read (say slow connection).
     // Meanwhile, verify that others can get all tiles fine.
     // TODO: Track memory consumption to verify we don't buffer too much.
 
     std::ostringstream oss;
-    for (auto i = 0; i < 1000; ++i)
+    for (int i = 0; i < 1000; ++i)
     {
         oss << Util::encodeId(Util::rng::getNext(), 6);
     }
 
-    const auto documentContents = oss.str();
-    for (auto x = 0; x < 8; ++x)
+    const std::string documentContents = oss.str();
+    for (int x = 0; x < 8; ++x)
     {
         // Invalidate to force re-rendering.
         sendTextFrame(socket2, "uno .uno:SelectAll");
@@ -421,9 +421,9 @@ void TileCacheTests::testUnresponsiveClient()
 
         // Verify that we get all 8 tiles.
         sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
-        for (auto i = 0; i < 8; ++i)
+        for (int i = 0; i < 8; ++i)
         {
-            auto tile = getResponseMessage(socket2, "tile:", "client2 ");
+            std::vector<char> tile = getResponseMessage(socket2, "tile:", "client2 ");
             CPPUNIT_ASSERT_MESSAGE("Did not receive tile #" + std::to_string(i+1) + " of 8: message as expected", !tile.empty());
         }
     }
@@ -434,7 +434,7 @@ void TileCacheTests::testImpressTiles()
     try
     {
         const std::string testName = "impressTiles ";
-        auto socket = loadDocAndGetSocket("setclientpart.odp", _uri, testName);
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("setclientpart.odp", _uri, testName);
 
         sendTextFrame(socket, "tile part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0", testName);
         getTileMessage(*socket, testName);
@@ -450,7 +450,7 @@ void TileCacheTests::testClientPartImpress()
     try
     {
         const std::string testName = "clientPartImpress ";
-        auto socket = loadDocAndGetSocket("setclientpart.odp", _uri, testName);
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("setclientpart.odp", _uri, testName);
 
         checkTiles(socket, "presentation", testName);
 
@@ -467,7 +467,7 @@ void TileCacheTests::testClientPartCalc()
     try
     {
         const std::string testName = "clientPartCalc ";
-        auto socket = loadDocAndGetSocket("setclientpart.ods", _uri, testName);
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("setclientpart.ods", _uri, testName);
 
         checkTiles(socket, "spreadsheet", testName);
 
@@ -481,9 +481,9 @@ void TileCacheTests::testClientPartCalc()
 
 void TileCacheTests::testTilesRenderedJustOnce()
 {
-    const auto testname = "tilesRenderdJustOnce ";
+    const char* testname = "tilesRenderdJustOnce ";
 
-    auto socket = loadDocAndGetSocket("with_comment.odt", _uri, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("with_comment.odt", _uri, testname);
 
     assertResponseString(socket, "statechanged: .uno:AcceptTrackedChange=", testname);
 
@@ -551,13 +551,13 @@ void TileCacheTests::testTilesRenderedJustOnceMultiClient()
     getDocumentPathAndURL("with_comment.odt", documentPath, documentURL, testname);
 
     std::cerr << "Connecting first client." << std::endl;
-    auto socket = loadDocAndGetSocket(_uri, documentURL, testname1);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname1);
     std::cerr << "Connecting second client." << std::endl;
-    auto socket2 = loadDocAndGetSocket(_uri, documentURL, testname2);
+    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname2);
     std::cerr << "Connecting third client." << std::endl;
-    auto socket3 = loadDocAndGetSocket(_uri, documentURL, testname3);
+    std::shared_ptr<LOOLWebSocket> socket3 = loadDocAndGetSocket(_uri, documentURL, testname3);
     std::cerr << "Connecting fourth client." << std::endl;
-    auto socket4 = loadDocAndGetSocket(_uri, documentURL, "tilesRenderdJustOnce-4 ");
+    std::shared_ptr<LOOLWebSocket> socket4 = loadDocAndGetSocket(_uri, documentURL, "tilesRenderdJustOnce-4 ");
 
     for (int i = 0; i < 10; ++i)
     {
@@ -641,9 +641,9 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, "simultaneousTilesrenderedJustOnce ");
 
     std::cerr << "Connecting first client." << std::endl;
-    auto socket1 = loadDocAndGetSocket(_uri, documentURL, "simultaneousTilesRenderdJustOnce-1 ");
+    std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "simultaneousTilesRenderdJustOnce-1 ");
     std::cerr << "Connecting second client." << std::endl;
-    auto socket2 = loadDocAndGetSocket(_uri, documentURL, "simultaneousTilesRenderdJustOnce-2 ");
+    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "simultaneousTilesRenderdJustOnce-2 ");
 
     // Wait for the invalidatetile events to pass, otherwise they
     // remove our tile subscription.
@@ -673,8 +673,8 @@ void TileCacheTests::testLoad12ods()
 {
     try
     {
-        const auto testName = "load12ods ";
-        auto socket = loadDocAndGetSocket("load12.ods", _uri, testName);
+        const char* testName = "load12ods ";
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("load12.ods", _uri, testName);
 
         int docSheet = -1;
         int docSheets = 0;
@@ -702,7 +702,7 @@ void TileCacheTests::checkBlackTile(std::stringstream& tile)
     png_uint_32 width = 0;
     png_uint_32 rowBytes = 0;
 
-    auto rows = Png::decodePNG(tile, height, width, rowBytes);
+    std::vector<png_bytep> rows = Png::decodePNG(tile, height, width, rowBytes);
 
     png_uint_32 black = 0;
     for (png_uint_32 itRow = 0; itRow < height; ++itRow)
@@ -734,10 +734,10 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, con
     // render correctly and there are no black tiles.
     // Current cap of table size ends at 257280 twips (for load12.ods),
     // otherwise 2035200 should be rendered successfully.
-    const auto req = "tile part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
+    const char* req = "tile part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
     sendTextFrame(socket, req);
 
-    const auto tile = getResponseMessage(socket, "tile:", name);
+    const std::vector<char> tile = getResponseMessage(socket, "tile:", name);
     const std::string firstLine = LOOLProtocol::getFirstLine(tile);
 
 #if 0
@@ -753,12 +753,12 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, con
 
 void TileCacheTests::testTileInvalidateWriter()
 {
-    const auto testname = "tileInvalidateWriter ";
+    const char* testname = "tileInvalidateWriter ";
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-    auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
     std::string text = "Test. Now go 3 \"Enters\":\n\n\nNow after the enters, goes this text";
     for (char ch : text)
@@ -789,13 +789,13 @@ void TileCacheTests::testTileInvalidateWriter()
 
 void TileCacheTests::testTileInvalidateWriterPage()
 {
-    const auto testname = "tileInvalidateWriterPage ";
+    const char* testname = "tileInvalidateWriterPage ";
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-    auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
     sendChar(socket, '\n', skCtrl, testname); // Send Ctrl+Enter (page break).
     assertResponseString(socket, "invalidatetiles:", testname);
@@ -812,22 +812,22 @@ void TileCacheTests::testTileInvalidateWriterPage()
 // This isn't yet used
 void TileCacheTests::testWriterAnyKey()
 {
-    const auto testname = "writerAnyKey ";
+    const char* testname = "writerAnyKey ";
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-    auto socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
     // Now test "usual" keycodes (TODO: whole 32-bit range)
     for (int i=0; i<0x1000; ++i)
     {
         std::stringstream ss("Keycode ");
         ss << i;
-        auto s = ss.str();
+        std::string s = ss.str();
         std::stringstream fn("saveas url=");
         fn << documentURL << i << ".odt format= options=";
-        auto f = fn.str();
+        std::string f = fn.str();
 
         const int istart = 474;
         sendText(socket, "\n"+s+"\n");
@@ -897,7 +897,7 @@ void TileCacheTests::testWriterAnyKey()
 void TileCacheTests::testTileInvalidateCalc()
 {
     const std::string testname = "tileInvalidateCalc ";
-    auto socket = loadDocAndGetSocket("empty.ods", _uri, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("empty.ods", _uri, testname);
 
     std::string text = "Test. Now go 3 \"Enters\": Now after the enters, goes this text";
     for (char ch : text)
@@ -931,13 +931,13 @@ void TileCacheTests::testTileInvalidatePartCalc()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL(filename, documentPath, documentURL, testname);
-    auto socket1 = loadDocAndGetSocket(_uri, documentURL, testname1);
+    std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, testname1);
 
     sendTextFrame(socket1, "setclientpart part=2", testname1);
     assertResponseString(socket1, "setpart:", testname1);
     sendTextFrame(socket1, "mouse type=buttondown x=1500 y=1500 count=1 buttons=1 modifier=0", testname1);
 
-    auto socket2 = loadDocAndGetSocket(_uri, documentURL, testname2);
+    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname2);
     sendTextFrame(socket2, "setclientpart part=5", testname2);
     assertResponseString(socket2, "setpart:", testname2);
     sendTextFrame(socket2, "mouse type=buttondown x=1500 y=1500 count=1 buttons=1 modifier=0", testname2);
@@ -969,13 +969,13 @@ void TileCacheTests::testTileInvalidatePartImpress()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL(filename, documentPath, documentURL, testname);
-    auto socket1 = loadDocAndGetSocket(_uri, documentURL, testname1);
+    std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, testname1);
 
     sendTextFrame(socket1, "setclientpart part=2", testname1);
     assertResponseString(socket1, "setpart:", testname1);
     sendTextFrame(socket1, "mouse type=buttondown x=1500 y=1500 count=1 buttons=1 modifier=0", testname1);
 
-    auto socket2 = loadDocAndGetSocket(_uri, documentURL, testname2);
+    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname2);
     sendTextFrame(socket2, "setclientpart part=5", testname2);
     assertResponseString(socket2, "setpart:", testname2);
     sendTextFrame(socket2, "mouse type=buttondown x=1500 y=1500 count=1 buttons=1 modifier=0", testname2);
@@ -1024,7 +1024,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
 
         // Expected format is something like 'type= parts= current= width= height='.
-        const auto text = tokens[0].substr(type.size());
+        const std::string text = tokens[0].substr(type.size());
         totalParts = std::stoi(tokens[1].substr(parts.size()));
         currentPart = std::stoi(tokens[2].substr(current.size()));
         docWidth = std::stoi(tokens[3].substr(width.size()));
@@ -1048,12 +1048,12 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
     std::vector<int> vParts = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     std::random_shuffle(vParts.begin(), vParts.end());
     int requests = 0;
-    for (auto it : vParts)
+    for (int it : vParts)
     {
         if (currentPart != it)
         {
             // change part
-            const auto text = Poco::format("setclientpart part=%d", it);
+            const std::string text = Poco::format("setclientpart part=%d", it);
             sendTextFrame(socket, text, name);
             // Wait for the change to take effect otherwise we get invalidatetile
             // which removes our next tile request subscription (expecting us to
