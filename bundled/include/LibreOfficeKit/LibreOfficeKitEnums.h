@@ -267,6 +267,11 @@ typedef enum
     /**
      * The size and/or the position of the cell cursor changed.
      *
+     * Payload format: "x, y, width, height, column, row", where the first
+     * 4 numbers are document coordinates, in twips, and the last 2 are table
+     * coordinates starting from 0.
+     * When the cursor is not shown the payload format is the "EMPTY" string.
+     *
      * Rectangle format is the same as LOK_CALLBACK_INVALIDATE_TILES.
      */
     LOK_CALLBACK_CELL_CURSOR = 17,
@@ -509,11 +514,12 @@ typedef enum
      * The column/row header is no more valid because of a column/row insertion
      * or a similar event. Clients must query a new column/row header set.
      *
-     * The payload says if we are invalidating a row or column header.
+     * The payload says if we are invalidating a row or column header. So,
+     * payload values can be: "row", "column", "all".
      */
     LOK_CALLBACK_INVALIDATE_HEADER = 33,
     /**
-     * The text content of the address field in Calc.
+     * The text content of the address field in Calc. Eg: "A7"
      */
     LOK_CALLBACK_CELL_ADDRESS = 34,
     /**
@@ -534,7 +540,32 @@ typedef enum
      */
     LOK_CALLBACK_RULER_UPDATE = 35,
     /**
-     * Dialog invalidation
+     * Window related callbacks are emitted under this category. It includes
+     * external windows like dialogs, autopopups for now.
+     *
+     * The payload format is:
+     *
+     * {
+     *    "id": "unique integer id of the dialog",
+     *    "action": "<see below>",
+     *    "type": "<see below>"
+     *    "rectangle": "x, y, width, height"
+     * }
+     *
+     * "type" tells the type of the window the action is associated with
+     *  - "dialog" - window is a dialog
+     *  - "child" - window is a floating window (combo boxes, etc.)
+     *
+     * "action" can take following values:
+     * - "created" - window is created in the backend, client can render it now
+     * - "title_changed" - window's title is changed
+     * - "size_changed" - window's size is changed
+     * - "invalidate" - the area as described by "rectangle" is invalidated
+     *    Clients must request the new area
+     * - "cursor_invalidate" - cursor is invalidated. New position is in "rectangle"
+     * - "cursor_visible" - cursor visible status is changed. Status is availabe
+     *    in "visible" field
+     * - "close" - window is closed
      */
     LOK_CALLBACK_WINDOW = 36,
 }
@@ -548,6 +579,17 @@ typedef enum
     LOK_KEYEVENT_KEYUP
 }
 LibreOfficeKitKeyEventType;
+
+typedef enum
+{
+    /// cf. SalEvent::ExtTextInput
+    LOK_EXT_TEXTINPUT,
+    /// cf. SalEvent::ExtTextInputPos
+    LOK_EXT_TEXTINPUT_POS,
+    /// cf. SalEvent::EndExtTextInput
+    LOK_EXT_TEXTINPUT_END
+}
+LibreOfficeKitExtTextInputType;
 
 typedef enum
 {

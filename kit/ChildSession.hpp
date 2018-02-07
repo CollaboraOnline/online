@@ -188,6 +188,7 @@ private:
     bool paste(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool insertFile(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool keyEvent(const char* buffer, int length, const std::vector<std::string>& tokens, const LokEventTargetEnum target);
+    bool extTextInputEvent(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens);
     bool dialogKeyEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool mouseEvent(const char* buffer, int length, const std::vector<std::string>& tokens, const LokEventTargetEnum target);
     bool unoCommand(const char* buffer, int length, const std::vector<std::string>& tokens);

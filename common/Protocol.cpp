@@ -134,7 +134,7 @@ namespace LOOLProtocol
 
     bool getTokenString(const std::string& token, const std::string& name, std::string& value)
     {
-        if (token.size() > (name.size() + 1) &&
+        if (token.size() >= (name.size() + 1) &&
             token.compare(0, name.size(), name) == 0 &&
             token[name.size()] == '=')
         {
