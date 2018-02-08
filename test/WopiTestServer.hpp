@@ -112,7 +112,7 @@ protected:
             fileInfo->set("UserFriendlyName", "test");
             fileInfo->set("UserCanWrite", "true");
             fileInfo->set("PostMessageOrigin", "localhost");
-            fileInfo->set("LastModifiedTime", Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::ISO8601_FORMAT));
+            fileInfo->set("LastModifiedTime", Poco::DateTimeFormatter::format(Poco::DateTime(_fileLastModifiedTime), Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
             fileInfo->set("EnableOwnerTermination", "true");
 
             std::ostringstream jsonStream;
@@ -190,6 +190,7 @@ protected:
             std::string wopiTimestamp = request.get("X-LOOL-WOPI-Timestamp");
             if (!wopiTimestamp.empty())
             {
+
                 const std::string fileModifiedTime =
                     Poco::DateTimeFormatter::format(Poco::DateTime(_fileLastModifiedTime),
                                                     Poco::DateTimeFormat::ISO8601_FRAC_FORMAT);
@@ -199,7 +200,7 @@ protected:
                     oss << "HTTP/1.1 409 Conflict\r\n"
                         << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                         << "\r\n"
-                        << "{\"LOOLStatusCode\":" << LOOLStatusCode::DocChanged << "}";
+                        << "{\"LOOLStatusCode\":" << static_cast<int>(LOOLStatusCode::DocChanged) << "}";
 
                     socket->send(oss.str());
                     socket->shutdown();
@@ -216,9 +217,9 @@ protected:
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "\r\n";
+                << "\r\n"
+                << "{\"LastModifiedTime\": \"" << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::ISO8601_FRAC_FORMAT) << "\" }";
 
             socket->send(oss.str());
             socket->shutdown();
