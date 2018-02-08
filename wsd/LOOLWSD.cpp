@@ -2565,6 +2565,7 @@ private:
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ServerSocket::Type::Local, port, PrisonerPoll, factory);
 
+#ifdef BUILDING_TESTS
         // If we fail, try the next 100 ports.
         for (int i = 0; i < 100 && !socket; ++i)
         {
@@ -2573,10 +2574,11 @@ private:
             socket = getServerSocket(
             ServerSocket::Type::Local, port, PrisonerPoll, factory);
         }
+#endif
 
-        if (!UnitWSD::isUnitTesting() && !socket)
+        if (!socket)
         {
-            LOG_FTL("Failed to listen on Prisoner port (" <<
+            LOG_FTL("Failed to listen on Prisoner port(s) (" <<
                     MasterPortNumber << '-' << port << "). Exiting.");
             _exit(Application::EXIT_SOFTWARE);
         }
@@ -2598,14 +2600,24 @@ private:
 #endif
             factory = std::make_shared<PlainSocketFactory>();
 
+
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ServerSocket::Type::Public, port, WebServerPoll, factory);
+#ifdef BUILDLING_TESTS
         while (!socket)
         {
             ++port;
             LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << ".");
             socket = getServerSocket(
                 ServerSocket::Type::Public, port, WebServerPoll, factory);
+        }
+#endif
+
+        if (!socket)
+        {
+            LOG_FTL("Failed to listen on Server port(s) (" <<
+                    ClientPortNumber << '-' << port << "). Exiting.");
+            _exit(Application::EXIT_SOFTWARE);
         }
 
         ClientPortNumber = port;
