@@ -29,6 +29,8 @@ class WebSocketHandler;
 // Forward declaration to avoid pulling the world here.
 namespace Poco
 {
+    class MemoryInputStream;
+
     namespace Net
     {
         class HTTPServerRequest;
@@ -117,7 +119,7 @@ public:
     }
 
     /// Custom response to a http request.
-    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& /*request*/, std::shared_ptr<StreamSocket>& /*socket*/)
+    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& /*request*/, Poco::MemoryInputStream& /*message*/,std::shared_ptr<StreamSocket>& /*socket*/)
     {
         return false;
     }

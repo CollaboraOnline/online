@@ -1788,7 +1788,7 @@ private:
             std::vector<std::string> reqPathSegs;
             requestUri.getPathSegments(reqPathSegs);
 
-            if (UnitWSD::get().handleHttpRequest(request, socket))
+            if (UnitWSD::get().handleHttpRequest(request, message, socket))
             {
                 // Unit testing, nothing to do here
             }
