@@ -384,7 +384,7 @@ L.Map.Keyboard = L.Handler.extend({
 				if (!this._keyHandled && this._bufferedTextInputEvent) {
 					var textInputData = this._bufferedTextInputEvent.originalEvent.data;
 					charCode = e.originalEvent.keyCode;
-					for (idx = 0; i < textInputData.length; i++) {
+					for (var idx = 0; i < textInputData.length; i++) {
 						postEventFn.call(eventObject, 'input', textInputData[idx].charCodeAt(), 0);
 					}
 				}
