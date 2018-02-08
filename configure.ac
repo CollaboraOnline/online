@@ -117,6 +117,10 @@ AC_ARG_ENABLE([setcap],
             AS_HELP_STRING([--disable-setcap],
                           [Do not set capabilities on files. For packaging builds]))
 
+AC_ARG_ENABLE([werror],
+            AS_HELP_STRING([--disable-werror],
+                          [Do not turn warnings into errors.]))
+
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -170,8 +174,17 @@ AC_SUBST(MAX_DOCUMENTS)
 # Test for build environment
 
 CXXFLAGS="$CXXFLAGS -std=c++11"
-CXXFLAGS="$CXXFLAGS -Wall -Wextra -Werror -Wshadow"
-CFLAGS="$CFLAGS -Wall -Wextra -Werror"
+CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wshadow"
+CFLAGS="$CFLAGS -Wall -Wextra"
+
+AC_MSG_CHECKING([whether to turn warnings to errors])
+if test -z "$enable_werror" -o "$enable_werror" = "yes"; then
+    AC_MSG_RESULT([yes])
+    CXXFLAGS="$CXXFLAGS -Werror"
+    CFLAGS="$CFLAGS -Werror"
+else
+    AC_MSG_RESULT([no])
+fi
 
 # check for C++11 support
 HAVE_CXX11=
