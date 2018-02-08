@@ -44,7 +44,6 @@ public:
 
         _wopiSrc = "";
         Poco::URI::encode(wopiURL.toString(), ":/?", _wopiSrc);
-        Poco::URI loolUri(helpers::getTestServerURI());
 
         LOG_INF("Connecting to the fake WOPI server: /lool/" << _wopiSrc << "/ws");
 
