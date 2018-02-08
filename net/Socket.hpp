@@ -501,7 +501,7 @@ public:
         } while (rc == -1 && errno == EINTR);
 
         if (rc == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
-            LOG_SYS("wakeup socket #" << fd << " is closd at wakeup?");
+            LOG_SYS("wakeup socket #" << fd << " is closed at wakeup?");
     }
 
     /// Wakeup the main polling loop in another thread
