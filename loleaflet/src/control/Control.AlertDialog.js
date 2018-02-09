@@ -26,8 +26,8 @@ L.Control.AlertDialog = L.Control.extend({
 			return;
 		} else if (e.cmd && e.kind) {
 			var msg = _('The server encountered a %0 error while parsing the %1 command.');
-			msg.replace('%0', e.kind);
-			msg.replace('%1', e.cmd);
+			msg = msg.replace('%0', e.kind);
+			msg = msg.replace('%1', e.cmd);
 			vex.dialog.alert(msg);
 		}
 
