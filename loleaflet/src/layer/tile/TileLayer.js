@@ -1537,7 +1537,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			// move the hidden input field with the cursor
 			var clipContainer = L.DomUtil.get('doc-clipboard-container');
-			var pos = this._map.latLngToLayerPoint(L.latLng(cursorPos)).round();
+			var pos = this._map.latLngToContainerPoint(L.latLng(cursorPos)).round();
 			L.DomUtil.setPosition(clipContainer, pos);
 		}
 		else if (this._cursorMarker) {
