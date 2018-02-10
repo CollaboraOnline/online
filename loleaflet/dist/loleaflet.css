@@ -142,6 +142,10 @@ body {
 .loleaflet-annotation {
 	position: absolute;
 	text-align: center;
+	user-select: text;
+	-moz-user-select: text;
+	-webkit-user-select: text;
+	-ms-user-select: text;
 }
 
 .loleaflet-annotation-content-wrapper, .loleaflet-annotation-redline-content-wrapper {
