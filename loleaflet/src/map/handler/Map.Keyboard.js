@@ -425,6 +425,10 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_handleCtrlCommand: function (e) {
+		// Control
+		if (e.originalEvent.keyCode == 17)
+			return true;
+
 		if (e.type !== 'keydown' && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v' && e.originalEvent.key !== 'x' &&
 			/* Safari */ e.originalEvent.keyCode !== 99 && e.originalEvent.keyCode !== 118 && e.originalEvent.keyCode !== 120) {
 			e.originalEvent.preventDefault();
@@ -512,7 +516,7 @@ L.Map.Keyboard = L.Handler.extend({
 		case 91: // Left Cmd (Safari)
 		case 93: // Right Cmd (Safari)
 			// we prepare for a copy or cut event
-			this._map._docLayer._textArea.value = 'dummy text';
+			this._map._docLayer._textArea.value = window.getSelection().toString();
 			this._map._docLayer._textArea.focus();
 			this._map._docLayer._textArea.select();
 			return true;

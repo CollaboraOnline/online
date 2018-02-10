@@ -1906,7 +1906,11 @@ L.TileLayer = L.GridLayer.extend({
 	_onCopy: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		if (this._selectionTextContent) {
+		if (this._map._docLayer._textArea.value !== '') {
+			L.Compatibility.clipboardSet(e, this._map._docLayer._textArea.value);
+			this._map._docLayer._textArea.value = '';
+		}
+		if (this._textSelectionStart && this._textSelectionEnd && this._selectionTextContent) {
 			L.Compatibility.clipboardSet(e, this._selectionTextContent);
 
 			// remember the copied text, for rich copy/paste inside a document
@@ -1919,7 +1923,11 @@ L.TileLayer = L.GridLayer.extend({
 	_onCut: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		if (this._selectionTextContent) {
+		if (this._map._docLayer._textArea.value !== '') {
+			L.Compatibility.clipboardSet(e, this._map._docLayer._textArea.value);
+			this._map._docLayer._textArea.value = '';
+		}
+		if (this._textSelectionStart && this._textSelectionEnd && this._selectionTextContent) {
 			L.Compatibility.clipboardSet(e, this._selectionTextContent);
 
 			// remember the copied text, for rich copy/paste inside a document
