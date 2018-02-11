@@ -1586,7 +1586,7 @@ private:
             LOG_TRC("View to url [" << uri << "] created.");
         }
 
-        const std::string renderParams = makeRenderParams(userName);
+        const std::string renderParams = makeRenderParams(_renderOpts, userName);
         LOG_INF("Initializing for rendering session [" << sessionId << "] on document url [" <<
                 _url << "] with: [" << renderParams << "].");
 
@@ -1685,15 +1685,15 @@ private:
         return false;
     }
 
-    std::string makeRenderParams(const std::string& userName)
+    static std::string makeRenderParams(const std::string& renderOpts, const std::string& userName)
     {
         Object::Ptr renderOptsObj;
 
         // Fill the object with renderoptions, if any
-        if (!_renderOpts.empty())
+        if (!renderOpts.empty())
         {
             Parser parser;
-            Poco::Dynamic::Var var = parser.parse(_renderOpts);
+            Poco::Dynamic::Var var = parser.parse(renderOpts);
             renderOptsObj = var.extract<Object::Ptr>();
         }
         else if (!userName.empty())
@@ -1712,15 +1712,14 @@ private:
             renderOptsObj->set(".uno:Author", authorObj);
         }
 
-        std::string renderParams;
         if (renderOptsObj)
         {
             std::ostringstream ossRenderOpts;
             renderOptsObj->stringify(ossRenderOpts);
-            renderParams = ossRenderOpts.str();
+            return ossRenderOpts.str();
         }
 
-        return renderParams;
+        return std::string();
     }
 
     void run() override
