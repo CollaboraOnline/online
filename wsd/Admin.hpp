@@ -126,6 +126,14 @@ private:
     /// under @hardModeLimit
     void triggerMemoryCleanup(size_t hardModeLimit);
 
+    /// Round the interval up to multiples of MinStatsIntervalMs.
+    /// This is to avoid arbitrarily small intervals that hammer the server.
+    static int capAndRoundInterval(const unsigned interval)
+    {
+        const int value = std::max<int>(interval, MinStatsIntervalMs);
+        return ((value + MinStatsIntervalMs - 1) / MinStatsIntervalMs) * MinStatsIntervalMs;
+    }
+
 private:
     /// The model is accessed only during startup & in
     /// the Admin Poll thread.
@@ -139,13 +147,14 @@ private:
     size_t _totalSysMemKb;
     size_t _totalAvailMemKb;
 
-    std::atomic<int> _memStatsTaskIntervalMs;
     std::atomic<int> _cpuStatsTaskIntervalMs;
-    std::atomic<int> _networkStatsIntervalMs;
+    std::atomic<int> _memStatsTaskIntervalMs;
+    std::atomic<int> _netStatsTaskIntervalMs;
     DocProcSettings _defDocProcSettings;
 
     // Don't update any more frequently than this since it's excessive.
-    const int MinStatsIntervalMs = 50;
+    static const int MinStatsIntervalMs = 50;
+    static const int DefStatsIntervalMs = 2500;
 };
 
 #endif

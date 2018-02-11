@@ -333,9 +333,9 @@ Admin::Admin() :
     _lastJiffies(0),
     _lastSentCount(0),
     _lastRecvCount(0),
-    _memStatsTaskIntervalMs(5000),
-    _cpuStatsTaskIntervalMs(2000),
-    _networkStatsIntervalMs(5000)
+    _cpuStatsTaskIntervalMs(DefStatsIntervalMs),
+    _memStatsTaskIntervalMs(DefStatsIntervalMs * 2),
+    _netStatsTaskIntervalMs(DefStatsIntervalMs * 2)
 {
     LOG_INF("Admin ctor.");
 
@@ -371,18 +371,18 @@ void Admin::pollingThread()
 
     while (!_stop && !TerminationFlag && !ShutdownRequestFlag)
     {
-        std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+        const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
 
         int cpuWait = _cpuStatsTaskIntervalMs -
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCPU).count();
         if (cpuWait <= MinStatsIntervalMs / 2) // Close enough
         {
             const size_t currentJiffies = getTotalCpuUsage();
-            size_t cpuPercent = 100 * 1000 * currentJiffies / (sysconf (_SC_CLK_TCK) * _cpuStatsTaskIntervalMs);
+            const size_t cpuPercent = 100 * 1000 * currentJiffies / (sysconf (_SC_CLK_TCK) * _cpuStatsTaskIntervalMs);
             _model.addCpuStats(cpuPercent);
 
-            lastCPU = now;
             cpuWait += _cpuStatsTaskIntervalMs;
+            lastCPU = now;
         }
 
         int memWait = _memStatsTaskIntervalMs -
@@ -390,41 +390,43 @@ void Admin::pollingThread()
         if (memWait <= MinStatsIntervalMs / 2) // Close enough
         {
             const size_t totalMem = getTotalMemoryUsage();
+            _model.addMemStats(totalMem);
+
             if (totalMem != _lastTotalMemory)
             {
-                LOG_TRC("Total memory used: " << totalMem << " KB.");
+                // If our total memory consumption is above limit, cleanup
+                triggerMemoryCleanup(totalMem);
+
                 _lastTotalMemory = totalMem;
             }
 
-            _model.addMemStats(totalMem);
-
-            lastMem = now;
             memWait += _memStatsTaskIntervalMs;
-
-            // If our total memory consumption is above limit, cleanup
-            triggerMemoryCleanup(totalMem);
+            lastMem = now;
         }
 
-        int netWait = _networkStatsIntervalMs -
+        int netWait = _netStatsTaskIntervalMs -
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastNet).count();
         if (netWait <= MinStatsIntervalMs / 2) // Close enough
         {
-            uint64_t sentCount = _model.getSentBytesTotal();
-            uint64_t recvCount = _model.getRecvBytesTotal();
+            const uint64_t sentCount = _model.getSentBytesTotal();
+            const uint64_t recvCount = _model.getRecvBytesTotal();
 
             _model.addSentStats(sentCount - _lastSentCount);
             _model.addRecvStats(recvCount - _lastRecvCount);
 
-            LOG_TRC("Total Data sent: " << sentCount << ", recv: " << recvCount);
-            _lastRecvCount = recvCount;
-            _lastSentCount = sentCount;
+            if (_lastRecvCount != recvCount || _lastSentCount != sentCount)
+            {
+                LOG_TRC("Total Data sent: " << sentCount << ", recv: " << recvCount);
+                _lastRecvCount = recvCount;
+                _lastSentCount = sentCount;
+            }
 
+            netWait += _netStatsTaskIntervalMs;
             lastNet = now;
-            netWait += _networkStatsIntervalMs;
         }
 
         // Handle websockets & other work.
-        const int timeout = std::max(std::min(std::min(cpuWait, memWait), netWait), MinStatsIntervalMs);
+        const int timeout = capAndRoundInterval(std::min(std::min(cpuWait, memWait), netWait));
         LOG_TRC("Admin poll for " << timeout << "ms.");
         poll(timeout);
     }
@@ -453,14 +455,16 @@ void Admin::rmDoc(const std::string& docKey)
 
 void Admin::rescheduleMemTimer(unsigned interval)
 {
-    _memStatsTaskIntervalMs = std::max<int>(interval, MinStatsIntervalMs);
+    _memStatsTaskIntervalMs = capAndRoundInterval(interval);
     LOG_INF("Memory stats interval changed - New interval: " << _memStatsTaskIntervalMs);
+    _netStatsTaskIntervalMs = capAndRoundInterval(interval); // Until we support modifying this.
+    LOG_INF("Network stats interval changed - New interval: " << _netStatsTaskIntervalMs);
     wakeup();
 }
 
 void Admin::rescheduleCpuTimer(unsigned interval)
 {
-    _cpuStatsTaskIntervalMs = std::max<int>(interval, MinStatsIntervalMs);
+    _cpuStatsTaskIntervalMs = capAndRoundInterval(interval);
     LOG_INF("CPU stats interval changed - New interval: " << _cpuStatsTaskIntervalMs);
     wakeup();
 }
@@ -485,7 +489,7 @@ size_t Admin::getTotalCpuUsage()
     const size_t wsdJ = Util::getCpuUsage(Poco::Process::id());
     const size_t kitsJ = _model.getKitsJiffies();
 
-    if(_lastJiffies == 0)
+    if (_lastJiffies == 0)
     {
         _lastJiffies = forkitJ + wsdJ;
         return 0;
@@ -509,7 +513,7 @@ unsigned Admin::getCpuStatsInterval()
 
 unsigned Admin::getNetStatsInterval()
 {
-    return _networkStatsIntervalMs;
+    return _netStatsTaskIntervalMs;
 }
 
 AdminModel& Admin::getModel()
@@ -546,7 +550,7 @@ void Admin::notifyForkit()
         LOG_INF("Forkit write pipe not set (yet).");
 }
 
-void Admin::triggerMemoryCleanup(size_t totalMem)
+void Admin::triggerMemoryCleanup(const size_t totalMem)
 {
     // Trigger mem cleanup when we are consuming too much memory (as configured by sysadmin)
     const auto memLimit = LOOLWSD::getConfigValue<double>("memproportion", 0.0);
