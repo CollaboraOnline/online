@@ -140,7 +140,7 @@ void getDocumentPathAndURL(const std::string& docFilename, std::string& document
 }
 
 inline
-void sendTextFrame(LOOLWebSocket& socket, const std::string& string, const std::string& testname = "")
+void sendTextFrame(LOOLWebSocket& socket, const std::string& string, const std::string& testname)
 {
 #ifndef FUZZER
     TST_LOG("Sending " << string.size() << " bytes: " << LOOLProtocol::getAbbreviatedMessage(string));
@@ -183,7 +183,7 @@ std::string const & getTestServerURI()
 }
 
 inline
-int getErrorCode(LOOLWebSocket& ws, std::string& message, const std::string& testname = "")
+int getErrorCode(LOOLWebSocket& ws, std::string& message, const std::string& testname)
 {
     int flags = 0;
     int bytes = 0;
@@ -211,13 +211,13 @@ int getErrorCode(LOOLWebSocket& ws, std::string& message, const std::string& tes
 }
 
 inline
-int getErrorCode(const std::shared_ptr<LOOLWebSocket>& ws, std::string& message, const std::string& testname = "")
+int getErrorCode(const std::shared_ptr<LOOLWebSocket>& ws, std::string& message, const std::string& testname)
 {
     return getErrorCode(*ws, message, testname);
 }
 
 inline
-std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefix, const std::string& testname = "", const size_t timeoutMs = 10000)
+std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
 {
     try
     {
@@ -305,20 +305,20 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
 }
 
 inline
-std::vector<char> getResponseMessage(const std::shared_ptr<LOOLWebSocket>& ws, const std::string& prefix, const std::string& testname = "", const size_t timeoutMs = 10000)
+std::vector<char> getResponseMessage(const std::shared_ptr<LOOLWebSocket>& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
 {
     return getResponseMessage(*ws, prefix, testname, timeoutMs);
 }
 
 template <typename T>
-std::string getResponseString(T& ws, const std::string& prefix, const std::string& testname = "", const size_t timeoutMs = 10000)
+std::string getResponseString(T& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
 {
     const auto response = getResponseMessage(ws, prefix, testname, timeoutMs);
     return std::string(response.data(), response.size());
 }
 
 template <typename T>
-std::string assertResponseString(T& ws, const std::string& prefix, const std::string testname = "")
+std::string assertResponseString(T& ws, const std::string& prefix, const std::string testname)
 {
     const auto res = getResponseString(ws, prefix, testname);
     CPPUNIT_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
@@ -327,7 +327,7 @@ std::string assertResponseString(T& ws, const std::string& prefix, const std::st
 
 /// Assert that we don't get a response with the given prefix.
 template <typename T>
-std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string testname = "")
+std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string testname)
 {
     const auto res = getResponseString(ws, prefix, testname, 1000);
     CPPUNIT_ASSERT_MESSAGE(testname + "Did not expect getting message [" + res + "].", res.empty());
@@ -335,7 +335,7 @@ std::string assertNotInResponse(T& ws, const std::string& prefix, const std::str
 }
 
 inline
-bool isDocumentLoaded(LOOLWebSocket& ws, const std::string& testname = "", bool isView = true)
+bool isDocumentLoaded(LOOLWebSocket& ws, const std::string& testname, bool isView = true)
 {
     const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
     const auto message = getResponseString(ws, prefix, testname);
@@ -343,7 +343,7 @@ bool isDocumentLoaded(LOOLWebSocket& ws, const std::string& testname = "", bool 
 }
 
 inline
-bool isDocumentLoaded(std::shared_ptr<LOOLWebSocket>& ws, const std::string& testname = "", bool isView = true)
+bool isDocumentLoaded(std::shared_ptr<LOOLWebSocket>& ws, const std::string& testname, bool isView = true)
 {
     return isDocumentLoaded(*ws, testname, isView);
 }
@@ -357,7 +357,7 @@ std::shared_ptr<LOOLWebSocket>
 connectLOKit(const Poco::URI& uri,
              Poco::Net::HTTPRequest& request,
              Poco::Net::HTTPResponse& response,
-             const std::string& testname = "")
+             const std::string& testname)
 {
     TST_LOG_BEGIN("Connecting... ");
     int retries = 10;
@@ -390,7 +390,7 @@ connectLOKit(const Poco::URI& uri,
 }
 
 inline
-std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, const std::string& testname = "", bool isView = true)
+std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, const std::string& testname, bool isView = true)
 {
     try
     {
@@ -415,7 +415,7 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const s
 }
 
 inline
-std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const std::string& docFilename, const Poco::URI& uri, const std::string& testname = "", bool isView = true)
+std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const std::string& docFilename, const Poco::URI& uri, const std::string& testname, bool isView = true)
 {
     try
     {
@@ -487,13 +487,13 @@ void parseDocSize(const std::string& message, const std::string& type,
 }
 
 inline
-std::vector<char> getTileMessage(LOOLWebSocket& ws, const std::string& testname = "")
+std::vector<char> getTileMessage(LOOLWebSocket& ws, const std::string& testname)
 {
     return getResponseMessage(ws, "tile", testname);
 }
 
 inline
-std::vector<char> assertTileMessage(LOOLWebSocket& ws, const std::string& testname = "")
+std::vector<char> assertTileMessage(LOOLWebSocket& ws, const std::string& testname)
 {
     const std::vector<char> response = getTileMessage(ws, testname);
 
@@ -512,7 +512,7 @@ std::vector<char> assertTileMessage(LOOLWebSocket& ws, const std::string& testna
 }
 
 inline
-std::vector<char> assertTileMessage(const std::shared_ptr<LOOLWebSocket>& ws, const std::string& testname = "")
+std::vector<char> assertTileMessage(const std::shared_ptr<LOOLWebSocket>& ws, const std::string& testname)
 {
     return assertTileMessage(*ws, testname);
 }
@@ -551,7 +551,7 @@ inline int getCharKey(char ch, SpecialKey specialKeys)
     return result | specialKeys;
 }
 
-inline void sendKeyEvent(std::shared_ptr<LOOLWebSocket>& socket, const char* type, int chr, int key, const std::string& testname = "")
+inline void sendKeyEvent(std::shared_ptr<LOOLWebSocket>& socket, const char* type, int chr, int key, const std::string& testname)
 {
     std::ostringstream ssIn;
     ssIn << "key type=" << type << " char=" << chr << " key=" << key;
@@ -564,12 +564,12 @@ inline void sendKeyPress(std::shared_ptr<LOOLWebSocket>& socket, int chr, int ke
     sendKeyEvent(socket, "up", chr, key, testname);
 }
 
-inline void sendChar(std::shared_ptr<LOOLWebSocket>& socket, char ch, SpecialKey specialKeys=skNone, const std::string& testname = "")
+inline void sendChar(std::shared_ptr<LOOLWebSocket>& socket, char ch, SpecialKey specialKeys, const std::string& testname)
 {
     sendKeyPress(socket, getCharChar(ch, specialKeys), getCharKey(ch, specialKeys), testname);
 }
 
-inline void sendText(std::shared_ptr<LOOLWebSocket>& socket, const std::string& text, const std::string& testname = "")
+inline void sendText(std::shared_ptr<LOOLWebSocket>& socket, const std::string& text, const std::string& testname)
 {
     for (char ch : text)
     {
@@ -609,7 +609,7 @@ inline void getServerVersion(LOOLWebSocket& socket,
                              const std::string& testname)
 {
     const std::string clientVersion = "loolclient 0.1";
-    sendTextFrame(socket, clientVersion);
+    sendTextFrame(socket, clientVersion, testname);
     std::vector<char> loVersion = getResponseMessage(socket, "lokitversion", testname);
     std::string line = LOOLProtocol::getFirstLine(loVersion.data(), loVersion.size());
     line = line.substr(strlen("lokitversion "));

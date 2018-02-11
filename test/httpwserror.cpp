@@ -97,10 +97,10 @@ void HTTPWSError::testBadDocLoadFail()
         getDocumentPathAndURL("corrupted.odt", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
 
         // Send a load request with incorrect password
-        sendTextFrame(socket, "load url=" + documentURL);
+        sendTextFrame(socket, "load url=" + documentURL, testname);
 
         const auto response = getResponseString(socket, "error:", testname);
         Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);

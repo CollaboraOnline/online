@@ -211,15 +211,15 @@ void TileCacheTests::testSimpleCombine()
 
     sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
-    std::vector<char> tile1a = getResponseMessage(socket1, "tile:");
+    std::vector<char> tile1a = getResponseMessage(socket1, "tile:", testname);
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
-    std::vector<char> tile1b = getResponseMessage(socket1, "tile:");
+    std::vector<char> tile1b = getResponseMessage(socket1, "tile:", testname);
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
     sendTextFrame(socket1, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
-    tile1a = getResponseMessage(socket1, "tile:");
+    tile1a = getResponseMessage(socket1, "tile:", testname);
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
-    tile1b = getResponseMessage(socket1, "tile:");
+    tile1b = getResponseMessage(socket1, "tile:", testname);
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
 
     // Second.
@@ -228,9 +228,9 @@ void TileCacheTests::testSimpleCombine()
 
     sendTextFrame(socket2, "tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
-    std::vector<char> tile2a = getResponseMessage(socket2, "tile:");
+    std::vector<char> tile2a = getResponseMessage(socket2, "tile:", testname);
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2a.empty());
-    std::vector<char> tile2b = getResponseMessage(socket2, "tile:");
+    std::vector<char> tile2b = getResponseMessage(socket2, "tile:", testname);
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2b.empty());
 }
 
@@ -657,8 +657,8 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
     sendTextFrame(socket1, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
     sendTextFrame(socket2, "tile part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
 
-    const auto response1 = assertResponseString(socket1, "tile:");
-    const auto response2 = assertResponseString(socket2, "tile:");
+    const auto response1 = assertResponseString(socket1, "tile:", "client1 ");
+    const auto response2 = assertResponseString(socket2, "tile:", "client2 ");
 
     if (!response1.empty() && !response2.empty())
     {
@@ -677,8 +677,8 @@ void TileCacheTests::testLoad12ods()
 {
     try
     {
-        const char* testName = "load12ods ";
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("load12.ods", _uri, testName);
+        const char* testname = "load12ods ";
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("load12.ods", _uri, testname);
 
         int docSheet = -1;
         int docSheets = 0;
@@ -689,10 +689,10 @@ void TileCacheTests::testLoad12ods()
         // check document size
         sendTextFrame(socket, "status");
 
-        const auto response = assertResponseString(socket, "status:");
+        const auto response = assertResponseString(socket, "status:", testname);
         parseDocSize(response.substr(7), "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
-        checkBlackTiles(socket, docSheet, docWidth, docWidth, testName);
+        checkBlackTiles(socket, docSheet, docWidth, docWidth, testname);
     }
     catch (const Poco::Exception& exc)
     {
@@ -767,21 +767,21 @@ void TileCacheTests::testTileInvalidateWriter()
     std::string text = "Test. Now go 3 \"Enters\":\n\n\nNow after the enters, goes this text";
     for (char ch : text)
     {
-        sendChar(socket, ch); // Send ordinary characters and wait for response -> one tile invalidation for each
+        sendChar(socket, ch, skNone, testname); // Send ordinary characters and wait for response -> one tile invalidation for each
         assertResponseString(socket, "invalidatetiles:", testname);
     }
 
     text = "\n\n\n";
     for (char ch : text)
     {
-        sendChar(socket, ch, skCtrl); // Send 3 Ctrl+Enter -> 3 new pages
+        sendChar(socket, ch, skCtrl, testname); // Send 3 Ctrl+Enter -> 3 new pages
         assertResponseString(socket, "invalidatetiles:", testname);
     }
 
     text = "abcde";
     for (char ch : text)
     {
-        sendChar(socket, ch);
+        sendChar(socket, ch, skNone, testname);
         assertResponseString(socket, "invalidatetiles:", testname);
     }
 
@@ -834,66 +834,66 @@ void TileCacheTests::testWriterAnyKey()
         std::string f = fn.str();
 
         const int istart = 474;
-        sendText(socket, "\n"+s+"\n");
-        sendKeyEvent(socket, "input", 0, i);
-        sendKeyEvent(socket, "up", 0, i);
-        sendText(socket, "\nEnd "+s+"\n");
+        sendText(socket, "\n"+s+"\n", testname);
+        sendKeyEvent(socket, "input", 0, i, testname);
+        sendKeyEvent(socket, "up", 0, i, testname);
+        sendText(socket, "\nEnd "+s+"\n", testname);
         if (i>=istart)
             sendTextFrame(socket, f);
 
-        sendText(socket, "\n"+s+" With Shift:\n");
-        sendKeyEvent(socket, "input", 0, i|skShift);
-        sendKeyEvent(socket, "up", 0, i|skShift);
-        sendText(socket, "\nEnd "+s+" With Shift\n");
+        sendText(socket, "\n"+s+" With Shift:\n", testname);
+        sendKeyEvent(socket, "input", 0, i|skShift, testname);
+        sendKeyEvent(socket, "up", 0, i|skShift, testname);
+        sendText(socket, "\nEnd "+s+" With Shift\n", testname);
         if (i>=istart)
             sendTextFrame(socket, f);
 
-        sendText(socket, "\n"+s+" With Ctrl:\n");
-        sendKeyEvent(socket, "input", 0, i|skCtrl);
-        sendKeyEvent(socket, "up", 0, i|skCtrl);
-        sendText(socket, "\nEnd "+s+" With Ctrl\n");
+        sendText(socket, "\n"+s+" With Ctrl:\n", testname);
+        sendKeyEvent(socket, "input", 0, i|skCtrl, testname);
+        sendKeyEvent(socket, "up", 0, i|skCtrl, testname);
+        sendText(socket, "\nEnd "+s+" With Ctrl\n", testname);
         if (i>=istart)
             sendTextFrame(socket, f);
 
-        sendText(socket, "\n"+s+" With Alt:\n");
-        sendKeyEvent(socket, "input", 0, i|skAlt);
-        sendKeyEvent(socket, "up", 0, i|skAlt);
-        sendText(socket, "\nEnd "+s+" With Alt\n");
+        sendText(socket, "\n"+s+" With Alt:\n", testname);
+        sendKeyEvent(socket, "input", 0, i|skAlt, testname);
+        sendKeyEvent(socket, "up", 0, i|skAlt, testname);
+        sendText(socket, "\nEnd "+s+" With Alt\n", testname);
         if (i>=istart)
             sendTextFrame(socket, f);
 
-        sendText(socket, "\n"+s+" With Shift+Ctrl:\n");
-        sendKeyEvent(socket, "input", 0, i|skShift|skCtrl);
-        sendKeyEvent(socket, "up", 0, i|skShift|skCtrl);
-        sendText(socket, "\nEnd "+s+" With Shift+Ctrl\n");
+        sendText(socket, "\n"+s+" With Shift+Ctrl:\n", testname);
+        sendKeyEvent(socket, "input", 0, i|skShift|skCtrl, testname);
+        sendKeyEvent(socket, "up", 0, i|skShift|skCtrl, testname);
+        sendText(socket, "\nEnd "+s+" With Shift+Ctrl\n", testname);
         if (i>=istart)
             sendTextFrame(socket, f);
 
-        sendText(socket, "\n"+s+" With Shift+Alt:\n");
-        sendKeyEvent(socket, "input", 0, i|skShift|skAlt);
-        sendKeyEvent(socket, "up", 0, i|skShift|skAlt);
-        sendText(socket, "\nEnd "+s+" With Shift+Alt\n");
+        sendText(socket, "\n"+s+" With Shift+Alt:\n", testname);
+        sendKeyEvent(socket, "input", 0, i|skShift|skAlt, testname);
+        sendKeyEvent(socket, "up", 0, i|skShift|skAlt, testname);
+        sendText(socket, "\nEnd "+s+" With Shift+Alt\n", testname);
         if (i>=istart)
             sendTextFrame(socket, f);
 
-        sendText(socket, "\n"+s+" With Ctrl+Alt:\n");
-        sendKeyEvent(socket, "input", 0, i|skCtrl|skAlt);
-        sendKeyEvent(socket, "up", 0, i|skCtrl|skAlt);
-        sendText(socket, "\nEnd "+s+" With Ctrl+Alt\n");
+        sendText(socket, "\n"+s+" With Ctrl+Alt:\n", testname);
+        sendKeyEvent(socket, "input", 0, i|skCtrl|skAlt, testname);
+        sendKeyEvent(socket, "up", 0, i|skCtrl|skAlt, testname);
+        sendText(socket, "\nEnd "+s+" With Ctrl+Alt\n", testname);
         if (i>=istart)
             sendTextFrame(socket, f);
 
-        sendText(socket, "\n"+s+" With Shift+Ctrl+Alt:\n");
-        sendKeyEvent(socket, "input", 0, i|skShift|skCtrl|skAlt);
-        sendKeyEvent(socket, "up", 0, i|skShift|skCtrl|skAlt);
-        sendText(socket, "\nEnd "+s+" With Shift+Ctrl+Alt\n");
+        sendText(socket, "\n"+s+" With Shift+Ctrl+Alt:\n", testname);
+        sendKeyEvent(socket, "input", 0, i|skShift|skCtrl|skAlt, testname);
+        sendKeyEvent(socket, "up", 0, i|skShift|skCtrl|skAlt, testname);
+        sendText(socket, "\nEnd "+s+" With Shift+Ctrl+Alt\n", testname);
 
         if (i>=istart)
             sendTextFrame(socket, f);
 
         // This is to allow server to process the input, and check that everything is still OK
-        sendTextFrame(socket, "status");
-        getResponseMessage(socket, "status:");
+        sendTextFrame(socket, "status", testname);
+        getResponseMessage(socket, "status:", testname);
     }
     //    sendTextFrame(socket, "saveas url=file:///tmp/emptyempty.odt format= options=");
 }
@@ -906,7 +906,7 @@ void TileCacheTests::testTileInvalidateCalc()
     std::string text = "Test. Now go 3 \"Enters\": Now after the enters, goes this text";
     for (char ch : text)
     {
-        sendChar(socket, ch); // Send ordinary characters -> one tile invalidation for each
+        sendChar(socket, ch, skNone, testname); // Send ordinary characters -> one tile invalidation for each
         assertResponseString(socket, "invalidatetiles:", testname);
     }
 
@@ -914,14 +914,14 @@ void TileCacheTests::testTileInvalidateCalc()
     text = "\n\n\n";
     for (char ch : text)
     {
-        sendChar(socket, ch, skCtrl); // Send 3 Ctrl+Enter -> 3 new pages; I see 3 tiles invalidated for each
+        sendChar(socket, ch, skCtrl, testname); // Send 3 Ctrl+Enter -> 3 new pages; I see 3 tiles invalidated for each
         assertResponseString(socket, "invalidatetiles:", testname);
     }
 
     text = "abcde";
     for (char ch : text)
     {
-        sendChar(socket, ch);
+        sendChar(socket, ch, skNone, testname);
         assertResponseString(socket, "invalidatetiles:", testname);
     }
 }
@@ -949,8 +949,8 @@ void TileCacheTests::testTileInvalidatePartCalc()
     static const std::string text = "Some test";
     for (char ch : text)
     {
-        sendChar(socket1, ch);
-        sendChar(socket2, ch);
+        sendChar(socket1, ch, skNone, testname);
+        sendChar(socket2, ch, skNone, testname);
 
         const auto response1 = assertResponseString(socket1, "invalidatetiles:", testname1);
         int value1;
@@ -988,8 +988,8 @@ void TileCacheTests::testTileInvalidatePartImpress()
     static const std::string text = "Some test";
     for (char ch : text)
     {
-        sendChar(socket1, ch);
-        sendChar(socket2, ch);
+        sendChar(socket1, ch, skNone, testname);
+        sendChar(socket2, ch, skNone, testname);
 
         const auto response1 = assertResponseString(socket1, "invalidatetiles:", testname1);
         int value1;

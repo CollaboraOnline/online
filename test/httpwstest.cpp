@@ -418,7 +418,7 @@ void HTTPWSTest::testConnectNoLoad()
     std::shared_ptr<LOOLWebSocket> socket1 = connectLOKit(_uri, request, _response, testname2);
     CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket1);
     sendTextFrame(socket1, "load url=" + documentURL, testname2);
-    CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket1));
+    CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket1, testname2));
 
     // Connect but don't load second view.
     TST_LOG_NAME(testname3, "Connecting third to disconnect without loading.");
@@ -429,7 +429,7 @@ void HTTPWSTest::testConnectNoLoad()
 
     TST_LOG_NAME(testname2, "Getting status from first view.");
     sendTextFrame(socket1, "status", testname2);
-    assertResponseString(socket1, "status:");
+    assertResponseString(socket1, "status:", testname2);
 
     TST_LOG_NAME(testname2, "Disconnecting second.");
     socket1.reset();
@@ -610,12 +610,12 @@ void HTTPWSTest::testBadLoad()
         getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
 
         // Before loading request status.
         sendTextFrame(socket, "status");
 
-        const auto line = assertResponseString(socket, "error:");
+        const auto line = assertResponseString(socket, "error:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);
     }
     catch (const Poco::Exception& exc)
@@ -745,7 +745,7 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket2 = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket2 = connectLOKit(_uri, request, _response, testname);
 
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "uno .uno:Delete", testname);
@@ -964,11 +964,11 @@ void HTTPWSTest::testRenderingOptions()
         const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
 
         sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
         sendTextFrame(socket, "status");
-        const auto status = assertResponseString(socket, "status:");
+        const auto status = assertResponseString(socket, "status:", testname);
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
         Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
@@ -996,7 +996,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
         getDocumentPathAndURL("password-protected.ods", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
 
         // Send a load request without password first
         sendTextFrame(socket, "load url=" + documentURL);
@@ -1027,7 +1027,7 @@ void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
         getDocumentPathAndURL("password-protected.ods", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
 
         // Send a load request with incorrect password
         sendTextFrame(socket, "load url=" + documentURL + " password=2");
@@ -1058,12 +1058,12 @@ void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
         getDocumentPathAndURL("password-protected.ods", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
 
         // Send a load request with correct password
         sendTextFrame(socket, "load url=" + documentURL + " password=1");
 
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket));
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket, testname));
     }
     catch (const Poco::Exception& exc)
     {
@@ -1085,12 +1085,12 @@ void HTTPWSTest::testPasswordProtectedOOXMLDocument()
         getDocumentPathAndURL("password-protected.docx", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
 
         // Send a load request with correct password
         sendTextFrame(socket, "load url=" + documentURL + " password=abc");
 
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket));
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket, testname));
     }
     catch (const Poco::Exception& exc)
     {
@@ -1107,12 +1107,12 @@ void HTTPWSTest::testPasswordProtectedBinaryMSOfficeDocument()
         getDocumentPathAndURL("password-protected.doc", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
 
         // Send a load request with correct password
         sendTextFrame(socket, "load url=" + documentURL + " password=abc");
 
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket));
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket, testname));
     }
     catch (const Poco::Exception& exc)
     {
@@ -1133,15 +1133,15 @@ void HTTPWSTest::testInsertDelete()
         getDocumentPathAndURL("insert-delete.odp", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
 
         sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket, testname));
 
         // check total slides 1
         TST_LOG("Expecting 1 slide.");
         sendTextFrame(socket, "status");
-        response = getResponseString(socket, "status:");
+        response = getResponseString(socket, "status:", testname);
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(testname, response.substr(7), parts);
         CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
@@ -1153,7 +1153,7 @@ void HTTPWSTest::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:InsertPage");
-            response = getResponseString(socket, "status:");
+            response = getResponseString(socket, "status:", testname);
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             getPartHashCodes(testname, response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
@@ -1169,7 +1169,7 @@ void HTTPWSTest::testInsertDelete()
             // Explicitly delete the nth slide.
             sendTextFrame(socket, "setclientpart part=" + std::to_string(it));
             sendTextFrame(socket, "uno .uno:DeletePage");
-            response = getResponseString(socket, "status:");
+            response = getResponseString(socket, "status:", testname);
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             getPartHashCodes(testname, response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
@@ -1182,7 +1182,7 @@ void HTTPWSTest::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Undo");
-            response = getResponseString(socket, "status:");
+            response = getResponseString(socket, "status:", testname);
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             getPartHashCodes(testname, response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
@@ -1197,7 +1197,7 @@ void HTTPWSTest::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             sendTextFrame(socket, "uno .uno:Redo");
-            response = getResponseString(socket, "status:");
+            response = getResponseString(socket, "status:", testname);
             CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
             getPartHashCodes(testname, response.substr(7), parts);
             CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
@@ -1208,7 +1208,7 @@ void HTTPWSTest::testInsertDelete()
         // check total slides 1
         TST_LOG("Expecting 1 slide.");
         sendTextFrame(socket, "status");
-        response = getResponseString(socket, "status:");
+        response = getResponseString(socket, "status:", testname);
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(testname, response.substr(7), parts);
         CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
@@ -1251,10 +1251,10 @@ void HTTPWSTest::testSlideShow()
         getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL, testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response);
+        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
 
         sendTextFrame(socket, "load url=" + documentURL, testname);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket));
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket, testname));
 
         // request slide show
         sendTextFrame(socket, "downloadas name=slideshow.svg id=slideshow format=svg options=", testname);
@@ -1324,7 +1324,7 @@ void HTTPWSTest::testInactiveClient()
         std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-1 ");
 
         // Connect another and go inactive.
-        TST_LOG("Connecting second client.");
+        TST_LOG_NAME("inactiveClient-2 ", "Connecting second client.");
         std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-2 ", true);
         sendTextFrame(socket2, "userinactive", "inactiveClient-2 ");
 
@@ -2593,8 +2593,8 @@ void HTTPWSTest::testViewInfoMsg()
     getDocumentPathAndURL("hello.odt", docPath, docURL, testname);
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-    std::shared_ptr<LOOLWebSocket> socket0 = connectLOKit(_uri, request, _response);
-    std::shared_ptr<LOOLWebSocket> socket1 = connectLOKit(_uri, request, _response);
+    std::shared_ptr<LOOLWebSocket> socket0 = connectLOKit(_uri, request, _response, testname);
+    std::shared_ptr<LOOLWebSocket> socket1 = connectLOKit(_uri, request, _response, testname);
 
     std::string response;
     int part, parts, width, height;
@@ -2662,8 +2662,8 @@ void HTTPWSTest::testUndoConflict()
     getDocumentPathAndURL("empty.odt", docPath, docURL, testname);
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-    std::shared_ptr<LOOLWebSocket> socket0 = connectLOKit(_uri, request, _response);
-    std::shared_ptr<LOOLWebSocket> socket1 = connectLOKit(_uri, request, _response);
+    std::shared_ptr<LOOLWebSocket> socket0 = connectLOKit(_uri, request, _response, testname);
+    std::shared_ptr<LOOLWebSocket> socket1 = connectLOKit(_uri, request, _response, testname);
 
     std::string response;
     try
