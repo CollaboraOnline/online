@@ -146,7 +146,7 @@ void SocketDisposition::execute()
 void WebSocketHandler::dumpState(std::ostream& os)
 {
     os << (_shuttingDown ? "shutd " : "alive ")
-       << std::setw(5) << 1.0*_pingTimeUs/1000 << "ms ";
+       << std::setw(5) << _pingTimeUs/1000. << "ms ";
     if (_wsPayload.size() > 0)
         Util::dumpHex(os, "\t\tws queued payload:\n", "\t\t", _wsPayload);
     os << "\n";

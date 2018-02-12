@@ -25,30 +25,29 @@
 class WebSocketHandler : public SocketHandlerInterface
 {
 protected:
-    // The socket that owns us (we can't own it).
+    /// The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
 
-    const int InitialPingDelayMs = 25;
-    const int PingFrequencyMs = 18 * 1000;
-    std::chrono::steady_clock::time_point _pingSent;
+    std::chrono::steady_clock::time_point _lastPingSentTime;
     int _pingTimeUs;
 
     std::vector<char> _wsPayload;
-    bool _shuttingDown;
-    enum class WSState { HTTP, WS } _wsState;
+    std::atomic<bool> _shuttingDown;
 
-    enum class WSFrameMask : unsigned char
+    struct WSFrameMask
     {
-        Fin = 0x80,
-        Mask = 0x80
+        static const unsigned char Fin = 0x80;
+        static const unsigned char Mask = 0x80;
     };
+
+    static const int InitialPingDelayMs = 25;
+    static const int PingFrequencyMs = 18 * 1000;
 
 public:
     WebSocketHandler() :
-        _pingSent(std::chrono::steady_clock::now()),
+        _lastPingSentTime(std::chrono::steady_clock::now()),
         _pingTimeUs(0),
-        _shuttingDown(false),
-        _wsState(WSState::HTTP)
+        _shuttingDown(false)
     {
     }
 
@@ -56,12 +55,11 @@ public:
     WebSocketHandler(const std::weak_ptr<StreamSocket>& socket,
                      const Poco::Net::HTTPRequest& request) :
         _socket(socket),
-        _pingSent(std::chrono::steady_clock::now() -
+        _lastPingSentTime(std::chrono::steady_clock::now() -
                   std::chrono::milliseconds(PingFrequencyMs) -
                   std::chrono::milliseconds(InitialPingDelayMs)),
         _pingTimeUs(0),
-        _shuttingDown(false),
-        _wsState(WSState::HTTP)
+        _shuttingDown(false)
     {
         upgradeToWebSocket(request);
     }
@@ -110,7 +108,7 @@ public:
         buf[0] = ((((int)statusCode) >> 8) & 0xff);
         buf[1] = ((((int)statusCode) >> 0) & 0xff);
         std::copy(statusMessage.begin(), statusMessage.end(), buf.begin() + 2);
-        const unsigned char flags = static_cast<unsigned char>(WSFrameMask::Fin)
+        const unsigned char flags = WSFrameMask::Fin
                                   | static_cast<char>(WSOpCode::Close);
 
         sendFrame(socket, buf.data(), buf.size(), flags);
@@ -197,9 +195,12 @@ public:
         switch (code)
         {
         case WSOpCode::Pong:
-            _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _pingSent).count();
+        {
+            _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
+                                        (std::chrono::steady_clock::now() - _lastPingSentTime).count();
             LOG_TRC("#" << socket->getFD() << ": Pong received: " << _pingTimeUs << " microseconds");
             break;
+        }
         case WSOpCode::Ping:
             LOG_ERR("#" << socket->getFD() << ": Clients should not send pings, only servers");
             // drop through
@@ -263,39 +264,39 @@ public:
                       int & timeoutMaxMs) override
     {
         const int timeSincePingMs =
-            std::chrono::duration_cast<std::chrono::milliseconds>(now - _pingSent).count();
+            std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastPingSentTime).count();
         timeoutMaxMs = std::min(timeoutMaxMs, PingFrequencyMs - timeSincePingMs);
         return POLLIN;
     }
 
     /// Send a ping message
     void sendPing(std::chrono::steady_clock::time_point now,
-                  const std::shared_ptr<Socket>& socket)
+                  const std::shared_ptr<StreamSocket>& socket)
     {
         assert(socket && "Expected a valid socket instance.");
 
         // Must not send this before we're upgraded.
-        if (_wsState != WSState::WS)
+        if (!socket->isWebSocket())
         {
-            LOG_WRN("Attempted ping on non-upgraded websocket!");
-            _pingSent = now; // Pretend we sent it to avoid timing out immediately.
+            LOG_WRN("Attempted ping on non-upgraded websocket! #" << socket->getFD());
+            _lastPingSentTime = now; // Pretend we sent it to avoid timing out immediately.
             return;
         }
 
         LOG_TRC("#" << socket->getFD() << ": Sending ping.");
         // FIXME: allow an empty payload.
         sendMessage("", 1, WSOpCode::Ping, false);
-        _pingSent = now;
+        _lastPingSentTime = now;
     }
 
     /// Do we need to handle a timeout ?
     void checkTimeout(std::chrono::steady_clock::time_point now) override
     {
         const int timeSincePingMs =
-            std::chrono::duration_cast<std::chrono::milliseconds>(now - _pingSent).count();
+            std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastPingSentTime).count();
         if (timeSincePingMs >= PingFrequencyMs)
         {
-            const std::shared_ptr<Socket> socket = _socket.lock();
+            const std::shared_ptr<StreamSocket> socket = _socket.lock();
             if (socket)
                 sendPing(now, socket);
         }
@@ -321,8 +322,8 @@ public:
 
         //TODO: Support fragmented messages.
 
-        auto socket = _socket.lock();
-        return sendFrame(socket, data, len, static_cast<unsigned char>(WSFrameMask::Fin) | static_cast<unsigned char>(code), flush);
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        return sendFrame(socket, data, len, WSFrameMask::Fin | static_cast<unsigned char>(code), flush);
     }
 
 protected:
@@ -406,7 +407,7 @@ protected:
             throw std::runtime_error("Invalid socket while upgrading to WebSocket. Request: " + req.getURI());
 
         LOG_TRC("#" << socket->getFD() << ": Upgrading to WebSocket.");
-        assert(_wsState == WSState::HTTP);
+        assert(!socket->isWebSocket());
 
         // create our websocket goodness ...
         const int wsVersion = std::stoi(req.get("Sec-WebSocket-Version", "13"));
@@ -432,11 +433,11 @@ protected:
         LOG_TRC("#" << socket->getFD() << ": Sending WS Upgrade response: " << res);
         socket->send(res);
 
-        _wsState = WSState::WS;
+        socket->setWebSocket();
 
         // No need to ping right upon connection/upgrade,
         // but do reset the time to avoid pinging immediately after.
-        _pingSent = std::chrono::steady_clock::now();
+        _lastPingSentTime = std::chrono::steady_clock::now();
     }
 };
 
