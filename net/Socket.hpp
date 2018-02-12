@@ -701,10 +701,11 @@ public:
     StreamSocket(const int fd, std::shared_ptr<SocketHandlerInterface> socketHandler) :
         Socket(fd),
         _socketHandler(std::move(socketHandler)),
-        _closed(false),
-        _shutdownSignalled(false),
         _bytesSent(0),
-        _bytesRecvd(0)
+        _bytesRecvd(0),
+        _wsState(WSState::HTTP),
+        _closed(false),
+        _shutdownSignalled(false)
     {
         LOG_DBG("StreamSocket ctor #" << fd);
 
@@ -731,6 +732,8 @@ public:
     }
 
     bool isClosed() const { return _closed; }
+    bool isWebSocket() const { return _wsState == WSState::WS; }
+    void setWebSocket() { _wsState = WSState::WS; }
 
     /// Just trigger the async shutdown.
     virtual void shutdown() override
@@ -969,17 +972,19 @@ protected:
     /// Client handling the actual data.
     std::shared_ptr<SocketHandlerInterface> _socketHandler;
 
+    std::vector<char> _inBuffer;
+    std::vector<char> _outBuffer;
+
+    uint64_t _bytesSent;
+    uint64_t _bytesRecvd;
+
+    enum class WSState { HTTP, WS } _wsState;
+
     /// True if we are already closed.
     bool _closed;
 
     /// True when shutdown was requested via shutdown().
     bool _shutdownSignalled;
-
-    std::vector< char > _inBuffer;
-    std::vector< char > _outBuffer;
-
-    uint64_t _bytesSent;
-    uint64_t _bytesRecvd;
 
     // To be able to access _inBuffer and _outBuffer.
     // TODO we probably need accessors to the _inBuffer & _outBuffer
