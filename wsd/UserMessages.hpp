@@ -12,8 +12,9 @@
 #ifndef INCLUDED_USERMESSAGES_HPP
 #define INCLUDED_USERMESSAGES_HPP
 
-constexpr auto SERVICE_UNAVAILABLE_INTERNAL_ERROR = "error: cmd=socket kind=serviceunavailable";
-constexpr auto PAYLOAD_UNAVAILABLE_LIMIT_REACHED = "error: cmd=socket kind=limitreached params=%u,%u";
+constexpr const char* SERVICE_UNAVAILABLE_INTERNAL_ERROR = "error: cmd=socket kind=serviceunavailable";
+constexpr const char* PAYLOAD_UNAVAILABLE_LIMIT_REACHED = "error: cmd=socket kind=hardlimitreached params=%u,%u";
+constexpr const char* PAYLOAD_INFO_LIMIT_REACHED = "info: cmd=socket kind=limitreached params=%u,%u";
 
 #endif
 
