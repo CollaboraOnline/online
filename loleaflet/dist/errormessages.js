@@ -1,6 +1,6 @@
 exports.diskfull = _('No disk space left on server, please contact the server administrator to continue.');
 exports.emptyhosturl = _('The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator.');
-exports.limitreached = _('This development build is limited to %0 documents, and %1 connections - to avoid the impression that it is suitable for deployment in large enterprises. To find out more about deploying and scaling %2 check out: <br/><a href=\"%3\">%3</a>.');
+exports.limitreached = _('This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this version is limited to {docs} documents, and {connections} connections.<br/>{a}More information and support{/a}');
 exports.limitreachedprod = _('This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later.');
 exports.serviceunavailable = _('Service is unavailable. Please try again later and report to your administrator if the issue persists.');
 exports.unauthorized = _('Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists.');

@@ -196,7 +196,7 @@ namespace
 inline void shutdownLimitReached(WebSocketHandler& ws)
 {
     const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
-    LOG_INF("Sending client limit-reached message: " << error);
+    LOG_INF("Sending client 'hardlimitreached' message: " << error);
 
     try
     {
@@ -211,6 +211,22 @@ inline void shutdownLimitReached(WebSocketHandler& ws)
         LOG_ERR("Error while shuting down socket on reaching limit: " << ex.what());
     }
 }
+
+inline void infoLimitReached()
+{
+    const std::string info = Poco::format(PAYLOAD_INFO_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
+    LOG_INF("Sending client 'limitreached' message: " << info);
+
+    try
+    {
+        Util::alertAllUsers(info);
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Error while shuting down socket on reaching limit: " << ex.what());
+    }
+}
+
 
 /// Internal implementation to alert all clients
 /// connected to any document.
@@ -1454,9 +1470,11 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
 
         if (DocBrokers.size() + 1 > LOOLWSD::MaxDocuments)
         {
-            LOG_ERR("Maximum number of open documents of " << LOOLWSD::MaxDocuments << " reached.");
+            LOG_INF("Maximum number of open documents of " << LOOLWSD::MaxDocuments << " reached.");
+#if ENABLE_SUPPORT_KEY
             shutdownLimitReached(ws);
             return nullptr;
+#endif
         }
 
         // Set the one we just created.
@@ -1486,6 +1504,13 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
             // Alert all other existing sessions also
             Util::alertAllUsers(diskfullMsg);
         }
+#if !ENABLE_SUPPORT_KEY
+        // Users of development versions get just an info when reaching max documents or connections
+        if (DocBrokers.size() + 1 > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
+        {
+            infoLimitReached();
+        }
+#endif
 
         // Now we have a DocumentBroker and we're ready to process client commands.
         if (ws)
@@ -2257,9 +2282,11 @@ private:
         {
             if (LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
             {
-                LOG_ERR("Limit on maximum number of connections of " << LOOLWSD::MaxConnections << " reached.");
+                LOG_INF("Limit on maximum number of connections of " << LOOLWSD::MaxConnections << " reached.");
+#if ENABLE_SUPPORT_KEY
                 shutdownLimitReached(ws);
                 return;
+#endif
             }
 
             LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << url << "].");
