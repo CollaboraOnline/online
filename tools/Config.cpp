@@ -102,7 +102,7 @@ void Config::displayHelp()
 #if ENABLE_SUPPORT_KEY
               << "    set-support-key\n"
 #endif
-              << "    set-raw-config <key> <value>" << std::endl;
+              << "    set <key> <value>" << std::endl;
 }
 
 void Config::defineOptions(OptionSet& optionSet)
@@ -299,7 +299,7 @@ int Config::main(const std::vector<std::string>& args)
         changed = true;
     }
 #endif
-    else if (args[0] == "set-raw-config")
+    else if (args[0] == "set")
     {
         if (args.size() == 3)
         {
@@ -317,9 +317,9 @@ int Config::main(const std::vector<std::string>& args)
                 std::cerr << "No property, \"" << args[1] << "\"," << " found in config file." << std::endl;
         }
         else
-            std::cerr << "set-raw-config expects a key and value as arguments" << std::endl
+            std::cerr << "set expects a key and value as arguments" << std::endl
                       << "Eg: " << std::endl
-                      << "    set-raw-config logging.level trace" << std::endl;
+                      << "    set logging.level trace" << std::endl;
 
     }
     else
