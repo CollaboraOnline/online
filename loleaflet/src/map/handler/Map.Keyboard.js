@@ -239,16 +239,18 @@ L.Map.Keyboard = L.Handler.extend({
 		return this.keymap[keyCode] || keyCode;
 	},
 
-	_onKeyDown: function (e, postEventFn) {
+	_onKeyDown: function (e, keyEventFn, compEventFn) {
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
 			return;
 		}
 		var docLayer = this._map._docLayer;
-		var eventObject;
-		if (!postEventFn) {
+		if (!keyEventFn) {
 			// default is to post keyboard events on the document
-			postEventFn = docLayer._postKeyboardEvent;
-			eventObject = docLayer;
+			keyEventFn = L.bind(docLayer._postKeyboardEvent, docLayer);
+		}
+		if (!compEventFn) {
+			// document has winid=0
+			compEventFn = L.bind(docLayer._postCompositionEvent, docLayer, 0 /* winid */);
 		}
 		this.modifier = 0;
 		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;
@@ -299,7 +301,7 @@ L.Map.Keyboard = L.Handler.extend({
 				txt += e.originalEvent.data[i];
 			}
 			if (txt) {
-				this._map._socket.sendMessage('textinput type=input text=' + txt);
+				compEventFn('input', txt);
 			}
 		}
 
@@ -322,7 +324,7 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this.modifier) {
 			unoKeyCode |= this.modifier;
 			if (e.type !== 'keyup' && (this.modifier !== shift || (keyCode === 32 && !docLayer._isCursorVisible))) {
-				postEventFn.call(eventObject, 'input', charCode, unoKeyCode);
+				keyEventFn('input', charCode, unoKeyCode);
 				e.originalEvent.preventDefault();
 				return;
 			}
@@ -336,7 +338,7 @@ L.Map.Keyboard = L.Handler.extend({
 				this._bufferedTextInputEvent = null;
 
 				if (this._handleOnKeyDown(keyCode, this.modifier) && charCode === 0) {
-					postEventFn.call(eventObject, 'input', charCode, unoKeyCode);
+					keyEventFn('input', charCode, unoKeyCode);
 				}
 			}
 			else if ((e.type === 'keypress' || e.type === 'compositionend') &&
@@ -353,9 +355,9 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 				if (e.type === 'compositionend') {
 					// Set all keycodes to zero
-					this._map._socket.sendMessage('textinput type=end text=void');
+					compEventFn('end', '');
 				} else {
-					postEventFn.call(eventObject, 'input', charCode, unoKeyCode);
+					keyEventFn('input', charCode, unoKeyCode);
 				}
 
 				this._keyHandled = true;
@@ -388,7 +390,7 @@ L.Map.Keyboard = L.Handler.extend({
 						keyEventFn('input', textInputData[idx].charCodeAt(), 0);
 					}
 				}
-				postEventFn.call(eventObject, 'up', charCode, unoKeyCode);
+				keyEventFn('up', charCode, unoKeyCode);
 
 				this._keyHandled = true;
 				this._bufferedTextInputEvent = null;
@@ -414,7 +416,7 @@ L.Map.Keyboard = L.Handler.extend({
 			else if (key in this._panKeys && e.originalEvent.shiftKey &&
 					docLayer._selections.getLayers().length !== 0) {
 				// if there is a selection and the user wants to modify it
-				postEventFn.call(eventObject, 'input', charCode, unoKeyCode);
+				keyEventFn('input', charCode, unoKeyCode);
 			}
 			else if (key in this._zoomKeys) {
 				map.setZoom(map.getZoom() + (e.shiftKey ? 3 : 1) * this._zoomKeys[key]);

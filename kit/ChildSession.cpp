@@ -771,13 +771,15 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
 bool ChildSession::extTextInputEvent(const char* /*buffer*/, int /*length*/,
                                      const std::vector<std::string>& tokens)
 {
-    int type;
+    int id, type;
     std::string text;
-    if (tokens.size() < 3 ||
-        !getTokenKeyword(tokens[1], "type",
+    if (tokens.size() < 4 ||
+        !getTokenInteger(tokens[1], "id", id) || id < 0 ||
+        !getTokenKeyword(tokens[2], "type",
                         {{"input", LOK_EXT_TEXTINPUT}, {"end", LOK_EXT_TEXTINPUT_END}},
                          type) ||
-        !getTokenString(tokens[2], "text", text))
+        !getTokenString(tokens[3], "text", text))
+
     {
         sendTextFrame("error: cmd=" + std::string(tokens[0]) + " kind=syntax");
         return false;
@@ -785,7 +787,7 @@ bool ChildSession::extTextInputEvent(const char* /*buffer*/, int /*length*/,
 
     std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
     getLOKitDocument()->setView(_viewId);
-    getLOKitDocument()->postExtTextInputEvent(type, text.c_str());
+    getLOKitDocument()->postExtTextInputEvent(id, type, text.c_str());
 
     return true;
 }

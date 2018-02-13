@@ -1468,6 +1468,11 @@ L.TileLayer = L.GridLayer.extend({
 				' char=' + charcode + ' key=' + keycode);
 	},
 
+	// if winId=0, then event is posted on the document
+	_postCompositionEvent: function(winId, type, text) {
+		this._map._socket.sendMessage('textinput id=' + winId + ' type=' + type + ' text=' + text);
+	},
+
 	_postSelectGraphicEvent: function(type, x, y) {
 		this._map._socket.sendMessage('selectgraphic type=' + type +
 				' x=' + x + ' y=' + y);
