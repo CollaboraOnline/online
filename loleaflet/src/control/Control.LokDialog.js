@@ -231,16 +231,27 @@ L.Control.LokDialog = L.Control.extend({
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, this._toRawDlgId(strDlgId), e.offsetX, e.offsetY, 1, buttons, 0);
 		}, this);
-		L.DomEvent.on(dialogCanvas, 'keyup keypress keydown', function(e) {
-			// _onKeyDown fn below requires this kind of structure but leaflet DomEvent.on doesn't pass it
-			e.originalEvent = e;
-			map['keyboard']._onKeyDown(e, L.bind(this._postWindowKeyboardEvent, this, this._toRawDlgId(strDlgId)));
-		}, this);
+		L.DomEvent.on(dialogCanvas,
+		              'keyup keypress keydown compositionstart compositionupdate compositionend',
+		              function(e) {
+			              e.originalEvent = e; // _onKeyDown fn below requires real event in e.originalEvent
+			              var fn = this._postWindowKeyboardEvent;
+			              if (e.type.startsWith('composition')) {
+				              fn = this._postWindowCompositionEvent;
+			              }
+			              map['keyboard']._onKeyDown(e, L.bind(fn,
+			                                                   this,
+			                                                   this._toRawDlgId(strDlgId)));
+		              }, this);
 		L.DomEvent.on(dialogCanvas, 'contextmenu', function() {
 			return false;
 		});
 
 		this._launchDialogCursor(strDlgId);
+	},
+
+	_postWindowCompositionEvent: function(winid, type, text) {
+		this._map._docLayer._postCompositionEvent(winid, type, text);
 	},
 
 	_postWindowMouseEvent: function(type, winid, x, y, count, buttons, modifier) {
