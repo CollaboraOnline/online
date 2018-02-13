@@ -7,6 +7,7 @@
 L.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
 	ReconnectCount: 0,
+	WasShownLimitDialog: false,
 
 	getParameterValue: function (s) {
 		var i = s.indexOf('=');
@@ -426,30 +427,33 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('error:') && !this._map._docLayer) {
 			textMsg = textMsg.substring(6);
-			if (command.errorKind === 'limitreached') {
-				this._map._fatal = true;
-				this._map._active = false; // Practically disconnected.
+			if (command.errorKind === 'hardlimitreached') {
 
-				// Servers configured for 50 documents are not demo/development.
-				if (parseInt(command.params[0]) >= 50) {
-					textMsg = errorMessages.limitreachedprod;
-					textMsg = textMsg.replace(/%0/g, command.params[0]);
-					textMsg = textMsg.replace(/%1/g, command.params[1]);
-				}
-				else {
-					textMsg = errorMessages.limitreached;
-					textMsg = textMsg.replace(/%0/g, command.params[0]);
-					textMsg = textMsg.replace(/%1/g, command.params[1]);
-					textMsg = textMsg.replace(/%2/g, (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online'));
-					textMsg = textMsg.replace(/%3/g, (typeof brandProductFAQURL !== 'undefined' ? brandProductFAQURL : 'https://wiki.documentfoundation.org/Development/LibreOffice_Online'));
-				}
+				textMsg = errorMessages.limitreachedprod;
+				textMsg = textMsg.replace(/%0/g, command.params[0]);
+				textMsg = textMsg.replace(/%1/g, command.params[1]);
 			}
 			else if (command.errorKind === 'serviceunavailable') {
-				this._map._fatal = true;
-				this._map._active = false; // Practically disconnected.
 				textMsg = errorMessages.serviceunavailable;
 			}
+			this._map._fatal = true;
+			this._map._active = false; // Practically disconnected.
 			this._map.fire('error', {msg: textMsg});
+		}
+		else if (textMsg.startsWith('info:') && command.errorCmd === 'socket') {
+			if (command.errorKind === 'limitreached' && !this.WasShownLimitDialog) {
+				this.WasShownLimitDialog = true;
+				textMsg = errorMessages.limitreached;
+				textMsg = textMsg.replace(/{docs}/g, command.params[0]);
+				textMsg = textMsg.replace(/{connections}/g, command.params[1]);
+				textMsg = textMsg.replace(/{productname}/g, (typeof brandProductName !== 'undefined' ?
+						brandProductName : 'LibreOffice Online'));
+				brandProductFAQURL = (typeof brandProductFAQURL !== 'undefined') ?
+						brandProductFAQURL : 'https://hub.libreoffice.org/professional-online-support';
+				textMsg = textMsg.replace(/{a}/g, '<a target="_blank" href="'+brandProductFAQURL+'">');
+				textMsg = textMsg.replace(/{\/a}/g, '</a>');
+				this._map.fire('error', {msg: textMsg});
+			}
 		}
 		else if (textMsg.startsWith('pong ') && this._map._docLayer && this._map._docLayer._debug) {
 			var times = this._map._docLayer._debugTimePING;
