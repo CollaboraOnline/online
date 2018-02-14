@@ -237,7 +237,7 @@ L.Map.Keyboard = L.Handler.extend({
 		return this.keymap[keyCode] || keyCode;
 	},
 
-	_onKeyDown: function (e, keyEventFn, compEventFn) {
+	_onKeyDown: function (e, keyEventFn, compEventFn, inputEle) {
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
 			return;
 		}
@@ -249,6 +249,9 @@ L.Map.Keyboard = L.Handler.extend({
 		if (!compEventFn) {
 			// document has winid=0
 			compEventFn = L.bind(docLayer._postCompositionEvent, docLayer, 0 /* winid */);
+		}
+		if (!inputEle) {
+			inputEle = this._map._textArea;
 		}
 		this.modifier = 0;
 		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;
@@ -308,13 +311,13 @@ L.Map.Keyboard = L.Handler.extend({
 			// get the composited char codes
 			// clear the input now - best to do this ASAP so the input
 			// is clear for the next word
-			this._map._textArea.value = '';
+			inputEle.value = '';
 		}
 
 		if (!this._isComposing && e.type === 'keyup') {
 			// not compositing and keyup, clear the input so it is ready
 			// for next word (or char only)
-			this._map._textArea.value = '';
+			inputEle.value = '';
 		}
 
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
