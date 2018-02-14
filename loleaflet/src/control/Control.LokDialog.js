@@ -2,7 +2,7 @@
  * L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global $ map */
+/* global $ map L */
 L.Control.LokDialog = L.Control.extend({
 
 	dialogIdPrefix: 'lokdialog-',
@@ -145,12 +145,7 @@ L.Control.LokDialog = L.Control.extend({
 				var y = parseInt(rectangle[1]);
 				height = parseInt(rectangle[3]);
 
-				var dialogCursor = L.DomUtil.get(strDlgId + '-cursor');
-				L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
-				L.DomUtil.setStyle(dialogCursor, 'display', this._dialogs[e.id].cursorVisible ? 'block' : 'none');
-				// set the position of the cursor container element
-				L.DomUtil.setStyle(this._dialogs[e.id].cursor, 'left', x + 'px');
-				L.DomUtil.setStyle(this._dialogs[e.id].cursor, 'top', y + 'px');
+				this._updateDialogCursor(e.id, x, y, height);
 			}
 		} else if (e.action === 'title_changed') {
 			if (e.title && this._dialogs[parseInt(e.id)]) {
@@ -176,12 +171,58 @@ L.Control.LokDialog = L.Control.extend({
 		this._map.sendUnoCommand(e.uno);
 	},
 
-	_launchDialogCursor: function(dialogId) {
+	_updateDialogCursor: function(dlgId, x, y, height) {
+		var strDlgId = this._toDlgPrefix(dlgId);
+		var dialogCursor = L.DomUtil.get(strDlgId + '-cursor');
+		L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
+		L.DomUtil.setStyle(dialogCursor, 'display', this._dialogs[dlgId].cursorVisible ? 'block' : 'none');
+		// set the position of the cursor container element
+		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'left', x + 'px');
+		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'top', y + 'px');
+
+		// update the input as well
+		this._updateDialogInput(dlgId);
+	},
+
+	_createDialogCursor: function(dialogId) {
 		var id = this._toRawDlgId(dialogId);
 		this._dialogs[id].cursor = L.DomUtil.create('div', 'leaflet-cursor-container', L.DomUtil.get(dialogId));
 		var cursor = L.DomUtil.create('div', 'leaflet-cursor lokdialog-cursor', this._dialogs[id].cursor);
 		cursor.id = dialogId + '-cursor';
 		L.DomUtil.addClass(cursor, 'blinking-cursor');
+	},
+
+	_createDialogInput: function(dialogId) {
+		var id = this._toRawDlgId(dialogId);
+		var clipDlgContainer = L.DomUtil.create('div', 'clipboard-container', L.DomUtil.get(dialogId));
+		clipDlgContainer.id = dialogId + '-clipboard-container';
+		var dlgTextArea = L.DomUtil.create('input', 'clipboard', clipDlgContainer);
+		dlgTextArea.setAttribute('type', 'text');
+		dlgTextArea.setAttribute('autocorrect', 'off');
+		dlgTextArea.setAttribute('autocapitalize', 'off');
+		dlgTextArea.setAttribute('autocomplete', 'off');
+		dlgTextArea.setAttribute('spellcheck', 'false');
+		this._dialogs[id].input = dlgTextArea;
+
+		return dlgTextArea;
+	},
+
+	_updateDialogInput: function(dlgId) {
+		if (!this._dialogs[dlgId].input)
+			return;
+
+		var strDlgId = this._toDlgPrefix(dlgId);
+		var left = parseInt(L.DomUtil.getStyle(this._dialogs[dlgId].cursor, 'left'));
+		var top = parseInt(L.DomUtil.getStyle(this._dialogs[dlgId].cursor, 'top'));
+		var dlgContainer = L.DomUtil.get(strDlgId + '-clipboard-container');
+		L.DomUtil.setPosition(dlgContainer, new L.Point(left, top));
+	},
+
+	focus: function(dlgId) {
+		if (!this._isOpen(dlgId) || !this._dialogs[dlgId].input)
+			return;
+
+		this._dialogs[dlgId].input.focus();
 	},
 
 	_launchDialog: function(strDlgId, width, height, title) {
@@ -194,8 +235,6 @@ L.Control.LokDialog = L.Control.extend({
 		var dialogCanvas = L.DomUtil.create('canvas', 'lokdialog_canvas', dialogContainer);
 		dialogCanvas.width = width;
 		dialogCanvas.height = height;
-		dialogCanvas.tabIndex = '0';
-		dialogCanvas.contentEditable = true;
 		dialogCanvas.id = strDlgId + '-canvas';
 
 		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
@@ -225,31 +264,38 @@ L.Control.LokDialog = L.Control.extend({
 		// don't make 'TAB' focus on this button; we want to cycle focus in the lok dialog with each TAB
 		$('.lokdialog_container button.ui-dialog-titlebar-close').attr('tabindex', '-1').blur();
 
+		this._createDialogCursor(strDlgId);
+		var dlgInput = this._createDialogInput(strDlgId);
+
 		L.DomEvent.on(dialogCanvas, 'mousedown mouseup', function(e) {
 			var buttons = 0;
 			buttons |= e.button === map['mouse'].JSButtons.left ? map['mouse'].LOButtons.left : 0;
 			buttons |= e.button === map['mouse'].JSButtons.middle ? map['mouse'].LOButtons.middle : 0;
 			buttons |= e.button === map['mouse'].JSButtons.right ? map['mouse'].LOButtons.right : 0;
+			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, this._toRawDlgId(strDlgId), e.offsetX, e.offsetY, 1, buttons, 0);
+			dlgInput.focus();
 		}, this);
-		L.DomEvent.on(dialogCanvas,
-		              'keyup keypress keydown compositionstart compositionupdate compositionend',
+		L.DomEvent.on(dlgInput,
+		              'keyup keypress keydown compositionstart compositionupdate compositionend textInput',
 		              function(e) {
 			              e.originalEvent = e; // _onKeyDown fn below requires real event in e.originalEvent
-			              var fn = this._postWindowKeyboardEvent;
-			              if (e.type.startsWith('composition')) {
-				              fn = this._postWindowCompositionEvent;
-			              }
-			              map['keyboard']._onKeyDown(e, L.bind(fn,
-			                                                   this,
-			                                                   this._toRawDlgId(strDlgId)));
+			              map['keyboard']._onKeyDown(e,
+			                                         L.bind(this._postWindowKeyboardEvent,
+			                                                this,
+			                                                this._toRawDlgId(strDlgId)),
+			                                         L.bind(this._postWindowCompositionEvent,
+			                                                this,
+			                                                this._toRawDlgId(strDlgId)),
+			                                         dlgInput);
+
+			              // keep map active while user is playing with dialog
+			              this._map.lastActiveTime = Date.now();
 		              }, this);
-		L.DomEvent.on(dialogCanvas, 'contextmenu', function() {
+		L.DomEvent.on(dlgInput, 'contextmenu', function() {
 			return false;
 		});
-
-		this._launchDialogCursor(strDlgId);
 	},
 
 	_postWindowCompositionEvent: function(winid, type, text) {
@@ -283,6 +329,7 @@ L.Control.LokDialog = L.Control.extend({
 		var img = new Image();
 		var canvas = document.getElementById(strDlgId + '-canvas');
 		var ctx = canvas.getContext('2d');
+		var that = this;
 		img.onload = function() {
 			var x = 0;
 			var y = 0;
@@ -297,6 +344,7 @@ L.Control.LokDialog = L.Control.extend({
 			// if dialog is hidden, show it
 			var dialogContainer = L.DomUtil.get(strDlgId);
 			$(dialogContainer).parent().show();
+			that.focus(dialogId);
 		};
 		img.src = imgData;
 	},
