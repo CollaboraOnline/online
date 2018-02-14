@@ -115,7 +115,7 @@ void StorageBase::initialize()
     // Init client
     Poco::Net::Context::Params sslClientParams;
 
-    // TODO: Be more strict and setup SSL key/certs for remove server and us
+    // TODO: Be more strict and setup SSL key/certs for remote server and us
     sslClientParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
 
     Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleClientHandler = new Poco::Net::KeyConsoleHandler(false);
