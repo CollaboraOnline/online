@@ -14,8 +14,7 @@ dist_doc_DATA = wsd/README \
 loolwsddatadir = @LOOLWSD_DATADIR@
 
 loolwsddata_DATA = discovery.xml \
-                   favicon.ico \
-                   robots.txt
+                   favicon.ico
 
 loolwsdconfigdir = @LOOLWSD_CONFIGDIR@
 
@@ -209,7 +208,6 @@ EXTRA_DIST = discovery.xml \
              loolwsd.spec \
              loolwsd.xml.in \
              loolwsd.service \
-             robots.txt \
              sysconfig.loolwsd \
              debian/compat \
              debian/copyright \

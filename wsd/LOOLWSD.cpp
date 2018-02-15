@@ -1825,6 +1825,10 @@ private:
             {
                 handleWopiDiscoveryRequest(request);
             }
+            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/robots.txt")
+            {
+                handleRobotsTxtRequest(request);
+            }
             else
             {
                 StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
@@ -1958,6 +1962,31 @@ private:
         socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent discovery.xml successfully.");
+    }
+
+    void handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request)
+    {
+        LOG_DBG("HTTP request: " << request.getURI());
+        const std::string mimeType = "text/plain";
+        const std::string responseString = "User-agent: *\nDisallow: /\n";
+
+        std::ostringstream oss;
+        oss << "HTTP/1.1 200 OK\r\n"
+            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+            << "Content-Length: " << responseString.size() << "\r\n"
+            << "Content-Type: " << mimeType << "\r\n"
+            << "\r\n";
+
+        if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
+        {
+            oss << responseString;
+        }
+
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        socket->send(oss.str());
+        socket->shutdown();
+        LOG_INF("Sent robots.txt response successfully.");
     }
 
     static std::string getContentType(const std::string& fileName)
