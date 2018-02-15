@@ -58,7 +58,7 @@ function _mobilify() {
 	}
 	for (itemIdx in toolbarUpMore.items) {
 		id = toolbarUpMore.items[itemIdx].id;
-		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && !toolbarUp.get(id).hidden) {
+		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUpMore.get(id) && !toolbarUpMore.get(id).hidden) {
 			toolbarUpMore.hide(id);
 		}
 	}
