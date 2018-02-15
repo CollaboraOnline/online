@@ -122,6 +122,8 @@ function resizeToolbar() {
 		_unmobilify();
 	}
 
+	toolbarUp.refresh();
+	toolbarUpMore.refresh();
 	// move items from toolbar-up-more -> toolbar-up
 	while ($('#toolbar-up')[0].scrollWidth <= $(window).width()) {
 		var item = toolbarUpMore.items[0];
