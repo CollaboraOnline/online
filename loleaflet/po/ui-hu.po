@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-23 11:12+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2018-02-15 22:05+0100\n"
+"PO-Revision-Date: 2018-02-15 22:10+0100\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.3\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Pootle-Revision: 3062106\n"
 "X-Pootle-Path: /hu/libo_online/loleaflet-ui-hu.po\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 
 #: admin.strings.js:5
 msgid "Admin console"
@@ -114,7 +114,7 @@ msgstr "CPU-grafikon"
 msgid "Network Graph"
 msgstr "Hálózatgrafikon"
 
-#: admin.strings.js:30 src/layer/marker/Annotation.js:222
+#: admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "Mentés"
 
@@ -236,201 +236,201 @@ msgstr "A dokumentum nem menthető, mert a hozzáférési token lejárt vagy ér
 msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
 msgstr "A dokumentumot nem sikerült menteni. Ellenőrizze a jogosultságokat vagy lépjen kapcsolatba a tárhely rendszergazdájával."
 
-#: dist/toolbar/toolbar.js:103
+#: dist/toolbar/toolbar.js:105
 msgid "%n users"
 msgstr "%n felhasználó"
 
-#: dist/toolbar/toolbar.js:104
+#: dist/toolbar/toolbar.js:106
 msgid "1 user"
 msgstr "1 felhasználó"
 
-#: dist/toolbar/toolbar.js:105
+#: dist/toolbar/toolbar.js:107
 msgid "0 users"
 msgstr "Nincsenek felhasználók"
 
-#: dist/toolbar/toolbar.js:269
+#: dist/toolbar/toolbar.js:275
 msgid "Are you sure you want to delete this page?"
 msgstr "Biztosan törli ezt az oldalt?"
 
-#: dist/toolbar/toolbar.js:454
+#: dist/toolbar/toolbar.js:460
 msgid "Document repair"
 msgstr "Dokumentum helyreállítása"
 
-#: dist/toolbar/toolbar.js:495
+#: dist/toolbar/toolbar.js:501
 msgid "Insert table"
 msgstr "Táblázat beszúrása"
 
-#: dist/toolbar/toolbar.js:500
+#: dist/toolbar/toolbar.js:506
 msgid "More"
 msgstr "További ikonok"
 
-#: dist/toolbar/toolbar.js:598 dist/toolbar/toolbar.js:1072
+#: dist/toolbar/toolbar.js:604 dist/toolbar/toolbar.js:1078
 msgid "Sum"
 msgstr "Összeg"
 
-#: dist/toolbar/toolbar.js:599
+#: dist/toolbar/toolbar.js:605
 msgid "Function"
 msgstr "Függvény"
 
-#: dist/toolbar/toolbar.js:600 src/layer/marker/Annotation.js:161
+#: dist/toolbar/toolbar.js:606 src/layer/marker/Annotation.js:163
 msgid "Cancel"
 msgstr "Mégse"
 
-#: dist/toolbar/toolbar.js:601
+#: dist/toolbar/toolbar.js:607
 msgid "Accept"
 msgstr "Elfogadás"
 
-#: dist/toolbar/toolbar.js:617
+#: dist/toolbar/toolbar.js:623
 msgid "First sheet"
 msgstr "Első munkalap"
 
-#: dist/toolbar/toolbar.js:618
+#: dist/toolbar/toolbar.js:624
 msgid "Previous sheet"
 msgstr "Előző munkalap"
 
-#: dist/toolbar/toolbar.js:619
+#: dist/toolbar/toolbar.js:625
 msgid "Next sheet"
 msgstr "Következő munkalap"
 
-#: dist/toolbar/toolbar.js:620
+#: dist/toolbar/toolbar.js:626
 msgid "Last sheet"
 msgstr "Utolsó munkalap"
 
-#: dist/toolbar/toolbar.js:630 src/control/Control.Menubar.js:265
+#: dist/toolbar/toolbar.js:636 src/control/Control.Menubar.js:270
 msgid "Fullscreen presentation"
 msgstr "Teljes képernyős bemutató"
 
-#: dist/toolbar/toolbar.js:647
+#: dist/toolbar/toolbar.js:653
 msgid "Search:"
 msgstr "Keresés:"
 
-#: dist/toolbar/toolbar.js:654
+#: dist/toolbar/toolbar.js:660
 msgid "Cancel the search"
 msgstr "Keresés leállítása"
 
-#: dist/toolbar/toolbar.js:659
+#: dist/toolbar/toolbar.js:665
 msgid "No users"
 msgstr "Nincsenek felhasználók"
 
-#: dist/toolbar/toolbar.js:663
+#: dist/toolbar/toolbar.js:669
 msgid "Always follow the editor"
 msgstr "Szerkesztő követése"
 
-#: dist/toolbar/toolbar.js:666
+#: dist/toolbar/toolbar.js:672
 msgid "Current"
 msgstr "Jelenleg"
 
-#: dist/toolbar/toolbar.js:673 src/control/Control.Menubar.js:57
-#: src/control/Control.Menubar.js:233
+#: dist/toolbar/toolbar.js:679 src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:238
 msgid "Reset zoom"
 msgstr "Alaphelyzet"
 
-#: dist/toolbar/toolbar.js:705
+#: dist/toolbar/toolbar.js:711
 msgid "%user has joined"
 msgstr "%user csatlakozott"
 
-#: dist/toolbar/toolbar.js:706
+#: dist/toolbar/toolbar.js:712
 msgid "%user has left"
 msgstr "%user kilépett"
 
-#: dist/toolbar/toolbar.js:872 dist/toolbar/toolbar.js:1453
+#: dist/toolbar/toolbar.js:878 dist/toolbar/toolbar.js:1464
 msgid "Size"
 msgstr "Méret"
 
-#: dist/toolbar/toolbar.js:1050
+#: dist/toolbar/toolbar.js:1056
 msgid "Number of Sheets"
 msgstr "Munkalapok száma"
 
-#: dist/toolbar/toolbar.js:1053
+#: dist/toolbar/toolbar.js:1059
 msgid "Selected range of cells"
 msgstr "Kijelölt cellatartomány"
 
-#: dist/toolbar/toolbar.js:1056 dist/toolbar/toolbar.js:1094
+#: dist/toolbar/toolbar.js:1062 dist/toolbar/toolbar.js:1100
 msgid "Entering text mode"
 msgstr "Szövegbevitel módja"
 
-#: dist/toolbar/toolbar.js:1059 dist/toolbar/toolbar.js:1100
-#: dist/toolbar/toolbar.js:1123
+#: dist/toolbar/toolbar.js:1065 dist/toolbar/toolbar.js:1106
+#: dist/toolbar/toolbar.js:1129
 msgid "Text Language"
 msgstr "Szöveg nyelve"
 
-#: dist/toolbar/toolbar.js:1062 dist/toolbar/toolbar.js:1097
+#: dist/toolbar/toolbar.js:1068 dist/toolbar/toolbar.js:1103
 msgid "Selection Mode"
 msgstr "Kijelölési mód"
 
-#: dist/toolbar/toolbar.js:1065
+#: dist/toolbar/toolbar.js:1071
 msgid "Choice of functions"
 msgstr "Függvények listája"
 
-#: dist/toolbar/toolbar.js:1067
+#: dist/toolbar/toolbar.js:1073
 msgid "Average"
 msgstr "Átlag"
 
-#: dist/toolbar/toolbar.js:1068
+#: dist/toolbar/toolbar.js:1074
 msgid "CountA"
 msgstr "Darab2"
 
-#: dist/toolbar/toolbar.js:1069
+#: dist/toolbar/toolbar.js:1075
 msgid "Count"
 msgstr "Darab"
 
-#: dist/toolbar/toolbar.js:1070
+#: dist/toolbar/toolbar.js:1076
 msgid "Maximum"
 msgstr "Maximum"
 
-#: dist/toolbar/toolbar.js:1071
+#: dist/toolbar/toolbar.js:1077
 msgid "Minimum"
 msgstr "Minimum"
 
-#: dist/toolbar/toolbar.js:1073
+#: dist/toolbar/toolbar.js:1079
 msgid "Selection count"
 msgstr "Kijelöltek száma"
 
-#: dist/toolbar/toolbar.js:1074
+#: dist/toolbar/toolbar.js:1080
 msgid "None"
 msgstr "Nincs"
 
-#: dist/toolbar/toolbar.js:1088
+#: dist/toolbar/toolbar.js:1094
 msgid "Number of Pages"
 msgstr "Oldalak száma"
 
-#: dist/toolbar/toolbar.js:1091
+#: dist/toolbar/toolbar.js:1097
 msgid "Word Counter"
 msgstr "Szavak száma"
 
-#: dist/toolbar/toolbar.js:1120
+#: dist/toolbar/toolbar.js:1126
 msgid "Number of Slides"
 msgstr "Diák száma"
 
-#: dist/toolbar/toolbar.js:1270
+#: dist/toolbar/toolbar.js:1276
 msgid "Document saved"
 msgstr "Dokumentum elmentve"
 
-#: dist/toolbar/toolbar.js:1423
+#: dist/toolbar/toolbar.js:1434
 msgid "Style"
 msgstr "Stílus"
 
-#: dist/toolbar/toolbar.js:1445
+#: dist/toolbar/toolbar.js:1456
 msgid "Font"
 msgstr "Betűkészlet"
 
-#: dist/toolbar/toolbar.js:1481
+#: dist/toolbar/toolbar.js:1492
 msgid "Previous slide"
 msgstr "Előző dia"
 
-#: dist/toolbar/toolbar.js:1482
+#: dist/toolbar/toolbar.js:1493
 msgid "Next slide"
 msgstr "Következő dia"
 
-#: dist/toolbar/toolbar.js:1543
+#: dist/toolbar/toolbar.js:1554
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Feloldhatatlan visszavonási/újraalkalmazási helyzet. A dokumentum korábbi állapotának helyreállítása a megoldás."
 
-#: dist/toolbar/toolbar.js:1791 src/control/Control.DocumentRepair.js:94
+#: dist/toolbar/toolbar.js:1802 src/control/Control.DocumentRepair.js:94
 msgid "You"
 msgstr "Ön"
 
-#: dist/toolbar/toolbar.js:1797
+#: dist/toolbar/toolbar.js:1808
 msgid "Readonly"
 msgstr "Írásvédett"
 
@@ -538,18 +538,18 @@ msgstr "Időbélyeg"
 msgid "Jump to state"
 msgstr "Ugrás állapotra"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:209
-#: src/control/Control.Menubar.js:284
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:289
 msgid "See revision history"
 msgstr "Változáselőzmények"
 
-#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:210
-#: src/control/Control.Menubar.js:285
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:215
+#: src/control/Control.Menubar.js:290
 msgid "Download as"
 msgstr "Letöltés másként"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:211
-#: src/control/Control.Menubar.js:286
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:216
+#: src/control/Control.Menubar.js:291
 msgid "PDF Document (.pdf)"
 msgstr "PDF dokumentum (.pdf)"
 
@@ -565,75 +565,75 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:219
-#: src/control/Control.Menubar.js:294
+#: src/control/Control.Menubar.js:27
+msgid "Rich Text (.rtf)"
+msgstr "Rich Text (.rtf)"
+
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:224
+#: src/control/Control.Menubar.js:299
 msgid "Repair"
 msgstr "Helyreállítás"
 
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:71
+msgid "All"
+msgstr "Összes"
+
+#: src/control/Control.Menubar.js:118
 msgid "Text orientation"
 msgstr "Szöveg iránya"
 
-#: src/control/Control.Menubar.js:189 src/control/Control.Menubar.js:191
-#: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:270
-#: src/control/Control.Menubar.js:358
+#: src/control/Control.Menubar.js:194 src/control/Control.Menubar.js:196
+#: src/control/Control.Menubar.js:198 src/control/Control.Menubar.js:275
+#: src/control/Control.Menubar.js:363
 msgid "None (Do not check spelling)"
 msgstr "Nincs (nincs helyesírás-ellenőrzés)"
 
-#: src/control/Control.Menubar.js:198 src/control/Control.Menubar.js:273
-#: src/control/Control.Menubar.js:361
+#: src/control/Control.Menubar.js:203 src/control/Control.Menubar.js:278
+#: src/control/Control.Menubar.js:366
 msgid "Keyboard shortcuts"
 msgstr "Gyorsbillentyűk"
 
-#: src/control/Control.Menubar.js:199 src/control/Control.Menubar.js:274
-#: src/control/Control.Menubar.js:362
+#: src/control/Control.Menubar.js:204 src/control/Control.Menubar.js:279
+#: src/control/Control.Menubar.js:367
 msgid "About"
 msgstr "Verzióinformációk"
 
-#: src/control/Control.Menubar.js:201 src/control/Control.Menubar.js:276
-#: src/control/Control.Menubar.js:364
+#: src/control/Control.Menubar.js:206 src/control/Control.Menubar.js:281
+#: src/control/Control.Menubar.js:369
 msgid "Close document"
 msgstr "Dokumentum bezárása"
 
-#: src/control/Control.Menubar.js:212
+#: src/control/Control.Menubar.js:217
 msgid "ODF presentation (.odp)"
 msgstr "ODF bemutató (.odp)"
 
-#: src/control/Control.Menubar.js:213
+#: src/control/Control.Menubar.js:218
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:219
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:287
+#: src/control/Control.Menubar.js:292
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF munkafüzet (.ods)"
 
-#: src/control/Control.Menubar.js:288
+#: src/control/Control.Menubar.js:293
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:289
+#: src/control/Control.Menubar.js:294
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:421
+#: src/control/Control.Menubar.js:434
 msgid "Reset to Default Language"
 msgstr "Vissza az alapértelmezett nyelvre"
 
-#: src/control/Control.Menubar.js:639
+#: src/control/Control.Menubar.js:697
 msgid "Are you sure you want to delete this slide?"
 msgstr "Biztosan törölni szeretné ezt a diát?"
-
-#: src/control/Control.Menubar.js:669
-msgid "Are you sure you want to delete the header?"
-msgstr "Valóban törölni akarja az élőfejet?"
-
-#: src/control/Control.Menubar.js:670
-msgid "Are you sure you want to delete the footer?"
-msgstr "Valóban törölni akarja az élőlábat?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
@@ -679,7 +679,7 @@ msgstr "Adja meg az új munkalapnevet"
 msgid "Downloading..."
 msgstr "Letöltés…"
 
-#: src/control/Toolbar.js:98 src/map/Map.js:1025
+#: src/control/Toolbar.js:98 src/map/Map.js:1029
 msgid "Saving..."
 msgstr "Mentés…"
 
@@ -695,79 +695,83 @@ msgstr "Probléma történt a LibreOffice Online-hoz kapcsolódáskor: "
 msgid "Unsupported server version."
 msgstr "Nem támogatott kiszolgálóverzió."
 
-#: src/core/Socket.js:263
+#: src/core/Socket.js:264
 msgid "Session terminated by document owner"
 msgstr "A dokumentum tulajdonosa bezárta a munkamenetet "
 
-#: src/core/Socket.js:267
+#: src/core/Socket.js:268
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Inaktív dokumentum – kattintson az újratöltéshez és szerkesztés folytatásához"
 
-#: src/core/Socket.js:274
+#: src/core/Socket.js:275
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "A kiszolgáló karbantartásra leáll (automatikus mentés)"
 
-#: src/core/Socket.js:278
+#: src/core/Socket.js:279
 msgid "Oops, there is a problem connecting the document"
 msgstr "Probléma történt a dokumentumhoz kapcsolódás során."
 
-#: src/core/Socket.js:282
+#: src/core/Socket.js:283
 msgid "Server is recycling and will be available shortly"
 msgstr "A kiszolgáló éppen újraindul, hamarosan elérhető lesz."
 
-#: src/core/Socket.js:312
+#: src/core/Socket.js:313
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
 msgstr "A dokumentum megváltozott a tárhelyen. Az új dokumentum fog betöltődni. Az Ön verziója egy korábbi állapotként lesz elérhető."
 
-#: src/core/Socket.js:424
+#: src/core/Socket.js:319
+msgid "Restoring older revision. Any unsaved changes will be available in version history"
+msgstr "Régebbi változat visszaállítása. A nem mentett változtatások a verzióelőzményekben meglesznek."
+
+#: src/core/Socket.js:436
 msgid "Document has been changed in storage. Do you want to discard your changes, and load the document from the storage?"
 msgstr "A dokumentum megváltozott a tárhelyen. Elveti a saját módosításait, és betölti a dokumentumot a tárhelyről?"
 
-#: src/core/Socket.js:426
+#: src/core/Socket.js:438
 msgid "Discard changes"
 msgstr "Változtatások elvetése"
 
-#: src/core/Socket.js:427
+#: src/core/Socket.js:439
 msgid "Overwrite document"
 msgstr "Dokumentum felülírása"
 
-#: src/core/Socket.js:484
+#: src/core/Socket.js:496
 msgid "Document requires password to view."
 msgstr "A dokumentum megnyitásához jelszó szükséges."
 
-#: src/core/Socket.js:487
+#: src/core/Socket.js:499
 msgid "Document requires password to modify."
 msgstr "A dokumentum módosításához jelszó szükséges."
 
-#: src/core/Socket.js:489
+#: src/core/Socket.js:501
 msgid "Hit Cancel to open in view-only mode."
 msgstr "A Mégse gombra kattintva a dokumentum csak olvasható módban fog megnyílni."
 
-#: src/core/Socket.js:493
+#: src/core/Socket.js:505
 msgid "Wrong password provided. Please try again."
 msgstr "A megadott jelszó nem jó. Próbálja újra."
 
-#: src/core/Socket.js:599
+#: src/core/Socket.js:611
 msgid "Connecting..."
 msgstr "Kapcsolódás..."
 
-#: src/core/Socket.js:738
+#: src/core/Socket.js:750
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "Nagyon sajnáljuk, de nem lehet kapcsolódni a dokumentumhoz. Próbálja meg később."
 
-#: src/layer/marker/Annotation.js:191
+#: src/layer/marker/Annotation.js:193
 msgid "Accept change"
 msgstr "Változás elfogadása"
 
-#: src/layer/marker/Annotation.js:196
+#: src/layer/marker/Annotation.js:198
 msgid "Reject change"
 msgstr "Változás elvetése"
 
-#: src/layer/marker/Annotation.js:205
+#: src/layer/marker/Annotation.js:207
 msgid "Open menu"
 msgstr "Menü megnyitása"
 
-#: src/layer/marker/Annotation.js:225 src/layer/tile/TileLayer.js:194
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:194
 msgid "Reply"
 msgstr "Válasz"
 
@@ -783,11 +787,11 @@ msgstr "Eltávolítás"
 msgid "Initializing..."
 msgstr "Előkészítés…"
 
-#: src/map/Map.js:889
+#: src/map/Map.js:893
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktív dokumentum – kattintson a szerkesztés folytatásához"
 
-#: src/map/Map.js:1028
+#: src/map/Map.js:1032
 msgid "Loading..."
 msgstr "Betöltés…"
 
