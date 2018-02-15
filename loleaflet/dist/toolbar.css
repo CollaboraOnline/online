@@ -77,8 +77,9 @@
     z-index: 1050;
     right: 35px;
     top: 2px;
-    width: 135px;
+    width: 200px;
     font-size: 16px;
+    padding-right: 20px;
     border: 1px solid transparent;
     background-color: transparent;
 }
@@ -95,7 +96,6 @@
     background-position: right;
     background-repeat: no-repeat;
     padding-right: 20px;
-    width: 120px;
 }
 
 #closebuttonwrapper {
