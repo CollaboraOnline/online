@@ -254,6 +254,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
+				{uno: '.uno:HyperlinkDialog'},
+				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'}]
 			},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), type: 'menu', menu: [
