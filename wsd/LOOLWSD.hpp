@@ -10,6 +10,7 @@
 #ifndef INCLUDED_LOOLWSD_HPP
 #define INCLUDED_LOOLWSD_HPP
 
+#include <algorithm>
 #include <atomic>
 #include <map>
 #include <set>
@@ -92,10 +93,12 @@ public:
         return LOOLWSD::SSLTermination.get();
     }
 
-    /// Return truee iff extension is marked as view action in discovery.xml.
+    /// Return true iff extension is marked as view action in discovery.xml.
     static bool IsViewFileExtension(const std::string& extension)
     {
-        return EditFileExtensions.find(extension) == EditFileExtensions.end();
+        std::string lowerCaseExtension = extension;
+        std::transform(lowerCaseExtension.begin(), lowerCaseExtension.end(), lowerCaseExtension.begin(), ::tolower);
+        return EditFileExtensions.find(lowerCaseExtension) == EditFileExtensions.end();
     }
 
     /// Returns the value of the specified application configuration,
