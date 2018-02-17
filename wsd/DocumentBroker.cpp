@@ -596,7 +596,11 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << localPath << "]: " <<
                 Poco::DigestEngine::digestToHex(sha1.digest()));
 
-        _uriJailed = Poco::URI(Poco::URI("file://"), localPath);
+        // LibreOffice can't open files with '#' in the name
+        std::string localPathEncoded;
+        Poco::URI::encode(localPath,"#",localPathEncoded);
+        _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded);
+
         _filename = fileInfo._filename;
 
         // Use the local temp file's timestamp.
