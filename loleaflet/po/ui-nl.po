@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-23 11:12+0100\n"
+"POT-Creation-Date: 2018-02-17 14:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.3\n"
-"X-Pootle-Revision: 3062906\n"
+"X-Generator: Translate Toolkit 2.2.5\n"
+"X-Pootle-Revision: 3085085\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-ui-nl.po\n"
 
 #: admin.strings.js:5
@@ -114,7 +114,7 @@ msgstr "CPU-grafiek"
 msgid "Network Graph"
 msgstr "Netwerkgrafiek"
 
-#: admin.strings.js:30 src/layer/marker/Annotation.js:222
+#: admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "Opslaan"
 
@@ -236,201 +236,201 @@ msgstr "Het document kan niet bewaard worden, als gevolg van een verlopen of ong
 msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
 msgstr "Document kan niet worden opgeslagen. Controleer uw rechten of neem contact op met de serverbeheerder."
 
-#: dist/toolbar/toolbar.js:103
+#: dist/toolbar/toolbar.js:105
 msgid "%n users"
 msgstr "%n gebruikers"
 
-#: dist/toolbar/toolbar.js:104
+#: dist/toolbar/toolbar.js:106
 msgid "1 user"
 msgstr "1 gebruiker"
 
-#: dist/toolbar/toolbar.js:105
+#: dist/toolbar/toolbar.js:107
 msgid "0 users"
 msgstr "0 gebruikers"
 
-#: dist/toolbar/toolbar.js:269
+#: dist/toolbar/toolbar.js:275
 msgid "Are you sure you want to delete this page?"
 msgstr "Weet u zeker dat u deze pagina wilt verwijderen?"
 
-#: dist/toolbar/toolbar.js:454
+#: dist/toolbar/toolbar.js:460
 msgid "Document repair"
 msgstr "Documentreparatie"
 
-#: dist/toolbar/toolbar.js:495
+#: dist/toolbar/toolbar.js:501
 msgid "Insert table"
 msgstr "Tabel invoegen"
 
-#: dist/toolbar/toolbar.js:500
+#: dist/toolbar/toolbar.js:506
 msgid "More"
 msgstr "Meer"
 
-#: dist/toolbar/toolbar.js:598 dist/toolbar/toolbar.js:1072
+#: dist/toolbar/toolbar.js:604 dist/toolbar/toolbar.js:1078
 msgid "Sum"
 msgstr "Som"
 
-#: dist/toolbar/toolbar.js:599
+#: dist/toolbar/toolbar.js:605
 msgid "Function"
 msgstr "Functie"
 
-#: dist/toolbar/toolbar.js:600 src/layer/marker/Annotation.js:161
+#: dist/toolbar/toolbar.js:606 src/layer/marker/Annotation.js:163
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: dist/toolbar/toolbar.js:601
+#: dist/toolbar/toolbar.js:607
 msgid "Accept"
 msgstr "Accepteren"
 
-#: dist/toolbar/toolbar.js:617
+#: dist/toolbar/toolbar.js:623
 msgid "First sheet"
 msgstr "Eerste werkblad"
 
-#: dist/toolbar/toolbar.js:618
+#: dist/toolbar/toolbar.js:624
 msgid "Previous sheet"
 msgstr "Vorig werkblad"
 
-#: dist/toolbar/toolbar.js:619
+#: dist/toolbar/toolbar.js:625
 msgid "Next sheet"
 msgstr "Volgend werkblad"
 
-#: dist/toolbar/toolbar.js:620
+#: dist/toolbar/toolbar.js:626
 msgid "Last sheet"
 msgstr "Laatste werkblad"
 
-#: dist/toolbar/toolbar.js:630 src/control/Control.Menubar.js:265
+#: dist/toolbar/toolbar.js:636 src/control/Control.Menubar.js:279
 msgid "Fullscreen presentation"
 msgstr "Presentatie volledig scherm"
 
-#: dist/toolbar/toolbar.js:647
+#: dist/toolbar/toolbar.js:653
 msgid "Search:"
 msgstr "Zoeken:"
 
-#: dist/toolbar/toolbar.js:654
+#: dist/toolbar/toolbar.js:660
 msgid "Cancel the search"
 msgstr "Zoekopdracht annuleren"
 
-#: dist/toolbar/toolbar.js:659
+#: dist/toolbar/toolbar.js:665
 msgid "No users"
 msgstr "Geen gebruikers"
 
-#: dist/toolbar/toolbar.js:663
+#: dist/toolbar/toolbar.js:669
 msgid "Always follow the editor"
 msgstr "Volg altijd de editor"
 
-#: dist/toolbar/toolbar.js:666
+#: dist/toolbar/toolbar.js:672
 msgid "Current"
 msgstr "Huidig"
 
-#: dist/toolbar/toolbar.js:673 src/control/Control.Menubar.js:57
-#: src/control/Control.Menubar.js:233
+#: dist/toolbar/toolbar.js:679 src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:247
 msgid "Reset zoom"
 msgstr "Zoom herstellen"
 
-#: dist/toolbar/toolbar.js:705
+#: dist/toolbar/toolbar.js:711
 msgid "%user has joined"
 msgstr "%user heeft zich vervoegd"
 
-#: dist/toolbar/toolbar.js:706
+#: dist/toolbar/toolbar.js:712
 msgid "%user has left"
 msgstr "%user is vertrokken"
 
-#: dist/toolbar/toolbar.js:872 dist/toolbar/toolbar.js:1453
+#: dist/toolbar/toolbar.js:878 dist/toolbar/toolbar.js:1464
 msgid "Size"
 msgstr "Grootte"
 
-#: dist/toolbar/toolbar.js:1050
+#: dist/toolbar/toolbar.js:1056
 msgid "Number of Sheets"
 msgstr "Aantal bladen"
 
-#: dist/toolbar/toolbar.js:1053
+#: dist/toolbar/toolbar.js:1059
 msgid "Selected range of cells"
 msgstr "Geselecteerd cellenbereik"
 
-#: dist/toolbar/toolbar.js:1056 dist/toolbar/toolbar.js:1094
+#: dist/toolbar/toolbar.js:1062 dist/toolbar/toolbar.js:1100
 msgid "Entering text mode"
 msgstr "Tekstmodus activeren"
 
-#: dist/toolbar/toolbar.js:1059 dist/toolbar/toolbar.js:1100
-#: dist/toolbar/toolbar.js:1123
+#: dist/toolbar/toolbar.js:1065 dist/toolbar/toolbar.js:1106
+#: dist/toolbar/toolbar.js:1129
 msgid "Text Language"
 msgstr "Teksttaal"
 
-#: dist/toolbar/toolbar.js:1062 dist/toolbar/toolbar.js:1097
+#: dist/toolbar/toolbar.js:1068 dist/toolbar/toolbar.js:1103
 msgid "Selection Mode"
 msgstr "Selectie modus"
 
-#: dist/toolbar/toolbar.js:1065
+#: dist/toolbar/toolbar.js:1071
 msgid "Choice of functions"
 msgstr "Lijst met functies"
 
-#: dist/toolbar/toolbar.js:1067
+#: dist/toolbar/toolbar.js:1073
 msgid "Average"
 msgstr "Gemiddelde"
 
-#: dist/toolbar/toolbar.js:1068
+#: dist/toolbar/toolbar.js:1074
 msgid "CountA"
 msgstr "AantalA"
 
-#: dist/toolbar/toolbar.js:1069
+#: dist/toolbar/toolbar.js:1075
 msgid "Count"
 msgstr "Aantal"
 
-#: dist/toolbar/toolbar.js:1070
+#: dist/toolbar/toolbar.js:1076
 msgid "Maximum"
 msgstr "Maximum"
 
-#: dist/toolbar/toolbar.js:1071
+#: dist/toolbar/toolbar.js:1077
 msgid "Minimum"
 msgstr "Minimum"
 
-#: dist/toolbar/toolbar.js:1073
+#: dist/toolbar/toolbar.js:1079
 msgid "Selection count"
 msgstr "Selectie tellen"
 
-#: dist/toolbar/toolbar.js:1074
+#: dist/toolbar/toolbar.js:1080
 msgid "None"
 msgstr "Geen"
 
-#: dist/toolbar/toolbar.js:1088
+#: dist/toolbar/toolbar.js:1094
 msgid "Number of Pages"
 msgstr "Aantal pagina's"
 
-#: dist/toolbar/toolbar.js:1091
+#: dist/toolbar/toolbar.js:1097
 msgid "Word Counter"
 msgstr "Aantal woorden"
 
-#: dist/toolbar/toolbar.js:1120
+#: dist/toolbar/toolbar.js:1126
 msgid "Number of Slides"
 msgstr "Aantal dia's"
 
-#: dist/toolbar/toolbar.js:1270
+#: dist/toolbar/toolbar.js:1276
 msgid "Document saved"
 msgstr "Document opgeslagen"
 
-#: dist/toolbar/toolbar.js:1423
+#: dist/toolbar/toolbar.js:1434
 msgid "Style"
 msgstr "Opmaakprofiel"
 
-#: dist/toolbar/toolbar.js:1445
+#: dist/toolbar/toolbar.js:1456
 msgid "Font"
 msgstr "Lettertype"
 
-#: dist/toolbar/toolbar.js:1481
+#: dist/toolbar/toolbar.js:1492
 msgid "Previous slide"
 msgstr "Vorige dia"
 
-#: dist/toolbar/toolbar.js:1482
+#: dist/toolbar/toolbar.js:1493
 msgid "Next slide"
 msgstr "Volgende dia"
 
-#: dist/toolbar/toolbar.js:1543
+#: dist/toolbar/toolbar.js:1554
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Ongedaan maken/Opnieuw conflicteert met meerdere gebruikers. Gebruik document herstellen om dit op te lossen."
 
-#: dist/toolbar/toolbar.js:1791 src/control/Control.DocumentRepair.js:94
+#: dist/toolbar/toolbar.js:1802 src/control/Control.DocumentRepair.js:94
 msgid "You"
 msgstr "U"
 
-#: dist/toolbar/toolbar.js:1797
+#: dist/toolbar/toolbar.js:1808
 msgid "Readonly"
 msgstr "alleen-lezen"
 
@@ -488,11 +488,11 @@ msgstr " seconden"
 
 #: src/control/Control.AlertDialog.js:28
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr ""
+msgstr "De server ondervond een %0-fout tijdens het uitvoeren van de %1-opdracht."
 
 #: src/control/Control.AlertDialog.js:41
 msgid "Download PDF export?"
-msgstr ""
+msgstr "PDF-export downloaden?"
 
 #: src/control/Control.ContextMenu.js:129
 msgid "Internal Cut"
@@ -538,18 +538,18 @@ msgstr "Tijdsaanduiding"
 msgid "Jump to state"
 msgstr "Wissel naar status"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:209
-#: src/control/Control.Menubar.js:284
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:223
+#: src/control/Control.Menubar.js:298
 msgid "See revision history"
 msgstr "Bekijk de wijzigingsgeschiedenis"
 
-#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:210
-#: src/control/Control.Menubar.js:285
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:224
+#: src/control/Control.Menubar.js:299
 msgid "Download as"
 msgstr "Downloaden als"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:211
-#: src/control/Control.Menubar.js:286
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:225
+#: src/control/Control.Menubar.js:300
 msgid "PDF Document (.pdf)"
 msgstr "PDF bestand (.pdf)"
 
@@ -565,75 +565,75 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:219
-#: src/control/Control.Menubar.js:294
+#: src/control/Control.Menubar.js:27
+msgid "Rich Text (.rtf)"
+msgstr "Rich Text (.rtf)"
+
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:233
+#: src/control/Control.Menubar.js:308
 msgid "Repair"
 msgstr "Herstellen"
 
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:80
+msgid "All"
+msgstr "Alle"
+
+#: src/control/Control.Menubar.js:127
 msgid "Text orientation"
 msgstr "Tekstoriëntatie"
 
-#: src/control/Control.Menubar.js:189 src/control/Control.Menubar.js:191
-#: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:270
-#: src/control/Control.Menubar.js:358
+#: src/control/Control.Menubar.js:203 src/control/Control.Menubar.js:205
+#: src/control/Control.Menubar.js:207 src/control/Control.Menubar.js:284
+#: src/control/Control.Menubar.js:372
 msgid "None (Do not check spelling)"
 msgstr "Geen (geen spellingcontrole)"
 
-#: src/control/Control.Menubar.js:198 src/control/Control.Menubar.js:273
-#: src/control/Control.Menubar.js:361
+#: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:287
+#: src/control/Control.Menubar.js:375
 msgid "Keyboard shortcuts"
 msgstr "Sneltoetsen"
 
-#: src/control/Control.Menubar.js:199 src/control/Control.Menubar.js:274
-#: src/control/Control.Menubar.js:362
+#: src/control/Control.Menubar.js:213 src/control/Control.Menubar.js:288
+#: src/control/Control.Menubar.js:376
 msgid "About"
 msgstr "Over"
 
-#: src/control/Control.Menubar.js:201 src/control/Control.Menubar.js:276
-#: src/control/Control.Menubar.js:364
+#: src/control/Control.Menubar.js:215 src/control/Control.Menubar.js:290
+#: src/control/Control.Menubar.js:378
 msgid "Close document"
 msgstr "Document sluiten"
 
-#: src/control/Control.Menubar.js:212
+#: src/control/Control.Menubar.js:226
 msgid "ODF presentation (.odp)"
 msgstr "ODF presentatie (.odp)"
 
-#: src/control/Control.Menubar.js:213
+#: src/control/Control.Menubar.js:227
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:228
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:287
+#: src/control/Control.Menubar.js:301
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF werkblad (.ods)"
 
-#: src/control/Control.Menubar.js:288
+#: src/control/Control.Menubar.js:302
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:289
+#: src/control/Control.Menubar.js:303
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:421
+#: src/control/Control.Menubar.js:443
 msgid "Reset to Default Language"
 msgstr "Herstellen naar standaard taal"
 
-#: src/control/Control.Menubar.js:639
+#: src/control/Control.Menubar.js:706
 msgid "Are you sure you want to delete this slide?"
 msgstr "Bent u zeker dat u deze dia wilt verwijderen?"
-
-#: src/control/Control.Menubar.js:669
-msgid "Are you sure you want to delete the header?"
-msgstr "Weet u zeker dat u de koptekst wilt verwijderen?"
-
-#: src/control/Control.Menubar.js:670
-msgid "Are you sure you want to delete the footer?"
-msgstr "Weet u zeker dat u de voettekst wilt verwijderen?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
@@ -679,7 +679,7 @@ msgstr "Voer een nieuwe bladnaam in."
 msgid "Downloading..."
 msgstr "Bezig met ophalen..."
 
-#: src/control/Toolbar.js:98 src/map/Map.js:1025
+#: src/control/Toolbar.js:98 src/map/Map.js:1029
 msgid "Saving..."
 msgstr "Opslaan..."
 
@@ -695,79 +695,83 @@ msgstr "Oops, er is een probleem bij het verbinden met LibreOffice Online : "
 msgid "Unsupported server version."
 msgstr "Niet-ondersteunde serverversie"
 
-#: src/core/Socket.js:263
+#: src/core/Socket.js:264
 msgid "Session terminated by document owner"
 msgstr "Sessie beëindigd door document-eigenaar"
 
-#: src/core/Socket.js:267
+#: src/core/Socket.js:268
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Niet actief document - klik om het bewerken te hervatten"
 
-#: src/core/Socket.js:274
+#: src/core/Socket.js:275
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server wordt afgesloten voor onderhoud (automatische-opslag)"
 
-#: src/core/Socket.js:278
+#: src/core/Socket.js:279
 msgid "Oops, there is a problem connecting the document"
 msgstr "Oeps, er is een probleem met de toegang tot het document"
 
-#: src/core/Socket.js:282
+#: src/core/Socket.js:283
 msgid "Server is recycling and will be available shortly"
 msgstr "De server wordt opnieuw opgestart en zal binnenkort weer beschikbaar zijn."
 
-#: src/core/Socket.js:312
+#: src/core/Socket.js:313
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
 msgstr "Het document is in de opslag gewijzigd. Het document opnieuw laden. Uw versie is beschikbaar als revisie."
 
-#: src/core/Socket.js:424
+#: src/core/Socket.js:319
+msgid "Restoring older revision. Any unsaved changes will be available in version history"
+msgstr "Oudere revisie herstellen. Niet-opgeslagen wijzigingen zijn beschikbaar in de versiegeschiedenis"
+
+#: src/core/Socket.js:436
 msgid "Document has been changed in storage. Do you want to discard your changes, and load the document from the storage?"
 msgstr "Het document is in de opslag gewijzigd. Wilt u uw wijzigingen verwerpen en het document vanuit de opslag laden?"
 
-#: src/core/Socket.js:426
+#: src/core/Socket.js:438
 msgid "Discard changes"
 msgstr "Wijzigingen verwerpen"
 
-#: src/core/Socket.js:427
+#: src/core/Socket.js:439
 msgid "Overwrite document"
 msgstr "Document overschrijven"
 
-#: src/core/Socket.js:484
+#: src/core/Socket.js:496
 msgid "Document requires password to view."
 msgstr "Er is een wachtwoord nodig om dit document te bekijken."
 
-#: src/core/Socket.js:487
+#: src/core/Socket.js:499
 msgid "Document requires password to modify."
 msgstr "Er is een wachtwoord nodig om dit document te bewerken."
 
-#: src/core/Socket.js:489
+#: src/core/Socket.js:501
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Klik Cancel om het in alleen-lezen modus te openen."
 
-#: src/core/Socket.js:493
+#: src/core/Socket.js:505
 msgid "Wrong password provided. Please try again."
 msgstr "Verkeer wachtwoord ingevoerd. Probeer aub opnieuw."
 
-#: src/core/Socket.js:599
+#: src/core/Socket.js:611
 msgid "Connecting..."
 msgstr "Bezig met verbinden..."
 
-#: src/core/Socket.js:738
+#: src/core/Socket.js:750
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "Ach, dit is vervelend. We kunnen geen verbinding maken met uw document. Probeer het aub opnieuw."
 
-#: src/layer/marker/Annotation.js:191
+#: src/layer/marker/Annotation.js:193
 msgid "Accept change"
 msgstr "Wijziging accepteren"
 
-#: src/layer/marker/Annotation.js:196
+#: src/layer/marker/Annotation.js:198
 msgid "Reject change"
 msgstr "Wijziging verwerpen"
 
-#: src/layer/marker/Annotation.js:205
+#: src/layer/marker/Annotation.js:207
 msgid "Open menu"
 msgstr "Menu openen"
 
-#: src/layer/marker/Annotation.js:225 src/layer/tile/TileLayer.js:194
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:194
 msgid "Reply"
 msgstr "Beantwoorden"
 
@@ -783,11 +787,11 @@ msgstr "Verwijderen"
 msgid "Initializing..."
 msgstr "Initialiseren…"
 
-#: src/map/Map.js:889
+#: src/map/Map.js:893
 msgid "Inactive document - please click to resume editing"
 msgstr "Niet actief document - klik om het bewerken te hervatten"
 
-#: src/map/Map.js:1028
+#: src/map/Map.js:1032
 msgid "Loading..."
 msgstr "Laden…"
 
