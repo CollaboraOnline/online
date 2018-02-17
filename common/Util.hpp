@@ -10,7 +10,6 @@
 #ifndef INCLUDED_UTIL_HPP
 #define INCLUDED_UTIL_HPP
 
-#include <cstring>
 #include <atomic>
 #include <cassert>
 #include <cstring>
