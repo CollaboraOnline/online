@@ -47,6 +47,7 @@
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <common/FileUtil.hpp>
+#include <common/JsonUtil.hpp>
 
 bool StorageBase::FilesystemEnabled;
 bool StorageBase::WopiEnabled;
@@ -325,7 +326,8 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
     return StorageBase::SaveResult(StorageBase::SaveResult::OK);
 }
 
-namespace {
+namespace
+{
 
 inline
 Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
@@ -336,107 +338,6 @@ Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
         ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(),
                                             Poco::Net::SSLManager::instance().defaultClientContext())
         : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
-}
-
-int getLevenshteinDist(const std::string& string1, const std::string& string2) {
-    int matrix[string1.size() + 1][string2.size() + 1];
-    std::memset(matrix, 0, sizeof(matrix[0][0]) * (string1.size() + 1) * (string2.size() + 1));
-
-    for (size_t i = 0; i < string1.size() + 1; i++)
-    {
-        for (size_t j = 0; j < string2.size() + 1; j++)
-        {
-            if (i == 0)
-            {
-                matrix[i][j] = j;
-            }
-            else if (j == 0)
-            {
-                matrix[i][j] = i;
-            }
-            else if (string1[i - 1] == string2[j - 1])
-            {
-                matrix[i][j] = matrix[i - 1][j - 1];
-            }
-            else
-            {
-                matrix[i][j] = 1 + std::min(std::min(matrix[i][j - 1], matrix[i - 1][j]),
-                                            matrix[i - 1][j - 1]);
-            }
-        }
-    }
-
-    return matrix[string1.size()][string2.size()];
-}
-
-// Gets value for `key` directly from the given JSON in `object`
-template <typename T>
-T getJSONValue(const Poco::JSON::Object::Ptr &object, const std::string& key)
-{
-    T value = T();
-    try
-    {
-        const Poco::Dynamic::Var valueVar = object->get(key);
-        value = valueVar.convert<T>();
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOG_ERR("getJSONValue: " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
-    }
-
-    return value;
-}
-
-// Function that searches `object` for `key` and warns if there are minor mis-spellings involved
-// Upon successfull search, fills `value` with value found in object.
-template <typename T>
-void getWOPIValue(const Poco::JSON::Object::Ptr &object, const std::string& key, T& value)
-{
-    std::vector<std::string> propertyNames;
-    object->getNames(propertyNames);
-
-    // Check each property name against given key
-    // and accept with a mis-spell tolerance of 2
-    // TODO: propertyNames can be pruned after getting its value
-    for (const auto& userInput: propertyNames)
-    {
-        std::string string1(key), string2(userInput);
-        std::transform(key.begin(), key.end(), string1.begin(), tolower);
-        std::transform(userInput.begin(), userInput.end(), string2.begin(), tolower);
-        int levDist = getLevenshteinDist(string1, string2);
-
-        if (levDist > 2) /* Mis-spelling tolerance */
-            continue;
-        else if (levDist > 0 || key != userInput)
-        {
-            LOG_WRN("Incorrect JSON property [" << userInput << "]. Did you mean " << key << " ?");
-            return;
-        }
-
-        value = getJSONValue<T>(object, userInput);
-        return;
-    }
-
-    LOG_WRN("Missing JSON property [" << key << "]");
-}
-
-// Parse the json string and fill the Poco::JSON object
-// Returns true if parsing successful otherwise false
-bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
-{
-    bool success = false;
-    const size_t index = json.find_first_of('{');
-    if (index != std::string::npos)
-    {
-        const std::string stringJSON = json.substr(index);
-        Poco::JSON::Parser parser;
-        const Poco::Dynamic::Var result = parser.parse(stringJSON);
-        object = result.extract<Poco::JSON::Object::Ptr>();
-        success = true;
-    }
-
-    return success;
 }
 
 void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
@@ -457,7 +358,7 @@ void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
 #endif
 }
 
-Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time)
+Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time, const std::string& name)
 {
     Poco::Timestamp timestamp = Poco::Timestamp::fromEpochTime(0);
     try
@@ -469,8 +370,8 @@ Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time)
     }
     catch (const Poco::SyntaxException& exc)
     {
-        LOG_WRN("Time [" << iso8601Time << "] is in invalid format: " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+        LOG_WRN(name << " [" << iso8601Time << "] is in invalid format: " << exc.displayText() <<
+                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "") << ". Returning " << timestamp);
     }
 
     return timestamp;
@@ -553,27 +454,27 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 
     LOG_DBG("WOPI::CheckFileInfo returned: " << resMsg << ". Call duration: " << callDuration.count() << "s");
     Poco::JSON::Object::Ptr object;
-    if (parseJSON(resMsg, object))
+    if (JsonUtil::parseJSON(resMsg, object))
     {
-        getWOPIValue(object, "BaseFileName", filename);
-        getWOPIValue(object, "Size", size);
-        getWOPIValue(object, "OwnerId", ownerId);
-        getWOPIValue(object, "UserId", userId);
-        getWOPIValue(object, "UserFriendlyName", userName);
-        getWOPIValue(object, "UserExtraInfo", userExtraInfo);
-        getWOPIValue(object, "WatermarkText", watermarkText);
-        getWOPIValue(object, "UserCanWrite", canWrite);
-        getWOPIValue(object, "PostMessageOrigin", postMessageOrigin);
-        getWOPIValue(object, "HidePrintOption", hidePrintOption);
-        getWOPIValue(object, "HideSaveOption", hideSaveOption);
-        getWOPIValue(object, "HideExportOption", hideExportOption);
-        getWOPIValue(object, "EnableOwnerTermination", enableOwnerTermination);
-        getWOPIValue(object, "DisablePrint", disablePrint);
-        getWOPIValue(object, "DisableExport", disableExport);
-        getWOPIValue(object, "DisableCopy", disableCopy);
-        getWOPIValue(object, "DisableInactiveMessages", disableInactiveMessages);
-        getWOPIValue(object, "LastModifiedTime", lastModifiedTime);
-        getWOPIValue(object, "UserCanNotWriteRelative", userCanNotWriteRelative);
+        JsonUtil::findJSONValue(object, "BaseFileName", filename);
+        JsonUtil::findJSONValue(object, "Size", size);
+        JsonUtil::findJSONValue(object, "OwnerId", ownerId);
+        JsonUtil::findJSONValue(object, "UserId", userId);
+        JsonUtil::findJSONValue(object, "UserFriendlyName", userName);
+        JsonUtil::findJSONValue(object, "UserExtraInfo", userExtraInfo);
+        JsonUtil::findJSONValue(object, "WatermarkText", watermarkText);
+        JsonUtil::findJSONValue(object, "UserCanWrite", canWrite);
+        JsonUtil::findJSONValue(object, "PostMessageOrigin", postMessageOrigin);
+        JsonUtil::findJSONValue(object, "HidePrintOption", hidePrintOption);
+        JsonUtil::findJSONValue(object, "HideSaveOption", hideSaveOption);
+        JsonUtil::findJSONValue(object, "HideExportOption", hideExportOption);
+        JsonUtil::findJSONValue(object, "EnableOwnerTermination", enableOwnerTermination);
+        JsonUtil::findJSONValue(object, "DisablePrint", disablePrint);
+        JsonUtil::findJSONValue(object, "DisableExport", disableExport);
+        JsonUtil::findJSONValue(object, "DisableCopy", disableCopy);
+        JsonUtil::findJSONValue(object, "DisableInactiveMessages", disableInactiveMessages);
+        JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
+        JsonUtil::findJSONValue(object, "UserCanNotWriteRelative", userCanNotWriteRelative);
     }
     else
     {
@@ -581,7 +482,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriObject.toString());
     }
 
-    const Poco::Timestamp modifiedTime = iso8601ToTimestamp(lastModifiedTime);
+    const Poco::Timestamp modifiedTime = iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
     _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, userExtraInfo, watermarkText, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, enableOwnerTermination, disablePrint, disableExport, disableCopy, disableInactiveMessages, userCanNotWriteRelative, callDuration}));
@@ -746,7 +647,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         std::istream& rs = psession->receiveResponse(response);
         Poco::StreamCopier::copyStream(rs, oss);
 
-        std::string wopiLog(isSaveAs? "WOPI::PutRelativeFile": "WOPI::PutFile");
+        const std::string wopiLog(isSaveAs ? "WOPI::PutRelativeFile" : "WOPI::PutFile");
         LOG_INF(wopiLog << " response: " << oss.str());
         LOG_INF(wopiLog << " uploaded " << size << " bytes from [" << filePath <<
                 "] -> [" << uriObject.toString() << "]: " <<
@@ -756,18 +657,18 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         {
             saveResult.setResult(StorageBase::SaveResult::OK);
             Poco::JSON::Object::Ptr object;
-            if (parseJSON(oss.str(), object))
+            if (JsonUtil::parseJSON(oss.str(), object))
             {
-                const std::string lastModifiedTime = getJSONValue<std::string>(object, "LastModifiedTime");
+                const std::string lastModifiedTime = JsonUtil::getJSONValue<std::string>(object, "LastModifiedTime");
                 LOG_TRC(wopiLog << " returns LastModifiedTime [" << lastModifiedTime << "].");
-                _fileInfo._modifiedTime = iso8601ToTimestamp(lastModifiedTime);
+                _fileInfo._modifiedTime = iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
 
                 if (isSaveAs)
                 {
-                    const std::string name = getJSONValue<std::string>(object, "Name");
+                    const std::string name = JsonUtil::getJSONValue<std::string>(object, "Name");
                     LOG_TRC(wopiLog << " returns Name [" << name << "].");
 
-                    const std::string url = getJSONValue<std::string>(object, "Url");
+                    const std::string url = JsonUtil::getJSONValue<std::string>(object, "Url");
                     LOG_TRC(wopiLog << " returns Url [" << url << "].");
 
                     saveResult.setSaveAsResult(name, url);
@@ -794,9 +695,9 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         {
             saveResult.setResult(StorageBase::SaveResult::CONFLICT);
             Poco::JSON::Object::Ptr object;
-            if (parseJSON(oss.str(), object))
+            if (JsonUtil::parseJSON(oss.str(), object))
             {
-                const unsigned loolStatusCode = getJSONValue<unsigned>(object, "LOOLStatusCode");
+                const unsigned loolStatusCode = JsonUtil::getJSONValue<unsigned>(object, "LOOLStatusCode");
                 if (loolStatusCode == static_cast<unsigned>(LOOLStatusCode::DOC_CHANGED))
                 {
                     saveResult.setResult(StorageBase::SaveResult::DOC_CHANGED);

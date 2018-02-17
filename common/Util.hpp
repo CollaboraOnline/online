@@ -10,8 +10,9 @@
 #ifndef INCLUDED_UTIL_HPP
 #define INCLUDED_UTIL_HPP
 
-#include <atomic>
 #include <cassert>
+#include <cstddef>
+#include <atomic>
 #include <functional>
 #include <memory>
 #include <mutex>
