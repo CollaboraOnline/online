@@ -19,6 +19,7 @@
 #include <Protocol.hpp>
 #include <TileDesc.hpp>
 #include <Util.hpp>
+#include <JsonUtil.hpp>
 
 /// WhiteBox unit-tests.
 class WhiteBoxTests : public CPPUNIT_NS::TestFixture
@@ -34,6 +35,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testEmptyCellCursor);
     CPPUNIT_TEST(testRectanglesIntersect);
     CPPUNIT_TEST(testAuthorization);
+    CPPUNIT_TEST(testJson);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -46,6 +48,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testEmptyCellCursor();
     void testRectanglesIntersect();
     void testAuthorization();
+    void testJson();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -468,6 +471,38 @@ void WhiteBoxTests::testAuthorization()
     auth5.authorizeRequest(req5);
     CPPUNIT_ASSERT_EQUAL(std::string("Basic huh=="), req5.get("Authorization"));
     CPPUNIT_ASSERT_EQUAL(std::string("else"), req5.get("X-Something-More"));
+}
+
+void WhiteBoxTests::testJson()
+{
+    static const char* testString =
+         "{\"BaseFileName\":\"SomeFile.pdf\",\"DisableCopy\":true,\"DisableExport\":true,\"DisableInactiveMessages\":true,\"DisablePrint\":true,\"EnableOwnerTermination\":true,\"HideExportOption\":true,\"HidePrintOption\":true,\"OwnerId\":\"id@owner.com\",\"PostMessageOrigin\":\"*\",\"Size\":193551,\"UserCanWrite\":true,\"UserFriendlyName\":\"Owning user\",\"UserId\":\"user@user.com\",\"WatermarkText\":null}";
+
+    Poco::JSON::Object::Ptr object;
+    CPPUNIT_ASSERT(JsonUtil::parseJSON(testString, object));
+
+    size_t iValue = false;
+    JsonUtil::findJSONValue(object, "Size", iValue);
+    CPPUNIT_ASSERT_EQUAL(size_t(193551U), iValue);
+
+    bool bValue = false;
+    JsonUtil::findJSONValue(object, "DisableCopy", bValue);
+    CPPUNIT_ASSERT_EQUAL(true, bValue);
+
+    std::string sValue;
+    JsonUtil::findJSONValue(object, "BaseFileName", sValue);
+    CPPUNIT_ASSERT_EQUAL(std::string("SomeFile.pdf"), sValue);
+
+    // Don't accept inexact key names.
+    sValue.clear();
+    JsonUtil::findJSONValue(object, "basefilename", sValue);
+    CPPUNIT_ASSERT_EQUAL(std::string(), sValue);
+
+    JsonUtil::findJSONValue(object, "invalid", sValue);
+    CPPUNIT_ASSERT_EQUAL(std::string(), sValue);
+
+    JsonUtil::findJSONValue(object, "UserId", sValue);
+    CPPUNIT_ASSERT_EQUAL(std::string("user@user.com"), sValue);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
