@@ -292,13 +292,6 @@ var deps = {
 		desc: 'Row Header bar'
 	},
 
-	ControlMetricInput: {
-		src: ['control/Control.js',
-		      'control/Control.MetricInput.js'],
-		heading: 'Controls',
-		desc: 'Metric Input'
-	},
-
 	ControlDocumentRepair: {
 		src: ['control/Control.js',
 		      'control/Control.DocumentRepair.js'],

@@ -106,15 +106,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	optimalHeight: function(index) {
-		if (!this._dialog) {
-			this._dialog = L.control.metricInput(this._onDialogResult, this, 0, {title: _UNO('.uno:SetOptimalRowHeight', 'spreadsheet', true).replace('...','')});
-		}
 		if (this._map._docLayer._selections.getLayers().length === 0) {
 			this._selectRow(index, 0);
 		}
-		this._dialog.addTo(this._map);
-		this._map.enable(false);
-		this._dialog.show();
+		this._map.sendUnoCommand('.uno:SetOptimalRowHeight');
 	},
 
 	insertRow: function(index) {

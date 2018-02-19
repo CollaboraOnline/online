@@ -109,17 +109,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	optimalWidth: function(index) {
-		if (!this._dialog) {
-			this._dialog = L.control.metricInput(this._onDialogResult, this,
-							     this._map._docLayer.twipsToHMM(this._map._docLayer.STD_EXTRA_WIDTH),
-							     {title: _UNO('.uno:SetOptimalColumnWidth', 'spreadsheet', true).replace('...', '')});
-		}
 		if (this._map._docLayer._selections.getLayers().length === 0) {
 			this._selectColumn(index, 0);
 		}
-		this._dialog.addTo(this._map);
-		this._map.enable(false);
-		this._dialog.show();
+		this._map.sendUnoCommand('.uno:SetOptimalColumnWidth');
 	},
 
 	insertColumn: function(index) {
