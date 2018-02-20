@@ -692,7 +692,7 @@ L.Map = L.Evented.extend({
 			throw new Error('Map container is already initialized.');
 		}
 
-		var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', container);
+		var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', container.parentElement);
 		textAreaContainer.id = 'doc-clipboard-container';
 		this._textArea = L.DomUtil.create('input', 'clipboard', textAreaContainer);
 		this._textArea.setAttribute('type', 'text');
