@@ -790,7 +790,7 @@ bool ChildSession::extTextInputEvent(const char* /*buffer*/, int /*length*/,
 
     std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
     getLOKitDocument()->setView(_viewId);
-    getLOKitDocument()->postExtTextInputEvent(id, type, decodedText.c_str());
+    getLOKitDocument()->postWindowExtTextInputEvent(id, type, decodedText.c_str());
 
     return true;
 }
