@@ -669,7 +669,7 @@ $(function () {
 				'<td>Always follow the editor</td>' +
 				'</tr>' +
 				'</table>' +
-				'<p id="currently-msg">Current - <b><span id="current-editor">Dewan</span></b></p>' +
+				'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
 				'</div>'
 			},
 			{type: 'break', id: 'userlistbreak'},
