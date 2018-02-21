@@ -56,7 +56,6 @@ pot:
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.Menubar.js \
-		src/control/Control.MetricInput.js \
 		src/control/Control.RowHeader.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.Tabs.js \
