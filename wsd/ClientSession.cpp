@@ -237,11 +237,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "save")
     {
         int dontTerminateEdit = 1;
-        int dontSaveIfUnmodified = 1;
         if (tokens.size() > 1)
             getTokenInteger(tokens[1], "dontTerminateEdit", dontTerminateEdit);
 
-        if (tokens.size() > 2)
+        // Don't save unmodified docs by default, or when read-only.
+        int dontSaveIfUnmodified = 1;
+        if (!isReadOnly() && tokens.size() > 2)
             getTokenInteger(tokens[2], "dontSaveIfUnmodified", dontSaveIfUnmodified);
 
         docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0);
