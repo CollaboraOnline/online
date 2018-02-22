@@ -371,4 +371,5 @@ body {
 /* Place above statusbar */
 .vex.vex-theme-bottom-right-corner .vex-content {
 	bottom: 40px !important;
+	right: 10px !important;
 }
