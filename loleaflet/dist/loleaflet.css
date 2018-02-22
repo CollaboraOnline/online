@@ -363,3 +363,12 @@ body {
         -webkit-user-select: none;
         -o-user-select: none;
 }
+
+/* Infobar */
+.vex-theme-bottom-right-corner .vex-dialog-message {
+	font-size: 1em;
+}
+/* Place above statusbar */
+.vex.vex-theme-bottom-right-corner .vex-content {
+	bottom: 40px !important;
+}

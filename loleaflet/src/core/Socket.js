@@ -571,9 +571,12 @@ L.Socket = L.Class.extend({
 						brandProductName : 'LibreOffice Online'));
 				brandProductFAQURL = (typeof brandProductFAQURL !== 'undefined') ?
 						brandProductFAQURL : 'https://hub.libreoffice.org/professional-online-support';
-				textMsg = textMsg.replace(/{a}/g, '<a target="_blank" href="'+brandProductFAQURL+'">');
-				textMsg = textMsg.replace(/{\/a}/g, '</a>');
-				this._map.fire('error', {msg: textMsg});
+				this._map.fire('infobar',
+					{
+						msg: textMsg,
+						action: brandProductFAQURL,
+						actionLabel: errorMessages.infoandsupport
+					});
 			}
 		}
 		else if (textMsg.startsWith('pong ') && this._map._docLayer && this._map._docLayer._debug) {
