@@ -21,7 +21,9 @@
 #define LOOLWSD_TEST_LOLEAFLET_UI "/loleaflet/" LOOLWSD_VERSION_HASH "/loleaflet.html"
 
 /* Default document used in the start test URI */
-#define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH "test/data/hello-world.odt"
+#define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER  "test/data/hello-world.odt"
+#define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC    "test/data/hello-world.ods"
+#define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS "test/data/hello-world.odp"
 
 // This is the main source for the loolwsd program. LOOL uses several loolwsd processes: one main
 // parent process that listens on the TCP port and accepts connections from LOOL clients, and a
@@ -525,7 +527,7 @@ inline std::string getLaunchBase(const std::string &credentials)
     return oss.str();
 }
 
-inline std::string getLaunchURI()
+inline std::string getLaunchURI(const std::string &document)
 {
     const std::string aAbsTopSrcDir = Poco::Path(Application::instance().commandPath()).parent().toString();
 
@@ -535,7 +537,7 @@ inline std::string getLaunchURI()
     oss << LOOLWSD_TEST_LOLEAFLET_UI;
     oss << "?file_path=file://";
     oss << Poco::Path(aAbsTopSrcDir).absolute().toString();
-    oss << LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH;
+    oss << document;
 
     return oss.str();
 }
@@ -944,8 +946,11 @@ void LOOLWSD::initialize(Application& self)
     Admin::instance().setDefDocProcSettings(docProcSettings, false);
 
 #if ENABLE_DEBUG
-    std::cerr << "\nLaunch this in your browser:\n\n"
-              << getLaunchURI() << '\n' << std::endl;
+    std::cerr << "\nLaunch one of these in your browser:\n\n"
+              << "    Writer:  " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER) << '\n'
+              << "    Calc:    " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC) << '\n'
+              << "    Impress: " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS) << '\n'
+              << std::endl;
 
     const std::string adminURI = getAdminURI(config());
     if (!adminURI.empty())
