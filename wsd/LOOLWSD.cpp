@@ -1515,7 +1515,7 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
             }
 #if !ENABLE_SUPPORT_KEY
             // Users of development versions get just an info when reaching max documents or connections
-            if (DocBrokers.size() + 1 > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
+            if (DocBrokers.size() > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
             {
                 infoLimitReached(ws);
             }
