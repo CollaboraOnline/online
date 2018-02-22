@@ -553,7 +553,7 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, cons
     else
     {
         values = getLOKitDocument()->getCommandValues(command.c_str());
-        success = sendTextFrame("commandvalues: " + std::string(values == nullptr ? "" : values));
+        success = sendTextFrame("commandvalues: " + std::string(values == nullptr ? "{}" : values));
         std::free(values);
     }
 
