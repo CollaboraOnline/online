@@ -212,7 +212,7 @@ inline void shutdownLimitReached(WebSocketHandler& ws)
     }
 }
 
-inline void infoLimitReached()
+inline void infoLimitReached(const WebSocketHandler* ws)
 {
     const std::string info = Poco::format(PAYLOAD_INFO_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
     LOG_INF("Sending client 'limitreached' message: " << info);
@@ -220,6 +220,7 @@ inline void infoLimitReached()
     try
     {
         Util::alertAllUsers(info);
+        ws->sendMessage(info);
     }
     catch (const std::exception& ex)
     {
@@ -1496,28 +1497,29 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
     LOG_CHECK_RET(docBroker && "Null docBroker instance", nullptr);
     try
     {
-        const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
-        if (!fs.empty())
-        {
-            LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
-            const std::string diskfullMsg = "error: cmd=internal kind=diskfull";
-            // Alert all other existing sessions also
-            Util::alertAllUsers(diskfullMsg);
-        }
-#if !ENABLE_SUPPORT_KEY
-        // Users of development versions get just an info when reaching max documents or connections
-        if (DocBrokers.size() + 1 > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
-        {
-            infoLimitReached();
-        }
-#endif
-
         // Now we have a DocumentBroker and we're ready to process client commands.
         if (ws)
         {
             const std::string statusReady = "statusindicator: ready";
             LOG_TRC("Sending to Client [" << statusReady << "].");
             ws->sendMessage(statusReady);
+
+            const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
+            if (!fs.empty())
+            {
+                LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
+                const std::string diskfullMsg = "error: cmd=internal kind=diskfull";
+                // Alert all existing sessions
+                Util::alertAllUsers(diskfullMsg);
+                ws->sendMessage(diskfullMsg);
+            }
+#if !ENABLE_SUPPORT_KEY
+            // Users of development versions get just an info when reaching max documents or connections
+            if (DocBrokers.size() + 1 > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
+            {
+                infoLimitReached(ws);
+            }
+#endif
         }
 
         // In case of WOPI, if this session is not set as readonly, it might be set so
