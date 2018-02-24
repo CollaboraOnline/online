@@ -216,22 +216,23 @@ inline void shutdownLimitReached(WebSocketHandler& ws)
 }
 #endif
 
-inline void infoLimitReached(const WebSocketHandler* ws)
+inline void checkSessionLimitsAndWarnClients()
 {
-    const std::string info = Poco::format(PAYLOAD_INFO_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
-    LOG_INF("Sending client 'limitreached' message: " << info);
+    if (DocBrokers.size() > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
+    {
+        const std::string info = Poco::format(PAYLOAD_INFO_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
+        LOG_INF("Sending client 'limitreached' message: " << info);
 
-    try
-    {
-        Util::alertAllUsers(info);
-        ws->sendMessage(info);
-    }
-    catch (const std::exception& ex)
-    {
-        LOG_ERR("Error while shuting down socket on reaching limit: " << ex.what());
+        try
+        {
+            Util::alertAllUsers(info);
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Error while shuting down socket on reaching limit: " << ex.what());
+        }
     }
 }
-
 
 /// Internal implementation to alert all clients
 /// connected to any document.
@@ -250,6 +251,24 @@ void alertAllUsersInternal(const std::string& msg)
         docBroker->addCallback([msg, docBroker](){ docBroker->alertAllUsers(msg); });
     }
 }
+
+static void checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
+{
+    try
+    {
+        const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems(cacheLastCheck);
+        if (!fs.empty())
+        {
+            LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
+            alertAllUsersInternal("error: cmd=internal kind=diskfull");
+        }
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_WRN("Exception while checking disk-space and warning clients: " << exc.what());
+    }
+}
+
 }
 
 /// Remove dead and idle DocBrokers.
@@ -300,12 +319,7 @@ static int forkChildren(const int number)
 
     if (number > 0)
     {
-        const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems(false);
-        if (!fs.empty())
-        {
-            LOG_WRN("File system of " << fs << " dangerously low on disk space");
-            alertAllUsersInternal("error: cmd=internal kind=diskfull");
-        }
+        checkDiskSpaceAndWarnClients(false);
 
 #ifdef KIT_IN_PROCESS
         forkLibreOfficeKit(LOOLWSD::ChildRoot, LOOLWSD::SysTemplate, LOOLWSD::LoTemplate, LO_JAIL_SUBPATH, number);
@@ -1514,23 +1528,6 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
             const std::string statusReady = "statusindicator: ready";
             LOG_TRC("Sending to Client [" << statusReady << "].");
             ws->sendMessage(statusReady);
-
-            const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems();
-            if (!fs.empty())
-            {
-                LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
-                const std::string diskfullMsg = "error: cmd=internal kind=diskfull";
-                // Alert all existing sessions
-                Util::alertAllUsers(diskfullMsg);
-                ws->sendMessage(diskfullMsg);
-            }
-#if !ENABLE_SUPPORT_KEY
-            // Users of development versions get just an info when reaching max documents or connections
-            if (DocBrokers.size() > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
-            {
-                infoLimitReached(ws);
-            }
-#endif
         }
 
         // In case of WOPI, if this session is not set as readonly, it might be set so
@@ -2332,6 +2329,12 @@ private:
 
                                 // Add and load the session.
                                 docBroker->addSession(clientSession);
+
+                                checkDiskSpaceAndWarnClients(true);
+#if !ENABLE_SUPPORT_KEY
+                                // Users of development versions get just an info when reaching max documents or connections
+                                checkSessionLimitsAndWarnClients();
+#endif
                             }
                             catch (const UnauthorizedRequestException& exc)
                             {
