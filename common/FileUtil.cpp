@@ -188,14 +188,14 @@ namespace FileUtil
 {
     void registerFileSystemForDiskSpaceChecks(const std::string& path)
     {
-        std::lock_guard<std::mutex> lock(fsmutex);
-
-        if (!path.empty())
+        const std::string::size_type lastSlash = path.rfind('/');
+        assert(path.empty() || lastSlash != std::string::npos);
+        if (lastSlash != std::string::npos)
         {
-            std::string dirPath = path;
-            std::string::size_type lastSlash = dirPath.rfind('/');
-            assert(lastSlash != std::string::npos);
-            dirPath = dirPath.substr(0, lastSlash + 1) + '.';
+            const std::string dirPath = path.substr(0, lastSlash + 1) + '.';
+            LOG_INF("Registering filesystem for space checks: [" << dirPath << "]");
+
+            std::lock_guard<std::mutex> lock(fsmutex);
 
             struct stat s;
             if (stat(dirPath.c_str(), &s) == 0)
@@ -207,19 +207,19 @@ namespace FileUtil
 
     std::string checkDiskSpaceOnRegisteredFileSystems(const bool cacheLastCheck)
     {
-        std::lock_guard<std::mutex> lock(fsmutex);
-
         static std::chrono::steady_clock::time_point lastCheck;
         std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
 
-        // Don't check more often that once a minute
+        std::lock_guard<std::mutex> lock(fsmutex);
+
+        // Don't check more often than once a minute
         if (std::chrono::duration_cast<std::chrono::seconds>(now - lastCheck).count() < 60)
             return std::string();
 
         if (cacheLastCheck)
             lastCheck = now;
 
-        for (auto& i: filesystems)
+        for (const auto& i: filesystems)
         {
             if (!checkDiskSpace(i.path))
             {
@@ -242,10 +242,15 @@ namespace FileUtil
         if (statfs(path.c_str(), &sfs) == -1)
             return true;
 
+        const int64_t freeBytes = static_cast<int64_t>(sfs.f_bavail) * sfs.f_bsize;
+
+        LOG_INF("Filesystem [" << path << "] has " << (freeBytes / 1024 / 1024) <<
+                " MB free (" << (sfs.f_bavail * 100. / sfs.f_blocks) << "%).");
+
         // we should be able to run just OK with 5GB
         constexpr int64_t ENOUGH_SPACE = int64_t(5)*1024*1024*1024;
 
-        if (static_cast<int64_t>(sfs.f_bavail) * sfs.f_bsize > ENOUGH_SPACE)
+        if (freeBytes > ENOUGH_SPACE)
             return true;
 
         if (static_cast<double>(sfs.f_bavail) / sfs.f_blocks <= 0.05)
