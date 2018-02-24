@@ -436,7 +436,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
     }
     catch (const Poco::FileNotFoundException& exc)
     {
-        LOG_ERR("FileServerRequestHandler: " << exc.displayText());
+        LOG_WRN("FileServerRequestHandler: " << exc.displayText());
 
         // 404 not found
         std::ostringstream oss;
@@ -455,7 +455,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
     struct stat fileStat;
     DIR *workingdir;
 
-    LOG_TRC("Pre-reading directory: " << basePath << path << "\n");
+    LOG_TRC("Pre-reading directory: " << basePath << path);
     workingdir = opendir((basePath + path).c_str());
 
     while ((currentFile = readdir(workingdir)) != NULL)
@@ -471,7 +471,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
         else if (S_ISREG(fileStat.st_mode))
         {
-            LOG_TRC("Reading file: '" << basePath << relPath << " as '" << relPath << "'\n");
+            LOG_TRC("Reading file: '" << basePath << relPath << " as '" << relPath << "'");
 
             std::ifstream file(basePath + relPath, std::ios::binary);
 
@@ -486,7 +486,8 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             compressedFile.reserve(fileStat.st_size);
             std::string uncompressedFile;
             uncompressedFile.reserve(fileStat.st_size);
-            do {
+            do
+            {
                 file.read(&buf[0], fileStat.st_size);
                 const long unsigned int size = file.gcount();
                 if (size == 0)
@@ -597,7 +598,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
             {
                 tokenTtl = std::stoul(accessTokenTtl);
             }
-            catch(const std::exception& exc)
+            catch (const std::exception& exc)
             {
                 LOG_ERR("access_token_ttl must be represented as the number of milliseconds since January 1, 1970 UTC, when the token will expire");
             }
