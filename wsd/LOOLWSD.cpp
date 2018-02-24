@@ -2050,37 +2050,36 @@ private:
                 format = tokens[3];
 
             bool sent = false;
-            if (!fromPath.empty())
+            if (!fromPath.empty() && !format.empty())
             {
-                if (!format.empty())
+                LOG_INF("Conversion request for URI [" << fromPath << "].");
+
+                Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
+                const std::string docKey = DocumentBroker::getDocKey(uriPublic);
+
+                // This lock could become a bottleneck.
+                // In that case, we can use a pool and index by publicPath.
+                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+
+                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
+
+                cleanupDocBrokers();
+
+                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                DocBrokers.emplace(docKey, docBroker);
+                LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+
+                // Load the document.
+                // TODO: Move to DocumentBroker.
+                const bool isReadOnly = true;
+                std::shared_ptr<ClientSession> clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker, isReadOnly);
+                if (clientSession)
                 {
-                    LOG_INF("Conversion request for URI [" << fromPath << "].");
-
-                    Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
-                    const std::string docKey = DocumentBroker::getDocKey(uriPublic);
-
-                    // This lock could become a bottleneck.
-                    // In that case, we can use a pool and index by publicPath.
-                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-
-                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
-
-                    cleanupDocBrokers();
-
-                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    DocBrokers.emplace(docKey, docBroker);
-                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
-
-                    // Load the document.
-                    // TODO: Move to DocumentBroker.
-                    const bool isReadOnly = true;
-                    std::shared_ptr<ClientSession> clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker, isReadOnly);
-                    if (clientSession)
+                    disposition.setMove([docBroker, clientSession, format]
+                                        (const std::shared_ptr<Socket> &moveSocket)
                     {
-                        disposition.setMove([docBroker, clientSession, format]
-                                            (const std::shared_ptr<Socket> &moveSocket)
-                        { // Perform all of this after removing the socket
+                        // Perform all of this after removing the socket
 
                         // Make sure the thread is running before adding callback.
                         docBroker->startThread();
@@ -2118,13 +2117,12 @@ private:
                             std::vector<char> saveasRequest(saveas.begin(), saveas.end());
                             clientSession->handleMessage(true, WSOpCode::Text, saveasRequest);
                         });
-                        });
+                    });
 
-                        sent = true;
-                    }
-                    else
-                        LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
+                    sent = true;
                 }
+                else
+                    LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
             }
 
             if (!sent)
@@ -2729,11 +2727,13 @@ int LOOLWSD::innerMain()
         LOG_FTL("Missing --systemplate option");
         throw MissingOptionException("systemplate");
     }
+
     if (LoTemplate.empty())
     {
         LOG_FTL("Missing --lotemplate option");
         throw MissingOptionException("lotemplate");
     }
+
     if (ChildRoot.empty())
     {
         LOG_FTL("Missing --childroot option");
