@@ -12,6 +12,7 @@
 
 #include <unistd.h>
 
+#include <cstddef>
 #include <functional>
 #include <thread>
 #include <sstream>

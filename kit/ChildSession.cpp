@@ -45,7 +45,8 @@ ChildSession::ChildSession(const std::string& id,
     _jailId(jailId),
     _docManager(docManager),
     _viewId(-1),
-    _isDocLoaded(false)
+    _isDocLoaded(false),
+    _copyToClipboard(false)
 {
     LOG_INF("ChildSession ctor [" << getName() << "].");
 }
@@ -693,6 +694,22 @@ bool ChildSession::getChildId()
     return true;
 }
 
+std::string ChildSession::getTextSelectionInternal(const std::string& mimeType)
+{
+    char* textSelection = nullptr;
+    {
+        std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+
+        getLOKitDocument()->setView(_viewId);
+
+        textSelection = getLOKitDocument()->getTextSelection(mimeType.c_str(), nullptr);
+    }
+
+    std::string str(textSelection ? textSelection : "");
+    free(textSelection);
+    return str;
+}
+
 bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     std::string mimeType;
@@ -704,17 +721,7 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
         return false;
     }
 
-    char* textSelection = nullptr;
-    {
-        std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
-
-        getLOKitDocument()->setView(_viewId);
-
-        textSelection = getLOKitDocument()->getTextSelection(mimeType.c_str(), nullptr);
-    }
-
-    sendTextFrame("textselectioncontent: " + std::string(textSelection));
-    free(textSelection);
+    sendTextFrame("textselectioncontent: " + getTextSelectionInternal(mimeType));
     return true;
 }
 
@@ -948,19 +955,25 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const std:
 
     getLOKitDocument()->setView(_viewId);
 
-    if (tokens.size() == 2 && tokens[1] == ".uno:fakeDiskFull")
+    if (tokens.size() == 2)
     {
-        Util::alertAllUsers("internal", "diskfull");
-    }
-    else if (tokens.size() == 2)
-    {
-        getLOKitDocument()->postUnoCommand(tokens[1].c_str(), nullptr, bNotify);
+        if (tokens[1] == ".uno:fakeDiskFull")
+        {
+            Util::alertAllUsers("internal", "diskfull");
+        }
+        else
+        {
+            if (tokens[1] == ".uno:Copy")
+                _copyToClipboard = true;
+
+            getLOKitDocument()->postUnoCommand(tokens[1].c_str(), nullptr, bNotify);
+        }
     }
     else
     {
         getLOKitDocument()->postUnoCommand(tokens[1].c_str(),
-                                       Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(),
-                                       bNotify);
+                                           Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(),
+                                           bNotify);
     }
 
     return true;
@@ -1546,6 +1559,18 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_VALIDITY_LIST_BUTTON:
         sendTextFrame("validitylistbutton: " + payload);
         break;
+    case LOK_CALLBACK_CLIPBOARD_CHANGED:
+    {
+        std::string selection;
+        if (_copyToClipboard)
+        {
+            _copyToClipboard = false;
+            selection = getTextSelectionInternal("");
+        }
+
+        sendTextFrame("clipboardchanged: " + selection);
+        break;
+    }
     default:
         LOG_ERR("Unknown callback event (" << type << "): " << payload);
     }

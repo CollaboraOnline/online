@@ -184,6 +184,7 @@ private:
     bool downloadAs(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool getChildId();
     bool getTextSelection(const char* buffer, int length, const std::vector<std::string>& tokens);
+    std::string getTextSelectionInternal(const std::string& mimeType);
     bool paste(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool insertFile(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool keyEvent(const char* buffer, int length, const std::vector<std::string>& tokens, const LokEventTargetEnum target);
@@ -226,6 +227,9 @@ private:
     std::string _docType;
 
     StateRecorder _stateRecorder;
+
+    /// If we are copying to clipboard.
+    bool _copyToClipboard;
 
     /// Synchronize _loKitDocument access.
     /// This should be owned by Document.

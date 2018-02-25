@@ -580,7 +580,7 @@ bool ClientSession::filterMessage(const std::string& message) const
                 LOG_WRN("No value of id in downloadas message");
         }
     }
-    else if (tokens[0] == "gettextselection")
+    else if (tokens[0] == "gettextselection" || tokens[0] == ".uno:Copy")
     {
         if (_wopiFileInfo && _wopiFileInfo->_disableCopy)
         {
