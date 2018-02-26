@@ -143,6 +143,9 @@ void SocketDisposition::execute()
     _socketMove = nullptr;
 }
 
+const int WebSocketHandler::InitialPingDelayMs = 25;
+const int WebSocketHandler::PingFrequencyMs = 18 * 1000;
+
 void WebSocketHandler::dumpState(std::ostream& os)
 {
     os << (_shuttingDown ? "shutd " : "alive ")
