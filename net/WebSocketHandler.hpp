@@ -40,8 +40,8 @@ protected:
         static const unsigned char Mask = 0x80;
     };
 
-    static const int InitialPingDelayMs = 25;
-    static const int PingFrequencyMs = 18 * 1000;
+    static const int InitialPingDelayMs;
+    static const int PingFrequencyMs;
 
 public:
     WebSocketHandler() :
