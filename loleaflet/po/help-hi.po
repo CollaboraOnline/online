@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-23 11:12+0200\n"
+"POT-Creation-Date: 2018-02-27 15:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,17 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.1.0\n"
-"X-Pootle-Revision: 826698\n"
+"X-Generator: Translate Toolkit 2.2.4\n"
+"X-Pootle-Revision: 3089211\n"
 "X-Pootle-Path: /hi/libo_online/loleaflet-help-hi.po\n"
 
 #: dist/loleaflet-help.html+div.h1:25-5
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "कुंजीपटल अल्प मार्ग"
 
 #: dist/loleaflet-help.html+div.div.h2:27-9
 msgid "General Keyboard Shortcuts"
-msgstr ""
+msgstr "सामान्य कुंजीपट अल्प मार्ग"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:29-18
 msgid "Undo"
@@ -28,7 +28,7 @@ msgstr "पहले जैसा"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:29-49
 msgid "Ctrl + Z"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:30-18
 msgid "Redo"
@@ -36,19 +36,19 @@ msgstr "फिर करें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:30-49
 msgid "Ctrl + Y"
-msgstr ""
+msgstr "कंट्रोल + Y"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:31-18
 msgid "Cut"
-msgstr ""
+msgstr "काटें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:31-48
 msgid "Ctrl + X"
-msgstr ""
+msgstr "कंट्रोल + X"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:32-18
 msgid "Paste as unformatted text"
-msgstr ""
+msgstr "अप्रारूपित पाठ चिपकाएँ"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:32-70
 msgid "Ctrl + Alt + Shift + V"
@@ -56,15 +56,16 @@ msgstr ""
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:33-18
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "छापें (PDF के रुप में डाउनलोड करें)"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:33-68
+#, fuzzy
 msgid "Ctrl + P"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:34-18
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "कुंजीपट शॉर्टकट मदद प्रदर्शित करें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:34-80
 msgid "Ctrl + Shift + ?"
@@ -73,19 +74,20 @@ msgstr ""
 #: dist/loleaflet-help.html+div.div.h2:38-9
 #: dist/loleaflet-help.html+div.div.h2:160-9
 msgid "Text formatting"
-msgstr ""
+msgstr "पाठ प्रारूपण"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:40-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:137-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:162-18
 msgid "Bold"
-msgstr ""
+msgstr "मोटा"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:40-49
 #: dist/loleaflet-help.html+div.div.table.tr.td:137-49
 #: dist/loleaflet-help.html+div.div.table.tr.td:162-49
+#, fuzzy
 msgid "Ctrl + B"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:41-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:138-18
@@ -96,35 +98,38 @@ msgstr ""
 #: dist/loleaflet-help.html+div.div.table.tr.td:41-51
 #: dist/loleaflet-help.html+div.div.table.tr.td:138-51
 #: dist/loleaflet-help.html+div.div.table.tr.td:163-51
+#, fuzzy
 msgid "Ctrl + I"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:42-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:139-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:164-18
 msgid "Underline"
-msgstr ""
+msgstr "रेखांकित"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:42-54
 #: dist/loleaflet-help.html+div.div.table.tr.td:139-54
 #: dist/loleaflet-help.html+div.div.table.tr.td:164-54
+#, fuzzy
 msgid "Ctrl + U"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:43-18
 msgid "Double Underline"
-msgstr ""
+msgstr "दोबारा रेखांकित करें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:43-61
 #: dist/loleaflet-help.html+div.div.table.tr.td:144-54
+#, fuzzy
 msgid "Ctrl + D"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:44-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:140-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:165-18
 msgid "Strikethrough"
-msgstr ""
+msgstr "आरपार काटें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:44-58
 #: dist/loleaflet-help.html+div.div.table.tr.td:140-58
@@ -135,7 +140,7 @@ msgstr ""
 #: dist/loleaflet-help.html+div.div.table.tr.td:45-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:166-18
 msgid "Superscript"
-msgstr ""
+msgstr "उपरीलिपी"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:45-56
 #: dist/loleaflet-help.html+div.div.table.tr.td:166-56
@@ -145,7 +150,7 @@ msgstr ""
 #: dist/loleaflet-help.html+div.div.table.tr.td:46-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:167-18
 msgid "Subscript"
-msgstr ""
+msgstr "उपलिपि"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:46-54
 #: dist/loleaflet-help.html+div.div.table.tr.td:167-54
@@ -155,125 +160,136 @@ msgstr ""
 #: dist/loleaflet-help.html+div.div.table.tr.td:47-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:141-18
 msgid "Remove direct formatting"
-msgstr ""
+msgstr "प्रत्यक्ष प्रारूपण मिटाएँ"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:47-69
 #: dist/loleaflet-help.html+div.div.table.tr.td:141-69
+#, fuzzy
 msgid "Ctrl + M"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.h2:49-9
 #: dist/loleaflet-help.html+div.div.h2:170-9
 msgid "Paragraph formatting"
-msgstr ""
+msgstr "अनुच्छेद प्रारूपण"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:51-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:146-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:172-18
 msgid "Align Center"
-msgstr ""
+msgstr "मध्य संरेखण"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:51-57
 #: dist/loleaflet-help.html+div.div.table.tr.td:146-57
 #: dist/loleaflet-help.html+div.div.table.tr.td:172-57
+#, fuzzy
 msgid "Ctrl + E"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:52-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:147-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:173-18
 msgid "Align Left"
-msgstr ""
+msgstr "बायाँ संरेखण"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:52-55
 #: dist/loleaflet-help.html+div.div.table.tr.td:147-55
 #: dist/loleaflet-help.html+div.div.table.tr.td:173-55
+#, fuzzy
 msgid "Ctrl + L"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:53-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:148-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:174-18
 msgid "Align Right"
-msgstr ""
+msgstr "दाहिना संरेखण"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:53-56
 #: dist/loleaflet-help.html+div.div.table.tr.td:148-56
 #: dist/loleaflet-help.html+div.div.table.tr.td:174-56
+#, fuzzy
 msgid "Ctrl + R"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:54-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:149-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:175-18
 msgid "Justify"
-msgstr ""
+msgstr "जस्टिफ़ाई"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:54-52
 #: dist/loleaflet-help.html+div.div.table.tr.td:149-52
 #: dist/loleaflet-help.html+div.div.table.tr.td:175-52
+#, fuzzy
 msgid "Ctrl + J"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:55-18
 msgid "Apply Default paragraph style"
-msgstr ""
+msgstr "डिफ़ॉल्ट अनुच्छेद शैली लागू करें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:55-74
+#, fuzzy
 msgid "Ctrl + 0"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:56-18
 msgid "Apply Heading 1 paragraph style"
-msgstr ""
+msgstr "शीर्षक 1 अनुच्छेद शैली लागू करें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:56-76
+#, fuzzy
 msgid "Ctrl + 1"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:57-18
 msgid "Apply Heading 2 paragraph style"
-msgstr ""
+msgstr "शीर्षक 2 अनुच्छेद शैली लागू करें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:57-76
+#, fuzzy
 msgid "Ctrl + 2"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:58-18
 msgid "Apply Heading 3 paragraph style"
-msgstr ""
+msgstr "शीर्षक 3 अनुच्छेद शैली लागू करें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:58-76
 #: dist/loleaflet-help.html+div.div.table.tr.td:150-69
+#, fuzzy
 msgid "Ctrl + 3"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:59-18
 msgid "Apply Heading 4 paragraph style"
-msgstr ""
+msgstr "शीर्षक 4 अनुच्छेद शैली लागू करें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:59-76
+#, fuzzy
 msgid "Ctrl + 4"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:60-18
 msgid "Apply Heading 5 paragraph style"
-msgstr ""
+msgstr "शीर्षक ५ अनुच्छेद शैली लागू करें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:60-76
+#, fuzzy
 msgid "Ctrl + 5"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.h2:62-9
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "दस्तावेज़ में पाठ चयन आैर पथ प्रदर्शन"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:64-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:145-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:168-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:181-18
 msgid "Select All"
-msgstr ""
+msgstr "सभी चुनें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:64-55
 #: dist/loleaflet-help.html+div.div.table.tr.td:102-18
@@ -281,63 +297,67 @@ msgstr ""
 #: dist/loleaflet-help.html+div.div.table.tr.td:168-55
 #: dist/loleaflet-help.html+div.div.table.tr.td:181-55
 #: dist/loleaflet-help.html+div.div.table.tr.td:213-79
+#, fuzzy
 msgid "Ctrl + A"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:65-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:182-18
 msgid "Move cursor to the left"
-msgstr ""
+msgstr "संकेतक को दाएँ खिसकाएँ"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:65-68
 #: dist/loleaflet-help.html+div.div.table.tr.td:182-68
 msgid "Arrow Left"
-msgstr ""
+msgstr "तीर बायें करें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:66-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:183-18
 msgid "Move cursor with selection to the left"
-msgstr ""
+msgstr "संकेतक चयन को बाएँ खिसकाएँ"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:66-83
 #: dist/loleaflet-help.html+div.div.table.tr.td:183-83
+#, fuzzy
 msgid "Shift + Arrow Left"
-msgstr ""
+msgstr "Shift +ऊपर तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:67-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:184-18
 msgid "Go to beginning of a word"
-msgstr ""
+msgstr "शब्द के प्रारंभ में जाएँ"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:67-70
 #: dist/loleaflet-help.html+div.div.table.tr.td:184-70
+#, fuzzy
 msgid "Ctrl + Arrow Left"
-msgstr ""
+msgstr "Ctrl + दायां तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:68-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:185-18
 msgid "Select to the left word by word"
-msgstr ""
+msgstr "एक एक शब्द से बाएें की तरफ चुनें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:68-76
 #: dist/loleaflet-help.html+div.div.table.tr.td:185-76
+#, fuzzy
 msgid "Ctrl + Shift + Arrow Left"
-msgstr ""
+msgstr "Ctrl + Shift + दायां तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:69-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:186-18
 msgid "Move cursor to the right"
-msgstr ""
+msgstr "संकेतक को दाएँ खिसकाएँ"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:69-69
 #: dist/loleaflet-help.html+div.div.table.tr.td:186-69
 msgid "Arrow Right"
-msgstr ""
+msgstr "दायां तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:70-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:187-18
 msgid "Move cursor with selection to the right"
-msgstr ""
+msgstr "चयन संकेतक को दाएँ खिसकाएँ"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:70-84
 #: dist/loleaflet-help.html+div.div.table.tr.td:187-84
@@ -347,107 +367,109 @@ msgstr ""
 #: dist/loleaflet-help.html+div.div.table.tr.td:71-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:188-18
 msgid "Go to start of the next word"
-msgstr ""
+msgstr "अगले शब्द के प्रारंभ में जायें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:71-73
 #: dist/loleaflet-help.html+div.div.table.tr.td:188-73
 msgid "Ctrl + Arrow Right"
-msgstr ""
+msgstr "Ctrl + दायां तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:72-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:189-18
 msgid "Select to the right word by word"
-msgstr ""
+msgstr "एक एक शब्द से दायें की तरफ चुनें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:72-77
 #: dist/loleaflet-help.html+div.div.table.tr.td:189-77
 msgid "Ctrl + Shift + Arrow Right"
-msgstr ""
+msgstr "Ctrl + Shift + दायां तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:73-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:190-18
 msgid "Move cursor up one line"
-msgstr ""
+msgstr "संकेतक को एक पंक्ति उपर खिसकायें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:73-68
 #: dist/loleaflet-help.html+div.div.table.tr.td:190-68
 msgid "Arrow Up"
-msgstr ""
+msgstr "ऊपर तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:74-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:191-18
 msgid "Select lines in upwards direction"
-msgstr ""
+msgstr "ऊपर की दिशा में पंक्तियाँ चुनें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:74-78
 #: dist/loleaflet-help.html+div.div.table.tr.td:191-78
 msgid "Shift + Arrow Up"
-msgstr ""
+msgstr "Shift +ऊपर तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:75-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:192-18
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr ""
+msgstr "संकेतक को पिछले अनुच्छेद के शुरुआत मे लायें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:75-95
 #: dist/loleaflet-help.html+div.div.table.tr.td:192-95
 msgid "Ctrl + Arrow Up"
-msgstr ""
+msgstr "Ctrl + तीर उपर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:76-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:193-18
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "अनुच्छेद के शुरुआत में चुनें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:76-77
 #: dist/loleaflet-help.html+div.div.table.tr.td:193-77
 msgid "Ctrl + Shift + Arrow Up"
-msgstr ""
+msgstr "Ctrl + Shift + उपरी तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:77-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:194-18
 msgid "Move cursor down one line"
-msgstr ""
+msgstr "संकेतक को एक पंक्ति नीचे खिसकायें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:77-70
 #: dist/loleaflet-help.html+div.div.table.tr.td:194-70
 msgid "Arrow Down"
-msgstr ""
+msgstr "नीचला तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:78-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:195-18
 msgid "Select lines in downwards direction"
-msgstr ""
+msgstr "पंक्तियों को नीचे की दिशा में चुनें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:78-80
 #: dist/loleaflet-help.html+div.div.table.tr.td:195-80
 msgid "Shift + Arrow Down"
-msgstr ""
+msgstr "Shift + तीर नीचे"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:79-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:196-18
 msgid "Move cursor to beginning of the next paragraph"
-msgstr ""
+msgstr "संकेतक को अगले अनुच्छेद के शुरुआत मे लायें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:79-91
 #: dist/loleaflet-help.html+div.div.table.tr.td:196-91
 msgid "Ctrl + Arrow Down"
-msgstr ""
+msgstr "Ctrl + निचला तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:80-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:197-18
 msgid "Select to end of paragraph"
-msgstr ""
+msgstr "अनुच्छेद के अंत तक चुनें"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:80-71
 #: dist/loleaflet-help.html+div.div.table.tr.td:197-71
+#, fuzzy
 msgid "Ctrl + Shift + Arrow Down"
-msgstr ""
+msgstr "Ctrl + Shift + उपरी तीर"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:81-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:198-18
+#, fuzzy
 msgid "Go to beginning of line"
-msgstr ""
+msgstr "शब्द के प्रारंभ में जाएँ"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:81-68
 #: dist/loleaflet-help.html+div.div.table.tr.td:198-68
@@ -724,8 +746,9 @@ msgid "Insert soft hyphen"
 msgstr ""
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:123-63
+#, fuzzy
 msgid "Ctrl + -"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:124-18
 msgid "Insert non-breaking hyphen"
@@ -782,16 +805,18 @@ msgid "Insert new paragraph without numbering inside a list. Does not work when 
 msgstr ""
 
 #: dist/loleaflet-help.html+div.div.h2:135-9
+#, fuzzy
 msgid "Cell formatting"
-msgstr ""
+msgstr "पाठ प्रारूपण"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:143-18
 msgid "Display comment"
 msgstr ""
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:143-60
+#, fuzzy
 msgid "Ctrl + F1"
-msgstr ""
+msgstr "कंट्रोल +Z"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:144-18
 msgid "Fill Down"
@@ -868,8 +893,9 @@ msgid "Shift + Tab"
 msgstr ""
 
 #: dist/loleaflet-help.html+div.div.h2:179-9
+#, fuzzy
 msgid "Text selection and navigation in a textbox"
-msgstr ""
+msgstr "दस्तावेज़ में पाठ चयन आैर पथ प्रदर्शन"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:201-18
 msgid "Go and select text to start of textbox"

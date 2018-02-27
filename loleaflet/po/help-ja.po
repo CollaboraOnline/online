@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-23 11:12+0200\n"
+"POT-Creation-Date: 2018-02-27 15:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.1.0\n"
-"X-Pootle-Revision: 3066709\n"
+"X-Generator: Translate Toolkit 2.2.4\n"
+"X-Pootle-Revision: 3089459\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-help-ja.po\n"
 
 #: dist/loleaflet-help.html+div.h1:25-5
@@ -266,7 +266,7 @@ msgstr "Ctrl + 5"
 
 #: dist/loleaflet-help.html+div.div.h2:62-9
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "ドキュメント内のテキスト選択と移動"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:64-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:145-18
@@ -397,7 +397,7 @@ msgstr "Ctrl + 上矢印"
 #: dist/loleaflet-help.html+div.div.table.tr.td:76-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:193-18
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "段落頭まで選択"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:76-77
 #: dist/loleaflet-help.html+div.div.table.tr.td:193-77
@@ -437,7 +437,7 @@ msgstr "Ctrl + 下矢印"
 #: dist/loleaflet-help.html+div.div.table.tr.td:80-18
 #: dist/loleaflet-help.html+div.div.table.tr.td:197-18
 msgid "Select to end of paragraph"
-msgstr ""
+msgstr "段落末まで選択"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:80-71
 #: dist/loleaflet-help.html+div.div.table.tr.td:197-71
@@ -526,7 +526,7 @@ msgstr "Ctrl + Shift + End"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:89-18
 msgid "Move the view up one page"
-msgstr ""
+msgstr "表示を1ページ分上に移動"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:89-70
 msgid "PageUp"
@@ -542,16 +542,15 @@ msgstr "Ctrl + PageUp"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:91-18
 msgid "Extend the selection up one page"
-msgstr ""
+msgstr "選択を1ページ分上に広げる"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:91-77
-#, fuzzy
 msgid "Shift + PageUp"
-msgstr "Shift + PageDown"
+msgstr "Shift + PageUp"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:92-18
 msgid "Move the view down one page"
-msgstr ""
+msgstr "表示を1ページ分下に移動"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:92-72
 msgid "PageDown"
@@ -567,7 +566,7 @@ msgstr "Ctrl + PageDown"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:94-18
 msgid "Extend the selection down one page"
-msgstr ""
+msgstr "選択を1ページ分下に広げる"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:94-79
 msgid "Shift + PageDown"
@@ -607,7 +606,7 @@ msgstr "Ctrl + Shift + Del"
 
 #: dist/loleaflet-help.html+div.div.h2:100-9
 msgid "Shortcut Keys for Tables"
-msgstr ""
+msgstr "表用のショートカット"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:102-54
 msgid "If the active cell is empty: selects the whole table. Otherwise: selects the contents of the active cell. Pressing again selects the entire table."
@@ -627,7 +626,7 @@ msgstr "Ctrl + Tab"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:105-56
 msgid "Inserts a tab stop (only in tables). Depending on the Window Manager in use, Alt + Tab may be used instead."
-msgstr ""
+msgstr "タブストップを挿入します（表内のみ）。ウィンドウマネージャが利用している場合、Alt + Tabが代わりに利用できます。"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:106-18
 msgid "Alt + Arrow Keys"
@@ -652,17 +651,15 @@ msgstr "Alt + Ctrl + 矢印"
 #: dist/loleaflet-help.html+div.div.table.tr.td:108-69
 #: dist/loleaflet-help.html+div.div.table.tr.td:109-77
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "Altと似ているが、こちらはアクティブセルだけが更新される"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:109-18
-#, fuzzy
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr "Alt + Shift + 矢印"
+msgstr "Ctrl + Alt + Shift + 矢印キー"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:110-18
-#, fuzzy
 msgid "Alt + Insert"
-msgstr "Alt + Enter"
+msgstr "Alt + Insert"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:110-58
 msgid "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key inserts cell"
@@ -694,7 +691,7 @@ msgstr "1 つまたは複数のセルを選択すると、選択したセルを�
 
 #: dist/loleaflet-help.html+div.div.h2:117-9
 msgid "Word processor functions"
-msgstr ""
+msgstr "ワードプロセッサ機能"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:119-18
 msgid "Insert footnote"
@@ -782,7 +779,7 @@ msgstr "Alt + Enter"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:131-18
 msgid "Insert new paragraph without numbering inside a list. Does not work when the cursor is at the end of the list."
-msgstr ""
+msgstr "リストの内側に番号付けしないで段落を挿入する。カーソルがリストの最後にあるときは働きません。"
 
 #: dist/loleaflet-help.html+div.div.h2:135-9
 msgid "Cell formatting"
@@ -790,7 +787,7 @@ msgstr "セル書式"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:143-18
 msgid "Display comment"
-msgstr ""
+msgstr "コメントの表示"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:143-60
 msgid "Ctrl + F1"
@@ -871,8 +868,9 @@ msgid "Shift + Tab"
 msgstr "Shift + Tab"
 
 #: dist/loleaflet-help.html+div.div.h2:179-9
+#, fuzzy
 msgid "Text selection and navigation in a textbox"
-msgstr ""
+msgstr "ドキュメント内のテキスト選択と移動"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:201-18
 #, fuzzy

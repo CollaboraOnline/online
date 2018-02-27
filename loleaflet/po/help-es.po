@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-23 11:12+0200\n"
+"POT-Creation-Date: 2018-02-27 15:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.1.0\n"
-"X-Pootle-Revision: 2788598\n"
+"X-Generator: Translate Toolkit 2.2.4\n"
+"X-Pootle-Revision: 3084311\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
 
 #: dist/loleaflet-help.html+div.h1:25-5
@@ -651,7 +651,7 @@ msgstr "Alt + Ctrl + ↑, ↓, ← o →"
 #: dist/loleaflet-help.html+div.div.table.tr.td:108-69
 #: dist/loleaflet-help.html+div.div.table.tr.td:109-77
 msgid "Like Alt, but only the active cell is modified"
-msgstr "Como Alt, pero solo se modifica la celda actual"
+msgstr "Equivale a Alt, pero solo se modifica la celda activa"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:109-18
 msgid "Ctrl + Alt + Shift + Arrow Keys"
