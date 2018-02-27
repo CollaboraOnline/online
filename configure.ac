@@ -121,6 +121,35 @@ AC_ARG_ENABLE([werror],
             AS_HELP_STRING([--disable-werror],
                           [Do not turn warnings into errors.]))
 
+AC_ARG_WITH(parallelism,
+    AS_HELP_STRING([--with-parallelism],
+        [Number of jobs to run simultaneously during build. Parallel builds can
+        save a lot of time on multi-cpu machines. Defaults to the number of
+        CPUs on the machine.]),
+,)
+
+# Number of CPUs to use during the build
+AC_MSG_CHECKING([for number of processors to use])
+# plain --with-parallelism is just the default
+if test -n "$with_parallelism" -a "$with_parallelism" != "yes"; then
+    if test "$with_parallelism" = "no"; then
+        PARALLELISM=0
+    else
+        PARALLELISM=$with_parallelism
+    fi
+else
+    PARALLELISM=`getconf _NPROCESSORS_ONLN`
+fi
+
+if test $PARALLELISM -eq 0; then
+    AC_MSG_RESULT([explicit make -j option needed])
+    PARALLELISM_OPTION=
+else
+    AC_MSG_RESULT([$PARALLELISM])
+    PARALLELISM_OPTION="-j $PARALLELISM"
+fi
+AC_SUBST(PARALLELISM_OPTION)
+
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],

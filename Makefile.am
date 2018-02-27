@@ -1,3 +1,4 @@
+AM_MAKEFLAGS = @PARALLELISM_OPTION@
 SUBDIRS = . test loleaflet
 
 export ENABLE_DEBUG
