@@ -1,6 +1,7 @@
 {
 "Arrange":"Rregullo",
 "As C~haracter":"~Si shkronjë",
+"AutoCorr~ect":"Korrigjim aut~omatik",
 "Auto~Filter":"~Filtër automatik",
 "A~rea...":"~Zona...",
 "A~rrange":"~Rregullo",
@@ -143,6 +144,7 @@
 "~Hide":"~Fsheh",
 "~Hide AutoFilter":"~Fshehe Filtrin Automatik",
 "~Hide Details":"~Fshih detajet",
+"~Hide Sheets":"~Fsheh Fletët",
 "~Image...":"~Figura...",
 "~Insert":"~Fut",
 "~More Fields...":"Fusha të ~tjera...",
@@ -175,7 +177,9 @@
 "~Tools":"~Mjetet",
 "~UPPERCASE":"SHKRONJA TË ~MËDHA",
 "~Ungroup...":"~Zhgrupo...",
+"~Validity...":"~Vlefshmëria...",
 "~View":"~Paraqitja",
+"~While Typing":"~Derisa të shtypësh",
 "~Word Count":"~Numërimi i fjalëve",
 "~lowercase":"~shkronja të vogla"
 }

@@ -1,6 +1,7 @@
 {
 "Arrange":"Rangskik",
 "As C~haracter":"As k~arakter",
+"AutoCorr~ect":"Ou~tokorrigeer",
 "Auto~Filter":"Outo~Filter",
 "A~rea...":"A~rea...",
 "A~rrange":"R~angskik",
@@ -123,6 +124,7 @@
 "~Hide":"~Versteek",
 "~Hide AutoFilter":"~Versteek OutoFilter",
 "~Hide Details":"~Versteek details",
+"~Hide Sheets":"~Versteek velle",
 "~Insert":"~Voeg in",
 "~Left-to-right mark":"~Links-na-regs-merk",
 "~Non-breaking space":"~Ononderbroke spasie",
@@ -155,7 +157,9 @@
 "~Time":"~Tyd",
 "~Tools":"~Nutsgoed",
 "~Ungroup...":"~Ontgroepeer...",
+"~Validity...":"~Geldigheid...",
 "~View":"~Bekyk",
+"~While Typing":"~Terwyl u tik",
 "~Word Count":"~Woordtelling",
 "~Wrap":"~Omvou",
 "~Wrap Through":"~Omvou deurgaans"

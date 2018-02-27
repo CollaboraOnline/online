@@ -1,6 +1,7 @@
 {
 "Arrange":"ترتیب",
 "As C~haracter":"الفاظ جیسے",
+"AutoCorr~ect":"خودکارشکل",
 "Auto~Filter":"خودکارفلٹر",
 "A~rea...":"علاقہ۔۔۔",
 "A~rrange":"ترتیب دینا",
@@ -132,7 +133,9 @@
 "~Tools":"اوزار",
 "~UPPERCASE":"اپّرکیس",
 "~Ungroup...":"ان گروپ",
+"~Validity...":"تقویت",
 "~View":"منظر",
+"~While Typing":"ٹائپینگ کےدوران",
 "~Word Count":"  الفاظ شمار",
 "~Wrap":"لپیٹنا",
 "~Wrap Through":"سےلپیٹو",

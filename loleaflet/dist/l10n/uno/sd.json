@@ -1,6 +1,7 @@
 {
 "Arrange":"سلسلي ۾ رکو",
 "As C~haracter":"اَکر جيان",
+"AutoCorr~ect":"خودڪار رچنا",
 "Auto~Filter":"خودڪار فلٽر",
 "A~rea...":"کيتر",
 "A~rrange":"سلسلو ڏيو",
@@ -153,7 +154,9 @@
 "~Tools":"اوزارَ",
 "~UPPERCASE":"اپرڪيس",
 "~Ungroup...":"گروپ ٽوڙيو",
+"~Validity...":"جائزگي۔۔۔",
 "~View":"نظارو",
+"~While Typing":"ٽائيپ ڪرڻ دؤران",
 "~Word Count":"لفظن جي ڳڻپ",
 "~Wrap":"ويڙهيو",
 "~Wrap Through":"آرپار لپيٽيو",

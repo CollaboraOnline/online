@@ -77,7 +77,7 @@ var unoCommandsArray = {
 	GroupOutlineMenu:{spreadsheet:{menu:_('~Group and Outline'),},},
 	Grow:{global:{menu:_('Increase Size'),},},
 	HelpMenu:{global:{menu:_('~Help'),},},
-	Hide:{spreadsheet:{menu:_('~Hide Sheet'),},},
+	Hide:{spreadsheet:{menu:_('~Hide Sheets'),},},
 	HideColumn:{spreadsheet:{context:_('H~ide Columns'),menu:_('~Hide'),},},
 	HideDetail:{global:{menu:_('~Hide Details'),},},
 	HideRow:{spreadsheet:{context:_('H~ide Rows'),menu:_('H~ide'),},},

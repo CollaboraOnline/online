@@ -1,6 +1,7 @@
 {
 "Arrange":"Beakanya",
 "As C~haracter":"Bjalo ka tlh~aka",
+"AutoCorr~ect":"Phošollo-~boitirišo",
 "Auto~Filter":"~Filthara-boitirišo",
 "A~rea...":"L~efelo...",
 "A~rrange":"B~eakanya",
@@ -120,6 +121,7 @@
 "~Hide":"~Fihla",
 "~Hide AutoFilter":"~Fihla filthara-boitirišo",
 "~Hide Details":"~Fihla dintlha",
+"~Hide Sheets":"~Fihla dipampiri",
 "~Insert":"~Tsenya",
 "~Left-to-right mark":"~Leswao la la nngele go ya go la go ja",
 "~Non-breaking space":"Sekgoba se sa ~kgaogego",
@@ -152,7 +154,9 @@
 "~Time":"~Nako",
 "~Tools":"~Dithulusi",
 "~Ungroup...":"~Hlopholla...",
+"~Validity...":"~Tiišetšo...",
 "~View":"~Tebelelo",
+"~While Typing":"~Mola o tlanya",
 "~Word Count":"~Palo ya mantšu",
 "~Wrap":"~Phuthela",
 "~Wrap Through":"~Phuthela gohle"
