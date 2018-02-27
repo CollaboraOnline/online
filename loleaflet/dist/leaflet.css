@@ -688,11 +688,18 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 	opacity: 0;
 	}
 
-.clipboard {
-	width: 1px;
-	height: 1px;
-	padding: 0px;
-	}
+input.clipboard {
+	width: 0px;
+	height: 0px;
+	padding: 0px !important; /* w2ui defines "input:not([type=button])" rule which sets
+				    the padding to non-zero. Hence, the !important. Otherwise,
+				    clipboard cursor apperas in MSIE and MSEdge */
+	border: 0px !important;
+}
+
+.clipboard:focus {
+    outline: none;
+}
 
 .resize-detector {
     position: absolute;
