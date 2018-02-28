@@ -724,7 +724,7 @@ $(function () {
 		onRefresh: function() {
 			$('#tb_toolbar-down_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
 			$('#search-input').off('input', onSearch).on('input', onSearch);
-			$('#search-input').off('keypress', onSearchKeyPress).on('keypress', onSearchKeyPress);
+			$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
 		}
 	});
 });
@@ -815,15 +815,15 @@ function onSearch() {
 	}
 }
 
-function onSearchKeyPress(e) {
-	if (e.keyCode === 13) { // Enter key
+function onSearchKeyDown(e) {
+	if ((e.keyCode === 71 && e.ctrlKey) || e.keyCode === 114 || e.keyCode === 13) {
 		if (e.shiftKey) {
-			// search backwards
 			map.search(L.DomUtil.get('search-input').value, true);
 		} else {
 			map.search(L.DomUtil.get('search-input').value);
 		}
-	} else if (e.keyCode === 27) { // Escape key
+		e.preventDefault();
+	} else if (e.keyCode === 27) {
 		_cancelSearch();
 	}
 }
