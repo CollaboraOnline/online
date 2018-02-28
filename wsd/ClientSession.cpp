@@ -869,11 +869,9 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
 bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
 {
-    const auto& message = payload->abbr();
-
     if (isCloseFrame())
     {
-        LOG_TRC(getName() << ": peer began the closing handshake. Dropping forward message [" << message << "].");
+        LOG_TRC(getName() << ": peer began the closing handshake. Dropping forward message [" << payload->abbr() << "].");
         return true;
     }
 
