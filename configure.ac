@@ -341,6 +341,11 @@ fi
 
 AC_SUBST(ENABLE_SSL)
 
+AC_CHECK_HEADERS([security/pam_appl.h],
+                 [],
+                 [AC_MSG_ERROR([header security/pam_appl.h not found, install PAM development package])])
+AC_CHECK_LIB(pam, pam_start, [], [AC_MSG_ERROR([No. Install PAM development package])])
+
 if test "x$with_support_public_key" != "x"; then
     AC_DEFINE([ENABLE_SUPPORT_KEY],1,[Whether to enable support key])
 
