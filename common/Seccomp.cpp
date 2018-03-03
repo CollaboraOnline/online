@@ -32,6 +32,7 @@
 #include <common/SigUtil.hpp>
 #include <Seccomp.hpp>
 
+#if DISABLE_SECCOMP == 0
 #ifndef SYS_SECCOMP
 #  define SYS_SECCOMP 1
 #endif
@@ -43,7 +44,6 @@
 #  error "Platform does not support seccomp filtering yet - unsafe."
 #endif
 
-#if DISABLE_SECCOMP == 0
 extern "C" {
 
 static void handleSysSignal(int /* signal */,
