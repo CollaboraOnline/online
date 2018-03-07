@@ -121,7 +121,7 @@ Testing
         + run: make load-test
 
 The structure of the unit tests:
-Loleaflet unit tets are located under spec/loleaflet. Following Leaflet's testing style, each test's path
+Loleaflet unit tests are located under spec/loleaflet. Following Leaflet's testing style, each test's path
 should mirror the source's path, so spec/loleaflet/control/ToolbarSpec.js tests the features from
 src/control/Toolbar.js . Any new test file needs also to be added in spec/leaflet.html
 
