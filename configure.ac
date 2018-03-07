@@ -425,6 +425,16 @@ else
     fi
 fi
 
+AC_PATH_PROG(NODE, node, no)
+if test "$NODE" = "no"; then
+    AC_MSG_ERROR([node required to build loleaflet, but not installed])
+else
+    NODE_VER=`node --version | sed 's/^v//' | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
+    if test "$NODE_VER" -lt 60000; then
+        AC_MSG_ERROR([This node version is old, upgrade to >= 6.0.0])
+    fi
+fi
+
 test "$prefix" = NONE && prefix=$ac_default_prefix
 LOOLWSD_CACHEDIR=${localstatedir}/cache/${PACKAGE}
 while :; do
