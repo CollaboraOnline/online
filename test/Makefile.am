@@ -119,7 +119,7 @@ endif
 TEST_EXTENSIONS = .la
 LA_LOG_DRIVER = ${top_srcdir}/test/run_unit.sh
 
-EXTRA_DIST = data/hello.odt data/hello.txt $(test_SOURCES) $(unittest_SOURCES) run_unit.sh
+EXTRA_DIST = data/delta-text.png data/delta-text2.png data/hello.odt data/hello.txt $(test_SOURCES) $(unittest_SOURCES) run_unit.sh
 
 check_valgrind: all
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
