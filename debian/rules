@@ -9,7 +9,7 @@ CONFFLAGS = --enable-silent-rules --prefix=/usr --localstatedir=/var --sysconfdi
 
 # main packaging script based on dh7 syntax
 %:
-	dh $@ --with=systemd
+	dh $@ --with=systemd --parallel
 
 override_dh_auto_configure:
 	./configure $(CONFFLAGS)
