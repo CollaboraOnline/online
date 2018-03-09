@@ -15,7 +15,6 @@
 
 #include <dlfcn.h>
 #include <ftw.h>
-#include <malloc.h>
 #include <sys/capability.h>
 #include <unistd.h>
 #include <utime.h>
@@ -562,14 +561,11 @@ public:
         , _width(0)
         , _height(0)
         , _alphaLevel(0.2)
-        , _pixmap(nullptr)
     {
     }
 
     ~Watermark()
     {
-        if (_pixmap)
-            std::free(_pixmap);
     }
 
     void blending(unsigned char* tilePixmap,
@@ -631,11 +627,10 @@ private:
     /// Create bitmap that we later use as the watermark for every tile.
     const unsigned char* getPixmap(int width, int height)
     {
-        if (_pixmap && width == _width && height == _height)
-            return _pixmap;
+        if (!_pixmap.empty() && width == _width && height == _height)
+            return _pixmap.data();
 
-        if (_pixmap)
-            std::free(_pixmap);
+        _pixmap.clear();
 
         _width = width;
         _height = height;
@@ -658,7 +653,7 @@ private:
         }
 
         const unsigned int pixel_count = width * height * 4;
-        _pixmap = static_cast<unsigned char*>(malloc(pixel_count));
+        _pixmap.reserve(pixel_count);
 
         // Create the white blurred background
         // Use box blur, it's enough for our purposes
@@ -694,18 +689,18 @@ private:
         }
 
         // Now copy the (black) text over the (white) blur
-        alphaBlend(text, _width, _height, 0, 0, _pixmap, _width, _height);
+        alphaBlend(text, _width, _height, 0, 0, _pixmap.data(), _width, _height);
 
         // No longer needed.
         std::free(text);
 
         // Make the resulting pixmap semi-transparent
-        for (unsigned char* p = _pixmap; p < _pixmap + pixel_count; p++)
+        for (unsigned char* p = _pixmap.data(); p < _pixmap.data() + pixel_count; p++)
         {
             *p = static_cast<unsigned char>(*p * _alphaLevel);
         }
 
-        return _pixmap;
+        return _pixmap.data();
     }
 
 private:
@@ -715,7 +710,7 @@ private:
     int _width;
     int _height;
     double _alphaLevel;
-    unsigned char* _pixmap;
+    std::vector<unsigned char> _pixmap;
 };
 
 static FILE* ProcSMapsFile = nullptr;
