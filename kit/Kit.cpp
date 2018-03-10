@@ -148,11 +148,6 @@ namespace
 
     bool shouldLinkFile(const char *path)
     {
-        static bool avoidCode = getenv("LINK_NO_CODE");
-
-        if (!avoidCode)
-            return true;
-
         switch (linkOrCopyType)
         {
         case LinkOrCopyType::LO:
@@ -160,9 +155,26 @@ namespace
             const char *dot = strrchr(path, '.');
             if (!dot)
                 return true;
+
             if (!strcmp(dot, ".dbg") ||
                 !strcmp(dot, ".so"))
+            {
+                // NSS is problematic ...
+                if (strstr(path, "libnspr4") ||
+                    strstr(path, "libplds4") ||
+                    strstr(path, "libplc4") ||
+                    strstr(path, "libnss3") ||
+                    strstr(path, "libnssckbi") ||
+                    strstr(path, "libnsutil3") ||
+                    strstr(path, "libssl3") ||
+                    strstr(path, "libsoftokn3") ||
+                    strstr(path, "libsqlite3") ||
+                    strstr(path, "libfreeblpriv3"))
+                    return true;
+
+                // otherwise drop the rest of the code.
                 return false;
+            }
             const char *vers;
             if ((vers = strstr(path, ".so."))) // .so.[digit]+
             {

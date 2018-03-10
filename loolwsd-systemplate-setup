@@ -23,11 +23,8 @@ cd / || exit 1
 # First essential files and shared objects
 find etc/passwd etc/group etc/hosts \
      etc/resolv.conf \
-     lib/ld-* lib64/ld-* \
-     lib/libcap* lib64/libcap* lib/*-linux-gnu/libcap* \
-     lib/libattr* lib/*-linux-gnu/libattr* \
      etc/ld.so.* \
-     lib/libnss_* lib64/libnss_* lib/*-linux-gnu/libnss*\
+     lib/ld-* lib64/ld-* \
      var/cache/fontconfig \
      etc/fonts \
      etc/localtime \
@@ -37,22 +34,15 @@ find etc/passwd etc/group etc/hosts \
      usr/share/zoneinfo/* \
      usr/share/liblangtag \
      usr/share/hyphen \
-     usr/lib/libpng* usr/lib64/libpng* lib/*-linux-gnu/libpng* \
-     usr/lib/*-linux-gnu/liblcms2* \
 	 -type f
 
 find etc/fonts \
      lib/ld-* lib64/ld-* \
-     lib/libnss_* lib64/libnss_* lib/*-linux-gnu/libnss*\
-     lib/libcap* lib64/libcap* lib/*-linux-gnu/libcap* \
-     lib/libattr* lib/*-linux-gnu/libattr* \
-     usr/lib/libpng* usr/lib64/libpng* lib/*-linux-gnu/libpng* \
-     usr/lib/*-linux-gnu/liblcms2* \
-	 -type l
+	-type l
 
 # Go through the LO shared objects and check what system libraries
 # they link to.
-find $INSTDIR -name '*.so' -o -name '*.so.[0-9]*' -o -name 'xpdfimport' |
+find $INSTDIR -name 'xpdfimport' |
 while read file; do
     ldd $file 2>/dev/null
 done |
