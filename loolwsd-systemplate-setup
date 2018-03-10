@@ -80,13 +80,15 @@ if [ -h usr/share/fonts/ghostscript ]; then
     cp -r -p -L /usr/share/ghostscript/fonts usr/share/ghostscript
 fi
 
+# Remove obsolete & unused bitmap fonts
+find usr/share -name '*.pcf' | xargs rm -f
+find usr/share -name '*.pcf.gz' | xargs rm -f
+
 # Debugging only hackery to avoid confusion.
 if test "z$ENABLE_DEBUG" != "z" -a "z$HOME" != "z"; then
     echo "Copying development users's fonts into systemplate"
     mkdir -p $CHROOT/$HOME
-    mkdir -p $CHROOT/$HOME/docs
     test -d $HOME/.fonts && cp -r -p -L $HOME/.fonts $CHROOT/$HOME
-    test -d $HOME/docs && cp -r -p -L $HOME/docs $CHROOT/$HOME
 fi
 
 exit 0
