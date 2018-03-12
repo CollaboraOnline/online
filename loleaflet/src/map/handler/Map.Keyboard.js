@@ -182,17 +182,16 @@ L.Map.Keyboard = L.Handler.extend({
 		this._map.off('compositionstart compositionupdate compositionend textInput', this._onKeyDown, this);
 	},
 
-	_handleOnKeyDown: function (keyCode, modifier) {
-		if (modifier & this.keyModifier.shift) {
+	_ignoreKeyEvent: function(e) {
+		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;
+		if (shift && (e.originalEvent.keyCode === 45 || e.originalEvent.keyCode === 46)) {
 			// don't handle shift+insert, shift+delete
 			// These are converted to 'cut', 'paste' events which are
 			// automatically handled by us, so avoid double-handling
-			if (keyCode === 45 || keyCode === 46) {
-				return false;
-			}
+			return true;
 		}
 
-		return this.handleOnKeyDownKeys[keyCode];
+		return false;
 	},
 
 	_setPanOffset: function (pan) {
@@ -336,16 +335,19 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this._map._permission === 'edit') {
 			docLayer._resetPreFetching();
 
-			if (e.type === 'keydown') {
+			if (this._ignoreKeyEvent(e)) {
+				// key ignored
+			}
+			else if (e.type === 'keydown') {
 				this._keyHandled = false;
 				this._bufferedTextInputEvent = null;
 
-				if (this._handleOnKeyDown(keyCode, this.modifier) && charCode === 0) {
+				if (this.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 					keyEventFn('input', charCode, unoKeyCode);
 				}
 			}
 			else if ((e.type === 'keypress' || e.type === 'compositionend') &&
-			         (!this._handleOnKeyDown(keyCode, this.modifier) || charCode !== 0)) {
+			         (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
 				if (charCode === keyCode && charCode !== 13) {
 					// Chrome sets keyCode = charCode for printable keys
 					// while LO requires it to be 0
