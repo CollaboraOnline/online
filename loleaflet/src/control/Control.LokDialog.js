@@ -227,7 +227,6 @@ L.Control.LokDialog = L.Control.extend({
 		var dialogContainer = L.DomUtil.create('div', 'lokdialog', document.body);
 		L.DomUtil.setStyle(dialogContainer, 'padding', '0px');
 		L.DomUtil.setStyle(dialogContainer, 'margin', '0px');
-		L.DomUtil.setStyle(dialogContainer, 'overflow', 'hidden');
 		dialogContainer.id = strDlgId;
 
 		var dialogCanvas = L.DomUtil.create('canvas', 'lokdialog_canvas', dialogContainer);
@@ -373,14 +372,6 @@ L.Control.LokDialog = L.Control.extend({
 			ctx.drawImage(img, 0, 0);
 		};
 		img.src = imgData;
-
-		// increase the height of the container,
-		// so that if the floating window goes out of the parent,
-		// it doesn't get stripped off
-		height = parseInt(canvas.style.top) + canvas.height;
-		var currentHeight = parseInt($('#' + strDlgId).css('height'));
-		if (height > currentHeight)
-			$('#' + strDlgId).css('height', height + 'px');
 	},
 
 	_onDialogChildClose: function(dialogId) {
