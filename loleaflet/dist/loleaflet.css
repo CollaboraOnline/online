@@ -340,8 +340,8 @@ body {
 }
 
 .lokdialog_container.ui-dialog.ui-widget-content {
-        padding: 0px;
-	overflow: hidden;
+	padding: 0px;
+	overflow: visible;
 	width: auto;
 	height: auto;
 	border: none;
@@ -350,7 +350,8 @@ body {
 }
 
 .lokdialog.ui-dialog-content.ui-widget-content {
-        padding: 0px;
+	padding: 0px;
+	overflow: visible;
 }
 
 .lokdialog_canvas {
