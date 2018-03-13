@@ -65,6 +65,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:InsertMenu', 'text'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
+				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
 				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertPageNumberField'},
@@ -256,6 +257,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:InsertMenu', 'presentation'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
+				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
 				{uno: '.uno:HyperlinkDialog'},
 				{type: 'separator'},
@@ -330,6 +332,7 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphic', type: 'action'},
+				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'}
