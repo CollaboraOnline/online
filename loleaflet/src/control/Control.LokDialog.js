@@ -238,6 +238,7 @@ L.Control.LokDialog = L.Control.extend({
 
 		var that = this;
 		$(dialogContainer).dialog({
+			minWidth: width,
 			width: width,
 			title: title ? title : '',
 			modal: false,
