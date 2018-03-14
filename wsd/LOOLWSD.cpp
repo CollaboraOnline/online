@@ -197,6 +197,7 @@ static int careerSpanMs = 0;
 namespace
 {
 
+#if ENABLE_SUPPORT_KEY
 inline void shutdownLimitReached(WebSocketHandler& ws)
 {
     const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
@@ -215,6 +216,7 @@ inline void shutdownLimitReached(WebSocketHandler& ws)
         LOG_ERR("Error while shuting down socket on reaching limit: " << ex.what());
     }
 }
+#endif
 
 inline void infoLimitReached(const WebSocketHandler* ws)
 {
