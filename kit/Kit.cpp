@@ -2075,6 +2075,10 @@ void lokit_main(const std::string& childRoot,
             instdir_path = "/" + loTemplate + "/program";
         }
 
+        // hard-random tmpdir inside the jail / root
+        std::string tmpSubdir = Util::createRandomTmpDir();
+        ::setenv("TMPDIR", tmpSubdir.c_str(), 1);
+
         {
             const char *instdir = instdir_path.c_str();
             const char *userdir = userdir_url.c_str();

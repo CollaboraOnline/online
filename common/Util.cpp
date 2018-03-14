@@ -116,6 +116,30 @@ namespace Util
         }
     }
 
+    static std::string getDefaultTmpDir()
+    {
+        const char *tmp = getenv("TMPDIR");
+        if (!tmp)
+            tmp = getenv("TEMP");
+        if (!tmp)
+            tmp = getenv("TMP");
+        if (!tmp)
+            tmp = "/tmp";
+        return tmp;
+    }
+
+    std::string createRandomTmpDir()
+    {
+        std::string defaultTmp = getDefaultTmpDir();
+        std::string newTmp =
+            defaultTmp + "/lool-" + rng::getFilename(16);
+        if (::mkdir(newTmp.c_str(), S_IRWXU) < 0) {
+            LOG_ERR("Failed to create random temp directory");
+            return defaultTmp;
+        }
+        return newTmp;
+    }
+
     // close what we have - far faster than going up to a 1m open_max eg.
     static bool closeFdsFromProc()
     {

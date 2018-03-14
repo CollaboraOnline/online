@@ -42,6 +42,9 @@ namespace Util
         std::string getFilename(const size_t length);
     }
 
+    /// Create randomized temporary directory
+    std::string createRandomTmpDir();
+
     /// Spawn a process if stdInput is non-NULL it contains a writable descriptor
     /// to send data to the child.
     int spawnProcess(const std::string &cmd, const std::vector<std::string> &args,
