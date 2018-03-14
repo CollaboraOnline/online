@@ -1989,6 +1989,7 @@ void lokit_main(const std::string& childRoot,
     }
 
     Util::rng::reseed();
+
     const std::string LogLevel = logLevel ? logLevel : "trace";
     const bool bTraceStartup = (std::getenv("LOOL_TRACE_STARTUP") != nullptr);
     Log::initialize("kit", bTraceStartup ? "trace" : logLevel, logColor != nullptr, logToFile, logProperties);
@@ -2122,6 +2123,10 @@ void lokit_main(const std::string& childRoot,
             userdir_url = "file:///" + jailPath.toString() + "/user";
             instdir_path = "/" + loTemplate + "/program";
         }
+
+        // hard-random tmpdir inside the jail / root
+        std::string tmpSubdir = Util::createRandomTmpDir();
+        ::setenv("TMPDIR", tmpSubdir.c_str(), 1);
 
         {
             const char *instdir = instdir_path.c_str();
