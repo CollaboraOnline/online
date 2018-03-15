@@ -98,11 +98,12 @@ void Config::displayHelp()
     // Command list
     std::cout << std::endl
               << "Commands: " << std::endl
-              << "    set-admin-password\n"
+              << "    set-admin-password" << std::endl
 #if ENABLE_SUPPORT_KEY
-              << "    set-support-key\n"
+              << "    set-support-key" << std::endl
 #endif
-              << "    set <key> <value>" << std::endl;
+              << "    set <key> <value>" << std::endl
+              << "    update-system-template" << std::endl << std::endl;
 }
 
 void Config::defineOptions(OptionSet& optionSet)
@@ -321,6 +322,13 @@ int Config::main(const std::vector<std::string>& args)
                       << "Eg: " << std::endl
                       << "    set logging.level trace" << std::endl;
 
+    }
+    else if (args[0] == "update-system-template")
+    {
+        const char command[] = "su lool --shell=/bin/sh -c 'loolwsd-systemplate-setup /opt/lool/systemplate " LO_PATH " >/dev/null 2>&1'";
+        std::cout << "Running the following command:" << std::endl
+                  << command << std::endl;
+        system(command);
     }
     else
     {
