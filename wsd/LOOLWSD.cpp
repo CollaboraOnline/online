@@ -2726,11 +2726,9 @@ int LOOLWSD::innerMain()
 
     initializeSSL();
 
-    char* locale = setlocale(LC_ALL, nullptr);
-    if (locale == nullptr || std::strcmp(locale, "C") == 0)
-    {
-        setlocale(LC_ALL, "en_US.utf8");
-    }
+    // Force a uniform UTF-8 locale for ourselves & our children.
+    ::setenv("LC_ALL", "en_US.UTF-8", 1);
+    setlocale(LC_ALL, "en_US.UTF-8");
 
     if (access(Cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
