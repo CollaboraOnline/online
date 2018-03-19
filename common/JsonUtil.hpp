@@ -25,7 +25,7 @@ namespace JsonUtil
 
 // Parse the json string and fill the Poco::JSON object
 // Returns true if parsing successful otherwise false
-bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
+inline bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
 {
     bool success = false;
     const size_t index = json.find_first_of('{');
