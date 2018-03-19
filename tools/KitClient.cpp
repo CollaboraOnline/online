@@ -80,6 +80,7 @@ extern "C"
             CASE(CELL_ADDRESS);
             CASE(RULER_UPDATE);
             CASE(WINDOW);
+            CASE(VALIDITY_LIST_BUTTON);
             CASE(CLIPBOARD_CHANGED);
 #undef CASE
         }

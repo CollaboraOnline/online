@@ -190,3 +190,13 @@
 .spreadsheet-header-row-resize {
 	cursor: row-resize;
 	}
+
+.spreadsheet-drop-down-marker {
+	margin-left: 0px;
+	margin-top: 0px;
+	width: 18px;
+	height: 17px;
+	background-image: url('../images/drop-down-button.svg');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	}

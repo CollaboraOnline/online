@@ -145,6 +145,14 @@ L.TileLayer = L.GridLayer.extend({
 			});
 		}, this));
 
+		this._dropDownButton = L.marker(new L.LatLng(0, 0), {
+			icon: L.divIcon({
+				className: 'spreadsheet-drop-down-marker',
+				iconSize: null
+			}),
+			interactive: false
+		});
+
 		this._emptyTilesCount = 0;
 		this._msgQueue = [];
 		this._toolbarCommandValues = {};
@@ -487,6 +495,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('editor:')) {
 			this._updateEditor(textMsg);
+		}
+		else if (textMsg.startsWith('validitylistbutton:')) {
+			this._onValidityListButtonMsg(textMsg);
 		}
 	},
 
@@ -1828,6 +1839,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			if (this._cellCursorMarker) {
 				this._map.removeLayer(this._cellCursorMarker);
+				this._map.removeLayer(this._dropDownButton);
 			}
 			this._cellCursorMarker = L.rectangle(this._cellCursor, {
 				pointerEvents: 'none',
@@ -1839,10 +1851,64 @@ L.TileLayer = L.GridLayer.extend({
 				return;
 			}
 			this._map.addLayer(this._cellCursorMarker);
+
+			this._addDropDownMarker();
 		}
 		else if (this._cellCursorMarker) {
 			this._map.removeLayer(this._cellCursorMarker);
 		}
+		this._removeDropDownMarker();
+	},
+
+	_onValidityListButtonMsg: function(textMsg) {
+		var strXY = textMsg.match(/\d+/g);
+		var validatedCell = new L.Point(parseInt(strXY[0]), parseInt(strXY[1]));
+		var show = parseInt(strXY[2]) === 1;
+		if (show) {
+			if (this._validatedCellXY && !this._validatedCellXY.equals(validatedCell)) {
+				this._validatedCellXY = null;
+				this._removeDropDownMarker();
+			}
+			this._validatedCellXY = validatedCell;
+			this._addDropDownMarker();
+		}
+		else if (this._validatedCellXY && this._validatedCellXY.equals(validatedCell)) {
+			this._validatedCellXY = null;
+			this._removeDropDownMarker();
+		}
+	},
+
+	_addDropDownMarker: function () {
+		if (this._validatedCellXY && this._cellCursorXY && this._validatedCellXY.equals(this._cellCursorXY)) {
+			var pos = this._cellCursor.getNorthEast();
+			var cellCursorHeightPx = this._twipsToPixels(this._cellCursorTwips.getSize()).y;
+			var dropDownMarker = this._getDropDownMarker(cellCursorHeightPx);
+			dropDownMarker.setLatLng(pos);
+			this._map.addLayer(dropDownMarker);
+		}
+	},
+
+	_removeDropDownMarker: function () {
+		if (!this._validatedCellXY && this._dropDownButton)
+			this._map.removeLayer(this._dropDownButton);
+	},
+
+	_getDropDownMarker: function (height) {
+		if (height) {
+			var maxHeight = 27; // it matches the max height of the same control in core
+			var topMargin = 0;
+			if (height > maxHeight) {
+				topMargin = height - maxHeight;
+				height = maxHeight;
+			}
+			var icon =  L.divIcon({
+				className: 'spreadsheet-drop-down-marker',
+				iconSize: [undefined, height],
+				iconAnchor: [0, -topMargin]
+			});
+			this._dropDownButton.setIcon(icon);
+		}
+		return this._dropDownButton;
 	},
 
 	// Update text selection handlers.
