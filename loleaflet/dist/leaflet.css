@@ -689,8 +689,8 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 	}
 
 input.clipboard {
-	width: 0px;
-	height: 0px;
+	width: 1px;
+	height: 1px;
 	padding: 0px !important; /* w2ui defines "input:not([type=button])" rule which sets
 				    the padding to non-zero. Hence, the !important. Otherwise,
 				    clipboard cursor apperas in MSIE and MSEdge */
