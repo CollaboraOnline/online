@@ -80,6 +80,7 @@ extern "C"
             CASE(CELL_ADDRESS);
             CASE(RULER_UPDATE);
             CASE(WINDOW);
+            CASE(VALIDITY_LIST_BUTTON);
 #undef CASE
         }
         std::cout << " payload: " << payload << std::endl;

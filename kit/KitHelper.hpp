@@ -117,6 +117,8 @@ namespace LOKitHelper
             return "CELL_ADDRESS";
         case LOK_CALLBACK_WINDOW:
             return "WINDOW";
+        case LOK_CALLBACK_VALIDITY_LIST_BUTTON:
+            return "VALIDITY_LIST_BUTTON";
        }
 
         return std::to_string(type);

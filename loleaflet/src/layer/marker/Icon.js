@@ -47,10 +47,10 @@ L.Icon = L.Class.extend({
 	},
 
 	_setIconStyles: function (img, name) {
-		var options = this.options,
-		    size = L.point(options[name + 'Size']),
-		    anchor = L.point(name === 'shadow' && options.shadowAnchor || options.iconAnchor ||
-		            size && size.divideBy(2, true));
+		var options = this.options;
+		var size = L.point(options[name + 'Size']);
+		var anchor = L.point(name === 'shadow' && options.shadowAnchor || options.iconAnchor ||
+		            size && size.x !== undefined && size.y !== undefined && size.divideBy(2, true));
 
 		img.className = 'leaflet-marker-' + name + ' ' + (options.className || '');
 
@@ -60,9 +60,12 @@ L.Icon = L.Class.extend({
 		}
 
 		if (size) {
-			img.style.width  = size.x + 'px';
-			img.style.height = size.y + 'px';
+			if (size.x !== undefined)
+				img.style.width  = size.x + 'px';
+			if (size.y !== undefined)
+				img.style.height = size.y + 'px';
 		}
+
 	},
 
 	_createImg: function (src, el) {

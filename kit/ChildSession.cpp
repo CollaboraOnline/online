@@ -1539,6 +1539,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_WINDOW:
         sendTextFrame("window: " + payload);
         break;
+    case LOK_CALLBACK_VALIDITY_LIST_BUTTON:
+        sendTextFrame("validitylistbutton: " + payload);
+        break;
     default:
         LOG_ERR("Unknown callback event (" << type << "): " << payload);
     }
