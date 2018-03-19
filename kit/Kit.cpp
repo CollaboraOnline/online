@@ -1967,6 +1967,7 @@ void lokit_main(const std::string& childRoot,
                 const std::string& loTemplate,
                 const std::string& loSubPath,
                 bool noCapabilities,
+                bool noSeccomp,
                 bool queryVersion,
                 bool displayVersion)
 {
@@ -2119,7 +2120,7 @@ void lokit_main(const std::string& childRoot,
         }
         else // noCapabilities set
         {
-            LOG_INF("Using template " << loTemplate << " as install subpath - skipping jail setup");
+            LOG_ERR("Security warning - using template " << loTemplate << " as install subpath - skipping chroot jail setup");
             userdir_url = "file:///" + jailPath.toString() + "/user";
             instdir_path = "/" + loTemplate + "/program";
         }
@@ -2156,8 +2157,14 @@ void lokit_main(const std::string& childRoot,
         // Lock down the syscalls that can be used
         if (!Seccomp::lockdown(Seccomp::Type::KIT))
         {
-            LOG_ERR("LibreOfficeKit security lockdown failed. Exiting.");
-            std::_Exit(Application::EXIT_SOFTWARE);
+            if (!noSeccomp)
+            {
+                LOG_ERR("LibreOfficeKit seccomp security lockdown failed. Exiting.");
+                std::_Exit(Application::EXIT_SOFTWARE);
+            }
+
+            LOG_ERR("LibreOfficeKit seccomp security lockdown failed, but configured to continue. "
+                    "You are running in a significantly less secure mode.");
         }
 
         rlimit rlim = { 0, 0 };

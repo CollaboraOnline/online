@@ -566,8 +566,9 @@ std::atomic<unsigned> LOOLWSD::NextSessionId;
 #ifndef KIT_IN_PROCESS
 std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
 std::atomic<int> LOOLWSD::ForKitProcId(-1);
-bool LOOLWSD::NoCapsForKit = false;
 #endif
+bool LOOLWSD::NoSeccomp = false;
+bool LOOLWSD::NoCapsForKit = false;
 #ifdef FUZZER
 bool LOOLWSD::DummyLOK = false;
 std::string LOOLWSD::FuzzFileName;
@@ -685,6 +686,8 @@ void LOOLWSD::initialize(Application& self)
             { "ssl.hpkp[@report_only]", "false" },
             { "ssl.hpkp.max_age[@enable]", "true" },
             { "ssl.hpkp.report_uri[@enable]", "false" },
+            { "security.seccomp", "true" },
+            { "security.capabilities", "true" },
             { "storage.filesystem[@allow]", "false" },
             { "storage.wopi[@allow]", "true" },
             { "storage.wopi.host[0][@allow]", "true" },
@@ -850,6 +853,9 @@ void LOOLWSD::initialize(Application& self)
     // Log the connection and document limits.
     LOOLWSD::MaxConnections = MAX_CONNECTIONS;
     LOOLWSD::MaxDocuments = MAX_DOCUMENTS;
+
+    NoSeccomp = !getConfigValue<bool>(conf, "security.seccomp", true);
+    NoCapsForKit = !getConfigValue<bool>(conf, "security.capabilities", true);
 
 #if ENABLE_SUPPORT_KEY
     const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");
@@ -1085,14 +1091,14 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("unitlib"));
 
-    optionSet.addOption(Option("nocaps", "", "Use a non-privileged forkit for valgrinding.")
-                        .required(false)
-                        .repeatable(false));
-
     optionSet.addOption(Option("careerspan", "", "How many seconds to run.")
                         .required(false)
                         .repeatable(false)
                         .argument("seconds"));
+
+    optionSet.addOption(Option("nocaps", "", "Use a non-privileged forkit, with increase in security problems.")
+                        .required(false)
+                        .repeatable(false));
 #endif
 
 #ifdef FUZZER
@@ -1136,12 +1142,12 @@ void LOOLWSD::handleOption(const std::string& optionName,
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
+    else if (optionName == "careerspan")
+        careerSpanMs = std::stoi(value) * 1000; // Convert second to ms
 #ifndef KIT_IN_PROCESS
     else if (optionName == "nocaps")
         NoCapsForKit = true;
 #endif
-    else if (optionName == "careerspan")
-        careerSpanMs = std::stoi(value) * 1000; // Convert second to ms
 
     static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
     if (clientPort)
@@ -1354,21 +1360,19 @@ bool LOOLWSD::createForKit()
     args.push_back("--rlimits=" + ossRLimits.str());
 
     if (UnitWSD::get().hasKitHooks())
-    {
         args.push_back("--unitlib=" + UnitTestLibrary);
-    }
 
     if (DisplayVersion)
-    {
         args.push_back("--version");
-    }
+
+    if (NoCapsForKit)
+        args.push_back("--nocaps");
+
+    if (NoSeccomp)
+        args.push_back("--noseccomp");
 
     std::string forKitPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
-    if (NoCapsForKit)
-    {
-        forKitPath = forKitPath + std::string("-nocaps");
-        args.push_back("--nocaps");
-    }
+
 
     // Always reap first, in case we haven't done so yet.
     if (ForKitProcId != -1)
@@ -2554,6 +2558,8 @@ public:
            <<          " prisoner " << MasterPortNumber << "\n"
            << "  SSL: " << (LOOLWSD::isSSLEnabled() ? "https" : "http") << "\n"
            << "  SSL-Termination: " << (LOOLWSD::isSSLTermination() ? "yes" : "no") << "\n"
+           << "  Security " << (LOOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
+                            << (LOOLWSD::NoSeccomp ? "no" : "") << " api lockdown\n"
            << "  TerminationFlag: " << TerminationFlag << "\n"
            << "  isShuttingDown: " << ShutdownRequestFlag << "\n"
            << "  NewChildren: " << NewChildren.size() << "\n"

@@ -20,6 +20,7 @@ void lokit_main(const std::string& childRoot,
                 const std::string& loTemplate,
                 const std::string& loSubPath,
                 bool noCapabilities,
+                bool noSeccomp,
                 bool queryVersionInfo,
                 bool displayVersion);
 
