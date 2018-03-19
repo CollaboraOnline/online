@@ -175,6 +175,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:OutlineBullet'},
 				{uno: '.uno:PageDialog'},
 				{type: 'separator'},
+				{uno: '.uno:FormatColumns'},
+				{type: 'separator'},
 				{uno: '.uno:ResetAttributes'}
 			]},
 			{name: _UNO('.uno:TableMenu', 'text'), type: 'menu', menu: [

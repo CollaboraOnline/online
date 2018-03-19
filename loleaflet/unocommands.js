@@ -66,6 +66,7 @@ var unoCommandsArray = {
 	FormatArea:{global:{menu:_('A~rea...'),},},
 	FormatBulletsMenu:{global:{menu:_('Lis~ts'),},},
 	FormatCellDialog:{spreadsheet:{context:_('~Format Cells...'),menu:_('Ce~lls...'),},},
+	FormatColumns:{text:{menu:_('Co~lumns...'),},},
 	FormatLine:{global:{menu:_('L~ine...'),},},
 	FormatMenu:{global:{menu:_('F~ormat'),},},
 	FormatObjectMenu:{global:{menu:_('~Object and Shape'),},text:{menu:_('Text Box and Shap~e'),},},
