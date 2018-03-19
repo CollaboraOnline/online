@@ -43,6 +43,7 @@ public:
     static std::atomic<unsigned> NextSessionId;
     static unsigned int NumPreSpawnedChildren;
     static bool NoCapsForKit;
+    static bool NoSeccomp;
     static std::atomic<int> ForKitWritePipe;
     static std::atomic<int> ForKitProcId;
     static bool DummyLOK;

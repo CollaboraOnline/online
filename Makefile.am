@@ -86,7 +86,6 @@ loolwsd_SOURCES = $(loolwsd_sources) \
 noinst_PROGRAMS = clientnb \
                   connect \
                   lokitclient \
-                  loolforkit-nocaps \
                   loolwsd_fuzzer
 
 connect_SOURCES = tools/Connect.cpp \
@@ -115,9 +114,6 @@ loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
 clientnb_SOURCES = net/clientnb.cpp \
                    common/Log.cpp \
                    common/Util.cpp
-
-# build a binary with no caps to help debugging
-loolforkit_nocaps_SOURCES = $(loolforkit_SOURCES)
 
 loolmount_SOURCES = tools/mount.cpp
 

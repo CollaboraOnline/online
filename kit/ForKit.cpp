@@ -49,6 +49,7 @@ using Poco::Util::Application;
 
 #ifndef KIT_IN_PROCESS
 static bool NoCapsForKit = false;
+static bool NoSeccomp = false;
 #endif
 static bool DisplayVersion = false;
 static std::string UnitTestLibrary;
@@ -270,9 +271,9 @@ static int createLibreOfficeKit(const std::string& childRoot,
         }
 
 #ifndef KIT_IN_PROCESS
-        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, NoCapsForKit, queryVersion, DisplayVersion);
+        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, NoCapsForKit, NoSeccomp, queryVersion, DisplayVersion);
 #else
-        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, true, queryVersion, DisplayVersion);
+        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, true, true, queryVersion, DisplayVersion);
 #endif
     }
     else
@@ -455,12 +456,20 @@ int main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             UnitTestLibrary = std::string(eq+1);
         }
-        // we are running in no-privilege mode - with no chroot etc.
+#endif
+        // we are running in a lower-privilege mode - with no chroot
         else if (std::strstr(cmd, "--nocaps") == cmd)
         {
+            LOG_ERR("Security: Running without the capability to enter a chroot jail is ill advised.");
             NoCapsForKit = true;
         }
-#endif
+
+        // we are running without seccomp protection
+        else if (std::strstr(cmd, "--noseccomp") == cmd)
+        {
+            LOG_ERR("Security :Running without the ability to filter system calls is ill advised.");
+            NoSeccomp = true;
+        }
     }
 
     if (loSubPath.empty() || sysTemplate.empty() ||
