@@ -365,8 +365,10 @@ L.Control.LokDialog = L.Control.extend({
 		if (!canvas)
 			return; // no floating window to paint to
 
-		canvas.width = width;
-		canvas.height = height;
+		if (width !== canvas.width)
+			canvas.width = width;
+		if (height !== canvas.height)
+			canvas.height = height;
 		var ctx = canvas.getContext('2d');
 		img.onload = function() {
 			ctx.drawImage(img, 0, 0);
