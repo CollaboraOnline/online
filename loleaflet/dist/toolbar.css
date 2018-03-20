@@ -310,7 +310,7 @@ button.leaflet-control-search-next
 .w2ui-icon.selected{ background: url('../images/lc_ok.svg') no-repeat center !important; }
 .w2ui-icon.repair{ background: url('../images/lc_backward.svg') no-repeat center !important; }
 .w2ui-icon.specialcharacter{ background: url('../images/lc_insertsymbol.svg') no-repeat center !important; }
-.w2ui-icon.insertobjectchart{ background: url('../images/lc_drawchart-lc_insertobjectchart.svg') no-repeat center !important; }
+.w2ui-icon.insertobjectchart{ background: url('../images/lc_drawchart.svg') no-repeat center !important; }
 
 #inserttable-wrapper {
     position: relative;
