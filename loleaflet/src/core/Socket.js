@@ -439,6 +439,7 @@ L.Socket = L.Class.extend({
 				// better we do it first so that another error message doesn't override this one
 				// upon socket close.
 				this.close();
+				return; // Don't show this message.
 			}
 			else if (command.errorKind === 'documentconflict')
 			{
