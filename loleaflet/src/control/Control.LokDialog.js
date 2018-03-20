@@ -236,8 +236,6 @@ L.Control.LokDialog = L.Control.extend({
 		dialogCanvas.height = height;
 		dialogCanvas.id = strDlgId + '-canvas';
 
-		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
-
 		var that = this;
 		$(dialogContainer).dialog({
 			width: width,
@@ -266,6 +264,10 @@ L.Control.LokDialog = L.Control.extend({
 		this._createDialogCursor(strDlgId);
 		var dlgInput = this._createDialogInput(strDlgId);
 
+		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
+		L.DomEvent.on(dialogCanvas, 'mousemove', function() {
+			this._map.lastActiveTime = Date.now();
+		}, this);
 		L.DomEvent.on(dialogCanvas, 'mousedown mouseup', function(e) {
 			var buttons = 0;
 			buttons |= e.button === map['mouse'].JSButtons.left ? map['mouse'].LOButtons.left : 0;
