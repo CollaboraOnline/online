@@ -20,7 +20,7 @@ changequote([,])dnl
   window.addEventListener('message', PostMessageReadyListener, false);
 </script>
 <link rel="stylesheet" href="/loleaflet/%VERSION%/branding.css"> <!-- add your logo here -->
-ifelse(debug,[true],[<link rel="stylesheet" href="/loleaflet/%VERSION%/toolbar/w2ui-1.4.3.css">],[dnl])
+ifelse(debug,[true],[<link rel="stylesheet" href="/loleaflet/%VERSION%/w2ui-1.5.rc1.css">],[dnl])
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json" />
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json" />
@@ -101,7 +101,7 @@ ifelse(debug,[true],[<link rel="stylesheet" href="/loleaflet/%VERSION%/toolbar/w
     <script src="/loleaflet/%VERSION%/branding.js"></script> <!-- logo onclick handler -->
     <script src="/loleaflet/%VERSION%/bundle.js"></script>
 ifelse(debug,[true],
-[    <script src="/loleaflet/%VERSION%/toolbar/w2ui-1.4.3.js"></script>],
-[    <script src="/loleaflet/%VERSION%/toolbar/w2ui-1.4.3.min.js"></script>])
+[    <script src="/loleaflet/%VERSION%/toolbar/w2ui-1.5.rc1.js"></script>],
+[    <script src="/loleaflet/%VERSION%/toolbar/w2ui-1.5.rc1.min.js"></script>])
     <script src="/loleaflet/%VERSION%/toolbar/toolbar.js"></script>
 </body></html>
