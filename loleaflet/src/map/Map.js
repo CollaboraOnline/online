@@ -86,6 +86,9 @@ L.Map = L.Evented.extend({
 		this._socket = L.socket(this);
 		this._progressBar = L.progressOverlay(this.getCenter(), L.point(150, 25));
 
+		this._clipboardContainer = L.clipboardContainer();
+		this.addLayer(this._clipboardContainer);
+
 		// Inhibit the context menu - the browser thinks that the document
 		// is just a bunch of images, hence the context menu is useless (tdf#94599)
 		this.on('contextmenu', function() {});
@@ -662,9 +665,9 @@ L.Map = L.Evented.extend({
 
 	focus: function () {
 		console.debug('focus:');
-		if (this._docLayer && document.activeElement !== this._docLayer._textArea) {
+		if (this._docLayer) {
 			console.debug('focus: focussing');
-			this._docLayer._textArea.focus();
+			this._clipboardContainer.focus(true);
 		}
 	},
 
@@ -692,14 +695,6 @@ L.Map = L.Evented.extend({
 			throw new Error('Map container is already initialized.');
 		}
 
-		var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', container.parentElement);
-		textAreaContainer.id = 'doc-clipboard-container';
-		this._textArea = L.DomUtil.create('input', 'clipboard', textAreaContainer);
-		this._textArea.setAttribute('type', 'text');
-		this._textArea.setAttribute('autocorrect', 'off');
-		this._textArea.setAttribute('autocapitalize', 'off');
-		this._textArea.setAttribute('autocomplete', 'off');
-		this._textArea.setAttribute('spellcheck', 'false');
 		this._resizeDetector = L.DomUtil.create('iframe', 'resize-detector', container);
 		this._fileDownloader = L.DomUtil.create('iframe', '', container);
 		L.DomUtil.setStyle(this._fileDownloader, 'display', 'none');
@@ -829,8 +824,7 @@ L.Map = L.Evented.extend({
 
 		L.DomEvent[onOff](this._container, 'click dblclick mousedown mouseup ' +
 			'mouseover mouseout mousemove contextmenu dragover drop ' +
-			'keydown keypress keyup trplclick qdrplclick', this._handleDOMEvent, this);
-		L.DomEvent[onOff](this._textArea, 'copy cut paste keydown keypress keyup compositionstart compositionupdate compositionend textInput', this._handleDOMEvent, this);
+			'trplclick qdrplclick', this._handleDOMEvent, this);
 
 		if (this.options.trackResize && this._resizeDetector.contentWindow) {
 			L.DomEvent[onOff](this._resizeDetector.contentWindow, 'resize', this._onResize, this);
@@ -1072,8 +1066,8 @@ L.Map = L.Evented.extend({
 		// Calling from some other place with no real 'click' event doesn't work
 		if (type === 'click') {
 			if (this._permission === 'edit') {
-				this._textArea.blur();
-				this._textArea.focus();
+				this._clipboardContainer.focus(false);
+				this._clipboardContainer.focus(true);
 			}
 
 			// unselect if anything is selected already
