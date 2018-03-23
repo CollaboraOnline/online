@@ -268,7 +268,8 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
     if (!Poco::File(_jailedFilePath).exists() && link(publicFilePath.c_str(), _jailedFilePath.c_str()) == -1)
     {
         // Failed
-        LOG_WRN("link(\"" << publicFilePath << "\", \"" << _jailedFilePath << "\") failed. Will copy.");
+        LOG_WRN("link(\"" << publicFilePath << "\", \"" << _jailedFilePath << "\") failed. Will copy. "
+                "Linking error: " << errno << " " << strerror(errno));
     }
 
     try
@@ -303,7 +304,7 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
 {
     try
     {
-        LOG_TRC("Saving local file to local file storage " << _isCopy << " for " << _jailedFilePath);
+        LOG_TRC("Saving local file to local file storage (isCopy: " << _isCopy << ") for " << _jailedFilePath);
         // Copy the file back.
         if (_isCopy && Poco::File(_jailedFilePath).exists())
         {
