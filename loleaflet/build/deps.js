@@ -80,6 +80,11 @@ var deps = {
 		desc: 'Used to display a progress image over rectangular are of the map.'
 	},
 
+	ClipboardContainer: {
+		src: ['layer/marker/ClipboardContainer.js'],
+		desc: 'Container for hidden input field.'
+	},
+
 	Marker: {
 		src: ['layer/marker/Icon.js',
 		      'layer/marker/Icon.Default.js',

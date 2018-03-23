@@ -252,7 +252,7 @@ L.Map.Keyboard = L.Handler.extend({
 			compEventFn = L.bind(docLayer._postCompositionEvent, docLayer, 0 /* winid */);
 		}
 		if (!inputEle) {
-			inputEle = this._map._textArea;
+			inputEle = this._map._clipboardContainer._textArea;
 		}
 		this.modifier = 0;
 		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;
@@ -523,9 +523,9 @@ L.Map.Keyboard = L.Handler.extend({
 		case 91: // Left Cmd (Safari)
 		case 93: // Right Cmd (Safari)
 			// we prepare for a copy or cut event
-			this._map._docLayer._textArea.value = window.getSelection().toString();
-			this._map._docLayer._textArea.focus();
-			this._map._docLayer._textArea.select();
+			this._map._clipboardContainer.setValue(window.getSelection().toString());
+			this._map._clipboardContainer.focus(true);
+			this._map._clipboardContainer.select();
 			return true;
 		case 80: // p
 			this._map.print();

@@ -290,8 +290,7 @@ L.TileLayer = L.GridLayer.extend({
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
-		this._textArea = map._textArea;
-		this._textArea.focus();
+		this._map._clipboardContainer.focus(true);
 
 		map.setPermission(this.options.permission);
 
@@ -1548,11 +1547,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
 			}
 			this._map.addLayer(this._cursorMarker);
-
-			// move the hidden input field with the cursor
-			var clipContainer = L.DomUtil.get('doc-clipboard-container');
-			var pos = this._map.latLngToContainerPoint(L.latLng(cursorPos)).round();
-			L.DomUtil.setPosition(clipContainer, pos);
+			this._map._clipboardContainer.setLatLng(this._visibleCursor.getNorthWest());
 		}
 		else if (this._cursorMarker) {
 			this._map.removeLayer(this._cursorMarker);
@@ -1736,7 +1731,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		if (e.type === 'dragend') {
 			e.target.isDragged = false;
-			this._textArea.focus();
+			this._map._clipboardContainer.focus(true);
 			this._map.fire('scrollvelocity', {vx: 0, vy: 0});
 		}
 
@@ -1920,9 +1915,9 @@ L.TileLayer = L.GridLayer.extend({
 	_onCopy: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		if (this._map._docLayer._textArea.value !== '') {
-			L.Compatibility.clipboardSet(e, this._map._docLayer._textArea.value);
-			this._map._docLayer._textArea.value = '';
+		if (this._map._clipboardContainer.getValue() !== '') {
+			L.Compatibility.clipboardSet(e, this._map._clipboardContainer.getValue());
+			this._map._clipboardContainer.setValue('');
 		} else if (this._selectionTextContent) {
 			L.Compatibility.clipboardSet(e, this._selectionTextContent);
 
@@ -1936,9 +1931,9 @@ L.TileLayer = L.GridLayer.extend({
 	_onCut: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		if (this._map._docLayer._textArea.value !== '') {
-			L.Compatibility.clipboardSet(e, this._map._docLayer._textArea.value);
-			this._map._docLayer._textArea.value = '';
+		if (this._map._clipboardContainer.getValue() !== '') {
+			L.Compatibility.clipboardSet(e, this._map._clipboardContainer.getValue());
+			this._map._clipboardContainer.setValue('');
 		} else if (this._selectionTextContent) {
 			L.Compatibility.clipboardSet(e, this._selectionTextContent);
 

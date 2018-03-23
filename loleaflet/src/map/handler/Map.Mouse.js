@@ -150,7 +150,7 @@ L.Map.Mouse = L.Handler.extend({
 					var docLayer = this._map._docLayer;
 					this._mouseEventsQueue = [];
 					docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, buttons, modifier);
-					docLayer._textArea.focus();
+					this._map._clipboardContainer.focus(true);
 				}, this));
 				this._holdMouseEvent = setTimeout(L.bind(this._executeMouseEvents, this), timeOut);
 
