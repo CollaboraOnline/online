@@ -129,9 +129,9 @@ L.Control.Ruler = L.Control.extend({
 			this._rMarginMarker =  L.DomUtil.create('div', classMargin + ' ' + rightComp, this._rFace);
 
 			this._lMarginDrag = L.DomUtil.create('div', classDraggable + ' ' + leftComp, this._rMarginWrapper);
-			this._lToolTip = L.DomUtil.create('div', lToolTip, this._lMarginDrag)
+			this._lToolTip = L.DomUtil.create('div', lToolTip, this._lMarginDrag);
 			this._rMarginDrag = L.DomUtil.create('div', classDraggable + ' ' + rightComp, this._rMarginWrapper);
-			this._rToolTip = L.DomUtil.create('div', rToolTip, this._rMarginDrag)
+			this._rToolTip = L.DomUtil.create('div', rToolTip, this._rMarginDrag);
 			this._lMarginDrag.title = leftMarginStr;
 			this._rMarginDrag.title = rightMarginStr;
 		}
