@@ -1172,6 +1172,10 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
 
         getLOKitDocument()->setView(_viewId);
 
+        if (filterOptions.empty())
+            // Save and no arguments, provide our default.
+            filterOptions = "NoFileSync";
+
         LOG_DBG("Calling LOK's saveAs with: '" << url.c_str() << "', '" <<
                 (format.size() == 0 ? "(nullptr)" : format.c_str()) << "', '" <<
                 (filterOptions.size() == 0 ? "(nullptr)" : filterOptions.c_str()) << "'.");
