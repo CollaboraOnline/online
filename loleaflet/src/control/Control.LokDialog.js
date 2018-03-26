@@ -91,8 +91,12 @@ L.Control.LokDialog = L.Control.extend({
 		if (e.action === 'created') {
 			var width = parseInt(e.size.split(',')[0]);
 			var height = parseInt(e.size.split(',')[1]);
+
 			if (e.winType === 'dialog') {
-				this._launchDialog(this._toDlgPrefix(e.id), width, height, e.title);
+				var left = (e.position != null)? parseInt(e.position.split(',')[0]): null;
+				var top = (e.position != null)? parseInt(e.position.split(',')[1]): null;
+
+				this._launchDialog(this._toDlgPrefix(e.id), left, top, width, height, e.title);
 				this._sendPaintWindow(e.id, this._createRectStr(e.id));
 			} else if (e.winType === 'child') {
 				if (!this._isOpen(e.parentId))
@@ -136,7 +140,7 @@ L.Control.LokDialog = L.Control.extend({
 			// FIXME: we don't really have to destroy and launch the dialog again but do it for
 			// now because the size sent to us previously in 'created' cb is not correct
 			$('#' + strDlgId).remove();
-			this._launchDialog(strDlgId, width, height, this._dialogs[parseInt(e.id)].title);
+			this._launchDialog(strDlgId, null, null, width, height, this._dialogs[parseInt(e.id)].title);
 			this._sendPaintWindow(e.id, this._createRectStr(e.id));
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.id) && !!e.rectangle) {
@@ -225,7 +229,7 @@ L.Control.LokDialog = L.Control.extend({
 		this._dialogs[dlgId].input.focus();
 	},
 
-	_launchDialog: function(strDlgId, width, height, title) {
+	_launchDialog: function(strDlgId, leftTwips, topTwips, width, height, title) {
 		var dialogContainer = L.DomUtil.create('div', 'lokdialog', document.body);
 		L.DomUtil.setStyle(dialogContainer, 'padding', '0px');
 		L.DomUtil.setStyle(dialogContainer, 'margin', '0px');
@@ -249,6 +253,22 @@ L.Control.LokDialog = L.Control.extend({
 				that._onDialogClose(that._toRawDlgId(strDlgId), true);
 			}
 		});
+
+		if (leftTwips != null && topTwips != null) {
+			// magic to re-calculate the position in twips to absolute pixel
+			// position inside the #document-container
+			var pixels = this._map._docLayer._twipsToPixels(new L.Point(leftTwips, topTwips));
+			var origin = this._map.getPixelOrigin();
+			var panePos = this._map._getMapPanePos();
+
+			var left = pixels.x + panePos.x - origin.x;
+			var top = pixels.y + panePos.y - origin.y;
+
+			if (left >= 0 && top >= 0) {
+				$(dialogContainer).dialog('option', 'position', { my: 'left top', at: 'left+' + left + ' top+' + top, of: '#document-container' });
+			}
+		}
+
 		// don't show the dialog surround until we have the dialog content
 		$(dialogContainer).parent().hide();
 
