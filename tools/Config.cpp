@@ -329,7 +329,10 @@ int Config::main(const std::vector<std::string>& args)
         const char command[] = "su lool --shell=/bin/sh -c 'loolwsd-systemplate-setup /opt/lool/systemplate " LO_PATH " >/dev/null 2>&1'";
         std::cout << "Running the following command:" << std::endl
                   << command << std::endl;
+
         retval = system(command);
+        if (retval != 0)
+            std::cerr << "Error when executing command." << std::endl;
     }
     else
     {
