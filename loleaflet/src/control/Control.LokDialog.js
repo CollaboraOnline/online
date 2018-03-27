@@ -246,6 +246,10 @@ L.Control.LokDialog = L.Control.extend({
 
 		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
 
+		var dialogClass = 'lokdialog_container';
+		if (!title)
+			dialogClass += ' lokdialog_notitle';
+
 		var that = this;
 		$(dialogContainer).dialog({
 			minWidth: width,
@@ -254,7 +258,7 @@ L.Control.LokDialog = L.Control.extend({
 			modal: false,
 			closeOnEscape: true,
 			resizable: false,
-			dialogClass: 'lokdialog_container',
+			dialogClass: dialogClass,
 			close: function() {
 				that._onDialogClose(that._toRawDlgId(strDlgId), true);
 			}

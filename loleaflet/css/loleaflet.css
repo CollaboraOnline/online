@@ -347,6 +347,10 @@ body {
 	text-indent: 1px;
 }
 
+.lokdialog_container.lokdialog_notitle .ui-dialog-titlebar {
+	display: none;
+}
+
 .lokdialog_container.ui-dialog.ui-widget-content {
 	padding: 0px;
 	overflow: visible;
