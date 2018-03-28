@@ -801,10 +801,6 @@ L.Map = L.Evented.extend({
 
 	_rawPanBy: function (offset) {
 		L.DomUtil.setPosition(this._mapPane, this._getMapPanePos().subtract(offset));
-
-		if (this._docLayer) {
-			this._docLayer._updateContainerElements();
-		}
 	},
 
 	_getZoomSpan: function () {
