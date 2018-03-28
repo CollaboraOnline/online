@@ -2,9 +2,9 @@
 
 <!-- Proof of concept of running loleaflet.html in an iframe.
 
-     The top part of this page has a form with three input fields:
-     "x", "y", and "color", a submit button, and a "result" field used
-     for output only.
+     The top part of this page has several forms. The first one with
+     three input fields: "x", "y", and "color", a submit button, and a
+     "result" field used for output only.
 
      When the submit button is pressed, the input fields are passed as
      a postMessage to the iframe. The message also specifies what
@@ -15,6 +15,9 @@
      the iframe. The Python script returns a value, which gets passed
      to loleaflet in a unocommandresult: message, and passed on to the
      event listener on this page, which writes it to the output field.
+
+     The other forms call other Python functions in other files. (In
+     particular, in NamedRanges.py in the same directory.)
 
      To test this, do 'make run', and then in your browser open the
      equivalent of
