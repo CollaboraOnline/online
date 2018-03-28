@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
-<!-- Proof of concept of running loleaflet.html in an iframe.
+<!-- Proof of concept of running loleaflet.html in an iframe. Also
+     shows how to, from outside the iframe, invoke Python scripting in
+     the underlying LibreOffice instance that manipulates the document
+     being edited.
 
      The top part of this page has several forms. The first one with
      three input fields: "x", "y", and "color", a submit button, and a
@@ -17,7 +20,9 @@
      event listener on this page, which writes it to the output field.
 
      The other forms call other Python functions in other files. (In
-     particular, in NamedRanges.py in the same directory.)
+     particular, in NamedRanges.py in the same directory.) The forms
+     invoke Python functions that list, add, and delete named ranges
+     in a Calc document being edited.
 
      To test this, do 'make run', and then in your browser open the
      equivalent of
@@ -34,6 +39,13 @@
     <title>Online Editor</title>
 
     <script>
+
+      // These functions named call* are invoked when submitting the
+      // forms defined in the body of this web page. They show how to
+      // post a message to the iframe where Online is running, that
+      // will cause a Python script in the underlying LibreOffice
+      // instance to be invoked.
+
       function callSetCellColor() {
         window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
         var x = document.forms[0].elements['x'].value;
@@ -105,10 +117,17 @@
                                      '*');
       }
 
+      // This function is invoked when the iframe posts a message back.
+
       function receiveMessage(event) {
         var msg = JSON.parse(event.data);
         console.log('==== framed.html receiveMessage: ' + event.data);
         console.log('                                 ' + msg);
+
+        // We are only interested in messages that are marked as being
+        // a result from a Python script invoked by one of the call*
+        // functions above.
+
         if (msg.hasOwnProperty('MessageId') &&
             msg.MessageId === 'CallPythonScript-Result' &&
             msg.hasOwnProperty('Values') &&
@@ -117,6 +136,7 @@
 	    msg.Values.success == 'true' &&
 	    msg.Values.hasOwnProperty('result') &&
 	    msg.Values.result.hasOwnProperty('value')) {
+          // We are only interested in the result of the SetCellColor and GetNamedRanges functions
           if (msg.Values.commandName === 'vnd.sun.star.script:SetCellColor.py$SetCellColor?language=Python&location=share') {
 	    document.forms['cell-colour-form'].elements['result'].readOnly = false;
 	    document.forms['cell-colour-form'].elements['result'].value = msg.Values.result.value;
@@ -140,7 +160,11 @@
           }
         }
       }
+
+      // 'main' code of this <script> block, run when page is being
+      // rendered. Install the message listener.
       window.addEventListener("message", receiveMessage, false);
+
     </script>
 
     <meta charset="utf-8">
