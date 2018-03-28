@@ -89,6 +89,19 @@
                                      '*');
       }
 
+      function callDeleteNamedRange() {
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+        var name = document.forms['delete-named-range-form'].elements['name'].value;
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'CallPythonScript',
+                                                     'SendTime': Date.now(),
+                                                     'ScriptFile': 'NamedRanges.py',
+                                                     'Function': 'DeleteNamedRange',
+                                                     'Values': {'name': {'type': 'string', 'value': name}
+                                                               }
+                                                     }),
+                                     '*');
+      }
+
       function receiveMessage(event) {
         var msg = JSON.parse(event.data);
         console.log('==== framed.html receiveMessage: ' + event.data);
@@ -153,6 +166,10 @@
       <input type="text" name="name"> on Sheet1 from (A1 syntax)
       <input type="text" name="x0" value="A" size="1" pattern="[A-Z]{1}"> <input type="number" name="y0", min="1" max="999" value="1"> to
       <input type="text" name="x1" value="B" size="1" pattern="[A-Z]{1}"> <input type="number" name="y1", min="1" max="999" value="3">.
+    </form>
+
+    <form id="delete-named-range-form">
+      Click <button onclick="callDeleteNamedRange(); return false;">here</button> to delete the named range called <input type="text" name="name">
     </form>
 
     <!-- The hostname and pathnames below are obviously specific to my
