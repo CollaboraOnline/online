@@ -26,12 +26,14 @@ L.Cursor = L.Layer.extend({
 		this.update();
 		this.getPane().appendChild(this._container);
 
-		this._map._textArea = this._textArea;
+		if (this._textArea && !this._map._textArea) {
+			this._map._textArea = this._textArea;
 
-		L.DomEvent['off'](this._textArea, 'copy cut paste keydown keypress keyup compositionstart compositionupdate compositionend textInput', this._map._handleDOMEvent, this._map);
-		L.DomEvent['on'](this._textArea, 'copy cut paste keydown keypress keyup compositionstart compositionupdate compositionend textInput', this._map._handleDOMEvent, this._map);
+			L.DomEvent['off'](this._textArea, 'copy cut paste keydown keypress keyup compositionstart compositionupdate compositionend textInput', this._map._handleDOMEvent, this._map);
+			L.DomEvent['on'](this._textArea, 'copy cut paste keydown keypress keyup compositionstart compositionupdate compositionend textInput', this._map._handleDOMEvent, this._map);
 
-		this._textArea.focus();
+			this._textArea.focus();
+		}
 	},
 
 	onRemove: function () {
@@ -75,7 +77,8 @@ L.Cursor = L.Layer.extend({
 
 	show: function() {
 		L.DomUtil.setStyle(this._container, 'visibility', 'visible');
-		this._textArea.focus();
+		if (this._textArea)
+			this._textArea.focus();
 	},
 
 	hide: function() {
@@ -119,14 +122,16 @@ L.Cursor = L.Layer.extend({
 			.disableClickPropagation(this._cursor)
 			.disableScrollPropagation(this._container);
 
-		var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', this._container);
-		textAreaContainer.id = 'doc-clipboard-container';
-		this._textArea = L.DomUtil.create('input', 'clipboard', textAreaContainer);
-		this._textArea.setAttribute('type', 'text');
-		this._textArea.setAttribute('autocorrect', 'off');
-		this._textArea.setAttribute('autocapitalize', 'off');
-		this._textArea.setAttribute('autocomplete', 'off');
-		this._textArea.setAttribute('spellcheck', 'false');
+		if (this.options.clipboard) {
+			var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', this._container);
+			textAreaContainer.id = 'doc-clipboard-container';
+			this._textArea = L.DomUtil.create('input', 'clipboard', textAreaContainer);
+			this._textArea.setAttribute('type', 'text');
+			this._textArea.setAttribute('autocorrect', 'off');
+			this._textArea.setAttribute('autocapitalize', 'off');
+			this._textArea.setAttribute('autocomplete', 'off');
+			this._textArea.setAttribute('spellcheck', 'false');
+		}
 	},
 
 	_setPos: function (pos) {
