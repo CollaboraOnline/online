@@ -197,6 +197,7 @@ int Config::main(const std::vector<std::string>& args)
         return Application::EXIT_NOINPUT;
     }
 
+    int retval = Application::EXIT_OK;
     bool changed = false;
     _loolConfig.load(ConfigFile);
 
@@ -328,7 +329,7 @@ int Config::main(const std::vector<std::string>& args)
         const char command[] = "su lool --shell=/bin/sh -c 'loolwsd-systemplate-setup /opt/lool/systemplate " LO_PATH " >/dev/null 2>&1'";
         std::cout << "Running the following command:" << std::endl
                   << command << std::endl;
-        system(command);
+        retval = system(command);
     }
     else
     {
@@ -343,8 +344,7 @@ int Config::main(const std::vector<std::string>& args)
         std::cout << "Saved" << std::endl;
     }
 
-    // This tool only handles options, nothing to do here
-    return Application::EXIT_OK;
+    return retval;
 }
 
 POCO_APP_MAIN(Config);
