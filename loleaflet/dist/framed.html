@@ -16,32 +16,6 @@
      to loleaflet in a unocommandresult: message, and passed on to the
      event listener on this page, which writes it to the output field.
 
-     For this to work, in the trivial proof of concept case of 'make
-     run', the below patch is needed to the C++ code. It is probably
-     not necessary in a "real" WOPI-based setup where iframes are
-     already used and things work fine.
-
---- a/wsd/FileServer.cpp
-+++ b/wsd/FileServer.cpp
-@@ -172,7 +172,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
-         const auto& config = Application::instance().config();
-         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-         const std::string endPoint = requestSegments[requestSegments.size() - 1];
--        if (endPoint == loleafletHtml)
-+        if (endPoint == loleafletHtml || endPoint == "framed.html")
-         {
-             preprocessFile(request, message, socket);
-             return;
-@@ -548,7 +548,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
-         LOG_TRC("Denied frame ancestor: " << frameAncestor);
- 
-         cspOss << "img-src 'self' data: ;";
--        oss << "X-Frame-Options: deny\r\n";
-+        oss << "X-Frame-Options: sameorigin\r\n";
-     }
- 
-     cspOss << "\r\n";
-
 -->
 
 <html>
@@ -179,6 +153,6 @@
     the hex string needs to be changed of course, to the right one as
     shown by 'make run'. -->
 
-    <iframe src="http://snorken.local:9980/loleaflet/94781ec6/loleaflet.html?file_path=file:///home/tml/lo/internal-online/test/data/empty.ods&NotWOPIButIframe=true" height="1000" width="1000"></iframe>
+    <iframe src="http://snorken.local:9980/loleaflet/3304e9093/loleaflet.html?file_path=file:///home/tml/lo/online/test/data/empty.ods&NotWOPIButIframe=true" height="1000" width="1000"></iframe>
   </body>
 </html>
