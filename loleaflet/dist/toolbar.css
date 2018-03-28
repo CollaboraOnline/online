@@ -274,6 +274,7 @@ button.leaflet-control-search-next
 .w2ui-icon.help{ background: url('../images/lc_helpindex.svg') no-repeat center !important; }
 .w2ui-icon.incrementindent{ background: url('../images/lc_decrementlevel.svg') no-repeat center !important; }
 .w2ui-icon.insertpage{ background: url('../images/lc_insertpage.svg') no-repeat center !important; }
+.w2ui-icon.insertsheet{ background: url('../images/plus.svg') no-repeat center !important; }
 .w2ui-icon.italic{ background: url('../images/lc_italic.svg') no-repeat center !important; }
 .w2ui-icon.insertgraphic{ background: url('../images/lc_gallery.svg') no-repeat center !important; }
 .w2ui-icon.inserttable{ background: url('../images/lc_inserttable.svg') no-repeat center !important; }
