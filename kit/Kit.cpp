@@ -172,6 +172,10 @@ namespace
                     strstr(path, "libfreeblpriv3"))
                     return true;
 
+                // As is Python ...
+                if (strstr(path, "python-core"))
+                    return true;
+
                 // otherwise drop the rest of the code.
                 return false;
             }
