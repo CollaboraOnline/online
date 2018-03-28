@@ -1057,7 +1057,6 @@ L.Map = L.Evented.extend({
 		// Calling from some other place with no real 'click' event doesn't work
 		if (type === 'click') {
 			if (this._permission === 'edit') {
-				this._textArea.blur();
 				this._textArea.focus();
 			}
 
