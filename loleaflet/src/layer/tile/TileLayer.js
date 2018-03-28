@@ -1446,7 +1446,7 @@ L.TileLayer = L.GridLayer.extend({
 			var cursorPos = this._visibleCursor.getNorthWest();
 
 			if (!this._cursorMarker) {
-				this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), {blink: true});
+				this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), {blink: true, clipboard: true});
 				this._map.addLayer(this._cursorMarker);
 
 				this._textArea = this._cursorMarker._textArea;
