@@ -662,9 +662,9 @@ L.Map = L.Evented.extend({
 
 	focus: function () {
 		console.debug('focus:');
-		if (this._docLayer && document.activeElement !== this._docLayer._textArea) {
+		if (this._textArea && document.activeElement !== this._textArea) {
 			console.debug('focus: focussing');
-			this._docLayer._textArea.focus();
+			this._textArea.focus();
 		}
 	},
 
@@ -692,14 +692,6 @@ L.Map = L.Evented.extend({
 			throw new Error('Map container is already initialized.');
 		}
 
-		var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', container.parentElement);
-		textAreaContainer.id = 'doc-clipboard-container';
-		this._textArea = L.DomUtil.create('input', 'clipboard', textAreaContainer);
-		this._textArea.setAttribute('type', 'text');
-		this._textArea.setAttribute('autocorrect', 'off');
-		this._textArea.setAttribute('autocapitalize', 'off');
-		this._textArea.setAttribute('autocomplete', 'off');
-		this._textArea.setAttribute('spellcheck', 'false');
 		this._resizeDetector = L.DomUtil.create('iframe', 'resize-detector', container);
 		this._fileDownloader = L.DomUtil.create('iframe', '', container);
 		L.DomUtil.setStyle(this._fileDownloader, 'display', 'none');
@@ -823,8 +815,7 @@ L.Map = L.Evented.extend({
 
 		L.DomEvent[onOff](this._container, 'click dblclick mousedown mouseup ' +
 			'mouseover mouseout mousemove contextmenu dragover drop ' +
-			'keydown keypress keyup trplclick qdrplclick', this._handleDOMEvent, this);
-		L.DomEvent[onOff](this._textArea, 'copy cut paste keydown keypress keyup compositionstart compositionupdate compositionend textInput', this._handleDOMEvent, this);
+			'trplclick qdrplclick', this._handleDOMEvent, this);
 
 		if (this.options.trackResize && this._resizeDetector.contentWindow) {
 			L.DomEvent[onOff](this._resizeDetector.contentWindow, 'resize', this._onResize, this);
