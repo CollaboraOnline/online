@@ -22,6 +22,8 @@ all-local: node_modules $(L10N_JSON) $(JQUERY_UI_DIST_IMAGES)
 	rm -rf dist/plugins/draw-$(DRAW_VERSION) || true
 	mkdir -p dist/plugins/draw-$(DRAW_VERSION)
 	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
+	@m4 -E -Ddebug=$(ENABLE_DEBUG) dist/loleaflet.html.m4 > dist/loleaflet.html
+	@m4 -E -Ddebug=$(ENABLE_DEBUG) main.css.m4 > main.css
 	jake build debug=$(ENABLE_DEBUG) minify=$(MINIFY)
 
 node_modules: npm-shrinkwrap.json
