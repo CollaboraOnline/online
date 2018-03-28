@@ -693,7 +693,6 @@ L.Map = L.Evented.extend({
 		}
 
 		var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', container.parentElement);
-		textAreaContainer.id = 'doc-clipboard-container';
 		this._textArea = L.DomUtil.create('input', 'clipboard', textAreaContainer);
 		this._textArea.setAttribute('type', 'text');
 		this._textArea.setAttribute('autocorrect', 'off');
