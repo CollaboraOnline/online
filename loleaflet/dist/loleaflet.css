@@ -66,6 +66,21 @@ body {
     top: 30px;
 }
 
+#toolbar-wrapper {
+    position: relative;
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#toolbar-logo {
+    width: 125px;
+}
+
+#toolbar-hamburger {
+    width: 0;
+}
+
 @media (max-width: 767px) {
     /* Show slidesorter beyond 768px only */
     #presentation-controls-wrapper {
@@ -90,18 +105,11 @@ body {
     #spreadsheet-row-column-frame.readonly {
 	top: 30px !important;
     }
-    /* There seems to be some bug in w2ui library -
-     * when we are in very low screen width, the toolbar-up-more
-     * toolbar's width doesn't adjust according to its children toolbar
-     * items and truncate all items but one. Lets override the width in
-     * mobile mode to prevent that.
-     */
-    #toolbar-up-more {
-	width: auto !important;
+    #toolbar-logo {
+	width: 32px;
     }
-    /* We need to give space for options menu */
-    #tb_toolbar-up_item_rightmenupadding {
-	padding-right: 40px;
+    #toolbar-hamburger {
+	width: 41px;
     }
     #closebutton {
 	display: none;

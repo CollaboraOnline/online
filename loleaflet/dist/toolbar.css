@@ -2,7 +2,7 @@
     left: 0;
     right: 0;
     text-align: center;
-    z-index: 1000;
+    z-index: 999;
     overflow: visible !important;
 }
 
@@ -16,7 +16,7 @@
     z-index: 1000;
 }
 
-#toolbar-up-more,w2ui-toolbar {
+w2ui-toolbar {
     position: absolute;
     right: 10px;
     top: 40px;
@@ -52,14 +52,14 @@
     z-index: 11;
 }
 
+.w2ui-scroll-left,
+.w2ui-scroll-right {
+    z-index: 15;
+}
+
 /* center the toolbar */
 #tb_presentation-toolbar_item_left {
     width: 50%;
-}
-/* leave space for branding logo */
-#tb_toolbar-up_item_left {
-    width: 0;
-    padding-left: 125px;
 }
 
 #addressInput {
@@ -70,6 +70,12 @@
 #formulaInput {
     height: 29px;
     width: 700px;
+}
+
+@media (max-width: 767px) {
+     #formulaInput {
+	width: 500px;
+     }
 }
 
 #document-name-input {
@@ -118,10 +124,6 @@
     background-color: #eee;
 }
 .closebuttonimage{ background: url('../images/lc_closedoc.svg') no-repeat center !important; }
-
-#tb_toolbar-up_item_right {
-    width: 100%;
-}
 
 #tb_toolbar-down_item_left {
     width: 45%;
@@ -313,11 +315,6 @@ button.leaflet-control-search-next
 .w2ui-icon.specialcharacter{ background: url('../images/lc_insertsymbol.svg') no-repeat center !important; }
 .w2ui-icon.insertobjectchart{ background: url('../images/lc_drawchart.svg') no-repeat center !important; }
 
-#inserttable-wrapper {
-    position: relative;
-    right: 230px; /* insertable popup has ~230px width, place it to open from its right edge to the left */
-}
-
 .inserttable-pop {
     z-index: 1000;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
@@ -348,7 +345,6 @@ button.leaflet-control-search-next
     position: relative;
     padding: 2px;
     display: block;
-    width: 232px;
     height: 232px;
 }
 

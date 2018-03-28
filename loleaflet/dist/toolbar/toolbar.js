@@ -11,63 +11,23 @@ function onDelete(e) {
 	}
 }
 
-// When we are in mobile view, only these items in toolbar-up will be shown
-var toolbarUpMobileItems = [
-	'left',
-	'save',
-	'savebreak',
-	'bold',
-	'italic',
-	'underline',
-	'strikeout',
-	'formatbreak',
-	'leftpara',
-	'centerpara',
-	'rightpara',
-	'justifypara',
-	'right',
-	'rightmenupadding'
-];
-
-var statusbarMobileItems = [
-	'search',
-	'searchprev',
-	'searchnext',
-	'cancelsearch',
-	'left',
-	'right',
-	'userlist',
-	'userlistbreak',
-	'prev',
-	'next'
-];
-
 var nUsers, oneUser, noUser;
 
 function _mobilify() {
 	var toolbarUp = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var statusbar = w2ui['toolbar-down'];
 
-	for (var itemIdx in toolbarUp.items) {
-		var id = toolbarUp.items[itemIdx].id;
-		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && !toolbarUp.get(id).hidden) {
-			toolbarUp.hide(id);
+	toolbarUp.items.forEach(function(item) {
+		if (item.mobile === false && !item.hidden) {
+			toolbarUp.hide(item.id);
 		}
-	}
-	for (itemIdx in toolbarUpMore.items) {
-		id = toolbarUpMore.items[itemIdx].id;
-		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUpMore.get(id) && !toolbarUpMore.get(id).hidden) {
-			toolbarUpMore.hide(id);
-		}
-	}
+	});
 
-	for (itemIdx in statusbar.items) {
-		id = statusbar.items[itemIdx].id;
-		if (statusbarMobileItems.indexOf(id) === -1 && !statusbar.get(id).hidden) {
-			statusbar.hide(id);
+	statusbar.items.forEach(function(item) {
+		if (item.mobile === false && !item.hidden) {
+			statusbar.hide(item.id);
 		}
-	}
+	});
 
 	nUsers = '%n';
 	oneUser = '1';
@@ -79,28 +39,19 @@ function _mobilify() {
 
 function _unmobilify() {
 	var toolbarUp = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var statusbar = w2ui['toolbar-down'];
 
-	for (var itemIdx in toolbarUp.items) {
-		var id = toolbarUp.items[itemIdx].id;
-		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && toolbarUp.get(id).hidden) {
-			toolbarUp.show(id);
+	toolbarUp.items.forEach(function(item) {
+		if (item.mobile === false && item.hidden) {
+			toolbarUp.show(item.id);
 		}
-	}
-	for (itemIdx in toolbarUpMore.items) {
-		id = toolbarUpMore.items[itemIdx].id;
-		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUpMore.get(id) && toolbarUpMore.get(id).hidden) {
-			toolbarUpMore.show(id);
-		}
-	}
+	});
 
-	for (itemIdx in statusbar.items) {
-		id = statusbar.items[itemIdx].id;
-		if (statusbarMobileItems.indexOf(id) === -1 && statusbar.get(id).hidden) {
-			statusbar.show(id);
+	statusbar.items.forEach(function(item) {
+		if (item.mobile === false && item.hidden) {
+			statusbar.show(item.id);
 		}
-	}
+	});
 
 	nUsers = _('%n users');
 	oneUser = _('1 user');
@@ -111,9 +62,8 @@ function _unmobilify() {
 }
 
 function resizeToolbar() {
-	var hasMoreItems = false;
 	var toolbarUp = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
+	var statusbar = w2ui['toolbar-down'];
 
 	if ($(window).width() < mobileWidth) {
 		_mobilify();
@@ -121,44 +71,8 @@ function resizeToolbar() {
 		_unmobilify();
 	}
 
-	toolbarUp.refresh();
-	toolbarUpMore.refresh();
-	// move items from toolbar-up-more -> toolbar-up
-	while ($('#toolbar-up')[0].scrollWidth <= $(window).width()) {
-		var item = toolbarUpMore.items[0];
-		if (!item) {
-			break;
-		}
-		toolbarUpMore.items.shift();
-		toolbarUp.insert('right', item);
-	}
-
-	// move items from toolbar-up -> toolbar-up-more
-	while ($('#toolbar-up')[0].scrollWidth > Math.max($(window).width(), parseInt($('body').css('min-width')))) {
-		var itemId = toolbarUp.items[toolbarUp.items.length - 4].id;
-		item = toolbarUp.get(itemId);
-		toolbarUp.remove(itemId);
-		toolbarUpMore.insert(toolbarUpMore.items[0], item);
-		hasMoreItems = true;
-	}
-
-	if (hasMoreItems) {
-		w2ui['toolbar-up'].show('more');
-	}
-	else {
-		w2ui['toolbar-up'].hide('more');
-	}
-
-	// resize toolbar-up-more
-	var lastItem = $('#toolbar-up-more>table>tbody>tr>td[valign="middle"]').last();
-	if (lastItem.length) {
-		$('#toolbar-up-more').width($(lastItem).position().left + $(lastItem).width());
-		w2ui['toolbar-up-more'].render();
-	} else {
-		$('#toolbar-up-more').hide();
-		var toolbar = w2ui['toolbar-up'];
-		toolbar.uncheck('more');
-	}
+	toolbarUp.resize();
+	statusbar.resize();
 }
 
 function _cancelSearch() {
@@ -171,7 +85,7 @@ function _cancelSearch() {
 	map.focus();
 }
 
-function onClick(id, item, subItem) {
+function onClick(e, id, item, subItem) {
 	if (w2ui['toolbar-up'].get(id) !== null) {
 		var toolbar = w2ui['toolbar-up'];
 		var item = toolbar.get(id);
@@ -190,10 +104,6 @@ function onClick(id, item, subItem) {
 	}
 	else if (w2ui['presentation-toolbar'].get(id) !== null) {
 		toolbar = w2ui['presentation-toolbar'];
-		item = toolbar.get(id);
-	}
-	else if (w2ui['toolbar-up-more'].get(id) !== null) {
-		toolbar = w2ui['toolbar-up-more'];
 		item = toolbar.get(id);
 	}
 	else if (item && subItem)
@@ -300,30 +210,11 @@ function onClick(id, item, subItem) {
 	else if (id === 'insertgraphic') {
 		L.DomUtil.get('insertgraphic').click();
 	}
-	else if (id === 'inserttable') {
-		$('#inserttable-popup').toggle();
+	else if (id === 'fontcolor' && e.color) {
+		onColorPick(id, e.color);
 	}
-	else if (id === 'fontcolor') {
-		// absolutely no idea why, but without the timeout, the popup is
-		// closed as soon as it is opend
-		setTimeout(function () {
-			$('#fontColorPicker').colorpicker({
-				strings: _('Theme Colors') + ',' + _('Standard Colors') + ',' + _('Web Colors') + ',' + _('Theme Colors') + ',' + _('Back to Palette') + ',' + _('History') + ',' + _('No history yet.')
-			});
-			$('#fontColorPicker').colorpicker('showPalette');
-			$('.ui-widget-content').addClass('loleaflet-font');
-		}, 0);
-	}
-	else if (id === 'backcolor') {
-		// absolutely no idea why, but without the timeout, the popup is
-		// closed as soon as it is opend
-		setTimeout(function () {
-			$('#backColorPicker').colorpicker({
-				strings: _('Theme Colors') + ',' + _('Standard Colors') + ',' + _('Web Colors') + ',' + _('Theme Colors') + ',' + _('Back to Palette') + ',' + _('History') + ',' + _('No history yet.')
-			});
-			$('#backColorPicker').colorpicker('showPalette');
-			$('.ui-widget-content').addClass('loleaflet-font');
-		}, 0);
+	else if (id === 'backcolor' && e.color) {
+		onColorPick(id, e.color)
 	}
 	else if (id === 'sum') {
 		map.sendUnoCommand('.uno:AutoSum');
@@ -348,30 +239,13 @@ function onClick(id, item, subItem) {
 		w2ui['formulabar'].hide('acceptformula', 'cancelformula');
 		w2ui['formulabar'].show('sum', 'function');
 	}
-	else if (id === 'more') {
-		$('#toolbar-up-more').toggle();
-		if ($('#toolbar-up-more').is(':visible')) {
-			toolbar.check('more');
-		}
-		else {
-			toolbar.uncheck('more');
-		}
-		w2ui['toolbar-up-more'].render();
-		resizeToolbar();
-	}
 }
 
 function insertTable() {
 	var rows = 10;
 	var cols = 10;
 	var $grid = $('.inserttable-grid');
-	var $popup = $('#inserttable-popup');
 	var $status = $('#inserttable-status');
-
-	// Return if already initialized
-	if ($grid.children().length) {
-		return;
-	}
 
 	// init
 	for (var r = 0; r < rows; r++) {
@@ -397,7 +271,6 @@ function insertTable() {
 		click: function() {
 			var col = $(this).index() + 1;
 			var row = $(this).parent().index() + 1;
-			$popup.toggle();
 			$('.col').removeClass('bright');
 			$status.html('<br/>');
 			var msg = 'uno .uno:InsertTable {' +
@@ -405,21 +278,19 @@ function insertTable() {
 				+ col +
 				' }, "Rows": { "type": "long","value": '
 				+ row + ' }}';
+
+			if ($('#w2ui-overlay-toolbar-up').length > 0) {
+				$('#w2ui-overlay-toolbar-up').removeData('keepOpen')[0].hide();
+			}
+
 			map._socket.sendMessage(msg);
 			// refocus map due popup
 			map.focus();
 		}
 	}, '.col');
-
-	// close dialog on mouseleave
-	$popup.mouseleave(function() {
-		$(this).hide();
-		$('.col').removeClass('bright');
-		$status.html('<br/>');
-	});
 }
 
-function onColorPick(e, color) {
+function onColorPick(id, color) {
 	if (map.getPermission() !== 'edit' || color === undefined) {
 		return;
 	}
@@ -427,7 +298,7 @@ function onColorPick(e, color) {
 	color = parseInt(color.replace('#', ''), 16);
 	var command = {};
 	var fontcolor, backcolor;
-	if (e.target.id === 'fontColorPicker') {
+	if (id === 'fontcolor') {
 		fontcolor = {'text': 'FontColor',
 					 'spreadsheet': 'Color',
 					 'presentation': 'Color'}[map.getDocType()];
@@ -436,7 +307,7 @@ function onColorPick(e, color) {
 		command[fontcolor].value = color;
 		var uno = '.uno:' + fontcolor;
 	}
-	else if (e.target.id === 'backColorPicker') {
+	else if (id === 'backcolor') {
 		backcolor = {'text': 'BackColor',
 					 'spreadsheet': 'BackgroundColor',
 					 'presentation': 'CharBackColor'}[map.getDocType()];
@@ -454,15 +325,6 @@ var fontsSelectValue;
 var fontsizesSelectValue;
 
 $(function () {
-	$('#toolbar-up-more').w2toolbar({
-		name: 'toolbar-up-more',
-		items: [
-		],
-		onClick: function (e) {
-			onClick(e.target);
-		}
-	});
-
 	$('#toolbar-up').w2toolbar({
 		name: 'toolbar-up',
 		items: [
@@ -473,19 +335,17 @@ $(function () {
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 			{type: 'button',  id: 'repair', img: 'repair', hint: _('Document repair'), disabled: true},
 			{type: 'break'},
-			{type: 'html',   id: 'styles', html: '<select class="styles-select"></select>'},
-			{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>'},
-			{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>'},
-			{type: 'break'},
+			{type: 'html',   id: 'styles', html: '<select class="styles-select"></select>', mobile: false},
+			{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>', mobile: false},
+			{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>', mobile: false},
+			{type: 'break', mobile: false},
 			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold', disabled: true},
 			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic', disabled: true},
 			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline', disabled: true},
 			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout', disabled: true},
 			{type: 'break', id: 'formatbreak'},
-			{type: 'html',  id: 'fontcolor-html', html: '<div id="fontcolor-wrapper"><input id="fontColorPicker" style="display:none;"></div>'},
-			{type: 'button',  id: 'fontcolor', img: 'color', hint: _UNO('.uno:FontColor')},
-			{type: 'html',  id: 'backcolor-html', html: '<div id="backcolor-wrapper"><input id="backColorPicker" style="display:none;"></div>'},
-			{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
+			{type: 'text-color',  id: 'fontcolor', hint: _UNO('.uno:FontColor')},
+			{type: 'color',  id: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
 			{type: 'break'},
 			{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true), uno: 'LeftPara', unosheet: 'AlignLeft', disabled: true},
 			{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true), uno: 'CenterPara', unosheet: 'AlignHorizontalCenter', disabled: true},
@@ -511,80 +371,17 @@ $(function () {
 			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _UNO('.uno:IncrementIndent', '', true), uno: 'IncrementIndent', disabled: true},
 			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _UNO('.uno:DecrementIndent', '', true), uno: 'DecrementIndent', disabled: true},
 			{type: 'break', id: 'incdecindent'},
-			{type: 'html',  id: 'inserttable-html', html: '<div id="inserttable-wrapper"><div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all" style="position: absolute; display: none;"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div></div>'},
-			{type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table')},
+			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), overlay: {onShow: insertTable},
+			 html: '<div id="inserttable-wrapper"><div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div></div></div>'},
 			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true)},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true)},
-			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'},
-			{type: 'html', id: 'right'},
-			{type: 'button',  id: 'more', img: 'more', hint: _('More')},
-			{type: 'html', id: 'rightmenupadding'}
+			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'}
 		],
 		onClick: function (e) {
-			onClick(e.target);
+			onClick(e, e.target);
 		},
 		onRefresh: function() {
-			if (!L.DomUtil.get('fontcolorindicator')) {
-				var fontColorIndicator = L.DomUtil.create('div', 'font-color-indicator', L.DomUtil.get('tb_toolbar-up_item_fontcolor'));
-				fontColorIndicator.id = 'fontcolorindicator';
-				L.DomEvent.on(fontColorIndicator, 'mouseover', function () {
-					var button = fontColorIndicator.parentNode.firstChild;
-					$(button).addClass('over');
-				});
-				L.DomEvent.on(fontColorIndicator, 'mouseout', function () {
-					var button = fontColorIndicator.parentNode.firstChild;
-					$(button).removeClass('over');
-				});
-				L.DomEvent.on(fontColorIndicator, 'mousedown', function () {
-					var button = fontColorIndicator.parentNode.firstChild;
-					$(button).addClass('down');
-				});
-				L.DomEvent.on(fontColorIndicator, 'mouseup', function () {
-					var button = fontColorIndicator.parentNode.firstChild;
-					$(button).removeClass('down');
-				});
-				fontColorIndicator.addEventListener('click', function () {
-					var toolbar = w2ui['toolbar-up'];
-					if (toolbar) {
-						toolbar.click('fontcolor', window.event);
-					}
-				}, false);
-
-				$('#fontColorPicker').colorpicker({showOn:'none', hideButton:true});
-				$('#fontColorPicker').on('change.color', onColorPick);
-			}
-
-			if (!L.DomUtil.get('backcolorindicator')) {
-				var backColorIndicator = L.DomUtil.create('div', 'back-color-indicator', L.DomUtil.get('tb_toolbar-up_item_backcolor'));
-				backColorIndicator.id = 'backcolorindicator';
-				L.DomEvent.on(backColorIndicator, 'mouseover', function () {
-					var button = backColorIndicator.parentNode.firstChild;
-					$(button).addClass('over');
-				});
-				L.DomEvent.on(backColorIndicator, 'mouseout', function () {
-					var button = backColorIndicator.parentNode.firstChild;
-					$(button).removeClass('over');
-				});
-				L.DomEvent.on(backColorIndicator, 'mousedown', function () {
-					var button = backColorIndicator.parentNode.firstChild;
-					$(button).addClass('down');
-				});
-				L.DomEvent.on(backColorIndicator, 'mouseup', function () {
-					var button = backColorIndicator.parentNode.firstChild;
-					$(button).removeClass('down');
-				});
-				backColorIndicator.addEventListener('click', function () {
-					var toolbar = w2ui['toolbar-up'];
-					if (toolbar) {
-						toolbar.click('backcolor', window.event);
-					}
-				}, false);
-
-				$('#backColorPicker').colorpicker({showOn:'none', hideButton:true});
-				$('#backColorPicker').on('change.color', onColorPick);
-			}
-
 			if (map.getDocType() === 'presentation') {
 				// Fill the style select box if not yet filled
 				if ($('.styles-select')[0] && $('.styles-select')[0].length === 0) {
@@ -623,7 +420,7 @@ $(function () {
 			{type: 'html', id: 'formula', html: '<input id="formulaInput" type="text">'}
 		],
 		onClick: function (e) {
-			onClick(e.target);
+			onClick(e, e.target);
 		},
 		onRefresh: function(e) {
 			$('#addressInput').off('keyup', onAddressInput).on('keyup', onAddressInput);
@@ -642,7 +439,7 @@ $(function () {
 			{type: 'button',  id: 'insertsheet', img: 'insertsheet', hidden:true, hint: _('Insert sheet')}
 		],
 		onClick: function (e) {
-			onClick(e.target);
+			onClick(e, e.target);
 		}
 	});
 	$('#presentation-toolbar').w2toolbar({
@@ -657,7 +454,7 @@ $(function () {
 			{type: 'html',  id: 'right'}
 		],
 		onClick: function (e) {
-			onClick(e.target);
+			onClick(e, e.target);
 		}
 	});
 
@@ -676,8 +473,8 @@ $(function () {
 			{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
 			{type: 'html',  id: 'left'},
 			{type: 'html',  id: 'right'},
-			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
-			{type: 'break', id: 'modifiedstatuslabelbreak'},
+			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>', mobile:false},
+			{type: 'break', id: 'modifiedstatuslabelbreak', mobile:false},
 			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
 				'<hr><table class="loleaflet-font" id="editor-btn">' +
 				'<tr>' +
@@ -694,7 +491,7 @@ $(function () {
 			{type: 'break', id: 'prevnextbreak'},
 			{type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _('Reset zoom')},
 			{type: 'button',  id: 'zoomout', img: 'zoomout', hint: _UNO('.uno:ZoomMinus')},
-			{type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>'},
+			{type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>', mobile: false},
 			{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _UNO('.uno:ZoomPlus')}
 		],
 		onClick: function (e) {
@@ -714,7 +511,7 @@ $(function () {
 				}, 100);
 				return;
 			}
-			onClick(e.target, e.item, e.subItem);
+			onClick(e, e.target, e.item, e.subItem);
 		},
 		onRefresh: function(e) {
 			$('#tb_toolbar-down_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
@@ -1057,14 +854,12 @@ map.on('wopiprops', function(e) {
 
 map.on('doclayerinit', function () {
 	var toolbarUp = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var statusbar = w2ui['toolbar-down'];
 	var docType = map.getDocType();
 
 	switch (docType) {
 	case 'spreadsheet':
 		toolbarUp.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
-		toolbarUpMore.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
 		statusbar.disable('zoomreset', 'zoomout', 'zoomin', 'zoomlevel');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
@@ -1074,13 +869,13 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'RowColSelCount',
 				html: '<div id="RowColSelCount" class="loleaflet-font" title="'+_('Selected range of cells')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break3'},
-			{type: 'html',  id: 'InsertMode',
+			{type: 'html',  id: 'InsertMode', mobile: false,
 				html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break4'},
-			{type: 'html',  id: 'LanguageStatus',
+			{type: 'html',  id: 'LanguageStatus', mobile: false,
 				html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break5'},
-			{type: 'html',  id: 'StatusSelectionMode',
+			{type: 'html',  id: 'StatusSelectionMode', mobile: false,
 				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break8'},
 			{type: 'html',  id: 'StateTableCell',
@@ -1103,22 +898,21 @@ map.on('doclayerinit', function () {
 		break;
 	case 'text':
 		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
-		toolbarUpMore.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		statusbar.insert('left', [
 			{type: 'break', id: 'break1'},
 			{type: 'html',  id: 'StatePageNumber',
 				html: '<div id="StatePageNumber" class="loleaflet-font" title="'+_('Number of Pages')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'StateWordCount',
+			{type: 'html',  id: 'StateWordCount', mobile: false,
 				html: '<div id="StateWordCount" class="loleaflet-font" title="'+_('Word Counter')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break5'},
-			{type: 'html',  id: 'InsertMode',
+			{type: 'break', id:'break5', mobile: false},
+			{type: 'html',  id: 'InsertMode', mobile: false,
 				html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break6'},
-			{type: 'html',  id: 'StatusSelectionMode',
+			{type: 'break', id:'break6', mobile:false},
+			{type: 'html',  id: 'StatusSelectionMode', mobile: false,
 				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break7'},
-			{type: 'html',  id: 'LanguageStatus',
+			{type: 'break', id:'break7', mobile:false},
+			{type: 'html',  id: 'LanguageStatus', mobile: false,
 				html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' }
 		]);
 
@@ -1135,13 +929,12 @@ map.on('doclayerinit', function () {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
 		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
-		toolbarUpMore.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'PageStatus',
 				html: '<div id="PageStatus" class="loleaflet-font" title="'+_('Number of Slides')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'LanguageStatus',
+			{type: 'break', id:'break2', mobile:false},
+			{type: 'html',  id: 'LanguageStatus', mobile: false,
 				html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' }
 		]);
 
@@ -1152,7 +945,6 @@ map.on('doclayerinit', function () {
 		break;
 	case 'drawing':
 		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
-		toolbarUpMore.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 
 		// Remove irrelevant toolbars
 		$('#formulabar').hide();
@@ -1161,7 +953,6 @@ map.on('doclayerinit', function () {
 		break;
 	}
 	toolbarUp.refresh();
-	toolbarUpMore.refresh();
 	statusbar.refresh();
 	resizeToolbar();
 });
@@ -1169,7 +960,6 @@ map.on('doclayerinit', function () {
 
 map.on('commandstatechanged', function (e) {
 	var toolbar = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var statusbar = w2ui['toolbar-down'];
 	var commandName = e.commandName;
 	var state = e.state;
@@ -1343,25 +1133,19 @@ map.on('commandstatechanged', function (e) {
 	if (state === 'true') {
 		toolbar.enable(id);
 		toolbar.check(id);
-		toolbarUpMore.check(id);
 	}
 	else if (state === 'false') {
 		toolbar.enable(id);
 		toolbar.uncheck(id);
-		toolbarUpMore.uncheck(id);
 	}
 	// Change the toolbar button states if we are in editmode
 	// If in non-edit mode, will be taken care of when permission is changed to 'edit'
 	else if (map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
-		// in case some buttons are in toolbar-up-more, find
-		// them and en/dis-able them.
 		if (state === 'enabled') {
 			toolbar.enable(id);
-			toolbarUpMore.enable(id);
 		} else {
 			toolbar.uncheck(id);
 			toolbar.disable(id);
-			toolbarUpMore.disable(id);
 		}
 	}
 });
@@ -1600,22 +1384,18 @@ map.on('hyperlinkclicked', function (e) {
 
 map.on('updatepermission', function (e) {
 	var toolbar = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 
 	// copy the first array
 	var items = toolbar.items.slice();
-	items.concat(toolbarUpMore.items);
 	for (var idx in items) {
 		var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : items[idx].uno;
 		var keepDisabled = map['stateChangeHandler'].getItemValue(unoCmd) === 'disabled';
 		if (e.perm === 'edit') {
 			if (!keepDisabled) {
 				toolbar.enable(items[idx].id);
-				toolbarUpMore.enable(items[idx].id);
 			}
 		} else {
 			toolbar.disable(items[idx].id);
-			toolbarUpMore.disable(items[idx].id);
 		}
 	}
 
