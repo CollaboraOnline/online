@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-23 11:12+0100\n"
+"POT-Creation-Date: 2018-03-28 14:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.3\n"
-"X-Pootle-Revision: 3060384\n"
+"X-Generator: Translate Toolkit 2.2.5\n"
+"X-Pootle-Revision: 3084506\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-ui-eo.po\n"
 
 #: admin.strings.js:5
@@ -114,7 +114,7 @@ msgstr "CPU-diagramo"
 msgid "Network Graph"
 msgstr "Reta diagramo"
 
-#: admin.strings.js:30 src/layer/marker/Annotation.js:222
+#: admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "Konservi"
 
@@ -188,250 +188,254 @@ msgid "The host URL is empty. The loolwsd server is probably misconfigured, plea
 msgstr "La gastiga URL estas malplena. Probable la loolwsd-servilo estas mise agordita. Bonvolu kontakti la administranton."
 
 #: dist/errormessages.js:3
-msgid "This development build is limited to %0 documents, and %1 connections - to avoid the impression that it is suitable for deployment in large enterprises. To find out more about deploying and scaling %2 check out: <br/><a href=\"%3\">%3</a>."
-msgstr "Ĉi tiu evoluiga versio estas limigita al %0 dokumentoj, kaj %1 konektoj - por eviti la impreson ke ĝi taŭgas por uzado en grandaj entreprenoj. Por eltrovi pli pri kiel disponigi kaj skaligi %2 vidu: <br/><a href=\"%3\">%3</a>."
+msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
+msgstr ""
 
 #: dist/errormessages.js:4
+msgid "More information and support"
+msgstr ""
+
+#: dist/errormessages.js:5
 msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
 msgstr "Ĉi tiu servo estas limigita de la administranto al %0 dokumentoj, kaj %1 konektoj. Ĉi tiu limo estas atingita. Bonvolu reprovi poste."
 
-#: dist/errormessages.js:5
+#: dist/errormessages.js:6
 msgid "Service is unavailable. Please try again later and report to your administrator if the issue persists."
 msgstr "La servo ne estas disponebla. Bonvolu reprovi poste kaj raporti al via administranto de la problemo daŭras."
 
-#: dist/errormessages.js:6
+#: dist/errormessages.js:7
 msgid "Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists."
 msgstr "Nepermesita WOPI-gastiga komputilo. Reprovu poste kaj raporti al via administranto se la problemo daŭras."
 
-#: dist/errormessages.js:7
+#: dist/errormessages.js:8
 msgid "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: file_path=/path/to/doc/"
 msgstr "Malĝusta uzo de WOPISrc: WOPISrc=valida enkodita URI, aŭ dosierujo, uzmaniero: file_path=/vojo/al/dokumento/"
 
-#: dist/errormessages.js:8
+#: dist/errormessages.js:9
 msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
 msgstr "Via seanco senvalidiĝos ene de %time. Bonvolu konservi vian laboraĵon kaj aktualigi la seancon (aŭ retpaĝon) por daŭrigi."
 
-#: dist/errormessages.js:9
+#: dist/errormessages.js:10
 msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
 msgstr "Via seanco senvalidiĝis. Pluaj ŝanĝoj al la dokumento eble ne konserviĝos. Bonvolu aktualigi la seancon (aŭ retpaĝon) por daŭrigi."
 
-#: dist/errormessages.js:10
+#: dist/errormessages.js:11
 msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
 msgstr "Malsukcesis ŝarĝi la dokumenton. Bonvolu certigi ke la dosiertipo estas subtenata kaj ne difektita, kaj reprovu."
 
-#: dist/errormessages.js:13
+#: dist/errormessages.js:14
 #, javascript-format
 msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
 msgstr "Malsukcesis legi dokumenton el konservejo. Bonvolu kontakti la administranton de via konserveja servilo (%storageserver) ."
 
-#: dist/errormessages.js:14
+#: dist/errormessages.js:15
 #, javascript-format
 msgid "Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing."
 msgstr "Malsukcesis konservi ĉar mankas spaco en la konserva servilo. La dokumento nun estas nurlega. Bonvolu kontakti la administranton de servilo (%storageserver) por daŭrigi redaktadon."
 
-#: dist/errormessages.js:15
+#: dist/errormessages.js:16
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr "Ne eblas konservi dokumenton pro posttempolima aŭ nevalida alira ĵetono."
 
-#: dist/errormessages.js:16
+#: dist/errormessages.js:17
 msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
 msgstr "Ne povas konservi la dokumenton. Kontrolu viajn permesojn aŭ kontaktu la administranton de la konserveja servilo."
 
-#: dist/toolbar/toolbar.js:103
+#: dist/toolbar/toolbar.js:105
 msgid "%n users"
 msgstr "%n uzantoj"
 
-#: dist/toolbar/toolbar.js:104
+#: dist/toolbar/toolbar.js:106
 msgid "1 user"
 msgstr "1 uzanto"
 
-#: dist/toolbar/toolbar.js:105
+#: dist/toolbar/toolbar.js:107
 msgid "0 users"
 msgstr "0 uzantoj"
 
-#: dist/toolbar/toolbar.js:269
+#: dist/toolbar/toolbar.js:275
 msgid "Are you sure you want to delete this page?"
 msgstr "Ĉu vi certe volas forigi ĉi tiun paĝon?"
 
-#: dist/toolbar/toolbar.js:454
+#: dist/toolbar/toolbar.js:460
 msgid "Document repair"
 msgstr "Ripari dokumenton"
 
-#: dist/toolbar/toolbar.js:495
+#: dist/toolbar/toolbar.js:501
 msgid "Insert table"
 msgstr "Enmeti tabelon"
 
-#: dist/toolbar/toolbar.js:500
+#: dist/toolbar/toolbar.js:507
 msgid "More"
 msgstr "Pli"
 
-#: dist/toolbar/toolbar.js:598 dist/toolbar/toolbar.js:1072
+#: dist/toolbar/toolbar.js:605 dist/toolbar/toolbar.js:1079
 msgid "Sum"
 msgstr "Sumo"
 
-#: dist/toolbar/toolbar.js:599
+#: dist/toolbar/toolbar.js:606
 msgid "Function"
 msgstr "Funkcio"
 
-#: dist/toolbar/toolbar.js:600 src/layer/marker/Annotation.js:161
+#: dist/toolbar/toolbar.js:607 src/layer/marker/Annotation.js:163
 msgid "Cancel"
 msgstr "Nuligi"
 
-#: dist/toolbar/toolbar.js:601
+#: dist/toolbar/toolbar.js:608
 msgid "Accept"
 msgstr "Akcepti"
 
-#: dist/toolbar/toolbar.js:617
+#: dist/toolbar/toolbar.js:624
 msgid "First sheet"
 msgstr "Unua folio"
 
-#: dist/toolbar/toolbar.js:618
+#: dist/toolbar/toolbar.js:625
 msgid "Previous sheet"
 msgstr "Antaŭa folio"
 
-#: dist/toolbar/toolbar.js:619
+#: dist/toolbar/toolbar.js:626
 msgid "Next sheet"
 msgstr "Sekva folio"
 
-#: dist/toolbar/toolbar.js:620
+#: dist/toolbar/toolbar.js:627
 msgid "Last sheet"
 msgstr "Lasta folio"
 
-#: dist/toolbar/toolbar.js:630 src/control/Control.Menubar.js:265
+#: dist/toolbar/toolbar.js:637 src/control/Control.Menubar.js:288
 msgid "Fullscreen presentation"
 msgstr "Tutekrana prezentaĵo"
 
-#: dist/toolbar/toolbar.js:647
+#: dist/toolbar/toolbar.js:654
 msgid "Search:"
 msgstr "Serĉi:"
 
-#: dist/toolbar/toolbar.js:654
+#: dist/toolbar/toolbar.js:661
 msgid "Cancel the search"
 msgstr "Nuligi serĉon"
 
-#: dist/toolbar/toolbar.js:659
+#: dist/toolbar/toolbar.js:666
 msgid "No users"
 msgstr "Neniu uzanto"
 
-#: dist/toolbar/toolbar.js:663
+#: dist/toolbar/toolbar.js:670
 msgid "Always follow the editor"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:666
+#: dist/toolbar/toolbar.js:673
 msgid "Current"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:673 src/control/Control.Menubar.js:57
-#: src/control/Control.Menubar.js:233
+#: dist/toolbar/toolbar.js:680 src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:253
 msgid "Reset zoom"
 msgstr "Reagordi zomon"
 
-#: dist/toolbar/toolbar.js:705
+#: dist/toolbar/toolbar.js:712
 msgid "%user has joined"
 msgstr "%user aliĝis"
 
-#: dist/toolbar/toolbar.js:706
+#: dist/toolbar/toolbar.js:713
 msgid "%user has left"
 msgstr "%user foriris"
 
-#: dist/toolbar/toolbar.js:872 dist/toolbar/toolbar.js:1453
+#: dist/toolbar/toolbar.js:879 dist/toolbar/toolbar.js:1465
 msgid "Size"
 msgstr "Grando"
 
-#: dist/toolbar/toolbar.js:1050
+#: dist/toolbar/toolbar.js:1057
 msgid "Number of Sheets"
 msgstr "Nombro da folioj"
 
-#: dist/toolbar/toolbar.js:1053
+#: dist/toolbar/toolbar.js:1060
 msgid "Selected range of cells"
 msgstr "Elektita ĉelaro"
 
-#: dist/toolbar/toolbar.js:1056 dist/toolbar/toolbar.js:1094
+#: dist/toolbar/toolbar.js:1063 dist/toolbar/toolbar.js:1101
 msgid "Entering text mode"
 msgstr "Eniras en teksta reĝimo."
 
-#: dist/toolbar/toolbar.js:1059 dist/toolbar/toolbar.js:1100
-#: dist/toolbar/toolbar.js:1123
+#: dist/toolbar/toolbar.js:1066 dist/toolbar/toolbar.js:1107
+#: dist/toolbar/toolbar.js:1130
 msgid "Text Language"
 msgstr "Teksta lingvo"
 
-#: dist/toolbar/toolbar.js:1062 dist/toolbar/toolbar.js:1097
+#: dist/toolbar/toolbar.js:1069 dist/toolbar/toolbar.js:1104
 msgid "Selection Mode"
 msgstr "Elekta reĝimo"
 
-#: dist/toolbar/toolbar.js:1065
+#: dist/toolbar/toolbar.js:1072
 msgid "Choice of functions"
 msgstr "Elekti funkciojn"
 
-#: dist/toolbar/toolbar.js:1067
+#: dist/toolbar/toolbar.js:1074
 msgid "Average"
 msgstr "Averaĝo"
 
-#: dist/toolbar/toolbar.js:1068
+#: dist/toolbar/toolbar.js:1075
 msgid "CountA"
 msgstr "NombroA"
 
-#: dist/toolbar/toolbar.js:1069
+#: dist/toolbar/toolbar.js:1076
 msgid "Count"
 msgstr "Nombri"
 
-#: dist/toolbar/toolbar.js:1070
+#: dist/toolbar/toolbar.js:1077
 msgid "Maximum"
 msgstr "Maksimumo"
 
-#: dist/toolbar/toolbar.js:1071
+#: dist/toolbar/toolbar.js:1078
 msgid "Minimum"
 msgstr "Minimumo"
 
-#: dist/toolbar/toolbar.js:1073
+#: dist/toolbar/toolbar.js:1080
 msgid "Selection count"
 msgstr "Nombro de la elektaĵo"
 
-#: dist/toolbar/toolbar.js:1074
+#: dist/toolbar/toolbar.js:1081
 msgid "None"
 msgstr "Neniu"
 
-#: dist/toolbar/toolbar.js:1088
+#: dist/toolbar/toolbar.js:1095
 msgid "Number of Pages"
 msgstr "Nombro da paĝoj"
 
-#: dist/toolbar/toolbar.js:1091
+#: dist/toolbar/toolbar.js:1098
 msgid "Word Counter"
 msgstr "Vortnombrilo"
 
-#: dist/toolbar/toolbar.js:1120
+#: dist/toolbar/toolbar.js:1127
 msgid "Number of Slides"
 msgstr "Nombro da lumbildoj"
 
-#: dist/toolbar/toolbar.js:1270
+#: dist/toolbar/toolbar.js:1277
 msgid "Document saved"
 msgstr "Dokumento konservita"
 
-#: dist/toolbar/toolbar.js:1423
+#: dist/toolbar/toolbar.js:1435
 msgid "Style"
 msgstr "Stilo"
 
-#: dist/toolbar/toolbar.js:1445
+#: dist/toolbar/toolbar.js:1457
 msgid "Font"
 msgstr "Tiparo"
 
-#: dist/toolbar/toolbar.js:1481
+#: dist/toolbar/toolbar.js:1493
 msgid "Previous slide"
 msgstr "Antaŭa lumbildo"
 
-#: dist/toolbar/toolbar.js:1482
+#: dist/toolbar/toolbar.js:1494
 msgid "Next slide"
 msgstr "Sekva lumbildo"
 
-#: dist/toolbar/toolbar.js:1543
+#: dist/toolbar/toolbar.js:1555
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Fari/malfari konfliktas inter pluraj uzantoj. Bonvolu uzi dokumentanriparadon por solvi"
 
-#: dist/toolbar/toolbar.js:1791 src/control/Control.DocumentRepair.js:94
+#: dist/toolbar/toolbar.js:1803 src/control/Control.DocumentRepair.js:94
 msgid "You"
 msgstr "Vi"
 
-#: dist/toolbar/toolbar.js:1797
+#: dist/toolbar/toolbar.js:1809
 msgid "Readonly"
 msgstr "Nurlega"
 
@@ -523,7 +527,7 @@ msgstr "Tipo"
 msgid "Index"
 msgstr "Indekso"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:221
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:229
 msgid "Comment"
 msgstr "Komento"
 
@@ -539,18 +543,18 @@ msgstr "Tempomarko"
 msgid "Jump to state"
 msgstr "Salti al stato"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:209
-#: src/control/Control.Menubar.js:284
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:229
+#: src/control/Control.Menubar.js:307
 msgid "See revision history"
 msgstr "Vidu historion de versioj"
 
-#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:210
-#: src/control/Control.Menubar.js:285
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:308
 msgid "Download as"
 msgstr "Elŝuti kiel"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:211
-#: src/control/Control.Menubar.js:286
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:231
+#: src/control/Control.Menubar.js:309
 msgid "PDF Document (.pdf)"
 msgstr "PDF-dokumento (.pdf)"
 
@@ -566,77 +570,75 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:219
-#: src/control/Control.Menubar.js:294
+#: src/control/Control.Menubar.js:27
+msgid "Rich Text (.rtf)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:239
+#: src/control/Control.Menubar.js:317
 msgid "Repair"
 msgstr "Ripari"
 
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:81
+msgid "All"
+msgstr ""
+
+#: src/control/Control.Menubar.js:128
 msgid "Text orientation"
 msgstr "Orientiĝo de teksto"
 
-#: src/control/Control.Menubar.js:189 src/control/Control.Menubar.js:191
-#: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:270
-#: src/control/Control.Menubar.js:358
+#: src/control/Control.Menubar.js:206 src/control/Control.Menubar.js:208
+#: src/control/Control.Menubar.js:210 src/control/Control.Menubar.js:293
+#: src/control/Control.Menubar.js:383
 msgid "None (Do not check spelling)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:198 src/control/Control.Menubar.js:273
-#: src/control/Control.Menubar.js:361
+#: src/control/Control.Menubar.js:218 src/control/Control.Menubar.js:296
+#: src/control/Control.Menubar.js:386
 msgid "Keyboard shortcuts"
 msgstr "Fulmoklavoj"
 
-#: src/control/Control.Menubar.js:199 src/control/Control.Menubar.js:274
-#: src/control/Control.Menubar.js:362
+#: src/control/Control.Menubar.js:219 src/control/Control.Menubar.js:297
+#: src/control/Control.Menubar.js:387
 msgid "About"
 msgstr "Pri"
 
-#: src/control/Control.Menubar.js:201 src/control/Control.Menubar.js:276
-#: src/control/Control.Menubar.js:364
+#: src/control/Control.Menubar.js:221 src/control/Control.Menubar.js:299
+#: src/control/Control.Menubar.js:389
 msgid "Close document"
 msgstr "Fermi dokumenton"
 
-#: src/control/Control.Menubar.js:212
+#: src/control/Control.Menubar.js:232
 msgid "ODF presentation (.odp)"
 msgstr "ODF-prezentaĵo (.odp)"
 
-#: src/control/Control.Menubar.js:213
+#: src/control/Control.Menubar.js:233
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:234
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:287
+#: src/control/Control.Menubar.js:310
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF-kalkultabelo (.ods)"
 
-#: src/control/Control.Menubar.js:288
+#: src/control/Control.Menubar.js:311
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:289
+#: src/control/Control.Menubar.js:312
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:421
+#: src/control/Control.Menubar.js:454
 msgid "Reset to Default Language"
 msgstr "Reagordi al apriora lingvo"
 
-#: src/control/Control.Menubar.js:639
+#: src/control/Control.Menubar.js:717
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ĉu vi certe volas forigi ĉi tiun lumbildon?"
-
-#: src/control/Control.Menubar.js:669
-#, fuzzy
-msgid "Are you sure you want to delete the header?"
-msgstr "Ĉu vi certe volas forigi ĉi tiun paĝon?"
-
-#: src/control/Control.Menubar.js:670
-#, fuzzy
-msgid "Are you sure you want to delete the footer?"
-msgstr "Ĉu vi certe volas forigi ĉi tiun paĝon?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
@@ -682,7 +684,7 @@ msgstr "Enigi novan folinomon"
 msgid "Downloading..."
 msgstr "Elŝutas..."
 
-#: src/control/Toolbar.js:98 src/map/Map.js:1025
+#: src/control/Toolbar.js:98 src/map/Map.js:1029
 msgid "Saving..."
 msgstr "Konservas..."
 
@@ -690,95 +692,99 @@ msgstr "Konservas..."
 msgid "This version of %productName is powered by"
 msgstr "Ĉi tiu versio de %productName estas povigita de"
 
-#: src/core/Socket.js:37
+#: src/core/Socket.js:38
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Ho ve. Spertis problemon konektante al LibreOffice Online: "
 
-#: src/core/Socket.js:213
+#: src/core/Socket.js:214
 msgid "Unsupported server version."
 msgstr "Nesubtenata servila versio."
 
-#: src/core/Socket.js:263
+#: src/core/Socket.js:265
 msgid "Session terminated by document owner"
 msgstr "Posedanto de la dokumento finis la seancon"
 
-#: src/core/Socket.js:267
+#: src/core/Socket.js:269
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Neaktiva dokumento - bonvolu alklaki por reŝargi kaj daŭrigi redakti"
 
-#: src/core/Socket.js:274
+#: src/core/Socket.js:276
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "La servilo aŭtomate malsaltiĝas por prizorgado"
 
-#: src/core/Socket.js:278
+#: src/core/Socket.js:280
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ho ve. Okazis problemo konekti al la dokumento"
 
-#: src/core/Socket.js:282
+#: src/core/Socket.js:284
 msgid "Server is recycling and will be available shortly"
 msgstr "La servilo cikle laboras kaj baldaŭ disponeblos"
 
-#: src/core/Socket.js:312
+#: src/core/Socket.js:314
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
 msgstr "La dokumento ŝanĝiĝis en konservejo. Ŝargas la dokumenton. Via versio disponeblas kiel reviziaĵo."
 
-#: src/core/Socket.js:424
+#: src/core/Socket.js:320
+msgid "Restoring older revision. Any unsaved changes will be available in version history"
+msgstr ""
+
+#: src/core/Socket.js:437
 msgid "Document has been changed in storage. Do you want to discard your changes, and load the document from the storage?"
 msgstr "La dokumento ŝanĝiĝis en konservejo. Ĉu vi volas forigi viajn ŝanĝojn, kaj ŝargi la dokumenton el la konservejo?"
 
-#: src/core/Socket.js:426
+#: src/core/Socket.js:439
 msgid "Discard changes"
 msgstr "Forĵeti ŝanĝojn"
 
-#: src/core/Socket.js:427
+#: src/core/Socket.js:440
 msgid "Overwrite document"
 msgstr "Anstataŭigi dokumenton"
 
-#: src/core/Socket.js:484
+#: src/core/Socket.js:497
 msgid "Document requires password to view."
 msgstr "Pasvorto necesas por vidi dokumenton."
 
-#: src/core/Socket.js:487
+#: src/core/Socket.js:500
 msgid "Document requires password to modify."
 msgstr "Pasvorto necesas por ŝanĝi dokumenton. "
 
-#: src/core/Socket.js:489
+#: src/core/Socket.js:502
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Alklaku al Nuligi por malfermi en nurlega reĝimo."
 
-#: src/core/Socket.js:493
+#: src/core/Socket.js:506
 msgid "Wrong password provided. Please try again."
 msgstr "Malĝusta pasvorto. Bonvolu reprovi."
 
-#: src/core/Socket.js:599
+#: src/core/Socket.js:618
 msgid "Connecting..."
 msgstr "Konektas..."
 
-#: src/core/Socket.js:738
+#: src/core/Socket.js:757
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "Bedaŭrinde ni ne povas konekti al via dokumento. Bonvolu reprovi."
 
-#: src/layer/marker/Annotation.js:191
+#: src/layer/marker/Annotation.js:193
 msgid "Accept change"
 msgstr "Akcepti ŝanĝon"
 
-#: src/layer/marker/Annotation.js:196
+#: src/layer/marker/Annotation.js:198
 msgid "Reject change"
 msgstr "Malakcepti ŝanĝon"
 
-#: src/layer/marker/Annotation.js:205
+#: src/layer/marker/Annotation.js:207
 msgid "Open menu"
 msgstr "Malfermi la menuon"
 
-#: src/layer/marker/Annotation.js:225 src/layer/tile/TileLayer.js:194
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:202
 msgid "Reply"
 msgstr "Respondi"
 
-#: src/layer/tile/TileLayer.js:188
+#: src/layer/tile/TileLayer.js:196
 msgid "Modify"
 msgstr "Ŝanĝi"
 
-#: src/layer/tile/TileLayer.js:200
+#: src/layer/tile/TileLayer.js:208
 msgid "Remove"
 msgstr "Forigi"
 
@@ -786,11 +792,11 @@ msgstr "Forigi"
 msgid "Initializing..."
 msgstr "Pravalorizas..."
 
-#: src/map/Map.js:889
+#: src/map/Map.js:893
 msgid "Inactive document - please click to resume editing"
 msgstr "Neaktiva dokumento - bonvolu alklaki por daŭrigi redakti"
 
-#: src/map/Map.js:1028
+#: src/map/Map.js:1032
 msgid "Loading..."
 msgstr "Ŝargas..."
 

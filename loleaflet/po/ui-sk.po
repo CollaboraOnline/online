@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-23 11:12+0100\n"
+"POT-Creation-Date: 2018-03-28 14:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.3\n"
-"X-Pootle-Revision: 3061487\n"
+"X-Generator: Translate Toolkit 2.2.5\n"
+"X-Pootle-Revision: 3084652\n"
 "X-Pootle-Path: /sk/libo_online/loleaflet-ui-sk.po\n"
 
 #: admin.strings.js:5
@@ -114,7 +114,7 @@ msgstr "Graf procesora"
 msgid "Network Graph"
 msgstr "Graf siete"
 
-#: admin.strings.js:30 src/layer/marker/Annotation.js:222
+#: admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "Uložiť"
 
@@ -187,250 +187,254 @@ msgid "The host URL is empty. The loolwsd server is probably misconfigured, plea
 msgstr "URL servera nie je špecifikovaný. Loowsd server je pravdepodobne zle nakonfigurovaný, kontaktujte prosím administrátora."
 
 #: dist/errormessages.js:3
-msgid "This development build is limited to %0 documents, and %1 connections - to avoid the impression that it is suitable for deployment in large enterprises. To find out more about deploying and scaling %2 check out: <br/><a href=\"%3\">%3</a>."
-msgstr "Táto vývojová verzia je obmedzená na %0 dokumentov a %1 pripojení a nie je vhodná na nasadenie vo veľkých podnikoch. Ak sa chcete dozvedieť viac o nasadení a škálovaní %2 navštívte: <br/> <a href=\"%3\">%3</a>."
+msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
+msgstr ""
 
 #: dist/errormessages.js:4
+msgid "More information and support"
+msgstr ""
+
+#: dist/errormessages.js:5
 msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
 msgstr "Táto služba je administrátorom obmedzená na %0 dokumenty/dokumentov a %1 spojenia/spojení. Tento limit bol dosiahnutý. Skúste neskôr prosím."
 
-#: dist/errormessages.js:5
+#: dist/errormessages.js:6
 msgid "Service is unavailable. Please try again later and report to your administrator if the issue persists."
 msgstr "Služba nie je dostupná. Prosím skúste to neskôr a v prípade zotrvania problému kontaktujte svojho správcu."
 
-#: dist/errormessages.js:6
+#: dist/errormessages.js:7
 msgid "Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists."
 msgstr "Neoprávnený WOPI hostiteľ. Skúste to prosím neskôr a v prípade zotrvania problému kontaktujte správcu."
 
-#: dist/errormessages.js:7
+#: dist/errormessages.js:8
 msgid "Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: file_path=/path/to/doc/"
 msgstr "Nesprávne WOPISrc, použitie: WOPISrc=platné URI alebo cesta, použitie: cesta=/cesta/k/dokumentu/"
 
-#: dist/errormessages.js:8
+#: dist/errormessages.js:9
 msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
 msgstr "Relácia expiruje o %time. Na pokračovanie uložte dokumenty a reláciu (alebo webovú stránku) obnovte"
 
-#: dist/errormessages.js:9
+#: dist/errormessages.js:10
 msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
 msgstr "Vaša relácia expirovala, ďalšie zmeny dokumentu nemožno uložiť. Na pokračovanie reláciu (alebo webovú stránku) obnovte"
 
-#: dist/errormessages.js:10
+#: dist/errormessages.js:11
 msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
 msgstr "Nepodarilo sa načítať dokument. Prosím preverte si, či je typ súboru podporovaný alebo či súbor nie je poškodený, a skúste to znova."
 
-#: dist/errormessages.js:13
+#: dist/errormessages.js:14
 #, javascript-format
 msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
 msgstr "Nepodarilo sa načítať dokument. Prosím kontaktujte správcu vášho sieťového úložiska (%storageserver)."
 
-#: dist/errormessages.js:14
+#: dist/errormessages.js:15
 #, javascript-format
 msgid "Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing."
 msgstr "Ukladanie dokumentu zlyhalo, lebo na serveri nie je dostatok diskového priestoru. Dokument bude ďalej v režime len na čítanie. Ak chcete v práci pokračovať, kontaktuje prosím administrátora servera (%storageserver)."
 
-#: dist/errormessages.js:15
+#: dist/errormessages.js:16
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr "Dokument nemožno uložiť pre expiráciu alebo neplatnosť prístupového tokenu"
 
-#: dist/errormessages.js:16
+#: dist/errormessages.js:17
 msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
 msgstr "Dokument nemožno uložiť. Skontrolujte svoje prístupové práva alebo kontaktujte administrátora servera."
 
-#: dist/toolbar/toolbar.js:103
+#: dist/toolbar/toolbar.js:105
 msgid "%n users"
 msgstr "%n používateľov"
 
-#: dist/toolbar/toolbar.js:104
+#: dist/toolbar/toolbar.js:106
 msgid "1 user"
 msgstr "1 používateľ"
 
-#: dist/toolbar/toolbar.js:105
+#: dist/toolbar/toolbar.js:107
 msgid "0 users"
 msgstr "Žiadni používatelia"
 
-#: dist/toolbar/toolbar.js:269
+#: dist/toolbar/toolbar.js:275
 msgid "Are you sure you want to delete this page?"
 msgstr "Naozaj chcete túto stranu odstrániť?"
 
-#: dist/toolbar/toolbar.js:454
+#: dist/toolbar/toolbar.js:460
 msgid "Document repair"
 msgstr "Obnoviť dokument"
 
-#: dist/toolbar/toolbar.js:495
+#: dist/toolbar/toolbar.js:501
 msgid "Insert table"
 msgstr "Vložiť tabuľku"
 
-#: dist/toolbar/toolbar.js:500
+#: dist/toolbar/toolbar.js:507
 msgid "More"
 msgstr "Viac"
 
-#: dist/toolbar/toolbar.js:598 dist/toolbar/toolbar.js:1072
+#: dist/toolbar/toolbar.js:605 dist/toolbar/toolbar.js:1079
 msgid "Sum"
 msgstr "Súčet"
 
-#: dist/toolbar/toolbar.js:599
+#: dist/toolbar/toolbar.js:606
 msgid "Function"
 msgstr "Funkcia"
 
-#: dist/toolbar/toolbar.js:600 src/layer/marker/Annotation.js:161
+#: dist/toolbar/toolbar.js:607 src/layer/marker/Annotation.js:163
 msgid "Cancel"
 msgstr "Zrušiť"
 
-#: dist/toolbar/toolbar.js:601
+#: dist/toolbar/toolbar.js:608
 msgid "Accept"
 msgstr "Prijať"
 
-#: dist/toolbar/toolbar.js:617
+#: dist/toolbar/toolbar.js:624
 msgid "First sheet"
 msgstr "Prvý hárok"
 
-#: dist/toolbar/toolbar.js:618
+#: dist/toolbar/toolbar.js:625
 msgid "Previous sheet"
 msgstr "Predchádzajúci hárok"
 
-#: dist/toolbar/toolbar.js:619
+#: dist/toolbar/toolbar.js:626
 msgid "Next sheet"
 msgstr "Nasledujúci hárok"
 
-#: dist/toolbar/toolbar.js:620
+#: dist/toolbar/toolbar.js:627
 msgid "Last sheet"
 msgstr "Posledný hárok"
 
-#: dist/toolbar/toolbar.js:630 src/control/Control.Menubar.js:265
+#: dist/toolbar/toolbar.js:637 src/control/Control.Menubar.js:288
 msgid "Fullscreen presentation"
 msgstr "Prezentácia na celú obrazovku"
 
-#: dist/toolbar/toolbar.js:647
+#: dist/toolbar/toolbar.js:654
 msgid "Search:"
 msgstr "Vyhľadať:"
 
-#: dist/toolbar/toolbar.js:654
+#: dist/toolbar/toolbar.js:661
 msgid "Cancel the search"
 msgstr "Zrušiť vyhľadávanie"
 
-#: dist/toolbar/toolbar.js:659
+#: dist/toolbar/toolbar.js:666
 msgid "No users"
 msgstr "Žiadni používatelia"
 
-#: dist/toolbar/toolbar.js:663
+#: dist/toolbar/toolbar.js:670
 msgid "Always follow the editor"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:666
+#: dist/toolbar/toolbar.js:673
 msgid "Current"
 msgstr "Aktuálny"
 
-#: dist/toolbar/toolbar.js:673 src/control/Control.Menubar.js:57
-#: src/control/Control.Menubar.js:233
+#: dist/toolbar/toolbar.js:680 src/control/Control.Menubar.js:58
+#: src/control/Control.Menubar.js:253
 msgid "Reset zoom"
 msgstr "Resetovať zväčšenie"
 
-#: dist/toolbar/toolbar.js:705
+#: dist/toolbar/toolbar.js:712
 msgid "%user has joined"
 msgstr "%user sa pripojil"
 
-#: dist/toolbar/toolbar.js:706
+#: dist/toolbar/toolbar.js:713
 msgid "%user has left"
 msgstr "%user sa odpojil"
 
-#: dist/toolbar/toolbar.js:872 dist/toolbar/toolbar.js:1453
+#: dist/toolbar/toolbar.js:879 dist/toolbar/toolbar.js:1465
 msgid "Size"
 msgstr "Veľkosť"
 
-#: dist/toolbar/toolbar.js:1050
+#: dist/toolbar/toolbar.js:1057
 msgid "Number of Sheets"
 msgstr "Počet hárkov"
 
-#: dist/toolbar/toolbar.js:1053
+#: dist/toolbar/toolbar.js:1060
 msgid "Selected range of cells"
 msgstr "Vybraná oblasť buniek"
 
-#: dist/toolbar/toolbar.js:1056 dist/toolbar/toolbar.js:1094
+#: dist/toolbar/toolbar.js:1063 dist/toolbar/toolbar.js:1101
 msgid "Entering text mode"
 msgstr "Prepínanie do textového režimu"
 
-#: dist/toolbar/toolbar.js:1059 dist/toolbar/toolbar.js:1100
-#: dist/toolbar/toolbar.js:1123
+#: dist/toolbar/toolbar.js:1066 dist/toolbar/toolbar.js:1107
+#: dist/toolbar/toolbar.js:1130
 msgid "Text Language"
 msgstr "Jazyk textu"
 
-#: dist/toolbar/toolbar.js:1062 dist/toolbar/toolbar.js:1097
+#: dist/toolbar/toolbar.js:1069 dist/toolbar/toolbar.js:1104
 msgid "Selection Mode"
 msgstr "Režim výberu"
 
-#: dist/toolbar/toolbar.js:1065
+#: dist/toolbar/toolbar.js:1072
 msgid "Choice of functions"
 msgstr "Voľba funkcií"
 
-#: dist/toolbar/toolbar.js:1067
+#: dist/toolbar/toolbar.js:1074
 msgid "Average"
 msgstr "Priemer"
 
-#: dist/toolbar/toolbar.js:1068
+#: dist/toolbar/toolbar.js:1075
 msgid "CountA"
 msgstr "Počet hodnôt"
 
-#: dist/toolbar/toolbar.js:1069
+#: dist/toolbar/toolbar.js:1076
 msgid "Count"
 msgstr "Počet"
 
-#: dist/toolbar/toolbar.js:1070
+#: dist/toolbar/toolbar.js:1077
 msgid "Maximum"
 msgstr "Maximum"
 
-#: dist/toolbar/toolbar.js:1071
+#: dist/toolbar/toolbar.js:1078
 msgid "Minimum"
 msgstr "Minimum"
 
-#: dist/toolbar/toolbar.js:1073
+#: dist/toolbar/toolbar.js:1080
 msgid "Selection count"
 msgstr "Počet vybraných"
 
-#: dist/toolbar/toolbar.js:1074
+#: dist/toolbar/toolbar.js:1081
 msgid "None"
 msgstr "Žiadne"
 
-#: dist/toolbar/toolbar.js:1088
+#: dist/toolbar/toolbar.js:1095
 msgid "Number of Pages"
 msgstr "Počet strán"
 
-#: dist/toolbar/toolbar.js:1091
+#: dist/toolbar/toolbar.js:1098
 msgid "Word Counter"
 msgstr "Počet slov"
 
-#: dist/toolbar/toolbar.js:1120
+#: dist/toolbar/toolbar.js:1127
 msgid "Number of Slides"
 msgstr "Počet snímok"
 
-#: dist/toolbar/toolbar.js:1270
+#: dist/toolbar/toolbar.js:1277
 msgid "Document saved"
 msgstr "Dokument uložený"
 
-#: dist/toolbar/toolbar.js:1423
+#: dist/toolbar/toolbar.js:1435
 msgid "Style"
 msgstr "Štýl"
 
-#: dist/toolbar/toolbar.js:1445
+#: dist/toolbar/toolbar.js:1457
 msgid "Font"
 msgstr "Písmo"
 
-#: dist/toolbar/toolbar.js:1481
+#: dist/toolbar/toolbar.js:1493
 msgid "Previous slide"
 msgstr "Predchádzajúca snímka"
 
-#: dist/toolbar/toolbar.js:1482
+#: dist/toolbar/toolbar.js:1494
 msgid "Next slide"
 msgstr "Nasledujúca snímka"
 
-#: dist/toolbar/toolbar.js:1543
+#: dist/toolbar/toolbar.js:1555
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Konflikt medzi viacerými používateľmi pri rušení alebo obnove zmien. Na vyriešenie problému použite prosím obnovu dokumentu."
 
-#: dist/toolbar/toolbar.js:1791 src/control/Control.DocumentRepair.js:94
+#: dist/toolbar/toolbar.js:1803 src/control/Control.DocumentRepair.js:94
 msgid "You"
 msgstr "Vy"
 
-#: dist/toolbar/toolbar.js:1797
+#: dist/toolbar/toolbar.js:1809
 msgid "Readonly"
 msgstr "Len na čítanie"
 
@@ -522,7 +526,7 @@ msgstr "Typ"
 msgid "Index"
 msgstr "Register"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:221
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:229
 msgid "Comment"
 msgstr "Poznámka"
 
@@ -538,18 +542,18 @@ msgstr "Časová značka"
 msgid "Jump to state"
 msgstr "Prejsť na stav"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:209
-#: src/control/Control.Menubar.js:284
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:229
+#: src/control/Control.Menubar.js:307
 msgid "See revision history"
 msgstr "Zobraziť históriu revízií"
 
-#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:210
-#: src/control/Control.Menubar.js:285
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:308
 msgid "Download as"
 msgstr "Stiahnuť ako"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:211
-#: src/control/Control.Menubar.js:286
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:231
+#: src/control/Control.Menubar.js:309
 msgid "PDF Document (.pdf)"
 msgstr "PDF dokument (.pdf)"
 
@@ -565,75 +569,75 @@ msgstr "Microsoft Word 2003 (.doc)"
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:219
-#: src/control/Control.Menubar.js:294
+#: src/control/Control.Menubar.js:27
+msgid "Rich Text (.rtf)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:239
+#: src/control/Control.Menubar.js:317
 msgid "Repair"
 msgstr "Opraviť"
 
-#: src/control/Control.Menubar.js:114
+#: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:81
+msgid "All"
+msgstr ""
+
+#: src/control/Control.Menubar.js:128
 msgid "Text orientation"
 msgstr "Orientácia textu"
 
-#: src/control/Control.Menubar.js:189 src/control/Control.Menubar.js:191
-#: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:270
-#: src/control/Control.Menubar.js:358
+#: src/control/Control.Menubar.js:206 src/control/Control.Menubar.js:208
+#: src/control/Control.Menubar.js:210 src/control/Control.Menubar.js:293
+#: src/control/Control.Menubar.js:383
 msgid "None (Do not check spelling)"
 msgstr "Žiadny (nekontrolovať pravopis)"
 
-#: src/control/Control.Menubar.js:198 src/control/Control.Menubar.js:273
-#: src/control/Control.Menubar.js:361
+#: src/control/Control.Menubar.js:218 src/control/Control.Menubar.js:296
+#: src/control/Control.Menubar.js:386
 msgid "Keyboard shortcuts"
 msgstr "Klávesové skratky"
 
-#: src/control/Control.Menubar.js:199 src/control/Control.Menubar.js:274
-#: src/control/Control.Menubar.js:362
+#: src/control/Control.Menubar.js:219 src/control/Control.Menubar.js:297
+#: src/control/Control.Menubar.js:387
 msgid "About"
 msgstr "O programe"
 
-#: src/control/Control.Menubar.js:201 src/control/Control.Menubar.js:276
-#: src/control/Control.Menubar.js:364
+#: src/control/Control.Menubar.js:221 src/control/Control.Menubar.js:299
+#: src/control/Control.Menubar.js:389
 msgid "Close document"
 msgstr "Zavrieť dokument"
 
-#: src/control/Control.Menubar.js:212
+#: src/control/Control.Menubar.js:232
 msgid "ODF presentation (.odp)"
 msgstr "ODF prezentácia (.odp)"
 
-#: src/control/Control.Menubar.js:213
+#: src/control/Control.Menubar.js:233
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:234
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:287
+#: src/control/Control.Menubar.js:310
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF tabuľkový dokument (.ods)"
 
-#: src/control/Control.Menubar.js:288
+#: src/control/Control.Menubar.js:311
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:289
+#: src/control/Control.Menubar.js:312
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:421
+#: src/control/Control.Menubar.js:454
 msgid "Reset to Default Language"
 msgstr "Nastaviť na predvolený jazyk"
 
-#: src/control/Control.Menubar.js:639
+#: src/control/Control.Menubar.js:717
 msgid "Are you sure you want to delete this slide?"
 msgstr "Naozaj chcete túto snímku odstrániť?"
-
-#: src/control/Control.Menubar.js:669
-msgid "Are you sure you want to delete the header?"
-msgstr "Skutočne chcete hlavičku odstrániť?"
-
-#: src/control/Control.Menubar.js:670
-msgid "Are you sure you want to delete the footer?"
-msgstr "Skutočne chcete pätu odstrániť?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
@@ -679,7 +683,7 @@ msgstr "Zadajte nový názov hárku"
 msgid "Downloading..."
 msgstr "Preberá sa…"
 
-#: src/control/Toolbar.js:98 src/map/Map.js:1025
+#: src/control/Toolbar.js:98 src/map/Map.js:1029
 msgid "Saving..."
 msgstr "Prebieha ukladanie..."
 
@@ -687,95 +691,99 @@ msgstr "Prebieha ukladanie..."
 msgid "This version of %productName is powered by"
 msgstr "Táto verzia of %productName bola vytvorená"
 
-#: src/core/Socket.js:37
+#: src/core/Socket.js:38
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Vyskytol sa problém s pripojenín k LibreOffice Online :"
 
-#: src/core/Socket.js:213
+#: src/core/Socket.js:214
 msgid "Unsupported server version."
 msgstr "Nepodporovaná verzia servera."
 
-#: src/core/Socket.js:263
+#: src/core/Socket.js:265
 msgid "Session terminated by document owner"
 msgstr "Relácia ukončená vlastníkom dokumentu"
 
-#: src/core/Socket.js:267
+#: src/core/Socket.js:269
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Neaktívny dokument - kliknutím myšou dokument opätovne načítať a pokračovať v úprave "
 
-#: src/core/Socket.js:274
+#: src/core/Socket.js:276
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server sa vypína kvôli údržbe (zmeny budú automaticky uložené)"
 
-#: src/core/Socket.js:278
+#: src/core/Socket.js:280
 msgid "Oops, there is a problem connecting the document"
 msgstr "Nastal problém pri spájaní sa s dokumentom"
 
-#: src/core/Socket.js:282
+#: src/core/Socket.js:284
 msgid "Server is recycling and will be available shortly"
 msgstr "Server bude reštartovaný a o chvíľu bude opäť dostupný"
 
-#: src/core/Socket.js:312
+#: src/core/Socket.js:314
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
 msgstr "Dokument v úložisku bol zmenený. Dokument sa načítava, vaša verzia bude uložená ako revízia."
 
-#: src/core/Socket.js:424
+#: src/core/Socket.js:320
+msgid "Restoring older revision. Any unsaved changes will be available in version history"
+msgstr ""
+
+#: src/core/Socket.js:437
 msgid "Document has been changed in storage. Do you want to discard your changes, and load the document from the storage?"
 msgstr "Dokument v úložisku bol zmenený. Chcete zahodiť svoje zmeny a načítať dokument z úložiska? "
 
-#: src/core/Socket.js:426
+#: src/core/Socket.js:439
 msgid "Discard changes"
 msgstr "Zahodiť zmeny"
 
-#: src/core/Socket.js:427
+#: src/core/Socket.js:440
 msgid "Overwrite document"
 msgstr "Prepísať dokument"
 
-#: src/core/Socket.js:484
+#: src/core/Socket.js:497
 msgid "Document requires password to view."
 msgstr "Na zobrazenie dokumentu je potrebné heslo."
 
-#: src/core/Socket.js:487
+#: src/core/Socket.js:500
 msgid "Document requires password to modify."
 msgstr "Na úpravu dokumentu je potrebné heslo."
 
-#: src/core/Socket.js:489
+#: src/core/Socket.js:502
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Stlačením Zrušiť otvoriť v režime zobrazenia"
 
-#: src/core/Socket.js:493
+#: src/core/Socket.js:506
 msgid "Wrong password provided. Please try again."
 msgstr "Zadané nesprávne heslo, zopakujte."
 
-#: src/core/Socket.js:599
+#: src/core/Socket.js:618
 msgid "Connecting..."
 msgstr "Prebieha pripájanie…"
 
-#: src/core/Socket.js:738
+#: src/core/Socket.js:757
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "Nepodarilo sa nadviazať spojenie s dokumentom. Prosím zopakujte."
 
-#: src/layer/marker/Annotation.js:191
+#: src/layer/marker/Annotation.js:193
 msgid "Accept change"
 msgstr "Akceptovať zmenu"
 
-#: src/layer/marker/Annotation.js:196
+#: src/layer/marker/Annotation.js:198
 msgid "Reject change"
 msgstr "Odmietnuť zmenu"
 
-#: src/layer/marker/Annotation.js:205
+#: src/layer/marker/Annotation.js:207
 msgid "Open menu"
 msgstr "Otvoriť menu"
 
-#: src/layer/marker/Annotation.js:225 src/layer/tile/TileLayer.js:194
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:202
 msgid "Reply"
 msgstr "Odpovedať"
 
-#: src/layer/tile/TileLayer.js:188
+#: src/layer/tile/TileLayer.js:196
 msgid "Modify"
 msgstr "Upraviť"
 
-#: src/layer/tile/TileLayer.js:200
+#: src/layer/tile/TileLayer.js:208
 msgid "Remove"
 msgstr "Odstrániť"
 
@@ -783,11 +791,11 @@ msgstr "Odstrániť"
 msgid "Initializing..."
 msgstr "Prebieha inicializácia..."
 
-#: src/map/Map.js:889
+#: src/map/Map.js:893
 msgid "Inactive document - please click to resume editing"
 msgstr "Neaktívny dokument - na pokračovanie kliknite myšou"
 
-#: src/map/Map.js:1028
+#: src/map/Map.js:1032
 msgid "Loading..."
 msgstr "Načítava sa…"
 
