@@ -105,7 +105,7 @@ var unoCommandsArray = {
 	InsertMenu:{global:{menu:_('~Insert'),},},
 	InsertNeutralParagraph:{text:{menu:_('Insert Unnumbered Entry'),},},
 	InsertNonBreakingSpace:{global:{menu:_('~Non-breaking space'),},},
-	InsertObjectChart:{global:{menu:_('~Chart...')}},
+	InsertObjectChart:{global:{context:_('Insert Chart'),menu:_('~Chart...'),},},
 	InsertPageCountField:{text:{menu:_('Page ~Count'),},},
 	InsertPageFooter:{text:{menu:_('Foote~r'),},},
 	InsertPageHeader:{text:{menu:_('He~ader'),},},
