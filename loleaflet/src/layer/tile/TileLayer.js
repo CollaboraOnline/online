@@ -278,6 +278,8 @@ L.TileLayer = L.GridLayer.extend({
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
+		this._textArea = map._textArea;
+		this._textArea.focus();
 
 		map.setPermission(this.options.permission);
 
@@ -1435,18 +1437,15 @@ L.TileLayer = L.GridLayer.extend({
 			var cursorPos = this._visibleCursor.getNorthWest();
 
 			if (!this._cursorMarker) {
-				this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), {blink: true, clipboard: true});
-				this._map.addLayer(this._cursorMarker);
-
-				this._textArea = this._cursorMarker._textArea;
+				this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), {blink: true});
 			}
 			else {
-				this._cursorMarker.show();
 				this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
 			}
+			this._map.addLayer(this._cursorMarker);
 		}
 		else if (this._cursorMarker) {
-			this._cursorMarker.hide();
+			this._map.removeLayer(this._cursorMarker);
 			this._isCursorOverlayVisible = false;
 		}
 	},
@@ -1811,9 +1810,9 @@ L.TileLayer = L.GridLayer.extend({
 	_onCopy: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		if (this._textArea.value !== '') {
-			L.Compatibility.clipboardSet(e, this._textArea.value);
-			this._textArea.value = '';
+		if (this._map._docLayer._textArea.value !== '') {
+			L.Compatibility.clipboardSet(e, this._map._docLayer._textArea.value);
+			this._map._docLayer._textArea.value = '';
 		} else if (this._selectionTextContent) {
 			L.Compatibility.clipboardSet(e, this._selectionTextContent);
 
@@ -1827,9 +1826,9 @@ L.TileLayer = L.GridLayer.extend({
 	_onCut: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		if (this._textArea.value !== '') {
-			L.Compatibility.clipboardSet(e, this._textArea.value);
-			this._textArea.value = '';
+		if (this._map._docLayer._textArea.value !== '') {
+			L.Compatibility.clipboardSet(e, this._map._docLayer._textArea.value);
+			this._map._docLayer._textArea.value = '';
 		} else if (this._selectionTextContent) {
 			L.Compatibility.clipboardSet(e, this._selectionTextContent);
 

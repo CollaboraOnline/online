@@ -16,24 +16,13 @@ L.Cursor = L.Layer.extend({
 		this._initLayout();
 	},
 
-	onAdd: function (map) {
-		this._map = map;
-
+	onAdd: function () {
 		if (!this._container) {
 			this._initLayout();
 		}
 
 		this.update();
 		this.getPane().appendChild(this._container);
-
-		if (this._textArea && !this._map._textArea) {
-			this._map._textArea = this._textArea;
-
-			L.DomEvent['off'](this._textArea, 'copy cut paste keydown keypress keyup compositionstart compositionupdate compositionend textInput', this._map._handleDOMEvent, this._map);
-			L.DomEvent['on'](this._textArea, 'copy cut paste keydown keypress keyup compositionstart compositionupdate compositionend textInput', this._map._handleDOMEvent, this._map);
-
-			this._textArea.focus();
-		}
 	},
 
 	onRemove: function () {
@@ -75,16 +64,6 @@ L.Cursor = L.Layer.extend({
 		}
 	},
 
-	show: function() {
-		L.DomUtil.setStyle(this._container, 'visibility', 'visible');
-		if (this._textArea)
-			this._textArea.focus();
-	},
-
-	hide: function() {
-		L.DomUtil.setStyle(this._container, 'visibility', 'hidden');
-	},
-
 	showCursorHeader: function() {
 		if (this._cursorHeader) {
 			L.DomUtil.setStyle(this._cursorHeader, 'visibility', 'visible');
@@ -121,17 +100,6 @@ L.Cursor = L.Layer.extend({
 		L.DomEvent
 			.disableClickPropagation(this._cursor)
 			.disableScrollPropagation(this._container);
-
-		if (this.options.clipboard) {
-			var textAreaContainer = L.DomUtil.create('div', 'clipboard-container', this._container);
-			textAreaContainer.id = 'doc-clipboard-container';
-			this._textArea = L.DomUtil.create('input', 'clipboard', textAreaContainer);
-			this._textArea.setAttribute('type', 'text');
-			this._textArea.setAttribute('autocorrect', 'off');
-			this._textArea.setAttribute('autocapitalize', 'off');
-			this._textArea.setAttribute('autocomplete', 'off');
-			this._textArea.setAttribute('spellcheck', 'false');
-		}
 	},
 
 	_setPos: function (pos) {
