@@ -696,7 +696,13 @@ L.Map = L.Evented.extend({
 		this._fileDownloader = L.DomUtil.create('iframe', '', container);
 		L.DomUtil.setStyle(this._fileDownloader, 'display', 'none');
 
+		L.DomEvent.addListener(container, 'scroll', this._onScroll, this);
 		container._leaflet = true;
+	},
+
+	_onScroll: function() {
+		this._container.scrollTop = 0;
+		this._container.scrollLeft = 0;
 	},
 
 	_initLayout: function () {
