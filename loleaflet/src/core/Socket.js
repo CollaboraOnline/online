@@ -435,6 +435,8 @@ L.Socket = L.Class.extend({
 
 				vex.dialog.confirm({
 					message: _('Document has been changed in storage. Do you want to discard your changes, and load the document from the storage?'),
+					escapeButtonCloses: false,
+					overlayClosesOnClick: false,
 					buttons: [
 						$.extend({}, vex.dialog.buttons.YES, { text: _('Discard changes') }),
 						$.extend({}, vex.dialog.buttons.NO, { text: _('Overwrite document') })
