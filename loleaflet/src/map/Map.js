@@ -849,7 +849,7 @@ L.Map = L.Evented.extend({
 
 	_activate: function () {
 		if (this._serverRecycling || this._documentIdle) {
-			return;
+			return false;
 		}
 
 		console.debug('_activate:');
@@ -864,8 +864,14 @@ L.Map = L.Evented.extend({
 				if (this._docLayer) {
 					this._docLayer._onMessage('invalidatetiles: EMPTY', null);
 				}
+
 				if (vex.dialogID > 0) {
 					var id = vex.dialogID;
+
+					var options = vex.getVexByID(id).data().vex;
+					if (!options.overlayClosesOnClick || !options.escapeButtonCloses)
+						return false;
+
 					vex.dialogID = -1;
 					this._startInactiveTimer();
 					this.focus();
