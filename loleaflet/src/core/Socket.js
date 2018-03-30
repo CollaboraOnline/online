@@ -435,21 +435,41 @@ L.Socket = L.Class.extend({
 					vex.close(id);
 				}
 
-				vex.dialog.confirm({
-					message: _('Document has been changed in storage. Do you want to discard your changes, and load the document from the storage?'),
+				vex.dialog.open({
+					message: _('Document has been changed in storage. What would you like to do with your unsaved changes?'),
 					escapeButtonCloses: false,
 					overlayClosesOnClick: false,
+					contentCSS: { width: '700px' },
 					buttons: [
-						$.extend({}, vex.dialog.buttons.YES, { text: _('Discard changes') }),
-						$.extend({}, vex.dialog.buttons.NO, { text: _('Overwrite document') })
+						$.extend({}, vex.dialog.buttons.YES, { text: _('Discard'),
+						                                      click: function($vexContent) {
+							                                      $vexContent.data().vex.value = 'discard';
+							                                      vex.close($vexContent.data().vex.id);
+						                                      }}),
+						$.extend({}, vex.dialog.buttons.YES, { text: _('Overwrite'),
+						                                      click: function($vexContent) {
+							                                      $vexContent.data().vex.value = 'overwrite';
+							                                      vex.close($vexContent.data().vex.id);
+						                                      }}),
+						$.extend({}, vex.dialog.buttons.YES, { text: _('Save to new file'),
+						                                      click: function($vexContent) {
+							                                      $vexContent.data().vex.value = 'saveas';
+							                                      vex.close($vexContent.data().vex.id);
+						                                      }})
 					],
 					callback: L.bind(function(value) {
-						if (value) {
+						if (value === 'discard') {
 							// They want to refresh the page and load document again for all
 							this.sendMessage('closedocument');
-						} else {
+						} else if (value === 'overwrite') {
 							// They want to overwrite
 							this.sendMessage('savetostorage force=1');
+						} else if (value === 'saveas') {
+							var filename = this._map['wopi'].BaseFileName;
+							if (filename) {
+								filename = L.LOUtil.generateNewFileName(filename, '_new');
+								this._map.saveAs(filename);
+							}
 						}
 					}, this)
 				});
