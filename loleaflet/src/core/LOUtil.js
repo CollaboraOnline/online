@@ -78,5 +78,12 @@ L.LOUtil = {
 			}
 		}
 		return rectangles;
+	},
+
+	/// oldFileName = Example.odt, suffix = new
+	/// returns: Example_new.odt
+	generateNewFileName: function(oldFileName, suffix) {
+		var idx = oldFileName.lastIndexOf('.');
+		return oldFileName.substring(0, idx) + suffix + oldFileName.substring(idx);
 	}
 };
