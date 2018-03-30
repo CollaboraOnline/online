@@ -439,7 +439,7 @@ L.Socket = L.Class.extend({
 					message: _('Document has been changed in storage. What would you like to do with your unsaved changes?'),
 					escapeButtonCloses: false,
 					overlayClosesOnClick: false,
-					contentCSS: { width: '700px' },
+					contentCSS: { width: '600px' },
 					buttons: [
 						$.extend({}, vex.dialog.buttons.YES, { text: _('Discard'),
 						                                      click: function($vexContent) {
