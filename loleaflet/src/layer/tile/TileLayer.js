@@ -1149,15 +1149,49 @@ L.TileLayer = L.GridLayer.extend({
 		this._selectionTextContent = textMsg.substr(22);
 	},
 
+	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
+		if (this._map._docLayer._docType === 'spreadsheet' && oldSelection) {
+			var mapBounds = this._map.getBounds();
+			if (!mapBounds.contains(newSelection) && !newSelection.equals(oldSelection)) {
+				var spacingX = Math.abs(this._cellCursor.getEast() - this._cellCursor.getWest()) / 4.0;
+				var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 2.0;
+
+				var scrollX = 0, scrollY = 0;
+				if (newSelection.getEast() > mapBounds.getEast() && newSelection.getEast() > oldSelection.getEast())
+					scrollX = newSelection.getEast() - mapBounds.getEast() + spacingX;
+				else if (newSelection.getWest() < mapBounds.getWest() && newSelection.getWest() < oldSelection.getWest())
+					scrollX = newSelection.getWest() - mapBounds.getWest() - spacingX;
+				if (newSelection.getNorth() > mapBounds.getNorth() && newSelection.getNorth() > oldSelection.getNorth())
+					scrollY = newSelection.getNorth() - mapBounds.getNorth() + spacingY;
+				else if (newSelection.getSouth() < mapBounds.getSouth() && newSelection.getSouth() < oldSelection.getSouth())
+					scrollY = newSelection.getSouth() - mapBounds.getSouth() - spacingY;
+				if (scrollX !== 0 || scrollY !== 0) {
+					var newCenter = mapBounds.getCenter();
+					newCenter.lng += scrollX;
+					newCenter.lat += scrollY;
+					var center = this._map.project(newCenter);
+					center = center.subtract(this._map.getSize().divideBy(2));
+					center.x = Math.round(center.x < 0 ? 0 : center.x);
+					center.y = Math.round(center.y < 0 ? 0 : center.y);
+					this._map.fire('scrollto', {x: center.x, y: center.y});
+				}
+			}
+		}
+	},
+
 	_onTextSelectionEndMsg: function (textMsg) {
 		var strTwips = textMsg.match(/\d+/g);
 		if (strTwips != null && this._map._permission === 'edit') {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
+
+			var oldSelection = this._textSelectionEnd;
 			this._textSelectionEnd = new L.LatLngBounds(
 						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+
+			this._updateScrollOnCellSelection(oldSelection, this._textSelectionEnd);
 		}
 		else {
 			this._textSelectionEnd = null;
@@ -1170,14 +1204,16 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
+			var oldSelection = this._textSelectionStart;
 			this._textSelectionStart = new L.LatLngBounds(
 						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+
+			this._updateScrollOnCellSelection(oldSelection, this._textSelectionStart);
 		}
 		else {
 			this._textSelectionStart = null;
 		}
-
 	},
 
 	_onTileMsg: function (textMsg, img) {
