@@ -3103,6 +3103,47 @@ Editor to WOPI host
 	</tr>
 </table>
 
+<h3 id='loleaflet-postmessage-python'>Calling Python scripts</h3>
+WOPI host to editor
+<table data-id='postmessage-python-to-editor'>
+	<tr>
+		<th>MessageId</th>
+		<th>Values</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>CallPythonScript</b></code></td>
+		<td><code>
+		    <nobr>ScriptFile: &lt;string&gt;</nobr><br/>
+		    <nobr>Function: &lt;string&gt;</nobr>
+		    <nobr>Values: &lt;object&gt;</nobr>
+		</code></td>
+		<td>
+		  Calls a Python script. The Values parameter contains an
+		  object with named parameters that are passed to the script.
+		</td>
+	</tr>
+</table>
+Editor to WOPI host
+<table data-id='postmessage-python-to-host'>
+	<tr>
+		<th>MessageId</th>
+		<th>Values</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>CallPythonScript-Result</b></code></td>
+		<td><code>
+		    <nobr>commandName: &lt;string&gt;</nobr>
+		    <nobr>Values: &lt;object&gt;</nobr>
+		</code></td>
+		<td>
+		  Returns the result of a Python script. The URL of the script called
+		  is in the commandName parameter.
+		</td>
+	</tr>
+</table>
+
 <h2 id="marker">Marker</h2>
 
 <p>Used to put markers on the map. Extends <a href="#layer">Layer</a>.</p>
