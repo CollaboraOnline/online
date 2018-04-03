@@ -9183,6 +9183,23 @@ var unoCommands = [
     description: 'Paint a shadow around Write page / Impress slide border.'
 },
 
+{
+    header: 'Calling Python scripts',
+},
+
+{
+    uno: 'vnd.sun.star.script:&lt;filename&gt;$&lt;function&gt;?language=Python&location=share',
+    parameter: {
+                                                               'sheet': {'type': 'string', 'value': 'Sheet1'},
+								'x0': {'type': 'long', 'value': 1},
+								'y0': {'type': 'long', 'value': 2},
+								'width': {'type': 'long', 'value': 3},
+								'height': {'type': 'long', 'value': 4},
+								'name': {'type': 'string', 'value': 'Alice'}
+    },
+    description: 'Calls a Python script. The parameter example here are those taken by the DefineNamedRange function in the NamedRanges.py file.'
+},
+
 ];
 $(document).ready(function() {
     var table = $('#uno-commands-table');
