@@ -601,9 +601,12 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 
     // Keep only the origin, reject everything else
     Poco::URI uriFrameAncestor(frameAncestor);
-    if (!frameAncestor.empty() && !uriFrameAncestor.getScheme().empty() && !uriFrameAncestor.getHost().empty())
+    std::string frameAncestorScheme = uriFrameAncestor.getScheme();
+    std::string frameAncestorHost = uriFrameAncestor.getHost();
+
+    if (!frameAncestor.empty() && Util::isValidURIScheme(frameAncestorScheme) && Util::isValidURIHost(frameAncestorHost))
     {
-        frameAncestor = uriFrameAncestor.getScheme() + "://" + uriFrameAncestor.getHost() + ":" + std::to_string(uriFrameAncestor.getPort());
+        frameAncestor = frameAncestorScheme + "://" + frameAncestorHost + ":" + std::to_string(uriFrameAncestor.getPort());
 
         LOG_TRC("Final frame ancestor: " << frameAncestor);
 
