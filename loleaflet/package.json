@@ -24,8 +24,7 @@
     "timeago": "1.5.3",
     "uglify-js": "~2.4.16",
     "uglifyify": "3.0.2",
-    "vex-js": "2.3.2",
-    "w2ui": "1.4.3"
+    "vex-js": "2.3.2"
   },
   "browser": {
     "loleaflet": "./dist/leaflet-src.js"
