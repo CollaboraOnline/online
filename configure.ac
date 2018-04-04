@@ -99,6 +99,10 @@ AC_ARG_WITH([max-connections],
 AC_ARG_WITH([max-documents],
              AS_HELP_STRING([--max-documents],
                            [Set the limit on the total number of documents. Def: 10, Min: 2.]))
+ 
+AC_ARG_ENABLE([hard-limit],
+            AS_HELP_STRING([--enable-hard-limit],
+                [Turns the max connections and max documents into a hard limit.]))
 
 AC_ARG_WITH([compiler-plugins],
             AS_HELP_STRING([--with-compiler-plugins=<path>],
@@ -286,6 +290,11 @@ else
 fi
 
 AC_SUBST(ENABLE_SSL)
+
+AS_IF([test "$enable_hard_limit" == "yes"],
+      [AC_DEFINE([ENABLE_SUPPORT_KEY],1,[Whether to enable hard limit])],
+      [AC_DEFINE([ENABLE_SUPPORT_KEY],0,[Whether to enable hard limit])])
+AC_SUBST(ENABLE_SUPPORT_KEY)
 
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
 
