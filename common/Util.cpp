@@ -513,6 +513,34 @@ namespace Util
 
         return map;
     }
+
+    bool isValidURIScheme(const std::string& scheme)
+    {
+        if (scheme.empty())
+            return false;
+
+        for (char c : scheme)
+        {
+            if (!isalpha(c))
+                return false;
+        }
+
+        return true;
+    }
+
+    bool isValidURIHost(const std::string& host)
+    {
+        if (host.empty())
+            return false;
+
+        for (char c : host)
+        {
+            if (!isalnum(c) && c != '_' && c != '-' && c != '.' && c !=':' && c != '[' && c != ']')
+                return false;
+        }
+
+        return true;
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
