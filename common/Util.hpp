@@ -302,6 +302,14 @@ namespace Util
         return s.length() >= t.length() && memcmp(s.c_str(), t.c_str(), t.length()) == 0;
     }
 
+    /// Check for the URI scheme validity.
+    /// For now just a basic sanity check, can be extended if necessary.
+    bool isValidURIScheme(const std::string& scheme);
+
+    /// Check for the URI host validity.
+    /// For now just a basic sanity check, can be extended if necessary.
+    bool isValidURIHost(const std::string& host);
+
     /// Given one or more patterns to allow, and one or more to deny,
     /// the match member will return true if, and only if, the subject
     /// matches the allowed list, but not the deny.
