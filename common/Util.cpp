@@ -321,6 +321,34 @@ namespace Util
         static std::atomic_int counter(0);
         return std::to_string(Poco::Process::id()) + "/" + std::to_string(counter++);
     }
+
+    bool isValidURIScheme(const std::string& scheme)
+    {
+        if (scheme.empty())
+            return false;
+
+        for (char c : scheme)
+        {
+            if (!isalpha(c))
+                return false;
+        }
+
+        return true;
+    }
+
+    bool isValidURIHost(const std::string& host)
+    {
+        if (host.empty())
+            return false;
+
+        for (char c : host)
+        {
+            if (!isalnum(c) && c != '_' && c != '-' && c != '.' && c !=':' && c != '[' && c != ']')
+                return false;
+        }
+
+        return true;
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
