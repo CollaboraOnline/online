@@ -16,7 +16,7 @@
     z-index: 1000;
 }
 
-#toolbar-up-more,w2ui-toolbar {
+w2ui-toolbar {
     position: absolute;
     right: 10px;
     top: 40px;

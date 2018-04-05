@@ -47,19 +47,12 @@ var nUsers, oneUser, noUser;
 
 function _mobilify() {
 	var toolbarUp = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var statusbar = w2ui['toolbar-down'];
 
 	for (var itemIdx in toolbarUp.items) {
 		var id = toolbarUp.items[itemIdx].id;
 		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && !toolbarUp.get(id).hidden) {
 			toolbarUp.hide(id);
-		}
-	}
-	for (itemIdx in toolbarUpMore.items) {
-		id = toolbarUpMore.items[itemIdx].id;
-		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUpMore.get(id) && !toolbarUpMore.get(id).hidden) {
-			toolbarUpMore.hide(id);
 		}
 	}
 
@@ -80,19 +73,12 @@ function _mobilify() {
 
 function _unmobilify() {
 	var toolbarUp = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var statusbar = w2ui['toolbar-down'];
 
 	for (var itemIdx in toolbarUp.items) {
 		var id = toolbarUp.items[itemIdx].id;
 		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && toolbarUp.get(id).hidden) {
 			toolbarUp.show(id);
-		}
-	}
-	for (itemIdx in toolbarUpMore.items) {
-		id = toolbarUpMore.items[itemIdx].id;
-		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUpMore.get(id) && toolbarUpMore.get(id).hidden) {
-			toolbarUpMore.show(id);
 		}
 	}
 
@@ -114,7 +100,6 @@ function _unmobilify() {
 function resizeToolbar() {
 	var hasMoreItems = false;
 	var toolbarUp = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 
 	if ($(window).width() < mobileWidth) {
 		_mobilify();
@@ -123,43 +108,6 @@ function resizeToolbar() {
 	}
 
 	toolbarUp.refresh();
-	toolbarUpMore.refresh();
-	// move items from toolbar-up-more -> toolbar-up
-	while ($('#toolbar-up')[0].scrollWidth <= $(window).width()) {
-		var item = toolbarUpMore.items[0];
-		if (!item) {
-			break;
-		}
-		toolbarUpMore.items.shift();
-		toolbarUp.insert('right', item);
-	}
-
-	// move items from toolbar-up -> toolbar-up-more
-	while ($('#toolbar-up')[0].scrollWidth > Math.max($(window).width(), parseInt($('body').css('min-width')))) {
-		var itemId = toolbarUp.items[toolbarUp.items.length - 4].id;
-		item = toolbarUp.get(itemId);
-		toolbarUp.remove(itemId);
-		toolbarUpMore.insert(toolbarUpMore.items[0], item);
-		hasMoreItems = true;
-	}
-
-	if (hasMoreItems) {
-		w2ui['toolbar-up'].show('more');
-	}
-	else {
-		w2ui['toolbar-up'].hide('more');
-	}
-
-	// resize toolbar-up-more
-	var lastItem = $('#toolbar-up-more>table>tbody>tr>td[valign="middle"]').last();
-	if (lastItem.length) {
-		$('#toolbar-up-more').width($(lastItem).position().left + $(lastItem).width());
-		w2ui['toolbar-up-more'].render();
-	} else {
-		$('#toolbar-up-more').hide();
-		var toolbar = w2ui['toolbar-up'];
-		toolbar.uncheck('more');
-	}
 }
 
 function _cancelSearch() {
@@ -191,10 +139,6 @@ function onClick(id, item, subItem) {
 	}
 	else if (w2ui['presentation-toolbar'].get(id) !== null) {
 		toolbar = w2ui['presentation-toolbar'];
-		item = toolbar.get(id);
-	}
-	else if (w2ui['toolbar-up-more'].get(id) !== null) {
-		toolbar = w2ui['toolbar-up-more'];
 		item = toolbar.get(id);
 	}
 	else if (item && subItem)
@@ -345,17 +289,6 @@ function onClick(id, item, subItem) {
 		w2ui['formulabar'].hide('acceptformula', 'cancelformula');
 		w2ui['formulabar'].show('sum', 'function');
 	}
-	else if (id === 'more') {
-		$('#toolbar-up-more').toggle();
-		if ($('#toolbar-up-more').is(':visible')) {
-			toolbar.check('more');
-		}
-		else {
-			toolbar.uncheck('more');
-		}
-		w2ui['toolbar-up-more'].render();
-		resizeToolbar();
-	}
 }
 
 function insertTable() {
@@ -451,15 +384,6 @@ var fontsSelectValue;
 var fontsizesSelectValue;
 
 $(function () {
-	$('#toolbar-up-more').w2toolbar({
-		name: 'toolbar-up-more',
-		items: [
-		],
-		onClick: function (e) {
-			onClick(e.target);
-		}
-	});
-
 	$('#toolbar-up').w2toolbar({
 		name: 'toolbar-up',
 		items: [
@@ -526,7 +450,6 @@ $(function () {
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true)},
 			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'},
 			{type: 'html', id: 'right'},
-			{type: 'button',  id: 'more', img: 'more', hint: _('More')},
 			{type: 'html', id: 'rightmenupadding'}
 		],
 		onClick: function (e) {
@@ -1065,14 +988,12 @@ map.on('wopiprops', function(e) {
 
 map.on('doclayerinit', function () {
 	var toolbarUp = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var statusbar = w2ui['toolbar-down'];
 	var docType = map.getDocType();
 
 	switch (docType) {
 	case 'spreadsheet':
 		toolbarUp.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
-		toolbarUpMore.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
 		statusbar.disable('zoomreset', 'zoomout', 'zoomin', 'zoomlevel');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
@@ -1111,7 +1032,6 @@ map.on('doclayerinit', function () {
 		break;
 	case 'text':
 		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
-		toolbarUpMore.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		statusbar.insert('left', [
 			{type: 'break', id: 'break1'},
 			{type: 'html',  id: 'StatePageNumber',
@@ -1143,7 +1063,6 @@ map.on('doclayerinit', function () {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
 		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
-		toolbarUpMore.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'PageStatus',
@@ -1160,7 +1079,6 @@ map.on('doclayerinit', function () {
 		break;
 	case 'drawing':
 		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
-		toolbarUpMore.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
 
 		// Remove irrelevant toolbars
 		$('#formulabar').hide();
@@ -1169,7 +1087,6 @@ map.on('doclayerinit', function () {
 		break;
 	}
 	toolbarUp.refresh();
-	toolbarUpMore.refresh();
 	statusbar.refresh();
 	resizeToolbar();
 });
@@ -1177,7 +1094,6 @@ map.on('doclayerinit', function () {
 
 map.on('commandstatechanged', function (e) {
 	var toolbar = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 	var statusbar = w2ui['toolbar-down'];
 	var commandName = e.commandName;
 	var state = e.state;
@@ -1348,25 +1264,19 @@ map.on('commandstatechanged', function (e) {
 	if (state === 'true') {
 		toolbar.enable(id);
 		toolbar.check(id);
-		toolbarUpMore.check(id);
 	}
 	else if (state === 'false') {
 		toolbar.enable(id);
 		toolbar.uncheck(id);
-		toolbarUpMore.uncheck(id);
 	}
 	// Change the toolbar button states if we are in editmode
 	// If in non-edit mode, will be taken care of when permission is changed to 'edit'
 	else if (map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
-		// in case some buttons are in toolbar-up-more, find
-		// them and en/dis-able them.
 		if (state === 'enabled') {
 			toolbar.enable(id);
-			toolbarUpMore.enable(id);
 		} else {
 			toolbar.uncheck(id);
 			toolbar.disable(id);
-			toolbarUpMore.disable(id);
 		}
 	}
 });
@@ -1605,22 +1515,18 @@ map.on('hyperlinkclicked', function (e) {
 
 map.on('updatepermission', function (e) {
 	var toolbar = w2ui['toolbar-up'];
-	var toolbarUpMore = w2ui['toolbar-up-more'];
 
 	// copy the first array
 	var items = toolbar.items.slice();
-	items.concat(toolbarUpMore.items);
 	for (var idx in items) {
 		var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : items[idx].uno;
 		var keepDisabled = map['stateChangeHandler'].getItemValue(unoCmd) === 'disabled';
 		if (e.perm === 'edit') {
 			if (!keepDisabled) {
 				toolbar.enable(items[idx].id);
-				toolbarUpMore.enable(items[idx].id);
 			}
 		} else {
 			toolbar.disable(items[idx].id);
-			toolbarUpMore.disable(items[idx].id);
 		}
 	}
 
