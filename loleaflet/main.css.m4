@@ -1,4 +1,5 @@
 changequote([,])dnl
+ifelse(debug,[true],[dnl],[@import url('dist/w2ui-1.5.rc1.css');])
 @import url('dist/leaflet.css');
 @import url('dist/selectionMarkers.css');
 @import url('dist/loleaflet.css');
@@ -16,7 +17,6 @@ changequote([,])dnl
 @import url('node_modules/vex-js/css/vex.css');
 @import url('node_modules/vex-js/css/vex-theme-plain.css');
 @import url('node_modules/vex-js/css/vex-theme-bottom-right-corner.css');
-ifelse(debug,[true],[dnl],[@import url('dist/w2ui-1.5.rc1.css');])
 @import url('node_modules/select2/dist/css/select2.css');
 @import url('node_modules/smartmenus/dist/css/sm-core-css.css');
 @import url('node_modules/smartmenus/dist/css/sm-simple/sm-simple.css');
