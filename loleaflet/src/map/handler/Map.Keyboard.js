@@ -136,7 +136,8 @@ L.Map.Keyboard = L.Handler.extend({
 		39  : true, // right arrow
 		40  : true, // down arrow
 		45  : true, // insert
-		46  : true // delete
+		46  : true, // delete
+		113 : true  // f2
 	},
 
 	keyCodes: {
