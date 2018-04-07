@@ -98,7 +98,6 @@ function _unmobilify() {
 }
 
 function resizeToolbar() {
-	var hasMoreItems = false;
 	var toolbarUp = w2ui['toolbar-up'];
 
 	if ($(window).width() < mobileWidth) {
