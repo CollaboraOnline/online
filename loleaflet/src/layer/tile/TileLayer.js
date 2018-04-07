@@ -749,7 +749,10 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onInvalidateCursorMsg: function (textMsg) {
 		var docLayer = this._map._docLayer;
-		var strTwips = textMsg.match(/\d+/g);
+		textMsg = textMsg.substring('invalidatecursor:'.length + 1);
+		var obj = JSON.parse(textMsg);
+		var modifierViewId = parseInt(obj.viewId);
+		var strTwips = obj.rectangle.match(/\d+/g);
 		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 		var bottomRightTwips = topLeftTwips.add(offset);
@@ -762,7 +765,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.fire('setFollowOff');
 		}
 		this._map.lastActionByUser = false;
-		this._onUpdateCursor();
+		this._onUpdateCursor(this._viewId === modifierViewId);
 	},
 
 	_updateEditor: function(textMsg) {
@@ -1451,11 +1454,11 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	// Update cursor layer (blinking cursor).
-	_onUpdateCursor: function (e) {
+	_onUpdateCursor: function (scroll) {
 		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
 
-		if (!e && !this._map.getBounds().contains(this._visibleCursor) && this._isCursorVisible) {
+		if ((scroll !== false) && !this._map.getBounds().contains(this._visibleCursor) && this._isCursorVisible) {
 			var center = this._map.project(cursorPos);
 			center = center.subtract(this._map.getSize().divideBy(2));
 			center.x = Math.round(center.x < 0 ? 0 : center.x);
