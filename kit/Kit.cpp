@@ -1184,10 +1184,27 @@ public:
         // when we examine the content of the JSON
         std::string targetViewId;
 
-        if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
-            type == LOK_CALLBACK_CELL_CURSOR)
+        if (type == LOK_CALLBACK_CELL_CURSOR)
         {
             Poco::StringTokenizer tokens(payload, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            // Payload may be 'EMPTY'.
+            if (tokens.count() == 4)
+            {
+                int cursorX = std::stoi(tokens[0]);
+                int cursorY = std::stoi(tokens[1]);
+                int cursorWidth = std::stoi(tokens[2]);
+                int cursorHeight = std::stoi(tokens[3]);
+
+                tileQueue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
+            }
+        }
+        else if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR)
+        {
+            Poco::JSON::Parser parser;
+            const Poco::Dynamic::Var result = parser.parse(payload);
+            const auto& command = result.extract<Poco::JSON::Object::Ptr>();
+            std::string rectangle = command->get("rectangle").toString();
+            Poco::StringTokenizer tokens(rectangle, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             // Payload may be 'EMPTY'.
             if (tokens.count() == 4)
             {
@@ -1545,7 +1562,8 @@ private:
                              | LOK_FEATURE_DOCUMENT_PASSWORD_TO_MODIFY
                              | LOK_FEATURE_PART_IN_INVALIDATION_CALLBACK
                              | LOK_FEATURE_NO_TILED_ANNOTATIONS
-                             | LOK_FEATURE_RANGE_HEADERS;
+                             | LOK_FEATURE_RANGE_HEADERS
+                             | LOK_FEATURE_VIEWID_IN_VISCURSOR_INVALIDATION_CALLBACK;
             _loKit->setOptionalFeatures(flags);
 
             // Save the provided password with us and the jailed url

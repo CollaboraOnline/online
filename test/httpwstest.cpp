@@ -2518,7 +2518,13 @@ void HTTPWSTest::testCursorPosition()
 
         // receive cursor position
         response = getResponseString(socket0, "invalidatecursor:", testname);
-        Poco::StringTokenizer cursorTokens(response.substr(17), ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+
+        Poco::JSON::Parser parser0;
+        const Poco::Dynamic::Var result0 = parser0.parse(response.substr(17));
+        const auto& command0 = result0.extract<Poco::JSON::Object::Ptr>();
+        CPPUNIT_ASSERT_MESSAGE("missing property rectangle", command0->has("rectangle"));
+
+        Poco::StringTokenizer cursorTokens(command0->get("rectangle").toString(), ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.count());
 
         // Create second view
