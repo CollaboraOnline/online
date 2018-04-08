@@ -32,6 +32,9 @@ L.Control.Scroll = L.Control.extend({
 			scrollInertia: 0,
 			advanced:{autoExpandHorizontalScroll: true}, /* weird bug, it should be false */
 			callbacks:{
+				onScrollStart: function() {
+					control._map.fire('closepopup');
+				},
 				onScroll: function() {
 					control._onScrollEnd(this);
 					if (autoHideTimeout)

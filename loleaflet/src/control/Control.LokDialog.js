@@ -12,6 +12,8 @@ L.Control.LokDialog = L.Control.extend({
 		map.on('windowpaint', this._onDialogPaint, this);
 		map.on('opendialog', this._openDialog, this);
 		map.on('docloaded', this._docLoaded, this);
+		map.on('closepopup', this.onCloseCurrentPopUp, this);
+		L.DomEvent.on(document, 'mouseup', this.onCloseCurrentPopUp, this);
 	},
 
 	_dialogs: {},
@@ -228,6 +230,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_launchDialog: function(strDlgId, leftTwips, topTwips, width, height, title) {
+		this.onCloseCurrentPopUp();
 		var dialogContainer = L.DomUtil.create('div', 'lokdialog', document.body);
 		L.DomUtil.setStyle(dialogContainer, 'padding', '0px');
 		L.DomUtil.setStyle(dialogContainer, 'margin', '0px');
@@ -290,6 +293,7 @@ L.Control.LokDialog = L.Control.extend({
 		var dlgInput = this._createDialogInput(strDlgId);
 
 		L.DomEvent.on(dialogCanvas, 'mousedown mouseup', function(e) {
+			L.DomEvent.stopPropagation(e);
 			var buttons = 0;
 			buttons |= e.button === map['mouse'].JSButtons.left ? map['mouse'].LOButtons.left : 0;
 			buttons |= e.button === map['mouse'].JSButtons.middle ? map['mouse'].LOButtons.middle : 0;
@@ -318,6 +322,8 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomEvent.on(dlgInput, 'contextmenu', function() {
 			return false;
 		});
+
+		this._currentId = this._toRawDlgId(strDlgId);
 	},
 
 	_postWindowCompositionEvent: function(winid, type, text) {
@@ -341,6 +347,14 @@ L.Control.LokDialog = L.Control.extend({
 		$('#' + this._toDlgPrefix(dialogId)).remove();
 		this._map.focus();
 		delete this._dialogs[dialogId];
+		this._currentId = null;
+	},
+
+	onCloseCurrentPopUp: function() {
+		// for title-less dialog only (context menu, pop-up)
+		if (!this._currentId || !this._isOpen(this._currentId) || this._dialogs[this._currentId].title)
+			return;
+		this._onDialogClose(this._currentId, true);
 	},
 
 	_paintDialog: function(dialogId, rectangle, imgData) {
