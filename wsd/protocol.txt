@@ -376,7 +376,8 @@ message as documented above.) For instance:
 
 invalidatecursor: <payload>
 
-    The payload contains a rectangle describing the cursor position.
+    The payload contains a rectangle describing the cursor position
+    and the id of the view which triggered the invalidation. JSON payload.
 
     The communication between the parent process (the one keeping open the
     Websocket connections to the clients) and a child process (handling
