@@ -781,16 +781,23 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         else if (tokens[0] == "invalidatecursor:")
         {
             assert(firstLine.size() == static_cast<std::string::size_type>(length));
-            StringTokenizer firstLineTokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+
+            const size_t index = firstLine.find_first_of('{');
+            const std::string stringJSON = firstLine.substr(index);
+            Poco::JSON::Parser parser;
+            const Poco::Dynamic::Var result = parser.parse(stringJSON);
+            const auto& object = result.extract<Poco::JSON::Object::Ptr>();
+            const std::string rectangle = object->get("rectangle").toString();
+            StringTokenizer rectangleTokens(rectangle, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             int x = 0, y = 0, w = 0, h = 0;
-            if (firstLineTokens.count() > 2 &&
-                stringToInteger(firstLineTokens[1], x) &&
-                stringToInteger(firstLineTokens[2], y))
+            if (rectangleTokens.count() > 2 &&
+                stringToInteger(rectangleTokens[0], x) &&
+                stringToInteger(rectangleTokens[1], y))
             {
-                if (firstLineTokens.count() > 3)
+                if (rectangleTokens.count() > 3)
                 {
-                    stringToInteger(firstLineTokens[3], w);
-                    stringToInteger(firstLineTokens[4], h);
+                    stringToInteger(rectangleTokens[2], w);
+                    stringToInteger(rectangleTokens[3], h);
                 }
 
                 docBroker->invalidateCursor(x, y, w, h);
