@@ -1,5 +1,11 @@
 #! /bin/bash
 
+srcdir=`dirname $0`
+test -n "$srcdir" || srcdir=.
+
+olddir=`pwd`
+cd "$srcdir"
+
 function failed {
     cat << EOF 1>&2
 
@@ -22,6 +28,8 @@ autoreconf || failed "autoreconf"
 
 cat << EOF
 
-Result: All went OK, please run ./configure (with the appropriate parameters) now.
+Result: All went OK, please run $srcdir/configure (with the appropriate parameters) now.
 
 EOF
+
+cd "$olddir"
