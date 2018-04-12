@@ -252,7 +252,7 @@ var unoCommandsArray = {
 	ZoomPlus:{global:{menu:_('Zoom In'),},},
 };
 
-global._UNO = function(string, component, isContext) {
+window._UNO = function(string, component, isContext) {
 	var command = string.substr(5);
 	var context = 'menu';
 	if (isContext === true) {

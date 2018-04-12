@@ -1,6 +1,8 @@
 var deps = {
 	Core: {
 		src: ['Leaflet.js',
+		      'errormessages.js',
+		      'unocommands.js',
 		      'core/Log.js',
 		      'core/Util.js',
 		      'core/LOUtil.js',

@@ -218,7 +218,7 @@ var unoCommandsArray = {\n''')
 
     f.write('''};
 
-global._UNO = function(string, component, isContext) {
+window._UNO = function(string, component, isContext) {
 \tvar command = string.substr(5);
 \tvar context = 'menu';
 \tif (isContext === true) {
@@ -252,7 +252,7 @@ global._UNO = function(string, component, isContext) {
 def parseUnocommandsJS(onlineDir):
     strings = {}
 
-    f = open(onlineDir + '/loleaflet/unocommands.js', 'r')
+    f = open(onlineDir + '/loleaflet/src/unocommands.js', 'r')
     readingCommands = False
     for line in f:
         line = line.decode('utf-8')

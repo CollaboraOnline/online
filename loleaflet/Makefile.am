@@ -8,34 +8,221 @@ DRAW_VERSION=0.2.4
 
 MINIFY=false
 
-L10N_PO = $(wildcard po/*.po)
-L10N_JSON = $(patsubst po/%.po,dist/l10n/%.json,$(L10N_PO))
+L10N_PO = $(wildcard $(srcdir)/po/*.po)
+L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(builddir)/dist/l10n/%.json,$(L10N_PO))
 
 JQUERY_UI_IMAGE_PATH = node_modules/jquery-ui/themes/ui-lightness/images
 JQUERY_UI_IMAGES = $(wildcard $(JQUERY_UI_IMAGE_PATH)/*.png)
-JQUERY_UI_DIST_IMAGES = $(patsubst $(JQUERY_UI_IMAGE_PATH)/%.png,dist/$(JQUERY_UI_IMAGE_PATH)/%.png,$(JQUERY_UI_IMAGES))
+JQUERY_UI_DIST_IMAGES = $(patsubst $(JQUERY_UI_IMAGE_PATH)/%.png,$(builddir)/dist/images/%.png,$(JQUERY_UI_IMAGES))
+
+LOLEAFLET_IMAGES_SRC = $(wildcard $(srcdir)/images/*)
+LOLEAFLET_IMAGES_DST = $(patsubst $(srcdir)/%,$(builddir)/dist/%,$(LOLEAFLET_IMAGES_SRC))
+
+LOLEAFLET_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.*')
+LOLEAFLET_L10N_DST =  $(patsubst $(srcdir)/l10n/%,$(builddir)/dist/l10n/%,$(LOLEAFLET_L10N_SRC))
+
+LOLEAFLET_DRAW_JS_SRC = $(shell find $(srcdir)/plugins/draw-$(DRAW_VERSION)/src -name '*.js')
+LOLEAFLET_DRAW_CSS_SRC = $(shell find $(srcdir)/plugins/draw-$(DRAW_VERSION)/dist -name '*.css')
+
+LOLEAFLET_HTML_SRC = $(shell find $(srcdir)/html -name '*.html')
+LOLEAFLET_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(builddir)/dist/%.html,$(LOLEAFLET_HTML_SRC))
+
+define file_target
+$(1): $(2)
+	@cp $$< $$@
+
+endef
+
+define file_targets
+$(foreach file,$(1),$(call file_target,\
+	$(builddir)/dist/$(notdir $(file)),\
+	$(file)))
+endef
+
+LOLEAFLET_CSS =\
+	$(srcdir)/css/w2ui-1.5.rc1.css \
+	$(srcdir)/css/leaflet.css \
+	$(srcdir)/css/selectionMarkers.css \
+	$(srcdir)/css/loleaflet.css \
+	$(srcdir)/css/toolbar.css \
+	$(srcdir)/css/partsPreviewControl.css \
+	$(srcdir)/css/scrollBar.css \
+	$(srcdir)/css/searchControl.css \
+	$(srcdir)/css/spreadsheet.css \
+	$(srcdir)/css/editor.css \
+	$(srcdir)/plugins/draw-$(DRAW_VERSION)/dist/leaflet.draw.css \
+	$(builddir)/node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css \
+	$(builddir)/node_modules/jquery-contextmenu/dist/jquery.contextMenu.css \
+	$(builddir)/node_modules/vex-js/css/vex.css \
+	$(builddir)/node_modules/vex-js/css/vex-theme-plain.css \
+	$(builddir)/node_modules/vex-js/css/vex-theme-bottom-right-corner.css \
+	$(builddir)/node_modules/select2/dist/css/select2.css \
+	$(builddir)/node_modules/smartmenus/dist/css/sm-core-css.css \
+	$(builddir)/node_modules/smartmenus/dist/css/sm-simple/sm-simple.css \
+	$(srcdir)/css/menubar.css \
+	$(builddir)/node_modules/jquery-ui/themes/ui-lightness/jquery-ui.css \
+	$(builddir)/node_modules/evol-colorpicker/css/evol-colorpicker.css
+
+LOLEAFLET_CSS_DST = $(foreach file,$(LOLEAFLET_CSS),$(builddir)/dist/$(notdir $(file)))
+LOLEAFLET_CSS_M4 = $(strip $(foreach file,$(LOLEAFLET_CSS),$(notdir $(file))))
+
+$(eval $(call file_targets,$(LOLEAFLET_CSS)))
+
+NODE_MODULES_JS =\
+	node_modules/jquery/dist/jquery.js \
+	node_modules/jquery-mousewheel/jquery.mousewheel.js \
+	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
+	node_modules/jquery-ui/jquery-ui.js \
+	node_modules/evol-colorpicker/js/evol-colorpicker.js \
+	node_modules/smartmenus/dist/jquery.smartmenus.js \
+	node_modules/timeago/jquery.timeago.js \
+	node_modules/autolinker/dist/Autolinker.js \
+	node_modules/json-js/json2.js \
+	node_modules/l10n-for-node/l10n.js \
+	node_modules/select2/dist/js/select2.js \
+	node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js \
+	node_modules/vex-js/js/vex.js \
+	node_modules/vex-js/js/vex.dialog.js
+
+NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
+NODE_MODULES_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(NODE_MODULES_JS))
+
+GLOBAL_JS =\
+	global.js
+
+LOLEAFLET_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getFiles().join(' '))} catch(e) {}"))
+
+PLUGINS_JS =\
+	loleaflet.draw-src.js \
+	w2ui-1.5.rc1.js \
+	main.js \
+	toolbar.js
+
+LOLEAFLET_JS_SRC = $(shell find $(srcdir)/src -name '*.js')
+LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(builddir)/dist/src/%.js,$(LOLEAFLET_JS_SRC))
+
+COMMA := ,
+EMPTY :=
+SPACE := $(EMPTY) $(EMPTY)
+LOLEAFLET_VERSION = $(shell cd $(srcdir) && git log -1 --pretty=format:"%h")
+LOLEAFLET_PREFIX := $(if $(ENABLE_DEBUG),$(builddir)/dist,$(builddir)/build)
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
-all-local: node_modules $(L10N_JSON) $(JQUERY_UI_DIST_IMAGES)
-	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
-	rm -rf dist/plugins/draw-$(DRAW_VERSION) || true
-	mkdir -p dist/plugins/draw-$(DRAW_VERSION)
-	cd plugins/draw-$(DRAW_VERSION) && jake build && cp -ar dist ../../dist/plugins/draw-$(DRAW_VERSION)
-	@m4 -E -Ddebug=$(ENABLE_DEBUG) dist/loleaflet.html.m4 > dist/loleaflet.html
-	@m4 -E -Ddebug=$(ENABLE_DEBUG) main.css.m4 > main.css
-	jake build debug=$(ENABLE_DEBUG) minify=$(MINIFY)
+all-local: | node_modules \
+	$(LOLEAFLET_L10N_DST) \
+	$(L10N_JSON) \
+	$(LOLEAFLET_IMAGES_DST) \
+	$(JQUERY_UI_DIST_IMAGES) \
+	$(LOLEAFLET_PREFIX)/loleaflet.draw-src.js \
+	$(LOLEAFLET_PREFIX)/loleaflet-src.js \
+	$(builddir)/dist/bundle.css \
+	$(builddir)/dist/bundle.js \
+	$(builddir)/dist/loleaflet.html
+	@echo "build loleaflet completed"
+
+$(LOLEAFLET_PREFIX)/loleaflet.draw-src.js: $(LOLEAFLET_DRAW_CSS_SRC) $(LOLEAFLET_DRAW_JS_SRC)
+	@mkdir -p $(dir $@)
+	@NODE_PATH=$(abs_builddir)/node_modules jake -f $(srcdir)/plugins/draw-$(DRAW_VERSION)/Jakefile.js -C $(srcdir)/plugins/draw-$(DRAW_VERSION) build
+if ENABLE_DEBUG
+	@cp $(LOLEAFLET_DRAW_CSS_SRC) $(builddir)/dist/
+endif
+	@cp -a $(srcdir)/plugins/draw-$(DRAW_VERSION)/dist/images/* $(builddir)/dist/images/
+	@cp -a $(srcdir)/plugins/draw-$(DRAW_VERSION)/dist/leaflet.draw-src.js $@
+
+if ENABLE_DEBUG
+$(LOLEAFLET_PREFIX)/loleaflet-src.js: $(LOLEAFLET_JS_DST)
+	@echo "Checking loleaflet for JS errors..."
+	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
+	@touch $@
+
+$(builddir)/dist/bundle.css: $(LOLEAFLET_CSS_DST)
+	@touch $@
+
+$(builddir)/dist/bundle.js: $(NODE_MODULES_JS_DST) \
+	$(LOLEAFLET_PREFIX)/loleaflet-src.js \
+	$(LOLEAFLET_PREFIX)/loleaflet.draw-src.js \
+	$(builddir)/dist/global.js $(builddir)/dist/w2ui-1.5.rc1.js \
+	$(builddir)/dist/main.js $(builddir)/dist/toolbar.js
+	@touch $@
+else
+$(LOLEAFLET_PREFIX)/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
+	@mkdir -p $(dir $@)
+	@echo "Checking loleaflet for JS errors..."
+	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
+	@echo "Concatenating loleaflet files..."
+	@(cat $(srcdir)/src/copyright.js | sed 's/{VERSION}/$(LOLEAFLET_VERSION)/' - \
+		&& echo "(function (window, document, undefined) {" \
+		&& awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(call LOLEAFLET_JS,$(srcdir)/build/build.js)) \
+		&& echo "}(window, document));") > $@
+
+$(builddir)/dist/bundle.css: $(LOLEAFLET_CSS)
+	@echo "Uglify loleaflet css files..."
+	@$(NODE) node_modules/uglifycss/uglifycss $(LOLEAFLET_CSS) > $@
+
+$(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
+	$(LOLEAFLET_PREFIX)/loleaflet-src.js \
+	$(LOLEAFLET_PREFIX)/loleaflet.draw-src.js \
+	$(srcdir)/js/global.js $(srcdir)/js/w2ui-1.5.rc1.js \
+	$(srcdir)/js/main.js $(srcdir)/js/toolbar.js
+	@echo "Uglify loleaflet js files..."
+	@$(NODE) node_modules/uglify-js/bin/uglifyjs \
+		$(srcdir)/js/global.js \
+		$(NODE_MODULES_JS) \
+		$(builddir)/build/loleaflet-src.js \
+		$(builddir)/build/loleaflet.draw-src.js \
+		$(srcdir)/js/w2ui-1.5.rc1.js \
+		$(srcdir)/js/main.js \
+		$(srcdir)/js/toolbar.js \
+		--source-map --output $@
+endif
+
+$(builddir)/dist/loleaflet.html: $(srcdir)/loleaflet.html.m4 $(LOLEAFLET_HTML_DST) \
+	$(builddir)/dist/bundle.css $(builddir)/dist/bundle.js
+	@echo "Generating loleaflet.html..."
+	@m4 -E -DDEBUG=$(ENABLE_DEBUG) \
+		-DLOLEAFLET_CSS="$(subst $(SPACE),$(COMMA),$(LOLEAFLET_CSS_M4))" \
+		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(GLOBAL_JS) $(NODE_MODULES_JS) $(call LOLEAFLET_JS,$(srcdir)/build/build.js) $(PLUGINS_JS))" \
+		$(srcdir)/loleaflet.html.m4 > $@
 
 node_modules: npm-shrinkwrap.json
 	npm install
 	touch node_modules
 
-dist/$(JQUERY_UI_IMAGE_PATH)/%.png: $(JQUERY_UI_IMAGE_PATH)/%.png
-	mkdir -p dist/$(JQUERY_UI_IMAGE_PATH)
-	cp -a $(JQUERY_UI_IMAGE_PATH)/* dist/$(JQUERY_UI_IMAGE_PATH)/
+$(builddir)/dist/images/%: $(srcdir)/images/%
+	@mkdir -p $(dir $@)
+	@cp $< $@
 
-dist/l10n/%.json: po/%.po
-	@util/po2json.py $< -o $@
+$(builddir)/dist/%.html: $(srcdir)/html/%.html
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(builddir)/dist/src/%.js: $(srcdir)/src/%.js
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(builddir)/dist/%.js: $(srcdir)/js/%.js
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(builddir)/dist/node_modules/%.js: $(builddir)/node_modules/%.js
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(builddir)/dist/$(JQUERY_UI_IMAGE_PATH)/%.png: $(JQUERY_UI_IMAGE_PATH)/%.png
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(builddir)/dist/images/%.png: $(JQUERY_UI_IMAGE_PATH)/%.png
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(builddir)/dist/l10n/%: $(srcdir)/l10n/%
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(builddir)/dist/l10n/%.json: $(srcdir)/po/%.po
+	@$(srcdir)/util/po2json.py $< -o $@
 
 install-data-hook:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/loleaflet; \
@@ -76,8 +263,16 @@ l10n: pot
 
 clean-local:
 	rm -rf node_modules
-	cd dist && rm -f bundle.js bundle.js.map admin-bundle.js admin-bundle.js.map
-	cd plugins/draw-$(DRAW_VERSION) && rm -f dist/*.js
+	rm -rf $(builddir)/dist/src
+	rm -rf $(builddir)/dist/node_modules
+	rm -rf $(builddir)/dist/plugins
+	rm -rf $(builddir)/dist/images
+	rm -rf $(builddir)/dist/l10n
+	rm -rf $(builddir)/build/loleaflet-src.js
+	rm -rf $(builddir)/build/loleaflet.draw-src.js
+	rm -f $(builddir)/dist/*.html
+	cd dist && rm -f bundle.js bundle.css bundle.js.map admin-bundle.js admin-bundle.js.map
+	cd $(srcdir)/plugins/draw-$(DRAW_VERSION) && rm -f dist/*.js
 
 spec/data/load-test:
 	if [ ! -d spec/data/load_test ]; then \

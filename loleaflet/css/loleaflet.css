@@ -252,15 +252,15 @@ body {
 }
 
 .loleaflet-redline-accept-button {
-        background: url('../images/lc_accepttrackedchanges.svg') no-repeat center !important;
+        background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important;
 }
 
 .loleaflet-redline-reject-button {
-        background: url('../images/lc_rejecttrackedchange.svg') no-repeat center !important;
+        background: url('images/lc_rejecttrackedchange.svg') no-repeat center !important;
 }
 
 .loleaflet-annotation-menu, .loleaflet-annotation-menu-redline {
-	background: url(../images/submenu.svg) no-repeat center !important;
+	background: url('images/submenu.svg') no-repeat center !important;
 }
 
 .loleaflet-annotation-menu:hover, .loleaflet-annotation-menu-redline:hover, .loleaflet-redline-accept-button:hover, .loleaflet-redline-reject-button:hover {

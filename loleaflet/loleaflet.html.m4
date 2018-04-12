@@ -1,4 +1,8 @@
 changequote([,])dnl
+dnl# foreachq(x, `item_1, item_2, ..., item_n', stmt)
+dnl# quoted list, alternate improved version
+define([foreachq],[ifelse([$2],[],[],[pushdef([$1])_$0([$1],[$3],[],$2)popdef([$1])])])dnl
+define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(shift(shift($@))))])])dnl
 <!DOCTYPE html>
 <!-- saved from url=(0054)http://leafletjs.com/examples/quick-start-example.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,8 +23,10 @@ changequote([,])dnl
   };
   window.addEventListener('message', PostMessageReadyListener, false);
 </script>
+ifelse(DEBUG,[true],foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="/loleaflet/%VERSION%/fileCSS" />
+]),[<link rel="stylesheet" href="/loleaflet/%VERSION%/bundle.css" />
+])dnl
 <link rel="stylesheet" href="/loleaflet/%VERSION%/branding.css"> <!-- add your logo here -->
-ifelse(debug,[true],[<link rel="stylesheet" href="/loleaflet/%VERSION%/w2ui-1.5.rc1.css">],[dnl])
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json" />
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json" />
@@ -103,10 +109,10 @@ ifelse(debug,[true],[<link rel="stylesheet" href="/loleaflet/%VERSION%/w2ui-1.5.
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
     </script>
+ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
+[    <script src="/loleaflet/%VERSION%/fileJS"></script>
+]),
+[    <script src="/loleaflet/%VERSION%/bundle.js"></script>
+])dnl
     <script src="/loleaflet/%VERSION%/branding.js"></script> <!-- logo onclick handler -->
-    <script src="/loleaflet/%VERSION%/bundle.js"></script>
-ifelse(debug,[true],
-[    <script src="/loleaflet/%VERSION%/toolbar/w2ui-1.5.rc1.js"></script>],
-[    <script src="/loleaflet/%VERSION%/toolbar/w2ui-1.5.rc1.min.js"></script>])
-    <script src="/loleaflet/%VERSION%/toolbar/toolbar.js"></script>
 </body></html>

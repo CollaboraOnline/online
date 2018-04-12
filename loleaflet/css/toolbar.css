@@ -98,7 +98,7 @@ w2ui-toolbar {
 #document-name-input.editable:hover {
     border: 1px solid #bbbbbb;
     background-color: white;
-    background-image: url('../images/lc_editdoc.svg');
+    background-image: url('images/lc_editdoc.svg');
     background-position: right;
     background-repeat: no-repeat;
     padding-right: 20px;
@@ -123,7 +123,7 @@ w2ui-toolbar {
     border-color: #ccc;
     background-color: #eee;
 }
-.closebuttonimage{ background: url('../images/lc_closedoc.svg') no-repeat center !important; }
+.closebuttonimage{ background: url('images/lc_closedoc.svg') no-repeat center !important; }
 
 #tb_toolbar-down_item_left {
     width: 45%;
@@ -256,65 +256,65 @@ button.leaflet-control-search-next
     border-style: solid;
 }
 
-.w2ui-icon.accepttrackedchanges{ background: url('../images/lc_accepttrackedchanges.svg') no-repeat center !important; }
-.w2ui-icon.alignblock{ background: url('../images/lc_alignblock.svg') no-repeat center !important; }
-.w2ui-icon.alignhorizontal{ background: url('../images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
-.w2ui-icon.alignleft{ background: url('../images/lc_alignleft.svg') no-repeat center !important; }
-.w2ui-icon.alignright{ background: url('../images/lc_alignright.svg') no-repeat center !important; }
-.w2ui-icon.autosum{ background: url('../images/lc_autosum.svg') no-repeat center !important; }
-.w2ui-icon.backcolor{ background: url('../images/lc_backcolor.svg') no-repeat center !important; }
-.w2ui-icon.bold{ background: url('../images/lc_bold.svg') no-repeat center !important; }
-.w2ui-icon.annotation{ background: url('../images/lc_showannotations.svg') no-repeat center !important; }
-.w2ui-icon.bullet{ background: url('../images/lc_defaultbullet.svg') no-repeat center !important; }
-.w2ui-icon.cancel{ background: url('../images/lc_cancel.svg') no-repeat center !important; }
-.w2ui-icon.color{ background: url('../images/lc_color.svg') no-repeat center !important; }
-.w2ui-icon.decrementindent{ background: url('../images/lc_decrementindent.svg') no-repeat center !important; }
-.w2ui-icon.deletepage{ background: url('../images/lc_deletepage.svg') no-repeat center !important; }
-.w2ui-icon.duplicatepage{ background: url('../images/lc_duplicatepage.svg') no-repeat center !important; }
-.w2ui-icon.edit{ background: url('../images/lc_editdoc.svg') no-repeat center !important; }
-.w2ui-icon.equal{ background: url('../images/lc26049.svg') no-repeat center !important; }
-.w2ui-icon.help{ background: url('../images/lc_helpindex.svg') no-repeat center !important; }
-.w2ui-icon.incrementindent{ background: url('../images/lc_decrementlevel.svg') no-repeat center !important; }
-.w2ui-icon.insertpage{ background: url('../images/lc_insertpage.svg') no-repeat center !important; }
-.w2ui-icon.insertsheet{ background: url('../images/plus.svg') no-repeat center !important; }
-.w2ui-icon.italic{ background: url('../images/lc_italic.svg') no-repeat center !important; }
-.w2ui-icon.insertgraphic{ background: url('../images/lc_gallery.svg') no-repeat center !important; }
-.w2ui-icon.inserttable{ background: url('../images/lc_inserttable.svg') no-repeat center !important; }
-.w2ui-icon.next{ background: url('../images/lc_downsearch.svg') no-repeat center !important; }
-.w2ui-icon.numbering{ background: url('../images/lc_defaultnumbering.svg') no-repeat center !important; }
-.w2ui-icon.presentation{ background: url('../images/lc_dia.svg') no-repeat center !important; }
-.w2ui-icon.prev{ background: url('../images/lc_upsearch.svg') no-repeat center !important; }
-.w2ui-icon.print{ background: url('../images/lc_print.svg') no-repeat center !important; }
-.w2ui-icon.redo{ background: url('../images/lc_redo.svg') no-repeat center !important; }
-.w2ui-icon.save{ background: url('../images/lc_save.svg') no-repeat center !important; }
-.w2ui-icon.saveas{ background: url('../images/lc_saveas.svg') no-repeat center !important; }
-.w2ui-icon.savemodified{ background: url('../images/savemodified.svg') no-repeat center !important; }
-.w2ui-icon.strikeout{ background: url('../images/lc_strikeout.svg') no-repeat center !important; }
-.w2ui-icon.insertfootnote{ background: url('../images/lc_insertfootnote.svg') no-repeat center !important; }
-.w2ui-icon.underline{ background: url('../images/lc_underline.svg') no-repeat center !important; }
-.w2ui-icon.undo{ background: url('../images/lc_undo.svg') no-repeat center !important; }
-.w2ui-icon.zoomin{ background: url('../images/plus.svg') no-repeat center !important; }
-.w2ui-icon.zoomout{ background: url('../images/minus.svg') no-repeat center !important; }
-.w2ui-icon.zoomreset{ background: url('../images/lc_view100.svg') no-repeat center !important; }
-.w2ui-icon.more{ background: url('../images/lc_downsearch.svg') no-repeat center !important; }
-.w2ui-icon.firstrecord{ background: url('../images/lc_firstrecord.svg') no-repeat center !important; }
-.w2ui-icon.nextrecord{ background: url('../images/lc_nextrecord.svg') no-repeat center !important; }
-.w2ui-icon.prevrecord{ background: url('../images/lc_prevrecord.svg') no-repeat center !important; }
-.w2ui-icon.lastrecord{ background: url('../images/lc_lastrecord.svg') no-repeat center !important; }
-.w2ui-icon.wraptext{ background: url('../images/lc_wraptext.svg') no-repeat center !important; }
-.w2ui-icon.togglemergecells{ background: url('../images/lc_togglemergecells.svg') no-repeat center !important; }
-.w2ui-icon.numberformatcurrency{ background: url('../images/lc_currencyfield.svg') no-repeat center !important; }
-.w2ui-icon.numberformatpercent{ background: url('../images/lc_numberformatpercent.svg') no-repeat center !important; }
-.w2ui-icon.numberformatdecimal{ background: url('../images/lc_numberformatdecimal.svg') no-repeat center !important; }
-.w2ui-icon.numberformatdate{ background: url('../images/lc_datefield.svg') no-repeat center !important; }
-.w2ui-icon.numberformatincdecimals{ background: url('../images/lc_numberformatincdecimals.svg') no-repeat center !important; }
-.w2ui-icon.numberformatdecdecimals{ background: url('../images/lc_numberformatdecdecimals.svg') no-repeat center !important; }
-.w2ui-icon.sortascending{ background: url('../images/lc_sortascending.svg') no-repeat center !important; }
-.w2ui-icon.sortdescending{ background: url('../images/lc_sortdescending.svg') no-repeat center !important; }
-.w2ui-icon.selected{ background: url('../images/lc_ok.svg') no-repeat center !important; }
-.w2ui-icon.repair{ background: url('../images/lc_backward.svg') no-repeat center !important; }
-.w2ui-icon.specialcharacter{ background: url('../images/lc_insertsymbol.svg') no-repeat center !important; }
-.w2ui-icon.insertobjectchart{ background: url('../images/lc_drawchart.svg') no-repeat center !important; }
+.w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
+.w2ui-icon.alignblock{ background: url('images/lc_alignblock.svg') no-repeat center !important; }
+.w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
+.w2ui-icon.alignleft{ background: url('images/lc_alignleft.svg') no-repeat center !important; }
+.w2ui-icon.alignright{ background: url('images/lc_alignright.svg') no-repeat center !important; }
+.w2ui-icon.autosum{ background: url('images/lc_autosum.svg') no-repeat center !important; }
+.w2ui-icon.backcolor{ background: url('images/lc_backcolor.svg') no-repeat center !important; }
+.w2ui-icon.bold{ background: url('images/lc_bold.svg') no-repeat center !important; }
+.w2ui-icon.annotation{ background: url('images/lc_showannotations.svg') no-repeat center !important; }
+.w2ui-icon.bullet{ background: url('images/lc_defaultbullet.svg') no-repeat center !important; }
+.w2ui-icon.cancel{ background: url('images/lc_cancel.svg') no-repeat center !important; }
+.w2ui-icon.color{ background: url('images/lc_color.svg') no-repeat center !important; }
+.w2ui-icon.decrementindent{ background: url('images/lc_decrementindent.svg') no-repeat center !important; }
+.w2ui-icon.deletepage{ background: url('images/lc_deletepage.svg') no-repeat center !important; }
+.w2ui-icon.duplicatepage{ background: url('images/lc_duplicatepage.svg') no-repeat center !important; }
+.w2ui-icon.edit{ background: url('images/lc_editdoc.svg') no-repeat center !important; }
+.w2ui-icon.equal{ background: url('images/lc26049.svg') no-repeat center !important; }
+.w2ui-icon.help{ background: url('images/lc_helpindex.svg') no-repeat center !important; }
+.w2ui-icon.incrementindent{ background: url('images/lc_decrementlevel.svg') no-repeat center !important; }
+.w2ui-icon.insertpage{ background: url('images/lc_insertpage.svg') no-repeat center !important; }
+.w2ui-icon.insertsheet{ background: url('images/plus.svg') no-repeat center !important; }
+.w2ui-icon.italic{ background: url('images/lc_italic.svg') no-repeat center !important; }
+.w2ui-icon.insertgraphic{ background: url('images/lc_gallery.svg') no-repeat center !important; }
+.w2ui-icon.inserttable{ background: url('images/lc_inserttable.svg') no-repeat center !important; }
+.w2ui-icon.next{ background: url('images/lc_downsearch.svg') no-repeat center !important; }
+.w2ui-icon.numbering{ background: url('images/lc_defaultnumbering.svg') no-repeat center !important; }
+.w2ui-icon.presentation{ background: url('images/lc_dia.svg') no-repeat center !important; }
+.w2ui-icon.prev{ background: url('images/lc_upsearch.svg') no-repeat center !important; }
+.w2ui-icon.print{ background: url('images/lc_print.svg') no-repeat center !important; }
+.w2ui-icon.redo{ background: url('images/lc_redo.svg') no-repeat center !important; }
+.w2ui-icon.save{ background: url('images/lc_save.svg') no-repeat center !important; }
+.w2ui-icon.saveas{ background: url('images/lc_saveas.svg') no-repeat center !important; }
+.w2ui-icon.savemodified{ background: url('images/savemodified.svg') no-repeat center !important; }
+.w2ui-icon.strikeout{ background: url('images/lc_strikeout.svg') no-repeat center !important; }
+.w2ui-icon.insertfootnote{ background: url('images/lc_insertfootnote.svg') no-repeat center !important; }
+.w2ui-icon.underline{ background: url('images/lc_underline.svg') no-repeat center !important; }
+.w2ui-icon.undo{ background: url('images/lc_undo.svg') no-repeat center !important; }
+.w2ui-icon.zoomin{ background: url('images/plus.svg') no-repeat center !important; }
+.w2ui-icon.zoomout{ background: url('images/minus.svg') no-repeat center !important; }
+.w2ui-icon.zoomreset{ background: url('images/lc_view100.svg') no-repeat center !important; }
+.w2ui-icon.more{ background: url('images/lc_downsearch.svg') no-repeat center !important; }
+.w2ui-icon.firstrecord{ background: url('images/lc_firstrecord.svg') no-repeat center !important; }
+.w2ui-icon.nextrecord{ background: url('images/lc_nextrecord.svg') no-repeat center !important; }
+.w2ui-icon.prevrecord{ background: url('images/lc_prevrecord.svg') no-repeat center !important; }
+.w2ui-icon.lastrecord{ background: url('images/lc_lastrecord.svg') no-repeat center !important; }
+.w2ui-icon.wraptext{ background: url('images/lc_wraptext.svg') no-repeat center !important; }
+.w2ui-icon.togglemergecells{ background: url('images/lc_togglemergecells.svg') no-repeat center !important; }
+.w2ui-icon.numberformatcurrency{ background: url('images/lc_currencyfield.svg') no-repeat center !important; }
+.w2ui-icon.numberformatpercent{ background: url('images/lc_numberformatpercent.svg') no-repeat center !important; }
+.w2ui-icon.numberformatdecimal{ background: url('images/lc_numberformatdecimal.svg') no-repeat center !important; }
+.w2ui-icon.numberformatdate{ background: url('images/lc_datefield.svg') no-repeat center !important; }
+.w2ui-icon.numberformatincdecimals{ background: url('images/lc_numberformatincdecimals.svg') no-repeat center !important; }
+.w2ui-icon.numberformatdecdecimals{ background: url('images/lc_numberformatdecdecimals.svg') no-repeat center !important; }
+.w2ui-icon.sortascending{ background: url('images/lc_sortascending.svg') no-repeat center !important; }
+.w2ui-icon.sortdescending{ background: url('images/lc_sortdescending.svg') no-repeat center !important; }
+.w2ui-icon.selected{ background: url('images/lc_ok.svg') no-repeat center !important; }
+.w2ui-icon.repair{ background: url('images/lc_backward.svg') no-repeat center !important; }
+.w2ui-icon.specialcharacter{ background: url('images/lc_insertsymbol.svg') no-repeat center !important; }
+.w2ui-icon.insertobjectchart{ background: url('images/lc_drawchart.svg') no-repeat center !important; }
 
 .inserttable-pop {
     z-index: 1000;
