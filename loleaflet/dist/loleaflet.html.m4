@@ -52,6 +52,7 @@ ifelse(debug,[true],[<link rel="stylesheet" href="/loleaflet/%VERSION%/w2ui-1.5.
       <div id="toolbar-wrapper">
 	<div id="toolbar-logo"></div>
 	<div id="toolbar-up"></div>
+	<div id="toolbar-hamburger"></div>
 	<div id="formulabar"></div>
       </div>
       <input id="insertgraphic" type="file" style="position: fixed; top: -100em">

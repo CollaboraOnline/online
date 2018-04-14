@@ -79,6 +79,11 @@ body {
     width: 125px;
 }
 
+#toolbar-hamburger {
+    display: none;
+    width: 41px;
+}
+
 @media (max-width: 767px) {
     /* Show slidesorter beyond 768px only */
     #presentation-controls-wrapper {
@@ -105,6 +110,9 @@ body {
     }
     #toolbar-logo {
 	width: 32px;
+    }
+    #toolbar-hamburger {
+	display: table-cell;
     }
     #closebutton {
 	display: none;
