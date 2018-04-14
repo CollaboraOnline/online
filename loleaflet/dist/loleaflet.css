@@ -66,6 +66,19 @@ body {
     top: 30px;
 }
 
+#toolbar-wrapper {
+    position: relative;
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#toolbar-logo {
+    display: table-cell;
+    width: 125px;
+}
+
 @media (max-width: 767px) {
     /* Show slidesorter beyond 768px only */
     #presentation-controls-wrapper {
@@ -90,9 +103,8 @@ body {
     #spreadsheet-row-column-frame.readonly {
 	top: 30px !important;
     }
-    /* We need to give space for options menu */
-    #tb_toolbar-up_item_rightmenupadding {
-	padding-right: 40px;
+    #toolbar-logo {
+	width: 32px;
     }
     #closebutton {
 	display: none;

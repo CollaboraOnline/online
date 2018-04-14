@@ -56,11 +56,6 @@ w2ui-toolbar {
 #tb_presentation-toolbar_item_left {
     width: 50%;
 }
-/* leave space for branding logo */
-#tb_toolbar-up_item_left {
-    width: 0;
-    padding-left: 125px;
-}
 
 #addressInput {
     height: 29px;
@@ -118,10 +113,6 @@ w2ui-toolbar {
     background-color: #eee;
 }
 .closebuttonimage{ background: url('../images/lc_closedoc.svg') no-repeat center !important; }
-
-#tb_toolbar-up_item_right {
-    width: 100%;
-}
 
 #tb_toolbar-down_item_left {
     width: 45%;

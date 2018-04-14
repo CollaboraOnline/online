@@ -50,6 +50,7 @@ ifelse(debug,[true],[<link rel="stylesheet" href="/loleaflet/%VERSION%/w2ui-1.5.
 	<ul id="main-menu" class="sm sm-simple lo-menu"></ul>
       </nav>
       <div id="toolbar-wrapper">
+	<div id="toolbar-logo"></div>
 	<div id="toolbar-up"></div>
 	<div id="formulabar"></div>
       </div>

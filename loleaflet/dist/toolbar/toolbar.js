@@ -99,6 +99,7 @@ function _unmobilify() {
 
 function resizeToolbar() {
 	var toolbarUp = w2ui['toolbar-up'];
+	var statusbar = w2ui['toolbar-down'];
 
 	if ($(window).width() < mobileWidth) {
 		_mobilify();
@@ -107,6 +108,8 @@ function resizeToolbar() {
 	}
 
 	toolbarUp.refresh();
+	toolbarUp.resize();
+	statusbar.resize();
 }
 
 function _cancelSearch() {
@@ -386,7 +389,6 @@ $(function () {
 	$('#toolbar-up').w2toolbar({
 		name: 'toolbar-up',
 		items: [
-			{type: 'html', id: 'left'},
 			{type: 'menu', id: 'writer:menu:wrap', caption: _('Textwrap'), items: [
 				{ text: _('No wrap'), id: 'wrap-WrapOff' },
 				{ text: _('Page wrap'), id: 'wrap-WrapOn' },
@@ -447,9 +449,7 @@ $(function () {
 			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true)},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true)},
-			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'},
-			{type: 'html', id: 'right'},
-			{type: 'html', id: 'rightmenupadding'}
+			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'}
 		],
 		onClick: function (e) {
 			onClick(e.target);

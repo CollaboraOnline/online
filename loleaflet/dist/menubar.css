@@ -190,10 +190,6 @@
     display: block;
 }
 
-#toolbar-wrapper {
-    position: relative;
-}
-
 /* desktop mode */
 @media (min-width: 768px) {
     /* hide the button in desktop view */
