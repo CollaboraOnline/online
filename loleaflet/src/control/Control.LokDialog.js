@@ -88,6 +88,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogMsg: function(e) {
 		e.id = parseInt(e.id);
+		var left, top;
 		var strDlgId = this._toDlgPrefix(e.id);
 
 		if (e.action === 'created') {
@@ -95,8 +96,8 @@ L.Control.LokDialog = L.Control.extend({
 			var height = parseInt(e.size.split(',')[1]);
 
 			if (e.winType === 'dialog') {
-				var left = (e.position != null)? parseInt(e.position.split(',')[0]): null;
-				var top = (e.position != null)? parseInt(e.position.split(',')[1]): null;
+				left = (e.position != null)? parseInt(e.position.split(',')[0]): null;
+				top = (e.position != null)? parseInt(e.position.split(',')[1]): null;
 
 				this._launchDialog(this._toDlgPrefix(e.id), left, top, width, height, e.title);
 				this._sendPaintWindow(e.id, this._createRectStr(e.id));
@@ -105,8 +106,8 @@ L.Control.LokDialog = L.Control.extend({
 					return;
 
 				var parentId = parseInt(e.parentId);
-				var left = parseInt(e.position.split(',')[0]);
-				var top = parseInt(e.position.split(',')[1]);
+				left = parseInt(e.position.split(',')[0]);
+				top = parseInt(e.position.split(',')[1]);
 
 				this._removeDialogChild(parentId);
 				this._dialogs[parentId].childid = e.id;
