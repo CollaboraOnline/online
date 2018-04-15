@@ -213,9 +213,6 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'insertgraphic') {
 		L.DomUtil.get('insertgraphic').click();
 	}
-	else if (id === 'inserttable') {
-		$('#inserttable-popup').toggle();
-	}
 	else if (id === 'fontcolor' && e.color) {
 		onColorPick(id, e.color);
 	}
@@ -251,13 +248,7 @@ function insertTable() {
 	var rows = 10;
 	var cols = 10;
 	var $grid = $('.inserttable-grid');
-	var $popup = $('#inserttable-popup');
 	var $status = $('#inserttable-status');
-
-	// Return if already initialized
-	if ($grid.children().length) {
-		return;
-	}
 
 	// init
 	for (var r = 0; r < rows; r++) {
@@ -283,7 +274,6 @@ function insertTable() {
 		click: function() {
 			var col = $(this).index() + 1;
 			var row = $(this).parent().index() + 1;
-			$popup.toggle();
 			$('.col').removeClass('bright');
 			$status.html('<br/>');
 			var msg = 'uno .uno:InsertTable {' +
@@ -291,18 +281,16 @@ function insertTable() {
 				+ col +
 				' }, "Rows": { "type": "long","value": '
 				+ row + ' }}';
+
+			if ($('#w2ui-overlay-toolbar-up').length > 0) {
+				$('#w2ui-overlay-toolbar-up').removeData('keepOpen')[0].hide();
+			}
+
 			map._socket.sendMessage(msg);
 			// refocus map due popup
 			map.focus();
 		}
 	}, '.col');
-
-	// close dialog on mouseleave
-	$popup.mouseleave(function() {
-		$(this).hide();
-		$('.col').removeClass('bright');
-		$status.html('<br/>');
-	});
 }
 
 function onColorPick(id, color) {
@@ -396,8 +384,8 @@ $(function () {
 			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _UNO('.uno:IncrementIndent', '', true), uno: 'IncrementIndent', disabled: true},
 			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _UNO('.uno:DecrementIndent', '', true), uno: 'DecrementIndent', disabled: true},
 			{type: 'break', id: 'incdecindent'},
-			{type: 'html',  id: 'inserttable-html', html: '<div id="inserttable-wrapper"><div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all" style="position: absolute; display: none;"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div></div>'},
-			{type: 'button',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table')},
+			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), overlay: {onShow: insertTable},
+			 html: '<div id="inserttable-wrapper"><div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div></div></div>'},
 			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true)},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true)},

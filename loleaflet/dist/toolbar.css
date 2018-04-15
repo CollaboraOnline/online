@@ -310,11 +310,6 @@ button.leaflet-control-search-next
 .w2ui-icon.specialcharacter{ background: url('../images/lc_insertsymbol.svg') no-repeat center !important; }
 .w2ui-icon.insertobjectchart{ background: url('../images/lc_drawchart.svg') no-repeat center !important; }
 
-#inserttable-wrapper {
-    position: relative;
-    right: 230px; /* insertable popup has ~230px width, place it to open from its right edge to the left */
-}
-
 .inserttable-pop {
     z-index: 1000;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
@@ -345,7 +340,6 @@ button.leaflet-control-search-next
     position: relative;
     padding: 2px;
     display: block;
-    width: 232px;
     height: 232px;
 }
 
