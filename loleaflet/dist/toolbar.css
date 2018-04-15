@@ -52,6 +52,11 @@ w2ui-toolbar {
     z-index: 11;
 }
 
+.w2ui-scroll-left,
+.w2ui-scroll-right {
+    z-index: 15;
+}
+
 /* center the toolbar */
 #tb_presentation-toolbar_item_left {
     width: 50%;
