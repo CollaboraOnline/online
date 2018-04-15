@@ -18,13 +18,13 @@ function _mobilify() {
 	var toolbarUp = w2ui['toolbar-up'];
 	var statusbar = w2ui['toolbar-down'];
 
-	toolbarUp.items.forEach(function(item){
+	toolbarUp.items.forEach(function(item) {
 		if (item.mobile === false && !item.hidden) {
 			toolbarUp.hide(item.id);
 		}
 	});
 
-	statusbar.items.forEach(function(item){
+	statusbar.items.forEach(function(item) {
 		if (item.mobile === false && !item.hidden) {
 			statusbar.hide(item.id);
 		}
@@ -41,15 +41,14 @@ function _mobilify() {
 function _unmobilify() {
 	var toolbarUp = w2ui['toolbar-up'];
 	var statusbar = w2ui['toolbar-down'];
-	var item;
 
-	toolbarUp.items.forEach(function(item){
+	toolbarUp.items.forEach(function(item) {
 		if (item.mobile === false && item.hidden) {
 			toolbarUp.show(item.id);
 		}
 	});
 
-	statusbar.items.forEach(function(item){
+	statusbar.items.forEach(function(item) {
 		if (item.mobile === false && item.hidden) {
 			statusbar.show(item.id);
 		}
@@ -87,7 +86,7 @@ function _cancelSearch() {
 	map.focus();
 }
 
-function onClick(id, item, subItem) {
+function onClick(e, id, item, subItem) {
 	if (w2ui['toolbar-up'].get(id) !== null) {
 		var toolbar = w2ui['toolbar-up'];
 		item = toolbar.get(id);
@@ -217,21 +216,11 @@ function onClick(id, item, subItem) {
 	else if (id === 'inserttable') {
 		$('#inserttable-popup').toggle();
 	}
-	else if (id === 'fontcolor') {
-		// absolutely no idea why, but without the timeout, the popup is
-		// closed as soon as it is opend
-		setTimeout(function () {
-			$('#fontColorPicker').colorpicker('showPalette');
-			$('.ui-widget-content').addClass('loleaflet-font');
-		}, 0);
+	else if (id === 'fontcolor' && e.color) {
+		onColorPick(id, e.color);
 	}
-	else if (id === 'backcolor') {
-		// absolutely no idea why, but without the timeout, the popup is
-		// closed as soon as it is opend
-		setTimeout(function () {
-			$('#backColorPicker').colorpicker('showPalette');
-			$('.ui-widget-content').addClass('loleaflet-font');
-		}, 0);
+	else if (id === 'backcolor' && e.color) {
+		onColorPick(id, e.color)
 	}
 	else if (id === 'sum') {
 		map.sendUnoCommand('.uno:AutoSum');
@@ -316,7 +305,7 @@ function insertTable() {
 	});
 }
 
-function onColorPick(e, color) {
+function onColorPick(id, color) {
 	if (map.getPermission() !== 'edit' || color === undefined) {
 		return;
 	}
@@ -324,7 +313,7 @@ function onColorPick(e, color) {
 	color = parseInt(color.replace('#', ''), 16);
 	var command = {};
 	var fontcolor, backcolor;
-	if (e.target.id === 'fontColorPicker') {
+	if (id === 'fontcolor') {
 		fontcolor = {'text': 'FontColor',
 					 'spreadsheet': 'Color',
 					 'presentation': 'Color'}[map.getDocType()];
@@ -333,7 +322,7 @@ function onColorPick(e, color) {
 		command[fontcolor].value = color;
 		var uno = '.uno:' + fontcolor;
 	}
-	else if (e.target.id === 'backColorPicker') {
+	else if (id === 'backcolor') {
 		backcolor = {'text': 'BackColor',
 					 'spreadsheet': 'BackgroundColor',
 					 'presentation': 'CharBackColor'}[map.getDocType()];
@@ -380,10 +369,8 @@ $(function () {
 			{type: 'break', id: 'formatbreak'},
 			{type: 'button',  id: 'insertfootnote', img: 'insertfootnote', hint: _UNO('.uno:InsertFootnote'), uno: 'InsertFootnote', mobile: false},
 			{type: 'break' , mobile:false},
-			{type: 'html',  id: 'fontcolor-html', html: '<div id="fontcolor-wrapper"><input id="fontColorPicker" style="display:none;"></div>', mobile:false},
-			{type: 'button',  id: 'fontcolor', img: 'color', hint: _UNO('.uno:FontColor'), mobile:false},
-			{type: 'html',  id: 'backcolor-html', html: '<div id="backcolor-wrapper"><input id="backColorPicker" style="display:none;"></div>', mobile:false},
-			{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
+			{type: 'text-color',  id: 'fontcolor', hint: _UNO('.uno:FontColor')},
+			{type: 'color',  id: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
 			{type: 'break'},
 			{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true), uno: 'LeftPara', unosheet: 'AlignLeft', disabled: true},
 			{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true), uno: 'CenterPara', unosheet: 'AlignHorizontalCenter', disabled: true},
@@ -417,69 +404,9 @@ $(function () {
 			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'}
 		],
 		onClick: function (e) {
-			onClick(e.target);
+			onClick(e, e.target);
 		},
 		onRefresh: function() {
-			if (!L.DomUtil.get('fontcolorindicator')) {
-				var fontColorIndicator = L.DomUtil.create('div', 'font-color-indicator', L.DomUtil.get('tb_toolbar-up_item_fontcolor'));
-				fontColorIndicator.id = 'fontcolorindicator';
-				L.DomEvent.on(fontColorIndicator, 'mouseover', function () {
-					var button = fontColorIndicator.parentNode.firstChild;
-					$(button).addClass('over');
-				});
-				L.DomEvent.on(fontColorIndicator, 'mouseout', function () {
-					var button = fontColorIndicator.parentNode.firstChild;
-					$(button).removeClass('over');
-				});
-				L.DomEvent.on(fontColorIndicator, 'mousedown', function () {
-					var button = fontColorIndicator.parentNode.firstChild;
-					$(button).addClass('down');
-				});
-				L.DomEvent.on(fontColorIndicator, 'mouseup', function () {
-					var button = fontColorIndicator.parentNode.firstChild;
-					$(button).removeClass('down');
-				});
-				fontColorIndicator.addEventListener('click', function () {
-					var toolbar = w2ui['toolbar-up'];
-					if (toolbar) {
-						toolbar.click('fontcolor', window.event);
-					}
-				}, false);
-
-				$('#fontColorPicker').colorpicker({showOn:'none', hideButton:true});
-				$('#fontColorPicker').on('change.color', onColorPick);
-			}
-
-			if (!L.DomUtil.get('backcolorindicator')) {
-				var backColorIndicator = L.DomUtil.create('div', 'back-color-indicator', L.DomUtil.get('tb_toolbar-up_item_backcolor'));
-				backColorIndicator.id = 'backcolorindicator';
-				L.DomEvent.on(backColorIndicator, 'mouseover', function () {
-					var button = backColorIndicator.parentNode.firstChild;
-					$(button).addClass('over');
-				});
-				L.DomEvent.on(backColorIndicator, 'mouseout', function () {
-					var button = backColorIndicator.parentNode.firstChild;
-					$(button).removeClass('over');
-				});
-				L.DomEvent.on(backColorIndicator, 'mousedown', function () {
-					var button = backColorIndicator.parentNode.firstChild;
-					$(button).addClass('down');
-				});
-				L.DomEvent.on(backColorIndicator, 'mouseup', function () {
-					var button = backColorIndicator.parentNode.firstChild;
-					$(button).removeClass('down');
-				});
-				backColorIndicator.addEventListener('click', function () {
-					var toolbar = w2ui['toolbar-up'];
-					if (toolbar) {
-						toolbar.click('backcolor', window.event);
-					}
-				}, false);
-
-				$('#backColorPicker').colorpicker({showOn:'none', hideButton:true});
-				$('#backColorPicker').on('change.color', onColorPick);
-			}
-
 			if (map.getDocType() === 'presentation') {
 				// Fill the style select box if not yet filled
 				if ($('.styles-select')[0] && $('.styles-select')[0].length === 0) {
@@ -518,7 +445,7 @@ $(function () {
 			{type: 'html', id: 'formula', html: '<input id="formulaInput" type="text">'}
 		],
 		onClick: function (e) {
-			onClick(e.target);
+			onClick(e, e.target);
 		},
 		onRefresh: function() {
 			$('#addressInput').off('keyup', onAddressInput).on('keyup', onAddressInput);
@@ -537,7 +464,7 @@ $(function () {
 			{type: 'button',  id: 'insertsheet', img: 'insertsheet', hidden:true, hint: _('Insert sheet')}
 		],
 		onClick: function (e) {
-			onClick(e.target);
+			onClick(e, e.target);
 		}
 	});
 	$('#presentation-toolbar').w2toolbar({
@@ -552,7 +479,7 @@ $(function () {
 			{type: 'html',  id: 'right'}
 		],
 		onClick: function (e) {
-			onClick(e.target);
+			onClick(e, e.target);
 		}
 	});
 
@@ -609,7 +536,7 @@ $(function () {
 				}, 100);
 				return;
 			}
-			onClick(e.target, e.item, e.subItem);
+			onClick(e, e.target, e.item, e.subItem);
 		},
 		onRefresh: function() {
 			$('#tb_toolbar-down_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
