@@ -2,7 +2,7 @@ Leaflet platform for LibreOffice Online
 ========================================
 
 This is the client part of LibreOffice Online.  For the server part, see the
-../loolwsd/README, and install it first.
+../wsd/README, and install it first.
 
 Build dependencies
 ------------------
@@ -79,7 +79,7 @@ To see an example:
 
 Note that this will, by default, set the loolwsd's file server's root to the parent directory of loolwsd,
 which means you can access all the files in loleaflet using /loleaflet/ path. It is advised to set
-file_server_root_path manually for more control. See loolwsd/README for more information.
+file_server_root_path manually for more control. See wsd/README for more information.
 
 * open dist/loleaflet.html through loolwsd's fileserver
 
