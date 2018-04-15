@@ -67,6 +67,12 @@ w2ui-toolbar {
     width: 700px;
 }
 
+@media (max-width: 767px) {
+     #formulaInput {
+	width: 500px;
+     }
+}
+
 #document-name-input {
     position: fixed;
     z-index: 1050;

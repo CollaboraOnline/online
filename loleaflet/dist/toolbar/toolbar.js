@@ -12,56 +12,23 @@ function onDelete(e) {
 	}
 }
 
-// When we are in mobile view, only these items in toolbar-up will be shown
-var toolbarUpMobileItems = [
-	'left',
-	'save',
-	'savebreak',
-	'bold',
-	'italic',
-	'underline',
-	'strikeout',
-	'formatbreak',
-	'leftpara',
-	'centerpara',
-	'rightpara',
-	'justifypara',
-	'right',
-	'rightmenupadding'
-];
-
-var statusbarMobileItems = [
-	'search',
-	'searchprev',
-	'searchnext',
-	'cancelsearch',
-	'left',
-	'right',
-	'userlist',
-	'userlistbreak',
-	'prev',
-	'next'
-];
-
 var nUsers, oneUser, noUser;
 
 function _mobilify() {
 	var toolbarUp = w2ui['toolbar-up'];
 	var statusbar = w2ui['toolbar-down'];
 
-	for (var itemIdx in toolbarUp.items) {
-		var id = toolbarUp.items[itemIdx].id;
-		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && !toolbarUp.get(id).hidden) {
-			toolbarUp.hide(id);
+	toolbarUp.items.forEach(function(item){
+		if (item.mobile === false && !item.hidden) {
+			toolbarUp.hide(item.id);
 		}
-	}
+	});
 
-	for (itemIdx in statusbar.items) {
-		id = statusbar.items[itemIdx].id;
-		if (statusbarMobileItems.indexOf(id) === -1 && !statusbar.get(id).hidden) {
-			statusbar.hide(id);
+	statusbar.items.forEach(function(item){
+		if (item.mobile === false && !item.hidden) {
+			statusbar.hide(item.id);
 		}
-	}
+	});
 
 	nUsers = '%n';
 	oneUser = '1';
@@ -74,20 +41,19 @@ function _mobilify() {
 function _unmobilify() {
 	var toolbarUp = w2ui['toolbar-up'];
 	var statusbar = w2ui['toolbar-down'];
+	var item;
 
-	for (var itemIdx in toolbarUp.items) {
-		var id = toolbarUp.items[itemIdx].id;
-		if (toolbarUpMobileItems.indexOf(id) === -1 && toolbarUp.get(id) && toolbarUp.get(id).hidden) {
-			toolbarUp.show(id);
+	toolbarUp.items.forEach(function(item){
+		if (item.mobile === false && item.hidden) {
+			toolbarUp.show(item.id);
 		}
-	}
+	});
 
-	for (itemIdx in statusbar.items) {
-		id = statusbar.items[itemIdx].id;
-		if (statusbarMobileItems.indexOf(id) === -1 && statusbar.get(id).hidden) {
-			statusbar.show(id);
+	statusbar.items.forEach(function(item){
+		if (item.mobile === false && item.hidden) {
+			statusbar.show(item.id);
 		}
-	}
+	});
 
 	nUsers = _('%n users');
 	oneUser = _('1 user');
@@ -107,7 +73,6 @@ function resizeToolbar() {
 		_unmobilify();
 	}
 
-	toolbarUp.refresh();
 	toolbarUp.resize();
 	statusbar.resize();
 }
@@ -404,20 +369,20 @@ $(function () {
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 			{type: 'button',  id: 'repair', img: 'repair', hint: _('Document repair'), disabled: true},
 			{type: 'break'},
-			{type: 'html',   id: 'styles', html: '<select class="styles-select"></select>'},
-			{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>'},
-			{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>'},
-			{type: 'break'},
+			{type: 'html',   id: 'styles', html: '<select class="styles-select"></select>', mobile: false},
+			{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>', mobile: false},
+			{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>', mobile: false},
+			{type: 'break', mobile: false},
 			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold', disabled: true},
 			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic', disabled: true},
 			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline', disabled: true},
 			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout', disabled: true},
 			{type: 'break', id: 'formatbreak'},
-			{type: 'button',  id: 'insertfootnote', img: 'insertfootnote', hint: _UNO('.uno:InsertFootnote'), uno: 'InsertFootnote' },
-			{type: 'break' },
-			{type: 'html',  id: 'fontcolor-html', html: '<div id="fontcolor-wrapper"><input id="fontColorPicker" style="display:none;"></div>'},
-			{type: 'button',  id: 'fontcolor', img: 'color', hint: _UNO('.uno:FontColor')},
-			{type: 'html',  id: 'backcolor-html', html: '<div id="backcolor-wrapper"><input id="backColorPicker" style="display:none;"></div>'},
+			{type: 'button',  id: 'insertfootnote', img: 'insertfootnote', hint: _UNO('.uno:InsertFootnote'), uno: 'InsertFootnote', mobile: false},
+			{type: 'break' , mobile:false},
+			{type: 'html',  id: 'fontcolor-html', html: '<div id="fontcolor-wrapper"><input id="fontColorPicker" style="display:none;"></div>', mobile:false},
+			{type: 'button',  id: 'fontcolor', img: 'color', hint: _UNO('.uno:FontColor'), mobile:false},
+			{type: 'html',  id: 'backcolor-html', html: '<div id="backcolor-wrapper"><input id="backColorPicker" style="display:none;"></div>', mobile:false},
 			{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
 			{type: 'break'},
 			{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true), uno: 'LeftPara', unosheet: 'AlignLeft', disabled: true},
@@ -606,8 +571,8 @@ $(function () {
 			{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
 			{type: 'html',  id: 'left'},
 			{type: 'html',  id: 'right'},
-			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>'},
-			{type: 'break', id: 'modifiedstatuslabelbreak'},
+			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>', mobile:false},
+			{type: 'break', id: 'modifiedstatuslabelbreak', mobile:false},
 			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
 				'<hr><table class="loleaflet-font" id="editor-btn">' +
 				'<tr>' +
@@ -624,7 +589,7 @@ $(function () {
 			{type: 'break', id: 'prevnextbreak'},
 			{type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _('Reset zoom')},
 			{type: 'button',  id: 'zoomout', img: 'zoomout', hint: _UNO('.uno:ZoomMinus')},
-			{type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>'},
+			{type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>', mobile: false},
 			{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _UNO('.uno:ZoomPlus')}
 		],
 		onClick: function (e) {
@@ -1002,16 +967,16 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'RowColSelCount',
 				html: '<div id="RowColSelCount" class="loleaflet-font" title="'+_('Selected range of cells')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break3'},
-			{type: 'html',  id: 'InsertMode',
+			{type: 'html',  id: 'InsertMode', mobile: false,
 				html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break4'},
-			{type: 'html',  id: 'LanguageStatus',
+			{type: 'html',  id: 'LanguageStatus', mobile: false,
 				html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break5'},
-			{type: 'html',  id: 'StatusSelectionMode',
+			{type: 'html',  id: 'StatusSelectionMode', mobile: false,
 				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break8'},
-			{type: 'html',  id: 'StateTableCell',
+			{type: 'break', id:'break8', mobile: false},
+			{type: 'html',  id: 'StateTableCell', mobile:false,
 			 html: '<div id="StateTableCell" class="loleaflet-font" title="'+_('Choice of functions')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'menu', id: 'StateTableCellMenu', caption: '', current: 5, items: [
 				{ func: '2', text: _('Average'), icon: ''},
@@ -1036,16 +1001,16 @@ map.on('doclayerinit', function () {
 			{type: 'html',  id: 'StatePageNumber',
 				html: '<div id="StatePageNumber" class="loleaflet-font" title="'+_('Number of Pages')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
 			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'StateWordCount',
+			{type: 'html',  id: 'StateWordCount', mobile: false,
 				html: '<div id="StateWordCount" class="loleaflet-font" title="'+_('Word Counter')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break5'},
-			{type: 'html',  id: 'InsertMode',
+			{type: 'break', id:'break5', mobile: false},
+			{type: 'html',  id: 'InsertMode', mobile: false,
 				html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break6'},
-			{type: 'html',  id: 'StatusSelectionMode',
+			{type: 'break', id:'break6', mobile:false},
+			{type: 'html',  id: 'StatusSelectionMode', mobile: false,
 				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break7'},
-			{type: 'html',  id: 'LanguageStatus',
+			{type: 'break', id:'break7', mobile:false},
+			{type: 'html',  id: 'LanguageStatus', mobile: false,
 				html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' }
 		]);
 
@@ -1066,8 +1031,8 @@ map.on('doclayerinit', function () {
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'PageStatus',
 				html: '<div id="PageStatus" class="loleaflet-font" title="'+_('Number of Slides')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'LanguageStatus',
+			{type: 'break', id:'break2', mobile:false},
+			{type: 'html',  id: 'LanguageStatus', mobile: false,
 				html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' }
 		]);
 

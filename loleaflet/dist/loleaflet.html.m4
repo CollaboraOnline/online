@@ -49,12 +49,16 @@ ifelse(debug,[true],[<link rel="stylesheet" href="/loleaflet/%VERSION%/w2ui-1.5.
 	</label>
 	<ul id="main-menu" class="sm sm-simple lo-menu"></ul>
       </nav>
-      <div id="toolbar-wrapper">
-	<div id="toolbar-logo"></div>
-	<div id="toolbar-up"></div>
-	<div id="toolbar-hamburger"></div>
-	<div id="formulabar"></div>
-      </div>
+      <table id="toolbar-wrapper">
+	<tr>
+	  <td id="toolbar-logo"></td>
+	  <td id="toolbar-up"</td>
+	  <td id="toolbar-hamburger"></td>
+	</tr>
+	<tr>
+	  <td colspan="3" id="formulabar"></td>
+	</tr>
+      </table>
       <input id="insertgraphic" type="file" style="position: fixed; top: -100em">
     </div>
 

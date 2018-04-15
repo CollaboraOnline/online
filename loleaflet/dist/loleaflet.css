@@ -68,20 +68,17 @@ body {
 
 #toolbar-wrapper {
     position: relative;
-    display: table;
     table-layout: fixed;
     border-collapse: collapse;
     width: 100%;
 }
 
 #toolbar-logo {
-    display: table-cell;
     width: 125px;
 }
 
 #toolbar-hamburger {
-    display: none;
-    width: 41px;
+    width: 0;
 }
 
 @media (max-width: 767px) {
@@ -112,7 +109,7 @@ body {
 	width: 32px;
     }
     #toolbar-hamburger {
-	display: table-cell;
+	width: 41px;
     }
     #closebutton {
 	display: none;
