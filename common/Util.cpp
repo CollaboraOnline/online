@@ -140,6 +140,21 @@ namespace Util
         return newTmp;
     }
 
+    int getProcessThreadCount()
+    {
+        DIR *fdDir = opendir("/proc/self/task");
+        if (!fdDir)
+        {
+            LOG_ERR("No proc mounted");
+            return -1;
+        }
+        int tasks = 0;
+        while (readdir(fdDir))
+            tasks++;
+        closedir(fdDir);
+        return tasks;
+    }
+
     // close what we have - far faster than going up to a 1m open_max eg.
     static bool closeFdsFromProc()
     {

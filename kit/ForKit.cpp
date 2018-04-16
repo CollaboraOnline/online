@@ -527,6 +527,9 @@ int main(int argc, char** argv)
     if (!globalPreinit(loTemplate))
         std::_Exit(Application::EXIT_SOFTWARE);
 
+    if (Util::getProcessThreadCount() != 1)
+        LOG_ERR("Error: forkit has more than a single thread after pre-init");
+
     LOG_INF("Preinit stage OK.");
 
     // We must have at least one child, more are created dynamically.
