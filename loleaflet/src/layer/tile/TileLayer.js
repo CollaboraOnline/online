@@ -2157,20 +2157,19 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_fitWidthZoom: function (e, maxZoom) {
+		if (isNaN(this._docWidthTwips)) { return; }
 		var size = e ? e.newSize : this._map.getSize();
 		var widthTwips = size.x * this._map.options.tileWidthTwips / this._tileSize;
-		maxZoom = maxZoom ? maxZoom : this._map.getZoom();
+		var ratio = widthTwips / this._docWidthTwips;
 
+		maxZoom = maxZoom ? maxZoom : this.options.maxZoom;
 		// 'fit width zoom' has no use in spreadsheets, ignore it there
 		if (this._docType !== 'spreadsheet') {
 			var crsScale = this._map.options.crs.scale(1);
-			if (this._docWidthTwips > 0)
-			{
-				var ratio = widthTwips / this._docWidthTwips;
-				var zoom = this._map.getZoom() + Math.floor(Math.log(ratio) / Math.log(crsScale));
+			var zoom = 10 + Math.floor(Math.log(ratio) / Math.log(crsScale));
 
-				zoom = Math.max(1, zoom);
-				zoom = Math.min(maxZoom, zoom);
+			zoom = Math.min(maxZoom, Math.max(1, zoom));
+			if (this._docWidthTwips * this._map.getZoomScale(zoom, 10) < widthTwips) {
 				this._map.setZoom(zoom, {animate: false});
 			}
 		}
