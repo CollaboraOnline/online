@@ -113,6 +113,8 @@ bool isPamAuthOk(const std::string user, const std::string pass)
 bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                                                HTTPResponse &response)
 {
+    assert(LOOLWSD::AdminEnabled);
+
     const auto& config = Application::instance().config();
     const auto sslKeyPath = config.getString("ssl.key_file_path", "");
 
@@ -250,10 +252,15 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
         if (request.getMethod() == HTTPRequest::HTTP_GET)
         {
             if (endPoint == "admin.html" ||
+                endPoint == "admin-bundle.js" ||
+                endPoint == "admin-localizations.js" ||
                 endPoint == "adminSettings.html" ||
                 endPoint == "adminAnalytics.html")
             {
                 noCache = true;
+
+                if (!LOOLWSD::AdminEnabled)
+                    throw Poco::FileAccessDeniedException("Admin console disabled");
 
                 if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
                     throw Poco::Net::NotAuthenticatedException("Invalid admin login");

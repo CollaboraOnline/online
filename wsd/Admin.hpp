@@ -60,11 +60,7 @@ public:
         return admin;
     }
 
-    void start()
-    {
-        // FIXME: not if admin console is not enabled ?
-        startThread();
-    }
+    void start();
 
     /// Custom poll thread function
     void pollingThread() override;
