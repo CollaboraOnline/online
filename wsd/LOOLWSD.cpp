@@ -569,6 +569,7 @@ std::atomic<int> LOOLWSD::ForKitProcId(-1);
 #endif
 bool LOOLWSD::NoSeccomp = false;
 bool LOOLWSD::NoCapsForKit = false;
+bool LOOLWSD::AdminEnabled = true;
 #ifdef FUZZER
 bool LOOLWSD::DummyLOK = false;
 std::string LOOLWSD::FuzzFileName;
@@ -856,6 +857,7 @@ void LOOLWSD::initialize(Application& self)
 
     NoSeccomp = !getConfigValue<bool>(conf, "security.seccomp", true);
     NoCapsForKit = !getConfigValue<bool>(conf, "security.capabilities", true);
+    AdminEnabled = getConfigValue<bool>(conf, "admin_console.enable", true);
 
 #if ENABLE_SUPPORT_KEY
     const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");

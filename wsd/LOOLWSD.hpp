@@ -44,6 +44,7 @@ public:
     static unsigned int NumPreSpawnedChildren;
     static bool NoCapsForKit;
     static bool NoSeccomp;
+    static bool AdminEnabled;
     static std::atomic<int> ForKitWritePipe;
     static std::atomic<int> ForKitProcId;
     static bool DummyLOK;
