@@ -154,7 +154,7 @@ namespace LOKitHelper
                     std::string partinfo(ptrValue);
                     std::free(ptrValue);
                     const auto aPartInfo = Util::JsonToMap(partinfo);
-                    for (const auto prop: aPartInfo)
+                    for (const auto& prop: aPartInfo)
                     {
                         const std::string& name = prop.first;
                         if (name == "visible")
