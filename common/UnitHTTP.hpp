@@ -114,7 +114,12 @@ public:
 
 namespace UnitHTTP
 {
-    Poco::Net::HTTPClientSession* createSession();
+    Poco::Net::HTTPClientSession* createSession()
+    {
+        // HTTP forced in configure hook.
+        return new Poco::Net::HTTPClientSession ("127.0.0.1",
+                                                 ClientPortNumber);
+    }
 }
 
 class UnitWebSocket
@@ -124,14 +129,32 @@ class UnitWebSocket
 
 public:
     /// Get a websocket connected for a given URL
-    UnitWebSocket(const std::string& docURL);
+    UnitWebSocket(const std::string& docURL)
+    {
+        try {
+            UnitHTTPServerResponse response;
+            UnitHTTPServerRequest request(response, docURL);
+
+            _session = UnitHTTP::createSession();
+
+            // FIXME: leaking the session - hey ho ... do we need a UnitSocket ?
+            _socket = new LOOLWebSocket(*_session, request, response);
+        } catch (const Poco::Exception &ex) {
+            std::cerr << "Exception creating websocket " << ex.displayText() << std::endl;
+            throw;
+        }
+    }
+
     ~UnitWebSocket()
     {
         delete _socket;
         delete _session;
     }
 
-    LOOLWebSocket* getLOOLWebSocket() const;
+    LOOLWebSocket* getLOOLWebSocket() const
+    {
+        return _socket;
+    }
 };
 
 #endif

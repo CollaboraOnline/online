@@ -63,7 +63,6 @@ shared_sources = common/FileUtil.cpp \
                  common/SigUtil.cpp \
                  common/SpookyV2.cpp \
                  common/Unit.cpp \
-                 common/UnitHTTP.cpp \
                  common/Util.cpp \
                  net/DelaySocket.cpp \
                  net/Socket.cpp
