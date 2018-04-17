@@ -292,6 +292,10 @@ L.Control.LokDialog = L.Control.extend({
 		this._createDialogCursor(strDlgId);
 		var dlgInput = this._createDialogInput(strDlgId);
 
+		L.DomEvent.on(dialogCanvas, 'mousemove', function(e) {
+			if (!this._dialogs[this._currentId].title) // For context menu
+				this._postWindowMouseEvent('move', this._toRawDlgId(strDlgId), e.offsetX, e.offsetY, 1, 0, 0);
+		}, this);
 		L.DomEvent.on(dialogCanvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stopPropagation(e);
 			var buttons = 0;
