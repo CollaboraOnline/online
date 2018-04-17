@@ -552,6 +552,7 @@ std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
 std::atomic<int> LOOLWSD::ForKitProcId(-1);
 bool LOOLWSD::NoCapsForKit = false;
 #endif
+bool LOOLWSD::AdminEnabled = true;
 #ifdef FUZZER
 bool LOOLWSD::DummyLOK = false;
 std::string LOOLWSD::FuzzFileName;
@@ -825,6 +826,8 @@ void LOOLWSD::initialize(Application& self)
     // Log the connection and document limits.
     LOOLWSD::MaxConnections = MAX_CONNECTIONS;
     LOOLWSD::MaxDocuments = MAX_DOCUMENTS;
+
+    AdminEnabled = getConfigValue<bool>(conf, "admin_console.enable", true);
 
 #if ENABLE_SUPPORT_KEY
     const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");
