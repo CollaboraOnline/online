@@ -291,7 +291,13 @@ bool AdminSocketHandler::handleInitialRequest(
     const std::weak_ptr<StreamSocket> &socketWeak,
     const Poco::Net::HTTPRequest& request)
 {
-    auto socket = socketWeak.lock();
+    if (!LOOLWSD::AdminEnabled)
+    {
+        LOG_ERR("Request for disabled admin console");
+        return false;
+    }
+
+    std::shared_ptr<StreamSocket> socket = socketWeak.lock();
 
     // Different session id pool for admin sessions (?)
     const auto sessionId = Util::decodeId(LOOLWSD::GenSessionId());
@@ -604,6 +610,12 @@ void Admin::dumpState(std::ostream& os)
 {
     // FIXME: be more helpful ...
     SocketPoll::dumpState(os);
+}
+
+void Admin::start()
+{
+    if (LOOLWSD::AdminEnabled)
+        startThread();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
