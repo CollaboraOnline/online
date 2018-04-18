@@ -34,6 +34,7 @@
 #include <Util.hpp>
 
 #include <net/Socket.hpp>
+#include <net/SslSocket.hpp>
 #include <net/WebSocketHandler.hpp>
 
 #include <common/SigUtil.hpp>
@@ -275,6 +276,14 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
       _admin(adminManager),
       _sessionId(0),
       _isAuthenticated(false)
+{
+}
+
+AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
+    : WebSocketHandler(),
+      _admin(adminManager),
+      _sessionId(0),
+      _isAuthenticated(true)
 {
 }
 
@@ -613,8 +622,156 @@ void Admin::dumpState(std::ostream& os)
     SocketPoll::dumpState(os);
 }
 
+class MonitorSocketHandler : public AdminSocketHandler
+{
+    bool _connecting;
+public:
+
+    MonitorSocketHandler(Admin *admin) :
+        AdminSocketHandler(admin),
+        _connecting(true)
+    {
+    }
+    int getPollEvents(std::chrono::steady_clock::time_point now,
+                      int &timeoutMaxMs) override
+    {
+        if (_connecting)
+        {
+            LOG_TRC("Waiting for outbound connection to complete");
+            return POLLOUT;
+        }
+        else
+            return AdminSocketHandler::getPollEvents(now, timeoutMaxMs);
+    }
+
+    void performWrites() override
+    {
+        LOG_TRC("Outbound monitor - connected");
+        _connecting = false;
+        setWebSocket();
+        return AdminSocketHandler::performWrites();
+    }
+};
+
+void Admin::connectToMonitor(const Poco::URI &uri)
+{
+    LOG_INF("Connecting to monitor " << uri.getHost() << " : " << uri.getPort() << " : " << uri.getPath());
+
+    // FIXME: put this in a ClientSocket class ?
+    // FIXME: store the address there - and ... (so on) ...
+	struct addrinfo* ainfo = nullptr;
+	struct addrinfo hints;
+	std::memset(&hints, 0, sizeof(hints));
+	int rc = getaddrinfo(uri.getHost().c_str(),
+                         std::to_string(uri.getPort()).c_str(),
+                         &hints, &ainfo);
+    std::string canonicalName;
+    bool isSSL = uri.getScheme() != "ws";
+#if !ENABLE_SSL
+    if (isSSL)
+    {
+        LOG_ERR("Error: wss for monitor requested but SSL not compiled in.");
+        return;
+    }
+#endif
+
+    if (!rc && ainfo)
+    {
+        for (struct addrinfo* ai = ainfo; ai; ai = ai->ai_next)
+        {
+            if (ai->ai_canonname)
+                canonicalName = ai->ai_canonname;
+
+            if (ai->ai_addrlen && ai->ai_addr)
+            {
+                int fd = socket(ai->ai_addr->sa_family, SOCK_STREAM | SOCK_NONBLOCK, 0);
+                int res = connect(fd, ai->ai_addr, ai->ai_addrlen);
+                // FIXME: SSL sockets presumably need some setup, checking etc. and ... =)
+                if (fd < 0 || (res < 0 && errno != EINPROGRESS))
+                {
+                    LOG_ERR("Failed to connect to " << uri.getHost());
+                    close(fd);
+                }
+                else
+                {
+                    std::shared_ptr<StreamSocket> socket;
+                    std::shared_ptr<SocketHandlerInterface> handler = std::make_shared<MonitorSocketHandler>(this);
+#if ENABLE_SSL
+                    if (isSSL)
+                        socket = StreamSocket::create<SslStreamSocket>(fd, handler);
+#endif
+                    if (!socket && !isSSL)
+                        socket = StreamSocket::create<StreamSocket>(fd, handler);
+
+                    if (socket)
+                    {
+                        LOG_DBG("Connected to monitor " << uri.getHost() << " #" << socket->getFD());
+
+                        // cf. WebSocketHandler::upgradeToWebSocket (?)
+                        // send Sec-WebSocket-Key: <hmm> ... Sec-WebSocket-Protocol: chat, Sec-WebSocket-Version: 13
+
+                        std::ostringstream oss;
+                        oss << "GET " << uri.getHost() << " HTTP/1.1\r\n"
+                            "Connection:Upgrade\r\n"
+                            "Sec-WebSocket-Accept:GAcwqP21iVOY2yKefQ64c0yVN5M=\r\n"
+                            "Upgrade:websocket\r\n"
+                            "Accept-Encoding:gzip, deflate, br\r\n"
+                            "Accept-Language:en\r\n"
+                            "Cache-Control:no-cache\r\n"
+                            "Pragma:no-cache\r\n"
+                            "Sec-WebSocket-Extensions:permessage-deflate; client_max_window_bits\r\n"
+                            "Sec-WebSocket-Key:fxTaWTEMVhq1PkWsMoLxGw==\r\n"
+                            "Sec-WebSocket-Version:13\r\n"
+                            "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                            "\r\n";
+                        socket->send(oss.str());
+                        handler->onConnect(socket);
+                        insertNewSocket(socket);
+                    }
+                    else
+                    {
+                        LOG_ERR("Failed to allocate socket for monitor " << uri.getHost());
+                        close(fd);
+                    }
+
+                    break;
+                }
+			}
+        }
+
+		freeaddrinfo(ainfo);
+    }
+    else
+        LOG_ERR("Failed to lookup monitor host '" << uri.getHost() << "' skipping");
+}
+
 void Admin::start()
 {
+    bool haveMonitors = false;
+    const auto& config = Application::instance().config();
+
+    for (size_t i = 0; ; ++i)
+    {
+        const std::string path = "monitors.monitor[" + std::to_string(i) + "]";
+        const std::string uri = config.getString(path, "");
+        if (!config.has(path))
+            break;
+        if (!uri.empty())
+        {
+            Poco::URI monitor(uri);
+            if (monitor.getScheme() == "wss" || monitor.getScheme() == "ws")
+            {
+                addCallback([=] { connectToMonitor(monitor); } );
+                haveMonitors = true;
+            }
+            else
+                LOG_ERR("Unhandled monitor URI: '" << uri << "' should be \"wss://foo:1234/baa\"");
+        }
+    }
+
+    if (!haveMonitors)
+        LOG_TRC("No monitors configured.");
+
     startThread();
 }
 

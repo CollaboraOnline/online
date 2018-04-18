@@ -23,6 +23,8 @@ class Admin;
 class AdminSocketHandler : public WebSocketHandler
 {
 public:
+    AdminSocketHandler(Admin* adminManager);
+
     AdminSocketHandler(Admin* adminManager,
                        const std::weak_ptr<StreamSocket>& socket,
                        const Poco::Net::HTTPRequest& request);
@@ -129,6 +131,9 @@ private:
         const int value = std::max<int>(interval, MinStatsIntervalMs);
         return ((value + MinStatsIntervalMs - 1) / MinStatsIntervalMs) * MinStatsIntervalMs;
     }
+
+    /// Synchronous connection setup to remote monitoring server
+    void connectToMonitor(const Poco::URI &uri);
 
 private:
     /// The model is accessed only during startup & in
