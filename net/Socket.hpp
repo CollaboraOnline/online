@@ -118,7 +118,7 @@ public:
     }
 
     /// Create socket of the given type.
-    int createSocket(Type type);
+    static int createSocket(Type type);
 
     /// Returns the OS native socket fd.
     int getFD() const { return _fd; }

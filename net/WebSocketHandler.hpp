@@ -432,7 +432,12 @@ protected:
         const std::string res = oss.str();
         LOG_TRC("#" << socket->getFD() << ": Sending WS Upgrade response: " << res);
         socket->send(res);
+        setWebSocket();
+    }
 
+    void setWebSocket()
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         socket->setWebSocket();
 
         // No need to ping right upon connection/upgrade,
