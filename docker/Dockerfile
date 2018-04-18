@@ -18,7 +18,7 @@ RUN apt-get -y install apt-transport-https locales-all libpng12-0 libxinerama1 l
 RUN echo "deb https://collaboraoffice.com/repos/Poco/ /" >> /etc/apt/sources.list.d/poco.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0C54D189F4BA284D
 RUN apt-get update
-RUN apt-get -y install libpoco*48
+RUN apt-get -y install libpoco*60
 
 # copy freshly built LibreOffice master and LibreOffice Online master with latest translations
 COPY /instdir /
