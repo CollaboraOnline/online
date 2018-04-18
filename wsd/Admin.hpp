@@ -23,6 +23,8 @@ class Admin;
 class AdminSocketHandler : public WebSocketHandler
 {
 public:
+    AdminSocketHandler(Admin* adminManager);
+
     AdminSocketHandler(Admin* adminManager,
                        const std::weak_ptr<StreamSocket>& socket,
                        const Poco::Net::HTTPRequest& request);
@@ -121,6 +123,9 @@ private:
     /// Memory consumption has increased, start killing kits etc. till memory consumption gets back
     /// under @hardModeLimit
     void triggerMemoryCleanup(size_t hardModeLimit);
+
+    /// Synchronous connection setup to remote monitoring server
+    void connectToMonitor(const Poco::URI &uri);
 
 private:
     /// The model is accessed only during startup & in

@@ -28,11 +28,15 @@
 #  include <SslSocket.hpp>
 #endif
 
+SocketPoll DumpSocketPoll("websocket");
+
 // Dumps incoming websocket messages and doesn't respond.
 class DumpSocketHandler : public WebSocketHandler
 {
 public:
-    DumpSocketHandler()
+    DumpSocketHandler(const std::weak_ptr<StreamSocket>& socket,
+                      const Poco::Net::HTTPRequest& request) :
+        WebSocketHandler(socket, request)
     {
     }
 
@@ -63,7 +67,7 @@ private:
     }
 
     /// Called after successful socket reads.
-    void handleIncomingMessage(SocketDisposition & /* disposition */) override
+    void handleIncomingMessage(SocketDisposition &disposition) override
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         std::vector<char>& in = socket->_inBuffer;
@@ -135,7 +139,9 @@ private:
                                                               Poco::StringTokenizer::TOK_TRIM);
 
             if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
-                socket->setHandler(std::make_shared<DumpSocketHandler>());
+            {
+                socket->setHandler(std::make_shared<DumpSocketHandler>(_socket, request));
+            }
             else
             {
                 Poco::Net::HTTPResponse response;
@@ -143,7 +149,7 @@ private:
                 response.setContentLength(0);
                 LOG_INF("DumpWebSockets bad request");
                 socket->send(response);
-                socket->shutdown();
+                disposition.setClosed();
             }
         }
         catch (const std::exception& exc)
@@ -187,7 +193,7 @@ class DumpSocketFactory final : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int physicalFd) override
     {
-#if ENABLE_SSL
+#if 0 && ENABLE_SSL
         return StreamSocket::create<SslStreamSocket>(physicalFd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
 #else
         return StreamSocket::create<StreamSocket>(physicalFd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
@@ -208,12 +214,14 @@ int main (int argc, char **argv)
     int port = 9042;
     (void) argc; (void) argv;
 
+    Log::initialize("WebSocketDump", "trace", true, false,
+                    std::map<std::string, std::string>());
+
     SocketPoll acceptPoll("accept");
-    SocketPoll DumpSocketPoll("websocket");
 
     // Setup listening socket with a factory for connected sockets.
     auto serverSocket = std::make_shared<ServerSocket>(
-        Socket::Type::IPv4, DumpSocketPoll,
+        Socket::Type::All, DumpSocketPoll,
         std::make_shared<DumpSocketFactory>());
 
     if (!serverSocket->bind(ServerSocket::Type::Public, port))
@@ -233,7 +241,7 @@ int main (int argc, char **argv)
 
     while (true)
     {
-        DumpSocketPoll.poll(1000);
+        DumpSocketPoll.poll(100 * 1000);
     }
 }
 
