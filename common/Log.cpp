@@ -110,11 +110,11 @@ namespace Log
             osTid = Util::getThreadId();
             threadName = Util::getThreadName();
         }
-
         Poco::DateTime time;
-        snprintf(buffer, 1023, "%s-%.05lu %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
+        snprintf(buffer, 1023, "%s-%.05lu %.2u/%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
                     (Source.inited ? Source.id.c_str() : "<shutdown>"),
                     osTid,
+                    time.day(), time.month(),
                     time.hour(), time.minute(), time.second(),
                     time.millisecond() * 1000 + time.microsecond(),
                     threadName, level);
