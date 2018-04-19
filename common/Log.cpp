@@ -112,9 +112,10 @@ namespace Log
         }
 
         Poco::DateTime time;
-        snprintf(buffer, 1023, "%s-%.05lu %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
+        snprintf(buffer, 1023, "%s-%.05lu %.4u-%.2u-%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
                     (Source.inited ? Source.id.c_str() : "<shutdown>"),
                     osTid,
+                    time.year(), time.month(), time.day(),
                     time.hour(), time.minute(), time.second(),
                     time.millisecond() * 1000 + time.microsecond(),
                     threadName, level);
