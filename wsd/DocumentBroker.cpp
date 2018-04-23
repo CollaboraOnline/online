@@ -502,6 +502,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         wopiInfo->set("HidePrintOption", wopifileinfo->_hidePrintOption);
         wopiInfo->set("HideSaveOption", wopifileinfo->_hideSaveOption);
         wopiInfo->set("HideExportOption", wopifileinfo->_hideExportOption);
+        wopiInfo->set("HideChangeTrackingControls", wopifileinfo->_hideChangeTrackingControls);
         wopiInfo->set("DisablePrint", wopifileinfo->_disablePrint);
         wopiInfo->set("DisableExport", wopifileinfo->_disableExport);
         wopiInfo->set("DisableCopy", wopifileinfo->_disableCopy);

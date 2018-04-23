@@ -268,6 +268,7 @@ public:
                      const bool hidePrintOption,
                      const bool hideSaveOption,
                      const bool hideExportOption,
+                     const bool hideChangeTrackingControls,
                      const bool enableOwnerTermination,
                      const bool disablePrint,
                      const bool disableExport,
@@ -283,6 +284,7 @@ public:
               _hidePrintOption(hidePrintOption),
               _hideSaveOption(hideSaveOption),
               _hideExportOption(hideExportOption),
+              _hideChangeTrackingControls(hideChangeTrackingControls),
               _enableOwnerTermination(enableOwnerTermination),
               _disablePrint(disablePrint),
               _disableExport(disableExport),
@@ -312,6 +314,8 @@ public:
         bool _hideSaveOption;
         /// Hide 'Download as' button/menubar item from UI
         bool _hideExportOption;
+        /// Hide change tacking menu from UI
+        bool _hideChangeTrackingControls;
         /// If WOPI host has enabled owner termination feature on
         bool _enableOwnerTermination;
         /// If WOPI host has allowed the user to print the document

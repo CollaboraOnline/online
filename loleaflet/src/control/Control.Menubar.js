@@ -38,7 +38,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'},
 				{type: 'separator'},
-				{name: _UNO('.uno:ChangesMenu', 'text'), type: 'menu', menu: [
+				{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
 					{uno: '.uno:TrackChanges'},
 					{uno: '.uno:ShowTrackedChanges'},
 					{type: 'separator'},
@@ -803,6 +803,9 @@ L.Control.Menubar = L.Control.extend({
 				continue;
 
 			if (menu[i].id && menu[i].id.startsWith('fullscreen-presentation') && this._map['wopi'].HideExportOption)
+				continue;
+
+			if (menu[i].id === 'changesmenu' && this._map['wopi'].HideChangeTrackingControls)
 				continue;
 
 			// Keep track of all 'downloadas-' options and register them as
