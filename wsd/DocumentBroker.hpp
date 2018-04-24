@@ -350,6 +350,12 @@ public:
     /// Sends a message to all sessions
     void broadcastMessage(const std::string& message);
 
+    /// Returns true iff an initial setting by the given name is already initialized.
+    bool isInitialSettingSet(const std::string& name) const;
+
+    /// Sets the initialization flag of a given initial setting.
+    void setInitialSetting(const std::string& name);
+
 private:
 
     /// Shutdown all client connections with the given reason.
@@ -428,6 +434,9 @@ private:
 
     /// All session of this DocBroker by ID.
     std::map<std::string, std::shared_ptr<ClientSession> > _sessions;
+
+    /// If we set the user-requested inital (on load) settings to be forced.
+    std::set<std::string> _isInitialStateSet;
 
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;

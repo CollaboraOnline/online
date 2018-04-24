@@ -19,6 +19,7 @@
 
 #include "DocumentBroker.hpp"
 #include "LOOLWSD.hpp"
+#include "Storage.hpp"
 #include "common/Common.hpp"
 #include "common/Log.hpp"
 #include "common/Protocol.hpp"
@@ -738,6 +739,40 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         {
             docBroker->setModified(stateTokens[1] == "true");
         }
+        else
+        {
+            // Set the initial settings per the user's request.
+            const std::pair<std::string, std::string> unoStatePair = LOOLProtocol::split(tokens[1], '=');
+
+            if (!docBroker->isInitialSettingSet(unoStatePair.first))
+            {
+                docBroker->setInitialSetting(unoStatePair.first);
+                if (unoStatePair.first == ".uno:TrackChanges")
+                {
+                    if ((unoStatePair.second == "true" &&
+                         _wopiFileInfo->_disableChangeTrackingRecord == WopiStorage::WOPIFileInfo::TriState::True) ||
+                        (unoStatePair.second == "false" &&
+                         _wopiFileInfo->_disableChangeTrackingRecord == WopiStorage::WOPIFileInfo::TriState::False))
+                    {
+                        // Toggle the TrackChanges state.
+                        LOG_DBG("Forcing " << unoStatePair.first << " toggle per user settings.");
+                        forwardToChild("uno .uno:TrackChanges", docBroker);
+                    }
+                }
+                else if (unoStatePair.first == ".uno:ShowTrackedChanges")
+                {
+                    if ((unoStatePair.second == "true" &&
+                         _wopiFileInfo->_disableChangeTrackingShow == WopiStorage::WOPIFileInfo::TriState::True) ||
+                        (unoStatePair.second == "false" &&
+                         _wopiFileInfo->_disableChangeTrackingShow == WopiStorage::WOPIFileInfo::TriState::False))
+                    {
+                        // Toggle the ShowTrackChanges state.
+                        LOG_DBG("Forcing " << unoStatePair.first << " toggle per user settings.");
+                        forwardToChild("uno .uno:ShowTrackedChanges", docBroker);
+                    }
+                }
+            }
+        }
     }
 
     if (!_isDocPasswordProtected)
@@ -843,7 +878,6 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
     }
 
     enqueueSendMessage(payload);
-
     return true;
 }
 
