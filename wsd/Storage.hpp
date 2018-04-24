@@ -259,6 +259,13 @@ public:
     class WOPIFileInfo
     {
     public:
+        enum class TriState
+        {
+            False,
+            True,
+            Unset
+        };
+
         WOPIFileInfo(const std::string& userid,
                      const std::string& username,
                      const std::string& userExtraInfo,
@@ -268,13 +275,15 @@ public:
                      const bool hidePrintOption,
                      const bool hideSaveOption,
                      const bool hideExportOption,
-                     const bool hideChangeTrackingControls,
                      const bool enableOwnerTermination,
                      const bool disablePrint,
                      const bool disableExport,
                      const bool disableCopy,
                      const bool disableInactiveMessages,
                      const bool userCanNotWriteRelative,
+                     const TriState disableChangeTrackingShow,
+                     const TriState disableChangeTrackingRecord,
+                     const TriState hideChangeTrackingControls,
                      const std::chrono::duration<double> callDuration)
             : _userid(userid),
               _username(username),
@@ -284,13 +293,15 @@ public:
               _hidePrintOption(hidePrintOption),
               _hideSaveOption(hideSaveOption),
               _hideExportOption(hideExportOption),
-              _hideChangeTrackingControls(hideChangeTrackingControls),
               _enableOwnerTermination(enableOwnerTermination),
               _disablePrint(disablePrint),
               _disableExport(disableExport),
               _disableCopy(disableCopy),
               _disableInactiveMessages(disableInactiveMessages),
               _userCanNotWriteRelative(userCanNotWriteRelative),
+              _disableChangeTrackingShow(disableChangeTrackingShow),
+              _disableChangeTrackingRecord(disableChangeTrackingRecord),
+              _hideChangeTrackingControls(hideChangeTrackingControls),
               _callDuration(callDuration)
             {
                 _userExtraInfo = userExtraInfo;
@@ -314,8 +325,6 @@ public:
         bool _hideSaveOption;
         /// Hide 'Download as' button/menubar item from UI
         bool _hideExportOption;
-        /// Hide change tacking menu from UI
-        bool _hideChangeTrackingControls;
         /// If WOPI host has enabled owner termination feature on
         bool _enableOwnerTermination;
         /// If WOPI host has allowed the user to print the document
@@ -328,6 +337,13 @@ public:
         bool _disableInactiveMessages;
         /// If set to false, users can access the save-as functionality
         bool _userCanNotWriteRelative;
+        /// If we should disable change-tracking visibility by default (meaningful at loading).
+        TriState _disableChangeTrackingShow;
+        /// If we should disable change-tracking ability by default (meaningful at loading).
+        TriState _disableChangeTrackingRecord;
+        /// If we should hide change-tracking commands for this user.
+        TriState _hideChangeTrackingControls;
+
         /// Time it took to call WOPI's CheckFileInfo
         std::chrono::duration<double> _callDuration;
     };

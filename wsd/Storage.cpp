@@ -446,13 +446,15 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     bool hidePrintOption = false;
     bool hideSaveOption = false;
     bool hideExportOption = false;
-    bool hideChangeTrackingControls = false;
     bool disablePrint = false;
     bool disableExport = false;
     bool disableCopy = false;
     bool disableInactiveMessages = false;
     std::string lastModifiedTime;
     bool userCanNotWriteRelative = true;
+    WOPIFileInfo::TriState disableChangeTrackingRecord = WOPIFileInfo::TriState::Unset;
+    WOPIFileInfo::TriState disableChangeTrackingShow = WOPIFileInfo::TriState::Unset;
+    WOPIFileInfo::TriState hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
 
     LOG_DBG("WOPI::CheckFileInfo returned: " << resMsg << ". Call duration: " << callDuration.count() << "s");
     Poco::JSON::Object::Ptr object;
@@ -470,7 +472,6 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         JsonUtil::findJSONValue(object, "HidePrintOption", hidePrintOption);
         JsonUtil::findJSONValue(object, "HideSaveOption", hideSaveOption);
         JsonUtil::findJSONValue(object, "HideExportOption", hideExportOption);
-        JsonUtil::findJSONValue(object, "hideChangeTrackingControls", hideChangeTrackingControls);
         JsonUtil::findJSONValue(object, "EnableOwnerTermination", enableOwnerTermination);
         JsonUtil::findJSONValue(object, "DisablePrint", disablePrint);
         JsonUtil::findJSONValue(object, "DisableExport", disableExport);
@@ -478,6 +479,13 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         JsonUtil::findJSONValue(object, "DisableInactiveMessages", disableInactiveMessages);
         JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
         JsonUtil::findJSONValue(object, "UserCanNotWriteRelative", userCanNotWriteRelative);
+        bool booleanFlag = false;
+        if (JsonUtil::findJSONValue(object, "DisableChangeTrackingRecord", booleanFlag))
+            disableChangeTrackingRecord = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
+        if (JsonUtil::findJSONValue(object, "DisableChangeTrackingShow", booleanFlag))
+            disableChangeTrackingShow = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
+        if (JsonUtil::findJSONValue(object, "HideChangeTrackingControls", booleanFlag))
+            hideChangeTrackingControls = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
     }
     else
     {
@@ -488,7 +496,13 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     const Poco::Timestamp modifiedTime = iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
     _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
 
-    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo({userId, userName, userExtraInfo, watermarkText, canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption, hideChangeTrackingControls, enableOwnerTermination, disablePrint, disableExport, disableCopy, disableInactiveMessages, userCanNotWriteRelative, callDuration}));
+    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(
+        {userId, userName, userExtraInfo, watermarkText, canWrite,
+         postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption,
+         enableOwnerTermination, disablePrint, disableExport, disableCopy,
+         disableInactiveMessages, userCanNotWriteRelative,
+         disableChangeTrackingShow, disableChangeTrackingRecord,
+         hideChangeTrackingControls, callDuration}));
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
