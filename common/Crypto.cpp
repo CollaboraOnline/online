@@ -127,6 +127,16 @@ int SupportKey::validDaysRemaining()
     return days;
 }
 
+DateTime SupportKey::expiry() const
+{
+    return _impl->_expiry;
+}
+
+std::string SupportKey::data() const
+{
+    return _impl->_data;
+}
+
 #endif // ENABLE_SUPPORT_KEY
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -39,11 +39,15 @@
 #include <Poco/URI.h>
 
 #include "Auth.hpp"
-#include "Common.hpp"
+#include <Common.hpp>
+#include <Crypto.hpp>
 #include "FileServer.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "Protocol.hpp"
+
+#define BRAND_SUPPORTED "branding"
+#define BRAND_UNSUPPORTED "branding-CODE"
 
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPBasicCredentials;
@@ -288,10 +292,16 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
         if (request.getMethod() == HTTPRequest::HTTP_GET)
         {
             if (endPoint == "admin.html" ||
-                endPoint == "admin-bundle.js" ||
-                endPoint == "admin-localizations.js" ||
                 endPoint == "adminSettings.html" ||
+                endPoint == "adminHistory.html" ||
                 endPoint == "adminAnalytics.html")
+            {
+                preprocessAdminFile(request, socket);
+                return;
+            }
+
+            if (endPoint == "admin-bundle.js" ||
+                endPoint == "admin-localizations.js")
             {
                 noCache = true;
 
@@ -542,6 +552,8 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
 
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
 {
+    static const std::string linkCSS = "<link rel=\"stylesheet\" href=\"/loleaflet/" LOOLWSD_VERSION_HASH "/%s.css\">";
+    static const std::string scriptJS = "<script src=\"/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>";
     const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
     const auto params = Poco::URI(request.getURI()).getQueryParameters();
 
@@ -590,7 +602,26 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
 
+    std::string brandCSS(Poco::format(linkCSS, std::string(BRAND_UNSUPPORTED)));
+    std::string brandJS(Poco::format(scriptJS, std::string(BRAND_UNSUPPORTED)));
+
     const auto& config = Application::instance().config();
+#if ENABLE_SUPPORT_KEY
+    const std::string keyString = config.getString("support_key", "");
+    SupportKey key(keyString);
+    if (key.verify() && key.validDaysRemaining() > 0)
+    {
+        brandCSS = Poco::format(linkCSS, std::string(BRAND_SUPPORTED));
+        brandJS = Poco::format(scriptJS, std::string(BRAND_SUPPORTED));
+    }
+#elif ENABLE_DEBUG
+    brandCSS = "";
+    brandJS = "";
+#endif
+
+    Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_CSS%-->"), brandCSS);
+    Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_JS%-->"), brandJS);
+
     const auto loleafletLogging = config.getString("loleaflet_logging", "false");
     Poco::replaceInPlace(preprocess, std::string("%LOLEAFLET_LOGGING%"), loleafletLogging);
     const auto outOfFocusTimeoutSecs= config.getString("per_view.out_of_focus_timeout_secs", "60");
@@ -732,6 +763,55 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 
     socket->send(oss.str());
     LOG_DBG("Sent file: " << relPath << ": " << preprocess);
+}
+
+void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,const std::shared_ptr<StreamSocket>& socket)
+{
+    Poco::Net::HTTPResponse response;
+    static const std::string scriptJS("<script src=\"/loleaflet/dist/%s.js\"></script>");
+    static const std::string footerPage("<div class=\"footer navbar-fixed-bottom text-info text-center\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</div>");
+
+    if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
+        throw Poco::Net::NotAuthenticatedException("Invalid admin login");
+
+    const std::string relPath = getRequestPathname(request);
+    LOG_DBG("Preprocessing file: " << relPath);
+    std::string adminFile = *getUncompressedFile(relPath);
+    std::string brandJS(Poco::format(scriptJS, std::string(BRAND_UNSUPPORTED)));
+    std::string brandFooter;
+
+#if ENABLE_SUPPORT_KEY
+    const auto& config = Application::instance().config();
+    const std::string keyString = config.getString("support_key", "");
+    SupportKey key(keyString);
+
+    if (key.verify() && key.validDaysRemaining() > 0)
+    {
+        brandJS = Poco::format(scriptJS, std::string(BRAND_SUPPORTED));
+        brandFooter = Poco::format(footerPage, key.data(), Poco::DateTimeFormatter::format(key.expiry(), Poco::DateTimeFormat::RFC822_FORMAT));
+    }
+#elif ENABLE_DEBUG
+    brandJS = "";
+#endif
+
+    Poco::replaceInPlace(adminFile, std::string("<!--%BRANDING_JS%-->"), brandJS);
+    Poco::replaceInPlace(adminFile, std::string("<!--%FOOTER%-->"), brandFooter);
+
+    // Ask UAs to block if they detect any XSS attempt
+    response.add("X-XSS-Protection", "1; mode=block");
+    // No referrer-policy
+    response.add("Referrer-Policy", "no-referrer");
+    response.add("X-Content-Type-Options", "nosniff");
+    response.set("User-Agent", HTTP_AGENT_STRING);
+    response.set("Date", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
+
+    response.setContentType("text/html");
+    response.setChunkedTransferEncoding(false);
+
+    std::ostringstream oss;
+    response.write(oss);
+    oss << adminFile;
+    socket->send(oss.str());
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
