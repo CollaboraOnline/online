@@ -20,7 +20,7 @@
   <body>
     <script src="/loleaflet/dist/admin-bundle.js"></script>
     <script src="/loleaflet/dist/branding.js"></script>
-    <script>if (brandProductName) {l10nstrings.strProductName = brandProductName}</script>
+    <script>if (typeof brandProductName !== 'undefined') {l10nstrings.strProductName = brandProductName}</script>
     <script>document.title = l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole</script>
     <script>
       if (window.location.protocol == "https:") {
