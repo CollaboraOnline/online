@@ -262,6 +262,20 @@ run-valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=false --o:logging.level=trace
 
+run-gdb: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+	@echo "Launching loolwsd under valgrind's callgrind"
+	@fc-cache "@LO_PATH@"/share/fonts/truetype
+	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
+	gdb --tui --args \
+		./loolwsd --nocaps \
+			  --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
+			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
+			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
+			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
+			  --o:admin_console.username=admin --o:admin_console.password=admin \
+			  --o:logging.file[@enable]=false --o:logging.level=error
+
 run-callgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd under valgrind's callgrind"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
