@@ -84,10 +84,18 @@ L.Socket = L.Class.extend({
 	},
 
 	sendMessage: function (msg, coords) {
-		if ((!msg.startsWith('useractive') && !msg.startsWith('userinactive') && !this._map._active) ||
-		    this._map._fatal) {
-			// Avoid communicating when we're inactive.
+		if (this._map._fatal) {
+			// Avoid communicating when we're in fatal state
 			return;
+		}
+
+		if (!this._map._active) {
+			// Avoid communicating when we're inactive.
+			if (typeof msg !== 'string')
+				return;
+
+			if (!msg.startsWith('useractive') && !msg.startsWith('userinactive'))
+				return;
 		}
 
 		var socketState = this.socket.readyState;
