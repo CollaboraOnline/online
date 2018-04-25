@@ -14,16 +14,6 @@ if (typeof String.prototype.startsWith !== 'function') {
 }
 
 L.Compatibility = {
-	clipboardGet: function (event) {
-		var text = null;
-		if (event.clipboardData) { // Standard
-			text = event.clipboardData.getData('text/plain');
-		}
-		else if (window.clipboardData) { // IE 11
-			text = window.clipboardData.getData('Text');
-		}
-		return text;
-	},
 	clipboardSet: function (event, text) {
 		if (event.clipboardData) { // Standard
 			event.clipboardData.setData('text/plain', text);
@@ -1956,16 +1946,12 @@ L.TileLayer = L.GridLayer.extend({
 	_onPaste: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		var pasteString = L.Compatibility.clipboardGet(e);
-		if (pasteString === 'false' || !pasteString || pasteString === this._selectionTextHash) {
-			// If there is nothing to paste in clipboard, no harm in
-			// issuing a .uno:Paste in case there is something internally copied in the document
-			// or if the content of the clipboard did not change, we surely must do a rich paste
-			// instead of a normal paste
-			this._map._socket.sendMessage('uno .uno:Paste');
+
+		if (e.clipboardData) { // Standard
+			this._dataTransferToDocument(e.clipboardData, /* preferInternal = */ true);
 		}
-		else {
-			this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + pasteString);
+		else if (window.clipboardData) { // IE 11
+			this._dataTransferToDocument(window.clipboardData, /* preferInternal = */ true);
 		}
 	},
 
@@ -1988,8 +1974,25 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 
+		this._dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false);
+	},
+
+	_dataTransferToDocument: function (dataTransfer, preferInternal) {
+		// for the paste, we might prefer the internal LOK's copy/paste
+		if (preferInternal === true) {
+			var pasteString = dataTransfer.getData('text/plain');
+			if (!pasteString) {
+				pasteString = window.clipboardData.getData('Text');
+			}
+
+			if (pasteString === this._selectionTextHash) {
+				this._map._socket.sendMessage('uno .uno:Paste');
+				return
+			}
+		}
+
 		// handle content
-		var types = e.dataTransfer.types;
+		var types = dataTransfer.types;
 		var hasHTML = false;
 		for (var t = 0; !hasHTML && t < types.length; t++) {
 			if (types[t] === 'text/html') {
@@ -2001,15 +2004,15 @@ L.TileLayer = L.GridLayer.extend({
 		for (t = 0; !handled && t < types.length; t++) {
 			var type = types[t];
 			if (type === 'text/html') {
-				this._map._socket.sendMessage('paste mimetype=text/html\n' + e.dataTransfer.getData(type));
+				this._map._socket.sendMessage('paste mimetype=text/html\n' + dataTransfer.getData(type));
 				handled = true;
 			}
-			else if (type === 'text/plain' && !hasHTML) {
-				this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + e.dataTransfer.getData(type));
+			else if ((type === 'text/plain' || type ==='Text') && !hasHTML) {
+				this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + dataTransfer.getData(type));
 				handled = true;
 			}
 			else if (type === 'Files') {
-				var files = e.dataTransfer.files;
+				var files = dataTransfer.files;
 				for (var i = 0; i < files.length; ++i) {
 					var file = files[i];
 					if (file.type.match(/image.*/)) {
