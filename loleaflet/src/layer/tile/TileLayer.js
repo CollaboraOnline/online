@@ -2078,45 +2078,48 @@ L.TileLayer = L.GridLayer.extend({
 		if (preferInternal === true) {
 			var pasteString = dataTransfer.getData('text/plain');
 			if (!pasteString) {
-				pasteString = window.clipboardData.getData('Text');
+				pasteString = dataTransfer.getData('Text'); // IE 11
 			}
 
-			if (pasteString === this._selectionTextHash) {
+			if (pasteString && pasteString === this._selectionTextHash) {
 				this._map._socket.sendMessage('uno .uno:Paste');
-				return
+				return;
 			}
 		}
 
-		// handle content
 		var types = dataTransfer.types;
-		var hasHTML = false;
-		for (var t = 0; !hasHTML && t < types.length; t++) {
-			if (types[t] === 'text/html') {
-				hasHTML = true;
-			}
-		}
 
-		var handled = false;
-		for (t = 0; !handled && t < types.length; t++) {
-			var type = types[t];
-			if (type === 'text/html') {
-				this._map._socket.sendMessage('paste mimetype=text/html\n' + dataTransfer.getData(type));
-				handled = true;
-			}
-			else if ((type === 'text/plain' || type ==='Text') && !hasHTML) {
-				this._map._socket.sendMessage('paste mimetype=text/plain;charset=utf-8\n' + dataTransfer.getData(type));
-				handled = true;
-			}
-			else if (type === 'Files') {
+		// first try to transfer images
+		// TODO if we have both Files and a normal mimetype, should we handle
+		// both, or prefer one or the other?
+		for (var t = 0; t < types.length; ++t) {
+			if (types[t] === 'Files') {
 				var files = dataTransfer.files;
-				for (var i = 0; i < files.length; ++i) {
-					var file = files[i];
+				for (var f = 0; f < files.length; ++f) {
+					var file = files[f];
 					if (file.type.match(/image.*/)) {
 						var reader = new FileReader();
 						reader.onload = this._onFileLoadFunc(file);
 						reader.readAsArrayBuffer(file);
-						handled = true;
 					}
+				}
+			}
+		}
+
+		// now try various mime types
+		var mimeTypes = [
+			['text/rtf', 'text/rtf'],
+			['text/html', 'text/html'],
+			['text/plain', 'text/plain;charset=utf-8'],
+			['Text', 'text/plain;charset=utf-8']
+		];
+
+		for (var i = 0; i < mimeTypes.length; ++i) {
+			for (t = 0; t < types.length; ++t) {
+				if (mimeTypes[i][0] === types[t]) {
+					var blob = new Blob(['paste mimetype=' + mimeTypes[i][1] + '\n', dataTransfer.getData(types[t])]);
+					this._map._socket.sendMessage(blob);
+					return;
 				}
 			}
 		}
