@@ -750,9 +750,9 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 if (unoStatePair.first == ".uno:TrackChanges")
                 {
                     if ((unoStatePair.second == "true" &&
-                         _wopiFileInfo->_disableChangeTrackingRecord == WopiStorage::WOPIFileInfo::TriState::True) ||
+                         _wopiFileInfo && _wopiFileInfo->_disableChangeTrackingRecord == WopiStorage::WOPIFileInfo::TriState::True) ||
                         (unoStatePair.second == "false" &&
-                         _wopiFileInfo->_disableChangeTrackingRecord == WopiStorage::WOPIFileInfo::TriState::False))
+                         _wopiFileInfo && _wopiFileInfo->_disableChangeTrackingRecord == WopiStorage::WOPIFileInfo::TriState::False))
                     {
                         // Toggle the TrackChanges state.
                         LOG_DBG("Forcing " << unoStatePair.first << " toggle per user settings.");
@@ -762,9 +762,9 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 else if (unoStatePair.first == ".uno:ShowTrackedChanges")
                 {
                     if ((unoStatePair.second == "true" &&
-                         _wopiFileInfo->_disableChangeTrackingShow == WopiStorage::WOPIFileInfo::TriState::True) ||
+                         _wopiFileInfo && _wopiFileInfo->_disableChangeTrackingShow == WopiStorage::WOPIFileInfo::TriState::True) ||
                         (unoStatePair.second == "false" &&
-                         _wopiFileInfo->_disableChangeTrackingShow == WopiStorage::WOPIFileInfo::TriState::False))
+                         _wopiFileInfo && _wopiFileInfo->_disableChangeTrackingShow == WopiStorage::WOPIFileInfo::TriState::False))
                     {
                         // Toggle the ShowTrackChanges state.
                         LOG_DBG("Forcing " << unoStatePair.first << " toggle per user settings.");
