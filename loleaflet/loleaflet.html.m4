@@ -26,7 +26,7 @@ define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(
 ifelse(DEBUG,[true],foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="/loleaflet/%VERSION%/fileCSS" />
 ]),[<link rel="stylesheet" href="/loleaflet/%VERSION%/bundle.css" />
 ])dnl
-<link rel="stylesheet" href="/loleaflet/%VERSION%/branding.css"> <!-- add your logo here -->
+<!--%BRANDING_CSS%--> <!-- add your logo here -->
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json" />
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
@@ -114,5 +114,5 @@ ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
 ]),
 [    <script src="/loleaflet/%VERSION%/bundle.js"></script>
 ])dnl
-    <script src="/loleaflet/%VERSION%/branding.js"></script> <!-- logo onclick handler -->
+    <!--%BRANDING_JS%--> <!-- logo onclick handler -->
 </body></html>

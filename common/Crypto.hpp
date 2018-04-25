@@ -15,6 +15,9 @@
 #include <memory>
 
 struct SupportKeyImpl;
+namespace Poco {
+    class DateTime;
+}
 
 class SupportKey {
     std::unique_ptr<SupportKeyImpl> _impl;
@@ -28,6 +31,10 @@ public:
 
     /// How many days until key expires
     int validDaysRemaining();
+
+    Poco::DateTime expiry() const;
+
+    std::string data() const;
 };
 
 #endif
