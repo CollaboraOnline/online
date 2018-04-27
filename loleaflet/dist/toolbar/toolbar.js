@@ -1281,9 +1281,11 @@ map.on('commandstatechanged', function (e) {
 		var html;
 		if (modifiedStatus) {
 			html = $('#modifiedstatuslabel').html('').parent().html();
+			w2ui['toolbar-up'].set('save', {img:'savemodified'});
 		}
 		else {
 			html = $('#modifiedstatuslabel').html(_('Document saved')).parent().html();
+			w2ui['toolbar-up'].set('save', {img:'save'});
 		}
 		updateToolbarItem(statusbar, 'modifiedstatuslabel', html);
 	}

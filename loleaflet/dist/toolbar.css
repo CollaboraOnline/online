@@ -286,6 +286,7 @@ button.leaflet-control-search-next
 .w2ui-icon.redo{ background: url('../images/lc_redo.svg') no-repeat center !important; }
 .w2ui-icon.save{ background: url('../images/lc_save.svg') no-repeat center !important; }
 .w2ui-icon.saveas{ background: url('../images/lc_saveas.svg') no-repeat center !important; }
+.w2ui-icon.savemodified{ background: url('../images/savemodified.svg') no-repeat center !important; }
 .w2ui-icon.strikeout{ background: url('../images/lc_strikeout.svg') no-repeat center !important; }
 .w2ui-icon.underline{ background: url('../images/lc_underline.svg') no-repeat center !important; }
 .w2ui-icon.undo{ background: url('../images/lc_undo.svg') no-repeat center !important; }
