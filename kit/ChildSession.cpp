@@ -1176,8 +1176,19 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
         getLOKitDocument()->setView(_viewId);
 
         if (filterOptions.empty())
+        {
+            std::vector<std::string> filterOptionsVector;
+
             // Save and no arguments, provide our default.
-            filterOptions = "NoFileSync";
+            filterOptionsVector.push_back("NoFileSync");
+
+            if (format == "html")
+                // Opt-in to avoid linked images, those would not leave the
+                // chroot.
+                filterOptionsVector.push_back("EmbedImages");
+
+            filterOptions = Poco::cat(std::string(","), filterOptionsVector.begin(), filterOptionsVector.end());
+        }
 
         LOG_DBG("Calling LOK's saveAs with: '" << url.c_str() << "', '" <<
                 (format.size() == 0 ? "(nullptr)" : format.c_str()) << "', '" <<
