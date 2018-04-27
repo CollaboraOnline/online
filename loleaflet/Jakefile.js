@@ -13,6 +13,7 @@ For a custom build, open build/build.html in the browser and follow the instruct
 */
 
 var build = require('./build/build.js'),
+    builddir = process.env.builddir ? process.env.builddir + '/' : '',
     version = require('./src/Leaflet.js').version;
 
 function hint(msg, args) {
@@ -72,7 +73,7 @@ file('dist/bundle.js', build.getBundleFiles(), {async: true}, function() {
 });
 
 desc('Create final bundle js file to be used by admin console');
-file('dist/admin-bundle.js', build.getAdminBundleFiles(), {async: true}, function() {
+file(builddir + 'dist/admin-bundle.js', build.getAdminBundleFiles(), {async: true}, function() {
 	var debug = process.env.debug === 'true';
 	var minify = process.env.minify === 'true';
 

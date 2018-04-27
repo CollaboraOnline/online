@@ -4,7 +4,7 @@ var fs = require('fs'),
     browserify = require('browserify'),
     browserifyCss = require('browserify-css'),
     exorcist = require('exorcist'),
-
+    builddir = process.env.builddir ? process.env.builddir + '/' : '',
     deps = require('./deps.js').deps,
     adminDeps = require('./adminDeps.js').adminDeps;
 
@@ -147,10 +147,10 @@ function bundle(files, destFilename, debug, minify, callback) {
 			global: true
 		}, 'uglifyify');
 	}
-	var bundleFs = fs.createWriteStream('dist/' + destFilename);
+	var bundleFs = fs.createWriteStream(builddir + 'dist/' + destFilename);
 	var res = bundler.bundle();
 	if (debug) {
-		res = res.pipe(exorcist('dist/' + destFilename + '.map'));
+		res = res.pipe(exorcist(builddir + 'dist/' + destFilename + '.map'));
 	}
 	res.pipe(bundleFs);
 

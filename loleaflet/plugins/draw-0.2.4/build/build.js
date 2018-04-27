@@ -1,7 +1,7 @@
 var fs = require('fs'),
 	UglifyJS = require('uglify-js'),
 	zlib = require('zlib'),
-
+	builddir = process.env.builddir ? process.env.builddir + '/' : '',
 	deps = require('./deps.js').deps;
 
 function getFiles(compsBase32) {
@@ -91,7 +91,7 @@ exports.build = function (callback, compsBase32, buildName) {
 		outro = '}(window, document));',
 		newSrc = copy + intro + combineFiles(files) + outro,
 
-		pathPart = 'dist/leaflet.draw' + (buildName ? '-' + buildName : ''),
+		pathPart = builddir + 'dist/leaflet.draw' + (buildName ? '-' + buildName : ''),
 		srcPath = pathPart + '-src.js',
 
 		oldSrc = loadSilently(srcPath),
