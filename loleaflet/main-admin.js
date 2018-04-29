@@ -1,9 +1,9 @@
 // CSS requires
-require('./node_modules/bootstrap/dist/css/bootstrap.css');
+require('bootstrap/dist/css/bootstrap.css');
 require('./dist/admin/bootstrap/ie10-viewport-bug-workaround.css');
 require('./dist/admin/bootstrap/dashboard.css');
-require('./node_modules/vex-js/css/vex.css');
-require('./node_modules/vex-js/css/vex-theme-plain.css');
+require('vex-js/css/vex.css');
+require('vex-js/css/vex-theme-plain.css');
 
 var $ = require('jquery');
 global.$ = global.jQuery = $;

@@ -139,8 +139,9 @@ function bytesToKB(bytes) {
 }
 
 function bundle(files, destFilename, debug, minify, callback) {
-	var bundler = browserify(files, {debug: debug});
-	bundler = bundler.transform(browserifyCss);
+	var node_paths = builddir !== '' ? [builddir + 'node_modules'] : [process.cwd() +'/node_modules']
+	var bundler = browserify(files, {debug: debug, paths:node_paths});
+	bundler = bundler.transform(browserifyCss, {global:true});
 	if (minify) {
 		console.log('uglifying');
 		bundler.transform({

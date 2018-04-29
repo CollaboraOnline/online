@@ -19,7 +19,7 @@ var build = require('./build/build.js'),
 function hint(msg, args) {
 	return function () {
 		console.log(msg);
-		jake.exec('node node_modules/eslint/bin/eslint.js ' + args,
+		jake.exec('node ' + builddir + 'node_modules/eslint/bin/eslint.js ' + args,
 		          {printStdout: true}, function () {
 			console.log('\tCheck passed.\n');
 			complete();

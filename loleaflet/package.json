@@ -29,11 +29,6 @@
   "browser": {
     "loleaflet": "./dist/leaflet-src.js"
   },
-  "browserify": {
-    "transform": [
-      "browserify-css"
-    ]
-  },
   "main": "main.js",
   "style": "main.css",
   "scripts": {
