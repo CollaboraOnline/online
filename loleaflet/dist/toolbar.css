@@ -79,13 +79,14 @@ w2ui-toolbar {
 }
 
 #document-name-input {
-    position: fixed;
     z-index: 1050;
-    right: 35px;
     top: 2px;
     width: 200px;
-    font-size: 16px;
+    font-size: 14px;
     padding-right: 20px;
+    padding-top: 6px;
+    padding-bottom: 5px;
+    padding-left: 5px;
     border: 1px solid transparent;
     background-color: transparent;
 }

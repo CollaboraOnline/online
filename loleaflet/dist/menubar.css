@@ -2,6 +2,8 @@
     top: 39px;
     height: 25px;
     padding-left: 125px;
+    padding-right: 32px; /* for: the red close button on the right */
+    overflow: hidden;
     z-index: 1000;
     outline: none;
     background-color: transparent;
