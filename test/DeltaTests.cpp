@@ -156,14 +156,14 @@ void DeltaTests::testDeltaSequence()
     png_uint_32 height, width, rowBytes;
     const TileWireId textWid = 1;
     std::vector<char> text =
-        DeltaTests::loadPng("data/delta-text.png",
+        DeltaTests::loadPng(TDOC "/delta-text.png",
                             height, width, rowBytes);
     CPPUNIT_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
     CPPUNIT_ASSERT_EQUAL(size_t(256 * 256 * 4), text.size());
 
     const TileWireId text2Wid = 2;
     std::vector<char> text2 =
-        DeltaTests::loadPng("data/delta-text2.png",
+        DeltaTests::loadPng(TDOC "/delta-text2.png",
                             height, width, rowBytes);
     CPPUNIT_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
     CPPUNIT_ASSERT_EQUAL(size_t(256 * 256 * 4), text2.size());
