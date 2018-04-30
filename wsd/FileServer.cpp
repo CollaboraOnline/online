@@ -191,7 +191,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 
     bool authenticated = false;
 
-    if (userProvidedUsr == user && userProvidedPwd == pass)
+    if (userProvidedUsr == user && userProvidedPwd == pass && !user.empty() && !pass.empty())
     {
         authenticated = true;
     }
