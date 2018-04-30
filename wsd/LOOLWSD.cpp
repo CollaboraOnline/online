@@ -531,14 +531,12 @@ inline std::string getLaunchBase(const std::string &credentials)
 
 inline std::string getLaunchURI(const std::string &document)
 {
-    const std::string aAbsTopSrcDir = Poco::Path(Application::instance().commandPath()).parent().toString();
-
     std::ostringstream oss;
 
     oss << getLaunchBase("");
     oss << LOOLWSD_TEST_LOLEAFLET_UI;
     oss << "?file_path=file://";
-    oss << Poco::Path(aAbsTopSrcDir).absolute().toString();
+    oss << DEBUG_ABSSRCDIR "/";
     oss << document;
 
     return oss.str();
