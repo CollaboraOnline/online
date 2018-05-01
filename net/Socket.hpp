@@ -40,8 +40,10 @@
 
 namespace Poco
 {
+    class MemoryInputStream;
     namespace Net
     {
+        class HTTPRequest;
         class HTTPResponse;
     }
 }
@@ -833,6 +835,20 @@ public:
         return socket;
     }
 
+    /// Remove the first @count bytes from input buffer
+    void eraseFirstInputBytes(size_t count)
+    {
+        _inBuffer.erase(_inBuffer.begin(), _inBuffer.begin() + count);
+    }
+
+    /// Detects if we have an HTTP header in the provided message and
+    /// populates a request for that.
+    bool parseHeader(const char *clientLoggingName,
+                     Poco::MemoryInputStream &message,
+                     Poco::Net::HTTPRequest &request,
+                     size_t *requestSize = nullptr);
+
+    /// Get input/output statistics on this stream
     void getIOStats(uint64_t &sent, uint64_t &recv)
     {
         sent = _bytesSent;
@@ -1021,8 +1037,7 @@ namespace HttpHelper
     void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path, const std::string& mediaType,
                   Poco::Net::HTTPResponse& response, bool noCache = false, bool deflate = false,
                   const bool headerOnly = false);
-};
-
+}
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

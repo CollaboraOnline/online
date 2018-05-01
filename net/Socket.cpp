@@ -17,6 +17,8 @@
 #include <Poco/DateTime.h>
 #include <Poco/DateTimeFormat.h>
 #include <Poco/DateTimeFormatter.h>
+#include <Poco/MemoryStream.h>
+#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 
 #include <SigUtil.hpp>
@@ -239,6 +241,70 @@ bool ServerSocket::bind(Type type, int port)
         LOG_SYS("Failed to bind to: " << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6") << " port: " << port);
 
     return rc == 0;
+}
+
+bool StreamSocket::parseHeader(const char *clientName,
+                               Poco::MemoryInputStream &message,
+                               Poco::Net::HTTPRequest &request,
+                               size_t *requestSize)
+{
+    LOG_TRC("#" << getFD() << " handling incoming " << _inBuffer.size() << " bytes.");
+
+    assert(!requestSize || *requestSize == 0);
+
+    // Find the end of the header, if any.
+    static const std::string marker("\r\n\r\n");
+    auto itBody = std::search(_inBuffer.begin(), _inBuffer.end(),
+                              marker.begin(), marker.end());
+    if (itBody == _inBuffer.end())
+    {
+        LOG_TRC("#" << getFD() << " doesn't have enough data yet.");
+        return false;
+    }
+
+    // Skip the marker.
+    itBody += marker.size();
+    if (requestSize)
+        *requestSize = static_cast<size_t>(itBody - _inBuffer.begin());
+
+    try
+    {
+        request.read(message);
+
+        Log::StreamLogger logger = Log::info();
+        if (logger.enabled())
+        {
+            logger << "#" << getFD() << ": " << clientName << " HTTP Request: "
+                   << request.getMethod() << ' '
+                   << request.getURI() << ' '
+                   << request.getVersion();
+
+            for (const auto& it : request)
+            {
+                logger << " / " << it.first << ": " << it.second;
+            }
+
+            LOG_END(logger);
+        }
+
+        const std::streamsize contentLength = request.getContentLength();
+        const auto offset = itBody - _inBuffer.begin();
+        const std::streamsize available = _inBuffer.size() - offset;
+
+        if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH && available < contentLength)
+        {
+            LOG_DBG("Not enough content yet: ContentLength: " << contentLength << ", available: " << available);
+            return false;
+        }
+    }
+    catch (const std::exception& exc)
+    {
+        // Probably don't have enough data just yet.
+        // TODO: timeout if we never get enough.
+        return false;
+    }
+
+    return true;
 }
 
 
