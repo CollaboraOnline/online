@@ -214,6 +214,11 @@ int main (int argc, char **argv)
     int port = 9042;
     (void) argc; (void) argv;
 
+    if (!UnitWSD::init(UnitWSD::UnitType::Wsd, ""))
+    {
+        throw std::runtime_error("Failed to load wsd unit test library.");
+    }
+
     Log::initialize("WebSocketDump", "trace", true, false,
                     std::map<std::string, std::string>());
 
