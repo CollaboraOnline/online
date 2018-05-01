@@ -269,6 +269,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     }
 }
 
+/// Connection from remote admin socket
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
                                        const std::weak_ptr<StreamSocket>& socket,
                                        const Poco::Net::HTTPRequest& request)
@@ -279,8 +280,9 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
 {
 }
 
+/// Client connection to remote amdin socket
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
-    : WebSocketHandler(),
+    : WebSocketHandler(true),
       _admin(adminManager),
       _sessionId(0),
       _isAuthenticated(true)
@@ -648,7 +650,6 @@ public:
     {
         LOG_TRC("Outbound monitor - connected");
         _connecting = false;
-        setWebSocket();
         return AdminSocketHandler::performWrites();
     }
 };
@@ -713,7 +714,8 @@ void Admin::connectToMonitor(const Poco::URI &uri)
                         std::ostringstream oss;
                         oss << "GET " << uri.getHost() << " HTTP/1.1\r\n"
                             "Connection:Upgrade\r\n"
-                            "Sec-WebSocket-Accept:GAcwqP21iVOY2yKefQ64c0yVN5M=\r\n"
+                            "User-Foo: Adminbits\r\n"
+                            "Sec-WebSocket-Key: GAcwqP21iVOY2yKefQ64c0yVN5M=\r\n"
                             "Upgrade:websocket\r\n"
                             "Accept-Encoding:gzip, deflate, br\r\n"
                             "Accept-Language:en\r\n"
