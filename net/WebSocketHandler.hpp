@@ -19,6 +19,7 @@
 #include "common/Unit.hpp"
 #include "Socket.hpp"
 
+#include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/WebSocket.h>
 
@@ -33,6 +34,7 @@ protected:
 
     std::vector<char> _wsPayload;
     std::atomic<bool> _shuttingDown;
+    bool _isClient;
 
     struct WSFrameMask
     {
@@ -44,10 +46,12 @@ protected:
     static const int PingFrequencyMs;
 
 public:
-    WebSocketHandler() :
+    /// Perform upgrade ourselves, or select a client web socket.
+    WebSocketHandler(bool isClient = false) :
         _lastPingSentTime(std::chrono::steady_clock::now()),
         _pingTimeUs(0),
-        _shuttingDown(false)
+        _shuttingDown(false),
+        _isClient(isClient)
     {
     }
 
@@ -59,7 +63,8 @@ public:
                   std::chrono::milliseconds(PingFrequencyMs) -
                   std::chrono::milliseconds(InitialPingDelayMs)),
         _pingTimeUs(0),
-        _shuttingDown(false)
+        _shuttingDown(false),
+        _isClient(false)
     {
         upgradeToWebSocket(request);
     }
@@ -253,6 +258,8 @@ public:
         {
             LOG_ERR("No socket associated with WebSocketHandler 0x" << std::hex << this << std::dec);
         }
+        else if (_isClient && !socket->isWebSocket())
+            handleClientUpgrade();
         else
         {
             while (handleOneIncomingMessage(socket))
@@ -433,6 +440,59 @@ protected:
         LOG_TRC("#" << socket->getFD() << ": Sending WS Upgrade response: " << res);
         socket->send(res);
         setWebSocket();
+    }
+
+    // Handle incoming upgrade to full socket as client WS.
+    void handleClientUpgrade()
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+
+        LOG_TRC("Incoming client websocket upgrade request");
+
+        Poco::MemoryInputStream message(&socket->_inBuffer[0],
+                                        socket->_inBuffer.size());;
+        Poco::Net::HTTPRequest req;
+        size_t requestSize = 0;
+
+        bool bOk = false;
+        if (!socket->parseHeader("Monitor", message, req, &requestSize))
+        {
+// FIXME: grim hack [!] we can't parse the response for some strange reason ...
+//        we get an exception inside Poco ...
+//            return;
+            bOk = true;
+        }
+        else if (req.find("Upgrade") != req.end() && Poco::icompare(req["Upgrade"], "websocket") == 0)
+        {
+            const std::string wsKey = req.get("Sec-WebSocket-Accept", "");
+            const std::string wsProtocol = req.get("Sec-WebSocket-Protocol", "");
+            if (Poco::icompare(wsProtocol, "chat") != 0)
+                LOG_ERR("Unknown websocket protocol " << wsProtocol);
+            else
+            {
+                LOG_TRC("Accepted incoming websocket request");
+                // FIXME: validate Sec-WebSocket-Accept vs. Sec-WebSocket-Key etc.
+                bOk = true;
+            }
+        }
+
+        if (!bOk)
+        {
+            LOG_ERR("Bad websocker server reply: " << req.getURI());
+
+            // Bad request.
+            std::ostringstream oss;
+            oss << "HTTP/1.1 400\r\n"
+                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                << "Content-Length: 0\r\n"
+                << "\r\n";
+            socket->send(oss.str());
+            socket->shutdown();
+        }
+
+        setWebSocket();
+        socket->eraseFirstInputBytes(requestSize);
     }
 
     void setWebSocket()
