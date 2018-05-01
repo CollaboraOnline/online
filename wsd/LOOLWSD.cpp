@@ -1600,43 +1600,17 @@ private:
             return;
         }
 
-        auto socket = _socket.lock();
-        std::vector<char>& in = socket->_inBuffer;
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
 
-        // Find the end of the header, if any.
-        static const std::string marker("\r\n\r\n");
-        auto itBody = std::search(in.begin(), in.end(),
-                                  marker.begin(), marker.end());
-        if (itBody == in.end())
-        {
-            LOG_TRC("#" << socket->getFD() << " doesn't have enough data yet.");
-            return;
-        }
-
-        // Skip the marker.
-        itBody += marker.size();
-
-        Poco::MemoryInputStream message(&in[0], in.size());
+        Poco::MemoryInputStream message(&socket->_inBuffer[0],
+                                        socket->_inBuffer.size());;
         Poco::Net::HTTPRequest request;
+        size_t requestSize = 0;
+
         try
         {
-            request.read(message);
-
-            auto logger = Log::info();
-            if (logger.enabled())
-            {
-                logger << "#" << socket->getFD() << ": Prisoner HTTP Request: "
-                       << request.getMethod() << ' '
-                       << request.getURI() << ' '
-                       << request.getVersion();
-
-                for (const auto& it : request)
-                {
-                    logger << " / " << it.first << ": " << it.second;
-                }
-
-                LOG_END(logger);
-            }
+            if (!socket->parseHeader("Prisoner", message, request, &requestSize))
+                return;
 
             LOG_TRC("Child connection with URI [" << request.getURI() << "].");
             if (request.getURI().find(NEW_CHILD_URI) != 0)
@@ -1677,7 +1651,7 @@ private:
                 return;
             }
 
-            in.clear();
+            socket->_inBuffer.clear();
 
             LOG_INF("New child [" << pid << "], jailId: " << jailId << ".");
 
@@ -1760,61 +1734,15 @@ private:
     /// Called after successful socket reads.
     void handleIncomingMessage(SocketDisposition &disposition) override
     {
-        auto socket = _socket.lock();
-        std::vector<char>& in = socket->_inBuffer;
-        LOG_TRC("#" << socket->getFD() << " handling incoming " << in.size() << " bytes.");
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
 
-        // Find the end of the header, if any.
-        static const std::string marker("\r\n\r\n");
-        auto itBody = std::search(in.begin(), in.end(),
-                                  marker.begin(), marker.end());
-        if (itBody == in.end())
-        {
-            LOG_DBG("#" << socket->getFD() << " doesn't have enough data yet.");
-            return;
-        }
-
-        // Skip the marker.
-        itBody += marker.size();
-
-        Poco::MemoryInputStream message(&in[0], in.size());
+        Poco::MemoryInputStream message(&socket->_inBuffer[0],
+                                        socket->_inBuffer.size());;
         Poco::Net::HTTPRequest request;
-        try
-        {
-            request.read(message);
+        size_t requestSize = 0;
 
-            auto logger = Log::info();
-            if (logger.enabled())
-            {
-                logger << "#" << socket->getFD() << ": Client HTTP Request: "
-                       << request.getMethod() << ' '
-                       << request.getURI() << ' '
-                       << request.getVersion();
-
-                for (const auto& it : request)
-                {
-                    logger << " / " << it.first << ": " << it.second;
-                }
-
-                LOG_END(logger);
-            }
-
-            const std::streamsize contentLength = request.getContentLength();
-            const auto offset = itBody - in.begin();
-            const std::streamsize available = in.size() - offset;
-
-            if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH && available < contentLength)
-            {
-                LOG_DBG("Not enough content yet: ContentLength: " << contentLength << ", available: " << available);
-                return;
-            }
-        }
-        catch (const std::exception& exc)
-        {
-            // Probably don't have enough data just yet.
-            // TODO: timeout if we never get enough.
+        if (!socket->parseHeader("Client", message, request, &requestSize))
             return;
-        }
 
         try
         {
@@ -1908,12 +1836,12 @@ private:
 
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
             LOG_INF("#" << socket->getFD() << " Exception while processing incoming request: [" <<
-                    LOOLProtocol::getAbbreviatedMessage(in) << "]: " << exc.what());
+                    LOOLProtocol::getAbbreviatedMessage(socket->_inBuffer) << "]: " << exc.what());
         }
 
         // if we succeeded - remove the request from our input buffer
         // we expect one request per socket
-        in.erase(in.begin(), itBody);
+        socket->eraseFirstInputBytes(requestSize);
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
