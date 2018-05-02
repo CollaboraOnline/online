@@ -66,15 +66,16 @@ int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
     return PAM_SUCCESS;
 }
 
-bool isPamAuthOk(const std::string user, const std::string pass)
+/// Use PAM to check for user / password.
+bool isPamAuthOk(const std::string& userProvidedUsr, const std::string& userProvidedPwd)
 {
     struct pam_conv localConversation { functionConversation, nullptr };
     pam_handle_t *localAuthHandle = NULL;
     int retval;
 
-    localConversation.appdata_ptr = const_cast<char *>(pass.c_str());
+    localConversation.appdata_ptr = const_cast<char *>(userProvidedPwd.c_str());
 
-    retval = pam_start("loolwsd", user.c_str(), &localConversation, &localAuthHandle);
+    retval = pam_start("loolwsd", userProvidedUsr.c_str(), &localConversation, &localAuthHandle);
 
     if (retval != PAM_SUCCESS)
     {
@@ -88,7 +89,7 @@ bool isPamAuthOk(const std::string user, const std::string pass)
     {
        if (retval == PAM_AUTH_ERR)
        {
-           LOG_ERR("PAM authentication failure for user \"" << user << "\".");
+           LOG_ERR("PAM authentication failure for user \"" << userProvidedUsr << "\".");
        }
        else
        {
@@ -97,7 +98,7 @@ bool isPamAuthOk(const std::string user, const std::string pass)
        return false;
     }
 
-    LOG_INF("PAM authentication success for user \"" << user << "\".");
+    LOG_INF("PAM authentication success for user \"" << userProvidedUsr << "\".");
 
     retval = pam_end(localAuthHandle, retval);
 
@@ -108,6 +109,83 @@ bool isPamAuthOk(const std::string user, const std::string pass)
 
     return true;
 }
+
+/// Check for user / password set in loolwsd.xml.
+bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userProvidedPwd)
+{
+    const auto& config = Application::instance().config();
+    const std::string user = config.getString("admin_console.username", "");
+
+    // Check for the username
+    if (user.empty())
+    {
+        LOG_ERR("Admin Console username missing, admin console disabled.");
+        return false;
+    }
+    else if (user != userProvidedUsr)
+    {
+        LOG_ERR("Admin Console wrong username.");
+        return false;
+    }
+
+    const char useLoolconfig[] = " Use loolconfig to configure the admin password.";
+
+    // do we have secure_password?
+    if (config.has("admin_console.secure_password"))
+    {
+        const std::string securePass = config.getString("admin_console.secure_password", "");
+        if (securePass.empty())
+        {
+            LOG_ERR("Admin Console secure password is empty, denying access." << useLoolconfig);
+            return false;
+        }
+
+#if HAVE_PKCS5_PBKDF2_HMAC
+        // Extract the salt from the config
+        std::vector<unsigned char> saltData;
+        std::vector<std::string> tokens = LOOLProtocol::tokenize(securePass, '.');
+        if (tokens.size() != 5 ||
+            tokens[0] != "pbkdf2" ||
+            tokens[1] != "sha512" ||
+            !Util::dataFromHexString(tokens[3], saltData))
+        {
+            LOG_ERR("Incorrect format detected for secure_password in config file." << useLoolconfig);
+            return false;
+        }
+
+        unsigned char userProvidedPwdHash[tokens[4].size() / 2];
+        PKCS5_PBKDF2_HMAC(userProvidedPwd.c_str(), -1,
+                          saltData.data(), saltData.size(),
+                          std::stoi(tokens[2]),
+                          EVP_sha512(),
+                          sizeof userProvidedPwdHash, userProvidedPwdHash);
+
+        std::stringstream stream;
+        for (unsigned long j = 0; j < sizeof userProvidedPwdHash; ++j)
+            stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(userProvidedPwdHash[j]);
+
+        // now compare the hashed user-provided pwd against the stored hash
+        return stream.str() == tokens[4];
+#else
+        const std::string pass = config.getString("admin_console.password", "");
+        LOG_ERR("The config file has admin_console.secure_password setting, "
+                << "but this application was compiled with old OpenSSL version, "
+                << "and this setting cannot be used." << (!pass.empty()? " Falling back to plain text password.": ""));
+
+        // careful, a fall-through!
+#endif
+    }
+
+    const std::string pass = config.getString("admin_console.password", "");
+    if (pass.empty())
+    {
+        LOG_ERR("Admin Console password is empty, denying access." << useLoolconfig);
+        return false;
+    }
+
+    return pass == userProvidedPwd;
+}
+
 }
 
 bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
@@ -138,88 +216,46 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
         LOG_INF("No existing JWT cookie found");
     }
 
+    // If no cookie found, or is invalid, let the admin re-login
     HTTPBasicCredentials credentials(request);
-    std::string userProvidedPwd = credentials.getPassword();
     std::string userProvidedUsr = credentials.getUsername();
+    std::string userProvidedPwd = credentials.getPassword();
 
-    // If no cookie found, or is invalid, let admin re-login
-    const std::string user = config.getString("admin_console.username", "");
-    std::string pass = config.getString("admin_console.password", "");
-    const bool pam = config.getBool("admin_console.enable_pam", "true");
-
-    if (config.has("admin_console.secure_password"))
+    // Deny attempts to login without providing a username / pwd and fail right away
+    // We don't even want to allow a password-less PAM module to be used here,
+    // or anything.
+    if (userProvidedUsr.empty() || userProvidedPwd.empty())
     {
-#if HAVE_PKCS5_PBKDF2_HMAC
-        pass = config.getString("admin_console.secure_password");
-        // Extract the salt from the config
-        std::vector<unsigned char> saltData;
-        std::vector<std::string> tokens = LOOLProtocol::tokenize(pass, '.');
-        if (tokens.size() != 5 ||
-            tokens[0] != "pbkdf2" ||
-            tokens[1] != "sha512" ||
-            !Util::dataFromHexString(tokens[3], saltData))
-        {
-            LOG_ERR("Incorrect format detected for secure_password in config file."
-                    << "Use loolconfig to configure admin password.");
-        }
-
-        unsigned char userProvidedPwdHash[tokens[4].size() / 2];
-        PKCS5_PBKDF2_HMAC(userProvidedPwd.c_str(), -1,
-                          saltData.data(), saltData.size(),
-                          std::stoi(tokens[2]),
-                          EVP_sha512(),
-                          sizeof userProvidedPwdHash, userProvidedPwdHash);
-
-        std::stringstream stream;
-        for (unsigned long j = 0; j < sizeof userProvidedPwdHash; ++j)
-            stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(userProvidedPwdHash[j]);
-
-        userProvidedPwd = stream.str();
-        pass = tokens[4];
-#else
-        LOG_ERR("The config file has admin_console.secure_password setting, "
-                << "but this application was compiled with old OpenSSL version, "
-                << "and this setting cannot be used. Falling back to plain text password or to PAM, if it is set.");
-#endif
-    }
-
-    if (!pam && (user.empty() || pass.empty()))
-    {
-        LOG_ERR("Admin Console credentials missing. Denying access until set.");
+        LOG_WRN("An attempt to log into Admin Console without username or password.");
         return false;
     }
 
-    bool authenticated = false;
-
-    if (userProvidedUsr == user && userProvidedPwd == pass)
+    // Check if the user is allowed to use the admin console
+    if (config.getBool("admin_console.enable_pam", "false"))
     {
-        authenticated = true;
-    }
-
-    if (!authenticated && pam)
-    {
-        authenticated = isPamAuthOk(userProvidedUsr, userProvidedPwd);
-    }
-
-    if (authenticated)
-    {
-        // generate and set the cookie
-        JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
-        const std::string jwtToken = authAgent.getAccessToken();
-
-        Poco::Net::HTTPCookie cookie("jwt", jwtToken);
-        // bundlify appears to add an extra /dist -> dist/dist/admin
-        cookie.setPath("/loleaflet/dist/");
-        cookie.setSecure(LOOLWSD::isSSLEnabled() ||
-                         LOOLWSD::isSSLTermination());
-        response.addCookie(cookie);
+        // use PAM - it needs the username too
+        if (!isPamAuthOk(userProvidedUsr, userProvidedPwd))
+            return false;
     }
     else
     {
-        LOG_INF("Wrong admin credentials.");
+        // use the hash or password in the config file
+        if (!isConfigAuthOk(userProvidedUsr, userProvidedPwd))
+            return false;
     }
 
-    return authenticated;
+    // authentication passed, generate and set the cookie
+    JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
+    const std::string jwtToken = authAgent.getAccessToken();
+
+    Poco::Net::HTTPCookie cookie("jwt", jwtToken);
+    // bundlify appears to add an extra /dist -> dist/dist/admin
+    cookie.setPath("/loleaflet/dist/");
+    cookie.setSecure(LOOLWSD::isSSLEnabled() ||
+                     LOOLWSD::isSSLTermination());
+    response.addCookie(cookie);
+
+    return true;
 }
 
 void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::MemoryInputStream& message,
