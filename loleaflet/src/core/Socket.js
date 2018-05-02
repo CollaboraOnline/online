@@ -34,6 +34,9 @@ L.Socket = L.Class.extend({
 
 		var websocketURI = map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc;
 		try {
+			if (this.socket) {
+				this.close();
+			}
 			this.socket = new WebSocket(websocketURI);
 		} catch (e) {
 			this._map.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ').replace('LibreOffice Online', (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online')) + _('Cannot create websocket, please restart your browser.'), cmd: 'socket', kind: 'failed', id: 3});
