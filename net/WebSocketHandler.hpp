@@ -197,24 +197,51 @@ public:
                 ", fin? " << fin << ", mask? " << hasMask << ", payload length: " << _wsPayload.size() <<
                 ", residual socket data: " << socket->_inBuffer.size() << " bytes.");
 
+        bool doClose = false;
+
         switch (code)
         {
         case WSOpCode::Pong:
         {
-            _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
-                                        (std::chrono::steady_clock::now() - _lastPingSentTime).count();
-            LOG_TRC("#" << socket->getFD() << ": Pong received: " << _pingTimeUs << " microseconds");
-            break;
+            if (_isClient)
+            {
+                LOG_ERR("#" << socket->getFD() << ": Servers should not send pongs, only clients");
+                doClose = true;
+                break;
+            }
+            else
+            {
+                _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
+                    (std::chrono::steady_clock::now() - _lastPingSentTime).count();
+                LOG_TRC("#" << socket->getFD() << ": Pong received: " << _pingTimeUs << " microseconds");
+                break;
+            }
         }
         case WSOpCode::Ping:
-            LOG_ERR("#" << socket->getFD() << ": Clients should not send pings, only servers");
-            // drop through
-#if defined __clang__
-            [[clang::fallthrough]];
-#elif defined __GNUC__ && __GNUC__ >= 7
-            [[fallthrough]];
-#endif
+            if (_isClient)
+            {
+                auto now = std::chrono::steady_clock::now();
+                _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
+                                        (now - _lastPingSentTime).count();
+                sendPong(now, &_wsPayload[0], payloadLen, socket);
+                break;
+            }
+            else
+            {
+                LOG_ERR("#" << socket->getFD() << ": Clients should not send pings, only servers");
+                doClose = true;
+            }
+            break;
         case WSOpCode::Close:
+            doClose = true;
+            break;
+        default:
+            handleMessage(fin, code, _wsPayload);
+            break;
+        }
+
+        if (doClose)
+        {
             if (!_shuttingDown)
             {
                 // Peer-initiated shutdown must be echoed.
@@ -239,10 +266,6 @@ public:
 
             // TCP Close.
             socket->closeConnection();
-            break;
-        default:
-            handleMessage(fin, code, _wsPayload);
-            break;
         }
 
         _wsPayload.clear();
@@ -270,15 +293,20 @@ public:
     int getPollEvents(std::chrono::steady_clock::time_point now,
                       int & timeoutMaxMs) override
     {
-        const int timeSincePingMs =
-            std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastPingSentTime).count();
-        timeoutMaxMs = std::min(timeoutMaxMs, PingFrequencyMs - timeSincePingMs);
+        if (!_isClient)
+        {
+            const int timeSincePingMs =
+                std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastPingSentTime).count();
+            timeoutMaxMs = std::min(timeoutMaxMs, PingFrequencyMs - timeSincePingMs);
+        }
         return POLLIN;
     }
 
     /// Send a ping message
-    void sendPing(std::chrono::steady_clock::time_point now,
-                  const std::shared_ptr<StreamSocket>& socket)
+    void sendPingOrPong(std::chrono::steady_clock::time_point now,
+                        const char* data, const size_t len,
+                        const WSOpCode code,
+                        const std::shared_ptr<StreamSocket>& socket)
     {
         assert(socket && "Expected a valid socket instance.");
 
@@ -290,15 +318,34 @@ public:
             return;
         }
 
-        LOG_TRC("#" << socket->getFD() << ": Sending ping.");
+        LOG_TRC("#" << socket->getFD() << ": Sending " <<
+                (const char *)(code == WSOpCode::Ping ? " ping." : "pong."));
         // FIXME: allow an empty payload.
-        sendMessage("", 1, WSOpCode::Ping, false);
+        sendMessage(data, len, code, false);
         _lastPingSentTime = now;
+    }
+
+    void sendPing(std::chrono::steady_clock::time_point now,
+                  const std::shared_ptr<StreamSocket>& socket)
+    {
+        assert(!_isClient);
+        sendPingOrPong(now, "", 1, WSOpCode::Ping, socket);
+    }
+
+    void sendPong(std::chrono::steady_clock::time_point now,
+                  const char* data, const size_t len,
+                  const std::shared_ptr<StreamSocket>& socket)
+    {
+        assert(_isClient);
+        sendPingOrPong(now, data, len, WSOpCode::Pong, socket);
     }
 
     /// Do we need to handle a timeout ?
     void checkTimeout(std::chrono::steady_clock::time_point now) override
     {
+        if (_isClient)
+            return;
+
         const int timeSincePingMs =
             std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastPingSentTime).count();
         if (timeSincePingMs >= PingFrequencyMs)
