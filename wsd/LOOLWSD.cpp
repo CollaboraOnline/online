@@ -705,7 +705,7 @@ void LOOLWSD::initialize(Application& self)
             { "trace[@enable]", "false" },
             { "trace.path[@compress]", "true" },
             { "trace.path[@snapshot]", "false" },
-            { "admin_console.enable_pam", "true"} };
+            { "admin_console.enable_pam", "false"} };
 
     // Set default values, in case they are missing from the config file.
     AutoPtr<AppConfigMap> defConfig(new AppConfigMap(DefAppConfig));
