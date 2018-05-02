@@ -503,16 +503,6 @@ L.Control.Menubar = L.Control.extend({
 		}
 	},
 
-	_addAfterElements: function() {
-		var elemLi = L.DomUtil.create('li', '', this._menubarCont);
-		L.DomUtil.setStyle(elemLi, 'float', 'right');
-
-		// move document-name-input element to menubar
-		var elem = L.DomUtil.get('document-name-input');
-		L.DomUtil.remove(elem);
-		elemLi.appendChild(elem);
-	},
-
 	_onDocLayerInit: function() {
 		// clear initial menu
 		while (this._menubarCont.hasChildNodes()) {
@@ -528,8 +518,6 @@ L.Control.Menubar = L.Control.extend({
 		} else if (docType === 'presentation' || docType === 'drawing') {
 			this._initializeMenu(this.options.presentation);
 		}
-
-		this._addAfterElements();
 
 		// initialize menubar plugin
 		$('#main-menu').smartmenus({
