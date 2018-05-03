@@ -19,8 +19,9 @@
 class SslStreamSocket final : public StreamSocket
 {
 public:
-    SslStreamSocket(const int fd, std::shared_ptr<SocketHandlerInterface> responseClient) :
-        StreamSocket(fd, std::move(responseClient)),
+    SslStreamSocket(const int fd, bool isClient,
+                    std::shared_ptr<SocketHandlerInterface> responseClient) :
+        StreamSocket(fd, isClient, std::move(responseClient)),
         _ssl(nullptr),
         _sslWantsTo(SslWantsTo::Neither),
         _doHandshake(true)
@@ -44,8 +45,10 @@ public:
 
         SSL_set_bio(_ssl, bio, bio);
 
-        // We are a server-side socket.
-        SSL_set_accept_state(_ssl);
+        if (isClient)
+            SSL_set_connect_state(_ssl);
+        else // We are a server-side socket.
+            SSL_set_accept_state(_ssl);
     }
 
     ~SslStreamSocket()
