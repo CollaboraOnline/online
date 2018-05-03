@@ -699,10 +699,10 @@ void Admin::connectToMonitor(const Poco::URI &uri)
                     std::shared_ptr<SocketHandlerInterface> handler = std::make_shared<MonitorSocketHandler>(this);
 #if ENABLE_SSL
                     if (isSSL)
-                        socket = StreamSocket::create<SslStreamSocket>(fd, handler);
+                        socket = StreamSocket::create<SslStreamSocket>(fd, true, handler);
 #endif
                     if (!socket && !isSSL)
-                        socket = StreamSocket::create<StreamSocket>(fd, handler);
+                        socket = StreamSocket::create<StreamSocket>(fd, true, handler);
 
                     if (socket)
                     {

@@ -700,7 +700,8 @@ class StreamSocket : public Socket, public std::enable_shared_from_this<StreamSo
 {
 public:
     /// Create a StreamSocket from native FD and take ownership of handler instance.
-    StreamSocket(const int fd, std::shared_ptr<SocketHandlerInterface> socketHandler) :
+    StreamSocket(const int fd, bool /* isClient */,
+                 std::shared_ptr<SocketHandlerInterface> socketHandler) :
         Socket(fd),
         _socketHandler(std::move(socketHandler)),
         _bytesSent(0),
@@ -827,10 +828,10 @@ public:
     /// but we can't have a shared_ptr in the ctor.
     template <typename TSocket>
     static
-    std::shared_ptr<TSocket> create(const int fd, std::shared_ptr<SocketHandlerInterface> handler)
+    std::shared_ptr<TSocket> create(const int fd, bool isClient, std::shared_ptr<SocketHandlerInterface> handler)
     {
         SocketHandlerInterface* pHandler = handler.get();
-        auto socket = std::make_shared<TSocket>(fd, std::move(handler));
+        auto socket = std::make_shared<TSocket>(fd, isClient, std::move(handler));
         pHandler->onConnect(socket);
         return socket;
     }
