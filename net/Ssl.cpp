@@ -66,9 +66,9 @@ SslContext::SslContext(const std::string& certFilePath,
     // Create the Context. We only have one,
     // as we don't expect/support different servers in same process.
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-    _ctx = SSL_CTX_new(TLS_server_method());
+    _ctx = SSL_CTX_new(TLS_method());
 #else
-    _ctx = SSL_CTX_new(SSLv23_server_method());
+    _ctx = SSL_CTX_new(SSLv23_method());
 #endif
 
     // SSL_CTX_set_default_passwd_cb(_ctx, &privateKeyPassphraseCallback);
