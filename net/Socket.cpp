@@ -297,8 +297,16 @@ bool StreamSocket::parseHeader(const char *clientName,
             return false;
         }
     }
+    catch (const Poco::Exception& exc)
+    {
+        LOG_DBG("parseHeader exception caught: " << exc.displayText());
+        // Probably don't have enough data just yet.
+        // TODO: timeout if we never get enough.
+        return false;
+    }
     catch (const std::exception& exc)
     {
+        LOG_DBG("parseHeader exception caught.");
         // Probably don't have enough data just yet.
         // TODO: timeout if we never get enough.
         return false;
