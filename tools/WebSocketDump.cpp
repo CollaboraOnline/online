@@ -140,7 +140,10 @@ private:
 
             if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
             {
-                socket->setHandler(std::make_shared<DumpSocketHandler>(_socket, request));
+                auto dumpHandler = std::make_shared<DumpSocketHandler>(_socket, request);
+                socket->setHandler(dumpHandler);
+                dumpHandler->sendMessage("version");
+                dumpHandler->sendMessage("documents");
             }
             else
             {
@@ -194,9 +197,9 @@ class DumpSocketFactory final : public SocketFactory
     std::shared_ptr<Socket> create(const int physicalFd) override
     {
 #if 0 && ENABLE_SSL
-        return StreamSocket::create<SslStreamSocket>(physicalFd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
+        return StreamSocket::create<SslStreamSocket>(physicalFd, false, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
 #else
-        return StreamSocket::create<StreamSocket>(physicalFd, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
+        return StreamSocket::create<StreamSocket>(physicalFd, false, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
 #endif
     }
 };
