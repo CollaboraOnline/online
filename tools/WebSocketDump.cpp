@@ -196,7 +196,7 @@ class DumpSocketFactory final : public SocketFactory
 {
     std::shared_ptr<Socket> create(const int physicalFd) override
     {
-#if 0 && ENABLE_SSL
+#if ENABLE_SSL
         return StreamSocket::create<SslStreamSocket>(physicalFd, false, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
 #else
         return StreamSocket::create<StreamSocket>(physicalFd, false, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
@@ -224,6 +224,20 @@ int main (int argc, char **argv)
 
     Log::initialize("WebSocketDump", "trace", true, false,
                     std::map<std::string, std::string>());
+
+#if ENABLE_SSL
+    // hard coded but easy for now.
+    const std::string ssl_cert_file_path = "etc/cert.pem";
+    const std::string ssl_key_file_path = "etc/key.pem";
+    const std::string ssl_ca_file_path = "etc/ca-chain.cert.pem";
+    const std::string ssl_cipher_list = "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH";
+
+    // Initialize the non-blocking socket SSL.
+    SslContext::initialize(ssl_cert_file_path,
+                           ssl_key_file_path,
+                           ssl_ca_file_path,
+                           ssl_cipher_list);
+#endif
 
     SocketPoll acceptPoll("accept");
 
