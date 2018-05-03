@@ -21,6 +21,7 @@
 
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/WebSocket.h>
 
 class WebSocketHandler : public SocketHandlerInterface
@@ -494,52 +495,64 @@ protected:
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
-        LOG_TRC("Incoming client websocket upgrade request");
-
-        Poco::MemoryInputStream message(&socket->_inBuffer[0],
-                                        socket->_inBuffer.size());;
-        Poco::Net::HTTPRequest req;
-        size_t requestSize = 0;
+        LOG_TRC("Incoming client websocket upgrade response: " << std::string(&socket->_inBuffer[0], socket->_inBuffer.size()));
 
         bool bOk = false;
-        if (!socket->parseHeader("Monitor", message, req, &requestSize))
+        size_t responseSize = 0;
+
+        try
         {
-// FIXME: grim hack [!] we can't parse the response for some strange reason ...
-//        we get an exception inside Poco ...
-//            return;
-            bOk = true;
-        }
-        else if (req.find("Upgrade") != req.end() && Poco::icompare(req["Upgrade"], "websocket") == 0)
-        {
-            const std::string wsKey = req.get("Sec-WebSocket-Accept", "");
-            const std::string wsProtocol = req.get("Sec-WebSocket-Protocol", "");
-            if (Poco::icompare(wsProtocol, "chat") != 0)
-                LOG_ERR("Unknown websocket protocol " << wsProtocol);
-            else
+            Poco::MemoryInputStream message(&socket->_inBuffer[0], socket->_inBuffer.size());;
+            Poco::Net::HTTPResponse response;
+
+            response.read(message);
+
             {
-                LOG_TRC("Accepted incoming websocket request");
-                // FIXME: validate Sec-WebSocket-Accept vs. Sec-WebSocket-Key etc.
-                bOk = true;
+                static const std::string marker("\r\n\r\n");
+                auto itBody = std::search(socket->_inBuffer.begin(),
+                                          socket->_inBuffer.end(),
+                                          marker.begin(), marker.end());
+
+                if (itBody != socket->_inBuffer.end())
+                    responseSize = itBody - socket->_inBuffer.begin() + marker.size();
+            }
+
+            if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS &&
+                    response.has("Upgrade") && Poco::icompare(response.get("Upgrade"), "websocket") == 0)
+            {
+#if 0 // SAL_DEBUG ...
+                const std::string wsKey = response.get("Sec-WebSocket-Accept", "");
+                const std::string wsProtocol = response.get("Sec-WebSocket-Protocol", "");
+                if (Poco::icompare(wsProtocol, "chat") != 0)
+                    LOG_ERR("Unknown websocket protocol " << wsProtocol);
+                else
+#endif
+                {
+                    LOG_TRC("Accepted incoming websocket response");
+                    // FIXME: validate Sec-WebSocket-Accept vs. Sec-WebSocket-Key etc.
+                    bOk = true;
+                }
             }
         }
-
-        if (!bOk)
+        catch (const Poco::Exception& exc)
         {
-            LOG_ERR("Bad websocker server reply: " << req.getURI());
+            LOG_DBG("handleClientUpgrade exception caught: " << exc.displayText());
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_DBG("handleClientUpgrade exception caught.");
+        }
 
-            // Bad request.
-            std::ostringstream oss;
-            oss << "HTTP/1.1 400\r\n"
-                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "Content-Length: 0\r\n"
-                << "\r\n";
-            socket->send(oss.str());
+        if (!bOk || responseSize == 0)
+        {
+            LOG_ERR("Bad websocker server response.");
+
             socket->shutdown();
+            return;
         }
 
         setWebSocket();
-        socket->eraseFirstInputBytes(requestSize);
+        socket->eraseFirstInputBytes(responseSize);
     }
 
     void setWebSocket()
