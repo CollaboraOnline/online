@@ -18,6 +18,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/Util/XMLConfiguration.h>
 
 #include <Log.hpp>
 #include <Util.hpp>
@@ -194,13 +195,19 @@ private:
 
 class DumpSocketFactory final : public SocketFactory
 {
+private:
+    bool _isSSL = false;
+
+public:
+    DumpSocketFactory(bool isSSL) : _isSSL(isSSL) {}
+
     std::shared_ptr<Socket> create(const int physicalFd) override
     {
 #if ENABLE_SSL
-        return StreamSocket::create<SslStreamSocket>(physicalFd, false, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
-#else
-        return StreamSocket::create<StreamSocket>(physicalFd, false, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
+        if (_isSSL)
+            return StreamSocket::create<SslStreamSocket>(physicalFd, false, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
 #endif
+        return StreamSocket::create<StreamSocket>(physicalFd, false, std::unique_ptr<SocketHandlerInterface>{ new ClientRequestDispatcher });
     }
 };
 
@@ -212,9 +219,15 @@ namespace Util
     }
 }
 
+class LoolConfig final: public Poco::Util::XMLConfiguration
+{
+public:
+    LoolConfig()
+        {}
+};
+
 int main (int argc, char **argv)
 {
-    int port = 9042;
     (void) argc; (void) argv;
 
     if (!UnitWSD::init(UnitWSD::UnitType::Wsd, ""))
@@ -225,6 +238,20 @@ int main (int argc, char **argv)
     Log::initialize("WebSocketDump", "trace", true, false,
                     std::map<std::string, std::string>());
 
+    LoolConfig config;
+    config.load("loolwsd.xml");
+
+    // read the port & ssl support
+    int port = 9042;
+    bool isSSL = false;
+    std::string monitorAddress = config.getString("monitors.monitor");
+    if (!monitorAddress.empty())
+    {
+        Poco::URI monitorURI(monitorAddress);
+        port = monitorURI.getPort();
+        isSSL = (monitorURI.getScheme() == "wss");
+    }
+
 #if ENABLE_SSL
     // hard coded but easy for now.
     const std::string ssl_cert_file_path = "etc/cert.pem";
@@ -233,10 +260,11 @@ int main (int argc, char **argv)
     const std::string ssl_cipher_list = "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH";
 
     // Initialize the non-blocking socket SSL.
-    SslContext::initialize(ssl_cert_file_path,
-                           ssl_key_file_path,
-                           ssl_ca_file_path,
-                           ssl_cipher_list);
+    if (isSSL)
+        SslContext::initialize(ssl_cert_file_path,
+                               ssl_key_file_path,
+                               ssl_ca_file_path,
+                               ssl_cipher_list);
 #endif
 
     SocketPoll acceptPoll("accept");
@@ -244,7 +272,7 @@ int main (int argc, char **argv)
     // Setup listening socket with a factory for connected sockets.
     auto serverSocket = std::make_shared<ServerSocket>(
         Socket::Type::All, DumpSocketPoll,
-        std::make_shared<DumpSocketFactory>());
+        std::make_shared<DumpSocketFactory>(isSSL));
 
     if (!serverSocket->bind(ServerSocket::Type::Public, port))
     {
