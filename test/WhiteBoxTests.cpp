@@ -390,7 +390,7 @@ public:
         return _tileQueue;
     }
 
-    bool sendFrame(const char* /*buffer*/, int /*length*/, int /*flags*/) override
+    bool sendFrame(const char* /*buffer*/, int /*length*/, WSOpCode /*opCode*/) override
     {
         return true;
     }

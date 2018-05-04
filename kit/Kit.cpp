@@ -979,7 +979,7 @@ public:
         }
 
         LOG_TRC("Sending render-tile response (" << output.size() << " bytes) for: " << response);
-        websocketHandler->sendMessage(output.data(), output.size(), WebSocket::FRAME_BINARY);
+        websocketHandler->sendMessage(output.data(), output.size(), WSOpCode::Binary);
     }
 
     void renderCombinedTiles(const std::vector<std::string>& tokens, const std::shared_ptr<WebSocketHandler>& websocketHandler)
@@ -1108,7 +1108,7 @@ public:
         std::copy(tileMsg.begin(), tileMsg.end(), response.begin());
         std::copy(output.begin(), output.end(), response.begin() + tileMsg.size());
 
-        websocketHandler->sendMessage(response.data(), response.size(), WebSocket::FRAME_BINARY);
+        websocketHandler->sendMessage(response.data(), response.size(), WSOpCode::Binary);
     }
 
     bool sendTextFrame(const std::string& message)
@@ -1116,7 +1116,7 @@ public:
         return sendFrame(message.data(), message.size());
     }
 
-    bool sendFrame(const char* buffer, int length, int flags = Poco::Net::WebSocket::FRAME_TEXT) override
+    bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) override
     {
         try
         {
@@ -1126,7 +1126,7 @@ public:
                 return false;
             }
 
-            _websocketHandler->sendMessage(buffer, length, flags);
+            _websocketHandler->sendMessage(buffer, length, opCode);
             return true;
         }
         catch (const Exception& exc)
@@ -2334,7 +2334,7 @@ void lokit_main(const std::string& childRoot,
 
         SocketPoll mainKit("kit");
 
-        const Poco::URI uri("ws://127.0.0.1");
+        Poco::URI uri("ws://127.0.0.1");
         uri.setPort(MasterPortNumber);
 
         mainKit.insertNewWebSocketSync(uri, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId));
