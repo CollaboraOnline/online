@@ -70,7 +70,7 @@ public:
 
     virtual std::shared_ptr<TileQueue>& getTileQueue() = 0;
 
-    virtual bool sendFrame(const char* buffer, int length, int flags = Poco::Net::WebSocket::FRAME_TEXT) = 0;
+    virtual bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) = 0;
 };
 
 struct RecordedEvent
@@ -160,15 +160,15 @@ public:
     bool sendTextFrame(const char* buffer, int length) override
     {
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
-        const auto lock = getLock();
-        return _docManager.sendFrame(msg.data(), msg.size(), Poco::Net::WebSocket::FRAME_TEXT);
+        const std::unique_lock<std::mutex> lock = getLock();
+        return _docManager.sendFrame(msg.data(), msg.size(), WSOpCode::Text);
     }
 
     bool sendBinaryFrame(const char* buffer, int length) override
     {
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
-        const auto lock = getLock();
-        return _docManager.sendFrame(msg.data(), msg.size(), Poco::Net::WebSocket::FRAME_BINARY);
+        const std::unique_lock<std::mutex> lock = getLock();
+        return _docManager.sendFrame(msg.data(), msg.size(), WSOpCode::Binary);
     }
 
     using Session::sendTextFrame;

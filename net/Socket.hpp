@@ -46,6 +46,7 @@ namespace Poco
         class HTTPRequest;
         class HTTPResponse;
     }
+    class URI;
 }
 
 class Socket;
@@ -307,6 +308,41 @@ private:
     std::thread::id _owner;
 };
 
+class StreamSocket;
+
+/// Interface that handles the actual incoming message.
+class SocketHandlerInterface
+{
+public:
+    virtual ~SocketHandlerInterface() {}
+    /// Called when the socket is newly created to
+    /// set the socket associated with this ResponseClient.
+    /// Will be called exactly once.
+    virtual void onConnect(const std::shared_ptr<StreamSocket>& socket) = 0;
+
+    /// Called after successful socket reads.
+    virtual void handleIncomingMessage(SocketDisposition &disposition) = 0;
+
+    /// Prepare our poll record; adjust @timeoutMaxMs downwards
+    /// for timeouts, based on current time @now.
+    /// @returns POLLIN and POLLOUT if output is expected.
+    virtual int getPollEvents(std::chrono::steady_clock::time_point now,
+                              int &timeoutMaxMs) = 0;
+
+    /// Do we need to handle a timeout ?
+    virtual void checkTimeout(std::chrono::steady_clock::time_point /* now */) {}
+
+    /// Do some of the queued writing.
+    virtual void performWrites() = 0;
+
+    /// Called when the is disconnected and will be destroyed.
+    /// Will be called exactly once.
+    virtual void onDisconnect() {}
+
+    /// Append pretty printed internal state to a line
+    virtual void dumpState(std::ostream& os) { os << "\n"; }
+};
+
 /// Handles non-blocking socket event polling.
 /// Only polls on N-Sockets and invokes callback and
 /// doesn't manage buffers or client data.
@@ -534,6 +570,10 @@ public:
         }
     }
 
+    /// Inserts a new websocket to be polled.
+    /// NOTE: The DNS lookup is synchronous.
+    void insertNewWebSocketSync(const Poco::URI &uri, const std::shared_ptr<SocketHandlerInterface>& websocketHandler);
+
     typedef std::function<void()> CallbackFn;
 
     /// Add a callback to be invoked in the polling thread
@@ -658,41 +698,6 @@ protected:
     std::atomic<bool> _threadStarted;
     std::atomic<bool> _threadFinished;
     std::thread::id _owner;
-};
-
-class StreamSocket;
-
-/// Interface that handles the actual incoming message.
-class SocketHandlerInterface
-{
-public:
-    virtual ~SocketHandlerInterface() {}
-    /// Called when the socket is newly created to
-    /// set the socket associated with this ResponseClient.
-    /// Will be called exactly once.
-    virtual void onConnect(const std::shared_ptr<StreamSocket>& socket) = 0;
-
-    /// Called after successful socket reads.
-    virtual void handleIncomingMessage(SocketDisposition &disposition) = 0;
-
-    /// Prepare our poll record; adjust @timeoutMaxMs downwards
-    /// for timeouts, based on current time @now.
-    /// @returns POLLIN and POLLOUT if output is expected.
-    virtual int getPollEvents(std::chrono::steady_clock::time_point now,
-                              int &timeoutMaxMs) = 0;
-
-    /// Do we need to handle a timeout ?
-    virtual void checkTimeout(std::chrono::steady_clock::time_point /* now */) {}
-
-    /// Do some of the queued writing.
-    virtual void performWrites() = 0;
-
-    /// Called when the is disconnected and will be destroyed.
-    /// Will be called exactly once.
-    virtual void onDisconnect() {}
-
-    /// Append pretty printed internal state to a line
-    virtual void dumpState(std::ostream& os) { os << "\n"; }
 };
 
 /// A plain, non-blocking, data streaming socket.

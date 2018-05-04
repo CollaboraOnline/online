@@ -25,6 +25,10 @@ noinst_LTLIBRARIES = \
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS)
 
+if ENABLE_SSL
+AM_LDFLAGS += -lssl -lcrypto
+endif
+
 # We work around some of the mess of using the same sources both on
 # the server side and here in unit tests with conditional compilation
 # based on BUILDING_TESTS
@@ -46,6 +50,10 @@ wsd_sources = \
             ../wsd/TestStubs.cpp \
             ../common/Unit.cpp \
             ../net/Socket.cpp
+
+if ENABLE_SSL
+wsd_sources += ../net/Ssl.cpp
+endif
 
 test_base_source = \
 	TileQueueTests.cpp \
