@@ -57,7 +57,6 @@
 #include "KitHelper.hpp"
 #include "Kit.hpp"
 #include <Protocol.hpp>
-#include <LOOLWebSocket.hpp>
 #include <Log.hpp>
 #include <Png.hpp>
 #include <Rectangle.hpp>
@@ -754,14 +753,14 @@ public:
              const std::string& docId,
              const std::string& url,
              std::shared_ptr<TileQueue> tileQueue,
-             const std::shared_ptr<LOOLWebSocket>& ws)
+             const std::shared_ptr<WebSocketHandler>& websocketHandler)
       : _loKit(loKit),
         _jailId(jailId),
         _docKey(docKey),
         _docId(docId),
         _url(url),
         _tileQueue(std::move(tileQueue)),
-        _ws(ws),
+        _websocketHandler(websocketHandler),
         _docPassword(""),
         _haveDocPassword(false),
         _isDocPasswordProtected(false),
@@ -909,9 +908,9 @@ public:
         LOG_INF("setDocumentPassword returned");
     }
 
-    void renderTile(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
+    void renderTile(const std::vector<std::string>& tokens, const std::shared_ptr<WebSocketHandler>& websocketHandler)
     {
-        assert(ws && "Expected a non-null websocket.");
+        assert(websocketHandler && "Expected a non-null websocket.");
         TileDesc tile = TileDesc::parse(tokens);
 
         size_t pixmapDataSize = 4 * tile.getWidth() * tile.getHeight();
@@ -980,12 +979,12 @@ public:
         }
 
         LOG_TRC("Sending render-tile response (" << output.size() << " bytes) for: " << response);
-        ws->sendFrame(output.data(), output.size(), WebSocket::FRAME_BINARY);
+        websocketHandler->sendMessage(output.data(), output.size(), WebSocket::FRAME_BINARY);
     }
 
-    void renderCombinedTiles(const std::vector<std::string>& tokens, const std::shared_ptr<LOOLWebSocket>& ws)
+    void renderCombinedTiles(const std::vector<std::string>& tokens, const std::shared_ptr<WebSocketHandler>& websocketHandler)
     {
-        assert(ws && "Expected a non-null websocket.");
+        assert(websocketHandler && "Expected a non-null websocket.");
         TileCombined tileCombined = TileCombined::parse(tokens);
         auto& tiles = tileCombined.getTiles();
 
@@ -1109,7 +1108,7 @@ public:
         std::copy(tileMsg.begin(), tileMsg.end(), response.begin());
         std::copy(output.begin(), output.end(), response.begin() + tileMsg.size());
 
-        ws->sendFrame(response.data(), response.size(), WebSocket::FRAME_BINARY);
+        websocketHandler->sendMessage(response.data(), response.size(), WebSocket::FRAME_BINARY);
     }
 
     bool sendTextFrame(const std::string& message)
@@ -1121,13 +1120,13 @@ public:
     {
         try
         {
-            if (!_ws || _ws->poll(Poco::Timespan(0), Poco::Net::Socket::SelectMode::SELECT_ERROR))
+            if (!_websocketHandler)
             {
                 LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(buffer, length) << "].");
                 return false;
             }
 
-            _ws->sendFrame(buffer, length, flags);
+            _websocketHandler->sendMessage(buffer, length, flags);
             return true;
         }
         catch (const Exception& exc)
@@ -1827,11 +1826,11 @@ private:
 
                 if (tokens[0] == "tile")
                 {
-                    renderTile(tokens, _ws);
+                    renderTile(tokens, _websocketHandler);
                 }
                 else if (tokens[0] == "tilecombine")
                 {
-                    renderCombinedTiles(tokens, _ws);
+                    renderCombinedTiles(tokens, _websocketHandler);
                 }
                 else if (LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
                 {
@@ -1954,7 +1953,7 @@ private:
 
     std::shared_ptr<lok::Document> _loKitDocument;
     std::shared_ptr<TileQueue> _tileQueue;
-    std::shared_ptr<LOOLWebSocket> _ws;
+    std::shared_ptr<WebSocketHandler> _websocketHandler;
     PngCache _pngCache;
 
     // Document password provided
@@ -1988,6 +1987,97 @@ private:
     /// For showing disconnected user info in the doc repair dialog.
     std::map<int, UserInfo> _sessionUserInfo;
     Poco::Thread _callbackThread;
+};
+
+class KitWebSocketHandler final : public WebSocketHandler, public std::enable_shared_from_this<KitWebSocketHandler>
+{
+    std::shared_ptr<TileQueue> _queue;
+    std::string _socketName;
+    std::shared_ptr<lok::Office> _loKit;
+    std::string _jailId;
+
+public:
+    KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit, const std::string& jailId) :
+        WebSocketHandler(/* isClient = */ true),
+        _queue(std::make_shared<TileQueue>()),
+        _socketName(socketName),
+        _loKit(loKit),
+        _jailId(jailId)
+    {
+    }
+
+protected:
+    void handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char>& data) override
+    {
+        std::string message(data.data(), data.size());
+
+#if 0 // FIXME might be needed for unit tests #ifndef KIT_IN_PROCESS
+        if (UnitKit::get().filterKitMessage(ws, message))
+        {
+            return;
+        }
+#endif
+
+        LOG_DBG(_socketName << ": recv [" << LOOLProtocol::getAbbreviatedMessage(message) << "].");
+        std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
+
+        // Note: Syntax or parsing errors here are unexpected and fatal.
+        if (TerminationFlag)
+        {
+            LOG_DBG("Too late, we're going down");
+        }
+        else if (tokens[0] == "session")
+        {
+            const std::string& sessionId = tokens[1];
+            const std::string& docKey = tokens[2];
+            const std::string& docId = tokens[3];
+
+            std::string url;
+            URI::decode(docKey, url);
+            LOG_INF("New session [" << sessionId << "] request on url [" << url << "].");
+
+            if (!document)
+            {
+                document = std::make_shared<Document>(_loKit, _jailId, docKey, docId, url, _queue, shared_from_this());
+            }
+
+            // Validate and create session.
+            if (!(url == document->getUrl() && document->createSession(sessionId)))
+            {
+                LOG_DBG("CreateSession failed.");
+            }
+        }
+        else if (tokens[0] == "exit")
+        {
+            LOG_TRC("Setting TerminationFlag due to 'exit' command from parent.");
+            TerminationFlag = true;
+        }
+        else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
+                tokens[0] == "paintwindow" ||
+                LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
+        {
+            if (document)
+            {
+                _queue->put(message);
+            }
+            else
+            {
+                LOG_WRN("No document while processing " << tokens[0] << " request.");
+            }
+        }
+        else if (tokens.size() == 3 && tokens[0] == "setconfig")
+        {
+            // Currently onlly rlimit entries are supported.
+            if (!Rlimit::handleSetrlimitCommand(tokens))
+            {
+                LOG_ERR("Unknown setconfig command: " << message);
+            }
+        }
+        else
+        {
+            LOG_ERR("Bad or unknown token [" << tokens[0] << "]");
+        }
+    }
 };
 
 void documentViewCallback(const int type, const char* payload, void* data)
@@ -2242,110 +2332,26 @@ void lokit_main(const std::string& childRoot,
             free(versionInfo);
         }
 
-        // Open websocket connection between the child process and WSD.
-        HTTPClientSession cs("127.0.0.1", MasterPortNumber);
-        cs.setTimeout(Poco::Timespan(10, 0)); // 10 second
-        LOG_DBG("Connecting to Master " << cs.getHost() << ':' << cs.getPort());
-        HTTPRequest request(HTTPRequest::HTTP_GET, requestUrl);
-        HTTPResponse response;
-        auto ws = std::make_shared<LOOLWebSocket>(cs, request, response);
-        ws->setReceiveTimeout(0);
+        SocketPoll mainKit("kit");
 
-        auto queue = std::make_shared<TileQueue>();
+        const Poco::URI uri("ws://127.0.0.1");
+        uri.setPort(MasterPortNumber);
 
-        if (bTraceStartup && LogLevel != "trace")
+        mainKit.insertNewWebSocketSync(uri, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId));
+        LOG_INF("New kit client websocket inserted.");
+
+        while (!TerminationFlag)
         {
-            LOG_INF("Setting log-level to [" << LogLevel << "].");
-            Log::logger().setLevel(LogLevel);
+            mainKit.poll(SocketPoll::DefaultPollTimeoutMs);
+
+            if (document && document->purgeSessions() == 0)
+            {
+                LOG_INF("Last session discarded. Terminating.");
+                TerminationFlag = true;
+            }
         }
 
-        const std::string socketName = "child_ws_" + pid;
-        IoUtil::SocketProcessor(ws, socketName,
-                [&socketName, &ws, &loKit, &jailId, &queue](const std::vector<char>& data)
-                {
-                    std::string message(data.data(), data.size());
-
-#ifndef KIT_IN_PROCESS
-                    if (UnitKit::get().filterKitMessage(ws, message))
-                    {
-                        return true;
-                    }
-#endif
-
-                    LOG_DBG(socketName << ": recv [" << LOOLProtocol::getAbbreviatedMessage(message) << "].");
-                    std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
-
-                    // Note: Syntax or parsing errors here are unexpected and fatal.
-                    if (TerminationFlag)
-                    {
-                        LOG_DBG("Too late, we're going down");
-                    }
-                    else if (tokens[0] == "session")
-                    {
-                        const std::string& sessionId = tokens[1];
-                        const std::string& docKey = tokens[2];
-                        const std::string& docId = tokens[3];
-
-                        std::string url;
-                        URI::decode(docKey, url);
-                        LOG_INF("New session [" << sessionId << "] request on url [" << url << "].");
-
-                        if (!document)
-                        {
-                            document = std::make_shared<Document>(loKit, jailId, docKey, docId, url, queue, ws);
-                        }
-
-                        // Validate and create session.
-                        if (!(url == document->getUrl() &&
-                              document->createSession(sessionId)))
-                        {
-                            LOG_DBG("CreateSession failed.");
-                        }
-                    }
-                    else if (tokens[0] == "exit")
-                    {
-                        LOG_TRC("Setting TerminationFlag due to 'exit' command from parent.");
-                        TerminationFlag = true;
-                    }
-                    else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
-                             tokens[0] == "paintwindow" ||
-                             LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
-                    {
-                        if (document)
-                        {
-                            queue->put(message);
-                        }
-                        else
-                        {
-                            LOG_WRN("No document while processing " << tokens[0] << " request.");
-                        }
-                    }
-                    else if (tokens.size() == 3 && tokens[0] == "setconfig")
-                    {
-                        // Currently onlly rlimit entries are supported.
-                        if (!Rlimit::handleSetrlimitCommand(tokens))
-                        {
-                            LOG_ERR("Unknown setconfig command: " << message);
-                        }
-                    }
-                    else
-                    {
-                        LOG_ERR("Bad or unknown token [" << tokens[0] << "]");
-                    }
-
-                    return true;
-                },
-                []() {},
-                []()
-                {
-                    if (document && document->purgeSessions() == 0)
-                    {
-                        LOG_INF("Last session discarded. Terminating.");
-                        TerminationFlag = true;
-                    }
-
-                    return TerminationFlag.load();
-                });
+        LOG_INF("Kit poll terminated.");
 
         // Let forkit handle the jail cleanup.
     }
