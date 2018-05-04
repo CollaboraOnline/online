@@ -20,10 +20,12 @@
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/URI.h>
 
 #include "SigUtil.hpp"
 #include "Socket.hpp"
 #include "ServerSocket.hpp"
+#include "SslSocket.hpp"
 #include "WebSocketHandler.hpp"
 
 int SocketPoll::DefaultPollTimeoutMs = 5000;
@@ -124,6 +126,98 @@ void SocketPoll::wakeupWorld()
 {
     for (const auto& fd : getWakeupsArray())
         wakeup(fd);
+}
+
+void SocketPoll::insertNewWebSocketSync(const Poco::URI &uri, const std::shared_ptr<SocketHandlerInterface>& websocketHandler)
+{
+    LOG_INF("Connecting to " << uri.getHost() << " : " << uri.getPort() << " : " << uri.getPath());
+
+    // FIXME: put this in a ClientSocket class ?
+    // FIXME: store the address there - and ... (so on) ...
+    struct addrinfo* ainfo = nullptr;
+    struct addrinfo hints;
+    std::memset(&hints, 0, sizeof(hints));
+    int rc = getaddrinfo(uri.getHost().c_str(),
+                         std::to_string(uri.getPort()).c_str(),
+                         &hints, &ainfo);
+    std::string canonicalName;
+    bool isSSL = uri.getScheme() != "ws";
+#if !ENABLE_SSL
+    if (isSSL)
+    {
+        LOG_ERR("Error: wss for client websocket requested but SSL not compiled in.");
+        return;
+    }
+#endif
+
+    if (!rc && ainfo)
+    {
+        for (struct addrinfo* ai = ainfo; ai; ai = ai->ai_next)
+        {
+            if (ai->ai_canonname)
+                canonicalName = ai->ai_canonname;
+
+            if (ai->ai_addrlen && ai->ai_addr)
+            {
+                int fd = socket(ai->ai_addr->sa_family, SOCK_STREAM | SOCK_NONBLOCK, 0);
+                int res = connect(fd, ai->ai_addr, ai->ai_addrlen);
+                // FIXME: SSL sockets presumably need some setup, checking etc. and ... =)
+                if (fd < 0 || (res < 0 && errno != EINPROGRESS))
+                {
+                    LOG_ERR("Failed to connect to " << uri.getHost());
+                    close(fd);
+                }
+                else
+                {
+                    std::shared_ptr<StreamSocket> socket;
+#if ENABLE_SSL
+                    if (isSSL)
+                        socket = StreamSocket::create<SslStreamSocket>(fd, true, websocketHandler);
+#endif
+                    if (!socket && !isSSL)
+                        socket = StreamSocket::create<StreamSocket>(fd, true, websocketHandler);
+
+                    if (socket)
+                    {
+                        LOG_DBG("Connected to client websocket " << uri.getHost() << " #" << socket->getFD());
+
+                        // cf. WebSocketHandler::upgradeToWebSocket (?)
+                        // send Sec-WebSocket-Key: <hmm> ... Sec-WebSocket-Protocol: chat, Sec-WebSocket-Version: 13
+
+                        std::ostringstream oss;
+                        oss << "GET " << uri.getHost() << " HTTP/1.1\r\n"
+                            "Connection:Upgrade\r\n"
+                            "User-Foo: Adminbits\r\n"
+                            "Sec-WebSocket-Key: GAcwqP21iVOY2yKefQ64c0yVN5M=\r\n"
+                            "Upgrade:websocket\r\n"
+                            "Accept-Encoding:gzip, deflate, br\r\n"
+                            "Accept-Language:en\r\n"
+                            "Cache-Control:no-cache\r\n"
+                            "Pragma:no-cache\r\n"
+                            "Sec-WebSocket-Extensions:permessage-deflate; client_max_window_bits\r\n"
+                            "Sec-WebSocket-Key:fxTaWTEMVhq1PkWsMoLxGw==\r\n"
+                            "Sec-WebSocket-Version:13\r\n"
+                            "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                            "\r\n";
+                        socket->send(oss.str());
+                        websocketHandler->onConnect(socket);
+                        insertNewSocket(socket);
+                    }
+                    else
+                    {
+                        LOG_ERR("Failed to allocate socket for client websocket " << uri.getHost());
+                        close(fd);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        freeaddrinfo(ainfo);
+    }
+    else
+        LOG_ERR("Failed to lookup client websocket host '" << uri.getHost() << "' skipping");
 }
 
 void ServerSocket::dumpState(std::ostream& os)
