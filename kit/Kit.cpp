@@ -2253,24 +2253,23 @@ void lokit_main(const std::string& childRoot,
 
         static const std::string pid = std::to_string(Process::id());
 
-        std::string requestUrl = NEW_CHILD_URI;
-        requestUrl += "pid=" + pid + "&jailid=" + jailId;
+        Poco::URI uri("ws://127.0.0.1");
+        uri.setPort(MasterPortNumber);
+        uri.setPath(NEW_CHILD_URI);
+        uri.addQueryParameter("pid", std::to_string(Process::id()));
+        uri.addQueryParameter("jailid", jailId);
+
         if (queryVersion)
         {
             char* versionInfo = loKit->getVersionInfo();
             std::string versionString(versionInfo);
             if (displayVersion)
                 std::cout << "office version details: " << versionString << std::endl;
-            std::string encodedVersionStr;
-            URI::encode(versionString, "", encodedVersionStr);
-            requestUrl += "&version=" + encodedVersionStr;
+            uri.addQueryParameter("version", versionString);
             free(versionInfo);
         }
 
         SocketPoll mainKit("kit");
-
-        Poco::URI uri("ws://127.0.0.1");
-        uri.setPort(MasterPortNumber);
 
         mainKit.insertNewWebSocketSync(uri, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId));
         LOG_INF("New kit client websocket inserted.");
