@@ -185,7 +185,7 @@ void SocketPoll::insertNewWebSocketSync(const Poco::URI &uri, const std::shared_
                         // send Sec-WebSocket-Key: <hmm> ... Sec-WebSocket-Protocol: chat, Sec-WebSocket-Version: 13
 
                         std::ostringstream oss;
-                        oss << "GET " << uri.getHost() << " HTTP/1.1\r\n"
+                        oss << "GET " << uri.getPathAndQuery() << " HTTP/1.1\r\n"
                             "Connection:Upgrade\r\n"
                             "User-Foo: Adminbits\r\n"
                             "Sec-WebSocket-Key: GAcwqP21iVOY2yKefQ64c0yVN5M=\r\n"

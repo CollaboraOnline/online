@@ -1620,14 +1620,15 @@ private:
                 return;
 
             LOG_TRC("Child connection with URI [" << request.getURI() << "].");
-            if (request.getURI().find(NEW_CHILD_URI) != 0)
+            Poco::URI requestURI(request.getURI());
+            if (requestURI.getPath() != NEW_CHILD_URI)
             {
                 LOG_ERR("Invalid incoming URI.");
                 return;
             }
 
             // New Child is spawned.
-            const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
+            const Poco::URI::QueryParameters params = requestURI.getQueryParameters();
             Poco::Process::PID pid = -1;
             std::string jailId;
             for (const auto& param : params)

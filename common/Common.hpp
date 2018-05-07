@@ -29,10 +29,10 @@ constexpr long READ_BUFFER_SIZE = 64 * 1024;
 /// or as intentionally flooding the server.
 constexpr int MAX_MESSAGE_SIZE = 2 * 1024 * READ_BUFFER_SIZE;
 
-constexpr const char* JAILED_DOCUMENT_ROOT = "/user/docs/";
-constexpr const char* CHILD_URI = "/loolws/child?";
-constexpr const char* NEW_CHILD_URI = "/loolws/newchild?";
-constexpr const char* LO_JAIL_SUBPATH = "lo";
+constexpr const char JAILED_DOCUMENT_ROOT[] = "/user/docs/";
+constexpr const char CHILD_URI[] = "/loolws/child?";
+constexpr const char NEW_CHILD_URI[] = "/loolws/newchild";
+constexpr const char LO_JAIL_SUBPATH[] = "lo";
 
 /// The HTTP response User-Agent.
 constexpr const char* HTTP_AGENT_STRING = "LOOLWSD HTTP Agent " LOOLWSD_VERSION;
