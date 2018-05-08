@@ -90,7 +90,7 @@ cat > libreoffice/autogen.input << EOF
 --with-linker-hash-style=both
 --with-system-dicts
 --with-system-zlib
---with-theme=tango galaxy
+--with-theme=colibre
 --without-branding
 --without-help
 --without-java
