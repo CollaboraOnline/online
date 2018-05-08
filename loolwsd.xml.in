@@ -52,8 +52,8 @@
 
     <loleaflet_logging desc="Logging in the browser console" default="@LOLEAFLET_LOGGING@">@LOLEAFLET_LOGGING@</loleaflet_logging>
 
-    <trace desc="Dump commands and notifications for replay. When 'snapshot' is true, the source file is copied to the path first." enable="true">
-        <path desc="Output path to hold trace file and docs. Use '%' for timestamp to avoid overwriting." compress="true" snapshot="false">/tmp/looltrace-%.gz</path>
+    <trace desc="Dump commands and notifications for replay. When 'snapshot' is true, the source file is copied to the path first." enable="false">
+        <path desc="Output path to hold trace file and docs. Use '%' for timestamp to avoid overwriting. For example: /some/path/to/looltrace-%.gz" compress="true" snapshot="false"></path>
         <filter>
             <message desc="Regex pattern of messages to exclude"></message>
         </filter>
