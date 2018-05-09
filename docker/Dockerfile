@@ -28,7 +28,6 @@ COPY /scripts/run-lool.sh /
 
 # set up LibreOffice Online (normally done by postinstall script of package)
 RUN setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit
-RUN setcap cap_sys_admin=ep /usr/bin/loolmount
 RUN adduser --quiet --system --group --home /opt/lool lool
 RUN mkdir -p /var/cache/loolwsd && chown lool: /var/cache/loolwsd
 RUN rm -rf /var/cache/loolwsd/*
