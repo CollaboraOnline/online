@@ -191,7 +191,7 @@ void Tool::handleOption(const std::string& optionName,
 
         helpFormatter.setCommand(commandName());
         helpFormatter.setUsage("OPTIONS");
-        helpFormatter.setHeader("LibreOffice Online tool.");
+        helpFormatter.setHeader("LibreOffice Online document converter tool.");
         helpFormatter.format(std::cout);
         std::exit(Application::EXIT_OK);
     }
