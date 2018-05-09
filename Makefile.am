@@ -244,7 +244,7 @@ $(SYSTEM_STAMP) : ${top_srcdir}/loolwsd-systemplate-setup
 clean-local:
 	if test "z@JAILS_PATH@" != "z"; then rm -rf "@JAILS_PATH@"; fi
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
-	if test "z@TILECHACHE_PATH@" != "z"; then rm -rf "@TILECHACHE_PATH@"; fi
+	if test "z@TILECACHE_PATH@" != "z"; then rm -rf "@TILECACHE_PATH@"; fi
 
 run: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd"
@@ -253,7 +253,7 @@ run: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo
 	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			  --o:tile_cache_path="@TILECHACHE_PATH@" \
+			  --o:tile_cache_path="@TILECACHE_PATH@" \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
@@ -267,7 +267,7 @@ run-valgrind: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
 		./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			  --o:tile_cache_path="@TILECHACHE_PATH@" \
+			  --o:tile_cache_path="@TILECACHE_PATH@" \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
@@ -282,7 +282,7 @@ run-gdb: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 		./loolwsd --nocaps \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			  --o:tile_cache_path="@TILECHACHE_PATH@" \
+			  --o:tile_cache_path="@TILECACHE_PATH@" \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
@@ -297,7 +297,7 @@ run-callgrind: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 		./loolwsd --nocaps \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			  --o:tile_cache_path="@TILECHACHE_PATH@" \
+			  --o:tile_cache_path="@TILECACHE_PATH@" \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
@@ -312,7 +312,7 @@ run-strace: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 		./loolwsd --nocaps \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			  --o:tile_cache_path="@TILECHACHE_PATH@" \
+			  --o:tile_cache_path="@TILECACHE_PATH@" \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
