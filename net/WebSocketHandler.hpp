@@ -130,7 +130,7 @@ public:
         if (len == 0)
             return false; // avoid logging.
 
-        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes.");
+        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: " << std::string(socket->_inBuffer.data(), socket->_inBuffer.size()));
 
         if (len < 2) // partial read
             return false;

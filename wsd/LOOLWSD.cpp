@@ -2394,8 +2394,7 @@ class PlainSocketFactory final : public SocketFactory
 
         std::shared_ptr<Socket> socket =
             StreamSocket::create<StreamSocket>(
-                fd, false, std::unique_ptr<SocketHandlerInterface>{
-                    new ClientRequestDispatcher });
+                fd, false, std::make_shared<ClientRequestDispatcher>());
 
         return socket;
     }
@@ -2412,8 +2411,7 @@ class SslSocketFactory final : public SocketFactory
             fd = Delay::create(SimulatedLatencyMs, physicalFd);
 
         return StreamSocket::create<SslStreamSocket>(
-            fd, false, std::unique_ptr<SocketHandlerInterface>{
-                new ClientRequestDispatcher });
+            fd, false, std::make_shared<ClientRequestDispatcher>());
     }
 };
 #endif
@@ -2423,7 +2421,7 @@ class PrisonerSocketFactory final : public SocketFactory
     std::shared_ptr<Socket> create(const int fd) override
     {
         // No local delay.
-        return StreamSocket::create<StreamSocket>(fd, false, std::unique_ptr<SocketHandlerInterface>{ new PrisonerRequestDispatcher });
+        return StreamSocket::create<StreamSocket>(fd, false, std::make_shared<PrisonerRequestDispatcher>());
     }
 };
 
