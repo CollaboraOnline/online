@@ -4,7 +4,7 @@ export ENABLE_DEBUG
 
 bin_PROGRAMS = \
 	loolwsd loolforkit loolmap loolmount \
-	looltool loolstress loolconfig loolsocketdump
+	loolconvert loolstress loolconfig loolsocketdump
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
@@ -120,7 +120,7 @@ loolmount_SOURCES = tools/mount.cpp
 
 loolmap_SOURCES = tools/map.cpp
 
-looltool_SOURCES = tools/Tool.cpp
+loolconvert_SOURCES = tools/Tool.cpp
 
 loolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" ${include_paths}
 loolstress_SOURCES = tools/Stress.cpp \
