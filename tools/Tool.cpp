@@ -41,6 +41,9 @@
 /// Simple command-line tool for file format conversion.
 class Tool: public Poco::Util::Application
 {
+    // Display help information on the console
+    void displayHelp();
+
 public:
     Tool();
 
@@ -159,6 +162,15 @@ Tool::Tool() :
 {
 }
 
+void Tool::displayHelp()
+{
+    HelpFormatter helpFormatter(options());
+    helpFormatter.setCommand(commandName());
+    helpFormatter.setUsage("OPTIONS FILE(S)");
+    helpFormatter.setHeader("LibreOffice Online document converter tool.");
+    helpFormatter.format(std::cout);
+}
+
 void Tool::defineOptions(OptionSet& optionSet)
 {
     Application::defineOptions(optionSet);
@@ -187,12 +199,7 @@ void Tool::handleOption(const std::string& optionName,
 
     if (optionName == "help")
     {
-        HelpFormatter helpFormatter(options());
-
-        helpFormatter.setCommand(commandName());
-        helpFormatter.setUsage("OPTIONS");
-        helpFormatter.setHeader("LibreOffice Online document converter tool.");
-        helpFormatter.format(std::cout);
+        displayHelp();
         std::exit(Application::EXIT_OK);
     }
     else if (optionName == "extension")
@@ -214,6 +221,13 @@ void Tool::handleOption(const std::string& optionName,
 
 int Tool::main(const std::vector<std::string>& args)
 {
+    if (args.empty())
+    {
+        std::cerr << "Nothing to do." << std::endl;
+        displayHelp();
+        return Application::EXIT_NOINPUT;
+    }
+
     std::vector<std::unique_ptr<Thread>> clients(_numWorkers);
 
     size_t chunk = (args.size() + _numWorkers - 1) / _numWorkers;
