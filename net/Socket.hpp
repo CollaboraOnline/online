@@ -704,11 +704,11 @@ protected:
 class StreamSocket : public Socket, public std::enable_shared_from_this<StreamSocket>
 {
 public:
-    /// Create a StreamSocket from native FD and take ownership of handler instance.
+    /// Create a StreamSocket from native FD.
     StreamSocket(const int fd, bool /* isClient */,
-                 std::shared_ptr<SocketHandlerInterface> socketHandler) :
+                 const std::shared_ptr<SocketHandlerInterface> socketHandler) :
         Socket(fd),
-        _socketHandler(std::move(socketHandler)),
+        _socketHandler(socketHandler),
         _bytesSent(0),
         _bytesRecvd(0),
         _wsState(WSState::HTTP),
