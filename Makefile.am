@@ -238,37 +238,43 @@ $(SYSTEM_STAMP) : ${top_srcdir}/loolwsd-systemplate-setup
 @JAILS_PATH@ :
 	mkdir -p $@
 
+@TILECACHE_PATH@ :
+	mkdir -p $@
+
 clean-local:
 	if test "z@JAILS_PATH@" != "z"; then rm -rf "@JAILS_PATH@"; fi
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
+	if test "z@TILECHACHE_PATH@" != "z"; then rm -rf "@TILECHACHE_PATH@"; fi
 
-run: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	@echo
 	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:tile_cache_path="@TILECHACHE_PATH@" \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=true --o:logging.level=trace
 
-run-valgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run-valgrind: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
 		./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:tile_cache_path="@TILECHACHE_PATH@" \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=false --o:logging.level=trace
 
-run-gdb: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run-gdb: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd under valgrind's callgrind"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
@@ -276,13 +282,14 @@ run-gdb: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 		./loolwsd --nocaps \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:tile_cache_path="@TILECHACHE_PATH@" \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=false --o:logging.level=error
 
-run-callgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run-callgrind: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd under valgrind's callgrind"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
@@ -290,13 +297,14 @@ run-callgrind: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 		./loolwsd --nocaps \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:tile_cache_path="@TILECHACHE_PATH@" \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=false --o:logging.level=error
 
-run-strace: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run-strace: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@echo "Launching loolwsd under strace"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
@@ -304,6 +312,7 @@ run-strace: all @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 		./loolwsd --nocaps \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:tile_cache_path="@TILECHACHE_PATH@" \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
@@ -319,6 +328,7 @@ endif
 clean-cache cache-clean:
 # Intentionally don't use "*" below... Avoid risk of accidentally running rm -rf /*
 	test -n "@LOOLWSD_CACHEDIR@" && rm -rf "@LOOLWSD_CACHEDIR@"/[0-9a-f]
+	test -n "@TILECACHE_PATH@" && rm -rf "@TILECACHE_PATH@"/[0-9a-f]
 
 clang-tidy:
 	parallel clang-tidy -header-filter=^$(PWD).* -- $(shell git ls-files|grep /.*cpp$$|grep -v test)
@@ -329,7 +339,7 @@ clang-tidy:
 # capabilities won't survive packaging anyway. Instead, handle it when
 # installing the RPM or Debian package.
 
-all-local: loolforkit @JAILS_PATH@ $(SYSTEM_STAMP)
+all-local: loolforkit @TILECACHE_PATH@ @JAILS_PATH@ $(SYSTEM_STAMP)
 if ENABLE_SETCAP
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit
 	    sudo @SETCAP@ cap_sys_admin=ep loolmount

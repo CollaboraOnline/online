@@ -230,6 +230,7 @@ if test -n "$with_lo_path"; then
    version_file="$with_lo_path/program/versionrc"
    if test -f $version_file; then
      JAILS_PATH="\${abs_top_builddir}/jails"
+     TILECACHE_PATH="\${abs_top_builddir}/cache"
      SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
      have_lo_path=true
      lo_msg="test against $LO_PATH"
@@ -245,6 +246,7 @@ fi
 AC_SUBST(LO_PATH)
 AC_DEFINE_UNQUOTED([LO_PATH],["$LO_PATH"],[Path to LibreOffice installation])
 AC_SUBST(JAILS_PATH)
+AC_SUBST(TILECACHE_PATH)
 AC_SUBST(SYSTEMPLATE_PATH)
 AM_CONDITIONAL(HAVE_LO_PATH,[test "$have_lo_path" = "true"])
 

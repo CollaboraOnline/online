@@ -38,6 +38,7 @@ common/support-public-key.hpp
 systemplate
 test-driver
 jails
+cache
 test/data/hello-world.odt
 
 *.o
