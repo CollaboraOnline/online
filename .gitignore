@@ -49,6 +49,10 @@ loolwsd.log
 *.log.*.gz
 *.lo
 
+# lolefalet
+loleaflet/dist
+loleaflet/admin/admin-src.js
+
 connect
 lokitclient
 loolwsd
