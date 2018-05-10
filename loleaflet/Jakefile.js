@@ -54,7 +54,7 @@ file('dist/leaflet-src.js', build.getFiles(), {async: true}, function() {
 });
 
 desc('Create a combined admin file');
-file('dist/admin/admin-src.js', build.getAdminFiles(), {async: true}, function() {
+file('admin/admin-src.js', build.getAdminFiles(), {async: true}, function() {
 	var lint = jake.Task['lintadmin'];
 	lint.addListener('complete', function(value) {
 		console.log('Building admin-src.js ...');

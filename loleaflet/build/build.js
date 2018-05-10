@@ -33,11 +33,11 @@ var CSSBundleFiles = [
 
 var adminBundleFiles = [
 	'main-admin.js',
-	'dist/admin/admin-src.js',
-	'dist/admin/bootstrap/ie10-viewport-bug-workaround.css',
+	'admin/admin-src.js',
+	'admin/bootstrap/ie10-viewport-bug-workaround.css',
 	'admin.strings.js',
-	'dist/admin/bootstrap/holder.min.js',
-	'dist/admin/bootstrap/ie10-viewport-bug-workaround.js'
+	'admin/bootstrap/holder.min.js',
+	'admin/bootstrap/ie10-viewport-bug-workaround.js'
 ];
 
 exports.getBundleFiles = function() {
@@ -233,7 +233,7 @@ exports.build = function (callback, version, compsBase32, buildName) {
 exports.buildadmin = function(callback) {
 	// TODO: Also minify if admin complexity increases in future
 	var adminNewSrc = combineFiles(getAdminFiles()),
-	    adminPath = 'dist/admin/admin-src.js',
+	    adminPath = 'admin/admin-src.js',
 	    adminOldSrc = loadSilently(adminPath),
 	    adminSrcDelta = getSizeDelta(adminNewSrc, adminOldSrc, true);
 
