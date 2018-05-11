@@ -694,6 +694,7 @@ public:
              const std::string& docId,
              const std::string& url,
              std::shared_ptr<TileQueue> tileQueue,
+             SocketPoll& socketPoll,
              const std::shared_ptr<WebSocketHandler>& websocketHandler)
       : _loKit(loKit),
         _jailId(jailId),
@@ -701,6 +702,7 @@ public:
         _docId(docId),
         _url(url),
         _tileQueue(std::move(tileQueue)),
+        _socketPoll(socketPoll),
         _websocketHandler(websocketHandler),
         _docPassword(""),
         _haveDocPassword(false),
@@ -734,6 +736,20 @@ public:
     }
 
     const std::string& getUrl() const { return _url; }
+
+    /// Post the message in the correct thread.
+    bool postMessage(const std::shared_ptr<std::vector<char>>& message, const WSOpCode code) const
+    {
+        LOG_TRC("postMessage called with: " << getAbbreviatedMessage(message->data(), message->size()));
+        if (!_websocketHandler)
+        {
+            LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(message->data(), message->size()) << "].");
+            return false;
+        }
+
+        _socketPoll.addCallback([=] { _websocketHandler->sendMessage(message->data(), message->size(), code); });
+        return true;
+    }
 
     bool createSession(const std::string& sessionId)
     {
@@ -849,9 +865,8 @@ public:
         LOG_INF("setDocumentPassword returned");
     }
 
-    void renderTile(const std::vector<std::string>& tokens, const std::shared_ptr<WebSocketHandler>& websocketHandler)
+    void renderTile(const std::vector<std::string>& tokens)
     {
-        assert(websocketHandler && "Expected a non-null websocket.");
         TileDesc tile = TileDesc::parse(tokens);
 
         size_t pixmapDataSize = 4 * tile.getWidth() * tile.getHeight();
@@ -905,12 +920,12 @@ public:
         if (_docWatermark)
             _docWatermark->blending(pixmap.data(), 0, 0, pixelWidth, pixelHeight, pixelWidth, pixelHeight, mode);
 
-        std::vector<char> output;
-        output.reserve(response.size() + pixmapDataSize);
-        output.resize(response.size());
-        std::memcpy(output.data(), response.data(), response.size());
+        std::shared_ptr<std::vector<char>> output = std::make_shared<std::vector<char>>();
+        output->reserve(response.size() + pixmapDataSize);
+        output->resize(response.size());
+        std::memcpy(output->data(), response.data(), response.size());
 
-        if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), output, mode, hash, wid, oldWireId))
+        if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), *output, mode, hash, wid, oldWireId))
         {
             //FIXME: Return error.
             //sendTextFrame("error: cmd=tile kind=failure");
@@ -919,13 +934,12 @@ public:
             return;
         }
 
-        LOG_TRC("Sending render-tile response (" << output.size() << " bytes) for: " << response);
-        websocketHandler->sendMessage(output.data(), output.size(), WSOpCode::Binary);
+        LOG_TRC("Sending render-tile response (" << output->size() << " bytes) for: " << response);
+        postMessage(output, WSOpCode::Binary);
     }
 
-    void renderCombinedTiles(const std::vector<std::string>& tokens, const std::shared_ptr<WebSocketHandler>& websocketHandler)
+    void renderCombinedTiles(const std::vector<std::string>& tokens)
     {
-        assert(websocketHandler && "Expected a non-null websocket.");
         TileCombined tileCombined = TileCombined::parse(tokens);
         auto& tiles = tileCombined.getTiles();
 
@@ -1044,12 +1058,12 @@ public:
         const auto tileMsg = ADD_DEBUG_RENDERID(tileCombined.serialize("tilecombine:")) + "\n";
         LOG_TRC("Sending back painted tiles for " << tileMsg);
 
-        std::vector<char> response;
-        response.resize(tileMsg.size() + output.size());
-        std::copy(tileMsg.begin(), tileMsg.end(), response.begin());
-        std::copy(output.begin(), output.end(), response.begin() + tileMsg.size());
+        std::shared_ptr<std::vector<char>> response = std::make_shared<std::vector<char>>();
+        response->resize(tileMsg.size() + output.size());
+        std::copy(tileMsg.begin(), tileMsg.end(), response->begin());
+        std::copy(output.begin(), output.end(), response->begin() + tileMsg.size());
 
-        websocketHandler->sendMessage(response.data(), response.size(), WSOpCode::Binary);
+        postMessage(response, WSOpCode::Binary);
     }
 
     bool sendTextFrame(const std::string& message)
@@ -1061,14 +1075,11 @@ public:
     {
         try
         {
-            if (!_websocketHandler)
-            {
-                LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(buffer, length) << "].");
-                return false;
-            }
+            std::shared_ptr<std::vector<char>> message = std::make_shared<std::vector<char>>();
+            message->resize(length);
+            std::memcpy(message->data(), buffer, length);
 
-            _websocketHandler->sendMessage(buffer, length, opCode);
-            return true;
+            return postMessage(message, opCode);
         }
         catch (const Exception& exc)
         {
@@ -1768,11 +1779,11 @@ private:
 
                 if (tokens[0] == "tile")
                 {
-                    renderTile(tokens, _websocketHandler);
+                    renderTile(tokens);
                 }
                 else if (tokens[0] == "tilecombine")
                 {
-                    renderCombinedTiles(tokens, _websocketHandler);
+                    renderCombinedTiles(tokens);
                 }
                 else if (LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
                 {
@@ -1895,6 +1906,7 @@ private:
 
     std::shared_ptr<lok::Document> _loKitDocument;
     std::shared_ptr<TileQueue> _tileQueue;
+    SocketPoll& _socketPoll;
     std::shared_ptr<WebSocketHandler> _websocketHandler;
     PngCache _pngCache;
 
@@ -1937,14 +1949,16 @@ class KitWebSocketHandler final : public WebSocketHandler, public std::enable_sh
     std::string _socketName;
     std::shared_ptr<lok::Office> _loKit;
     std::string _jailId;
+    SocketPoll& _socketPoll;
 
 public:
-    KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit, const std::string& jailId) :
+    KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit, const std::string& jailId, SocketPoll& socketPoll) :
         WebSocketHandler(/* isClient = */ true),
         _queue(std::make_shared<TileQueue>()),
         _socketName(socketName),
         _loKit(loKit),
-        _jailId(jailId)
+        _jailId(jailId),
+        _socketPoll(socketPoll)
     {
     }
 
@@ -1980,7 +1994,7 @@ protected:
 
             if (!document)
             {
-                document = std::make_shared<Document>(_loKit, _jailId, docKey, docId, url, _queue, shared_from_this());
+                document = std::make_shared<Document>(_loKit, _jailId, docKey, docId, url, _queue, _socketPoll, shared_from_this());
             }
 
             // Validate and create session.
@@ -2271,7 +2285,7 @@ void lokit_main(const std::string& childRoot,
 
         SocketPoll mainKit("kit");
 
-        mainKit.insertNewWebSocketSync(uri, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId));
+        mainKit.insertNewWebSocketSync(uri, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId, mainKit));
         LOG_INF("New kit client websocket inserted.");
 
         while (!TerminationFlag)
