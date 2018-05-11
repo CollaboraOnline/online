@@ -256,8 +256,8 @@ pot:
 	xgettext --from-code=UTF-8 --keyword=_ --output=po/templates/loleaflet-ui.pot \
 		admin.strings.js \
 		evol.colorpicker.strings.js \
-		dist/errormessages.js \
-		dist/toolbar/toolbar.js \
+		src/errormessages.js \
+		js/toolbar.js \
 		src/admin/AdminSocketAnalytics.js \
 		src/admin/AdminSocketBase.js \
 		src/admin/AdminSocketOverview.js \
@@ -279,7 +279,7 @@ pot:
 		src/map/Map.js \
 		src/map/handler/Map.FileInserter.js
 
-	html2po --pot --input=dist/loleaflet-help.html --output=po/templates/loleaflet-help.pot --duplicates=merge
+	html2po --pot --input=html/loleaflet-help.html --output=po/templates/loleaflet-help.pot --duplicates=merge
 
 l10n: pot
 	for i in po/ui-*.po; do pot2po --input=po/templates/loleaflet-ui.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
