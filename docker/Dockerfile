@@ -20,6 +20,9 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0C54D189F4BA284D
 RUN apt-get update
 RUN apt-get -y install libpoco*60
 
+# tdf#117557 - Add CJK Fonts to LibreOffice Online Docker Image
+RUN apt-get -y install fonts-wqy-zenhei fonts-wqy-microhei fonts-droid-fallback fonts-noto-cjk
+
 # copy freshly built LibreOffice master and LibreOffice Online master with latest translations
 COPY /instdir /
 
