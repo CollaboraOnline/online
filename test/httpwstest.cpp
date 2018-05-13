@@ -1279,11 +1279,12 @@ void HTTPWSTest::testSlideShow()
         const std::string path = "/lool/" + encodedDoc + "/" + jail + "/" + dir + "/" + name;
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
+        TST_LOG("Requesting SVG from " << path);
         session->sendRequest(requestSVG);
 
         Poco::Net::HTTPResponse responseSVG;
         std::istream& rs = session->receiveResponse(responseSVG);
-        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, responseSVG.getStatus());
+        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK /* 200 */, responseSVG.getStatus());
         CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
         TST_LOG("SVG file size: " << responseSVG.getContentLength());
 
