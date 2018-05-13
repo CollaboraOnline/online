@@ -70,9 +70,25 @@ public:
             // Create a socket object using the factory.
             if (rc != -1)
             {
-                std::string ip = inet_ntoa(clientInfo.sin_addr);
+                char addrstr[INET6_ADDRSTRLEN];
+
+                const void *inAddr;
+                if (clientInfo.sin_family == AF_INET)
+                {
+                    auto ipv4 = (struct sockaddr_in *)&clientInfo.sin_addr;
+                    inAddr = &(ipv4->sin_addr);
+                }
+                else
+                {
+                    auto ipv6 = (struct sockaddr_in6 *)&clientInfo.sin_addr;
+                    inAddr = &(ipv6->sin6_addr);
+                }
+
+                inet_ntop(clientInfo.sin_family, inAddr, addrstr, sizeof(addrstr));
                 std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
-                _socket->_clientAddress = ip;
+                _socket->_clientAddress = addrstr;
+                LOG_DBG("Accepted socket has family " << clientInfo.sin_family <<
+                        " address " << _socket->_clientAddress);
                 return _socket;
             }
             return std::shared_ptr<Socket>(nullptr);
