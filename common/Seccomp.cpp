@@ -133,7 +133,6 @@ bool lockdown(Type type)
         KILL_SYSCALL(getitimer),
         KILL_SYSCALL(setitimer),
         KILL_SYSCALL(sendfile),
-        KILL_SYSCALL(shutdown),
         KILL_SYSCALL(listen),  // server sockets
         KILL_SYSCALL(accept),  // server sockets
 #if 0
