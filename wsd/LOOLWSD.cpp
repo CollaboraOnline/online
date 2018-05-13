@@ -1728,6 +1728,33 @@ public:
         StaticFileContentCache["discovery.xml"] = getDiscoveryXML();
     }
 
+    /// Does this address feature in the allowed hosts list.
+    bool allowPostFrom(const std::string &address)
+    {
+        static bool init = false;
+        static Util::RegexListMatcher hosts;
+        if (!init)
+        {
+            const auto& app = Poco::Util::Application::instance();
+            // Parse the host allow settings.
+            for (size_t i = 0; ; ++i)
+            {
+                const std::string path = "post_allow.host[" + std::to_string(i) + "]";
+                const auto host = app.config().getString(path, "");
+                if (!host.empty())
+                {
+                    LOG_INF("Adding trusted POST_ALLOW host: [" << host << "].");
+                    hosts.allow(host);
+                }
+                else if (!app.config().has(path))
+                {
+                    break;
+                }
+            }
+        }
+        return hosts.match(address);
+    }
+
 private:
 
     /// Set the socket associated with this ResponseClient.
@@ -1805,42 +1832,8 @@ private:
                 if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
                 {
-                    // allow/deny for POST
-                    const auto& app = Poco::Util::Application::instance();
-                    Util::RegexListMatcher hosts;
-                    // Parse the host allow settings.
-                    for (size_t i = 0; ; ++i)
-                    {
-                        const std::string path = "post_allow.host[" + std::to_string(i) + "]";
-                        const auto host = app.config().getString(path, "");
-                        if (!host.empty())
-                        {
-                            LOG_INF("Adding trusted POST_ALLOW host: [" << host << "].");
-                            hosts.allow(host);
-                        }
-                        else if (!app.config().has(path))
-                        {
-                            break;
-                        }
-                    }
-                    if (!hosts.match(socket->clientAddress()))
-                    {
-                        LOG_ERR("client address DENY: " << socket->clientAddress().c_str());
-
-                        std::ostringstream oss;
-                        oss << "HTTP/1.1 403\r\n"
-                            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                            << "User-Agent: " << HTTP_AGENT_STRING << "\r\n"
-                            << "Content-Length: 0\r\n"
-                            << "\r\n";
-                        socket->send(oss.str());
-                        socket->shutdown();
-                    }
-                    else
-                    {
-                        // All post requests have url prefix 'lool'.
-                        handlePostRequest(request, message, disposition);
-                    }
+                    // All post requests have url prefix 'lool'.
+                    handlePostRequest(request, message, disposition);
                 }
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws" &&
                          request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
@@ -2035,6 +2028,21 @@ private:
             HTMLForm form(request, message, handler);
 
             std::string format = (form.has("format") ? form.get("format") : "");
+
+            if (!allowPostFrom(socket->clientAddress()))
+            {
+                LOG_ERR("client address DENY: " << socket->clientAddress().c_str());
+
+                std::ostringstream oss;
+                oss << "HTTP/1.1 403\r\n"
+                    << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                    << "User-Agent: " << HTTP_AGENT_STRING << "\r\n"
+                    << "Content-Length: 0\r\n"
+                    << "\r\n";
+                socket->send(oss.str());
+                socket->shutdown();
+                return;
+            }
 
             // prefer what is in the URI
             if (tokens.count() > 3)
