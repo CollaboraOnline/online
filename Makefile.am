@@ -4,7 +4,7 @@ export ENABLE_DEBUG
 
 bin_PROGRAMS = \
 	loolwsd loolforkit \
-	loolconvert loolconfig loolsocketdump
+	loolconvert loolconfig
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
@@ -96,7 +96,8 @@ noinst_PROGRAMS = clientnb \
                   loolwsd_fuzzer \
                   loolmap \
                   loolstress \
-                  loolmount
+                  loolmount \
+                  loolsocketdump
 
 connect_SOURCES = tools/Connect.cpp \
                   common/Log.cpp \
