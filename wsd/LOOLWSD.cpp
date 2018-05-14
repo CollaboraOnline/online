@@ -1739,7 +1739,7 @@ public:
             // Parse the host allow settings.
             for (size_t i = 0; ; ++i)
             {
-                const std::string path = "post_allow.host[" + std::to_string(i) + "]";
+                const std::string path = "net.post_allow.host[" + std::to_string(i) + "]";
                 const auto host = app.config().getString(path, "");
                 if (!host.empty())
                 {
