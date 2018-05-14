@@ -76,9 +76,11 @@ static std::chrono::steady_clock::time_point TestStartTime;
 
 static void testCountHowManyLoolkits()
 {
+    const char testname[] = "countHowManyLoolkits ";
     TestStartTime = std::chrono::steady_clock::now();
 
     InitialLoolKitCount = countLoolKitProcesses(InitialLoolKitCount);
+    TST_LOG("Initial loolkit count is " << InitialLoolKitCount);
     CPPUNIT_ASSERT(InitialLoolKitCount > 0);
 
     TestStartTime = std::chrono::steady_clock::now();
@@ -86,7 +88,7 @@ static void testCountHowManyLoolkits()
 
 static void testNoExtraLoolKitsLeft()
 {
-    const char* testname = "noExtraLoolKitsLeft ";
+    const char testname[] = "noExtraLoolKitsLeft ";
     const int countNow = countLoolKitProcesses(InitialLoolKitCount);
     CPPUNIT_ASSERT_EQUAL(InitialLoolKitCount, countNow);
 
