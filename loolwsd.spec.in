@@ -150,6 +150,11 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/share/doc/loolwsd/README.vars
 /usr/share/doc/loolwsd/protocol.txt
 /usr/share/doc/loolwsd/reference.txt
+/usr/share/man/man1/loolwsd.1.gz
+/usr/share/man/man1/loolforkit.1.gz
+/usr/share/man/man1/loolconvert.1.gz
+/usr/share/man/man1/loolconfig.1.gz
+/usr/share/man/man1/loolwsd-systemplate-setup.1.gz
 %if 0%{?rhel} == 6 || 0%{?suse_version} == 1110
 /etc/init.d/loolwsd
 %endif
