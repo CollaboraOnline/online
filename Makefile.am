@@ -8,6 +8,12 @@ bin_PROGRAMS = \
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
+man_MANS = man/loolwsd.1 \
+           man/loolforkit.1 \
+           man/loolconvert.1 \
+           man/loolconfig.1 \
+           man/loolwsd-systemplate-setup.1
+
 dist_doc_DATA = wsd/README \
                 wsd/README.vars \
                 wsd/protocol.txt \
@@ -225,7 +231,8 @@ EXTRA_DIST = discovery.xml \
              etc/key.pem \
              etc/cert.pem \
              etc/ca-chain.cert.pem \
-             scripts/unocommands.py
+             scripts/unocommands.py \
+             $(man_MANS)
 
 if HAVE_LO_PATH
 

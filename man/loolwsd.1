@@ -1,0 +1,34 @@
+.TH LOOLWSD "1" "May 2018" "loolwsd " "User Commands"
+.SH NAME
+loolwsd \- LibreOffice Online Websocket Daemon
+.SH SYNOPSYS
+loolwsd OPTIONS
+.SH OPTIONS
+\fB\-\-daemon\fR                       Run application as a daemon.
+.PP
+\fB\-\-umask\fR=\fImask\fR                   Set the daemon's umask (octal, e.g. 027).
+.PP
+\fB\-\-pidfile\fR=\fIpath\fR                 Write the process ID of the application to given file.
+.PP
+\fB\-\-help\fR                         Display help information on command line arguments.
+.PP
+\fB\-\-version\fR                      Display version information.
+.PP
+\fB\-\-port\fR=\fIport_number\fR             Port number to listen to (default: 9980), must not be 9981.
+.PP
+\fB\-\-disable\-ssl\fR                  Disable SSL security layer.
+.PP
+\fB\-oxmlpath\fR, \fB\-\-override\fR=\fIxmlpath\fR  Override any setting by providing fullxmlpath=value.
+.PP
+\fB\-\-config\-file\fR=\fIpath\fR             Override configuration file path.
+.PP
+\fB\-\-config\-dir\fR=\fIpath\fR              Override extra configuration directory path.
+.PP
+\fB\-\-unitlib\fR=\fIunitlib\fR              Unit testing library path.
+.PP
+\fB\-\-careerspan\fR=\fIseconds\fR           How many seconds to run.
+.PP
+\fB\-\-nocaps\fR                       Use a non\-privileged forkit, with increase in security problems.
+.PP
+.SH "SEE ALSO"
+loolforkit(1), loolconvert(1), loolconfig(1), loolwsd-systemplate-setup(1)
