@@ -614,8 +614,7 @@ void Admin::dumpState(std::ostream& os)
 
 void Admin::start()
 {
-    if (LOOLWSD::AdminEnabled)
-        startThread();
+    startThread();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
