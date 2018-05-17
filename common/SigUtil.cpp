@@ -284,6 +284,7 @@ namespace SigUtil
         sigaction(SIGUSR1, &action, nullptr);
     }
 
+    /// Kill the given pid with SIGTERM.  Returns true when the pid does not exist any more.
     bool killChild(const int pid)
     {
         LOG_DBG("Killing PID: " << pid);
