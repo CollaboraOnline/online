@@ -134,10 +134,10 @@ public:
         }
 
         // Kill or abandon the child.
-        if (_pid != -1 && rude && kill(_pid, 0) != 0 && errno != ESRCH)
+        if (rude && _pid != -1 && kill(_pid, 0) == 0)
         {
             LOG_INF("Killing child [" << _pid << "].");
-            if (SigUtil::killChild(_pid))
+            if (!SigUtil::killChild(_pid))
             {
                 LOG_ERR("Cannot terminate lokit [" << _pid << "]. Abandoning.");
             }
