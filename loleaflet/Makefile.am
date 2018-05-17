@@ -22,6 +22,8 @@ LOLEAFLET_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.*')
 LOLEAFLET_L10N_DST =  $(patsubst $(srcdir)/l10n/%,$(builddir)/dist/l10n/%,$(LOLEAFLET_L10N_SRC))
 
 LOLEAFLET_DRAW_JS_SRC = $(shell find $(srcdir)/plugins/draw-$(DRAW_VERSION)/src -name '*.js')
+LOLEAFLET_DRAW_JS_DST = $(patsubst $(srcdir)/plugins/%.js,$(builddir)/dist/plugins/%.js,$(LOLEAFLET_DRAW_JS_SRC))
+
 LOLEAFLET_DRAW_CSS_SRC = $(shell find $(srcdir)/plugins/draw-$(DRAW_VERSION)/dist -name '*.css')
 
 LOLEAFLET_HTML_SRC = $(shell find $(srcdir)/html -name '*.html')
@@ -102,7 +104,6 @@ GLOBAL_JS =\
 LOLEAFLET_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getFiles().join(' '))} catch(e) {}"))
 
 PLUGINS_JS =\
-	leaflet.draw-src.js \
 	w2ui-1.5.rc1.js \
 	main.js \
 	toolbar.js
@@ -123,7 +124,6 @@ all-local: | node_modules \
 	$(L10N_JSON) \
 	$(LOLEAFLET_IMAGES_DST) \
 	$(JQUERY_UI_DIST_IMAGES) \
-	$(LOLEAFLET_PREFIX)/dist/leaflet.draw-src.js \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(builddir)/dist/admin-bundle.js \
 	$(builddir)/dist/bundle.css \
@@ -131,21 +131,15 @@ all-local: | node_modules \
 	$(builddir)/dist/loleaflet.html
 	@echo "build loleaflet completed"
 
-$(LOLEAFLET_PREFIX)/dist/leaflet.draw-src.js: $(LOLEAFLET_DRAW_CSS_SRC) $(LOLEAFLET_DRAW_JS_SRC)
-	@mkdir -p $(dir $@)
-	@NODE_PATH=$(abs_builddir)/node_modules jake -f $(srcdir)/plugins/draw-$(DRAW_VERSION)/Jakefile.js -C $(srcdir)/plugins/draw-$(DRAW_VERSION) build debug=$(ENABLE_DEBUG) minify=$(MINIFY) builddir=$(LOLEAFLET_PREFIX)
-if ENABLE_DEBUG
-	@cp $(LOLEAFLET_DRAW_CSS_SRC) $(builddir)/dist/
-endif
-	@cp -a $(srcdir)/plugins/draw-$(DRAW_VERSION)/dist/images/* $(builddir)/dist/images/
-
 $(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) $(BOOTSTRAP_DST) $(CURSORS_DST)
 	@NODE_PATH=$(abs_builddir)/node_modules jake -f $(srcdir)/Jakefile.js -C $(srcdir) $(abs_builddir)/dist/admin-bundle.js debug=$(ENABLE_DEBUG) minify=$(MINIFY) builddir=$(abs_builddir)
 
 if ENABLE_DEBUG
-$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST)
+$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST) $(LOLEAFLET_DRAW_JS_DST)
 	@echo "Checking loleaflet for JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
+	@cp -a $(srcdir)/plugins/draw-$(DRAW_VERSION)/dist/images/* $(builddir)/dist/images/
+#	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/plugins/draw-$(DRAW_VERSION)/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@touch $@
 
 $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS_DST)
@@ -153,7 +147,6 @@ $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS_DST)
 
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_DST) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
-	$(LOLEAFLET_PREFIX)/dist/leaflet.draw-src.js \
 	$(builddir)/dist/global.js $(builddir)/dist/w2ui-1.5.rc1.js \
 	$(builddir)/dist/main.js $(builddir)/dist/toolbar.js
 	@touch $@
@@ -165,7 +158,9 @@ $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
 	@echo "Concatenating loleaflet files..."
 	@(cat $(srcdir)/src/copyright.js | sed 's/{VERSION}/$(LOLEAFLET_VERSION)/' - \
 		&& echo "(function (window, document, undefined) {" \
-		&& awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(call LOLEAFLET_JS,$(srcdir)/build/build.js)) \
+		&& awk 'FNR == 1 {print ""} 1' \
+		$(patsubst %.js,$(srcdir)/%.js,$(call LOLEAFLET_JS,$(srcdir)/build/build.js)) \
+		$(patsubst %.js,$(srcdir)/plugins/draw-$(DRAW_VERSION)/%.js,$(call LOLEAFLET_JS,$(srcdir)/plugins/draw-$(DRAW_VERSION)/build/build.js)) \
 		&& echo "}(window, document));") > $@
 
 $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS)
@@ -174,7 +169,6 @@ $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS)
 
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
-	$(LOLEAFLET_PREFIX)/dist/leaflet.draw-src.js \
 	$(srcdir)/js/global.js $(srcdir)/js/w2ui-1.5.rc1.js \
 	$(srcdir)/js/main.js $(srcdir)/js/toolbar.js
 	@echo "Uglify loleaflet js files..."
@@ -182,7 +176,6 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 		$(srcdir)/js/global.js \
 		$(NODE_MODULES_JS) \
 		$(builddir)/build/dist/loleaflet-src.js \
-		$(builddir)/build/dist/leaflet.draw-src.js \
 		$(srcdir)/js/w2ui-1.5.rc1.js \
 		$(srcdir)/js/main.js \
 		$(srcdir)/js/toolbar.js \
@@ -194,12 +187,19 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/loleaflet.html.m4 $(LOLEAFLET_HTML_DS
 	@echo "Generating loleaflet.html..."
 	@m4 -E -DDEBUG=$(ENABLE_DEBUG) \
 		-DLOLEAFLET_CSS="$(subst $(SPACE),$(COMMA),$(LOLEAFLET_CSS_M4))" \
-		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(GLOBAL_JS) $(NODE_MODULES_JS) $(call LOLEAFLET_JS,$(srcdir)/build/build.js) $(PLUGINS_JS))" \
+		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(GLOBAL_JS) $(NODE_MODULES_JS) \
+		$(call LOLEAFLET_JS,$(srcdir)/build/build.js) \
+		$(patsubst %.js,plugins/draw-$(DRAW_VERSION)/%.js,$(call LOLEAFLET_JS,$(srcdir)/plugins/draw-$(DRAW_VERSION)/build/build.js)) \
+		$(PLUGINS_JS))" \
 		$(srcdir)/loleaflet.html.m4 > $@
 
 node_modules: npm-shrinkwrap.json
 	npm install
 	touch node_modules
+
+$(builddir)/dist/plugins/%.js: $(srcdir)/plugins/%.js
+	@mkdir -p $(dir $@)
+	@cp $< $@
 
 $(builddir)/dist/images/%: $(srcdir)/images/%
 	@mkdir -p $(dir $@)
@@ -287,16 +287,8 @@ l10n: pot
 
 clean-local:
 	rm -rf node_modules
-	rm -rf $(builddir)/dist/src
-	rm -rf $(builddir)/dist/node_modules
-	rm -rf $(builddir)/dist/plugins
-	rm -rf $(builddir)/dist/images
-	rm -rf $(builddir)/dist/l10n
-	rm -rf $(builddir)/build/loleaflet-src.js
-	rm -rf $(builddir)/build/leaflet.draw-src.js
-	rm -f $(builddir)/dist/*.html
-	cd dist && rm -f bundle.js bundle.css bundle.js.map admin-bundle.js admin-bundle.js.map
-	cd $(srcdir)/plugins/draw-$(DRAW_VERSION) && rm -f dist/*.js
+	rm -rf $(builddir)/dist
+	rm -rf $(builddir)/build/dist
 
 spec/data/load-test:
 	if [ ! -d spec/data/load_test ]; then \
