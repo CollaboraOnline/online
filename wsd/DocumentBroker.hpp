@@ -78,38 +78,23 @@ public:
 
     ~ChildProcess()
     {
-        if (_pid > 0)
-        {
-            LOG_DBG("~ChildProcess dtor [" << _pid << "].");
-            close(true);
+        if (_pid <= 0)
+            return;
 
-            // No need for the socket anymore.
-            _ws.reset();
-            _socket.reset();
-        }
+        LOG_DBG("~ChildProcess dtor [" << _pid << "].");
+        terminate();
+
+        // No need for the socket anymore.
+        _ws.reset();
+        _socket.reset();
+
     }
 
     void setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker);
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }
 
-    void stop()
-    {
-        // Request the child to exit.
-        try
-        {
-            if (isAlive())
-            {
-                LOG_DBG("Stopping ChildProcess [" << _pid << "]");
-                sendTextFrame("exit");
-            }
-        }
-        catch (const std::exception&)
-        {
-            // Already logged in sendTextFrame.
-        }
-    }
-
-    void close(const bool rude)
+    /// Let the child close a nice way.
+    void close()
     {
         if (_pid < 0)
             return;
@@ -118,23 +103,32 @@ public:
         {
             LOG_DBG("Closing ChildProcess [" << _pid << "].");
 
-            if (!rude)
+            // Request the child to exit
+            if (isAlive())
             {
-                // First mark to stop the thread so it knows it's intentional.
-                stop();
-
-                // Shutdown the socket.
-                if (_ws)
-                    _ws->shutdown();
+                LOG_DBG("Stopping ChildProcess [" << _pid << "]");
+                sendTextFrame("exit");
             }
+
+            // Shutdown the socket.
+            if (_ws)
+                _ws->shutdown();
         }
         catch (const std::exception& ex)
         {
             LOG_ERR("Error while closing child process: " << ex.what());
         }
 
-        // Kill or abandon the child.
-        if (rude && _pid != -1 && kill(_pid, 0) == 0)
+        _pid = -1;
+    }
+
+    /// Kill or abandon the child.
+    void terminate()
+    {
+        if (_pid < 0)
+            return;
+
+        if (::kill(_pid, 0) == 0)
         {
             LOG_INF("Killing child [" << _pid << "].");
             if (!SigUtil::killChild(_pid))
@@ -179,7 +173,7 @@ public:
     {
         try
         {
-            return _pid > 1 && _ws && kill(_pid, 0) == 0;
+            return _pid > 1 && _ws && ::kill(_pid, 0) == 0;
         }
         catch (const std::exception&)
         {

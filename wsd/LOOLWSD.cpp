@@ -2816,7 +2816,7 @@ int LOOLWSD::innerMain()
     LOG_INF("Requesting child processes to terminate.");
     for (auto& child : NewChildren)
     {
-        child->close(true);
+        child->terminate();
     }
 
 #ifndef KIT_IN_PROCESS
