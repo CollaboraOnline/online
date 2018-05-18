@@ -32,6 +32,7 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/RegularExpression.h>
 #include <Poco/Runnable.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
@@ -161,6 +162,13 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
         Poco::URI requestUri(request.getURI());
         LOG_TRC("Fileserver request: " << requestUri.toString());
         requestUri.normalize(); // avoid .'s and ..'s
+
+        std::string path(requestUri.getPath());
+        if (path.find("loleaflet/" LOOLWSD_VERSION_HASH "/") == std::string::npos)
+        {
+            LOG_WRN("client - server version mismatch, disabling browser cache.");
+            noCache = true;
+        }
 
         std::vector<std::string> requestSegments;
         requestUri.getPathSegments(requestSegments);
@@ -421,9 +429,13 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
     requestUri.normalize();
 
     std::string path(requestUri.getPath());
-
-    // Convert version back to a real file name.
-    Poco::replaceInPlace(path, std::string("/loleaflet/" LOOLWSD_VERSION_HASH "/"), std::string("/loleaflet/dist/"));
+    Poco::RegularExpression gitHashRe("/([0-9a-f]+)/");
+    std::string gitHash;
+    if (gitHashRe.extract(path, gitHash))
+    {
+        // Convert version back to a real file name.
+        Poco::replaceInPlace(path, std::string("/loleaflet" + gitHash), std::string("/loleaflet/dist/"));
+    }
 
     return path;
 }
