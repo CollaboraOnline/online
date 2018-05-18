@@ -2034,6 +2034,12 @@ protected:
             LOG_ERR("Bad or unknown token [" << tokens[0] << "]");
         }
     }
+
+    void onDisconnect() override
+    {
+        LOG_WRN("Kit connection lost without exit arriving from wsd");
+        TerminationFlag = true;
+    }
 };
 
 void documentViewCallback(const int type, const char* payload, void* data)
