@@ -243,6 +243,7 @@ void killPids(const std::vector<int> &pids)
 void HTTPCrashTest::killLoKitProcesses()
 {
     killPids(getKitPids());
+    InitialLoolKitCount = 1; // non-intuitive but it will arrive soon.
 }
 
 void HTTPCrashTest::killForkitProcess()
