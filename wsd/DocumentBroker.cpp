@@ -1599,10 +1599,7 @@ void DocumentBroker::terminateChild(const std::string& closeReason)
     {
         LOG_INF("Terminating child [" << getPid() << "] of doc [" << _docKey << "].");
 
-        // First flag to stop as it might be waiting on our lock
-        // to process some incoming message.
-        _childProcess->stop();
-        _childProcess->close(false);
+        _childProcess->close();
     }
 
     stop(closeReason);
