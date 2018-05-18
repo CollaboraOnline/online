@@ -443,6 +443,17 @@ void Admin::pollingThread()
             netWait += _networkStatsIntervalMs;
         }
 
+        // (re)-connect (with sync. DNS - urk) to one monitor at a time
+        if (_pendingConnects.size())
+        {
+            MonitorConnectRecord rec = _pendingConnects[0];
+            if (rec._when < now)
+            {
+                _pendingConnects.erase(_pendingConnects.begin());
+                connectToMonitorSync(rec._uri);
+            }
+        }
+
         // Handle websockets & other work.
         const int timeout = std::max(std::min(std::min(cpuWait, memWait), netWait), MinStatsIntervalMs);
         LOG_TRC("Admin poll for " << timeout << "ms.");
@@ -629,11 +640,13 @@ void Admin::dumpState(std::ostream& os)
 class MonitorSocketHandler : public AdminSocketHandler
 {
     bool _connecting;
+    std::string _uri;
 public:
 
-    MonitorSocketHandler(Admin *admin) :
+    MonitorSocketHandler(Admin *admin, const std::string &uri) :
         AdminSocketHandler(admin),
-        _connecting(true)
+        _connecting(true),
+        _uri(uri)
     {
     }
     int getPollEvents(std::chrono::steady_clock::time_point now,
@@ -654,11 +667,27 @@ public:
         _connecting = false;
         return AdminSocketHandler::performWrites();
     }
+
+    void onDisconnect() override
+    {
+        LOG_WRN("Monitor " << _uri << " dis-connected, re-trying in 20 seconds");
+        Admin::instance().scheduleMonitorConnect(_uri, std::chrono::steady_clock::now() + std::chrono::seconds(20));
+    }
 };
 
-void Admin::connectToMonitor(const Poco::URI &uri)
+void Admin::connectToMonitorSync(const std::string &uri)
 {
-    insertNewWebSocketSync(uri, std::make_shared<MonitorSocketHandler>(this));
+    insertNewWebSocketSync(Poco::URI(uri), std::make_shared<MonitorSocketHandler>(this, uri));
+}
+
+void Admin::scheduleMonitorConnect(const std::string &uri, std::chrono::steady_clock::time_point when)
+{
+    assertCorrectThread();
+
+    MonitorConnectRecord todo;
+    todo._when = when;
+    todo._uri = uri;
+    _pendingConnects.push_back(todo);
 }
 
 void Admin::start()
@@ -677,7 +706,7 @@ void Admin::start()
             Poco::URI monitor(uri);
             if (monitor.getScheme() == "wss" || monitor.getScheme() == "ws")
             {
-                addCallback([=] { connectToMonitor(monitor); } );
+                addCallback([=] { scheduleMonitorConnect(uri, std::chrono::steady_clock::now()); });
                 haveMonitors = true;
             }
             else
