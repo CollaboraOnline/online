@@ -116,6 +116,9 @@ public:
             notifyForkit();
     }
 
+    /// Attempt a synchronous connection to a monitor with @uri @when that future comes
+    void scheduleMonitorConnect(const std::string &uri, std::chrono::steady_clock::time_point when);
+
 private:
     /// Notify Forkit of changed settings.
     void notifyForkit();
@@ -133,7 +136,7 @@ private:
     }
 
     /// Synchronous connection setup to remote monitoring server
-    void connectToMonitor(const Poco::URI &uri);
+    void connectToMonitorSync(const std::string &uri);
 
 private:
     /// The model is accessed only during startup & in
@@ -147,6 +150,12 @@ private:
     uint64_t _lastRecvCount;
     size_t _totalSysMemKb;
     size_t _totalAvailMemKb;
+
+    struct MonitorConnectRecord {
+        std::chrono::steady_clock::time_point _when;
+        std::string _uri;
+    };
+    std::vector<MonitorConnectRecord> _pendingConnects;
 
     std::atomic<int> _cpuStatsTaskIntervalMs;
     std::atomic<int> _memStatsTaskIntervalMs;
