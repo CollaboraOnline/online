@@ -411,6 +411,7 @@ AC_SUBST(LOOLWSD_DATADIR)
 AC_CONFIG_FILES([Makefile
                  test/Makefile
                  loleaflet/Makefile
+                 loleaflet/npm-shrinkwrap.json
                  loolwsd.spec
                  loolwsd.xml
                  debian/loolwsd.postinst])
