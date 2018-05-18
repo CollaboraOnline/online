@@ -448,12 +448,12 @@ AC_SUBST(ENABLE_SETCAP)
 AC_CONFIG_LINKS([discovery.xml:discovery.xml])
 AC_CONFIG_LINKS([loolkitconfig.xcu:loolkitconfig.xcu])
 AC_CONFIG_LINKS([loleaflet/package.json:loleaflet/package.json])
-AC_CONFIG_LINKS([loleaflet/npm-shrinkwrap.json:loleaflet/npm-shrinkwrap.json])
 AC_LINK_FILES([loleaflet/node_shrinkwrap], [loleaflet/node_shrinkwrap])
 
 AC_CONFIG_FILES([Makefile
                  test/Makefile
                  loleaflet/Makefile
+                 loleaflet/npm-shrinkwrap.json
                  loolwsd.spec
                  loolwsd.xml
                  debian/loolwsd.postinst])
