@@ -698,6 +698,10 @@ void TileCacheTests::testLoad12ods()
     {
         CPPUNIT_FAIL(exc.displayText());
     }
+    catch (...)
+    {
+        CPPUNIT_FAIL("Unexpected exception thrown during ods load");
+    }
 }
 
 void TileCacheTests::checkBlackTile(std::stringstream& tile)
@@ -742,6 +746,12 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, con
     sendTextFrame(socket, req);
 
     const std::vector<char> tile = getResponseMessage(socket, "tile:", name);
+    if (!tile.size())
+    {
+        CPPUNIT_FAIL("No tile returned to checkBlackTiles - failed load ?");
+        return;
+    }
+
     const std::string firstLine = LOOLProtocol::getFirstLine(tile);
 
 #if 0
