@@ -117,7 +117,6 @@
     </admin_console>
 
     <monitors desc="Addresses of servers we connect to on start for monitoring">
-	<monitor>ws://localhost:9042/foo</monitor>
     </monitors>
 
 </config>
