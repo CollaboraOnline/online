@@ -374,6 +374,10 @@ namespace HttpHelper
             response.set("Cache-Control", "max-age=11059200");
             response.set("ETag", "\"" LOOLWSD_VERSION_HASH "\"");
         }
+        else
+        {
+            response.set("Cache-Control", "no-cache");
+        }
 
         response.setContentType(mediaType);
         response.add("X-Content-Type-Options", "nosniff");
