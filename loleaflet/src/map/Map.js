@@ -19,7 +19,8 @@ L.Map = L.Evented.extend({
 		tileWidthTwips: 3840,
 		tileHeightTwips: 3840,
 		urlPrefix: 'lool',
-		wopiSrc: ''
+		wopiSrc: '',
+		cursorURL: 'cursors'
 	},
 
 	lastActiveTime: Date.now(),

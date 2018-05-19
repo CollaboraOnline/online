@@ -2,8 +2,10 @@
  * LibreOffice Online toolbar
  */
 
-/* global $ map closebutton w2ui w2utils vex _ _UNO */
-/* exported onUseritemClicked editorUpdate */
+/* global $ closebutton w2ui w2utils vex _ _UNO */
+(function(global) {
+
+var map;
 var mobileWidth = 768;
 
 function onDelete(e) {
@@ -236,8 +238,8 @@ function onClick(e, id, item, subItem) {
 		// focus on map, and press enter
 		map.focus();
 		map._docLayer._postKeyboardEvent('input',
-		                                 map.keyboard.keyCodes.enter,
-		                                 map.keyboard._toUNOKeyCode(map.keyboard.keyCodes.enter));
+						 map.keyboard.keyCodes.enter,
+						 map.keyboard._toUNOKeyCode(map.keyboard.keyCodes.enter));
 
 		w2ui['formulabar'].hide('acceptformula', 'cancelformula');
 		w2ui['formulabar'].show('sum', 'function');
@@ -327,7 +329,7 @@ var stylesSelectValue;
 var fontsSelectValue;
 var fontsizesSelectValue;
 
-$(function () {
+function createToolbar() {
 	$('#toolbar-up').w2toolbar({
 		name: 'toolbar-up',
 		items: [
@@ -532,10 +534,9 @@ $(function () {
 			$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
 		}
 	});
-});
+}
 
 var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
-var userLeftPopupMessage = '<div>' + _('%user has left') + '</div>';
 var userPopupTimeout = null;
 
 function localizeStateTableCell (text) {
@@ -821,18 +822,9 @@ function onFormulaBarBlur() {
 	}, 250);
 }
 
-map.on('hidebusy', function() {
-	// If locked, unlock
-	if (w2ui['toolbar-down'].box.firstChild.className === 'w2ui-lock') {
-		w2utils.unlock(w2ui['toolbar-down'].box);
-	}
-});
 
-map.on('showbusy', function(e) {
-	w2utils.lock(w2ui['toolbar-down'].box, e.label, true);
-});
 
-map.on('wopiprops', function(e) {
+function onWopiProps(e) {
 	if (e.HideSaveOption) {
 		w2ui['toolbar-up'].hide('save');
 	}
@@ -863,9 +855,9 @@ map.on('wopiprops', function(e) {
 		$('#document-name-input').removeClass('editable');
 		$('#document-name-input').off('keypress', onDocumentNameKeyPress);
 	}
-});
+}
 
-map.on('doclayerinit', function () {
+function onDocLayerInit() {
 	var toolbarUp = w2ui['toolbar-up'];
 	var statusbar = w2ui['toolbar-down'];
 	var docType = map.getDocType();
@@ -968,10 +960,9 @@ map.on('doclayerinit', function () {
 	toolbarUp.refresh();
 	statusbar.refresh();
 	resizeToolbar();
-});
+}
 
-
-map.on('commandstatechanged', function (e) {
+function onCommandStateChanged(e) {
 	var toolbar = w2ui['toolbar-up'];
 	var statusbar = w2ui['toolbar-down'];
 	var commandName = e.commandName;
@@ -1160,24 +1151,7 @@ map.on('commandstatechanged', function (e) {
 			toolbar.disable(id);
 		}
 	}
-});
-
-map.on('search', function (e) {
-	var searchInput = L.DomUtil.get('search-input');
-	var toolbar = w2ui['toolbar-down'];
-	if (e.count === 0) {
-		toolbar.disable('searchprev');
-		toolbar.disable('searchnext');
-		toolbar.hide('cancelsearch');
-		L.DomUtil.addClass(searchInput, 'search-not-found');
-		$('#findthis').addClass('search-not-found');
-		map.resetSelection();
-		setTimeout(function () {
-			$('#findthis').removeClass('search-not-found');
-			L.DomUtil.removeClass(searchInput, 'search-not-found');
-		}, 500);
-	}
-});
+}
 
 function updateCommandValues() {
 	var data = [];
@@ -1287,11 +1261,8 @@ function updateCommandValues() {
 	}
 }
 
-map.on('updatetoolbarcommandvalues', function() {
-	w2ui['toolbar-up'].refresh();
-});
 
-map.on('updateparts pagenumberchanged', function (e) {
+function onUpdateParts(e) {
 	if (e.docType === 'text') {
 		var current = e.currentPage;
 		var count = e.pages;
@@ -1344,9 +1315,9 @@ map.on('updateparts pagenumberchanged', function (e) {
 		toolbar.show('lastrecord');
 		toolbar.show('insertsheet');
 	}
-});
+}
 
-map.on('commandresult', function (e) {
+function onCommandResult(e) {
 	var commandName = e.commandName;
 
 	if (commandName === '.uno:Save') {
@@ -1368,33 +1339,9 @@ map.on('commandresult', function (e) {
 		$('#tb_toolbar-up_item_repair').w2overlay({ html: '<div style="padding: 10px; line-height: 150%">' +
 			_('Conflict Undo/Redo with multiple users. Please use document repair to resolve') + '</div>'});
 	}
-});
+}
 
-map.on('celladdress', function (e) {
-	if (document.activeElement !== L.DomUtil.get('addressInput')) {
-		// if the user is not editing the address field
-		L.DomUtil.get('addressInput').value = e.address;
-	}
-});
-
-map.on('cellformula', function (e) {
-	if (document.activeElement !== L.DomUtil.get('formulaInput')) {
-		// if the user is not editing the formula bar
-		L.DomUtil.get('formulaInput').value = e.formula;
-	}
-});
-
-map.on('zoomend', function () {
-	var zoomRatio = map.getZoomScale(map.getZoom(), map.options.zoom);
-	var zoomPercent = Math.round(zoomRatio * 100);
-	$('#zoomlevel').html(zoomPercent + '%');
-});
-
-map.on('hyperlinkclicked', function (e) {
-	window.open(e.url, '_blank');
-});
-
-map.on('updatepermission', function (e) {
+function onUpdatePermission(e) {
 	var toolbar = w2ui['toolbar-up'];
 
 	// copy the first array
@@ -1476,17 +1423,7 @@ map.on('updatepermission', function (e) {
 		});
 		$('#search-input').prop('disabled', true);
 	}
-});
-
-map.on('keydown', function (e) {
-	if (e.originalEvent.ctrlKey && !e.originalEvent.altKey &&
-	   (e.originalEvent.key === 'f' || e.originalEvent.key === 'F')) {
-		var entry = L.DomUtil.get('search-input');
-		entry.focus();
-		entry.select();
-		e.originalEvent.preventDefault();
-	}
-});
+}
 
 function goToViewId(id) {
 	var docLayer = map._docLayer;
@@ -1501,7 +1438,7 @@ function goToViewId(id) {
 	}
 }
 
-function onUseritemClicked(e) {
+function onUseritemClicked(e) { // eslint-disable-line no-unused-vars
 	var docLayer = map._docLayer;
 	var viewId = parseInt(e.currentTarget.id.replace('user-', ''));
 
@@ -1521,7 +1458,7 @@ function onUseritemClicked(e) {
 	selectUser(viewId);
 }
 
-function editorUpdate(e) {
+function editorUpdate(e) { // eslint-disable-line no-unused-vars
 	var docLayer = map._docLayer;
 
 	if (e.target.checked) {
@@ -1564,14 +1501,14 @@ function getUserItem(viewId, userName, extraInfo, color) {
 	}
 
 	var html = '<tr class="' + className + '" id="user-' + viewId + '" onclick="onUseritemClicked(event)">' +
-	             '<td class=usercolor style="background-color: ' + color  +';">';
+		     '<td class=usercolor style="background-color: ' + color  +';">';
 	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
 		html += '<img src="' + extraInfo.avatar + '" width="32" height="32" />';
 	}
 
 	// TODO: Add mail and other links as sub-menu.
 	html += '</td>' +
-	             '<td class="username loleaflet-font" >' + userName + '</td>' +
+		     '<td class="username loleaflet-font" >' + userName + '</td>' +
 	    '</tr>';
 
 	return html;
@@ -1593,7 +1530,7 @@ function updateUserListCount() {
 	$('#zoomlevel').html(zoomlevel);
 }
 
-map.on('addview', function(e) {
+function onAddView(e) {
 	$('#tb_toolbar-down_item_userlist')
 		.w2overlay({
 			class: 'loleaflet-font',
@@ -1623,47 +1560,7 @@ map.on('addview', function(e) {
 	var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
 	userlistItem.html = newhtml;
 	updateUserListCount();
-});
-
-map.on('removeview', function(e) {
-	$('#tb_toolbar-down_item_userlist')
-		.w2overlay({
-			class: 'loleaflet-font',
-			html: userLeftPopupMessage.replace('%user', e.username),
-			style: 'padding: 5px'
-		});
-	clearTimeout(userPopupTimeout);
-	userPopupTimeout = setTimeout(function() {
-		$('#tb_toolbar-down_item_userlist').w2overlay('');
-		clearTimeout(userPopupTimeout);
-		userPopupTimeout = null;
-	}, 3000);
-
-	if (e.viewId === map._docLayer._followThis) {
-		map._docLayer._followThis = -1;
-		map._docLayer._followUser = false;
-	}
-
-	var userlistItem = w2ui['toolbar-down'].get('userlist');
-	userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
-	updateUserListCount();
-});
-
-map.on('updateEditorName', function(e) {
-	$('#currently-msg').show();
-	$('#current-editor').text(e.username);
-});
-
-map.on('setFollowOff', function() {
-	var docLayer = map._docLayer;
-	var viewId = docLayer._followThis;
-	if (viewId !== -1 && map._viewInfo[viewId]) {
-		deselectUser(viewId);
-	}
-	docLayer._followThis = -1;
-	docLayer._followUser = false;
-	docLayer._followEditor = false;
-});
+}
 
 $(window).resize(function() {
 	resizeToolbar();
@@ -1683,3 +1580,103 @@ $(document).ready(function() {
 	// Attach insert file action
 	$('#insertgraphic').on('change', onInsertFile);
 });
+
+function setupToolbar(e) {
+	map = e;
+
+	createToolbar();
+
+	map.on('updateEditorName', function(e) {
+		$('#currently-msg').show();
+		$('#current-editor').text(e.username);
+	});
+
+	map.on('setFollowOff', function() {
+		var docLayer = map._docLayer;
+		var viewId = docLayer._followThis;
+		if (viewId !== -1 && map._viewInfo[viewId]) {
+			deselectUser(viewId);
+		}
+		docLayer._followThis = -1;
+		docLayer._followUser = false;
+		docLayer._followEditor = false;
+	});
+
+	map.on('keydown', function (e) {
+		if (e.originalEvent.ctrlKey && !e.originalEvent.altKey &&
+		   (e.originalEvent.key === 'f' || e.originalEvent.key === 'F')) {
+			var entry = L.DomUtil.get('search-input');
+			entry.focus();
+			entry.select();
+			e.originalEvent.preventDefault();
+		}
+	});
+
+	map.on('hyperlinkclicked', function (e) {
+		window.open(e.url, '_blank');
+	});
+
+	map.on('cellformula', function (e) {
+		if (document.activeElement !== L.DomUtil.get('formulaInput')) {
+			// if the user is not editing the formula bar
+			L.DomUtil.get('formulaInput').value = e.formula;
+		}
+	});
+
+	map.on('zoomend', function () {
+		var zoomRatio = map.getZoomScale(map.getZoom(), map.options.zoom);
+		var zoomPercent = Math.round(zoomRatio * 100);
+		$('#zoomlevel').html(zoomPercent + '%');
+	});
+
+	map.on('celladdress', function (e) {
+		if (document.activeElement !== L.DomUtil.get('addressInput')) {
+			// if the user is not editing the address field
+			L.DomUtil.get('addressInput').value = e.address;
+		}
+	});
+
+	map.on('search', function (e) {
+		var searchInput = L.DomUtil.get('search-input');
+		var toolbar = w2ui['toolbar-down'];
+		if (e.count === 0) {
+			toolbar.disable('searchprev');
+			toolbar.disable('searchnext');
+			toolbar.hide('cancelsearch');
+			L.DomUtil.addClass(searchInput, 'search-not-found');
+			$('#findthis').addClass('search-not-found');
+			map.resetSelection();
+			setTimeout(function () {
+				$('#findthis').removeClass('search-not-found');
+				L.DomUtil.removeClass(searchInput, 'search-not-found');
+			}, 500);
+		}
+	});
+
+	map.on('updatetoolbarcommandvalues', function() {
+		w2ui['toolbar-up'].refresh();
+	});
+
+	map.on('showbusy', function(e) {
+		w2utils.lock(w2ui['toolbar-down'].box, e.label, true);
+	});
+
+	map.on('hidebusy', function() {
+		// If locked, unlock
+		if (w2ui['toolbar-down'].box.firstChild.className === 'w2ui-lock') {
+			w2utils.unlock(w2ui['toolbar-down'].box);
+		}
+	});
+
+	map.on('doclayerinit', onDocLayerInit);
+	map.on('wopiprops', onWopiProps);
+	map.on('addview', onAddView);
+	map.on('updatepermission', onUpdatePermission);
+	map.on('commandresult', onCommandResult);
+	map.on('updateparts pagenumberchanged', onUpdateParts);
+	map.on('commandstatechanged', onCommandStateChanged);
+}
+
+global.setupToolbar = setupToolbar;
+
+}(window));

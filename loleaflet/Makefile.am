@@ -105,8 +105,8 @@ LOLEAFLET_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e
 
 PLUGINS_JS =\
 	w2ui-1.5.rc1.js \
-	main.js \
-	toolbar.js
+	toolbar.js \
+	main.js
 
 LOLEAFLET_JS_SRC = $(shell find $(srcdir)/src -name '*.js')
 LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(builddir)/dist/src/%.js,$(LOLEAFLET_JS_SRC))
@@ -137,7 +137,7 @@ $(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) $(BOOTSTRAP_DST) $(CURS
 if ENABLE_DEBUG
 $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST) $(LOLEAFLET_DRAW_JS_DST)
 	@echo "Checking loleaflet for JS errors..."
-	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
+	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@cp -a $(srcdir)/plugins/draw-$(DRAW_VERSION)/dist/images/* $(builddir)/dist/images/
 #	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/plugins/draw-$(DRAW_VERSION)/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@touch $@
@@ -147,14 +147,16 @@ $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS_DST)
 
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_DST) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
-	$(builddir)/dist/global.js $(builddir)/dist/w2ui-1.5.rc1.js \
-	$(builddir)/dist/main.js $(builddir)/dist/toolbar.js
+	$(builddir)/dist/global.js \
+	$(builddir)/dist/w2ui-1.5.rc1.js \
+	$(builddir)/dist/toolbar.js \
+	$(builddir)/dist/main.js
 	@touch $@
 else
 $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
 	@mkdir -p $(dir $@)
 	@echo "Checking loleaflet for JS errors..."
-	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
+	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@echo "Concatenating loleaflet files..."
 	@(cat $(srcdir)/src/copyright.js | sed 's/{VERSION}/$(LOLEAFLET_VERSION)/' - \
 		&& echo "(function (window, document, undefined) {" \
@@ -169,16 +171,18 @@ $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS)
 
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
-	$(srcdir)/js/global.js $(srcdir)/js/w2ui-1.5.rc1.js \
-	$(srcdir)/js/main.js $(srcdir)/js/toolbar.js
+	$(srcdir)/js/global.js \
+	$(srcdir)/js/w2ui-1.5.rc1.js \
+	$(srcdir)/js/toolbar.js \
+	$(srcdir)/js/main.js
 	@echo "Uglify loleaflet js files..."
 	@$(NODE) node_modules/uglify-js/bin/uglifyjs \
 		$(srcdir)/js/global.js \
 		$(NODE_MODULES_JS) \
-		$(builddir)/build/dist/loleaflet-src.js \
 		$(srcdir)/js/w2ui-1.5.rc1.js \
-		$(srcdir)/js/main.js \
+		$(builddir)/build/dist/loleaflet-src.js \
 		$(srcdir)/js/toolbar.js \
+		$(srcdir)/js/main.js \
 		--source-map --output $@
 endif
 

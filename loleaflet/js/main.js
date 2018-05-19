@@ -66,6 +66,8 @@ var map = L.map('map', {
 global.map = map;
 
 ////// Controls /////
+map.addControl(L.control.menubar());
+setupToolbar(map);
 map.addControl(L.control.scroll());
 map.addControl(L.control.alertDialog());
 map.addControl(L.control.lokDialog());
@@ -74,13 +76,12 @@ map.addControl(L.control.tabs());
 map.addControl(L.control.columnHeader());
 map.addControl(L.control.rowHeader());
 map.addControl(L.control.contextMenu());
-map.addControl(L.control.menubar());
 map.addControl(L.control.infobar());
 map.loadDocument();
 
 window.addEventListener('beforeunload', function () {
-	if (global.map && global.map._socket) {
-		global.map._socket.close();
+	if (map && map._socket) {
+		map._socket.close();
 	}
 });
 
