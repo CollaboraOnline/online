@@ -33,7 +33,7 @@ var CSSBundleFiles = [
 
 var adminBundleFiles = [
 	'main-admin.js',
-	'admin/admin-src.js',
+	builddir + 'dist/admin-src.js',
 	'admin/bootstrap/ie10-viewport-bug-workaround.css',
 	'admin.strings.js',
 	'admin/bootstrap/holder.min.js',
@@ -139,7 +139,8 @@ function bytesToKB(bytes) {
 }
 
 function bundle(files, destFilename, debug, minify, callback) {
-	var node_paths = builddir !== '' ? [builddir + 'node_modules'] : [process.cwd() +'/node_modules']
+	var node_paths = builddir !== '' ? [builddir + 'node_modules', builddir + 'dist'] :
+		[process.cwd() +'/node_modules', process.cwd() + '/dist']
 	var bundler = browserify(files, {debug: debug, paths:node_paths});
 	bundler = bundler.transform(browserifyCss, {global:true});
 	if (minify) {
@@ -233,7 +234,7 @@ exports.build = function (callback, version, compsBase32, buildName) {
 exports.buildadmin = function(callback) {
 	// TODO: Also minify if admin complexity increases in future
 	var adminNewSrc = combineFiles(getAdminFiles()),
-	    adminPath = 'admin/admin-src.js',
+	    adminPath = builddir + 'dist/admin-src.js',
 	    adminOldSrc = loadSilently(adminPath),
 	    adminSrcDelta = getSizeDelta(adminNewSrc, adminOldSrc, true);
 

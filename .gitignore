@@ -53,7 +53,6 @@ loolwsd.log
 
 # lolefalet
 loleaflet/dist
-loleaflet/admin/admin-src.js
 
 connect
 lokitclient
