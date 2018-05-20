@@ -2,7 +2,7 @@
  * L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global $ map L */
+/* global $ L */
 L.Control.LokDialog = L.Control.extend({
 
 	dialogIdPrefix: 'lokdialog-',
@@ -298,9 +298,9 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomEvent.on(dialogCanvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stopPropagation(e);
 			var buttons = 0;
-			buttons |= e.button === map['mouse'].JSButtons.left ? map['mouse'].LOButtons.left : 0;
-			buttons |= e.button === map['mouse'].JSButtons.middle ? map['mouse'].LOButtons.middle : 0;
-			buttons |= e.button === map['mouse'].JSButtons.right ? map['mouse'].LOButtons.right : 0;
+			buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
+			buttons |= e.button === this._map['mouse'].JSButtons.middle ? this._map['mouse'].LOButtons.middle : 0;
+			buttons |= e.button === this._map['mouse'].JSButtons.right ? this._map['mouse'].LOButtons.right : 0;
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, this._toRawDlgId(strDlgId), e.offsetX, e.offsetY, 1, buttons, 0);
@@ -310,7 +310,7 @@ L.Control.LokDialog = L.Control.extend({
 		              'keyup keypress keydown compositionstart compositionupdate compositionend textInput',
 		              function(e) {
 			              e.originalEvent = e; // _onKeyDown fn below requires real event in e.originalEvent
-			              map['keyboard']._onKeyDown(e,
+			              this._map['keyboard']._onKeyDown(e,
 			                                         L.bind(this._postWindowKeyboardEvent,
 			                                                this,
 			                                                this._toRawDlgId(strDlgId)),
@@ -445,9 +445,9 @@ L.Control.LokDialog = L.Control.extend({
 		// attach events
 		L.DomEvent.on(floatingCanvas, 'mousedown mouseup', function(e) {
 			var buttons = 0;
-			buttons |= e.button === map['mouse'].JSButtons.left ? map['mouse'].LOButtons.left : 0;
-			buttons |= e.button === map['mouse'].JSButtons.middle ? map['mouse'].LOButtons.middle : 0;
-			buttons |= e.button === map['mouse'].JSButtons.right ? map['mouse'].LOButtons.right : 0;
+			buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
+			buttons |= e.button === this._map['mouse'].JSButtons.middle ? this._map['mouse'].LOButtons.middle : 0;
+			buttons |= e.button === this._map['mouse'].JSButtons.right ? this._map['mouse'].LOButtons.right : 0;
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, childId, e.offsetX, e.offsetY, 1, buttons, 0);
 		}, this);
