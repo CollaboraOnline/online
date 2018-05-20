@@ -2,7 +2,7 @@
  * Toolbar handler
  */
 
-/* global $ window vex brandProductName _ map */
+/* global $ window vex brandProductName _ */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -176,6 +176,7 @@ L.Map.include({
 
 	showLOKeyboardHelp: function() {
 		var w = window.innerWidth / 2;
+		var map = this;
 		$.get('loleaflet-help.html', function(data) {
 			vex.open({
 				content: data,
@@ -238,6 +239,7 @@ L.Map.include({
 		var productString = _('This version of %productName is powered by');
 		content.find('#product-string').text(productString.replace('%productName', productName));
 		var w = window.innerWidth / 2;
+		var map = this;
 		vex.open({
 			content: content,
 			showCloseButton: true,
