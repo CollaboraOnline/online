@@ -2,8 +2,6 @@
  * L.Map.Keyboard is handling keyboard interaction with the map, enabled by default.
  */
 
-/* global map */
-
 L.Map.mergeOptions({
 	keyboard: true,
 	keyboardPanOffset: 20,
@@ -451,7 +449,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (e.originalEvent.ctrlKey && e.originalEvent.shiftKey && e.originalEvent.key === '?') {
-			map.showLOKeyboardHelp();
+			this._map.showLOKeyboardHelp();
 			e.originalEvent.preventDefault();
 			return true;
 		}
