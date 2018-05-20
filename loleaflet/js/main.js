@@ -61,9 +61,6 @@ var map = L.map('map', {
 	idleTimeoutSecs: idleTimeoutSecs,  // Dim when user is idle.
 	outOfFocusTimeoutSecs: outOfFocusTimeoutSecs // Dim after switching tabs.
 });
-// toolbar.js (loaded in <script> tag accesses map as global variable,
-// so expose it
-global.map = map;
 
 ////// Controls /////
 map.addControl(L.control.menubar());
