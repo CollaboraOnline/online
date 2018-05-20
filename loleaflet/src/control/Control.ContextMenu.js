@@ -2,7 +2,7 @@
 * Control.ContextMenu
 */
 
-/* global $ map _ _UNO */
+/* global $ _ _UNO */
 L.Control.ContextMenu = L.Control.extend({
 	options: {
 		SEPARATOR: '---------',
@@ -68,6 +68,7 @@ L.Control.ContextMenu = L.Control.extend({
 	},
 
 	_onContextMenu: function(obj) {
+		var map = this._map;
 		if (map._permission !== 'edit') {
 			return;
 		}
@@ -93,7 +94,7 @@ L.Control.ContextMenu = L.Control.extend({
 	},
 
 	_createContextMenuStructure: function(obj) {
-		var docType = map.getDocType();
+		var docType = this._map.getDocType();
 		var contextMenu = {};
 		var sepIdx = 1, itemName;
 		var isLastItemText = false;
