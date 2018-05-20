@@ -2,7 +2,7 @@
 * Control.Menubar
 */
 
-/* global $ _ _UNO map vex revHistoryEnabled closebutton L */
+/* global $ _ _UNO vex revHistoryEnabled closebutton L */
 L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
@@ -427,7 +427,7 @@ L.Control.Menubar = L.Control.extend({
 
 		var liItem = L.DomUtil.create('li', '');
 		liItem.id = 'menu-' + e.id;
-		if (map._permission === 'readonly') {
+		if (this._map._permission === 'readonly') {
 			L.DomUtil.addClass(liItem, 'readonly');
 		}
 		var aItem = L.DomUtil.create('a', '', liItem);
@@ -575,7 +575,7 @@ L.Control.Menubar = L.Control.extend({
 
 	_checkedMenu: function(uno, item) {
 		var constChecked = 'lo-menu-item-checked';
-		var state = map['stateChangeHandler'].getItemValue(uno);
+		var state = this._map['stateChangeHandler'].getItemValue(uno);
 		var data = $(item).data('tag');
 		state = state[data] || false;
 		if (state) {
@@ -592,7 +592,7 @@ L.Control.Menubar = L.Control.extend({
 			var aItem = this;
 			var type = $(aItem).data('type');
 			var id = $(aItem).data('id');
-			if (map._permission === 'edit') {
+			if (self._map._permission === 'edit') {
 				if (type === 'unocommand') { // enable all depending on stored commandStates
 					var data, lang;
 					var constUno = 'uno';
@@ -602,7 +602,7 @@ L.Control.Menubar = L.Control.extend({
 					var constPageHeader = '.uno:InsertPageHeader';
 					var constPageFooter = '.uno:InsertPageFooter';
 					var unoCommand = $(aItem).data(constUno);
-					var itemState = map[constState].getItemValue(unoCommand);
+					var itemState = self._map[constState].getItemValue(unoCommand);
 					if (itemState === 'disabled') {
 						$(aItem).addClass('disabled');
 					} else {
@@ -610,7 +610,7 @@ L.Control.Menubar = L.Control.extend({
 					}
 					if (unoCommand.startsWith(constLanguage)) {
 						unoCommand = constLanguage;
-						lang = map[constState].getItemValue(unoCommand);
+						lang = self._map[constState].getItemValue(unoCommand);
 						data = decodeURIComponent($(aItem).data(constUno));
 						if (data.indexOf(lang) !== -1) {
 							$(aItem).addClass(constChecked);
@@ -668,27 +668,27 @@ L.Control.Menubar = L.Control.extend({
 	_executeAction: function(item) {
 		var id = $(item).data('id');
 		if (id === 'save') {
-			map.save(true, true);
+			this._map.save(true, true);
 		} else if (id === 'saveas') {
-			map.fire('postMessage', {msgId: 'UI_SaveAs'});
+			this._map.fire('postMessage', {msgId: 'UI_SaveAs'});
 		} else if (id === 'print') {
-			map.print();
+			this._map.print();
 		} else if (id.startsWith('downloadas-')) {
 			var format = id.substring('downloadas-'.length);
-			var fileName = map['wopi'].BaseFileName;
+			var fileName = this._map['wopi'].BaseFileName;
 			fileName = fileName.substr(0, fileName.lastIndexOf('.'));
 			fileName = fileName === '' ? 'document' : fileName;
-			map.downloadAs(fileName + '.' + format, format);
+			this._map.downloadAs(fileName + '.' + format, format);
 		} else if (id === 'insertcomment') {
-			map.insertComment();
+			this._map.insertComment();
 		} else if (id === 'insertgraphic') {
 			L.DomUtil.get('insertgraphic').click();
-		} else if (id === 'zoomin' && map.getZoom() < map.getMaxZoom()) {
-			map.zoomIn(1);
-		} else if (id === 'zoomout' && map.getZoom() > map.getMinZoom()) {
-			map.zoomOut(1);
+		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
+			this._map.zoomIn(1);
+		} else if (id === 'zoomout' && this._map.getZoom() > this._map.getMinZoom()) {
+			this._map.zoomOut(1);
 		} else if (id === 'zoomreset') {
-			map.setZoom(map.options.zoom);
+			this._map.setZoom(this._map.options.zoom);
 		} else if (id === 'fullscreen') {
 			if (!document.fullscreenElement &&
 				!document.mozFullscreenElement &&
@@ -712,36 +712,36 @@ L.Control.Menubar = L.Control.extend({
 			} else if (document.webkitExitFullscreen) {
 				document.webkitExitFullscreen();
 			}
-		} else if (id === 'fullscreen-presentation' && map.getDocType() === 'presentation') {
-			map.fire('fullscreen');
+		} else if (id === 'fullscreen-presentation' && this._map.getDocType() === 'presentation') {
+			this._map.fire('fullscreen');
 		} else if (id === 'insertpage') {
-			map.insertPage();
+			this._map.insertPage();
 		} else if (id === 'duplicatepage') {
-			map.duplicatePage();
+			this._map.duplicatePage();
 		} else if (id === 'deletepage') {
 			vex.dialog.confirm({
 				message: _('Are you sure you want to delete this slide?'),
 				callback: this._onDeleteSlide
 			}, this);
 		} else if (id === 'about') {
-			map.showLOAboutDialog();
+			this._map.showLOAboutDialog();
 		} else if (id === 'keyboard-shortcuts') {
-			map.showLOKeyboardHelp();
+			this._map.showLOKeyboardHelp();
 		} else if (id === 'rev-history') {
 			// if we are being loaded inside an iframe, ask
 			// our host to show revision history mode
-			map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
-			map.fire('postMessage', {msgId: 'UI_FileVersions'});
+			this._map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
+			this._map.fire('postMessage', {msgId: 'UI_FileVersions'});
 		} else if (id === 'closedocument') {
-			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
-			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
-			map.remove();
+			this._map.fire('postMessage', {msgId: 'close', args: {EverModified: this._map._everModified, Deprecated: true}});
+			this._map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: this._map._everModified}});
+			this._map.remove();
 		} else if (id === 'repair') {
-			map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
+			this._map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		}
 		// Inform the host if asked
 		if ($(item).data('postmessage') === 'true') {
-			map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: id} });
+			this._map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: id} });
 		}
 	},
 
@@ -750,12 +750,12 @@ L.Control.Menubar = L.Control.extend({
 		if (unoCommand.startsWith('.uno:InsertPageHeader') || unoCommand.startsWith('.uno:InsertPageFooter')) {
 			unoCommand = unoCommand + ($(item).hasClass('lo-menu-item-checked') ? 'On:bool=false' : 'On:bool=true');
 		}
-		map.sendUnoCommand(unoCommand);
+		this._map.sendUnoCommand(unoCommand);
 	},
 
 	_onDeleteSlide: function(e) {
 		if (e) {
-			map.deletePage();
+			this._map.deletePage();
 		}
 	},
 
@@ -769,7 +769,7 @@ L.Control.Menubar = L.Control.extend({
 		}
 
 		if ($(item).data('id') !== 'insertcomment')
-			map.focus();
+			self._map.focus();
 	},
 
 	_createMenu: function(menu) {
@@ -780,7 +780,7 @@ L.Control.Menubar = L.Control.extend({
 				continue;
 			}
 
-			if (map._permission === 'readonly' && menu[i].type === 'menu') {
+			if (this._map._permission === 'readonly' && menu[i].type === 'menu') {
 				var found = false;
 				for (var j in this.options.allowedReadonlyMenus) {
 					if (this.options.allowedReadonlyMenus[j] === menu[i].id) {
@@ -829,7 +829,7 @@ L.Control.Menubar = L.Control.extend({
 			var liItem = L.DomUtil.create('li', '');
 			if (menu[i].id) {
 				liItem.id = 'menu-' + menu[i].id;
-				if (menu[i].id === 'closedocument' && map._permission === 'readonly') {
+				if (menu[i].id === 'closedocument' && this._map._permission === 'readonly') {
 					// see corresponding css rule for readonly class usage
 					L.DomUtil.addClass(liItem, 'readonly');
 				}
