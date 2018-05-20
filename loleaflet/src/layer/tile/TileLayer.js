@@ -2,7 +2,7 @@
 /*
  * L.TileLayer is used for standard xyz-numbered tile layers.
  */
-/* global $ _ map Uint8ClampedArray Uint8Array */
+/* global $ _ Uint8ClampedArray Uint8Array */
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
@@ -495,13 +495,13 @@ L.TileLayer = L.GridLayer.extend({
 		this._invalidateClientVisibleArea();
 		this._debug = !this._debug;
 		if (!this._debug) {
-			map.removeLayer(this._debugInfo);
-			map.removeLayer(this._debugInfo2);
+			this._map.removeLayer(this._debugInfo);
+			this._map.removeLayer(this._debugInfo2);
 			$('.leaflet-control-layers-expanded').css('display', 'none');
 		} else {
 			if (this._debugInfo) {
-				map.addLayer(this._debugInfo);
-				map.addLayer(this._debugInfo2);
+				this._map.addLayer(this._debugInfo);
+				this._map.addLayer(this._debugInfo2);
 				$('.leaflet-control-layers-expanded').css('display', 'block');
 			}
 			this._debugInit();
@@ -562,8 +562,8 @@ L.TileLayer = L.GridLayer.extend({
 		parser.href = this._map.options.server;
 
 		var wopiSrc = '';
-		if (map.options.wopiSrc != '') {
-			wopiSrc = '?WOPISrc=' + map.options.wopiSrc;
+		if (this._map.options.wopiSrc != '') {
+			wopiSrc = '?WOPISrc=' + this._map.options.wopiSrc;
 		}
 		var url = this._map.options.webserver + '/' + this._map.options.urlPrefix + '/' +
 		    encodeURIComponent(this._map.options.doc) + '/' + command.jail + '/' + command.dir + '/' + command.name + wopiSrc;
@@ -2300,36 +2300,36 @@ L.TileLayer = L.GridLayer.extend({
 			this._debugData = {};
 			this._debugDataNames = ['tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount'];
 			for (var i = 0; i < this._debugDataNames.length; i++) {
-				this._debugData[this._debugDataNames[i]] = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(map);
+				this._debugData[this._debugDataNames[i]] = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(this._map);
 			}
 			this._debugInfo = new L.LayerGroup();
 			this._debugInfo2 = new L.LayerGroup();
 			this._debugAlwaysActive = new L.LayerGroup();
 			this._debugTyper = new L.LayerGroup();
-			map.addLayer(this._debugInfo);
-			map.addLayer(this._debugInfo2);
+			this._map.addLayer(this._debugInfo);
+			this._map.addLayer(this._debugInfo2);
 			var overlayMaps = {
 				'Tile overlays': this._debugInfo,
 				'Screen overlays': this._debugInfo2,
 				'Always active': this._debugAlwaysActive,
 				'Typing': this._debugTyper
 			};
-			L.control.layers({}, overlayMaps, {collapsed: false}).addTo(map);
+			L.control.layers({}, overlayMaps, {collapsed: false}).addTo(this._map);
 
 			this._map.on('layeradd', function(e) {
 				if (e.layer === this._debugAlwaysActive) {
-					map._debugAlwaysActive = true;
+					this._map._debugAlwaysActive = true;
 				} else if (e.layer === this._debugTyper) {
 					this._debugTypeTimeout();
 				} else if (e.layer === this._debugInfo2) {
 					for (var i = 0; i < this._debugDataNames.length; i++) {
-						this._debugData[this._debugDataNames[i]].addTo(map);
+						this._debugData[this._debugDataNames[i]].addTo(this._map);
 					}
 				}
 			}, this);
-			map.on('layerremove', function(e) {
+			this._map.on('layerremove', function(e) {
 				if (e.layer === this._debugAlwaysActive) {
-					map._debugAlwaysActive = false;
+					this._map._debugAlwaysActive = false;
 				} else if (e.layer === this._debugTyper) {
 					clearTimeout(this._debugTypeTimeoutId);
 				} else if (e.layer === this._debugInfo2) {
@@ -2430,7 +2430,7 @@ L.TileLayer = L.GridLayer.extend({
 					rect.setStyle({fillOpacity: opac - 0.04});
 				}
 			}
-			this._debugTimeoutId = setTimeout(function () { map._docLayer._debugTimeout(); }, 50);
+			this._debugTimeoutId = setTimeout(function () { this._map._docLayer._debugTimeout(); }, 50);
 		}
 	},
 
@@ -2443,7 +2443,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._postKeyboardEvent('input', this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length), 0);
 		}
 		this._debugLoremPos++;
-		this._debugTypeTimeoutId = setTimeout(function () { map._docLayer._debugTypeTimeout(); }, 50);
+		this._debugTypeTimeoutId = setTimeout(function () { this._map._docLayer._debugTypeTimeout(); }, 50);
 	}
 
 });
