@@ -114,7 +114,7 @@ public:
 
 namespace UnitHTTP
 {
-    Poco::Net::HTTPClientSession* createSession()
+    inline Poco::Net::HTTPClientSession* createSession()
     {
         // HTTP forced in configure hook.
         return new Poco::Net::HTTPClientSession ("127.0.0.1",
