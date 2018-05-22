@@ -105,6 +105,12 @@ L.Cursor = L.Layer.extend({
 	_setPos: function (pos) {
 		L.DomUtil.setPosition(this._container, pos);
 		this._container.style.zIndex = this.options.zIndex;
+		// Restart blinking animation
+		if (this.options.blink) {
+			L.DomUtil.removeClass(this._cursor, 'blinking-cursor');
+			void this._cursor.offsetWidth;
+			L.DomUtil.addClass(this._cursor, 'blinking-cursor');
+		}
 	},
 
 	_setSize: function () {
