@@ -29,8 +29,8 @@ ifelse(DEBUG,[true],foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" h
 <link rel="stylesheet" href="/loleaflet/%VERSION%/branding.css"> <!-- add your logo here -->
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json" />
-<link rel="localizations" href="/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json" />
 <link rel="localizations" href="/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
+<link rel="localizations" href="/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json" />
 </head>
 
   <body style="user-select: none;">
