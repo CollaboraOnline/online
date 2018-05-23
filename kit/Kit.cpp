@@ -82,7 +82,6 @@ using Poco::File;
 using Poco::JSON::Array;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
-using Poco::Net::WebSocket;
 using Poco::Runnable;
 using Poco::StringTokenizer;
 using Poco::Thread;
@@ -91,9 +90,6 @@ using Poco::URI;
 using Poco::Util::Application;
 
 #ifndef BUILDING_TESTS
-using Poco::Net::HTTPClientSession;
-using Poco::Net::HTTPRequest;
-using Poco::Net::HTTPResponse;
 using Poco::Path;
 using Poco::Process;
 #endif
