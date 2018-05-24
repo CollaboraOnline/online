@@ -20,7 +20,7 @@ L.Map = L.Evented.extend({
 		tileHeightTwips: 3840,
 		urlPrefix: 'lool',
 		wopiSrc: '',
-		cursorURL: 'cursors'
+		cursorURL: 'images/cursors'
 	},
 
 	lastActiveTime: Date.now(),
@@ -53,7 +53,7 @@ L.Map = L.Evented.extend({
 			this.setView(L.latLng(options.center), options.zoom, {reset: true});
 		}
 
-		L.Cursor.imagePath = options.cursorURL || L.Cursor.getCursorURL('cursors');
+		L.Cursor.imagePath = options.cursorURL;
 
 		if (options.webserver === undefined) {
 			var protocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;

@@ -123,22 +123,6 @@ L.cursor = function (latlng, size, options) {
 	return new L.Cursor(latlng, size, options);
 };
 
-L.Cursor.getCursorURL = function (localPath) {
-	var scripts = document.getElementsByTagName('script'),
-	    leafletRe = /[\/^]leaflet[\-\._]?([\w\-\._]*)\.js\??/;
-
-	var i, len, src, path;
-
-	for (i = 0, len = scripts.length; i < len; i++) {
-		src = scripts[i].src;
-
-		if (src.match(leafletRe)) {
-			path = src.split(leafletRe)[0];
-			return (path ? path + '/' : '') + localPath;
-		}
-	}
-};
-
 L.Cursor.hotSpot = {
 	fill: {x: 7, y: 16}
 };

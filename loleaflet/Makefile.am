@@ -15,7 +15,7 @@ JQUERY_UI_IMAGE_PATH = node_modules/jquery-ui/themes/ui-lightness/images
 JQUERY_UI_IMAGES = $(wildcard $(JQUERY_UI_IMAGE_PATH)/*.png)
 JQUERY_UI_DIST_IMAGES = $(patsubst $(JQUERY_UI_IMAGE_PATH)/%.png,$(builddir)/dist/images/%.png,$(JQUERY_UI_IMAGES))
 
-LOLEAFLET_IMAGES_SRC = $(wildcard $(srcdir)/images/*)
+LOLEAFLET_IMAGES_SRC = $(shell find $(srcdir)/images -name '*.*')
 LOLEAFLET_IMAGES_DST = $(patsubst $(srcdir)/%,$(builddir)/dist/%,$(LOLEAFLET_IMAGES_SRC))
 
 LOLEAFLET_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.*')
@@ -34,9 +34,6 @@ LOLEAFLET_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(builddir)/dist/admin/%,$(LO
 
 BOOTSTRAP_SRC = $(shell find $(srcdir)/bootstrap -name '*.*')
 BOOTSTRAP_DST = $(patsubst $(srcdir)/bootstrap/%,$(builddir)/dist/bootstrap/%,$(BOOTSTRAP_SRC))
-
-CURSORS_SRC = $(shell find $(srcdir)/cursors -name '*.*')
-CURSORS_DST = $(patsubst $(srcdir)/cursors/%,$(builddir)/dist/cursors/%,$(CURSORS_SRC))
 
 define file_target
 $(1): $(2)
@@ -131,7 +128,7 @@ all-local: | node_modules \
 	$(builddir)/dist/loleaflet.html
 	@echo "build loleaflet completed"
 
-$(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) $(BOOTSTRAP_DST) $(CURSORS_DST)
+$(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) $(BOOTSTRAP_DST)
 	@NODE_PATH=$(abs_builddir)/node_modules jake -f $(srcdir)/Jakefile.js -C $(srcdir) $(abs_builddir)/dist/admin-bundle.js debug=$(ENABLE_DEBUG) minify=$(MINIFY) builddir=$(abs_builddir)
 
 if ENABLE_DEBUG
@@ -244,10 +241,6 @@ $(builddir)/dist/admin/%: $(srcdir)/admin/%
 	@cp $< $@
 
 $(builddir)/dist/bootstrap/%: $(srcdir)/bootstrap/%
-	@mkdir -p $(dir $@)
-	@cp $< $@
-
-$(builddir)/dist/cursors/%: $(srcdir)/cursors/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
