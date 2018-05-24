@@ -21,10 +21,10 @@ L.Toolbar = L.Class.extend({
 
 	addToolbar: function (map) {
 		var container = L.DomUtil.create('div', 'leaflet-draw-section'),
-			buttonIndex = 0,
-			buttonClassPrefix = this._toolbarClass || '',
-			modeHandlers = this.getModeHandlers(map),
-			i;
+		buttonIndex = 0,
+		buttonClassPrefix = this._toolbarClass || '',
+		modeHandlers = this.getModeHandlers(map),
+		i;
 
 		this._toolbarContainer = L.DomUtil.create('div', 'leaflet-draw-toolbar leaflet-bar');
 		this._map = map;
@@ -172,9 +172,9 @@ L.Toolbar = L.Class.extend({
 
 	_createActions: function (handler) {
 		var container = this._actionsContainer,
-			buttons = this.getActions(handler),
-			l = buttons.length,
-			li, di, dl, button;
+		buttons = this.getActions(handler),
+		l = buttons.length,
+		li, di, dl, button;
 
 		// Dispose the actions toolbar (todo: dispose only not used buttons)
 		for (di = 0, dl = this._actionButtons.length; di < dl; di++) {
@@ -211,8 +211,8 @@ L.Toolbar = L.Class.extend({
 
 	_showActionsToolbar: function () {
 		var buttonIndex = this._activeMode.buttonIndex,
-			lastButtonIndex = this._lastButtonIndex,
-			toolbarPosition = this._activeMode.button.offsetTop - 1;
+		lastButtonIndex = this._lastButtonIndex,
+		toolbarPosition = this._activeMode.button.offsetTop - 1;
 
 		// Recreate action buttons on every click
 		this._createActions(this._activeMode.handler);

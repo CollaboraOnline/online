@@ -2,9 +2,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 	// Ported from the OpenLayers implementation. See https://github.com/openlayers/openlayers/blob/master/lib/OpenLayers/Geometry/LinearRing.js#L270
 	geodesicArea: function (latLngs) {
 		var pointsCount = latLngs.length,
-			area = 0.0,
-			d2r = L.LatLng.DEG_TO_RAD,
-			p1, p2;
+		area = 0.0,
+		d2r = L.LatLng.DEG_TO_RAD,
+		p1, p2;
 
 		if (pointsCount > 2) {
 			for (var i = 0; i < pointsCount; i++) {

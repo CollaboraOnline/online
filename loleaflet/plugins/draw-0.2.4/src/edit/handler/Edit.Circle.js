@@ -9,7 +9,7 @@ L.Edit.Circle = L.Edit.SimpleShape.extend({
 
 	_createResizeMarker: function () {
 		var center = this._shape.getLatLng(),
-			resizemarkerPoint = this._getResizeMarkerPoint(center);
+		resizemarkerPoint = this._getResizeMarkerPoint(center);
 
 		this._resizeMarkers = [];
 		this._resizeMarkers.push(this._createMarker(resizemarkerPoint, this.options.resizeIcon));
@@ -18,7 +18,7 @@ L.Edit.Circle = L.Edit.SimpleShape.extend({
 	_getResizeMarkerPoint: function (latlng) {
 		// From L.shape.getBounds()
 		var delta = this._shape._radius * Math.cos(Math.PI / 4),
-			point = this._map.project(latlng);
+		point = this._map.project(latlng);
 		return this._map.unproject([point.x + delta, point.y - delta]);
 	},
 
@@ -34,7 +34,7 @@ L.Edit.Circle = L.Edit.SimpleShape.extend({
 
 	_resize: function (latlng) {
 		var moveLatLng = this._moveMarker.getLatLng(),
-			radius = moveLatLng.distanceTo(latlng);
+		radius = moveLatLng.distanceTo(latlng);
 
 		this._shape.setRadius(radius);
 	}

@@ -58,7 +58,7 @@ L.Edit.Poly = L.Handler.extend({
 		this._markers = [];
 
 		var latlngs = this._poly._latlngs,
-			i, j, len, marker;
+		i, j, len, marker;
 
 		// TODO refactor holes implementation in Polygon to support it here
 
@@ -137,7 +137,7 @@ L.Edit.Poly = L.Handler.extend({
 
 	_onMarkerClick: function (e) {
 		var minPoints = L.Polygon && (this._poly instanceof L.Polygon) ? 4 : 3,
-			marker = e.target;
+		marker = e.target;
 
 		// If removing this point would create an invalid polyline/polygon don't remove
 		if (this._poly._latlngs.length < minPoints) {

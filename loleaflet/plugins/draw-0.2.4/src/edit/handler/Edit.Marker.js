@@ -56,7 +56,7 @@ L.Edit.Marker = L.Handler.extend({
 
 	_offsetMarker: function (icon, offset) {
 		var iconMarginTop = parseInt(icon.style.marginTop, 10) - offset,
-			iconMarginLeft = parseInt(icon.style.marginLeft, 10) - offset;
+		iconMarginLeft = parseInt(icon.style.marginLeft, 10) - offset;
 
 		icon.style.marginTop = iconMarginTop + 'px';
 		icon.style.marginLeft = iconMarginLeft + 'px';

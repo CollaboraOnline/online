@@ -39,9 +39,9 @@ L.Control.Draw = L.Control.extend({
 
 	onAdd: function (map) {
 		var container = L.DomUtil.create('div', 'leaflet-draw'),
-			addedTopClass = false,
-			topClassName = 'leaflet-draw-toolbar-top',
-			toolbarContainer;
+		addedTopClass = false,
+		topClassName = 'leaflet-draw-toolbar-top',
+		toolbarContainer;
 
 		for (var toolbarId in this._toolbars) {
 			if (this._toolbars.hasOwnProperty(toolbarId)) {

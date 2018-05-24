@@ -125,8 +125,8 @@ L.EditToolbar = L.Toolbar.extend({
 
 	_checkDisabled: function () {
 		var featureGroup = this.options.featureGroup,
-			hasLayers = featureGroup.getLayers().length !== 0,
-			button;
+		hasLayers = featureGroup.getLayers().length !== 0,
+		button;
 
 		if (this.options.edit) {
 			button = this._modes[L.EditToolbar.Edit.TYPE].button;

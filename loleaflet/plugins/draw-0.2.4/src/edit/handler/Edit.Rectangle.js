@@ -3,7 +3,7 @@ L.Edit = L.Edit || {};
 L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 	_createMoveMarker: function () {
 		var bounds = this._shape.getBounds(),
-			center = bounds.getCenter();
+		center = bounds.getCenter();
 
 		this._moveMarker = this._createMarker(center, this.options.moveIcon);
 		this._moveMarker.setOpacity(0);
@@ -26,9 +26,9 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 
 		// Save a reference to the opposite point
 		var corners = this._getCorners(),
-			marker = e.target,
-			currentCornerIndex  = marker._cornerIndex,
-			oppositeCornerIndex = (currentCornerIndex + 4) % 8;
+		marker = e.target,
+		currentCornerIndex  = marker._cornerIndex,
+		oppositeCornerIndex = (currentCornerIndex + 4) % 8;
 
 		this._oppositeCorner = corners[ oppositeCornerIndex % 2 ?  (oppositeCornerIndex + 1) % 8 : oppositeCornerIndex ];
 		this._currentCorner  = corners[ currentCornerIndex  % 2 ?  (currentCornerIndex  + 1) % 8 : currentCornerIndex ];
@@ -39,7 +39,7 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 
 	_onMarkerDragEnd: function (e) {
 		var marker = e.target,
-			bounds, center;
+		bounds, center;
 
 		// Reset move marker position to the center
 		if (marker === this._moveMarker) {
@@ -56,9 +56,9 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 
 	_move: function (newCenter) {
 		var latlngs = this._shape.getLatLngs(),
-			bounds = this._shape.getBounds(),
-			center = bounds.getCenter(),
-			offset, newLatLngs = [];
+		bounds = this._shape.getBounds(),
+		center = bounds.getCenter(),
+		offset, newLatLngs = [];
 
 		// Offset the latlngs to the new center
 		for (var i = 0, l = latlngs.length; i < l; i++) {
@@ -75,7 +75,7 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 	_resize: function (latlng) {
 		var bounds;
 
-		if (this._currentIndex == 1 || this._currentIndex == 5 )
+		if (this._currentIndex == 1 || this._currentIndex == 5)
 			latlng.lng = this._currentCorner.lng;
 		else if (this._currentIndex == 3 || this._currentIndex == 7)
 			latlng.lat = this._currentCorner.lat;
@@ -90,15 +90,15 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 
 	_getCorners: function () {
 		var bounds = this._shape.getBounds(),
-			nw = bounds.getNorthWest(),
-			ne = bounds.getNorthEast(),
-			se = bounds.getSouthEast(),
-			sw = bounds.getSouthWest(),
-			center = bounds.getCenter(),
-			north  = L.latLng(nw.lat, center.lng),
-			south  = L.latLng(sw.lat, center.lng),
-			west   = L.latLng(center.lat, nw.lng),
-			east   = L.latLng(center.lat, ne.lng);
+		nw = bounds.getNorthWest(),
+		ne = bounds.getNorthEast(),
+		se = bounds.getSouthEast(),
+		sw = bounds.getSouthWest(),
+		center = bounds.getCenter(),
+		north  = L.latLng(nw.lat, center.lng),
+		south  = L.latLng(sw.lat, center.lng),
+		west   = L.latLng(center.lat, nw.lng),
+		east   = L.latLng(center.lat, ne.lng);
 
 		return [nw, north, ne, east, se, south, sw, west];
 	},

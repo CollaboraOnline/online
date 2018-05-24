@@ -42,8 +42,8 @@ L.Draw.Rectangle = L.Draw.SimpleShape.extend({
 
 	_getTooltipText: function () {
 		var tooltipText = L.Draw.SimpleShape.prototype._getTooltipText.call(this),
-			shape = this._shape,
-			latLngs, area, subtext;
+		shape = this._shape,
+		latLngs, area, subtext;
 
 		if (shape) {
 			latLngs = this._shape.getLatLngs();

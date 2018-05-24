@@ -43,9 +43,9 @@ L.Draw.Circle = L.Draw.SimpleShape.extend({
 
 	_onMouseMove: function (e) {
 		var latlng = e.latlng,
-			showRadius = this.options.showRadius,
-			useMetric = this.options.metric,
-			radius;
+		showRadius = this.options.showRadius,
+		useMetric = this.options.metric,
+		radius;
 
 		this._tooltip.updatePosition(latlng);
 		if (this._isDrawing) {

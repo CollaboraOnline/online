@@ -141,7 +141,7 @@ L.EditToolbar.Edit = L.Handler.extend({
 
 	_enableLayerEdit: function (e) {
 		var layer = e.layer || e.target || e,
-			pathOptions;
+		pathOptions;
 
 		// Back up this layer (if haven't before)
 		this._backupLayer(layer);

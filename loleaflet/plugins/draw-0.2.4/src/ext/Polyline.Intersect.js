@@ -3,8 +3,8 @@ L.Polyline.include({
 	// NOTE: does not support detecting intersection for degenerate cases.
 	intersects: function () {
 		var points = this._originalPoints,
-			len = points ? points.length : 0,
-			i, p, p1;
+		len = points ? points.length : 0,
+		i, p, p1;
 
 		if (this._tooFewPointsForIntersection()) {
 			return false;
@@ -39,10 +39,10 @@ L.Polyline.include({
 	// NOTE: does not support detecting intersection for degenerate cases.
 	newPointIntersects: function (newPoint, skipFirst) {
 		var points = this._originalPoints,
-			len = points ? points.length : 0,
-			lastPoint = points ? points[len - 1] : null,
-			// The previous previous line segment. Previous line segment doesn't need testing.
-			maxIndex = len - 2;
+		len = points ? points.length : 0,
+		lastPoint = points ? points[len - 1] : null,
+		// The previous previous line segment. Previous line segment doesn't need testing.
+		maxIndex = len - 2;
 
 		if (this._tooFewPointsForIntersection(1)) {
 			return false;
@@ -55,7 +55,7 @@ L.Polyline.include({
 	// Cannot have intersection when < 3 line segments (< 4 points)
 	_tooFewPointsForIntersection: function (extraPoints) {
 		var points = this._originalPoints,
-			len = points ? points.length : 0;
+		len = points ? points.length : 0;
 		// Increment length by extraPoints if present
 		len += extraPoints || 0;
 
@@ -66,7 +66,7 @@ L.Polyline.include({
 	// Don't need to check the predecessor as will never intersect.
 	_lineSegmentsIntersectsRange: function (p, p1, maxIndex, minIndex) {
 		var points = this._originalPoints,
-			p2, p3;
+		p2, p3;
 
 		minIndex = minIndex || 0;
 

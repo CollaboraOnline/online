@@ -119,7 +119,7 @@ L.Edit.SimpleShape = L.Handler.extend({
 
 	_onMarkerDrag: function (e) {
 		var marker = e.target,
-			latlng = marker.getLatLng();
+		latlng = marker.getLatLng();
 
 		if (marker === this._moveMarker) {
 			this._move(latlng);

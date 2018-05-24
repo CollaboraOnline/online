@@ -121,8 +121,8 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 		}
 
 		var lastMarker = this._markers.pop(),
-			poly = this._poly,
-			latlng = this._poly.spliceLatLngs(poly.getLatLngs().length - 1, 1)[0];
+		poly = this._poly,
+		latlng = this._poly.spliceLatLngs(poly.getLatLngs().length - 1, 1)[0];
 
 		this._markerGroup.removeLayer(lastMarker);
 
@@ -182,7 +182,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 
 	_onMouseMove: function (e) {
 		var newPos = e.layerPoint,
-			latlng = e.latlng;
+		latlng = e.latlng;
 
 		// Save latlng
 		// should this be moved to _updateGuide() ?
@@ -280,13 +280,13 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 
 	_drawGuide: function (pointA, pointB) {
 		var length = Math.floor(Math.sqrt(Math.pow((pointB.x - pointA.x), 2) + Math.pow((pointB.y - pointA.y), 2))),
-			guidelineDistance = this.options.guidelineDistance,
-			maxGuideLineLength = this.options.maxGuideLineLength,
-			// Only draw a guideline with a max length
-			i = length > maxGuideLineLength ? length - maxGuideLineLength : guidelineDistance,
-			fraction,
-			dashPoint,
-			dash;
+		guidelineDistance = this.options.guidelineDistance,
+		maxGuideLineLength = this.options.maxGuideLineLength,
+		// Only draw a guideline with a max length
+		i = length > maxGuideLineLength ? length - maxGuideLineLength : guidelineDistance,
+		fraction,
+		dashPoint,
+		dash;
 
 		//create the guides container if we haven't yet
 		if (!this._guidesContainer) {
@@ -332,7 +332,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 
 	_getTooltipText: function () {
 		var showLength = this.options.showLength,
-			labelText, distanceStr;
+		labelText, distanceStr;
 
 		if (this._markers.length === 0) {
 			labelText = {
@@ -358,7 +358,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 
 	_updateRunningMeasure: function (latlng, added) {
 		var markersLength = this._markers.length,
-			previousMarkerIndex, distance;
+		previousMarkerIndex, distance;
 
 		if (this._markers.length === 1) {
 			this._measurementRunningTotal = 0;
@@ -372,8 +372,8 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 
 	_getMeasurementString: function () {
 		var currentLatLng = this._currentLatLng,
-			previousLatLng = this._markers[this._markers.length - 1].getLatLng(),
-			distance;
+		previousLatLng = this._markers[this._markers.length - 1].getLatLng(),
+		distance;
 
 		// calculate the distance from the last fixed point to the mouse position
 		distance = this._measurementRunningTotal + currentLatLng.distanceTo(previousLatLng);
