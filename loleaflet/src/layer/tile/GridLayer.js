@@ -23,7 +23,7 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	initialize: function (options) {
-		options = L.setOptions(this, options);
+		L.setOptions(this, options);
 	},
 
 	onAdd: function () {
