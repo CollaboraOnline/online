@@ -564,7 +564,7 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
 
 constexpr char BRANDING[] = "branding";
 #if ENABLE_SUPPORT_KEY
-constexpr char BRANDING_SUPPORTED[] = "branding-supported";
+constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
@@ -627,10 +627,10 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 #if ENABLE_SUPPORT_KEY
     const std::string keyString = config.getString("support_key", "");
     SupportKey key(keyString);
-    if (key.verify() && key.validDaysRemaining() > 0)
+    if (!key.verify() || key.validDaysRemaining() <= 0)
     {
-        brandCSS = Poco::format(linkCSS, std::string(BRANDING_SUPPORTED));
-        brandJS = Poco::format(scriptJS, std::string(BRANDING_SUPPORTED));
+        brandCSS = Poco::format(linkCSS, std::string(BRANDING_UNSUPPORTED));
+        brandJS = Poco::format(scriptJS, std::string(BRANDING_UNSUPPORTED));
     }
 #elif ENABLE_DEBUG
     brandCSS = "";
@@ -807,9 +807,9 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
     const std::string keyString = config.getString("support_key", "");
     SupportKey key(keyString);
 
-    if (key.verify() && key.validDaysRemaining() > 0)
+    if (!key.verify() || key.validDaysRemaining() <= 0)
     {
-        brandJS = Poco::format(scriptJS, std::string(BRANDING_SUPPORTED));
+        brandJS = Poco::format(scriptJS, std::string(BRANDING_UNSUPPORTED));
         brandFooter = Poco::format(footerPage, key.data(), Poco::DateTimeFormatter::format(key.expiry(), Poco::DateTimeFormat::RFC822_FORMAT));
     }
 #elif ENABLE_DEBUG
