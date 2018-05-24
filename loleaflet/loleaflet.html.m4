@@ -102,10 +102,10 @@ ifelse(DEBUG,[true],foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" h
 
     <script>
       window.host = '%HOST%';
-      window.access_token = '%ACCESS_TOKEN%';
-      window.access_token_ttl = '%ACCESS_TOKEN_TTL%';
-      window.access_header = '%ACCESS_HEADER%';
-      window.loleaflet_logging = '%LOLEAFLET_LOGGING%';
+      window.accessToken = '%ACCESS_TOKEN%';
+      window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
+      window.accessHeader = '%ACCESS_HEADER%';
+      window.loleafletLogging = '%LOLEAFLET_LOGGING%';
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
     </script>

@@ -3,6 +3,7 @@
  */
 
 /* global $ closebutton w2ui w2utils vex _ _UNO */
+/*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function(global) {
 
 var map;
