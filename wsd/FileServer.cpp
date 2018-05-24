@@ -46,9 +46,6 @@
 #include "Log.hpp"
 #include "Protocol.hpp"
 
-#define BRAND_SUPPORTED "branding"
-#define BRAND_UNSUPPORTED "branding-CODE"
-
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPBasicCredentials;
 using Poco::Net::HTTPRequest;
@@ -550,10 +547,13 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
     return path;
 }
 
+constexpr char BRANDING[] = "branding";
+#if ENABLE_SUPPORT_KEY
+constexpr char BRANDING_SUPPORTED[] = "branding-supported";
+#endif
+
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
 {
-    static const std::string linkCSS = "<link rel=\"stylesheet\" href=\"/loleaflet/" LOOLWSD_VERSION_HASH "/%s.css\">";
-    static const std::string scriptJS = "<script src=\"/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>";
     const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
     const auto params = Poco::URI(request.getURI()).getQueryParameters();
 
@@ -602,8 +602,11 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
 
-    std::string brandCSS(Poco::format(linkCSS, std::string(BRAND_UNSUPPORTED)));
-    std::string brandJS(Poco::format(scriptJS, std::string(BRAND_UNSUPPORTED)));
+    static const std::string linkCSS("<link rel=\"stylesheet\" href=\"/loleaflet/" LOOLWSD_VERSION_HASH "/%s.css\">");
+    static const std::string scriptJS("<script src=\"/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
+
+    std::string brandCSS(Poco::format(linkCSS, std::string(BRANDING)));
+    std::string brandJS(Poco::format(scriptJS, std::string(BRANDING)));
 
     const auto& config = Application::instance().config();
 #if ENABLE_SUPPORT_KEY
@@ -611,8 +614,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     SupportKey key(keyString);
     if (key.verify() && key.validDaysRemaining() > 0)
     {
-        brandCSS = Poco::format(linkCSS, std::string(BRAND_SUPPORTED));
-        brandJS = Poco::format(scriptJS, std::string(BRAND_SUPPORTED));
+        brandCSS = Poco::format(linkCSS, std::string(BRANDING_SUPPORTED));
+        brandJS = Poco::format(scriptJS, std::string(BRANDING_SUPPORTED));
     }
 #elif ENABLE_DEBUG
     brandCSS = "";
@@ -768,16 +771,20 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,const std::shared_ptr<StreamSocket>& socket)
 {
     Poco::Net::HTTPResponse response;
-    static const std::string scriptJS("<script src=\"/loleaflet/dist/%s.js\"></script>");
-    static const std::string footerPage("<div class=\"footer navbar-fixed-bottom text-info text-center\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</div>");
+
+    if (!LOOLWSD::AdminEnabled)
+        throw Poco::FileAccessDeniedException("Admin console disabled");
 
     if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
+    static const std::string scriptJS("<script src=\"/loleaflet/dist/%s.js\"></script>");
+    static const std::string footerPage("<div class=\"footer navbar-fixed-bottom text-info text-center\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</div>");
+
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string adminFile = *getUncompressedFile(relPath);
-    std::string brandJS(Poco::format(scriptJS, std::string(BRAND_UNSUPPORTED)));
+    std::string brandJS(Poco::format(scriptJS, std::string(BRANDING)));
     std::string brandFooter;
 
 #if ENABLE_SUPPORT_KEY
@@ -787,7 +794,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
 
     if (key.verify() && key.validDaysRemaining() > 0)
     {
-        brandJS = Poco::format(scriptJS, std::string(BRAND_SUPPORTED));
+        brandJS = Poco::format(scriptJS, std::string(BRANDING_SUPPORTED));
         brandFooter = Poco::format(footerPage, key.data(), Poco::DateTimeFormatter::format(key.expiry(), Poco::DateTimeFormat::RFC822_FORMAT));
     }
 #elif ENABLE_DEBUG
