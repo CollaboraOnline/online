@@ -1,12 +1,16 @@
+/* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader vex host */
+/* global idleTimeoutSecs outOfFocusTimeoutSecs setupToolbar*/
+/*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {
 
+var wopiParams;
 var wopiSrc = getParameterByName('WOPISrc');
 
-if (wopiSrc !== '' && access_token !== '') {
-	var wopiParams = { 'access_token': access_token, 'access_token_ttl': access_token_ttl };
+if (wopiSrc !== '' && accessToken !== '') {
+	wopiParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTTL };
 }
-else if (wopiSrc !== '' && access_header !== '') {
-	var wopiParams = { 'access_header': access_header };
+else if (wopiSrc !== '' && accessHeader !== '') {
+	wopiParams = { 'access_header': accessHeader };
 }
 
 var filePath = getParameterByName('file_path');
@@ -21,10 +25,10 @@ var alwaysActive = getParameterByName('alwaysactive');
 // Loleaflet Debug mode
 var debugMode = getParameterByName('debug');
 if (wopiSrc === '' && filePath === '') {
-    vex.dialog.alert(errorMessages.wrongwopisrc);
+	vex.dialog.alert(errorMessages.wrongwopisrc);
 }
 if (host === '') {
-    vex.dialog.alert(errorMessages.emptyhosturl);
+	vex.dialog.alert(errorMessages.emptyhosturl);
 }
 
 // loleaflet.js accesses these globals
