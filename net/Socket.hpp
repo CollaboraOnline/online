@@ -706,9 +706,9 @@ class StreamSocket : public Socket, public std::enable_shared_from_this<StreamSo
 public:
     /// Create a StreamSocket from native FD.
     StreamSocket(const int fd, bool /* isClient */,
-                 const std::shared_ptr<SocketHandlerInterface> socketHandler) :
+                 std::shared_ptr<SocketHandlerInterface> socketHandler) :
         Socket(fd),
-        _socketHandler(socketHandler),
+        _socketHandler(std::move(socketHandler)),
         _bytesSent(0),
         _bytesRecvd(0),
         _wsState(WSState::HTTP),
