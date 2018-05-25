@@ -405,6 +405,41 @@ var shapes = {
 		{img: 'calloutshapes_line-callout-1', uno: 'CalloutShapes.line-callout-1'},
 		{img: 'calloutshapes_line-callout-2', uno: 'CalloutShapes.line-callout-2'},
 		{img: 'calloutshapes_line-callout-3', uno: 'CalloutShapes.line-callout-3'}
+	],
+
+	'Flowchart': [
+		{img: 'flowchartshapes_flowchart-process', uno: 'FlowchartShapes.flowchart-process'},
+		{img: 'flowchartshapes_flowchart-alternate-process', uno: 'FlowchartShapes.flowchart-alternate-process'},
+		{img: 'flowchartshapes_flowchart-decision', uno: 'FlowchartShapes.flowchart-decision'},
+		{img: 'flowchartshapes_flowchart-data', uno: 'FlowchartShapes.flowchart-data'},
+		{img: 'flowchartshapes_flowchart-predefined-process', uno: 'FlowchartShapes.flowchart-predefined-process'},
+		{img: 'flowchartshapes_flowchart-internal-storage', uno: 'FlowchartShapes.flowchart-internal-storage'},
+
+		{img: 'flowchartshapes_flowchart-document', uno: 'FlowchartShapes.flowchart-document'},
+		{img: 'flowchartshapes_flowchart-multidocument', uno: 'FlowchartShapes.flowchart-multidocument'},
+		{img: 'flowchartshapes_flowchart-terminator', uno: 'FlowchartShapes.flowchart-terminator'},
+		{img: 'flowchartshapes_flowchart-preparation', uno: 'FlowchartShapes.flowchart-preparation'},
+		{img: 'flowchartshapes_flowchart-manual-input', uno: 'FlowchartShapes.flowchart-manual-input'},
+		{img: 'flowchartshapes_flowchart-manual-operation', uno: 'FlowchartShapes.flowchart-manual-operation'},
+
+		{img: 'flowchartshapes_flowchart-connector', uno: 'FlowchartShapes.flowchart-connector'},
+		{img: 'flowchartshapes_flowchart-off-page-connector', uno: 'FlowchartShapes.flowchart-off-page-connector'},
+		{img: 'flowchartshapes_flowchart-card', uno: 'FlowchartShapes.flowchart-card'},
+		{img: 'flowchartshapes_flowchart-punched-tape', uno: 'FlowchartShapes.flowchart-punched-tape'},
+		{img: 'flowchartshapes_flowchart-summing-junction', uno: 'FlowchartShapes.flowchart-summing-junction'},
+		{img: 'flowchartshapes_flowchart-or', uno: 'FlowchartShapes.flowchart-or'},
+
+		{img: 'flowchartshapes_flowchart-collate', uno: 'FlowchartShapes.flowchart-collate'},
+		{img: 'flowchartshapes_flowchart-sort', uno: 'FlowchartShapes.flowchart-sort'},
+		{img: 'flowchartshapes_flowchart-extract', uno: 'FlowchartShapes.flowchart-extract'},
+		{img: 'flowchartshapes_flowchart-merge', uno: 'FlowchartShapes.flowchart-merge'},
+		{img: 'flowchartshapes_flowchart-stored-data', uno: 'FlowchartShapes.flowchart-stored-data'},
+		{img: 'flowchartshapes_flowchart-delay', uno: 'FlowchartShapes.flowchart-delay'},
+
+		{img: 'flowchartshapes_flowchart-sequential-access', uno: 'FlowchartShapes.flowchart-sequential-access'},
+		{img: 'flowchartshapes_flowchart-magnetic-disk', uno: 'FlowchartShapes.flowchart-magnetic-disk'},
+		{img: 'flowchartshapes_flowchart-direct-access-storage', uno: 'FlowchartShapes.flowchart-direct-access-storage'},
+		{img: 'flowchartshapes_flowchart-display', uno: 'FlowchartShapes.flowchart-display'}
 	]
 };
 

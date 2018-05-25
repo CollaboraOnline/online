@@ -351,6 +351,39 @@ button.leaflet-control-search-next
 .w2ui-icon.calloutshapes_line-callout-2 { background: url('images/lc_calloutshapes.line-callout-2.svg') no-repeat center !important; }
 .w2ui-icon.calloutshapes_line-callout-3 { background: url('images/lc_calloutshapes.line-callout-3.svg') no-repeat center !important; }
 
+.w2ui-icon.flowchartshapes_flowchart-process { background: url('images/lc_flowchartshapes.flowchart-process.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-alternate-process { background: url('images/lc_flowchartshapes.flowchart-alternate-process.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-decision { background: url('images/lc_flowchartshapes.flowchart-decision.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-data { background: url('images/lc_flowchartshapes.flowchart-data.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-predefined-process { background: url('images/lc_flowchartshapes.flowchart-predefined-process.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-internal-storage { background: url('images/lc_flowchartshapes.flowchart-internal-storage.svg') no-repeat center !important; }
+
+.w2ui-icon.flowchartshapes_flowchart-document { background: url('images/lc_flowchartshapes.flowchart-document.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-multidocument { background: url('images/lc_flowchartshapes.flowchart-multidocument.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-terminator { background: url('images/lc_flowchartshapes.flowchart-terminator.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-preparation { background: url('images/lc_flowchartshapes.flowchart-preparation.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-manual-input { background: url('images/lc_flowchartshapes.flowchart-manual-input.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-manual-operation { background: url('images/lc_flowchartshapes.flowchart-manual-operation.svg') no-repeat center !important; }
+
+.w2ui-icon.flowchartshapes_flowchart-connector { background: url('images/lc_flowchartshapes.flowchart-connector.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-off-page-connector { background: url('images/lc_flowchartshapes.flowchart-off-page-connector.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-card { background: url('images/lc_flowchartshapes.flowchart-card.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-punched-tape { background: url('images/lc_flowchartshapes.flowchart-punched-tape.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-summing-junction { background: url('images/lc_flowchartshapes.flowchart-summing-junction.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-or { background: url('images/lc_flowchartshapes.flowchart-or.svg') no-repeat center !important; }
+
+.w2ui-icon.flowchartshapes_flowchart-collate { background: url('images/lc_flowchartshapes.flowchart-collate.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-sort { background: url('images/lc_flowchartshapes.flowchart-sort.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-extract { background: url('images/lc_flowchartshapes.flowchart-extract.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-merge { background: url('images/lc_flowchartshapes.flowchart-merge.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-stored-data { background: url('images/lc_flowchartshapes.flowchart-stored-data.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-delay { background: url('images/lc_flowchartshapes.flowchart-delay.svg') no-repeat center !important; }
+
+.w2ui-icon.flowchartshapes_flowchart-sequential-access { background: url('images/lc_flowchartshapes.flowchart-sequential-access.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-magnetic-disk { background: url('images/lc_flowchartshapes.flowchart-magnetic-disk.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-direct-access-storage { background: url('images/lc_flowchartshapes.flowchart-direct-access-storage.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-display { background: url('images/lc_flowchartshapes.flowchart-display.svg') no-repeat center !important; }
+
 .w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
 .w2ui-icon.alignblock{ background: url('images/lc_alignblock.svg') no-repeat center !important; }
 .w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
