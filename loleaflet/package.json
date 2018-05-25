@@ -9,7 +9,6 @@
     "browserify-css": "0.9.1",
     "d3": "3.5.17",
     "eslint": "3.0.0",
-    "evol-colorpicker": "3.2.6",
     "exorcist": "0.4.0",
     "jake": "~8.0.10",
     "jquery": "2.2.4",
