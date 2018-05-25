@@ -1169,16 +1169,6 @@
       "integrity": "sha1-nr23Y1rQmccNzEwqH1AEKI6L2SQ=",
       "dev": true
     },
-    "evol-colorpicker": {
-      "version": "3.2.6",
-      "resolved": "file:node_shrinkwrap/evol-colorpicker-3.2.6.tgz",
-      "integrity": "sha1-a4Nyx+jvjMVHiCNbl+n6JdZ1Kts=",
-      "dev": true,
-      "requires": {
-        "jquery": "2.2.4",
-        "jquery-ui": "1.10.5"
-      }
-    },
     "evp_bytestokey": {
       "version": "1.0.3",
       "resolved": "file:node_shrinkwrap/evp_bytestokey-1.0.3.tgz",
