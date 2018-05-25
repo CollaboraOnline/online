@@ -444,7 +444,7 @@ var shapes = {
 };
 
 function insertShapes() {
-	var width = 6;
+	var width = 10;
 	var $grid = $('.insertshape-grid');
 
 	if ($grid.children().size() > 0)
