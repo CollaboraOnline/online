@@ -1,40 +1,45 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:13+0000\n"
+"POT-Creation-Date: 2018-05-25 14:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: bg\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.3\n"
+"X-Generator: Translate Toolkit 2.2.5\n"
+"X-Pootle-Revision: 3277395\n"
 "X-Pootle-Path: /bg/libo_online/loleaflet-ui-bg.po\n"
-"X-Pootle-Revision: 2780504\n"
 
 #: admin.strings.js:5
 msgid "Admin console"
 msgstr "Администраторска конзола"
 
-#: admin.strings.js:7
+#: admin.strings.js:6
 msgid "Settings"
 msgstr "Настройки"
 
-#: admin.strings.js:8
+#: admin.strings.js:7
 msgid "Overview"
 msgstr "Обзор"
 
-#: admin.strings.js:9
+#: admin.strings.js:8
 msgid "(current)"
 msgstr "(текущ)"
 
-#: admin.strings.js:10
+#: admin.strings.js:9
 msgid "Analytics"
 msgstr "Анализ"
 
-#: evol.colorpicker.strings.js:6
+#: admin.strings.js:10 evol.colorpicker.strings.js:6
 msgid "History"
 msgstr "Хронология"
 
@@ -47,110 +52,116 @@ msgid "Users online"
 msgstr "Потребители онлайн"
 
 #: admin.strings.js:13
-#, fuzzy
 msgid "User Name"
 msgstr "Потребителско име"
 
-#: admin.strings.js:13
+#: admin.strings.js:14
 msgid "Documents opened"
 msgstr "Отворени документи"
 
 #: admin.strings.js:15
 msgid "Number of Documents"
-msgstr ""
+msgstr "Брой документи"
 
-#: admin.strings.js:14
+#: admin.strings.js:16
 msgid "Memory consumed"
 msgstr "Използвана памет"
 
 #: admin.strings.js:17
 msgid "Bytes sent"
-msgstr ""
+msgstr "Изпратени байтове"
 
 #: admin.strings.js:18
 msgid "Bytes received"
-msgstr ""
+msgstr "Получени байтове"
 
-#: admin.strings.js:15
+#: admin.strings.js:19
 msgid "PID"
 msgstr "Идентификатор на процеса"
 
-#: admin.strings.js:16
+#: admin.strings.js:20
 msgid "Document"
 msgstr "Документ"
 
-#: admin.strings.js:17
+#: admin.strings.js:21
 msgid "Number of views"
 msgstr "Брой разглеждания"
 
-#: admin.strings.js:18
+#: admin.strings.js:22
 msgid "Elapsed time"
 msgstr "Изминало време"
 
-#: admin.strings.js:19
+#: admin.strings.js:23
 msgid "Idle time"
 msgstr "Време на престой"
 
 #: admin.strings.js:24
 msgid "Modified"
-msgstr ""
+msgstr "Променен"
 
-#: admin.strings.js:20
+#: admin.strings.js:25
 msgid "Kill"
 msgstr "Прекратяване"
 
-#: admin.strings.js:21
+#: admin.strings.js:26
 msgid "Graphs"
 msgstr "Графики"
 
 #: admin.strings.js:27
 msgid "Memory Graph"
-msgstr ""
+msgstr "Графика на паметта"
 
 #: admin.strings.js:28
 msgid "CPU Graph"
-msgstr ""
+msgstr "Графика на ЦП"
 
 #: admin.strings.js:29
 msgid "Network Graph"
-msgstr ""
+msgstr "Графика на мрежата"
 
-#: admin.strings.js:22
-#: dist/toolbar/toolbar.js:473
-#: src/control/Control.Menubar.js:11
-#: src/control/Control.Menubar.js:175
-#: src/control/Control.Menubar.js:235
-#: src/layer/marker/Annotation.js:184
+#: admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "Записване"
 
-#: admin.strings.js:23
+#: admin.strings.js:31
 msgid "Cache size of memory statistics"
 msgstr "Размер на кеша за статистика на паметта"
 
-#: admin.strings.js:24
+#: admin.strings.js:32
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Интервал за статистика на паметта (мс)"
 
-#: admin.strings.js:25
+#: admin.strings.js:33
 msgid "Cache size of CPU statistics"
 msgstr "Размер на кеша за статистика на ЦП"
 
-#: admin.strings.js:26
+#: admin.strings.js:34
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Интервал за статистика на ЦП (мс)"
 
 #: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Максимална виртуална памет за процес на документ (МБ) – само намаляване"
 
 #: admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Максимална стекова памет за процес на документ (КБ) – само намаляване"
 
 #: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Максимален размер на файл за записване на диска (МБ) – само намаляване"
+
+#: admin.strings.js:38
+msgid "Documents:"
+msgstr "Документи:"
+
+#: admin.strings.js:39
+msgid "Expired:"
+msgstr "Изтекъл срок:"
+
+#: admin.strings.js:40
+msgid "Refresh"
+msgstr "Опресняване"
 
 #: evol.colorpicker.strings.js:2
 msgid "Theme Colors"
@@ -172,85 +183,7 @@ msgstr "Назад към палитрата"
 msgid "No history yet."
 msgstr "Хронологията още е празна."
 
-#: unocommands.js:1
-msgid "Copy Hyperlink"
-msgstr "Копиране на хипервръзка"
-
-#: unocommands.js:2
-msgid "Down One Level"
-msgstr "Едно ниво надолу"
-
-#: unocommands.js:3
-msgid "Up One Level"
-msgstr "Едно ниво нагоре"
-
-#: unocommands.js:4
-msgid "Edit Comment"
-msgstr "Редактиране на коментар"
-
-#: unocommands.js:5
-msgid "Insert Comment"
-msgstr "Вмъкване на коментар"
-
-#: unocommands.js:6
-msgid "Merge"
-msgstr "Сливане"
-
-#: unocommands.js:7
-msgid "Merge Cells..."
-msgstr "Сливане на клетки..."
-
-#: unocommands.js:8
-msgid "Bring Forward"
-msgstr "Преместване напред"
-
-#: unocommands.js:9
-msgid "Send Backward"
-msgstr "Преместване назад"
-
-#: unocommands.js:10
-msgid "Paste Special"
-msgstr "Специално поставяне"
-
-#: unocommands.js:11
-msgid "Unformatted Text"
-msgstr "Неформатиран текст"
-
-#: unocommands.js:12
-msgid "No Wrap"
-msgstr "Без обтичане"
-
-#: unocommands.js:13
-msgid "Wrap Before"
-msgstr "Обтичане преди обекта"
-
-#: unocommands.js:14
-msgid "Wrap After"
-msgstr "Обтичане след обекта"
-
-#: unocommands.js:15
-msgid "Enable Contour"
-msgstr "Контур"
-
-#: unocommands.js:16
-msgid "Update Index or Table of Contents"
-msgstr "Обновяване на указател или съдържание"
-
-#: unocommands.js:17
-msgid "Delete Index or Table of Contents"
-msgstr "Изтриване на указател или съдържание"
-
-#: unocommands.js:18
-#: src/layer/marker/Annotation.js:187
-#: src/layer/tile/TileLayer.js:188
-msgid "Reply"
-msgstr "Отговор"
-
-#: unocommands.js:19
-msgid "Refresh"
-msgstr "Опресняване"
-
-#: dist/errormessages.js:1
+#: src/errormessages.js:13
 msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
@@ -258,7 +191,7 @@ msgstr ""
 "Свършило е свободното място на сървъра – за да продължите, свържете се с "
 "администратора му."
 
-#: dist/errormessages.js:2
+#: src/errormessages.js:14
 msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
@@ -266,19 +199,23 @@ msgstr ""
 "URL на хоста е празен. Вероятно има грешка в конфигурацията на сървъра "
 "loolwsd, свържете се с администратора."
 
-#: dist/errormessages.js:3
+#: src/errormessages.js:15
 msgid ""
-"This development build is limited to %0 documents, and %1 connections - to "
-"avoid the impression that it is suitable for deployment in large "
-"enterprises. To find out more about deploying and scaling %2 check out: "
-"<br/><a href=\"%3\">%3</a>."
+"This is an unsupported version of {productname}. To avoid the impression "
+"that it is suitable for deployment in enterprises, this message appears when "
+"more than {docs} documents or {connections} connections are in use "
+"concurrently"
 msgstr ""
-"Тази работна компилация е ограничена до %0 документа и %1 връзки, за да се "
-"избегне впечатлението, че е подходяща за внедряване в големи организации. За "
-"повече информация относно внедряването и мащабирането на %2 вижте: <br/><a "
-"href=\"%3\">%3</a>."
+"Тази версия на {productname} не се поддържа. За да се предотврати "
+"впечатлението, че е подходяща за внедряване в предприятия, това съобщение се "
+"появява, когато едновременно се използват повече от {docs} документа или "
+"{connections} връзки."
 
-#: dist/errormessages.js:4
+#: src/errormessages.js:16
+msgid "More information and support"
+msgstr "Повече информация и поддръжка"
+
+#: src/errormessages.js:17
 msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
@@ -286,7 +223,7 @@ msgstr ""
 "Тази услуга е ограничена до %0 документа и %1 връзки от администратора. "
 "Ограничението е достигнато. Моля, опитайте отново по-късно."
 
-#: dist/errormessages.js:5
+#: src/errormessages.js:18
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
@@ -294,7 +231,7 @@ msgstr ""
 "Услугата е недостъпна. Опитайте по-късно и ако проблемът продължава, "
 "съобщете на администратора."
 
-#: dist/errormessages.js:6
+#: src/errormessages.js:19
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
@@ -302,15 +239,12 @@ msgstr ""
 "Неупълномощен WOPI хост. Опитайте по-късно и ако проблемът продължава, "
 "съобщете на администратора."
 
-#: dist/errormessages.js:7
-msgid ""
-"Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
-"file_path=/path/to/doc/"
+#: src/errormessages.js:20
+msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr ""
-"Неправилен WOPISrc (употреба: WOPISrc=валиден кодиран URI) или file_path "
-"(употреба: file_path=/път/към/документ)"
+"Погрешен или липсващ параметър WOPISrc, моля, свържете се с поддръжката."
 
-#: dist/errormessages.js:8
+#: src/errormessages.js:21
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
@@ -318,7 +252,7 @@ msgstr ""
 "Сесията ви ще изтече след %time. Моля, запишете промените и опреснете "
 "сесията (или уебстраницата), за да продължите."
 
-#: dist/errormessages.js:9
+#: src/errormessages.js:22
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
@@ -326,7 +260,7 @@ msgstr ""
 "Сесията ви изтече. По-нататъшните промени в документа може да не се запишат. "
 "Моля, опреснете сесията (или уебстраницата), за да продължите."
 
-#: dist/errormessages.js:10
+#: src/errormessages.js:23
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
@@ -334,14 +268,17 @@ msgstr ""
 "Зареждането на документа бе неуспешно. Уверете се, че файлът е от поддържан "
 "тип и не е повреден и опитайте отново."
 
-#: dist/errormessages.js:13
+#: src/errormessages.js:26
+#, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
+"Прочитането на документа от хранилището бе неуспешно. Моля, свържете се с "
+"администратора на сървъра за съхранение (%storageserver)."
 
-#: dist/errormessages.js:14
-#, fuzzy
+#: src/errormessages.js:27
+#, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
@@ -349,451 +286,276 @@ msgid ""
 msgstr ""
 "Записването бе неуспешно поради недостиг на място в сървъра за съхранение. "
 "Документът ще остане само за четене. Моля, свържете се с администратора на "
-"сървъра, за да продължите да редактирате."
+"сървъра (%storageserver), за да продължите да редактирате."
 
-#: dist/errormessages.js:15
+#: src/errormessages.js:28
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
+"Документът не може да бъде записан поради изтекъл или невалиден код за "
+"достъп."
 
-#: dist/errormessages.js:16
-#, fuzzy
+#: src/errormessages.js:29
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Документът не може да бъде записан за съхранение. Проверете правата си за "
-"достъп или се свържете с администратора на сървъра за съхранение."
+"Документът не може да бъде записан. Проверете правата си за достъп или се "
+"свържете с администратора на сървъра за съхранение."
 
-#: dist/toolbar/toolbar.js:105
+#: js/toolbar.js:60
 msgid "%n users"
 msgstr "%n потребители"
 
-#: dist/toolbar/toolbar.js:106
+#: js/toolbar.js:61
 msgid "1 user"
 msgstr "1 потребител"
 
-#: dist/toolbar/toolbar.js:107
+#: js/toolbar.js:62
 msgid "0 users"
 msgstr "0 потребители"
 
-#: dist/toolbar/toolbar.js:264
+#: js/toolbar.js:189
 msgid "Are you sure you want to delete this page?"
 msgstr "Наистина ли искате да изтриете тази страница?"
 
-#: dist/toolbar/toolbar.js:464
+#: js/toolbar.js:399
 msgid "Textwrap"
 msgstr "Обтичане с текст"
 
-#: dist/toolbar/toolbar.js:465
+#: js/toolbar.js:400
 msgid "No wrap"
 msgstr "Без обтичане"
 
-#: dist/toolbar/toolbar.js:466
+#: js/toolbar.js:401
 msgid "Page wrap"
 msgstr "Обтичане по страницата"
 
-#: dist/toolbar/toolbar.js:467
+#: js/toolbar.js:402
 msgid "Wrap anchor only"
 msgstr "Само котвата"
 
-#: dist/toolbar/toolbar.js:468
+#: js/toolbar.js:403
 msgid "Ideal wrap"
 msgstr "Оптимално обтичане"
 
-#: dist/toolbar/toolbar.js:469
+#: js/toolbar.js:404
 msgid "Left wrap"
 msgstr "Обтичане отляво"
 
-#: dist/toolbar/toolbar.js:470
+#: js/toolbar.js:405
 msgid "Right wrap"
 msgstr "Обтичане отдясно"
 
-#: dist/toolbar/toolbar.js:471
+#: js/toolbar.js:406
 msgid "Wrap through"
 msgstr "Изливане през обекта"
 
-#: dist/toolbar/toolbar.js:475
-#: src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:185
-#: src/control/Control.Menubar.js:245
-msgid "Undo"
-msgstr "Отмяна"
-
-#: dist/toolbar/toolbar.js:476
-#: src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:186
-#: src/control/Control.Menubar.js:246
-msgid "Redo"
-msgstr "Възстановяване"
-
-#: dist/toolbar/toolbar.js:477
+#: js/toolbar.js:412
 msgid "Document repair"
 msgstr "Поправяне на документ"
 
-#: dist/toolbar/toolbar.js:483
-#: src/control/Control.Menubar.js:71
-msgid "Bold"
-msgstr "Получер"
-
-#: dist/toolbar/toolbar.js:484
-#: src/control/Control.Menubar.js:72
-msgid "Italic"
-msgstr "Курсив"
-
-#: dist/toolbar/toolbar.js:485
-#: src/control/Control.Menubar.js:73
-msgid "Underline"
-msgstr "Подчертан"
-
-#: dist/toolbar/toolbar.js:486
-msgid "Strikeout"
-msgstr "Зачертан"
-
-#: dist/toolbar/toolbar.js:488
-msgid "Insert Footnote"
-msgstr "Вмъкване на бележка под линия"
-
-#: dist/toolbar/toolbar.js:491
-msgid "Font color"
-msgstr "Цвят на шрифта"
-
-#: dist/toolbar/toolbar.js:493
-msgid "Highlighting"
-msgstr "Осветяване"
-
-#: dist/toolbar/toolbar.js:495
-msgid "Align left"
-msgstr "Подравняване отляво"
-
-#: dist/toolbar/toolbar.js:496
-msgid "Center horizontally"
-msgstr "Хоризонтално центриране"
-
-#: dist/toolbar/toolbar.js:497
-msgid "Align right"
-msgstr "Подравняване отдясно"
-
-#: dist/toolbar/toolbar.js:498
-#: src/control/Control.Menubar.js:112
-msgid "Justified"
-msgstr "Двустранно подравняване"
-
-#: dist/toolbar/toolbar.js:500
-msgid "Wrap Text"
-msgstr "Пренасяне на текст"
-
-#: dist/toolbar/toolbar.js:501
-msgid "Merge and Center Cells"
-msgstr "Сливане и центриране на клетките"
-
-#: dist/toolbar/toolbar.js:503
-msgid "Format as Currency"
-msgstr "Форматиране като валута"
-
-#: dist/toolbar/toolbar.js:504
-msgid "Format as Percent"
-msgstr "Форматиране като процент"
-
-#: dist/toolbar/toolbar.js:505
-msgid "Format as Number"
-msgstr "Форматиране като число"
-
-#: dist/toolbar/toolbar.js:506
-msgid "Format as Date"
-msgstr "Форматиране като дата"
-
-#: dist/toolbar/toolbar.js:507
-msgid "Add Decimal Place"
-msgstr "Добавяне на разреди"
-
-#: dist/toolbar/toolbar.js:508
-msgid "Delete Decimal Place"
-msgstr "Премахване на разреди"
-
-#: dist/toolbar/toolbar.js:510
-msgid "Sort Ascending"
-msgstr "Възходящо сортиране"
-
-#: dist/toolbar/toolbar.js:511
-msgid "Sort Descending"
-msgstr "Низходящо сортиране"
-
-#: dist/toolbar/toolbar.js:513
-#: src/control/Control.Menubar.js:118
-msgid "Bullets on/off"
-msgstr "Водачи - вкл./изкл."
-
-#: dist/toolbar/toolbar.js:514
-#: src/control/Control.Menubar.js:119
-msgid "Numbering on/off"
-msgstr "Номера - вкл./изкл."
-
-#: dist/toolbar/toolbar.js:516
-#: src/control/Control.Menubar.js:106
-msgid "Increase indent"
-msgstr "Увеличаване на отстъпа"
-
-#: dist/toolbar/toolbar.js:517
-#: src/control/Control.Menubar.js:107
-msgid "Decrease indent"
-msgstr "Намаляване на отстъпа"
-
-#: dist/toolbar/toolbar.js:520
+#: js/toolbar.js:452
 msgid "Insert table"
 msgstr "Вмъкване на таблица"
 
-#: dist/toolbar/toolbar.js:521
-msgid "Insert comment"
-msgstr "Вмъкване на коментар"
+#: js/toolbar.js:454
+#, fuzzy
+msgid "Insert shapes"
+msgstr "Вмъкване на лист"
 
-#: dist/toolbar/toolbar.js:522
-msgid "Insert graphic"
-msgstr "Вмъкване на графика"
-
-#: dist/toolbar/toolbar.js:523
-msgid "Special Character"
-msgstr "Специален знак"
-
-#: dist/toolbar/toolbar.js:525
-msgid "More"
-msgstr "Още"
-
-#: dist/toolbar/toolbar.js:606
-msgid "Layout"
-msgstr "Оформление"
-
-#: dist/toolbar/toolbar.js:631
-#: dist/toolbar/toolbar.js:976
+#: js/toolbar.js:498 js/toolbar.js:961
 msgid "Sum"
 msgstr "Сума"
 
-#: dist/toolbar/toolbar.js:632
+#: js/toolbar.js:499
 msgid "Function"
 msgstr "Функция"
 
-#: dist/toolbar/toolbar.js:633
-#: src/control/Control.CharacterMap.js:428
-#: src/layer/marker/Annotation.js:130
+#: js/toolbar.js:500 src/layer/marker/Annotation.js:163
 msgid "Cancel"
 msgstr "Отказ"
 
-#: dist/toolbar/toolbar.js:634
+#: js/toolbar.js:501
 msgid "Accept"
 msgstr "Приемане"
 
-#: dist/toolbar/toolbar.js:649
+#: js/toolbar.js:517
 msgid "First sheet"
 msgstr "Първи лист"
 
-#: dist/toolbar/toolbar.js:650
+#: js/toolbar.js:518
 msgid "Previous sheet"
 msgstr "Предишен лист"
 
-#: dist/toolbar/toolbar.js:651
+#: js/toolbar.js:519
 msgid "Next sheet"
 msgstr "Следващ лист"
 
-#: dist/toolbar/toolbar.js:652
+#: js/toolbar.js:520
 msgid "Last sheet"
 msgstr "Последен лист"
 
-#: dist/toolbar/toolbar.js:662
-#: src/control/Control.Menubar.js:224
+#: js/toolbar.js:521
+msgid "Insert sheet"
+msgstr "Вмъкване на лист"
+
+#: js/toolbar.js:531 src/control/Control.Menubar.js:292
 msgid "Fullscreen presentation"
 msgstr "Презентация на цял екран"
 
-#: dist/toolbar/toolbar.js:664
-msgid "Insert slide"
-msgstr "Вмъкване на кадър"
-
-#: dist/toolbar/toolbar.js:665
-#: src/control/Control.Menubar.js:221
-msgid "Duplicate slide"
-msgstr "Дублиране на кадър"
-
-#: dist/toolbar/toolbar.js:666
-#: src/control/Control.Menubar.js:222
-msgid "Delete slide"
-msgstr "Изтриване на кадър"
-
-#: dist/toolbar/toolbar.js:679
+#: js/toolbar.js:548
 msgid "Search:"
 msgstr "Търсене:"
 
-#: dist/toolbar/toolbar.js:684
-msgid "Search backwards"
-msgstr "Търсене назад"
-
-#: dist/toolbar/toolbar.js:685
-msgid "Search forward"
-msgstr "Търсене напред"
-
-#: dist/toolbar/toolbar.js:686
+#: js/toolbar.js:555
 msgid "Cancel the search"
 msgstr "Отказ от търсенето"
 
-#: dist/toolbar/toolbar.js:680
-msgid "Text Language"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:691
+#: js/toolbar.js:560
 msgid "No users"
 msgstr "Няма потребители"
 
-#: dist/toolbar/toolbar.js:693
-msgid "Previous page"
-msgstr "Предишна страница"
+#: js/toolbar.js:564
+msgid "Always follow the editor"
+msgstr "Постоянно следване на редактора"
 
-#: dist/toolbar/toolbar.js:694
-msgid "Next page"
-msgstr "Следваща страница"
+#: js/toolbar.js:567
+msgid "Current"
+msgstr "Текущ"
 
-#: dist/toolbar/toolbar.js:696
-#: src/control/Control.Menubar.js:44
-#: src/control/Control.Menubar.js:199
+#: js/toolbar.js:574 src/control/Control.Menubar.js:60
+#: src/control/Control.Menubar.js:257
 msgid "Reset zoom"
 msgstr "Нулиране на мащаба"
 
-#: dist/toolbar/toolbar.js:697
-#: src/control/Control.Menubar.js:43
-#: src/control/Control.Menubar.js:198
-msgid "Zoom out"
-msgstr "Намаляване"
-
-#: dist/toolbar/toolbar.js:699
-#: src/control/Control.Menubar.js:42
-#: src/control/Control.Menubar.js:197
-msgid "Zoom in"
-msgstr "Увеличаване"
-
-#: dist/toolbar/toolbar.js:715
+#: js/toolbar.js:606
 msgid "%user has joined"
 msgstr "%user се присъедини"
 
-#: dist/toolbar/toolbar.js:716
-msgid "%user has left"
-msgstr "%user се изключи"
-
-#: dist/toolbar/toolbar.js:825
-#: dist/toolbar/toolbar.js:1351
+#: js/toolbar.js:772 js/toolbar.js:1319
 msgid "Size"
 msgstr "Размер"
 
-#: dist/toolbar/toolbar.js:957
+#: js/toolbar.js:939
 msgid "Number of Sheets"
 msgstr "Брой листове"
 
-#: dist/toolbar/toolbar.js:960
+#: js/toolbar.js:942
 msgid "Selected range of cells"
 msgstr "Избран диапазон от клетки"
 
-#: dist/toolbar/toolbar.js:963
-#: dist/toolbar/toolbar.js:998
+#: js/toolbar.js:945 js/toolbar.js:982
 msgid "Entering text mode"
 msgstr "Текстов режим"
 
-#: dist/toolbar/toolbar.js:966
-#: dist/toolbar/toolbar.js:1001
+#: js/toolbar.js:948 js/toolbar.js:988 js/toolbar.js:1010
+msgid "Text Language"
+msgstr "Език на текста"
+
+#: js/toolbar.js:951 js/toolbar.js:985
 msgid "Selection Mode"
 msgstr "Режим на избиране"
 
-#: dist/toolbar/toolbar.js:969
+#: js/toolbar.js:954
 msgid "Choice of functions"
 msgstr "Избор на функции"
 
-#: dist/toolbar/toolbar.js:971
+#: js/toolbar.js:956
 msgid "Average"
 msgstr "Средно"
 
-#: dist/toolbar/toolbar.js:972
+#: js/toolbar.js:957
 msgid "CountA"
 msgstr "БройA"
 
-#: dist/toolbar/toolbar.js:973
+#: js/toolbar.js:958
 msgid "Count"
 msgstr "Брой"
 
-#: dist/toolbar/toolbar.js:974
+#: js/toolbar.js:959
 msgid "Maximum"
 msgstr "Максимум"
 
-#: dist/toolbar/toolbar.js:975
+#: js/toolbar.js:960
 msgid "Minimum"
 msgstr "Минимум"
 
-#: dist/toolbar/toolbar.js:977
+#: js/toolbar.js:962
 msgid "Selection count"
 msgstr "Брой избрани клетки"
 
-#: dist/toolbar/toolbar.js:978
-#: src/control/Control.CharacterMap.js:11
+#: js/toolbar.js:963
 msgid "None"
 msgstr "Няма"
 
-#: dist/toolbar/toolbar.js:992
+#: js/toolbar.js:976
 msgid "Number of Pages"
 msgstr "Брой страници"
 
-#: dist/toolbar/toolbar.js:995
+#: js/toolbar.js:979
 msgid "Word Counter"
 msgstr "Брой думи"
 
-#: dist/toolbar/toolbar.js:1018
+#: js/toolbar.js:1007
 msgid "Number of Slides"
 msgstr "Брой кадри"
 
-#: dist/toolbar/toolbar.js:1161
+#: js/toolbar.js:1153
 msgid "Document saved"
 msgstr "Документът е записан"
 
-#: dist/toolbar/toolbar.js:1324
+#: js/toolbar.js:1289
 msgid "Style"
 msgstr "Стил"
 
-#: dist/toolbar/toolbar.js:1343
+#: js/toolbar.js:1311
 msgid "Font"
 msgstr "Шрифт"
 
-#: dist/toolbar/toolbar.js:1379
+#: js/toolbar.js:1344
 msgid "Previous slide"
 msgstr "Предишен кадър"
 
-#: dist/toolbar/toolbar.js:1380
+#: js/toolbar.js:1345
 msgid "Next slide"
 msgstr "Следващ кадър"
 
-#: dist/toolbar/toolbar.js:1433
+#: js/toolbar.js:1407
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Конфликт при „Отмяна“/„Възстановяване“ от няколко потребители. Разрешете го "
 "чрез командата за поправяне на документ."
 
-#: dist/toolbar/toolbar.js:1598
-#: src/control/Control.DocumentRepair.js:87
+#: js/toolbar.js:1617 src/control/Control.DocumentRepair.js:93
 msgid "You"
 msgstr "Вие"
 
-#: dist/toolbar/toolbar.js:1604
+#: js/toolbar.js:1623
 msgid "Readonly"
 msgstr "Само за четене"
 
-#: src/admin/AdminSocketBase.js:46
+#: src/admin/AdminSocketAnalytics.js:218
+msgid "Received"
+msgstr "Получени"
+
+#: src/admin/AdminSocketAnalytics.js:222
+msgid "Sent"
+msgstr "Изпратени"
+
+#: src/admin/AdminSocketBase.js:45
 msgid "Connection error"
 msgstr "Грешка при свързване"
 
-#: src/admin/AdminSocketOverview.js:66
+#: src/admin/AdminSocketOverview.js:100
 msgid "Are you sure you want to terminate this session?"
 msgstr "Наистина ли искате да приключите сесията?"
 
-#: src/admin/AdminSocketOverview.js:152
-#: src/admin/AdminSocketOverview.js:311
-#, fuzzy
+#: src/admin/AdminSocketOverview.js:181 src/admin/AdminSocketOverview.js:283
 msgid "Documents"
-msgstr "Документ"
+msgstr "Документи"
 
-#: src/admin/AdminSocketSettings.js:34
-#, fuzzy
+#: src/admin/AdminSocketSettings.js:33
 msgid "Are you sure you want to shut down the server?"
 msgstr "Наистина ли искате да спрете сървъра?"
 
@@ -813,13 +575,11 @@ msgstr "ГБ"
 msgid "TB"
 msgstr "ТБ"
 
-#: src/admin/Util.js:42
-#: src/admin/Util.js:44
+#: src/admin/Util.js:42 src/admin/Util.js:44
 msgid " hrs"
 msgstr " ч"
 
-#: src/admin/Util.js:48
-#: src/admin/Util.js:50
+#: src/admin/Util.js:48 src/admin/Util.js:50
 msgid " mins"
 msgstr " мин"
 
@@ -827,1120 +587,27 @@ msgstr " мин"
 msgid " s"
 msgstr " с"
 
-#: src/control/Control.CharacterMap.js:12
-msgid "Basic Latin"
-msgstr "Основна латиница"
-
-#: src/control/Control.CharacterMap.js:13
-msgid "Latin-1"
-msgstr "Латиница-1"
-
-#: src/control/Control.CharacterMap.js:14
-msgid "Latin Extended-A"
-msgstr "Разширена латиница-A"
-
-#: src/control/Control.CharacterMap.js:15
-msgid "Latin Extended-B"
-msgstr "Разширена латиница-B"
-
-#: src/control/Control.CharacterMap.js:16
-msgid "IPA Extensions"
-msgstr "Разширения на IPA"
-
-#: src/control/Control.CharacterMap.js:17
-msgid "Spacing Modifier Letters"
-msgstr "Знаци, променящи разредката"
-
-#: src/control/Control.CharacterMap.js:18
-msgid "Combining Diacritical Marks"
-msgstr "Комбиниращи диакритични знаци"
-
-#: src/control/Control.CharacterMap.js:19
-msgid "Basic Greek"
-msgstr "Основен гръцки"
-
-#: src/control/Control.CharacterMap.js:20
-msgid "Cyrillic"
-msgstr "Кирилица"
-
-#: src/control/Control.CharacterMap.js:21
-msgid "Armenian"
-msgstr "Арменски"
-
-#: src/control/Control.CharacterMap.js:22
-msgid "Basic Hebrew"
-msgstr "Основен иврит"
-
-#: src/control/Control.CharacterMap.js:23
-msgid "Basic Arabic"
-msgstr "Основен арабски"
-
-#: src/control/Control.CharacterMap.js:24
-msgid "Syriac"
-msgstr "Сирийска азбука"
-
-#: src/control/Control.CharacterMap.js:25
-msgid "Thaana"
-msgstr "Таана"
-
-#: src/control/Control.CharacterMap.js:26
-msgid "Devanagari"
-msgstr "Деванагари"
-
-#: src/control/Control.CharacterMap.js:27
-msgid "Bengali"
-msgstr "Бенгалски"
-
-#: src/control/Control.CharacterMap.js:28
-msgid "Gurmukhi"
-msgstr "Гурмукхи"
-
-#: src/control/Control.CharacterMap.js:29
-msgid "Gujarati"
-msgstr "Гуджарати"
-
-#: src/control/Control.CharacterMap.js:30
-msgid "Odia"
-msgstr "Одия"
-
-#: src/control/Control.CharacterMap.js:31
-msgid "Tamil"
-msgstr "Тамилски"
-
-#: src/control/Control.CharacterMap.js:32
-msgid "Telugu"
-msgstr "Телугу"
-
-#: src/control/Control.CharacterMap.js:33
-msgid "Kannada"
-msgstr "Каннада"
-
-#: src/control/Control.CharacterMap.js:34
-msgid "Malayalam"
-msgstr "Малаялам"
-
-#: src/control/Control.CharacterMap.js:35
-msgid "Sinhala"
-msgstr "Синхалски"
-
-#: src/control/Control.CharacterMap.js:36
-msgid "Thai"
-msgstr "Тайски"
-
-#: src/control/Control.CharacterMap.js:37
-msgid "Lao"
-msgstr "Лаоски"
-
-#: src/control/Control.CharacterMap.js:38
-msgid "Tibetan"
-msgstr "Тибетски"
-
-#: src/control/Control.CharacterMap.js:39
-msgid "Myanmar"
-msgstr "Бирмански"
-
-#: src/control/Control.CharacterMap.js:40
-msgid "Basic Georgian"
-msgstr "Основен грузински"
-
-#: src/control/Control.CharacterMap.js:41
-msgid "Hangul Jamo"
-msgstr "Хангул джамо"
-
-#: src/control/Control.CharacterMap.js:43
-msgid "Ethiopic"
-msgstr "Етиопски"
-
-#: src/control/Control.CharacterMap.js:44
-msgid "Cherokee"
-msgstr "Чероки"
-
-#: src/control/Control.CharacterMap.js:46
-msgid "Canadian Aboriginal Syllables"
-msgstr "Сричков аборигенски канадски"
-
-#: src/control/Control.CharacterMap.js:47
-msgid "Ogham"
-msgstr "Огхам"
-
-#: src/control/Control.CharacterMap.js:48
-msgid "Runic"
-msgstr "Рунически"
-
-#: src/control/Control.CharacterMap.js:49
-msgid "Khmer"
-msgstr "Кхмерски"
-
-#: src/control/Control.CharacterMap.js:50
-msgid "Mongolian"
-msgstr "Монголски"
-
-#: src/control/Control.CharacterMap.js:51
-msgid "Latin Extended Additional"
-msgstr "Допълнителна разширена латиница"
-
-#: src/control/Control.CharacterMap.js:52
-msgid "Greek Extended"
-msgstr "Разширен гръцки"
-
-#: src/control/Control.CharacterMap.js:53
-msgid "General Punctuation"
-msgstr "Обща пунктуация"
-
-#: src/control/Control.CharacterMap.js:54
-msgid "Superscripts and Subscripts"
-msgstr "Горни и долни индекси"
-
-#: src/control/Control.CharacterMap.js:55
-msgid "Currency Symbols"
-msgstr "Валутни символи"
-
-#: src/control/Control.CharacterMap.js:56
-msgid "Combining Diacritical Symbols"
-msgstr "Комбинирани диакритични символи"
-
-#: src/control/Control.CharacterMap.js:57
-msgid "Letterlike Symbols"
-msgstr "Буквоподобни символи"
-
-#: src/control/Control.CharacterMap.js:58
-msgid "Number Forms"
-msgstr "Числови форми"
-
-#: src/control/Control.CharacterMap.js:59
-msgid "Arrows"
-msgstr "Стрелки"
-
-#: src/control/Control.CharacterMap.js:60
-msgid "Mathematical Operators"
-msgstr "Математически оператори"
-
-#: src/control/Control.CharacterMap.js:61
-msgid "Miscellaneous Technical"
-msgstr "Разни технически знаци"
-
-#: src/control/Control.CharacterMap.js:62
-msgid "Control Pictures"
-msgstr "Изображения на управляващи кодове"
-
-#: src/control/Control.CharacterMap.js:63
-msgid "Optical Character Recognition"
-msgstr "Оптично разпознаване на знаци"
-
-#: src/control/Control.CharacterMap.js:64
-msgid "Enclosed Alphanumerics"
-msgstr "Оградени букви и цифри"
-
-#: src/control/Control.CharacterMap.js:65
-msgid "Box Drawing"
-msgstr "Рисуване на рамки"
-
-#: src/control/Control.CharacterMap.js:66
-msgid "Block Elements"
-msgstr "Блокови елементи"
-
-#: src/control/Control.CharacterMap.js:67
-msgid "Geometric Shapes"
-msgstr "Геометрични фигури"
-
-#: src/control/Control.CharacterMap.js:68
-msgid "Miscellaneous Symbols"
-msgstr "Разни символи"
-
-#: src/control/Control.CharacterMap.js:69
-msgid "Dingbats"
-msgstr "Символи Dingbats"
-
-#: src/control/Control.CharacterMap.js:70
-msgid "Braille Patterns"
-msgstr "Брайлово писмо"
-
-#: src/control/Control.CharacterMap.js:71
-msgid "CJK Radicals Supplement"
-msgstr "КЯК – допълнителни радикали"
-
-#: src/control/Control.CharacterMap.js:72
-msgid "Kangxi Radicals"
-msgstr "Канджи – радикали"
-
-#: src/control/Control.CharacterMap.js:73
-msgid "Ideographic Description Characters"
-msgstr "Идеографски описателни знаци"
-
-#: src/control/Control.CharacterMap.js:74
-msgid "CJK Symbols and Punctuation"
-msgstr "КЯК – символи и пунктуация"
-
-#: src/control/Control.CharacterMap.js:75
-msgid "Hiragana"
-msgstr "Хирагана"
-
-#: src/control/Control.CharacterMap.js:76
-msgid "Katakana"
-msgstr "Катакана"
-
-#: src/control/Control.CharacterMap.js:77
-msgid "Bopomofo"
-msgstr "Бопомофо"
-
-#: src/control/Control.CharacterMap.js:78
-msgid "Hangul Compatibility Jamo"
-msgstr "Хангул джамо (съвместимост)"
-
-#: src/control/Control.CharacterMap.js:79
-msgid "Kanbun"
-msgstr "Канбун"
-
-#: src/control/Control.CharacterMap.js:80
-msgid "Bopomofo Extended"
-msgstr "Разширен бопомофо"
-
-#: src/control/Control.CharacterMap.js:81
-msgid "Enclosed CJK Letters and Months"
-msgstr "КЯК – оградени букви и месеци"
-
-#: src/control/Control.CharacterMap.js:82
-msgid "CJK Compatibility"
-msgstr "КЯК – съвместимост"
-
-#: src/control/Control.CharacterMap.js:84
-msgid "CJK Unified Ideographs Extension A"
-msgstr "КЯК – унифицирани идеограми, разширение A"
-
-#: src/control/Control.CharacterMap.js:86
-msgid "CJK Unified Ideographs"
-msgstr "КЯК – унифицирани идеограми"
-
-#: src/control/Control.CharacterMap.js:88
-msgid "Yi Syllables"
-msgstr "Срички на носу"
-
-#: src/control/Control.CharacterMap.js:90
-msgid "Yi Radicals"
-msgstr "Радикали на носу"
-
-#: src/control/Control.CharacterMap.js:92
-msgid "Hangul"
-msgstr "Хангул"
-
-# https://en.wikipedia.org/wiki/Universal_Character_Set_characters#Surrogates
-#: src/control/Control.CharacterMap.js:94
-msgid "High Surrogates"
-msgstr "Високи заместители"
-
-#: src/control/Control.CharacterMap.js:95
-msgid "High Private Use Surrogates"
-msgstr "Високи заместители за частно използване"
-
-#: src/control/Control.CharacterMap.js:97
-msgid "Low Surrogates"
-msgstr "Ниски заместители"
-
-#: src/control/Control.CharacterMap.js:99
-msgid "Private Use Area"
-msgstr "Област за частно използване"
-
-#: src/control/Control.CharacterMap.js:101
-msgid "CJK Compatibility Ideographs"
-msgstr "КЯК – идеограми за съвместимост"
-
-#: src/control/Control.CharacterMap.js:102
-msgid "Alphabetic Presentation Forms"
-msgstr "Азбучни форми на представяне"
-
-#: src/control/Control.CharacterMap.js:104
-msgid "Arabic Presentation Forms-A"
-msgstr "Арабски форми на представяне-A"
-
-#: src/control/Control.CharacterMap.js:105
-msgid "Combining Half Marks"
-msgstr "Половинки знаци за комбиниране"
-
-#: src/control/Control.CharacterMap.js:106
-msgid "CJK Compatibility Forms"
-msgstr "КЯК – форми за съвместимост"
-
-#: src/control/Control.CharacterMap.js:107
-msgid "Small Form Variants"
-msgstr "Малки варианти на форми"
-
-#: src/control/Control.CharacterMap.js:108
-msgid "Arabic Presentation Forms-B"
-msgstr "Арабски форми на представяне-B"
-
-#: src/control/Control.CharacterMap.js:109
-msgid "Specials"
-msgstr "Специални"
-
-#: src/control/Control.CharacterMap.js:110
-msgid "Halfwidth and Fullwidth Forms"
-msgstr "Форми с половин и пълна ширина"
-
-#: src/control/Control.CharacterMap.js:111
-msgid "Old Italic"
-msgstr "Староиталийски"
-
-#: src/control/Control.CharacterMap.js:112
-msgid "Gothic"
-msgstr "Готически"
-
-#: src/control/Control.CharacterMap.js:113
-msgid "Deseret"
-msgstr "Дезерет"
-
-#: src/control/Control.CharacterMap.js:114
-msgid "Byzantine Musical Symbols"
-msgstr "Византийски музикални символи"
-
-#: src/control/Control.CharacterMap.js:115
-#: src/control/Control.CharacterMap.js:116
-msgid "Musical Symbols"
-msgstr "Музикални символи"
-
-#: src/control/Control.CharacterMap.js:118
-msgid "CJK Unified Ideographs Extension B"
-msgstr "КЯК – унифицирани идеограми, разширение B"
-
-#: src/control/Control.CharacterMap.js:121
-msgid "CJK Compatibility Ideographs Supplement"
-msgstr "КЯК – идеограми за съвместимост, допълнение"
-
-#: src/control/Control.CharacterMap.js:122
-msgid "Tags"
-msgstr "Етикети"
-
-#: src/control/Control.CharacterMap.js:123
-msgid "Cyrillic Supplement"
-msgstr "Кирилица – допълнение"
-
-#: src/control/Control.CharacterMap.js:124
-msgid "Tagalog"
-msgstr "Тагалог"
-
-#: src/control/Control.CharacterMap.js:125
-msgid "Hanunoo"
-msgstr "Хануну"
-
-#: src/control/Control.CharacterMap.js:126
-msgid "Buhid"
-msgstr "Бухид"
-
-#: src/control/Control.CharacterMap.js:127
-msgid "Tagbanwa"
-msgstr "Тагбануа"
-
-#: src/control/Control.CharacterMap.js:128
-msgid "Miscellaneous Mathematical Symbols-A"
-msgstr "Разни математически символи-A"
-
-#: src/control/Control.CharacterMap.js:129
-msgid "Supplemental Arrows-A"
-msgstr "Допълнителни стрелки-A"
-
-#: src/control/Control.CharacterMap.js:130
-msgid "Supplemental Arrows-B"
-msgstr "Допълнителни стрелки-B"
-
-#: src/control/Control.CharacterMap.js:131
-msgid "Miscellaneous Mathematical Symbols-B"
-msgstr "Разни математически символи-B"
-
-#: src/control/Control.CharacterMap.js:132
-msgid "Supplemental Mathematical Operators"
-msgstr "Допълнителни математически оператори"
-
-#: src/control/Control.CharacterMap.js:133
-msgid "Katakana Phonetics Extensions"
-msgstr "Фонетични разширения на катакана"
-
-#: src/control/Control.CharacterMap.js:134
-msgid "Variation Selectors"
-msgstr "Избор на вариант"
-
-#: src/control/Control.CharacterMap.js:136
-msgid "Supplementary Private Use Area-A"
-msgstr "Допълнителна област за частно използване-A"
-
-#: src/control/Control.CharacterMap.js:139
-msgid "Supplementary Private Use Area-B"
-msgstr "Допълнителна област за частно използване-В"
-
-#: src/control/Control.CharacterMap.js:140
-msgid "Limbu"
-msgstr "Лимбу"
-
-#: src/control/Control.CharacterMap.js:141
-msgid "Tai Le"
-msgstr "Тай ле"
-
-#: src/control/Control.CharacterMap.js:142
-msgid "Khmer Symbols"
-msgstr "Кхмерски символи"
-
-#: src/control/Control.CharacterMap.js:143
-msgid "Phonetic Extensions"
-msgstr "Фонетични разширения"
-
-#: src/control/Control.CharacterMap.js:144
-msgid "Miscellaneous Symbols And Arrows"
-msgstr "Разни символи и стрелки"
-
-#: src/control/Control.CharacterMap.js:145
-msgid "Yijing Hexagram Symbols"
-msgstr "Старокитайски хексаграмни символи"
-
-#: src/control/Control.CharacterMap.js:146
-msgid "Linear B Syllabary"
-msgstr "Линейна сричкова азбука B"
-
-#: src/control/Control.CharacterMap.js:147
-msgid "Linear B Ideograms"
-msgstr "Линейни идеограми B"
-
-#: src/control/Control.CharacterMap.js:148
-msgid "Aegean Numbers"
-msgstr "Егейски числа"
-
-#: src/control/Control.CharacterMap.js:149
-msgid "Ugaritic"
-msgstr "Угаритски"
-
-#: src/control/Control.CharacterMap.js:150
-msgid "Shavian"
-msgstr "Знаци на Бърнард Шоу"
-
-#: src/control/Control.CharacterMap.js:151
-msgid "Osmanya"
-msgstr "Османия"
-
-#: src/control/Control.CharacterMap.js:152
-msgid "Cypriot Syllabary"
-msgstr "Кипърска сричкова азбука"
-
-#: src/control/Control.CharacterMap.js:153
-msgid "Tai Xuan Jing Symbols"
-msgstr "Символи Тай Сюен Дзин"
-
-#: src/control/Control.CharacterMap.js:154
-msgid "Variation Selectors Supplement"
-msgstr "Избор на вариант – допълнение"
-
-#: src/control/Control.CharacterMap.js:155
-msgid "Ancient Greek Musical Notation"
-msgstr "Древногръцки музикални знаци"
-
-#: src/control/Control.CharacterMap.js:156
-msgid "Ancient Greek Numbers"
-msgstr "Древногръцки числа"
-
-#: src/control/Control.CharacterMap.js:157
-msgid "Arabic Supplement"
-msgstr "Арабски – допълнение"
-
-#: src/control/Control.CharacterMap.js:158
-msgid "Buginese"
-msgstr "Бугиски"
-
-#: src/control/Control.CharacterMap.js:159
-msgid "CJK Strokes"
-msgstr "КЯК – щрихи"
-
-#: src/control/Control.CharacterMap.js:160
-msgid "Combining Diacritical Marks Supplement"
-msgstr "Комбиниращи диакритични знаци – допълнение"
-
-#: src/control/Control.CharacterMap.js:161
-msgid "Coptic"
-msgstr "Коптски"
-
-#: src/control/Control.CharacterMap.js:162
-msgid "Ethiopic Extended"
-msgstr "Разширен етиопски"
-
-#: src/control/Control.CharacterMap.js:163
-msgid "Ethiopic Supplement"
-msgstr "Етиопски – допълнение"
-
-#: src/control/Control.CharacterMap.js:164
-msgid "Georgian Supplement"
-msgstr "Грузински – допълнение"
-
-#: src/control/Control.CharacterMap.js:165
-msgid "Glagolitic"
-msgstr "Глаголица"
-
-#: src/control/Control.CharacterMap.js:166
-msgid "Kharoshthi"
-msgstr "Карощи"
-
-#: src/control/Control.CharacterMap.js:167
-msgid "Modifier Tone Letters"
-msgstr "Знаци, променящи тоновете"
-
-#: src/control/Control.CharacterMap.js:168
-msgid "New Tai Lue"
-msgstr "Нов тай лю"
-
-#: src/control/Control.CharacterMap.js:169
-msgid "Old Persian"
-msgstr "Староперсийски"
-
-#: src/control/Control.CharacterMap.js:170
-msgid "Phonetic Extensions Supplement"
-msgstr "Фонетични разширения – допълнение"
-
-#: src/control/Control.CharacterMap.js:171
-msgid "Supplemental Punctuation"
-msgstr "Пунктуация – допълнение"
-
-#: src/control/Control.CharacterMap.js:172
-msgid "Syloti Nagri"
-msgstr "Силоти нагри"
-
-#: src/control/Control.CharacterMap.js:173
-msgid "Tifinagh"
-msgstr "Тифинаг"
-
-#: src/control/Control.CharacterMap.js:174
-msgid "Vertical Forms"
-msgstr "Вертикални форми"
-
-#: src/control/Control.CharacterMap.js:175
-msgid "Nko"
-msgstr "Нко"
-
-#: src/control/Control.CharacterMap.js:176
-msgid "Balinese"
-msgstr "Балийски"
-
-#: src/control/Control.CharacterMap.js:177
-msgid "Latin Extended-C"
-msgstr "Разширена латиница-C"
-
-#: src/control/Control.CharacterMap.js:178
-msgid "Latin Extended-D"
-msgstr "Разширена латиница-D"
-
-#: src/control/Control.CharacterMap.js:179
-msgid "Phags-Pa"
-msgstr "Фагс па"
-
-#: src/control/Control.CharacterMap.js:180
-msgid "Phoenician"
-msgstr "Финикийски"
-
-#: src/control/Control.CharacterMap.js:182
-msgid "Cuneiform"
-msgstr "Клинопис"
-
-#: src/control/Control.CharacterMap.js:183
-msgid "Cuneiform Numbers And Punctuation"
-msgstr "Клинописни числа и пунктуация"
-
-#: src/control/Control.CharacterMap.js:184
-msgid "Counting Rod Numerals"
-msgstr "Китайски числа на рабош"
-
-#: src/control/Control.CharacterMap.js:185
-msgid "Sundanese"
-msgstr "Сундански"
-
-#: src/control/Control.CharacterMap.js:186
-msgid "Lepcha"
-msgstr "Лепча"
-
-#: src/control/Control.CharacterMap.js:187
-msgid "Ol Chiki"
-msgstr "Ол чики – санталски"
-
-#: src/control/Control.CharacterMap.js:188
-msgid "Cyrillic Extended-A"
-msgstr "Разширена кирилица-A"
-
-#: src/control/Control.CharacterMap.js:190
-msgid "Vai"
-msgstr "Вай"
-
-#: src/control/Control.CharacterMap.js:191
-msgid "Cyrillic Extended-B"
-msgstr "Разширена кирилица-B"
-
-#: src/control/Control.CharacterMap.js:192
-msgid "Saurashtra"
-msgstr "Саураштра"
-
-#: src/control/Control.CharacterMap.js:193
-msgid "Kayah Li"
-msgstr "Кая ли"
-
-#: src/control/Control.CharacterMap.js:194
-msgid "Rejang"
-msgstr "Режанг"
-
-#: src/control/Control.CharacterMap.js:195
-msgid "Cham"
-msgstr "Чам"
-
-#: src/control/Control.CharacterMap.js:196
-msgid "Ancient Symbols"
-msgstr "Древни символи"
-
-#: src/control/Control.CharacterMap.js:197
-msgid "Phaistos Disc"
-msgstr "Дискът от Фестос"
-
-#: src/control/Control.CharacterMap.js:198
-msgid "Lycian"
-msgstr "Ликийски"
-
-#: src/control/Control.CharacterMap.js:199
-msgid "Carian"
-msgstr "Карийски"
-
-#: src/control/Control.CharacterMap.js:200
-msgid "Lydian"
-msgstr "Лидийски"
-
-#: src/control/Control.CharacterMap.js:201
-msgid "Mahjong Tiles"
-msgstr "Плочки за маджонг"
-
-#: src/control/Control.CharacterMap.js:202
-msgid "Domino Tiles"
-msgstr "Плочки за домино"
-
-#: src/control/Control.CharacterMap.js:203
-msgid "Samaritan"
-msgstr "Самаритски"
-
-#: src/control/Control.CharacterMap.js:204
-msgid "Canadian Aboriginal Syllabics Extended"
-msgstr "Разширени унифицирани срички на канадските аборигени"
-
-#: src/control/Control.CharacterMap.js:205
-msgid "Tai Tham"
-msgstr "Тай тхам"
-
-#: src/control/Control.CharacterMap.js:206
-msgid "Vedic Extensions"
-msgstr "Ведически разширения"
-
-#: src/control/Control.CharacterMap.js:207
-msgid "Lisu"
-msgstr "Лису"
-
-#: src/control/Control.CharacterMap.js:208
-msgid "Bamum"
-msgstr "Бамум"
-
-#: src/control/Control.CharacterMap.js:209
-msgid "Common Indic Number Forms"
-msgstr "Общи индийски числови форми"
-
-#: src/control/Control.CharacterMap.js:210
-msgid "Devanagari Extended"
-msgstr "Разширена деванагари"
-
-#: src/control/Control.CharacterMap.js:211
-msgid "Hangul Jamo Extended-A"
-msgstr "Разширена хангул джамо-A"
-
-#: src/control/Control.CharacterMap.js:212
-msgid "Javanese"
-msgstr "Явански"
-
-#: src/control/Control.CharacterMap.js:213
-msgid "Myanmar Extended-A"
-msgstr "Разширен бирмански-A"
-
-#: src/control/Control.CharacterMap.js:214
-msgid "Tai Viet"
-msgstr "Тай виет"
-
-#: src/control/Control.CharacterMap.js:215
-msgid "Meetei Mayek"
-msgstr "Мейтей майек"
-
-#: src/control/Control.CharacterMap.js:216
-msgid "Hangul Jamo Extended-B"
-msgstr "Разширена хангул джамо-B"
-
-#: src/control/Control.CharacterMap.js:217
-msgid "Imperial Aramaic"
-msgstr "Имперски арамейски"
-
-#: src/control/Control.CharacterMap.js:218
-msgid "Old South Arabian"
-msgstr "Стар южноарабски"
-
-#: src/control/Control.CharacterMap.js:219
-msgid "Avestan"
-msgstr "Авестийски"
-
-#: src/control/Control.CharacterMap.js:220
-msgid "Inscriptional Parthian"
-msgstr "Партски"
-
-#: src/control/Control.CharacterMap.js:221
-msgid "Inscriptional Pahlavi"
-msgstr "Пахлави"
-
-#: src/control/Control.CharacterMap.js:222
-msgid "Old Turkic"
-msgstr "Старотюркски"
-
-#: src/control/Control.CharacterMap.js:223
-msgid "Rumi Numeral Symbols"
-msgstr "Цифрови знаци руми"
-
-#: src/control/Control.CharacterMap.js:224
-msgid "Kaithi"
-msgstr "Кайтхи"
-
-#: src/control/Control.CharacterMap.js:226
-msgid "Egyptian Hieroglyphs"
-msgstr "Египетски йероглифи"
-
-#: src/control/Control.CharacterMap.js:227
-msgid "Enclosed Alphanumeric Supplement"
-msgstr "Оградени букви и цифри – допълнение"
-
-#: src/control/Control.CharacterMap.js:228
-msgid "Enclosed Ideographic Supplement"
-msgstr "Оградени идеограми – допълнение"
-
-#: src/control/Control.CharacterMap.js:230
-msgid "CJK Unified Ideographs Extension C"
-msgstr "КЯК – унифицирани идеограми, разширение C"
-
-#: src/control/Control.CharacterMap.js:231
-msgid "Mandaic"
-msgstr "Мандейска азбука"
-
-#: src/control/Control.CharacterMap.js:232
-msgid "Batak"
-msgstr "Батак"
-
-#: src/control/Control.CharacterMap.js:233
-msgid "Ethiopic Extended-A"
-msgstr "Разширен етиопски-А"
-
-#: src/control/Control.CharacterMap.js:234
-msgid "Brahmi"
-msgstr "Брахми"
-
-#: src/control/Control.CharacterMap.js:236
-msgid "Bamum Supplement"
-msgstr "Бамум – допълнение"
-
-#: src/control/Control.CharacterMap.js:237
-msgid "Kana Supplement"
-msgstr "Кана – допълнение"
-
-#: src/control/Control.CharacterMap.js:238
-msgid "Playing Cards"
-msgstr "Карти за игра"
-
-#: src/control/Control.CharacterMap.js:240
-msgid "Miscellaneous Symbols And Pictographs"
-msgstr "Разни знаци и пиктограми"
-
-#: src/control/Control.CharacterMap.js:241
-msgid "Emoticons"
-msgstr "Емотикони"
-
-#: src/control/Control.CharacterMap.js:242
-msgid "Transport And Map Symbols"
-msgstr "Транспортни и картографски символи"
-
-#: src/control/Control.CharacterMap.js:243
-msgid "Alchemical Symbols"
-msgstr "Алхимически символи"
-
-#: src/control/Control.CharacterMap.js:245
-msgid "CJK Unified Ideographs Extension D"
-msgstr "КЯК – унифицирани идеограми, разширение D"
-
-#: src/control/Control.CharacterMap.js:247
-msgid "Arabic Extended-A"
-msgstr "Разширен арабски-А"
-
-#: src/control/Control.CharacterMap.js:248
-msgid "Arabic Mathematical Alphabetic Symbols"
-msgstr "Арабски математически азбучни символи"
-
-#: src/control/Control.CharacterMap.js:249
-msgid "Chakma"
-msgstr "Чакма"
-
-#: src/control/Control.CharacterMap.js:250
-msgid "Meetei Mayek Extensions"
-msgstr "Разширения на мейтей майек"
-
-#: src/control/Control.CharacterMap.js:251
-msgid "Meroitic Cursive"
-msgstr "Ръкописен мероитски"
-
-#: src/control/Control.CharacterMap.js:252
-msgid "Meroitic Hieroglyphs"
-msgstr "Мероитски йероглифи"
-
-#: src/control/Control.CharacterMap.js:253
-msgid "Miao"
-msgstr "Миао"
-
-#: src/control/Control.CharacterMap.js:254
-msgid "Sharada"
-msgstr "Шарада"
-
-#: src/control/Control.CharacterMap.js:255
-msgid "Sora Sompeng"
-msgstr "Сора сомпенг"
-
-#: src/control/Control.CharacterMap.js:256
-msgid "Sundanese Supplement"
-msgstr "Сундански – допълнение"
-
-#: src/control/Control.CharacterMap.js:257
-msgid "Takri"
-msgstr "Такри"
-
-#: src/control/Control.CharacterMap.js:258
-msgid "Bassa Vah"
-msgstr "Баса"
-
-#: src/control/Control.CharacterMap.js:259
-msgid "Caucasian Albanian"
-msgstr "Кавказки албански"
-
-#: src/control/Control.CharacterMap.js:260
-msgid "Coptic Epact Numbers"
-msgstr "Коптски епактични числа"
-
-#: src/control/Control.CharacterMap.js:261
-msgid "Combining Diacritical Marks Extended"
-msgstr "Разширени комбиниращи диакритични знаци"
-
-#: src/control/Control.CharacterMap.js:262
-msgid "Duployan"
-msgstr "Система на Дюплойе"
-
-#: src/control/Control.CharacterMap.js:263
-msgid "Elbasan"
-msgstr "Елбасан"
-
-#: src/control/Control.CharacterMap.js:264
-msgid "Geometric Shapes Extended"
-msgstr "Разширени геометрични фигури"
-
-#: src/control/Control.CharacterMap.js:265
-msgid "Grantha"
-msgstr "Грантха"
-
-#: src/control/Control.CharacterMap.js:266
-msgid "Khojki"
-msgstr "Ходжки"
-
-#: src/control/Control.CharacterMap.js:267
-msgid "Khudawadi"
-msgstr "Худавади"
-
-#: src/control/Control.CharacterMap.js:268
-msgid "Latin Extended-E"
-msgstr "Разширена латиница-E"
-
-#: src/control/Control.CharacterMap.js:270
-msgid "Linear A"
-msgstr "Линеар A"
-
-#: src/control/Control.CharacterMap.js:271
-msgid "Mahajani"
-msgstr "Махаджани"
-
-#: src/control/Control.CharacterMap.js:272
-msgid "Manichaean"
-msgstr "Манихейска азбука"
-
-#: src/control/Control.CharacterMap.js:273
-msgid "Mende Kikakui"
-msgstr "Менде кикакуи"
-
-#: src/control/Control.CharacterMap.js:274
-msgid "Modi"
-msgstr "Моди"
-
-#: src/control/Control.CharacterMap.js:275
-msgid "Mro"
-msgstr "Мро"
-
-#: src/control/Control.CharacterMap.js:276
-msgid "Myanmar Extended-B"
-msgstr "Разширен бирмански-B"
-
-#: src/control/Control.CharacterMap.js:277
-msgid "Nabataean"
-msgstr "Набатейска азбука"
-
-#: src/control/Control.CharacterMap.js:278
-msgid "Old North Arabian"
-msgstr "Стар северноарабски"
-
-#: src/control/Control.CharacterMap.js:279
-msgid "Old Permic"
-msgstr "Старопермски"
-
-#: src/control/Control.CharacterMap.js:280
-msgid "Ornamental Dingbats"
-msgstr "Орнаменти"
-
-#: src/control/Control.CharacterMap.js:281
-msgid "Pahawh Hmong"
-msgstr "Пахау хмонг"
-
-#: src/control/Control.CharacterMap.js:282
-msgid "Palmyrene"
-msgstr "Палмирска азбука"
-
-#: src/control/Control.CharacterMap.js:283
-msgid "Pau Cin Hau"
-msgstr "Пау Чин Хау"
-
-#: src/control/Control.CharacterMap.js:284
-msgid "Psalter Pahlavi"
-msgstr "Псалтирен пахлави"
-
-#: src/control/Control.CharacterMap.js:285
-msgid "Shorthand Format Controls"
-msgstr "Форматиране на стенография"
-
-#: src/control/Control.CharacterMap.js:286
-msgid "Siddham"
-msgstr "Сидхам"
-
-#: src/control/Control.CharacterMap.js:287
-msgid "Sinhala Archaic Numbers"
-msgstr "Синхала – архаични числа"
-
-#: src/control/Control.CharacterMap.js:288
-msgid "Supplemental Arrows-C"
-msgstr "Допълнителни стрелки-C"
-
-#: src/control/Control.CharacterMap.js:289
-msgid "Tirhuta"
-msgstr "Тирхута"
-
-#: src/control/Control.CharacterMap.js:290
-msgid "Warang Citi"
-msgstr "Варанг кшити"
-
-#: src/control/Control.CharacterMap.js:291
-msgid "Ahom"
-msgstr "Ахам"
-
-#: src/control/Control.CharacterMap.js:293
-msgid "Anatolian Hieroglyphs"
-msgstr "Анатолийски йероглифи"
-
-#: src/control/Control.CharacterMap.js:294
-msgid "Cherokee Supplement"
-msgstr "Чероки – допълнение"
-
-#: src/control/Control.CharacterMap.js:295
-#: src/control/Control.CharacterMap.js:296
-msgid "CJK Unified Ideographs Extension E"
-msgstr "КЯК – унифицирани идеограми, разширение E"
-
-#: src/control/Control.CharacterMap.js:298
-msgid "Early Dynastic Cuneiform"
-msgstr "Раннодинастичен клинопис"
-
-#: src/control/Control.CharacterMap.js:299
-msgid "Hatran"
-msgstr "Азбука от Хатра"
-
-#: src/control/Control.CharacterMap.js:300
-msgid "Multani"
-msgstr "Сераики"
-
-#: src/control/Control.CharacterMap.js:301
-msgid "Old Hungarian"
-msgstr "Староунгарски"
-
-#: src/control/Control.CharacterMap.js:302
-msgid "Supplemental Symbols And Pictographs"
-msgstr "Допълнителни символи и пиктограми"
-
-#: src/control/Control.CharacterMap.js:304
-msgid "Sutton Signwriting"
-msgstr "Жестово писмо на Сътън"
-
-#: src/control/Control.CharacterMap.js:390
-msgid "Special Characters"
-msgstr "Специални знаци"
-
-#: src/control/Control.CharacterMap.js:395
-msgid "Font Name:"
-msgstr "Име на шрифт:"
-
-#: src/control/Control.CharacterMap.js:402
-msgid "Subset:"
-msgstr "Подмножество:"
-
-#: src/control/Control.CharacterMap.js:413
-msgid "Selected Character:"
-msgstr "Избран знак:"
-
-#: src/control/Control.CharacterMap.js:418
-msgid "Hexadecimal:"
-msgstr "Шестнайсетично:"
-
-#: src/control/Control.CharacterMap.js:424
-#: src/control/Control.Menubar.js:49
-#: src/control/Control.Menubar.js:149
-#: src/control/Control.Menubar.js:201
-#: src/control/Control.Menubar.js:208
-#: src/control/Control.Menubar.js:257
-msgid "Insert"
-msgstr "Вмъкване"
-
-#: src/control/Control.ColumnHeader.js:39
-msgid "Insert column before"
-msgstr "Вмъкване на колона преди"
-
-#: src/control/Control.ColumnHeader.js:46
-#: src/control/Control.Menubar.js:271
-msgid "Delete column"
-msgstr "Изтриване на колона"
-
-#: src/control/Control.ColumnHeader.js:53
-msgid "Optimal Width"
-msgstr "Оптимална ширина"
-
-#: src/control/Control.ColumnHeader.js:60
-msgid "Hide Columns"
-msgstr "Скриване на колони"
-
-#: src/control/Control.ColumnHeader.js:67
-msgid "Show Columns"
-msgstr "Показване на колони"
-
-#: src/control/Control.ColumnHeader.js:82
-msgid "Optimal Column Width"
-msgstr "Оптимална ширина на колони"
-
-#: src/control/Control.ContextMenu.js:135
+#: src/control/Control.AlertDialog.js:28
+msgid "The server encountered a %0 error while parsing the %1 command."
+msgstr "Сървърът се сблъска с грешка „%0“ при анализа на командата „%1“."
+
+#: src/control/Control.AlertDialog.js:41
+msgid "Download PDF export?"
+msgstr "Да се изтегли ли експортиращият модул за PDF?"
+
+#: src/control/Control.ContextMenu.js:130
 msgid "Internal Cut"
 msgstr "Вътрешно изрязване"
 
-#: src/control/Control.ContextMenu.js:138
+#: src/control/Control.ContextMenu.js:133
 msgid "Internal Copy"
 msgstr "Вътрешно копиране"
 
-#: src/control/Control.ContextMenu.js:141
+#: src/control/Control.ContextMenu.js:136
 msgid "Internal Paste"
 msgstr "Вътрешно поставяне"
 
-#: src/control/Control.ContextMenu.js:163
+#: src/control/Control.ContextMenu.js:158
 msgid "Internal Paste Special"
 msgstr "Вътрешно специално поставяне"
 
@@ -1948,652 +615,126 @@ msgstr "Вътрешно специално поставяне"
 msgid "Repair Document"
 msgstr "Поправяне на документ"
 
-#: src/control/Control.DocumentRepair.js:40
+#: src/control/Control.DocumentRepair.js:43
 msgid "Type"
 msgstr "Тип"
 
-#: src/control/Control.DocumentRepair.js:42
+#: src/control/Control.DocumentRepair.js:45
 msgid "Index"
 msgstr "Индекс"
 
-#: src/control/Control.DocumentRepair.js:44
-#: src/layer/tile/TileLayer.js:215
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:231
 msgid "Comment"
 msgstr "Коментар"
 
-#: src/control/Control.DocumentRepair.js:46
+#: src/control/Control.DocumentRepair.js:49
 msgid "User name"
 msgstr "Потребителско име"
 
-#: src/control/Control.DocumentRepair.js:48
+#: src/control/Control.DocumentRepair.js:51
 msgid "Timestamp"
 msgstr "Времеви печат"
 
-#: src/control/Control.DocumentRepair.js:52
+#: src/control/Control.DocumentRepair.js:55
 msgid "Jump to state"
 msgstr "Преминаване към състояние"
 
-#: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:174
-#: src/control/Control.Menubar.js:234
-msgid "File"
-msgstr "Файл"
-
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:184
-#: src/control/Control.Menubar.js:244
-msgid "Edit"
-msgstr "Редактиране"
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:194
-#: src/control/Control.Menubar.js:254
-msgid "View"
-msgstr "Изглед"
-
-#: src/control/Control.Menubar.js:14
-#: src/control/Control.Menubar.js:175
-#: src/control/Control.Menubar.js:241
-#: src/control/Control.Menubar.js:292
-msgid "Tools"
-msgstr ""
-
-#: src/control/Control.Menubar.js:19
-msgid "Save As"
-msgstr ""
-
-#: src/control/Control.Menubar.js:12
-#: src/control/Control.Menubar.js:176
-#: src/control/Control.Menubar.js:236
-msgid "Print"
-msgstr "Печат"
-
-#: src/control/Control.Menubar.js:13
-#: src/control/Control.Menubar.js:177
-#: src/control/Control.Menubar.js:237
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:231
+#: src/control/Control.Menubar.js:311
 msgid "See revision history"
 msgstr "Хронология на редакциите"
 
-#: src/control/Control.Menubar.js:14
-#: src/control/Control.Menubar.js:178
-#: src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:232
+#: src/control/Control.Menubar.js:312
 msgid "Download as"
 msgstr "Изтегляне като"
 
-#: src/control/Control.Menubar.js:15
-#: src/control/Control.Menubar.js:179
-#: src/control/Control.Menubar.js:239
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:233
+#: src/control/Control.Menubar.js:313
 msgid "PDF Document (.pdf)"
 msgstr "PDF документ (.pdf)"
 
-#: src/control/Control.Menubar.js:16
+#: src/control/Control.Menubar.js:24
 msgid "ODF text document (.odt)"
 msgstr "ODF – текстов документ (.odt)"
 
-#: src/control/Control.Menubar.js:17
+#: src/control/Control.Menubar.js:25
 msgid "Microsoft Word 2003 (.doc)"
 msgstr "Microsoft Word 2003 (.doc)"
 
-#: src/control/Control.Menubar.js:18
+#: src/control/Control.Menubar.js:26
 msgid "Microsoft Word (.docx)"
 msgstr "Microsoft Word (.docx)"
 
-#: src/control/Control.Menubar.js:21
+#: src/control/Control.Menubar.js:27
+msgid "Rich Text (.rtf)"
+msgstr "Rich Text (.rtf)"
+
+#: src/control/Control.Menubar.js:34 src/control/Control.Menubar.js:243
+#: src/control/Control.Menubar.js:323
 msgid "Repair"
 msgstr "Поправяне"
 
-#: src/control/Control.Menubar.js:25
-#: src/control/Control.Menubar.js:188
-#: src/control/Control.Menubar.js:248
-msgid "Cut"
-msgstr "Изрязване"
+#: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
+msgid "All"
+msgstr "Всичко"
 
-#: src/control/Control.Menubar.js:26
-#: src/control/Control.Menubar.js:189
-#: src/control/Control.Menubar.js:249
-msgid "Copy"
-msgstr "Копиране"
-
-#: src/control/Control.Menubar.js:27
-#: src/control/Control.Menubar.js:190
-#: src/control/Control.Menubar.js:250
-msgid "Paste"
-msgstr "Поставяне"
-
-#: src/control/Control.Menubar.js:29
-#: src/control/Control.Menubar.js:192
-#: src/control/Control.Menubar.js:252
-msgid "Select all"
-msgstr "Избиране на всичко"
-
-#: src/control/Control.Menubar.js:38
-#: src/control/Control.Menubar.js:207
-#: src/control/Control.Menubar.js:271
-#: src/control/Control.Menubar.js:518
-msgid "Find & Replace"
-msgstr ""
-
-#: src/control/Control.Menubar.js:31
-msgid "Track Changes"
-msgstr "Следене на промените"
-
-#: src/control/Control.Menubar.js:32
-msgid "Record"
-msgstr "Регистриране"
-
-#: src/control/Control.Menubar.js:33
-msgid "Show"
-msgstr "Показване"
-
-#: src/control/Control.Menubar.js:35
-msgid "Previous"
-msgstr "Предишна"
-
-#: src/control/Control.Menubar.js:36
-msgid "Next"
-msgstr "Следваща"
-
-#: src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:195
-#: src/control/Control.Menubar.js:255
-msgid "Full screen"
-msgstr "Цял екран"
-
-#: src/control/Control.Menubar.js:46
-msgid "Formatting Marks"
-msgstr "Форматиращи знаци"
-
-#: src/control/Control.Menubar.js:50
-#: src/control/Control.Menubar.js:202
-#: src/control/Control.Menubar.js:258
-msgid "Image"
-msgstr "Изображение"
-
-#: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:203
-#: src/control/Control.Menubar.js:259
-msgid "Comment..."
-msgstr "Коментар..."
-
-#: src/control/Control.Menubar.js:53
-msgid "Footnote"
-msgstr "Бележка под линия"
-
-#: src/control/Control.Menubar.js:54
-msgid "Endnote"
-msgstr "Бележка в края"
-
-#: src/control/Control.Menubar.js:56
-msgid "Page break"
-msgstr "Нова страница"
-
-#: src/control/Control.Menubar.js:57
-msgid "Column break"
-msgstr "Нова колона"
-
-#: src/control/Control.Menubar.js:59
-#: src/control/Control.Menubar.js:205
-#: src/control/Control.Menubar.js:264
-msgid "Special character..."
-msgstr "Специален знак..."
-
-#: src/control/Control.Menubar.js:60
-msgid "Formatting mark"
-msgstr "Форматиращ знак"
-
-#: src/control/Control.Menubar.js:61
-msgid "Non-breaking space"
-msgstr "Непрекъсваем интервал"
-
-#: src/control/Control.Menubar.js:62
-msgid "Non-breaking hyphen"
-msgstr "Непрекъсваемо тире"
-
-#: src/control/Control.Menubar.js:63
-msgid "Soft hyphen"
-msgstr "Меко тире за пренос"
-
-#: src/control/Control.Menubar.js:64
-msgid "No-width optional break"
-msgstr "Мека непрекъсваема връзка"
-
-#: src/control/Control.Menubar.js:65
-msgid "No-width no break"
-msgstr "Непрекъсваема връзка"
-
-#: src/control/Control.Menubar.js:66
-msgid "Left-to-right mark"
-msgstr "Знак \"отляво надясно\""
-
-#: src/control/Control.Menubar.js:67
-msgid "Right-to-left mark"
-msgstr "Знак \"отдясно наляво\""
-
-#: src/control/Control.Menubar.js:69
-msgid "Format"
-msgstr "Форматиране"
-
-#: src/control/Control.Menubar.js:70
-msgid "Text"
-msgstr "Текст"
-
-#: src/control/Control.Menubar.js:74
-msgid "Double underline"
-msgstr "Двойно подчертан"
-
-#: src/control/Control.Menubar.js:75
-msgid "Strikethrough"
-msgstr "Зачертан"
-
-#: src/control/Control.Menubar.js:76
-msgid "Overline"
-msgstr "Надчертан"
-
-#: src/control/Control.Menubar.js:78
-msgid "Superscript"
-msgstr "Горен индекс"
-
-#: src/control/Control.Menubar.js:79
-msgid "Subscript"
-msgstr "Долен индекс"
-
-#: src/control/Control.Menubar.js:80
-msgid "ꜱᴍᴀʟʟ ᴄᴀᴘꜱ"
-msgstr "ᴍᴀлки глᴀвни"
-
-#: src/control/Control.Menubar.js:82
-msgid "Shadow"
-msgstr "Сянка"
-
-#: src/control/Control.Menubar.js:83
-msgid "Outline"
-msgstr "Контур"
-
-#: src/control/Control.Menubar.js:85
-msgid "Increase size"
-msgstr "Увеличаване на шрифта"
-
-#: src/control/Control.Menubar.js:86
-msgid "Decrease size"
-msgstr "Намаляване на шрифта"
-
-#: src/control/Control.Menubar.js:88
-msgid "UPPERCASE"
-msgstr "ГЛАВНИ БУКВИ"
-
-#: src/control/Control.Menubar.js:89
-msgid "lowercase"
-msgstr "малки букви"
-
-#: src/control/Control.Menubar.js:90
-msgid "Cycle case"
-msgstr "Смяна на регистъра"
-
-#: src/control/Control.Menubar.js:92
-msgid "Sentence case"
-msgstr "Изречение"
-
-#: src/control/Control.Menubar.js:93
-msgid "Capitalize Every Word"
-msgstr "Главна Буква На Всяка Дума"
-
-#: src/control/Control.Menubar.js:94
-msgid "tOGGLE cASE"
-msgstr "оБРАТЕН рЕГИСТЪР"
-
-#: src/control/Control.Menubar.js:95
+#: src/control/Control.Menubar.js:130
 msgid "Text orientation"
 msgstr "Ориентация на текста"
 
-#: src/control/Control.Menubar.js:96
-msgid "Set paragraph left-to-right"
-msgstr "Абзац от ляво надясно"
+#: src/control/Control.Menubar.js:208 src/control/Control.Menubar.js:210
+#: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:297
+#: src/control/Control.Menubar.js:389
+msgid "None (Do not check spelling)"
+msgstr "Няма (без проверка на правописа)"
 
-#: src/control/Control.Menubar.js:97
-msgid "Set paragraph right-to-left"
-msgstr "Абзац от дясно наляво"
-
-#: src/control/Control.Menubar.js:98
-msgid "Spacing"
-msgstr "Разредка"
-
-#: src/control/Control.Menubar.js:99
-msgid "Line spacing: 1"
-msgstr "Междуредие: 1"
-
-#: src/control/Control.Menubar.js:100
-msgid "Line spacing: 1.5"
-msgstr "Междуредие: 1,5"
-
-#: src/control/Control.Menubar.js:101
-msgid "Line spacing: 2"
-msgstr "Междуредие: 2"
-
-#: src/control/Control.Menubar.js:103
-msgid "Increase paragraph spacing"
-msgstr "Раздалечаване на абзаците"
-
-#: src/control/Control.Menubar.js:104
-msgid "Decrease paragraph spacing"
-msgstr "Сближаване на абзаците"
-
-#: src/control/Control.Menubar.js:108
-msgid "Align"
-msgstr "Подравняване"
-
-#: src/control/Control.Menubar.js:109
-msgid "Left"
-msgstr "Отляво"
-
-#: src/control/Control.Menubar.js:110
-msgid "Centered"
-msgstr "Центрирано"
-
-#: src/control/Control.Menubar.js:111
-msgid "Right"
-msgstr "Отдясно"
-
-#: src/control/Control.Menubar.js:114
-msgid "Top"
-msgstr "Отгоре"
-
-#: src/control/Control.Menubar.js:115
-msgid "Center"
-msgstr "В средата"
-
-#: src/control/Control.Menubar.js:116
-msgid "Bottom"
-msgstr "Отдолу"
-
-#: src/control/Control.Menubar.js:117
-msgid "Lists"
-msgstr "Списъци"
-
-#: src/control/Control.Menubar.js:121
-msgid "Demote one level"
-msgstr "Понижаване с едно ниво"
-
-#: src/control/Control.Menubar.js:122
-msgid "Promote one level"
-msgstr "Повишаване с едно ниво"
-
-#: src/control/Control.Menubar.js:123
-msgid "Demote one level with subpoints"
-msgstr "Понижаване с едно ниво заедно с подточките"
-
-#: src/control/Control.Menubar.js:124
-msgid "Promote one level with subpoints"
-msgstr "Повишаване с едно ниво заедно с подточките"
-
-#: src/control/Control.Menubar.js:126
-msgid "Move down"
-msgstr "Преместване надолу"
-
-#: src/control/Control.Menubar.js:127
-msgid "Move up"
-msgstr "Преместване нагоре"
-
-#: src/control/Control.Menubar.js:128
-msgid "Move down with subpoints"
-msgstr "Преместване надолу с подточките"
-
-#: src/control/Control.Menubar.js:129
-msgid "Move up with subpoints"
-msgstr "Преместване нагоре с подточките"
-
-#: src/control/Control.Menubar.js:131
-msgid "Insert unnumbered entry"
-msgstr "Вмъкване на неномерирана позиция"
-
-#: src/control/Control.Menubar.js:132
-msgid "Restart numbering"
-msgstr "Започване на номерирането отначало"
-
-#: src/control/Control.Menubar.js:134
-msgid "To next paragraph in level"
-msgstr "Към следващия абзац в нивото"
-
-#: src/control/Control.Menubar.js:135
-msgid "To previous paragraph in level"
-msgstr "Към предишния абзац в нивото"
-
-#: src/control/Control.Menubar.js:136
-msgid "Continue previous numbering"
-msgstr "Продължаване на предишното номериране"
-
-#: src/control/Control.Menubar.js:137
-msgid "Clear direct formatting"
-msgstr "Изчистване на прякото форматиране"
-
-#: src/control/Control.Menubar.js:138
-msgid "Page"
-msgstr "Страница"
-
-#: src/control/Control.Menubar.js:139
-#: src/control/Control.Menubar.js:141
-#: src/control/Control.Menubar.js:143
-#: src/control/Control.Menubar.js:145
-msgid "Portrait"
-msgstr "Портрет"
-
-#: src/control/Control.Menubar.js:140
-#: src/control/Control.Menubar.js:142
-#: src/control/Control.Menubar.js:144
-#: src/control/Control.Menubar.js:146
-msgid "Landscape"
-msgstr "Пейзаж"
-
-#: src/control/Control.Menubar.js:148
-#: src/control/Control.Menubar.js:207
-msgid "Tables"
-msgstr "Таблици"
-
-#: src/control/Control.Menubar.js:150
-#: src/control/Control.Menubar.js:209
-msgid "Rows before"
-msgstr "Редове преди"
-
-#: src/control/Control.Menubar.js:151
-#: src/control/Control.Menubar.js:210
-msgid "Rows after"
-msgstr "Редове след"
-
-#: src/control/Control.Menubar.js:153
-#: src/control/Control.Menubar.js:212
-msgid "Columns left"
-msgstr "Колони отляво"
-
-#: src/control/Control.Menubar.js:154
-#: src/control/Control.Menubar.js:213
-msgid "Columns right"
-msgstr "Колони отдясно"
-
-#: src/control/Control.Menubar.js:155
-#: src/control/Control.Menubar.js:214
-msgid "Delete"
-msgstr "Изтриване"
-
-#: src/control/Control.Menubar.js:156
-#: src/control/Control.Menubar.js:215
-msgid "Rows"
-msgstr "Редове"
-
-#: src/control/Control.Menubar.js:157
-#: src/control/Control.Menubar.js:216
-msgid "Columns"
-msgstr "Колони"
-
-#: src/control/Control.Menubar.js:158
-#: src/control/Control.Menubar.js:160
-msgid "Table"
-msgstr "Таблица"
-
-#: src/control/Control.Menubar.js:159
-msgid "Select"
-msgstr "Избиране"
-
-#: src/control/Control.Menubar.js:161
-#: src/control/Control.Menubar.js:261
-msgid "Row"
-msgstr "Ред"
-
-#: src/control/Control.Menubar.js:162
-#: src/control/Control.Menubar.js:262
-msgid "Column"
-msgstr "Колона"
-
-#: src/control/Control.Menubar.js:163
-msgid "Cell"
-msgstr "Клетка"
-
-#: src/control/Control.Menubar.js:164
-#: src/control/Control.Menubar.js:217
-msgid "Merge cells"
-msgstr "Сливане на клетки"
-
-#: src/control/Control.Menubar.js:176
-#: src/control/Control.Menubar.js:242
-#: src/control/Control.Menubar.js:293
-msgid "Automatic Spell Checking"
-msgstr ""
-
-#: src/control/Control.Menubar.js:177
-msgid "Language"
-msgstr ""
-
-#: src/control/Control.Menubar.js:178
-msgid "Reset to Default Language"
-msgstr ""
-
-#: src/control/Control.Menubar.js:166
-#: src/control/Control.Menubar.js:226
-#: src/control/Control.Menubar.js:273
-msgid "Help"
-msgstr "Помощ"
-
-#: src/control/Control.Menubar.js:167
-#: src/control/Control.Menubar.js:227
-#: src/control/Control.Menubar.js:274
+#: src/control/Control.Menubar.js:220 src/control/Control.Menubar.js:300
+#: src/control/Control.Menubar.js:392
 msgid "Keyboard shortcuts"
 msgstr "Клавишни комбинации"
 
-#: src/control/Control.Menubar.js:168
-#: src/control/Control.Menubar.js:228
-#: src/control/Control.Menubar.js:275
+#: src/control/Control.Menubar.js:221 src/control/Control.Menubar.js:301
+#: src/control/Control.Menubar.js:393
 msgid "About"
 msgstr "За програмата"
 
-#: dist/toolbar/toolbar.js:527
-#: src/control/Control.Menubar.js:170
-#: src/control/Control.Menubar.js:230
-#: src/control/Control.Menubar.js:277
+#: src/control/Control.Menubar.js:223 src/control/Control.Menubar.js:303
+#: src/control/Control.Menubar.js:395
 msgid "Close document"
 msgstr "Затваряне на документа"
 
-#: src/control/Control.Menubar.js:180
+#: src/control/Control.Menubar.js:234
 msgid "ODF presentation (.odp)"
 msgstr "ODF – презентация (.odp)"
 
-#: src/control/Control.Menubar.js:181
+#: src/control/Control.Menubar.js:235
 msgid "Microsoft Powerpoint 2003 (.ppt)"
 msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:182
+#: src/control/Control.Menubar.js:236
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "Microsoft Powerpoint (.pptx)"
 
-#: src/control/Control.Menubar.js:219
-msgid "Slide"
-msgstr "Кадър"
-
-#: src/control/Control.Menubar.js:220
-msgid "New slide"
-msgstr "Нов кадър"
-
-#: src/control/Control.Menubar.js:240
+#: src/control/Control.Menubar.js:314
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF – електронна таблица (.ods)"
 
-#: src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:315
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "Microsoft Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:316
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:266
-msgid "Cells"
-msgstr "Клетки"
+#: src/control/Control.Menubar.js:460
+msgid "Reset to Default Language"
+msgstr "Връщане на подразбирания език"
 
-#: src/control/Control.Menubar.js:267
-msgid "Insert row"
-msgstr "Вмъкване на ред"
-
-#: src/control/Control.Menubar.js:268
-msgid "Insert column"
-msgstr "Вмъкване на колона"
-
-#: src/control/Control.Menubar.js:270
-#: src/control/Control.RowHeader.js:44
-msgid "Delete row"
-msgstr "Изтриване на ред"
-
-#: src/control/Control.Menubar.js:497
-msgid "Find"
-msgstr ""
-
-#: src/control/Control.Menubar.js:505
-msgid "Replace with"
-msgstr ""
-
-#: src/control/Control.Menubar.js:522
-msgid "Replace"
-msgstr ""
-
-#: src/control/Control.Menubar.js:527
-msgid "Replace All"
-msgstr ""
-
-#: src/control/Control.Menubar.js:477
+#: src/control/Control.Menubar.js:723
 msgid "Are you sure you want to delete this slide?"
 msgstr "Наистина ли искате да изтриете този кадър?"
-
-#: src/control/Control.MetricInput.js:38
-msgid "(100th/mm)"
-msgstr "(стотна/мм)"
-
-#: src/control/Control.MetricInput.js:44
-msgid "Add: "
-msgstr "Добавяне: "
-
-#: src/control/Control.MetricInput.js:61
-msgid "Default value"
-msgstr "Подразбирана стойност"
-
-#: src/control/Control.MetricInput.js:68
-msgid "Submit"
-msgstr "Подаване"
-
-#: src/control/Control.RowHeader.js:37
-msgid "Insert row above"
-msgstr "Вмъкване на ред отгоре"
-
-#: src/control/Control.RowHeader.js:51
-msgid "Optimal Height"
-msgstr "Оптимална височина"
-
-#: src/control/Control.RowHeader.js:58
-msgid "Hide Rows"
-msgstr "Скриване на редове"
-
-#: src/control/Control.RowHeader.js:65
-msgid "Show Rows"
-msgstr "Показване на редове"
-
-#: src/control/Control.RowHeader.js:78
-msgid "Optimal Row Height"
-msgstr "Оптимална височина на редове"
 
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
@@ -2603,150 +744,167 @@ msgstr "Превъртане на анотациите нагоре"
 msgid "Scroll down annotations"
 msgstr "Превъртане на анотациите надолу"
 
-#: src/control/Control.Tabs.js:46
+#: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
 msgstr "Вмъкване на лист преди този"
 
-#: src/control/Control.Tabs.js:47
+#: src/control/Control.Tabs.js:48
 msgid "Insert sheet after this"
 msgstr "Вмъкване на лист след този"
 
-#: src/control/Control.Tabs.js:48
-msgid "Delete sheet"
-msgstr "Изтриване на лист"
-
-#: src/control/Control.Tabs.js:52
+#: src/control/Control.Tabs.js:53
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "Наистина ли искате да изтриете лист %sheet%?"
 
-#: src/control/Control.Tabs.js:61
-msgid "Rename sheet"
-msgstr "Преименуване на лист"
-
-#: src/control/Control.Tabs.js:65
+#: src/control/Control.Tabs.js:66
 msgid "Enter new sheet name"
 msgstr "Въведете ново име на листа"
 
-#: src/control/Toolbar.js:74
-#: src/control/Toolbar.js:83
+#: src/control/Toolbar.js:74 src/control/Toolbar.js:83
 msgid "Downloading..."
 msgstr "Протича изтегляне..."
 
-#: src/control/Toolbar.js:246
+#: src/control/Toolbar.js:98 src/map/Map.js:1043
+msgid "Saving..."
+msgstr "Протича записване..."
+
+#: src/control/Toolbar.js:239
 msgid "This version of %productName is powered by"
 msgstr "Тази версия на %productName се поддържа от"
 
-#: src/core/Socket.js:30
+#: src/core/Socket.js:42
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Възникна проблем при свързване с LibreOffice Online: "
 
-#: src/core/Socket.js:188
+#: src/core/Socket.js:42
+msgid "Cannot create websocket, please restart your browser."
+msgstr "Не може да се създаде уебсокет, моля, рестартирайте браузъра."
+
+#: src/core/Socket.js:228
 msgid "Unsupported server version."
 msgstr "Неподдържана версия на сървъра."
 
-#: src/core/Socket.js:226
+#: src/core/Socket.js:279
 msgid "Session terminated by document owner"
 msgstr "Сесията е прекратена от собственика на документа"
 
-#: src/core/Socket.js:261
+#: src/core/Socket.js:283
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Неактивен документ - щракнете за презареждане и редактиране"
 
-#: src/core/Socket.js:229
+#: src/core/Socket.js:290
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Сървърът спира за техническо обслужване (извършва се автозаписване)"
 
-#: src/core/Socket.js:272
+#: src/core/Socket.js:294
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Възникна проблем при свързване с документа"
 
-#: src/core/Socket.js:232
+#: src/core/Socket.js:298
 msgid "Server is recycling and will be available shortly"
 msgstr "Сървърът се рестартира и ще бъде достъпен скоро"
 
-#: src/core/Socket.js:306
+#: src/core/Socket.js:329
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Документът е променен в хранилището. Новата версия се зарежда. Вашата версия "
+"е запазена като предишна редакция."
 
-#: src/core/Socket.js:418
+#: src/core/Socket.js:335
 msgid ""
-"Document has been changed in storage. Do you want to discard your changes, "
-"and load the document from the storage?"
+"Restoring older revision. Any unsaved changes will be available in version "
+"history"
 msgstr ""
+"Възстановява се по-стара версия. Незаписаните промени ще са достъпни в "
+"хронологията на версиите"
 
-#: src/core/Socket.js:420
-msgid "Discard changes"
+#: src/core/Socket.js:453
+msgid ""
+"Document has been changed in storage. What would you like to do with your "
+"unsaved changes?"
 msgstr ""
+"Документът е бил променен в хранилището. Какво искате да направите с "
+"незаписаните си промени?"
 
-#: src/core/Socket.js:421
-msgid "Overwrite document"
-msgstr ""
+#: src/core/Socket.js:458
+msgid "Discard"
+msgstr "Отхвърляне"
 
-#: src/core/Socket.js:348
+#: src/core/Socket.js:463
+msgid "Overwrite"
+msgstr "Презаписване"
+
+#: src/core/Socket.js:468
+msgid "Save to new file"
+msgstr "Записване в нов файл"
+
+#: src/core/Socket.js:535
 msgid "Document requires password to view."
 msgstr "За разглеждане на документа се изисква парола."
 
-#: src/core/Socket.js:351
+#: src/core/Socket.js:538
 msgid "Document requires password to modify."
 msgstr "За променяне на документа се изисква парола."
 
-#: src/core/Socket.js:353
+#: src/core/Socket.js:540
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Изберете Отказ, за да го отворите само за разглеждане."
 
-#: src/core/Socket.js:357
+#: src/core/Socket.js:544
 msgid "Wrong password provided. Please try again."
 msgstr "Въведена е погрешна парола. Моля, опитайте отново."
 
-#: src/core/Socket.js:420
+#: src/core/Socket.js:657
 msgid "Connecting..."
 msgstr "Протича свързване..."
 
-#: src/core/Socket.js:542
+#: src/core/Socket.js:806
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Не е възможно свързване с документа. Моля, опитайте отново."
 
-#: src/layer/marker/Annotation.js:156
+#: src/layer/marker/Annotation.js:193
 msgid "Accept change"
 msgstr "Приемане на промяната"
 
-#: src/layer/marker/Annotation.js:161
+#: src/layer/marker/Annotation.js:198
 msgid "Reject change"
 msgstr "Отхвърляне на промяната"
 
-#: src/layer/marker/Annotation.js:169
+#: src/layer/marker/Annotation.js:207
 msgid "Open menu"
 msgstr "Отваряне на менюто"
 
-#: src/layer/tile/TileLayer.js:182
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:204
+msgid "Reply"
+msgstr "Отговор"
+
+#: src/layer/tile/TileLayer.js:198
 msgid "Modify"
 msgstr "Променяне"
 
-#: src/layer/tile/TileLayer.js:194
+#: src/layer/tile/TileLayer.js:210
 msgid "Remove"
 msgstr "Премахване"
 
-#: src/map/Map.js:131
+#: src/map/Map.js:142
 msgid "Initializing..."
 msgstr "Протича инициализиране..."
 
-#: src/map/Map.js:820
+#: src/map/Map.js:907
 msgid "Inactive document - please click to resume editing"
 msgstr "Неактивен документ - щракнете за редактиране"
 
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:939
-msgid "Saving..."
-msgstr "Протича записване..."
-
-#: src/map/Map.js:942
+#: src/map/Map.js:1046
 msgid "Loading..."
 msgstr "Протича зареждане..."
 
-#: src/map/handler/Map.FileInserter.js:54
+#: src/map/handler/Map.FileInserter.js:60
 msgid "Uploading..."
 msgstr "Протича качване..."
+
+#~ msgid "%user has left"
+#~ msgstr "%user се изключи"

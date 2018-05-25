@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:14+0000\n"
+"POT-Creation-Date: 2018-05-25 14:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,928 +10,936 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.3\n"
+"X-Generator: Translate Toolkit 2.2.4\n"
+"X-Pootle-Revision: 3200752\n"
 "X-Pootle-Path: /ko/libo_online/loleaflet-help-ko.po\n"
-"X-Pootle-Revision: 826732\n"
 
-#: dist%2Floleaflet-help.html+div.h1%3A25
+#: html/loleaflet-help.html+div.h1:25-5
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "키보드 단축키"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A27
+#: html/loleaflet-help.html+div.div.h2:27-9
 msgid "General Keyboard Shortcuts"
-msgstr ""
+msgstr "표준 키보드 단축키"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
+#: html/loleaflet-help.html+div.div.table.tr.td:29-18
 msgid "Undo"
-msgstr ""
+msgstr "실행 취소"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A29
+#: html/loleaflet-help.html+div.div.table.tr.td:29-49
 msgid "Ctrl + Z"
-msgstr ""
+msgstr "Ctrl + Z"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
+#: html/loleaflet-help.html+div.div.table.tr.td:30-18
 msgid "Redo"
-msgstr ""
+msgstr "재실행"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A30
+#: html/loleaflet-help.html+div.div.table.tr.td:30-49
 msgid "Ctrl + Y"
-msgstr ""
+msgstr "Ctrl + Y"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
+#: html/loleaflet-help.html+div.div.table.tr.td:31-18
 msgid "Cut"
-msgstr ""
+msgstr "잘라내기"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A31
+#: html/loleaflet-help.html+div.div.table.tr.td:31-48
 msgid "Ctrl + X"
-msgstr ""
+msgstr "Ctrl + X"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
+#: html/loleaflet-help.html+div.div.table.tr.td:32-18
 msgid "Paste as unformatted text"
-msgstr ""
+msgstr "서식없는 텍스트 붙여넣기"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A32
+#: html/loleaflet-help.html+div.div.table.tr.td:32-70
 msgid "Ctrl + Alt + Shift + V"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + V"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
+#: html/loleaflet-help.html+div.div.table.tr.td:33-18
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "인쇄 (PDF로 다운로드)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A33
+#: html/loleaflet-help.html+div.div.table.tr.td:33-68
 msgid "Ctrl + P"
-msgstr ""
+msgstr "Ctrl + P"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
+#: html/loleaflet-help.html+div.div.table.tr.td:34-18
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "키보드 단축키 도움말 표시"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A34
+#: html/loleaflet-help.html+div.div.table.tr.td:34-80
 msgid "Ctrl + Shift + ?"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A38
-#: dist%2Floleaflet-help.html+div.div.h2%3A160
+#: html/loleaflet-help.html+div.div.h2:38-9
+#: html/loleaflet-help.html+div.div.h2:160-9
 msgid "Text formatting"
-msgstr ""
+msgstr "텍스트 서식"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
+#: html/loleaflet-help.html+div.div.table.tr.td:40-18
+#: html/loleaflet-help.html+div.div.table.tr.td:137-18
+#: html/loleaflet-help.html+div.div.table.tr.td:162-18
 msgid "Bold"
-msgstr ""
+msgstr "굵게"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A40
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A137
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A162
+#: html/loleaflet-help.html+div.div.table.tr.td:40-49
+#: html/loleaflet-help.html+div.div.table.tr.td:137-49
+#: html/loleaflet-help.html+div.div.table.tr.td:162-49
 msgid "Ctrl + B"
-msgstr ""
+msgstr "Ctrl + B"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
+#: html/loleaflet-help.html+div.div.table.tr.td:41-18
+#: html/loleaflet-help.html+div.div.table.tr.td:138-18
+#: html/loleaflet-help.html+div.div.table.tr.td:163-18
 msgid "Italic"
-msgstr ""
+msgstr "이탤릭"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A41
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A138
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A163
+#: html/loleaflet-help.html+div.div.table.tr.td:41-51
+#: html/loleaflet-help.html+div.div.table.tr.td:138-51
+#: html/loleaflet-help.html+div.div.table.tr.td:163-51
 msgid "Ctrl + I"
-msgstr ""
+msgstr "Ctrl + I"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
+#: html/loleaflet-help.html+div.div.table.tr.td:42-18
+#: html/loleaflet-help.html+div.div.table.tr.td:139-18
+#: html/loleaflet-help.html+div.div.table.tr.td:164-18
 msgid "Underline"
-msgstr ""
+msgstr "밑줄"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A42
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A139
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A164
+#: html/loleaflet-help.html+div.div.table.tr.td:42-54
+#: html/loleaflet-help.html+div.div.table.tr.td:139-54
+#: html/loleaflet-help.html+div.div.table.tr.td:164-54
 msgid "Ctrl + U"
-msgstr ""
+msgstr "Ctrl + U"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
+#: html/loleaflet-help.html+div.div.table.tr.td:43-18
 msgid "Double Underline"
-msgstr ""
+msgstr "이중 밑줄"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A43
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
+#: html/loleaflet-help.html+div.div.table.tr.td:43-61
+#: html/loleaflet-help.html+div.div.table.tr.td:144-54
 msgid "Ctrl + D"
-msgstr ""
+msgstr "Ctrl + D"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
+#: html/loleaflet-help.html+div.div.table.tr.td:44-18
+#: html/loleaflet-help.html+div.div.table.tr.td:140-18
+#: html/loleaflet-help.html+div.div.table.tr.td:165-18
 msgid "Strikethrough"
-msgstr ""
+msgstr "취소선"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A44
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A140
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A165
+#: html/loleaflet-help.html+div.div.table.tr.td:44-58
+#: html/loleaflet-help.html+div.div.table.tr.td:140-58
+#: html/loleaflet-help.html+div.div.table.tr.td:165-58
 msgid "Ctrl + Alt + 5"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
+#: html/loleaflet-help.html+div.div.table.tr.td:45-18
+#: html/loleaflet-help.html+div.div.table.tr.td:166-18
 msgid "Superscript"
-msgstr ""
+msgstr "위 첨자"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A45
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A166
+#: html/loleaflet-help.html+div.div.table.tr.td:45-56
+#: html/loleaflet-help.html+div.div.table.tr.td:166-56
 msgid "Ctrl + Shift + P"
-msgstr ""
+msgstr "Ctrl + Shift + P"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
+#: html/loleaflet-help.html+div.div.table.tr.td:46-18
+#: html/loleaflet-help.html+div.div.table.tr.td:167-18
 msgid "Subscript"
-msgstr ""
+msgstr "아래 첨자"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A46
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A167
+#: html/loleaflet-help.html+div.div.table.tr.td:46-54
+#: html/loleaflet-help.html+div.div.table.tr.td:167-54
 msgid "Ctrl + Shift + B"
-msgstr ""
+msgstr "Ctrl + Shift + B"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
+#: html/loleaflet-help.html+div.div.table.tr.td:47-18
+#: html/loleaflet-help.html+div.div.table.tr.td:141-18
 msgid "Remove direct formatting"
-msgstr ""
+msgstr "직접 지정한 서식 삭제"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A47
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A141
+#: html/loleaflet-help.html+div.div.table.tr.td:47-69
+#: html/loleaflet-help.html+div.div.table.tr.td:141-69
 msgid "Ctrl + M"
-msgstr ""
+msgstr "Ctrl + M"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A49
-#: dist%2Floleaflet-help.html+div.div.h2%3A170
+#: html/loleaflet-help.html+div.div.h2:49-9
+#: html/loleaflet-help.html+div.div.h2:170-9
 msgid "Paragraph formatting"
-msgstr ""
+msgstr "단락 서식 지정"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
+#: html/loleaflet-help.html+div.div.table.tr.td:51-18
+#: html/loleaflet-help.html+div.div.table.tr.td:146-18
+#: html/loleaflet-help.html+div.div.table.tr.td:172-18
 msgid "Align Center"
-msgstr ""
+msgstr "가운데 맞춤"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A51
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A146
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A172
+#: html/loleaflet-help.html+div.div.table.tr.td:51-57
+#: html/loleaflet-help.html+div.div.table.tr.td:146-57
+#: html/loleaflet-help.html+div.div.table.tr.td:172-57
 msgid "Ctrl + E"
-msgstr ""
+msgstr "Ctrl + E"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
+#: html/loleaflet-help.html+div.div.table.tr.td:52-18
+#: html/loleaflet-help.html+div.div.table.tr.td:147-18
+#: html/loleaflet-help.html+div.div.table.tr.td:173-18
 msgid "Align Left"
-msgstr ""
+msgstr "왼쪽 맞춤"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A52
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A147
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A173
+#: html/loleaflet-help.html+div.div.table.tr.td:52-55
+#: html/loleaflet-help.html+div.div.table.tr.td:147-55
+#: html/loleaflet-help.html+div.div.table.tr.td:173-55
 msgid "Ctrl + L"
-msgstr ""
+msgstr "Ctrl + L"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
+#: html/loleaflet-help.html+div.div.table.tr.td:53-18
+#: html/loleaflet-help.html+div.div.table.tr.td:148-18
+#: html/loleaflet-help.html+div.div.table.tr.td:174-18
 msgid "Align Right"
-msgstr ""
+msgstr "오른쪽 맞춤"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A53
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A148
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A174
+#: html/loleaflet-help.html+div.div.table.tr.td:53-56
+#: html/loleaflet-help.html+div.div.table.tr.td:148-56
+#: html/loleaflet-help.html+div.div.table.tr.td:174-56
 msgid "Ctrl + R"
-msgstr ""
+msgstr "Ctrl + R"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
+#: html/loleaflet-help.html+div.div.table.tr.td:54-18
+#: html/loleaflet-help.html+div.div.table.tr.td:149-18
+#: html/loleaflet-help.html+div.div.table.tr.td:175-18
 msgid "Justify"
-msgstr ""
+msgstr "양쪽 맞춤"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A54
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A149
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A175
+#: html/loleaflet-help.html+div.div.table.tr.td:54-52
+#: html/loleaflet-help.html+div.div.table.tr.td:149-52
+#: html/loleaflet-help.html+div.div.table.tr.td:175-52
 msgid "Ctrl + J"
-msgstr ""
+msgstr "Ctrl + J"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
+#: html/loleaflet-help.html+div.div.table.tr.td:55-18
 msgid "Apply Default paragraph style"
-msgstr ""
+msgstr "기본 단락 스타일 적용"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A55
+#: html/loleaflet-help.html+div.div.table.tr.td:55-74
 msgid "Ctrl + 0"
-msgstr ""
+msgstr "Ctrl + 0"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
+#: html/loleaflet-help.html+div.div.table.tr.td:56-18
 msgid "Apply Heading 1 paragraph style"
-msgstr ""
+msgstr "제목 1 단락 스타일 적용"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A56
+#: html/loleaflet-help.html+div.div.table.tr.td:56-76
 msgid "Ctrl + 1"
-msgstr ""
+msgstr "Ctrl + 1"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
+#: html/loleaflet-help.html+div.div.table.tr.td:57-18
 msgid "Apply Heading 2 paragraph style"
-msgstr ""
+msgstr "제목 2 단락 스타일을 적용"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A57
+#: html/loleaflet-help.html+div.div.table.tr.td:57-76
 msgid "Ctrl + 2"
-msgstr ""
+msgstr "Ctrl + 2"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
+#: html/loleaflet-help.html+div.div.table.tr.td:58-18
 msgid "Apply Heading 3 paragraph style"
-msgstr ""
+msgstr "제목 3 단락 스타일 적용"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A58
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
+#: html/loleaflet-help.html+div.div.table.tr.td:58-76
+#: html/loleaflet-help.html+div.div.table.tr.td:150-69
 msgid "Ctrl + 3"
-msgstr ""
+msgstr "Ctrl + 3"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
+#: html/loleaflet-help.html+div.div.table.tr.td:59-18
 msgid "Apply Heading 4 paragraph style"
-msgstr ""
+msgstr "제목 4 단락 스타일을 적용"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A59
+#: html/loleaflet-help.html+div.div.table.tr.td:59-76
 msgid "Ctrl + 4"
-msgstr ""
+msgstr "Ctrl + 4"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
+#: html/loleaflet-help.html+div.div.table.tr.td:60-18
 msgid "Apply Heading 5 paragraph style"
-msgstr ""
+msgstr "제목 5 단락 스타일을 적용"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A60
+#: html/loleaflet-help.html+div.div.table.tr.td:60-76
 msgid "Ctrl + 5"
-msgstr ""
+msgstr "Ctrl + 5"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A62
+#: html/loleaflet-help.html+div.div.h2:62-9
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "문서의 텍스트 선택 및 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
+#: html/loleaflet-help.html+div.div.table.tr.td:64-18
+#: html/loleaflet-help.html+div.div.table.tr.td:145-18
+#: html/loleaflet-help.html+div.div.table.tr.td:168-18
+#: html/loleaflet-help.html+div.div.table.tr.td:181-18
 msgid "Select All"
-msgstr ""
+msgstr "모두 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A64
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A145
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A168
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A181
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
+#: html/loleaflet-help.html+div.div.table.tr.td:64-55
+#: html/loleaflet-help.html+div.div.table.tr.td:102-18
+#: html/loleaflet-help.html+div.div.table.tr.td:145-55
+#: html/loleaflet-help.html+div.div.table.tr.td:168-55
+#: html/loleaflet-help.html+div.div.table.tr.td:181-55
+#: html/loleaflet-help.html+div.div.table.tr.td:213-79
 msgid "Ctrl + A"
-msgstr ""
+msgstr "Ctrl + A"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
+#: html/loleaflet-help.html+div.div.table.tr.td:65-18
+#: html/loleaflet-help.html+div.div.table.tr.td:182-18
 msgid "Move cursor to the left"
-msgstr ""
+msgstr "커서를 왼쪽으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A65
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A182
+#: html/loleaflet-help.html+div.div.table.tr.td:65-68
+#: html/loleaflet-help.html+div.div.table.tr.td:182-68
 msgid "Arrow Left"
-msgstr ""
+msgstr "왼쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
+#: html/loleaflet-help.html+div.div.table.tr.td:66-18
+#: html/loleaflet-help.html+div.div.table.tr.td:183-18
 msgid "Move cursor with selection to the left"
-msgstr ""
+msgstr "선택된 항목에 있는 커서를 왼쪽으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A66
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A183
+#: html/loleaflet-help.html+div.div.table.tr.td:66-83
+#: html/loleaflet-help.html+div.div.table.tr.td:183-83
 msgid "Shift + Arrow Left"
-msgstr ""
+msgstr "Shift + 왼쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
+#: html/loleaflet-help.html+div.div.table.tr.td:67-18
+#: html/loleaflet-help.html+div.div.table.tr.td:184-18
 msgid "Go to beginning of a word"
-msgstr ""
+msgstr "단어 시작으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A67
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A184
+#: html/loleaflet-help.html+div.div.table.tr.td:67-70
+#: html/loleaflet-help.html+div.div.table.tr.td:184-70
 msgid "Ctrl + Arrow Left"
-msgstr ""
+msgstr "Ctrl + 왼쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
+#: html/loleaflet-help.html+div.div.table.tr.td:68-18
+#: html/loleaflet-help.html+div.div.table.tr.td:185-18
 msgid "Select to the left word by word"
-msgstr ""
+msgstr "단어 단위로 왼쪽 단어 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A68
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A185
+#: html/loleaflet-help.html+div.div.table.tr.td:68-76
+#: html/loleaflet-help.html+div.div.table.tr.td:185-76
 msgid "Ctrl + Shift + Arrow Left"
-msgstr ""
+msgstr "Ctrl + Shift + 왼쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
+#: html/loleaflet-help.html+div.div.table.tr.td:69-18
+#: html/loleaflet-help.html+div.div.table.tr.td:186-18
 msgid "Move cursor to the right"
-msgstr ""
+msgstr "커서를 오른쪽으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A69
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A186
+#: html/loleaflet-help.html+div.div.table.tr.td:69-69
+#: html/loleaflet-help.html+div.div.table.tr.td:186-69
 msgid "Arrow Right"
-msgstr ""
+msgstr "오른쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
+#: html/loleaflet-help.html+div.div.table.tr.td:70-18
+#: html/loleaflet-help.html+div.div.table.tr.td:187-18
 msgid "Move cursor with selection to the right"
-msgstr ""
+msgstr "선택한 항목에 있는 커서를 오른쪽으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A70
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A187
+#: html/loleaflet-help.html+div.div.table.tr.td:70-84
+#: html/loleaflet-help.html+div.div.table.tr.td:187-84
 msgid "Shift + Arrow Right"
-msgstr ""
+msgstr "Shift + 오른쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
+#: html/loleaflet-help.html+div.div.table.tr.td:71-18
+#: html/loleaflet-help.html+div.div.table.tr.td:188-18
 msgid "Go to start of the next word"
-msgstr ""
+msgstr "다음 단어의 첫부분으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A71
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A188
+#: html/loleaflet-help.html+div.div.table.tr.td:71-73
+#: html/loleaflet-help.html+div.div.table.tr.td:188-73
 msgid "Ctrl + Arrow Right"
-msgstr ""
+msgstr "Ctrl + 오른쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
+#: html/loleaflet-help.html+div.div.table.tr.td:72-18
+#: html/loleaflet-help.html+div.div.table.tr.td:189-18
 msgid "Select to the right word by word"
-msgstr ""
+msgstr "단어 단위로 오른쪽 단어 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A72
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A189
+#: html/loleaflet-help.html+div.div.table.tr.td:72-77
+#: html/loleaflet-help.html+div.div.table.tr.td:189-77
 msgid "Ctrl + Shift + Arrow Right"
-msgstr ""
+msgstr "Ctrl + Shift + 오른쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
+#: html/loleaflet-help.html+div.div.table.tr.td:73-18
+#: html/loleaflet-help.html+div.div.table.tr.td:190-18
 msgid "Move cursor up one line"
-msgstr ""
+msgstr "커서를 한 줄 위로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A73
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A190
+#: html/loleaflet-help.html+div.div.table.tr.td:73-68
+#: html/loleaflet-help.html+div.div.table.tr.td:190-68
 msgid "Arrow Up"
-msgstr ""
+msgstr "위쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
+#: html/loleaflet-help.html+div.div.table.tr.td:74-18
+#: html/loleaflet-help.html+div.div.table.tr.td:191-18
 msgid "Select lines in upwards direction"
-msgstr ""
+msgstr "위쪽으로 줄 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A74
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A191
+#: html/loleaflet-help.html+div.div.table.tr.td:74-78
+#: html/loleaflet-help.html+div.div.table.tr.td:191-78
 msgid "Shift + Arrow Up"
-msgstr ""
+msgstr "Shift + 위쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
+#: html/loleaflet-help.html+div.div.table.tr.td:75-18
+#: html/loleaflet-help.html+div.div.table.tr.td:192-18
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr ""
+msgstr "커서를 이전 단락의 시작 부분으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A75
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A192
+#: html/loleaflet-help.html+div.div.table.tr.td:75-95
+#: html/loleaflet-help.html+div.div.table.tr.td:192-95
 msgid "Ctrl + Arrow Up"
-msgstr ""
+msgstr "Ctrl + 위쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
+#: html/loleaflet-help.html+div.div.table.tr.td:76-18
+#: html/loleaflet-help.html+div.div.table.tr.td:193-18
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "단락의 시작까지 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A76
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A193
+#: html/loleaflet-help.html+div.div.table.tr.td:76-77
+#: html/loleaflet-help.html+div.div.table.tr.td:193-77
 msgid "Ctrl + Shift + Arrow Up"
-msgstr ""
+msgstr "Ctrl + Shift + 위쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
+#: html/loleaflet-help.html+div.div.table.tr.td:77-18
+#: html/loleaflet-help.html+div.div.table.tr.td:194-18
 msgid "Move cursor down one line"
-msgstr ""
+msgstr "커서를 한 줄 아래로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A77
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A194
+#: html/loleaflet-help.html+div.div.table.tr.td:77-70
+#: html/loleaflet-help.html+div.div.table.tr.td:194-70
 msgid "Arrow Down"
-msgstr ""
+msgstr "아래쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
+#: html/loleaflet-help.html+div.div.table.tr.td:78-18
+#: html/loleaflet-help.html+div.div.table.tr.td:195-18
 msgid "Select lines in downwards direction"
-msgstr ""
+msgstr "아래쪽으로 줄 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A78
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A195
+#: html/loleaflet-help.html+div.div.table.tr.td:78-80
+#: html/loleaflet-help.html+div.div.table.tr.td:195-80
 msgid "Shift + Arrow Down"
-msgstr ""
+msgstr "Shift + 오른쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
+#: html/loleaflet-help.html+div.div.table.tr.td:79-18
+#: html/loleaflet-help.html+div.div.table.tr.td:196-18
 msgid "Move cursor to beginning of the next paragraph"
-msgstr ""
+msgstr "커서를 다음 단락의 시작 부분으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A79
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A196
+#: html/loleaflet-help.html+div.div.table.tr.td:79-91
+#: html/loleaflet-help.html+div.div.table.tr.td:196-91
 msgid "Ctrl + Arrow Down"
-msgstr ""
+msgstr "Ctrl + 아래쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
+#: html/loleaflet-help.html+div.div.table.tr.td:80-18
+#: html/loleaflet-help.html+div.div.table.tr.td:197-18
 msgid "Select to end of paragraph"
-msgstr ""
+msgstr "단락 끝까지 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A80
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A197
+#: html/loleaflet-help.html+div.div.table.tr.td:80-71
+#: html/loleaflet-help.html+div.div.table.tr.td:197-71
 msgid "Ctrl + Shift + Arrow Down"
-msgstr ""
+msgstr "Ctrl + Shift + 아래쪽 화살표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
+#: html/loleaflet-help.html+div.div.table.tr.td:81-18
+#: html/loleaflet-help.html+div.div.table.tr.td:198-18
 msgid "Go to beginning of line"
-msgstr ""
+msgstr "줄 시작으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A81
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A198
+#: html/loleaflet-help.html+div.div.table.tr.td:81-68
+#: html/loleaflet-help.html+div.div.table.tr.td:198-68
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
+#: html/loleaflet-help.html+div.div.table.tr.td:82-18
+#: html/loleaflet-help.html+div.div.table.tr.td:199-18
 msgid "Go and select to the beginning of a line"
-msgstr ""
+msgstr "줄 시작 부분까지 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A82
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A199
+#: html/loleaflet-help.html+div.div.table.tr.td:82-85
+#: html/loleaflet-help.html+div.div.table.tr.td:199-85
 msgid "Shift + Home"
-msgstr ""
+msgstr "Shift + Home"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
+#: html/loleaflet-help.html+div.div.table.tr.td:83-18
+#: html/loleaflet-help.html+div.div.table.tr.td:200-18
 msgid "Go to start of document"
-msgstr ""
+msgstr "문서 시작으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A83
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A200
+#: html/loleaflet-help.html+div.div.table.tr.td:83-68
+#: html/loleaflet-help.html+div.div.table.tr.td:103-18
+#: html/loleaflet-help.html+div.div.table.tr.td:200-68
 msgid "Ctrl + Home"
-msgstr ""
+msgstr "Ctrl + Home"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
+#: html/loleaflet-help.html+div.div.table.tr.td:84-18
 msgid "Go and select text to start of document"
-msgstr ""
+msgstr "문서 시작 부분까지 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A84
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
+#: html/loleaflet-help.html+div.div.table.tr.td:84-84
+#: html/loleaflet-help.html+div.div.table.tr.td:201-83
 msgid "Ctrl + Shift + Home"
-msgstr ""
+msgstr "Ctrl + Shift + Home"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
+#: html/loleaflet-help.html+div.div.table.tr.td:85-18
+#: html/loleaflet-help.html+div.div.table.tr.td:202-18
 msgid "Go to end of line"
-msgstr ""
+msgstr "줄 끝으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A85
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A202
+#: html/loleaflet-help.html+div.div.table.tr.td:85-62
+#: html/loleaflet-help.html+div.div.table.tr.td:202-62
 msgid "End"
-msgstr ""
+msgstr "End"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
+#: html/loleaflet-help.html+div.div.table.tr.td:86-18
+#: html/loleaflet-help.html+div.div.table.tr.td:203-18
 msgid "Go and select to the end of a line"
-msgstr ""
+msgstr "줄 끝까지 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A86
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A203
+#: html/loleaflet-help.html+div.div.table.tr.td:86-79
+#: html/loleaflet-help.html+div.div.table.tr.td:203-79
 msgid "Shift + End"
-msgstr ""
+msgstr "Shift + End"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
+#: html/loleaflet-help.html+div.div.table.tr.td:87-18
+#: html/loleaflet-help.html+div.div.table.tr.td:204-18
 msgid "Go to end of document"
-msgstr ""
+msgstr "문서 끝으로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A87
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A204
+#: html/loleaflet-help.html+div.div.table.tr.td:87-66
+#: html/loleaflet-help.html+div.div.table.tr.td:104-18
+#: html/loleaflet-help.html+div.div.table.tr.td:204-66
 msgid "Ctrl + End"
-msgstr ""
+msgstr "Ctrl + End"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
+#: html/loleaflet-help.html+div.div.table.tr.td:88-18
 msgid "Go and select text to end of document"
-msgstr ""
+msgstr "문서 끝까지 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A88
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
+#: html/loleaflet-help.html+div.div.table.tr.td:88-82
+#: html/loleaflet-help.html+div.div.table.tr.td:205-81
 msgid "Ctrl + Shift + End"
-msgstr ""
+msgstr "Ctrl + Shift + End"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
+#: html/loleaflet-help.html+div.div.table.tr.td:89-18
 msgid "Move the view up one page"
-msgstr ""
+msgstr "화면을 한 페이지 위로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A89
+#: html/loleaflet-help.html+div.div.table.tr.td:89-70
 msgid "PageUp"
-msgstr ""
+msgstr "PageUp"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
+#: html/loleaflet-help.html+div.div.table.tr.td:90-18
 msgid "Switch cursor between text and header"
-msgstr ""
+msgstr "본문과 머리글 편집 전환"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A90
+#: html/loleaflet-help.html+div.div.table.tr.td:90-82
 msgid "Ctrl + PageUp"
-msgstr ""
+msgstr "Ctrl + PageUp"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
+#: html/loleaflet-help.html+div.div.table.tr.td:91-18
 msgid "Extend the selection up one page"
-msgstr ""
+msgstr "한 페이지 위까지 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A91
+#: html/loleaflet-help.html+div.div.table.tr.td:91-77
 msgid "Shift + PageUp"
-msgstr ""
+msgstr "Shift + PageUp"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
+#: html/loleaflet-help.html+div.div.table.tr.td:92-18
 msgid "Move the view down one page"
-msgstr ""
+msgstr "화면을 한 페이지 아래로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A92
+#: html/loleaflet-help.html+div.div.table.tr.td:92-72
 msgid "PageDown"
-msgstr ""
+msgstr "PageDown"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
+#: html/loleaflet-help.html+div.div.table.tr.td:93-18
 msgid "Switch cursor between text and footer"
-msgstr ""
+msgstr "본문과 바닥글 편집 전환"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A93
+#: html/loleaflet-help.html+div.div.table.tr.td:93-82
 msgid "Ctrl + PageDown"
-msgstr ""
+msgstr "Ctrl + PageDown"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
+#: html/loleaflet-help.html+div.div.table.tr.td:94-18
 msgid "Extend the selection down one page"
-msgstr ""
+msgstr "한 페이지 아래까지 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A94
+#: html/loleaflet-help.html+div.div.table.tr.td:94-79
 msgid "Shift + PageDown"
-msgstr ""
+msgstr "Shift + PageDown"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
+#: html/loleaflet-help.html+div.div.table.tr.td:95-18
 msgid "Delete to beginning of word"
-msgstr ""
+msgstr "현재 위치부터 단어 시작 부분까지 삭제"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A95
+#: html/loleaflet-help.html+div.div.table.tr.td:95-72
 msgid "Ctrl + Backspace"
-msgstr ""
+msgstr "Ctrl + Backspace"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
+#: html/loleaflet-help.html+div.div.table.tr.td:96-18
 msgid "Delete to end of word"
-msgstr ""
+msgstr "현재 위치부터 단어 끝 부분까지 삭제"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A96
+#: html/loleaflet-help.html+div.div.table.tr.td:96-66
 msgid "Ctrl + Del"
-msgstr ""
+msgstr "Ctrl + Del"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
+#: html/loleaflet-help.html+div.div.table.tr.td:97-18
 msgid "Delete to beginning of sentence"
-msgstr ""
+msgstr "현재 위치부터 문장 시작 부분까지 삭제"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A97
+#: html/loleaflet-help.html+div.div.table.tr.td:97-76
 msgid "Ctrl + Shift + Backspace"
-msgstr ""
+msgstr "Ctrl + Shift + Backspace"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A98
+#: html/loleaflet-help.html+div.div.table.tr.td:98-18
 msgid "Delete to end of sentence"
-msgstr ""
+msgstr "현재 위치부터 문장 끝 부분까지 삭제"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A98
+#: html/loleaflet-help.html+div.div.table.tr.td:98-70
 msgid "Ctrl + Shift + Del"
-msgstr ""
+msgstr "Ctrl + Shift + Del"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A100
+#: html/loleaflet-help.html+div.div.h2:100-9
 msgid "Shortcut Keys for Tables"
-msgstr ""
+msgstr "단축키 표"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A102
+#: html/loleaflet-help.html+div.div.table.tr.td:102-54
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
-msgstr ""
+msgstr "현재 셀이 비어 있을 경우: 표 전체를 선택. 그 외: 현재 셀의 내용을 선택. 한번 더 실행하면 표 전체를 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A103
+#: html/loleaflet-help.html+div.div.table.tr.td:103-57
 msgid ""
 "If the active cell is empty: goes to the beginning of the table. Otherwise: "
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
+"현재 셀이 비어 있을 경우: 표의 시작으로 이동. 그 외: 처음 누르면 현재 셀의 시작으로 이동, 다시 누르면 현재 표의 시작으로 이동, "
+"세 번째로 누르면 문서 시작으로 이동."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A104
+#: html/loleaflet-help.html+div.div.table.tr.td:104-56
 msgid ""
 "If the active cell is empty: goes to the end of the table. Otherwise: first "
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
+"현재 셀이 비어 있을 경우: 표 끝으로 이동. 그 외: 처음 누르면 현재 셀의 끝으로 이동, 다시 누르면 표의 끝으로 이동, 다시 누르면 "
+"문서 끝으로 이동."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
+#: html/loleaflet-help.html+div.div.table.tr.td:105-18
 msgid "Ctrl + Tab"
-msgstr ""
+msgstr "Ctrl + Tab"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A105
+#: html/loleaflet-help.html+div.div.table.tr.td:105-56
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "Alt + Tab may be used instead."
-msgstr ""
+msgstr "탭 삽입하기(표 내에서만). 사용하는 윈도우 관리자에 따라 Alt + Tab 를 사용해야 할 수도 있습니다."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
+#: html/loleaflet-help.html+div.div.table.tr.td:106-18
 msgid "Alt + Arrow Keys"
-msgstr ""
+msgstr "Alt + 화살표 키"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A106
+#: html/loleaflet-help.html+div.div.table.tr.td:106-62
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
-msgstr ""
+msgstr "오른쪽/아래쪽 셀 모서리에서 열/행의 크기 증가/감소"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
+#: html/loleaflet-help.html+div.div.table.tr.td:107-18
 msgid "Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Alt + Shift + 화살표 키"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A107
+#: html/loleaflet-help.html+div.div.table.tr.td:107-70
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
-msgstr ""
+msgstr "왼쪽/위쪽 셀 모서리에서 열/행 크기 증가/감소"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
+#: html/loleaflet-help.html+div.div.table.tr.td:108-18
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr ""
+msgstr "Alt + Ctrl + 화살표 키"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A108
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
+#: html/loleaflet-help.html+div.div.table.tr.td:108-69
+#: html/loleaflet-help.html+div.div.table.tr.td:109-77
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "현재 셀의 크기 조정"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A109
+#: html/loleaflet-help.html+div.div.table.tr.td:109-18
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + 화살표 키"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
+#: html/loleaflet-help.html+div.div.table.tr.td:110-18
 msgid "Alt + Insert"
-msgstr ""
+msgstr "Alt + Insert"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A110
+#: html/loleaflet-help.html+div.div.table.tr.td:110-58
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
 "inserts cell"
-msgstr ""
+msgstr "3초간 삽입 모드. 화살표 키는 행/열 삽입, Ctrl + 화살표 키는 셀 삽입"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
+#: html/loleaflet-help.html+div.div.table.tr.td:111-18
 msgid "Alt + Del"
-msgstr ""
+msgstr "Alt + Del"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A111
+#: html/loleaflet-help.html+div.div.table.tr.td:111-55
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
 "merges cell with neighboring cell"
-msgstr ""
+msgstr "3초간 삭제 모드. 화살표 키는 행/열 삭제, Ctrl + 화살표 키는 근처 셀과 셀 병합"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A112
+#: html/loleaflet-help.html+div.div.table.tr.td:112-18
 msgid "Shift + Ctrl + Del"
-msgstr ""
+msgstr "Shift + Ctrl + Del"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A112
+#: html/loleaflet-help.html+div.div.table.tr.td.p:112-64
 msgid ""
 "If no whole cell is selected, the text from the cursor to the end of the "
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
+"셀 전체가 선택되지 않은 경우, 커서부터 현재 문장 끝까지 텍스트가 삭제됩니다. 커서가 셀 끝에 있고 셀 전체가 선택되지 않은 경우, "
+"다음 셀의 내용이 삭제됩니다."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A113
+#: html/loleaflet-help.html+div.div.table.tr.td.p:113-1
 msgid ""
 "If no whole cell is selected and the cursor is at the end of the table, the "
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
-msgstr ""
+msgstr "셀 전체가 선택되지 않았고 커서가 표의 끝에 있을 경우, 표 다음에 오는 단락이 삭제됩니다.(문서 마지막 단락인 경우 제외)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td.p%3A114
+#: html/loleaflet-help.html+div.div.table.tr.td.p:114-1
 msgid ""
 "If one or more cells are selected, the whole rows containing the selection "
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
+"하나 이상의 셀이 선택된 경우, 선택한 셀을 포함한 전체 행이 삭제됩니다. 모든 행이 완전하게 또는 부분적으로 선택되었다면 표 전체가 "
+"삭제됩니다."
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A117
+#: html/loleaflet-help.html+div.div.h2:117-9
 msgid "Word processor functions"
-msgstr ""
+msgstr "워드프로세서 기능"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
+#: html/loleaflet-help.html+div.div.table.tr.td:119-18
 msgid "Insert footnote"
-msgstr ""
+msgstr "각주 삽입"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A119
+#: html/loleaflet-help.html+div.div.table.tr.td:119-60
 msgid "Ctrl + Alt + F"
-msgstr ""
+msgstr "Ctrl + Alt + F"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
+#: html/loleaflet-help.html+div.div.table.tr.td:120-18
 msgid "Insert endnote"
-msgstr ""
+msgstr "미주 삽입"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A120
+#: html/loleaflet-help.html+div.div.table.tr.td:120-59
 msgid "Ctrl + Alt + D"
-msgstr ""
+msgstr "Ctrl + Alt + D"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
+#: html/loleaflet-help.html+div.div.table.tr.td:121-18
+#: html/loleaflet-help.html+div.div.table.tr.td:142-18
 msgid "Insert comment"
-msgstr ""
+msgstr "주석 삽입"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A121
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A142
+#: html/loleaflet-help.html+div.div.table.tr.td:121-59
+#: html/loleaflet-help.html+div.div.table.tr.td:142-59
 msgid "Ctrl + Alt + C"
-msgstr ""
+msgstr "Ctrl + Alt + C"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
+#: html/loleaflet-help.html+div.div.table.tr.td:123-18
 msgid "Insert soft hyphen"
-msgstr ""
+msgstr "사용자 지정 하이픈 삽입하기"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A123
+#: html/loleaflet-help.html+div.div.table.tr.td:123-63
 msgid "Ctrl + -"
-msgstr ""
+msgstr "Ctrl + -"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
+#: html/loleaflet-help.html+div.div.table.tr.td:124-18
 msgid "Insert non-breaking hyphen"
-msgstr ""
+msgstr "단어 잘림 방지 하이픈 삽입하기"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A124
+#: html/loleaflet-help.html+div.div.table.tr.td:124-71
 msgid "Ctrl + Shift + -"
-msgstr ""
+msgstr "Ctrl + Shift + -"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
+#: html/loleaflet-help.html+div.div.table.tr.td:126-18
 msgid "Insert non-breaking space"
-msgstr ""
+msgstr "줄 바꿈하지 않는 공백 삽입하기"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A126
+#: html/loleaflet-help.html+div.div.table.tr.td:126-70
 msgid "Ctrl + Shift + Space"
-msgstr ""
+msgstr "Ctrl + Shift + Space"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
+#: html/loleaflet-help.html+div.div.table.tr.td:127-18
 msgid "Insert line break"
-msgstr ""
+msgstr "줄 바꿈 삽입하기"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A127
+#: html/loleaflet-help.html+div.div.table.tr.td:127-62
 msgid "Shift + Enter"
-msgstr ""
+msgstr "Shift + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
+#: html/loleaflet-help.html+div.div.table.tr.td:128-18
 msgid "Manual page break"
-msgstr ""
+msgstr "수동 페이지 나누기"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A128
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
+#: html/loleaflet-help.html+div.div.table.tr.td:128-62
+#: html/loleaflet-help.html+div.div.table.tr.td:212-93
 msgid "Ctrl + Enter"
-msgstr ""
+msgstr "Ctrl + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
+#: html/loleaflet-help.html+div.div.table.tr.td:129-18
 msgid "Column break (in multicolumnar text)"
-msgstr ""
+msgstr "열 구분 (다중 열 텍스트에서)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A129
+#: html/loleaflet-help.html+div.div.table.tr.td:129-81
 msgid "Ctrl + Shift + Enter"
-msgstr ""
+msgstr "Ctrl + Shift + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
+#: html/loleaflet-help.html+div.div.table.tr.td:130-18
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
-msgstr ""
+msgstr "구역 앞뒤, 또는 표 앞에 새 단락을 직접 삽입하기"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A130
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A131
+#: html/loleaflet-help.html+div.div.table.tr.td:130-119
+#: html/loleaflet-help.html+div.div.table.tr.td:131-155
 msgid "Alt + Enter"
-msgstr ""
+msgstr "Alt + Enter"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A131
+#: html/loleaflet-help.html+div.div.table.tr.td:131-18
 msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
-msgstr ""
+msgstr "목록 안에 번호없는 새 단락 삽입하기.(커서가 목록 끝에 있을 때 제외)"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A135
+#: html/loleaflet-help.html+div.div.h2:135-9
 msgid "Cell formatting"
-msgstr ""
+msgstr "셀 서식 지정"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
+#: html/loleaflet-help.html+div.div.table.tr.td:143-18
 msgid "Display comment"
-msgstr ""
+msgstr "주석 표시"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A143
+#: html/loleaflet-help.html+div.div.table.tr.td:143-60
 msgid "Ctrl + F1"
-msgstr ""
+msgstr "Ctrl + F1"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A144
+#: html/loleaflet-help.html+div.div.table.tr.td:144-18
 msgid "Fill Down"
-msgstr ""
+msgstr "아래로 채우기"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A150
+#: html/loleaflet-help.html+div.div.table.tr.td:150-18
 msgid "Set Optimal Column Width"
-msgstr ""
+msgstr "최적의 열너비 설정"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
+#: html/loleaflet-help.html+div.div.table.tr.td:151-18
 msgid "Two decimal places, thousands separator"
-msgstr ""
+msgstr "소수점 이하 두자리, 천단위 구분기호"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A151
+#: html/loleaflet-help.html+div.div.table.tr.td:151-84
 msgid "Ctrl + Shift + 1"
-msgstr ""
+msgstr "Ctrl + Shift + 1"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
+#: html/loleaflet-help.html+div.div.table.tr.td:152-18
 msgid "Standard exponential format"
-msgstr ""
+msgstr "표준 지수 서식"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A152
+#: html/loleaflet-help.html+div.div.table.tr.td:152-72
 msgid "Ctrl + Shift + 2"
-msgstr ""
+msgstr "Ctrl + Shift + 2"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
+#: html/loleaflet-help.html+div.div.table.tr.td:153-18
 msgid "Standard date format"
-msgstr ""
+msgstr "표준 날짜 서식"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A153
+#: html/loleaflet-help.html+div.div.table.tr.td:153-65
 msgid "Ctrl + Shift + 3"
-msgstr ""
+msgstr "Ctrl + Shift + 3"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
+#: html/loleaflet-help.html+div.div.table.tr.td:154-18
 msgid "Standard currency format"
-msgstr ""
+msgstr "표준 통화 서식"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A154
+#: html/loleaflet-help.html+div.div.table.tr.td:154-69
 msgid "Ctrl + Shift + 4"
-msgstr ""
+msgstr "Ctrl + Shift + 4"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
+#: html/loleaflet-help.html+div.div.table.tr.td:155-18
 msgid "Standard percentage format (two decimal places)"
-msgstr ""
+msgstr "표준 백분율 서식 (소수점 이하 2자리)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A155
+#: html/loleaflet-help.html+div.div.table.tr.td:155-92
 msgid "Ctrl + Shift + 5"
-msgstr ""
+msgstr "Ctrl + Shift + 5"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
+#: html/loleaflet-help.html+div.div.table.tr.td:156-18
 msgid "Standard format"
-msgstr ""
+msgstr "표준 서식"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A156
+#: html/loleaflet-help.html+div.div.table.tr.td:156-60
 msgid "Ctrl + Shift + 6"
-msgstr ""
+msgstr "Ctrl + Shift + 6"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
+#: html/loleaflet-help.html+div.div.table.tr.td:176-18
 msgid "Demote list item (list item has to be selected)"
-msgstr ""
+msgstr "목록에서 항목 수준 내리기(항목을 선택해야 합니다.)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A176
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
+#: html/loleaflet-help.html+div.div.table.tr.td:176-92
+#: html/loleaflet-help.html+div.div.table.tr.td:210-99
 msgid "Tab"
-msgstr ""
+msgstr "탭"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
+#: html/loleaflet-help.html+div.div.table.tr.td:177-18
 msgid "Promote list item (list item has to be selected)"
-msgstr ""
+msgstr "목록에서 항목 수준 올리기(항목을 선택해야 합니다.)"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A177
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
+#: html/loleaflet-help.html+div.div.table.tr.td:177-93
+#: html/loleaflet-help.html+div.div.table.tr.td:211-107
 msgid "Shift + Tab"
-msgstr ""
+msgstr "Shift + Tab"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A179
+#: html/loleaflet-help.html+div.div.h2:179-9
 msgid "Text selection and navigation in a textbox"
-msgstr ""
+msgstr "텍스트 상자에서 텍스트 선택 및 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A201
+#: html/loleaflet-help.html+div.div.table.tr.td:201-18
 msgid "Go and select text to start of textbox"
-msgstr ""
+msgstr "텍스트 상자의 시작 부분까지 선택"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A205
+#: html/loleaflet-help.html+div.div.table.tr.td:205-18
 msgid "Go and select text to end of textbox"
-msgstr ""
+msgstr "텍스트 상자의 끝 부분까지 선택"
 
-#: dist%2Floleaflet-help.html+div.div.h2%3A207
+#: html/loleaflet-help.html+div.div.h2:207-9
 msgid "Slide / draw page keyboard shortcuts"
-msgstr ""
+msgstr "슬라이드 / 드로우 페이지의 키보드 단축키"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
+#: html/loleaflet-help.html+div.div.table.tr.td:209-18
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
-msgstr ""
+msgstr "현재 모드에서 벗어나기. 예) 편집모드에서 개체 선택 모드로 전환, 또는 개체 선택 모드에서 보기 모드로 전환"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A209
+#: html/loleaflet-help.html+div.div.table.tr.td:209-166
 msgid "Esc"
-msgstr ""
+msgstr "Esc"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A210
+#: html/loleaflet-help.html+div.div.table.tr.td:210-18
 msgid "Select objects in the order in which they were created"
-msgstr ""
+msgstr "개체를 만든 순서대로 선택합니다."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A211
+#: html/loleaflet-help.html+div.div.table.tr.td:211-18
 msgid "Select objects in the reverse order in which they were created"
-msgstr ""
+msgstr "개체를 만든 역순으로 선택합니다."
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A212
+#: html/loleaflet-help.html+div.div.table.tr.td:212-18
 msgid "Move to next text object on slide / drawing page"
-msgstr ""
+msgstr "슬라이드/드로우 페이지에서 다음 텍스트 개체로 이동"
 
-#: dist%2Floleaflet-help.html+div.div.table.tr.td%3A213
+#: html/loleaflet-help.html+div.div.table.tr.td:213-18
 msgid "Select all in slide / drawing page"
-msgstr ""
+msgstr "드라이드/드로우 페이지의 모든 내용 선택하기"
