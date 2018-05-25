@@ -395,6 +395,16 @@ var shapes = {
 		{img: 'starshapes_horizontal-scroll', uno: 'StarShapes.horizontal-scroll'},
 		{img: 'starshapes_signet', uno: 'StarShapes.signet'},
 		{img: 'starshapes_doorplate', uno: 'StarShapes.doorplate'}
+	],
+
+	'Callout': [
+		{img: 'calloutshapes_rectangular-callout', uno: 'CalloutShapes.rectangular-callout'},
+		{img: 'calloutshapes_round-rectangular-callout', uno: 'CalloutShapes.round-rectangular-callout'},
+		{img: 'calloutshapes_round-callout', uno: 'CalloutShapes.round-callout'},
+		{img: 'calloutshapes_cloud-callout', uno: 'CalloutShapes.cloud-callout'},
+		{img: 'calloutshapes_line-callout-1', uno: 'CalloutShapes.line-callout-1'},
+		{img: 'calloutshapes_line-callout-2', uno: 'CalloutShapes.line-callout-2'},
+		{img: 'calloutshapes_line-callout-3', uno: 'CalloutShapes.line-callout-3'}
 	]
 };
 

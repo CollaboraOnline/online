@@ -343,6 +343,14 @@ button.leaflet-control-search-next
 .w2ui-icon.starshapes_signet { background: url('images/lc_starshapes.signet.svg') no-repeat center !important; }
 .w2ui-icon.starshapes_doorplate { background: url('images/lc_starshapes.doorplate.svg') no-repeat center !important; }
 
+.w2ui-icon.calloutshapes_rectangular-callout { background: url('images/lc_calloutshapes.rectangular-callout.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_round-rectangular-callout { background: url('images/lc_calloutshapes.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_round-callout { background: url('images/lc_calloutshapes.round-callout.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_cloud-callout { background: url('images/lc_calloutshapes.cloud-callout.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_line-callout-1 { background: url('images/lc_calloutshapes.line-callout-1.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_line-callout-2 { background: url('images/lc_calloutshapes.line-callout-2.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_line-callout-3 { background: url('images/lc_calloutshapes.line-callout-3.svg') no-repeat center !important; }
+
 .w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
 .w2ui-icon.alignblock{ background: url('images/lc_alignblock.svg') no-repeat center !important; }
 .w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
