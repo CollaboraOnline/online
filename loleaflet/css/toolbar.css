@@ -298,6 +298,37 @@ button.leaflet-control-search-next
 .w2ui-icon.symbolshapes_octagon-bevel { background: url('images/lc_symbolshapes.octagon-bevel.svg') no-repeat center !important; }
 .w2ui-icon.symbolshapes_diamond-bevel { background: url('images/lc_symbolshapes.diamond-bevel.svg') no-repeat center !important; }
 
+.w2ui-icon.arrowshapes_left-arrow { background: url('images/lc_arrowshapes.left-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_right-arrow { background: url('images/lc_arrowshapes.right-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-arrow { background: url('images/lc_arrowshapes.up-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_down-arrow { background: url('images/lc_arrowshapes.down-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_left-right-arrow { background: url('images/lc_arrowshapes.left-right-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-down-arrow { background: url('images/lc_arrowshapes.up-down-arrow.svg') no-repeat center !important; }
+
+.w2ui-icon.arrowshapes_up-right-arrow { background: url('images/lc_arrowshapes.up-right-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-right-down-arrow { background: url('images/lc_arrowshapes.up-right-down-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_quad-arrow { background: url('images/lc_arrowshapes.quad-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_corner-right-arrow { background: url('images/lc_arrowshapes.corner-right-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_split-arrow { background: url('images/lc_arrowshapes.split-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_striped-right-arrow { background: url('images/lc_arrowshapes.striped-right-arrow.svg') no-repeat center !important; }
+
+.w2ui-icon.arrowshapes_notched-right-arrow { background: url('images/lc_arrowshapes.notched-right-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_pentagon-right { background: url('images/lc_arrowshapes.pentagon-right.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_chevron { background: url('images/lc_arrowshapes.chevron.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_right-arrow-callout { background: url('images/lc_arrowshapes.right-brace.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_left-arrow-callout { background: url('images/lc_arrowshapes.left-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-arrow-callout { background: url('images/lc_arrowshapes.up-arrow-callout.svg') no-repeat center !important; }
+
+.w2ui-icon.arrowshapes_down-arrow-callout { background: url('images/lc_arrowshapes.down-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_left-right-arrow-callout { background: url('images/lc_arrowshapes.left-right-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-down-arrow-callout { background: url('images/lc_arrowshapes.up-down-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-right-arrow-callout { background: url('images/lc_arrowshapes.up-right-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_quad-arrow-callout { background: url('images/lc_arrowshapes.quad-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_circular-arrow { background: url('images/lc_arrowshapes.circular-arrow.svg') no-repeat center !important; }
+
+.w2ui-icon.arrowshapes_split-round-arrow { background: url('images/lc_arrowshapes.split-round-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_s-sharped-arrow { background: url('images/lc_arrowshapes.s-sharped-arrow.svg') no-repeat center !important; }
+
 .w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
 .w2ui-icon.alignblock{ background: url('images/lc_alignblock.svg') no-repeat center !important; }
 .w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }

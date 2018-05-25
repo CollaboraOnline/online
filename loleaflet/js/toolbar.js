@@ -297,7 +297,7 @@ function insertTable() {
 }
 
 var shapes = {
-	'Basic Shapes': [
+	'Basic': [
 		{img: 'basicshapes_rectangle', uno: 'BasicShapes.rectangle'},
 		{img: 'basicshapes_round-rectangle', uno: 'BasicShapes.round-rectangle'},
 		{img: 'basicshapes_quadrat', uno: 'BasicShapes.quadrat'},
@@ -325,7 +325,7 @@ var shapes = {
 		{img: 'basicshapes_frame', uno: 'BasicShapes.frame'}
 	],
 
-	'Symbol Shapes':  [
+	'Symbols':  [
 		{img: 'symbolshapes', uno: 'SymbolShapes.smiley'},
 		{img: 'symbolshapes_sun', uno: 'SymbolShapes.sun'},
 		{img: 'symbolshapes_moon', uno: 'SymbolShapes.moon'},
@@ -346,6 +346,39 @@ var shapes = {
 		{img: 'symbolshapes_quad-bevel', uno: 'SymbolShapes.quad-bevel'},
 		{img: 'symbolshapes_octagon-bevel', uno: 'SymbolShapes.octagon-bevel'},
 		{img: 'symbolshapes_diamond-bevel', uno: 'SymbolShapes.diamond-bevel'}
+	],
+
+	'Arrows': [
+		{img: 'arrowshapes_left-arrow', uno: 'ArrowShapes.left-arrow'},
+		{img: 'arrowshapes_right-arrow', uno: 'ArrowShapes.right-arrow'},
+		{img: 'arrowshapes_up-arrow', uno: 'ArrowShapes.up-arrow'},
+		{img: 'arrowshapes_down-arrow', uno: 'ArrowShapes.down-arrow'},
+		{img: 'arrowshapes_left-right-arrow', uno: 'ArrowShapes.left-right-arrow'},
+		{img: 'arrowshapes_up-down-arrow', uno: 'ArrowShapes.up-down-arrow'},
+
+		{img: 'arrowshapes_up-right-arrow', uno: 'ArrowShapes.up-right-arrow'},
+		{img: 'arrowshapes_up-right-down-arrow', uno: 'ArrowShapes.up-right-down-arrow'},
+		{img: 'arrowshapes_quad-arrow', uno: 'ArrowShapes.quad-arrow'},
+		{img: 'arrowshapes_corner-right-arrow', uno: 'ArrowShapes.corner-right-arrow'},
+		{img: 'arrowshapes_split-arrow', uno: 'ArrowShapes.split-arrow'},
+		{img: 'arrowshapes_striped-right-arrow', uno: 'ArrowShapes.striped-right-arrow'},
+
+		{img: 'arrowshapes_notched-right-arrow', uno: 'ArrowShapes.notched-right-arrow'},
+		{img: 'arrowshapes_pentagon-right', uno: 'ArrowShapes.pentagon-right'},
+		{img: 'arrowshapes_chevron', uno: 'ArrowShapes.chevron'},
+		{img: 'arrowshapes_right-arrow-callout', uno: 'ArrowShapes.right-arrow-callout'},
+		{img: 'arrowshapes_left-arrow-callout', uno: 'ArrowShapes.left-arrow-callout'},
+		{img: 'arrowshapes_up-arrow-callout', uno: 'ArrowShapes.up-arrow-callout'},
+
+		{img: 'arrowshapes_down-arrow-callout', uno: 'ArrowShapes.down-arrow-callout'},
+		{img: 'arrowshapes_left-right-arrow-callout', uno: 'ArrowShapes.left-right-arrow-callout'},
+		{img: 'arrowshapes_up-down-arrow-callout', uno: 'ArrowShapes.up-down-arrow-callout'},
+		{img: 'arrowshapes_up-right-arrow-callout', uno: 'ArrowShapes.up-right-arrow-callout'},
+		{img: 'arrowshapes_quad-arrow-callout', uno: 'ArrowShapes.quad-arrow-callout'},
+		{img: 'arrowshapes_circular-arrow', uno: 'ArrowShapes.circular-arrow'},
+
+		{img: 'arrowshapes_split-round-arrow', uno: 'ArrowShapes.split-round-arrow'},
+		{img: 'arrowshapes_s-sharped-arrow', uno: 'ArrowShapes.s-sharped-arrow'}
 	]
 };
 
@@ -353,7 +386,7 @@ function insertShapes() {
 	var width = 6;
 	var $grid = $('.insertshape-grid');
 
-	if ($grid.children().size() == rows)
+	if ($grid.children().size() > 0)
 		return;
 
 	for (var s in shapes) {
