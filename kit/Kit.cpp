@@ -590,7 +590,7 @@ public:
         int width = tileWidth * 0.9;
         int height = tileHeight * 0.9;
 
-        const unsigned char* pixmap = getPixmap(width, height);
+        const std::vector<unsigned char>* pixmap = getPixmap(width, height);
 
         if (pixmap && tilePixmap)
         {
@@ -600,7 +600,7 @@ public:
             offsetX += (tileWidth - maxX) / 2;
             offsetY += (tileHeight - maxY) / 2;
 
-            alphaBlend(pixmap, _width, _height, offsetX, offsetY, tilePixmap, tilesPixmapWidth, tilesPixmapHeight);
+            alphaBlend(pixmap->data(), _width, _height, offsetX, offsetY, tilePixmap, tilesPixmapWidth, tilesPixmapHeight);
         }
     }
 
@@ -637,10 +637,10 @@ private:
     }
 
     /// Create bitmap that we later use as the watermark for every tile.
-    const unsigned char* getPixmap(int width, int height)
+    const std::vector<unsigned char>* getPixmap(int width, int height)
     {
         if (!_pixmap.empty() && width == _width && height == _height)
-            return _pixmap.data();
+            return &_pixmap;
 
         _pixmap.clear();
 
@@ -712,7 +712,7 @@ private:
             *p = static_cast<unsigned char>(*p * _alphaLevel);
         }
 
-        return _pixmap.data();
+        return &_pixmap;
     }
 
 private:
