@@ -379,6 +379,22 @@ var shapes = {
 
 		{img: 'arrowshapes_split-round-arrow', uno: 'ArrowShapes.split-round-arrow'},
 		{img: 'arrowshapes_s-sharped-arrow', uno: 'ArrowShapes.s-sharped-arrow'}
+	],
+
+	'Star': [
+		{img: 'starshapes_bang', uno: 'StarShapes.bang'},
+		{img: 'starshapes_star4', uno: 'StarShapes.star4'},
+		{img: 'starshapes_star5', uno: 'StarShapes.star5'},
+		{img: 'starshapes_star6', uno: 'StarShapes.star6'},
+		{img: 'starshapes_star8', uno: 'StarShapes.star8'},
+		{img: 'starshapes_star12', uno: 'StarShapes.star12'},
+
+		{img: 'starshapes_star24', uno: 'StarShapes.star24'},
+		{img: 'starshapes_concave-star6', uno: 'StarShapes.concave-star6'},
+		{img: 'starshapes_vertical-scroll', uno: 'StarShapes.vertical-scroll'},
+		{img: 'starshapes_horizontal-scroll', uno: 'StarShapes.horizontal-scroll'},
+		{img: 'starshapes_signet', uno: 'StarShapes.signet'},
+		{img: 'starshapes_doorplate', uno: 'StarShapes.doorplate'}
 	]
 };
 

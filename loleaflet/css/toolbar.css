@@ -329,6 +329,20 @@ button.leaflet-control-search-next
 .w2ui-icon.arrowshapes_split-round-arrow { background: url('images/lc_arrowshapes.split-round-arrow.svg') no-repeat center !important; }
 .w2ui-icon.arrowshapes_s-sharped-arrow { background: url('images/lc_arrowshapes.s-sharped-arrow.svg') no-repeat center !important; }
 
+.w2ui-icon.starshapes_bang { background: url('images/lc_starshapes.bang.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_star4 { background: url('images/lc_starshapes.star4.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_star5 { background: url('images/lc_starshapes.star5.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_star6 { background: url('images/lc_starshapes.star6.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_star8 { background: url('images/lc_starshapes.star8.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_star12 { background: url('images/lc_starshapes.star12.svg') no-repeat center !important; }
+
+.w2ui-icon.starshapes_star24 { background: url('images/lc_starshapes.star24.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_concave-star6 { background: url('images/lc_starshapes.concave-star6.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_vertical-scroll { background: url('images/lc_starshapes.vertical-scroll.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_horizontal-scroll { background: url('images/lc_starshapes.horizontal-scroll.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_signet { background: url('images/lc_starshapes.signet.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_doorplate { background: url('images/lc_starshapes.doorplate.svg') no-repeat center !important; }
+
 .w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
 .w2ui-icon.alignblock{ background: url('images/lc_alignblock.svg') no-repeat center !important; }
 .w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
