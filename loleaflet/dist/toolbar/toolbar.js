@@ -307,6 +307,9 @@ function onClick(id, item, subItem) {
 		// absolutely no idea why, but without the timeout, the popup is
 		// closed as soon as it is opend
 		setTimeout(function () {
+			$('#fontColorPicker').colorpicker({
+				strings: _('Theme Colors') + ',' + _('Standard Colors') + ',' + _('Web Colors') + ',' + _('Theme Colors') + ',' + _('Back to Palette') + ',' + _('History') + ',' + _('No history yet.')
+			});
 			$('#fontColorPicker').colorpicker('showPalette');
 			$('.ui-widget-content').addClass('loleaflet-font');
 		}, 0);
@@ -315,6 +318,9 @@ function onClick(id, item, subItem) {
 		// absolutely no idea why, but without the timeout, the popup is
 		// closed as soon as it is opend
 		setTimeout(function () {
+			$('#backColorPicker').colorpicker({
+				strings: _('Theme Colors') + ',' + _('Standard Colors') + ',' + _('Web Colors') + ',' + _('Theme Colors') + ',' + _('Back to Palette') + ',' + _('History') + ',' + _('No history yet.')
+			});
 			$('#backColorPicker').colorpicker('showPalette');
 			$('.ui-widget-content').addClass('loleaflet-font');
 		}, 0);
