@@ -279,6 +279,25 @@ button.leaflet-control-search-next
 .w2ui-icon.basicshapes_paper { background: url('images/lc_basicshapes.paper.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_frame { background: url('images/lc_basicshapes.frame.svg') no-repeat center !important; }
 
+.w2ui-icon.symbolshapes { background: url('images/lc_symbolshapes.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_sun { background: url('images/lc_symbolshapes.sun.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_moon { background: url('images/lc_symbolshapes.moon.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_lightning { background: url('images/lc_symbolshapes.lightning.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_heart { background: url('images/lc_symbolshapes.heart.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_flower { background: url('images/lc_symbolshapes.flower.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_cloud { background: url('images/lc_symbolshapes.cloud.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_forbidden { background: url('images/lc_symbolshapes.forbidden.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_puzzle { background: url('images/lc_symbolshapes.puzzle.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_bracket-pair { background: url('images/lc_symbolshapes.bracket-pair.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_left-bracket { background: url('images/lc_symbolshapes.left-bracket.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_right-bracket { background: url('images/lc_symbolshapes.right-bracket.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_brace-pair { background: url('images/lc_symbolshapes.brace-pair.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_left-brace { background: url('images/lc_symbolshapes.left-brace.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_right-brace { background: url('images/lc_symbolshapes.right-brace.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_quad-bevel { background: url('images/lc_symbolshapes.right-brace.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_octagon-bevel { background: url('images/lc_symbolshapes.octagon-bevel.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_diamond-bevel { background: url('images/lc_symbolshapes.diamond-bevel.svg') no-repeat center !important; }
+
 .w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
 .w2ui-icon.alignblock{ background: url('images/lc_alignblock.svg') no-repeat center !important; }
 .w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
@@ -414,6 +433,13 @@ button.leaflet-control-search-next
     width: 30px;
     border: 1px solid transparent;
     background: rgba(255, 255, 255, 1);
+}
+
+.insertshape-grid .row-header {
+    height: 30px;
+    text-align: center;
+    padding: 5px;
+    clear: both;
 }
 
 .insertshape-grid .col:hover {

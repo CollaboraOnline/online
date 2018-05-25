@@ -296,59 +296,88 @@ function insertTable() {
 	}, '.col');
 }
 
-var basicShapes = [
-	{img: 'basicshapes_rectangle', uno: 'BasicShapes.rectangle'},
-	{img: 'basicshapes_round-rectangle', uno: 'BasicShapes.round-rectangle'},
-	{img: 'basicshapes_quadrat', uno: 'BasicShapes.quadrat'},
-	{img: 'basicshapes_round-quadrat', uno: 'BasicShapes.round-quadrat'},
-	{img: 'basicshapes_circle', uno: 'BasicShapes.circle'},
-	{img: 'basicshapes_ellipse', uno: 'BasicShapes.ellipse'},
+var shapes = {
+	'Basic Shapes': [
+		{img: 'basicshapes_rectangle', uno: 'BasicShapes.rectangle'},
+		{img: 'basicshapes_round-rectangle', uno: 'BasicShapes.round-rectangle'},
+		{img: 'basicshapes_quadrat', uno: 'BasicShapes.quadrat'},
+		{img: 'basicshapes_round-quadrat', uno: 'BasicShapes.round-quadrat'},
+		{img: 'basicshapes_circle', uno: 'BasicShapes.circle'},
+		{img: 'basicshapes_ellipse', uno: 'BasicShapes.ellipse'},
 
-	{img: 'basicshapes_circle-pie', uno: 'BasicShapes.circle-pie'},
-	{img: 'basicshapes_isosceles-triangle', uno: 'BasicShapes.isosceles-triangle'},
-	{img: 'basicshapes_right-triangle', uno: 'BasicShapes.right-triangle'},
-	{img: 'basicshapes_trapezoid', uno: 'BasicShapes.trapezoid'},
-	{img: 'basicshapes_diamond', uno: 'BasicShapes.diamong'},
-	{img: 'basicshapes_parallelogram', uno: 'BasicShapes.parallelogram'},
+		{img: 'basicshapes_circle-pie', uno: 'BasicShapes.circle-pie'},
+		{img: 'basicshapes_isosceles-triangle', uno: 'BasicShapes.isosceles-triangle'},
+		{img: 'basicshapes_right-triangle', uno: 'BasicShapes.right-triangle'},
+		{img: 'basicshapes_trapezoid', uno: 'BasicShapes.trapezoid'},
+		{img: 'basicshapes_diamond', uno: 'BasicShapes.diamond'},
+		{img: 'basicshapes_parallelogram', uno: 'BasicShapes.parallelogram'},
 
-	{img: 'basicshapes_pentagon', uno: 'BasicShapes.pentagon'},
-	{img: 'basicshapes_hexagon', uno: 'BasicShapes.hexagon'},
-	{img: 'basicshapes_octagon', uno: 'BasicShapes.octagon'},
-	{img: 'basicshapes_cross', uno: 'BasicShapes.cross'},
-	{img: 'basicshapes_ring', uno: 'BasicShapes.ring'},
-	{img: 'basicshapes_block-arc', uno: 'BasicShapes.block-arc'},
+		{img: 'basicshapes_pentagon', uno: 'BasicShapes.pentagon'},
+		{img: 'basicshapes_hexagon', uno: 'BasicShapes.hexagon'},
+		{img: 'basicshapes_octagon', uno: 'BasicShapes.octagon'},
+		{img: 'basicshapes_cross', uno: 'BasicShapes.cross'},
+		{img: 'basicshapes_ring', uno: 'BasicShapes.ring'},
+		{img: 'basicshapes_block-arc', uno: 'BasicShapes.block-arc'},
 
-	{img: 'basicshapes_can', uno: 'BasicShapes.can'},
-	{img: 'basicshapes_cube', uno: 'BasicShapes.cube'},
-	{img: 'basicshapes_paper', uno: 'BasicShapes.paper'},
-	{img: 'basicshapes_frame', uno: 'BasicShapes.frame'}
-];
+		{img: 'basicshapes_can', uno: 'BasicShapes.can'},
+		{img: 'basicshapes_cube', uno: 'BasicShapes.cube'},
+		{img: 'basicshapes_paper', uno: 'BasicShapes.paper'},
+		{img: 'basicshapes_frame', uno: 'BasicShapes.frame'}
+	],
+
+	'Symbol Shapes':  [
+		{img: 'symbolshapes', uno: 'SymbolShapes.smiley'},
+		{img: 'symbolshapes_sun', uno: 'SymbolShapes.sun'},
+		{img: 'symbolshapes_moon', uno: 'SymbolShapes.moon'},
+		{img: 'symbolshapes_lightning', uno: 'SymbolShapes.lightning'},
+		{img: 'symbolshapes_heart', uno: 'SymbolShapes.heart'},
+		{img: 'symbolshapes_flower', uno: 'SymbolShapes.flower'},
+
+		{img: 'symbolshapes_cloud', uno: 'SymbolShapes.cloud'},
+		{img: 'symbolshapes_forbidden', uno: 'SymbolShapes.forbidden'},
+		{img: 'symbolshapes_puzzle', uno: 'SymbolShapes.puzzle'},
+		{img: 'symbolshapes_bracket-pair', uno: 'SymbolShapes.bracket-pair'},
+		{img: 'symbolshapes_left-bracket', uno: 'SymbolShapes.left-bracket'},
+		{img: 'symbolshapes_right-bracket', uno: 'SymbolShapes.right-bracket'},
+
+		{img: 'symbolshapes_brace-pair', uno: 'SymbolShapes.brace-pair'},
+		{img: 'symbolshapes_left-brace', uno: 'SymbolShapes.left-brace'},
+		{img: 'symbolshapes_right-brace', uno: 'SymbolShapes.right-brace'},
+		{img: 'symbolshapes_quad-bevel', uno: 'SymbolShapes.quad-bevel'},
+		{img: 'symbolshapes_octagon-bevel', uno: 'SymbolShapes.octagon-bevel'},
+		{img: 'symbolshapes_diamond-bevel', uno: 'SymbolShapes.diamond-bevel'}
+	]
+};
 
 function insertShapes() {
 	var width = 6;
 	var $grid = $('.insertshape-grid');
 
-	var rows = Math.ceil(basicShapes.length / width);
-	var idx = 0;
-
 	if ($grid.children().size() == rows)
 		return;
 
-	for (var r = 0; r < rows; r++) {
-		var $row = $('<div/>').addClass('row');
-		$grid.append($row);
-		for (var c = 0; c < width; c++) {
-			if (idx >= basicShapes.length) {
-				break;
-			}
-			var shape = basicShapes[idx++];
-			var $col = $('<div/>').addClass('col w2ui-icon').addClass(shape.img);
-			$col.data('uno', shape.uno);
-			$row.append($col);
-		}
+	for (var s in shapes) {
+		var $rowHeader = $('<div/>').addClass('row-header loleaflet-font').append(s);
+		$grid.append($rowHeader);
 
-		if (idx >= basicShapes.length)
-			break;
+		var rows = Math.ceil(shapes[s].length / width);
+		var idx = 0;
+		for (var r = 0; r < rows; r++) {
+			var $row = $('<div/>').addClass('row');
+			$grid.append($row);
+			for (var c = 0; c < width; c++) {
+				if (idx >= shapes[s].length) {
+					break;
+				}
+				var shape = shapes[s][idx++];
+				var $col = $('<div/>').addClass('col w2ui-icon').addClass(shape.img);
+				$col.data('uno', shape.uno);
+				$row.append($col);
+			}
+
+			if (idx >= shapes[s].length)
+				break;
+		}
 	}
 
 	$grid.on({
@@ -451,7 +480,7 @@ function createToolbar() {
 			{type: 'break', id: 'incdecindent'},
 			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), overlay: {onShow: insertTable},
 			 html: '<div id="inserttable-wrapper"><div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div></div></div>'},
-			{type: 'drop',  id: 'insertshapes',  img: 'insertshapes', hint: _('Insert shapes'), overlay: {onShow: insertShapes},
+			{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), overlay: {onShow: insertShapes},
 			 html: '<div id="insertshape-wrapper"><div id="insertshape-popup" class="insertshape-pop ui-widget ui-widget-content ui-corner-all"><div class="insertshape-grid"></div></div></div>'},
 			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true)},
