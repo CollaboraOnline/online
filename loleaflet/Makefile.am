@@ -159,7 +159,7 @@ $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
 
 $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS)
 	@echo "Uglify loleaflet css files..."
-	@$(NODE) node_modules/uglifycss/uglifycss $(LOLEAFLET_CSS) > $@
+	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglifycss/uglifycss $(LOLEAFLET_CSS) > $@
 
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
@@ -168,7 +168,7 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(srcdir)/js/toolbar.js \
 	$(srcdir)/js/main.js
 	@echo "Uglify loleaflet js files..."
-	@$(NODE) node_modules/uglify-js/bin/uglifyjs \
+	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs \
 		$(srcdir)/js/global.js \
 		$(NODE_MODULES_JS) \
 		$(srcdir)/js/w2ui-1.5.rc1.js \
