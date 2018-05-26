@@ -6,8 +6,6 @@
 # Version number of the bundled 'draw' thing
 DRAW_VERSION=0.2.4
 
-MINIFY=false
-
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
 L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(builddir)/dist/l10n/%.json,$(L10N_PO))
 
@@ -30,6 +28,7 @@ LOLEAFLET_HTML_SRC = $(shell find $(srcdir)/html -name '*.html')
 LOLEAFLET_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(builddir)/dist/%.html,$(LOLEAFLET_HTML_SRC))
 
 LOLEAFLET_ADMIN_SRC = $(shell find $(srcdir)/admin -name '*.html')
+LOLEAFLET_ADMIN_ALL = $(shell find $(srcdir)/admin -name '*')
 LOLEAFLET_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(builddir)/dist/admin/%,$(LOLEAFLET_ADMIN_SRC))
 
 define file_target
@@ -94,6 +93,7 @@ GLOBAL_JS =\
 	global.js
 
 LOLEAFLET_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getFiles().join(' '))} catch(e) {}"))
+ADMIN_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getAdminFiles().join(' '))} catch(e) {}"))
 
 PLUGINS_JS =\
 	w2ui-1.5.rc1.js \
@@ -124,8 +124,14 @@ build-loleaflet: | $(LOLEAFLET_L10N_DST) \
 	$(builddir)/dist/loleaflet.html
 	@echo "build loleaflet completed"
 
-$(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST)
-	@NODE_PATH=$(abs_builddir)/node_modules jake -f $(srcdir)/Jakefile.js -C $(srcdir) $(abs_builddir)/dist/admin-bundle.js debug=$(ENABLE_DEBUG) minify=$(MINIFY) builddir=$(abs_builddir)
+$(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
+	$(LOLEAFLET_PREFIX)/dist/admin-src.js
+	@NODE_PATH=$(abs_builddir)/node_modules:$(LOLEAFLET_PREFIX)/dist $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(ENABLE_DEBUG),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
+
+$(LOLEAFLET_PREFIX)/dist/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
+	@echo "Checking for admin JS errors..."
+	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src/admin --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
+	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(call ADMIN_JS,$(srcdir)/build/build.js)) > $@
 
 if ENABLE_DEBUG
 $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST) $(LOLEAFLET_DRAW_JS_DST)
@@ -146,9 +152,8 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_DST) \
 else
 $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
 	@mkdir -p $(dir $@)
-	@echo "Checking loleaflet for JS errors..."
+	@echo "Checking for loleaflet JS errors..."
 	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src $(srcdir)/plugins/draw-$(DRAW_VERSION)/src  $(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
-	@echo "Concatenating loleaflet files..."
 	@(cat $(srcdir)/src/copyright.js | sed 's/{VERSION}/$(LOLEAFLET_VERSION)/' - \
 		&& echo "(function (window, document, undefined) {" \
 		&& awk 'FNR == 1 {print ""} 1' \
@@ -242,7 +247,7 @@ install-data-hook:
 
 pot:
 	xgettext --from-code=UTF-8 --keyword=_ --output=po/templates/loleaflet-ui.pot \
-		admin.strings.js \
+		admin/admin.strings.js \
 		src/errormessages.js \
 		js/toolbar.js \
 		src/admin/AdminSocketAnalytics.js \
