@@ -1,7 +1,7 @@
 // CSS requires
 require('bootstrap/dist/css/bootstrap.css');
-require('./admin/bootstrap/ie10-viewport-bug-workaround.css');
-require('./admin/bootstrap/dashboard.css');
+require('./bootstrap/ie10-viewport-bug-workaround.css');
+require('./bootstrap/dashboard.css');
 require('vex-js/css/vex.css');
 require('vex-js/css/vex-theme-plain.css');
 
@@ -24,6 +24,6 @@ global.l10nstrings = require('./admin.strings.js');
 
 global.d3 = require('d3');
 require('bootstrap/dist/js/bootstrap.js');
-require('./admin/bootstrap/holder.min.js');
-require('./admin/bootstrap/ie10-viewport-bug-workaround.js');
+require('./bootstrap/holder.min.js');
+require('./bootstrap/ie10-viewport-bug-workaround.js');
 global.Admin = require('admin-src.js');
