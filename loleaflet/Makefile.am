@@ -32,9 +32,6 @@ LOLEAFLET_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(builddir)/dist/%.html,$(
 LOLEAFLET_ADMIN_SRC = $(shell find $(srcdir)/admin -name '*.html')
 LOLEAFLET_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(builddir)/dist/admin/%,$(LOLEAFLET_ADMIN_SRC))
 
-BOOTSTRAP_SRC = $(shell find $(srcdir)/bootstrap -name '*.*')
-BOOTSTRAP_DST = $(patsubst $(srcdir)/bootstrap/%,$(builddir)/dist/bootstrap/%,$(BOOTSTRAP_SRC))
-
 define file_target
 $(1): $(2)
 	@cp $$< $$@
@@ -126,7 +123,7 @@ all-local: | node_modules \
 	$(builddir)/dist/loleaflet.html
 	@echo "build loleaflet completed"
 
-$(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) $(BOOTSTRAP_DST)
+$(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST)
 	@NODE_PATH=$(abs_builddir)/node_modules jake -f $(srcdir)/Jakefile.js -C $(srcdir) $(abs_builddir)/dist/admin-bundle.js debug=$(ENABLE_DEBUG) minify=$(MINIFY) builddir=$(abs_builddir)
 
 if ENABLE_DEBUG
@@ -235,10 +232,6 @@ $(builddir)/dist/l10n/%.json: $(srcdir)/po/%.po
 	@$(srcdir)/util/po2json.py $< -o $@
 
 $(builddir)/dist/admin/%: $(srcdir)/admin/%
-	@mkdir -p $(dir $@)
-	@cp $< $@
-
-$(builddir)/dist/bootstrap/%: $(srcdir)/bootstrap/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
