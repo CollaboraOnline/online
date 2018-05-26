@@ -131,7 +131,6 @@ if ENABLE_DEBUG
 $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST) $(LOLEAFLET_DRAW_JS_DST)
 	@echo "Checking loleaflet for JS errors..."
 	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src $(srcdir)/plugins/draw-$(DRAW_VERSION)/src  $(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
-	@cp -a $(srcdir)/plugins/draw-$(DRAW_VERSION)/dist/images/* $(builddir)/dist/images/
 	@touch $@
 
 $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS_DST)
