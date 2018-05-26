@@ -111,8 +111,9 @@ LOLEAFLET_PREFIX := $(if $(ENABLE_DEBUG),$(abs_builddir),$(abs_builddir)/build)
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
-all-local: | node_modules \
-	$(LOLEAFLET_L10N_DST) \
+all-local: node_modules
+
+build-loleaflet: | $(LOLEAFLET_L10N_DST) \
 	$(L10N_JSON) \
 	$(LOLEAFLET_IMAGES_DST) \
 	$(JQUERY_UI_DIST_IMAGES) \
@@ -189,8 +190,9 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/loleaflet.html.m4 $(LOLEAFLET_HTML_DS
 		$(srcdir)/loleaflet.html.m4 > $@
 
 node_modules: npm-shrinkwrap.json
-	npm install
-	touch node_modules
+	@npm install
+	@touch node_modules
+	@$(MAKE) build-loleaflet
 
 $(builddir)/dist/plugins/%.js: $(srcdir)/plugins/%.js
 	@mkdir -p $(dir $@)
