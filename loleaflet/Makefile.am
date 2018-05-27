@@ -183,7 +183,7 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 		--source-map --output $@
 endif
 
-$(builddir)/dist/loleaflet.html: $(srcdir)/loleaflet.html.m4 $(LOLEAFLET_HTML_DST) \
+$(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HTML_DST) \
 	$(builddir)/dist/bundle.css $(builddir)/dist/bundle.js
 	@echo "Generating loleaflet.html..."
 	@m4 -E -DDEBUG=$(ENABLE_DEBUG) \
@@ -192,7 +192,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/loleaflet.html.m4 $(LOLEAFLET_HTML_DS
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js) \
 		$(patsubst %.js,plugins/draw-$(DRAW_VERSION)/%.js,$(call LOLEAFLET_JS,$(srcdir)/plugins/draw-$(DRAW_VERSION)/build/build.js)) \
 		$(PLUGINS_JS))" \
-		$(srcdir)/loleaflet.html.m4 > $@
+		$(srcdir)/html/loleaflet.html.m4 > $@
 
 node_modules: npm-shrinkwrap.json
 	@npm install
