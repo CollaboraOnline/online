@@ -129,7 +129,7 @@ $(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 
 $(LOLEAFLET_PREFIX)/dist/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 	@echo "Checking for admin JS errors..."
-#	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
+	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(call LOLEAFLET_JS,$(srcdir)/admin/build/build.js)) > $@
 
 if ENABLE_DEBUG
