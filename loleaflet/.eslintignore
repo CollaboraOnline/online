@@ -1,5 +1,3 @@
 # We only directly edit toolbar.js in dist/
 **/js/w2ui-1.5.rc1.js
-
-**/src/admin/Base.js
 **/src/unocommands.js
