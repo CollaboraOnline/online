@@ -93,7 +93,6 @@ GLOBAL_JS =\
 	global.js
 
 LOLEAFLET_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getFiles().join(' '))} catch(e) {}"))
-ADMIN_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getAdminFiles().join(' '))} catch(e) {}"))
 
 PLUGINS_JS =\
 	w2ui-1.5.rc1.js \
@@ -130,8 +129,8 @@ $(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 
 $(LOLEAFLET_PREFIX)/dist/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 	@echo "Checking for admin JS errors..."
-	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src/admin --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
-	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(call ADMIN_JS,$(srcdir)/build/build.js)) > $@
+#	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
+	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(call LOLEAFLET_JS,$(srcdir)/admin/build/build.js)) > $@
 
 if ENABLE_DEBUG
 $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST) $(LOLEAFLET_DRAW_JS_DST)
@@ -250,12 +249,12 @@ pot:
 		admin/admin.strings.js \
 		src/errormessages.js \
 		js/toolbar.js \
-		src/admin/AdminSocketAnalytics.js \
-		src/admin/AdminSocketBase.js \
-		src/admin/AdminSocketOverview.js \
-		src/admin/AdminSocketHistory.js \
-		src/admin/AdminSocketSettings.js \
-		src/admin/Util.js \
+		admin/src/AdminSocketAnalytics.js \
+		admin/src/AdminSocketBase.js \
+		admin/src/AdminSocketOverview.js \
+		admin/src/AdminSocketHistory.js \
+		admin/src/AdminSocketSettings.js \
+		admin/src/Util.js \
 		src/control/Control.AlertDialog.js \
 		src/control/Control.ColumnHeader.js \
 		src/control/Control.ContextMenu.js \

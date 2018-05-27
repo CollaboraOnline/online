@@ -1,42 +1,42 @@
-var adminDeps = {
+var deps = {
 	AdminCore: {
-		src: ['admin/Base.js',
-		      'admin/Admin.js',
-		      'admin/AdminSocketBase.js'],
+		src: ['src/Base.js',
+		      'src/Admin.js',
+		      'src/AdminSocketBase.js'],
 		desc: 'Core admin scripts infrastructure'
 	},
 
 	Util: {
-		src: ['admin/Util.js'],
+		src: ['src/Util.js'],
 		desc: 'Utility class',
 		deps: ['AdminCore']
 	},
 
 	AdminSocketOverview: {
-		src: ['admin/AdminSocketOverview.js'],
+		src: ['src/AdminSocketOverview.js'],
 		desc: 'Socket to handle messages in overview page.',
 		deps: ['AdminCore']
 	},
 
 	AdminSocketAnalytics: {
-		src: ['admin/AdminSocketAnalytics.js'],
+		src: ['src/AdminSocketAnalytics.js'],
 		desc: 'Socket to handle messages in analytics page.',
 		deps: ['AdminCore']
 	},
 
 	AdminSocketSettings: {
-		src: ['admin/AdminSocketSettings.js'],
+		src: ['src/AdminSocketSettings.js'],
 		desc: 'Socket to handle settings from server',
 		deps: ['AdminCore']
 	},
 
  	AdminSocketHistory: {
-		src: ['admin/AdminSocketHistory.js'],
+		src: ['src/AdminSocketHistory.js'],
 		desc: 'Socket to query document history.',
 		deps: ['AdminCore']
 	}
 };
 
 if (typeof exports !== 'undefined') {
-	exports.adminDeps = adminDeps;
+	exports.deps = deps;
 }
