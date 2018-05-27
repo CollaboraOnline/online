@@ -64,7 +64,10 @@ var AdminSocketSettings = AdminSocketBase.extend({
 				var setting = settings[i].split('=');
 				var settingKey = setting[0];
 				var settingVal = setting[1];
-				document.getElementById(settingKey).value = settingVal;
+				var elem = document.getElementById(settingKey);
+				if (elem) {
+					elem.value = settingVal;
+				}
 			}
 		}
 		else if (textMsg.startsWith('loolserver ')) {
