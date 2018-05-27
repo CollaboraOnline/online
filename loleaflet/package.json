@@ -10,7 +10,6 @@
     "d3": "3.5.17",
     "eslint": "3.0.0",
     "exorcist": "0.4.0",
-    "jake": "~8.0.10",
     "jquery": "2.2.4",
     "jquery-contextmenu": "2.2.3",
     "jquery-ui": "1.10.5",
@@ -26,14 +25,6 @@
     "uglifycss": "0.0.27",
     "uglifyify": "3.0.2",
     "vex-js": "2.3.2"
-  },
-  "browser": {
-    "loleaflet": "./dist/leaflet-src.js"
-  },
-  "main": "main.js",
-  "style": "main.css",
-  "scripts": {
-    "test": "jake test"
   },
   "repository": {
     "type": "git",
