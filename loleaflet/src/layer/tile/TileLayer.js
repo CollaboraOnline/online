@@ -560,7 +560,10 @@ L.TileLayer = L.GridLayer.extend({
 		if (command.id === 'print') {
 			if (L.Browser.gecko || L.Browser.edge || this._map.options.print === false) {
 				// the print dialog doesn't work well on firefox
-				this._map.fire('print', {url: url});
+				// due to a pdf.js issue - https://github.com/mozilla/pdf.js/issues/5397
+				// open the pdf file in a new tab so that that user can print it directly in the browser's
+				// pdf viewer
+				window.open(url + '?attachment=0', '_blank');
 			}
 			else {
 				this._map.fire('filedownloadready', {url: url});
