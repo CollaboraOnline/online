@@ -8,7 +8,6 @@ L.Control.AlertDialog = L.Control.extend({
 		// TODO: Better distinction between warnings and errors
 		map.on('error', this._onError, this);
 		map.on('warn', this._onError, this);
-		map.on('print', this._onPrint, this);
 	},
 
 	_onError: function(e) {
@@ -33,18 +32,6 @@ L.Control.AlertDialog = L.Control.extend({
 
 		// Remember the current dialog ID to close it later.
 		vex.dialogID = vex.globalID - 1;
-	},
-
-	_onPrint: function (e) {
-		var url = e.url;
-		vex.dialog.confirm({
-			message: _('Download PDF export?'),
-			callback: L.bind(function (value) {
-				if (value) {
-					this._map._fileDownloader.src = url;
-				}
-			}, this)
-		});
 	}
 });
 
