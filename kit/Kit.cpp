@@ -600,19 +600,19 @@ public:
             offsetX += (tileWidth - maxX) / 2;
             offsetY += (tileHeight - maxY) / 2;
 
-            alphaBlend(pixmap->data(), _width, _height, offsetX, offsetY, tilePixmap, tilesPixmapWidth, tilesPixmapHeight);
+            alphaBlend(*pixmap, _width, _height, offsetX, offsetY, tilePixmap, tilesPixmapWidth, tilesPixmapHeight);
         }
     }
 
 private:
     /// Alpha blend pixels from 'from' over the 'to'.
-    void alphaBlend(const unsigned char* from, int from_width, int from_height, int from_offset_x, int from_offset_y,
+    void alphaBlend(const std::vector<unsigned char>& from, int from_width, int from_height, int from_offset_x, int from_offset_y,
             unsigned char* to, int to_width, int to_height)
     {
         for (int to_y = from_offset_y, from_y = 0; (to_y < to_height) && (from_y < from_height) ; ++to_y, ++from_y)
             for (int to_x = from_offset_x, from_x = 0; (to_x < to_width) && (from_x < from_width); ++to_x, ++from_x)
             {
-                const unsigned char* f = from + 4 * (from_y * from_width + from_x);
+                const unsigned char* f = from.data() + 4 * (from_y * from_width + from_x);
                 double src_r = f[0];
                 double src_g = f[1];
                 double src_b = f[2];
@@ -657,14 +657,19 @@ private:
         // are always set to 0 (black) and the alpha level is 0 everywhere
         // except on the text area; the alpha level take into account of
         // performing anti-aliasing over the text edges.
-        unsigned char* text = _loKitDoc->renderFont(_font.c_str(), _text.c_str(), &_width, &_height);
+        unsigned char* textPixels = _loKitDoc->renderFont(_font.c_str(), _text.c_str(), &_width, &_height);
 
-        if (!text)
+        if (!textPixels)
         {
             LOG_ERR("Watermark: rendering failed.");
         }
 
         const unsigned int pixel_count = width * height * 4;
+
+        std::vector<unsigned char> text(textPixels, textPixels + pixel_count);
+        // No longer needed.
+        std::free(textPixels);
+
         _pixmap.reserve(pixel_count);
 
         // Create the white blurred background
@@ -702,9 +707,6 @@ private:
 
         // Now copy the (black) text over the (white) blur
         alphaBlend(text, _width, _height, 0, 0, _pixmap.data(), _width, _height);
-
-        // No longer needed.
-        std::free(text);
 
         // Make the resulting pixmap semi-transparent
         for (unsigned char* p = _pixmap.data(); p < _pixmap.data() + pixel_count; p++)
