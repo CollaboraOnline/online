@@ -29,7 +29,7 @@ node_modules: npm-shrinkwrap.json
 
 dist/$(JQUERY_UI_IMAGE_PATH)/%.png: $(JQUERY_UI_IMAGE_PATH)/%.png
 	mkdir -p dist/$(JQUERY_UI_IMAGE_PATH)
-	cp -a $(JQUERY_UI_IMAGE_PATH)/* dist/$(JQUERY_UI_IMAGE_PATH)/
+	cp -a $< $@
 
 dist/l10n/%.json: po/%.po
 	@util/po2json.py $< -o $@
