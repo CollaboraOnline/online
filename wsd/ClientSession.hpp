@@ -16,6 +16,7 @@
 #include "SenderQueue.hpp"
 #include "DocumentBroker.hpp"
 #include <Poco/URI.h>
+#include <Rectangle.hpp>
 
 class DocumentBroker;
 
@@ -176,6 +177,18 @@ private:
     uint64_t _keyEvents;
 
     SenderQueue<std::shared_ptr<Message>> _senderQueue;
+
+    /// Visible area of the client
+    Util::Rectangle _clientVisibleArea;
+
+    /// Selected part of the document viewed by the client (no parts in Writer)
+    int _clientSelectedPart;
+
+    /// Zoom properties of the client
+    int _tileWidthPixel;
+    int _tileHeightPixel;
+    int _tileWidthTwips;
+    int _tileHeightTwips;
 };
 
 #endif
