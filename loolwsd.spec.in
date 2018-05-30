@@ -88,7 +88,7 @@ install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
 %endif
 mkdir -p %{buildroot}/etc/cron.d
 echo "#Remove old tiles once every 10 days at midnight" > %{buildroot}/etc/cron.d/loolwsd.cron
-echo "0 0 */1 * * root find /var/cache/loolwsd -name \"*.png\" -a -atime +10 -exec rm {} \;" >> %{buildroot}/etc/cron.d/loolwsd.cron
+echo "0 0 */1 * * root find /var/cache/loolwsd -type f -a -atime +10 -exec rm {} \;" >> %{buildroot}/etc/cron.d/loolwsd.cron
 mkdir -p %{buildroot}/etc/pam.d
 echo "auth       required     pam_unix.so" > %{buildroot}/etc/pam.d/loolwsd
 echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
