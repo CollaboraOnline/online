@@ -1385,9 +1385,22 @@ L.TileLayer = L.GridLayer.extend({
 			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
 			this._clientZoom = null;
 		}
+
+		if (this._clientVisibleArea) {
+			// Visible area is dirty, update it on the server.
+			var visibleArea = this._map._container.getBoundingClientRect();
+			var pos = this._pixelsToTwips(new L.Point(visibleArea.left, visibleArea.top));
+			var size = this._pixelsToTwips(new L.Point(visibleArea.width, visibleArea.height));
+			var payload = 'clientvisiblearea x=' + Math.round(pos.x) + ' y=' + Math.round(pos.y) +
+				' width=' + Math.round(size.x) + ' height=' + Math.round(size.y);
+			this._map._socket.sendMessage(payload);
+			this._clientVisibleArea = false;
+		}
+
 		this._map._socket.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count +
 				' buttons=' + buttons + ' modifier=' + modifier);
+
 
 		if (type === 'buttondown') {
 			this._clearSearchResults();

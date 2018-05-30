@@ -42,7 +42,13 @@ ClientSession::ClientSession(const std::string& id,
     _isDocumentOwner(false),
     _isAttached(false),
     _isViewLoaded(false),
-    _keyEvents(1)
+    _keyEvents(1),
+    _clientVisibleArea(0, 0, 0, 0),
+    _clientSelectedPart(0),
+    _tileWidthPixel(0),
+    _tileHeightPixel(0),
+    _tileWidthTwips(0),
+    _tileHeightTwips(0)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
@@ -257,6 +263,63 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (docBroker->saveToStorage(getId(), true, "" /* This is irrelevant when success is true*/, true))
         {
             docBroker->broadcastMessage("commandresult: { \"command\": \"savetostorage\", \"success\": true }");
+        }
+    }
+    else if (tokens[0] == "clientvisiblearea")
+    {
+        int x;
+        int y;
+        int width;
+        int height;
+        if (tokens.size() != 5 ||
+            !getTokenInteger(tokens[1], "x", x) ||
+            !getTokenInteger(tokens[2], "y", y) ||
+            !getTokenInteger(tokens[3], "width", width) ||
+            !getTokenInteger(tokens[4], "height", height))
+        {
+            sendTextFrame("error: cmd=clientvisiblearea kind=syntax");
+            return false;
+        }
+        else
+        {
+            _clientVisibleArea = Util::Rectangle(x, y, width, height);
+            return forwardToChild(std::string(buffer, length), docBroker);
+        }
+    }
+    else if (tokens[0] == "setclientpart")
+    {
+        int temp;
+        if (tokens.size() != 2 ||
+            !getTokenInteger(tokens[1], "part", temp))
+        {
+            sendTextFrame("error: cmd=setclientpart kind=syntax");
+            return false;
+        }
+        else
+        {
+            _clientSelectedPart = temp;
+            return forwardToChild(std::string(buffer, length), docBroker);
+        }
+    }
+    else if (tokens[0] == "clientzoom")
+    {
+        int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
+        if (tokens.size() != 5 ||
+            !getTokenInteger(tokens[1], "tilepixelwidth", tilePixelWidth) ||
+            !getTokenInteger(tokens[2], "tilepixelheight", tilePixelHeight) ||
+            !getTokenInteger(tokens[3], "tiletwipwidth", tileTwipWidth) ||
+            !getTokenInteger(tokens[4], "tiletwipheight", tileTwipHeight))
+        {
+            sendTextFrame("error: cmd=clientzoom kind=syntax");
+            return false;
+        }
+        else
+        {
+            _tileWidthPixel = tilePixelWidth;
+            _tileHeightPixel = tilePixelHeight;
+            _tileWidthTwips = tileTwipWidth;
+            _tileHeightTwips = tileTwipHeight;
+            return forwardToChild(std::string(buffer, length), docBroker);
         }
     }
     else
@@ -635,6 +698,14 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         //TODO: Should forward to client?
         int curPart;
         return getTokenInteger(tokens[1], "part", curPart);
+    }
+    else if (tokens[0] == "setpart:" && tokens.size() == 2)
+    {
+        int setPart;
+        if(getTokenInteger(tokens[1], "part", setPart))
+            _clientSelectedPart = setPart;
+        else
+            return false;
     }
     else if (tokens.size() == 3 && tokens[0] == "saveas:")
     {
