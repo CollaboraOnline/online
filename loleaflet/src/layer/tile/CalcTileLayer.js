@@ -242,9 +242,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 			command.height = parseInt(strTwips[3]);
 			command.part = this._selectedPart;
 		}
-		if (this._docType === 'text') {
-			command.part = 0;
-		}
 		var topLeftTwips = new L.Point(command.x, command.y);
 		var offset = new L.Point(command.width, command.height);
 		var bottomRightTwips = topLeftTwips.add(offset);
@@ -255,11 +252,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
 		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
 		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
-
-		var tilePositionsX = '';
-		var tilePositionsY = '';
-		var oldWireIds = '';
-		var needsNewTiles = false;
 
 		for (var key in this._tiles) {
 			var coords = this._tiles[key].coords;
@@ -274,24 +266,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 					this._tiles[key]._invalidCount = 1;
 				}
 				if (visibleArea.intersects(bounds)) {
-					if (tilePositionsX !== '') {
-						tilePositionsX += ',';
-					}
-					tilePositionsX += tileTopLeft.x;
-					if (tilePositionsY !== '') {
-						tilePositionsY += ',';
-					}
-					tilePositionsY += tileTopLeft.y;
-					if (oldWireIds !== '') {
-						oldWireIds += ',';
-					}
-					if (this._tiles[key].oldWireId === undefined) {
-						oldWireIds += '0';
-					}
-					else {
-						oldWireIds += this._tiles[key].oldWireId;
-					}
-					needsNewTiles = true;
 					if (this._debug) {
 						this._debugAddInvalidationData(this._tiles[key]);
 					}
@@ -301,24 +275,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 					this._preFetchBorder = null;
 					this._removeTile(key);
 				}
-			}
-		}
-
-		if (needsNewTiles && command.part === this._selectedPart)
-		{
-			var message = 'tilecombine ' +
-				'part=' + command.part + ' ' +
-				'width=' + this._tileWidthPx + ' ' +
-				'height=' + this._tileHeightPx + ' ' +
-				'tileposx=' + tilePositionsX + ' ' +
-				'tileposy=' + tilePositionsY + ' ' +
-				'tilewidth=' + this._tileWidthTwips + ' ' +
-				'tileheight=' + this._tileHeightTwips + ' ' +
-				'oldwid=' + oldWireIds;
-
-			this._map._socket.sendMessage(message, '');
-			if (this._debug) {
-				this._debugAddInvalidationMessage(message);
 			}
 		}
 

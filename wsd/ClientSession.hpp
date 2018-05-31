@@ -144,6 +144,9 @@ private:
 
     void dumpState(std::ostream& os) override;
 
+    void handleTileInvalidation(const std::string& message,
+                                const std::shared_ptr<DocumentBroker>& docBroker);
+
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 
@@ -189,6 +192,9 @@ private:
     int _tileHeightPixel;
     int _tileWidthTwips;
     int _tileHeightTwips;
+
+    // Type of the docuemnt, extracter from status message
+    std::string _docType;
 };
 
 #endif
