@@ -73,6 +73,11 @@ struct Rectangle
     {
         return _x1 <= _x2 && _y1 <= _y2;
     }
+
+    bool hasSurface()
+    {
+        return _x1 < _x2 && _y1 < _y2;
+    }
 };
 
 }

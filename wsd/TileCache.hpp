@@ -17,6 +17,7 @@
 #include <string>
 
 #include <Poco/Timestamp.h>
+#include <Rectangle.hpp>
 
 #include "TileDesc.hpp"
 
@@ -71,6 +72,9 @@ public:
 
     // The tiles parameter is an invalidatetiles: message as sent by the child process
     void invalidateTiles(const std::string& tiles);
+
+    /// Parse invalidateTiles message to a part number and a rectangle of the invalidated area
+    static std::pair<int, Util::Rectangle> parseInvalidateMsg(const std::string& tiles);
 
     /// Store the timestamp to modtime.txt.
     void saveLastModified(const Poco::Timestamp& timestamp);

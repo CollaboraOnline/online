@@ -44,7 +44,7 @@ ClientSession::ClientSession(const std::string& id,
     _isViewLoaded(false),
     _keyEvents(1),
     _clientVisibleArea(0, 0, 0, 0),
-    _clientSelectedPart(0),
+    _clientSelectedPart(-1),
     _tileWidthPixel(0),
     _tileHeightPixel(0),
     _tileWidthTwips(0),
@@ -857,6 +857,13 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             setViewLoaded();
             docBroker->setLoaded();
 
+            const std::string stringMsg(buffer, length);
+            const size_t index = stringMsg.find("type=") + 5;
+            if (index != std::string::npos)
+            {
+                _docType = stringMsg.substr(index, stringMsg.find_first_of(' ', index) - index);
+            }
+
             // Forward the status response to the client.
             return forwardToClient(payload);
         }
@@ -882,7 +889,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         else if (tokens[0] == "invalidatetiles:")
         {
             assert(firstLine.size() == static_cast<std::string::size_type>(length));
-            docBroker->invalidateTiles(firstLine);
+            handleTileInvalidation(firstLine, docBroker);
         }
         else if (tokens[0] == "invalidatecursor:")
         {
@@ -1055,6 +1062,61 @@ void ClientSession::dumpState(std::ostream& os)
     os << "\n";
     _senderQueue.dumpState(os);
 
+}
+
+void ClientSession::handleTileInvalidation(const std::string& message,
+    const std::shared_ptr<DocumentBroker>& docBroker)
+{
+    docBroker->invalidateTiles(message);
+
+    // Skip requesting new tiles if we don't have client visible area data yet.
+    if(!_clientVisibleArea.hasSurface() ||
+       _tileWidthPixel == 0 || _tileHeightPixel == 0 ||
+       _tileWidthTwips == 0 || _tileHeightTwips == 0 ||
+       _clientSelectedPart == -1)
+    {
+        return;
+    }
+
+    std::pair<int, Util::Rectangle> result = TileCache::parseInvalidateMsg(message);
+    int part = result.first;
+    Util::Rectangle& invalidateRect = result.second;
+
+    if(_docType.find("text") != std::string::npos) // For Writer we don't have separate parts
+        part = 0;
+
+    if(part == -1) // If no part is specifed we use the part used by the client
+        part = _clientSelectedPart;
+
+    std::vector<TileDesc> invalidTiles;
+    if(part == _clientSelectedPart)
+    {
+        Util::Rectangle intersection;
+        intersection._x1 = std::max(invalidateRect._x1, _clientVisibleArea._x1);
+        intersection._y1 = std::max(invalidateRect._y1, _clientVisibleArea._y1);
+        intersection._x2 = std::min(invalidateRect._x2, _clientVisibleArea._x2);
+        intersection._y2 = std::min(invalidateRect._y2, _clientVisibleArea._y2);
+        if(intersection.isValid()) // Client visible area and invalidated rectangle has intersection
+        {
+            for(int i = std::ceil(intersection._x1 / _tileWidthTwips);
+                i <= std::ceil(intersection._x2 / _tileWidthTwips); ++i)
+            {
+                for(int j = std::ceil(intersection._y1 / _tileHeightTwips);
+                    j <= std::ceil(intersection._y2 / _tileHeightTwips); ++j)
+                {
+                    invalidTiles.emplace_back(TileDesc(part, _tileWidthPixel, _tileHeightPixel, i * _tileWidthTwips, j * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false));
+                    invalidTiles.back().setOldWireId(0);
+                    invalidTiles.back().setWireId(0);
+                }
+            }
+        }
+    }
+
+    if(!invalidTiles.empty())
+    {
+        TileCombined tileCombined = TileCombined::create(invalidTiles);
+        docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

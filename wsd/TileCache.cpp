@@ -339,22 +339,27 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
 
 void TileCache::invalidateTiles(const std::string& tiles)
 {
+    std::pair<int, Util::Rectangle> result = TileCache::parseInvalidateMsg(tiles);
+    Util::Rectangle& invalidateRect = result.second;
+    invalidateTiles(result.first, invalidateRect.getLeft(), invalidateRect.getTop(), invalidateRect.getWidth(), invalidateRect.getHeight());
+}
+
+std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string& tiles)
+{
     StringTokenizer tokens(tiles, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
     assert(tokens[0] == "invalidatetiles:");
 
     if (tokens.count() == 2 && tokens[1] == "EMPTY")
     {
-        invalidateTiles(-1, 0, 0, INT_MAX, INT_MAX);
-        return;
+        return std::pair<int, Util::Rectangle>(-1, Util::Rectangle(0, 0, INT_MAX, INT_MAX));
     }
     else if (tokens.count() == 3 && tokens[1] == "EMPTY,")
     {
         int part = 0;
         if (stringToInteger(tokens[2], part))
         {
-            invalidateTiles(part, 0, 0, INT_MAX, INT_MAX);
-            return;
+            return std::pair<int, Util::Rectangle>(part, Util::Rectangle(0, 0, INT_MAX, INT_MAX));
         }
     }
     else
@@ -367,12 +372,13 @@ void TileCache::invalidateTiles(const std::string& tiles)
             getTokenInteger(tokens[4], "width", width) &&
             getTokenInteger(tokens[5], "height", height))
         {
-            invalidateTiles(part, x, y, width, height);
-            return;
+
+            return std::pair<int, Util::Rectangle>(part, Util::Rectangle(x, y, width, height));
         }
     }
 
     LOG_ERR("Unexpected invalidatetiles request [" << tiles << "].");
+    return std::pair<int, Util::Rectangle>(-1, Util::Rectangle(0, 0, 0, 0));
 }
 
 void TileCache::removeFile(const std::string& fileName)
