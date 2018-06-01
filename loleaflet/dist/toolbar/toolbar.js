@@ -328,7 +328,6 @@ $(function () {
 	$('#toolbar-up').w2toolbar({
 		name: 'toolbar-up',
 		items: [
-			{type: 'html', id: 'left'},
 			{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
 			{type: 'break', id: 'savebreak'},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
