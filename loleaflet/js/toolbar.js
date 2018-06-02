@@ -516,7 +516,8 @@ var fontsSelectValue;
 var fontsizesSelectValue;
 
 function createToolbar() {
-	$('#toolbar-up').w2toolbar({
+	var toolbar = $('#toolbar-up');
+	toolbar.w2toolbar({
 		name: 'toolbar-up',
 		items: [
 			{type: 'menu', id: 'menu-wrap', caption: _('Textwrap'), items: [
@@ -611,8 +612,10 @@ function createToolbar() {
 			insertShapes();
 		}
 	});
+	toolbar.contextmenu(function() { return false; });
 
-	$('#formulabar').w2toolbar({
+	toolbar = $('#formulabar');
+	toolbar.w2toolbar({
 		name: 'formulabar',
 		items: [
 			{type: 'html',  id: 'left'},
@@ -634,7 +637,10 @@ function createToolbar() {
 			$('#formulaInput').off('focus', onFormulaBarFocus).on('focus', onFormulaBarFocus);
 		}
 	});
-	$('#spreadsheet-toolbar').w2toolbar({
+	toolbar.contextmenu(function() { return false; });
+
+	toolbar = $('#spreadsheet-toolbar')
+	toolbar.w2toolbar({
 		name: 'spreadsheet-toolbar',
 		items: [
 			{type: 'button',  id: 'firstrecord',  img: 'firstrecord', hidden: true, hint: _('First sheet')},
@@ -647,7 +653,10 @@ function createToolbar() {
 			onClick(e, e.target);
 		}
 	});
-	$('#presentation-toolbar').w2toolbar({
+	toolbar.contextmenu(function() { return false; });
+
+	toolbar = $('#presentation-toolbar');
+	toolbar.w2toolbar({
 		name: 'presentation-toolbar',
 		items: [
 			{type: 'html',  id: 'left'},
@@ -662,8 +671,10 @@ function createToolbar() {
 			onClick(e, e.target);
 		}
 	});
+	toolbar.contextmenu(function() { return false; });
 
-	$('#toolbar-down').w2toolbar({
+	toolbar = $('#toolbar-down');
+	toolbar.w2toolbar({
 		name: 'toolbar-down',
 		items: [
 			{type: 'html',  id: 'search',
