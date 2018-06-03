@@ -329,12 +329,13 @@ AS_IF([test "$enable_ssl" != "no"],
 AM_CONDITIONAL([ENABLE_SSL], [test "$enable_ssl" != "no"])
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
 
-ENABLE_SSL=
+ENABLE_SSL=true
 if test "$enable_ssl" != "no"; then
    ssl_msg="ssl enabled"
    ENABLE_SSL=true
 else
    ssl_msg="insecure: ssl disabled"
+   ENABLE_SSL=false
 fi
 
 AC_SUBST(ENABLE_SSL)
