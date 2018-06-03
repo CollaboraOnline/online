@@ -587,6 +587,8 @@ std::string LOOLWSD::LOKitVersion;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
 std::string LOOLWSD::LogLevel = "trace";
+bool LOOLWSD::AnonymizeFilenames = false;
+bool LOOLWSD::AnonymizeUsernames = false;
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 std::set<std::string> LOOLWSD::EditFileExtensions;
@@ -656,61 +658,65 @@ void LOOLWSD::initialize(Application& self)
 
     // Add default values of new entries here.
     static const std::map<std::string, std::string> DefAppConfig
-        = { { "allowed_languages", "de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru" },
-            { "tile_cache_path", LOOLWSD_CACHEDIR },
-            { "tile_cache_persistent", "true" },
-            { "sys_template_path", "systemplate" },
-            { "lo_template_path", LO_PATH },
+        = {
+            { "admin_console.enable_pam", "false"},
+            { "allowed_languages", "de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru" },
             { "child_root_path", "jails" },
-            { "lo_jail_subpath", "lo" },
-            { "server_name", "" },
             { "file_server_root_path", "loleaflet/.." },
-            { "num_prespawn_children", "1" },
-            { "per_document.max_concurrency", "4" },
-            { "per_document.idle_timeout_secs", "3600" },
-            { "per_document.idlesave_duration_secs", "30" },
-            { "per_document.autosave_duration_secs", "300" },
-            { "per_document.limit_virt_mem_mb", "0" },
-            { "per_document.limit_stack_mem_kb", "8000" },
-            { "per_document.limit_file_size_mb", "0" },
-            { "per_document.limit_num_open_files", "0" },
-            { "per_view.out_of_focus_timeout_secs", "60" },
-            { "per_view.idle_timeout_secs", "900" },
-            { "loleaflet_html", "loleaflet.html" },
+            { "lo_jail_subpath", "lo" },
+            { "lo_template_path", LO_PATH },
+            { "logging.anonymize.filenames", "false" },
+            { "logging.anonymize.usernames", "false" },
             { "logging.color", "true" },
+            { "logging.file.property[0]", "loolwsd.log" },
+            { "logging.file.property[0][@name]", "path" },
+            { "logging.file.property[1]", "never" },
+            { "logging.file.property[1][@name]", "rotation" },
+            { "logging.file.property[2]", "true" },
+            { "logging.file.property[2][@name]", "compress" },
+            { "logging.file.property[3]", "false" },
+            { "logging.file.property[3][@name]", "flush" },
+            { "logging.file[@enable]", "false" },
             { "logging.level", "trace" },
+            { "loleaflet_html", "loleaflet.html" },
             { "loleaflet_logging", "false" },
             { "net.proto", "all" },
-            { "ssl.enable", "true" },
-            { "ssl.termination", "true" },
-            { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
-            { "ssl.key_file_path", LOOLWSD_CONFIGDIR "/key.pem" },
+            { "num_prespawn_children", "1" },
+            { "per_document.autosave_duration_secs", "300" },
+            { "per_document.idle_timeout_secs", "3600" },
+            { "per_document.idlesave_duration_secs", "30" },
+            { "per_document.limit_file_size_mb", "0" },
+            { "per_document.limit_num_open_files", "0" },
+            { "per_document.limit_stack_mem_kb", "8000" },
+            { "per_document.limit_virt_mem_mb", "0" },
+            { "per_document.max_concurrency", "4" },
+            { "per_view.idle_timeout_secs", "900" },
+            { "per_view.out_of_focus_timeout_secs", "60" },
+            { "security.capabilities", "true" },
+            { "security.seccomp", "true" },
+            { "server_name", "" },
             { "ssl.ca_file_path", LOOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
-            { "ssl.hpkp[@enable]", "false" },
-            { "ssl.hpkp[@report_only]", "false" },
+            { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
+            { "ssl.enable", "true" },
             { "ssl.hpkp.max_age[@enable]", "true" },
             { "ssl.hpkp.report_uri[@enable]", "false" },
-            { "security.seccomp", "true" },
-            { "security.capabilities", "true" },
+            { "ssl.hpkp[@enable]", "false" },
+            { "ssl.hpkp[@report_only]", "false" },
+            { "ssl.key_file_path", LOOLWSD_CONFIGDIR "/key.pem" },
+            { "ssl.termination", "true" },
             { "storage.filesystem[@allow]", "false" },
-            { "storage.wopi[@allow]", "true" },
-            { "storage.wopi.host[0][@allow]", "true" },
-            { "storage.wopi.host[0]", "localhost" },
-            { "storage.wopi.max_file_size", "0" },
             { "storage.webdav[@allow]", "false" },
-            { "logging.file[@enable]", "false" },
-            { "logging.file.property[0][@name]", "path" },
-            { "logging.file.property[0]", "loolwsd.log" },
-            { "logging.file.property[1][@name]", "rotation" },
-            { "logging.file.property[1]", "never" },
-            { "logging.file.property[2][@name]", "compress" },
-            { "logging.file.property[2]", "true" },
-            { "logging.file.property[3][@name]", "flush" },
-            { "logging.file.property[3]", "false" },
-            { "trace[@enable]", "false" },
+            { "storage.wopi.host[0]", "localhost" },
+            { "storage.wopi.host[0][@allow]", "true" },
+            { "storage.wopi.max_file_size", "0" },
+            { "storage.wopi[@allow]", "true" },
+            { "sys_template_path", "systemplate" },
+            { "tile_cache_path", LOOLWSD_CACHEDIR },
+            { "tile_cache_persistent", "true" },
             { "trace.path[@compress]", "true" },
             { "trace.path[@snapshot]", "false" },
-            { "admin_console.enable_pam", "false"} };
+            { "trace[@enable]", "false" }
+          };
 
     // Set default values, in case they are missing from the config file.
     AutoPtr<AppConfigMap> defConfig(new AppConfigMap(DefAppConfig));
@@ -755,6 +761,21 @@ void LOOLWSD::initialize(Application& self)
         setenv("LOOL_LOGCOLOR", "1", true);
     }
 
+    // Get anonymization settings.
+    AnonymizeFilenames = getConfigValue<bool>(conf, "logging.anonymize.filenames", false);
+    setenv("LOOL_ANONYMIZE_FILENAMES", AnonymizeFilenames ? "1" : "0", true);
+    AnonymizeUsernames = getConfigValue<bool>(conf, "logging.anonymize.usernames", false);
+    setenv("LOOL_ANONYMIZE_USERNAMES", AnonymizeUsernames ? "1" : "0", true);
+    if (AnonymizeFilenames || AnonymizeUsernames)
+    {
+        if (LogLevel == "trace")
+        {
+            LOG_FTL("Anonymization and trace-level logging are incompatible. "
+                    "Please reduce logging level to debug or lower to prevent leaking sensitive user data.");
+            _exit(Application::EXIT_SOFTWARE);
+        }
+    }
+
     const auto logToFile = getConfigValue<bool>(conf, "logging.file[@enable]", false);
     std::map<std::string, std::string> logProperties;
     for (size_t i = 0; ; ++i)
@@ -790,7 +811,7 @@ void LOOLWSD::initialize(Application& self)
     Log::initialize("wsd", "trace", withColor, logToFile, logProperties);
     if (LogLevel != "trace")
     {
-        LOG_INF("Setting log-level to [trace] and delaying setting to requested [" << LogLevel << "].");
+        LOG_INF("Setting log-level to [trace] and delaying setting to configured [" << LogLevel << "] until after WSD initialization.");
     }
 
     {
@@ -2804,7 +2825,7 @@ int LOOLWSD::innerMain()
 
     if (LogLevel != "trace")
     {
-        LOG_INF("Setting log-level to [" << LogLevel << "].");
+        LOG_INF("WSD initialization complete: setting log-level to [" << LogLevel << "] as configured.");
         Log::logger().setLevel(LogLevel);
     }
 
