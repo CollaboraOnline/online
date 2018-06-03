@@ -64,6 +64,8 @@ public:
     static std::string ServiceRoot; ///< There are installations that need prefixing every page with some path.
     static std::string LOKitVersion;
     static std::string LogLevel;
+    static bool AnonymizeFilenames;
+    static bool AnonymizeUsernames;
     static std::atomic<unsigned> NumConnections;
     static bool TileCachePersistent;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
