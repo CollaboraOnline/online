@@ -221,6 +221,11 @@ static void cleanupChildren()
             LOG_INF("Child " << exitedChildPid << " has exited, will remove its jail [" << it->second << "].");
             jails.emplace_back(it->second);
             childJails.erase(it);
+            if (childJails.empty() && !TerminationFlag)
+            {
+                // We ran out of kits and we aren't terminating.
+                LOG_WRN("No live Kits exist, and we are not terminating yet.");
+            }
         }
         else
         {
@@ -264,7 +269,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
             const size_t delaySecs = std::stoul(std::getenv("SLEEPKITFORDEBUGGER"));
             if (delaySecs > 0)
             {
-                std::cerr << "Sleeping " << delaySecs
+                std::cerr << "Kit: Sleeping " << delaySecs
                           << " seconds to give you time to attach debugger to process "
                           << Process::id() << std::endl;
                 Thread::sleep(delaySecs * 1000);
@@ -353,7 +358,7 @@ int main(int argc, char** argv)
         const size_t delaySecs = std::stoul(std::getenv("SLEEPFORDEBUGGER"));
         if (delaySecs > 0)
         {
-            std::cerr << "Sleeping " << delaySecs
+            std::cerr << "Forkit: Sleeping " << delaySecs
                       << " seconds to give you time to attach debugger to process "
                       << Process::id() << std::endl;
             Thread::sleep(delaySecs * 1000);
