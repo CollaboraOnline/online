@@ -52,6 +52,14 @@ AC_ARG_ENABLE([debug],
               AS_HELP_STRING([--enable-debug],
                              [Enable debugging, link with debugging version of Poco libraries]))
 
+AC_ARG_ENABLE([anonymize-usernames],
+              AS_HELP_STRING([--enable-anonymize-usernames],
+                             [Enable anonymization/obfuscation of usernames in logs]))
+
+AC_ARG_ENABLE([anonymize-filenames],
+              AS_HELP_STRING([--enable-anonymize-filenames],
+                             [Enable anonymization/obfuscation of filenames in logs]))
+
 AC_ARG_ENABLE([seccomp],
               AS_HELP_STRING([--disable-seccomp],
                              [Disable use of linux/seccomp.h header when kernel on target system does not support it.
@@ -126,6 +134,8 @@ ENABLE_DEBUG=
 LOOLWSD_LOGLEVEL="warning"
 LOOLWSD_LOG_TO_FILE="false"
 LOOLWSD_LOGFILE="/var/log/loolwsd.log"
+LOOLWSD_ANONYMIZE_FILENAMES=false
+LOOLWSD_ANONYMIZE_USERNAMES=false
 LOLEAFLET_LOGGING="false"
 debug_msg="secure mode: product build"
 if test "$enable_debug" = "yes"; then
@@ -134,6 +144,8 @@ if test "$enable_debug" = "yes"; then
    LOOLWSD_LOGLEVEL="trace"
    LOOLWSD_LOG_TO_FILE="true"
    LOOLWSD_LOGFILE="/tmp/loolwsd.log"
+   LOOLWSD_ANONYMIZE_FILENAMES=false
+   LOOLWSD_ANONYMIZE_USERNAMES=false
    LOLEAFLET_LOGGING="true"
    debug_msg="low security debugging mode"
 else
@@ -148,6 +160,16 @@ if test -n "$with_logfile" ; then
    LOOLWSD_LOGFILE="$with_logfile"
 fi
 AC_SUBST(LOOLWSD_LOGFILE)
+
+if test -n "$enable_anonymize_filenames" ; then
+   LOOLWSD_ANONYMIZE_FILENAMES=true
+fi
+AC_SUBST(LOOLWSD_ANONYMIZE_FILENAMES)
+
+if test -n "$enable_anonymize_usernames" ; then
+   LOOLWSD_ANONYMIZE_USERNAMES=true
+fi
+AC_SUBST(LOOLWSD_ANONYMIZE_USERNAMES)
 
 MAX_CONNECTIONS=20
 AS_IF([test -n "$with_max_connections" && test "$with_max_connections" -gt "0"],
