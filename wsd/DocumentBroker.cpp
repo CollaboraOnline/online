@@ -1143,7 +1143,7 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
                 for (const auto& pair : _sessions)
                     logger << pair.second->getId() << ' ';
 
-                LOG_END(logger);
+                LOG_END(logger, true);
             }
 
             // Let the child know the client has disconnected.

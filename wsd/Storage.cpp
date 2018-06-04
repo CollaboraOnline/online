@@ -443,7 +443,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
                 logger << '\t' << pair.first << ": " << pair.second << " / ";
             }
 
-            LOG_END(logger);
+            LOG_END(logger, true);
         }
 
         if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
@@ -570,7 +570,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
                 logger << '\t' << pair.first << ": " << pair.second << " / ";
             }
 
-            LOG_END(logger);
+            LOG_END(logger, true);
         }
 
         if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)

@@ -342,7 +342,7 @@ void cleanupDocBrokers()
                 logger << "DocumentBroker [" << pair.first << "].\n";
             }
 
-            LOG_END(logger);
+            LOG_END(logger, true);
         }
     }
 }
