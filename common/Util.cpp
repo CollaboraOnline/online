@@ -61,6 +61,8 @@
 #include "Log.hpp"
 #include "Util.hpp"
 
+using std::size_t;
+
 namespace Util
 {
     namespace rng
@@ -296,7 +298,7 @@ namespace Util
 
     static const char *startsWith(const char *line, const char *tag)
     {
-        size_t len = strlen(tag);
+        size_t len = std::strlen(tag);
         if (!strncmp(line, tag, len))
         {
             while (!isdigit(line[len]) && line[len] != '\0')
@@ -495,7 +497,7 @@ namespace Util
         return replace(r, "\n", " / ");
     }
 
-    static __thread char ThreadName[32];
+    static __thread char ThreadName[32] = {0};
 
     void setThreadName(const std::string& s)
     {
@@ -503,12 +505,11 @@ namespace Util
         ThreadName[31] = '\0';
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(s.c_str()), 0, 0, 0) != 0)
-            LOG_SYS("Cannot set thread name of " << getThreadId() << " (" <<
-                    std::this_thread::get_id() << ") to [" << s << "].");
+            LOG_SYS("Cannot set thread name of " << getThreadId() << " (" << std::hex <<
+                    std::this_thread::get_id() << std::dec << ") to [" << s << "].");
         else
-            LOG_INF("Thread " << getThreadId() << " (" <<
-                    std::this_thread::get_id() <<
-                    ") is now called [" << s << "].");
+            LOG_INF("Thread " << getThreadId() << " (" << std::hex <<
+                    std::this_thread::get_id() << std::dec << ") is now called [" << s << "].");
 #elif defined IOS
         [[NSThread currentThread] setName:[NSString stringWithUTF8String:ThreadName]];
         LOG_INF("Thread " << getThreadId() <<
@@ -523,7 +524,7 @@ namespace Util
         {
 #ifdef __linux
             if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(ThreadName), 0, 0, 0) != 0)
-                ThreadName[0] = '\0';
+                strncpy(ThreadName, "<noid>", sizeof(ThreadName) - 1);
 #elif defined IOS
             const char *const name = [[[NSThread currentThread] name] UTF8String];
             strncpy(ThreadName, name, 31);
@@ -536,7 +537,7 @@ namespace Util
     }
 
 #ifdef __linux
-    static __thread pid_t ThreadTid;
+    static __thread pid_t ThreadTid = 0;
 
     pid_t getThreadId()
 #else
@@ -546,7 +547,7 @@ namespace Util
         // Avoid so many redundant system calls
 #ifdef __linux
         if (!ThreadTid)
-            ThreadTid = syscall(SYS_gettid);
+            ThreadTid = ::syscall(SYS_gettid);
         return ThreadTid;
 #else
         return std::this_thread::get_id();

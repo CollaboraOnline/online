@@ -12,6 +12,9 @@
  */
 
 #include <config.h>
+
+#include "Seccomp.hpp"
+
 #include <dlfcn.h>
 #include <ftw.h>
 #include <linux/audit.h>
@@ -31,7 +34,6 @@
 
 #include <common/Log.hpp>
 #include <common/SigUtil.hpp>
-#include "Seccomp.hpp"
 
 #if DISABLE_SECCOMP == 0
 #ifndef SYS_SECCOMP
