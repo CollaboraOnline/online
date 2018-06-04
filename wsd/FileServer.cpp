@@ -630,9 +630,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         brandCSS = Poco::format(linkCSS, std::string(BRANDING_UNSUPPORTED));
         brandJS = Poco::format(scriptJS, std::string(BRANDING_UNSUPPORTED));
     }
-#elif ENABLE_DEBUG
-    brandCSS = "";
-    brandJS = "";
 #endif
 
     Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_CSS%-->"), brandCSS);
@@ -810,8 +807,6 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
         brandJS = Poco::format(scriptJS, std::string(BRANDING_UNSUPPORTED));
         brandFooter = Poco::format(footerPage, key.data(), Poco::DateTimeFormatter::format(key.expiry(), Poco::DateTimeFormat::RFC822_FORMAT));
     }
-#elif ENABLE_DEBUG
-    brandJS = "";
 #endif
 
     Poco::replaceInPlace(adminFile, std::string("<!--%BRANDING_JS%-->"), brandJS);
