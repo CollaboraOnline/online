@@ -387,7 +387,7 @@ int main(int argc, char** argv)
     LogLevel = logLevel ? logLevel : "trace";
     if (LogLevel != "trace")
     {
-        LOG_INF("Setting log-level to [trace] and delaying setting to requested [" << LogLevel << "].");
+        LOG_INF("Setting log-level to [trace] and delaying setting to configured [" << LogLevel << "] until after Forkit initialization.");
     }
 
     std::string childRoot;
@@ -551,7 +551,7 @@ int main(int argc, char** argv)
     ::unsetenv("LOOL_TRACE_STARTUP");
     if (LogLevel != "trace")
     {
-        LOG_INF("Setting log-level to [" << LogLevel << "].");
+        LOG_INF("Forkit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
         Log::logger().setLevel(LogLevel);
     }
 

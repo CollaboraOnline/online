@@ -902,7 +902,7 @@ void LOOLWSD::initialize(Application& self)
     Log::initialize("wsd", "trace", withColor, logToFile, logProperties);
     if (LogLevel != "trace")
     {
-        LOG_INF("Setting log-level to [trace] and delaying setting to requested [" << LogLevel << "].");
+        LOG_INF("Setting log-level to [trace] and delaying setting to configured [" << LogLevel << "] until after WSD initialization.");
     }
 
     {
@@ -3002,7 +3002,7 @@ int LOOLWSD::innerMain()
 
     if (LogLevel != "trace")
     {
-        LOG_INF("Setting log-level to [" << LogLevel << "].");
+        LOG_INF("WSD initialization complete: setting log-level to [" << LogLevel << "] as configured.");
         Log::logger().setLevel(LogLevel);
     }
 

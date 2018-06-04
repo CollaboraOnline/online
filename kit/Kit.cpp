@@ -2182,7 +2182,7 @@ void lokit_main(
     Log::initialize("kit", bTraceStartup ? "trace" : logLevel, logColor != nullptr, logToFile, logProperties);
     if (bTraceStartup && LogLevel != "trace")
     {
-        LOG_INF("Setting log-level to [trace] and delaying setting to requested [" << LogLevel << "].");
+        LOG_INF("Setting log-level to [trace] and delaying setting to configured [" << LogLevel << "] until after Kit initialization.");
     }
 
     assert(!childRoot.empty());
@@ -2427,6 +2427,12 @@ void lokit_main(
 #endif
 
         LOG_INF("New kit client websocket inserted.");
+
+        if (bTraceStartup && LogLevel != "trace")
+        {
+            LOG_INF("Kit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
+            Log::logger().setLevel(LogLevel);
+        }
 
         while (!TerminationFlag)
         {
