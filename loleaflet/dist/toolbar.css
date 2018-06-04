@@ -1,6 +1,7 @@
 #toolbar-up.w2ui-toolbar {
     left: 0;
     right: 0;
+    padding-left: 9px;
     text-align: center;
     z-index: 999;
     overflow: visible !important;
