@@ -189,20 +189,120 @@ namespace Log
     }
 }
 
-#define LOG_BODY_(PRIO, LVL, X) Poco::Message m_(l_.name(), "", Poco::Message::PRIO_##PRIO); char b_[1024]; std::ostringstream oss_(Log::prefix(b_, LVL, false), std::ostringstream::ate); oss_ << std::boolalpha << X << "| " << __FILE__ << ':' << __LINE__; m_.setText(oss_.str()); l_.log(m_);
-#define LOG_TRC(X) do { auto& l_ = Log::logger(); if (l_.trace()) { LOG_BODY_(TRACE, "TRC", X); } } while (false)
-#define LOG_DBG(X) do { auto& l_ = Log::logger(); if (l_.debug()) { LOG_BODY_(DEBUG, "DBG", X); } } while (false)
-#define LOG_INF(X) do { auto& l_ = Log::logger(); if (l_.information()) { LOG_BODY_(INFORMATION, "INF", X); } } while (false)
-#define LOG_WRN(X) do { auto& l_ = Log::logger(); if (l_.warning()) { LOG_BODY_(WARNING, "WRN", X); } } while (false)
-#define LOG_ERR(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(ERROR, "ERR", X); } } while (false)
-#define LOG_SYS(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(ERROR, "ERR", X << " (errno: " << std::strerror(errno) << ")"); } } while (false)
-#define LOG_FTL(X) do { auto& l_ = Log::logger(); if (l_.fatal()) { LOG_BODY_(FATAL, "FTL", X); } } while (false)
-#define LOG_SFL(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(FATAL, "FTL", X << " (errno: " << std::strerror(errno) << ")"); } } while (false)
+#define LOG_END(LOG)                                \
+    do                                              \
+    {                                               \
+        LOG << "| " << __FILE__ << ':' << __LINE__; \
+        LOG.flush();                                \
+    } while (false)
 
-#define LOG_END(l) do { l << __FILE__ << ':' << __LINE__; l.flush(); } while (false)
+#define LOG_BODY_(LOG, PRIO, LVL, X)                                               \
+    Poco::Message m_(LOG.name(), "", Poco::Message::PRIO_##PRIO);                  \
+    char b_[1024];                                                                 \
+    std::ostringstream oss_(Log::prefix(b_, LVL, false), std::ostringstream::ate); \
+    oss_ << std::boolalpha << X;                                                   \
+    LOG_END(oss_);                                                                  \
+    m_.setText(oss_.str());                                                        \
+    LOG.log(m_);
 
-#define LOG_CHECK(X) do { if (!(X)) { LOG_ERR("Check failed. Expected (" #X ")."); } } while (false)
-#define LOG_CHECK_RET(X, RET) do { if (!(X)) { LOG_ERR("Check failed. Expected (" #X ")."); return RET; } } while (false)
+#define LOG_TRC(X)                            \
+    do                                        \
+    {                                         \
+        auto &log_ = Log::logger();           \
+        if (log_.trace())                     \
+        {                                     \
+            LOG_BODY_(log_, TRACE, "TRC", X); \
+        }                                     \
+    } while (false)
+
+#define LOG_DBG(X)                            \
+    do                                        \
+    {                                         \
+        auto &log_ = Log::logger();           \
+        if (log_.debug())                     \
+        {                                     \
+            LOG_BODY_(log_, DEBUG, "DBG", X); \
+        }                                     \
+    } while (false)
+
+#define LOG_INF(X)                                  \
+    do                                              \
+    {                                               \
+        auto &log_ = Log::logger();                 \
+        if (log_.information())                     \
+        {                                           \
+            LOG_BODY_(log_, INFORMATION, "INF", X); \
+        }                                           \
+    } while (false)
+
+#define LOG_WRN(X)                              \
+    do                                          \
+    {                                           \
+        auto &log_ = Log::logger();             \
+        if (log_.warning())                     \
+        {                                       \
+            LOG_BODY_(log_, WARNING, "WRN", X); \
+        }                                       \
+    } while (false)
+
+#define LOG_ERR(X)                            \
+    do                                        \
+    {                                         \
+        auto &log_ = Log::logger();           \
+        if (log_.error())                     \
+        {                                     \
+            LOG_BODY_(log_, ERROR, "ERR", X); \
+        }                                     \
+    } while (false)
+
+#define LOG_SYS(X)                                                                          \
+    do                                                                                      \
+    {                                                                                       \
+        auto &log_ = Log::logger();                                                         \
+        if (log_.error())                                                                   \
+        {                                                                                   \
+            LOG_BODY_(log_, ERROR, "ERR", X << " (errno: " << std::strerror(errno) << ")"); \
+        }                                                                                   \
+    } while (false)
+
+#define LOG_FTL(X)                            \
+    do                                        \
+    {                                         \
+        auto &log_ = Log::logger();           \
+        if (log_.fatal())                     \
+        {                                     \
+            LOG_BODY_(log_, FATAL, "FTL", X); \
+        }                                     \
+    } while (false)
+
+#define LOG_SFL(X)                                                                          \
+    do                                                                                      \
+    {                                                                                       \
+        auto &log_ = Log::logger();                                                         \
+        if (log_.error())                                                                   \
+        {                                                                                   \
+            LOG_BODY_(log_, FATAL, "FTL", X << " (errno: " << std::strerror(errno) << ")"); \
+        }                                                                                   \
+    } while (false)
+
+#define LOG_CHECK(X)                                     \
+    do                                                   \
+    {                                                    \
+        if (!(X))                                        \
+        {                                                \
+            LOG_ERR("Check failed. Expected (" #X ")."); \
+        }                                                \
+    } while (false)
+
+#define LOG_CHECK_RET(X, RET)                            \
+    do                                                   \
+    {                                                    \
+        if (!(X))                                        \
+        {                                                \
+            LOG_ERR("Check failed. Expected (" #X ")."); \
+            return RET;                                  \
+        }                                                \
+    } while (false)
 
 #endif
 
