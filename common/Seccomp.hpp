@@ -9,6 +9,9 @@
 #ifndef INCLUDED_SECCOMP_HPP
 #define INCLUDED_SECCOMP_HPP
 
+#include <string>
+#include <vector>
+
 namespace Seccomp {
     enum Type { KIT, WSD };
 

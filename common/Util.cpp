@@ -16,6 +16,7 @@
 #include <sys/poll.h>
 #include <sys/prctl.h>
 #include <sys/stat.h>
+#include <sys/syscall.h>
 #include <sys/uio.h>
 #include <sys/vfs.h>
 #include <sys/types.h>
@@ -55,6 +56,8 @@
 #include "Common.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
+
+using std::size_t;
 
 namespace Util
 {
@@ -272,7 +275,7 @@ namespace Util
 
     static const char *startsWith(const char *line, const char *tag)
     {
-        int len = strlen(tag);
+        int len = std::strlen(tag);
         if (!strncmp(line, tag, len))
         {
             while (!isdigit(line[len]) && line[len] != '\0')
@@ -444,42 +447,40 @@ namespace Util
         return replace(r, "\n", " / ");
     }
 
-    static __thread char ThreadName[32];
+    static __thread char ThreadName[32] = {0};
 
     void setThreadName(const std::string& s)
     {
         strncpy(ThreadName, s.c_str(), 31);
         ThreadName[31] = '\0';
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(s.c_str()), 0, 0, 0) != 0)
-            LOG_SYS("Cannot set thread name of " << getThreadId() << " (0x" <<
-                    std::hex << std::this_thread::get_id() <<
-                    std::dec << ") to [" << s << "].");
+            LOG_SYS("Cannot set thread name of " << getThreadId() << " (" << std::hex <<
+                    std::this_thread::get_id() << std::dec << ") to [" << s << "].");
         else
-            LOG_INF("Thread " << getThreadId() << " (0x" <<
-                    std::hex << std::this_thread::get_id() <<
-                    std::dec << ") is now called [" << s << "].");
+            LOG_INF("Thread " << getThreadId() << " (" << std::hex <<
+                    std::this_thread::get_id() << std::dec << ") is now called [" << s << "].");
     }
 
     const char *getThreadName()
     {
-        // Main process and/or not set yet.
+        // Main process and/or thread name not set yet.
         if (ThreadName[0] == '\0')
         {
             if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(ThreadName), 0, 0, 0) != 0)
-                ThreadName[0] = '\0';
+                strncpy(ThreadName, "<noid>", sizeof(ThreadName) - 1);
         }
 
         // Avoid so many redundant system calls
         return ThreadName;
     }
 
-    static __thread pid_t ThreadTid;
+    static __thread pid_t ThreadTid = 0;
 
     pid_t getThreadId()
     {
         // Avoid so many redundant system calls
         if (!ThreadTid)
-            ThreadTid = syscall(SYS_gettid);
+            ThreadTid = ::syscall(SYS_gettid);
         return ThreadTid;
     }
 
