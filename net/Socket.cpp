@@ -9,9 +9,13 @@
 
 #include "config.h"
 
-#include <stdio.h>
+#include "Socket.hpp"
+
+#include <cstring>
 #include <ctype.h>
 #include <iomanip>
+#include <stdio.h>
+#include <unistd.h>
 #include <zlib.h>
 
 #include <Poco/DateTime.h>
@@ -19,8 +23,7 @@
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/Net/HTTPResponse.h>
 
-#include "SigUtil.hpp"
-#include "Socket.hpp"
+#include <SigUtil.hpp>
 #include "ServerSocket.hpp"
 #include "WebSocketHandler.hpp"
 

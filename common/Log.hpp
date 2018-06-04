@@ -10,9 +10,6 @@
 #ifndef INCLUDED_LOG_HPP
 #define INCLUDED_LOG_HPP
 
-#include <sys/syscall.h>
-#include <unistd.h>
-
 #include <functional>
 #include <sstream>
 #include <string>
@@ -38,7 +35,7 @@ namespace Log
                     std::map<std::string, std::string> config);
     Poco::Logger& logger();
 
-    char* prefix(char* buffer, const char* level, bool sigSafe);
+    char* prefix(char* buffer, std::size_t len, const char* level);
 
     inline bool traceEnabled() { return logger().trace(); }
     inline bool debugEnabled() { return logger().debug(); }
@@ -52,7 +49,7 @@ namespace Log
     /// Signal safe logging
     void signalLog(const char* message);
     /// Signal log number
-    void signalLogNumber(size_t num);
+    void signalLogNumber(std::size_t num);
 
     /// The following is to write streaming logs.
     /// Log::info() << "Value: 0x" << std::hex << value
@@ -80,7 +77,7 @@ namespace Log
             _enabled(true)
         {
             char buffer[1024];
-            _stream << prefix(buffer, level, syscall(SYS_gettid));
+            _stream << prefix(buffer, sizeof(buffer) - 1, level);
         }
 
         StreamLogger(StreamLogger&& sl) noexcept
@@ -196,13 +193,13 @@ namespace Log
         LOG.flush();                                \
     } while (false)
 
-#define LOG_BODY_(LOG, PRIO, LVL, X)                                               \
-    Poco::Message m_(LOG.name(), "", Poco::Message::PRIO_##PRIO);                  \
-    char b_[1024];                                                                 \
-    std::ostringstream oss_(Log::prefix(b_, LVL, false), std::ostringstream::ate); \
-    oss_ << std::boolalpha << X;                                                   \
-    LOG_END(oss_);                                                                  \
-    m_.setText(oss_.str());                                                        \
+#define LOG_BODY_(LOG, PRIO, LVL, X)                                                        \
+    Poco::Message m_(LOG.name(), "", Poco::Message::PRIO_##PRIO);                           \
+    char b_[1024];                                                                          \
+    std::ostringstream oss_(Log::prefix(b_, sizeof(b_) - 1, LVL), std::ostringstream::ate); \
+    oss_ << std::boolalpha << X;                                                            \
+    LOG_END(oss_);                                                                          \
+    m_.setText(oss_.str());                                                                 \
     LOG.log(m_);
 
 #define LOG_TRC(X)                            \
