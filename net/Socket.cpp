@@ -60,6 +60,7 @@ SocketPoll::SocketPoll(const std::string& threadName)
       _stop(false),
       _threadStarted(false),
       _threadFinished(false),
+      _runOnClientThread(false),
       _owner(std::this_thread::get_id())
 {
     // Create the wakeup fd.
@@ -92,14 +93,17 @@ SocketPoll::~SocketPoll()
     _wakeup[1] = -1;
 }
 
-void SocketPoll::startThread()
+bool SocketPoll::startThread()
 {
+    assert(!_runOnClientThread);
+
     if (!_threadStarted)
     {
         _threadStarted = true;
         try
         {
             _thread = std::thread(&SocketPoll::pollingThreadEntry, this);
+            return true;
         }
         catch (const std::exception& exc)
         {
@@ -107,6 +111,8 @@ void SocketPoll::startThread()
             _threadStarted = false;
         }
     }
+
+    return false;
 }
 
 void SocketPoll::joinThread()
