@@ -412,7 +412,7 @@ public:
         }
     }
 
-    bool isAlive() const { return _threadStarted && !_threadFinished; }
+    bool isAlive() const { return (_threadStarted && !_threadFinished) || _runOnClientThread; }
 
     /// Check if we should continue polling
     virtual bool continuePolling()
@@ -667,10 +667,27 @@ public:
     const std::string& name() const { return _name; }
 
     /// Start the polling thread (if desired)
-    void startThread();
+    /// Mutually exclusive with runOnClientThread().
+    bool startThread();
 
     /// Stop and join the polling thread before returning (if active)
     void joinThread();
+
+    /// Called to prevent starting own poll thread
+    /// when polling is done on the client's thread.
+    /// Mutually exclusive with startThread().
+    bool runOnClientThread()
+    {
+        assert(!_threadStarted);
+
+        if (!_threadStarted)
+        {
+            _runOnClientThread = true;
+            return true;
+        }
+
+        return false;
+    }
 
 private:
     /// Initialize the poll fds array with the right events
@@ -729,6 +746,7 @@ protected:
     std::thread _thread;
     std::atomic<bool> _threadStarted;
     std::atomic<bool> _threadFinished;
+    std::atomic<bool> _runOnClientThread;
     std::thread::id _owner;
 };
 

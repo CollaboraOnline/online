@@ -2418,6 +2418,7 @@ void lokit_main(
 #endif // MOBILEAPP
 
         SocketPoll mainKit("kit");
+        mainKit.runOnClientThread(); // We will do the polling on this thread.
 
 #ifndef MOBILEAPP
         mainKit.insertNewWebSocketSync(uri, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId, mainKit));
