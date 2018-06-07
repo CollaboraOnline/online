@@ -621,7 +621,7 @@ int ClientSession::getPollEvents(std::chrono::steady_clock::time_point /* now */
 
 void ClientSession::performWrites()
 {
-    LOG_DBG(getName() << " ClientSession: performing writes");
+    LOG_TRC(getName() << " ClientSession: performing writes.");
 
     std::shared_ptr<Message> item;
     if (_senderQueue.dequeue(item))
@@ -645,7 +645,7 @@ void ClientSession::performWrites()
         }
     }
 
-    LOG_DBG(getName() << " ClientSession: performed write");
+    LOG_TRC(getName() << " ClientSession: performed write.");
 }
 
 bool ClientSession::handleKitToClientMessage(const char* buffer, const int length)
