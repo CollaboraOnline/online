@@ -283,9 +283,10 @@ AS_IF([test `uname -s` != Darwin],
                       [AC_MSG_ERROR([dlopen not found])])])
 
 AC_SEARCH_LIBS([png_create_write_struct],
-               [png],
+               [png png16],
                [],
-               [AC_MSG_ERROR([libpng not available?])])
+               [AC_MSG_ERROR([libpng not available?])],
+               [-lz])
 
 AS_IF([test `uname -s` = Linux],
       [AC_SEARCH_LIBS([cap_get_proc],
