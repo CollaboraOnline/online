@@ -31,6 +31,11 @@ canceltiles
     parameter. There is no guarantee of exactly which tile: messages
     might still be sent back to the client.
 
+tileprocessed tile=<tileid>
+
+    Previously sent tile (server -> client) arrived and processed by the client.
+    Tileid has the next stucture : <tile x coord>:<tile y coord>:<zoom level>:<selected part>
+
 downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
 
     Exports the current document to the desired format and returns a download URL

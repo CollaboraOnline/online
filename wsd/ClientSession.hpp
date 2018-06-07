@@ -17,8 +17,10 @@
 #include "DocumentBroker.hpp"
 #include <Poco/URI.h>
 #include <Rectangle.hpp>
+#include <boost/optional.hpp>
 
 class DocumentBroker;
+
 
 /// Represents a session to a LOOL client, in the WSD process.
 class ClientSession final : public Session, public std::enable_shared_from_this<ClientSession>
@@ -106,6 +108,12 @@ public:
 
     /// Set WOPI fileinfo object
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
+
+    boost::optional<TileCombined>& getRequestedTiles() { return _requestedTiles; }
+
+    int getTilesOnFly() const { return _tilesOnFly; }
+    void setTilesOnFly(int tilesOnFly) { _tilesOnFly = tilesOnFly; }
+
 
 private:
 
@@ -195,7 +203,12 @@ private:
 
     // Type of the docuemnt, extracter from status message
     std::string _docType;
+
+    int _tilesOnFly;
+
+    boost::optional<TileCombined> _requestedTiles;
 };
+
 
 #endif
 

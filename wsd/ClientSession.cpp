@@ -54,7 +54,8 @@ ClientSession::ClientSession(const std::string& id,
     _tileWidthPixel(0),
     _tileHeightPixel(0),
     _tileWidthTwips(0),
-    _tileHeightTwips(0)
+    _tileHeightTwips(0),
+    _tilesOnFly(0)
 {
     assert(!creatingPngThumbnail || thumbnailFile != "");
     const size_t curConnections = ++LOOLWSD::NumConnections;
@@ -138,6 +139,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         return loadDocument(buffer, length, tokens, docBroker);
     }
     else if (tokens[0] != "canceltiles" &&
+             tokens[0] != "tileprocessed" &&
              tokens[0] != "clientzoom" &&
              tokens[0] != "clientvisiblearea" &&
              tokens[0] != "outlinestate" &&
@@ -328,6 +330,13 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             _tileHeightTwips = tileTwipHeight;
             return forwardToChild(std::string(buffer, length), docBroker);
         }
+    }
+    else if (tokens[0] == "tileprocessed")
+    {
+        if(_tilesOnFly > 0) // canceltiles message can zero this value
+            --_tilesOnFly;
+        docBroker->sendRequestedTiles(shared_from_this());
+        return true;
     }
     else
     {
