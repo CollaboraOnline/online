@@ -208,9 +208,9 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'lastrecord') {
 		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() + 120);
 	}
-	else if (id.startsWith('menu:wrap:wrap-'))
+	else if (id.startsWith('menu-wrap:wrap-'))
 	{
-		var wrapType = id.substring('menu:wrap:wrap-'.length);
+		var wrapType = id.substring('menu-wrap:wrap-'.length);
 		map.toggleCommandState(wrapType);
 	}
 	else if (id === 'insertgraphic') {
@@ -519,7 +519,7 @@ function createToolbar() {
 	$('#toolbar-up').w2toolbar({
 		name: 'toolbar-up',
 		items: [
-			{type: 'menu', id: 'writer:menu:wrap', caption: _('Textwrap'), items: [
+			{type: 'menu', id: 'menu-wrap', caption: _('Textwrap'), items: [
 				{ text: _('No wrap'), id: 'wrap-WrapOff' },
 				{ text: _('Page wrap'), id: 'wrap-WrapOn' },
 				{ text: _('Wrap anchor only'), id: 'wrap-WrapAnchorOnly' },
