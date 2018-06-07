@@ -1290,60 +1290,135 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 
     LOG_TRC("TileCombined request for " << tileCombined.serialize());
 
-    // Satisfy as many tiles from the cache.
-    std::vector<TileDesc> tiles;
+    // Check which newly requested tiles needs rendering.
+    std::vector<TileDesc> tilesNeedsRendering;
     for (auto& tile : tileCombined.getTiles())
     {
         std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
-        if (cachedTile)
-        {
-            //TODO: Combine the response to reduce latency.
-#if ENABLE_DEBUG
-            const std::string response = tile.serialize("tile:") + " renderid=cached\n";
-#else
-            const std::string response = tile.serialize("tile:") + "\n";
-#endif
-
-            std::vector<char> output;
-            output.reserve(static_cast<size_t>(4) * tile.getWidth() * tile.getHeight());
-            output.resize(response.size());
-            std::memcpy(output.data(), response.data(), response.size());
-
-            assert(cachedTile->is_open());
-            cachedTile->seekg(0, std::ios_base::end);
-            const auto pos = output.size();
-            std::streamsize size = cachedTile->tellg();
-            output.resize(pos + size);
-            cachedTile->seekg(0, std::ios_base::beg);
-            cachedTile->read(output.data() + pos, size);
+        if(cachedTile)
             cachedTile->close();
-
-            session->sendBinaryFrame(output.data(), output.size());
-        }
         else
         {
             // Not cached, needs rendering.
             tile.setVersion(++_tileVersion);
-            tileCache().subscribeToTileRendering(tile, session);
-            tiles.push_back(tile);
+            tilesNeedsRendering.push_back(tile);
             _debugRenderedTileCount++;
         }
     }
 
-    if (!tiles.empty())
+    // Send rendering request
+    if (!tilesNeedsRendering.empty())
     {
-        auto newTileCombined = TileCombined::create(tiles);
+        auto newTileCombined = TileCombined::create(tilesNeedsRendering);
 
         // Forward to child to render.
         const auto req = newTileCombined.serialize("tilecombine");
         LOG_DBG("Sending residual tilecombine: " << req);
         _childProcess->sendTextFrame(req);
     }
+
+    // Accumulate tiles
+    boost::optional<TileCombined>& requestedTiles = session->getRequestedTiles();
+    if(requestedTiles == boost::none)
+    {
+        requestedTiles = TileCombined::create(tileCombined.getTiles());
+    }
+    // Drop duplicated tiles, but use newer version number
+    else
+    {
+        for (const auto& newTile : tileCombined.getTiles())
+        {
+            const TileDesc& firstOldTile = requestedTiles.get().getTiles()[0];
+            if(newTile.getPart() != firstOldTile.getPart() ||
+               newTile.getWidth() != firstOldTile.getWidth() ||
+               newTile.getHeight() != firstOldTile.getHeight() ||
+               newTile.getTileWidth() != firstOldTile.getTileWidth() ||
+               newTile.getTileHeight() != firstOldTile.getTileHeight() )
+            {
+                LOG_WRN("Different visible area information in tile requests");
+            }
+
+            bool tileFound = false;
+            for (auto& oldTile : requestedTiles.get().getTiles())
+            {
+                if(oldTile.getTilePosX() == newTile.getTilePosX() &&
+                   oldTile.getTilePosY() == newTile.getTilePosY() )
+                {
+                    oldTile.setVersion(newTile.getVersion());
+                    oldTile.setOldWireId(newTile.getOldWireId());
+                    oldTile.setWireId(newTile.getWireId());
+                    tileFound = true;
+                    break;
+                }
+            }
+            if(!tileFound)
+                requestedTiles.get().getTiles().push_back(newTile);
+        }
+    }
+
+    lock.unlock();
+    lock.release();
+    sendRequestedTiles(session);
+}
+
+void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& session)
+{
+    assert(session->getTilesOnFly() >= 0);
+    std::unique_lock<std::mutex> lock(_mutex);
+
+    // All tiles were processed on client side what we sent last time, so we can send a new banch of tiles
+    // which was invalidated / requested in the meantime
+    boost::optional<TileCombined>& requestedTiles = session->getRequestedTiles();
+    if(session->getTilesOnFly() == 0 && requestedTiles != boost::none && !requestedTiles.get().getTiles().empty())
+    {
+        session->setTilesOnFly(requestedTiles.get().getTiles().size());
+
+        // Satisfy as many tiles from the cache.
+        for (auto& tile : requestedTiles.get().getTiles())
+        {
+            std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
+            if (cachedTile)
+            {
+                //TODO: Combine the response to reduce latency.
+#if ENABLE_DEBUG
+                const std::string response = tile.serialize("tile:") + " renderid=cached\n";
+#else
+                const std::string response = tile.serialize("tile:") + "\n";
+#endif
+
+                std::vector<char> output;
+                output.reserve(static_cast<size_t>(4) * tile.getWidth() * tile.getHeight());
+                output.resize(response.size());
+                std::memcpy(output.data(), response.data(), response.size());
+
+                assert(cachedTile->is_open());
+                cachedTile->seekg(0, std::ios_base::end);
+                const auto pos = output.size();
+                std::streamsize size = cachedTile->tellg();
+                output.resize(pos + size);
+                cachedTile->seekg(0, std::ios_base::beg);
+                cachedTile->read(output.data() + pos, size);
+                cachedTile->close();
+
+                session->sendBinaryFrame(output.data(), output.size());
+            }
+            else
+            {
+                // Not cached, needs rendering. Rendering request was already sent
+                tileCache().subscribeToTileRendering(tile, session);
+            }
+        }
+        requestedTiles = boost::none;
+    }
 }
 
 void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& session)
 {
     std::unique_lock<std::mutex> lock(_mutex);
+
+    // Clear tile requests
+    session->setTilesOnFly(0);
+    session->getRequestedTiles() = boost::none;
 
     const auto canceltiles = tileCache().cancelTiles(session);
     if (!canceltiles.empty())

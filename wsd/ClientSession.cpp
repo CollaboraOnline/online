@@ -48,7 +48,8 @@ ClientSession::ClientSession(const std::string& id,
     _tileWidthPixel(0),
     _tileHeightPixel(0),
     _tileWidthTwips(0),
-    _tileHeightTwips(0)
+    _tileHeightTwips(0),
+    _tilesOnFly(0)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
@@ -131,6 +132,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         return loadDocument(buffer, length, tokens, docBroker);
     }
     else if (tokens[0] != "canceltiles" &&
+             tokens[0] != "tileprocessed" &&
              tokens[0] != "clientzoom" &&
              tokens[0] != "clientvisiblearea" &&
              tokens[0] != "outlinestate" &&
@@ -321,6 +323,13 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             _tileHeightTwips = tileTwipHeight;
             return forwardToChild(std::string(buffer, length), docBroker);
         }
+    }
+    else if (tokens[0] == "tileprocessed")
+    {
+        if(_tilesOnFly > 0) // canceltiles message can zero this value
+            --_tilesOnFly;
+        docBroker->sendRequestedTiles(shared_from_this());
+        return true;
     }
     else
     {
@@ -1069,11 +1078,13 @@ void ClientSession::handleTileInvalidation(const std::string& message,
 {
     docBroker->invalidateTiles(message);
 
+    bool bIsTextDocument = _docType.find("text") != std::string::npos;
+
     // Skip requesting new tiles if we don't have client visible area data yet.
     if(!_clientVisibleArea.hasSurface() ||
        _tileWidthPixel == 0 || _tileHeightPixel == 0 ||
        _tileWidthTwips == 0 || _tileHeightTwips == 0 ||
-       _clientSelectedPart == -1)
+       (_clientSelectedPart == -1 && !bIsTextDocument))
     {
         return;
     }
@@ -1082,14 +1093,14 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     int part = result.first;
     Util::Rectangle& invalidateRect = result.second;
 
-    if(_docType.find("text") != std::string::npos) // For Writer we don't have separate parts
+    if(bIsTextDocument) // For Writer we don't have separate parts
         part = 0;
 
     if(part == -1) // If no part is specifed we use the part used by the client
         part = _clientSelectedPart;
 
     std::vector<TileDesc> invalidTiles;
-    if(part == _clientSelectedPart)
+    if(part == _clientSelectedPart || bIsTextDocument)
     {
         Util::Rectangle intersection;
         intersection._x1 = std::max(invalidateRect._x1, _clientVisibleArea._x1);

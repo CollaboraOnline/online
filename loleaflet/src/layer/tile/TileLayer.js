@@ -1340,6 +1340,9 @@ L.TileLayer = L.GridLayer.extend({
 			tile.el.src = img;
 		}
 		L.Log.log(textMsg, L.INCOMING, key);
+
+		// Send acknowledgment, that the tile message arrived
+		this._map._socket.sendMessage('tileprocessed tile= ' + key);
 	},
 
 	_tileOnLoad: function (done, tile) {

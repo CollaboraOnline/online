@@ -301,6 +301,7 @@ public:
     void handleDialogRequest(const std::string& dialogCmd);
     void handleTileCombinedRequest(TileCombined& tileCombined,
                                    const std::shared_ptr<ClientSession>& session);
+    void sendRequestedTiles(const std::shared_ptr<ClientSession>& session);
     void cancelTileRequests(const std::shared_ptr<ClientSession>& session);
     void handleTileResponse(const std::vector<char>& payload);
     void handleDialogPaintResponse(const std::vector<char>& payload, bool child);
