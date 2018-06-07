@@ -475,11 +475,12 @@ button.leaflet-control-search-next
     position: relative;
     padding: 2px;
     display: block;
-    height: 232px;
+    width: 243px;
 }
 
 .inserttable-grid .row {
     height: 20px;
+    margin: 3px;
 }
 
 .inserttable-grid .col {
