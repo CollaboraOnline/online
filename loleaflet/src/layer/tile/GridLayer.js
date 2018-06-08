@@ -542,24 +542,7 @@ L.GridLayer = L.Layer.extend({
 			if (newView) {
 				// we know that a new set of tiles that cover the whole view has been requested
 				// so we're able to cancel the previous requests that are being processed
-				this._map._socket.sendMessage('canceltiles');
-				for (key in this._tiles) {
-					// When _invalidCount > 0 the tile has been invalidated, however the new tile content
-					// has not yet been fetched and because of `canceltiles` message it will never be
-					// so we need to remove the tile, or when the tile is back inside the visible area
-					// its content would be the old invalidated one;
-					// example: a tile is invalidated but a sudden scroll to the cell cursor position causes
-					// to move the tile out of the visible area before the new content is fetched
-					if (!this._tiles[key].loaded || this._tiles[key]._invalidCount > 0) {
-						L.DomUtil.remove(this._tiles[key].el);
-						delete this._tiles[key];
-						if (this._debug) {
-							this._debugCancelledTiles++;
-							this._debugShowTileData();
-						}
-					}
-				}
-				this._emptyTilesCount = 0;
+				this._cancelTiles();
 			}
 
 			// if its the first batch of tiles to load
@@ -620,25 +603,7 @@ L.GridLayer = L.Layer.extend({
 			if (newView) {
 				// we know that a new set of tiles that cover the whole view has been requested
 				// so we're able to cancel the previous requests that are being processed
-				this._map._socket.sendMessage('canceltiles');
-				for (key in this._tiles) {
-					tile = this._tiles[key];
-					// When _invalidCount > 0 the tile has been invalidated, however the new tile content
-					// has not yet been fetched and because of `canceltiles` message it will never be
-					// so we need to remove the tile, or when the tile is back inside the visible area
-					// its content would be the old invalidated one;
-					// example: a tile is invalidated but a sudden scroll to the cell cursor position causes
-					// to move the tile out of the visible area before the new content is fetched
-					if (!tile.loaded || tile._invalidCount > 0) {
-						L.DomUtil.remove(tile.el);
-						delete this._tiles[key];
-						if (this._debug && this._debugDataCancelledTiles) {
-							this._debugCancelledTiles++;
-							this._debugDataCancelledTiles.setPrefix('Cancelled tiles: ' + this._debugCancelledTiles);
-						}
-					}
-				}
-				this._emptyTilesCount = 0;
+				this._cancelTiles();
 			}
 
 			// if its the first batch of tiles to load
@@ -717,6 +682,46 @@ L.GridLayer = L.Layer.extend({
 
 			this._level.el.appendChild(fragment);
 		}
+	},
+
+	_cancelTiles: function() {
+		this._map._socket.sendMessage('canceltiles');
+		for (var key in this._tiles) {
+			var tile = this._tiles[key];
+			// When _invalidCount > 0 the tile has been invalidated, however the new tile content
+			// has not yet been fetched and because of `canceltiles` message it will never be
+			// so we need to remove the tile, or when the tile is back inside the visible area
+			// its content would be the old invalidated one. Drop only those tiles which are not in
+			// the new visible area.
+			// example: a tile is invalidated but a sudden scroll to the cell cursor position causes
+			// to move the tile out of the visible area before the new content is fetched
+
+			var dropTile = !tile.loaded;
+			var coords = tile.coords;
+			if (coords.part === this._selectedPart) {
+				var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
+				var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
+				var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
+				var tileTopLeft = this._coordsToTwips(coords);
+				var tileBottomRight = new L.Point(this._tileWidthTwips, this._tileHeightTwips);
+				var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(tileBottomRight));
+				dropTile |= (tile._invalidCount > 0 && !visibleArea.intersects(tileBounds));
+			}
+			else {
+				dropTile |= tile._invalidCount > 0;
+			}
+
+
+			if (dropTile) {
+				L.DomUtil.remove(tile.el);
+				delete this._tiles[key];
+				if (this._debug && this._debugDataCancelledTiles) {
+					this._debugCancelledTiles++;
+					this._debugDataCancelledTiles.setPrefix('Cancelled tiles: ' + this._debugCancelledTiles);
+				}
+			}
+		}
+		this._emptyTilesCount = 0;
 	},
 
 	_isValidTile: function (coords) {
