@@ -101,9 +101,7 @@ bool lockdown(Type type)
         // Load sycall number
         BPF_STMT(BPF_LD+BPF_W+BPF_ABS,  offsetof(struct seccomp_data, nr)),
 
-        // ------------------------------------------------------------
-        // ---   First white-list the syscalls we frequently use.   ---
-        // ------------------------------------------------------------
+        // First white-list the syscalls we frequently use.
         ACCEPT_SYSCALL(recvfrom),
         ACCEPT_SYSCALL(write),
         ACCEPT_SYSCALL(futex),
@@ -115,9 +113,7 @@ bool lockdown(Type type)
         ACCEPT_SYSCALL(close),
         ACCEPT_SYSCALL(nanosleep),
 
-        // ------------------------------------------------------------
-        // --- Now block everything that we don't like the look of. ---
-        // ------------------------------------------------------------
+        // Now block everything that we don't like the look of.
 
         // FIXME: should we bother blocking calls that have early
         // permission checks we don't meet ?

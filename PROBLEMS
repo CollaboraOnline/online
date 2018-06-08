@@ -51,5 +51,3 @@
   used just once or twice, passed as a parameter to a function, or
   used in a comparisin expression. This is fairly pointless and just
   makes the code harder to read. Use string literals instead.
-
-- ASCII art? Seriously?
