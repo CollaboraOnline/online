@@ -149,10 +149,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._msgQueue = [];
 		this._toolbarCommandValues = {};
 		this._previewInvalidations = [];
-		this._clientZoom = 'tilepixelwidth=' + this._tileWidthPx + ' ' +
-			'tilepixelheight=' + this._tileHeightPx + ' ' +
-			'tiletwipwidth=' + this.options.tileWidthTwips + ' ' +
-			'tiletwipheight=' + this.options.tileHeightTwips;
+		this._updateClientZoom();
 
 		this._followThis = -1;
 		this._editorId = -1;
@@ -1479,22 +1476,10 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
-		if (this._clientZoom) {
-			// the zoom level has changed
-			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
-			this._clientZoom = null;
-		}
 
-		if (this._clientVisibleArea) {
-			// Visible area is dirty, update it on the server.
-			var visibleArea = this._map._container.getBoundingClientRect();
-			var pos = this._pixelsToTwips(new L.Point(visibleArea.left, visibleArea.top));
-			var size = this._pixelsToTwips(new L.Point(visibleArea.width, visibleArea.height));
-			var payload = 'clientvisiblearea x=' + Math.round(pos.x) + ' y=' + Math.round(pos.y) +
-				' width=' + Math.round(size.x) + ' height=' + Math.round(size.y);
-			this._map._socket.sendMessage(payload);
-			this._clientVisibleArea = false;
-		}
+		this._sendClientZoom();
+
+		this._sendClientVisibleArea();
 
 		this._map._socket.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count +
@@ -1521,21 +1506,11 @@ L.TileLayer = L.GridLayer.extend({
 				this._cellCursorOnPgDn = new L.LatLngBounds(this._prevCellCursor.getSouthWest(), this._prevCellCursor.getNorthEast());
 			}
 		}
-		if (this._clientZoom) {
-			// the zoom level has changed
-			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
-			this._clientZoom = null;
-		}
-		if (this._clientVisibleArea) {
-			// Visible area is dirty, update it on the server.
-			var visibleArea = this._map._container.getBoundingClientRect();
-			var pos = this._pixelsToTwips(new L.Point(visibleArea.left, visibleArea.top));
-			var size = this._pixelsToTwips(new L.Point(visibleArea.width, visibleArea.height));
-			var payload = 'clientvisiblearea x=' + Math.round(pos.x) + ' y=' + Math.round(pos.y) +
-				' width=' + Math.round(size.x) + ' height=' + Math.round(size.y);
-			this._map._socket.sendMessage(payload);
-			this._clientVisibleArea = false;
-		}
+
+		this._sendClientZoom();
+
+		this._sendClientVisibleArea();
+
 		this._map._socket.sendMessage('key type=' + type +
 				' char=' + charcode + ' key=' + keycode);
 	},
@@ -2299,17 +2274,6 @@ L.TileLayer = L.GridLayer.extend({
 			'tilepixelheight=' + this._tileHeightPx + ' ' +
 			'tiletwipwidth=' + this._tileWidthTwips + ' ' +
 			'tiletwipheight=' + this._tileHeightTwips;
-	},
-
-	_invalidateClientVisibleArea: function() {
-		if (this._debug) {
-			this._debugInfo.clearLayers();
-			for (var key in this._tiles) {
-				this._tiles[key]._debugPopup = null;
-				this._tiles[key]._debugTile = null;
-			}
-		}
-		this._clientVisibleArea = true;
 	},
 
 	_debugGetTimeArray: function() {
