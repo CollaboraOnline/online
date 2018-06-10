@@ -10,6 +10,7 @@
 #ifndef INCLUDED_UTIL_HPP
 #define INCLUDED_UTIL_HPP
 
+#include <cstring>
 #include <atomic>
 #include <cassert>
 #include <cstring>
@@ -292,9 +293,22 @@ namespace Util
         return trimmed(std::string(s));
     }
 
+    /// Return true iff s starts with t.
     inline bool startsWith(const std::string& s, const std::string& t)
     {
         return s.length() >= t.length() && memcmp(s.c_str(), t.c_str(), t.length()) == 0;
+    }
+
+    /// Return true iff s starts with t.
+    inline bool startsWith(const std::string& s, const char* t)
+    {
+        if (t != nullptr && !s.empty())
+        {
+            const size_t len = std::strlen(t);
+            return s.length() >= len && memcmp(s.c_str(), t, len) == 0;
+        }
+
+        return false;
     }
 
     /// Check for the URI scheme validity.
