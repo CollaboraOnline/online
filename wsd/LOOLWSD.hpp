@@ -139,6 +139,18 @@ public:
     /// Autosave a given document
     static void autoSave(const std::string& docKey);
 
+    /// Anonymize the basename of filenames, preserving the path and extension.
+    static std::string anonymizeUrl(const std::string& url)
+    {
+        return AnonymizeFilenames ? Util::anonymizeUrl(url) : url;
+    }
+
+    /// Anonymize usernames.
+    static std::string anonymizeUsername(const std::string& username)
+    {
+        return AnonymizeUsernames ? Util::anonymize(username) : username;
+    }
+
     int innerMain();
 
 protected:
