@@ -567,8 +567,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         watermarkText = LOOLWSD::OverrideWatermark;
 #endif
 
-    LOG_DBG("Setting username [" << username << "] and userId [" <<
-            userid << "] for session [" << sessionId << "]");
+    LOG_DBG("Setting username [" << LOOLWSD::anonymizeUsername(username) << "] and userId [" <<
+            LOOLWSD::anonymizeUsername(userid) << "] for session [" << sessionId << "]");
     session->setUserId(userid);
     session->setUserName(username);
     session->setUserExtraInfo(userExtraInfo);

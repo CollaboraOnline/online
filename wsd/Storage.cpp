@@ -13,6 +13,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <errno.h>
 #include <fstream>
 #include <iconv.h>
 #include <string>
@@ -51,6 +52,8 @@
 #include <Util.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
+
+using std::size_t;
 
 bool StorageBase::FilesystemEnabled;
 bool StorageBase::WopiEnabled;
@@ -417,21 +420,23 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 
     LOG_DBG("Getting info for wopi uri [" << uriObject.toString() << "].");
 
-    std::string resMsg;
-    const auto startTime = std::chrono::steady_clock::now();
+    std::string wopiResponse;
     std::chrono::duration<double> callDuration(0);
     try
     {
-        std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
-
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", WOPI_AGENT_STRING);
         auth.authorizeRequest(request);
         addStorageDebugCookie(request);
+
+        const auto startTime = std::chrono::steady_clock::now();
+
+        std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
         psession->sendRequest(request);
 
         Poco::Net::HTTPResponse response;
         std::istream& rs = psession->receiveResponse(response);
+
         callDuration = (std::chrono::steady_clock::now() - startTime);
 
         Log::StreamLogger logger = Log::trace();
@@ -452,7 +457,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
             throw StorageConnectionException("WOPI::CheckFileInfo failed");
         }
 
-        Poco::StreamCopier::copyToString(rs, resMsg);
+        Poco::StreamCopier::copyToString(rs, wopiResponse);
     }
     catch(const Poco::Exception& pexc)
     {
@@ -485,15 +490,49 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     WOPIFileInfo::TriState disableChangeTrackingShow = WOPIFileInfo::TriState::Unset;
     WOPIFileInfo::TriState hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
 
-    LOG_DBG("WOPI::CheckFileInfo returned: " << resMsg << ". Call duration: " << callDuration.count() << "s");
     Poco::JSON::Object::Ptr object;
-    if (JsonUtil::parseJSON(resMsg, object))
+    if (JsonUtil::parseJSON(wopiResponse, object))
     {
         JsonUtil::findJSONValue(object, "BaseFileName", filename);
-        JsonUtil::findJSONValue(object, "Size", size);
         JsonUtil::findJSONValue(object, "OwnerId", ownerId);
         JsonUtil::findJSONValue(object, "UserId", userId);
         JsonUtil::findJSONValue(object, "UserFriendlyName", userName);
+
+        // Anonymize key values.
+        if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
+        {
+            // Set anonymized version of the above fields before logging.
+            // Note: anonymization caches the result, so we don't need to store here.
+            if (LOOLWSD::AnonymizeFilenames)
+                object->set("basefilename", LOOLWSD::anonymizeUrl(filename));
+
+            if (LOOLWSD::AnonymizeUsernames)
+            {
+                object->set("ownerid", LOOLWSD::anonymizeUsername(ownerId));
+                object->set("UserId", LOOLWSD::anonymizeUsername(userId));
+                object->set("UserFriendlyName", LOOLWSD::anonymizeUsername(userName));
+            }
+
+            std::ostringstream oss;
+            object->stringify(oss);
+            wopiResponse = oss.str();
+
+            // Remove them for performance reasons; they aren't needed anymore.
+            if (LOOLWSD::AnonymizeFilenames)
+                object->remove("basefilename");
+
+            if (LOOLWSD::AnonymizeUsernames)
+            {
+                object->remove("ownerid");
+                object->remove("UserId");
+                object->remove("UserFriendlyName");
+            }
+        }
+
+        // Log either an original or anonymized version, depending on anonymization flags.
+        LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): " << wopiResponse);
+
+        JsonUtil::findJSONValue(object, "Size", size);
         JsonUtil::findJSONValue(object, "UserExtraInfo", userExtraInfo);
         JsonUtil::findJSONValue(object, "WatermarkText", watermarkText);
         JsonUtil::findJSONValue(object, "UserCanWrite", canWrite);
@@ -518,7 +557,11 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     }
     else
     {
-        LOG_ERR("WOPI::CheckFileInfo failed and no JSON payload returned. Access denied.");
+        if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
+            LOG_ERR("WOPI::CheckFileInfo failed or no valid JSON payload returned. Access denied.");
+        else
+            LOG_ERR("WOPI::CheckFileInfo failed or no valid JSON payload returned. Access denied. "
+                    "Original response: [" << wopiResponse << "].");
         throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriObject.toString());
     }
 
