@@ -43,6 +43,7 @@
 using namespace LOOLProtocol;
 
 using Poco::Exception;
+using std::size_t;
 
 Session::Session(const std::string& name, const std::string& id, bool readOnly) :
     _id(id),
@@ -86,62 +87,78 @@ void Session::parseDocOptions(const std::vector<std::string>& tokens, int& part,
 
     for (size_t i = offset; i < tokens.size(); ++i)
     {
-        // FIXME use Util::startsWith() instead of all these find(...) == 0
-        // FIXME or use the getToken* functions, isn't this exactly what they are for?
+        std::string name;
+        std::string value;
+        if (!LOOLProtocol::parseNameValuePair(tokens[i], name, value))
+        {
+            LOG_WRN("Unexpected doc options token [" << tokens[i] << "]. Skipping.");
+            continue;
+        }
 
-        if (tokens[i].find("url=") == 0)
+        if (name == "url")
         {
-            _docURL = tokens[i].substr(strlen("url="));
+            _docURL = value;
             ++offset;
         }
-        else if (tokens[i].find("jail=") == 0)
+        else if (name == "jail")
         {
-            _jailedFilePath = tokens[i].substr(strlen("jail="));
+            _jailedFilePath = value;
             ++offset;
         }
-        else if (tokens[i].find("authorid=") == 0)
+        else if (name == "xjail")
         {
-            const std::string userId = tokens[i].substr(strlen("authorid="));
-            Poco::URI::decode(userId, _userId);
+            _jailedFilePathAnonym = value;
             ++offset;
         }
-        else if (tokens[i].find("author=") == 0)
+        else if (name == "authorid")
         {
-            const std::string userName = tokens[i].substr(strlen("author="));
-            Poco::URI::decode(userName, _userName);
+            Poco::URI::decode(value, _userId);
             ++offset;
         }
-        else if (tokens[i].find("authorextrainfo=") == 0)
+        else if (name == "xauthorid")
         {
-            const std::string userExtraInfo= tokens[i].substr(strlen("authorextrainfo="));
-            Poco::URI::decode(userExtraInfo, _userExtraInfo);
+            Poco::URI::decode(value, _userIdAnonym);
             ++offset;
         }
-        else if (tokens[i].find("readonly=") == 0)
+        else if (name == "author")
         {
-            _isReadOnly = tokens[i].substr(strlen("readonly=")) != "0";
+            Poco::URI::decode(value, _userName);
             ++offset;
         }
-        else if (tokens[i].find("timestamp=") == 0)
+        else if (name == "xauthor")
         {
-            timestamp = tokens[i].substr(strlen("timestamp="));
+            Poco::URI::decode(value, _userNameAnonym);
             ++offset;
         }
-        else if (tokens[i].find("password=") == 0)
+        else if (name == "authorextrainfo")
         {
-            _docPassword = tokens[i].substr(strlen("password="));
+            Poco::URI::decode(value, _userExtraInfo);
+            ++offset;
+        }
+        else if (name == "readonly")
+        {
+            _isReadOnly = value != "0";
+            ++offset;
+        }
+        else if (name == "password")
+        {
+            _docPassword = value;
             _haveDocPassword = true;
             ++offset;
         }
-        else if (tokens[i].find("lang=") == 0)
+        else if (name == "lang")
         {
-            _lang = tokens[i].substr(strlen("lang="));
+            _lang = value;
             ++offset;
         }
-        else if (tokens[i].find("watermarkText=") == 0)
+        else if (name == "watermarkText")
         {
-            const std::string watermarkText = tokens[i].substr(strlen("watermarkText="));
-            Poco::URI::decode(watermarkText, _watermarkText);
+            Poco::URI::decode(value, _watermarkText);
+            ++offset;
+        }
+        else if (name == "timestamp")
+        {
+            timestamp = value;
             ++offset;
         }
     }
