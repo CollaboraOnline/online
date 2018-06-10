@@ -679,8 +679,9 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
         // LibreOffice can't open files with '#' in the name
         std::string localPathEncoded;
-        Poco::URI::encode(localPath,"#",localPathEncoded);
-        _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded);
+        Poco::URI::encode(localPath, "#", localPathEncoded);
+        _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
+        _uriJailedAnonym = Poco::URI(Poco::URI("file://"), LOOLWSD::anonymizeUrl(localPathEncoded)).toString();
 
         _filename = fileInfo._filename;
 
@@ -1653,8 +1654,9 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
         {
             // The json options must come last.
             msg = tokens[0] + ' ' + tokens[1] + ' ' + tokens[2];
-            msg += " jail=" + _uriJailed.toString() + ' ';
-            msg += Poco::cat(std::string(" "), tokens.begin() + 3, tokens.end());
+            msg += " jail=" + _uriJailed;
+            msg += " xjail=" + _uriJailedAnonym;
+            msg += ' ' + Poco::cat(std::string(" "), tokens.begin() + 3, tokens.end());
         }
 
         _childProcess->sendTextFrame(msg);
@@ -1840,7 +1842,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  jail id: " << _jailId;
     os << "\n  filename: " << _filename;
     os << "\n  public uri: " << _uriPublic.toString();
-    os << "\n  jailed uri: " << _uriJailed.toString();
+    os << "\n  jailed uri: " << _uriJailed;
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();

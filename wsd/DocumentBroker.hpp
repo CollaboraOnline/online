@@ -259,7 +259,6 @@ public:
     bool autoSave(const bool force);
 
     Poco::URI getPublicUri() const { return _uriPublic; }
-    Poco::URI getJailedUri() const { return _uriJailed; }
     const std::string& getJailId() const { return _jailId; }
     const std::string& getDocKey() const { return _docKey; }
     const std::string& getFilename() const { return _filename; };
@@ -411,7 +410,8 @@ private:
     const std::string _childRoot;
     const std::string _cacheRoot;
     std::shared_ptr<ChildProcess> _childProcess;
-    Poco::URI _uriJailed;
+    std::string _uriJailed;
+    std::string _uriJailedAnonym;
     std::string _jailId;
     std::string _filename;
 
