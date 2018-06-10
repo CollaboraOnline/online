@@ -542,6 +542,59 @@ namespace Util
 
         return true;
     }
+
+    static std::map<std::string, std::string> AnonymizedStrings;
+    static std::atomic<unsigned> AnonymizationSalt(0);
+
+    std::string anonymize(const std::string& text)
+    {
+        const auto it = AnonymizedStrings.find(text);
+        if (it != AnonymizedStrings.end())
+            return it->second;
+
+        // We just need something irreversible, short, and
+        // quite simple.
+        std::size_t hash = 0;
+        for (const char c : text)
+            hash += c;
+
+        // Generate the anonymized string. The '#' is to hint that it's anonymized.
+        // Prepend with salt to make it unique, in case we get collisions (which we will, eventually).
+        const std::string res = '#' + Util::encodeId(AnonymizationSalt++, 0) + '#' + Util::encodeId(hash, 0) + '#';
+        AnonymizedStrings[text] = res;
+        return res;
+    }
+
+    static std::string anonymizeFilename(const std::string& filename)
+    {
+        // Preserve the extension.
+        std::string basename;
+        std::string ext;
+        const std::size_t mid = filename.find_last_of('.');
+        if (mid != std::string::npos)
+        {
+            basename = filename.substr(0, mid);
+            ext = filename.substr(mid);
+        }
+        else
+            basename = filename;
+
+        return Util::anonymize(basename) + ext;
+    }
+
+    std::string anonymizeUrl(const std::string& url)
+    {
+        const std::size_t mid = url.find_last_of('/');
+        if (mid != std::string::npos)
+        {
+            const std::string path = url.substr(0, mid + 1);
+            const std::string filename = url.substr(mid + 1);
+            return path + Util::anonymizeFilename(filename);
+        }
+
+        // No path, treat as filename only.
+        return Util::anonymizeFilename(url);
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -237,6 +237,13 @@ namespace Util
     /// For now just a basic sanity check, can be extended if necessary.
     bool isValidURIHost(const std::string& host);
 
+    /// Anonymize a sensitive string to avoid leaking it.
+    /// Called on strings to be logged or exposed.
+    std::string anonymize(const std::string& text);
+
+    /// Anonymize the basename of filenames only, preserving the path and extension.
+    std::string anonymizeUrl(const std::string& url);
+
     /// Given one or more patterns to allow, and one or more to deny,
     /// the match member will return true if, and only if, the subject
     /// matches the allowed list, but not the deny.
