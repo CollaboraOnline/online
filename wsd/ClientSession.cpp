@@ -302,24 +302,26 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
 
         std::ostringstream oss;
         oss << "load";
-        oss << " url=" << docBroker->getPublicUri().toString();
+        oss << " url=" << docBroker->getPublicUri().toString();;
 
         if (!_userId.empty() && !_userName.empty())
         {
             std::string encodedUserId;
             Poco::URI::encode(_userId, "", encodedUserId);
             oss << " authorid=" << encodedUserId;
+            oss << " xauthorid=" << LOOLWSD::anonymizeUsername(encodedUserId);
 
             std::string encodedUserName;
             Poco::URI::encode(_userName, "", encodedUserName);
             oss << " author=" << encodedUserName;
+            oss << " xauthor=" << LOOLWSD::anonymizeUsername(encodedUserName);
         }
 
         if (!_userExtraInfo.empty())
         {
             std::string encodedUserExtraInfo;
             Poco::URI::encode(_userExtraInfo, "", encodedUserExtraInfo);
-            oss << " authorextrainfo=" << encodedUserExtraInfo;
+            oss << " authorextrainfo=" << encodedUserExtraInfo; //TODO: could this include PII?
         }
 
         oss << " readonly=" << isReadOnly();
