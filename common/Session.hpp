@@ -88,7 +88,8 @@ protected:
     Session(const std::string& name, const std::string& id, bool readonly);
     virtual ~Session();
 
-    /// Parses the options of the "load" command, shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
+    /// Parses the options of the "load" command,
+    /// shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
     void parseDocOptions(const std::vector<std::string>& tokens, int& part, std::string& timestamp);
 
     void updateLastActivityTime()
@@ -137,6 +138,9 @@ protected:
     /// The Jailed document path.
     std::string _jailedFilePath;
 
+    /// The Jailed document path, anonymized for logging.
+    std::string _jailedFilePathAnonym;
+
     /// Password provided, if any, to open the document
     std::string _docPassword;
 
@@ -149,11 +153,17 @@ protected:
     /// Document options: a JSON string, containing options (rendering, also possibly load in the future).
     std::string _docOptions;
 
-    /// Id of the user to whom the session belongs to
+    /// Id of the user to whom the session belongs to.
     std::string _userId;
 
-    /// Name of the user to whom the session belongs to
+    /// Id of the user to whom the session belongs to, anonymized for logging.
+    std::string _userIdAnonym;
+
+    /// Name of the user to whom the session belongs to.
     std::string _userName;
+
+    /// Name of the user to whom the session belongs to, anonymized for logging.
+    std::string _userNameAnonym;
 
     /// Extra info per user, mostly mail, avatar, links, etc.
     std::string _userExtraInfo;
