@@ -368,16 +368,18 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    bool loaded = _docManager.onLoad(getId(), _jailedFilePath, _userName,
-            _docPassword, renderOpts, _haveDocPassword, _lang, _watermarkText);
+    const bool loaded = _docManager.onLoad(getId(), _jailedFilePath, _jailedFilePathAnonym,
+                                           _userName, _userNameAnonym,
+                                           _docPassword, renderOpts, _haveDocPassword,
+                                           _lang, _watermarkText);
     if (!loaded || _viewId < 0)
     {
-        LOG_ERR("Failed to get LoKitDocument instance.");
+        LOG_ERR("Failed to get LoKitDocument instance for [" << _jailedFilePathAnonym << "].");
         return false;
     }
 
     LOG_INF("Created new view with viewid: [" << _viewId << "] for username: [" <<
-            _userName << "] in session: [" << getId() << "].");
+            _userNameAnonym << "] in session: [" << getId() << "].");
 
     std::unique_lock<std::mutex> lockLokDoc(_docManager.getDocumentMutex());
 
