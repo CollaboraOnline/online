@@ -578,8 +578,8 @@ bool ClientSession::filterMessage(const std::string& message) const
         }
         else
         {
-                allowed = false;
-                LOG_WRN("No value of id in downloadas message");
+            allowed = false;
+            LOG_WRN("No value of id in downloadas message");
         }
     }
     else if (tokens[0] == "gettextselection" || tokens[0] == ".uno:Copy")

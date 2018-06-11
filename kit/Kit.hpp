@@ -87,6 +87,12 @@ void forkLibreOfficeKit(const std::string& childRoot,
                         const std::string& loSubPath,
                         int limit = 0);
 
+/// Anonymize the basename of filenames, preserving the path and extension.
+std::string anonymizeUrl(const std::string& url);
+
+/// Anonymize usernames.
+std::string anonymizeUsername(const std::string& username);
+
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

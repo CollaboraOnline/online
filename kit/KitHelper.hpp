@@ -198,7 +198,7 @@ namespace LOKitHelper
 
         return oss.str();
     }
-};
+}
 
 #endif
 

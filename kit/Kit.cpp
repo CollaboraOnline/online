@@ -2076,7 +2076,10 @@ protected:
             for (const std::string& token : tokens)
             {
                 // Don't log PII, there are anonymized versions that get logged instead.
-                if (Util::startsWith(token, "jail") || Util::startsWith(token, "author"))
+                if (Util::startsWith(token, "jail") ||
+                    Util::startsWith(token, "author") ||
+                    Util::startsWith(token, "name") ||
+                    Util::startsWith(token, "url"))
                     continue;
 
                 logger << token << ' ';
@@ -2568,6 +2571,25 @@ bool globalPreinit(const std::string &loTemplate)
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() <<
             " ms.");
     return true;
+}
+
+std::string anonymizeUrl(const std::string& url)
+{
+#ifndef BUILDING_TESTS
+    return AnonymizeFilenames ? Util::anonymizeUrl(url) : url;
+#else
+    return url;
+#endif
+}
+
+/// Anonymize usernames.
+std::string anonymizeUsername(const std::string& username)
+{
+#ifndef BUILDING_TESTS
+    return AnonymizeUsernames ? Util::anonymize(username) : username;
+#else
+    return username;
+#endif
 }
 
 #if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS)
