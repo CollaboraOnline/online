@@ -664,18 +664,20 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
     // Prevent user inputting anything funny here.
     // A "name" should always be a name, not a path
     const Poco::Path filenameParam(name);
-    const auto url = JAILED_DOCUMENT_ROOT + tmpDir + "/" + filenameParam.getFileName();
+    const std::string url = JAILED_DOCUMENT_ROOT + tmpDir + "/" + filenameParam.getFileName();
+    const std::string nameAnonym = anonymizeUrl(name);
+    const std::string urlAnonym = JAILED_DOCUMENT_ROOT + tmpDir + "/" + Poco::Path(nameAnonym).getFileName();
 
     {
         std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
 
-        LOG_DBG("Calling LOK's downloadAs with: '" << url.c_str() << "', '" <<
-                (format.size() == 0 ? "(nullptr)" : format.c_str()) << "', '" <<
-                (filterOptions.size() == 0 ? "(nullptr)" : filterOptions.c_str()) << "'.");
+        LOG_DBG("Calling LOK's downloadAs with: url='" << urlAnonym << "', format='" <<
+                (format.empty() ? "(nullptr)" : format.c_str()) << "', ' filterOptions=" <<
+                (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << "'.");
 
         getLOKitDocument()->saveAs(url.c_str(),
-                format.size() == 0 ? nullptr :format.c_str(),
-                filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
+                                   format.empty() ? nullptr : format.c_str(),
+                                   filterOptions.empty() ? nullptr : filterOptions.c_str());
     }
 
     sendTextFrame("downloadas: jail=" + _jailId + " dir=" + tmpDir + " name=" + name +
