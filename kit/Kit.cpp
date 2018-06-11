@@ -2412,6 +2412,25 @@ bool globalPreinit(const std::string &loTemplate)
     return true;
 }
 
+std::string anonymizeUrl(const std::string& url)
+{
+#ifndef BUILDING_TESTS
+    return AnonymizeFilenames ? Util::anonymizeUrl(url) : url;
+#else
+    return url;
+#endif
+}
+
+/// Anonymize usernames.
+std::string anonymizeUsername(const std::string& username)
+{
+#ifndef BUILDING_TESTS
+    return AnonymizeUsernames ? Util::anonymize(username) : username;
+#else
+    return username;
+#endif
+}
+
 #if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS)
 namespace Util
 {
