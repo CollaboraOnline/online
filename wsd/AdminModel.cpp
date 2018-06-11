@@ -25,6 +25,7 @@
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
+#include <wsd/LOOLWSD.hpp>
 
 void Document::addView(const std::string& sessionId, const std::string& userName, const std::string& userId)
 {
@@ -88,7 +89,7 @@ const std::string Document::getHistory() const
     std::ostringstream oss;
     oss << "{";
     oss << "\"docKey\"" << ":\"" << _docKey << "\",";
-    oss << "\"filename\"" << ":\"" << getFilename() << "\",";
+    oss << "\"filename\"" << ":\"" << LOOLWSD::anonymizeUrl(getFilename()) << "\",";
     oss << "\"start\"" << ":" << _start << ",";
     oss << "\"end\"" << ":" << _end << ",";
     oss << "\"pid\"" << ":" << getPid() << ",";
