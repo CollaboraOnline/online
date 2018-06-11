@@ -183,6 +183,7 @@ protected:
     std::string _localStorePath;
     std::string _jailPath;
     std::string _jailedFilePath;
+    std::string _jailedFilePathAnonym;
     FileInfo _fileInfo;
     bool _isLoaded;
     bool _forceSave;

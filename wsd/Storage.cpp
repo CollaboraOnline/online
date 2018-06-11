@@ -273,22 +273,23 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
     // /chroot/jailId/user/doc/childId/file.ext
     const std::string filename = Poco::Path(_uri.getPath()).getFileName();
     _jailedFilePath = Poco::Path(getLocalRootPath(), filename).toString();
+    _jailedFilePathAnonym = LOOLWSD::anonymizeUrl(_jailedFilePath);
     LOG_INF("Public URI [" << _uri.getPath() <<
-            "] jailed to [" << _jailedFilePath << "].");
+            "] jailed to [" << _jailedFilePathAnonym << "].");
 
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
     const std::string publicFilePath = _uri.getPath();
 
     if (!FileUtil::checkDiskSpace(_jailedFilePath))
     {
-        throw StorageSpaceLowException("Low disk space for " + _jailedFilePath);
+        throw StorageSpaceLowException("Low disk space for " + _jailedFilePathAnonym);
     }
 
-    LOG_INF("Linking " << publicFilePath << " to " << _jailedFilePath);
+    LOG_INF("Linking " << publicFilePath << " to " << _jailedFilePathAnonym);
     if (!Poco::File(_jailedFilePath).exists() && link(publicFilePath.c_str(), _jailedFilePath.c_str()) == -1)
     {
         // Failed
-        LOG_WRN("link(\"" << publicFilePath << "\", \"" << _jailedFilePath << "\") failed. Will copy. "
+        LOG_WRN("link(\"" << publicFilePath << "\", \"" << _jailedFilePathAnonym << "\") failed. Will copy. "
                 "Linking error: " << Util::symbolicErrno(errno) << " " << strerror(errno));
     }
 
@@ -297,14 +298,14 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
         // Fallback to copying.
         if (!Poco::File(_jailedFilePath).exists())
         {
-            LOG_INF("Copying " << publicFilePath << " to " << _jailedFilePath);
+            LOG_INF("Copying " << publicFilePath << " to " << _jailedFilePathAnonym);
             Poco::File(publicFilePath).copyTo(_jailedFilePath);
             _isCopy = true;
         }
     }
     catch (const Poco::Exception& exc)
     {
-        LOG_ERR("copyTo(\"" << publicFilePath << "\", \"" << _jailedFilePath << "\") failed: " << exc.displayText());
+        LOG_ERR("copyTo(\"" << publicFilePath << "\", \"" << _jailedFilePathAnonym << "\") failed: " << exc.displayText());
         throw;
     }
 
@@ -334,11 +335,11 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
 {
     try
     {
-        LOG_TRC("Saving local file to local file storage (isCopy: " << _isCopy << ") for " << _jailedFilePath);
+        LOG_TRC("Saving local file to local file storage (isCopy: " << _isCopy << ") for " << _jailedFilePathAnonym);
         // Copy the file back.
         if (_isCopy && Poco::File(_jailedFilePath).exists())
         {
-            LOG_INF("Copying " << _jailedFilePath << " to " << _uri.getPath());
+            LOG_INF("Copying " << _jailedFilePathAnonym << " to " << _uri.getPath());
             Poco::File(_jailedFilePath).copyTo(_uri.getPath());
         }
 
@@ -349,7 +350,7 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
     }
     catch (const Poco::Exception& exc)
     {
-        LOG_ERR("copyTo(\"" << _jailedFilePath << "\", \"" << _uri.getPath() <<
+        LOG_ERR("copyTo(\"" << _jailedFilePathAnonym << "\", \"" << _uri.getPath() <<
                 "\") failed: " << exc.displayText());
         return StorageBase::SaveResult::FAILED;
     }
@@ -624,13 +625,14 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
         else // Successful
         {
             _jailedFilePath = Poco::Path(getLocalRootPath(), _fileInfo._filename).toString();
+            _jailedFilePathAnonym = LOOLWSD::anonymizeUrl(_jailedFilePath);
             std::ofstream ofs(_jailedFilePath);
             std::copy(std::istreambuf_iterator<char>(rs),
                       std::istreambuf_iterator<char>(),
                       std::ostreambuf_iterator<char>(ofs));
             ofs.close();
             LOG_INF("WOPI::GetFile downloaded " << getFileSize(_jailedFilePath) << " bytes from [" << uriObject.toString() <<
-                    "] -> " << _jailedFilePath << " in " << diff.count() << "s");
+                    "] -> " << _jailedFilePathAnonym << " in " << diff.count() << "s");
 
             _isLoaded = true;
             // Now return the jailed path.
@@ -660,7 +662,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
     uriObject.setPath(isSaveAs? uriObject.getPath(): uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
 
-    LOG_INF("Uploading URI via WOPI [" << uriObject.toString() << "] from [" << filePath + "].");
+    LOG_INF("Uploading URI via WOPI [" << LOOLWSD::anonymizeUrl(uriObject.toString()) << "] from [" << filePath + "].");
 
     std::ostringstream oss;
     StorageBase::SaveResult saveResult(StorageBase::SaveResult::FAILED);
@@ -739,7 +741,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         const std::string wopiLog(isSaveAs ? "WOPI::PutRelativeFile" : "WOPI::PutFile");
         LOG_INF(wopiLog << " response: " << oss.str());
         LOG_INF(wopiLog << " uploaded " << size << " bytes from [" << filePath <<
-                "] -> [" << uriObject.toString() << "]: " <<
+                "] -> [" << LOOLWSD::anonymizeUrl(uriObject.toString()) << "]: " <<
                 response.getStatus() << " " << response.getReason());
 
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
