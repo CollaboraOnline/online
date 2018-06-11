@@ -654,7 +654,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         Poco::DigestOutputStream dos(sha1);
         Poco::StreamCopier::copyStream(istr, dos);
         dos.close();
-        LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << localPath << "]: " <<
+        LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << LOOLWSD::anonymizeUrl(localPath) << "]: " <<
                 Poco::DigestEngine::digestToHex(sha1.digest()));
 
         // LibreOffice can't open files with '#' in the name
