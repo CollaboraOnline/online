@@ -971,53 +971,33 @@ L.GridLayer = L.Layer.extend({
 		var twips, msg;
 		for (var r = 0; r < rectangles.length; ++r) {
 			rectQueue = rectangles[r];
-
-			if (rectQueue.length === 1) {
-				// only one tile here
-				coords = rectQueue[0];
-				key = this._tileCoordsToKey(coords);
-
+			var tilePositionsX = '';
+			var tilePositionsY = '';
+			for (i = 0; i < rectQueue.length; i++) {
+				coords = rectQueue[i];
 				twips = this._coordsToTwips(coords);
-				msg = 'tile ' +
-					'part=' + coords.part + ' ' +
-					'width=' + this._tileWidthPx + ' ' +
-					'height=' + this._tileHeightPx + ' ' +
-					'tileposx=' + twips.x + ' '	+
-					'tileposy=' + twips.y + ' ' +
-					'tilewidth=' + this._tileWidthTwips + ' ' +
-					'tileheight=' + this._tileHeightTwips;
-				this._map._socket.sendMessage(msg, key);
-			}
-			else {
-				// more tiles, use tilecombine
-				var tilePositionsX = '';
-				var tilePositionsY = '';
-				for (i = 0; i < rectQueue.length; i++) {
-					coords = rectQueue[i];
-					twips = this._coordsToTwips(coords);
 
-					if (tilePositionsX !== '') {
-						tilePositionsX += ',';
-					}
-					tilePositionsX += twips.x;
-
-					if (tilePositionsY !== '') {
-						tilePositionsY += ',';
-					}
-					tilePositionsY += twips.y;
+				if (tilePositionsX !== '') {
+					tilePositionsX += ',';
 				}
+				tilePositionsX += twips.x;
 
-				twips = this._coordsToTwips(coords);
-				msg = 'tilecombine ' +
-					'part=' + coords.part + ' ' +
-					'width=' + this._tileWidthPx + ' ' +
-					'height=' + this._tileHeightPx + ' ' +
-					'tileposx=' + tilePositionsX + ' '	+
-					'tileposy=' + tilePositionsY + ' ' +
-					'tilewidth=' + this._tileWidthTwips + ' ' +
-					'tileheight=' + this._tileHeightTwips;
-				this._map._socket.sendMessage(msg, '');
+				if (tilePositionsY !== '') {
+					tilePositionsY += ',';
+				}
+				tilePositionsY += twips.y;
 			}
+
+			twips = this._coordsToTwips(coords);
+			msg = 'tilecombine ' +
+				'part=' + coords.part + ' ' +
+				'width=' + this._tileWidthPx + ' ' +
+				'height=' + this._tileHeightPx + ' ' +
+				'tileposx=' + tilePositionsX + ' '	+
+				'tileposy=' + tilePositionsY + ' ' +
+				'tilewidth=' + this._tileWidthTwips + ' ' +
+				'tileheight=' + this._tileHeightTwips;
+			this._map._socket.sendMessage(msg, '');
 		}
 	},
 
