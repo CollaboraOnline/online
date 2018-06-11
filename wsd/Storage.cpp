@@ -668,7 +668,6 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
 
     LOG_INF("Uploading URI via WOPI [" << uriAnonym << "] from [" << filePathAnonym + "].");
 
-    std::ostringstream oss;
     StorageBase::SaveResult saveResult(StorageBase::SaveResult::FAILED);
     try
     {
@@ -740,13 +739,35 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
 
         Poco::Net::HTTPResponse response;
         std::istream& rs = psession->receiveResponse(response);
+
+        std::ostringstream oss;
         Poco::StreamCopier::copyStream(rs, oss);
+        std::string responseString = oss.str();
 
         const std::string wopiLog(isSaveAs ? "WOPI::PutRelativeFile" : "WOPI::PutFile");
-        LOG_INF(wopiLog << " response: " << oss.str());
-        LOG_INF(wopiLog << " uploaded " << size << " bytes from [" << filePathAnonym <<
-                "] -> [" << uriAnonym << "]: " <<
-                response.getStatus() << " " << response.getReason());
+
+        if (Log::infoEnabled())
+        {
+            if (LOOLWSD::AnonymizeFilenames)
+            {
+                Poco::JSON::Object::Ptr object;
+                if (JsonUtil::parseJSON(responseString, object))
+                {
+                    // Anonymize the filename
+                    std::string filename;
+                    JsonUtil::findJSONValue(object, "Name", filename);
+                    object->set("Name", LOOLWSD::anonymizeUsername(filename));
+                    // Stringify to log.
+                    std::ostringstream ossResponse;
+                    object->stringify(ossResponse);
+                    responseString = ossResponse.str();
+                }
+            }
+
+            LOG_INF(wopiLog << " response: " << responseString);
+            LOG_INF(wopiLog << " uploaded " << size << " bytes from [" << filePathAnonym <<
+                    "] -> [" << uriAnonym << "]: " << response.getStatus() << " " << response.getReason());
+        }
 
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
         {
@@ -761,10 +782,10 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
                 if (isSaveAs)
                 {
                     const std::string name = JsonUtil::getJSONValue<std::string>(object, "Name");
-                    LOG_TRC(wopiLog << " returns Name [" << name << "].");
+                    LOG_TRC(wopiLog << " returns Name [" << LOOLWSD::anonymizeUrl(name) << "].");
 
                     const std::string url = JsonUtil::getJSONValue<std::string>(object, "Url");
-                    LOG_TRC(wopiLog << " returns Url [" << url << "].");
+                    LOG_TRC(wopiLog << " returns Url [" << LOOLWSD::anonymizeUrl(url) << "].");
 
                     saveResult.setSaveAsResult(name, url);
                 }
