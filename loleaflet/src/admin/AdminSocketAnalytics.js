@@ -214,11 +214,11 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 			var legendData = [
 				{
 					text: _('Received'),
-					color: 'red'
+					color: 'green'
 				},
 				{
 					text: _('Sent'),
-					color: 'green'
+					color: 'red'
 				}
 			];
 			var legendSpacing = 20;
