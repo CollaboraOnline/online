@@ -1306,7 +1306,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
         }
     }
 
-    // Send rendering request
+    // Send rendering request, prerender before we actually send the tiles
     if (!tilesNeedsRendering.empty())
     {
         auto newTileCombined = TileCombined::create(tilesNeedsRendering);
@@ -1374,6 +1374,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
         session->setTilesOnFly(requestedTiles.get().getTiles().size());
 
         // Satisfy as many tiles from the cache.
+        std::vector<TileDesc> tilesNeedsRendering;
         for (auto& tile : requestedTiles.get().getTiles())
         {
             std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
@@ -1404,9 +1405,27 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             }
             else
             {
-                // Not cached, needs rendering. Rendering request was already sent
+                // Not cached, needs rendering.
+                if(tile.getVersion() == -1) // Rendering of this tile was not requested yet
+                {
+                    tile.setVersion(++_tileVersion);
+                    tilesNeedsRendering.push_back(tile);
+                    _debugRenderedTileCount++;
+                }
                 tileCache().subscribeToTileRendering(tile, session);
             }
+        }
+
+        // Send rendering request for those tiles which were not prerendered
+        if (!tilesNeedsRendering.empty())
+        {
+            TileCombined newTileCombined = TileCombined::create(tilesNeedsRendering);
+
+            // Forward to child to render.
+            const std::string req = newTileCombined.serialize("tilecombine");
+            LOG_DBG("Some of the tiles were not prerendered. Sending residual tilecombine: " << req);
+            LOG_DBG("Sending residual tilecombine: " << req);
+            _childProcess->sendTextFrame(req);
         }
         requestedTiles = boost::none;
     }
