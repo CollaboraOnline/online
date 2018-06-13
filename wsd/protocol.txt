@@ -34,7 +34,7 @@ canceltiles
 tileprocessed tile=<tileid>
 
     Previously sent tile (server -> client) arrived and processed by the client.
-    Tileid has the next stucture : <tile x coord>:<tile y coord>:<zoom level>:<selected part>
+    Tileid has the next stucture : <selected part>:<tile x coord>:<tile y coord>:<tile width in twips>:<tile height in twips>
 
 downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
 

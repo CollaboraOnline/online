@@ -18,6 +18,7 @@
 #include <Poco/URI.h>
 #include <Rectangle.hpp>
 #include <boost/optional.hpp>
+#include <vector>
 
 class DocumentBroker;
 
@@ -111,8 +112,8 @@ public:
 
     boost::optional<TileCombined>& getRequestedTiles() { return _requestedTiles; }
 
-    int getTilesOnFly() const { return _tilesOnFly; }
-    void setTilesOnFly(int tilesOnFly);
+    const std::vector<std::string>& getTilesOnFly() const { return _tilesOnFly; }
+    void setTilesOnFly(boost::optional<TileCombined> tiles);
 
 
 private:
@@ -206,7 +207,7 @@ private:
     // Type of the docuemnt, extracter from status message
     std::string _docType;
 
-    int _tilesOnFly;
+    std::vector<std::string> _tilesOnFly;
     boost::optional<std::chrono::time_point<std::chrono::steady_clock>> _tileCounterStartTime;
 
     boost::optional<TileCombined> _requestedTiles;

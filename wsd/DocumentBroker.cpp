@@ -1363,15 +1363,14 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 
 void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& session)
 {
-    assert(session->getTilesOnFly() >= 0);
     std::unique_lock<std::mutex> lock(_mutex);
 
     // All tiles were processed on client side what we sent last time, so we can send a new banch of tiles
     // which was invalidated / requested in the meantime
     boost::optional<TileCombined>& requestedTiles = session->getRequestedTiles();
-    if(session->getTilesOnFly() == 0 && requestedTiles != boost::none && !requestedTiles.get().getTiles().empty())
+    if(session->getTilesOnFly().empty() && requestedTiles != boost::none && !requestedTiles.get().getTiles().empty())
     {
-        session->setTilesOnFly(requestedTiles.get().getTiles().size());
+        session->setTilesOnFly(requestedTiles.get());
 
         // Satisfy as many tiles from the cache.
         std::vector<TileDesc> tilesNeedsRendering;
@@ -1436,7 +1435,7 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
     std::unique_lock<std::mutex> lock(_mutex);
 
     // Clear tile requests
-    session->setTilesOnFly(0);
+    session->setTilesOnFly(boost::none);
     session->getRequestedTiles() = boost::none;
 
     const std::string canceltiles = tileCache().cancelTiles(session);
