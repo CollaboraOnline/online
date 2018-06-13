@@ -12,6 +12,7 @@
 #include "ClientSession.hpp"
 
 #include <fstream>
+#include <sstream>
 
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StringTokenizer.h>
@@ -48,8 +49,7 @@ ClientSession::ClientSession(const std::string& id,
     _tileWidthPixel(0),
     _tileHeightPixel(0),
     _tileWidthTwips(0),
-    _tileHeightTwips(0),
-    _tilesOnFly(0)
+    _tileHeightTwips(0)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
@@ -328,13 +328,20 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "tileprocessed")
     {
-        if(_tilesOnFly > 0) // canceltiles message can zero this value
+        std::string tileID;
+        if (tokens.size() != 2 ||
+            !getTokenString(tokens[1], "tile", tileID))
         {
-            --_tilesOnFly;
-            if(_tilesOnFly == 0)
-            {
-                _tileCounterStartTime = boost::none;
-            }
+            sendTextFrame("error: cmd=tileprocessed kind=syntax");
+            return false;
+        }
+        auto iter = std::find(_tilesOnFly.begin(), _tilesOnFly.end(), tileID);
+        if(iter != _tilesOnFly.end())
+            _tilesOnFly.erase(iter);
+
+        if(_tilesOnFly.empty())
+        {
+            _tileCounterStartTime = boost::none;
         }
         docBroker->sendRequestedTiles(shared_from_this());
         return true;
@@ -1002,15 +1009,23 @@ Authorization ClientSession::getAuthorization() const
     return Authorization();
 }
 
-void ClientSession::setTilesOnFly(int tilesOnFly)
+void ClientSession::setTilesOnFly(boost::optional<TileCombined> tiles)
 {
-    _tilesOnFly = tilesOnFly;
-    if(tilesOnFly == 0)
+
+    _tilesOnFly.clear();
+    if(tiles == boost::none)
     {
         _tileCounterStartTime = boost::none;
     }
     else
     {
+        for (auto& tile : tiles.get().getTiles())
+        {
+            std::ostringstream tileID;
+            tileID << tile.getPart() << ":" << tile.getTilePosX() << ":" << tile.getTilePosY() << ":"
+                   << tile.getTileWidth() << ":" << tile.getTileHeight();
+            _tilesOnFly.push_back(tileID.str());
+        }
         _tileCounterStartTime = std::chrono::steady_clock::now();
     }
 }
