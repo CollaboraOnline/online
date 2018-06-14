@@ -41,7 +41,7 @@
   one has no idea how it works. That was hopefully not the case when
   recursive mutexes were introduced here? But probably it is by now...
 
-- Occasionally Control-C (SIGINT) doesn't shut fown loolwsd. One has
+- Occasionally Control-C (SIGINT) doesn't shut down loolwsd. One has
   to kill it with SIGKILL. Which of course leaves all the chroot jails
   around.
 
@@ -49,5 +49,5 @@
   initialised with a value, that is never changed. (In many cases it
   is const, so could of course not be changed.) Then the variable is
   used just once or twice, passed as a parameter to a function, or
-  used in a comparisin expression. This is fairly pointless and just
+  used in a comparison expression. This is fairly pointless and just
   makes the code harder to read. Use string literals instead.
