@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
         # extract Calc style names and strings for status bar
         poFile = dir + lang + '/sc/source/ui/src.po'
-        stringIds = ["STR_STYLENAME_", "STR_FILTER_SELCOUNT", "STR_ROWCOL_SELCOUNT", "STR_FUN_TEXT_", "STR_UNDO_INSERTCELLS", "STR_TABLE_COUNT"]
+        stringIds = ["STR_STYLENAME_", "STR_FILTER_SELCOUNT", "STR_ROWCOL_SELCOUNT", "STR_FUN_TEXT_", "STR_UNDO_INSERTCELLS", "STR_TABLE_COUNT", "SCSTR_INSTABLE"]
         extractFromPo(poFile, stringIds, translations)
 
         # extract language names
