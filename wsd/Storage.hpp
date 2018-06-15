@@ -18,6 +18,7 @@
 #include <Poco/Util/Application.h>
 
 #include "Auth.hpp"
+#include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
 
@@ -121,7 +122,7 @@ public:
         _isUserModified(false),
         _isAutosave(false)
     {
-        LOG_DBG("Storage ctor: " << uri.toString());
+        LOG_DBG("Storage ctor: " << LOOLWSD::anonymizeUrl(uri.toString()));
     }
 
     virtual ~StorageBase() {}
@@ -211,7 +212,7 @@ public:
         _isCopy(false)
     {
         LOG_INF("LocalStorage ctor with localStorePath: [" << localStorePath <<
-                "], jailPath: [" << jailPath << "], uri: [" << uri.toString() << "].");
+                "], jailPath: [" << jailPath << "], uri: [" << LOOLWSD::anonymizeUrl(uri.toString()) << "].");
     }
 
     class LocalFileInfo
@@ -254,7 +255,7 @@ public:
         _wopiLoadDuration(0)
     {
         LOG_INF("WopiStorage ctor with localStorePath: [" << localStorePath <<
-                "], jailPath: [" << jailPath << "], uri: [" << uri.toString() << "].");
+                "], jailPath: [" << jailPath << "], uri: [" << LOOLWSD::anonymizeUrl(uri.toString()) << "].");
     }
 
     class WOPIFileInfo
@@ -360,7 +361,7 @@ public:
         _authAgent(std::move(authAgent))
     {
         LOG_INF("WebDAVStorage ctor with localStorePath: [" << localStorePath <<
-                "], jailPath: [" << jailPath << "], uri: [" << uri.toString() << "].");
+                "], jailPath: [" << jailPath << "], uri: [" << LOOLWSD::anonymizeUrl(uri.toString()) << "].");
     }
 
     // Implement me
