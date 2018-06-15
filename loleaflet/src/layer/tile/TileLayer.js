@@ -89,6 +89,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._visibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Cursor overlay is visible or hidden (for blinking).
 		this._isCursorOverlayVisible = false;
+		// Cursor overlay visibility flag to store last state during zooming
+		this._oldCursorOverlayVisibility = false;
 		// Cursor is visible or hidden (e.g. for graphic selection).
 		this._isCursorVisible = true;
 		// Original rectangle graphic selection in twips
@@ -255,7 +257,8 @@ L.TileLayer = L.GridLayer.extend({
 		map.on('dragover', this._onDragOver, this);
 		map.on('drop', this._onDrop, this);
 
-		map.on('zoomend', this._onUpdateCursor, this);
+		map.on('zoomstart', this._onZoomStart, this);
+		map.on('zoomend', this._onZoomEnd, this);
 		if (this._docType === 'spreadsheet') {
 			map.on('zoomend', this._onCellCursorShift, this);
 		}
@@ -1537,6 +1540,18 @@ L.TileLayer = L.GridLayer.extend({
 			return true;
 		}
 		return bounds.getSouthWest().equals(new L.LatLng(0, 0)) && bounds.getNorthEast().equals(new L.LatLng(0, 0));
+	},
+
+	_onZoomStart: function () {
+		this._oldCursorOverlayVisibility = this._isCursorOverlayVisible;
+		this._isCursorOverlayVisible = false;
+		this._onUpdateCursor();
+	},
+
+
+	_onZoomEnd: function () {
+		this._isCursorOverlayVisible = this._oldCursorOverlayVisibility;
+		this._onUpdateCursor();
 	},
 
 	// Update cursor layer (blinking cursor).
