@@ -805,7 +805,8 @@ void LOOLWSD::initialize(Application& self)
             { "tile_cache_persistent", "true" },
             { "trace.path[@compress]", "true" },
             { "trace.path[@snapshot]", "false" },
-            { "trace[@enable]", "false" } };
+            { "trace[@enable]", "false" }
+          };
 
     // Set default values, in case they are missing from the config file.
     AutoPtr<AppConfigMap> defConfig(new AppConfigMap(DefAppConfig));
@@ -1593,7 +1594,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
                                                              const Poco::URI& uriPublic)
 {
     LOG_INF("Find or create DocBroker for docKey [" << docKey <<
-            "] for session [" << id << "] on url [" << uriPublic.toString() << "].");
+            "] for session [" << id << "] on url [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) << "].");
 
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
@@ -1769,7 +1770,7 @@ private:
             if (!socket->parseHeader("Prisoner", message, request, &requestSize))
                 return;
 
-            LOG_TRC("Child connection with URI [" << request.getURI() << "].");
+            LOG_TRC("Child connection with URI [" << LOOLWSD::anonymizeUrl(request.getURI()) << "].");
             Poco::URI requestURI(request.getURI());
             if (requestURI.getPath() != NEW_CHILD_URI)
             {
@@ -1799,13 +1800,13 @@ private:
 
             if (pid <= 0)
             {
-                LOG_ERR("Invalid PID in child URI [" << request.getURI() << "].");
+                LOG_ERR("Invalid PID in child URI [" << LOOLWSD::anonymizeUrl(request.getURI()) << "].");
                 return;
             }
 
             if (jailId.empty())
             {
-                LOG_ERR("Invalid JailId in child URI [" << request.getURI() << "].");
+                LOG_ERR("Invalid JailId in child URI [" << LOOLWSD::anonymizeUrl(request.getURI()) << "].");
                 return;
             }
 
@@ -2188,7 +2189,7 @@ private:
     void handlePostRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
                            SocketDisposition &disposition)
     {
-        LOG_INF("Post request: [" << request.getURI() << "]");
+        LOG_INF("Post request: [" << LOOLWSD::anonymizeUrl(request.getURI()) << "]");
 
         Poco::Net::HTTPResponse response;
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -2229,18 +2230,18 @@ private:
                 Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
                 const std::string docKey = DocumentBroker::getDocKey(uriPublic);
 
-                // This lock could become a bottleneck.
-                // In that case, we can use a pool and index by publicPath.
-                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+                    // This lock could become a bottleneck.
+                    // In that case, we can use a pool and index by publicPath.
+                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
-                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
+                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                    auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
 
-                cleanupDocBrokers();
+                    cleanupDocBrokers();
 
-                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                DocBrokers.emplace(docKey, docBroker);
-                LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                    DocBrokers.emplace(docKey, docBroker);
+                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
 
                 // Load the document.
                 // TODO: Move to DocumentBroker.
@@ -2289,7 +2290,7 @@ private:
                             std::vector<char> saveasRequest(saveas.begin(), saveas.end());
                             clientSession->handleMessage(true, WSOpCode::Text, saveasRequest);
                         });
-                    });
+                        });
 
                     sent = true;
                 }
@@ -2436,11 +2437,12 @@ private:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!socket)
         {
-            LOG_WRN("No socket to handle client WS upgrade for request: " << request.getURI() << ", url: " << url);
+            LOG_WRN("No socket to handle client WS upgrade for request: " << LOOLWSD::anonymizeUrl(request.getURI()) << ", url: " << url);
             return;
         }
 
-        LOG_INF("Client WS request: " << request.getURI() << ", url: " << url << ", socket #" << socket->getFD());
+        // must be trace for anonymization
+        LOG_TRC("Client WS request: " << request.getURI() << ", url: " << url << ", socket #" << socket->getFD());
 
         // First Upgrade.
         WebSocketHandler ws(_socket, request);
@@ -2457,7 +2459,7 @@ private:
 #endif
             }
 
-            LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << url << "].");
+            LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << LOOLWSD::anonymizeUrl(url) << "].");
 
             // Indicate to the client that document broker is searching.
             const std::string status("statusindicator: find");
@@ -2466,7 +2468,7 @@ private:
 
             const Poco::URI uriPublic = DocumentBroker::sanitizeURI(url);
             const std::string docKey = DocumentBroker::getDocKey(uriPublic);
-            LOG_INF("Sanitized URI [" << url << "] to [" << uriPublic.toString() <<
+            LOG_INF("Sanitized URI [" << LOOLWSD::anonymizeUrl(url) << "] to [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) <<
                     "] and mapped to docKey [" << docKey << "] for session [" << _id << "].");
 
             // Check if readonly session is required
@@ -2480,7 +2482,7 @@ private:
                 }
             }
 
-            LOG_INF("URL [" << url << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
+            LOG_INF("URL [" << LOOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
 
             // Request a kit process for this doc.
             std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
@@ -2860,7 +2862,6 @@ private:
 #endif
             factory = std::make_shared<PlainSocketFactory>();
 
-
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ClientListenAddr, port, WebServerPoll, factory);
 #ifdef BUILDING_TESTS
@@ -2938,13 +2939,11 @@ int LOOLWSD::innerMain()
         LOG_FTL("Missing --systemplate option");
         throw MissingOptionException("systemplate");
     }
-
     if (LoTemplate.empty())
     {
         LOG_FTL("Missing --lotemplate option");
         throw MissingOptionException("lotemplate");
     }
-
     if (ChildRoot.empty())
     {
         LOG_FTL("Missing --childroot option");
