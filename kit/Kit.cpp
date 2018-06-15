@@ -719,7 +719,7 @@ public:
         _editorChangeWarning(false)
     {
         LOG_INF("Document ctor for [" << _docKey <<
-                "] url [" << _url << "] on child [" << _jailId <<
+                "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
                 "] and id [" << _docId << "].");
         assert(_loKit);
 
@@ -729,7 +729,7 @@ public:
     ~Document()
     {
         LOG_INF("~Document dtor for [" << _docKey <<
-                "] url [" << _url << "] on child [" << _jailId <<
+                "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
                 "] and id [" << _docId << "]. There are " <<
                 _sessions.size() << " views.");
 
@@ -764,12 +764,12 @@ public:
         {
             if (_sessions.find(sessionId) != _sessions.end())
             {
-                LOG_WRN("Session [" << sessionId << "] on url [" << _url << "] already exists.");
+                LOG_WRN("Session [" << sessionId << "] on url [" << anonymizeUrl(_url) << "] already exists.");
                 return true;
             }
 
             LOG_INF("Creating " << (_sessions.empty() ? "first" : "new") <<
-                    " session for url: " << _url << " for sessionId: " <<
+                    " session for url: " << anonymizeUrl(_url) << " for sessionId: " <<
                     sessionId << " on jailId: " << _jailId);
 
             auto session = std::make_shared<ChildSession>(sessionId, _jailId, *this);
@@ -785,7 +785,7 @@ public:
         catch (const std::exception& ex)
         {
             LOG_ERR("Exception while creating session [" << sessionId <<
-                    "] on url [" << _url << "] - '" << ex.what() << "'.");
+                    "] on url [" << anonymizeUrl(_url) << "] - '" << ex.what() << "'.");
             return false;
         }
     }
@@ -825,7 +825,7 @@ public:
             num_sessions = _sessions.size();
             if (num_sessions == 0)
             {
-                LOG_INF("Document [" << _url << "] has no more views, exiting bluntly.");
+                LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
                 std::_Exit(Application::EXIT_OK);
             }
         }
@@ -1283,7 +1283,7 @@ private:
     void onUnload(const ChildSession& session) override
     {
         const auto& sessionId = session.getId();
-        LOG_INF("Unloading session [" << sessionId << "] on url [" << _url << "].");
+        LOG_INF("Unloading session [" << sessionId << "] on url [" << anonymizeUrl(_url) << "].");
 
         const auto viewId = session.getViewId();
         _tileQueue->removeCursorPosition(viewId);
@@ -1304,14 +1304,14 @@ private:
             std::unique_lock<std::mutex> lock(_mutex);
             if (_sessions.empty())
             {
-                LOG_INF("Document [" << _url << "] has no more views, exiting bluntly.");
+                LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
                 std::_Exit(Application::EXIT_OK);
             }
 
-            LOG_INF("Document [" << _url << "] has no more views, but has " <<
+            LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, but has " <<
                     _sessions.size() << " sessions still. Destroying the document.");
             _loKitDocument.reset();
-            LOG_INF("Document [" << _url << "] session [" << sessionId << "] unloaded Document.");
+            LOG_INF("Document [" << anonymizeUrl(_url) << "] session [" << sessionId << "] unloaded Document.");
             return;
         }
         else
@@ -1325,7 +1325,7 @@ private:
         // _viewIdToCallbackDescr.erase(viewId);
 
         viewCount = _loKitDocument->getViewsCount();
-        LOG_INF("Document [" << _url << "] session [" <<
+        LOG_INF("Document [" << anonymizeUrl(_url) << "] session [" <<
                 sessionId << "] unloaded view [" << viewId << "]. Have " <<
                 viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
@@ -1608,7 +1608,7 @@ private:
         }
 
         LOG_INF("Initializing for rendering session [" << sessionId << "] on document url [" <<
-                _url << "] with: [" << makeRenderParams(_renderOpts, userNameAnonym) << "].");
+                anonymizeUrl(_url) << "] with: [" << makeRenderParams(_renderOpts, userNameAnonym) << "].");
 
         // initializeForRendering() should be called before
         // registerCallback(), as the previous creates a new view in Impress.
@@ -1628,7 +1628,7 @@ private:
         _loKitDocument->registerCallback(ViewCallback, _viewIdToCallbackDescr[viewId].get());
 
         const int viewCount = _loKitDocument->getViewsCount();
-        LOG_INF("Document url [" << _url << "] for session [" <<
+        LOG_INF("Document url [" << anonymizeUrl(_url) << "] for session [" <<
                 sessionId << "] loaded view [" << viewId << "]. Have " <<
                 viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
