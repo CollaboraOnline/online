@@ -1953,7 +1953,7 @@ class KitWebSocketHandler final : public WebSocketHandler, public std::enable_sh
 
 public:
     KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit, const std::string& jailId, SocketPoll& socketPoll) :
-        WebSocketHandler(/* isClient = */ true),
+        WebSocketHandler(/* isClient = */ true, /* isMasking */ false),
         _queue(std::make_shared<TileQueue>()),
         _socketName(socketName),
         _loKit(loKit),

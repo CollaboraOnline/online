@@ -36,6 +36,7 @@ protected:
     std::vector<char> _wsPayload;
     std::atomic<bool> _shuttingDown;
     bool _isClient;
+    bool _isMasking;
 
     struct WSFrameMask
     {
@@ -48,11 +49,12 @@ protected:
 
 public:
     /// Perform upgrade ourselves, or select a client web socket.
-    WebSocketHandler(bool isClient = false) :
+    WebSocketHandler(bool isClient = false, bool isMasking = true) :
         _lastPingSentTime(std::chrono::steady_clock::now()),
         _pingTimeUs(0),
         _shuttingDown(false),
-        _isClient(isClient)
+        _isClient(isClient),
+        _isMasking(isClient && isMasking)
     {
     }
 
@@ -65,7 +67,8 @@ public:
                   std::chrono::milliseconds(InitialPingDelayMs)),
         _pingTimeUs(0),
         _shuttingDown(false),
-        _isClient(false)
+        _isClient(false),
+        _isMasking(false)
     {
         upgradeToWebSocket(request);
     }
@@ -381,14 +384,14 @@ public:
         return sendFrame(socket, data, len, WSFrameMask::Fin | static_cast<unsigned char>(code), flush);
     }
 
-protected:
+private:
 
     /// Sends a WebSocket frame given the data, length, and flags.
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.
-    static int sendFrame(const std::shared_ptr<StreamSocket>& socket,
-                         const char* data, const size_t len,
-                         const unsigned char flags, const bool flush = true)
+    int sendFrame(const std::shared_ptr<StreamSocket>& socket,
+                  const char* data, const size_t len,
+                  unsigned char flags, const bool flush = true) const
     {
         if (!socket || data == nullptr || len == 0)
             return -1;
@@ -402,19 +405,20 @@ protected:
 
         out.push_back(flags);
 
+        int maskFlag = _isMasking ? 0x80 : 0;
         if (len < 126)
         {
-            out.push_back((char)len);
+            out.push_back((char)(len | maskFlag));
         }
         else if (len <= 0xffff)
         {
-            out.push_back((char)126);
+            out.push_back((char)(126 | maskFlag));
             out.push_back(static_cast<char>((len >> 8) & 0xff));
             out.push_back(static_cast<char>((len >> 0) & 0xff));
         }
         else
         {
-            out.push_back((char)127);
+            out.push_back((char)(127 | maskFlag));
             out.push_back(static_cast<char>((len >> 56) & 0xff));
             out.push_back(static_cast<char>((len >> 48) & 0xff));
             out.push_back(static_cast<char>((len >> 40) & 0xff));
@@ -425,8 +429,27 @@ protected:
             out.push_back(static_cast<char>((len >> 0) & 0xff));
         }
 
-        // Copy the data.
-        out.insert(out.end(), data, data + len);
+        if (_isMasking)
+        { // flip some top bits - perhaps it helps.
+            size_t mask = out.size();
+
+            out.push_back(static_cast<char>(0x81));
+            out.push_back(static_cast<char>(0x76));
+            out.push_back(static_cast<char>(0x81));
+            out.push_back(static_cast<char>(0x76));
+
+            // Copy the data.
+            out.insert(out.end(), data, data + len);
+
+            // Mask it.
+            for (size_t i = 4; i < out.size() - mask; ++i)
+                out[mask + i] = out[mask + i] ^ out[mask + (i%4)];
+        }
+        else
+        {
+            // Copy the data.
+            out.insert(out.end(), data, data + len);
+        }
         const size_t size = out.size() - oldSize;
 
         if (flush)
@@ -434,6 +457,8 @@ protected:
 
         return size;
     }
+
+protected:
 
     /// To be overriden to handle the websocket messages the way you need.
     virtual void handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &/*data*/)
