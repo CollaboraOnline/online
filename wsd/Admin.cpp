@@ -453,7 +453,7 @@ void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
 
 void Admin::rmDoc(const std::string& docKey)
 {
-    LOG_INF("Removing complete doc [" << docKey << "] from Admin.");
+    LOG_INF("Removing complete doc [" << LOOLWSD::anonymizeUrl(docKey) << "] from Admin.");
     addCallback([=]{ _model.removeDocument(docKey); });
 }
 

@@ -179,7 +179,7 @@ void AdminModel::assertCorrectThread() const
 
 AdminModel::~AdminModel()
 {
-    LOG_DBG("History:\n\n" << getAllHistory() << '\n');
+    LOG_TRC("History:\n\n" << getAllHistory() << '\n');
     LOG_INF("AdminModel dtor.");
 }
 
@@ -470,7 +470,7 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
     const auto ret = _documents.emplace(docKey, Document(docKey, pid, filename));
     ret.first->second.takeSnapshot();
     ret.first->second.addView(sessionId, userName, userId);
-    LOG_DBG("Added admin document [" << docKey << "].");
+    LOG_DBG("Added admin document [" << LOOLWSD::anonymizeUrl(docKey) << "].");
 
     std::string encodedUsername;
     std::string encodedFilename;
@@ -554,7 +554,7 @@ void AdminModel::removeDocument(const std::string& docKey)
             docIt->second.expireView(pair.first);
         }
 
-        LOG_DBG("Removed admin document [" << docKey << "].");
+        LOG_DBG("Removed admin document [" << LOOLWSD::anonymizeUrl(docKey) << "].");
         _expiredDocuments.emplace(*docIt);
         _documents.erase(docIt);
     }
