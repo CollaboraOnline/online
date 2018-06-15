@@ -889,7 +889,7 @@ void ClientSession::onDisconnect()
     try
     {
         // Connection terminated. Destroy session.
-        LOG_DBG(getName() << " on docKey [" << docKey << "] terminated. Cleaning up.");
+        LOG_DBG(getName() << " on docKey [" << LOOLWSD::anonymizeUrl(docKey) << "] terminated. Cleaning up.");
 
         docBroker->removeSession(getId());
     }
@@ -930,7 +930,7 @@ void ClientSession::onDisconnect()
     }
     catch (const std::exception& exc)
     {
-        LOG_WRN(getName() << ": Exception while closing socket for docKey [" << docKey << "]: " << exc.what());
+        LOG_WRN(getName() << ": Exception while closing socket for docKey [" << LOOLWSD::anonymizeUrl(docKey) << "]: " << exc.what());
     }
 }
 

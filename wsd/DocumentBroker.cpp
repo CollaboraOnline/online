@@ -171,8 +171,8 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
 
-    LOG_INF("DocumentBroker [" << _uriPublic.toString() <<
-            "] created with docKey [" << _docKey << "] and root [" << _childRoot << "]");
+    LOG_INF("DocumentBroker [" << LOOLWSD::anonymizeUrl(_uriPublic.toString()) <<
+            "] created with docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "] and root [" << _childRoot << "]");
 }
 
 void DocumentBroker::startThread()
@@ -188,7 +188,7 @@ void DocumentBroker::assertCorrectThread() const
 // The inner heart of the DocumentBroker - our poll loop.
 void DocumentBroker::pollThread()
 {
-    LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << "].");
+    LOG_INF("Starting docBroker polling thread for docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "].");
 
     _threadStart = std::chrono::steady_clock::now();
 
@@ -229,12 +229,12 @@ void DocumentBroker::pollThread()
         // Async cleanup.
         LOOLWSD::doHousekeeping();
 
-        LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
+        LOG_INF("Finished docBroker polling thread for docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "].");
         return;
     }
 
     _childProcess->setDocumentBroker(shared_from_this());
-    LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
+    LOG_INF("Doc [" << LOOLWSD::anonymizeUrl(_docKey) << "] attached to child [" << _childProcess->getPid() << "].");
 
     static const bool AutoSaveEnabled = !std::getenv("LOOL_NO_AUTOSAVE");
     static const size_t IdleDocTimeoutSecs = LOOLWSD::getConfigValue<int>(
@@ -264,7 +264,7 @@ void DocumentBroker::pollThread()
                                        // connection drop transiently reduces this.
                                        (sent > adminSent ? (sent - adminSent): uint64_t(0)),
                                        (recv > adminRecv ? (recv - adminRecv): uint64_t(0)));
-            LOG_DBG("Doc [" << _docKey << "] added sent: " << sent << " recv: " << recv << " bytes to totals");
+            LOG_DBG("Doc [" << LOOLWSD::anonymizeUrl(_docKey) << "] added sent: " << sent << " recv: " << recv << " bytes to totals");
             adminSent = sent;
             adminRecv = recv;
         }
@@ -280,10 +280,10 @@ void DocumentBroker::pollThread()
         if (ShutdownRequestFlag || _closeRequest)
         {
             const std::string reason = ShutdownRequestFlag ? "recycling" : _closeReason;
-            LOG_INF("Autosaving DocumentBroker for docKey [" << getDocKey() << "] for " << reason);
+            LOG_INF("Autosaving DocumentBroker for docKey [" << LOOLWSD::anonymizeUrl(getDocKey()) << "] for " << reason);
             if (!autoSave(isPossiblyModified()))
             {
-                LOG_INF("Terminating DocumentBroker for docKey [" << getDocKey() << "].");
+                LOG_INF("Terminating DocumentBroker for docKey [" << LOOLWSD::anonymizeUrl(getDocKey()) << "].");
                 stop(reason);
             }
         }
@@ -300,22 +300,22 @@ void DocumentBroker::pollThread()
         if (idle)
         {
             // Stop if there is nothing to save.
-            LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey() << "] to kill.");
+            LOG_INF("Autosaving idle DocumentBroker for docKey [" << LOOLWSD::anonymizeUrl(getDocKey()) << "] to kill.");
             if (!autoSave(isPossiblyModified()))
             {
-                LOG_INF("Terminating idle DocumentBroker for docKey [" << getDocKey() << "].");
+                LOG_INF("Terminating idle DocumentBroker for docKey [" << LOOLWSD::anonymizeUrl(getDocKey()) << "].");
                 stop("idle");
             }
         }
         else if (_sessions.empty() && (isLoaded() || _markToDestroy))
         {
             // If all sessions have been removed, no reason to linger.
-            LOG_INF("Terminating dead DocumentBroker for docKey [" << getDocKey() << "].");
+            LOG_INF("Terminating dead DocumentBroker for docKey [" << LOOLWSD::anonymizeUrl(getDocKey()) << "].");
             stop("dead");
         }
     }
 
-    LOG_INF("Finished polling doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
+    LOG_INF("Finished polling doc [" << LOOLWSD::anonymizeUrl(_docKey) << "]. stop: " << _stop << ", continuePolling: " <<
             _poll->continuePolling() << ", ShutdownRequestFlag: " << ShutdownRequestFlag <<
             ", TerminationFlag: " << TerminationFlag << ", closeReason: " << _closeReason << ". Flushing socket.");
 
@@ -339,7 +339,7 @@ void DocumentBroker::pollThread()
         _poll->poll(std::min(flushTimeoutMs - elapsedMs, POLL_TIMEOUT_MS / 5));
     }
 
-    LOG_INF("Finished flushing socket for doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
+    LOG_INF("Finished flushing socket for doc [" << LOOLWSD::anonymizeUrl(_docKey) << "]. stop: " << _stop << ", continuePolling: " <<
             _poll->continuePolling() << ", ShutdownRequestFlag: " << ShutdownRequestFlag <<
             ", TerminationFlag: " << TerminationFlag << ". Terminating child with reason: [" << _closeReason << "].");
 
@@ -357,7 +357,7 @@ void DocumentBroker::pollThread()
     if (_tileCache && !LOOLWSD::TileCachePersistent)
         _tileCache->completeCleanup();
 
-    LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
+    LOG_INF("Finished docBroker polling thread for docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "].");
 }
 
 bool DocumentBroker::isAlive() const
@@ -375,7 +375,7 @@ DocumentBroker::~DocumentBroker()
 
     Admin::instance().rmDoc(_docKey);
 
-    LOG_INF("~DocumentBroker [" << _docKey <<
+    LOG_INF("~DocumentBroker [" << LOOLWSD::anonymizeUrl(_docKey) <<
             "] destroyed with " << _sessions.size() << " sessions left.");
 
     // Do this early - to avoid operating on _childProcess from two threads.
@@ -383,7 +383,7 @@ DocumentBroker::~DocumentBroker()
 
     if (!_sessions.empty())
     {
-        LOG_WRN("DocumentBroker [" << _docKey << "] still has unremoved sessions.");
+        LOG_WRN("DocumentBroker [" << LOOLWSD::anonymizeUrl(_docKey) << "] still has unremoved sessions.");
     }
 
     // Need to first make sure the child exited, socket closed,
@@ -398,7 +398,7 @@ void DocumentBroker::joinThread()
 
 void DocumentBroker::stop(const std::string& reason)
 {
-    LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
+    LOG_DBG("Closing DocumentBroker for docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "] with reason: " << reason);
     _closeReason = reason; // used later in the polling loop
     _stop = true;
     _poll->wakeup();
@@ -410,7 +410,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
     const std::string sessionId = session->getId();
 
-    LOG_INF("Loading [" << _docKey << "] for session [" << sessionId << "] and jail [" << jailId << "].");
+    LOG_INF("Loading [" << LOOLWSD::anonymizeUrl(_docKey) << "] for session [" << sessionId << "] and jail [" << jailId << "].");
 
     {
         bool result;
@@ -421,7 +421,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     if (_markToDestroy)
     {
         // Tearing down.
-        LOG_WRN("Will not load document marked to destroy. DocKey: [" << _docKey << "].");
+        LOG_WRN("Will not load document marked to destroy. DocKey: [" << LOOLWSD::anonymizeUrl(_docKey) << "].");
         return false;
     }
 
@@ -442,13 +442,13 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         // Pass the public URI to storage as it needs to load using the token
         // and other storage-specific data provided in the URI.
         const Poco::URI& uriPublic = session->getPublicUri();
-        LOG_DBG("Loading, and creating new storage instance for URI [" << uriPublic.toString() << "].");
+        LOG_DBG("Loading, and creating new storage instance for URI [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) << "].");
 
         _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString());
         if (_storage == nullptr)
         {
             // We should get an exception, not null.
-            LOG_ERR("Failed to create Storage instance for [" << _docKey << "] in " << jailPath.toString());
+            LOG_ERR("Failed to create Storage instance for [" << LOOLWSD::anonymizeUrl(_docKey) << "] in " << jailPath.toString());
             return false;
         }
         firstInstance = true;
@@ -578,7 +578,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             fileInfo._modifiedTime != Zero &&
             _documentLastModifiedTime != fileInfo._modifiedTime)
         {
-            LOG_TRC("Document " << _docKey << "] has been modified behind our back. " <<
+            LOG_DBG("Document " << LOOLWSD::anonymizeUrl(_docKey) << "] has been modified behind our back. " <<
                     "Informing all clients. Expected: " << _documentLastModifiedTime <<
                     ", Actual: " << fileInfo._modifiedTime);
 
@@ -654,7 +654,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         Poco::DigestOutputStream dos(sha1);
         Poco::StreamCopier::copyStream(istr, dos);
         dos.close();
-        LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << LOOLWSD::anonymizeUrl(localPath) << "]: " <<
+        LOG_INF("SHA1 for DocKey [" << LOOLWSD::anonymizeUrl(_docKey) << "] of [" << LOOLWSD::anonymizeUrl(localPath) << "]: " <<
                 Poco::DigestEngine::digestToHex(sha1.digest()));
 
         // LibreOffice can't open files with '#' in the name
@@ -736,11 +736,11 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
     // If save requested, but core didn't save because document was unmodified
     // notify the waiting thread, if any.
-    LOG_TRC("Saving to storage docKey [" << _docKey << "] for session [" << sessionId <<
+    LOG_TRC("Saving to storage docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "] for session [" << sessionId <<
             "]. Success: " << success << ", result: " << result);
     if (!success && result == "unmodified")
     {
-        LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
+        LOG_DBG("Save skipped as document [" << LOOLWSD::anonymizeUrl(_docKey) << "] was not modified.");
         _lastSaveTime = std::chrono::steady_clock::now();
         _poll->wakeup();
         return true;
@@ -749,14 +749,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     const auto it = _sessions.find(sessionId);
     if (it == _sessions.end())
     {
-        LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving docKey [" << _docKey << "].");
+        LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "].");
         return false;
     }
 
     // Check that we are actually about to upload a successfully saved document.
     if (!success)
     {
-        LOG_ERR("Cannot save docKey [" << _docKey << "], the .uno:Save has failed in LOK.");
+        LOG_ERR("Cannot save docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "], the .uno:Save has failed in LOK.");
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
         return false;
     }
@@ -770,13 +770,13 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     if (!isSaveAs && newFileModifiedTime == _lastFileModifiedTime)
     {
         // Nothing to do.
-        LOG_DBG("Skipping unnecessary saving to URI [" << uriAnonym << "] with docKey [" << _docKey <<
+        LOG_DBG("Skipping unnecessary saving to URI [" << uriAnonym << "] with docKey [" << LOOLWSD::anonymizeUrl(_docKey) <<
                 "]. File last modified " << _lastFileModifiedTime.elapsed() / 1000000 << " seconds ago.");
         _poll->wakeup();
         return true;
     }
 
-    LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
+    LOG_DBG("Persisting [" << LOOLWSD::anonymizeUrl(_docKey) << "] after saving to URI [" << uriAnonym << "].");
 
     assert(_storage && _tileCache);
     StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(auth, saveAsPath, saveAsFilename);
@@ -796,7 +796,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             // After a successful save, we are sure that document in the storage is same as ours
             _documentChangedInStorage = false;
 
-            LOG_DBG("Saved docKey [" << _docKey << "] to URI [" << uriAnonym << "] and updated timestamps. " <<
+            LOG_DBG("Saved docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "] to URI [" << uriAnonym << "] and updated timestamps. " <<
                     " Document modified timestamp: " << _documentLastModifiedTime);
 
             // Resume polling.
@@ -819,7 +819,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
                 << " xfilename=" << filenameAnonym;
             it->second->sendTextFrame(oss.str());
 
-            LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << url <<
+            LOG_DBG("Saved As docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "] to URI [" << LOOLWSD::anonymizeUrl(url) <<
                     "] with name [" << filenameAnonym << "] successfully.");
         }
 
@@ -827,7 +827,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::DISKFULL)
     {
-        LOG_WRN("Disk full while saving docKey [" << _docKey << "] to URI [" << uriAnonym <<
+        LOG_WRN("Disk full while saving docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "] to URI [" << uriAnonym <<
                 "]. Making all sessions on doc read-only and notifying clients.");
 
         // Make everyone readonly and tell everyone that storage is low on diskspace.
@@ -839,14 +839,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::UNAUTHORIZED)
     {
-        LOG_ERR("Cannot save docKey [" << _docKey << "] to storage URI [" << uriAnonym <<
+        LOG_ERR("Cannot save docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "] to storage URI [" << uriAnonym <<
                 "]. Invalid or expired access token. Notifying client.");
         it->second->sendTextFrame("error: cmd=storage kind=saveunauthorized");
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::FAILED)
     {
         //TODO: Should we notify all clients?
-        LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << uriAnonym << "]. Notifying client.");
+        LOG_ERR("Failed to save docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "] to URI [" << uriAnonym << "]. Notifying client.");
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::DOC_CHANGED)
@@ -883,12 +883,12 @@ bool DocumentBroker::autoSave(const bool force)
         !_childProcess->isAlive() || (!_isModified && !force))
     {
         // Nothing to do.
-        LOG_TRC("Nothing to autosave [" << _docKey << "].");
+        LOG_TRC("Nothing to autosave [" << LOOLWSD::anonymizeUrl(_docKey) << "].");
         return false;
     }
 
     // Remember the last save time, since this is the predicate.
-    LOG_TRC("Checking to autosave [" << _docKey << "].");
+    LOG_TRC("Checking to autosave [" << LOOLWSD::anonymizeUrl(_docKey) << "].");
 
     // Which session to use when auto saving ?
     std::string savingSessionId;
@@ -911,7 +911,7 @@ bool DocumentBroker::autoSave(const bool force)
     bool sent = false;
     if (force)
     {
-        LOG_TRC("Sending forced save command for [" << _docKey << "].");
+        LOG_TRC("Sending forced save command for [" << LOOLWSD::anonymizeUrl(_docKey) << "].");
         // Don't terminate editing as this can be invoked by the admin OOM, but otherwise force saving anyway.
         sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/ true, /*dontSaveIfUnmodified=*/ true, /*isAutosave=*/ false);
     }
@@ -920,7 +920,7 @@ bool DocumentBroker::autoSave(const bool force)
         const auto now = std::chrono::steady_clock::now();
         const auto inactivityTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime).count();
         const auto timeSinceLastSaveMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastSaveTime).count();
-        LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSaveMs <<
+        LOG_TRC("Time since last save of docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "] is " << timeSinceLastSaveMs <<
                 "ms and most recent activity was " << inactivityTimeMs << "ms ago.");
 
         static const auto idleSaveDurationMs = LOOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30) * 1000;
@@ -929,7 +929,7 @@ bool DocumentBroker::autoSave(const bool force)
         if (inactivityTimeMs >= idleSaveDurationMs ||
             timeSinceLastSaveMs >= autoSaveDurationMs)
         {
-            LOG_TRC("Sending timed save command for [" << _docKey << "].");
+            LOG_TRC("Sending timed save command for [" << LOOLWSD::anonymizeUrl(_docKey) << "].");
             sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/ true, /*dontSaveIfUnmodified=*/ true, /*isAutosave=*/ true);
         }
     }
@@ -941,7 +941,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
 {
     assertCorrectThread();
 
-    LOG_INF("Saving doc [" << _docKey << "].");
+    LOG_INF("Saving doc [" << LOOLWSD::anonymizeUrl(_docKey) << "].");
 
     if (_sessions.find(sessionId) != _sessions.end())
     {
@@ -989,7 +989,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         return true;
     }
 
-    LOG_ERR("Failed to save doc [" << _docKey << "]: No valid sessions.");
+    LOG_ERR("Failed to save doc [" << LOOLWSD::anonymizeUrl(_docKey) << "]: No valid sessions.");
     return false;
 }
 
@@ -1007,10 +1007,10 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Failed to add session to [" << _docKey << "] with URI [" << session->getPublicUri().toString() << "]: " << exc.what());
+        LOG_ERR("Failed to add session to [" << LOOLWSD::anonymizeUrl(_docKey) << "] with URI [" << LOOLWSD::anonymizeUrl(session->getPublicUri().toString()) << "]: " << exc.what());
         if (_sessions.empty())
         {
-            LOG_INF("Doc [" << _docKey << "] has no more sessions. Marking to destroy.");
+            LOG_INF("Doc [" << LOOLWSD::anonymizeUrl(_docKey) << "] has no more sessions. Marking to destroy.");
             _markToDestroy = true;
         }
 
@@ -1060,7 +1060,7 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
     const auto count = _sessions.size();
     LOG_TRC("Added " << (session->isReadOnly() ? "readonly" : "non-readonly") <<
             " session [" << id << "] to docKey [" <<
-            _docKey << "] to have " << count << " sessions.");
+            LOOLWSD::anonymizeUrl(_docKey) << "] to have " << count << " sessions.");
 
     return count;
 }
@@ -1083,7 +1083,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
 
         const bool lastEditableSession = !it->second->isReadOnly() && !haveAnotherEditableSession(id);
 
-        LOG_INF("Removing session [" << id << "] on docKey [" << _docKey <<
+        LOG_INF("Removing session [" << id << "] on docKey [" << LOOLWSD::anonymizeUrl(_docKey) <<
                 "]. Have " << _sessions.size() << " sessions. markToDestroy: " << _markToDestroy <<
                 ", LastEditableSession: " << lastEditableSession);
 
@@ -1123,7 +1123,7 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
             {
                 logger << "Removed " << (readonly ? "readonly" : "non-readonly")
                        << " session [" << id << "] from docKey ["
-                       << _docKey << "] to have " << count << " sessions:";
+                       << LOOLWSD::anonymizeUrl(_docKey) << "] to have " << count << " sessions:";
                 for (const auto& pair : _sessions)
                     logger << pair.second->getId() << ' ';
 
@@ -1139,7 +1139,7 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
         else
         {
             LOG_TRC("Session [" << id << "] not found to remove from docKey [" <<
-                    _docKey << "]. Have " << _sessions.size() << " sessions.");
+                    LOOLWSD::anonymizeUrl(_docKey) << "]. Have " << _sessions.size() << " sessions.");
         }
     }
     catch (const std::exception& ex)
@@ -1169,7 +1169,7 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
 
-    LOG_DBG("Alerting all users of [" << _docKey << "]: " << msg);
+    LOG_DBG("Alerting all users of [" << LOOLWSD::anonymizeUrl(_docKey) << "]: " << msg);
     for (auto& it : _sessions)
     {
         it.second->enqueueSendMessage(payload);
@@ -1547,7 +1547,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
 void DocumentBroker::shutdownClients(const std::string& closeReason)
 {
     assertCorrectThread();
-    LOG_INF("Terminating " << _sessions.size() << " clients of doc [" << _docKey << "] with reason: " << closeReason);
+    LOG_INF("Terminating " << _sessions.size() << " clients of doc [" << LOOLWSD::anonymizeUrl(_docKey) << "] with reason: " << closeReason);
 
     // First copy into local container, since removeSession
     // will erase from _sessions, but will leave the last.
@@ -1577,7 +1577,7 @@ void DocumentBroker::childSocketTerminated()
 
     if (!_childProcess->isAlive())
     {
-        LOG_ERR("Child for doc [" << _docKey << "] terminated prematurely.");
+        LOG_ERR("Child for doc [" << LOOLWSD::anonymizeUrl(_docKey) << "] terminated prematurely.");
     }
 
     // We could restore the kit if this was unexpected.
@@ -1589,14 +1589,14 @@ void DocumentBroker::terminateChild(const std::string& closeReason)
 {
     assertCorrectThread();
 
-    LOG_INF("Terminating doc [" << _docKey << "] with reason: " << closeReason);
+    LOG_INF("Terminating doc [" << LOOLWSD::anonymizeUrl(_docKey) << "] with reason: " << closeReason);
 
     // Close all running sessions first.
     shutdownClients(closeReason);
 
     if (_childProcess)
     {
-        LOG_INF("Terminating child [" << getPid() << "] of doc [" << _docKey << "].");
+        LOG_INF("Terminating child [" << getPid() << "] of doc [" << LOOLWSD::anonymizeUrl(_docKey) << "].");
 
         // First flag to stop as it might be waiting on our lock
         // to process some incoming message.
@@ -1611,7 +1611,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
 {
     assertCorrectThread();
 
-    LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
+    LOG_DBG("Closing DocumentBroker for docKey [" << LOOLWSD::anonymizeUrl(_docKey) << "] with reason: " << reason);
     _closeReason = reason;
     _closeRequest = true;
 }
