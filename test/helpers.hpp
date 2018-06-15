@@ -378,7 +378,7 @@ connectLOKit(const Poco::URI& uri,
         catch (const std::exception& ex)
         {
             TST_LOG_END;
-            TST_LOG("Error connecting: " << ex.what());
+            TST_LOG("Connection problem: " << ex.what());
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
