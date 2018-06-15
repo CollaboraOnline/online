@@ -34,11 +34,11 @@ find etc/passwd etc/group etc/hosts \
      usr/share/zoneinfo/* \
      usr/share/liblangtag \
      usr/share/hyphen \
-	 -type f
+	 -type f 2>/dev/null
 
 find etc/fonts \
      lib/ld-* lib64/ld-* \
-	-type l
+	-type l 2>/dev/null
 
 # Go through the LO shared objects and check what system libraries
 # they link to.
