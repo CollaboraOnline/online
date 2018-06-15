@@ -269,7 +269,7 @@ void cleanupDocBrokers()
         // Remove only when not alive.
         if (!docBroker->isAlive())
         {
-            LOG_INF("Removing DocumentBroker for docKey [" << it->first << "].");
+            LOG_INF("Removing DocumentBroker for docKey [" << LOOLWSD::anonymizeUrl(it->first) << "].");
             it = DocBrokers.erase(it);
             continue;
         } else {
@@ -1454,8 +1454,8 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
                                                              const std::string& id,
                                                              const Poco::URI& uriPublic)
 {
-    LOG_INF("Find or create DocBroker for docKey [" << docKey <<
-            "] for session [" << id << "] on url [" << uriPublic.toString() << "].");
+    LOG_INF("Find or create DocBroker for docKey [" << LOOLWSD::anonymizeUrl(docKey) <<
+            "] for session [" << id << "] on url [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) << "].");
 
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
@@ -1474,13 +1474,13 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
     if (it != DocBrokers.end() && it->second)
     {
         // Get the DocumentBroker from the Cache.
-        LOG_DBG("Found DocumentBroker with docKey [" << docKey << "].");
+        LOG_DBG("Found DocumentBroker with docKey [" << LOOLWSD::anonymizeUrl(docKey) << "].");
         docBroker = it->second;
 
         // Destroying the document? Let the client reconnect.
         if (docBroker->isMarkedToDestroy())
         {
-            LOG_WRN("DocBroker with docKey [" << docKey << "] that is marked to be destroyed. Rejecting client request.");
+            LOG_WRN("DocBroker with docKey [" << LOOLWSD::anonymizeUrl(docKey) << "] that is marked to be destroyed. Rejecting client request.");
             ws.sendMessage("error: cmd=load kind=docunloading");
             ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, "error: cmd=load kind=docunloading");
             return nullptr;
@@ -1488,7 +1488,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
     }
     else
     {
-        LOG_DBG("No DocumentBroker with docKey [" << docKey << "] found. New Child and Document.");
+        LOG_DBG("No DocumentBroker with docKey [" << LOOLWSD::anonymizeUrl(docKey) << "] found. New Child and Document.");
     }
 
     if (TerminationFlag)
@@ -1516,10 +1516,10 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
         }
 
         // Set the one we just created.
-        LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+        LOG_DBG("New DocumentBroker for docKey [" << LOOLWSD::anonymizeUrl(docKey) << "].");
         docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, LOOLWSD::ChildRoot);
         DocBrokers.emplace(docKey, docBroker);
-        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << LOOLWSD::anonymizeUrl(docKey) << "].");
     }
 
     return docBroker;
@@ -1660,7 +1660,7 @@ private:
             {
                 logger << "#" << socket->getFD() << ": Prisoner HTTP Request: "
                        << request.getMethod() << ' '
-                       << request.getURI() << ' '
+                       << LOOLWSD::anonymizeUrl(request.getURI()) << ' '
                        << request.getVersion();
 
                 for (const auto& it : request)
@@ -1671,7 +1671,7 @@ private:
                 LOG_END(logger);
             }
 
-            LOG_TRC("Child connection with URI [" << request.getURI() << "].");
+            LOG_TRC("Child connection with URI [" << LOOLWSD::anonymizeUrl(request.getURI()) << "].");
             if (request.getURI().find(NEW_CHILD_URI) != 0)
             {
                 LOG_ERR("Invalid incoming URI.");
@@ -1700,13 +1700,13 @@ private:
 
             if (pid <= 0)
             {
-                LOG_ERR("Invalid PID in child URI [" << request.getURI() << "].");
+                LOG_ERR("Invalid PID in child URI [" << LOOLWSD::anonymizeUrl(request.getURI()) << "].");
                 return;
             }
 
             if (jailId.empty())
             {
-                LOG_ERR("Invalid JailId in child URI [" << request.getURI() << "].");
+                LOG_ERR("Invalid JailId in child URI [" << LOOLWSD::anonymizeUrl(request.getURI()) << "].");
                 return;
             }
 
@@ -1816,7 +1816,7 @@ private:
         {
             request.read(message);
 
-            auto logger = Log::info();
+            auto logger = Log::trace(); // must be trace for anonymization
             if (logger.enabled())
             {
                 logger << "#" << socket->getFD() << ": Client HTTP Request: "
@@ -2086,7 +2086,7 @@ private:
     void handlePostRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
                            SocketDisposition &disposition)
     {
-        LOG_INF("Post request: [" << request.getURI() << "]");
+        LOG_INF("Post request: [" << LOOLWSD::anonymizeUrl(request.getURI()) << "]");
 
         Poco::Net::HTTPResponse response;
         auto socket = _socket.lock();
@@ -2118,14 +2118,14 @@ private:
                     // In that case, we can use a pool and index by publicPath.
                     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
-                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                    LOG_DBG("New DocumentBroker for docKey [" << LOOLWSD::anonymizeUrl(docKey) << "].");
                     auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
 
                     cleanupDocBrokers();
 
-                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                    LOG_DBG("New DocumentBroker for docKey [" << LOOLWSD::anonymizeUrl(docKey) << "].");
                     DocBrokers.emplace(docKey, docBroker);
-                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << LOOLWSD::anonymizeUrl(docKey) << "].");
 
                     // Load the document.
                     // TODO: Move to DocumentBroker.
@@ -2178,7 +2178,7 @@ private:
                         sent = true;
                     }
                     else
-                        LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
+                        LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << LOOLWSD::anonymizeUrl(docKey) << "].");
                 }
             }
 
@@ -2212,7 +2212,7 @@ private:
                 // Maybe just free the client from sending childid in form ?
                 if (docBrokerIt == DocBrokers.end() || docBrokerIt->second->getJailId() != formChildid)
                 {
-                    throw BadRequestException("DocKey [" + docKey + "] or childid [" + formChildid + "] is invalid.");
+                    throw BadRequestException("DocKey [" + LOOLWSD::anonymizeUrl(docKey) + "] or childid [" + formChildid + "] is invalid.");
                 }
                 docBrokersLock.unlock();
 
@@ -2244,7 +2244,7 @@ private:
             auto docBrokerIt = DocBrokers.find(docKey);
             if (docBrokerIt == DocBrokers.end())
             {
-                throw BadRequestException("DocKey [" + docKey + "] is invalid.");
+                throw BadRequestException("DocKey [" + LOOLWSD::anonymizeUrl(docKey) + "] is invalid.");
             }
 
             // 2. Cross-check if received child id is correct
@@ -2308,11 +2308,12 @@ private:
         auto socket = _socket.lock();
         if (!socket)
         {
-            LOG_WRN("No socket to handle client WS upgrade for request: " << request.getURI() << ", url: " << url);
+            LOG_WRN("No socket to handle client WS upgrade for request: " << LOOLWSD::anonymizeUrl(request.getURI()) << ", url: " << url);
             return;
         }
 
-        LOG_INF("Client WS request: " << request.getURI() << ", url: " << url << ", socket #" << socket->getFD());
+        // must be trace for anonymization
+        LOG_TRC("Client WS request: " << request.getURI() << ", url: " << url << ", socket #" << socket->getFD());
 
         // First Upgrade.
         WebSocketHandler ws(_socket, request);
@@ -2329,7 +2330,7 @@ private:
 #endif
             }
 
-            LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << url << "].");
+            LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << LOOLWSD::anonymizeUrl(url) << "].");
 
             // Indicate to the client that document broker is searching.
             const std::string status("statusindicator: find");
@@ -2338,8 +2339,8 @@ private:
 
             const auto uriPublic = DocumentBroker::sanitizeURI(url);
             const auto docKey = DocumentBroker::getDocKey(uriPublic);
-            LOG_INF("Sanitized URI [" << url << "] to [" << uriPublic.toString() <<
-                    "] and mapped to docKey [" << docKey << "] for session [" << _id << "].");
+            LOG_INF("Sanitized URI [" << LOOLWSD::anonymizeUrl(url) << "] to [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) <<
+                    "] and mapped to docKey [" << LOOLWSD::anonymizeUrl(docKey) << "] for session [" << _id << "].");
 
             // Check if readonly session is required
             bool isReadOnly = false;
@@ -2352,7 +2353,7 @@ private:
                 }
             }
 
-            LOG_INF("URL [" << url << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
+            LOG_INF("URL [" << LOOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
 
             // Request a kit process for this doc.
             auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
@@ -2408,13 +2409,13 @@ private:
                 }
                 else
                 {
-                    LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
+                    LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << LOOLWSD::anonymizeUrl(docKey) << "].");
                     cleanupDocBrokers();
                 }
             }
             else
             {
-                throw ServiceUnavailableException("Failed to create DocBroker with docKey [" + docKey + "].");
+                throw ServiceUnavailableException("Failed to create DocBroker with docKey [" + LOOLWSD::anonymizeUrl(docKey) + "].");
             }
         }
         catch (const std::exception& exc)
