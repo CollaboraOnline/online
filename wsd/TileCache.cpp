@@ -53,10 +53,12 @@ TileCache::TileCache(const std::string& docURL,
     _cacheDir(cacheDir),
     _tileCachePersistent(tileCachePersistent)
 {
-    LOG_INF("TileCache ctor for uri [" << _docURL <<
+#ifndef BUILDING_TESTS
+    LOG_INF("TileCache ctor for uri [" << LOOLWSD::anonymizeUrl(_docURL) <<
             "], cacheDir: [" << _cacheDir <<
             "], modifiedTime=" << (modifiedTime.raw()/1000000) <<
             " getLastModified()=" << (getLastModified().raw()/1000000));
+#endif
     File directory(_cacheDir);
     std::string unsaved;
     if (directory.exists() &&
@@ -75,7 +77,9 @@ TileCache::TileCache(const std::string& docURL,
 TileCache::~TileCache()
 {
     _owner = std::thread::id(0);
-    LOG_INF("~TileCache dtor for uri [" << _docURL << "].");
+#ifndef BUILDING_TESTS
+    LOG_INF("~TileCache dtor for uri [" << LOOLWSD::anonymizeUrl(_docURL) << "].");
+#endif
 }
 
 void TileCache::completeCleanup() const
