@@ -677,6 +677,7 @@ public:
 
 void Admin::connectToMonitorSync(const std::string &uri)
 {
+    LOG_TRC("Add monitor " << uri);
     insertNewWebSocketSync(Poco::URI(uri), std::make_shared<MonitorSocketHandler>(this, uri));
 }
 
