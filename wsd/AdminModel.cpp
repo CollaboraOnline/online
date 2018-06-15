@@ -179,7 +179,7 @@ void AdminModel::assertCorrectThread() const
 
 AdminModel::~AdminModel()
 {
-    LOG_DBG("History:\n\n" << getAllHistory() << '\n');
+    LOG_TRC("History:\n\n" << getAllHistory() << '\n');
     LOG_INF("AdminModel dtor.");
 }
 
