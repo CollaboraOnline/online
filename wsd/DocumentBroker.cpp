@@ -173,7 +173,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     assert(!_docKey.empty());
     assert(!_childRoot.empty());
 
-    LOG_INF("DocumentBroker [" << _uriPublic.toString() <<
+    LOG_INF("DocumentBroker [" << LOOLWSD::anonymizeUrl(_uriPublic.toString()) <<
             "] created with docKey [" << _docKey << "] and root [" << _childRoot << "]");
 }
 
@@ -455,7 +455,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         // Pass the public URI to storage as it needs to load using the token
         // and other storage-specific data provided in the URI.
         const Poco::URI& uriPublic = session->getPublicUri();
-        LOG_DBG("Loading, and creating new storage instance for URI [" << uriPublic.toString() << "].");
+        LOG_DBG("Loading, and creating new storage instance for URI [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) << "].");
 
         _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString());
         if (_storage == nullptr)
@@ -596,7 +596,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             fileInfo._modifiedTime != Zero &&
             _documentLastModifiedTime != fileInfo._modifiedTime)
         {
-            LOG_TRC("Document " << _docKey << "] has been modified behind our back. " <<
+            LOG_DBG("Document " << _docKey << "] has been modified behind our back. " <<
                     "Informing all clients. Expected: " << _documentLastModifiedTime <<
                     ", Actual: " << fileInfo._modifiedTime);
 
@@ -840,7 +840,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
                 << " xfilename=" << filenameAnonym;
             it->second->sendTextFrame(oss.str());
 
-            LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << url <<
+            LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << LOOLWSD::anonymizeUrl(url) <<
                     "] with name [" << filenameAnonym << "] successfully.");
         }
 
@@ -1028,7 +1028,7 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Failed to add session to [" << _docKey << "] with URI [" << session->getPublicUri().toString() << "]: " << exc.what());
+        LOG_ERR("Failed to add session to [" << _docKey << "] with URI [" << LOOLWSD::anonymizeUrl(session->getPublicUri().toString()) << "]: " << exc.what());
         if (_sessions.empty())
         {
             LOG_INF("Doc [" << _docKey << "] has no more sessions. Marking to destroy.");
