@@ -161,7 +161,6 @@ void SocketPoll::insertNewWebSocketSync(const Poco::URI &uri, const std::shared_
             {
                 int fd = socket(ai->ai_addr->sa_family, SOCK_STREAM | SOCK_NONBLOCK, 0);
                 int res = connect(fd, ai->ai_addr, ai->ai_addrlen);
-                // FIXME: SSL sockets presumably need some setup, checking etc. and ... =)
                 if (fd < 0 || (res < 0 && errno != EINPROGRESS))
                 {
                     LOG_ERR("Failed to connect to " << uri.getHost());
@@ -259,7 +258,7 @@ void StreamSocket::dumpState(std::ostream& os)
     if (_inBuffer.size() > 0)
         Util::dumpHex(os, "\t\tinBuffer:\n", "\t\t", _inBuffer);
     if (_outBuffer.size() > 0)
-        Util::dumpHex(os, "\t\toutBuffer:\n", "\t\t", _inBuffer);
+        Util::dumpHex(os, "\t\toutBuffer:\n", "\t\t", _outBuffer);
 }
 
 void StreamSocket::send(Poco::Net::HTTPResponse& response)
