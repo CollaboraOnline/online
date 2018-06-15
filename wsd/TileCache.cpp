@@ -53,10 +53,12 @@ TileCache::TileCache(const std::string& docURL,
     _cacheDir(cacheDir),
     _tileCachePersistent(tileCachePersistent)
 {
-    LOG_INF("TileCache ctor for uri [" << _docURL <<
+#ifndef BUILDING_TESTS
+    LOG_INF("TileCache ctor for uri [" << LOOLWSD::anonymizeUrl(_docURL) <<
             "], cacheDir: [" << _cacheDir <<
             "], modifiedTime=" << (modifiedTime.raw()/1000000) <<
             " getLastModified()=" << (getLastModified().raw()/1000000));
+#endif
     File directory(_cacheDir);
     std::string unsaved;
     if (directory.exists() &&
@@ -75,7 +77,9 @@ TileCache::TileCache(const std::string& docURL,
 TileCache::~TileCache()
 {
     _owner = std::thread::id();
-    LOG_INF("~TileCache dtor for uri [" << _docURL << "].");
+#ifndef BUILDING_TESTS
+    LOG_INF("~TileCache dtor for uri [" << LOOLWSD::anonymizeUrl(_docURL) << "].");
+#endif
 }
 
 void TileCache::completeCleanup() const
@@ -169,10 +173,10 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
     const std::string fileName = _cacheDir + "/" + cacheFileName(tile);
 
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
-
     UnitWSD::get().lookupTile(tile.getPart(), tile.getWidth(), tile.getHeight(),
                               tile.getTilePosX(), tile.getTilePosY(),
                               tile.getTileWidth(), tile.getTileHeight(), result);
+
     if (result && result->is_open())
     {
         LOG_TRC("Found cache tile: " << fileName);
