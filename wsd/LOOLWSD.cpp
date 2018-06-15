@@ -1469,7 +1469,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
                                                              const Poco::URI& uriPublic)
 {
     LOG_INF("Find or create DocBroker for docKey [" << docKey <<
-            "] for session [" << id << "] on url [" << uriPublic.toString() << "].");
+            "] for session [" << id << "] on url [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) << "].");
 
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
@@ -1642,7 +1642,7 @@ private:
             if (!socket->parseHeader("Prisoner", message, request, &requestSize))
                 return;
 
-            LOG_TRC("Child connection with URI [" << request.getURI() << "].");
+            LOG_TRC("Child connection with URI [" << LOOLWSD::anonymizeUrl(request.getURI()) << "].");
             Poco::URI requestURI(request.getURI());
             if (requestURI.getPath() != NEW_CHILD_URI)
             {
@@ -1672,13 +1672,13 @@ private:
 
             if (pid <= 0)
             {
-                LOG_ERR("Invalid PID in child URI [" << request.getURI() << "].");
+                LOG_ERR("Invalid PID in child URI [" << LOOLWSD::anonymizeUrl(request.getURI()) << "].");
                 return;
             }
 
             if (jailId.empty())
             {
-                LOG_ERR("Invalid JailId in child URI [" << request.getURI() << "].");
+                LOG_ERR("Invalid JailId in child URI [" << LOOLWSD::anonymizeUrl(request.getURI()) << "].");
                 return;
             }
 
@@ -2012,7 +2012,7 @@ private:
     void handlePostRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
                            SocketDisposition &disposition)
     {
-        LOG_INF("Post request: [" << request.getURI() << "]");
+        LOG_INF("Post request: [" << LOOLWSD::anonymizeUrl(request.getURI()) << "]");
 
         Poco::Net::HTTPResponse response;
         auto socket = _socket.lock();
@@ -2246,11 +2246,12 @@ private:
         auto socket = _socket.lock();
         if (!socket)
         {
-            LOG_WRN("No socket to handle client WS upgrade for request: " << request.getURI() << ", url: " << url);
+            LOG_WRN("No socket to handle client WS upgrade for request: " << LOOLWSD::anonymizeUrl(request.getURI()) << ", url: " << url);
             return;
         }
 
-        LOG_INF("Client WS request: " << request.getURI() << ", url: " << url << ", socket #" << socket->getFD());
+        // must be trace for anonymization
+        LOG_TRC("Client WS request: " << request.getURI() << ", url: " << url << ", socket #" << socket->getFD());
 
         // First Upgrade.
         WebSocketHandler ws(_socket, request);
@@ -2267,7 +2268,7 @@ private:
 #endif
             }
 
-            LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << url << "].");
+            LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << LOOLWSD::anonymizeUrl(url) << "].");
 
             // Indicate to the client that document broker is searching.
             const std::string status("statusindicator: find");
@@ -2276,7 +2277,7 @@ private:
 
             const auto uriPublic = DocumentBroker::sanitizeURI(url);
             const auto docKey = DocumentBroker::getDocKey(uriPublic);
-            LOG_INF("Sanitized URI [" << url << "] to [" << uriPublic.toString() <<
+            LOG_INF("Sanitized URI [" << LOOLWSD::anonymizeUrl(url) << "] to [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) <<
                     "] and mapped to docKey [" << docKey << "] for session [" << _id << "].");
 
             // Check if readonly session is required
@@ -2290,7 +2291,7 @@ private:
                 }
             }
 
-            LOG_INF("URL [" << url << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
+            LOG_INF("URL [" << LOOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
 
             // Request a kit process for this doc.
             auto docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
