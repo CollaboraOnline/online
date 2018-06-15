@@ -315,11 +315,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onZoomRowColumns: function () {
-		this._updateClientZoom();
-		if (this._clientZoom) {
-			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
-			this._clientZoom = null;
-		}
+		this._sendClientZoom();
 		// TODO: test it!
 		this._map.fire('updaterowcolumnheaders');
 	},

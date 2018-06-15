@@ -149,15 +149,11 @@ L.TileLayer = L.GridLayer.extend({
 		this._msgQueue = [];
 		this._toolbarCommandValues = {};
 		this._previewInvalidations = [];
-		this._updateClientZoom();
 
 		this._followThis = -1;
 		this._editorId = -1;
 		this._followUser = false;
 		this._followEditor = false;
-
-		// Mark visible area as dirty by default.
-		this._invalidateClientVisibleArea();
 	},
 
 	onAdd: function (map) {
@@ -259,9 +255,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._docType === 'spreadsheet') {
 			map.on('zoomend', this._onCellCursorShift, this);
 		}
-		map.on('zoomend', this._updateClientZoom, this);
 		map.on('zoomend', L.bind(this.eachView, this, this._viewCursors, this._onUpdateViewCursor, this, false));
-		map.on('resize zoomend', this._invalidateClientVisibleArea, this);
 		map.on('dragstart', this._onDragStart, this);
 		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
@@ -492,7 +486,6 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	toggleTileDebugMode: function() {
-		this._invalidateClientVisibleArea();
 		this._debug = !this._debug;
 		if (!this._debug) {
 			this._map.removeLayer(this._debugInfo);
@@ -2268,13 +2261,6 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		this._previewInvalidations = [];
-	},
-
-	_updateClientZoom: function () {
-		this._clientZoom = 'tilepixelwidth=' + this._tileWidthPx + ' ' +
-			'tilepixelheight=' + this._tileHeightPx + ' ' +
-			'tiletwipwidth=' + this._tileWidthTwips + ' ' +
-			'tiletwipheight=' + this._tileHeightTwips;
 	},
 
 	_debugGetTimeArray: function() {

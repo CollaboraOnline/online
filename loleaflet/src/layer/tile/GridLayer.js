@@ -24,6 +24,9 @@ L.GridLayer = L.Layer.extend({
 
 	initialize: function (options) {
 		L.setOptions(this, options);
+
+		this._clientZoom = '';
+		this._clientVisibleArea = '';
 	},
 
 	onAdd: function () {
@@ -556,10 +559,8 @@ L.GridLayer = L.Layer.extend({
 			this._level.el.appendChild(fragment);
 		}
 
-		this._invalidateClientVisibleArea();
 		this._sendClientVisibleArea();
 
-		this._updateClientZoom();
 		this._sendClientZoom();
 	},
 
@@ -690,6 +691,34 @@ L.GridLayer = L.Layer.extend({
 		}
 	},
 
+	_sendClientVisibleArea: function () {
+		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
+		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
+		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
+		var size = new L.Point(visibleArea.getSize().x, visibleArea.getSize().y);
+		var newClientVisibleArea = 'clientvisiblearea x=' + Math.round(visibleTopLeft.x) + ' y=' + Math.round(visibleTopLeft.y) +
+			' width=' + Math.round(size.x) + ' height=' + Math.round(size.y);
+
+		if (this._clientVisibleArea !== newClientVisibleArea) {
+			// Visible area is dirty, update it on the server
+			this._clientVisibleArea = newClientVisibleArea
+			this._map._socket.sendMessage(this._clientVisibleArea);
+		}
+	},
+
+	_sendClientZoom: function () {
+		var newClientZoom = 'tilepixelwidth=' + this._tileWidthPx + ' ' +
+			'tilepixelheight=' + this._tileHeightPx + ' ' +
+			'tiletwipwidth=' + this._tileWidthTwips + ' ' +
+			'tiletwipheight=' + this._tileHeightTwips;
+
+		if (this._clientZoom !== newClientZoom) {
+			// the zoom level has changed
+			this._clientZoom = newClientZoom;
+			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
+		}
+	},
+
 	_cancelTiles: function() {
 		this._map._socket.sendMessage('canceltiles');
 		for (var key in this._tiles) {
@@ -728,39 +757,6 @@ L.GridLayer = L.Layer.extend({
 			}
 		}
 		this._emptyTilesCount = 0;
-	},
-
-	_invalidateClientVisibleArea: function() {
-		if (this._debug) {
-			this._debugInfo.clearLayers();
-			for (var key in this._tiles) {
-				this._tiles[key]._debugPopup = null;
-				this._tiles[key]._debugTile = null;
-			}
-		}
-		this._clientVisibleArea = true;
-	},
-
-	_sendClientVisibleArea: function () {
-		if (this._clientVisibleArea) {
-			// Visible area is dirty, update it on the server.
-			var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
-			var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
-			var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
-			var size = new L.Point(visibleArea.getSize().x, visibleArea.getSize().y);
-			var payload = 'clientvisiblearea x=' + Math.round(visibleTopLeft.x) + ' y=' + Math.round(visibleTopLeft.y) +
-				' width=' + Math.round(size.x) + ' height=' + Math.round(size.y);
-			this._map._socket.sendMessage(payload);
-			this._clientVisibleArea = false;
-		}
-	},
-
-	_sendClientZoom: function () {
-		if (this._clientZoom) {
-			// the zoom level has changed
-			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
-			this._clientZoom = null;
-		}
 	},
 
 	_isValidTile: function (coords) {
