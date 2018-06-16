@@ -881,11 +881,21 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             setViewLoaded();
             docBroker->setLoaded();
 
-            const std::string stringMsg(buffer, length);
-            const size_t index = stringMsg.find("type=") + 5;
-            if (index != std::string::npos)
+            for(auto &token : tokens)
             {
-                _docType = stringMsg.substr(index, stringMsg.find_first_of(' ', index) - index);
+                // Need to get the initial part id from status message
+                int part = -1;
+                if(getTokenInteger(token, "current", part))
+                {
+                    _clientSelectedPart = part;
+                }
+
+                // Get document type too
+                std::string docType;
+                if(getTokenString(token, "type", docType))
+                {
+                    _docType = docType;
+                }
             }
 
             // Forward the status response to the client.
