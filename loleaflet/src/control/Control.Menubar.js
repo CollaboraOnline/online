@@ -22,8 +22,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Download as'), id: 'downloadas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
 					{name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action'},
-					{name: _('Microsoft Word 2003 (.doc)'), id: 'downloadas-doc', type: 'action'},
-					{name: _('Microsoft Word (.docx)'), id: 'downloadas-docx', type: 'action'},
+					{name: _('Word 2003 Document (.doc)'), id: 'downloadas-doc', type: 'action'},
+					{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
 					{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'}]},
 				{type: 'separator'},
 				{uno: '.uno:SetDocumentProperties'}
@@ -232,8 +232,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Download as'), id: 'downloadas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
 					{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
-					{name: _('Microsoft Powerpoint 2003 (.ppt)'), id: 'downloadas-ppt', type: 'action'},
-					{name: _('Microsoft Powerpoint (.pptx)'), id: 'downloadas-pptx', type: 'action'}]},
+					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action'},
+					{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action'}]},
 				{type: 'separator'},
 				{uno: '.uno:SetDocumentProperties'}
 			]},
@@ -312,8 +312,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Download as'), id:'downloadas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
 					{name: _('ODF spreadsheet (.ods)'), id: 'downloadas-ods', type: 'action'},
-					{name: _('Microsoft Excel 2003 (.xls)'), id: 'downloadas-xls', type: 'action'},
-					{name: _('Microsoft Excel (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}]},
+					{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'downloadas-xls', type: 'action'},
+					{name: _('Excel Spreadsheet (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}]},
 				{type: 'separator'},
 				{uno: '.uno:SetDocumentProperties'}
 			]},
