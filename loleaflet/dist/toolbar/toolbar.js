@@ -241,6 +241,18 @@ function onClick(e, id, item, subItem) {
 	}
 }
 
+function insertBorder() {
+	var $grid = $('#insertborder-grid');
+
+	$grid.on({
+		click: function() {
+			// TODO send map.sendUnoCommand('.uno: com.sun.star.table.BorderLine2' );
+			$().w2overlay({ name: 'toolbar-up' });
+			console.log('click border');
+		}
+	});
+}
+
 function insertTable() {
 	var rows = 10;
 	var cols = 10;
@@ -871,6 +883,17 @@ map.on('doclayerinit', function () {
 	switch (docType) {
 	case 'spreadsheet':
 		toolbarUp.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
+		toolbarUp.insert('insertshapes',
+			{type: 'drop',  id: 'insertborder',  img: 'insertborder', hint: _('Borders'), overlay: {onShow: insertBorder},
+				html: '<table id="insertborder-grid"><tr><td class="w2ui-tb-image w2ui-icon frame01"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame02"></td><td class="w2ui-tb-image w2ui-icon frame03"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame04"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame05"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame06"></td><td class="w2ui-tb-image w2ui-icon frame07"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame08"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame09"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame10"></td><td class="w2ui-tb-image w2ui-icon frame11"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame12"></td></tr></table>'
+			}
+		);
 		statusbar.disable('zoomreset', 'zoomout', 'zoomin', 'zoomlevel');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
