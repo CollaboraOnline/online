@@ -257,6 +257,14 @@ button.leaflet-control-search-next
     border-style: solid;
 }
 
+#insertborder-grid tr td {
+    border-style: inset;
+}
+
+#insertborder-grid tr td:hover {
+    border-style: solid;
+}
+
 .w2ui-icon.basicshapes_rectangle { background: url('images/lc_basicshapes.rectangle.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_round-rectangle { background: url('images/lc_basicshapes.round-rectangle.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_quadrat { background: url('images/lc_basicshapes.quadrat.svg') no-repeat center !important; }
@@ -385,6 +393,19 @@ button.leaflet-control-search-next
 .w2ui-icon.flowchartshapes_flowchart-direct-access-storage { background: url('images/lc_flowchartshapes.flowchart-direct-access-storage.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-display { background: url('images/lc_flowchartshapes.flowchart-display.svg') no-repeat center !important; }
 
+.w2ui-icon.frame01 { background: url('images/fr01.svg') no-repeat center !important; }
+.w2ui-icon.frame02 { background: url('images/fr02.svg') no-repeat center !important; }
+.w2ui-icon.frame03 { background: url('images/fr03.svg') no-repeat center !important; }
+.w2ui-icon.frame04 { background: url('images/fr04.svg') no-repeat center !important; }
+.w2ui-icon.frame05 { background: url('images/fr05.svg') no-repeat center !important; }
+.w2ui-icon.frame06 { background: url('images/fr06.svg') no-repeat center !important; }
+.w2ui-icon.frame07 { background: url('images/fr07.svg') no-repeat center !important; }
+.w2ui-icon.frame08 { background: url('images/fr08.svg') no-repeat center !important; }
+.w2ui-icon.frame09 { background: url('images/fr09.svg') no-repeat center !important; }
+.w2ui-icon.frame10 { background: url('images/fr010.svg') no-repeat center !important; }
+.w2ui-icon.frame11 { background: url('images/fr011.svg') no-repeat center !important; }
+.w2ui-icon.frame12 { background: url('images/fr012.svg') no-repeat center !important; }
+
 .w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
 .w2ui-icon.alignblock{ background: url('images/lc_alignblock.svg') no-repeat center !important; }
 .w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
@@ -409,6 +430,7 @@ button.leaflet-control-search-next
 .w2ui-icon.italic{ background: url('images/lc_italic.svg') no-repeat center !important; }
 .w2ui-icon.insertgraphic{ background: url('images/lc_gallery.svg') no-repeat center !important; }
 .w2ui-icon.inserttable{ background: url('images/lc_inserttable.svg') no-repeat center !important; }
+.w2ui-icon.insertborder{ background: url('images/lc_setborderstyle.svg') no-repeat center !important; }
 .w2ui-icon.next{ background: url('images/lc_downsearch.svg') no-repeat center !important; }
 .w2ui-icon.numbering{ background: url('images/lc_defaultnumbering.svg') no-repeat center !important; }
 .w2ui-icon.presentation{ background: url('images/lc_dia.svg') no-repeat center !important; }
