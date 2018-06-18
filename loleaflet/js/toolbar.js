@@ -710,6 +710,10 @@ function createToolbar() {
 		}
 	});
 	toolbar.contextmenu(function() { return false; });
+	$(w2ui.formulabar.box).find('.w2ui-scroll-left, .w2ui-scroll-right').hide();
+	w2ui.formulabar.on('resize', function(target, e) {
+		e.isCancelled = true;
+	});
 
 	toolbar = $('#spreadsheet-toolbar')
 	toolbar.w2toolbar({
