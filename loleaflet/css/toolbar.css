@@ -257,12 +257,17 @@ button.leaflet-control-search-next
     border-style: solid;
 }
 
-#insertborder-grid tr td {
-    border-style: inset;
+#setborderstyle-grid tr td {
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.5);
+    position: relative;
+    padding: 2px;
+    border: 1px solid #ccc;
+    overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
 }
 
-#insertborder-grid tr td:hover {
-    border-style: solid;
+#setborderstyle-grid td:hover {
+    border: 1px solid #888;
 }
 
 .w2ui-icon.basicshapes_rectangle { background: url('images/lc_basicshapes.rectangle.svg') no-repeat center !important; }
@@ -430,7 +435,7 @@ button.leaflet-control-search-next
 .w2ui-icon.italic{ background: url('images/lc_italic.svg') no-repeat center !important; }
 .w2ui-icon.insertgraphic{ background: url('images/lc_gallery.svg') no-repeat center !important; }
 .w2ui-icon.inserttable{ background: url('images/lc_inserttable.svg') no-repeat center !important; }
-.w2ui-icon.insertborder{ background: url('images/lc_setborderstyle.svg') no-repeat center !important; }
+.w2ui-icon.setborderstyle{ background: url('images/lc_setborderstyle.svg') no-repeat center !important; }
 .w2ui-icon.next{ background: url('images/lc_downsearch.svg') no-repeat center !important; }
 .w2ui-icon.numbering{ background: url('images/lc_defaultnumbering.svg') no-repeat center !important; }
 .w2ui-icon.presentation{ background: url('images/lc_dia.svg') no-repeat center !important; }
