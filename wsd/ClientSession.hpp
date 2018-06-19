@@ -195,7 +195,7 @@ private:
     int _tileHeightTwips;
 
     // Type of the docuemnt, extracter from status message
-    std::string _docType;
+    bool _isTextDocument;
 
     std::vector<std::string> _tilesOnFly;
     boost::optional<std::chrono::time_point<std::chrono::steady_clock>> _tileCounterStartTime;

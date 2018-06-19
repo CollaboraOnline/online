@@ -49,7 +49,8 @@ ClientSession::ClientSession(const std::string& id,
     _tileWidthPixel(0),
     _tileHeightPixel(0),
     _tileWidthTwips(0),
-    _tileHeightTwips(0)
+    _tileHeightTwips(0),
+    _isTextDocument(false)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
@@ -292,17 +293,20 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "setclientpart")
     {
-        int temp;
-        if (tokens.size() != 2 ||
-            !getTokenInteger(tokens[1], "part", temp))
+        if(!_isTextDocument)
         {
-            sendTextFrame("error: cmd=setclientpart kind=syntax");
-            return false;
-        }
-        else
-        {
-            _clientSelectedPart = temp;
-            return forwardToChild(std::string(buffer, length), docBroker);
+            int temp;
+            if (tokens.size() != 2 ||
+                !getTokenInteger(tokens[1], "part", temp))
+            {
+                sendTextFrame("error: cmd=setclientpart kind=syntax");
+                return false;
+            }
+            else
+            {
+                _clientSelectedPart = temp;
+                return forwardToChild(std::string(buffer, length), docBroker);
+            }
         }
     }
     else if (tokens[0] == "clientzoom")
@@ -725,17 +729,20 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
     }
     else if (tokens[0] == "setpart:" && tokens.size() == 2)
     {
-        int setPart;
-        if(getTokenInteger(tokens[1], "part", setPart))
+        if(!_isTextDocument)
         {
-            _clientSelectedPart = setPart;
-        }
-        else if (stringToInteger(tokens[1], setPart))
-        {
-            _clientSelectedPart = setPart;
-        }
-        else
-            return false;
+            int setPart;
+            if(getTokenInteger(tokens[1], "part", setPart))
+            {
+                _clientSelectedPart = setPart;
+            }
+            else if (stringToInteger(tokens[1], setPart))
+            {
+                _clientSelectedPart = setPart;
+            }
+            else
+                return false;
+         }
     }
     else if (tokens.size() == 3 && tokens[0] == "saveas:")
     {
@@ -900,7 +907,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 std::string docType;
                 if(getTokenString(token, "type", docType))
                 {
-                    _docType = docType;
+                    _isTextDocument = docType.find("text") != std::string::npos;
                 }
             }
 
@@ -1130,13 +1137,11 @@ void ClientSession::handleTileInvalidation(const std::string& message,
 {
     docBroker->invalidateTiles(message);
 
-    bool bIsTextDocument = _docType.find("text") != std::string::npos;
-
     // Skip requesting new tiles if we don't have client visible area data yet.
     if(!_clientVisibleArea.hasSurface() ||
        _tileWidthPixel == 0 || _tileHeightPixel == 0 ||
        _tileWidthTwips == 0 || _tileHeightTwips == 0 ||
-       (_clientSelectedPart == -1 && !bIsTextDocument))
+       (_clientSelectedPart == -1 && !_isTextDocument))
     {
         return;
     }
@@ -1145,14 +1150,11 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     int part = result.first;
     Util::Rectangle& invalidateRect = result.second;
 
-    if(bIsTextDocument) // For Writer we don't have separate parts
-        part = 0;
-
-    if(part == -1) // If no part is specifed we use the part used by the client
+    if( part == -1 ) // If no part is specifed we use the part used by the client
         part = _clientSelectedPart;
 
     std::vector<TileDesc> invalidTiles;
-    if(part == _clientSelectedPart || bIsTextDocument)
+    if(part == _clientSelectedPart || _isTextDocument)
     {
         Util::Rectangle intersection;
         intersection._x1 = std::max(invalidateRect._x1, _clientVisibleArea._x1);
