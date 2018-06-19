@@ -242,7 +242,7 @@ function onClick(e, id, item, subItem) {
 }
 
 function insertBorder() {
-	var $grid = $('#insertborder-grid');
+	var $grid = $('#setborderstyle-grid');
 
 	$grid.on({
 		click: function() {
@@ -883,9 +883,9 @@ map.on('doclayerinit', function () {
 	switch (docType) {
 	case 'spreadsheet':
 		toolbarUp.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
-		toolbarUp.insert('insertshapes',
-			{type: 'drop',  id: 'insertborder',  img: 'insertborder', hint: _('Borders'), overlay: {onShow: insertBorder},
-				html: '<table id="insertborder-grid"><tr><td class="w2ui-tb-image w2ui-icon frame01"></td>' +
+		toolbarUp.insert('setborderstyle',
+			{type: 'drop',  id: 'setborderstyle',  img: 'setborderstyle', hint: _('Borders'), overlay: {onShow: insertBorder},
+				html: '<table id="setborderstyle-grid"><tr><td class="w2ui-tb-image w2ui-icon frame01"></td>' +
 				      '<td class="w2ui-tb-image w2ui-icon frame02"></td><td class="w2ui-tb-image w2ui-icon frame03"></td>' +
 				      '<td class="w2ui-tb-image w2ui-icon frame04"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame05"></td>' +
 				      '<td class="w2ui-tb-image w2ui-icon frame06"></td><td class="w2ui-tb-image w2ui-icon frame07"></td>' +
