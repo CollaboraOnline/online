@@ -1408,6 +1408,9 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                 if(tile.getVersion() == -1) // Rendering of this tile was not requested yet
                 {
                     tile.setVersion(++_tileVersion);
+                }
+                if(!tileCache().hasTileBeingRendered(tile))
+                {
                     tilesNeedsRendering.push_back(tile);
                     _debugRenderedTileCount++;
                 }

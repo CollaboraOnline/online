@@ -80,9 +80,12 @@ public:
     void saveLastModified(const Poco::Timestamp& timestamp);
 
     void forgetTileBeingRendered(const TileDesc& tile);
+    bool hasTileBeingRendered(const TileDesc& tile);
 
     void setThreadOwner(const std::thread::id &id) { _owner = id; }
     void assertCorrectThread();
+
+
 
 private:
     void invalidateTiles(int part, int x, int y, int width, int height);
