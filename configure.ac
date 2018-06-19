@@ -164,11 +164,13 @@ AC_SUBST(LOOLWSD_LOGFILE)
 if test -n "$enable_anonymize_filenames" ; then
    LOOLWSD_ANONYMIZE_FILENAMES=true
 fi
+AC_DEFINE_UNQUOTED([LOOLWSD_ANONYMIZE_FILENAMES],[$LOOLWSD_ANONYMIZE_FILENAMES],[Enable permanent filenames anonymization in logs])
 AC_SUBST(LOOLWSD_ANONYMIZE_FILENAMES)
 
 if test -n "$enable_anonymize_usernames" ; then
    LOOLWSD_ANONYMIZE_USERNAMES=true
 fi
+AC_DEFINE_UNQUOTED([LOOLWSD_ANONYMIZE_USERNAMES],[$LOOLWSD_ANONYMIZE_USERNAMES],[Enable permanent usernames anonymization in logs])
 AC_SUBST(LOOLWSD_ANONYMIZE_USERNAMES)
 
 MAX_CONNECTIONS=20
