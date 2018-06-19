@@ -241,16 +241,62 @@ function onClick(e, id, item, subItem) {
 	}
 }
 
-function insertBorder() {
-	var $grid = $('#setborderstyle-grid');
+function setBorders(left, right, bottom, top, horiz, vert) {
+	var params = {
+        OuterBorder: {
+            type : '[]any',
+            value : [
+                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : left }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : right }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : bottom }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : top }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+                { type : 'long', value : 0 },
+                { type : 'long', value : 0 },
+                { type : 'long', value : 0 },
+                { type : 'long', value : 0 },
+                { type : 'long', value : 0 }
+            ]
+        },
+        InnerBorder: {
+            type : '[]any',
+            value : [
+                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : horiz }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : vert }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+                { type : 'short', value : 0 },
+                { type : 'short', value : 127 },
+                { type : 'long', value : 0 }
+            ]
+        }};
+	map.sendUnoCommand('.uno:SetBorderStyle', params);
+}
 
-	$grid.on({
-		click: function() {
-			// TODO send map.sendUnoCommand('.uno: com.sun.star.table.BorderLine2' );
-			$().w2overlay({ name: 'toolbar-up' });
-			console.log('click border');
-		}
-	});
+function setBorderStyle(num) {
+	switch (num) {
+		case 1: setBorders(0, 0, 0, 0, 0, 0); break;
+		case 2: setBorders(1, 0, 0, 0, 0, 0); break;
+		case 3: setBorders(0, 1, 0, 0, 0, 0); break;
+		case 4: setBorders(1, 1, 0, 0, 0, 0); break;
+
+		case 5: setBorders(0, 0, 0, 1, 0, 0); break;
+		case 6: setBorders(0, 0, 1, 0, 0, 0); break;
+		case 7: setBorders(0, 0, 1, 1, 0, 0); break;
+		case 8: setBorders(1, 1, 1, 1, 0, 0); break;
+
+		case 9: setBorders(0, 0, 1, 1, 1, 0); break;
+		case 10: setBorders(1, 1, 1, 1, 1, 0); break;
+		case 11: setBorders(1, 1, 1, 1, 0, 1); break;
+		case 12: setBorders(1, 1, 1, 1, 1, 1); break;
+
+		default: console.log('ignored border: ' + num);
+	}
+
+	// close the popup
+	// TODO we may consider keeping it open in the future if we add border color
+	// and style to this popup too
+	if ($('#w2ui-overlay-toolbar-up').length > 0) {
+		$('#w2ui-overlay-toolbar-up').removeData('keepOpen')[0].hide();
+	}
+	map.focus();
 }
 
 function insertTable() {
@@ -385,6 +431,15 @@ $(function () {
 			{type: 'break', id: 'incdecindent'},
 			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), overlay: {onShow: insertTable},
 			 html: '<div id="inserttable-wrapper"><div id="inserttable-popup" class="inserttable-pop ui-widget ui-widget-content ui-corner-all"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div></div></div>'},
+			{type: 'drop',  id: 'setborderstyle',  img: 'setborderstyle', hint: _('Borders'),
+				html: '<table id="setborderstyle-grid"><tr><td class="w2ui-tb-image w2ui-icon frame01" onclick="setBorderStyle(1)"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame02" onclick="setBorderStyle(2)"></td><td class="w2ui-tb-image w2ui-icon frame03" onclick="setBorderStyle(3)"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame04" onclick="setBorderStyle(4)"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame05" onclick="setBorderStyle(5)"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame06" onclick="setBorderStyle(6)"></td><td class="w2ui-tb-image w2ui-icon frame07" onclick="setBorderStyle(7)"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame08" onclick="setBorderStyle(8)"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame09" onclick="setBorderStyle(9)"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame10" onclick="setBorderStyle(10)"></td><td class="w2ui-tb-image w2ui-icon frame11" onclick="setBorderStyle(11)"></td>' +
+				      '<td class="w2ui-tb-image w2ui-icon frame12" onclick="setBorderStyle(12)"></td></tr></table>'
+			},
 			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true)},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true)},
@@ -883,17 +938,6 @@ map.on('doclayerinit', function () {
 	switch (docType) {
 	case 'spreadsheet':
 		toolbarUp.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
-		toolbarUp.insert('setborderstyle',
-			{type: 'drop',  id: 'setborderstyle',  img: 'setborderstyle', hint: _('Borders'), overlay: {onShow: insertBorder},
-				html: '<table id="setborderstyle-grid"><tr><td class="w2ui-tb-image w2ui-icon frame01"></td>' +
-				      '<td class="w2ui-tb-image w2ui-icon frame02"></td><td class="w2ui-tb-image w2ui-icon frame03"></td>' +
-				      '<td class="w2ui-tb-image w2ui-icon frame04"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame05"></td>' +
-				      '<td class="w2ui-tb-image w2ui-icon frame06"></td><td class="w2ui-tb-image w2ui-icon frame07"></td>' +
-				      '<td class="w2ui-tb-image w2ui-icon frame08"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame09"></td>' +
-				      '<td class="w2ui-tb-image w2ui-icon frame10"></td><td class="w2ui-tb-image w2ui-icon frame11"></td>' +
-				      '<td class="w2ui-tb-image w2ui-icon frame12"></td></tr></table>'
-			}
-		);
 		statusbar.disable('zoomreset', 'zoomout', 'zoomin', 'zoomlevel');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
@@ -931,7 +975,7 @@ map.on('doclayerinit', function () {
 
 		break;
 	case 'text':
-		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
+		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle');
 		statusbar.insert('left', [
 			{type: 'break', id: 'break1'},
 			{type: 'html',  id: 'StatePageNumber',
@@ -962,7 +1006,7 @@ map.on('doclayerinit', function () {
 		if (!map['wopi'].HideExportOption) {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
-		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
+		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'PageStatus',
@@ -978,7 +1022,7 @@ map.on('doclayerinit', function () {
 
 		break;
 	case 'drawing':
-		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending');
+		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle');
 
 		// Remove irrelevant toolbars
 		$('#formulabar').hide();
