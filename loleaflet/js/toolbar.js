@@ -249,51 +249,51 @@ function onClick(e, id, item, subItem) {
 
 function setBorders(left, right, bottom, top, horiz, vert) {
 	var params = {
-        OuterBorder: {
-            type : '[]any',
-            value : [
-                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : left }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : right }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : bottom }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : top }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-                { type : 'long', value : 0 },
-                { type : 'long', value : 0 },
-                { type : 'long', value : 0 },
-                { type : 'long', value : 0 },
-                { type : 'long', value : 0 }
-            ]
-        },
-        InnerBorder: {
-            type : '[]any',
-            value : [
-                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : horiz }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-                { type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : vert }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
-                { type : 'short', value : 0 },
-                { type : 'short', value : 127 },
-                { type : 'long', value : 0 }
-            ]
-        }};
+		OuterBorder: {
+			type : '[]any',
+			value : [
+				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : left }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : right }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : bottom }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : top }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+				{ type : 'long', value : 0 },
+				{ type : 'long', value : 0 },
+				{ type : 'long', value : 0 },
+				{ type : 'long', value : 0 },
+				{ type : 'long', value : 0 }
+			]
+		},
+		InnerBorder: {
+			type : '[]any',
+			value : [
+				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : horiz }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+				{ type : 'com.sun.star.table.BorderLine2', value : { Color : { type : 'com.sun.star.util.Color', value : 0 }, InnerLineWidth : { type : 'short', value : 0 }, OuterLineWidth : { type : 'short', value : vert }, LineDistance : { type : 'short', value : 0 },  LineStyle : { type : 'short', value : 0 }, LineWidth : { type : 'unsigned long', value : 0 } } },
+				{ type : 'short', value : 0 },
+				{ type : 'short', value : 127 },
+				{ type : 'long', value : 0 }
+			]
+		}};
 	map.sendUnoCommand('.uno:SetBorderStyle', params);
 }
 
 function setBorderStyle(num) {
 	switch (num) {
-		case 1: setBorders(0, 0, 0, 0, 0, 0); break;
-		case 2: setBorders(1, 0, 0, 0, 0, 0); break;
-		case 3: setBorders(0, 1, 0, 0, 0, 0); break;
-		case 4: setBorders(1, 1, 0, 0, 0, 0); break;
+	case 1: setBorders(0, 0, 0, 0, 0, 0); break;
+	case 2: setBorders(1, 0, 0, 0, 0, 0); break;
+	case 3: setBorders(0, 1, 0, 0, 0, 0); break;
+	case 4: setBorders(1, 1, 0, 0, 0, 0); break;
 
-		case 5: setBorders(0, 0, 0, 1, 0, 0); break;
-		case 6: setBorders(0, 0, 1, 0, 0, 0); break;
-		case 7: setBorders(0, 0, 1, 1, 0, 0); break;
-		case 8: setBorders(1, 1, 1, 1, 0, 0); break;
+	case 5: setBorders(0, 0, 0, 1, 0, 0); break;
+	case 6: setBorders(0, 0, 1, 0, 0, 0); break;
+	case 7: setBorders(0, 0, 1, 1, 0, 0); break;
+	case 8: setBorders(1, 1, 1, 1, 0, 0); break;
 
-		case 9: setBorders(0, 0, 1, 1, 1, 0); break;
-		case 10: setBorders(1, 1, 1, 1, 1, 0); break;
-		case 11: setBorders(1, 1, 1, 1, 0, 1); break;
-		case 12: setBorders(1, 1, 1, 1, 1, 1); break;
+	case 9: setBorders(0, 0, 1, 1, 1, 0); break;
+	case 10: setBorders(1, 1, 1, 1, 1, 0); break;
+	case 11: setBorders(1, 1, 1, 1, 0, 1); break;
+	case 12: setBorders(1, 1, 1, 1, 1, 1); break;
 
-		default: console.log('ignored border: ' + num);
+	default: console.log('ignored border: ' + num);
 	}
 
 	// close the popup
