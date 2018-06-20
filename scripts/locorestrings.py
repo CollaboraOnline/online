@@ -50,7 +50,8 @@ if __name__ == "__main__":
 
         # extract 'Clear formatting'
         poFile = dir + lang + '/svx/source/tbxctrls.po'
-        extractFromPo(poFile, ["RID_SVXSTR_CLEARFORM"], translations)
+        stringIds = ["RID_SVXSTR_CLEARFORM", "RID_SVXSTR_FRAME"]
+        extractFromPo(poFile, stringIds, translations)
 
         # extract some status bar strings
         poFile = dir + lang + '/svx/source/stbctrls.po'
@@ -67,7 +68,7 @@ if __name__ == "__main__":
 
         # extract Impress/Draw style names
         poFile = dir + lang + '/sd/source/core.po'
-        streingIds = ["STR_STANDARD_STYLESHEET_NAME", "STR_POOL", "STR_PSEUDOSHEET"]
+        stringIds = ["STR_STANDARD_STYLESHEET_NAME", "STR_POOL", "STR_PSEUDOSHEET"]
         extractFromPo(poFile, stringIds, translations)
 
         # extract Impress layout names and 'Slide %1 of %2'
