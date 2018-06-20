@@ -299,8 +299,6 @@ function setBorderStyle(num) {
 	map.focus();
 }
 
-global.setBorderStyle = setBorderStyle;
-
 function insertTable() {
 	var rows = 10;
 	var cols = 10;
