@@ -23,8 +23,10 @@ class Admin;
 class AdminSocketHandler : public WebSocketHandler
 {
 public:
+    /// Client connection to remote amdin socket
     AdminSocketHandler(Admin* adminManager);
 
+    /// Connection from remote admin socket
     AdminSocketHandler(Admin* adminManager,
                        const std::weak_ptr<StreamSocket>& socket,
                        const Poco::Net::HTTPRequest& request);
@@ -33,6 +35,8 @@ public:
     /// @returns true if we should give this socket to the Admin poll.
     static bool handleInitialRequest(const std::weak_ptr<StreamSocket> &socket,
                                      const Poco::Net::HTTPRequest& request);
+
+    static void subscribeAsync(const std::shared_ptr<AdminSocketHandler> handler);
 
 private:
     /// Sends text frames simply to authenticated clients.

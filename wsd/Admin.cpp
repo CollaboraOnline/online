@@ -269,24 +269,23 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     }
 }
 
-/// Connection from remote admin socket
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
                                        const std::weak_ptr<StreamSocket>& socket,
                                        const Poco::Net::HTTPRequest& request)
     : WebSocketHandler(socket, request),
       _admin(adminManager),
-      _sessionId(0),
       _isAuthenticated(false)
 {
+    // Different session id pool for admin sessions (?)
+    _sessionId = Util::decodeId(LOOLWSD::GenSessionId());
 }
 
-/// Client connection to remote amdin socket
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
     : WebSocketHandler(true),
       _admin(adminManager),
-      _sessionId(0),
       _isAuthenticated(true)
 {
+    _sessionId = Util::decodeId(LOOLWSD::GenSessionId());
 }
 
 void AdminSocketHandler::sendTextFrame(const std::string& message)
@@ -301,6 +300,17 @@ void AdminSocketHandler::sendTextFrame(const std::string& message)
         LOG_TRC("Skip sending message to non-authenticated client: '" << message << "'");
 }
 
+void AdminSocketHandler::subscribeAsync(const std::shared_ptr<AdminSocketHandler> handler)
+{
+    Admin &admin = Admin::instance();
+
+    admin.addCallback([handler]
+        {
+            Admin &adminIn = Admin::instance();
+            adminIn.getModel().subscribe(handler->_sessionId, handler);
+        });
+}
+
 bool AdminSocketHandler::handleInitialRequest(
     const std::weak_ptr<StreamSocket> &socketWeak,
     const Poco::Net::HTTPRequest& request)
@@ -313,9 +323,6 @@ bool AdminSocketHandler::handleInitialRequest(
 
     std::shared_ptr<StreamSocket> socket = socketWeak.lock();
 
-    // Different session id pool for admin sessions (?)
-    const auto sessionId = Util::decodeId(LOOLWSD::GenSessionId());
-
     const std::string& requestURI = request.getURI();
     StringTokenizer pathTokens(requestURI, "/", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
 
@@ -324,13 +331,9 @@ bool AdminSocketHandler::handleInitialRequest(
         Admin &admin = Admin::instance();
         auto handler = std::make_shared<AdminSocketHandler>(&admin, socketWeak, request);
         socket->setHandler(handler);
-        admin.addCallback([handler, sessionId]
-        {
-            Admin &adminIn = Admin::instance();
-            AdminModel& model = adminIn.getModel();
-            handler->_sessionId = sessionId;
-            model.subscribe(sessionId, handler);
-        });
+
+        AdminSocketHandler::subscribeAsync(handler);
+
         return true;
     }
 
@@ -678,7 +681,9 @@ public:
 void Admin::connectToMonitorSync(const std::string &uri)
 {
     LOG_TRC("Add monitor " << uri);
-    insertNewWebSocketSync(Poco::URI(uri), std::make_shared<MonitorSocketHandler>(this, uri));
+    auto handler = std::make_shared<MonitorSocketHandler>(this, uri);
+    insertNewWebSocketSync(Poco::URI(uri), handler);
+    AdminSocketHandler::subscribeAsync(handler);
 }
 
 void Admin::scheduleMonitorConnect(const std::string &uri, std::chrono::steady_clock::time_point when)
