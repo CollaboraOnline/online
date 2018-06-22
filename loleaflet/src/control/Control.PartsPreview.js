@@ -12,6 +12,7 @@ L.Control.PartsPreview = L.Control.extend({
 		this._previewInitialized = false;
 		this._previewTiles = [];
 		this._partsPreviewCont = L.DomUtil.get('slide-sorter');
+		this._scrollY = 0;
 
 		map.on('updateparts', this._updateDisabled, this);
 		map.on('updatepart', this._updatePart, this);
@@ -38,8 +39,11 @@ L.Control.PartsPreview = L.Control.extend({
 					this._map.invalidateSize();
 					$('.scroll-container').mCustomScrollbar('update');
 				}, this), 500);
+				var previewContBB = this._partsPreviewCont.getBoundingClientRect();
+				this._previewContTop = previewContBB.top;
+				var bottomBound = previewContBB.bottom + previewContBB.height / 2;
 				for (var i = 0; i < parts; i++) {
-					this._previewTiles.push(this._createPreview(i, e.partNames[i]));
+					this._previewTiles.push(this._createPreview(i, e.partNames[i], bottomBound));
 				}
 				L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-selected');
 				this._previewInitialized = true;
@@ -59,19 +63,51 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 	},
 
-	_createPreview: function (i, hashCode) {
+	_createPreview: function (i, hashCode, bottomBound) {
 		var frame = L.DomUtil.create('div', 'preview-frame', this._partsPreviewCont);
 		L.DomUtil.create('span', 'preview-helper', frame);
+
 		var imgClassName = 'preview-img';
 		var img = L.DomUtil.create('img', imgClassName, frame);
 		img.hash = hashCode;
 		img.src = L.Icon.Default.imagePath + '/preview_placeholder.png';
+		img.fetched = false;
 		L.DomEvent
 			.on(img, 'click', L.DomEvent.stopPropagation)
 			.on(img, 'click', L.DomEvent.stop)
 			.on(img, 'click', this._setPart, this)
 			.on(img, 'click', this._refocusOnMap, this);
-		this._map.getPreview(i, i, 180, 180, {autoUpdate: this.options.autoUpdate});
+
+		var topBound = this._previewContTop;
+		var previewFrameTop = 0;
+		var previewFrameBottom = 0;
+		if (i > 0) {
+			if (!bottomBound) {
+				var previewContBB = this._partsPreviewCont.getBoundingClientRect();
+				bottomBound = this._previewContTop + previewContBB.height + previewContBB.height / 2;
+			}
+			previewFrameTop = this._previewContTop + this._previewFrameMargin + i * (this._previewFrameHeight + this._previewFrameMargin);
+			previewFrameTop -= this._scrollY;
+			previewFrameBottom = previewFrameTop + this._previewFrameHeight;
+		}
+
+		var imgSize;
+		if (i === 0 || (previewFrameTop >= topBound && previewFrameTop <= bottomBound)
+			|| (previewFrameBottom >= topBound && previewFrameBottom <= bottomBound)) {
+			imgSize = this._map.getPreview(i, i, 180, 180, {autoUpdate: this.options.autoUpdate});
+			img.fetched = true;
+		}
+
+		if (i === 0) {
+			var previewImgBorder = Math.round(parseFloat(L.DomUtil.getStyle(img, 'border-top-width')));
+			var previewImgMinWidth = Math.round(parseFloat(L.DomUtil.getStyle(img, 'min-width')));
+			var imgHeight = imgSize.height;
+			if (imgSize.width < previewImgMinWidth)
+				imgHeight = Math.round(imgHeight * previewImgMinWidth / imgSize.width);
+			var previewFrameBB = frame.getBoundingClientRect();
+			this._previewFrameMargin = previewFrameBB.top - this._previewContTop;
+			this._previewFrameHeight = imgHeight + 2 * previewImgBorder;
+		}
 
 		return img;
 	},
@@ -130,8 +166,9 @@ L.Control.PartsPreview = L.Control.extend({
 				for (it = 0; it < e.partNames.length; it++) {
 					this._previewTiles[it].hash = e.partNames[it];
 					this._previewTiles[it].src = L.Icon.Default.imagePath + '/preview_placeholder.png';
-					this._map.getPreview(it, it, 180, 180, {autoUpdate: this.options.autoUpdate});
+					this._previewTiles[it].fetched = false;
 				}
+				this._onScrollEnd();
 			}
 		}
 		else {
@@ -148,14 +185,20 @@ L.Control.PartsPreview = L.Control.extend({
 		if (this._map.getDocType() === 'presentation' || this._map.getDocType() === 'drawing') {
 			// the scrollbar has to be re-initialized here else it doesn't work
 			// probably a bug from the scrollbar
+			var control = this;
 			this._previewTiles[e.id].onload = function () {
 				$('#slide-sorter').mCustomScrollbar({
 					axis: 'y',
 					theme: 'dark-thick',
 					scrollInertia: 0,
-					alwaysShowScrollbar: 1});
+					alwaysShowScrollbar: 1,
+					callbacks:{
+						whileScrolling: function() {
+							control._onScroll(this);
+						}
+					}
+				});
 			};
-
 			this._previewTiles[e.id].src = e.tile;
 		}
 	},
@@ -188,6 +231,25 @@ L.Control.PartsPreview = L.Control.extend({
 
 			this._previewTiles.splice(e.selectedPart, 1);
 			this._updatePreviewIds();
+		}
+	},
+
+	_onScroll: function (e) {
+		this._scrollY = -e.mcs.top;
+
+		var previewContBB = this._partsPreviewCont.getBoundingClientRect();
+		var topBound = this._previewContTop - previewContBB.height / 2;
+		var bottomBound = topBound + previewContBB.height + previewContBB.height / 2;
+		for (var i = 0; i < this._previewTiles.length; ++i) {
+			var img = this._previewTiles[i];
+			if (img && img.parentNode && !img.fetched) {
+				var previewFrameBB = img.parentNode.getBoundingClientRect();
+				if ((previewFrameBB.top >= topBound && previewFrameBB.top <= bottomBound)
+				|| (previewFrameBB.bottom >= topBound && previewFrameBB.bottom <= bottomBound)) {
+					this._map.getPreview(i, i, 180, 180, {autoUpdate: this.options.autoUpdate});
+					img.fetched = true;
+				}
+			}
 		}
 	}
 });
