@@ -91,6 +91,8 @@ L.Map.include({
 							'tileheight=' + tileHeight + ' ' +
 							'id=' + id + ' ' +
 							'broadcast=' + (forAllClients ? 'yes' : 'no'));
+
+		return {width: maxWidth, height: maxHeight};
 	},
 
 	getCustomPreview: function (id, part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, options) {
