@@ -776,14 +776,14 @@ void LOOLWSD::initialize(Application& self)
     }
 
     // Get anonymization settings.
-#ifdef LOOLWSD_ANONYMIZE_USERNAMES
+#if LOOLWSD_ANONYMIZE_USERNAMES
     AnonymizeUsernames = true;
 #else
     AnonymizeUsernames = getConfigValue<bool>(conf, "logging.anonymize.usernames", false);
 #endif
     setenv("LOOL_ANONYMIZE_USERNAMES", AnonymizeUsernames ? "1" : "0", true);
 
-#ifdef LOOLWSD_ANONYMIZE_FILENAMES
+#if LOOLWSD_ANONYMIZE_FILENAMES
     AnonymizeFilenames = true;
 #else
     AnonymizeFilenames = getConfigValue<bool>(conf, "logging.anonymize.filenames", false);

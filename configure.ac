@@ -138,6 +138,7 @@ LOOLWSD_ANONYMIZE_FILENAMES=false
 LOOLWSD_ANONYMIZE_USERNAMES=false
 LOLEAFLET_LOGGING="false"
 debug_msg="secure mode: product build"
+anonym_msg=""
 if test "$enable_debug" = "yes"; then
    AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces])
    ENABLE_DEBUG=true
@@ -161,17 +162,23 @@ if test -n "$with_logfile" ; then
 fi
 AC_SUBST(LOOLWSD_LOGFILE)
 
-if test -n "$enable_anonymize_filenames" ; then
+if test "$enable_anonymize_filenames" = "yes" ; then
    LOOLWSD_ANONYMIZE_FILENAMES=true
+   anonym_msg="filenames anonymized; "
 fi
 AC_DEFINE_UNQUOTED([LOOLWSD_ANONYMIZE_FILENAMES],[$LOOLWSD_ANONYMIZE_FILENAMES],[Enable permanent filenames anonymization in logs])
 AC_SUBST(LOOLWSD_ANONYMIZE_FILENAMES)
 
-if test -n "$enable_anonymize_usernames" ; then
+if test "$enable_anonymize_usernames" = "yes" ; then
    LOOLWSD_ANONYMIZE_USERNAMES=true
+   anonym_msg="${anonym_msg}usernames anonymized; "
 fi
 AC_DEFINE_UNQUOTED([LOOLWSD_ANONYMIZE_USERNAMES],[$LOOLWSD_ANONYMIZE_USERNAMES],[Enable permanent usernames anonymization in logs])
 AC_SUBST(LOOLWSD_ANONYMIZE_USERNAMES)
+
+if "x$anonym_msg" = "x";  then
+  anonym_msg="no anonymization of usernames or filenames"
+fi
 
 MAX_CONNECTIONS=20
 AS_IF([test -n "$with_max_connections" && test "$with_max_connections" -gt "0"],
@@ -452,6 +459,7 @@ Configuration:
     LO integration tests    ${lo_msg}
     SSL support             $ssl_msg
     Debug & low security    $debug_msg
+    Anonymization           $anonym_msg
 
     \$ make # to compile"
 if test -n "$with_lo_path"; then
