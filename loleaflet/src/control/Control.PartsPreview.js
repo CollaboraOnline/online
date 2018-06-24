@@ -89,6 +89,7 @@ L.Control.PartsPreview = L.Control.extend({
 			previewFrameTop = this._previewContTop + this._previewFrameMargin + i * (this._previewFrameHeight + this._previewFrameMargin);
 			previewFrameTop -= this._scrollY;
 			previewFrameBottom = previewFrameTop + this._previewFrameHeight;
+			L.DomUtil.setStyle(img, 'height', this._previewImgHeight + 'px');
 		}
 
 		var imgSize;
@@ -96,6 +97,7 @@ L.Control.PartsPreview = L.Control.extend({
 			|| (previewFrameBottom >= topBound && previewFrameBottom <= bottomBound)) {
 			imgSize = this._map.getPreview(i, i, 180, 180, {autoUpdate: this.options.autoUpdate});
 			img.fetched = true;
+			L.DomUtil.setStyle(img, 'height', '');
 		}
 
 		if (i === 0) {
@@ -106,6 +108,7 @@ L.Control.PartsPreview = L.Control.extend({
 				imgHeight = Math.round(imgHeight * previewImgMinWidth / imgSize.width);
 			var previewFrameBB = frame.getBoundingClientRect();
 			this._previewFrameMargin = previewFrameBB.top - this._previewContTop;
+			this._previewImgHeight = imgHeight;
 			this._previewFrameHeight = imgHeight + 2 * previewImgBorder;
 		}
 
@@ -235,11 +238,17 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_onScroll: function (e) {
-		this._scrollY = -e.mcs.top;
+		var scrollOffset = 0;
+		if (e) {
+			var prevScrollY = this._scrollY;
+			this._scrollY = -e.mcs.top;
+			scrollOffset = this._scrollY - prevScrollY;
+		}
 
 		var previewContBB = this._partsPreviewCont.getBoundingClientRect();
-		var topBound = this._previewContTop - previewContBB.height / 2;
-		var bottomBound = topBound + previewContBB.height + previewContBB.height / 2;
+		var extra =  previewContBB.height;
+		var topBound = this._previewContTop - (scrollOffset < 0 ? extra : previewContBB.height / 2);
+		var bottomBound = this._previewContTop + previewContBB.height + (scrollOffset > 0 ? extra : previewContBB.height / 2);
 		for (var i = 0; i < this._previewTiles.length; ++i) {
 			var img = this._previewTiles[i];
 			if (img && img.parentNode && !img.fetched) {
