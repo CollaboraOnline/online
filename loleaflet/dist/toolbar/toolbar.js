@@ -386,6 +386,7 @@ $(function () {
 	var toolbar = $('#toolbar-up');
 	toolbar.w2toolbar({
 		name: 'toolbar-up',
+		tooltip: 'bottom',
 		items: [
 			{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
 			{type: 'break', id: 'savebreak'},
@@ -478,6 +479,7 @@ $(function () {
 	toolbar = $('#formulabar');
 	toolbar.w2toolbar({
 		name: 'formulabar',
+		tooltip: 'bottom',
 		items: [
 			{type: 'html',  id: 'left'},
 			{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
@@ -507,6 +509,7 @@ $(function () {
 	toolbar = $('#spreadsheet-toolbar')
 	toolbar.w2toolbar({
 		name: 'spreadsheet-toolbar',
+		tooltip: 'bottom',
 		items: [
 			{type: 'button',  id: 'firstrecord',  img: 'firstrecord', hidden: true, hint: _('First sheet')},
 			{type: 'button',  id: 'prevrecord',  img: 'prevrecord', hidden: true, hint: _('Previous sheet')},
@@ -523,6 +526,7 @@ $(function () {
 	toolbar = $('#presentation-toolbar');
 	toolbar.w2toolbar({
 		name: 'presentation-toolbar',
+		tooltip: 'bottom',
 		items: [
 			{type: 'html',  id: 'left'},
 			{type: 'button',  id: 'presentation', img: 'presentation', hidden:true, hint: _('Fullscreen presentation')},
@@ -541,6 +545,7 @@ $(function () {
 	toolbar = $('#toolbar-down');
 	toolbar.w2toolbar({
 		name: 'toolbar-down',
+		tooltip: 'top',
 		items: [
 			{type: 'html',  id: 'search',
 			 html: '<div style="padding: 3px 10px;" class="loleaflet-font">' +
