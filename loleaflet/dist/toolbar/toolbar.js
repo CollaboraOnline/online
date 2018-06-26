@@ -299,6 +299,22 @@ function setBorderStyle(num) {
 	map.focus();
 }
 
+function setConditionalFormatIconSet(num) {
+	var params = {
+		IconSet: {
+			type : 'short',
+			value : num
+		}};
+	map.sendUnoCommand('.uno:IconSetFormatDialog', params);
+
+	// close the popup
+	if ($('#w2ui-overlay-toolbar-up').length > 0) {
+		$('#w2ui-overlay-toolbar-up').removeData('keepOpen')[0].hide();
+	}
+	map.focus();
+}
+
+
 function insertTable() {
 	var rows = 10;
 	var cols = 10;
@@ -449,6 +465,16 @@ $(function () {
 				      '<td class="w2ui-tb-image w2ui-icon frame08" onclick="setBorderStyle(8)"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame09" onclick="setBorderStyle(9)"></td>' +
 				      '<td class="w2ui-tb-image w2ui-icon frame10" onclick="setBorderStyle(10)"></td><td class="w2ui-tb-image w2ui-icon frame11" onclick="setBorderStyle(11)"></td>' +
 				      '<td class="w2ui-tb-image w2ui-icon frame12" onclick="setBorderStyle(12)"></td></tr></table>'
+			},
+			{type: 'drop', id: 'conditionalformaticonset',  img: 'conditionalformatdialog', hint: _UNO('.uno:ConditionalFormatMenu'),
+				html: '<table id="conditionalformatmenu-grid"><tr>' +
+					  '<td class="w2ui-tb-image w2ui-icon iconset00" onclick="setConditionalFormatIconSet(0)"/><td class="w2ui-tb-image w2ui-icon iconset01" onclick="setConditionalFormatIconSet(1)"/><td class="w2ui-tb-image w2ui-icon iconset02" onclick="setConditionalFormatIconSet(2)"/></tr><tr>' +
+					  '<td class="w2ui-tb-image w2ui-icon iconset03" onclick="setConditionalFormatIconSet(3)"/><td class="w2ui-tb-image w2ui-icon iconset04" onclick="setConditionalFormatIconSet(4)"/><td class="w2ui-tb-image w2ui-icon iconset05" onclick="setConditionalFormatIconSet(5)"/></tr><tr>' +
+					  '<td class="w2ui-tb-image w2ui-icon iconset06" onclick="setConditionalFormatIconSet(6)"/><td class="w2ui-tb-image w2ui-icon iconset08" onclick="setConditionalFormatIconSet(8)"/><td class="w2ui-tb-image w2ui-icon iconset09" onclick="setConditionalFormatIconSet(9)"/></tr><tr>' + // iconset07 deliberately left out, see the .css for the reason
+					  '<td class="w2ui-tb-image w2ui-icon iconset10" onclick="setConditionalFormatIconSet(10)"/><td class="w2ui-tb-image w2ui-icon iconset11" onclick="setConditionalFormatIconSet(11)"/><td class="w2ui-tb-image w2ui-icon iconset12" onclick="setConditionalFormatIconSet(12)"/></tr><tr>' +
+					  '<td class="w2ui-tb-image w2ui-icon iconset13" onclick="setConditionalFormatIconSet(13)"/><td class="w2ui-tb-image w2ui-icon iconset14" onclick="setConditionalFormatIconSet(14)"/><td class="w2ui-tb-image w2ui-icon iconset15" onclick="setConditionalFormatIconSet(15)"/></tr><tr>' +
+					  '<td class="w2ui-tb-image w2ui-icon iconset16" onclick="setConditionalFormatIconSet(16)"/><td class="w2ui-tb-image w2ui-icon iconset17" onclick="setConditionalFormatIconSet(17)"/><td class="w2ui-tb-image w2ui-icon iconset18" onclick="setConditionalFormatIconSet(18)"/></tr><tr>' +
+					  '<td class="w2ui-tb-image w2ui-icon iconset19" onclick="setConditionalFormatIconSet(19)"/><td class="w2ui-tb-image w2ui-icon iconset20" onclick="setConditionalFormatIconSet(20)"/><td class="w2ui-tb-image w2ui-icon iconset21" onclick="setConditionalFormatIconSet(21)"/></tr></table>'
 			},
 			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true)},
@@ -1014,7 +1040,7 @@ map.on('doclayerinit', function () {
 
 		break;
 	case 'text':
-		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle');
+		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformatmenu');
 		statusbar.insert('left', [
 			{type: 'break', id: 'break1'},
 			{type: 'html',  id: 'StatePageNumber',
@@ -1045,7 +1071,7 @@ map.on('doclayerinit', function () {
 		if (!map['wopi'].HideExportOption) {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
-		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle');
+		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformatmenu');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'PageStatus',
@@ -1061,7 +1087,7 @@ map.on('doclayerinit', function () {
 
 		break;
 	case 'drawing':
-		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle');
+		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformatmenu');
 
 		// Remove irrelevant toolbars
 		$('#formulabar').hide();

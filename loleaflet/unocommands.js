@@ -26,6 +26,7 @@ var unoCommandsArray = {
 	CommonAlignRight:{global:{menu:_('Right'),},},
 	CommonAlignTop:{global:{menu:_('Top'),},},
 	CommonAlignVerticalCenter:{global:{menu:_('Center'),},},
+	ConditionalFormatMenu:{spreadsheet:{menu:_('C~onditional Formatting'),},},
 	ContinueNumbering:{text:{menu:_('Continue previous numbering'),},},
 	ControlCodes:{text:{menu:_('For~matting Marks'),},},
 	Copy:{global:{menu:_('~Copy'),},},
