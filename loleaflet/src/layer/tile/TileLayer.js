@@ -566,7 +566,9 @@ L.TileLayer = L.GridLayer.extend({
 				// due to a pdf.js issue - https://github.com/mozilla/pdf.js/issues/5397
 				// open the pdf file in a new tab so that that user can print it directly in the browser's
 				// pdf viewer
-				window.open(url + '?attachment=0', '_blank');
+				var param = wopiSrc !== '' ? '&' : '?';
+				param += 'attachment=0';
+				window.open(url + param, '_blank');
 			}
 			else {
 				this._map.fire('filedownloadready', {url: url});

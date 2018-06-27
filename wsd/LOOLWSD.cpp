@@ -2163,15 +2163,23 @@ private:
             LOG_INF("HTTP request for: " << filePath.toString());
             if (filePath.isAbsolute() && File(filePath).exists())
             {
-                int serveAsAttachment = 1;
-                if (tokens.count() >= 7)
-                    getTokenInteger(tokens[6], "attachment", serveAsAttachment);
+                const Poco::URI postRequestUri(request.getURI());
+                const Poco::URI::QueryParameters postRequestQueryParams = postRequestUri.getQueryParameters();
+
+                bool serveAsAttachment = true;
+                const auto attachmentIt = std::find_if(postRequestQueryParams.begin(),
+                                                       postRequestQueryParams.end(),
+                                                       [](const std::pair<std::string, std::string>& element) {
+                                                           return element.first == "attachment";
+                                                       });
+                if (attachmentIt != postRequestQueryParams.end())
+                    serveAsAttachment = attachmentIt->second != "0";
 
                 // Instruct browsers to download the file, not display it
                 // with the exception of SVG where we need the browser to
                 // actually show it.
                 std::string contentType = getContentType(fileName);
-                if (serveAsAttachment != 0 && contentType != "image/svg+xml")
+                if (serveAsAttachment && contentType != "image/svg+xml")
                     response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 
                 try
