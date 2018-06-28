@@ -662,6 +662,7 @@ std::string AdminModel::getDocuments() const
             Poco::URI::encode(it.second.getFilename(), " ", encodedFilename);
             oss << separator1 << '{' << ' '
                 << "\"pid\"" << ':' << it.second.getPid() << ','
+                << "\"docKey\"" << ':' << '"' << it.second.getDocKey() << '"' << ','
                 << "\"fileName\"" << ':' << '"' << encodedFilename << '"' << ','
                 << "\"activeViews\"" << ':' << it.second.getActiveViews() << ','
                 << "\"memory\"" << ':' << it.second.getMemoryDirty() << ','
