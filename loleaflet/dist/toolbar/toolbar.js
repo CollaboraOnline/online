@@ -272,6 +272,8 @@ function setBorders(left, right, bottom, top, horiz, vert) {
 
 function setBorderStyle(num) {
 	switch (num) {
+	case 0: map.sendUnoCommand('.uno:FormatCellBorders'); break;
+
 	case 1: setBorders(0, 0, 0, 0, 0, 0); break;
 	case 2: setBorders(1, 0, 0, 0, 0, 0); break;
 	case 3: setBorders(0, 1, 0, 0, 0, 0); break;
@@ -464,7 +466,8 @@ $(function () {
 				      '<td class="w2ui-tb-image w2ui-icon frame06" onclick="setBorderStyle(6)"></td><td class="w2ui-tb-image w2ui-icon frame07" onclick="setBorderStyle(7)"></td>' +
 				      '<td class="w2ui-tb-image w2ui-icon frame08" onclick="setBorderStyle(8)"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame09" onclick="setBorderStyle(9)"></td>' +
 				      '<td class="w2ui-tb-image w2ui-icon frame10" onclick="setBorderStyle(10)"></td><td class="w2ui-tb-image w2ui-icon frame11" onclick="setBorderStyle(11)"></td>' +
-				      '<td class="w2ui-tb-image w2ui-icon frame12" onclick="setBorderStyle(12)"></td></tr></table>'
+				      '<td class="w2ui-tb-image w2ui-icon frame12" onclick="setBorderStyle(12)"></td></tr><tr>' +
+				      '<td colspan="4" class="w2ui-tb-image w2ui-icon frame13" onclick="setBorderStyle(0)"><div id="div-frame13">' + _('More...') + '</div></td></tr></table>'
 			},
 			{type: 'drop', id: 'conditionalformaticonset',  img: 'conditionalformatdialog', hint: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet', true),
 				html: '<table id="conditionalformatmenu-grid"><tr>' +
