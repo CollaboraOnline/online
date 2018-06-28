@@ -10,6 +10,8 @@
 #ifndef INCLUDED_LOG_HPP
 #define INCLUDED_LOG_HPP
 
+#include "config.h"
+
 #include <functional>
 #include <sstream>
 #include <string>
