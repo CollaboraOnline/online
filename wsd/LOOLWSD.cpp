@@ -792,7 +792,7 @@ void LOOLWSD::initialize(Application& self)
 
     if (AnonymizeFilenames || AnonymizeUsernames)
     {
-        if (LogLevel == "trace")
+        if (LogLevel == "trace" && !getConfigValue<bool>(conf, "logging.anonymize.allow_logging_pii", false))
         {
             const char failure[] = "Anonymization and trace-level logging are incompatible. "
                 "Please reduce logging level to debug or lower in loolwsd.xml to prevent leaking sensitive user data.";
@@ -807,7 +807,7 @@ void LOOLWSD::initialize(Application& self)
 
     const auto logToFile = getConfigValue<bool>(conf, "logging.file[@enable]", false);
     std::map<std::string, std::string> logProperties;
-    for (size_t i = 0; ; ++i)
+    for (std::size_t i = 0; ; ++i)
     {
         const std::string confPath = "logging.file.property[" + std::to_string(i) + "]";
         const auto confName = config().getString(confPath + "[@name]", "");
