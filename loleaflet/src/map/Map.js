@@ -90,10 +90,6 @@ L.Map = L.Evented.extend({
 		this._clipboardContainer = L.clipboardContainer();
 		this.addLayer(this._clipboardContainer);
 
-		// Inhibit the context menu - the browser thinks that the document
-		// is just a bunch of images, hence the context menu is useless (tdf#94599)
-		this.on('contextmenu', function() {});
-
 		// When all these conditions are met, fire statusindicator:initializationcomplete
 		this.initConditions = {
 			'doclayerinit': false,
@@ -707,6 +703,8 @@ L.Map = L.Evented.extend({
 		this._fileDownloader = L.DomUtil.create('iframe', '', container);
 		L.DomUtil.setStyle(this._fileDownloader, 'display', 'none');
 
+		L.DomEvent.on(this._resizeDetector.contentWindow, 'contextmenu', L.DomEvent.preventDefault);
+		L.DomEvent.on(this._fileDownloader.contentWindow, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.addListener(container, 'scroll', this._onScroll, this);
 		container._leaflet = true;
 	},
@@ -831,7 +829,7 @@ L.Map = L.Evented.extend({
 		var onOff = remove ? 'off' : 'on';
 
 		L.DomEvent[onOff](this._container, 'click dblclick mousedown mouseup ' +
-			'mouseover mouseout mousemove contextmenu dragover drop ' +
+			'mouseover mouseout mousemove dragover drop ' +
 			'trplclick qdrplclick', this._handleDOMEvent, this);
 
 		if (this.options.trackResize && this._resizeDetector.contentWindow) {
