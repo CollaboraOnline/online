@@ -139,4 +139,6 @@ window.addEventListener('beforeunload', function () {
 		global.map._socket.close();
 	}
 });
+
+L.DomEvent.on(document, 'contextmenu', L.DomEvent.preventDefault);
 //require('./dist/toolbar/toolbar');
