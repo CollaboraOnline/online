@@ -216,10 +216,10 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'insertgraphic') {
 		L.DomUtil.get('insertgraphic').click();
 	}
-	else if (id === 'fontcolor' && e.color) {
+	else if (id === 'fontcolor' && typeof e.color !== 'undefined') {
 		onColorPick(id, e.color);
 	}
-	else if (id === 'backcolor' && e.color) {
+	else if (id === 'backcolor' && typeof e.color !== 'undefined') {
 		onColorPick(id, e.color)
 	}
 	else if (id === 'sum') {
@@ -544,11 +544,17 @@ function insertShapes() {
 }
 
 function onColorPick(id, color) {
-	if (map.getPermission() !== 'edit' || color === undefined) {
+	if (map.getPermission() !== 'edit') {
 		return;
 	}
+    // no fill or automatic color is -1
+	if (color === '') {
+		color = -1;
+	}
 	// transform from #FFFFFF to an Int
-	color = parseInt(color.replace('#', ''), 16);
+	else {
+		color = parseInt(color.replace('#', ''), 16);
+	}
 	var command = {};
 	var fontcolor, backcolor;
 	if (id === 'fontcolor') {
