@@ -85,9 +85,10 @@ if __name__ == "__main__":
         poFile = dir + lang + '/svtools/source/misc.po'
         extractFromPo(poFile, ["STR_ARR_SVT_LANGUAGE_TABLE"], translations)
 
-        # extract 'None (Do not check spelling)'
+        # extract 'None (Do not check spelling)' and 'More...'
         poFile = dir + lang + '/framework/source/classes.po'
-        extractFromPo(poFile, ["STR_LANGSTATUS_NONE"], translations)
+        stringIds = ["STR_LANGSTATUS_NONE", "STR_LANGSTATUS_MORE"]
+        extractFromPo(poFile, stringIds, translations)
 
         f = open(onlineDir + '/loleaflet/dist/l10n/locore/' + lang + '.json', 'w')
         f.write('{\n')
