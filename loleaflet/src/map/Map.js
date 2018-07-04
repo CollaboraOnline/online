@@ -117,11 +117,7 @@ L.Map = L.Evented.extend({
 			if (!this.initComplete) {
 				this._fireInitComplete('doclayerinit');
 			}
-			// Don't show the ruler if the window is small. Use 5% of window height as
-			// the fairly arbitrary limit how high the ruler can be. We "know" (from
-			// leaflet.css, .loleaflet-ruler, height) that the ruler height is 20px.
-			// That makes the limit 400px.
-			if ($(window).height() >= 400 && this._docLayer._docType == 'text') {
+			if (this._docLayer._docType == 'text') {
 				var interactiveRuler = this._permission === 'edit' ? true : false;
 				L.control.ruler({position:'topleft', interactive:interactiveRuler}).addTo(this);
 			}
