@@ -775,6 +775,9 @@ input.clipboard {
 
 .loleaflet-ruler {
 	background-color: #efefef;
+	/* If you change the below 20px, also change the window height limit
+	 * in the doclayerinit thing in Map.js.
+	 */
 	height: 20px;
 	width: 100vw;
 	margin: 0px;
