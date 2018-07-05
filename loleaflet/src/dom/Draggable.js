@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Draggable allows you to add dragging capabilities to any element. Supports mobile devices too.
  */

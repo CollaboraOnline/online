@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Map.Tap is used to enable mobile hacks like quick taps and long hold.
  */
