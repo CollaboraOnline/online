@@ -47,9 +47,11 @@ using Poco::Timestamp;
 
 TileCache::TileCache(const std::string& docURL,
                      const Timestamp& modifiedTime,
-                     const std::string& cacheDir) :
+                     const std::string& cacheDir,
+                     const bool tileCachePersistent) :
     _docURL(docURL),
-    _cacheDir(cacheDir)
+    _cacheDir(cacheDir),
+    _tileCachePersistent(tileCachePersistent)
 {
     LOG_INF("TileCache ctor for uri [" << _docURL <<
             "], cacheDir: [" << _cacheDir <<
@@ -161,6 +163,9 @@ int TileCache::getTileBeingRenderedVersion(const TileDesc& tile)
 
 std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
 {
+    if (!_tileCachePersistent)
+        return nullptr;
+
     const std::string fileName = _cacheDir + "/" + cacheFileName(tile);
 
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
@@ -190,7 +195,7 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     // Ignore if we can't save the tile, things will work anyway, but slower.
     // An error indication is supposed to be sent to all users in that case.
     const auto fileName = _cacheDir + "/" + cachedName;
-    if (FileUtil::saveDataToFileSafely(fileName, data, size))
+    if (_tileCachePersistent && FileUtil::saveDataToFileSafely(fileName, data, size))
     {
         LOG_TRC("Saved cache tile: " << fileName);
     }
@@ -317,7 +322,7 @@ void TileCache::setUnsavedChanges(bool state)
         removeFile("unsaved.txt");
 }
 
-void TileCache::saveRendering(const std::string& name, const std::string& dir, const char *data, size_t size)
+void TileCache::saveRendering(const std::string& name, const std::string& dir, const char *data, std::size_t size)
 {
     // can fonts be invalidated?
     const std::string dirName = _cacheDir + "/" + dir;
