@@ -116,6 +116,10 @@ public:
     void clearTilesOnFly();
     size_t getTilesOnFlyCount() const { return _tilesOnFly.size(); }
 
+    Util::Rectangle getVisibleArea() const { return _clientVisibleArea; }
+    int getTileWidthInTwips() const { return _tileWidthTwips; }
+    int getTileHeightInTwips() const { return _tileHeightTwips; }
+
 
 private:
 

@@ -41,7 +41,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define TILES_ON_FLY_UPPER_LIMIT 25
+#define TILES_ON_FLY_MIN_UPPER_LIMIT 10u
 
 using namespace LOOLProtocol;
 
@@ -1367,13 +1367,22 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
+    // How many tiles we have on the visible area, set the upper limit accordingly
+    const unsigned tilesFitOnWidth = static_cast<unsigned>(std::ceil(static_cast<float>(session->getVisibleArea().getWidth()) /
+                                                                     static_cast<float>(session->getTileWidthInTwips())));
+    const unsigned tilesFitOnHeight = static_cast<unsigned>(std::ceil(static_cast<float>(session->getVisibleArea().getHeight()) /
+                                                                      static_cast<float>(session->getTileHeightInTwips())));
+    const unsigned tilesInVisArea = tilesFitOnWidth * tilesFitOnHeight;
+
+    const unsigned tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea);
+
     // All tiles were processed on client side what we sent last time, so we can send a new banch of tiles
     // which was invalidated / requested in the meantime
     boost::optional<std::list<TileDesc>>& requestedTiles = session->getRequestedTiles();
     if(requestedTiles != boost::none && !requestedTiles.get().empty())
     {
         std::vector<TileDesc> tilesNeedsRendering;
-        while(session->getTilesOnFlyCount() < TILES_ON_FLY_UPPER_LIMIT && !requestedTiles.get().empty())
+        while(session->getTilesOnFlyCount() < tilesOnFlyUpperLimit && !requestedTiles.get().empty())
         {
             TileDesc& tile = *(requestedTiles.get().begin());
             session->addTileOnFly(tile);
