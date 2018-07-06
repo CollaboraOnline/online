@@ -603,7 +603,7 @@ L.Map = L.Evented.extend({
 
 	getScaleZoom: function (scale, fromZoom) {
 		fromZoom = fromZoom === undefined ? this._zoom : fromZoom;
-		return fromZoom + (Math.log(scale) / Math.LN2);
+		return fromZoom + (Math.log(scale) / Math.log(1.2));
 	},
 
 
