@@ -1385,7 +1385,6 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
         while(session->getTilesOnFlyCount() < tilesOnFlyUpperLimit && !requestedTiles.get().empty())
         {
             TileDesc& tile = *(requestedTiles.get().begin());
-            session->addTileOnFly(tile);
 
             // Satisfy as many tiles from the cache.
             std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
@@ -1412,6 +1411,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                 cachedTile->read(output.data() + pos, size);
                 cachedTile->close();
 
+                session->traceTileBySend(tile);
                 session->sendBinaryFrame(output.data(), output.size());
             }
             else

@@ -15,6 +15,11 @@
 
 #include "DocumentBroker.hpp"
 
+#include "ClientSession.hpp"
+
 void DocumentBroker::assertCorrectThread() const {}
+
+
+void ClientSession::traceTileBySend(const TileDesc& /*tile*/) {}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -293,6 +293,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         else
         {
             _clientVisibleArea = Util::Rectangle(x, y, width, height);
+            resetWireIdMap();
             return forwardToChild(std::string(buffer, length), docBroker);
         }
     }
@@ -310,6 +311,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             else
             {
                 _clientSelectedPart = temp;
+                resetWireIdMap();
                 return forwardToChild(std::string(buffer, length), docBroker);
             }
         }
@@ -332,6 +334,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             _tileHeightPixel = tilePixelHeight;
             _tileWidthTwips = tileTwipWidth;
             _tileHeightTwips = tileTwipHeight;
+            resetWireIdMap();
             return forwardToChild(std::string(buffer, length), docBroker);
         }
     }
@@ -941,6 +944,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 if(getTokenInteger(token, "current", part))
                 {
                     _clientSelectedPart = part;
+                    resetWireIdMap();
                 }
 
                 // Get document type too
@@ -1074,10 +1078,7 @@ Authorization ClientSession::getAuthorization() const
 
 void ClientSession::addTileOnFly(const TileDesc& tile)
 {
-    std::ostringstream tileID;
-    tileID << tile.getPart() << ":" << tile.getTilePosX() << ":" << tile.getTilePosY() << ":"
-           << tile.getTileWidth() << ":" << tile.getTileHeight();
-    _tilesOnFly.push_back(tileID.str());
+    _tilesOnFly.push_back(generateTileID(tile));
 }
 
 void ClientSession::clearTilesOnFly()
@@ -1202,7 +1203,13 @@ void ClientSession::handleTileInvalidation(const std::string& message,
                     j <= std::ceil(intersection._y2 / _tileHeightTwips); ++j)
                 {
                     invalidTiles.emplace_back(TileDesc(part, _tileWidthPixel, _tileHeightPixel, i * _tileWidthTwips, j * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false));
-                    invalidTiles.back().setOldWireId(0);
+
+                    TileWireId oldWireId = 0;
+                    auto iter = _oldWireIds.find(generateTileID(invalidTiles.back()));
+                    if(iter != _oldWireIds.end())
+                        oldWireId = iter->second;
+
+                    invalidTiles.back().setOldWireId(oldWireId);
                     invalidTiles.back().setWireId(0);
                 }
             }
@@ -1214,6 +1221,38 @@ void ClientSession::handleTileInvalidation(const std::string& message,
         TileCombined tileCombined = TileCombined::create(invalidTiles);
         docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
     }
+}
+
+void ClientSession::resetWireIdMap()
+{
+    _oldWireIds.clear();
+}
+
+void ClientSession::traceTileBySend(const TileDesc& tile)
+{
+    const std::string tileID = generateTileID(tile);
+
+    // Store wireId first
+    auto iter = _oldWireIds.find(tileID);
+    if(iter != _oldWireIds.end())
+    {
+        iter->second = tile.getWireId();
+    }
+    else
+    {
+        _oldWireIds.insert(std::pair<std::string, TileWireId>(tileID, tile.getWireId()));
+    }
+
+    // Record that the tile is sent
+    addTileOnFly(tile);
+}
+
+std::string ClientSession::generateTileID(const TileDesc& tile)
+{
+    std::ostringstream tileID;
+    tileID << tile.getPart() << ":" << tile.getTilePosX() << ":" << tile.getTilePosY() << ":"
+           << tile.getTileWidth() << ":" << tile.getTileHeight();
+    return tileID.str();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
