@@ -1315,9 +1315,6 @@ L.TileLayer = L.GridLayer.extend({
 			});
 		}
 		else if (tile) {
-			if (command.wireId != undefined) {
-				tile.oldWireId = command.wireId;
-			}
 			if (this._tiles[key]._invalidCount > 0) {
 				this._tiles[key]._invalidCount -= 1;
 			}

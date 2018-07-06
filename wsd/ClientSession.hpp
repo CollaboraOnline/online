@@ -19,6 +19,7 @@
 #include <Rectangle.hpp>
 #include <boost/optional.hpp>
 #include <list>
+#include <map>
 
 class DocumentBroker;
 
@@ -118,7 +119,9 @@ public:
     int getTileWidthInTwips() const { return _tileWidthTwips; }
     int getTileHeightInTwips() const { return _tileHeightTwips; }
 
-
+    /// This method updates internal data related to sent tiles (wireID and tiles-on-fly)
+    /// Call this method anytime when a new tile is sent to the client
+    void traceTileBySend(const TileDesc& tile);
 private:
 
     /// SocketHandler: disconnection event.
@@ -159,6 +162,11 @@ private:
     void handleTileInvalidation(const std::string& message,
                                 const std::shared_ptr<DocumentBroker>& docBroker);
 
+    /// Clear wireId map anytime when client visible area changes (visible area, zoom, part number)
+    void resetWireIdMap();
+
+    std::string generateTileID(const TileDesc& tile);
+
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 
@@ -197,12 +205,15 @@ private:
     int _tileWidthTwips;
     int _tileHeightTwips;
 
-    // Type of the docuemnt, extracter from status message
+    /// Client is using a text document?
     bool _isTextDocument;
 
     std::list<std::string> _tilesOnFly;
 
     boost::optional<std::list<TileDesc>> _requestedTiles;
+
+    /// Store wireID's of the sent tiles for the actual visible area
+    std::map<std::string, TileWireId> _oldWireIds;
 };
 
 
