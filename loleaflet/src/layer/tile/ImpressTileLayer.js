@@ -365,7 +365,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
 		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
 		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
-
+		var needsNewTiles = false;
 		for (var key in this._tiles) {
 			var coords = this._tiles[key].coords;
 			var tileTopLeft = this._coordsToTwips(coords);
@@ -379,6 +379,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 					this._tiles[key]._invalidCount = 1;
 				}
 				if (visibleArea.intersects(bounds)) {
+					needsNewTiles = true;
 					if (this._debug) {
 						this._debugAddInvalidationData(this._tiles[key]);
 					}
@@ -389,6 +390,11 @@ L.ImpressTileLayer = L.TileLayer.extend({
 					this._removeTile(key);
 				}
 			}
+		}
+
+		if (needsNewTiles && command.part === this._selectedPart && this._debug)
+		{
+			this._debugAddInvalidationMessage(textMsg);
 		}
 
 		for (key in this._tileCache) {

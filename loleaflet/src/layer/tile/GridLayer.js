@@ -703,6 +703,13 @@ L.GridLayer = L.Layer.extend({
 			// Visible area is dirty, update it on the server
 			this._clientVisibleArea = newClientVisibleArea
 			this._map._socket.sendMessage(this._clientVisibleArea);
+			if (this._debug) {
+				this._debugInfo.clearLayers();
+				for (var key in this._tiles) {
+					this._tiles[key]._debugPopup = null;
+					this._tiles[key]._debugTile = null;
+				}
+			}
 		}
 	},
 
