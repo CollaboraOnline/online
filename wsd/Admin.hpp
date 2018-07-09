@@ -36,7 +36,7 @@ public:
     static bool handleInitialRequest(const std::weak_ptr<StreamSocket> &socket,
                                      const Poco::Net::HTTPRequest& request);
 
-    static void subscribeAsync(const std::shared_ptr<AdminSocketHandler> handler);
+    static void subscribeAsync(const std::shared_ptr<AdminSocketHandler>& handler);
 
 private:
     /// Sends text frames simply to authenticated clients.

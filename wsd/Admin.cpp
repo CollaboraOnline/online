@@ -300,7 +300,7 @@ void AdminSocketHandler::sendTextFrame(const std::string& message)
         LOG_TRC("Skip sending message to non-authenticated client: '" << message << "'");
 }
 
-void AdminSocketHandler::subscribeAsync(const std::shared_ptr<AdminSocketHandler> handler)
+void AdminSocketHandler::subscribeAsync(const std::shared_ptr<AdminSocketHandler>& handler)
 {
     Admin &admin = Admin::instance();
 
