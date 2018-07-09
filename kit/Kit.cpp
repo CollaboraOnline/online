@@ -109,6 +109,7 @@ static LokHookFunction2* initFunction = nullptr;
 #ifndef BUILDING_TESTS
 static bool AnonymizeFilenames = false;
 static bool AnonymizeUsernames = false;
+static std::string ObfuscatedUserId;
 #endif
 
 #if ENABLE_DEBUG
@@ -2239,6 +2240,8 @@ void lokit_main(const std::string& childRoot,
                         const std::string& sessionId = tokens[1];
                         const std::string& docKey = tokens[2];
                         const std::string& docId = tokens[3];
+                        if (tokens.size() > 4)
+                            ObfuscatedUserId = tokens[4];
 
                         std::string url;
                         URI::decode(docKey, url);
@@ -2425,10 +2428,10 @@ std::string anonymizeUrl(const std::string& url)
 std::string anonymizeUsername(const std::string& username)
 {
 #ifndef BUILDING_TESTS
-    return AnonymizeUsernames ? Util::anonymize(username) : username;
-#else
-    return username;
+    if (AnonymizeUsernames)
+        return !ObfuscatedUserId.empty() ? ObfuscatedUserId : Util::anonymize(username);
 #endif
+    return username;
 }
 
 #if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS)

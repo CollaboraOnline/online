@@ -218,14 +218,14 @@ public:
     class LocalFileInfo
     {
     public:
-        LocalFileInfo(const std::string& userid,
+        LocalFileInfo(const std::string& userId,
                       const std::string& username)
-            : _userid(userid),
+            : _userId(userId),
               _username(username)
         {
         }
 
-        std::string _userid;
+        std::string _userId;
         std::string _username;
     };
 
@@ -261,7 +261,8 @@ public:
     class WOPIFileInfo
     {
     public:
-        WOPIFileInfo(const std::string& userid,
+        WOPIFileInfo(const std::string& userId,
+                     const std::string& obfuscatedUserId,
                      const std::string& username,
                      const std::string& userExtraInfo,
                      const std::string& watermarkText,
@@ -277,7 +278,8 @@ public:
                      const bool disableInactiveMessages,
                      const bool userCanNotWriteRelative,
                      const std::chrono::duration<double> callDuration)
-            : _userid(userid),
+            : _userId(userId),
+              _obfuscatedUserId(obfuscatedUserId),
               _username(username),
               _watermarkText(watermarkText),
               _userCanWrite(userCanWrite),
@@ -297,7 +299,9 @@ public:
             }
 
         /// User id of the user accessing the file
-        std::string _userid;
+        std::string _userId;
+        /// Obfuscated User id used for logging the UserId.
+        std::string _obfuscatedUserId;
         /// Display Name of user accessing the file
         std::string _username;
         /// Extra info per user, typically mail and other links, as json.
