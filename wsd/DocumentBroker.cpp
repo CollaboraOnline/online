@@ -470,7 +470,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     assert(_storage != nullptr);
 
     // Call the storage specific fileinfo functions
-    std::string userid, username;
+    std::string userId, username;
     std::string userExtraInfo;
     std::string watermarkText;
     std::chrono::duration<double> getInfoCallDuration(0);
@@ -480,7 +480,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     if (wopiStorage != nullptr)
     {
         std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(session->getAuthorization());
-        userid = wopifileinfo->_userid;
+        userId = wopifileinfo->_userId;
+        LOOLWSD::ObfuscatedUserId = wopifileinfo->_obfuscatedUserId;
         username = wopifileinfo->_username;
         userExtraInfo = wopifileinfo->_userExtraInfo;
         watermarkText = wopifileinfo->_watermarkText;
@@ -533,7 +534,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         session->sendMessage("wopi: " + ossWopiInfo.str());
 
         // Mark the session as 'Document owner' if WOPI hosts supports it
-        if (userid == _storage->getFileInfo()._ownerId)
+        if (userId == _storage->getFileInfo()._ownerId)
         {
             LOG_DBG("Session [" << sessionId << "] is the document owner");
             session->setDocumentOwner(true);
@@ -551,7 +552,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         if (localStorage != nullptr)
         {
             std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo = localStorage->getLocalFileInfo();
-            userid = localfileinfo->_userid;
+            userId = localfileinfo->_userId;
             username = localfileinfo->_username;
 
             if (LOOLWSD::IsViewFileExtension(localStorage->getFileExtension()))
@@ -562,14 +563,16 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         }
     }
 
+
 #if ENABLE_SUPPORT_KEY
     if (!LOOLWSD::OverrideWatermark.empty())
         watermarkText = LOOLWSD::OverrideWatermark;
 #endif
 
     LOG_DBG("Setting username [" << LOOLWSD::anonymizeUsername(username) << "] and userId [" <<
-            LOOLWSD::anonymizeUsername(userid) << "] for session [" << sessionId << "]");
-    session->setUserId(userid);
+            LOOLWSD::anonymizeUsername(userId) << "] for session [" << sessionId << "]");
+
+    session->setUserId(userId);
     session->setUserName(username);
     session->setUserExtraInfo(userExtraInfo);
     session->setWatermarkText(watermarkText);
@@ -1068,7 +1071,7 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
     const std::string id = session->getId();
 
     // Request a new session from the child kit.
-    const std::string aMessage = "session " + id + ' ' + _docKey + ' ' + _docId;
+    const std::string aMessage = "session " + id + ' ' + _docKey + ' ' + _docId + ' ' + LOOLWSD::ObfuscatedUserId;
     _childProcess->sendTextFrame(aMessage);
 
 #ifndef MOBILEAPP

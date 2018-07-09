@@ -115,6 +115,7 @@ static std::shared_ptr<Document> document;
 #ifndef BUILDING_TESTS
 static bool AnonymizeFilenames = false;
 static bool AnonymizeUsernames = false;
+static std::string ObfuscatedUserId;
 #endif
 
 #if ENABLE_DEBUG
