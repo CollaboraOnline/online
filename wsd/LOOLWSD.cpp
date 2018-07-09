@@ -603,6 +603,7 @@ std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
 std::string LOOLWSD::LogLevel = "trace";
 bool LOOLWSD::AnonymizeFilenames = false;
 bool LOOLWSD::AnonymizeUsernames = false;
+std::string LOOLWSD::ObfuscatedUserId;
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 std::set<std::string> LOOLWSD::EditFileExtensions;
@@ -781,14 +782,16 @@ void LOOLWSD::initialize(Application& self)
 #else
     AnonymizeUsernames = getConfigValue<bool>(conf, "logging.anonymize.usernames", false);
 #endif
-    setenv("LOOL_ANONYMIZE_USERNAMES", AnonymizeUsernames ? "1" : "0", true);
+    if (AnonymizeUsernames)
+        setenv("LOOL_ANONYMIZE_USERNAMES", AnonymizeUsernames ? "1" : "0", true);
 
 #if LOOLWSD_ANONYMIZE_FILENAMES
     AnonymizeFilenames = true;
 #else
     AnonymizeFilenames = getConfigValue<bool>(conf, "logging.anonymize.filenames", false);
 #endif
-    setenv("LOOL_ANONYMIZE_FILENAMES", AnonymizeFilenames ? "1" : "0", true);
+    if (AnonymizeFilenames)
+        setenv("LOOL_ANONYMIZE_FILENAMES", AnonymizeFilenames ? "1" : "0", true);
 
     if (AnonymizeFilenames || AnonymizeUsernames)
     {

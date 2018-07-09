@@ -409,7 +409,6 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 
         Poco::Net::HTTPResponse response;
         std::istream& rs = psession->receiveResponse(response);
-
         callDuration = (std::chrono::steady_clock::now() - startTime);
 
         auto logger = Log::trace();
@@ -445,6 +444,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     std::string ownerId;
     std::string userId;
     std::string userName;
+    std::string obfuscatedUserId;
     std::string userExtraInfo;
     std::string watermarkText;
     bool canWrite = false;
@@ -474,12 +474,15 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         // Anonymize key values.
         if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
         {
+            JsonUtil::findJSONValue(object, "ObfuscatedUserId", obfuscatedUserId, false);
+
             // Set anonymized version of the above fields before logging.
             // Note: anonymization caches the result, so we don't need to store here.
             if (LOOLWSD::AnonymizeFilenames)
                 object->set("BaseFileName", LOOLWSD::anonymizeUrl(filename));
 
-            if (LOOLWSD::AnonymizeUsernames)
+            // If obfuscatedUserId is provided, then don't log the originals and use it.
+            if (LOOLWSD::AnonymizeUsernames && obfuscatedUserId.empty())
             {
                 object->set("OwnerId", LOOLWSD::anonymizeUsername(ownerId));
                 object->set("UserId", LOOLWSD::anonymizeUsername(userId));
@@ -491,6 +494,8 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
             wopiResponse = oss.str();
 
             // Remove them for performance reasons; they aren't needed anymore.
+            object->remove("ObfuscatedUserId");
+
             if (LOOLWSD::AnonymizeFilenames)
                 object->remove("BaseFileName");
 
@@ -542,7 +547,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(
-        {userId, userName, userExtraInfo, watermarkText, canWrite,
+        {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, canWrite,
          postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption,
          enableOwnerTermination, disablePrint, disableExport, disableCopy,
          disableInactiveMessages, userCanNotWriteRelative,
@@ -612,7 +617,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
             return Poco::Path(_jailPath, _fileInfo._filename).toString();
         }
     }
-    catch(const Poco::Exception& pexc)
+    catch (const Poco::Exception& pexc)
     {
         LOG_ERR("Cannot load document from WOPI storage uri [" + uriAnonym + "]. Error: " <<
                 pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));
@@ -796,7 +801,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
             }
         }
     }
-    catch(const Poco::Exception& pexc)
+    catch (const Poco::Exception& pexc)
     {
         LOG_ERR("Cannot save file to WOPI storage uri [" << uriAnonym << "]. Error: " <<
                 pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));

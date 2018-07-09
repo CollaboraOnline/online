@@ -61,6 +61,7 @@ public:
     static std::string LogLevel;
     static bool AnonymizeFilenames;
     static bool AnonymizeUsernames;
+    static std::string ObfuscatedUserId;
     static std::atomic<unsigned> NumConnections;
     static bool TileCachePersistent;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
@@ -150,10 +151,14 @@ public:
         return AnonymizeFilenames ? Util::anonymizeUrl(url) : url;
     }
 
-    /// Anonymize usernames.
+    /// Anonymize user names and IDs.
+    /// Will use the Obfuscated User ID if one is provied via WOPI.
     static std::string anonymizeUsername(const std::string& username)
     {
-        return AnonymizeUsernames ? Util::anonymize(username) : username;
+        if (AnonymizeUsernames)
+            return !ObfuscatedUserId.empty() ? ObfuscatedUserId : Util::anonymize(username);
+
+        return username;
     }
 
 protected:
