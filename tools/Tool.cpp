@@ -208,7 +208,7 @@ void Tool::handleOption(const std::string& optionName,
         _destinationDir = value;
     else if (optionName == "parallelism")
         _numWorkers = std::max(std::stoi(value), 1);
-    else if (optionName == "uri")
+    else if (optionName == "server")
         _serverURI = value;
     else if (optionName == "no-check-certificate")
     {
