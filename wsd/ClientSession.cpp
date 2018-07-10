@@ -727,7 +727,13 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
     {
         int setPart;
         if(getTokenInteger(tokens[1], "part", setPart))
+        {
             _clientSelectedPart = setPart;
+        }
+        else if (stringToInteger(tokens[1], setPart))
+        {
+            _clientSelectedPart = setPart;
+        }
         else
             return false;
     }
