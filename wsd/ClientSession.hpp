@@ -109,8 +109,10 @@ public:
     /// Set WOPI fileinfo object
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
 
+    /// Get requested tiles waiting for sending to the client
     boost::optional<std::list<TileDesc>>& getRequestedTiles() { return _requestedTiles; }
 
+    /// Mark a new tile as sent
     void addTileOnFly(const TileDesc& tile);
     void clearTilesOnFly();
     size_t getTilesOnFlyCount() const { return _tilesOnFly.size(); }
@@ -159,12 +161,14 @@ private:
 
     void dumpState(std::ostream& os) override;
 
+    /// Handle invalidation message comming from a kit and transfer it to a tile request.
     void handleTileInvalidation(const std::string& message,
                                 const std::shared_ptr<DocumentBroker>& docBroker);
 
     /// Clear wireId map anytime when client visible area changes (visible area, zoom, part number)
     void resetWireIdMap();
 
+    /// Generate a unique id for a tile
     std::string generateTileID(const TileDesc& tile);
 
 private:
@@ -208,11 +212,13 @@ private:
     /// Client is using a text document?
     bool _isTextDocument;
 
+    /// TileID's of the sent tiles. Push by sending and pop by tileprocessed message from the client.
     std::list<std::string> _tilesOnFly;
 
+    /// Requested tiles are stored in this list, before we can send them to the client
     boost::optional<std::list<TileDesc>> _requestedTiles;
 
-    /// Store wireID's of the sent tiles for the actual visible area
+    /// Store wireID's of the sent tiles inside the actual visible area
     std::map<std::string, TileWireId> _oldWireIds;
 };
 
