@@ -2029,7 +2029,7 @@ private:
 
             if (!allowPostFrom(socket->clientAddress()))
             {
-                LOG_ERR("client address DENY: " << socket->clientAddress().c_str());
+                LOG_ERR("client address DENY: " << socket->clientAddress());
 
                 std::ostringstream oss;
                 oss << "HTTP/1.1 403\r\n"
