@@ -61,8 +61,8 @@ public:
     {
         // Accept a connection (if any) and set it to non-blocking.
         // There still need the client's address to filter request from POST(call from REST) here.
-        struct sockaddr_in clientInfo;
-        socklen_t addrlen = sizeof(struct sockaddr_in);
+        struct sockaddr_in6 clientInfo;
+        socklen_t addrlen = sizeof(clientInfo);
         const int rc = ::accept4(getFD(), (struct sockaddr *)&clientInfo, &addrlen, SOCK_NONBLOCK);
         LOG_DBG("Accepted socket #" << rc << ", creating socket object.");
         try
@@ -73,21 +73,21 @@ public:
                 char addrstr[INET6_ADDRSTRLEN];
 
                 const void *inAddr;
-                if (clientInfo.sin_family == AF_INET)
+                if (clientInfo.sin6_family == AF_INET)
                 {
-                    auto ipv4 = (struct sockaddr_in *)&clientInfo.sin_addr;
+                    auto ipv4 = (struct sockaddr_in *)&clientInfo;
                     inAddr = &(ipv4->sin_addr);
                 }
                 else
                 {
-                    auto ipv6 = (struct sockaddr_in6 *)&clientInfo.sin_addr;
+                    auto ipv6 = (struct sockaddr_in6 *)&clientInfo;
                     inAddr = &(ipv6->sin6_addr);
                 }
 
-                inet_ntop(clientInfo.sin_family, inAddr, addrstr, sizeof(addrstr));
+                inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
                 std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
                 _socket->_clientAddress = addrstr;
-                LOG_DBG("Accepted socket has family " << clientInfo.sin_family <<
+                LOG_DBG("Accepted socket has family " << clientInfo.sin6_family <<
                         " address " << _socket->_clientAddress);
                 return _socket;
             }
