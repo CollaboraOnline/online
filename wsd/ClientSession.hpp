@@ -112,7 +112,7 @@ public:
     boost::optional<TileCombined>& getRequestedTiles() { return _requestedTiles; }
 
     int getTilesOnFly() const { return _tilesOnFly; }
-    void setTilesOnFly(int tilesOnFly) { _tilesOnFly = tilesOnFly; }
+    void setTilesOnFly(int tilesOnFly);
 
 
 private:
@@ -154,6 +154,8 @@ private:
 
     void handleTileInvalidation(const std::string& message,
                                 const std::shared_ptr<DocumentBroker>& docBroker);
+
+    void checkTileRequestTimout();
 
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
@@ -205,6 +207,7 @@ private:
     std::string _docType;
 
     int _tilesOnFly;
+    boost::optional<std::chrono::time_point<std::chrono::steady_clock>> _tileCounterStartTime;
 
     boost::optional<TileCombined> _requestedTiles;
 };
