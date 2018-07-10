@@ -41,6 +41,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#define TILES_ON_FLY_UPPER_LIMIT 25
+
 using namespace LOOLProtocol;
 
 using Poco::JSON::Object;
@@ -1318,17 +1320,17 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     }
 
     // Accumulate tiles
-    boost::optional<TileCombined>& requestedTiles = session->getRequestedTiles();
+    boost::optional<std::list<TileDesc>>& requestedTiles = session->getRequestedTiles();
     if(requestedTiles == boost::none)
     {
-        requestedTiles = TileCombined::create(tileCombined.getTiles());
+        requestedTiles = std::list<TileDesc>(tileCombined.getTiles().begin(), tileCombined.getTiles().end());
     }
     // Drop duplicated tiles, but use newer version number
     else
     {
         for (const auto& newTile : tileCombined.getTiles())
         {
-            const TileDesc& firstOldTile = requestedTiles.get().getTiles()[0];
+            const TileDesc& firstOldTile = *(requestedTiles.get().begin());
             if(newTile.getPart() != firstOldTile.getPart() ||
                newTile.getWidth() != firstOldTile.getWidth() ||
                newTile.getHeight() != firstOldTile.getHeight() ||
@@ -1339,7 +1341,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
             }
 
             bool tileFound = false;
-            for (auto& oldTile : requestedTiles.get().getTiles())
+            for (auto& oldTile : requestedTiles.get())
             {
                 if(oldTile.getTilePosX() == newTile.getTilePosX() &&
                    oldTile.getTilePosY() == newTile.getTilePosY() )
@@ -1352,7 +1354,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
                 }
             }
             if(!tileFound)
-                requestedTiles.get().getTiles().push_back(newTile);
+                requestedTiles.get().push_back(newTile);
         }
     }
 
@@ -1367,15 +1369,16 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
 
     // All tiles were processed on client side what we sent last time, so we can send a new banch of tiles
     // which was invalidated / requested in the meantime
-    boost::optional<TileCombined>& requestedTiles = session->getRequestedTiles();
-    if(session->getTilesOnFly().empty() && requestedTiles != boost::none && !requestedTiles.get().getTiles().empty())
+    boost::optional<std::list<TileDesc>>& requestedTiles = session->getRequestedTiles();
+    if(requestedTiles != boost::none && !requestedTiles.get().empty())
     {
-        session->setTilesOnFly(requestedTiles.get());
-
-        // Satisfy as many tiles from the cache.
         std::vector<TileDesc> tilesNeedsRendering;
-        for (auto& tile : requestedTiles.get().getTiles())
+        while(session->getTilesOnFlyCount() < TILES_ON_FLY_UPPER_LIMIT && !requestedTiles.get().empty())
         {
+            TileDesc& tile = *(requestedTiles.get().begin());
+            session->addTileOnFly(tile);
+
+            // Satisfy as many tiles from the cache.
             std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
             if (cachedTile)
             {
@@ -1416,6 +1419,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                 }
                 tileCache().subscribeToTileRendering(tile, session);
             }
+            requestedTiles.get().pop_front();
         }
 
         // Send rendering request for those tiles which were not prerendered
@@ -1426,10 +1430,8 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             // Forward to child to render.
             const std::string req = newTileCombined.serialize("tilecombine");
             LOG_DBG("Some of the tiles were not prerendered. Sending residual tilecombine: " << req);
-            LOG_DBG("Sending residual tilecombine: " << req);
             _childProcess->sendTextFrame(req);
         }
-        requestedTiles = boost::none;
     }
 }
 
@@ -1438,7 +1440,7 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
     std::unique_lock<std::mutex> lock(_mutex);
 
     // Clear tile requests
-    session->setTilesOnFly(boost::none);
+    session->clearTilesOnFly();
     session->getRequestedTiles() = boost::none;
 
     const auto canceltiles = tileCache().cancelTiles(session);

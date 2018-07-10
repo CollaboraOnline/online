@@ -18,7 +18,7 @@
 #include <Poco/URI.h>
 #include <Rectangle.hpp>
 #include <boost/optional.hpp>
-#include <vector>
+#include <list>
 
 class DocumentBroker;
 
@@ -108,10 +108,11 @@ public:
     /// Set WOPI fileinfo object
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
 
-    boost::optional<TileCombined>& getRequestedTiles() { return _requestedTiles; }
+    boost::optional<std::list<TileDesc>>& getRequestedTiles() { return _requestedTiles; }
 
-    const std::vector<std::string>& getTilesOnFly() const { return _tilesOnFly; }
-    void setTilesOnFly(boost::optional<TileCombined> tiles);
+    void addTileOnFly(const TileDesc& tile);
+    void clearTilesOnFly();
+    size_t getTilesOnFlyCount() const { return _tilesOnFly.size(); }
 
 
 private:
@@ -154,8 +155,6 @@ private:
     void handleTileInvalidation(const std::string& message,
                                 const std::shared_ptr<DocumentBroker>& docBroker);
 
-    void checkTileRequestTimout();
-
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 
@@ -197,10 +196,9 @@ private:
     // Type of the docuemnt, extracter from status message
     bool _isTextDocument;
 
-    std::vector<std::string> _tilesOnFly;
-    boost::optional<std::chrono::time_point<std::chrono::steady_clock>> _tileCounterStartTime;
+    std::list<std::string> _tilesOnFly;
 
-    boost::optional<TileCombined> _requestedTiles;
+    boost::optional<std::list<TileDesc>> _requestedTiles;
 };
 
 

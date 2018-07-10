@@ -77,8 +77,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     const std::string firstLine = getFirstLine(buffer, length);
     const std::vector<std::string> tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
-    checkTileRequestTimout();
-
     auto docBroker = getDocumentBroker();
     if (!docBroker)
     {
@@ -343,10 +341,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if(iter != _tilesOnFly.end())
             _tilesOnFly.erase(iter);
 
-        if(_tilesOnFly.empty())
-        {
-            _tileCounterStartTime = boost::none;
-        }
         docBroker->sendRequestedTiles(shared_from_this());
         return true;
     }
@@ -1032,25 +1026,17 @@ Authorization ClientSession::getAuthorization() const
     return Authorization();
 }
 
-void ClientSession::setTilesOnFly(boost::optional<TileCombined> tiles)
+void ClientSession::addTileOnFly(const TileDesc& tile)
 {
+    std::ostringstream tileID;
+    tileID << tile.getPart() << ":" << tile.getTilePosX() << ":" << tile.getTilePosY() << ":"
+           << tile.getTileWidth() << ":" << tile.getTileHeight();
+    _tilesOnFly.push_back(tileID.str());
+}
 
+void ClientSession::clearTilesOnFly()
+{
     _tilesOnFly.clear();
-    if(tiles == boost::none)
-    {
-        _tileCounterStartTime = boost::none;
-    }
-    else
-    {
-        for (auto& tile : tiles.get().getTiles())
-        {
-            std::ostringstream tileID;
-            tileID << tile.getPart() << ":" << tile.getTilePosX() << ":" << tile.getTilePosY() << ":"
-                   << tile.getTileWidth() << ":" << tile.getTileHeight();
-            _tilesOnFly.push_back(tileID.str());
-        }
-        _tileCounterStartTime = std::chrono::steady_clock::now();
-    }
 }
 
 void ClientSession::onDisconnect()
@@ -1181,19 +1167,6 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     {
         TileCombined tileCombined = TileCombined::create(invalidTiles);
         docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
-    }
-}
-
-void ClientSession::checkTileRequestTimout()
-{
-    if(_tileCounterStartTime != boost::none)
-    {
-        const auto duration = std::chrono::steady_clock::now() - _tileCounterStartTime.get();
-        if( std::chrono::duration_cast<std::chrono::seconds>(duration).count() > 5)
-        {
-            LOG_WRN("Tile request timeout: server waits too long for tileprocessed messages.");
-            _tileCounterStartTime = boost::none;
-        }
     }
 }
 
