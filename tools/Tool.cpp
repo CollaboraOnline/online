@@ -91,8 +91,6 @@ public:
 
     void convertFile(const std::string& document)
     {
-        std::cerr << "convert file " << document << "\n";
-
         Poco::URI uri(_app._serverURI);
 
         Poco::Net::HTTPClientSession *session;
@@ -123,22 +121,14 @@ public:
         Poco::Net::HTTPResponse response;
 
         try {
-            std::cerr << "try to get response\n";
-
             // receiveResponse() resulted in a Poco::Net::NoMessageException.
             std::istream& responseStream = session->receiveResponse(response);
-
-            std::cerr << "Get response\n";
 
             Poco::Path path(document);
             std::string outPath = _app._destinationDir + "/" + path.getBaseName() + "." + _app._destinationFormat;
             std::ofstream fileStream(outPath);
 
-            std::cerr << "write to " << outPath << "\n";
-
             Poco::StreamCopier::copyStream(responseStream, fileStream);
-
-            std::cerr << "Copied stream\n";
         }
         catch (const Poco::Exception &e)
         {
@@ -171,38 +161,21 @@ void Tool::displayHelp()
     helpFormatter.format(std::cout);
 }
 
-void Tool::defineOptions(OptionSet& optionSet)
+void Tool::defineOptions(OptionSet&)
 {
-    Application::defineOptions(optionSet);
-
-    optionSet.addOption(Option("help", "", "Display help information on command line arguments.")
-                        .required(false).repeatable(false));
-    optionSet.addOption(Option("extension", "", "file format extension to convert to")
-                        .required(false).repeatable(false)
-                        .argument("format"));
-    optionSet.addOption(Option("outdir", "", "output directory for converted files")
-                        .required(false).repeatable(false).argument("outdir"));
-    optionSet.addOption(Option("parallelism", "", "number of simultaneous threads to use")
-                        .required(false).repeatable(false)
-                        .argument("threads"));
-    optionSet.addOption(Option("server", "", "URI of LOOL server")
-                        .required(false).repeatable(false)
-                        .argument("uri"));
-    optionSet.addOption(Option("no-check-certificate", "", "Disable checking of SSL certs")
-                        .required(false).repeatable(false));
+    stopOptionsProcessing();
 }
 
 void Tool::handleOption(const std::string& optionName,
                         const std::string& value)
 {
-    Application::handleOption(optionName, value);
-
     if (optionName == "help")
     {
         displayHelp();
         std::exit(Application::EXIT_OK);
     }
-    else if (optionName == "extension")
+    else if (optionName == "extension"
+             || optionName == "convert-to")
         _destinationFormat = value;
     else if (optionName == "outdir")
         _destinationDir = value;
@@ -219,8 +192,49 @@ void Tool::handleOption(const std::string& optionName,
     }
 }
 
-int Tool::main(const std::vector<std::string>& args)
+int Tool::main(const std::vector<std::string>& origArgs)
 {
+    std::vector<std::string> args = origArgs;
+
+    for (unsigned i = 0; i < origArgs.size(); ++i)
+    {
+        if (origArgs[i].length() > 0 && origArgs[i][0] != '-')
+            break;
+
+        // It's an option. Erase it from the file name vector.
+        args.erase(args.begin());
+
+        std::string optionName, value;
+
+        // Accept either one or two dashes, like LibreOffice.
+        if (origArgs[i].length() > 1 && origArgs[i][1] != '-')
+            optionName = origArgs[i].substr(1);
+        else if (origArgs[i].length() > 1 && origArgs[i][1] == '-')
+            optionName = origArgs[i].substr(2);
+        else
+            break;
+
+        std::string::size_type equals = optionName.find('=');
+
+        // Handle LibreOffice-compatible options that don't have their value separated with an equals,
+        // but as the next argument.
+        if (equals == std::string::npos
+            && (optionName == "convert-to"
+                || optionName == "outdir")
+            && i < origArgs.size()-1)
+        {
+            value = origArgs[i+1];
+            args.erase(args.begin());
+            ++i;
+        }
+        else if (equals != std::string::npos)
+        {
+            value = optionName.substr(equals+1);
+            optionName = optionName.substr(0, equals);
+        }
+        handleOption(optionName, value);
+    }
+
     if (args.empty())
     {
         std::cerr << "Nothing to do." << std::endl;
