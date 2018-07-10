@@ -76,6 +76,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     const std::string firstLine = getFirstLine(buffer, length);
     const std::vector<std::string> tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
+    checkTileRequestTimout();
+
     auto docBroker = getDocumentBroker();
     if (!docBroker)
     {
@@ -327,7 +329,13 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "tileprocessed")
     {
         if(_tilesOnFly > 0) // canceltiles message can zero this value
+        {
             --_tilesOnFly;
+            if(_tilesOnFly == 0)
+            {
+                _tileCounterStartTime = boost::none;
+            }
+        }
         docBroker->sendRequestedTiles(shared_from_this());
         return true;
     }
@@ -994,6 +1002,19 @@ Authorization ClientSession::getAuthorization() const
     return Authorization();
 }
 
+void ClientSession::setTilesOnFly(int tilesOnFly)
+{
+    _tilesOnFly = tilesOnFly;
+    if(tilesOnFly == 0)
+    {
+        _tileCounterStartTime = boost::none;
+    }
+    else
+    {
+        _tileCounterStartTime = std::chrono::steady_clock::now();
+    }
+}
+
 void ClientSession::onDisconnect()
 {
     LOG_INF(getName() << " Disconnected, current number of connections: " << LOOLWSD::NumConnections);
@@ -1127,6 +1148,19 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     {
         TileCombined tileCombined = TileCombined::create(invalidTiles);
         docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
+    }
+}
+
+void ClientSession::checkTileRequestTimout()
+{
+    if(_tileCounterStartTime != boost::none)
+    {
+        const auto duration = std::chrono::steady_clock::now() - _tileCounterStartTime.get();
+        if( std::chrono::duration_cast<std::chrono::seconds>(duration).count() > 5)
+        {
+            LOG_WRN("Tile request timeout: server waits too long for tileprocessed messages.");
+            _tileCounterStartTime = boost::none;
+        }
     }
 }
 
