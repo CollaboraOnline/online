@@ -96,7 +96,7 @@ public:
         Poco::URI uri(_app._serverURI);
 
         Poco::Net::HTTPClientSession *session;
-        if (_app._serverURI.compare(0, 5, "https"))
+        if (_app._serverURI.compare(0, 5, "https") == 0)
             session = new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
         else
             session = new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
