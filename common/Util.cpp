@@ -615,12 +615,26 @@ namespace Util
 
     static std::map<std::string, std::string> AnonymizedStrings;
     static std::atomic<unsigned> AnonymizationSalt(0);
+    static std::mutex AnonymizedMutex;
+
+    void mapAnonymized(const std::string& plain, const std::string& anonymized)
+    {
+        LOG_TRC("Anonymizing [" << plain << "] -> [" << anonymized << "].");
+
+        std::unique_lock<std::mutex> lock(AnonymizedMutex);
+
+        AnonymizedStrings[plain] = anonymized;
+    }
 
     std::string anonymize(const std::string& text)
     {
-        const auto it = AnonymizedStrings.find(text);
-        if (it != AnonymizedStrings.end())
-            return it->second;
+        {
+            std::unique_lock<std::mutex> lock(AnonymizedMutex);
+
+            const auto it = AnonymizedStrings.find(text);
+            if (it != AnonymizedStrings.end())
+                return it->second;
+        }
 
         // We just need something irreversible, short, and
         // quite simple.
@@ -631,7 +645,7 @@ namespace Util
         // Generate the anonymized string. The '#' is to hint that it's anonymized.
         // Prepend with salt to make it unique, in case we get collisions (which we will, eventually).
         const std::string res = '#' + Util::encodeId(AnonymizationSalt++, 0) + '#' + Util::encodeId(hash, 0) + '#';
-        AnonymizedStrings[text] = res;
+        mapAnonymized(text, res);
         return res;
     }
 
@@ -650,6 +664,16 @@ namespace Util
             basename = filename;
 
         return Util::anonymize(basename) + ext;
+    }
+
+    std::string getFilenameFromPath(const std::string& path)
+    {
+        const std::size_t mid = path.find_last_of('/');
+        if (mid != std::string::npos)
+            return path.substr(mid + 1);
+
+        // No path, treat as filename only.
+        return path;
     }
 
     std::string anonymizeUrl(const std::string& url)

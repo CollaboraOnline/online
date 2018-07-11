@@ -163,6 +163,10 @@ void Session::parseDocOptions(const std::vector<std::string>& tokens, int& part,
         }
     }
 
+    Util::mapAnonymized(_userId, _userIdAnonym);
+    Util::mapAnonymized(_userName, _userNameAnonym);
+    Util::mapAnonymized(_jailedFilePath, _jailedFilePathAnonym);
+
     if (tokens.size() > offset)
     {
         if (getTokenString(tokens[offset], "options", _docOptions))

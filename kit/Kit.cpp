@@ -115,6 +115,7 @@ static std::shared_ptr<Document> document;
 #ifndef BUILDING_TESTS
 static bool AnonymizeFilenames = false;
 static bool AnonymizeUsernames = false;
+static std::string ObfuscatedFileId;
 static std::string ObfuscatedUserId;
 #endif
 
@@ -2099,6 +2100,8 @@ protected:
             const std::string& sessionId = tokens[1];
             const std::string& docKey = tokens[2];
             const std::string& docId = tokens[3];
+            const std::string fileId = Util::getFilenameFromPath(docKey);
+            Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
             std::string url;
             URI::decode(docKey, url);

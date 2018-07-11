@@ -481,7 +481,6 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     {
         std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(session->getAuthorization());
         userId = wopifileinfo->_userId;
-        LOOLWSD::ObfuscatedUserId = wopifileinfo->_obfuscatedUserId;
         username = wopifileinfo->_username;
         userExtraInfo = wopifileinfo->_userExtraInfo;
         watermarkText = wopifileinfo->_watermarkText;
@@ -1071,7 +1070,7 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
     const std::string id = session->getId();
 
     // Request a new session from the child kit.
-    const std::string aMessage = "session " + id + ' ' + _docKey + ' ' + _docId + ' ' + LOOLWSD::ObfuscatedUserId;
+    const std::string aMessage = "session " + id + ' ' + _docKey + ' ' + _docId;
     _childProcess->sendTextFrame(aMessage);
 
 #ifndef MOBILEAPP
@@ -1839,7 +1838,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     uint64_t sent, recv;
     getIOStats(sent, recv);
 
-    os << " Broker: " << _filename << " pid: " << getPid();
+    os << " Broker: " << LOOLWSD::anonymizeUrl(_filename) << " pid: " << getPid();
     if (_markToDestroy)
         os << " *** Marked to destroy ***";
     else
@@ -1852,9 +1851,9 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  recv: " << recv;
     os << "\n  modified?: " << _isModified;
     os << "\n  jail id: " << _jailId;
-    os << "\n  filename: " << _filename;
+    os << "\n  filename: " << LOOLWSD::anonymizeUrl(_filename);
     os << "\n  public uri: " << _uriPublic.toString();
-    os << "\n  jailed uri: " << _uriJailed;
+    os << "\n  jailed uri: " << LOOLWSD::anonymizeUrl(_uriJailed);
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();

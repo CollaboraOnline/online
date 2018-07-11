@@ -671,7 +671,6 @@ std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
 std::string LOOLWSD::LogLevel = "trace";
 bool LOOLWSD::AnonymizeFilenames = false;
 bool LOOLWSD::AnonymizeUsernames = false;
-std::string LOOLWSD::ObfuscatedUserId;
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 unsigned LOOLWSD::MaxConnections;
@@ -806,8 +805,7 @@ void LOOLWSD::initialize(Application& self)
             { "tile_cache_persistent", "true" },
             { "trace.path[@compress]", "true" },
             { "trace.path[@snapshot]", "false" },
-            { "trace[@enable]", "false" }
-          };
+            { "trace[@enable]", "false" } };
 
     // Set default values, in case they are missing from the config file.
     AutoPtr<AppConfigMap> defConfig(new AppConfigMap(DefAppConfig));
@@ -2243,18 +2241,18 @@ private:
                 Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
                 const std::string docKey = DocumentBroker::getDocKey(uriPublic);
 
-                    // This lock could become a bottleneck.
-                    // In that case, we can use a pool and index by publicPath.
-                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+                // This lock could become a bottleneck.
+                // In that case, we can use a pool and index by publicPath.
+                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
-                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
+                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
 
-                    cleanupDocBrokers();
+                cleanupDocBrokers();
 
-                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    DocBrokers.emplace(docKey, docBroker);
-                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                DocBrokers.emplace(docKey, docBroker);
+                LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
 
                 // Load the document.
                 // TODO: Move to DocumentBroker.
@@ -2303,7 +2301,7 @@ private:
                             std::vector<char> saveasRequest(saveas.begin(), saveas.end());
                             clientSession->handleMessage(true, WSOpCode::Text, saveasRequest);
                         });
-                        });
+                    });
 
                     sent = true;
                 }
@@ -2481,8 +2479,10 @@ private:
 
             const Poco::URI uriPublic = DocumentBroker::sanitizeURI(url);
             const std::string docKey = DocumentBroker::getDocKey(uriPublic);
+            const std::string fileId = Util::getFilenameFromPath(docKey);
+            Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
             LOG_INF("Sanitized URI [" << LOOLWSD::anonymizeUrl(url) << "] to [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) <<
-                    "] and mapped to docKey [" << docKey << "] for session [" << _id << "].");
+                     "] and mapped to docKey [" << docKey << "] for session [" << _id << "].");
 
             // Check if readonly session is required
             bool isReadOnly = false;
@@ -2875,6 +2875,7 @@ private:
 #endif
             factory = std::make_shared<PlainSocketFactory>();
 
+
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ClientListenAddr, port, WebServerPoll, factory);
 #ifdef BUILDING_TESTS
@@ -2952,11 +2953,13 @@ int LOOLWSD::innerMain()
         LOG_FTL("Missing --systemplate option");
         throw MissingOptionException("systemplate");
     }
+
     if (LoTemplate.empty())
     {
         LOG_FTL("Missing --lotemplate option");
         throw MissingOptionException("lotemplate");
     }
+
     if (ChildRoot.empty())
     {
         LOG_FTL("Missing --childroot option");
