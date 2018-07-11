@@ -150,7 +150,7 @@ public:
             }
             else if (errno != EAGAIN && errno != EWOULDBLOCK)
             {
-                DELAY_LOG("#" << getFD() << " error : " << errno << " " << strerror(errno) << "\n");
+                DELAY_LOG("#" << getFD() << " error : " << Util::symbolicErrno(errno) << ": " << strerror(errno) << "\n");
                 changeState(Closed); // FIXME - propagate the error ?
             }
         }
@@ -189,8 +189,8 @@ public:
                             DELAY_LOG("#" << getFD() << " failed onwards write "
                                       << len << "bytes of "
                                       << chunk->_data.size()
-                                      << " queue: " << _chunks.size() << " error "
-                                      << strerror(errno) << "\n");
+                                      << " queue: " << _chunks.size() << " error: "
+                                      << Util::symbolicErrno(errno) << ": " << strerror(errno) << "\n");
                             changeState(Closed);
                         }
                     }

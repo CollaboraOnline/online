@@ -240,7 +240,7 @@ static void killPids(const std::vector<int> &pids, const std::string& testname)
     {
         TST_LOG_BEGIN("Killing " << pid);
         if (kill(pid, SIGKILL) == -1)
-            TST_LOG_APPEND("kill(" << pid << ", SIGKILL) failed: " << std::strerror(errno));
+            TST_LOG_APPEND("kill(" << pid << ", SIGKILL) failed: " << Util::symbolicErrno(errno) << ": " << std::strerror(errno));
         TST_LOG_END;
     }
 }

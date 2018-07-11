@@ -269,7 +269,7 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
     {
         // Failed
         LOG_WRN("link(\"" << publicFilePath << "\", \"" << _jailedFilePath << "\") failed. Will copy. "
-                "Linking error: " << errno << " " << strerror(errno));
+                "Linking error: " << Util::symbolicErrno(errno) << " " << strerror(errno));
     }
 
     try

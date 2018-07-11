@@ -23,6 +23,8 @@
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/Logger.h>
 
+#include "Util.hpp"
+
 inline std::ostream& operator<< (std::ostream& os, const Poco::Timestamp& ts)
 {
     os << Poco::DateTimeFormatter::format(Poco::DateTime(ts),
@@ -220,9 +222,9 @@ namespace Log
 #define LOG_INF(X) do { auto& l_ = Log::logger(); if (l_.information()) { LOG_BODY_(INFORMATION, "INF", X); } } while (false)
 #define LOG_WRN(X) do { auto& l_ = Log::logger(); if (l_.warning()) { LOG_BODY_(WARNING, "WRN", X); } } while (false)
 #define LOG_ERR(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(ERROR, "ERR", X); } } while (false)
-#define LOG_SYS(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(ERROR, "ERR", X << " (errno: " << std::strerror(errno) << ")"); } } while (false)
+#define LOG_SYS(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(ERROR, "ERR", X << " (" << Util::symbolicErrno(errno) << ": " << std::strerror(errno) << ")"); } } while (false)
 #define LOG_FTL(X) do { auto& l_ = Log::logger(); if (l_.fatal()) { LOG_BODY_(FATAL, "FTL", X); } } while (false)
-#define LOG_SFL(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(FATAL, "FTL", X << " (errno: " << std::strerror(errno) << ")"); } } while (false)
+#define LOG_SFL(X) do { auto& l_ = Log::logger(); if (l_.error()) { LOG_BODY_(FATAL, "FTL", X << " (" << Util::symbolicErrno(errno) << ": " << std::strerror(errno) << ")"); } } while (false)
 
 #define LOG_END(l) do { l << __FILE__ << ':' << __LINE__; l.flush(); } while (false)
 
