@@ -1187,6 +1187,10 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
 
             if (retry)
             {
+                LOG_DBG("Retry: calling LOK's saveAs with: '" << url.c_str() << "', '" <<
+                        (format.size() == 0 ? "(nullptr)" : format.c_str()) << "', '" <<
+                        (filterOptions.size() == 0 ? "(nullptr)" : filterOptions.c_str()) << "'.");
+
                 success = getLOKitDocument()->saveAs(url.c_str(),
                         format.size() == 0 ? nullptr :format.c_str(),
                         filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
