@@ -474,7 +474,15 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         // Anonymize key values.
         if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
         {
+            Util::mapAnonymized(filename, Util::getFilenameFromPath(_uri.toString()));
+
             JsonUtil::findJSONValue(object, "ObfuscatedUserId", obfuscatedUserId, false);
+            if (!obfuscatedUserId.empty())
+            {
+                Util::mapAnonymized(ownerId, obfuscatedUserId);
+                Util::mapAnonymized(userId, obfuscatedUserId);
+                Util::mapAnonymized(userName, obfuscatedUserId);
+            }
 
             // Set anonymized version of the above fields before logging.
             // Note: anonymization caches the result, so we don't need to store here.

@@ -322,8 +322,15 @@ namespace Util
     /// Called on strings to be logged or exposed.
     std::string anonymize(const std::string& text);
 
+    /// Sets the anonymized version of a given plain-text string.
+    /// After this, 'anonymize(plain)' will return 'anonymized'.
+    void mapAnonymized(const std::string& plain, const std::string& anonymized);
+
     /// Anonymize the basename of filenames only, preserving the path and extension.
     std::string anonymizeUrl(const std::string& url);
+
+    /// Extract and return the filename given a path (i.e. the token after last '/').
+    std::string getFilenameFromPath(const std::string& path);
 
     /// Given one or more patterns to allow, and one or more to deny,
     /// the match member will return true if, and only if, the subject
