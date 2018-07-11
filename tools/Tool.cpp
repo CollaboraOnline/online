@@ -30,7 +30,6 @@
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
-#include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 
@@ -68,7 +67,6 @@ using Poco::Runnable;
 using Poco::Thread;
 using Poco::URI;
 using Poco::Util::Application;
-using Poco::Util::HelpFormatter;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
 
@@ -154,11 +152,17 @@ Tool::Tool() :
 
 void Tool::displayHelp()
 {
-    HelpFormatter helpFormatter(options());
-    helpFormatter.setCommand(commandName());
-    helpFormatter.setUsage("OPTIONS FILE(S)");
-    helpFormatter.setHeader("LibreOffice Online document converter tool.");
-    helpFormatter.format(std::cout);
+    std::cout << "LibreOffice Online document converter tool.\n"
+              << "Usage: " << commandName() << " [options] file...\n"
+              << "Options are:\n"
+              << "  --help                      Show this text\n"
+              << "  --extension=format          File format to convert to\n"
+              << "  --outdir=directory          Output directory for converted files\n"
+              << "  --parallelism=threads       Number of simultaneous threads to use\n"
+              << "  --server=uri                URI of LOOL server\n"
+              << "  --no-check-certificate      Disable checking of SSL certificate\n"
+              << "In addition, the options taken by the libreoffice command for its --convert-to\n"
+              << "functionality can be used (but are ignored if irrelevant to this command)." << std::endl;
 }
 
 void Tool::defineOptions(OptionSet&)
