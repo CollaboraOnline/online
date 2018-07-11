@@ -619,14 +619,18 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         {
             if (errorCommand == "load")
             {
+                LOG_WRN("Document load failed: " << errorKind);
                 if (errorKind == "passwordrequired:to-view" ||
                     errorKind == "passwordrequired:to-modify" ||
                     errorKind == "wrongpassword")
                 {
                     forwardToClient(payload);
-                    LOG_WRN("Document load failed: " << errorKind);
                     return false;
                 }
+            }
+            else
+            {
+                LOG_WRN("Other than load failure: " << errorKind);
             }
         }
     }
