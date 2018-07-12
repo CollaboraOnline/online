@@ -351,7 +351,6 @@ all-local: loolforkit @TILECACHE_PATH@ @JAILS_PATH@ $(SYSTEM_STAMP)
 if ENABLE_SETCAP
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit
 	    sudo @SETCAP@ cap_sys_admin=ep loolmount
-	    echo "Set required capabilities"
 else
 	    echo "Skipping capability setting"
 endif
