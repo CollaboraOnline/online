@@ -122,7 +122,7 @@ def extractToolbarCommands(path):
     commands = []
 
     # extract from the menu specifications
-    f = open(path + '/loleaflet/dist/toolbar/toolbar.js', 'r')
+    f = open(path + '/loleaflet/js/toolbar.js', 'r')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
@@ -201,7 +201,7 @@ def writeUnocommandsJS(onlineDir, lofficeDir, menuCommands, contextCommands, too
             descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, toolbarCommands, 'Label', type)
 
     # output the unocommands.js
-    f = open(onlineDir + '/loleaflet/unocommands.js', 'w')
+    f = open(onlineDir + '/loleaflet/src/unocommands.js', 'w')
     f.write('''// Don't modify, generated using unocommands.py
 
 var unoCommandsArray = {\n''')
