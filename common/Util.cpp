@@ -549,6 +549,9 @@ namespace Util
 
     void mapAnonymized(const std::string& plain, const std::string& anonymized)
     {
+        if (plain.empty() || anonymized.empty())
+            return;
+
         LOG_TRC("Anonymizing [" << plain << "] -> [" << anonymized << "].");
 
         std::unique_lock<std::mutex> lock(AnonymizedMutex);
@@ -563,7 +566,10 @@ namespace Util
 
             const auto it = AnonymizedStrings.find(text);
             if (it != AnonymizedStrings.end())
+            {
+                LOG_TRC("Found anonymized [" << text << "] -> [" << it->second << "].");
                 return it->second;
+            }
         }
 
         // We just need something irreversible, short, and

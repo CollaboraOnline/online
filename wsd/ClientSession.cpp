@@ -309,12 +309,12 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             std::string encodedUserId;
             Poco::URI::encode(_userId, "", encodedUserId);
             oss << " authorid=" << encodedUserId;
-            oss << " xauthorid=" << LOOLWSD::anonymizeUsername(encodedUserId);
+            oss << " xauthorid=" << LOOLWSD::anonymizeUsername(_userId);
 
             std::string encodedUserName;
             Poco::URI::encode(_userName, "", encodedUserName);
             oss << " author=" << encodedUserName;
-            oss << " xauthor=" << LOOLWSD::anonymizeUsername(encodedUserName);
+            oss << " xauthor=" << LOOLWSD::anonymizeUsername(_userName);
         }
 
         if (!_userExtraInfo.empty())
