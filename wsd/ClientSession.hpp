@@ -26,7 +26,9 @@ public:
     ClientSession(const std::string& id,
                   const std::shared_ptr<DocumentBroker>& docBroker,
                   const Poco::URI& uriPublic,
-                  const bool isReadOnly = false);
+                  const bool isReadOnly = false,
+                  const bool creatingPngThumbnail = false,
+                  const std::string& thumbnailFile = "");
 
     virtual ~ClientSession();
 
@@ -146,6 +148,14 @@ private:
 
     /// URI with which client made request to us
     const Poco::URI _uriPublic;
+
+    /// True iff this is a convert-to operation creating a PNG. We assume all such PNGs will be
+    /// usable as "thumbnails" for the document.
+    const bool _creatingPngThumbnail;
+
+    /// The pathname of the thumbnail file being created. Valid only if _creatingPngThumbnail is
+    /// true.
+    const std::string _thumbnailFile;
 
     /// Whether this session is the owner of currently opened document
     bool _isDocumentOwner;

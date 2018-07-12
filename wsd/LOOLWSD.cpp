@@ -49,14 +49,15 @@
 #include <sstream>
 #include <thread>
 
+#include <Poco/DateTimeFormatter.h>
+#include <Poco/DigestStream.h>
+#include <Poco/DirectoryIterator.h>
 #include <Poco/DOM/AutoPtr.h>
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/DOMWriter.h>
 #include <Poco/DOM/Document.h>
 #include <Poco/DOM/Element.h>
 #include <Poco/DOM/NodeList.h>
-#include <Poco/DateTimeFormatter.h>
-#include <Poco/DirectoryIterator.h>
 #include <Poco/Environment.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
@@ -76,6 +77,7 @@
 #include <Poco/Pipe.h>
 #include <Poco/Process.h>
 #include <Poco/SAX/InputSource.h>
+#include <Poco/SHA1Engine.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/TemporaryFile.h>
@@ -1517,7 +1519,9 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
                                                              const std::string& id,
                                                              const Poco::URI& uriPublic,
                                                              const std::shared_ptr<DocumentBroker>& docBroker,
-                                                             const bool isReadOnly)
+                                                             const bool isReadOnly,
+                                                             const bool creatingPngThumbnail,
+                                                             const std::string& thumbnailFile)
 {
     LOG_CHECK_RET(docBroker && "Null docBroker instance", nullptr);
     try
@@ -1533,7 +1537,7 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
         // In case of WOPI, if this session is not set as readonly, it might be set so
         // later after making a call to WOPI host which tells us the permission on files
         // (UserCanWrite param).
-        return std::make_shared<ClientSession>(id, docBroker, uriPublic, isReadOnly);
+        return std::make_shared<ClientSession>(id, docBroker, uriPublic, isReadOnly, creatingPngThumbnail, thumbnailFile);
     }
     catch (const std::exception& exc)
     {
@@ -2049,7 +2053,52 @@ private:
             bool sent = false;
             if (!fromPath.empty() && !format.empty())
             {
-                LOG_INF("Conversion request for URI [" << fromPath << "].");
+                LOG_INF("Conversion request for file [" << fromPath << "].");
+
+                std::string thumbnailFile;
+                if (format == "png")
+                {
+                    // Check whether we already have a cached "thumbnail" for this document.
+
+                    // FIXME: We could here check if the document is such that already contains an
+                    // easily extractable thumbnail, like Thubnails/thumbnail.png in ODF documents,
+                    // and extract and return that.
+
+                    std::ifstream istr(fromPath, std::ios::binary);
+                    if (istr.is_open() && istr.good())
+                    {
+                        Poco::SHA1Engine sha1;
+                        Poco::DigestOutputStream dos(sha1);
+                        Poco::StreamCopier::copyStream(istr, dos);
+                        if (!istr.bad())
+                        {
+                            istr.close();
+                            dos.close();
+                            std::string digest = Poco::DigestEngine::digestToHex(sha1.digest());
+                            thumbnailFile = LOOLWSD::Cache + "/thumbnails/" + digest.substr(0, 2) + "/"
+                                + digest.substr(2, 2) + "/" + digest.substr(4) + ".png";
+
+                            istr.open(thumbnailFile, std::ios::binary);
+                            if (istr.is_open() && istr.good())
+                            {
+                                std::string png;
+                                Poco::StreamCopier::copyToString(istr, png);
+                                if (!istr.bad())
+                                {
+                                    LOG_TRC("Found cached thumbnail " << thumbnailFile);
+
+                                    response.set("Content-Disposition", "attachment; filename=\"" + digest + ".png\"");
+                                    response.setContentType("image/png");
+                                    response.setContentLength(png.size());
+                                    socket->send(response);
+                                    socket->send(png.data(), png.size(), true);
+
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
 
                 Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
                 const std::string docKey = DocumentBroker::getDocKey(uriPublic);
@@ -2070,7 +2119,8 @@ private:
                 // Load the document.
                 // TODO: Move to DocumentBroker.
                 const bool isReadOnly = true;
-                std::shared_ptr<ClientSession> clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker, isReadOnly);
+                std::shared_ptr<ClientSession> clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker,
+                                                                                      isReadOnly, format == "png", thumbnailFile);
                 if (clientSession)
                 {
                     disposition.setMove([docBroker, clientSession, format]
@@ -2309,7 +2359,7 @@ private:
             std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
             if (docBroker)
             {
-                std::shared_ptr<ClientSession> clientSession = createNewClientSession(&ws, _id, uriPublic, docBroker, isReadOnly);
+                std::shared_ptr<ClientSession> clientSession = createNewClientSession(&ws, _id, uriPublic, docBroker, isReadOnly, false, "");
                 if (clientSession)
                 {
                     // Transfer the client socket to the DocumentBroker when we get back to the poll:

@@ -13,6 +13,7 @@
 
 #include <fstream>
 
+#include <Poco/File.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
@@ -35,15 +36,20 @@ using Poco::StringTokenizer;
 ClientSession::ClientSession(const std::string& id,
                              const std::shared_ptr<DocumentBroker>& docBroker,
                              const Poco::URI& uriPublic,
-                             const bool readOnly) :
+                             const bool readOnly,
+                             const bool creatingPngThumbnail,
+                             const std::string& thumbnailFile) :
     Session("ToClient-" + id, id, readOnly),
     _docBroker(docBroker),
     _uriPublic(uriPublic),
+    _creatingPngThumbnail(creatingPngThumbnail),
+    _thumbnailFile(thumbnailFile),
     _isDocumentOwner(false),
     _isAttached(false),
     _isViewLoaded(false),
     _keyEvents(1)
 {
+    assert(!creatingPngThumbnail || thumbnailFile != "");
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
 }
@@ -722,6 +728,41 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                     response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 
                 HttpHelper::sendFile(_saveAsSocket, encodedFilePath, mimeType, response);
+
+                if (_creatingPngThumbnail)
+                {
+                    // Save the created PNG "thumbnail" under a name constructed from the SHA1 of
+                    // the document contents.
+
+                    // FIXME: We could first try to simply hardlink the result as the thumbnail.
+
+                    Poco::File(Poco::Path(_thumbnailFile).parent()).createDirectories();
+                    std::ofstream thumbnail(_thumbnailFile, std::ios::binary);
+
+                    if (thumbnail.is_open() && thumbnail.good())
+                    {
+                        std::ifstream result(resultURL.getPath(), std::ios::binary);
+                        if (result.is_open() && result.good())
+                        {
+                            Poco::StreamCopier::copyStream(result, thumbnail);
+                            if (!result.bad() && thumbnail.good())
+                            {
+                                LOG_TRC("Created cached thumbnail " << _thumbnailFile);
+                            }
+                            else
+                            {
+                                thumbnail.close();
+                                unlink(_thumbnailFile.c_str());
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (thumbnail.is_open())
+                            thumbnail.close();
+                        unlink(_thumbnailFile.c_str());
+                    }
+                }
             }
 
             // Conversion is done, cleanup this fake session.
