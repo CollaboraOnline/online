@@ -91,6 +91,8 @@
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/Util/XMLConfiguration.h>
+#include <Poco/Zip/ZipArchive.h>
+#include <Poco/Zip/ZipStream.h>
 
 #include "Admin.hpp"
 #include "Auth.hpp"
@@ -2058,15 +2060,49 @@ private:
                 std::string thumbnailFile;
                 if (format == "png")
                 {
-                    // Check whether we already have a cached "thumbnail" for this document.
-
-                    // FIXME: We could here check if the document is such that already contains an
-                    // easily extractable thumbnail, like Thubnails/thumbnail.png in ODF documents,
-                    // and extract and return that.
-
                     std::ifstream istr(fromPath, std::ios::binary);
                     if (istr.is_open() && istr.good())
                     {
+                        // Check whether it is an ODF document with an embedded PNG thumbnail.
+
+                        try
+                        {
+                            Poco::Zip::ZipArchive zip(istr);
+                            auto thumbnailHeader = zip.findHeader("Thumbnails/thumbnail.png");
+                            if (thumbnailHeader != zip.headerEnd() && thumbnailHeader->second.isFile())
+                            {
+                                Poco::Zip::ZipStreamBuf thumbnailStreamBuf(istr, thumbnailHeader->second, true);
+                                std::istream thumbnailStream(&thumbnailStreamBuf);
+                                if (thumbnailStream.good())
+                                {
+                                    std::string png;
+                                    Poco::StreamCopier::copyToString(thumbnailStream, png);
+                                    if (!thumbnailStream.bad())
+                                    {
+                                        LOG_TRC("Extracted thumbnail from ODF document");
+
+                                        response.set("Content-Disposition", "attachment; filename=\"thumbnail.png\"");
+                                        response.setContentType("image/png");
+                                        response.setContentLength(png.size());
+                                        socket->send(response);
+                                        socket->send(png.data(), png.size(), true);
+
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                        catch (Poco::Exception&)
+                        {
+                        }
+
+                        // Close and re-open istr after the Zip stuff above to get it into a known
+                        // good state.
+                        istr.close();
+                        istr.open(fromPath, std::ios::binary);
+
+                        // Look for cached thumbnail.
+
                         Poco::SHA1Engine sha1;
                         Poco::DigestOutputStream dos(sha1);
                         Poco::StreamCopier::copyStream(istr, dos);
