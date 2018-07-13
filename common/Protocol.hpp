@@ -22,6 +22,8 @@
 
 #include <Poco/Net/WebSocket.h>
 
+#include <Util.hpp>
+
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
@@ -145,45 +147,11 @@ namespace LOOLProtocol
         return getTokenInteger(tokenize(message), name, value);
     }
 
-    inline size_t getDelimiterPosition(const char* message, const int length, const char delim)
-    {
-        if (message && length > 0)
-        {
-            const char *founddelim = static_cast<const char *>(std::memchr(message, delim, length));
-            const size_t size = (founddelim == nullptr ? length : founddelim - message);
-            return size;
-        }
-
-        return 0;
-    }
-
-    inline
-    std::string getDelimitedInitialSubstring(const char *message, const int length, const char delim)
-    {
-        const size_t size = getDelimiterPosition(message, length, delim);
-        return std::string(message, size);
-    }
-
-    /// Split a string in two at the delimeter, removing it.
-    inline
-    std::pair<std::string, std::string> split(const char* s, const int length, const char delimeter = ' ')
-    {
-        const size_t size = getDelimiterPosition(s, length, delimeter);
-        return std::make_pair(std::string(s, size), std::string(s+size+1));
-    }
-
-    /// Split a string in two at the delimeter, removing it.
-    inline
-    std::pair<std::string, std::string> split(const std::string& s, const char delimeter = ' ')
-    {
-        return split(s.c_str(), s.size(), delimeter);
-    }
-
     /// Returns the first token of a message.
     inline
     std::string getFirstToken(const char *message, const int length, const char delim = ' ')
     {
-        return getDelimitedInitialSubstring(message, length, delim);
+        return Util::getDelimitedInitialSubstring(message, length, delim);
     }
 
     template <typename T>
@@ -247,7 +215,7 @@ namespace LOOLProtocol
     inline
     std::string getFirstLine(const char *message, const int length)
     {
-        return getDelimitedInitialSubstring(message, length, '\n');
+        return Util::getDelimitedInitialSubstring(message, length, '\n');
     }
 
     /// Returns the first line of any data which payload char*.
@@ -283,7 +251,7 @@ namespace LOOLProtocol
 
     inline std::string getAbbreviatedMessage(const std::string& message)
     {
-        const size_t pos = getDelimiterPosition(message.data(), std::min(message.size(), 500UL), '\n');
+        const size_t pos = Util::getDelimiterPosition(message.data(), std::min(message.size(), 501UL), '\n');
 
         // If first line is less than the length (minus newline), add ellipsis.
         if (pos < static_cast<std::string::size_type>(message.size()) - 1)

@@ -869,7 +869,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         else
         {
             // Set the initial settings per the user's request.
-            const std::pair<std::string, std::string> unoStatePair = LOOLProtocol::split(tokens[1], '=');
+            const std::pair<std::string, std::string> unoStatePair = Util::split(tokens[1], '=');
 
             if (!docBroker->isInitialSettingSet(unoStatePair.first))
             {

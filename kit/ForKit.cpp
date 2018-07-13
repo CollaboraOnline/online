@@ -452,7 +452,7 @@ int main(int argc, char** argv)
             std::vector<std::string> tokens = LOOLProtocol::tokenize(rlimits, ';');
             for (const std::string& cmdLimit : tokens)
             {
-                const std::pair<std::string, std::string> pair = LOOLProtocol::split(cmdLimit, ':');
+                const std::pair<std::string, std::string> pair = Util::split(cmdLimit, ':');
                 std::vector<std::string> tokensLimit = { "setconfig", pair.first, pair.second };
                 if (!Rlimit::handleSetrlimitCommand(tokensLimit))
                 {
