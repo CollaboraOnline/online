@@ -144,11 +144,11 @@ void WhiteBoxTests::testLOOLProtocolFunctions()
 
 void WhiteBoxTests::testMessageAbbreviation()
 {
-    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getDelimitedInitialSubstring(nullptr, 5, '\n'));
-    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getDelimitedInitialSubstring(nullptr, -1, '\n'));
-    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getDelimitedInitialSubstring("abc", 0, '\n'));
-    CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getDelimitedInitialSubstring("abc", -1, '\n'));
-    CPPUNIT_ASSERT_EQUAL(std::string("ab"), LOOLProtocol::getDelimitedInitialSubstring("abc", 2, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, 5, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, -1, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", 0, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", -1, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string("ab"), Util::getDelimitedInitialSubstring("abc", 2, '\n'));
 
     CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getAbbreviatedMessage(nullptr, 5));
     CPPUNIT_ASSERT_EQUAL(std::string(), LOOLProtocol::getAbbreviatedMessage(nullptr, -1));
