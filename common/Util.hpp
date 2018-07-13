@@ -310,6 +310,40 @@ namespace Util
         return false;
     }
 
+    inline size_t getDelimiterPosition(const char* message, const int length, const char delim)
+    {
+        if (message && length > 0)
+        {
+            const char *founddelim = static_cast<const char *>(std::memchr(message, delim, length));
+            const auto size = (founddelim == nullptr ? length : founddelim - message);
+            return size;
+        }
+
+        return 0;
+    }
+
+    inline
+    std::string getDelimitedInitialSubstring(const char *message, const int length, const char delim)
+    {
+        const auto size = getDelimiterPosition(message, length, delim);
+        return std::string(message, size);
+    }
+
+    /// Split a string in two at the delimeter, removing it.
+    inline
+    std::pair<std::string, std::string> split(const char* s, const int length, const char delimeter = ' ')
+    {
+        const auto size = getDelimiterPosition(s, length, delimeter);
+        return std::make_pair(std::string(s, size), std::string(s+size+1));
+    }
+
+    /// Split a string in two at the delimeter, removing it.
+    inline
+    std::pair<std::string, std::string> split(const std::string& s, const char delimeter = ' ')
+    {
+        return split(s.c_str(), s.size(), delimeter);
+    }
+
     /// Check for the URI scheme validity.
     /// For now just a basic sanity check, can be extended if necessary.
     bool isValidURIScheme(const std::string& scheme);
