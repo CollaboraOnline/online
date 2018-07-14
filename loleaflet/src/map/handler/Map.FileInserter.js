@@ -66,7 +66,12 @@ L.Map.FileInserter = L.Handler.extend({
 		var formData = new FormData();
 		formData.append('name', name);
 		formData.append('childid', this._childId);
-		formData.append('file', file);
+		if (file.filename && file.url) {
+			formData.append('url', file.url);
+			formData.append('filename', file.filename);
+		} else {
+			formData.append('file', file);
+		}
 		xmlHttp.send(formData);
 	}
 });

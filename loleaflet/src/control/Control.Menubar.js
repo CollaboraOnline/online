@@ -62,6 +62,7 @@ L.Control.Menubar = L.Control.extend({
 			},
 			{name: _UNO('.uno:InsertMenu', 'text'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphic', type: 'action'},
+				{name: _('Remote Image...'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
@@ -677,6 +678,8 @@ L.Control.Menubar = L.Control.extend({
 			map.insertComment();
 		} else if (id === 'insertgraphic') {
 			L.DomUtil.get('insertgraphic').click();
+		} else if (id === 'insertgraphicremote') {
+			map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 		} else if (id === 'zoomin' && map.getZoom() < map.getMaxZoom()) {
 			map.zoomIn(1);
 		} else if (id === 'zoomout' && map.getZoom() > map.getMinZoom()) {

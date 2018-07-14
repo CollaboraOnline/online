@@ -215,6 +215,11 @@ L.Map.WOPI = L.Handler.extend({
 				this._map.downloadAs(filename + '.' + format, format);
 			}
 		}
+		else if (msg.MessageId == 'Action_InsertGraphic') {
+			if (msg.Values) {
+				this._map.insertFile(msg.Values);
+			}
+		}
 		else if (msg.MessageId === 'Action_ShowBusy') {
 			if (msg.Values && msg.Values.Label) {
 				this._map.fire('showbusy', {label: msg.Values.Label});
