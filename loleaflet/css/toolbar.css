@@ -270,18 +270,18 @@ button.leaflet-control-search-next
     border: 1px solid #888;
 }
 
-.w2ui-icon.basicshapes_rectangle { background: url('images/lc_basicshapes.rectangle.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_round-rectangle { background: url('images/lc_basicshapes.round-rectangle.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_quadrat { background: url('images/lc_basicshapes.quadrat.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_rectangle { background: url('images/lc_rect.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_round-rectangle { background: url('images/lc_rect_rounded.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_quadrat { background: url('images/lc_square.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_round-quadrat { background: url('images/lc_basicshapes.round-quadrat.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_circle { background: url('images/lc_basicshapes.circle.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_ellipse { background: url('images/lc_basicshapes.ellipse.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_circle-pie { background: url('images/lc_basicshapes.circle-pie.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_circle { background: url('images/lc_circle.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_ellipse { background: url('images/lc_ellipse.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_circle-pie { background: url('images/lc_pie.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_isosceles-triangle { background: url('images/lc_basicshapes.isosceles-triangle.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_right-triangle { background: url('images/lc_basicshapes.right-triangle.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_trapezoid { background: url('images/lc_basicshapes.trapezoid.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_diamond { background: url('images/lc_basicshapes.diamond.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_parallelogram { background: url('images/lc_basicshapes.parallelogram.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_parallelogram { background: url('images/lc_flowchartshapes.flowchart-data.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_pentagon { background: url('images/lc_basicshapes.pentagon.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_hexagon { background: url('images/lc_basicshapes.hexagon.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_octagon { background: url('images/lc_basicshapes.octagon.svg') no-repeat center !important; }
@@ -289,9 +289,9 @@ button.leaflet-control-search-next
 .w2ui-icon.basicshapes_ring { background: url('images/lc_basicshapes.ring.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_block-arc { background: url('images/lc_basicshapes.block-arc.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_can { background: url('images/lc_basicshapes.can.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_cube { background: url('images/lc_basicshapes.cube.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_cube { background: url('images/lc_cube.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_paper { background: url('images/lc_basicshapes.paper.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_frame { background: url('images/lc_basicshapes.frame.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_frame { background: url('images/lc_rect_unfilled.svg') no-repeat center !important; }
 
 .w2ui-icon.symbolshapes { background: url('images/lc_symbolshapes.svg') no-repeat center !important; }
 .w2ui-icon.symbolshapes_sun { background: url('images/lc_symbolshapes.sun.svg') no-repeat center !important; }
@@ -316,7 +316,7 @@ button.leaflet-control-search-next
 .w2ui-icon.arrowshapes_right-arrow { background: url('images/lc_arrowshapes.right-arrow.svg') no-repeat center !important; }
 .w2ui-icon.arrowshapes_up-arrow { background: url('images/lc_arrowshapes.up-arrow.svg') no-repeat center !important; }
 .w2ui-icon.arrowshapes_down-arrow { background: url('images/lc_arrowshapes.down-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_left-right-arrow { background: url('images/lc_arrowshapes.left-right-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_left-right-arrow { background: url('images/lc_arrowshapes.svg') no-repeat center !important; }
 .w2ui-icon.arrowshapes_up-down-arrow { background: url('images/lc_arrowshapes.up-down-arrow.svg') no-repeat center !important; }
 
 .w2ui-icon.arrowshapes_up-right-arrow { background: url('images/lc_arrowshapes.up-right-arrow.svg') no-repeat center !important; }
@@ -354,19 +354,19 @@ button.leaflet-control-search-next
 .w2ui-icon.starshapes_concave-star6 { background: url('images/lc_starshapes.concave-star6.svg') no-repeat center !important; }
 .w2ui-icon.starshapes_vertical-scroll { background: url('images/lc_starshapes.vertical-scroll.svg') no-repeat center !important; }
 .w2ui-icon.starshapes_horizontal-scroll { background: url('images/lc_starshapes.horizontal-scroll.svg') no-repeat center !important; }
-.w2ui-icon.starshapes_signet { background: url('images/lc_starshapes.signet.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_signet { background: url('images/sc_signature.svg') no-repeat center !important; }
 .w2ui-icon.starshapes_doorplate { background: url('images/lc_starshapes.doorplate.svg') no-repeat center !important; }
 
 .w2ui-icon.calloutshapes_rectangular-callout { background: url('images/lc_calloutshapes.rectangular-callout.svg') no-repeat center !important; }
 .w2ui-icon.calloutshapes_round-rectangular-callout { background: url('images/lc_calloutshapes.svg') no-repeat center !important; }
 .w2ui-icon.calloutshapes_round-callout { background: url('images/lc_calloutshapes.round-callout.svg') no-repeat center !important; }
 .w2ui-icon.calloutshapes_cloud-callout { background: url('images/lc_calloutshapes.cloud-callout.svg') no-repeat center !important; }
-.w2ui-icon.calloutshapes_line-callout-1 { background: url('images/lc_calloutshapes.line-callout-1.svg') no-repeat center !important; }
-.w2ui-icon.calloutshapes_line-callout-2 { background: url('images/lc_calloutshapes.line-callout-2.svg') no-repeat center !important; }
-.w2ui-icon.calloutshapes_line-callout-3 { background: url('images/lc_calloutshapes.line-callout-3.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_line-callout-1 { background: url('images/sc_calloutshapes.line-callout-1.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_line-callout-2 { background: url('images/sc_calloutshapes.line-callout-2.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_line-callout-3 { background: url('images/sc_calloutshapes.line-callout-3.svg') no-repeat center !important; }
 
-.w2ui-icon.flowchartshapes_flowchart-process { background: url('images/lc_flowchartshapes.flowchart-process.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-alternate-process { background: url('images/lc_flowchartshapes.flowchart-alternate-process.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-process { background: url('images/lc_square.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-alternate-process { background: url('images/lc_basicshapes.round-quadrat.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-decision { background: url('images/lc_flowchartshapes.flowchart-decision.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-data { background: url('images/lc_flowchartshapes.flowchart-data.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-predefined-process { background: url('images/lc_flowchartshapes.flowchart-predefined-process.svg') no-repeat center !important; }
@@ -377,24 +377,24 @@ button.leaflet-control-search-next
 .w2ui-icon.flowchartshapes_flowchart-terminator { background: url('images/lc_flowchartshapes.flowchart-terminator.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-preparation { background: url('images/lc_flowchartshapes.flowchart-preparation.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-manual-input { background: url('images/lc_flowchartshapes.flowchart-manual-input.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-manual-operation { background: url('images/lc_flowchartshapes.flowchart-manual-operation.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-manual-operation { background: url('images/lc_basicshapes.trapezoid.svg') no-repeat center !important; }
 
-.w2ui-icon.flowchartshapes_flowchart-connector { background: url('images/lc_flowchartshapes.flowchart-connector.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-connector { background: url('images/lc_circle.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-off-page-connector { background: url('images/lc_flowchartshapes.flowchart-off-page-connector.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-card { background: url('images/lc_flowchartshapes.flowchart-card.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-punched-tape { background: url('images/lc_flowchartshapes.flowchart-punched-tape.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-punched-tape { background: url('images/lc_fontworkshapetype.fontwork-wave.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-summing-junction { background: url('images/lc_flowchartshapes.flowchart-summing-junction.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-or { background: url('images/lc_flowchartshapes.flowchart-or.svg') no-repeat center !important; }
 
 .w2ui-icon.flowchartshapes_flowchart-collate { background: url('images/lc_flowchartshapes.flowchart-collate.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-sort { background: url('images/lc_flowchartshapes.flowchart-sort.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-extract { background: url('images/lc_flowchartshapes.flowchart-extract.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-merge { background: url('images/lc_flowchartshapes.flowchart-merge.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-extract { background: url('images/lc_basicshapes.isosceles-triangle.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-merge { background: url('images/lc_fontworkshapetype.fontwork-triangle-down.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-stored-data { background: url('images/lc_flowchartshapes.flowchart-stored-data.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-delay { background: url('images/lc_flowchartshapes.flowchart-delay.svg') no-repeat center !important; }
 
 .w2ui-icon.flowchartshapes_flowchart-sequential-access { background: url('images/lc_flowchartshapes.flowchart-sequential-access.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-magnetic-disk { background: url('images/lc_flowchartshapes.flowchart-magnetic-disk.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-magnetic-disk { background: url('images/lc_basicshapes.can.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-direct-access-storage { background: url('images/lc_flowchartshapes.flowchart-direct-access-storage.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-display { background: url('images/lc_flowchartshapes.flowchart-display.svg') no-repeat center !important; }
 
