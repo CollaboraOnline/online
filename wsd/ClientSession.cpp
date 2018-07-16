@@ -15,6 +15,7 @@
 
 #include <Poco/File.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
