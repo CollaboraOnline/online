@@ -446,7 +446,7 @@ button.leaflet-control-search-next
 .w2ui-icon.redo{ background: url('images/lc_redo.svg') no-repeat center !important; }
 .w2ui-icon.save{ background: url('images/lc_save.svg') no-repeat center !important; }
 .w2ui-icon.saveas{ background: url('images/lc_saveas.svg') no-repeat center !important; }
-.w2ui-icon.savemodified{ background: url('images/savemodified.svg') no-repeat center !important; }
+.w2ui-icon.savemodified{ background: url('images/savemodified_small.svg') no-repeat center !important; }
 .w2ui-icon.strikeout{ background: url('images/lc_strikeout.svg') no-repeat center !important; }
 .w2ui-icon.insertfootnote{ background: url('images/lc_insertfootnote.svg') no-repeat center !important; }
 .w2ui-icon.underline{ background: url('images/lc_underline.svg') no-repeat center !important; }
@@ -461,7 +461,7 @@ button.leaflet-control-search-next
 .w2ui-icon.lastrecord{ background: url('images/lc_lastrecord.svg') no-repeat center !important; }
 .w2ui-icon.wraptext{ background: url('images/lc_wraptext.svg') no-repeat center !important; }
 .w2ui-icon.togglemergecells{ background: url('images/lc_togglemergecells.svg') no-repeat center !important; }
-.w2ui-icon.numberformatcurrency{ background: url('images/lc_currencyfield.svg') no-repeat center !important; }
+.w2ui-icon.numberformatcurrency{ background: url('images/lc_formattedfield.svg') no-repeat center !important; }
 .w2ui-icon.numberformatpercent{ background: url('images/lc_numberformatpercent.svg') no-repeat center !important; }
 .w2ui-icon.numberformatdecimal{ background: url('images/lc_numberformatdecimal.svg') no-repeat center !important; }
 .w2ui-icon.numberformatdate{ background: url('images/lc_datefield.svg') no-repeat center !important; }
