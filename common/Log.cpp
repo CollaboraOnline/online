@@ -16,6 +16,7 @@
 #include <cstring>
 #include <ctime>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -174,6 +175,17 @@ namespace Log
     Poco::Logger& logger()
     {
         return Poco::Logger::get(Source.inited ? Source.name : std::string());
+    }
+
+    void shutdown()
+    {
+        logger().shutdown();
+
+        // Flush
+        std::flush(std::cout);
+        fflush(stdout);
+        std::flush(std::cerr);
+        fflush(stderr);
     }
 }
 
