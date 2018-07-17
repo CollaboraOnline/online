@@ -649,6 +649,9 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
         return false;
     }
 
+    // Obfuscate the new name.
+    Util::mapAnonymized(name, _docManager.getObfuscatedFileId());
+
     getTokenString(tokens[3], "format", format);
 
     if (getTokenString(tokens[4], "options", filterOptions))

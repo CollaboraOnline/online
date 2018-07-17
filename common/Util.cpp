@@ -544,6 +544,42 @@ namespace Util
         return true;
     }
 
+    /// Split a string in two at the delimeter and give the delimiter to the first.
+    static
+    std::pair<std::string, std::string> splitLast2(const char* s, const int length, const char delimeter = ' ')
+    {
+        if (s != nullptr && length > 0)
+        {
+            const int pos = getLastDelimiterPosition(s, length, delimeter);
+            if (pos < length)
+                return std::make_pair(std::string(s, pos + 1), std::string(s + pos + 1));
+        }
+
+        // Not found; return in first.
+        return std::make_pair(std::string(s, length), std::string());
+    }
+
+    std::tuple<std::string, std::string, std::string, std::string> splitUrl(const std::string& url)
+    {
+        // In case we have a URL that has parameters.
+        std::string base;
+        std::string params;
+        std::tie(base, params) = Util::split(url, '?', false);
+
+        std::string filename;
+        std::tie(base, filename) = Util::splitLast2(base.c_str(), base.size(), '/');
+        if (filename.empty())
+        {
+            // If no '/', then it's only filename.
+            std::swap(base, filename);
+        }
+
+        std::string ext;
+        std::tie(filename, ext) = Util::splitLast(filename, '.', false);
+
+        return std::make_tuple(base, filename, ext, params);
+    }
+
     static std::map<std::string, std::string> AnonymizedStrings;
     static std::atomic<unsigned> AnonymizationSalt(0);
     static std::mutex AnonymizedMutex;
@@ -586,45 +622,25 @@ namespace Util
         return res;
     }
 
-    static std::string anonymizeFilename(const std::string& filename)
+    std::string getFilenameFromURL(const std::string& url)
     {
-        // Preserve the extension.
-        std::string basename;
+        std::string base;
+        std::string filename;
         std::string ext;
-        const std::size_t mid = filename.find_last_of('.');
-        if (mid != std::string::npos)
-        {
-            basename = filename.substr(0, mid);
-            ext = filename.substr(mid);
-        }
-        else
-            basename = filename;
-
-        return Util::anonymize(basename) + ext;
-    }
-
-    std::string getFilenameFromPath(const std::string& path)
-    {
-        const std::size_t mid = path.find_last_of('/');
-        if (mid != std::string::npos)
-            return path.substr(mid + 1);
-
-        // No path, treat as filename only.
-        return path;
+        std::string params;
+        std::tie(base, filename, ext, params) = Util::splitUrl(url);
+        return filename;
     }
 
     std::string anonymizeUrl(const std::string& url)
     {
-        const std::size_t mid = url.find_last_of('/');
-        if (mid != std::string::npos)
-        {
-            const std::string path = url.substr(0, mid + 1);
-            const std::string filename = url.substr(mid + 1);
-            return path + Util::anonymizeFilename(filename);
-        }
+        std::string base;
+        std::string filename;
+        std::string ext;
+        std::string params;
+        std::tie(base, filename, ext, params) = Util::splitUrl(url);
 
-        // No path, treat as filename only.
-        return Util::anonymizeFilename(url);
+        return base + Util::anonymize(filename) + ext + params;
     }
 }
 

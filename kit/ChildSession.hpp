@@ -70,6 +70,8 @@ public:
     /// setting a view followed by a tile render, etc.
     virtual std::mutex& getDocumentMutex() = 0;
 
+    virtual std::string getObfuscatedFileId() = 0;
+
     virtual std::shared_ptr<TileQueue>& getTileQueue() = 0;
 
     virtual bool sendFrame(const char* buffer, int length, int flags = Poco::Net::WebSocket::FRAME_TEXT) = 0;

@@ -242,6 +242,18 @@ namespace Util
         return false;
     }
 
+    inline size_t getLastDelimiterPosition(const char* message, const int length, const char delim)
+    {
+        if (message && length > 0)
+        {
+            const char *founddelim = static_cast<const char *>(memrchr(message, delim, length));
+            const auto size = (founddelim == nullptr ? length : founddelim - message);
+            return size;
+        }
+
+        return 0;
+    }
+
     inline size_t getDelimiterPosition(const char* message, const int length, const char delim)
     {
         if (message && length > 0)
@@ -263,18 +275,37 @@ namespace Util
 
     /// Split a string in two at the delimeter, removing it.
     inline
-    std::pair<std::string, std::string> split(const char* s, const int length, const char delimeter = ' ')
+    std::pair<std::string, std::string> split(const char* s, const int length, const char delimeter = ' ', bool removeDelim = true)
     {
         const auto size = getDelimiterPosition(s, length, delimeter);
-        return std::make_pair(std::string(s, size), std::string(s+size+1));
+        return std::make_pair(std::string(s, size), std::string(s+size+removeDelim));
     }
 
     /// Split a string in two at the delimeter, removing it.
     inline
-    std::pair<std::string, std::string> split(const std::string& s, const char delimeter = ' ')
+    std::pair<std::string, std::string> split(const std::string& s, const char delimeter = ' ', bool removeDelim = true)
     {
-        return split(s.c_str(), s.size(), delimeter);
+        return split(s.c_str(), s.size(), delimeter, removeDelim);
     }
+
+    /// Split a string in two at the delimeter.
+    inline
+    std::pair<std::string, std::string> splitLast(const char* s, const int length, const char delimeter = ' ', bool removeDelim = true)
+    {
+        const auto size = getLastDelimiterPosition(s, length, delimeter);
+        return std::make_pair(std::string(s, size), std::string(s+size+removeDelim));
+    }
+
+    /// Split a string in two at the delimeter, removing it.
+    inline
+    std::pair<std::string, std::string> splitLast(const std::string& s, const char delimeter = ' ', bool removeDelim = true)
+    {
+        return splitLast(s.c_str(), s.size(), delimeter, removeDelim);
+    }
+
+    /// Splits a URL into path (with protocol), filename, extension, parameters.
+    /// All components are optional, depending on what the URL represents (can be a unix path).
+    std::tuple<std::string, std::string, std::string, std::string> splitUrl(const std::string& url);
 
     /// Check for the URI scheme validity.
     /// For now just a basic sanity check, can be extended if necessary.
@@ -295,8 +326,8 @@ namespace Util
     /// Anonymize the basename of filenames only, preserving the path and extension.
     std::string anonymizeUrl(const std::string& url);
 
-    /// Extract and return the filename given a path (i.e. the token after last '/').
-    std::string getFilenameFromPath(const std::string& path);
+    /// Extract and return the filename given a url or path.
+    std::string getFilenameFromURL(const std::string& url);
 
     /// Given one or more patterns to allow, and one or more to deny,
     /// the match member will return true if, and only if, the subject
