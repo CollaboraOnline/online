@@ -609,7 +609,10 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
     Poco::URI uriObject(_uri);
     uriObject.setPath(uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
-    const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
+
+    Poco::URI uriObjectAnonym(_uri);
+    uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()) + "/contents");
+    const std::string uriAnonym = uriObjectAnonym.toString();
 
     LOG_DBG("Wopi requesting: " << uriAnonym);
 
