@@ -74,6 +74,7 @@ static void handleSysSignal(int /* signal */,
 
     SigUtil::dumpBacktrace();
 
+    Log::shutdown();
     _exit(1);
 }
 

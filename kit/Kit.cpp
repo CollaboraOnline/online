@@ -194,8 +194,9 @@ namespace
                 }
                 catch (const std::exception& exc)
                 {
-                    LOG_ERR("Copying of '" << fpath << "' to " << newPath.toString() <<
+                    LOG_FTL("Copying of '" << fpath << "' to " << newPath.toString() <<
                             " failed: " << exc.what() << ". Exiting.");
+                    Log::shutdown();
                     std::_Exit(Application::EXIT_SOFTWARE);
                 }
             }
@@ -267,7 +268,8 @@ namespace
         caps = cap_get_proc();
         if (caps == nullptr)
         {
-            LOG_SYS("cap_get_proc() failed.");
+            LOG_SFL("cap_get_proc() failed.");
+            Log::shutdown();
             std::_Exit(1);
         }
 
@@ -278,13 +280,15 @@ namespace
         if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
             cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
         {
-            LOG_SYS("cap_set_flag() failed.");
+            LOG_SFL("cap_set_flag() failed.");
+            Log::shutdown();
             std::_Exit(1);
         }
 
         if (cap_set_proc(caps) == -1)
         {
-            LOG_SYS("cap_set_proc() failed.");
+            LOG_SFL("cap_set_proc() failed.");
+            Log::shutdown();
             std::_Exit(1);
         }
 
@@ -827,7 +831,8 @@ public:
             num_sessions = _sessions.size();
             if (num_sessions == 0)
             {
-                LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
+                LOG_FTL("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
+                Log::shutdown();
                 std::_Exit(Application::EXIT_OK);
             }
         }
@@ -1307,6 +1312,7 @@ private:
             if (_sessions.empty())
             {
                 LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
+                Log::shutdown();
                 std::_Exit(Application::EXIT_OK);
             }
 
@@ -2207,13 +2213,15 @@ void lokit_main(const std::string& childRoot,
             LOG_INF("chroot(\"" << jailPath.toString() << "\")");
             if (chroot(jailPath.toString().c_str()) == -1)
             {
-                LOG_SYS("chroot(\"" << jailPath.toString() << "\") failed.");
+                LOG_SFL("chroot(\"" << jailPath.toString() << "\") failed.");
+                Log::shutdown();
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
 
             if (chdir("/") == -1)
             {
-                LOG_SYS("chdir(\"/\") in jail failed.");
+                LOG_SFL("chdir(\"/\") in jail failed.");
+                Log::shutdown();
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
 
@@ -2255,6 +2263,7 @@ void lokit_main(const std::string& childRoot,
             if (!loKit)
             {
                 LOG_FTL("LibreOfficeKit initialization failed. Exiting.");
+                Log::shutdown();
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
         }
@@ -2264,7 +2273,8 @@ void lokit_main(const std::string& childRoot,
         {
             if (!noSeccomp)
             {
-                LOG_ERR("LibreOfficeKit seccomp security lockdown failed. Exiting.");
+                LOG_FTL("LibreOfficeKit seccomp security lockdown failed. Exiting.");
+                Log::shutdown();
                 std::_Exit(Application::EXIT_SOFTWARE);
             }
 
@@ -2353,6 +2363,7 @@ void lokit_main(const std::string& childRoot,
     // Trap the signal handler, if invoked,
     // to prevent exiting.
     LOG_INF("Process finished.");
+    Log::shutdown();
     std::unique_lock<std::mutex> lock(SigHandlerTrap);
     std::_Exit(Application::EXIT_OK);
 }

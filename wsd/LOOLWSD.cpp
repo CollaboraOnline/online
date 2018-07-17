@@ -803,6 +803,7 @@ void LOOLWSD::initialize(Application& self)
 #if ENABLE_DEBUG
             std::cerr << "\nIf you have used 'make run', edit loolwsd.xml and make sure you have removed '--o:logging.level=trace' from the command line in Makefile.am.\n" << std::endl;
 #endif
+            Log::shutdown();
             _exit(Application::EXIT_SOFTWARE);
         }
     }
@@ -2635,6 +2636,7 @@ private:
         {
             LOG_FTL("Failed to listen on Prisoner port (" <<
                     MasterPortNumber << '-' << port << "). Exiting.");
+            Log::shutdown();
             _exit(Application::EXIT_SOFTWARE);
         }
 
