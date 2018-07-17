@@ -116,7 +116,6 @@ static std::shared_ptr<Document> document;
 static bool AnonymizeFilenames = false;
 static bool AnonymizeUsernames = false;
 static std::string ObfuscatedFileId;
-static std::string ObfuscatedUserId;
 #endif
 
 #if ENABLE_DEBUG
@@ -789,6 +788,7 @@ public:
         _docKey(docKey),
         _docId(docId),
         _url(url),
+        _obfuscatedFileId(Util::getFilenameFromURL(docKey)),
         _tileQueue(std::move(tileQueue)),
         _socketPoll(socketPoll),
         _websocketHandler(websocketHandler),
@@ -1995,6 +1995,11 @@ private:
         return _documentMutex;
     }
 
+    std::string getObfuscatedFileId() override
+    {
+        return _obfuscatedFileId;
+    }
+
 private:
     std::shared_ptr<lok::Office> _loKit;
     const std::string _jailId;
@@ -2003,6 +2008,7 @@ private:
     /// Short numerical ID. Unique during the lifetime of WSD.
     const std::string _docId;
     const std::string _url;
+    const std::string _obfuscatedFileId;
     std::string _jailedUrl;
     std::string _renderOpts;
 
@@ -2106,7 +2112,7 @@ protected:
             const std::string& sessionId = tokens[1];
             const std::string& docKey = tokens[2];
             const std::string& docId = tokens[3];
-            const std::string fileId = Util::getFilenameFromPath(docKey);
+            const std::string fileId = Util::getFilenameFromURL(docKey);
             Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
             std::string url;

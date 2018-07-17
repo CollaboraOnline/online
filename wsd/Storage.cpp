@@ -42,6 +42,7 @@
 
 #include <Poco/StreamCopier.h>
 #include <Poco/Timestamp.h>
+#include <Poco/URI.h>
 
 #include "Auth.hpp"
 #include <Common.hpp>
@@ -502,7 +503,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         // Anonymize key values.
         if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
         {
-            Util::mapAnonymized(filename, Util::getFilenameFromPath(_uri.toString()));
+            Util::mapAnonymized(Util::getFilenameFromURL(filename), Util::getFilenameFromURL(_uri.toString()));
 
             JsonUtil::findJSONValue(object, "ObfuscatedUserId", obfuscatedUserId, false);
             if (!obfuscatedUserId.empty())
@@ -766,9 +767,17 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
                 if (JsonUtil::parseJSON(responseString, object))
                 {
                     // Anonymize the filename
+                    std::string url;
+                    JsonUtil::findJSONValue(object, "Url", url);
+                    std::string decodedUrl;
+                    Poco::URI::decode(url, decodedUrl);
+                    const std::string obfuscatedFileId = Util::getFilenameFromURL(decodedUrl);
+
                     std::string filename;
                     JsonUtil::findJSONValue(object, "Name", filename);
-                    object->set("Name", LOOLWSD::anonymizeUsername(filename));
+                    const std::string filenameOnly = Util::getFilenameFromURL(filename);
+                    Util::mapAnonymized(filenameOnly, obfuscatedFileId);
+                    object->set("Name", LOOLWSD::anonymizeUrl(filename));
                     // Stringify to log.
                     std::ostringstream ossResponse;
                     object->stringify(ossResponse);

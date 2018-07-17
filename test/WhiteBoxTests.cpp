@@ -27,6 +27,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(WhiteBoxTests);
 
     CPPUNIT_TEST(testLOOLProtocolFunctions);
+    CPPUNIT_TEST(testSplitting);
     CPPUNIT_TEST(testMessageAbbreviation);
     CPPUNIT_TEST(testTokenizer);
     CPPUNIT_TEST(testReplace);
@@ -36,10 +37,12 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRectanglesIntersect);
     CPPUNIT_TEST(testAuthorization);
     CPPUNIT_TEST(testJson);
+    CPPUNIT_TEST(testAnonymization);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testLOOLProtocolFunctions();
+    void testSplitting();
     void testMessageAbbreviation();
     void testTokenizer();
     void testReplace();
@@ -49,6 +52,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRectanglesIntersect();
     void testAuthorization();
     void testJson();
+    void testAnonymization();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -140,6 +144,115 @@ void WhiteBoxTests::testLOOLProtocolFunctions()
     CPPUNIT_ASSERT_EQUAL(0UL, Util::trim(s).size());
     s = "   ";
     CPPUNIT_ASSERT_EQUAL(std::string(""), Util::trim(s));
+}
+
+void WhiteBoxTests::testSplitting()
+{
+    CPPUNIT_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, 5, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, -1, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", 0, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", -1, '\n'));
+    CPPUNIT_ASSERT_EQUAL(std::string("ab"), Util::getDelimitedInitialSubstring("abc", 2, '\n'));
+
+    std::string first;
+    std::string second;
+
+    std::tie(first, second) = Util::split(std::string(""), '.', true);
+    std::tie(first, second) = Util::split(std::string(""), '.', false);
+
+    std::tie(first, second) = Util::splitLast(std::string(""), '.', true);
+    std::tie(first, second) = Util::splitLast(std::string(""), '.', false);
+
+    // Split first, remove delim.
+    std::tie(first, second) = Util::split(std::string("a"), '.', true);
+    CPPUNIT_ASSERT_EQUAL(std::string("a"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), second);
+
+    // Split first, keep delim.
+    std::tie(first, second) = Util::split(std::string("a"), '.', false);
+    CPPUNIT_ASSERT_EQUAL(std::string("a"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), second);
+
+    // Split first, remove delim.
+    std::tie(first, second) = Util::splitLast(std::string("a"), '.', true);
+    CPPUNIT_ASSERT_EQUAL(std::string("a"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), second);
+
+    // Split first, keep delim.
+    std::tie(first, second) = Util::splitLast(std::string("a"), '.', false);
+    CPPUNIT_ASSERT_EQUAL(std::string("a"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), second);
+
+    // Split first, remove delim.
+    std::tie(first, second) = Util::split(std::string("aa.bb"), '.', true);
+    CPPUNIT_ASSERT_EQUAL(std::string("aa"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("bb"), second);
+
+    // Split first, keep delim.
+    std::tie(first, second) = Util::split(std::string("aa.bb"), '.', false);
+    CPPUNIT_ASSERT_EQUAL(std::string("aa"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string(".bb"), second);
+
+    CPPUNIT_ASSERT_EQUAL(5UL, Util::getLastDelimiterPosition("aa.bb.cc", 8, '.'));
+
+    // Split last, remove delim.
+    std::tie(first, second) = Util::splitLast(std::string("aa.bb.cc"), '.', true);
+    CPPUNIT_ASSERT_EQUAL(std::string("aa.bb"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("cc"), second);
+
+    // Split last, keep delim.
+    std::tie(first, second) = Util::splitLast(std::string("aa.bb.cc"), '.', false);
+    CPPUNIT_ASSERT_EQUAL(std::string("aa.bb"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string(".cc"), second);
+
+    // Split last, remove delim.
+    std::tie(first, second) = Util::splitLast(std::string("/owncloud/index.php/apps/richdocuments/wopi/files/13_ocgdpzbkm39u"), '/', true);
+    CPPUNIT_ASSERT_EQUAL(std::string("/owncloud/index.php/apps/richdocuments/wopi/files"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("13_ocgdpzbkm39u"), second);
+
+    // Split last, keep delim.
+    std::tie(first, second) = Util::splitLast(std::string("/owncloud/index.php/apps/richdocuments/wopi/files/13_ocgdpzbkm39u"), '/', false);
+    CPPUNIT_ASSERT_EQUAL(std::string("/owncloud/index.php/apps/richdocuments/wopi/files"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("/13_ocgdpzbkm39u"), second);
+
+    std::string third;
+    std::string fourth;
+
+    std::tie(first, second, third, fourth) = Util::splitUrl("filename");
+    CPPUNIT_ASSERT_EQUAL(std::string(""), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("filename"), second);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), third);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), fourth);
+
+    std::tie(first, second, third, fourth) = Util::splitUrl("filename.ext");
+    CPPUNIT_ASSERT_EQUAL(std::string(""), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("filename"), second);
+    CPPUNIT_ASSERT_EQUAL(std::string(".ext"), third);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), fourth);
+
+    std::tie(first, second, third, fourth) = Util::splitUrl("/path/to/filename");
+    CPPUNIT_ASSERT_EQUAL(std::string("/path/to/"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("filename"), second);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), third);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), fourth);
+
+    std::tie(first, second, third, fourth) = Util::splitUrl("http://domain.com/path/filename");
+    CPPUNIT_ASSERT_EQUAL(std::string("http://domain.com/path/"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("filename"), second);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), third);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), fourth);
+
+    std::tie(first, second, third, fourth) = Util::splitUrl("http://domain.com/path/filename.ext");
+    CPPUNIT_ASSERT_EQUAL(std::string("http://domain.com/path/"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("filename"), second);
+    CPPUNIT_ASSERT_EQUAL(std::string(".ext"), third);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), fourth);
+
+    std::tie(first, second, third, fourth) = Util::splitUrl("http://domain.com/path/filename.ext?params=3&command=5");
+    CPPUNIT_ASSERT_EQUAL(std::string("http://domain.com/path/"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("filename"), second);
+    CPPUNIT_ASSERT_EQUAL(std::string(".ext"), third);
+    CPPUNIT_ASSERT_EQUAL(std::string("?params=3&command=5"), fourth);
 }
 
 void WhiteBoxTests::testMessageAbbreviation()
@@ -387,6 +500,11 @@ public:
         return _mutex;
     }
 
+    std::string getObfuscatedFileId() override
+    {
+        return std::string();
+    }
+
     std::shared_ptr<TileQueue>& getTileQueue() override
     {
         return _tileQueue;
@@ -503,6 +621,40 @@ void WhiteBoxTests::testJson()
 
     JsonUtil::findJSONValue(object, "UserId", sValue);
     CPPUNIT_ASSERT_EQUAL(std::string("user@user.com"), sValue);
+}
+
+void WhiteBoxTests::testAnonymization()
+{
+    static const std::string name = "some name with space";
+    CPPUNIT_ASSERT_EQUAL(std::string("#0#77d#"), Util::anonymizeUrl(name));
+    Util::mapAnonymized(name, name);
+    CPPUNIT_ASSERT_EQUAL(name, Util::anonymizeUrl(name));
+
+    static const std::string filename = "filename.ext";
+    CPPUNIT_ASSERT_EQUAL(std::string("#1#341#.ext"), Util::anonymizeUrl(filename));
+    Util::mapAnonymized("filename", "filename");
+    CPPUNIT_ASSERT_EQUAL(name, Util::anonymizeUrl(name));
+
+    static const std::string filenameTestx = "testx (6).odt";
+    CPPUNIT_ASSERT_EQUAL(std::string("#2#2df#.odt"), Util::anonymizeUrl(filenameTestx));
+    Util::mapAnonymized("testx (6)", "testx (6)");
+    CPPUNIT_ASSERT_EQUAL(filenameTestx, Util::anonymizeUrl(filenameTestx));
+
+    static const std::string path = "/path/to/filename.ext";
+    CPPUNIT_ASSERT_EQUAL(path, Util::anonymizeUrl(path));
+
+    static const std::string plainUrl = "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/736_ocgdpzbkm39u?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_token_ttl=0&permission=edit";
+    const std::string urlAnonymized = Util::replace(plainUrl, "736_ocgdpzbkm39u", "#3#5a1#");
+    CPPUNIT_ASSERT_EQUAL(urlAnonymized, Util::anonymizeUrl(plainUrl));
+    Util::mapAnonymized("736_ocgdpzbkm39u", "736_ocgdpzbkm39u");
+    CPPUNIT_ASSERT_EQUAL(plainUrl, Util::anonymizeUrl(plainUrl));
+
+    static const std::string fileUrl = "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/736_ocgdpzbkm39u/secret.odt?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_token_ttl=0&permission=edit";
+    const std::string urlAnonymized2 = Util::replace(fileUrl, "secret", "#4#286#");
+    CPPUNIT_ASSERT_EQUAL(urlAnonymized2, Util::anonymizeUrl(fileUrl));
+    Util::mapAnonymized("secret", "736_ocgdpzbkm39u");
+    const std::string urlAnonymized3 = Util::replace(fileUrl, "secret", "736_ocgdpzbkm39u");
+    CPPUNIT_ASSERT_EQUAL(urlAnonymized3, Util::anonymizeUrl(fileUrl));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
