@@ -35,12 +35,18 @@ inline std::ostream& operator<< (std::ostream& os, const Poco::Timestamp& ts)
 
 namespace Log
 {
+    /// Initialize the logging system.
     void initialize(const std::string& name,
                     const std::string& logLevel,
                     const bool withColor,
                     const bool logToFile,
                     const std::map<std::string, std::string>& config);
+
+    /// Returns the underlying logging system.
     Poco::Logger& logger();
+
+    /// Shutdown and release the logging system.
+    void shutdown();
 
     char* prefix(char* buffer, std::size_t len, const char* level);
 
@@ -222,7 +228,6 @@ namespace Log
     {                                                   \
         if (FILEP)                                      \
             LOG << "| " << __FILE__ << ':' << __LINE__; \
-        LOG.flush();                                    \
     } while (false)
 
 #define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                 \

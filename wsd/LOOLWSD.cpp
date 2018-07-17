@@ -805,7 +805,8 @@ void LOOLWSD::initialize(Application& self)
             { "tile_cache_persistent", "true" },
             { "trace.path[@compress]", "true" },
             { "trace.path[@snapshot]", "false" },
-            { "trace[@enable]", "false" } };
+            { "trace[@enable]", "false" }
+          };
 
     // Set default values, in case they are missing from the config file.
     AutoPtr<AppConfigMap> defConfig(new AppConfigMap(DefAppConfig));
@@ -880,6 +881,7 @@ void LOOLWSD::initialize(Application& self)
 #if ENABLE_DEBUG
             std::cerr << "\nIf you have used 'make run', edit loolwsd.xml and make sure you have removed '--o:logging.level=trace' from the command line in Makefile.am.\n" << std::endl;
 #endif
+            Log::shutdown();
             _exit(Application::EXIT_SOFTWARE);
         }
     }
@@ -2241,18 +2243,18 @@ private:
                 Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
                 const std::string docKey = DocumentBroker::getDocKey(uriPublic);
 
-                // This lock could become a bottleneck.
-                // In that case, we can use a pool and index by publicPath.
-                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+                    // This lock could become a bottleneck.
+                    // In that case, we can use a pool and index by publicPath.
+                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
-                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
+                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                    auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
 
-                cleanupDocBrokers();
+                    cleanupDocBrokers();
 
-                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                DocBrokers.emplace(docKey, docBroker);
-                LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                    DocBrokers.emplace(docKey, docBroker);
+                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
 
                 // Load the document.
                 // TODO: Move to DocumentBroker.
@@ -2301,7 +2303,7 @@ private:
                             std::vector<char> saveasRequest(saveas.begin(), saveas.end());
                             clientSession->handleMessage(true, WSOpCode::Text, saveasRequest);
                         });
-                    });
+                        });
 
                     sent = true;
                 }
@@ -2846,6 +2848,7 @@ private:
         {
             LOG_FTL("Failed to listen on Prisoner port(s) (" <<
                     MasterPortNumber << '-' << port << "). Exiting.");
+            Log::shutdown();
             _exit(Application::EXIT_SOFTWARE);
         }
 
@@ -2874,7 +2877,6 @@ private:
         else
 #endif
             factory = std::make_shared<PlainSocketFactory>();
-
 
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ClientListenAddr, port, WebServerPoll, factory);
@@ -2953,13 +2955,11 @@ int LOOLWSD::innerMain()
         LOG_FTL("Missing --systemplate option");
         throw MissingOptionException("systemplate");
     }
-
     if (LoTemplate.empty())
     {
         LOG_FTL("Missing --lotemplate option");
         throw MissingOptionException("lotemplate");
     }
-
     if (ChildRoot.empty())
     {
         LOG_FTL("Missing --childroot option");

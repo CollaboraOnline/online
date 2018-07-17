@@ -530,7 +530,11 @@ int main(int argc, char** argv)
 
     // Initialize LoKit
     if (!globalPreinit(loTemplate))
+    {
+        LOG_FTL("Failed to preinit lokit.");
+        Log::shutdown();
         std::_Exit(Application::EXIT_SOFTWARE);
+    }
 
     if (Util::getProcessThreadCount() != 1)
         LOG_ERR("Error: forkit has more than a single thread after pre-init");
@@ -544,6 +548,7 @@ int main(int argc, char** argv)
     if (forKitPid < 0)
     {
         LOG_FTL("Failed to create a kit process.");
+        Log::shutdown();
         std::_Exit(Application::EXIT_SOFTWARE);
     }
 
@@ -580,6 +585,7 @@ int main(int argc, char** argv)
 #endif
 
     LOG_INF("ForKit process finished.");
+    Log::shutdown();
     std::_Exit(returnValue);
 }
 #endif

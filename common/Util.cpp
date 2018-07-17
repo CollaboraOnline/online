@@ -240,6 +240,7 @@ namespace Util
             int ret = execvp(params[0], &params[0]);
             if (ret < 0)
                 std::cerr << "Failed to exec command '" << cmd << "' with error '" << strerror(errno) << "'\n";
+            Log::shutdown();
             _exit(42);
         }
         // else spawning process still
