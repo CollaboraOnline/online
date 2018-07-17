@@ -1848,7 +1848,9 @@ private:
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws" &&
                          request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
                 {
-                    handleClientWsUpgrade(request, reqPathTokens[1], disposition);
+                    std::string decodedUri;
+                    Poco::URI::decode(reqPathTokens[1], decodedUri);
+                    handleClientWsUpgrade(request, decodedUri, disposition);
                 }
                 else
                 {
@@ -2281,6 +2283,14 @@ private:
 #endif
             }
 
+            LOG_INF("URL [" << url << "].");
+            const auto uriPublic = DocumentBroker::sanitizeURI(url);
+            LOG_INF("URI [" << uriPublic.getPath() << "].");
+            const auto docKey = DocumentBroker::getDocKey(uriPublic);
+            LOG_INF("DocKey [" << docKey << "].");
+            const std::string fileId = Util::getFilenameFromURL(docKey);
+            Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
+
             LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << LOOLWSD::anonymizeUrl(url) << "].");
 
             // Indicate to the client that document broker is searching.
@@ -2288,10 +2298,6 @@ private:
             LOG_TRC("Sending to Client [" << status << "].");
             ws.sendMessage(status);
 
-            const auto uriPublic = DocumentBroker::sanitizeURI(url);
-            const auto docKey = DocumentBroker::getDocKey(uriPublic);
-            const std::string fileId = Util::getFilenameFromPath(docKey);
-            Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
             LOG_INF("Sanitized URI [" << LOOLWSD::anonymizeUrl(url) << "] to [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) <<
                     "] and mapped to docKey [" << docKey << "] for session [" << _id << "].");
 

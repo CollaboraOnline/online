@@ -514,10 +514,13 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
         std::ostringstream ossWopiInfo;
         wopiInfo->stringify(ossWopiInfo);
+        const std::string wopiInfoString = ossWopiInfo.str();
+        LOG_TRC("Sending wopi info to client: " << wopiInfoString);
+
         // Contains PostMessageOrigin property which is necessary to post messages to parent
         // frame. Important to send this message immediately and not enqueue it so that in case
         // document load fails, loleaflet is able to tell its parent frame via PostMessage API.
-        session->sendMessage("wopi: " + ossWopiInfo.str());
+        session->sendMessage("wopi: " + wopiInfoString);
 
         // Mark the session as 'Document owner' if WOPI hosts supports it
         if (userId == _storage->getFileInfo()._ownerId)
