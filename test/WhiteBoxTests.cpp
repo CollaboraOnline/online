@@ -183,6 +183,28 @@ void WhiteBoxTests::testSplitting()
     CPPUNIT_ASSERT_EQUAL(std::string("a"), first);
     CPPUNIT_ASSERT_EQUAL(std::string(""), second);
 
+
+    // Split first, remove delim.
+    std::tie(first, second) = Util::split(std::string("a."), '.', true);
+    CPPUNIT_ASSERT_EQUAL(std::string("a"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), second);
+
+    // Split first, keep delim.
+    std::tie(first, second) = Util::split(std::string("a."), '.', false);
+    CPPUNIT_ASSERT_EQUAL(std::string("a"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("."), second);
+
+    // Split first, remove delim.
+    std::tie(first, second) = Util::splitLast(std::string("a."), '.', true);
+    CPPUNIT_ASSERT_EQUAL(std::string("a"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), second);
+
+    // Split first, keep delim.
+    std::tie(first, second) = Util::splitLast(std::string("a."), '.', false);
+    CPPUNIT_ASSERT_EQUAL(std::string("a"), first);
+    CPPUNIT_ASSERT_EQUAL(std::string("."), second);
+
+
     // Split first, remove delim.
     std::tie(first, second) = Util::split(std::string("aa.bb"), '.', true);
     CPPUNIT_ASSERT_EQUAL(std::string("aa"), first);
