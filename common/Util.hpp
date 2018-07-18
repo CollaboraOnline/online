@@ -278,7 +278,13 @@ namespace Util
     std::pair<std::string, std::string> split(const char* s, const int length, const char delimeter = ' ', bool removeDelim = true)
     {
         const auto size = getDelimiterPosition(s, length, delimeter);
-        return std::make_pair(std::string(s, size), std::string(s+size+removeDelim));
+
+        std::string after;
+        int after_pos = size + (removeDelim? 1: 0);
+        if (after_pos < length)
+            after = std::string(s + after_pos, length - after_pos);
+
+        return std::make_pair(std::string(s, size), after);
     }
 
     /// Split a string in two at the delimeter, removing it.
@@ -293,7 +299,13 @@ namespace Util
     std::pair<std::string, std::string> splitLast(const char* s, const int length, const char delimeter = ' ', bool removeDelim = true)
     {
         const auto size = getLastDelimiterPosition(s, length, delimeter);
-        return std::make_pair(std::string(s, size), std::string(s+size+removeDelim));
+
+        std::string after;
+        int after_pos = size + (removeDelim? 1: 0);
+        if (after_pos < length)
+            after = std::string(s + after_pos, length - after_pos);
+
+        return std::make_pair(std::string(s, size), after);
     }
 
     /// Split a string in two at the delimeter, removing it.
