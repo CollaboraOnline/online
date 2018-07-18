@@ -12,7 +12,7 @@ Name:           loolwsd%{name_suffix}
 Name:           loolwsd
 %endif
 Version:        @PACKAGE_VERSION@
-Release:        6%{?dist}
+Release:        7%{?dist}
 %if 0%{?suse_version} == 1110
 Group:          Productivity/Office/Suite
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
