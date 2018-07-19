@@ -133,11 +133,11 @@ public:
         if (len == 0)
             return false; // avoid logging.
 
-        // FIXME: Do we really want to dump binary data as such here?
-        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: " << std::string(socket->_inBuffer.data(), socket->_inBuffer.size()));
-
         if (len < 2) // partial read
+        {
+            LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
             return false;
+        }
 
         unsigned char *p = reinterpret_cast<unsigned char*>(&socket->_inBuffer[0]);
         const bool fin = p[0] & 0x80;
@@ -150,7 +150,10 @@ public:
         if (payloadLen == 126) // 2 byte length
         {
             if (len < 2 + 2)
+            {
+                LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
                 return false;
+            }
 
             payloadLen = (((unsigned)p[2]) << 8) | ((unsigned)p[3]);
             headerLen += 2;
@@ -158,8 +161,10 @@ public:
         else if (payloadLen == 127) // 8 byte length
         {
             if (len < 2 + 8)
+            {
+                LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
                 return false;
-
+            }
             payloadLen = ((((uint64_t)p[9]) <<  0) + (((uint64_t)p[8]) <<  8) +
                           (((uint64_t)p[7]) << 16) + (((uint64_t)p[6]) << 24) +
                           (((uint64_t)p[5]) << 32) + (((uint64_t)p[4]) << 40) +
@@ -178,8 +183,11 @@ public:
 
         if (payloadLen + headerLen > len)
         { // partial read wait for more data.
+            LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes, message is " << payloadLen + headerLen << " bytes");
             return false;
         }
+
+        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: " << Util::stringifyHexLine(socket->_inBuffer, 0, std::min((size_t)32, len)));
 
         data = p + headerLen;
 
