@@ -206,7 +206,7 @@ bool lockdown(Type type)
 
     sigemptyset(&action.sa_mask);
     action.sa_flags = SA_SIGINFO;
-    action.sa_handler = reinterpret_cast<__sighandler_t>(handleSysSignal);
+    action.sa_sigaction = handleSysSignal;
 
     sigaction(SIGSYS, &action, nullptr);
 
