@@ -299,7 +299,7 @@ public:
         else
         {
             while (handleOneIncomingMessage(socket))
-                ; // can have multiple msgs in one recv'd packet.
+                ; // might have multiple messages in the accumulated buffer.
         }
     }
 
