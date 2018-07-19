@@ -2802,6 +2802,9 @@ int LOOLWSD::innerMain()
         Log::logger().setLevel(LogLevel);
     }
 
+    // URI with /contents are public and we don't need to anonymize them.
+    Util::mapAnonymized("contents", "contents");
+
     // Start the server.
     srv.start(ClientPortNumber);
 
