@@ -1,8 +1,14 @@
+loolwsd (3.2.2-8) unstable; urgency=medium
+
+  * see the git log: http://col.la/coolcd32
+
+ -- Jan Holesovsky <kendy@collabora.com>  Thu, 19 Jul 2018 14:00:00 +0200
+
 loolwsd (3.2.2-7) unstable; urgency=medium
 
   * see the git log: http://col.la/coolcd32
 
- -- Jan Holesovsky <kendy@collabora.com>  Fri, 18 Jul 2018 14:30:00 +0200
+ -- Jan Holesovsky <kendy@collabora.com>  Wed, 18 Jul 2018 14:30:00 +0200
 
 loolwsd (3.2.2-6) unstable; urgency=medium
 
