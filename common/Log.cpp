@@ -33,8 +33,6 @@
 #include "Log.hpp"
 #include "Util.hpp"
 
-static char LogPrefix[256] = { '\0' };
-
 namespace Log
 {
     using namespace Poco;
@@ -140,8 +138,6 @@ namespace Log
         oss << Source.name << '-'
             << std::setw(5) << std::setfill('0') << Poco::Process::id();
         Source.id = oss.str();
-        assert (sizeof (LogPrefix) > strlen(oss.str().c_str()) + 1);
-        strncpy(LogPrefix, oss.str().c_str(), sizeof(LogPrefix));
 
         // Configure the logger.
         AutoPtr<Channel> channel;
