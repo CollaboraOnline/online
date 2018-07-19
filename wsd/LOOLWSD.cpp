@@ -3035,6 +3035,9 @@ int LOOLWSD::innerMain()
 
 #endif
 
+    // URI with /contents are public and we don't need to anonymize them.
+    Util::mapAnonymized("contents", "contents");
+
     // Start the server.
     srv.start(ClientPortNumber);
 
