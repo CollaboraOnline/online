@@ -243,6 +243,8 @@ void TileCacheTests::testPerformance()
             auto tile = getResponseMessage(socket, "tile:", "tile-performance ");
             CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile.empty());
         }
+        /// Send canceltiles message to clear tiles-on-fly list, otherwise wsd waits for tileprocessed messages
+        sendTextFrame(socket, "canceltiles");
     }
 
     std::cerr << "Tile rendering roundtrip for 5 x 8 tiles combined: " << timestamp.elapsed() / 1000.
@@ -426,6 +428,8 @@ void TileCacheTests::testUnresponsiveClient()
             auto tile = getResponseMessage(socket2, "tile:", "client2 ");
             CPPUNIT_ASSERT_MESSAGE("Did not receive tile #" + std::to_string(i+1) + " of 8: message as expected", !tile.empty());
         }
+        /// Send canceltiles message to clear tiles-on-fly list, otherwise wsd waits for tileprocessed messages
+        sendTextFrame(socket2, "canceltiles");
     }
 }
 
