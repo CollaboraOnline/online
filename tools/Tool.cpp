@@ -30,7 +30,6 @@
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
-#include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 
 #include <Common.hpp>
@@ -67,7 +66,6 @@ using Poco::Runnable;
 using Poco::Thread;
 using Poco::URI;
 using Poco::Util::Application;
-using Poco::Util::Option;
 using Poco::Util::OptionSet;
 
 /// Thread class which performs the conversion.
