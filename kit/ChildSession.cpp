@@ -650,7 +650,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
     }
 
     // Obfuscate the new name.
-    Util::mapAnonymized(name, _docManager.getObfuscatedFileId());
+    Util::mapAnonymized(Util::getFilenameFromURL(name), _docManager.getObfuscatedFileId());
 
     getTokenString(tokens[3], "format", format);
 
@@ -1130,8 +1130,6 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
         return false;
     }
 
-    const std::string urlAnonym = anonymizeUrl(url);
-
     // if the url is a 'wopi:///something/blah.odt', then save to a temporary
     Poco::URI wopiURL(url);
     if (wopiURL.getScheme() == "wopi")
@@ -1161,15 +1159,19 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
         }
     }
 
+
     bool success = false;
     {
         std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
 
-        getLOKitDocument()->setView(_viewId);
-
-        LOG_DBG("Calling LOK's saveAs with: '" << urlAnonym << "', '" <<
+        // We don't have the FileId at this point, just a new filename to save-as.
+        // So here the filename will be obfuscated with some hashing, which later will
+        // get a proper FileId that we will use going forward.
+        LOG_DBG("Calling LOK's saveAs with: '" << anonymizeUrl(wopiFilename) << "', '" <<
                 (format.size() == 0 ? "(nullptr)" : format.c_str()) << "', '" <<
                 (filterOptions.size() == 0 ? "(nullptr)" : filterOptions.c_str()) << "'.");
+
+        getLOKitDocument()->setView(_viewId);
 
         success = getLOKitDocument()->saveAs(url.c_str(),
                                              format.empty() ? nullptr : format.c_str(),

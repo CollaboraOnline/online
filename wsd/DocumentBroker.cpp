@@ -670,7 +670,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         std::string localPathEncoded;
         Poco::URI::encode(localPath, "#", localPathEncoded);
         _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
-        _uriJailedAnonym = Poco::URI(Poco::URI("file://"), LOOLWSD::anonymizeUrl(localPathEncoded)).toString();
+        _uriJailedAnonym = Poco::URI(Poco::URI("file://"), LOOLWSD::anonymizeUrl(localPath)).toString();
 
         _filename = fileInfo._filename;
 
@@ -772,6 +772,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
     const Authorization auth = it->second->getAuthorization();
     const std::string uri = isSaveAs ? saveAsPath : it->second->getPublicUri().toString();
+
+    // Map the FileId from the docKey to the new filename to anonymize the new filename as the FileId.
+    const std::string newFilename = Util::getFilenameFromURL(uri);
+    const std::string fileId = Util::getFilenameFromURL(_docKey);
+    if (LOOLWSD::AnonymizeFilenames)
+        LOG_DBG("New filename [" << LOOLWSD::anonymizeUrl(newFilename) << "] will be known by its fileId [" << fileId << "]");
+
+    Util::mapAnonymized(newFilename, fileId);
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uri);
 
     // If the file timestamp hasn't changed, skip saving.
