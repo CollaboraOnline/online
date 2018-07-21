@@ -768,16 +768,21 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
                 {
                     // Anonymize the filename
                     std::string url;
-                    JsonUtil::findJSONValue(object, "Url", url);
-                    std::string decodedUrl;
-                    Poco::URI::decode(url, decodedUrl);
-                    const std::string obfuscatedFileId = Util::getFilenameFromURL(decodedUrl);
-
                     std::string filename;
-                    JsonUtil::findJSONValue(object, "Name", filename);
-                    const std::string filenameOnly = Util::getFilenameFromURL(filename);
-                    Util::mapAnonymized(filenameOnly, obfuscatedFileId);
-                    object->set("Name", LOOLWSD::anonymizeUrl(filename));
+                    if (JsonUtil::findJSONValue(object, "Url", url) &&
+                        JsonUtil::findJSONValue(object, "Name", filename))
+                    {
+                        // Get the FileId form the URL, which we use as the anonymized filename.
+                        std::string decodedUrl;
+                        Poco::URI::decode(url, decodedUrl);
+                        const std::string obfuscatedFileId = Util::getFilenameFromURL(decodedUrl);
+                        Util::mapAnonymized(obfuscatedFileId, obfuscatedFileId); // Identity, to avoid re-anonymizing.
+
+                        const std::string filenameOnly = Util::getFilenameFromURL(filename);
+                        Util::mapAnonymized(filenameOnly, obfuscatedFileId);
+                        object->set("Name", LOOLWSD::anonymizeUrl(filename));
+                    }
+
                     // Stringify to log.
                     std::ostringstream ossResponse;
                     object->stringify(ossResponse);

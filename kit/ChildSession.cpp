@@ -657,7 +657,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
     }
 
     // Obfuscate the new name.
-    Util::mapAnonymized(name, _docManager.getObfuscatedFileId());
+    Util::mapAnonymized(Util::getFilenameFromURL(name), _docManager.getObfuscatedFileId());
 
     getTokenString(tokens[3], "format", format);
 
@@ -979,8 +979,8 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const std:
     else
     {
         getLOKitDocument()->postUnoCommand(tokens[1].c_str(),
-                                           Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(),
-                                           bNotify);
+                                       Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(),
+                                       bNotify);
     }
 
     return true;
@@ -1149,8 +1149,6 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
         return false;
     }
 
-    const std::string urlAnonym = anonymizeUrl(url);
-
     // if the url is a 'wopi:///something/blah.odt', then save to a temporary
     Poco::URI wopiURL(url);
     if (wopiURL.getScheme() == "wopi")
@@ -1184,17 +1182,20 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
     {
         std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
 
-        getLOKitDocument()->setView(_viewId);
-
         if (filterOptions.empty() && format == "html")
         {
             // Opt-in to avoid linked images, those would not leave the chroot.
             filterOptions = "EmbedImages";
         }
 
-        LOG_DBG("Calling LOK's saveAs with: url='" << urlAnonym << "', format='" <<
-                (format.empty() ? "(nullptr)" : format.c_str()) << "', filterOptions='" <<
-                (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << "'.");
+        // We don't have the FileId at this point, just a new filename to save-as.
+        // So here the filename will be obfuscated with some hashing, which later will
+        // get a proper FileId that we will use going forward.
+        LOG_DBG("Calling LOK's saveAs with: '" << anonymizeUrl(wopiFilename) << "', '" <<
+                (format.size() == 0 ? "(nullptr)" : format.c_str()) << "', '" <<
+                (filterOptions.size() == 0 ? "(nullptr)" : filterOptions.c_str()) << "'.");
+
+        getLOKitDocument()->setView(_viewId);
 
         success = getLOKitDocument()->saveAs(url.c_str(),
                                              format.empty() ? nullptr : format.c_str(),
@@ -1336,30 +1337,28 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
     }
 }
 
-void ChildSession::updateSpeed()
-{
+void ChildSession::updateSpeed() {
+
     std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
 
-    while (_cursorInvalidatedEvent.size() != 0 &&
-           std::chrono::duration_cast<std::chrono::milliseconds>(now - _cursorInvalidatedEvent.front()).count() > _eventStorageIntervalMs)
+    while(_cursorInvalidatedEvent.size() != 0 &&
+        std::chrono::duration_cast<std::chrono::milliseconds>(now - _cursorInvalidatedEvent.front()).count() > _eventStorageIntervalMs)
     {
         _cursorInvalidatedEvent.pop();
     }
-
     _cursorInvalidatedEvent.push(now);
     _docManager.updateEditorSpeeds(_viewId, _cursorInvalidatedEvent.size());
 }
 
-int ChildSession::getSpeed()
-{
+int ChildSession::getSpeed() {
+
     std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
 
-    while (_cursorInvalidatedEvent.size() > 0 &&
-           std::chrono::duration_cast<std::chrono::milliseconds>(now - _cursorInvalidatedEvent.front()).count() > _eventStorageIntervalMs)
+    while(_cursorInvalidatedEvent.size() > 0 &&
+        std::chrono::duration_cast<std::chrono::milliseconds>(now - _cursorInvalidatedEvent.front()).count() > _eventStorageIntervalMs)
     {
         _cursorInvalidatedEvent.pop();
     }
-
     return _cursorInvalidatedEvent.size();
 }
 
