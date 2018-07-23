@@ -440,14 +440,19 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
     catch (const Poco::FileNotFoundException& exc)
     {
         LOG_WRN("FileServerRequestHandler: " << exc.displayText());
+        Poco::URI requestUri(request.getURI());
+        std::string path(requestUri.getPath());
 
         // 404 not found
         std::ostringstream oss;
         oss << "HTTP/1.1 404\r\n"
+            << "Content-Type: text/html charset=UTF-8\r\n"
             << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
             << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-            << "Content-Length: 0\r\n"
-            << "\r\n";
+            << "\r\n"
+            << "<h1>Error 404 - page not found!</h1>"
+            << "<p>There appears to be an error locating " << path << ".</p>"
+            << "<p>Please contact your system administrator.</p>";
         socket->send(oss.str());
     }
 }
