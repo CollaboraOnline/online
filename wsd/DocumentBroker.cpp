@@ -1382,7 +1382,8 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     if(requestedTiles != boost::none && !requestedTiles.get().empty())
     {
         std::vector<TileDesc> tilesNeedsRendering;
-        while(session->getTilesOnFlyCount() < tilesOnFlyUpperLimit && !requestedTiles.get().empty())
+        while(session->getTilesOnFlyCount() + session->getTilesBeingRendered() < tilesOnFlyUpperLimit
+              && !requestedTiles.get().empty())
         {
             TileDesc& tile = *(requestedTiles.get().begin());
 
@@ -1417,15 +1418,9 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             else
             {
                 // Not cached, needs rendering.
-                if(tile.getVersion() == -1) // Rendering of this tile was not requested yet
-                {
-                    tile.setVersion(++_tileVersion);
-                }
-                if(!tileCache().hasTileBeingRendered(tile))
-                {
-                    tilesNeedsRendering.push_back(tile);
-                    _debugRenderedTileCount++;
-                }
+                tile.setVersion(++_tileVersion);
+                tilesNeedsRendering.push_back(tile);
+                _debugRenderedTileCount++;
                 tileCache().subscribeToTileRendering(tile, session);
             }
             requestedTiles.get().pop_front();
@@ -1497,25 +1492,16 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
 
     try
     {
-        const auto length = payload.size();
-        if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
-        {
-            const auto tileCombined = TileCombined::parse(firstLine);
-            const auto buffer = payload.data();
-            auto offset = firstLine.size() + 1;
+        const auto tileCombined = TileCombined::parse(firstLine);
+        const auto buffer = payload.data();
+        auto offset = firstLine.size() + 1;
 
-            std::unique_lock<std::mutex> lock(_mutex);
+        std::unique_lock<std::mutex> lock(_mutex);
 
-            for (const auto& tile : tileCombined.getTiles())
-            {
-                tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize());
-                offset += tile.getImgSize();
-            }
-        }
-        else
+        for (const auto& tile : tileCombined.getTiles())
         {
-            LOG_WRN("Dropping empty tilecombine response: " << firstLine);
-            // They will get re-issued if we don't forget them.
+            tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize());
+            offset += tile.getImgSize();
         }
     }
     catch (const std::exception& exc)
