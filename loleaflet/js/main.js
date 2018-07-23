@@ -61,7 +61,6 @@ var map = L.map('map', {
 	wopiSrc: wopiSrc,
 	notWopiButIframe: notWopiButIframe,
 	alwaysActive: alwaysActive,
-	autoFitWidth: false,
 	idleTimeoutSecs: idleTimeoutSecs,  // Dim when user is idle.
 	outOfFocusTimeoutSecs: outOfFocusTimeoutSecs // Dim after switching tabs.
 });
