@@ -190,7 +190,6 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
             std::shared_ptr<ClientSession> firstSession = firstSubscriber.lock();
             if (firstSession)
             {
-                firstSession->traceTileBySend(tile);
                 firstSession->enqueueSendMessage(payload);
             }
 
@@ -212,7 +211,6 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
                     std::shared_ptr<ClientSession> session = subscriber.lock();
                     if (session)
                     {
-                        session->traceTileBySend(tile);
                         session->enqueueSendMessage(payload);
                     }
                 }
