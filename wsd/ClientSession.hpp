@@ -137,6 +137,12 @@ public:
     /// This method updates internal data related to sent tiles (wireID and tiles-on-fly)
     /// Call this method anytime when a new tile is sent to the client
     void traceTileBySend(const TileDesc& tile);
+
+    void traceSubscribe() { ++_tilesBeingRendered; }
+    void traceUnSubscribe() { --_tilesBeingRendered; }
+    void clearSubscription() { _tilesBeingRendered = 0; }
+
+    int getTilesBeingRendered() const {return _tilesBeingRendered;}
 private:
 
     /// SocketHandler: disconnection event.
@@ -235,6 +241,10 @@ private:
 
     /// TileID's of the sent tiles. Push by sending and pop by tileprocessed message from the client.
     std::list<std::string> _tilesOnFly;
+
+    /// Number of tiles requested from kit, which this session is subsrcibed to
+    /// Track only non-thumbnail tiles (getId() == -1)
+    int _tilesBeingRendered;
 
     /// Requested tiles are stored in this list, before we can send them to the client
     boost::optional<std::list<TileDesc>> _requestedTiles;

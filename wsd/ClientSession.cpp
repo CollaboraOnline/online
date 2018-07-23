@@ -56,7 +56,9 @@ ClientSession::ClientSession(const std::string& id,
     _tileHeightPixel(0),
     _tileWidthTwips(0),
     _tileHeightTwips(0),
-    _isTextDocument(false)
+    _isTextDocument(false),
+    _tilesOnFly(0),
+    _tilesBeingRendered(0)
 {
     assert(!creatingPngThumbnail || thumbnailFile != "");
     const size_t curConnections = ++LOOLWSD::NumConnections;
@@ -350,6 +352,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         auto iter = std::find(_tilesOnFly.begin(), _tilesOnFly.end(), tileID);
         if(iter != _tilesOnFly.end())
             _tilesOnFly.erase(iter);
+        else
+            LOG_WRN("Tileprocessed message with an unknown tile ID");
 
         docBroker->sendRequestedTiles(shared_from_this());
         return true;

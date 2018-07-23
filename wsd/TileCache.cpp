@@ -120,13 +120,20 @@ std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(c
     return tile != _tilesBeingRendered.end() ? tile->second : nullptr;
 }
 
-void TileCache::forgetTileBeingRendered(const TileDesc& tile)
+void TileCache::forgetTileBeingRendered(std::shared_ptr<TileCache::TileBeingRendered> tileBeingRendered, const TileDesc& tile)
 {
-    const std::string cachedName = cacheFileName(tile);
-
     assertCorrectThread();
+    assert(tileBeingRendered);
+    assert(_tilesBeingRendered.find(tileBeingRendered->getCacheName()) != _tilesBeingRendered.end());
 
-    _tilesBeingRendered.erase(cachedName);
+    for(auto& subscriber : tileBeingRendered->_subscribers)
+    {
+        std::shared_ptr<ClientSession> session = subscriber.lock();
+        if(session && tile.getId() == -1)
+            session->traceUnSubscribe();
+    }
+
+    _tilesBeingRendered.erase(tileBeingRendered->getCacheName());
 }
 
 bool TileCache::hasTileBeingRendered(const TileDesc& tile)
@@ -157,6 +164,17 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     assertCorrectThread();
 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
+
+    // Kit did not send image data, because tile has the same wireID as the previously sent tile
+    // We need to remove only the subscriptions
+    if(size == 0)
+    {
+        if(tileBeingRendered && tileBeingRendered->getVersion() <= tile.getVersion())
+        {
+            forgetTileBeingRendered(tileBeingRendered, tile);
+        }
+        return;
+    }
 
     // Save to disk.
     const std::string cachedName = (tileBeingRendered ? tileBeingRendered->getCacheName()
@@ -226,7 +244,7 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
         {
             LOG_DBG("STATISTICS: tile " << tile.getVersion() << " internal roundtrip " <<
                     tileBeingRendered->getElapsedTimeMs() << " ms.");
-            _tilesBeingRendered.erase(cachedName);
+            forgetTileBeingRendered(tileBeingRendered, tile);
         }
     }
     else
@@ -477,6 +495,8 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
         LOG_DBG("Subscribing " << subscriber->getName() << " to tile " << name << " which has " <<
                 tileBeingRendered->_subscribers.size() << " subscribers already.");
         tileBeingRendered->_subscribers.push_back(subscriber);
+        if(tile.getId() == -1)
+            subscriber->traceSubscribe();
 
         const auto duration = (std::chrono::steady_clock::now() - tileBeingRendered->getStartTime());
         if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() > COMMAND_TIMEOUT_MS)
@@ -496,6 +516,8 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
 
         tileBeingRendered = std::make_shared<TileBeingRendered>(cachedName, tile);
         tileBeingRendered->_subscribers.push_back(subscriber);
+        if(tile.getId() == -1)
+            subscriber->traceSubscribe();
         _tilesBeingRendered[cachedName] = tileBeingRendered;
     }
 }
@@ -542,6 +564,7 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
         ++it;
     }
 
+    subscriber->clearSubscription();
     const std::string canceltiles = oss.str();
     return canceltiles.empty() ? canceltiles : "canceltiles " + canceltiles;
 }
