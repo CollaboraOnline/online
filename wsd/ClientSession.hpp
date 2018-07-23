@@ -84,7 +84,18 @@ public:
             docBroker->assertCorrectThread();
 
         LOG_TRC(getName() << " enqueueing client message " << data->id());
-        _senderQueue.enqueue(data);
+        size_t sizeBefore = _senderQueue.size();
+        size_t newSize = _senderQueue.enqueue(data);
+        if(sizeBefore != newSize)
+        {
+            // Track sent tile
+            const std::string command = data->firstToken();
+            if (command == "tile:")
+            {
+                const TileDesc tile = TileDesc::parse(data->firstLine());
+                traceTileBySend(tile);
+            }
+        }
     }
 
     /// Set the save-as socket which is used to send convert-to results.
