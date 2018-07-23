@@ -41,7 +41,10 @@ public:
     static const std::string *getUncompressedFile(const std::string &path);
 
 private:
-   static std::map<std::string, std::pair<std::string, std::string>> FileHash;
+    static std::map<std::string, std::pair<std::string, std::string>> FileHash;
+    static void sendError(int errorCode, const Poco::Net::HTTPRequest& request,
+                          const std::shared_ptr<StreamSocket>& socket, std::string shortMessage,
+                          std::string longMessage, std::string extraHeader = "");
 };
 
 #endif

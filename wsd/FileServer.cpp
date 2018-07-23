@@ -413,48 +413,43 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
     catch (const Poco::Net::NotAuthenticatedException& exc)
     {
         LOG_ERR("FileServerRequestHandler::NotAuthenticated: " << exc.displayText());
-
-        // Unauthorized.
-        std::ostringstream oss;
-        oss << "HTTP/1.1 401\r\n"
-            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-            << "Content-Length: 0\r\n"
-            << "WWW-Authenticate: Basic realm=\"online\"\r\n"
-            << "\r\n";
-        socket->send(oss.str());
+        sendError(401, request, socket, "", "", "WWW-authenticate: Basic realm=\"online\"\r\n");
     }
     catch (const Poco::FileAccessDeniedException& exc)
     {
         LOG_ERR("FileServerRequestHandler: " << exc.displayText());
-
-        // TODO return some 403 page?
-        std::ostringstream oss;
-        oss << "HTTP/1.1 403\r\n"
-            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-            << "Content-Length: 0\r\n"
-            << "\r\n";
-        socket->send(oss.str());
+        sendError(403, request, socket, "403 - Access denied!",
+                  "You are unable to access");
     }
     catch (const Poco::FileNotFoundException& exc)
     {
         LOG_WRN("FileServerRequestHandler: " << exc.displayText());
-        Poco::URI requestUri(request.getURI());
-        std::string path(requestUri.getPath());
-
-        // 404 not found
-        std::ostringstream oss;
-        oss << "HTTP/1.1 404\r\n"
-            << "Content-Type: text/html charset=UTF-8\r\n"
-            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-            << "\r\n"
-            << "<h1>Error 404 - page not found!</h1>"
-            << "<p>There appears to be an error locating " << path << ".</p>"
-            << "<p>Please contact your system administrator.</p>";
-        socket->send(oss.str());
+        sendError(404, request, socket, "404 - file not found!",
+                  "There seems to be a problem locating");
     }
+}
+
+void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPRequest& request,
+                                         const std::shared_ptr<StreamSocket>& socket,
+                                         std::string shortMessage, std::string longMessage,
+                                         std::string extraHeader)
+{
+    Poco::URI requestUri(request.getURI());
+    std::string path(requestUri.getPath());
+    std::ostringstream oss;
+    oss << "HTTP/1.1 " << errorCode << "\r\n"
+        << "Content-Type: text/html charset=UTF-8\r\n"
+        << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+        << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+        << extraHeader
+        << "\r\n";
+    if (!shortMessage.empty())
+    {
+        oss << "<h1>Error: " << shortMessage << "</h1>"
+            << "<p>" << longMessage << " " << path << "</p>"
+            << "<p>Please contact your system administrator.</p>";
+    }
+    socket->send(oss.str());
 }
 
 void FileServerRequestHandler::readDirToHash(const std::string &basePath, const std::string &path)
