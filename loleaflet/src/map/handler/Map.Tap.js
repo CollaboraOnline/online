@@ -21,31 +21,21 @@ L.Map.Tap = L.Handler.extend({
 
 		L.DomEvent.preventDefault(e);
 
-		this._fireClick = true;
-
 		// don't simulate click or track longpress if more than 1 touch
 		if (e.touches.length > 1) {
-			this._fireClick = false;
 			clearTimeout(this._holdTimeout);
 			return;
 		}
 
-		var first = e.touches[0],
-		    el = first.target;
+		var first = e.touches[0];
 
 		this._startPos = this._newPos = new L.Point(first.clientX, first.clientY);
-
-		// if touching a link, highlight it
-		if (el.tagName && el.tagName.toLowerCase() === 'a') {
-			L.DomUtil.addClass(el, 'leaflet-active');
-		}
 
 		// simulate long hold but setting a timeout
 		this._holdTimeout = setTimeout(L.bind(function () {
 			if (this._isTapValid()) {
-				this._fireClick = false;
-				this._onUp();
-				this._simulateEvent('contextmenu', first);
+				this._fireDblClick = true;
+				this._onUp(e);
 			}
 		}, this), 1000);
 
@@ -65,21 +55,12 @@ L.Map.Tap = L.Handler.extend({
 			touchend: this._onUp
 		}, this);
 
-		if (this._fireClick && e && e.changedTouches) {
+		var first = e.changedTouches[0];
+		this._simulateEvent('mouseup', first);
 
-			var first = e.changedTouches[0],
-			    el = first.target;
-
-			if (el && el.tagName && el.tagName.toLowerCase() === 'a') {
-				L.DomUtil.removeClass(el, 'leaflet-active');
-			}
-
-			this._simulateEvent('mouseup', first);
-
-			// simulate click if the touch didn't move too much
-			if (this._isTapValid()) {
-				this._simulateEvent('click', first);
-			}
+		if (this._fireDblClick) {
+			this._simulateEvent('dblclick', first);
+			this._fireDblClick = false;
 		}
 	},
 
@@ -90,21 +71,27 @@ L.Map.Tap = L.Handler.extend({
 	_onMove: function (e) {
 		var first = e.touches[0];
 		this._newPos = new L.Point(first.clientX, first.clientY);
+		this._simulateEvent('mousemove', first);
 	},
 
 	_simulateEvent: function (type, e) {
-		var simulatedEvent = document.createEvent('MouseEvents');
-
-		simulatedEvent._simulated = true;
-		e.target._simulatedClick = true;
-
-		simulatedEvent.initMouseEvent(
-		        type, true, true, window, 1,
-		        e.screenX, e.screenY,
-		        e.clientX, e.clientY,
-		        false, false, false, false, 0, null);
-
-		e.target.dispatchEvent(simulatedEvent);
+		var simulatedEvent = {
+			type: type,
+			canBubble: false,
+			cancelable: true,
+			screenX: e.screenX,
+			screenY: e.screenY,
+			clientX: e.clientX,
+			clientY: e.clientY,
+			ctrlKey: false,
+			altKey: false,
+			shiftKey: false,
+			metaKey: false,
+			button: 0,
+			target: e.target,
+			preventDefault: function () {}
+		};
+		this._map._handleDOMEvent(simulatedEvent);
 	}
 });
 
