@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe("L.LatLngUtil", function () {
 	it("cloneLatLngs", function () {
 		var latLngs = [{ lat: 0, lng: 0 }],

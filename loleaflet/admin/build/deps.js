@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 var deps = {
 	AdminCore: {
 		src: ['src/Base.js',

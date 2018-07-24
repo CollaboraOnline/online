@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.Draw.Polygon = L.Draw.Polyline.extend({
 	statics: {
 		TYPE: 'polygon'

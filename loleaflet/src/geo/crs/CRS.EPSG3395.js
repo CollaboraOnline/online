@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.CRS.EPSG3857 (World Mercator) CRS implementation.
  */

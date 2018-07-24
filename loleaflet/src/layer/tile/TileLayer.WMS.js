@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.TileLayer.WMS is used for WMS tile layers.
  */

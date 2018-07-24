@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 if (!Array.prototype.map) {
 	Array.prototype.map = function (fun /*, thisp */) {
 		"use strict";

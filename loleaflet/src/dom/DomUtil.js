@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.DomUtil contains various utility functions for working with DOM.
  */

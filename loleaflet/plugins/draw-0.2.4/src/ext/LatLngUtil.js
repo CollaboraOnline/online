@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.LatLngUtil contains different utility functions for LatLngs.
  */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.Draw.Rectangle = L.Draw.SimpleShape.extend({
 	statics: {
 		TYPE: 'rectangle'

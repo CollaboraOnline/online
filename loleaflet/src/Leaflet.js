@@ -1,4 +1,4 @@
-
+/* -*- js-indent-level: 8 -*- */
 var L = {
 	version: '0.8-dev'
 };

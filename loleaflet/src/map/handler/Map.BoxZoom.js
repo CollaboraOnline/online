@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Handler.ShiftDragZoom is used to add shift-drag zoom interaction to the map
   * (zoom to a selected bounding box), enabled by default.

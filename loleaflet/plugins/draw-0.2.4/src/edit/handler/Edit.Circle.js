@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.Edit = L.Edit || {};
 
 L.Edit.Circle = L.Edit.SimpleShape.extend({

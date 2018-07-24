@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Path is the base class for all Leaflet vector layers like polygons and circles.
  */

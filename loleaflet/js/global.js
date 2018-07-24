@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global loleafletLogging */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {

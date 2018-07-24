@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Polygon implements polygon vector layer (closed polyline with a fill inside).
  */

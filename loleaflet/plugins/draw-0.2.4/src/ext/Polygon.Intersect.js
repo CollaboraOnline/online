@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.Polygon.include({
 	// Checks a polygon for any intersecting line segments. Ignores holes.
 	intersects: function () {

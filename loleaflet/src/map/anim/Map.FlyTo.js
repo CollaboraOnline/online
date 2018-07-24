@@ -1,4 +1,4 @@
-
+/* -*- js-indent-level: 8 -*- */
 L.Map.include({
 	flyTo: function (targetCenter, targetZoom) {
 

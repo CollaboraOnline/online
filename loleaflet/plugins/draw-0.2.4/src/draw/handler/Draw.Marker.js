@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.Draw.Marker = L.Draw.Feature.extend({
 	statics: {
 		TYPE: 'marker'

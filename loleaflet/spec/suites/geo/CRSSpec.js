@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe("CRS.EPSG3857", function () {
 	var crs = L.CRS.EPSG3857;
 

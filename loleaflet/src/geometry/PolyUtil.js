@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.PolyUtil contains utility functions for polygons (clipping, etc.).
  */

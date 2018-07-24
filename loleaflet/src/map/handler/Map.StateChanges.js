@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Map.StateChanges stores the state changes commands coming from core
  * LOK_CALLBACK_STATE_CHANGED callback

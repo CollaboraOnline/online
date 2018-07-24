@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.CRS is the base object for all defined CRS (Coordinate Reference Systems) in Leaflet.
  */

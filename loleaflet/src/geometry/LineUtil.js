@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.LineUtil contains different utility functions for line segments
  * and polylines (clipping, simplification, distances, etc.)

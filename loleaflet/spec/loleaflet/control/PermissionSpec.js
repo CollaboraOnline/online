@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('Permissions', function () {
 	this.timeout(10000);
 	var map;

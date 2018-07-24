@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('Path', function () {
 	describe('#bringToBack', function () {
 		it('is a no-op for layers not on a map', function () {

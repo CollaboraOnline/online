@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.LayerGroup is a class to combine several layers into one so that
  * you can manipulate the group (e.g. add/remove it) as one layer.

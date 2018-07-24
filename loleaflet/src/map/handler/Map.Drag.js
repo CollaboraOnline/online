@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Handler.MapDrag is used to make the map draggable (with panning inertia), enabled by default.
  */

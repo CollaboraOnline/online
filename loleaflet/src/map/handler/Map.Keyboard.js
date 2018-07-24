@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Map.Keyboard is handling keyboard interaction with the map, enabled by default.
  */

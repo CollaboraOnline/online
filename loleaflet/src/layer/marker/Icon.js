@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Icon is an image-based icon class that you can use with L.Marker for custom markers.
  */

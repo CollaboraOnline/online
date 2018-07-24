@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Control.Attribution is used for displaying attribution on the map (added by default).
  */

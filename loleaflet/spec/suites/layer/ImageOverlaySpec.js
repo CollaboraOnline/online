@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('ImageOverlay', function () {
 	describe('#setStyle', function () {
 		it('sets opacity', function () {

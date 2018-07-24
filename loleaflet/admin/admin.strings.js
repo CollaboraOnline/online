@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* Stringtable for Admin Console User Interface */
 var l10nstrings = {};
 

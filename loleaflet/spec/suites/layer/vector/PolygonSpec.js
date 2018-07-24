@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('Polygon', function () {
 
 	var c = document.createElement('div');

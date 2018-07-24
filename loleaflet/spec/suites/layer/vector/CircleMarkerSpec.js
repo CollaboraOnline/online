@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 ﻿describe('CircleMarker', function () {
 	describe("#_radius", function () {
 		var map;

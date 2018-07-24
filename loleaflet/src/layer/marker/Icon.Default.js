@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Icon.Default is the blue marker icon used by default in Leaflet.
  */

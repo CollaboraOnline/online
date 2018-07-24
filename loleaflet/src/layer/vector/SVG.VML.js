@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Vector rendering for IE7-8 through VML.
  * Thanks to Dmitry Baranovsky and his Raphael library for inspiration!

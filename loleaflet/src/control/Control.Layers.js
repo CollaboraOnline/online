@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Control.Layers is a control to allow users to switch between different layers on the map.
  */

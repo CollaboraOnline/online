@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('LoadTest', function () {
 	// 25 s timeout
 	this.timeout(25000);

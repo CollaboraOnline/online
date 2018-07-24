@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('TileBench', function () {
 	// 25 s timeout
 	this.timeout(25000);

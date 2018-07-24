@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Extends the event handling code with double tap support for mobile browsers.
  */

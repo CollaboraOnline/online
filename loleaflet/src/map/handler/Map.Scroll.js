@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Handler.Scroll is used by L.Map to enable mouse scroll wheel zoom on the map.
  */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('Bounds', function () {
 	var a, b, c;
 

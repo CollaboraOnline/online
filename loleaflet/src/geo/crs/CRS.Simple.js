@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * A simple CRS that can be used for flat non-Earth maps like panoramas or game maps.
  */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('Circle', function () {
 	describe('#getBounds', function () {
 

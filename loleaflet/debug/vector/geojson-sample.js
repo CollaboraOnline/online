@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 var geojsonSample = {
 	"type": "FeatureCollection",
 	"features": [

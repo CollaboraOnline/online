@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // CSS requires
 require('bootstrap/dist/css/bootstrap.css');
 require('./bootstrap/ie10-viewport-bug-workaround.css');

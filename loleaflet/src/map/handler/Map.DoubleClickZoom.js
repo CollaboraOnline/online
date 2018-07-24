@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Handler.DoubleClickZoom is used to handle double-click zoom on the map, enabled by default.
  */

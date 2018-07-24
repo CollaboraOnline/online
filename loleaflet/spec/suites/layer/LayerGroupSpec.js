@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 ﻿describe('LayerGroup', function () {
 	describe("#hasLayer", function () {
 		it("returns false when passed undefined, null, or false", function () {

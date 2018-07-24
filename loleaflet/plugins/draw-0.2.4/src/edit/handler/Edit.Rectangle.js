@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.Edit = L.Edit || {};
 
 L.Edit.Rectangle = L.Edit.SimpleShape.extend({

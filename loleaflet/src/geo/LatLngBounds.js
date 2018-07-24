@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.LatLngBounds represents a rectangular area on the map in geographical coordinates.
  */

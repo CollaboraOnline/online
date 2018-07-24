@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe("Control.Layers", function () {
 	var map;
 

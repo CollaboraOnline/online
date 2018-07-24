@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Control.Scale is used for displaying metric/imperial scale on the map.
  */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe("Projection.Mercator", function () {
 	var p = L.Projection.Mercator;
 

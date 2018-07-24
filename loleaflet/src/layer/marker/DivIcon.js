@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.DivIcon is a lightweight HTML-based icon class (as opposed to the image-based L.Icon)
  * to use with L.Marker.

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.CircleMarker is a circle overlay with a permanent pixel radius.
  */

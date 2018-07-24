@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('LatLng', function () {
 	describe('constructor', function () {
 		it("sets lat and lng", function () {

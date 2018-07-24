@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 var deps = require('./deps.js').deps;
 
 exports.getFiles = function () {

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Control is a base class for implementing map controls. Handles positioning.
  * All other controls extend from this class.

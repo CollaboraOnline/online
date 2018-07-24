@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
 	Socket to be intialized on opening the settings page in Admin console
 */

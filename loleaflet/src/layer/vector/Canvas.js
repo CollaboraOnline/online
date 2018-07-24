@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Canvas handles Canvas vector layers rendering and mouse events handling. All Canvas-specific code goes here.
  */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.LOUtil contains various LO related utility functions used throughout the code
  */

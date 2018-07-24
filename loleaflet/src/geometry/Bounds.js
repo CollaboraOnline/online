@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Bounds represents a rectangular area on the screen in pixel coordinates.
  */

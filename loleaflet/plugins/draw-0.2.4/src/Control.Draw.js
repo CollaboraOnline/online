@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.Control.Draw = L.Control.extend({
 
 	options: {

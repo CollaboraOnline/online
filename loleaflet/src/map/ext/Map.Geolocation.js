@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Provides L.Map with convenient shortcuts for using browser geolocation features.
  */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.ProgressOverlay is used to overlay progress images over the map.
  */

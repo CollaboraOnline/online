@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 var deps = {
 	Core: {
 		src: ['Leaflet.js',

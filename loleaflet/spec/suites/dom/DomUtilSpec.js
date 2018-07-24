@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('DomUtil', function () {
 	var el;
 

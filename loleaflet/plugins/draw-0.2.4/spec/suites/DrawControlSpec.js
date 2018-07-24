@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe("Control.Draw", function () {
 	var map, control, container;
 

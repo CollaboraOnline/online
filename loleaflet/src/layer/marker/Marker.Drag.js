@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Handler.MarkerDrag is used internally by L.Marker to make the markers draggable.
  */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Renderer is a base class for renderer implementations (SVG, Canvas);
  * handles renderer container, bounds and zoom animation.

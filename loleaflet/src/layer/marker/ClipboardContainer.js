@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.ClipboardContainer is used to overlay the hidden clipbaord container on the map
  */

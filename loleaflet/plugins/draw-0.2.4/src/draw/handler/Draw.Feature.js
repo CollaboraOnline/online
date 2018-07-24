@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.Draw = {};
 
 L.Draw.Feature = L.Handler.extend({

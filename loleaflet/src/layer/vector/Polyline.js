@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Polyline implements polyline vector layer (a set of points connected with lines)
  */

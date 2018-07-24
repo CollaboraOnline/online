@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe("Map.Drag", function () {
 	describe("#addHook", function () {
 		it("calls the map with dragging enabled", function () {

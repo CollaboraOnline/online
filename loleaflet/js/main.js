@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader vex host */
 /* global idleTimeoutSecs outOfFocusTimeoutSecs setupToolbar*/
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/

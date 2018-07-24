@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Popup extension to L.Path (polylines, polygons, circles), adding popup-related methods.
  */

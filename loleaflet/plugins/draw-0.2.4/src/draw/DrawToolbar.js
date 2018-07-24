@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.DrawToolbar = L.Toolbar.extend({
 
 	statics: {

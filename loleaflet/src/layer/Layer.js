@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 
 L.Layer = L.Evented.extend({
 

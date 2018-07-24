@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 var WebSocket = require('ws');
 var events = require('events');
 

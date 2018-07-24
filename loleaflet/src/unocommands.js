@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // Don't modify, generated using unocommands.py
 
 var unoCommandsArray = {

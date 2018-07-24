@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 
 var tocCopy = document.createElement('div');
 tocCopy.id = 'toc-copy';

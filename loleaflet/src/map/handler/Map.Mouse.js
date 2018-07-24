@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Map.Mouse is handling mouse interaction with the document
  */

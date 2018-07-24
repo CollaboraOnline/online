@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // Karma configuration
 module.exports = function (config) {
 

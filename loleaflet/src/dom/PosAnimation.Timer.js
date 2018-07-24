@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.PosAnimation fallback implementation that powers Leaflet pan animations
  * in browsers that don't support CSS3 Transitions.

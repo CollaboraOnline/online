@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.CRS.Earth is the base class for all CRS representing Earth.
  */

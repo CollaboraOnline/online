@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
 	Socket to be intialized on opening the analytics page in Admin console
 	containing various graphs to show to the user on specified interval

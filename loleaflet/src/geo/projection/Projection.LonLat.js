@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Simple equirectangular (Plate Carree) projection, used by CRS like EPSG:4326 and Simple.
  */

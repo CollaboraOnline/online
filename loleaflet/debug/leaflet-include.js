@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 (function() {
 	function getFiles() {
 		var memo = {},

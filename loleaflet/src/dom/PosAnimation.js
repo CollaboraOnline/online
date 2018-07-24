@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.PosAnimation is used by Leaflet internally for pan animations.
  */

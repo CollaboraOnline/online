@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Util contains various utility functions used throughout Leaflet code.
  */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.ImageOverlay is used to overlay images over the map (to specific geographical bounds).
  */

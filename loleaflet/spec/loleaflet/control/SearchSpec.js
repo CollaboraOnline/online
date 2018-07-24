@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('Search', function () {
 	this.timeout(10000);
 	var map;

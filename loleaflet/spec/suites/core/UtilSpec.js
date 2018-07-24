@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('Util', function () {
 
 	describe('#extend', function () {

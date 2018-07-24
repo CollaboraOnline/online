@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('PolylineGeometry', function () {
 
 	var c = document.createElement('div');

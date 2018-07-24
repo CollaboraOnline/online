@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.SVG renders vector layers with SVG. All SVG-specific code goes here.
  */

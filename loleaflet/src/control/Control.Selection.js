@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Control.Selection enables by mouse drag selection in viewing mode
  */

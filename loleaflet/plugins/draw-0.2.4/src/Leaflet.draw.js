@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Leaflet.draw assumes that you have already included the Leaflet library.
  */

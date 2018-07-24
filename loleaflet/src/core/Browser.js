@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * @namespace Browser
  * @aka L.Browser

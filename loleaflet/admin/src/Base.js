@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
 	Base.js, version 1.1a
 	Copyright 2006-2010, Dean Edwards

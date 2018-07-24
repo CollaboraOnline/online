@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.EditToolbar.Edit = L.Handler.extend({
 	statics: {
 		TYPE: 'edit'

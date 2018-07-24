@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe("Marker", function () {
 	var map,
 		spy,

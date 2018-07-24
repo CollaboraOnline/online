@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.Tooltip = L.Class.extend({
 	initialize: function (map) {
 		this._map = map;

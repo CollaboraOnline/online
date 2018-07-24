@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 if (!Array.prototype.map) {
 	/*eslint no-extend-native:0*/
 	Array.prototype.map = function (fun /*, thisp */) {

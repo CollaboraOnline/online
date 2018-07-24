@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.FeatureGroup extends L.LayerGroup by introducing mouse events and additional methods
  * shared between a group of interactive layers (like vectors or markers).

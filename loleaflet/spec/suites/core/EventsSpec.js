@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('Events', function () {
 
 	describe('#fireEvent', function () {

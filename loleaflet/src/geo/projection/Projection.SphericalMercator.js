@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Spherical Mercator is the most popular map projection, used by EPSG:3857 CRS used by default.
  */

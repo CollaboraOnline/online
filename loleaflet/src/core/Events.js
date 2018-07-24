@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Evented is a base class that Leaflet classes inherit from to handle custom events.
  */

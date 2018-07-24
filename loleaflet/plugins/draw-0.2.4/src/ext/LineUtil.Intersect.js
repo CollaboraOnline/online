@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.Util.extend(L.LineUtil, {
 	// Checks to see if two line segments intersect. Does not handle degenerate cases.
 	// http://compgeom.cs.uiuc.edu/~jeffe/teaching/373/notes/x06-sweepline.pdf

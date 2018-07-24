@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 L.Map.include({
 	search: function (text, backward, replaceString,  command, expand) {
 		if (backward === undefined) {

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Rectangle extends Polygon and creates a rectangle when passed a LatLngBounds object.
  */

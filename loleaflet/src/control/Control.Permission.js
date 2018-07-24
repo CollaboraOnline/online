@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Control.EditView is used for switching between viewing and editing mode
  */

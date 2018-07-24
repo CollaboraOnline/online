@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe('Parts and Pages', function () {
 	this.timeout(10000);
 	var map;

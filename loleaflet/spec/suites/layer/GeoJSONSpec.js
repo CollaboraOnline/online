@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 describe("L.GeoJSON", function () {
 	describe("addData", function () {
 		var geoJSON = {

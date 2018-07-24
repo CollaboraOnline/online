@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.CRS.EPSG4326 is a CRS popular among advanced GIS specialists.
  */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.Marker is used to display clickable/draggable icons on the map.
  */

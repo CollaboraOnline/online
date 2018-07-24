@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 ﻿describe('FeatureGroup', function () {
 	var map;
 	beforeEach(function () {
