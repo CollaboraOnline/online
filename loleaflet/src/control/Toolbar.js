@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Toolbar handler
  */
@@ -185,6 +186,7 @@ L.Map.include({
 				contentCSS: {width: w + 'px'},
 				buttons: {},
 				afterOpen: function($vexContent) {
+					map.enable(false);
 					// Display help according to document opened
 					if (map.getDocType() === 'text') {
 						document.getElementById('text-shortcuts').style.display='block';
@@ -196,7 +198,7 @@ L.Map.include({
 						document.getElementById('presentation-shortcuts').style.display='block';
 					}
 
-					// Lets transalte
+					// Lets translate
 					var i, max;
 					var translatableContent = $vexContent.find('h1');
 					for (i = 0, max = translatableContent.length; i < max; i++) {
@@ -228,6 +230,7 @@ L.Map.include({
 				},
 				beforeClose: function () {
 					map.focus();
+					map.enable(true);
 				}
 			});
 		});
@@ -242,6 +245,12 @@ L.Map.include({
 		var productString = _('This version of %productName is powered by');
 		content.find('#product-string').text(productString.replace('%productName', productName));
 		var w = window.innerWidth / 2;
+		var map = this;
+		var handler = function(event) {
+			if (event.keyCode === 68) {
+				map._docLayer.toggleTileDebugMode();
+			}
+		};
 		vex.open({
 			content: content,
 			showCloseButton: true,
@@ -251,6 +260,7 @@ L.Map.include({
 			buttons: {},
 			afterOpen: function($vexContent) {
 				map.enable(false);
+				$(window).bind('keyup.vex', handler);
 				// workaround for https://github.com/HubSpot/vex/issues/43
 				$('.vex-overlay').css({ 'pointer-events': 'none'});
 				$('.vex').click(function() {
@@ -261,7 +271,9 @@ L.Map.include({
 				});
 			},
 			beforeClose: function () {
+				$(window).unbind('keyup.vex', handler)
 				map.enable(true);
+				map.focus();
 			}
 		});
 	}
