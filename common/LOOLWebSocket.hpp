@@ -20,6 +20,8 @@
 #include <Protocol.hpp>
 #include <Log.hpp>
 
+/// Deprecated: do not use ... replaced by net/Socket.hpp
+///
 /// WebSocket that is thread safe, and handles large frames transparently.
 /// Careful - sendFrame and receiveFrame are _not_ virtual,
 /// we need to make sure that we use LOOLWebSocket all over the place.
@@ -32,69 +34,35 @@ private:
     std::mutex _mutexRead;
     std::mutex _mutexWrite;
 
-#if ENABLE_DEBUG
-    static std::chrono::milliseconds getWebSocketDelay()
-    {
-        unsigned long baseDelay = 0;
-        unsigned long jitter = 0;
-        if (std::getenv("LOOL_WS_DELAY"))
-        {
-            baseDelay = std::stoul(std::getenv("LOOL_WS_DELAY"));
-        }
-        if (std::getenv("LOOL_WS_JITTER"))
-        {
-            jitter = std::stoul(std::getenv("LOOL_WS_JITTER"));
-        }
-
-        return std::chrono::milliseconds(baseDelay + (jitter > 0 ? (std::rand() % jitter) : 0));
-    }
-
-    void setMinSocketBufferSize()
-    {
-        if (std::getenv("LOOL_ZERO_BUFFER_SIZE"))
-        {
-            // Lets set it to zero as system will automatically adjust it to minimum
-            setSendBufferSize(0);
-            LOG_INF("Send buffer size for web socket set to minimum: " << getSendBufferSize());
-        }
-    }
-#endif
-
 public:
     LOOLWebSocket(const Socket& socket) :
         Poco::Net::WebSocket(socket)
     {
     }
 
+#if 0
     LOOLWebSocket(Poco::Net::HTTPServerRequest& request,
                   Poco::Net::HTTPServerResponse& response) :
         Poco::Net::WebSocket(request, response)
     {
-#if ENABLE_DEBUG
-        setMinSocketBufferSize();
-#endif
     }
+#endif
 
     LOOLWebSocket(Poco::Net::HTTPClientSession& cs,
                   Poco::Net::HTTPRequest& request,
                   Poco::Net::HTTPResponse& response) :
         Poco::Net::WebSocket(cs, request, response)
     {
-#if ENABLE_DEBUG
-        setMinSocketBufferSize();
-#endif
     }
-
+#if 0
     LOOLWebSocket(Poco::Net::HTTPClientSession& cs,
                   Poco::Net::HTTPRequest& request,
                   Poco::Net::HTTPResponse& response,
                   Poco::Net::HTTPCredentials& credentials) :
         Poco::Net::WebSocket(cs, request, response, credentials)
     {
-#if ENABLE_DEBUG
-        setMinSocketBufferSize();
-#endif
     }
+#endif
 
     /// Wrapper for Poco::Net::WebSocket::receiveFrame() that handles PING frames
     /// (by replying with a PONG frame) and PONG frames. PONG frames are ignored.
@@ -105,10 +73,6 @@ public:
     /// Should we also factor out the handling of non-final and continuation frames into this?
     int receiveFrame(char* buffer, const int length, int& flags)
     {
-#if ENABLE_DEBUG
-        // Delay receiving the frame
-        std::this_thread::sleep_for(getWebSocketDelay());
-#endif
         // Timeout is in microseconds. We don't need this, except to yield the cpu.
         static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000 / 10);
         static const Poco::Timespan waitZero(0);
@@ -157,10 +121,6 @@ public:
     /// Wrapper for Poco::Net::WebSocket::sendFrame() that handles large frames.
     int sendFrame(const char* buffer, const int length, const int flags = FRAME_TEXT)
     {
-#if ENABLE_DEBUG
-        // Delay sending the frame
-        std::this_thread::sleep_for(getWebSocketDelay());
-#endif
         static const Poco::Timespan waitZero(0);
         std::unique_lock<std::mutex> lock(_mutexWrite);
 
