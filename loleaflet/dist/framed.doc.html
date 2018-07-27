@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<!-- Proof of concept of running loleaflet.html in an iframe. Also
+     shows how to, from outside the iframe, invoke Python scripting in
+     the underlying LibreOffice instance that manipulates the document
+     being edited.
+
+     This demonstrates using the Python InsertText.py and Capitalise.py
+     scripts from javascript across iframes.
+
+     To test this, do 'make run', and then in your browser open the
+     equivalent of
+     http://snorken.local:9980/loleaflet/3304e9093/framed.html if the
+     browser is running on a different machine, or
+     http://localhost:9980/loleaflet/3304e9093/framed.html if running
+     on the same machine.
+
+-->
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Online Editor</title>
+
+    <script>
+
+      function insertText(text) {
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'CallPythonScript',
+                                                     'SendTime': Date.now(),
+                                                     'ScriptFile': 'InsertText.py',
+                                                     'Function': 'InsertText',
+                                                     'Values': { 'text': {'type': 'string', 'value': text}}
+                                                     }),
+                                     '*');
+      }
+
+      function capitalize() {
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'CallPythonScript',
+                                                     'SendTime': Date.now(),
+                                                     'ScriptFile': 'Capitalise.py',
+                                                     'Function': 'capitalisePython',
+                                                     'Values': null
+                                                     }),
+                                     '*');
+      }
+
+      // This function is invoked when the iframe posts a message back.
+
+      function receiveMessage(event) {
+        var msg = JSON.parse(event.data);
+        console.log('==== framed.html receiveMessage: ' + event.data);
+        console.log('                                 ' + msg);
+      }
+
+      // 'main' code of this <script> block, run when page is being
+      // rendered. Install the message listener.
+      window.addEventListener("message", receiveMessage, false);
+
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+
+  <body style="user-select: none;">
+
+    <form id="insert-text-form">
+      Click <button onclick="insertText(document.forms['insert-text-form'].elements['source'].value); return false;">here</button> to insert the following text into the document:
+      <textarea name="source" value="" rows="10" cols="80"></textarea>
+    </form>
+
+    <form id="insert-text-form">
+      Click <button onclick="capitalize(); return false;">here</button> to capitalize selected text in the document:
+    </form>
+
+    <!-- The hostname and pathnames below are obviously specific to my
+    personal environment and need to be changed appropriately. Also
+    the hex string needs to be changed of course, to the right one as
+    shown by 'make run'. -->
+
+    <iframe src="http://localhost:9980/loleaflet/ef3c798/loleaflet.html?file_path=file:///home/ash/prj/lo/online/test/data/empty.odt&NotWOPIButIframe=true" height="1000" width="1000"></iframe>
+  </body>
+</html>
