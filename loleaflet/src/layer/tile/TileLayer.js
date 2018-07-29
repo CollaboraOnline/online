@@ -2413,7 +2413,7 @@ L.TileLayer = L.GridLayer.extend({
 					rect.setStyle({fillOpacity: opac - 0.04});
 				}
 			}
-			this._debugTimeoutId = setTimeout(function () { this._map._docLayer._debugTimeout(); }, 50);
+			this._debugTimeoutId = setTimeout(L.bind(this._debugTimeout, this), 50);
 		}
 	},
 
@@ -2426,7 +2426,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._postKeyboardEvent('input', this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length), 0);
 		}
 		this._debugLoremPos++;
-		this._debugTypeTimeoutId = setTimeout(function () { this._map._docLayer._debugTypeTimeout(); }, 50);
+		this._debugTypeTimeoutId = setTimeout(L.bind(this._debugTypeTimeout, this), 50);
 	}
 
 });
