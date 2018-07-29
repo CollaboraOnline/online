@@ -172,13 +172,13 @@ L.Map.Keyboard = L.Handler.extend({
 
 		this._map.on('mousedown', this._onMouseDown, this);
 		this._map.on('keydown keyup keypress', this._onKeyDown, this);
-		this._map.on('compositionstart compositionupdate compositionend textInput', this._onKeyDown, this);
+		this._map.on('compositionstart compositionupdate compositionend textInput', this._onIME, this);
 	},
 
 	removeHooks: function () {
 		this._map.off('mousedown', this._onMouseDown, this);
 		this._map.off('keydown keyup keypress', this._onKeyDown, this);
-		this._map.off('compositionstart compositionupdate compositionend textInput', this._onKeyDown, this);
+		this._map.off('compositionstart compositionupdate compositionend textInput', this._onIME, this);
 	},
 
 	_ignoreKeyEvent: function(e) {
@@ -295,25 +295,6 @@ L.Map.Keyboard = L.Handler.extend({
 		var charCode = e.originalEvent.charCode;
 		var keyCode = e.originalEvent.keyCode;
 
-		if (e.type === 'compositionstart' || e.type === 'compositionupdate') {
-			this._isComposing = true; // we are starting composing with IME
-			var txt = '';
-			for (var i = 0; i < e.originalEvent.data.length; i++) {
-				txt += e.originalEvent.data[i];
-			}
-			if (txt) {
-				compEventFn('input', txt);
-			}
-		}
-
-		if (e.type === 'compositionend') {
-			this._isComposing = false; // stop of composing with IME
-			// get the composited char codes
-			// clear the input now - best to do this ASAP so the input
-			// is clear for the next word
-			inputEle.value = '';
-		}
-
 		if (!this._isComposing && e.type === 'keyup') {
 			// not compositing and keyup, clear the input so it is ready
 			// for next word (or char only)
@@ -339,14 +320,12 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 			else if (e.type === 'keydown') {
 				this._keyHandled = false;
-				this._bufferedTextInputEvent = null;
 
 				if (this.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 					keyEventFn('input', charCode, unoKeyCode);
 				}
 			}
-			else if ((e.type === 'keypress' || e.type === 'compositionend') &&
-			         (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
+			else if ((e.type === 'keypress') && (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
 				if (charCode === keyCode && charCode !== 13) {
 					// Chrome sets keyCode = charCode for printable keys
 					// while LO requires it to be 0
@@ -357,47 +336,13 @@ L.Map.Keyboard = L.Handler.extend({
 					// key press times will be paired with the invalidation messages
 					docLayer._debugKeypressQueue.push(+new Date());
 				}
-				if (e.type === 'compositionend') {
-					// Set all keycodes to zero
-					compEventFn('end', '');
-				} else {
-					keyEventFn('input', charCode, unoKeyCode);
-				}
 
+				keyEventFn('input', charCode, unoKeyCode);
 				this._keyHandled = true;
-			}
-			else if (e.type === 'textInput') {
-				// Store the textInput event
-				this._bufferedTextInputEvent = e;
 			}
 			else if (e.type === 'keyup') {
-				// Hack for making space and spell-check text insert work
-				// in Chrome (on Andorid) or Chrome with IME.
-				//
-				// Chrome (Android) IME triggers keyup/keydown input with
-				// code 229 when hitting space (as with all composiiton events)
-				// with addition to 'textinput' event, in which we only see that
-				// space was entered. Similar situation is also when inserting
-				// a soft-keyboard spell-check item - it is visible only with
-				// 'textinput' event (no composition event is fired).
-				// To make this work we need to insert textinput.data here..
-				//
-				// TODO: Maybe make sure this is only triggered when keydown has
-				// 229 code. Also we need to detect that composition was overriden
-				// (part or whole word deleted) with the spell-checked word. (for
-				// example: enter 'tar' and with spell-check correct that to 'rat')
-
-				if (!this._keyHandled && this._bufferedTextInputEvent) {
-					var textInputData = this._bufferedTextInputEvent.originalEvent.data;
-					charCode = e.originalEvent.keyCode;
-					for (var i = 0; i < textInputData.length; i++) {
-						keyEventFn('input', textInputData[i].charCodeAt(), 0);
-					}
-				}
 				keyEventFn('up', charCode, unoKeyCode);
-
 				this._keyHandled = true;
-				this._bufferedTextInputEvent = null;
 			}
 			if (keyCode === 9) {
 				// tab would change focus to other DOM elements
@@ -428,6 +373,51 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		L.DomEvent.stopPropagation(e.originalEvent);
+	},
+
+	_onIME: function (e) {
+		if (e.type === 'compositionstart' || e.type === 'compositionupdate') {
+			this._isComposing = true; // we are starting composing with IME
+			var txt = '';
+			for (var i = 0; i < e.originalEvent.data.length; i++) {
+				txt += e.originalEvent.data[i];
+			}
+			if (txt) {
+				this._map._docLayer._postCompositionEvent(0, 'input', txt);
+			}
+		}
+
+		if (e.type === 'compositionend') {
+			this._isComposing = false; // stop of composing with IME
+			// get the composited char codes
+			// clear the input now - best to do this ASAP so the input
+			// is clear for the next word
+			this._map._clipboardContainer._textArea.value = '';
+			// Set all keycodes to zero
+			this._map._docLayer._postCompositionEvent(0, 'end', '');
+		}
+
+		if (e.type === 'textInput' && !this._keyHandled) {
+			// Hack for making space and spell-check text insert work
+			// in Chrome (on Andorid) or Chrome with IME.
+			//
+			// Chrome (Android) IME triggers keyup/keydown input with
+			// code 229 when hitting space (as with all composiiton events)
+			// with addition to 'textinput' event, in which we only see that
+			// space was entered. Similar situation is also when inserting
+			// a soft-keyboard spell-check item - it is visible only with
+			// 'textinput' event (no composition event is fired).
+			// To make this work we need to insert textinput.data here..
+			//
+			// TODO: Maybe make sure this is only triggered when keydown has
+			// 229 code. Also we need to detect that composition was overriden
+			// (part or whole word deleted) with the spell-checked word. (for
+			// example: enter 'tar' and with spell-check correct that to 'rat')
+			var data = e.originalEvent.data;
+			for (var idx = 0; idx < data.length; idx++) {
+				this._map._docLayer._postKeyboardEvent('input', data[idx].charCodeAt(), 0);
+			}
+		}
 	},
 
 	_handleCtrlCommand: function (e) {
