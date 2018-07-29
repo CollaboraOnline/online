@@ -70,8 +70,11 @@ L.Map.Tap = L.Handler.extend({
 
 	_onMove: function (e) {
 		var first = e.touches[0];
-		this._newPos = new L.Point(first.clientX, first.clientY);
-		this._simulateEvent('mousemove', first);
+		var newPos = new L.Point(first.clientX, first.clientY);
+		if (newPos.distanceTo(this._startPos) > this._map.options.tapTolerance) {
+			this._newPos = newPos;
+			this._simulateEvent('mousemove', first);
+		}
 	},
 
 	_simulateEvent: function (type, e) {
