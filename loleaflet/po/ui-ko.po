@@ -194,11 +194,11 @@ msgstr "호스트 URL이 비어 있습니다. loolwsd 서버가 잘못 구성된
 
 #: dist/errormessages.js:3
 msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr ""
+msgstr "지원되지 않는 {productname} 버전입니다. 기업용 배포에 적합하다는 인상을 피하기 위해 {docs} 문서 또는 {connections} 개 이상의 연결을 동시에 사용하는 경우에 이 메시지가 표시됩니다."
 
 #: dist/errormessages.js:4
 msgid "More information and support"
-msgstr ""
+msgstr "더 많은 정보와 지원"
 
 #: dist/errormessages.js:5
 msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
@@ -214,7 +214,7 @@ msgstr "인증되지 않은 WOPI 호스트입니다. 나중에 다시 시도하�
 
 #: dist/errormessages.js:8
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "WOPISrc 매개 변수가 잘못되었거나 누락되었습니다. 지원팀에 문의하십시오."
 
 #: dist/errormessages.js:9
 msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
@@ -272,7 +272,7 @@ msgstr "표 삽입"
 
 #: dist/toolbar/toolbar.js:521
 msgid "More"
-msgstr ""
+msgstr "자세히"
 
 #: dist/toolbar/toolbar.js:619 dist/toolbar/toolbar.js:1094
 msgid "Sum"
@@ -308,7 +308,7 @@ msgstr "마지막 시트"
 
 #: dist/toolbar/toolbar.js:642
 msgid "Insert sheet"
-msgstr ""
+msgstr "시트 삽입"
 
 #: dist/toolbar/toolbar.js:652 src/control/Control.Menubar.js:288
 msgid "Fullscreen presentation"
@@ -739,19 +739,19 @@ msgstr "이전 버전으로 복구합니다. 저장되지 않은 변경 사항�
 
 #: src/core/Socket.js:445
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr ""
+msgstr "저장소에 있는 문서가 변경되었습니다. 변경 사항을 어떻게 처리하겠습니까?"
 
 #: src/core/Socket.js:450
 msgid "Discard"
-msgstr ""
+msgstr "버리기"
 
 #: src/core/Socket.js:455
 msgid "Overwrite"
-msgstr ""
+msgstr "덮어쓰기"
 
 #: src/core/Socket.js:460
 msgid "Save to new file"
-msgstr ""
+msgstr "새 파일로 저장"
 
 #: src/core/Socket.js:527
 msgid "Document requires password to view."
