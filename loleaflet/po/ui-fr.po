@@ -194,11 +194,11 @@ msgstr "L'URL de l'hôte est vide. Le serveur loolwsd est probablement mal confi
 
 #: dist/errormessages.js:3
 msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr ""
+msgstr "Cette version de {productname} n'est pas prise en charge. Pour éviter de donner l'impression qu'elle peut être déployée en entreprise, ce message apparaît lorsque plus de {docs} documents ou {connections} connexions sont utilisées concurremment."
 
 #: dist/errormessages.js:4
 msgid "More information and support"
-msgstr ""
+msgstr "Informations complémentaires et support"
 
 #: dist/errormessages.js:5
 msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
@@ -214,7 +214,7 @@ msgstr "Hôte WOPI non autorisé. Veuillez essayer de nouveau plus tard et en fa
 
 #: dist/errormessages.js:8
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "Paramètre WOPISrc manquant ou faux, veuillez contacter le support."
 
 #: dist/errormessages.js:9
 msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
@@ -308,7 +308,7 @@ msgstr "Dernière feuille"
 
 #: dist/toolbar/toolbar.js:642
 msgid "Insert sheet"
-msgstr ""
+msgstr "Insérer une feuille"
 
 #: dist/toolbar/toolbar.js:652 src/control/Control.Menubar.js:288
 msgid "Fullscreen presentation"
@@ -739,19 +739,19 @@ msgstr "Restauration d'une version antérieure. Toutes les modifications non enr
 
 #: src/core/Socket.js:445
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr ""
+msgstr "Le document a été modifié dans le stockage. Que voulez-vous faire des modifications non sauvegardées ?"
 
 #: src/core/Socket.js:450
 msgid "Discard"
-msgstr ""
+msgstr "Abandonner"
 
 #: src/core/Socket.js:455
 msgid "Overwrite"
-msgstr ""
+msgstr "Écraser"
 
 #: src/core/Socket.js:460
 msgid "Save to new file"
-msgstr ""
+msgstr "Enregistrer dans un nouveau fichier"
 
 #: src/core/Socket.js:527
 msgid "Document requires password to view."
