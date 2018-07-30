@@ -93,7 +93,7 @@ msgstr "アイドル時間"
 
 #: admin.strings.js:24
 msgid "Modified"
-msgstr ""
+msgstr "変更"
 
 #: admin.strings.js:25
 msgid "Kill"
@@ -272,7 +272,7 @@ msgstr "表の挿入"
 
 #: dist/toolbar/toolbar.js:521
 msgid "More"
-msgstr ""
+msgstr "詳細"
 
 #: dist/toolbar/toolbar.js:619 dist/toolbar/toolbar.js:1094
 msgid "Sum"
@@ -308,7 +308,7 @@ msgstr "最後のシート"
 
 #: dist/toolbar/toolbar.js:642
 msgid "Insert sheet"
-msgstr ""
+msgstr "シートの挿入"
 
 #: dist/toolbar/toolbar.js:652 src/control/Control.Menubar.js:288
 msgid "Fullscreen presentation"
@@ -332,7 +332,7 @@ msgstr "常に編集者に従う"
 
 #: dist/toolbar/toolbar.js:688
 msgid "Current"
-msgstr ""
+msgstr "現在"
 
 #: dist/toolbar/toolbar.js:695 src/control/Control.Menubar.js:58
 #: src/control/Control.Menubar.js:253
@@ -581,7 +581,7 @@ msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Rich Text (.rtf)"
 
 #: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:239
 #: src/control/Control.Menubar.js:317
@@ -590,7 +590,7 @@ msgstr "修復"
 
 #: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:81
 msgid "All"
-msgstr ""
+msgstr "すべて"
 
 #: src/control/Control.Menubar.js:128
 msgid "Text orientation"
@@ -663,7 +663,7 @@ msgstr "標準の値"
 
 #: src/control/Control.MetricInput.js:68
 msgid "Submit"
-msgstr ""
+msgstr "送信"
 
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
@@ -739,19 +739,19 @@ msgstr ""
 
 #: src/core/Socket.js:438
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr ""
+msgstr "ドキュメントがストレージ上で変更されました。"
 
 #: src/core/Socket.js:443
 msgid "Discard"
-msgstr ""
+msgstr "変更を破棄"
 
 #: src/core/Socket.js:448
 msgid "Overwrite"
-msgstr ""
+msgstr "ドキュメントを上書き"
 
 #: src/core/Socket.js:453
 msgid "Save to new file"
-msgstr ""
+msgstr "名前を付けて保存"
 
 #: src/core/Socket.js:520
 msgid "Document requires password to view."
