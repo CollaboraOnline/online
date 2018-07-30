@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-19 09:41+0200\n"
+"POT-Creation-Date: 2018-07-30 11:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,147 +17,147 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/admin.strings.js:5
+#: admin/admin.strings.js:6
 msgid "Admin console"
 msgstr ""
 
-#: admin/admin.strings.js:6
+#: admin/admin.strings.js:7
 msgid "Settings"
 msgstr ""
 
-#: admin/admin.strings.js:7
+#: admin/admin.strings.js:8
 msgid "Overview"
 msgstr ""
 
-#: admin/admin.strings.js:8
+#: admin/admin.strings.js:9
 msgid "(current)"
 msgstr ""
 
-#: admin/admin.strings.js:9
+#: admin/admin.strings.js:10
 msgid "Analytics"
 msgstr ""
 
-#: admin/admin.strings.js:10
+#: admin/admin.strings.js:11
 msgid "History"
 msgstr ""
 
-#: admin/admin.strings.js:11
+#: admin/admin.strings.js:12
 msgid "Dashboard"
 msgstr ""
 
-#: admin/admin.strings.js:12
+#: admin/admin.strings.js:13
 msgid "Users online"
 msgstr ""
 
-#: admin/admin.strings.js:13
+#: admin/admin.strings.js:14
 msgid "User Name"
 msgstr ""
 
-#: admin/admin.strings.js:14
+#: admin/admin.strings.js:15
 msgid "Documents opened"
 msgstr ""
 
-#: admin/admin.strings.js:15
+#: admin/admin.strings.js:16
 msgid "Number of Documents"
 msgstr ""
 
-#: admin/admin.strings.js:16
+#: admin/admin.strings.js:17
 msgid "Memory consumed"
 msgstr ""
 
-#: admin/admin.strings.js:17
+#: admin/admin.strings.js:18
 msgid "Bytes sent"
 msgstr ""
 
-#: admin/admin.strings.js:18
+#: admin/admin.strings.js:19
 msgid "Bytes received"
 msgstr ""
 
-#: admin/admin.strings.js:19
+#: admin/admin.strings.js:20
 msgid "PID"
 msgstr ""
 
-#: admin/admin.strings.js:20
+#: admin/admin.strings.js:21
 msgid "Document"
 msgstr ""
 
-#: admin/admin.strings.js:21
+#: admin/admin.strings.js:22
 msgid "Number of views"
 msgstr ""
 
-#: admin/admin.strings.js:22
+#: admin/admin.strings.js:23
 msgid "Elapsed time"
 msgstr ""
 
-#: admin/admin.strings.js:23
+#: admin/admin.strings.js:24
 msgid "Idle time"
 msgstr ""
 
-#: admin/admin.strings.js:24
+#: admin/admin.strings.js:25
 msgid "Modified"
 msgstr ""
 
-#: admin/admin.strings.js:25
+#: admin/admin.strings.js:26
 msgid "Kill"
 msgstr ""
 
-#: admin/admin.strings.js:26
+#: admin/admin.strings.js:27
 msgid "Graphs"
 msgstr ""
 
-#: admin/admin.strings.js:27
+#: admin/admin.strings.js:28
 msgid "Memory Graph"
 msgstr ""
 
-#: admin/admin.strings.js:28
+#: admin/admin.strings.js:29
 msgid "CPU Graph"
 msgstr ""
 
-#: admin/admin.strings.js:29
+#: admin/admin.strings.js:30
 msgid "Network Graph"
 msgstr ""
 
-#: admin/admin.strings.js:30 src/layer/marker/Annotation.js:224
+#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:225
 msgid "Save"
 msgstr ""
 
-#: admin/admin.strings.js:31
+#: admin/admin.strings.js:32
 msgid "Cache size of memory statistics"
 msgstr ""
 
-#: admin/admin.strings.js:32
+#: admin/admin.strings.js:33
 msgid "Time interval of memory statistics (in ms)"
 msgstr ""
 
-#: admin/admin.strings.js:33
+#: admin/admin.strings.js:34
 msgid "Cache size of CPU statistics"
 msgstr ""
 
-#: admin/admin.strings.js:34
+#: admin/admin.strings.js:35
 msgid "Time interval of CPU statistics (in ms)"
 msgstr ""
 
-#: admin/admin.strings.js:35
+#: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
 
-#: admin/admin.strings.js:36
+#: admin/admin.strings.js:37
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
 
-#: admin/admin.strings.js:37
+#: admin/admin.strings.js:38
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
 
-#: admin/admin.strings.js:38
+#: admin/admin.strings.js:39
 msgid "Documents:"
 msgstr ""
 
-#: admin/admin.strings.js:39
+#: admin/admin.strings.js:40
 msgid "Expired:"
 msgstr ""
 
-#: admin/admin.strings.js:40
+#: admin/admin.strings.js:41
 msgid "Refresh"
 msgstr ""
 
@@ -250,466 +250,474 @@ msgid ""
 "server administrator."
 msgstr ""
 
-#: js/toolbar.js:60
+#: js/toolbar.js:61
 msgid "%n users"
 msgstr ""
 
-#: js/toolbar.js:61
+#: js/toolbar.js:62
 msgid "1 user"
 msgstr ""
 
-#: js/toolbar.js:62
+#: js/toolbar.js:63
 msgid "0 users"
 msgstr ""
 
-#: js/toolbar.js:189
+#: js/toolbar.js:190
 msgid "Are you sure you want to delete this page?"
 msgstr ""
 
-#: js/toolbar.js:523
+#: js/toolbar.js:602
 msgid "Textwrap"
 msgstr ""
 
-#: js/toolbar.js:524
+#: js/toolbar.js:603
 msgid "No wrap"
 msgstr ""
 
-#: js/toolbar.js:525
+#: js/toolbar.js:604
 msgid "Page wrap"
 msgstr ""
 
-#: js/toolbar.js:526
+#: js/toolbar.js:605
 msgid "Wrap anchor only"
 msgstr ""
 
-#: js/toolbar.js:527
+#: js/toolbar.js:606
 msgid "Ideal wrap"
 msgstr ""
 
-#: js/toolbar.js:528
+#: js/toolbar.js:607
 msgid "Left wrap"
 msgstr ""
 
-#: js/toolbar.js:529
+#: js/toolbar.js:608
 msgid "Right wrap"
 msgstr ""
 
-#: js/toolbar.js:530
+#: js/toolbar.js:609
 msgid "Wrap through"
 msgstr ""
 
-#: js/toolbar.js:536
+#: js/toolbar.js:615
 msgid "Document repair"
 msgstr ""
 
-#: js/toolbar.js:576
+#: js/toolbar.js:655
 msgid "Insert table"
 msgstr ""
 
-#: js/toolbar.js:578
+#: js/toolbar.js:657
+msgid "Borders"
+msgstr ""
+
+#: js/toolbar.js:665
+msgid "More..."
+msgstr ""
+
+#: js/toolbar.js:667
 msgid "Insert shapes"
 msgstr ""
 
-#: js/toolbar.js:624 js/toolbar.js:1095
+#: js/toolbar.js:717 js/toolbar.js:1209
 msgid "Sum"
 msgstr ""
 
-#: js/toolbar.js:625
+#: js/toolbar.js:718
 msgid "Function"
 msgstr ""
 
-#: js/toolbar.js:626 src/layer/marker/Annotation.js:163
+#: js/toolbar.js:719 src/layer/marker/Annotation.js:164
 msgid "Cancel"
 msgstr ""
 
-#: js/toolbar.js:627
+#: js/toolbar.js:720
 msgid "Accept"
 msgstr ""
 
-#: js/toolbar.js:646
+#: js/toolbar.js:748
 msgid "First sheet"
 msgstr ""
 
-#: js/toolbar.js:647
+#: js/toolbar.js:749
 msgid "Previous sheet"
 msgstr ""
 
-#: js/toolbar.js:648
+#: js/toolbar.js:750
 msgid "Next sheet"
 msgstr ""
 
-#: js/toolbar.js:649
+#: js/toolbar.js:751
 msgid "Last sheet"
 msgstr ""
 
-#: js/toolbar.js:650
+#: js/toolbar.js:752
 msgid "Insert sheet"
 msgstr ""
 
-#: js/toolbar.js:663 src/control/Control.Menubar.js:292
+#: js/toolbar.js:769 src/control/Control.Menubar.js:293
 msgid "Fullscreen presentation"
 msgstr ""
 
-#: js/toolbar.js:682
+#: js/toolbar.js:792
 msgid "Search:"
 msgstr ""
 
-#: js/toolbar.js:689
+#: js/toolbar.js:799
 msgid "Cancel the search"
 msgstr ""
 
-#: js/toolbar.js:694
+#: js/toolbar.js:804
 msgid "No users"
 msgstr ""
 
-#: js/toolbar.js:698
+#: js/toolbar.js:808
 msgid "Always follow the editor"
 msgstr ""
 
-#: js/toolbar.js:701
+#: js/toolbar.js:811
 msgid "Current"
 msgstr ""
 
-#: js/toolbar.js:708 src/control/Control.Menubar.js:60
-#: src/control/Control.Menubar.js:257
+#: js/toolbar.js:818 src/control/Control.Menubar.js:61
+#: src/control/Control.Menubar.js:258
 msgid "Reset zoom"
 msgstr ""
 
-#: js/toolbar.js:740
+#: js/toolbar.js:854
 msgid "%user has joined"
 msgstr ""
 
-#: js/toolbar.js:906 js/toolbar.js:1453
+#: js/toolbar.js:1020 js/toolbar.js:1567
 msgid "Size"
 msgstr ""
 
-#: js/toolbar.js:1073
+#: js/toolbar.js:1187
 msgid "Number of Sheets"
 msgstr ""
 
-#: js/toolbar.js:1076
+#: js/toolbar.js:1190
 msgid "Selected range of cells"
 msgstr ""
 
-#: js/toolbar.js:1079 js/toolbar.js:1116
+#: js/toolbar.js:1193 js/toolbar.js:1230
 msgid "Entering text mode"
 msgstr ""
 
-#: js/toolbar.js:1082 js/toolbar.js:1122 js/toolbar.js:1144
+#: js/toolbar.js:1196 js/toolbar.js:1236 js/toolbar.js:1258
 msgid "Text Language"
 msgstr ""
 
-#: js/toolbar.js:1085 js/toolbar.js:1119
+#: js/toolbar.js:1199 js/toolbar.js:1233
 msgid "Selection Mode"
 msgstr ""
 
-#: js/toolbar.js:1088
+#: js/toolbar.js:1202
 msgid "Choice of functions"
 msgstr ""
 
-#: js/toolbar.js:1090
+#: js/toolbar.js:1204
 msgid "Average"
 msgstr ""
 
-#: js/toolbar.js:1091
+#: js/toolbar.js:1205
 msgid "CountA"
 msgstr ""
 
-#: js/toolbar.js:1092
+#: js/toolbar.js:1206
 msgid "Count"
 msgstr ""
 
-#: js/toolbar.js:1093
+#: js/toolbar.js:1207
 msgid "Maximum"
 msgstr ""
 
-#: js/toolbar.js:1094
+#: js/toolbar.js:1208
 msgid "Minimum"
 msgstr ""
 
-#: js/toolbar.js:1096
+#: js/toolbar.js:1210
 msgid "Selection count"
 msgstr ""
 
-#: js/toolbar.js:1097
+#: js/toolbar.js:1211
 msgid "None"
 msgstr ""
 
-#: js/toolbar.js:1110
+#: js/toolbar.js:1224
 msgid "Number of Pages"
 msgstr ""
 
-#: js/toolbar.js:1113
+#: js/toolbar.js:1227
 msgid "Word Counter"
 msgstr ""
 
-#: js/toolbar.js:1141
+#: js/toolbar.js:1255
 msgid "Number of Slides"
 msgstr ""
 
-#: js/toolbar.js:1287
+#: js/toolbar.js:1401
 msgid "Document saved"
 msgstr ""
 
-#: js/toolbar.js:1423
+#: js/toolbar.js:1537
 msgid "Style"
 msgstr ""
 
-#: js/toolbar.js:1445
+#: js/toolbar.js:1559
 msgid "Font"
 msgstr ""
 
-#: js/toolbar.js:1478
+#: js/toolbar.js:1592
 msgid "Previous slide"
 msgstr ""
 
-#: js/toolbar.js:1479
+#: js/toolbar.js:1593
 msgid "Next slide"
 msgstr ""
 
-#: js/toolbar.js:1541
+#: js/toolbar.js:1655
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: js/toolbar.js:1751 src/control/Control.DocumentRepair.js:93
+#: js/toolbar.js:1865 src/control/Control.DocumentRepair.js:94
 msgid "You"
 msgstr ""
 
-#: js/toolbar.js:1757
+#: js/toolbar.js:1871
 msgid "Readonly"
 msgstr ""
 
-#: admin/src/AdminSocketAnalytics.js:218
+#: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
 msgstr ""
 
-#: admin/src/AdminSocketAnalytics.js:222
+#: admin/src/AdminSocketAnalytics.js:223
 msgid "Sent"
 msgstr ""
 
-#: admin/src/AdminSocketBase.js:45
+#: admin/src/AdminSocketBase.js:46
 msgid "Connection error"
 msgstr ""
 
-#: admin/src/AdminSocketOverview.js:100
+#: admin/src/AdminSocketOverview.js:101
 msgid "Are you sure you want to terminate this session?"
 msgstr ""
 
-#: admin/src/AdminSocketOverview.js:181 admin/src/AdminSocketOverview.js:283
+#: admin/src/AdminSocketOverview.js:182 admin/src/AdminSocketOverview.js:284
 msgid "Documents"
 msgstr ""
 
-#: admin/src/AdminSocketSettings.js:33
+#: admin/src/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
 msgstr ""
 
-#: admin/src/Util.js:13
+#: admin/src/Util.js:14
 msgid "kB"
 msgstr ""
 
-#: admin/src/Util.js:13
+#: admin/src/Util.js:14
 msgid "MB"
 msgstr ""
 
-#: admin/src/Util.js:13
+#: admin/src/Util.js:14
 msgid "GB"
 msgstr ""
 
-#: admin/src/Util.js:13
+#: admin/src/Util.js:14
 msgid "TB"
 msgstr ""
 
-#: admin/src/Util.js:42 admin/src/Util.js:44
+#: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
 msgstr ""
 
-#: admin/src/Util.js:48 admin/src/Util.js:50
+#: admin/src/Util.js:49 admin/src/Util.js:51
 msgid " mins"
 msgstr ""
 
-#: admin/src/Util.js:53
+#: admin/src/Util.js:54
 msgid " s"
 msgstr ""
 
-#: src/control/Control.AlertDialog.js:27
+#: src/control/Control.AlertDialog.js:28
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:130
+#: src/control/Control.ContextMenu.js:131
 msgid "Internal Cut"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:133
+#: src/control/Control.ContextMenu.js:134
 msgid "Internal Copy"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:136
+#: src/control/Control.ContextMenu.js:137
 msgid "Internal Paste"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:158
+#: src/control/Control.ContextMenu.js:159
 msgid "Internal Paste Special"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:32
+#: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:43
+#: src/control/Control.DocumentRepair.js:44
 msgid "Type"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:45
+#: src/control/Control.DocumentRepair.js:46
 msgid "Index"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:233
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:226
 msgid "Comment"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:49
+#: src/control/Control.DocumentRepair.js:50
 msgid "User name"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:51
+#: src/control/Control.DocumentRepair.js:52
 msgid "Timestamp"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:55
+#: src/control/Control.DocumentRepair.js:56
 msgid "Jump to state"
-msgstr ""
-
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:231
-#: src/control/Control.Menubar.js:311
-msgid "See revision history"
 msgstr ""
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:232
 #: src/control/Control.Menubar.js:312
-msgid "Download as"
+msgid "See revision history"
 msgstr ""
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:233
 #: src/control/Control.Menubar.js:313
+msgid "Download as"
+msgstr ""
+
+#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:314
 msgid "PDF Document (.pdf)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:24
+#: src/control/Control.Menubar.js:25
 msgid "ODF text document (.odt)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:25
+#: src/control/Control.Menubar.js:26
 msgid "Word 2003 Document (.doc)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:26
+#: src/control/Control.Menubar.js:27
 msgid "Word Document (.docx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:27
+#: src/control/Control.Menubar.js:28
 msgid "Rich Text (.rtf)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:34 src/control/Control.Menubar.js:243
-#: src/control/Control.Menubar.js:323
+#: src/control/Control.Menubar.js:35 src/control/Control.Menubar.js:244
+#: src/control/Control.Menubar.js:324
 msgid "Repair"
 msgstr ""
 
-#: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
+#: src/control/Control.Menubar.js:82 src/control/Control.Menubar.js:84
 msgid "All"
 msgstr ""
 
-#: src/control/Control.Menubar.js:130
+#: src/control/Control.Menubar.js:131
 msgid "Text orientation"
 msgstr ""
 
-#: src/control/Control.Menubar.js:208 src/control/Control.Menubar.js:210
-#: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:297
-#: src/control/Control.Menubar.js:389
+#: src/control/Control.Menubar.js:209 src/control/Control.Menubar.js:211
+#: src/control/Control.Menubar.js:213 src/control/Control.Menubar.js:298
+#: src/control/Control.Menubar.js:390
 msgid "None (Do not check spelling)"
-msgstr ""
-
-#: src/control/Control.Menubar.js:220 src/control/Control.Menubar.js:300
-#: src/control/Control.Menubar.js:392
-msgid "Keyboard shortcuts"
 msgstr ""
 
 #: src/control/Control.Menubar.js:221 src/control/Control.Menubar.js:301
 #: src/control/Control.Menubar.js:393
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: src/control/Control.Menubar.js:222 src/control/Control.Menubar.js:302
+#: src/control/Control.Menubar.js:394
 msgid "About"
 msgstr ""
 
-#: src/control/Control.Menubar.js:223 src/control/Control.Menubar.js:303
-#: src/control/Control.Menubar.js:395
+#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:304
+#: src/control/Control.Menubar.js:396
 msgid "Close document"
 msgstr ""
 
-#: src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:235
 msgid "ODF presentation (.odp)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:235
+#: src/control/Control.Menubar.js:236
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:236
+#: src/control/Control.Menubar.js:237
 msgid "PowerPoint Presentation (.pptx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:314
+#: src/control/Control.Menubar.js:315
 msgid "ODF spreadsheet (.ods)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:315
+#: src/control/Control.Menubar.js:316
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:316
+#: src/control/Control.Menubar.js:317
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:460
+#: src/control/Control.Menubar.js:461
 msgid "Reset to Default Language"
 msgstr ""
 
-#: src/control/Control.Menubar.js:723
+#: src/control/Control.Menubar.js:724
 msgid "Are you sure you want to delete this slide?"
 msgstr ""
 
-#: src/control/Control.Scroll.Annotation.js:9
+#: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
 msgstr ""
 
-#: src/control/Control.Scroll.Annotation.js:11
+#: src/control/Control.Scroll.Annotation.js:12
 msgid "Scroll down annotations"
 msgstr ""
 
-#: src/control/Control.Tabs.js:47
+#: src/control/Control.Tabs.js:48
 msgid "Insert sheet before this"
 msgstr ""
 
-#: src/control/Control.Tabs.js:48
+#: src/control/Control.Tabs.js:49
 msgid "Insert sheet after this"
 msgstr ""
 
-#: src/control/Control.Tabs.js:53
+#: src/control/Control.Tabs.js:54
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr ""
 
-#: src/control/Control.Tabs.js:66
+#: src/control/Control.Tabs.js:67
 msgid "Enter new sheet name"
 msgstr ""
 
-#: src/control/Toolbar.js:74 src/control/Toolbar.js:83
+#: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
 msgstr ""
 
-#: src/control/Toolbar.js:98 src/map/Map.js:1043
+#: src/control/Toolbar.js:99 src/map/Map.js:1041
 msgid "Saving..."
 msgstr ""
 
-#: src/control/Toolbar.js:239
+#: src/control/Toolbar.js:242
 msgid "This version of %productName is powered by"
 msgstr ""
 
@@ -801,42 +809,42 @@ msgid ""
 "again."
 msgstr ""
 
-#: src/layer/marker/Annotation.js:193
+#: src/layer/marker/Annotation.js:194
 msgid "Accept change"
 msgstr ""
 
-#: src/layer/marker/Annotation.js:198
+#: src/layer/marker/Annotation.js:199
 msgid "Reject change"
 msgstr ""
 
-#: src/layer/marker/Annotation.js:207
+#: src/layer/marker/Annotation.js:208
 msgid "Open menu"
 msgstr ""
 
-#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:206
+#: src/layer/marker/Annotation.js:228 src/layer/tile/TileLayer.js:199
 msgid "Reply"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:200
+#: src/layer/tile/TileLayer.js:193
 msgid "Modify"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:212
+#: src/layer/tile/TileLayer.js:205
 msgid "Remove"
 msgstr ""
 
-#: src/map/Map.js:142
+#: src/map/Map.js:138
 msgid "Initializing..."
 msgstr ""
 
-#: src/map/Map.js:907
+#: src/map/Map.js:905
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 
-#: src/map/Map.js:1046
+#: src/map/Map.js:1044
 msgid "Loading..."
 msgstr ""
 
-#: src/map/handler/Map.FileInserter.js:60
+#: src/map/handler/Map.FileInserter.js:61
 msgid "Uploading..."
 msgstr ""
