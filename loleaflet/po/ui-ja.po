@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-30 11:37+0200\n"
+"POT-Creation-Date: 2018-07-30 18:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -701,79 +701,79 @@ msgstr "保存中..."
 msgid "This version of %productName is powered by"
 msgstr "このバージョンの %productName は以下で動作しています"
 
-#: src/core/Socket.js:38
+#: src/core/Socket.js:45
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "おっと、LibreOffice Onlineへの接続で問題が発生しました : "
 
-#: src/core/Socket.js:214
+#: src/core/Socket.js:221
 msgid "Unsupported server version."
 msgstr "サポートされていないサーバーバージョンです。"
 
-#: src/core/Socket.js:265
+#: src/core/Socket.js:272
 msgid "Session terminated by document owner"
 msgstr "ドキュメントの所有者によりセッションが切断されました。"
 
-#: src/core/Socket.js:269
+#: src/core/Socket.js:276
 msgid "Idle document - please click to reload and resume editing"
 msgstr "アイドルのドキュメント - リロードをクリックして編集を継続してください"
 
-#: src/core/Socket.js:276
+#: src/core/Socket.js:283
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "サーバーはメンテナンスのため終了します（自動セーブ）"
 
-#: src/core/Socket.js:280
+#: src/core/Socket.js:287
 msgid "Oops, there is a problem connecting the document"
 msgstr "おっと、ドキュメントへの接続に問題が発生しました"
 
-#: src/core/Socket.js:284
+#: src/core/Socket.js:291
 msgid "Server is recycling and will be available shortly"
 msgstr "サーバーは再利用中でもうじき利用可能になります"
 
-#: src/core/Socket.js:314
+#: src/core/Socket.js:321
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
 msgstr "ストレージでドキュメントが変更されました。新しいドキュメントを読み込んでいます。今のバージョンはリビジョンとして参照できます。"
 
-#: src/core/Socket.js:320
+#: src/core/Socket.js:327
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
 msgstr ""
 
-#: src/core/Socket.js:438
+#: src/core/Socket.js:445
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
 msgstr "ドキュメントがストレージ上で変更されました。"
 
-#: src/core/Socket.js:443
+#: src/core/Socket.js:450
 msgid "Discard"
 msgstr "変更を破棄"
 
-#: src/core/Socket.js:448
+#: src/core/Socket.js:455
 msgid "Overwrite"
 msgstr "ドキュメントを上書き"
 
-#: src/core/Socket.js:453
+#: src/core/Socket.js:460
 msgid "Save to new file"
 msgstr "名前を付けて保存"
 
-#: src/core/Socket.js:520
+#: src/core/Socket.js:527
 msgid "Document requires password to view."
 msgstr "ドキュメントを参照するにはパスワードが必要です。"
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:530
 msgid "Document requires password to modify."
 msgstr "ドキュメントを変更するにはパスワードが必要です。"
 
-#: src/core/Socket.js:525
+#: src/core/Socket.js:532
 msgid "Hit Cancel to open in view-only mode."
 msgstr "キャンセルを押下すると表示モードで開きます。"
 
-#: src/core/Socket.js:529
+#: src/core/Socket.js:536
 msgid "Wrong password provided. Please try again."
 msgstr "パスワードが間違っています、再度挑戦してください。"
 
-#: src/core/Socket.js:641
+#: src/core/Socket.js:648
 msgid "Connecting..."
 msgstr "接続中..."
 
-#: src/core/Socket.js:780
+#: src/core/Socket.js:787
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "ええ、困りましたね、ドキュメントに接続できませんでした。再度試みてください。"
 
