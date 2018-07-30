@@ -1,4 +1,5 @@
 {
+"$1 of $2 records found":"$2 개 중 $1 레코드 발견",
 "$1 rows, $2 columns selected":"%1 행, %2 열이 선택됨",
 "%1 words, %2 characters":"단어 %1 개, 문자 %2 개",
 "Adding selection":"추가 선택",
@@ -177,6 +178,7 @@
 "Graphics":"그래픽",
 "Greek":"그리스어",
 "Greek, Ancient":"고대 그리스어",
+"Guarani (Paraguay)":"과라니어 (파라과이)",
 "Gujarati":"구자라트어",
 "HTML":"HTML",
 "Haitian":"아이티어",
@@ -304,6 +306,7 @@
 "Mari, Meadow":"마리어, 메도우",
 "Max":"최대",
 "Mbochi":"Mbochi",
+"Median":"중앙값",
 "Min":"최소",
 "Mongolian Cyrillic":"몽골어 키릴",
 "Mongolian Mongolian":"몽골 몽골어",
