@@ -323,7 +323,7 @@ clang-tidy:
 # capabilities won't survive packaging anyway. Instead, handle it when
 # installing the RPM or Debian package.
 
-all-local: loolforkit @JAILS_PATH@ $(SYSTEM_STAMP)
+all-local: loolforkit loolmount @JAILS_PATH@ $(SYSTEM_STAMP)
 	@if test "$$BUILDING_FROM_RPMBUILD" != yes; then \
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit; \
 	    sudo @SETCAP@ cap_sys_admin=ep loolmount; \
