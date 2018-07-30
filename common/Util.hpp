@@ -143,16 +143,23 @@ namespace Util
 
     /// Dump data as hex and chars to stream
     inline void dumpHex (std::ostream &os, const char *legend, const char *prefix,
-                         const std::vector<char> &buffer, const unsigned int width = 32)
+                         const std::vector<char> &buffer, const unsigned int width = 32,
+                         std::size_t cap = INT32_MAX)
     {
         unsigned int i, j;
         char scratch[64];
 
+        if (cap > buffer.size())
+            cap = buffer.size();
+
+        const int precision = (cap < 0x100 ? 2 : cap < 0x1000 ? 3 : 4);
+
         os << legend;
-        for (j = 0; j < buffer.size() + width - 1; j += width)
+        const unsigned int lim = width * ((cap + width - 1) / width); // Round up.
+        for (j = 0; j < lim; j += width)
         {
             int skip = 0;
-            while (j >= width && j < buffer.size() - width &&
+            while (j >= width && j < cap - width &&
                    !memcmp(&buffer[j], &buffer[j-width], width))
             {
                 skip++;
@@ -164,13 +171,13 @@ namespace Util
                 os << "... dup " << skip - 1 << "...\n";
             }
 
-            sprintf (scratch, "%s0x%.4x  ", prefix, j);
+            sprintf (scratch, "%s0x%.*x  ", prefix, precision, j);
             os << scratch;
             for (i = 0; i < width; i++)
             {
                 if (i && (i % 8) == 0)
                     os << " ";
-                if ((j + i) < buffer.size())
+                if ((j + i) < cap)
                     sprintf (scratch, "%.2x ", (unsigned char)buffer[j+i]);
                 else
                     sprintf (scratch, "   ");
@@ -180,15 +187,25 @@ namespace Util
 
             for (i = 0; i < width; i++)
             {
-                if ((j + i) < buffer.size() && ::isprint(buffer[j+i]))
-                    sprintf (scratch, "%c", buffer[j+i]);
+                if ((j + i) < cap)
+                    sprintf (scratch, "%c", ::isprint(buffer[j+i]) ? buffer[j+i] : '.');
                 else
-                    sprintf (scratch, ".");
+                    sprintf (scratch, " ");
                 os << scratch;
             }
-            os << "\n";
+            os << '\n';
         }
         os.flush();
+    }
+
+    /// Dump data as hex and chars to string.
+    inline std::string dumpHex(const char *legend, const char *prefix,
+                               const std::vector<char> &buffer, const unsigned int width = 32,
+                               int cap = -1)
+    {
+        std::ostringstream oss;
+        dumpHex(oss, legend, prefix, buffer, width, cap);
+        return oss.str();
     }
 
     /// Trim spaces from the left. Just spaces.
