@@ -328,7 +328,7 @@ msgstr "사용자 없음"
 
 #: dist/toolbar/toolbar.js:685
 msgid "Always follow the editor"
-msgstr ""
+msgstr "항상 편집자를 따르십시오"
 
 #: dist/toolbar/toolbar.js:688
 msgid "Current"
@@ -699,7 +699,7 @@ msgstr "저장 중..."
 
 #: src/control/Toolbar.js:238
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "이 %productName 버전은에 의해 제공됩니다"
 
 #: src/core/Socket.js:45
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
