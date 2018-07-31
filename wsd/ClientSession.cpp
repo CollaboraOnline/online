@@ -1256,6 +1256,38 @@ void ClientSession::traceTileBySend(const TileDesc& tile)
     addTileOnFly(tile);
 }
 
+void ClientSession::traceSubscribeToTile(const std::string& cacheName)
+{
+    _tilesBeingRendered.insert(cacheName);
+}
+
+void ClientSession::traceUnSubscribeToTile(const std::string& cacheName)
+{
+    _tilesBeingRendered.erase(cacheName);
+}
+
+void ClientSession::removeOutdatedTileSubscriptions()
+{
+    const std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
+    if(!docBroker)
+        return;
+
+    auto iterator = _tilesBeingRendered.begin();
+    while(iterator != _tilesBeingRendered.end())
+    {
+        double elapsedTime = docBroker->tileCache().getTileBeingRenderedElapsedTimeMs(*iterator);
+        if(elapsedTime < 0.0 && elapsedTime > 5000.0)
+            _tilesBeingRendered.erase(iterator);
+        else
+            ++iterator;
+    }
+}
+
+void ClientSession::clearTileSubscription()
+{
+    _tilesBeingRendered.clear();
+}
+
 std::string ClientSession::generateTileID(const TileDesc& tile)
 {
     std::ostringstream tileID;

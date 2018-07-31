@@ -80,6 +80,7 @@ public:
     void saveLastModified(const Poco::Timestamp& timestamp);
 
     void forgetTileBeingRendered(std::shared_ptr<TileCache::TileBeingRendered> tileBeingRendered, const TileDesc& tile);
+    double getTileBeingRenderedElapsedTimeMs(const std::string& tileCacheName) const;
 
     void setThreadOwner(const std::thread::id &id) { _owner = id; }
     void assertCorrectThread();

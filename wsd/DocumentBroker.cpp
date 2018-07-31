@@ -1376,13 +1376,16 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
 
     const unsigned tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea);
 
+    // Update client's tilesBeingRendered list
+    session->removeOutdatedTileSubscriptions();
+
     // All tiles were processed on client side what we sent last time, so we can send a new banch of tiles
     // which was invalidated / requested in the meantime
     boost::optional<std::list<TileDesc>>& requestedTiles = session->getRequestedTiles();
     if(requestedTiles != boost::none && !requestedTiles.get().empty())
     {
         std::vector<TileDesc> tilesNeedsRendering;
-        while(session->getTilesOnFlyCount() + session->getTilesBeingRendered() < tilesOnFlyUpperLimit
+        while(session->getTilesOnFlyCount() + session->getTilesBeingRenderedCount() < tilesOnFlyUpperLimit
               && !requestedTiles.get().empty())
         {
             TileDesc& tile = *(requestedTiles.get().begin());

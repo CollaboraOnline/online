@@ -130,10 +130,19 @@ void TileCache::forgetTileBeingRendered(std::shared_ptr<TileCache::TileBeingRend
     {
         std::shared_ptr<ClientSession> session = subscriber.lock();
         if(session && tile.getId() == -1)
-            session->traceUnSubscribe();
+            session->traceUnSubscribeToTile(tileBeingRendered->getCacheName());
     }
 
     _tilesBeingRendered.erase(tileBeingRendered->getCacheName());
+}
+
+double TileCache::getTileBeingRenderedElapsedTimeMs(const std::string& tileCacheName) const
+{
+    auto iterator = _tilesBeingRendered.find(tileCacheName);
+    if(iterator == _tilesBeingRendered.end())
+        return -1.0; // Negativ value means that we did not find tileBeingRendered object
+
+    return iterator->second->getElapsedTimeMs();
 }
 
 std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
@@ -491,7 +500,7 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
                 tileBeingRendered->_subscribers.size() << " subscribers already.");
         tileBeingRendered->_subscribers.push_back(subscriber);
         if(tile.getId() == -1)
-            subscriber->traceSubscribe();
+            subscriber->traceSubscribeToTile(tileBeingRendered->getCacheName());
 
         const auto duration = (std::chrono::steady_clock::now() - tileBeingRendered->getStartTime());
         if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() > COMMAND_TIMEOUT_MS)
@@ -512,7 +521,7 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
         tileBeingRendered = std::make_shared<TileBeingRendered>(cachedName, tile);
         tileBeingRendered->_subscribers.push_back(subscriber);
         if(tile.getId() == -1)
-            subscriber->traceSubscribe();
+            subscriber->traceSubscribeToTile(tileBeingRendered->getCacheName());
         _tilesBeingRendered[cachedName] = tileBeingRendered;
     }
 }
@@ -560,7 +569,7 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
     }
 
     if(sub)
-        sub->clearSubscription();
+        sub->clearTileSubscription();
     const std::string canceltiles = oss.str();
     return canceltiles.empty() ? canceltiles : "canceltiles " + canceltiles;
 }
