@@ -2,12 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 14:45+0200\n"
+"POT-Creation-Date: 2018-07-31 14:03+0200\n"
 "PO-Revision-Date: 2018-05-02 00:28+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
@@ -21,173 +20,153 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: admin.strings.js:5
+#: admin/admin.strings.js:5
 msgid "Admin console"
 msgstr "Nadzorna konzola"
 
-#: admin.strings.js:6
+#: admin/admin.strings.js:6
 msgid "Settings"
 msgstr "Nastavitve"
 
-#: admin.strings.js:7
+#: admin/admin.strings.js:7
 msgid "Overview"
 msgstr "Pregled"
 
-#: admin.strings.js:8
+#: admin/admin.strings.js:8
 msgid "(current)"
 msgstr "(trenutno)"
 
-#: admin.strings.js:9
+#: admin/admin.strings.js:9
 msgid "Analytics"
 msgstr "Analitika"
 
-#: admin.strings.js:10 evol.colorpicker.strings.js:6
+#: admin/admin.strings.js:10
 msgid "History"
 msgstr "Zgodovina"
 
-#: admin.strings.js:11
+#: admin/admin.strings.js:11
 msgid "Dashboard"
 msgstr "Nadzorna plošča"
 
-#: admin.strings.js:12
+#: admin/admin.strings.js:12
 msgid "Users online"
 msgstr "povezanih uporabnikov"
 
-#: admin.strings.js:13
+#: admin/admin.strings.js:13
 msgid "User Name"
 msgstr "Uporabniško ime"
 
-#: admin.strings.js:14
+#: admin/admin.strings.js:14
 msgid "Documents opened"
 msgstr "odprtih dokumentov"
 
-#: admin.strings.js:15
+#: admin/admin.strings.js:15
 msgid "Number of Documents"
 msgstr "Število dokumentov"
 
-#: admin.strings.js:16
+#: admin/admin.strings.js:16
 msgid "Memory consumed"
 msgstr "zasedenega pomnilnika"
 
-#: admin.strings.js:17
+#: admin/admin.strings.js:17
 msgid "Bytes sent"
 msgstr "poslanih bajtov"
 
-#: admin.strings.js:18
+#: admin/admin.strings.js:18
 msgid "Bytes received"
 msgstr "prejetih bajtov"
 
-#: admin.strings.js:19
+#: admin/admin.strings.js:19
 msgid "PID"
 msgstr "PID"
 
-#: admin.strings.js:20
+#: admin/admin.strings.js:20
 msgid "Document"
 msgstr "Dokument"
 
-#: admin.strings.js:21
+#: admin/admin.strings.js:21
 msgid "Number of views"
 msgstr "Število ogledov"
 
-#: admin.strings.js:22
+#: admin/admin.strings.js:22
 msgid "Elapsed time"
 msgstr "Pretekli čas"
 
-#: admin.strings.js:23
+#: admin/admin.strings.js:23
 msgid "Idle time"
 msgstr "Čas nedejavnosti"
 
-#: admin.strings.js:24
+#: admin/admin.strings.js:24
 msgid "Modified"
 msgstr "Spremenjeno"
 
-#: admin.strings.js:25
+#: admin/admin.strings.js:25
 msgid "Kill"
 msgstr "Ubij"
 
-#: admin.strings.js:26
+#: admin/admin.strings.js:26
 msgid "Graphs"
 msgstr "Grafikoni"
 
-#: admin.strings.js:27
+#: admin/admin.strings.js:27
 msgid "Memory Graph"
 msgstr "Grafikon rabe pomnilnika"
 
-#: admin.strings.js:28
+#: admin/admin.strings.js:28
 msgid "CPU Graph"
 msgstr "Grafikon rabe CPE"
 
-#: admin.strings.js:29
+#: admin/admin.strings.js:29
 msgid "Network Graph"
 msgstr "Grafikon rabe omrežja"
 
-#: admin.strings.js:30 src/layer/marker/Annotation.js:224
+#: admin/admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "Shrani"
 
-#: admin.strings.js:31
+#: admin/admin.strings.js:31
 msgid "Cache size of memory statistics"
 msgstr "Velikost medpomnilnika za statistiko pomnilnika"
 
-#: admin.strings.js:32
+#: admin/admin.strings.js:32
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Časovni interval za statistiko pomnilnika (v ms)"
 
-#: admin.strings.js:33
+#: admin/admin.strings.js:33
 msgid "Cache size of CPU statistics"
 msgstr "Velikost medpomnilnika za statistiko CPE"
 
-#: admin.strings.js:34
+#: admin/admin.strings.js:34
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Časovni interval za statistiko CPE (v ms)"
 
-#: admin.strings.js:35
+#: admin/admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
 "Največji navidezni pomnilnik za proces dokumenta (v MB) – zgolj zmanjšajte"
 
-#: admin.strings.js:36
+#: admin/admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
 "Največji skladovni pomnilnik za proces dokumenta (v kB) – zgolj zmanjšajte"
 
-#: admin.strings.js:37
+#: admin/admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
 "Največja dovoljena velikost datoteke za pisanje na disk (v MB) – zgolj "
 "zmanjšajte"
 
-#: admin.strings.js:38
+#: admin/admin.strings.js:38
 msgid "Documents:"
 msgstr "Dokumenti:"
 
-#: admin.strings.js:39
+#: admin/admin.strings.js:39
 msgid "Expired:"
 msgstr "Preteklo:"
 
-#: admin.strings.js:40
+#: admin/admin.strings.js:40
 msgid "Refresh"
 msgstr "Osveži"
-
-#: evol.colorpicker.strings.js:2
-msgid "Theme Colors"
-msgstr "Barve teme"
-
-#: evol.colorpicker.strings.js:3
-msgid "Standard Colors"
-msgstr "Standardne barve"
-
-#: evol.colorpicker.strings.js:4
-msgid "Web Colors"
-msgstr "Spletne barve"
-
-#: evol.colorpicker.strings.js:5
-msgid "Back to Palette"
-msgstr "Nazaj na paleto"
-
-#: evol.colorpicker.strings.js:7
-msgid "No history yet."
-msgstr "Ni zgodovine."
 
 #: src/errormessages.js:13
 msgid ""
@@ -539,55 +518,55 @@ msgstr "Vi"
 msgid "Readonly"
 msgstr "Samo za branje"
 
-#: src/admin/AdminSocketAnalytics.js:218
+#: admin/src/AdminSocketAnalytics.js:218
 msgid "Received"
 msgstr "prejeto"
 
-#: src/admin/AdminSocketAnalytics.js:222
+#: admin/src/AdminSocketAnalytics.js:222
 msgid "Sent"
 msgstr "poslano"
 
-#: src/admin/AdminSocketBase.js:45
+#: admin/src/AdminSocketBase.js:45
 msgid "Connection error"
 msgstr "Napaka povezave"
 
-#: src/admin/AdminSocketOverview.js:100
+#: admin/src/AdminSocketOverview.js:100
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ste prepričani, da želite zaključiti to sejo?"
 
-#: src/admin/AdminSocketOverview.js:181 src/admin/AdminSocketOverview.js:283
+#: admin/src/AdminSocketOverview.js:181 admin/src/AdminSocketOverview.js:283
 msgid "Documents"
 msgstr "Dokumenti"
 
-#: src/admin/AdminSocketSettings.js:33
+#: admin/src/AdminSocketSettings.js:33
 msgid "Are you sure you want to shut down the server?"
 msgstr "Ali ste prepričani, da želite zaustaviti strežnik?"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "kB"
 msgstr "kB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "MB"
 msgstr "MB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "GB"
 msgstr "GB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "TB"
 msgstr "TB"
 
-#: src/admin/Util.js:42 src/admin/Util.js:44
+#: admin/src/Util.js:42 admin/src/Util.js:44
 msgid " hrs"
 msgstr " ur"
 
-#: src/admin/Util.js:48 src/admin/Util.js:50
+#: admin/src/Util.js:48 admin/src/Util.js:50
 msgid " mins"
 msgstr " min"
 
-#: src/admin/Util.js:53
+#: admin/src/Util.js:53
 msgid " s"
 msgstr " s"
 
@@ -627,7 +606,7 @@ msgstr "Vrsta"
 msgid "Index"
 msgstr "Kazalo"
 
-#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:231
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:233
 msgid "Comment"
 msgstr "Komentar"
 
@@ -883,15 +862,15 @@ msgstr "Zavrni spremembo"
 msgid "Open menu"
 msgstr "Odpri meni"
 
-#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:204
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:206
 msgid "Reply"
 msgstr "Odgovori"
 
-#: src/layer/tile/TileLayer.js:198
+#: src/layer/tile/TileLayer.js:200
 msgid "Modify"
 msgstr "Spremeni"
 
-#: src/layer/tile/TileLayer.js:210
+#: src/layer/tile/TileLayer.js:212
 msgid "Remove"
 msgstr "Odstrani"
 
@@ -910,6 +889,21 @@ msgstr "Nalaganje ..."
 #: src/map/handler/Map.FileInserter.js:60
 msgid "Uploading..."
 msgstr "Prenašanje na strežnik ..."
+
+#~ msgid "Theme Colors"
+#~ msgstr "Barve teme"
+
+#~ msgid "Standard Colors"
+#~ msgstr "Standardne barve"
+
+#~ msgid "Web Colors"
+#~ msgstr "Spletne barve"
+
+#~ msgid "Back to Palette"
+#~ msgstr "Nazaj na paleto"
+
+#~ msgid "No history yet."
+#~ msgstr "Ni zgodovine."
 
 #~ msgid "%user has left"
 #~ msgstr "Odšel je uporabnik %user"

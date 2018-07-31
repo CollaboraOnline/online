@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 14:45+0200\n"
+"POT-Creation-Date: 2018-07-31 14:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,172 +16,152 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Revision: 3276641\n"
+"X-Pootle-Revision: 3342624\n"
 "X-Pootle-Path: /ne/libo_online/loleaflet-ui-ne.po\n"
 
-#: admin.strings.js:5
+#: admin/admin.strings.js:5
 msgid "Admin console"
 msgstr "प्रबन्धक कन्सोल"
 
-#: admin.strings.js:6
+#: admin/admin.strings.js:6
 msgid "Settings"
 msgstr "सेटिङहरू"
 
-#: admin.strings.js:7
+#: admin/admin.strings.js:7
 msgid "Overview"
 msgstr "सिंहावलोकन"
 
-#: admin.strings.js:8
+#: admin/admin.strings.js:8
 msgid "(current)"
 msgstr "(हालको)"
 
-#: admin.strings.js:9
+#: admin/admin.strings.js:9
 msgid "Analytics"
 msgstr "विश्लेषण"
 
-#: admin.strings.js:10 evol.colorpicker.strings.js:6
+#: admin/admin.strings.js:10
 msgid "History"
 msgstr "इतिहास"
 
-#: admin.strings.js:11
+#: admin/admin.strings.js:11
 msgid "Dashboard"
 msgstr "ड्यसबोर्ड"
 
-#: admin.strings.js:12
+#: admin/admin.strings.js:12
 msgid "Users online"
 msgstr "अनलाइन प्रयोगकर्ता"
 
-#: admin.strings.js:13
+#: admin/admin.strings.js:13
 msgid "User Name"
 msgstr "प्रयोगकर्ता नाम"
 
-#: admin.strings.js:14
+#: admin/admin.strings.js:14
 msgid "Documents opened"
 msgstr "खोलिएका कागजातहरू"
 
-#: admin.strings.js:15
+#: admin/admin.strings.js:15
 msgid "Number of Documents"
 msgstr "कागजातको सङ्ख्या"
 
-#: admin.strings.js:16
+#: admin/admin.strings.js:16
 msgid "Memory consumed"
 msgstr "प्रयोग गरिएको मेमोरी"
 
-#: admin.strings.js:17
+#: admin/admin.strings.js:17
 msgid "Bytes sent"
 msgstr "पठाइएको बाइटहरू"
 
-#: admin.strings.js:18
+#: admin/admin.strings.js:18
 msgid "Bytes received"
 msgstr "प्राप्त बाइटहरू"
 
-#: admin.strings.js:19
+#: admin/admin.strings.js:19
 msgid "PID"
 msgstr "PID"
 
-#: admin.strings.js:20
+#: admin/admin.strings.js:20
 msgid "Document"
 msgstr "कागजात"
 
-#: admin.strings.js:21
+#: admin/admin.strings.js:21
 msgid "Number of views"
 msgstr "प्रदर्शन गरिएको गन्ति"
 
-#: admin.strings.js:22
+#: admin/admin.strings.js:22
 msgid "Elapsed time"
 msgstr "व्यतित समय"
 
-#: admin.strings.js:23
+#: admin/admin.strings.js:23
 msgid "Idle time"
 msgstr "निस्क्रिय समय"
 
-#: admin.strings.js:24
+#: admin/admin.strings.js:24
 msgid "Modified"
 msgstr "परिमार्जित"
 
-#: admin.strings.js:25
+#: admin/admin.strings.js:25
 msgid "Kill"
 msgstr "नष्ट गर्नुहोस्"
 
-#: admin.strings.js:26
+#: admin/admin.strings.js:26
 msgid "Graphs"
 msgstr "ग्राफहरू"
 
-#: admin.strings.js:27
+#: admin/admin.strings.js:27
 msgid "Memory Graph"
 msgstr "मेमोरी मानचित्र"
 
-#: admin.strings.js:28
+#: admin/admin.strings.js:28
 msgid "CPU Graph"
 msgstr "CPU मानचित्र"
 
-#: admin.strings.js:29
+#: admin/admin.strings.js:29
 msgid "Network Graph"
 msgstr "सञ्जाल मानचित्र"
 
-#: admin.strings.js:30 src/layer/marker/Annotation.js:224
+#: admin/admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "सङ्ग्रह गर्नुहोस्"
 
-#: admin.strings.js:31
+#: admin/admin.strings.js:31
 msgid "Cache size of memory statistics"
 msgstr "मेमोरी तथ्याङ्कको क्यास साइज"
 
-#: admin.strings.js:32
+#: admin/admin.strings.js:32
 msgid "Time interval of memory statistics (in ms)"
 msgstr "मेमोरी तथ्याङ्कको समय अन्तराल (मिलिसेकेन्ड मा)"
 
-#: admin.strings.js:33
+#: admin/admin.strings.js:33
 msgid "Cache size of CPU statistics"
 msgstr "सिपियु तथ्याङ्कको क्यास साइज"
 
-#: admin.strings.js:34
+#: admin/admin.strings.js:34
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "सिपियु तथ्याङ्कको समय अन्तराल (मिलिसेकेन्ड मा)"
 
-#: admin.strings.js:35
+#: admin/admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr "अधिकतम कागजात प्रक्रिया भर्चुअल मेमोरी (MB मा) - रिड्युस मात्र"
 
-#: admin.strings.js:36
+#: admin/admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr "अधिकतम कागजात प्रक्रिया स्ट्याक मेमोरी (KB मा) - रिड्युस मात्र"
 
-#: admin.strings.js:37
+#: admin/admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "डिस्कमा लेख्न अनुमति अधिकतम फाइल आकारलाई दिईयो (MB मा) - रिड्युस मात्र"
 
-#: admin.strings.js:38
+#: admin/admin.strings.js:38
 msgid "Documents:"
 msgstr "कागजातहरू:"
 
-#: admin.strings.js:39
+#: admin/admin.strings.js:39
 msgid "Expired:"
 msgstr "म्याद सकिएको:"
 
-#: admin.strings.js:40
+#: admin/admin.strings.js:40
 msgid "Refresh"
 msgstr "ताजा गर्नुहोस्"
-
-#: evol.colorpicker.strings.js:2
-msgid "Theme Colors"
-msgstr "विषयवस्तु रङ्हरू"
-
-#: evol.colorpicker.strings.js:3
-msgid "Standard Colors"
-msgstr "स्तरीय रङहरू"
-
-#: evol.colorpicker.strings.js:4
-msgid "Web Colors"
-msgstr "वेब रङहरू"
-
-#: evol.colorpicker.strings.js:5
-msgid "Back to Palette"
-msgstr "पेलेटमा फर्कने"
-
-#: evol.colorpicker.strings.js:7
-msgid "No history yet."
-msgstr "अहिले सम्म कुनै इतिहास छैन ।"
 
 #: src/errormessages.js:13
 msgid ""
@@ -355,7 +335,6 @@ msgid "Insert table"
 msgstr "तालिका घुसाउनुहोस्"
 
 #: js/toolbar.js:454
-#, fuzzy
 msgid "Insert shapes"
 msgstr "पाना घुसाउनुहोस्"
 
@@ -531,55 +510,55 @@ msgstr "तपाईँ"
 msgid "Readonly"
 msgstr "पढ्ने मात्र"
 
-#: src/admin/AdminSocketAnalytics.js:218
+#: admin/src/AdminSocketAnalytics.js:218
 msgid "Received"
 msgstr "प्राप्त भयो"
 
-#: src/admin/AdminSocketAnalytics.js:222
+#: admin/src/AdminSocketAnalytics.js:222
 msgid "Sent"
 msgstr "पठाइयो"
 
-#: src/admin/AdminSocketBase.js:45
+#: admin/src/AdminSocketBase.js:45
 msgid "Connection error"
 msgstr "जडान त्रुटि"
 
-#: src/admin/AdminSocketOverview.js:100
+#: admin/src/AdminSocketOverview.js:100
 msgid "Are you sure you want to terminate this session?"
 msgstr "के तपाईँ यो सेसनलाई मेट्न चहानुहुन्छ?"
 
-#: src/admin/AdminSocketOverview.js:181 src/admin/AdminSocketOverview.js:283
+#: admin/src/AdminSocketOverview.js:181 admin/src/AdminSocketOverview.js:283
 msgid "Documents"
 msgstr "कागजात"
 
-#: src/admin/AdminSocketSettings.js:33
+#: admin/src/AdminSocketSettings.js:33
 msgid "Are you sure you want to shut down the server?"
 msgstr "के तपाईँ सर्भर बन्द गर्ने चाहानामा निश्चित हुनुहुन्छ ?"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "kB"
 msgstr "kB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "MB"
 msgstr "MB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "GB"
 msgstr "GB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "TB"
 msgstr "TB"
 
-#: src/admin/Util.js:42 src/admin/Util.js:44
+#: admin/src/Util.js:42 admin/src/Util.js:44
 msgid " hrs"
 msgstr " घन्टा"
 
-#: src/admin/Util.js:48 src/admin/Util.js:50
+#: admin/src/Util.js:48 admin/src/Util.js:50
 msgid " mins"
 msgstr " मिनेट"
 
-#: src/admin/Util.js:53
+#: admin/src/Util.js:53
 msgid " s"
 msgstr " s"
 
@@ -589,7 +568,7 @@ msgstr "सर्भरमा त्रुटी %0 %1 कमान्ड का
 
 #: src/control/Control.AlertDialog.js:41
 msgid "Download PDF export?"
-msgstr "PDF निर्यात डाउनलोड गर्ने हो?"
+msgstr ""
 
 #: src/control/Control.ContextMenu.js:130
 msgid "Internal Cut"
@@ -619,7 +598,7 @@ msgstr "प्रकार"
 msgid "Index"
 msgstr "अनुक्रमणिका"
 
-#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:231
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:233
 msgid "Comment"
 msgstr "टिप्पणी"
 
@@ -656,11 +635,11 @@ msgstr "ODF पाठ कागजात (.odt)"
 
 #: src/control/Control.Menubar.js:25
 msgid "Microsoft Word 2003 (.doc)"
-msgstr "Microsoft Word 2003 (.doc)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:26
 msgid "Microsoft Word (.docx)"
-msgstr "Microsoft Word (.docx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
@@ -706,11 +685,11 @@ msgstr "ODF प्रस्तुतिकरण (.odp)"
 
 #: src/control/Control.Menubar.js:235
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr "Microsoft Powerpoint 2003 (.ppt)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:236
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr "Microsoft Powerpoint (.pptx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:314
 msgid "ODF spreadsheet (.ods)"
@@ -718,11 +697,11 @@ msgstr "ODF स्प्रेडसिट (.ods)"
 
 #: src/control/Control.Menubar.js:315
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr "Microsoft Excel 2003 (.xls)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:316
 msgid "Microsoft Excel (.xlsx)"
-msgstr "Microsoft Excel (.xlsx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:460
 msgid "Reset to Default Language"
@@ -878,15 +857,15 @@ msgstr "परिवर्तनहरू अस्वीकार गर्न�
 msgid "Open menu"
 msgstr "मेनु खोल्नोहोस्"
 
-#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:204
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:206
 msgid "Reply"
 msgstr "जवाफ दिनुहोस्"
 
-#: src/layer/tile/TileLayer.js:198
+#: src/layer/tile/TileLayer.js:200
 msgid "Modify"
 msgstr "परिमार्जन गर्नुहोस्"
 
-#: src/layer/tile/TileLayer.js:210
+#: src/layer/tile/TileLayer.js:212
 msgid "Remove"
 msgstr "हटाउनुहोस्"
 
@@ -906,5 +885,20 @@ msgstr "लोडहुँदै छ..."
 msgid "Uploading..."
 msgstr "अपलोड हुँदैछ..."
 
-#~ msgid "%user has left"
-#~ msgstr "%user ले छोड्नु भयो"
+#~ msgid "Word 2003 Document (.doc)"
+#~ msgstr "Word 2003 कागजात (.doc)"
+
+#~ msgid "Word Document (.docx)"
+#~ msgstr "Word कागजात (.docx)"
+
+#~ msgid "PowerPoint 2003 Presentation (.ppt)"
+#~ msgstr "PowerPoint 2003 प्रस्तुति (.ppt)"
+
+#~ msgid "PowerPoint Presentation (.pptx)"
+#~ msgstr "PowerPoint प्रस्तुति (.pptx)"
+
+#~ msgid "Excel 2003 Spreadsheet (.xls)"
+#~ msgstr "Excel 2003 स्प्रेडसिट (.xls)"
+
+#~ msgid "Excel Spreadsheet (.xlsx)"
+#~ msgstr "Excel स्प्रेडसिट (.xlsx)"

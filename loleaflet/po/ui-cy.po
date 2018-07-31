@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 14:45+0200\n"
+"POT-Creation-Date: 2018-07-31 14:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,172 +16,152 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Revision: 3280664\n"
+"X-Pootle-Revision: 3342254\n"
 "X-Pootle-Path: /cy/libo_online/loleaflet-ui-cy.po\n"
 
-#: admin.strings.js:5
+#: admin/admin.strings.js:5
 msgid "Admin console"
 msgstr "Consol gweinyddol"
 
-#: admin.strings.js:6
+#: admin/admin.strings.js:6
 msgid "Settings"
 msgstr "Gosodiadau"
 
-#: admin.strings.js:7
+#: admin/admin.strings.js:7
 msgid "Overview"
 msgstr "Trosolwg"
 
-#: admin.strings.js:8
+#: admin/admin.strings.js:8
 msgid "(current)"
 msgstr "(cyfredol)"
 
-#: admin.strings.js:9
+#: admin/admin.strings.js:9
 msgid "Analytics"
 msgstr "Dadansoddiad"
 
-#: admin.strings.js:10 evol.colorpicker.strings.js:6
+#: admin/admin.strings.js:10
 msgid "History"
 msgstr "Hanes"
 
-#: admin.strings.js:11
+#: admin/admin.strings.js:11
 msgid "Dashboard"
 msgstr "Bwrdd Gwaith"
 
-#: admin.strings.js:12
+#: admin/admin.strings.js:12
 msgid "Users online"
 msgstr "Defnyddwyr ar-lein"
 
-#: admin.strings.js:13
+#: admin/admin.strings.js:13
 msgid "User Name"
 msgstr "Enw Defnyddiwr"
 
-#: admin.strings.js:14
+#: admin/admin.strings.js:14
 msgid "Documents opened"
 msgstr "Dogfennau wedi eu hagor"
 
-#: admin.strings.js:15
+#: admin/admin.strings.js:15
 msgid "Number of Documents"
 msgstr "Nifer y Dogfennau"
 
-#: admin.strings.js:16
+#: admin/admin.strings.js:16
 msgid "Memory consumed"
 msgstr "Cof wedi ei ddefnyddio"
 
-#: admin.strings.js:17
+#: admin/admin.strings.js:17
 msgid "Bytes sent"
 msgstr "Didau wedi'u hanfon"
 
-#: admin.strings.js:18
+#: admin/admin.strings.js:18
 msgid "Bytes received"
 msgstr "Didau wedi'u derbyn"
 
-#: admin.strings.js:19
+#: admin/admin.strings.js:19
 msgid "PID"
 msgstr "PID"
 
-#: admin.strings.js:20
+#: admin/admin.strings.js:20
 msgid "Document"
 msgstr "Dogfen"
 
-#: admin.strings.js:21
+#: admin/admin.strings.js:21
 msgid "Number of views"
 msgstr "Nifer y golygon"
 
-#: admin.strings.js:22
+#: admin/admin.strings.js:22
 msgid "Elapsed time"
 msgstr "Amser wedi mynd heibio"
 
-#: admin.strings.js:23
+#: admin/admin.strings.js:23
 msgid "Idle time"
 msgstr "Amser oedi"
 
-#: admin.strings.js:24
+#: admin/admin.strings.js:24
 msgid "Modified"
 msgstr "Newidiwyd"
 
-#: admin.strings.js:25
+#: admin/admin.strings.js:25
 msgid "Kill"
 msgstr "Lladd"
 
-#: admin.strings.js:26
+#: admin/admin.strings.js:26
 msgid "Graphs"
 msgstr "Graffiau"
 
-#: admin.strings.js:27
+#: admin/admin.strings.js:27
 msgid "Memory Graph"
 msgstr "Newidiwyd"
 
-#: admin.strings.js:28
+#: admin/admin.strings.js:28
 msgid "CPU Graph"
 msgstr "Graff CPU"
 
-#: admin.strings.js:29
+#: admin/admin.strings.js:29
 msgid "Network Graph"
 msgstr "Graff Rhwydwaith"
 
-#: admin.strings.js:30 src/layer/marker/Annotation.js:224
+#: admin/admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "Cadw"
 
-#: admin.strings.js:31
+#: admin/admin.strings.js:31
 msgid "Cache size of memory statistics"
 msgstr "Maint y storfa o ystadegau cof"
 
-#: admin.strings.js:32
+#: admin/admin.strings.js:32
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Cyfnod amser ystadegau cof (mewn ms)"
 
-#: admin.strings.js:33
+#: admin/admin.strings.js:33
 msgid "Cache size of CPU statistics"
 msgstr "Maint storfa ystadegau CPU"
 
-#: admin.strings.js:34
+#: admin/admin.strings.js:34
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Cyfnod amser ystadegau CPU (mewn ms)"
 
-#: admin.strings.js:35
+#: admin/admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr "Cof rhithiol proses Dogfen Mwyaf (mewn MB) - lleihau'n unig"
 
-#: admin.strings.js:36
+#: admin/admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr "Cof proses stac Dogfen Mwyaf (mewn MB) - lleihau'n unig"
 
-#: admin.strings.js:37
+#: admin/admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "Y maint mwyaf i ysgrifennu i ddisg (mewn MB) - lleihau'n unig"
 
-#: admin.strings.js:38
+#: admin/admin.strings.js:38
 msgid "Documents:"
 msgstr "Dogfennau"
 
-#: admin.strings.js:39
+#: admin/admin.strings.js:39
 msgid "Expired:"
 msgstr "Dod i Ben:"
 
-#: admin.strings.js:40
+#: admin/admin.strings.js:40
 msgid "Refresh"
 msgstr "Adnewyddu"
-
-#: evol.colorpicker.strings.js:2
-msgid "Theme Colors"
-msgstr "Lliwiau Thema"
-
-#: evol.colorpicker.strings.js:3
-msgid "Standard Colors"
-msgstr "Lliwiau Safonnol"
-
-#: evol.colorpicker.strings.js:4
-msgid "Web Colors"
-msgstr "Lliwiau Gwe"
-
-#: evol.colorpicker.strings.js:5
-msgid "Back to Palette"
-msgstr "Nôl i'r Palet"
-
-#: evol.colorpicker.strings.js:7
-msgid "No history yet."
-msgstr "Dim hanes eto."
 
 #: src/errormessages.js:13
 msgid ""
@@ -356,9 +336,8 @@ msgid "Insert table"
 msgstr "Mewnosod tudalen"
 
 #: js/toolbar.js:454
-#, fuzzy
 msgid "Insert shapes"
-msgstr "Mewnosod dalen"
+msgstr "Mewnosod siapiau"
 
 #: js/toolbar.js:498 js/toolbar.js:961
 msgid "Sum"
@@ -532,55 +511,55 @@ msgstr "Chi"
 msgid "Readonly"
 msgstr "Darllen y unig"
 
-#: src/admin/AdminSocketAnalytics.js:218
+#: admin/src/AdminSocketAnalytics.js:218
 msgid "Received"
 msgstr "Derbyniwyd"
 
-#: src/admin/AdminSocketAnalytics.js:222
+#: admin/src/AdminSocketAnalytics.js:222
 msgid "Sent"
 msgstr "Anfonwyd"
 
-#: src/admin/AdminSocketBase.js:45
+#: admin/src/AdminSocketBase.js:45
 msgid "Connection error"
 msgstr "Gwall cysylltu"
 
-#: src/admin/AdminSocketOverview.js:100
+#: admin/src/AdminSocketOverview.js:100
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ydych chi'n siŵr eich bod eisiau dileu'r sesiwn hwn?"
 
-#: src/admin/AdminSocketOverview.js:181 src/admin/AdminSocketOverview.js:283
+#: admin/src/AdminSocketOverview.js:181 admin/src/AdminSocketOverview.js:283
 msgid "Documents"
 msgstr "Dogfennau"
 
-#: src/admin/AdminSocketSettings.js:33
+#: admin/src/AdminSocketSettings.js:33
 msgid "Are you sure you want to shut down the server?"
 msgstr "Ydych chi'n siŵr eich bod eisiau cau'r gweinydd?"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "kB"
 msgstr "kB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "MB"
 msgstr "MB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "GB"
 msgstr "GB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "TB"
 msgstr "TB"
 
-#: src/admin/Util.js:42 src/admin/Util.js:44
+#: admin/src/Util.js:42 admin/src/Util.js:44
 msgid " hrs"
 msgstr " awr"
 
-#: src/admin/Util.js:48 src/admin/Util.js:50
+#: admin/src/Util.js:48 admin/src/Util.js:50
 msgid " mins"
 msgstr " mun"
 
-#: src/admin/Util.js:53
+#: admin/src/Util.js:53
 msgid " s"
 msgstr " s"
 
@@ -590,7 +569,7 @@ msgstr "Profodd y gweinydd wall %0 wrth ddidoli'r gorchymyn %1."
 
 #: src/control/Control.AlertDialog.js:41
 msgid "Download PDF export?"
-msgstr "Llwytho i lawr yr arforio PDF?"
+msgstr ""
 
 #: src/control/Control.ContextMenu.js:130
 msgid "Internal Cut"
@@ -620,7 +599,7 @@ msgstr "Math"
 msgid "Index"
 msgstr "Mynegai"
 
-#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:231
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:233
 msgid "Comment"
 msgstr "Sylw"
 
@@ -657,11 +636,11 @@ msgstr "Dogfen testun ODF (.odt)"
 
 #: src/control/Control.Menubar.js:25
 msgid "Microsoft Word 2003 (.doc)"
-msgstr "Microsoft Word 2003 (.doc)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:26
 msgid "Microsoft Word (.docx)"
-msgstr "Microsoft Word (.docx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
@@ -707,11 +686,11 @@ msgstr "Cyflwyno ODF (.odp)"
 
 #: src/control/Control.Menubar.js:235
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr "Microsoft Powerpoint 2003 (.ppt)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:236
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr "Microsoft Powerpoint (.pptx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:314
 msgid "ODF spreadsheet (.ods)"
@@ -719,11 +698,11 @@ msgstr "Taenlen ODF (.ods)"
 
 #: src/control/Control.Menubar.js:315
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr "Microsoft Excel 2003 (.xls)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:316
 msgid "Microsoft Excel (.xlsx)"
-msgstr "Microsoft Excel (.xlsx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:460
 msgid "Reset to Default Language"
@@ -876,15 +855,15 @@ msgstr "Gwrthod newid"
 msgid "Open menu"
 msgstr "Agor dewislen"
 
-#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:204
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:206
 msgid "Reply"
 msgstr "Ateb"
 
-#: src/layer/tile/TileLayer.js:198
+#: src/layer/tile/TileLayer.js:200
 msgid "Modify"
 msgstr "Newid"
 
-#: src/layer/tile/TileLayer.js:210
+#: src/layer/tile/TileLayer.js:212
 msgid "Remove"
 msgstr "Tynnu"
 
@@ -904,5 +883,20 @@ msgstr "Yn llwytho..."
 msgid "Uploading..."
 msgstr "Yn llwytho..."
 
-#~ msgid "%user has left"
-#~ msgstr "Mae %user wedi gadael"
+#~ msgid "Word 2003 Document (.doc)"
+#~ msgstr "Dogfen Word 2003 (.doc)"
+
+#~ msgid "Word Document (.docx)"
+#~ msgstr "Dogfen Word (.docx)"
+
+#~ msgid "PowerPoint 2003 Presentation (.ppt)"
+#~ msgstr "Cyflwyniad PowerPoint 2003 (.ppt)"
+
+#~ msgid "PowerPoint Presentation (.pptx)"
+#~ msgstr "Cyflwyniad PowerPoint (.pptx)"
+
+#~ msgid "Excel 2003 Spreadsheet (.xls)"
+#~ msgstr "Taenlen Excel 2003 (.xls)"
+
+#~ msgid "Excel Spreadsheet (.xlsx)"
+#~ msgstr "Taenlen Excel (.xlsx)"

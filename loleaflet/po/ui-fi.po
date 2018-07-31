@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 14:45+0200\n"
+"POT-Creation-Date: 2018-07-31 14:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,173 +16,153 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Revision: 3265088\n"
+"X-Pootle-Revision: 3341354\n"
 "X-Pootle-Path: /fi/libo_online/loleaflet-ui-fi.po\n"
 
-#: admin.strings.js:5
+#: admin/admin.strings.js:5
 msgid "Admin console"
 msgstr "Ylläpitokonsoli"
 
-#: admin.strings.js:6
+#: admin/admin.strings.js:6
 msgid "Settings"
 msgstr "Asetukset"
 
-#: admin.strings.js:7
+#: admin/admin.strings.js:7
 msgid "Overview"
 msgstr "Yleiskatsaus"
 
-#: admin.strings.js:8
+#: admin/admin.strings.js:8
 msgid "(current)"
 msgstr "(nykyinen)"
 
-#: admin.strings.js:9
+#: admin/admin.strings.js:9
 msgid "Analytics"
 msgstr "Analytiikka"
 
-#: admin.strings.js:10 evol.colorpicker.strings.js:6
+#: admin/admin.strings.js:10
 msgid "History"
 msgstr "Historia"
 
-#: admin.strings.js:11
+#: admin/admin.strings.js:11
 msgid "Dashboard"
 msgstr "Kojelauta"
 
-#: admin.strings.js:12
+#: admin/admin.strings.js:12
 msgid "Users online"
 msgstr "Käyttäjiä nyt"
 
-#: admin.strings.js:13
+#: admin/admin.strings.js:13
 msgid "User Name"
 msgstr "Käyttäjänimi"
 
-#: admin.strings.js:14
+#: admin/admin.strings.js:14
 msgid "Documents opened"
 msgstr "Avattuja asiakirjoja"
 
-#: admin.strings.js:15
+#: admin/admin.strings.js:15
 msgid "Number of Documents"
 msgstr "Asiakirjojen lukumäärä"
 
-#: admin.strings.js:16
+#: admin/admin.strings.js:16
 msgid "Memory consumed"
 msgstr "Käytetty muistin määrä"
 
-#: admin.strings.js:17
+#: admin/admin.strings.js:17
 msgid "Bytes sent"
 msgstr "Tavuja lähetetty"
 
-#: admin.strings.js:18
+#: admin/admin.strings.js:18
 msgid "Bytes received"
 msgstr "Tavuja vastaanotettu"
 
-#: admin.strings.js:19
+#: admin/admin.strings.js:19
 msgid "PID"
 msgstr "PID"
 
-#: admin.strings.js:20
+#: admin/admin.strings.js:20
 msgid "Document"
 msgstr "Asiakirja"
 
-#: admin.strings.js:21
+#: admin/admin.strings.js:21
 #, fuzzy
 msgid "Number of views"
 msgstr "Taulukoiden määrä"
 
-#: admin.strings.js:22
+#: admin/admin.strings.js:22
 msgid "Elapsed time"
 msgstr "Kulunut aika"
 
-#: admin.strings.js:23
+#: admin/admin.strings.js:23
 msgid "Idle time"
 msgstr "Joutenoloaika"
 
-#: admin.strings.js:24
+#: admin/admin.strings.js:24
 msgid "Modified"
 msgstr "Muokattu"
 
-#: admin.strings.js:25
+#: admin/admin.strings.js:25
 msgid "Kill"
 msgstr "Lopeta"
 
-#: admin.strings.js:26
+#: admin/admin.strings.js:26
 msgid "Graphs"
 msgstr "Graafit"
 
-#: admin.strings.js:27
+#: admin/admin.strings.js:27
 msgid "Memory Graph"
 msgstr "Muistigraafi"
 
-#: admin.strings.js:28
+#: admin/admin.strings.js:28
 msgid "CPU Graph"
 msgstr "Suoritingraafi"
 
-#: admin.strings.js:29
+#: admin/admin.strings.js:29
 msgid "Network Graph"
 msgstr "Verkkograafi"
 
-#: admin.strings.js:30 src/layer/marker/Annotation.js:224
+#: admin/admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "Tallenna"
 
-#: admin.strings.js:31
+#: admin/admin.strings.js:31
 msgid "Cache size of memory statistics"
 msgstr "Välimuistin koko muistitilastoissa"
 
-#: admin.strings.js:32
+#: admin/admin.strings.js:32
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Aikaväli muistitilastoissa (millisekuntia)"
 
-#: admin.strings.js:33
+#: admin/admin.strings.js:33
 msgid "Cache size of CPU statistics"
 msgstr "Välimuistin koko CPU-tilastoissa"
 
-#: admin.strings.js:34
+#: admin/admin.strings.js:34
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Aikaväli CPU-tilastoissa (millisekuntia)"
 
-#: admin.strings.js:35
+#: admin/admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
 
-#: admin.strings.js:36
+#: admin/admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
 
-#: admin.strings.js:37
+#: admin/admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
 
-#: admin.strings.js:38
+#: admin/admin.strings.js:38
 msgid "Documents:"
 msgstr "Asiakirjat:"
 
-#: admin.strings.js:39
+#: admin/admin.strings.js:39
 msgid "Expired:"
 msgstr "Vanhentuneet:"
 
-#: admin.strings.js:40
+#: admin/admin.strings.js:40
 msgid "Refresh"
 msgstr "Päivitä"
-
-#: evol.colorpicker.strings.js:2
-msgid "Theme Colors"
-msgstr "Teemavärit"
-
-#: evol.colorpicker.strings.js:3
-msgid "Standard Colors"
-msgstr "Vakiovärit"
-
-#: evol.colorpicker.strings.js:4
-msgid "Web Colors"
-msgstr "Web-värit"
-
-#: evol.colorpicker.strings.js:5
-msgid "Back to Palette"
-msgstr "Takaisin palettiin"
-
-#: evol.colorpicker.strings.js:7
-msgid "No history yet."
-msgstr "Ei vielä historiaa."
 
 #: src/errormessages.js:13
 msgid ""
@@ -513,57 +493,57 @@ msgstr ""
 msgid "Readonly"
 msgstr ""
 
-#: src/admin/AdminSocketAnalytics.js:218
+#: admin/src/AdminSocketAnalytics.js:218
 msgid "Received"
 msgstr ""
 
-#: src/admin/AdminSocketAnalytics.js:222
+#: admin/src/AdminSocketAnalytics.js:222
 msgid "Sent"
 msgstr ""
 
-#: src/admin/AdminSocketBase.js:45
+#: admin/src/AdminSocketBase.js:45
 msgid "Connection error"
 msgstr ""
 
-#: src/admin/AdminSocketOverview.js:100
+#: admin/src/AdminSocketOverview.js:100
 #, fuzzy
 msgid "Are you sure you want to terminate this session?"
 msgstr "Haluatko varmasti poistaa tämän dian?"
 
-#: src/admin/AdminSocketOverview.js:181 src/admin/AdminSocketOverview.js:283
+#: admin/src/AdminSocketOverview.js:181 admin/src/AdminSocketOverview.js:283
 #, fuzzy
 msgid "Documents"
 msgstr "Asiakirjat:"
 
-#: src/admin/AdminSocketSettings.js:33
+#: admin/src/AdminSocketSettings.js:33
 msgid "Are you sure you want to shut down the server?"
 msgstr ""
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "kB"
 msgstr ""
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "MB"
 msgstr ""
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "GB"
 msgstr ""
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "TB"
 msgstr ""
 
-#: src/admin/Util.js:42 src/admin/Util.js:44
+#: admin/src/Util.js:42 admin/src/Util.js:44
 msgid " hrs"
 msgstr ""
 
-#: src/admin/Util.js:48 src/admin/Util.js:50
+#: admin/src/Util.js:48 admin/src/Util.js:50
 msgid " mins"
 msgstr ""
 
-#: src/admin/Util.js:53
+#: admin/src/Util.js:53
 msgid " s"
 msgstr ""
 
@@ -603,7 +583,7 @@ msgstr ""
 msgid "Index"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:231
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:233
 msgid "Comment"
 msgstr "Huomautus"
 
@@ -641,11 +621,11 @@ msgstr "ODF-tekstiasiakirja (.odt)"
 
 #: src/control/Control.Menubar.js:25
 msgid "Microsoft Word 2003 (.doc)"
-msgstr "Microsoft Word 2003 (.doc)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:26
 msgid "Microsoft Word (.docx)"
-msgstr "Microsoft Word (.docx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
@@ -691,11 +671,11 @@ msgstr "ODF-esitys (.odp)"
 
 #: src/control/Control.Menubar.js:235
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr "Microsoft Powerpoint 2003 (.ppt)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:236
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr "Microsoft Powerpoint (.pptx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:314
 msgid "ODF spreadsheet (.ods)"
@@ -703,11 +683,11 @@ msgstr "ODF-laskentataulukko (.ods)"
 
 #: src/control/Control.Menubar.js:315
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr "Microsoft Excel 2003 (.xls)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:316
 msgid "Microsoft Excel (.xlsx)"
-msgstr "Microsoft Excel (.xlsx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:460
 msgid "Reset to Default Language"
@@ -856,15 +836,15 @@ msgstr ""
 msgid "Open menu"
 msgstr ""
 
-#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:204
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:206
 msgid "Reply"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:198
+#: src/layer/tile/TileLayer.js:200
 msgid "Modify"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:210
+#: src/layer/tile/TileLayer.js:212
 msgid "Remove"
 msgstr ""
 

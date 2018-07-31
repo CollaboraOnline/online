@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 14:45+0200\n"
+"POT-Creation-Date: 2018-07-31 14:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.4\n"
-"X-Pootle-Revision: 828687\n"
+"X-Pootle-Revision: 3339432\n"
 "X-Pootle-Path: /fr/libo_online/loleaflet-help-fr.po\n"
 
 #: html/loleaflet-help.html+div.h1:25-5
@@ -582,7 +582,7 @@ msgstr "Ctrl + Retour arrière"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:96-18
 msgid "Delete to end of word"
-msgstr "Supprimer juqu'à la fin du mot"
+msgstr "Supprimer jusqu'à la fin du mot"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:96-66
 msgid "Ctrl + Del"
@@ -614,8 +614,8 @@ msgid ""
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
 "Si la cellule active est vide : sélectionne tout le tableau. Sinon : "
-"sélectionne le contenu de la cellule active. Utilisation répétée sélectionne "
-"tout le tableau."
+"sélectionne le contenu de la cellule active. L'utilisation répétée "
+"sélectionne tout le tableau."
 
 #: html/loleaflet-help.html+div.div.table.tr.td:103-57
 msgid ""
@@ -633,7 +633,7 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
-"Si la cellule active est vide : à la fin la fin du tableau. Sinon : le "
+"Si la cellule active est vide : va à la fin la fin du tableau. Sinon : le "
 "premier appui va à la fin de la cellule active, le second appui va à la fin "
 "du tableau actif, le troisième appui va à la fin du document. "
 
@@ -651,7 +651,7 @@ msgstr ""
 
 #: html/loleaflet-help.html+div.div.table.tr.td:106-18
 msgid "Alt + Arrow Keys"
-msgstr "Alt + les flèches de direction"
+msgstr "Alt + Flèches de direction"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:106-62
 msgid ""
@@ -662,17 +662,17 @@ msgstr ""
 
 #: html/loleaflet-help.html+div.div.table.tr.td:107-18
 msgid "Alt + Shift + Arrow Keys"
-msgstr "Alt + Maj + les flèches de direction"
+msgstr "Alt + Maj + Flèches de direction"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:107-70
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr ""
-"Agrandir/réduire la taille colonne/ligne au niveau du bord supérieur/gauche "
-"de la cellule"
+"Agrandir/réduire la taille de la colonne/ligne au niveau du bord supérieur/"
+"gauche de la cellule"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:108-18
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr "Alt + Ctrl + les flèches de direction"
+msgstr "Alt + Ctrl + Flèches de direction"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:108-69
 #: html/loleaflet-help.html+div.div.table.tr.td:109-77
@@ -681,7 +681,7 @@ msgstr "Comme Alt, mais actif uniquement si la cellule active est modifiée"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:109-18
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr "Ctrl + Alt + Maj + les flèches de direction"
+msgstr "Ctrl + Alt + Maj + Flèches de direction"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:110-18
 msgid "Alt + Insert"
@@ -693,7 +693,7 @@ msgid ""
 "inserts cell"
 msgstr ""
 "3 secondes en mode Insertion, la flèche de direction insère une ligne/"
-"colonne, Ctrl + flèche de direction insère une cellule"
+"colonne, Ctrl + Flèche de direction insère une cellule"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:111-18
 msgid "Alt + Del"
@@ -959,7 +959,7 @@ msgstr "Échap"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:210-18
 msgid "Select objects in the order in which they were created"
-msgstr "Sélectionner les objets dans l'ordre dans l'ordre de leur création"
+msgstr "Sélectionner les objets dans l'ordre de leur création"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:211-18
 msgid "Select objects in the reverse order in which they were created"

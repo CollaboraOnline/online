@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 14:45+0200\n"
+"POT-Creation-Date: 2018-07-31 14:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,178 +16,158 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Revision: 3265523\n"
+"X-Pootle-Revision: 3341567\n"
 "X-Pootle-Path: /fr/libo_online/loleaflet-ui-fr.po\n"
 
-#: admin.strings.js:5
+#: admin/admin.strings.js:5
 msgid "Admin console"
 msgstr "Console d'administration"
 
-#: admin.strings.js:6
+#: admin/admin.strings.js:6
 msgid "Settings"
 msgstr "Paramètres"
 
-#: admin.strings.js:7
+#: admin/admin.strings.js:7
 msgid "Overview"
 msgstr "Généralités"
 
-#: admin.strings.js:8
+#: admin/admin.strings.js:8
 msgid "(current)"
 msgstr "(actif)"
 
-#: admin.strings.js:9
+#: admin/admin.strings.js:9
 msgid "Analytics"
 msgstr "Analytique"
 
-#: admin.strings.js:10 evol.colorpicker.strings.js:6
+#: admin/admin.strings.js:10
 msgid "History"
 msgstr "Historique"
 
-#: admin.strings.js:11
+#: admin/admin.strings.js:11
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: admin.strings.js:12
+#: admin/admin.strings.js:12
 msgid "Users online"
 msgstr "Utilisateurs connectés"
 
-#: admin.strings.js:13
+#: admin/admin.strings.js:13
 msgid "User Name"
 msgstr "Nom d'utilisateur"
 
-#: admin.strings.js:14
+#: admin/admin.strings.js:14
 msgid "Documents opened"
 msgstr "Documents ouverts"
 
-#: admin.strings.js:15
+#: admin/admin.strings.js:15
 msgid "Number of Documents"
 msgstr "Nombre de documents"
 
-#: admin.strings.js:16
+#: admin/admin.strings.js:16
 msgid "Memory consumed"
 msgstr "Mémoire consommée"
 
-#: admin.strings.js:17
+#: admin/admin.strings.js:17
 msgid "Bytes sent"
 msgstr "Octets envoyés"
 
-#: admin.strings.js:18
+#: admin/admin.strings.js:18
 msgid "Bytes received"
 msgstr "Octets reçus"
 
-#: admin.strings.js:19
+#: admin/admin.strings.js:19
 msgid "PID"
 msgstr "PID"
 
-#: admin.strings.js:20
+#: admin/admin.strings.js:20
 msgid "Document"
 msgstr "Document"
 
-#: admin.strings.js:21
+#: admin/admin.strings.js:21
 msgid "Number of views"
 msgstr "Nombre de vues"
 
-#: admin.strings.js:22
+#: admin/admin.strings.js:22
 msgid "Elapsed time"
 msgstr "Temps écoulé"
 
-#: admin.strings.js:23
+#: admin/admin.strings.js:23
 msgid "Idle time"
 msgstr "Durée d'inactivité"
 
-#: admin.strings.js:24
+#: admin/admin.strings.js:24
 msgid "Modified"
 msgstr "Modifié"
 
-#: admin.strings.js:25
+#: admin/admin.strings.js:25
 msgid "Kill"
 msgstr "Interrombre"
 
-#: admin.strings.js:26
+#: admin/admin.strings.js:26
 msgid "Graphs"
 msgstr "Graphiques"
 
-#: admin.strings.js:27
+#: admin/admin.strings.js:27
 msgid "Memory Graph"
 msgstr "Graphique de la mémoire"
 
-#: admin.strings.js:28
+#: admin/admin.strings.js:28
 msgid "CPU Graph"
 msgstr "Graphique du CPU"
 
-#: admin.strings.js:29
+#: admin/admin.strings.js:29
 msgid "Network Graph"
 msgstr "Graphique du réseau"
 
-#: admin.strings.js:30 src/layer/marker/Annotation.js:224
+#: admin/admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "Enregistrer"
 
-#: admin.strings.js:31
+#: admin/admin.strings.js:31
 msgid "Cache size of memory statistics"
 msgstr "Taille du cache des statistiques de la mémoire"
 
-#: admin.strings.js:32
+#: admin/admin.strings.js:32
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Intervalle de temps des statistiques de la mémoire (en ms)"
 
-#: admin.strings.js:33
+#: admin/admin.strings.js:33
 msgid "Cache size of CPU statistics"
 msgstr "Taille du cache des statistiques CPU"
 
-#: admin.strings.js:34
+#: admin/admin.strings.js:34
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Intervalle de temps des statistiques CPU (en ms)"
 
-#: admin.strings.js:35
+#: admin/admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
 "Mémoire virtuelle de processus de document maximum (en Mo) - réduire "
 "uniquement"
 
-#: admin.strings.js:36
+#: admin/admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
 "Mémoire maximale de la pile de processus du document (en KB) - réduire "
 "seulement"
 
-#: admin.strings.js:37
+#: admin/admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
 "Taille maximale de fichier autorisée à écrire sur le disque (en Mo) - "
 "réduire seulement"
 
-#: admin.strings.js:38
+#: admin/admin.strings.js:38
 msgid "Documents:"
 msgstr "Documents :"
 
-#: admin.strings.js:39
+#: admin/admin.strings.js:39
 msgid "Expired:"
 msgstr "Expiré :"
 
-#: admin.strings.js:40
+#: admin/admin.strings.js:40
 msgid "Refresh"
 msgstr "Actualiser"
-
-#: evol.colorpicker.strings.js:2
-msgid "Theme Colors"
-msgstr "Couleurs du thème"
-
-#: evol.colorpicker.strings.js:3
-msgid "Standard Colors"
-msgstr "Couleurs standard"
-
-#: evol.colorpicker.strings.js:4
-msgid "Web Colors"
-msgstr "Couleurs web"
-
-#: evol.colorpicker.strings.js:5
-msgid "Back to Palette"
-msgstr "Retour à la palette"
-
-#: evol.colorpicker.strings.js:7
-msgid "No history yet."
-msgstr "Aucun historique actuellement."
 
 #: src/errormessages.js:13
 msgid ""
@@ -273,7 +253,7 @@ msgid ""
 "not corrupted, and try again."
 msgstr ""
 "Échec du chargement du document. Veuillez vous assurer que le type de "
-"fichier est pris en charge, qu'il n'est pas corrompu et essayez de nouveau. "
+"fichier est pris en charge, qu'il n'est pas corrompu et essayez de nouveau."
 
 #: src/errormessages.js:26
 #, javascript-format
@@ -319,7 +299,7 @@ msgstr "1 utilisateur"
 
 #: js/toolbar.js:62
 msgid "0 users"
-msgstr "0 utilisateurs"
+msgstr "0 utilisateur"
 
 #: js/toolbar.js:189
 msgid "Are you sure you want to delete this page?"
@@ -366,9 +346,8 @@ msgid "Insert table"
 msgstr "Insérer un tableau"
 
 #: js/toolbar.js:454
-#, fuzzy
 msgid "Insert shapes"
-msgstr "Insérer une feuille"
+msgstr "Insérer des formes"
 
 #: js/toolbar.js:498 js/toolbar.js:961
 msgid "Sum"
@@ -376,7 +355,7 @@ msgstr "Somme"
 
 #: js/toolbar.js:499
 msgid "Function"
-msgstr "Fonctions"
+msgstr "Fonction"
 
 #: js/toolbar.js:500 src/layer/marker/Annotation.js:163
 msgid "Cancel"
@@ -449,7 +428,7 @@ msgstr "Nombre de feuilles"
 
 #: js/toolbar.js:942
 msgid "Selected range of cells"
-msgstr "Plage de cellules sélectionnée"
+msgstr "Plage de cellules sélectionnées"
 
 #: js/toolbar.js:945 js/toolbar.js:982
 msgid "Entering text mode"
@@ -461,7 +440,7 @@ msgstr "Langue du texte"
 
 #: js/toolbar.js:951 js/toolbar.js:985
 msgid "Selection Mode"
-msgstr "Mode sélection"
+msgstr "Mode de sélection"
 
 #: js/toolbar.js:954
 msgid "Choice of functions"
@@ -501,7 +480,7 @@ msgstr "Nombre de pages"
 
 #: js/toolbar.js:979
 msgid "Word Counter"
-msgstr "Compteur de mot"
+msgstr "Compteur de mots"
 
 #: js/toolbar.js:1007
 msgid "Number of Slides"
@@ -542,66 +521,66 @@ msgstr "Vous"
 msgid "Readonly"
 msgstr "Lecture seule"
 
-#: src/admin/AdminSocketAnalytics.js:218
+#: admin/src/AdminSocketAnalytics.js:218
 msgid "Received"
 msgstr "Reçu"
 
-#: src/admin/AdminSocketAnalytics.js:222
+#: admin/src/AdminSocketAnalytics.js:222
 msgid "Sent"
 msgstr "Envoyé"
 
-#: src/admin/AdminSocketBase.js:45
+#: admin/src/AdminSocketBase.js:45
 msgid "Connection error"
 msgstr "Erreur de connexion"
 
-#: src/admin/AdminSocketOverview.js:100
+#: admin/src/AdminSocketOverview.js:100
 msgid "Are you sure you want to terminate this session?"
 msgstr "Voulez-vous vraiment terminer cette session ?"
 
-#: src/admin/AdminSocketOverview.js:181 src/admin/AdminSocketOverview.js:283
+#: admin/src/AdminSocketOverview.js:181 admin/src/AdminSocketOverview.js:283
 msgid "Documents"
 msgstr "Documents"
 
-#: src/admin/AdminSocketSettings.js:33
+#: admin/src/AdminSocketSettings.js:33
 msgid "Are you sure you want to shut down the server?"
 msgstr "Êtes-vous sûr de vouloir arrêter le serveur ?"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "kB"
 msgstr "Ko"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "MB"
 msgstr "Mo"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "GB"
 msgstr "Go"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "TB"
 msgstr "To"
 
-#: src/admin/Util.js:42 src/admin/Util.js:44
+#: admin/src/Util.js:42 admin/src/Util.js:44
 msgid " hrs"
 msgstr " hrs"
 
-#: src/admin/Util.js:48 src/admin/Util.js:50
+#: admin/src/Util.js:48 admin/src/Util.js:50
 msgid " mins"
 msgstr " mins"
 
-#: src/admin/Util.js:53
+#: admin/src/Util.js:53
 msgid " s"
 msgstr " s"
 
 #: src/control/Control.AlertDialog.js:28
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr ""
-"Le serveur a rencontré une erreur %0 lors de l'analyse de la commande %1"
+"Le serveur a rencontré une erreur %0 lors de l'analyse de la commande %1."
 
 #: src/control/Control.AlertDialog.js:41
 msgid "Download PDF export?"
-msgstr "Télécharger l'export PDF ?"
+msgstr ""
 
 #: src/control/Control.ContextMenu.js:130
 msgid "Internal Cut"
@@ -631,7 +610,7 @@ msgstr "Type"
 msgid "Index"
 msgstr "Index"
 
-#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:231
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:233
 msgid "Comment"
 msgstr "Commentaire"
 
@@ -668,11 +647,11 @@ msgstr "Document texte ODF (.odt)"
 
 #: src/control/Control.Menubar.js:25
 msgid "Microsoft Word 2003 (.doc)"
-msgstr "Microsoft Word 2003 (.doc)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:26
 msgid "Microsoft Word (.docx)"
-msgstr "Microsoft Word (.docx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
@@ -718,11 +697,11 @@ msgstr "Présentation ODF (.odp)"
 
 #: src/control/Control.Menubar.js:235
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr "Microsoft Powerpoint 2003 (.ppt)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:236
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr "Microsoft Powerpoint (.pptx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:314
 msgid "ODF spreadsheet (.ods)"
@@ -730,11 +709,11 @@ msgstr "Classeur ODF (.ods)"
 
 #: src/control/Control.Menubar.js:315
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr "Microsoft Excel 2003 (.xls)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:316
 msgid "Microsoft Excel (.xlsx)"
-msgstr "Microsoft Excel (.xlsx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:460
 msgid "Reset to Default Language"
@@ -754,11 +733,11 @@ msgstr "Faire défiler les annotations vers le bas"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
-msgstr "Insérer une feuille avant ceci"
+msgstr "Insérer une feuille avant"
 
 #: src/control/Control.Tabs.js:48
 msgid "Insert sheet after this"
-msgstr "Insérer une feuille après ceci"
+msgstr "Insérer une feuille après"
 
 #: src/control/Control.Tabs.js:53
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -778,7 +757,7 @@ msgstr "Enregistrement..."
 
 #: src/control/Toolbar.js:239
 msgid "This version of %productName is powered by"
-msgstr "Cette version de %productName est alimentée par"
+msgstr "Cette version de %productName est fournie par"
 
 #: src/core/Socket.js:42
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -811,7 +790,7 @@ msgstr "Oups, il y a un problème de connexion au document"
 
 #: src/core/Socket.js:298
 msgid "Server is recycling and will be available shortly"
-msgstr "Le serveur est cours de recyclage et sera bientôt disponible"
+msgstr "Le serveur est en cours de traitement et sera bientôt disponible"
 
 #: src/core/Socket.js:329
 msgid ""
@@ -874,7 +853,7 @@ msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
-"Bon, c'est embarrassant, nous ne pouvons connecter votre document. Veuillez "
+"Bon, c'est embarrassant, votre document ne peut pas être connecté. Veuillez "
 "réessayer."
 
 #: src/layer/marker/Annotation.js:193
@@ -889,15 +868,15 @@ msgstr "Rejeter la modification"
 msgid "Open menu"
 msgstr "Ouvrir le menu"
 
-#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:204
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:206
 msgid "Reply"
 msgstr "Répondre"
 
-#: src/layer/tile/TileLayer.js:198
+#: src/layer/tile/TileLayer.js:200
 msgid "Modify"
 msgstr "Modifier"
 
-#: src/layer/tile/TileLayer.js:210
+#: src/layer/tile/TileLayer.js:212
 msgid "Remove"
 msgstr "Supprimer"
 
@@ -917,5 +896,20 @@ msgstr "Chargement…"
 msgid "Uploading..."
 msgstr "Chargement…"
 
-#~ msgid "%user has left"
-#~ msgstr "%user a quitté"
+#~ msgid "Word 2003 Document (.doc)"
+#~ msgstr "Document Word 2003 (.doc)"
+
+#~ msgid "Word Document (.docx)"
+#~ msgstr "Document Word (.docx)"
+
+#~ msgid "PowerPoint 2003 Presentation (.ppt)"
+#~ msgstr "Présentation PorwerPoint 2003 (.ppt)"
+
+#~ msgid "PowerPoint Presentation (.pptx)"
+#~ msgstr "Présentation PowerPoint (.pptx)"
+
+#~ msgid "Excel 2003 Spreadsheet (.xls)"
+#~ msgstr "Classeur Excel 2003 (.xls)"
+
+#~ msgid "Excel Spreadsheet (.xlsx)"
+#~ msgstr "Classeur Excel (.xlsx)"

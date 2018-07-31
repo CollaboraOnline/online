@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 14:45+0200\n"
+"POT-Creation-Date: 2018-07-31 14:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,178 +16,158 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Revision: 3265102\n"
+"X-Pootle-Revision: 3341368\n"
 "X-Pootle-Path: /gl/libo_online/loleaflet-ui-gl.po\n"
 
-#: admin.strings.js:5
+#: admin/admin.strings.js:5
 msgid "Admin console"
 msgstr "Consola de administración"
 
-#: admin.strings.js:6
+#: admin/admin.strings.js:6
 msgid "Settings"
 msgstr "Configuración"
 
-#: admin.strings.js:7
+#: admin/admin.strings.js:7
 msgid "Overview"
 msgstr "Vista xeral"
 
-#: admin.strings.js:8
+#: admin/admin.strings.js:8
 msgid "(current)"
 msgstr "(actual)"
 
-#: admin.strings.js:9
+#: admin/admin.strings.js:9
 msgid "Analytics"
 msgstr "Analíticas"
 
-#: admin.strings.js:10 evol.colorpicker.strings.js:6
+#: admin/admin.strings.js:10
 msgid "History"
 msgstr "Historial"
 
-#: admin.strings.js:11
+#: admin/admin.strings.js:11
 msgid "Dashboard"
 msgstr "Taboleiro"
 
-#: admin.strings.js:12
+#: admin/admin.strings.js:12
 msgid "Users online"
 msgstr "Usuarios conectados"
 
-#: admin.strings.js:13
+#: admin/admin.strings.js:13
 msgid "User Name"
 msgstr "Nome de usuario"
 
-#: admin.strings.js:14
+#: admin/admin.strings.js:14
 msgid "Documents opened"
 msgstr "Documentos abertos"
 
-#: admin.strings.js:15
+#: admin/admin.strings.js:15
 msgid "Number of Documents"
 msgstr "Número de documentos"
 
-#: admin.strings.js:16
+#: admin/admin.strings.js:16
 msgid "Memory consumed"
 msgstr "Memoria consumida"
 
-#: admin.strings.js:17
+#: admin/admin.strings.js:17
 msgid "Bytes sent"
 msgstr "Bytes enviados"
 
-#: admin.strings.js:18
+#: admin/admin.strings.js:18
 msgid "Bytes received"
 msgstr "Bytes recibidos"
 
-#: admin.strings.js:19
+#: admin/admin.strings.js:19
 msgid "PID"
 msgstr "PID"
 
-#: admin.strings.js:20
+#: admin/admin.strings.js:20
 msgid "Document"
 msgstr "Documento"
 
-#: admin.strings.js:21
+#: admin/admin.strings.js:21
 msgid "Number of views"
 msgstr "Número de vistas"
 
-#: admin.strings.js:22
+#: admin/admin.strings.js:22
 msgid "Elapsed time"
 msgstr "Tempo transcorrido"
 
-#: admin.strings.js:23
+#: admin/admin.strings.js:23
 msgid "Idle time"
 msgstr "Tempo inactivo"
 
-#: admin.strings.js:24
+#: admin/admin.strings.js:24
 msgid "Modified"
 msgstr "Modificado"
 
-#: admin.strings.js:25
+#: admin/admin.strings.js:25
 msgid "Kill"
 msgstr "Matar"
 
-#: admin.strings.js:26
+#: admin/admin.strings.js:26
 msgid "Graphs"
 msgstr "Gráficas"
 
-#: admin.strings.js:27
+#: admin/admin.strings.js:27
 msgid "Memory Graph"
 msgstr "Gráfico de memoria"
 
-#: admin.strings.js:28
+#: admin/admin.strings.js:28
 msgid "CPU Graph"
 msgstr "Gráfico da CPU"
 
-#: admin.strings.js:29
+#: admin/admin.strings.js:29
 msgid "Network Graph"
 msgstr "Gráfico de rede"
 
-#: admin.strings.js:30 src/layer/marker/Annotation.js:224
+#: admin/admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "Gardar"
 
-#: admin.strings.js:31
+#: admin/admin.strings.js:31
 msgid "Cache size of memory statistics"
 msgstr "Tamaño da caché de estatísticas de memoria"
 
-#: admin.strings.js:32
+#: admin/admin.strings.js:32
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Intervalo de tempo da estatística da memoria (en ms)"
 
-#: admin.strings.js:33
+#: admin/admin.strings.js:33
 msgid "Cache size of CPU statistics"
 msgstr "Tamaño da caché da estatística da CPU"
 
-#: admin.strings.js:34
+#: admin/admin.strings.js:34
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Intervalo de tempo da estatística da CPU (en ms)"
 
-#: admin.strings.js:35
+#: admin/admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
 "Máximo de memorial virtual para procesar por documento (en MB) - soamente "
 "reducir"
 
-#: admin.strings.js:36
+#: admin/admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
 "Máximo de memoria de pila para procesar por documento (en KB) - soamente "
 "reducir"
 
-#: admin.strings.js:37
+#: admin/admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
 "Máximo tamaño de ficheiro permitido para escribir en disco (en MB) - "
 "soamente reducir"
 
-#: admin.strings.js:38
+#: admin/admin.strings.js:38
 msgid "Documents:"
 msgstr "Documentos:"
 
-#: admin.strings.js:39
+#: admin/admin.strings.js:39
 msgid "Expired:"
 msgstr "Caducado:"
 
-#: admin.strings.js:40
+#: admin/admin.strings.js:40
 msgid "Refresh"
 msgstr "Actualizar"
-
-#: evol.colorpicker.strings.js:2
-msgid "Theme Colors"
-msgstr "Cores do tema"
-
-#: evol.colorpicker.strings.js:3
-msgid "Standard Colors"
-msgstr "Cores estándar"
-
-#: evol.colorpicker.strings.js:4
-msgid "Web Colors"
-msgstr "Cores da web"
-
-#: evol.colorpicker.strings.js:5
-msgid "Back to Palette"
-msgstr "Retornar á paleta"
-
-#: evol.colorpicker.strings.js:7
-msgid "No history yet."
-msgstr "Aínda non hai historial."
 
 #: src/errormessages.js:13
 msgid ""
@@ -212,10 +192,14 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
+"Esta é unha versión sen mantemento do {productname}. Para evitar a impresión "
+"de que sexa axeitada para ser instalada en empresas, esta mensaxe aparece "
+"cando se empregan simultaneamente máis de {docs} documentos ou{connections} "
+"conexións"
 
 #: src/errormessages.js:16
 msgid "More information and support"
-msgstr ""
+msgstr "Máis información e axuda"
 
 #: src/errormessages.js:17
 msgid ""
@@ -243,7 +227,7 @@ msgstr ""
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "Parámetro WOPISrc erróneo ou ausente. Contacte con mantemento."
 
 #: src/errormessages.js:21
 msgid ""
@@ -535,55 +519,55 @@ msgstr "Vostede"
 msgid "Readonly"
 msgstr "Só lectura"
 
-#: src/admin/AdminSocketAnalytics.js:218
+#: admin/src/AdminSocketAnalytics.js:218
 msgid "Received"
 msgstr "Recibido"
 
-#: src/admin/AdminSocketAnalytics.js:222
+#: admin/src/AdminSocketAnalytics.js:222
 msgid "Sent"
 msgstr "Enviado"
 
-#: src/admin/AdminSocketBase.js:45
+#: admin/src/AdminSocketBase.js:45
 msgid "Connection error"
 msgstr "Erro de conexión"
 
-#: src/admin/AdminSocketOverview.js:100
+#: admin/src/AdminSocketOverview.js:100
 msgid "Are you sure you want to terminate this session?"
 msgstr "Confirma que desexa terminar esta sesión?"
 
-#: src/admin/AdminSocketOverview.js:181 src/admin/AdminSocketOverview.js:283
+#: admin/src/AdminSocketOverview.js:181 admin/src/AdminSocketOverview.js:283
 msgid "Documents"
 msgstr "Documentos"
 
-#: src/admin/AdminSocketSettings.js:33
+#: admin/src/AdminSocketSettings.js:33
 msgid "Are you sure you want to shut down the server?"
 msgstr "Está seguro de que desexa apagar o servidor?"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "kB"
 msgstr "kB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "MB"
 msgstr "MB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "GB"
 msgstr "GB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "TB"
 msgstr "TB"
 
-#: src/admin/Util.js:42 src/admin/Util.js:44
+#: admin/src/Util.js:42 admin/src/Util.js:44
 msgid " hrs"
 msgstr " horas"
 
-#: src/admin/Util.js:48 src/admin/Util.js:50
+#: admin/src/Util.js:48 admin/src/Util.js:50
 msgid " mins"
 msgstr " minutos"
 
-#: src/admin/Util.js:53
+#: admin/src/Util.js:53
 msgid " s"
 msgstr " segundos"
 
@@ -593,7 +577,7 @@ msgstr "O servidor atopou un erro %0 ao procesar a orde %1."
 
 #: src/control/Control.AlertDialog.js:41
 msgid "Download PDF export?"
-msgstr "Descargar exportación a PDF?"
+msgstr ""
 
 #: src/control/Control.ContextMenu.js:130
 msgid "Internal Cut"
@@ -623,7 +607,7 @@ msgstr "Tipo"
 msgid "Index"
 msgstr "Índice"
 
-#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:231
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:233
 msgid "Comment"
 msgstr "Comentario"
 
@@ -660,11 +644,11 @@ msgstr "Documento de texto ODF (.odt)"
 
 #: src/control/Control.Menubar.js:25
 msgid "Microsoft Word 2003 (.doc)"
-msgstr "Microsoft Word 2003 (.doc)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:26
 msgid "Microsoft Word (.docx)"
-msgstr "Microsoft Word (.docx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
@@ -710,11 +694,11 @@ msgstr "Presentación ODF (.odp)"
 
 #: src/control/Control.Menubar.js:235
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr "Microsoft PowerPoint 2003 (.ppt)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:236
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr "Microsoft Powerpoint (.pptx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:314
 msgid "ODF spreadsheet (.ods)"
@@ -722,11 +706,11 @@ msgstr "Folla de cálculo de ODF (.ods)"
 
 #: src/control/Control.Menubar.js:315
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr "Microsoft Excel 2003 (.xls)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:316
 msgid "Microsoft Excel (.xlsx)"
-msgstr "Microsoft Excel (.xlsx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:460
 msgid "Reset to Default Language"
@@ -778,7 +762,7 @@ msgstr "Vaites! Produciuse un problema ao conectar co LibreOffice Online:"
 
 #: src/core/Socket.js:42
 msgid "Cannot create websocket, please restart your browser."
-msgstr ""
+msgstr "non é posíbel crear o WebSocket. Reinicie o navegador."
 
 #: src/core/Socket.js:228
 msgid "Unsupported server version."
@@ -825,18 +809,20 @@ msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
+"O documento foi cambiado no almacenamento. Que desexa facer cos cambios que "
+"están sen gardar?"
 
 #: src/core/Socket.js:458
 msgid "Discard"
-msgstr ""
+msgstr "Desbotar"
 
 #: src/core/Socket.js:463
 msgid "Overwrite"
-msgstr ""
+msgstr "Substituír"
 
 #: src/core/Socket.js:468
 msgid "Save to new file"
-msgstr ""
+msgstr "Gardar con outro nome"
 
 #: src/core/Socket.js:535
 msgid "Document requires password to view."
@@ -876,15 +862,15 @@ msgstr "Rexeitar o cambio"
 msgid "Open menu"
 msgstr "Abrir o menú"
 
-#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:204
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:206
 msgid "Reply"
 msgstr "Responder"
 
-#: src/layer/tile/TileLayer.js:198
+#: src/layer/tile/TileLayer.js:200
 msgid "Modify"
 msgstr "Modificar"
 
-#: src/layer/tile/TileLayer.js:210
+#: src/layer/tile/TileLayer.js:212
 msgid "Remove"
 msgstr "Retirar"
 
@@ -903,6 +889,3 @@ msgstr "Cargando…"
 #: src/map/handler/Map.FileInserter.js:60
 msgid "Uploading..."
 msgstr "Enviando..."
-
-#~ msgid "%user has left"
-#~ msgstr "%user marchou"

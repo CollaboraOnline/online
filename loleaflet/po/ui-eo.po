@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 14:45+0200\n"
+"POT-Creation-Date: 2018-07-31 14:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,173 +16,152 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Revision: 3265078\n"
+"X-Pootle-Revision: 3389130\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-ui-eo.po\n"
 
-#: admin.strings.js:5
+#: admin/admin.strings.js:5
 msgid "Admin console"
 msgstr "Administra konzolo"
 
-#: admin.strings.js:6
+#: admin/admin.strings.js:6
 msgid "Settings"
 msgstr "Agordoj"
 
-#: admin.strings.js:7
+#: admin/admin.strings.js:7
 msgid "Overview"
 msgstr "Superrigardo"
 
-#: admin.strings.js:8
+#: admin/admin.strings.js:8
 msgid "(current)"
 msgstr "(aktuala)"
 
-#: admin.strings.js:9
+#: admin/admin.strings.js:9
 msgid "Analytics"
 msgstr "Analizado"
 
-#: admin.strings.js:10 evol.colorpicker.strings.js:6
+#: admin/admin.strings.js:10
 msgid "History"
 msgstr "Historio"
 
-#: admin.strings.js:11
+#: admin/admin.strings.js:11
 msgid "Dashboard"
 msgstr "Stirtablo"
 
-#: admin.strings.js:12
+#: admin/admin.strings.js:12
 msgid "Users online"
 msgstr "Uzantoj konektitaj"
 
-#: admin.strings.js:13
+#: admin/admin.strings.js:13
 msgid "User Name"
 msgstr "Salutnomo"
 
-#: admin.strings.js:14
+#: admin/admin.strings.js:14
 msgid "Documents opened"
 msgstr "Dokumentoj malfermitaj"
 
-#: admin.strings.js:15
+#: admin/admin.strings.js:15
 msgid "Number of Documents"
 msgstr "Nombro da dokumentoj"
 
-#: admin.strings.js:16
+#: admin/admin.strings.js:16
 msgid "Memory consumed"
 msgstr "Memoro konsumita"
 
-#: admin.strings.js:17
+#: admin/admin.strings.js:17
 msgid "Bytes sent"
 msgstr "Bajtoj senditaj"
 
-#: admin.strings.js:18
+#: admin/admin.strings.js:18
 msgid "Bytes received"
 msgstr "Bajtoj ricevitaj"
 
-#: admin.strings.js:19
+#: admin/admin.strings.js:19
 msgid "PID"
 msgstr "PID"
 
-#: admin.strings.js:20
+#: admin/admin.strings.js:20
 msgid "Document"
 msgstr "Dokumento"
 
-#: admin.strings.js:21
+#: admin/admin.strings.js:21
 msgid "Number of views"
 msgstr "Nombro da vidoj"
 
-#: admin.strings.js:22
+#: admin/admin.strings.js:22
 msgid "Elapsed time"
 msgstr "Pasinta tempo"
 
-#: admin.strings.js:23
+#: admin/admin.strings.js:23
 msgid "Idle time"
 msgstr "Senokupa tempo"
 
-#: admin.strings.js:24
+#: admin/admin.strings.js:24
 msgid "Modified"
 msgstr "Modifita"
 
-#: admin.strings.js:25
+#: admin/admin.strings.js:25
 msgid "Kill"
 msgstr "Mortigi"
 
-#: admin.strings.js:26
+#: admin/admin.strings.js:26
 msgid "Graphs"
 msgstr "Diagramoj"
 
-#: admin.strings.js:27
+#: admin/admin.strings.js:27
 msgid "Memory Graph"
 msgstr "Memora diagramo"
 
-#: admin.strings.js:28
+#: admin/admin.strings.js:28
 msgid "CPU Graph"
 msgstr "CPU-diagramo"
 
-#: admin.strings.js:29
+#: admin/admin.strings.js:29
 msgid "Network Graph"
 msgstr "Reta diagramo"
 
-#: admin.strings.js:30 src/layer/marker/Annotation.js:224
+#: admin/admin.strings.js:30 src/layer/marker/Annotation.js:224
 msgid "Save"
 msgstr "Konservi"
 
-#: admin.strings.js:31
+#: admin/admin.strings.js:31
 msgid "Cache size of memory statistics"
 msgstr "Kaŝmemoro por memoraj statistikoj"
 
-#: admin.strings.js:32
+#: admin/admin.strings.js:32
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Intervalo de memoraj statistikoj (en ms)"
 
-#: admin.strings.js:33
+#: admin/admin.strings.js:33
 msgid "Cache size of CPU statistics"
 msgstr "Kaŝmemora grando de ĉefprocesoraj statistikoj"
 
-#: admin.strings.js:34
+#: admin/admin.strings.js:34
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Intervalo de statistikaj statistikoj (en ms) "
 
-#: admin.strings.js:35
+#: admin/admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr "Maksimuma dokumenta procesa virtuala memoro (en MB) - nur redukti"
 
-#: admin.strings.js:36
+#: admin/admin.strings.js:36
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr "Maksimuma dokumenta procesa staka memoro (en MB) - nur redukti"
 
-#: admin.strings.js:37
+#: admin/admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "Maksimuma dosiergrando permesata skribi al disko (en MB) - nur redukti"
 
-#: admin.strings.js:38
-#, fuzzy
+#: admin/admin.strings.js:38
 msgid "Documents:"
-msgstr "Dokumentoj"
+msgstr "Dokumentoj:"
 
-#: admin.strings.js:39
+#: admin/admin.strings.js:39
 msgid "Expired:"
-msgstr ""
+msgstr "Eksvalida:"
 
-#: admin.strings.js:40
+#: admin/admin.strings.js:40
 msgid "Refresh"
 msgstr "Aktualigi"
-
-#: evol.colorpicker.strings.js:2
-msgid "Theme Colors"
-msgstr "Etosaj koloroj"
-
-#: evol.colorpicker.strings.js:3
-msgid "Standard Colors"
-msgstr "Normalaj koloroj"
-
-#: evol.colorpicker.strings.js:4
-msgid "Web Colors"
-msgstr "Retaj koloroj"
-
-#: evol.colorpicker.strings.js:5
-msgid "Back to Palette"
-msgstr "Reen al paletro"
-
-#: evol.colorpicker.strings.js:7
-msgid "No history yet."
-msgstr "Mankas historio."
 
 #: src/errormessages.js:13
 msgid ""
@@ -207,10 +186,13 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
+"Ĉi tiu estas nesubtenata versio de {productname}. Por eviti la impreson ke "
+"ĝi taŭgas por disponiĝi en entreprenoj, ĉi tiu mesaĝo aperos kiam pli ol "
+"{docs} dokumentoj aŭ {connections} konektoj estas aktuale uzataj."
 
 #: src/errormessages.js:16
 msgid "More information and support"
-msgstr ""
+msgstr "Plua informo kaj subteno"
 
 #: src/errormessages.js:17
 msgid ""
@@ -238,7 +220,7 @@ msgstr ""
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "Malĝusta aŭ mankanta WOPISrc-parametro. Bonvolu kontakti subtenanton."
 
 #: src/errormessages.js:21
 msgid ""
@@ -355,7 +337,7 @@ msgstr "Enmeti tabelon"
 
 #: js/toolbar.js:454
 msgid "Insert shapes"
-msgstr ""
+msgstr "Enmeti formojn"
 
 #: js/toolbar.js:498 js/toolbar.js:961
 msgid "Sum"
@@ -391,7 +373,7 @@ msgstr "Lasta folio"
 
 #: js/toolbar.js:521
 msgid "Insert sheet"
-msgstr ""
+msgstr "Enmeti folion"
 
 #: js/toolbar.js:531 src/control/Control.Menubar.js:292
 msgid "Fullscreen presentation"
@@ -411,11 +393,11 @@ msgstr "Neniu uzanto"
 
 #: js/toolbar.js:564
 msgid "Always follow the editor"
-msgstr ""
+msgstr "Ĉiam sekvu la redaktanton"
 
 #: js/toolbar.js:567
 msgid "Current"
-msgstr ""
+msgstr "Aktuale"
 
 #: js/toolbar.js:574 src/control/Control.Menubar.js:60
 #: src/control/Control.Menubar.js:257
@@ -529,61 +511,61 @@ msgstr "Vi"
 msgid "Readonly"
 msgstr "Nurlega"
 
-#: src/admin/AdminSocketAnalytics.js:218
+#: admin/src/AdminSocketAnalytics.js:218
 msgid "Received"
-msgstr ""
+msgstr "Ricevita"
 
-#: src/admin/AdminSocketAnalytics.js:222
+#: admin/src/AdminSocketAnalytics.js:222
 msgid "Sent"
-msgstr ""
+msgstr "Sendita"
 
-#: src/admin/AdminSocketBase.js:45
+#: admin/src/AdminSocketBase.js:45
 msgid "Connection error"
 msgstr "Konekta eraro"
 
-#: src/admin/AdminSocketOverview.js:100
+#: admin/src/AdminSocketOverview.js:100
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ĉe vi certe volas fini ĉi tiun seancon?"
 
-#: src/admin/AdminSocketOverview.js:181 src/admin/AdminSocketOverview.js:283
+#: admin/src/AdminSocketOverview.js:181 admin/src/AdminSocketOverview.js:283
 msgid "Documents"
 msgstr "Dokumentoj"
 
-#: src/admin/AdminSocketSettings.js:33
+#: admin/src/AdminSocketSettings.js:33
 msgid "Are you sure you want to shut down the server?"
 msgstr "Ĉu vi estas certa ke vi volas haltigi la servilon?"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "kB"
 msgstr "kB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "MB"
 msgstr "MB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "GB"
 msgstr "GB"
 
-#: src/admin/Util.js:13
+#: admin/src/Util.js:13
 msgid "TB"
 msgstr "TB"
 
-#: src/admin/Util.js:42 src/admin/Util.js:44
+#: admin/src/Util.js:42 admin/src/Util.js:44
 msgid " hrs"
 msgstr "h"
 
-#: src/admin/Util.js:48 src/admin/Util.js:50
+#: admin/src/Util.js:48 admin/src/Util.js:50
 msgid " mins"
 msgstr " min"
 
-#: src/admin/Util.js:53
+#: admin/src/Util.js:53
 msgid " s"
 msgstr " s"
 
 #: src/control/Control.AlertDialog.js:28
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr ""
+msgstr "La servilo trafis eraron %0 analizante la komandon %1."
 
 #: src/control/Control.AlertDialog.js:41
 msgid "Download PDF export?"
@@ -617,7 +599,7 @@ msgstr "Tipo"
 msgid "Index"
 msgstr "Indekso"
 
-#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:231
+#: src/control/Control.DocumentRepair.js:47 src/layer/tile/TileLayer.js:233
 msgid "Comment"
 msgstr "Komento"
 
@@ -654,15 +636,15 @@ msgstr "ODF-teksta dokumento (.odt)"
 
 #: src/control/Control.Menubar.js:25
 msgid "Microsoft Word 2003 (.doc)"
-msgstr "Microsoft Word 2003 (.doc)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:26
 msgid "Microsoft Word (.docx)"
-msgstr "Microsoft Word (.docx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Riĉa teksto (.rtf)"
 
 #: src/control/Control.Menubar.js:34 src/control/Control.Menubar.js:243
 #: src/control/Control.Menubar.js:323
@@ -671,7 +653,7 @@ msgstr "Ripari"
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"
-msgstr ""
+msgstr "Ĉiuj"
 
 #: src/control/Control.Menubar.js:130
 msgid "Text orientation"
@@ -681,7 +663,7 @@ msgstr "Orientiĝo de teksto"
 #: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:297
 #: src/control/Control.Menubar.js:389
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Neniu (Ne kontroli literumadon)"
 
 #: src/control/Control.Menubar.js:220 src/control/Control.Menubar.js:300
 #: src/control/Control.Menubar.js:392
@@ -704,11 +686,11 @@ msgstr "ODF-prezentaĵo (.odp)"
 
 #: src/control/Control.Menubar.js:235
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr "Microsoft Powerpoint 2003 (.ppt)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:236
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr "Microsoft Powerpoint (.pptx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:314
 msgid "ODF spreadsheet (.ods)"
@@ -716,11 +698,11 @@ msgstr "ODF-kalkultabelo (.ods)"
 
 #: src/control/Control.Menubar.js:315
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr "Microsoft Excel 2003 (.xls)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:316
 msgid "Microsoft Excel (.xlsx)"
-msgstr "Microsoft Excel (.xlsx)"
+msgstr ""
 
 #: src/control/Control.Menubar.js:460
 msgid "Reset to Default Language"
@@ -772,7 +754,7 @@ msgstr "Ho ve. Spertis problemon konektante al LibreOffice Online: "
 
 #: src/core/Socket.js:42
 msgid "Cannot create websocket, please restart your browser."
-msgstr ""
+msgstr "Ne povas krei konekt-interfacon, bonvolu restartigi la TTT-legilon."
 
 #: src/core/Socket.js:228
 msgid "Unsupported server version."
@@ -811,24 +793,28 @@ msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
+"Reŝtauras pli malnovan revizion. Eventualaj nekonservitaj ŝanĝoj disponeblos "
+"en versia historio"
 
 #: src/core/Socket.js:453
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
+"Dokumento estas ŝanĝita en konservejo. Kion faru pri viaj nekonservitaj "
+"ŝanĝoj?"
 
 #: src/core/Socket.js:458
 msgid "Discard"
-msgstr ""
+msgstr "Forĵeti"
 
 #: src/core/Socket.js:463
 msgid "Overwrite"
-msgstr ""
+msgstr "Anstataŭigi"
 
 #: src/core/Socket.js:468
 msgid "Save to new file"
-msgstr ""
+msgstr "Konservi al nova dosiero"
 
 #: src/core/Socket.js:535
 msgid "Document requires password to view."
@@ -868,15 +854,15 @@ msgstr "Malakcepti ŝanĝon"
 msgid "Open menu"
 msgstr "Malfermi la menuon"
 
-#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:204
+#: src/layer/marker/Annotation.js:227 src/layer/tile/TileLayer.js:206
 msgid "Reply"
 msgstr "Respondi"
 
-#: src/layer/tile/TileLayer.js:198
+#: src/layer/tile/TileLayer.js:200
 msgid "Modify"
 msgstr "Ŝanĝi"
 
-#: src/layer/tile/TileLayer.js:210
+#: src/layer/tile/TileLayer.js:212
 msgid "Remove"
 msgstr "Forigi"
 
@@ -895,6 +881,3 @@ msgstr "Ŝargas..."
 #: src/map/handler/Map.FileInserter.js:60
 msgid "Uploading..."
 msgstr "Alŝutas..."
-
-#~ msgid "%user has left"
-#~ msgstr "%user foriris"
