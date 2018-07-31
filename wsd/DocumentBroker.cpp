@@ -41,7 +41,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define TILES_ON_FLY_MIN_UPPER_LIMIT 10u
+#define TILES_ON_FLY_MIN_UPPER_LIMIT 10.0f
 
 using namespace LOOLProtocol;
 
@@ -1368,13 +1368,13 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     std::unique_lock<std::mutex> lock(_mutex);
 
     // How many tiles we have on the visible area, set the upper limit accordingly
-    const unsigned tilesFitOnWidth = static_cast<unsigned>(std::ceil(static_cast<float>(session->getVisibleArea().getWidth()) /
-                                                                     static_cast<float>(session->getTileWidthInTwips())));
-    const unsigned tilesFitOnHeight = static_cast<unsigned>(std::ceil(static_cast<float>(session->getVisibleArea().getHeight()) /
-                                                                      static_cast<float>(session->getTileHeightInTwips())));
-    const unsigned tilesInVisArea = tilesFitOnWidth * tilesFitOnHeight;
+    const float tilesFitOnWidth = static_cast<float>(session->getVisibleArea().getWidth()) /
+                                  static_cast<float>(session->getTileWidthInTwips());
+    const float tilesFitOnHeight = static_cast<float>(session->getVisibleArea().getHeight()) /
+                                   static_cast<float>(session->getTileHeightInTwips());
+    const float tilesInVisArea = tilesFitOnWidth * tilesFitOnHeight;
 
-    const unsigned tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea);
+    const float tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea * 1.5f);
 
     // Update client's tilesBeingRendered list
     session->removeOutdatedTileSubscriptions();
