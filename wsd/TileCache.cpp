@@ -136,11 +136,6 @@ void TileCache::forgetTileBeingRendered(std::shared_ptr<TileCache::TileBeingRend
     _tilesBeingRendered.erase(tileBeingRendered->getCacheName());
 }
 
-bool TileCache::hasTileBeingRendered(const TileDesc& tile)
-{
-    return findTileBeingRendered(tile) != nullptr;
-}
-
 std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
 {
     const std::string fileName = _cacheDir + "/" + cacheFileName(tile);
