@@ -213,6 +213,10 @@ L.Map.include({
 					for (i = 0, max = translatableContent.length; i < max; i++) {
 						translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
 					}
+					translatableContent = $vexContent.find('p');
+					for (i = 0, max = translatableContent.length; i < max; i++) {
+						translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
+					}
 
 					$('.vex-content').attr('tabindex', -1);
 					$('.vex-content').focus();
