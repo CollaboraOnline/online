@@ -431,8 +431,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
 
 void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPRequest& request,
                                          const std::shared_ptr<StreamSocket>& socket,
-                                         std::string shortMessage, std::string longMessage,
-                                         std::string extraHeader)
+                                         const std::string& shortMessage, const std::string& longMessage,
+                                         const std::string& extraHeader)
 {
     Poco::URI requestUri(request.getURI());
     std::string path(requestUri.getPath());
