@@ -1040,6 +1040,11 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
     return forwardToClient(payload);
 }
 
+void ClientSession::cancelTilesInQueue()
+{
+    _senderQueue.cancelTiles();
+}
+
 bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
 {
     if (isCloseFrame())

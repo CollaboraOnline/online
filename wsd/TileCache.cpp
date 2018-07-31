@@ -529,7 +529,7 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
 
     assertCorrectThread();
 
-    const ClientSession* sub = subscriber.get();
+    ClientSession* sub = subscriber.get();
 
     std::ostringstream oss;
 
@@ -564,7 +564,8 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
         ++it;
     }
 
-    subscriber->clearSubscription();
+    if(sub)
+        sub->clearSubscription();
     const std::string canceltiles = oss.str();
     return canceltiles.empty() ? canceltiles : "canceltiles " + canceltiles;
 }
