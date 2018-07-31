@@ -22,4 +22,10 @@ void DocumentBroker::assertCorrectThread() const {}
 
 void ClientSession::traceTileBySend(const TileDesc& /*tile*/) {}
 
+void ClientSession::traceSubscribeToTile(const std::string& /*tileCacheName*/) {};
+
+void ClientSession::traceUnSubscribeToTile(const std::string& /*tileCacheName*/) {};
+
+void ClientSession::clearTileSubscription() {};
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -20,6 +20,7 @@
 #include <boost/optional.hpp>
 #include <list>
 #include <map>
+#include <unordered_set>
 
 class DocumentBroker;
 
@@ -125,11 +126,13 @@ public:
     /// Call this method anytime when a new tile is sent to the client
     void traceTileBySend(const TileDesc& tile);
 
-    void traceSubscribe() { ++_tilesBeingRendered; }
-    void traceUnSubscribe() { --_tilesBeingRendered; }
-    void clearSubscription() { _tilesBeingRendered = 0; }
+    /// Trask tiles what we a subscription to
+    void traceSubscribeToTile(const std::string& tileCacheName);
+    void traceUnSubscribeToTile(const std::string& tileCacheName);
+    void removeOutdatedTileSubscriptions();
+    void clearTileSubscription();
 
-    int getTilesBeingRendered() const {return _tilesBeingRendered;}
+    size_t getTilesBeingRenderedCount() const {return _tilesBeingRendered.size();}
 private:
 
     /// SocketHandler: disconnection event.
@@ -221,9 +224,9 @@ private:
     /// TileID's of the sent tiles. Push by sending and pop by tileprocessed message from the client.
     std::list<std::string> _tilesOnFly;
 
-    /// Number of tiles requested from kit, which this session is subsrcibed to
+    /// Names of tiles requested from kit, which this session is subsrcibed to
     /// Track only non-thumbnail tiles (getId() == -1)
-    int _tilesBeingRendered;
+    std::unordered_set<std::string> _tilesBeingRendered;
 
     /// Requested tiles are stored in this list, before we can send them to the client
     boost::optional<std::list<TileDesc>> _requestedTiles;
