@@ -1113,10 +1113,6 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false)
                         .argument("seconds"));
-
-    optionSet.addOption(Option("nocaps", "", "Use a non-privileged forkit, with increase in security problems.")
-                        .required(false)
-                        .repeatable(false));
 #endif
 
 #ifdef FUZZER
@@ -1162,10 +1158,6 @@ void LOOLWSD::handleOption(const std::string& optionName,
         UnitTestLibrary = value;
     else if (optionName == "careerspan")
         careerSpanMs = std::stoi(value) * 1000; // Convert second to ms
-#ifndef KIT_IN_PROCESS
-    else if (optionName == "nocaps")
-        NoCapsForKit = true;
-#endif
 
     static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
     if (clientPort)

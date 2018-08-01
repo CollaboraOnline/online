@@ -287,7 +287,7 @@ run-gdb: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	gdb --tui --args \
-		./loolwsd --nocaps \
+		./loolwsd --o:security.capabilities="false" \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:tile_cache_path="@TILECACHE_PATH@" \
@@ -302,7 +302,7 @@ run-callgrind: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	valgrind --tool=callgrind --simulate-cache=yes --dump-instr=yes --num-callers=50 --error-limit=no --trace-children=yes \
-		./loolwsd --nocaps \
+		./loolwsd --o:security.capabilities="false" \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:tile_cache_path="@TILECACHE_PATH@" \
@@ -317,7 +317,7 @@ run-strace: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	strace -o strace.log -f -tt -s 256 \
-		./loolwsd --nocaps \
+		./loolwsd --o:security.capabilities="false" \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" --o:lo_template_path="@LO_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:tile_cache_path="@TILECACHE_PATH@" \
