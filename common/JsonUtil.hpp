@@ -106,7 +106,7 @@ bool findJSONValue(Poco::JSON::Object::Ptr &object, const std::string& key, T& v
 
     // Check each property name against given key
     // and warn for mis-spells with tolerance of 2.
-    for (const std::string& userInput: propertyNames)
+    for (const std::string& userInput : propertyNames)
     {
         if (key != userInput)
         {
@@ -134,7 +134,7 @@ bool findJSONValue(Poco::JSON::Object::Ptr &object, const std::string& key, T& v
         return true;
     }
 
-    LOG_WRN("Missing JSON property [" << key << "]");
+    LOG_INF("Missing JSON property [" << key << "] will default to [" << value << "].");
     return false;
 }
 

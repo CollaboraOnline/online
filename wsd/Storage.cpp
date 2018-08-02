@@ -397,10 +397,13 @@ Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time, const std::st
     Poco::Timestamp timestamp = Poco::Timestamp::fromEpochTime(0);
     try
     {
-        int timeZoneDifferential;
-        Poco::DateTime dateTime;
-        Poco::DateTimeParser::parse(Poco::DateTimeFormat::ISO8601_FRAC_FORMAT, iso8601Time, dateTime, timeZoneDifferential);
-        timestamp = dateTime.timestamp();
+        if (!iso8601Time.empty())
+        {
+            int timeZoneDifferential;
+            Poco::DateTime dateTime;
+            Poco::DateTimeParser::parse(Poco::DateTimeFormat::ISO8601_FRAC_FORMAT, iso8601Time, dateTime, timeZoneDifferential);
+            timestamp = dateTime.timestamp();
+        }
     }
     catch (const Poco::SyntaxException& exc)
     {
