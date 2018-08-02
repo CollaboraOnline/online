@@ -12,6 +12,7 @@ L.Map = L.Evented.extend({
 		zoom: 10,
 		minZoom: 1,
 		maxZoom: 20,
+		maxBounds: L.latLngBounds([0, 0], [-100, 100]),
 		fadeAnimation: false, // Not useful for typing.
 		trackResize: true,
 		markerZoomAnimation: true,
@@ -330,25 +331,14 @@ L.Map = L.Evented.extend({
 		return this.fire('moveend');
 	},
 
-	setMaxBounds: function (bounds, options) {
+	setMaxBounds: function (bounds) {
 		bounds = L.latLngBounds(bounds);
 
 		this.options.maxBounds = bounds;
-		options = options || {};
-
-		if (!bounds) {
-			return this.off('moveend', this._panInsideMaxBounds);
-		}
 
 		if (this._loaded) {
-			this._panInsideMaxBounds();
+			this.panInsideBounds(this.options.maxBounds);
 		}
-
-		if (options.panInside === false) {
-			return this.off('moveend', this._panInsideMaxBounds);
-		}
-
-		return this.on('moveend', this._panInsideMaxBounds);
 	},
 
 	setDocBounds: function (bounds) {
@@ -807,10 +797,6 @@ L.Map = L.Evented.extend({
 
 	_getZoomSpan: function () {
 		return this.getMaxZoom() - this.getMinZoom();
-	},
-
-	_panInsideMaxBounds: function () {
-		this.panInsideBounds(this.options.maxBounds);
 	},
 
 	_checkIfLoaded: function () {
