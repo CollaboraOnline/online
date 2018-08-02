@@ -470,6 +470,11 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     Poco::JSON::Object::Ptr object;
     if (JsonUtil::parseJSON(wopiResponse, object))
     {
+        if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
+            LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): anonymizing...");
+        else
+            LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): " << wopiResponse);
+
         JsonUtil::findJSONValue(object, "BaseFileName", filename);
         JsonUtil::findJSONValue(object, "OwnerId", ownerId);
         JsonUtil::findJSONValue(object, "UserId", userId);
@@ -517,10 +522,9 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
                 object->remove("UserId");
                 object->remove("UserFriendlyName");
             }
-        }
 
-        // Log either an original or anonymized version, depending on anonymization flags.
-        LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): " << wopiResponse);
+            LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): " << wopiResponse);
+        }
 
         JsonUtil::findJSONValue(object, "Size", size);
         JsonUtil::findJSONValue(object, "UserExtraInfo", userExtraInfo);
@@ -548,10 +552,12 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     else
     {
         if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
-            LOG_ERR("WOPI::CheckFileInfo failed or no valid JSON payload returned. Access denied.");
-        else
-            LOG_ERR("WOPI::CheckFileInfo failed or no valid JSON payload returned. Access denied. "
-                    "Original response: [" << wopiResponse << "].");
+            wopiResponse = "obfuscated";
+
+        LOG_ERR("WOPI::CheckFileInfo (" << callDuration.count() * 1000. <<
+                " ms) failed or no valid JSON payload returned. Access denied. "
+                "Original response: [" << wopiResponse << "].");
+
         throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriAnonym);
     }
 
