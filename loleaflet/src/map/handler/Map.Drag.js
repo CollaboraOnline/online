@@ -9,9 +9,6 @@ L.Map.mergeOptions({
 	inertiaDeceleration: 3400, // px/s^2
 	inertiaMaxSpeed: Infinity, // px/s
 	easeLinearity: 0.2,
-
-	// TODO refactor, move to CRS
-	worldCopyJump: false
 });
 
 L.Map.Drag = L.Handler.extend({
@@ -25,16 +22,10 @@ L.Map.Drag = L.Handler.extend({
 			this._draggable.on({
 				down: this._onDown,
 				dragstart: this._onDragStart,
+				predrag: this._onPreDrag,
 				drag: this._onDrag,
 				dragend: this._onDragEnd
 			}, this);
-
-			if (map.options.worldCopyJump) {
-				this._draggable.on('predrag', this._onPreDrag, this);
-				map.on('viewreset', this._onViewReset, this);
-
-				map.whenReady(this._onViewReset, this);
-			}
 		}
 		this._draggable.enable();
 	},
@@ -92,17 +83,10 @@ L.Map.Drag = L.Handler.extend({
 	},
 
 	_onPreDrag: function () {
-		// TODO refactor to be able to adjust map pane position after zoom
-		var worldWidth = this._worldWidth,
-		    halfWidth = Math.round(worldWidth / 2),
-		    dx = this._initialWorldOffset,
-		    x = this._draggable._newPos.x,
-		    newX1 = (x - halfWidth + dx) % worldWidth + halfWidth - dx,
-		    newX2 = (x + halfWidth + dx) % worldWidth - halfWidth - dx,
-		    newX = Math.abs(newX1 + dx) < Math.abs(newX2 + dx) ? newX1 : newX2;
-
-		this._draggable._absPos = this._draggable._newPos.clone();
-		this._draggable._newPos.x = newX;
+		var org = this._map.getPixelOrigin();
+		var size = this._map.getLayerMaxBounds().getSize().subtract(this._map.getSize());
+		this._draggable._newPos.x = Math.max(Math.min(org.x, this._draggable._newPos.x), org.x - size.x);
+		this._draggable._newPos.y = Math.max(Math.min(org.y, this._draggable._newPos.y), org.y - size.y);
 	},
 
 	_onDragEnd: function (e) {
@@ -115,9 +99,7 @@ L.Map.Drag = L.Handler.extend({
 
 		if (noInertia) {
 			map.fire('moveend');
-
 		} else {
-
 			var direction = this._lastPos.subtract(this._positions[0]),
 			    duration = (this._lastTime - this._times[0]) / 1000,
 			    ease = options.easeLinearity,
@@ -133,18 +115,6 @@ L.Map.Drag = L.Handler.extend({
 
 			if (!offset.x || !offset.y) {
 				map.fire('moveend');
-
-			} else {
-				offset = map._limitOffset(offset, map.options.maxBounds);
-
-				L.Util.requestAnimFrame(function () {
-					map.panBy(offset, {
-						duration: decelerationDuration,
-						easeLinearity: ease,
-						noMoveStart: true,
-						animate: true
-					});
-				});
 			}
 		}
 	}
