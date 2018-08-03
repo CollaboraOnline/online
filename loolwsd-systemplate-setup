@@ -21,10 +21,9 @@ cd / || exit 1
 # into the template tree of system files for the chroot jails.
 
 # First essential files and shared objects
-find etc/passwd etc/group etc/hosts \
-     etc/resolv.conf \
-     etc/ld.so.* \
+find etc/ld.so.* \
      lib/ld-* lib64/ld-* \
+     lib64/libnss_* \
      var/cache/fontconfig \
      etc/fonts \
      etc/localtime \
@@ -38,6 +37,7 @@ find etc/passwd etc/group etc/hosts \
 
 find etc/fonts \
      lib/ld-* lib64/ld-* \
+     lib64/libnss_* \
 	-type l 2>/dev/null
 
 # Go through the LO shared objects and check what system libraries

@@ -190,6 +190,27 @@ namespace
         }
     }
 
+    void linkOrCopyFile(const char *fpath, Path newPath)
+    {
+        if (linkOrCopyVerboseLogging)
+            LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath.toString() << "\"");
+        if (link(fpath, newPath.toString().c_str()) == -1)
+        {
+            LOG_INF("link(\"" << fpath << "\", \"" <<
+                    newPath.toString() << "\") failed. Will copy.");
+            try
+            {
+                File(fpath).copyTo(newPath.toString());
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_ERR("Copying of '" << fpath << "' to " << newPath.toString() <<
+                        " failed: " << exc.what() << ". Exiting.");
+                std::_Exit(Application::EXIT_SOFTWARE);
+            }
+        }
+    }
+
     int linkOrCopyFunction(const char *fpath,
                            const struct stat* /*sb*/,
                            int typeflag,
@@ -221,25 +242,7 @@ namespace
             File(newPath.parent()).createDirectories();
 
             if (shouldLinkFile(relativeOldPath))
-            {
-                if (linkOrCopyVerboseLogging)
-                    LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath.toString() << "\"");
-                if (link(fpath, newPath.toString().c_str()) == -1)
-                {
-                    LOG_INF("link(\"" << fpath << "\", \"" <<
-                            newPath.toString() << "\") failed. Will copy.");
-                    try
-                    {
-                        File(fpath).copyTo(newPath.toString());
-                    }
-                    catch (const std::exception& exc)
-                    {
-                        LOG_ERR("Copying of '" << fpath << "' to " << newPath.toString() <<
-                                " failed: " << exc.what() << ". Exiting.");
-                        std::_Exit(Application::EXIT_SOFTWARE);
-                    }
-                }
-            }
+                linkOrCopyFile(fpath, newPath);
             break;
         case FTW_D:
             {
@@ -2208,16 +2211,15 @@ void lokit_main(const std::string& childRoot,
                        bLoopMounted ? LinkOrCopyType::NoUsr : LinkOrCopyType::All);
             linkOrCopy(loTemplate, jailLOInstallation, LinkOrCopyType::LO);
 
-            // We need this because sometimes the hostname is not resolved
-            const std::initializer_list<const char*> networkFiles = {"/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
-            for (const auto& filename : networkFiles)
+            // Copy some needed files - makes the networking work in the
+            // chroot
+            const std::initializer_list<const char*> files = {"/etc/passwd", "/etc/group", "/etc/host.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/resolv.conf"};
+            for (const auto& filename : files)
             {
                 const Poco::Path etcPath = Path(jailPath, filename);
                 const std::string etcPathString = etcPath.toString();
                 if (File(filename).exists() && !File(etcPathString).exists() )
-                {
-                    linkOrCopy( filename, etcPath, LinkOrCopyType::All );
-                }
+                    linkOrCopyFile(filename, etcPath);
             }
 
             LOG_DBG("Initialized jail files.");
