@@ -1449,6 +1449,8 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
     session->clearTilesOnFly();
     session->getRequestedTiles() = boost::none;
 
+    session->clearTileSubscription();
+
     const std::string canceltiles = tileCache().cancelTiles(session);
     if (!canceltiles.empty())
     {
