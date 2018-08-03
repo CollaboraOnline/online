@@ -254,7 +254,7 @@ clean-local:
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 	if test "z@TILECACHE_PATH@" != "z"; then rm -rf "@TILECACHE_PATH@"; fi
 
-run: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run: all @TILECACHE_PATH@ @JAILS_PATH@
 	@echo "Launching loolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
@@ -268,7 +268,7 @@ run: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=true --o:logging.level=trace
 
-run-valgrind: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run-valgrind: all @TILECACHE_PATH@ @JAILS_PATH@
 	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
@@ -282,7 +282,7 @@ run-valgrind: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=false --o:logging.level=trace
 
-run-gdb: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run-gdb: all @TILECACHE_PATH@ @JAILS_PATH@
 	@echo "Launching loolwsd under valgrind's callgrind"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
@@ -297,7 +297,7 @@ run-gdb: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=false --o:logging.level=error
 
-run-callgrind: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run-callgrind: all @TILECACHE_PATH@ @JAILS_PATH@
 	@echo "Launching loolwsd under valgrind's callgrind"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
@@ -312,7 +312,7 @@ run-callgrind: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=false --o:logging.level=error
 
-run-strace: all @TILECACHE_PATH@ @JAILS_PATH@ @SYSTEMPLATE_PATH@/system_stamp
+run-strace: all @TILECACHE_PATH@ @JAILS_PATH@
 	@echo "Launching loolwsd under strace"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
