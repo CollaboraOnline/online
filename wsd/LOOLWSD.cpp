@@ -1354,6 +1354,16 @@ bool LOOLWSD::createForKit()
     std::unique_lock<std::mutex> newChildrenLock(NewChildrenMutex);
 
     std::vector<std::string> args;
+#ifdef STRACE_LOOLFORKIT
+    // if you want to use this, you need to setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/strace
+    args.push_back("-o");
+    args.push_back("strace.log");
+    args.push_back("-f");
+    args.push_back("-tt");
+    args.push_back("-s");
+    args.push_back("256");
+    args.push_back(Path(Application::instance().commandPath()).parent().toString() + "loolforkit");
+#endif
     args.push_back("--losubpath=" + std::string(LO_JAIL_SUBPATH));
     args.push_back("--systemplate=" + SysTemplate);
     args.push_back("--lotemplate=" + LoTemplate);
@@ -1381,8 +1391,11 @@ bool LOOLWSD::createForKit()
     if (NoSeccomp)
         args.push_back("--noseccomp");
 
+#ifdef STRACE_LOOLFORKIT
+    std::string forKitPath = "strace";
+#else
     std::string forKitPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
-
+#endif
 
     // Always reap first, in case we haven't done so yet.
     if (ForKitProcId != -1)
