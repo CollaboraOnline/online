@@ -217,7 +217,7 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId == 'Action_InsertGraphic') {
 			if (msg.Values) {
-				this._map.insertFile(msg.Values);
+				this._map.insertURL(msg.Values.url);
 			}
 		}
 		else if (msg.MessageId === 'Action_ShowBusy') {

@@ -755,19 +755,26 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
         return false;
     }
 
-    if (type == "graphic")
+    if (type == "graphic" || type == "graphicurl")
     {
-        std::string fileName = "file://" + std::string(JAILED_DOCUMENT_ROOT) + "insertfile/" + name;
+        std::string url;
+        if (type == "graphic")
+            url = "file://" + std::string(JAILED_DOCUMENT_ROOT) + "insertfile/" + name;
+        else if (type == "graphicurl")
+            URI::decode(name, url);
+
         std::string command = ".uno:InsertGraphic";
         std::string arguments = "{"
             "\"FileName\":{"
                 "\"type\":\"string\","
-                "\"value\":\"" + fileName + "\""
+                "\"value\":\"" + url + "\""
             "}}";
 
         std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
 
         getLOKitDocument()->setView(_viewId);
+
+        LOG_TRC("Inserting graphic: '" << arguments.c_str() << "', '");
 
         getLOKitDocument()->postUnoCommand(command.c_str(), arguments.c_str(), false);
     }
