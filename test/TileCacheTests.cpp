@@ -60,7 +60,8 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSimpleCombine);
     CPPUNIT_TEST(testPerformance);
     CPPUNIT_TEST(testCancelTiles);
-    CPPUNIT_TEST(testCancelTilesMultiView);
+    // unstable
+    // CPPUNIT_TEST(testCancelTilesMultiView);
     CPPUNIT_TEST(testDisconnectMultiView);
     CPPUNIT_TEST(testUnresponsiveClient);
     CPPUNIT_TEST(testImpressTiles);
