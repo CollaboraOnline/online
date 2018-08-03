@@ -17,8 +17,7 @@
 #include "DocumentBroker.hpp"
 #include <Poco/URI.h>
 #include <Rectangle.hpp>
-#include <boost/optional.hpp>
-#include <list>
+#include <deque>
 #include <map>
 #include <unordered_set>
 
@@ -122,7 +121,7 @@ public:
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
 
     /// Get requested tiles waiting for sending to the client
-    boost::optional<std::list<TileDesc>>& getRequestedTiles() { return _requestedTiles; }
+    std::deque<TileDesc>& getRequestedTiles() { return _requestedTiles; }
 
     /// Mark a new tile as sent
     void addTileOnFly(const TileDesc& tile);
@@ -240,7 +239,7 @@ private:
     std::unordered_set<std::string> _tilesBeingRendered;
 
     /// Requested tiles are stored in this list, before we can send them to the client
-    boost::optional<std::list<TileDesc>> _requestedTiles;
+    std::deque<TileDesc> _requestedTiles;
 
     /// Store wireID's of the sent tiles inside the actual visible area
     std::map<std::string, TileWireId> _oldWireIds;

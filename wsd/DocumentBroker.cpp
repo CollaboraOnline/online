@@ -1320,17 +1320,17 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     }
 
     // Accumulate tiles
-    boost::optional<std::list<TileDesc>>& requestedTiles = session->getRequestedTiles();
-    if(requestedTiles == boost::none)
+    std::deque<TileDesc>& requestedTiles = session->getRequestedTiles();
+    if (requestedTiles.empty())
     {
-        requestedTiles = std::list<TileDesc>(tileCombined.getTiles().begin(), tileCombined.getTiles().end());
+        requestedTiles = std::deque<TileDesc>(tileCombined.getTiles().begin(), tileCombined.getTiles().end());
     }
     // Drop duplicated tiles, but use newer version number
     else
     {
         for (const auto& newTile : tileCombined.getTiles())
         {
-            const TileDesc& firstOldTile = *(requestedTiles.get().begin());
+            const TileDesc& firstOldTile = *(requestedTiles.begin());
             if(newTile.getPart() != firstOldTile.getPart() ||
                newTile.getWidth() != firstOldTile.getWidth() ||
                newTile.getHeight() != firstOldTile.getHeight() ||
@@ -1341,7 +1341,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
             }
 
             bool tileFound = false;
-            for (auto& oldTile : requestedTiles.get())
+            for (auto& oldTile : requestedTiles)
             {
                 if(oldTile.getTilePosX() == newTile.getTilePosX() &&
                    oldTile.getTilePosY() == newTile.getTilePosY() )
@@ -1354,7 +1354,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
                 }
             }
             if(!tileFound)
-                requestedTiles.get().push_back(newTile);
+                requestedTiles.push_back(newTile);
         }
     }
 
@@ -1381,14 +1381,13 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
 
     // All tiles were processed on client side what we sent last time, so we can send a new banch of tiles
     // which was invalidated / requested in the meantime
-    boost::optional<std::list<TileDesc>>& requestedTiles = session->getRequestedTiles();
-    if(requestedTiles != boost::none && !requestedTiles.get().empty())
+    std::deque<TileDesc>& requestedTiles = session->getRequestedTiles();
+    if (!requestedTiles.empty())
     {
         std::vector<TileDesc> tilesNeedsRendering;
-        while(session->getTilesOnFlyCount() + session->getTilesBeingRenderedCount() < tilesOnFlyUpperLimit
-              && !requestedTiles.get().empty())
+        while(session->getTilesOnFlyCount() + session->getTilesBeingRenderedCount() < tilesOnFlyUpperLimit)
         {
-            TileDesc& tile = *(requestedTiles.get().begin());
+            TileDesc& tile = *(requestedTiles.begin());
 
             // Satisfy as many tiles from the cache.
             std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
@@ -1425,7 +1424,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                 _debugRenderedTileCount++;
                 tileCache().subscribeToTileRendering(tile, session);
             }
-            requestedTiles.get().pop_front();
+            requestedTiles.pop_front();
         }
 
         // Send rendering request for those tiles which were not prerendered
@@ -1447,7 +1446,8 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
 
     // Clear tile requests
     session->clearTilesOnFly();
-    session->getRequestedTiles() = boost::none;
+
+    session->getRequestedTiles().clear();
 
     session->clearTileSubscription();
 
