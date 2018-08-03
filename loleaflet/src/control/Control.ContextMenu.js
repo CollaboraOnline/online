@@ -156,8 +156,8 @@ L.Control.ContextMenu = L.Control.extend({
 
 				isLastItemText = true;
 			} else if (item.type === 'menu') {
-				itemName = item.text.replace('~', '');
-				if (itemName === 'Paste Special') {
+				itemName = item.text;
+				if (itemName.replace('~', '') === 'Paste Special') {
 					itemName = _('Internal Paste Special');
 				}
 				var submenu = this._createContextMenuStructure(item);
@@ -167,7 +167,7 @@ L.Control.ContextMenu = L.Control.extend({
 				}
 
 				contextMenu[item.command] = {
-					name: _(itemName),
+					name: _(itemName).replace(/\(~[A-Za-z]\)/, '').replace('~', ''),
 					items: submenu
 				};
 				isLastItemText = true;
