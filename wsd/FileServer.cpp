@@ -435,7 +435,7 @@ void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPReq
                                          const std::string& extraHeader)
 {
     Poco::URI requestUri(request.getURI());
-    std::string path(requestUri.getPath());
+    const std::string& path = requestUri.getPath();
     std::ostringstream oss;
     oss << "HTTP/1.1 " << errorCode << "\r\n"
         << "Content-Type: text/html charset=UTF-8\r\n"
