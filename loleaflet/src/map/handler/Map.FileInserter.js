@@ -12,6 +12,7 @@ L.Map.FileInserter = L.Handler.extend({
 		this._map = map;
 		this._childId = null;
 		this._toInsert = {};
+		this._toInsertURL = {};
 		var parser = document.createElement('a');
 		parser.href = map.options.server;
 		var wopiSrc = '';
@@ -24,11 +25,13 @@ L.Map.FileInserter = L.Handler.extend({
 
 	addHooks: function () {
 		this._map.on('insertfile', this._onInsertFile, this);
+		this._map.on('inserturl', this._onInsertURL, this);
 		this._map.on('childid', this._onChildIdMsg, this);
 	},
 
 	removeHooks: function () {
 		this._map.off('insertfile', this._onInsertFile, this);
+		this._map.off('inserturl', this._onInsertURL, this);
 		this._map.off('childid', this._onChildIdMsg, this);
 	},
 
@@ -42,12 +45,27 @@ L.Map.FileInserter = L.Handler.extend({
 		}
 	},
 
+	_onInsertURL: function (e) {
+		if (!this._childId) {
+			this._map._socket.sendMessage('getchildid');
+			this._toInsertURL[Date.now()] = e.url;
+		}
+		else {
+			this._sendURL(Date.now(), e.url);
+		}
+	},
+
 	_onChildIdMsg: function (e) {
 		this._childId = e.id;
 		for (var name in this._toInsert) {
 			this._sendFile(name, this._toInsert[name]);
 		}
 		this._toInsert = {};
+
+		for (name in this._toInsertURL) {
+			this._sendURL(name, this._toInsertURL[name]);
+		}
+		this._toInsertURL = {};
 	},
 
 	_sendFile: function (name, file) {
@@ -73,6 +91,10 @@ L.Map.FileInserter = L.Handler.extend({
 			formData.append('file', file);
 		}
 		xmlHttp.send(formData);
+	},
+
+	_sendURL: function (name, url) {
+		this._map._socket.sendMessage('insertfile name=' + encodeURIComponent(url) + ' type=graphicurl');
 	}
 });
 
