@@ -239,7 +239,7 @@ L.Control.Layers = L.Control.extend({
 
 		this._handlingClick = false;
 
-		this._refocusOnMap();
+		this._map.focus();
 	},
 
 	_expand: function () {

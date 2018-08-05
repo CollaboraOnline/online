@@ -27,7 +27,7 @@ L.Control.Selection = L.Control.extend({
 		else {
 			this._map.disableSelection();
 		}
-		this._refocusOnMap();
+		this._map.focus();
 	},
 
 	_onUpdatePermission: function (e) {
