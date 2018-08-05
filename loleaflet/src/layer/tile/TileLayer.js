@@ -1445,6 +1445,22 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateCursor();
 	},
 
+	_updateCursorPos: function () {
+		var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
+			this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
+		var cursorPos = this._visibleCursor.getNorthWest();
+
+		if (!this._cursorMarker) {
+			this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), {blink: true});
+		}
+		else {
+			this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
+		}
+
+		this._map.addLayer(this._cursorMarker);
+		return this._visibleCursor.getNorthWest();
+	},
+
 	// Update cursor layer (blinking cursor).
 	_onUpdateCursor: function (scroll) {
 		var cursorPos = this._visibleCursor.getNorthWest();
@@ -1477,23 +1493,11 @@ L.TileLayer = L.GridLayer.extend({
 	// the state of the document (if the falgs are set)
 	_updateCursorAndOverlay: function (update) {
 		if (this._map._permission === 'edit'
+		&& this._map._clipboardContainer._textArea === document.activeElement
 		&& this._isCursorVisible
 		&& this._isCursorOverlayVisible
 		&& !this._isEmptyRectangle(this._visibleCursor)) {
-
-			var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
-									 this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
-
-			var cursorPos = this._visibleCursor.getNorthWest();
-
-			if (!this._cursorMarker) {
-				this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), {blink: true});
-			}
-			else {
-				this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
-			}
-			this._map.addLayer(this._cursorMarker);
-			this._map._clipboardContainer.setLatLng(this._visibleCursor.getNorthWest());
+			this._updateCursorPos();
 		}
 		else if (this._cursorMarker) {
 			this._map.removeLayer(this._cursorMarker);
