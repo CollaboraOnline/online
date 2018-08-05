@@ -70,7 +70,7 @@ L.Control.PartsPreview = L.Control.extend({
 			.on(img, 'click', L.DomEvent.stopPropagation)
 			.on(img, 'click', L.DomEvent.stop)
 			.on(img, 'click', this._setPart, this)
-			.on(img, 'click', this._refocusOnMap, this);
+			.on(img, 'click', this._map.focus, this._map);
 		this._map.getPreview(i, i, 180, 180, {autoUpdate: this.options.autoUpdate});
 
 		return img;
