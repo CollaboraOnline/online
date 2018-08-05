@@ -32,10 +32,10 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	focus: function(focus) {
-		if (focus) {
-			this._textArea.focus();
-		} else {
+		if (focus === false) {
 			this._textArea.blur();
+		} else {
+			this._textArea.focus();
 		}
 	},
 

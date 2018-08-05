@@ -270,7 +270,7 @@ L.TileLayer = L.GridLayer.extend({
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
-		this._map._clipboardContainer.focus(true);
+		this._map.focus();
 
 		map.setPermission(this.options.permission);
 
@@ -1677,7 +1677,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		if (e.type === 'dragend') {
 			e.target.isDragged = false;
-			this._map._clipboardContainer.focus(true);
+			this._map.focus();
 			this._map.fire('scrollvelocity', {vx: 0, vy: 0});
 		}
 

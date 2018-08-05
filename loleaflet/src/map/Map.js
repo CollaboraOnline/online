@@ -660,7 +660,7 @@ L.Map = L.Evented.extend({
 		console.debug('focus:');
 		if (this._docLayer) {
 			console.debug('focus: focussing');
-			this._clipboardContainer.focus(true);
+			this._clipboardContainer.focus();
 		}
 	},
 
@@ -1063,8 +1063,7 @@ L.Map = L.Evented.extend({
 		// Calling from some other place with no real 'click' event doesn't work
 		if (type === 'click') {
 			if (this._permission === 'edit') {
-				this._clipboardContainer.focus(false);
-				this._clipboardContainer.focus(true);
+				this.focus();
 			}
 
 			// unselect if anything is selected already
