@@ -18,7 +18,9 @@ L.ClipboardContainer = L.Layer.extend({
 		L.DomEvent.on(this._textArea, 'copy cut paste ' +
 		              'keydown keypress keyup ' +
 		              'compositionstart compositionupdate compositionend textInput',
-		              this._map._handleDOMEvent, this._map);
+		              this._map._handleDOMEvent, this._map)
+			  .on(this._textArea, 'focus', this.onGotFocus, this)
+			  .on(this._textArea, 'blur', this.onLostFocus, this);
 	},
 
 	onRemove: function () {
@@ -29,10 +31,24 @@ L.ClipboardContainer = L.Layer.extend({
 		L.DomEvent.off(this._textArea, 'copy cut paste ' +
 		               'keydown keypress keyup ' +
 		               'compositionstart compositionupdate compositionend textInput',
-		               this._map._handleDOMEvent, this._map);
+		               this._map._handleDOMEvent, this._map)
+			  .off(this._textArea, 'focus', this.onGotFocus, this)
+			  .off(this._textArea, 'blur', this.onLostFocus, this);
+	},
+
+	onGotFocus: function () {
+		this.setLatLng(this._map._docLayer._updateCursorPos());
+	},
+
+	onLostFocus: function () {
+		this._map.removeLayer(this._map._docLayer._cursorMarker);
 	},
 
 	focus: function(focus) {
+		if (this._map._permission !== 'edit') {
+			return;
+		}
+
 		if (focus === false) {
 			this._textArea.blur();
 		} else {
