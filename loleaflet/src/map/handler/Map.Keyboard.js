@@ -229,7 +229,7 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this._map._permission === 'edit') {
 			return;
 		}
-		this._map._container.focus();
+		this._map.focus();
 	},
 
 	// Convert javascript key codes to UNO key codes.
@@ -523,7 +523,7 @@ L.Map.Keyboard = L.Handler.extend({
 		case 93: // Right Cmd (Safari)
 			// we prepare for a copy or cut event
 			this._map._clipboardContainer.setValue(window.getSelection().toString());
-			this._map._clipboardContainer.focus(true);
+			this._map.focus();
 			this._map._clipboardContainer.select();
 			return true;
 		case 80: // p
