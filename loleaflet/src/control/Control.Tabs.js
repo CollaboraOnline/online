@@ -126,7 +126,7 @@ L.Control.Tabs = L.Control.extend({
 						.on(tab, 'click', L.DomEvent.stopPropagation)
 						.on(tab, 'click', L.DomEvent.stop)
 						.on(tab, 'click', this._setPart, this)
-						.on(tab, 'click', this._refocusOnMap, this);
+						.on(tab, 'click', this._map.focus, this._map);
 					this._spreadsheetTabs[id] = tab;
 				}
 			}

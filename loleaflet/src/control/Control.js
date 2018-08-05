@@ -77,10 +77,6 @@ L.Control = L.Class.extend({
 		}
 		var corner = this._map._controlCorners[this.options.position];
 		return corner.hasChildNodes();
-	},
-
-	_refocusOnMap: function () {
-		this._map.focus();
 	}
 });
 
