@@ -194,11 +194,11 @@ msgstr "ホストURLが空です。loolwsdサーバーの設定が誤ってい�
 
 #: dist/errormessages.js:3
 msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr ""
+msgstr "このバージョンの{productname}はサポートされていないバージョンです。企業でのデプロイメントに適しているという印象を誤って与えることを避けるため、{docs}以上のドキュメントや{connections}以上のコネクションが同時に使用されている場合にこのメッセージが表示されます。"
 
 #: dist/errormessages.js:4
 msgid "More information and support"
-msgstr ""
+msgstr "詳しいサポート情報"
 
 #: dist/errormessages.js:5
 msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
@@ -214,7 +214,7 @@ msgstr "認証されていないWOPIホストです。後ほど再度試して�
 
 #: dist/errormessages.js:8
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "WOPISrcパラメータが間違っているか若しくは不足しています。サポートに連絡してください。"
 
 #: dist/errormessages.js:9
 msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
@@ -357,7 +357,7 @@ msgstr "シートの数"
 
 #: dist/toolbar/toolbar.js:1075
 msgid "Selected range of cells"
-msgstr ""
+msgstr "セルの選択範囲"
 
 #: dist/toolbar/toolbar.js:1078 dist/toolbar/toolbar.js:1116
 msgid "Entering text mode"
@@ -502,11 +502,11 @@ msgstr " 秒"
 
 #: src/control/Control.AlertDialog.js:28
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr ""
+msgstr "サーバーが％1コマンドの解析中に％0エラーが発生しました。"
 
 #: src/control/Control.AlertDialog.js:41
 msgid "Download PDF export?"
-msgstr ""
+msgstr "エクスポートされたPDFをダウンロードしますか？"
 
 #: src/control/Control.ContextMenu.js:129
 msgid "Internal Cut"
@@ -550,7 +550,7 @@ msgstr "タイムスタンプ"
 
 #: src/control/Control.DocumentRepair.js:56
 msgid "Jump to state"
-msgstr ""
+msgstr "選択された状態に戻る"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:229
 #: src/control/Control.Menubar.js:307
@@ -735,7 +735,7 @@ msgstr "ストレージでドキュメントが変更されました。新しい
 
 #: src/core/Socket.js:327
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
-msgstr ""
+msgstr "以前のリビジョンを復元しています。 保存されていない変更はバージョン履歴で利用可能になります。"
 
 #: src/core/Socket.js:445
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
