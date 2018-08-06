@@ -110,16 +110,6 @@ function onClick(e, id, item, subItem) {
 		toolbar = w2ui['presentation-toolbar'];
 		item = toolbar.get(id);
 	}
-	else if (item && subItem)
-	{
-		var command = {
-			'StatusBarFunc': {
-				type: 'unsigned short',
-				value: subItem.func
-			}
-		};
-		map.sendUnoCommand('.uno:StatusBarFunc', command);
-	}
 	else {
 		throw new Error('unknown id: ' + id);
 	}
@@ -244,6 +234,15 @@ function onClick(e, id, item, subItem) {
 
 		w2ui['formulabar'].hide('acceptformula', 'cancelformula');
 		w2ui['formulabar'].show('sum', 'function');
+	}
+	else if (id.startsWith('StateTableCellMenu') && subItem) {
+		var command = {
+			'StatusBarFunc': {
+				type: 'unsigned short',
+				value: subItem.func
+			}
+		};
+		map.sendUnoCommand('.uno:StatusBarFunc', command);
 	}
 }
 
