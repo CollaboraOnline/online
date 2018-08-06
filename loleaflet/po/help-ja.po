@@ -663,7 +663,7 @@ msgstr "Alt + Insert"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:110-58
 msgid "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key inserts cell"
-msgstr ""
+msgstr "挿入モードで3秒、矢印キーで行/列を挿入、Ctrl +矢印キーでセルを挿入"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:111-18
 msgid "Alt + Del"
@@ -671,7 +671,7 @@ msgstr "Alt + Del"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:111-55
 msgid "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key merges cell with neighboring cell"
-msgstr ""
+msgstr "削除モードで3秒、矢印キーで行/列を削除、Ctrl +矢印キーで隣接するセルとマージ"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:112-18
 msgid "Shift + Ctrl + Del"
@@ -770,7 +770,7 @@ msgstr "Ctrl + Shift + Enter"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:130-18
 msgid "Insert new paragraph directly before or after a section, or before a table"
-msgstr ""
+msgstr "セクションの前後に新しい段落を直接挿入するか、テーブルの前に挿入する"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:130-119
 #: dist/loleaflet-help.html+div.div.table.tr.td:131-155
@@ -851,7 +851,7 @@ msgstr "Ctrl + Shift + 6"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:176-18
 msgid "Demote list item (list item has to be selected)"
-msgstr ""
+msgstr "リスト項目のレベルを下げる（リスト項目を選択する必要があります）"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:176-92
 #: dist/loleaflet-help.html+div.div.table.tr.td:210-99
@@ -860,7 +860,7 @@ msgstr "Tab"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:177-18
 msgid "Promote list item (list item has to be selected)"
-msgstr ""
+msgstr "リスト項目のレベルを上げる（リスト項目を選択する必要があります）"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:177-93
 #: dist/loleaflet-help.html+div.div.table.tr.td:211-107
@@ -868,27 +868,24 @@ msgid "Shift + Tab"
 msgstr "Shift + Tab"
 
 #: dist/loleaflet-help.html+div.div.h2:179-9
-#, fuzzy
 msgid "Text selection and navigation in a textbox"
-msgstr "ドキュメント内のテキスト選択と移動"
+msgstr "テキストボックス内のテキストの選択とナビゲーション"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:201-18
-#, fuzzy
 msgid "Go and select text to start of textbox"
-msgstr "ドキュメントの始めまで選択"
+msgstr "テキストボックスの先頭までテキストを選択する"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:205-18
-#, fuzzy
 msgid "Go and select text to end of textbox"
-msgstr "ドキュメント末まで選択"
+msgstr "テキストボックスの最後までテキストを選択する"
 
 #: dist/loleaflet-help.html+div.div.h2:207-9
 msgid "Slide / draw page keyboard shortcuts"
-msgstr ""
+msgstr "スライド/ページのキーボードショートカットを描画する"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:209-18
 msgid "Escape current mode, i.e. from edit mode switch to object selection mode, from object selection mode switch to view mode."
-msgstr ""
+msgstr "現在のモードからエスケープする。すなわち、編集モードからオブジェクト選択モード、若しくはオブジェクト選択モードからビューモードへの切り替え。"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:209-166
 msgid "Esc"
@@ -904,8 +901,8 @@ msgstr "オブジェクトを、作成した逆順に選択します。"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:212-18
 msgid "Move to next text object on slide / drawing page"
-msgstr ""
+msgstr "スライド/ページのキーボードショートカットを描画する"
 
 #: dist/loleaflet-help.html+div.div.table.tr.td:213-18
 msgid "Select all in slide / drawing page"
-msgstr ""
+msgstr "スライド/図面ページ内のすべてのオブジェクトを選択"
