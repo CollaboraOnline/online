@@ -1200,7 +1200,13 @@ void ClientSession::traceTileBySend(const TileDesc& tile)
     }
     else
     {
-        _oldWireIds.insert(std::pair<std::string, TileWireId>(tileID, tile.getWireId()));
+        // Track only tile inside the visible area
+        if(_clientVisibleArea.hasSurface() &&
+           tile.getTilePosX() >= _clientVisibleArea._x1 && tile.getTilePosX() <= _clientVisibleArea._x2 &&
+           tile.getTilePosY() >= _clientVisibleArea._y1 && tile.getTilePosY() <= _clientVisibleArea._y2)
+        {
+            _oldWireIds.insert(std::pair<std::string, TileWireId>(tileID, tile.getWireId()));
+        }
     }
 
     // Record that the tile is sent
