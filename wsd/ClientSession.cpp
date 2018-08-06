@@ -747,10 +747,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             if(getTokenInteger(tokens[1], "part", setPart))
             {
                 _clientSelectedPart = setPart;
+                resetWireIdMap();
             }
             else if (stringToInteger(tokens[1], setPart))
             {
                 _clientSelectedPart = setPart;
+                resetWireIdMap();
             }
             else
                 return false;
