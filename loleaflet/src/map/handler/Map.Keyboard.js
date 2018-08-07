@@ -393,7 +393,7 @@ L.Map.Keyboard = L.Handler.extend({
 			// get the composited char codes
 			// clear the input now - best to do this ASAP so the input
 			// is clear for the next word
-			this._map._clipboardContainer._textArea.value = '';
+			this._map._clipboardContainer.setValue('');
 			// Set all keycodes to zero
 			this._map._docLayer._postCompositionEvent(0, 'end', '');
 		}
