@@ -194,13 +194,29 @@ function onClick(e, id, item, subItem) {
 		w2ui['formulabar'].show('sum', 'function');
 	}
 	else if (id.startsWith('StateTableCellMenu') && subItem) {
-		var command = {
-			'StatusBarFunc': {
-				type: 'unsigned short',
-				value: subItem.func
+		e.done(function () {
+			var menu = w2ui['toolbar-down'].get('StateTableCellMenu');
+			if (subItem.id === '1') { // 'None' was clicked, remove all other options
+				menu.selected = ['1'];
 			}
-		};
-		map.sendUnoCommand('.uno:StatusBarFunc', command);
+			else { // Something else was clicked, remove the 'None' option from the array
+				var index = menu.selected.indexOf('1');
+				if (index > -1) {
+					menu.selected.splice(index, 1);
+				}
+			}
+			var value = 0;
+			for (var it = 0; it < menu.selected.length; it++) {
+				value = +value + parseInt(menu.selected[it]);
+			}
+			var command = {
+				'StatusBarFunc': {
+					type: 'unsigned short',
+					value: value
+				}
+			};
+			map.sendUnoCommand('.uno:StatusBarFunc', command);
+		});
 	}
 }
 
@@ -683,23 +699,6 @@ function unoCmdToToolbarId(commandname)
 	return id;
 }
 
-function selectItem(item, func)
-{
-	var index = -1;
-	for (var it = 0; it < item.items.length; it++) {
-		if (item.items[it].func === func) {
-			index = it;
-			break;
-		}
-	}
-
-	if (index !== -1) {
-		item.items[item.current].icon = '';
-		item.items[index].icon = 'selected';
-		item.current = index;
-	}
-}
-
 function onSearch(e) {
 	var toolbar = w2ui['toolbar-down'];
 	// conditionally disabling until, we find a solution for tdf#108577
@@ -990,15 +989,15 @@ map.on('doclayerinit', function () {
 			{type: 'break', id:'break8'},
 			{type: 'html',  id: 'StateTableCell',
 				html: '<div id="StateTableCell" class="loleaflet-font" title="'+_('Choice of functions')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-		        {type: 'menu', id: 'StateTableCellMenu', caption: '', current: 5, items: [
-				{ func: '2', text: _('Average'), icon: ''},
-				{ func: '8', text: _('CountA'), icon: ''},
-				{ func: '4', text: _('Count'), icon: ''},
-				{ func: '16', text: _('Maximum'), icon: ''},
-				{ func: '32', text: _('Minimum'), icon: ''},
-				{ func: '512', text: _('Sum'), icon: 'selected'},
-				{ func: '8192', text: _('Selection count'), icon: ''},
-				{ func: '1', text: _('None'), icon: ''}
+			{type: 'menu-check', id: 'StateTableCellMenu', caption: '', selected: ['2', '512'], items: [
+				{ id: '2', text: _('Average')},
+				{ id: '8', text: _('CountA')},
+				{ id: '4', text: _('Count')},
+				{ id: '16', text: _('Maximum')},
+				{ id: '32', text: _('Minimum')},
+				{ id: '512', text: _('Sum')},
+				{ id: '8192', text: _('Selection count')},
+				{ id: '1', text: _('None')}
 		]}
 		]);
 
@@ -1228,8 +1227,16 @@ map.on('commandstatechanged', function (e) {
 		updateToolbarItem(statusbar, 'StateTableCell', $('#StateTableCell').html(state ? localizeStateTableCell(state) : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 	else if (commandName === '.uno:StatusBarFunc') {
-		if (state) {
-			selectItem(statusbar.get('StateTableCellMenu'), state);
+		var item = statusbar.get('StateTableCellMenu');
+		item.selected = [];
+		// Check 'None' even when state is 0
+		if (state === '0') {
+			state = 1;
+		}
+		for (var it = 0; it < item.items.length; it++) {
+			if (item.items[it].id & state) {
+				item.selected.push(item.items[it].id);
+			}
 		}
 	}
 	else if (commandName === '.uno:StatePageNumber') {
