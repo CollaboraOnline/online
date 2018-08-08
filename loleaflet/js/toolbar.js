@@ -584,7 +584,7 @@ function createToolbar() {
 		name: 'toolbar-up',
 		tooltip: 'bottom',
 		items: [
-			{type: 'menu', id: 'menu-wrap', caption: _('Textwrap'), items: [
+			{type: 'menu', id: 'menu-wrap', caption: _('Textwrap'), mobile: false, items: [
 				{ text: _('No wrap'), id: 'wrap-WrapOff' },
 				{ text: _('Page wrap'), id: 'wrap-WrapOn' },
 				{ text: _('Wrap anchor only'), id: 'wrap-WrapAnchorOnly' },
