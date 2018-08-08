@@ -8,7 +8,6 @@
 (function(global) {
 
 var map;
-var mobileWidth = 768;
 
 function onDelete(e) {
 	if (e !== false) {
@@ -42,42 +41,13 @@ function _mobilify() {
 	$('#document-name-input').hide();
 }
 
-function _unmobilify() {
-	var toolbarUp = w2ui['toolbar-up'];
-	var statusbar = w2ui['toolbar-down'];
-
-	toolbarUp.items.forEach(function(item) {
-		if (item.mobile === false && item.hidden) {
-			toolbarUp.show(item.id);
-		}
-	});
-
-	statusbar.items.forEach(function(item) {
-		if (item.mobile === false && item.hidden) {
-			statusbar.show(item.id);
-		}
-	});
-
-	nUsers = _('%n users');
-	oneUser = _('1 user');
-	noUser = _('0 users');
-	updateUserListCount();
-
-	$('#document-name-input').show();
-}
-
 function resizeToolbar() {
-	var toolbarUp = w2ui['toolbar-up'];
-	var statusbar = w2ui['toolbar-down'];
-
-	if ($(window).width() < mobileWidth) {
-		_mobilify();
-	} else {
-		_unmobilify();
+	if ($(window).width() !== map.getSize().x) {
+		var toolbarUp = w2ui['toolbar-up'];
+		var statusbar = w2ui['toolbar-down'];
+		toolbarUp.resize();
+		statusbar.resize();
 	}
-
-	toolbarUp.resize();
-	statusbar.resize();
 }
 
 function _cancelSearch() {
@@ -1272,7 +1242,9 @@ function onDocLayerInit() {
 	}
 	toolbarUp.refresh();
 	statusbar.refresh();
-	resizeToolbar();
+	if (L.Browser.mobile) {
+		_mobilify();
+	}
 }
 
 function onCommandStateChanged(e) {
