@@ -832,7 +832,6 @@ L.Map = L.Evented.extend({
 
 					vex.dialogID = -1;
 					this._startInactiveTimer();
-					this.focus();
 					return vex.close(id);
 				}
 			} else {
@@ -841,7 +840,6 @@ L.Map = L.Evented.extend({
 		}
 
 		this._startInactiveTimer();
-		this.focus();
 		return false;
 	},
 
