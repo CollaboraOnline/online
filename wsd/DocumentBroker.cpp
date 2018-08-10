@@ -1374,7 +1374,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                                    static_cast<float>(session->getTileHeightInTwips());
     const float tilesInVisArea = tilesFitOnWidth * tilesFitOnHeight;
 
-    const float tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea * 1.5f);
+    const float tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea * 1.20f);
 
     // Update client's tilesBeingRendered list
     session->removeOutdatedTileSubscriptions();
