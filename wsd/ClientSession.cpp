@@ -1202,13 +1202,13 @@ void ClientSession::handleTileInvalidation(const std::string& message,
         intersection._y2 = std::min(invalidateRect._y2, _clientVisibleArea._y2);
         if(intersection.isValid()) // Client visible area and invalidated rectangle has intersection
         {
-            for(int i = std::ceil(intersection._x1 / _tileWidthTwips);
-                i <= std::ceil(intersection._x2 / _tileWidthTwips); ++i)
+            for(int i = std::ceil(intersection._y1 / _tileHeightTwips);
+                    i <= std::ceil(intersection._y2 / _tileHeightTwips); ++i)
             {
-                for(int j = std::ceil(intersection._y1 / _tileHeightTwips);
-                    j <= std::ceil(intersection._y2 / _tileHeightTwips); ++j)
+                for(int j = std::ceil(intersection._x1 / _tileWidthTwips);
+                    j <= std::ceil(intersection._x2 / _tileWidthTwips); ++j)
                 {
-                    invalidTiles.emplace_back(TileDesc(part, _tileWidthPixel, _tileHeightPixel, i * _tileWidthTwips, j * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false));
+                    invalidTiles.emplace_back(TileDesc(part, _tileWidthPixel, _tileHeightPixel, j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false));
 
                     TileWireId oldWireId = 0;
                     auto iter = _oldWireIds.find(generateTileID(invalidTiles.back()));
