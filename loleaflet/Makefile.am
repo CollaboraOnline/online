@@ -75,6 +75,7 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/loleaflet.css \
 	$(srcdir)/css/toolbar.css \
 	$(srcdir)/css/partsPreviewControl.css \
+	$(srcdir)/css/sidebar.css \
 	$(srcdir)/css/scrollBar.css \
 	$(srcdir)/css/searchControl.css \
 	$(srcdir)/css/spreadsheet.css \

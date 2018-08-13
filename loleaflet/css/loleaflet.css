@@ -68,6 +68,18 @@ body {
 	top: 36px;
 }
 
+#sidebar-dock-wrapper {
+    background: #dfdfdf;
+    float: right;
+    /* position: absolute; */
+    top: 70px;
+    /* left: 0px; */
+    bottom: 66px;
+    max-width: 400px;
+    border-top: 1px solid #b6b6b6;
+    display: block;
+}
+
 #toolbar-wrapper {
 	position: relative;
 	table-layout: fixed;
@@ -115,6 +127,15 @@ body {
 	/* Show slidesorter beyond 768px only */
 	#presentation-controls-wrapper {
 	display: none;
+	}
+
+	/* Show sidebar beyond 768px only */
+	#sidebar-dock-wrapper {
+		display: none;
+	}
+
+	#document-container.sidebar-document {
+		left: 0px !important;
 	}
 
 	#document-container.tablet {

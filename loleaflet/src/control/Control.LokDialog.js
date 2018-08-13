@@ -175,6 +175,11 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogMsg: function(e) {
+		if (e.winType != undefined && e.winType !== 'dialog' && e.winType !== 'child') {
+			// We only handle pop-up dialogs here (see Control.Sidebar.js)
+			return;
+		}
+
 		e.id = parseInt(e.id);
 		var strId = this._toStrId(e.id);
 
@@ -595,6 +600,7 @@ L.Control.LokDialog = L.Control.extend({
 			that.focus(parentId);
 		};
 		img.src = imgData;
+		console.log('%c', img);
 	},
 
 	// Binary dialog msg recvd from core
