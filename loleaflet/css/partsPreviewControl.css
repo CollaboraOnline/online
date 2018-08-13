@@ -6,6 +6,10 @@
 	height: 100%
 }
 
+#sidebar-panel {
+	height: 100%
+}
+
 .preview-frame {
 	max-width: 190px;
 	white-space: nowrap;
