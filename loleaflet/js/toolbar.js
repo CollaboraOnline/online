@@ -32,13 +32,6 @@ function _mobilify() {
 			statusbar.hide(item.id);
 		}
 	});
-
-	nUsers = '%n';
-	oneUser = '1';
-	noUser = '0';
-	updateUserListCount();
-
-	$('#document-name-input').hide();
 }
 
 function resizeToolbar() {
@@ -1240,11 +1233,23 @@ function onDocLayerInit() {
 
 		break;
 	}
-	toolbarUp.refresh();
-	statusbar.refresh();
+
 	if (L.Browser.mobile) {
 		_mobilify();
+		nUsers = '%n';
+		oneUser = '1';
+		noUser = '0';
+		$('#document-name-input').hide();
+	} else {
+		nUsers = _('%n users');
+		oneUser = _('1 user');
+		noUser = _('0 users');
+		$('#document-name-input').show();
 	}
+
+	updateUserListCount();
+	toolbarUp.refresh();
+	statusbar.refresh();
 }
 
 function onCommandStateChanged(e) {
