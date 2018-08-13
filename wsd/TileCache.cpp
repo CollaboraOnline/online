@@ -120,7 +120,7 @@ std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(c
     return tile != _tilesBeingRendered.end() ? tile->second : nullptr;
 }
 
-void TileCache::forgetTileBeingRendered(std::shared_ptr<TileCache::TileBeingRendered> tileBeingRendered, const TileDesc& tile)
+void TileCache::forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered, const TileDesc& tile)
 {
     assertCorrectThread();
     assert(tileBeingRendered);

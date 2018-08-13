@@ -38,7 +38,7 @@ namespace Log
                     const std::string& logLevel,
                     const bool withColor,
                     const bool logToFile,
-                    std::map<std::string, std::string> config);
+                    const std::map<std::string, std::string>& config);
     Poco::Logger& logger();
 
     char* prefix(char* buffer, const char* level, bool sigSafe);

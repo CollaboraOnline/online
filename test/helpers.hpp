@@ -318,7 +318,7 @@ std::string getResponseString(T& ws, const std::string& prefix, const std::strin
 }
 
 template <typename T>
-std::string assertResponseString(T& ws, const std::string& prefix, const std::string testname)
+std::string assertResponseString(T& ws, const std::string& prefix, const std::string& testname)
 {
     const auto res = getResponseString(ws, prefix, testname);
     CPPUNIT_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));

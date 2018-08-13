@@ -190,7 +190,7 @@ namespace
         }
     }
 
-    void linkOrCopyFile(const char *fpath, Path newPath)
+    void linkOrCopyFile(const char *fpath, const Path& newPath)
     {
         if (linkOrCopyVerboseLogging)
             LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath.toString() << "\"");

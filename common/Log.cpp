@@ -131,7 +131,7 @@ namespace Log
                     const std::string& logLevel,
                     const bool withColor,
                     const bool logToFile,
-                    std::map<std::string, std::string> config)
+                    const std::map<std::string, std::string>& config)
     {
         Source.name = name;
         std::ostringstream oss;
