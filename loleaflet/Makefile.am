@@ -99,6 +99,9 @@ PLUGINS_JS =\
 	toolbar.js \
 	main.js
 
+PLUGINS_JS_SRC = $(shell find $(srcdir)/js -name '*.js')
+PLUGINS_JS_DST = $(patsubst $(srcdir)/js/%.js,$(builddir)/dist/%.js,$(PLUGINS_JS_SRC))
+
 LOLEAFLET_JS_SRC = $(shell find $(srcdir)/src -name '*.js')
 LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(builddir)/dist/src/%.js,$(LOLEAFLET_JS_SRC))
 
@@ -135,7 +138,7 @@ $(LOLEAFLET_PREFIX)/dist/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(call LOLEAFLET_JS,$(srcdir)/admin/build/build.js)) > $@
 
 if ENABLE_DEBUG
-$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST) $(LOLEAFLET_DRAW_JS_DST)
+$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST) $(LOLEAFLET_DRAW_JS_DST) $(PLUGINS_JS_DST)
 	@echo "Checking for loleaflet JS errors..."
 	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src $(srcdir)/plugins/draw-$(DRAW_VERSION)/src  $(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@touch $@
