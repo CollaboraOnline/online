@@ -541,6 +541,10 @@ L.GridLayer = L.Layer.extend({
 			}
 		}
 
+		this._sendClientVisibleArea();
+
+		this._sendClientZoom();
+
 		if (queue.length !== 0) {
 			if (newView) {
 				// we know that a new set of tiles that cover the whole view has been requested
@@ -558,10 +562,6 @@ L.GridLayer = L.Layer.extend({
 			this._addTiles(queue, fragment);
 			this._level.el.appendChild(fragment);
 		}
-
-		this._sendClientVisibleArea();
-
-		this._sendClientZoom();
 	},
 
 	_updateOnChangePart: function () {
