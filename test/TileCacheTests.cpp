@@ -58,7 +58,6 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testSimple);
     CPPUNIT_TEST(testSimpleCombine);
-    CPPUNIT_TEST(testPerformance);
     CPPUNIT_TEST(testCancelTiles);
     // unstable
     // CPPUNIT_TEST(testCancelTilesMultiView);
@@ -84,7 +83,6 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     void testSimple();
     void testSimpleCombine();
-    void testPerformance();
     void testCancelTiles();
     void testCancelTilesMultiView();
     void testDisconnectMultiView();
@@ -233,31 +231,6 @@ void TileCacheTests::testSimpleCombine()
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2a.empty());
     std::vector<char> tile2b = getResponseMessage(socket2, "tile:", testname);
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2b.empty());
-}
-
-void TileCacheTests::testPerformance()
-{
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, "performance ");
-
-    Poco::Timestamp timestamp;
-    for (int x = 0; x < 5; ++x)
-    {
-        sendTextFrame(socket, "tilecombine part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
-        for (int i = 0; i < 8; ++i)
-        {
-            std::vector<char> tile = getResponseMessage(socket, "tile:", "tile-performance ");
-            CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile.empty());
-        }
-        /// Send canceltiles message to clear tiles-on-fly list, otherwise wsd waits for tileprocessed messages
-        sendTextFrame(socket, "canceltiles");
-    }
-
-    std::cerr << "Tile rendering roundtrip for 5 x 8 tiles combined: " << timestamp.elapsed() / 1000.
-              << " ms. Per-tilecombine: " << timestamp.elapsed() / (1000. * 5)
-              << " ms. Per-tile: " << timestamp.elapsed() / (1000. * 5 * 8) << "ms."
-              << std::endl;
-
-    socket->shutdown();
 }
 
 void TileCacheTests::testCancelTiles()
