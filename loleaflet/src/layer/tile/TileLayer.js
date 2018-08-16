@@ -2060,7 +2060,7 @@ L.TileLayer = L.GridLayer.extend({
 		var widthTwips = newSize.x * this._map.options.tileWidthTwips / this._tileSize;
 		var ratio = widthTwips / this._docWidthTwips;
 
-		maxZoom = maxZoom ? maxZoom : this.options.maxZoom;
+		maxZoom = maxZoom ? maxZoom : this._map.options.zoom;
 		// 'fit width zoom' has no use in spreadsheets, ignore it there
 		if (this._docType !== 'spreadsheet') {
 			var crsScale = this._map.options.crs.scale(1);
