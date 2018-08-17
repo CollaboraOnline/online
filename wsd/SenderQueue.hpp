@@ -84,6 +84,15 @@ public:
         }
     }
 
+    void cancelTiles()
+    {
+        std::remove_if(_queue.begin(), _queue.end(),
+            [](const queue_item_t& cur)
+            {
+                return cur->firstToken() == "tile:";
+            });
+    }
+
 private:
     /// Deduplicate messages based on the new one.
     /// Returns true if the new message should be
