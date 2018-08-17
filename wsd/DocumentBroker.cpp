@@ -509,6 +509,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         wopiInfo->set("DisableCopy", wopifileinfo->_disableCopy);
         wopiInfo->set("DisableInactiveMessages", wopifileinfo->_disableInactiveMessages);
         wopiInfo->set("UserCanNotWriteRelative", wopifileinfo->_userCanNotWriteRelative);
+        wopiInfo->set("EnableInsertRemoteImage", wopifileinfo->_enableInsertRemoteImage);
         if (wopifileinfo->_hideChangeTrackingControls != WopiStorage::WOPIFileInfo::TriState::Unset)
             wopiInfo->set("HideChangeTrackingControls", wopifileinfo->_hideChangeTrackingControls == WopiStorage::WOPIFileInfo::TriState::True);
 
