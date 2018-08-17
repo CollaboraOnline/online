@@ -286,6 +286,7 @@ public:
                      const bool disableCopy,
                      const bool disableInactiveMessages,
                      const bool userCanNotWriteRelative,
+                     const bool enableInsertRemoteImage,
                      const TriState disableChangeTrackingShow,
                      const TriState disableChangeTrackingRecord,
                      const TriState hideChangeTrackingControls,
@@ -305,6 +306,7 @@ public:
               _disableCopy(disableCopy),
               _disableInactiveMessages(disableInactiveMessages),
               _userCanNotWriteRelative(userCanNotWriteRelative),
+              _enableInsertRemoteImage(enableInsertRemoteImage),
               _disableChangeTrackingShow(disableChangeTrackingShow),
               _disableChangeTrackingRecord(disableChangeTrackingRecord),
               _hideChangeTrackingControls(hideChangeTrackingControls),
@@ -345,6 +347,8 @@ public:
         bool _disableInactiveMessages;
         /// If set to false, users can access the save-as functionality
         bool _userCanNotWriteRelative;
+        /// if set to true, users can access the insert remote image functionality
+        bool _enableInsertRemoteImage;
         /// If we should disable change-tracking visibility by default (meaningful at loading).
         TriState _disableChangeTrackingShow;
         /// If we should disable change-tracking ability by default (meaningful at loading).
