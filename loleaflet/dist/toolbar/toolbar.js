@@ -998,7 +998,7 @@ map.on('doclayerinit', function () {
 				{ id: '512', text: _('Sum')},
 				{ id: '8192', text: _('Selection count')},
 				{ id: '1', text: _('None')}
-		]}
+			]}
 		]);
 
 		// Remove irrelevant toolbars
