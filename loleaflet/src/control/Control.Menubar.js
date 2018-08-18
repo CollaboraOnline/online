@@ -541,8 +541,13 @@ L.Control.Menubar = L.Control.extend({
 		$('#main-menu').attr('tabindex', 0);
 
 		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
+		$('#main-menu').bind('mouseenter.smapi', {self: this}, this._onMouseEnter);
+		$('#main-menu').bind('mouseleave.smapi', {self: this}, this._onMouseLeave);
+
 		$('#main-menu').bind('beforeshow.smapi', {self: this}, this._beforeShow);
 		$('#main-menu').bind('click.smapi', {self: this}, this._onClicked);
+
+		$('#main-menu').bind('keydown', {self: this}, this._onKeyDown);
 
 		// SmartMenus mobile menu toggle button
 		$(function() {
@@ -769,6 +774,32 @@ L.Control.Menubar = L.Control.extend({
 
 		if (!L.Browser.mobile && $(item).data('id') !== 'insertcomment')
 			self._map.focus();
+	},
+
+	_onMouseEnter: function(e, item) {
+		var self = e.data.self;
+		var type = $(item).data('type');
+		if (type === 'unocommand') {
+			var unoCommand = $(item).data('uno');
+			self._map.setHelpTarget(unoCommand);
+		} else if (type === 'action') {
+			var id = $(item).data('id');
+			self._map.setHelpTarget('modules/online/menu/' + id);
+		}
+	},
+
+	_onMouseLeave: function(e) {
+		var self = e.data.self;
+		self._map.setHelpTarget(null);
+	},
+
+	_onKeyDown: function(e) {
+		var self = e.data.self;
+
+		// handle help - F1
+		if (e.type === 'keydown' && !e.shiftKey && !e.ctrlKey && !e.altKey && e.keyCode == 112) {
+			self._map.showHelp();
+		}
 	},
 
 	_createMenu: function(menu) {
