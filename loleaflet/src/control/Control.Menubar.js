@@ -820,6 +820,9 @@ L.Control.Menubar = L.Control.extend({
 			if (menu[i].id === 'saveas' && this._map['wopi'].UserCanNotWriteRelative)
 				continue;
 
+			if (menu[i].id === 'insertgraphicremote' && !this._map['wopi'].EnableInsertRemoteImage)
+				continue;
+
 			if (menu[i].id && menu[i].id.startsWith('fullscreen-presentation') && this._map['wopi'].HideExportOption)
 				continue;
 

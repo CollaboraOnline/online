@@ -167,8 +167,11 @@ function onClick(e, id, item, subItem) {
 		var wrapType = id.substring('menu-wrap:wrap-'.length);
 		map.toggleCommandState(wrapType);
 	}
-	else if (id === 'insertgraphic') {
+	else if (id === 'insertgraphic' || item.id === 'localgraphic') {
 		L.DomUtil.get('insertgraphic').click();
+	}
+	else if (item.id === 'remotegraphic') {
+		map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 	}
 	else if (id === 'fontcolor' && typeof e.color !== 'undefined') {
 		onColorPick(id, e.color);
@@ -674,6 +677,11 @@ function createToolbar() {
 			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true)},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true)},
+			{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true,
+				items: [
+					{id: 'localgraphic', text: _UNO('.uno:InsertGraphic', '', true), icon: 'insertgraphic'},
+					{id: 'remotegraphic', text: _('Remote Image...'), icon: 'insertgraphic'}
+				]},
 			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'}
 		],
 		onClick: function (e) {
@@ -1157,6 +1165,10 @@ function onWopiProps(e) {
 		$('#document-name-input').prop('disabled', true);
 		$('#document-name-input').removeClass('editable');
 		$('#document-name-input').off('keypress', onDocumentNameKeyPress);
+	}
+	if (e.EnableInsertRemoteImage === true) {
+		w2ui['toolbar-up'].hide('insertgraphic');
+		w2ui['toolbar-up'].show('menugraphic');
 	}
 }
 
