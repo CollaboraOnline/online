@@ -79,6 +79,7 @@ L.Map = L.Evented.extend({
 		this._debugAlwaysActive = false; // disables the dimming / document inactivity when true
 		this._serverRecycling = false;
 		this._documentIdle = false;
+		this._helpTarget = null; // help page that fits best the current context
 
 		vex.dialogID = -1;
 
@@ -676,6 +677,20 @@ L.Map = L.Evented.extend({
 
 	focus: function () {
 		this._clipboardContainer.focus();
+	},
+
+	setHelpTarget: function(page) {
+		this._helpTarget = page;
+	},
+
+	showHelp: function() {
+		var helpURL = 'https://help.libreoffice.org/help.html';
+		var helpVersion = '6.0';
+		if (this._helpTarget !== null) {
+			helpURL += '?Target=' + this._helpTarget + '&Language=' + String.locale + '&System=UNIX&Version=' + helpVersion;
+		}
+
+		this.fire('hyperlinkclicked', {url: helpURL});
 	},
 
 	_fireInitComplete: function (condition) {

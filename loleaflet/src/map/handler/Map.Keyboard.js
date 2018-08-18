@@ -310,6 +310,13 @@ L.Map.Keyboard = L.Handler.extend({
 			alt = 0;
 		}
 
+		// handle help - F1
+		if (e.type === 'keydown' && !shift && !ctrl && !alt && !cmd && keyCode === 112) {
+			this._map.showHelp();
+			e.originalEvent.preventDefault();
+			return;
+		}
+
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
 
 		if (this.modifier) {
