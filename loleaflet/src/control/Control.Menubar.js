@@ -18,6 +18,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'text'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: 'action'},
+				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _UNO('.uno:Print', 'text'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: _('Download as'), id: 'downloadas', type: 'menu', menu: [
@@ -677,6 +678,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.save(true, true);
 		} else if (id === 'saveas') {
 			this._map.fire('postMessage', {msgId: 'UI_SaveAs'});
+		} else if (id === 'shareas') {
+			this._map.fire('postMessage', {msgId: 'UI_Share'});
 		} else if (id === 'print') {
 			this._map.print();
 		} else if (id.startsWith('downloadas-')) {
@@ -818,6 +821,9 @@ L.Control.Menubar = L.Control.extend({
 				continue;
 
 			if (menu[i].id === 'saveas' && this._map['wopi'].UserCanNotWriteRelative)
+				continue;
+
+			if (menu[i].id === 'shareas' && !this._map['wopi'].EnableShare)
 				continue;
 
 			if (menu[i].id === 'insertgraphicremote' && !this._map['wopi'].EnableInsertRemoteImage)
