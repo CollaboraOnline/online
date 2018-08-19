@@ -287,6 +287,7 @@ public:
                      const bool disableInactiveMessages,
                      const bool userCanNotWriteRelative,
                      const bool enableInsertRemoteImage,
+                     const bool enableShare,
                      const TriState disableChangeTrackingShow,
                      const TriState disableChangeTrackingRecord,
                      const TriState hideChangeTrackingControls,
@@ -307,6 +308,7 @@ public:
               _disableInactiveMessages(disableInactiveMessages),
               _userCanNotWriteRelative(userCanNotWriteRelative),
               _enableInsertRemoteImage(enableInsertRemoteImage),
+              _enableShare(enableShare),
               _disableChangeTrackingShow(disableChangeTrackingShow),
               _disableChangeTrackingRecord(disableChangeTrackingRecord),
               _hideChangeTrackingControls(hideChangeTrackingControls),
@@ -349,6 +351,8 @@ public:
         bool _userCanNotWriteRelative;
         /// if set to true, users can access the insert remote image functionality
         bool _enableInsertRemoteImage;
+        /// if set to true, users can access the file share functionality
+        bool _enableShare;
         /// If we should disable change-tracking visibility by default (meaningful at loading).
         TriState _disableChangeTrackingShow;
         /// If we should disable change-tracking ability by default (meaningful at loading).
