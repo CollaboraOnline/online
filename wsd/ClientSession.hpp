@@ -99,8 +99,6 @@ public:
         }
     }
 
-    void cancelTilesInQueue();
-
     /// Set the save-as socket which is used to send convert-to results.
     void setSaveAsSocket(const std::shared_ptr<StreamSocket>& socket)
     {
