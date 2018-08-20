@@ -185,6 +185,7 @@
 
 .leaflet-interactive {
 	cursor: pointer;
+	border-radius:50%;
 	}
 .leaflet-container {
 	cursor: text;
