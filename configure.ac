@@ -214,7 +214,7 @@ else
     AC_MSG_ERROR(no)
 fi
 
-with_lokit_path=`readlink $with_lokit_path`
+with_lokit_path=`readlink -f $with_lokit_path`
 AS_IF([test -n "$with_lokit_path"],
       [CPPFLAGS="$CPPFLAGS -I${with_lokit_path}"])
 lokit_msg="$with_lokit_path"
