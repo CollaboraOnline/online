@@ -39,12 +39,12 @@ L.Socket = L.Class.extend({
 			}
 			this.socket = new WebSocket(websocketURI);
 		} catch (e) {
-			// On IE 11 there is a limiation on the number of WebSockets open to a single domain (6 by default and can go to 128).
+			// On IE 11 there is a limitation on the number of WebSockets open to a single domain (6 by default and can go to 128).
 			// Detect this and hint the user.
 			var msgHint = '';
 			var isIE11 = !!window.MSInputMethodContext && !!document.documentMode; // https://stackoverflow.com/questions/21825157/internet-explorer-11-detection
 			if (isIE11)
-				msgHint = 'IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections';
+				msgHint = _('IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections');
 
 			this._map.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ').replace('LibreOffice Online', (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online')) + e + msgHint, cmd: 'socket', kind: 'failed', id: 3});
 			return;
