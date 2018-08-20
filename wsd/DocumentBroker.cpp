@@ -1385,7 +1385,8 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     if (!requestedTiles.empty())
     {
         std::vector<TileDesc> tilesNeedsRendering;
-        while(session->getTilesOnFlyCount() + session->getTilesBeingRenderedCount() < tilesOnFlyUpperLimit)
+        while(session->getTilesOnFlyCount() + session->getTilesBeingRenderedCount() < tilesOnFlyUpperLimit &&
+              !requestedTiles.empty())
         {
             TileDesc& tile = *(requestedTiles.begin());
 
