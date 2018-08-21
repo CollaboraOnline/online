@@ -1154,18 +1154,16 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     std::vector<TileDesc> invalidTiles;
     if(part == _clientSelectedPart || _isTextDocument)
     {
-        Util::Rectangle intersection;
-        intersection._x1 = std::max(invalidateRect._x1, _clientVisibleArea._x1);
-        intersection._y1 = std::max(invalidateRect._y1, _clientVisibleArea._y1);
-        intersection._x2 = std::min(invalidateRect._x2, _clientVisibleArea._x2);
-        intersection._y2 = std::min(invalidateRect._y2, _clientVisibleArea._y2);
-        if(intersection.isValid()) // Client visible area and invalidated rectangle has intersection
+        // Iterate through visible tiles
+        for(int i = std::ceil(_clientVisibleArea._y1 / _tileHeightTwips);
+                    i <= std::ceil(_clientVisibleArea._y2 / _tileHeightTwips); ++i)
         {
-            for(int i = std::ceil(intersection._y1 / _tileHeightTwips);
-                    i <= std::ceil(intersection._y2 / _tileHeightTwips); ++i)
+            for(int j = std::ceil(_clientVisibleArea._x1 / _tileWidthTwips);
+                j <= std::ceil(_clientVisibleArea._x2 / _tileWidthTwips); ++j)
             {
-                for(int j = std::ceil(intersection._x1 / _tileWidthTwips);
-                    j <= std::ceil(intersection._x2 / _tileWidthTwips); ++j)
+                // Find tiles affected by invalidation
+                Util::Rectangle tileRect (j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips);
+                if(invalidateRect.intersects(tileRect))
                 {
                     invalidTiles.emplace_back(TileDesc(part, _tileWidthPixel, _tileHeightPixel, j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false));
 
