@@ -1998,7 +1998,7 @@ protected:
         }
 #endif
 
-        LOG_DBG(_socketName << ": recv [" << LOOLProtocol::getAbbreviatedMessage(message) << "].");
+        LOG_TRC(_socketName << ": recv [" << LOOLProtocol::getAbbreviatedMessage(message) << "].");
         std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
 
         // Note: Syntax or parsing errors here are unexpected and fatal.
