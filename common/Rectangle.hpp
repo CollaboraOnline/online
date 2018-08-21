@@ -78,6 +78,16 @@ struct Rectangle
     {
         return _x1 < _x2 && _y1 < _y2;
     }
+
+    bool intersects(const Rectangle& rOther)
+    {
+        Util::Rectangle intersection;
+        intersection._x1 = std::max(_x1, rOther._x1);
+        intersection._y1 = std::max(_y1, rOther._y1);
+        intersection._x2 = std::min(_x2, rOther._x2);
+        intersection._y2 = std::min(_y2, rOther._y2);
+        return intersection.isValid();
+    }
 };
 
 }
