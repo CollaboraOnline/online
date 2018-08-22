@@ -74,6 +74,10 @@ L.ClipboardContainer = L.Layer.extend({
 		this._textArea.setAttribute('spellcheck', 'false');
 	},
 
+	activeElement: function () {
+		return this._textArea;
+	},
+
 	_setPos: function (pos) {
 		L.DomUtil.setPosition(this._container, pos);
 	}
