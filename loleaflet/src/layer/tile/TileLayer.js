@@ -270,7 +270,6 @@ L.TileLayer = L.GridLayer.extend({
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
-		this._map.focus();
 
 		map.setPermission(this.options.permission);
 
