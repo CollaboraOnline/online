@@ -86,15 +86,13 @@ public:
         LOG_TRC(getName() << " enqueueing client message " << data->id());
         size_t sizeBefore = _senderQueue.size();
         size_t newSize = _senderQueue.enqueue(data);
-        if(sizeBefore != newSize)
+
+        // Track sent tile
+        const std::string command = data->firstToken();
+        if (command == "tile:")
         {
-            // Track sent tile
-            const std::string command = data->firstToken();
-            if (command == "tile:")
-            {
-                const TileDesc tile = TileDesc::parse(data->firstLine());
-                traceTileBySend(tile);
-            }
+            const TileDesc tile = TileDesc::parse(data->firstLine());
+            traceTileBySend(tile, sizeBefore == newSize);
         }
     }
 
@@ -134,7 +132,7 @@ public:
 
     /// This method updates internal data related to sent tiles (wireID and tiles-on-fly)
     /// Call this method anytime when a new tile is sent to the client
-    void traceTileBySend(const TileDesc& tile);
+    void traceTileBySend(const TileDesc& tile, bool deduplicated = false);
 
     /// Trask tiles what we a subscription to
     void traceSubscribeToTile(const std::string& tileCacheName);

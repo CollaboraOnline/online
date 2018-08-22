@@ -1195,7 +1195,7 @@ void ClientSession::resetWireIdMap()
     _oldWireIds.clear();
 }
 
-void ClientSession::traceTileBySend(const TileDesc& tile)
+void ClientSession::traceTileBySend(const TileDesc& tile, bool deduplicated)
 {
     const std::string tileID = generateTileID(tile);
 
@@ -1217,7 +1217,8 @@ void ClientSession::traceTileBySend(const TileDesc& tile)
     }
 
     // Record that the tile is sent
-    addTileOnFly(tile);
+    if (!deduplicated)
+        addTileOnFly(tile);
 }
 
 void ClientSession::traceSubscribeToTile(const std::string& cacheName)
