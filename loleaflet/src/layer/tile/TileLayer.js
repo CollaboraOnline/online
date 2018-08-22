@@ -1493,7 +1493,7 @@ L.TileLayer = L.GridLayer.extend({
 	// the state of the document (if the falgs are set)
 	_updateCursorAndOverlay: function (update) {
 		if (this._map._permission === 'edit'
-		&& this._map._clipboardContainer._textArea === document.activeElement
+		&& this._map._clipboardContainer.activeElement() === document.activeElement
 		&& this._isCursorVisible
 		&& this._isCursorOverlayVisible
 		&& !this._isEmptyRectangle(this._visibleCursor)) {

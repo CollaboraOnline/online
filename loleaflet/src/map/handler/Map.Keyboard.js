@@ -251,7 +251,7 @@ L.Map.Keyboard = L.Handler.extend({
 			compEventFn = L.bind(docLayer._postCompositionEvent, docLayer, 0 /* winid */);
 		}
 		if (!inputEle) {
-			inputEle = this._map._clipboardContainer._textArea;
+			inputEle = this._map._clipboardContainer.activeElement();
 		}
 		this.modifier = 0;
 		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;
