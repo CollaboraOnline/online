@@ -20,7 +20,7 @@
 void DocumentBroker::assertCorrectThread() const {}
 
 
-void ClientSession::traceTileBySend(const TileDesc& /*tile*/) {}
+void ClientSession::traceTileBySend(const TileDesc& /*tile*/, bool /*deduplicated = false*/) {}
 
 void ClientSession::traceSubscribeToTile(const std::string& /*tileCacheName*/) {};
 
