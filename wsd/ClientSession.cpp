@@ -1144,6 +1144,13 @@ void ClientSession::handleTileInvalidation(const std::string& message,
         return;
     }
 
+    // Visible area can have negativ value as position, but we have tiles only in the positiv range 
+    Util::Rectangle normalizedVisArea;
+    normalizedVisArea._x1 = std::max(_clientVisibleArea._x1, 0);
+    normalizedVisArea._y1 = std::max(_clientVisibleArea._y1, 0);
+    normalizedVisArea._x2 = _clientVisibleArea._x2;
+    normalizedVisArea._y2 = _clientVisibleArea._y2;
+
     std::pair<int, Util::Rectangle> result = TileCache::parseInvalidateMsg(message);
     int part = result.first;
     Util::Rectangle& invalidateRect = result.second;
@@ -1155,11 +1162,11 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     if(part == _clientSelectedPart || _isTextDocument)
     {
         // Iterate through visible tiles
-        for(int i = std::ceil(_clientVisibleArea._y1 / _tileHeightTwips);
-                    i <= std::ceil(_clientVisibleArea._y2 / _tileHeightTwips); ++i)
+        for(int i = std::ceil(normalizedVisArea._y1 / _tileHeightTwips);
+                    i <= std::ceil(normalizedVisArea._y2 / _tileHeightTwips); ++i)
         {
-            for(int j = std::ceil(_clientVisibleArea._x1 / _tileWidthTwips);
-                j <= std::ceil(_clientVisibleArea._x2 / _tileWidthTwips); ++j)
+            for(int j = std::ceil(normalizedVisArea._x1 / _tileWidthTwips);
+                j <= std::ceil(normalizedVisArea._x2 / _tileWidthTwips); ++j)
             {
                 // Find tiles affected by invalidation
                 Util::Rectangle tileRect (j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips);
