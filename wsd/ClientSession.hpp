@@ -143,6 +143,9 @@ public:
     void clearTileSubscription();
 
     size_t getTilesBeingRenderedCount() const {return _tilesBeingRendered.size();}
+
+    /// Clear wireId map anytime when client visible area changes (visible area, zoom, part number)
+    void resetWireIdMap();
 private:
 
     /// SocketHandler: disconnection event.
@@ -183,9 +186,6 @@ private:
     /// Handle invalidation message comming from a kit and transfer it to a tile request.
     void handleTileInvalidation(const std::string& message,
                                 const std::shared_ptr<DocumentBroker>& docBroker);
-
-    /// Clear wireId map anytime when client visible area changes (visible area, zoom, part number)
-    void resetWireIdMap();
 
     /// Generate a unique id for a tile
     std::string generateTileID(const TileDesc& tile);
