@@ -1378,6 +1378,8 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
 
     // Update client's tilesBeingRendered list
     session->removeOutdatedTileSubscriptions();
+    // Drop tiles which we are waiting for too long
+    session->removeOutdatedTilesOnFly();
 
     // All tiles were processed on client side what we sent last time, so we can send a new banch of tiles
     // which was invalidated / requested in the meantime

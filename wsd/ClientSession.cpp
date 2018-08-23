@@ -52,7 +52,6 @@ ClientSession::ClientSession(const std::string& id,
     _tileWidthTwips(0),
     _tileHeightTwips(0),
     _isTextDocument(false),
-    _tilesOnFly(0),
     _tilesBeingRendered(0)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
@@ -343,10 +342,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             sendTextFrame("error: cmd=tileprocessed kind=syntax");
             return false;
         }
-        auto iter = std::find(_tilesOnFly.begin(), _tilesOnFly.end(), tileID);
-        if(iter != _tilesOnFly.end())
-            _tilesOnFly.erase(iter);
-        else
+
+        size_t retValue = _tilesOnFly.erase(tileID);
+        if(retValue == 0)
             LOG_WRN("Tileprocessed message with an unknown tile ID");
 
         docBroker->sendRequestedTiles(shared_from_this());
@@ -1043,12 +1041,25 @@ Authorization ClientSession::getAuthorization() const
 
 void ClientSession::addTileOnFly(const TileDesc& tile)
 {
-    _tilesOnFly.push_back(generateTileID(tile));
+    _tilesOnFly.insert({generateTileID(tile), std::chrono::steady_clock::now()});
 }
 
 void ClientSession::clearTilesOnFly()
 {
     _tilesOnFly.clear();
+}
+
+void ClientSession::removeOutdatedTilesOnFly()
+{
+    for(auto tileIter = _tilesOnFly.begin(); tileIter != _tilesOnFly.begin(); ++tileIter)
+    {
+        double elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - tileIter->second).count();
+        if(elapsedTimeMs > 3000)
+        {
+            LOG_WRN("Tracker tileID was dropped because of time out. Tileprocessed message did not arrive");
+            _tilesOnFly.erase(tileIter);
+        }
+    }
 }
 
 void ClientSession::onDisconnect()
@@ -1245,7 +1256,10 @@ void ClientSession::removeOutdatedTileSubscriptions()
     {
         double elapsedTime = docBroker->tileCache().getTileBeingRenderedElapsedTimeMs(*iterator);
         if(elapsedTime < 0.0 && elapsedTime > 5000.0)
+        {
+            LOG_WRN("Tracked TileBeingRendered was dropped because of time out.");
             _tilesBeingRendered.erase(iterator);
+        }
         else
             ++iterator;
     }
