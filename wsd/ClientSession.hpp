@@ -19,7 +19,8 @@
 #include <Rectangle.hpp>
 #include <deque>
 #include <map>
-#include <unordered_map>
+#include <list>
+#include <utility>
 #include <unordered_set>
 
 class DocumentBroker;
@@ -232,7 +233,7 @@ private:
     bool _isTextDocument;
 
     /// TileID's of the sent tiles. Push by sending and pop by tileprocessed message from the client.
-    std::unordered_map<std::string, std::chrono::steady_clock::time_point> _tilesOnFly;
+    std::list<std::pair<std::string, std::chrono::steady_clock::time_point>> _tilesOnFly;
 
     /// Names of tiles requested from kit, which this session is subsrcibed to
     /// Track only non-thumbnail tiles (getId() == -1)

@@ -343,8 +343,15 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        size_t retValue = _tilesOnFly.erase(tileID);
-        if(retValue == 0)
+        auto iter = std::find_if(_tilesOnFly.begin(), _tilesOnFly.end(),
+        [&tileID](const std::pair<std::string, std::chrono::steady_clock::time_point>& curTile)
+        {
+            return curTile.first == tileID;
+        });
+
+        if(iter != _tilesOnFly.end())
+            _tilesOnFly.erase(iter);
+        else
             LOG_WRN("Tileprocessed message with an unknown tile ID");
 
         docBroker->sendRequestedTiles(shared_from_this());
@@ -1041,7 +1048,7 @@ Authorization ClientSession::getAuthorization() const
 
 void ClientSession::addTileOnFly(const TileDesc& tile)
 {
-    _tilesOnFly.insert({generateTileID(tile), std::chrono::steady_clock::now()});
+    _tilesOnFly.push_back({generateTileID(tile), std::chrono::steady_clock::now()});
 }
 
 void ClientSession::clearTilesOnFly()
@@ -1051,14 +1058,19 @@ void ClientSession::clearTilesOnFly()
 
 void ClientSession::removeOutdatedTilesOnFly()
 {
-    for(auto tileIter = _tilesOnFly.begin(); tileIter != _tilesOnFly.end(); ++tileIter)
+    // Check only the beginning of the list, tiles are ordered by timestamp
+    bool continueLoop = true;
+    while(!_tilesOnFly.empty() && continueLoop)
     {
+        auto tileIter = _tilesOnFly.begin();
         double elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - tileIter->second).count();
         if(elapsedTimeMs > 3000)
         {
             LOG_WRN("Tracker tileID was dropped because of time out. Tileprocessed message did not arrive");
             _tilesOnFly.erase(tileIter);
         }
+        else
+            continueLoop = false;
     }
 }
 
