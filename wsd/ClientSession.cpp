@@ -1051,7 +1051,7 @@ void ClientSession::clearTilesOnFly()
 
 void ClientSession::removeOutdatedTilesOnFly()
 {
-    for(auto tileIter = _tilesOnFly.begin(); tileIter != _tilesOnFly.begin(); ++tileIter)
+    for(auto tileIter = _tilesOnFly.begin(); tileIter != _tilesOnFly.end(); ++tileIter)
     {
         double elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - tileIter->second).count();
         if(elapsedTimeMs > 3000)
