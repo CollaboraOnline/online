@@ -819,16 +819,12 @@ void LOOLWSD::initialize(Application& self)
 #else
     AnonymizeUsernames = getConfigValue<bool>(conf, "logging.anonymize.usernames", false);
 #endif
-    if (AnonymizeUsernames)
-        setenv("LOOL_ANONYMIZE_USERNAMES", AnonymizeUsernames ? "1" : "0", true);
 
 #if LOOLWSD_ANONYMIZE_FILENAMES
     AnonymizeFilenames = true;
 #else
     AnonymizeFilenames = getConfigValue<bool>(conf, "logging.anonymize.filenames", false);
 #endif
-    if (AnonymizeFilenames)
-        setenv("LOOL_ANONYMIZE_FILENAMES", AnonymizeFilenames ? "1" : "0", true);
 
     if ((AnonymizeFilenames || AnonymizeUsernames) && LogLevel == "trace")
     {
@@ -836,6 +832,10 @@ void LOOLWSD::initialize(Application& self)
         {
             LOG_WRN("Enabling trace logging while anonymization is enabled due to logging.anonymize.allow_logging_pii setting. "
                     "This will leak personally identifiable information!");
+
+            // Disable anonymization as it's useless now.
+            AnonymizeFilenames = false;
+            AnonymizeUsernames = false;
         }
         else
         {
@@ -851,6 +851,12 @@ void LOOLWSD::initialize(Application& self)
             _exit(Application::EXIT_SOFTWARE);
         }
     }
+
+    if (AnonymizeFilenames)
+        setenv("LOOL_ANONYMIZE_FILENAMES", "1", true);
+
+    if (AnonymizeUsernames)
+        setenv("LOOL_ANONYMIZE_USERNAMES", "1", true);
 
     {
         std::string proto = getConfigValue<std::string>(conf, "net.proto", "");
