@@ -947,7 +947,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         else if (tokens[0] == "invalidatetiles:")
         {
             assert(firstLine.size() == static_cast<std::string::size_type>(length));
+
+            // First forward invalidation
+            bool ret = forwardToClient(payload);
+
             handleTileInvalidation(firstLine, docBroker);
+            return ret;
         }
         else if (tokens[0] == "invalidatecursor:")
         {
