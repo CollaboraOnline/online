@@ -290,6 +290,13 @@ var deps = {
 		desc: 'Column Header bar'
 	},
 
+	ControlMobileInput: {
+		src: ['control/Control.js',
+		      'control/Control.MobileInput.js'],
+		heading: 'Controls',
+		desc: 'Mobile Input'
+	},
+
 	ControlRowHeader: {
 		src: ['control/Control.js',
 		      'control/Control.RowHeader.js'],
