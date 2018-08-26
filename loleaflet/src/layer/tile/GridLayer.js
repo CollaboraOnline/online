@@ -532,7 +532,8 @@ L.GridLayer = L.Layer.extend({
 
 				key = this._tileCoordsToKey(coords);
 				var tile = this._tiles[key];
-				if (tile) {
+				var invalid = tile && tile._invalidCount && tile._invalidCount > 0;
+				if (tile && tile.loaded && !invalid) {
 					tile.current = true;
 					newView = false;
 				} else {
@@ -866,34 +867,36 @@ L.GridLayer = L.Layer.extend({
 			key = this._tileCoordsToKey(coords);
 
 			if (coords.part === this._selectedPart) {
-				var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
+				if (!this._tiles[key]) {
+					var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
 
-				this._initTile(tile);
+					this._initTile(tile);
 
-				// if createTile is defined with a second argument ("done" callback),
-				// we know that tile is async and will be ready later; otherwise
-				if (this.createTile.length < 2) {
-					// mark tile as ready, but delay one frame for opacity animation to happen
-					setTimeout(L.bind(this._tileReady, this, coords, null, tile), 0);
+					// if createTile is defined with a second argument ("done" callback),
+					// we know that tile is async and will be ready later; otherwise
+					if (this.createTile.length < 2) {
+						// mark tile as ready, but delay one frame for opacity animation to happen
+						setTimeout(L.bind(this._tileReady, this, coords, null, tile), 0);
+					}
+
+					// we prefer top/left over translate3d so that we don't create a HW-accelerated layer from each tile
+					// which is slow, and it also fixes gaps between tiles in Safari
+					L.DomUtil.setPosition(tile, tilePos, true);
+
+					// save tile in cache
+					this._tiles[key] = {
+						el: tile,
+						coords: coords,
+						current: true
+					};
+
+					fragment.appendChild(tile);
+
+					this.fire('tileloadstart', {
+						tile: tile,
+						coords: coords
+					});
 				}
-
-				// we prefer top/left over translate3d so that we don't create a HW-accelerated layer from each tile
-				// which is slow, and it also fixes gaps between tiles in Safari
-				L.DomUtil.setPosition(tile, tilePos, true);
-
-				// save tile in cache
-				this._tiles[key] = {
-					el: tile,
-					coords: coords,
-					current: true
-				};
-
-				fragment.appendChild(tile);
-
-				this.fire('tileloadstart', {
-					tile: tile,
-					coords: coords
-				});
 			}
 
 			if (this._tileCache[key]) {
