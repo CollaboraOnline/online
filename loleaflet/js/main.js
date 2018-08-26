@@ -86,6 +86,8 @@ window.addEventListener('beforeunload', function () {
 	}
 });
 
-L.DomEvent.on(document, 'contextmenu', L.DomEvent.preventDefault);
+if (!L.Browser.mobile) {
+	L.DomEvent.on(document, 'contextmenu', L.DomEvent.preventDefault);
+}
 
 }(window));
