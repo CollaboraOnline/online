@@ -17,48 +17,50 @@ L.Control.Scroll = L.Control.extend({
 		this._prevDocWidth = 0;
 		this._prevDocHeight = 0;
 
-		map.on('scrollto', this._onScrollTo, this);
-		map.on('scrollby', this._onScrollBy, this);
-		map.on('scrollvelocity', this._onScrollVelocity, this);
-		map.on('handleautoscroll', this._onHandleAutoScroll, this);
-		map.on('docsize', this._onUpdateSize, this);
-		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
-		map.on('updaterowcolumnheaders', this._onUpdateRowColumnHeaders, this);
+		if (!L.Browser.mobile) {
+			map.on('scrollto', this._onScrollTo, this);
+			map.on('scrollby', this._onScrollBy, this);
+			map.on('scrollvelocity', this._onScrollVelocity, this);
+			map.on('handleautoscroll', this._onHandleAutoScroll, this);
+			map.on('docsize', this._onUpdateSize, this);
+			map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
+			map.on('updaterowcolumnheaders', this._onUpdateRowColumnHeaders, this);
 
-		var control = this;
-		var autoHideTimeout = null;
-		$('.scroll-container').mCustomScrollbar({
-			axis: 'yx',
-			theme: 'minimal-dark',
-			scrollInertia: 0,
-			advanced:{autoExpandHorizontalScroll: true}, /* weird bug, it should be false */
-			callbacks:{
-				onScrollStart: function() {
-					control._map.fire('closepopup');
-				},
-				onScroll: function() {
-					control._onScrollEnd(this);
-					if (autoHideTimeout)
-						clearTimeout(autoHideTimeout);
-					autoHideTimeout = setTimeout(function() {
-						//	$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').css({opacity: 0, 'filter': 'alpha(opacity=0)', '-ms-filter': 'alpha(opacity=0)'});
-						$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').removeClass('loleaflet-scrollbar-show');
-					}, 2000);
-				},
-				whileScrolling: function() {
-					control._onScroll(this);
+			var control = this;
+			var autoHideTimeout = null;
+			$('.scroll-container').mCustomScrollbar({
+				axis: 'yx',
+				theme: 'minimal-dark',
+				scrollInertia: 0,
+				advanced:{autoExpandHorizontalScroll: true}, // weird bug, it should be false
+				callbacks:{
+					onScrollStart: function() {
+						control._map.fire('closepopup');
+					},
+					onScroll: function() {
+						control._onScrollEnd(this);
+						if (autoHideTimeout)
+							clearTimeout(autoHideTimeout);
+						autoHideTimeout = setTimeout(function() {
+							//	$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').css({opacity: 0, 'filter': 'alpha(opacity=0)', '-ms-filter': 'alpha(opacity=0)'});
+							$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').removeClass('loleaflet-scrollbar-show');
+						}, 2000);
+					},
+					whileScrolling: function() {
+						control._onScroll(this);
 
-					// autoHide feature doesn't work because plugin relies on hovering on scroll container
-					// and we have a mock scroll container whereas the actual user hovering happens only on
-					// real document. Change the CSS rules manually to simulate autoHide feature.
-					$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').addClass('loleaflet-scrollbar-show');
-				},
-				onUpdate: function() {
-					console.debug('mCustomScrollbar: onUpdate:');
-				},
-				alwaysTriggerOffsets: false
-			}
-		});
+						// autoHide feature doesn't work because plugin relies on hovering on scroll container
+						// and we have a mock scroll container whereas the actual user hovering happens only on
+						// real document. Change the CSS rules manually to simulate autoHide feature.
+						$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').addClass('loleaflet-scrollbar-show');
+					},
+					onUpdate: function() {
+						console.debug('mCustomScrollbar: onUpdate:');
+					},
+					alwaysTriggerOffsets: false
+				}
+			});
+		}
 	},
 
 	_onCalcScroll: function (e) {
