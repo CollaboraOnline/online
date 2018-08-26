@@ -130,7 +130,6 @@ L.Map.include({
 		}
 
 		createCorner('top', 'left');
-		createCorner('top', 'middle');
 		createCorner('top', 'right');
 		createCorner('bottom', 'left');
 		createCorner('bottom', 'right');
