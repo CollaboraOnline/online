@@ -140,6 +140,24 @@ body {
 	overflow: auto;
 }
 
+.loleaflet-mobile-table {
+	background-color: transparent;
+	border-collapse: separate;
+	border-spacing: 0;
+	border: none;
+}
+
+.loleaflet-mobile-button {
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+}
+
+.loleaflet-mobile-input {
+	width: 100px;
+	height: 25px;
+}
+
 /* Important to override context-menu-icon's font-family here otherwise, jquery-contextmenu.css
  * will try to load its own font file which is not available in dist/ */
 .context-menu-icon::before {
@@ -257,6 +275,18 @@ body {
 
 .loleaflet-redline-reject-button {
         background: url('images/lc_rejecttrackedchange.svg') no-repeat center !important;
+}
+
+.loleaflet-mobile-copy {
+        background: url('images/copy.svg') no-repeat center !important;
+}
+
+.loleaflet-mobile-cut {
+        background: url('images/cut.svg') no-repeat center !important;
+}
+
+.loleaflet-mobile-paste {
+        background: url('images/paste.svg') no-repeat center !important;
 }
 
 .loleaflet-annotation-menu, .loleaflet-annotation-menu-redline {
