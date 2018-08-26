@@ -87,8 +87,12 @@ L.Map = L.Evented.extend({
 		this._socket = L.socket(this);
 		this._progressBar = L.progressOverlay(this.getCenter(), L.point(150, 25));
 
-		this._clipboardContainer = L.clipboardContainer();
-		this.addLayer(this._clipboardContainer);
+		if (L.Browser.mobile) {
+			this._clipboardContainer = L.control.mobileInput().addTo(this);
+		} else {
+			this._clipboardContainer = L.clipboardContainer();
+			this.addLayer(this._clipboardContainer);
+		}
 
 		// When all these conditions are met, fire statusindicator:initializationcomplete
 		this.initConditions = {
