@@ -327,7 +327,7 @@ std::string assertResponseString(T& ws, const std::string& prefix, const std::st
 
 /// Assert that we don't get a response with the given prefix.
 template <typename T>
-std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string testname)
+std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string& testname)
 {
     const auto res = getResponseString(ws, prefix, testname, 1000);
     CPPUNIT_ASSERT_MESSAGE(testname + "Did not expect getting message [" + res + "].", res.empty());
