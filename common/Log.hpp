@@ -10,7 +10,6 @@
 #ifndef INCLUDED_LOG_HPP
 #define INCLUDED_LOG_HPP
 
-#include <sys/syscall.h>
 #include <unistd.h>
 
 #include <functional>
@@ -83,7 +82,7 @@ namespace Log
             _enabled(true)
         {
             char buffer[1024];
-            _stream << prefix(buffer, level, syscall(SYS_gettid));
+            _stream << prefix(buffer, level, true);
         }
 
         StreamLogger(StreamLogger&& sl) noexcept

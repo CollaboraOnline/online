@@ -24,6 +24,7 @@
 #include <sys/capability.h>
 #include <sys/prctl.h>
 #include <sys/resource.h>
+#include <sys/syscall.h>
 #include <sys/time.h>
 #include <unistd.h>
 #include <utime.h>

@@ -18,6 +18,7 @@
 #include <sys/stat.h>
 #include <sys/uio.h>
 #include <sys/vfs.h>
+#include <sys/syscall.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <dirent.h>
