@@ -9,8 +9,12 @@
 
 #include <config.h>
 
+#ifdef __linux
 #include <sys/prctl.h>
 #include <sys/syscall.h>
+#else
+#import <Foundation/Foundation.h>
+#endif
 #include <unistd.h>
 
 #include <atomic>
@@ -93,6 +97,7 @@ namespace Log
 
     char* prefix(char* buffer, const char* level, bool sigSafe)
     {
+#ifdef __linux
         long osTid;
         char procName[32];
         const char *threadName = procName;
@@ -117,6 +122,16 @@ namespace Log
                     time.hour(), time.minute(), time.second(),
                     time.millisecond() * 1000 + time.microsecond(),
                     threadName, level);
+#else
+        Poco::DateTime time;
+        const char *threadName = Util::getThreadName();
+        snprintf(buffer, 1023, "%s %.4u-%.2u-%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
+                    (Source.inited ? Source.id.c_str() : "<shutdown>"),
+                    time.year(), time.month(), time.day(),
+                    time.hour(), time.minute(), time.second(),
+                    time.millisecond() * 1000 + time.microsecond(),
+                    threadName, level);
+#endif
         return buffer;
     }
 
