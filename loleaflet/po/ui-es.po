@@ -697,7 +697,7 @@ msgstr "Esta versión de %productName funciona con"
 
 #: src/core/Socket.js:47
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr ""
+msgstr "IE11 ha alcanzado su número máximo de conexiones. Consulte ese documento si necesita aumentar este límite: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:49
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
