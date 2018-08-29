@@ -13,7 +13,11 @@
 
 #include <ftw.h>
 #include <sys/stat.h>
+#ifdef __linux
 #include <sys/vfs.h>
+#else
+#import <Foundation/Foundation.h>
+#endif
 
 #include <chrono>
 #include <cstdio>
@@ -238,6 +242,10 @@ namespace FileUtil
         if (UnitBase::get().filterCheckDiskSpace(path, hookResult))
             return hookResult;
 
+        // we should be able to run just OK with 5GB
+        constexpr int64_t ENOUGH_SPACE = int64_t(5)*1024*1024*1024;
+
+#ifdef __linux
         struct statfs sfs;
         if (statfs(path.c_str(), &sfs) == -1)
             return true;
@@ -247,14 +255,22 @@ namespace FileUtil
         LOG_INF("Filesystem [" << path << "] has " << (freeBytes / 1024 / 1024) <<
                 " MB free (" << (sfs.f_bavail * 100. / sfs.f_blocks) << "%).");
 
-        // we should be able to run just OK with 5GB
-        constexpr int64_t ENOUGH_SPACE = int64_t(5)*1024*1024*1024;
-
         if (freeBytes > ENOUGH_SPACE)
             return true;
 
         if (static_cast<double>(sfs.f_bavail) / sfs.f_blocks <= 0.05)
             return false;
+#else
+        NSDictionary *atDict = [[NSFileManager defaultManager] attributesOfFileSystemForPath:@"/" error:NULL];
+        long long freeSpace = [[atDict objectForKey:NSFileSystemFreeSize] longLongValue];
+        long long totalSpace = [[atDict objectForKey:NSFileSystemSize] longLongValue];
+
+        if (freeSpace > ENOUGH_SPACE)
+            return true;
+
+        if (static_cast<double>(freeSpace) / totalSpace <= 0.05)
+            return false;
+#endif
 
         return true;
     }
