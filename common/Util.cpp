@@ -14,11 +14,15 @@
 #include <execinfo.h>
 #include <csignal>
 #include <sys/poll.h>
+#ifdef __linux
 #include <sys/prctl.h>
+#include <sys/syscall.h>
+#include <sys/vfs.h>
+#else
+#import <Foundation/Foundation.h>
+#endif
 #include <sys/stat.h>
 #include <sys/uio.h>
-#include <sys/vfs.h>
-#include <sys/syscall.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <dirent.h>
@@ -288,7 +292,7 @@ namespace Util
 
     static const char *startsWith(const char *line, const char *tag)
     {
-        int len = strlen(tag);
+        size_t len = strlen(tag);
         if (!strncmp(line, tag, len))
         {
             while (!isdigit(line[len]) && line[len] != '\0')
@@ -492,6 +496,7 @@ namespace Util
     {
         strncpy(ThreadName, s.c_str(), 31);
         ThreadName[31] = '\0';
+#ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(s.c_str()), 0, 0, 0) != 0)
             LOG_SYS("Cannot set thread name of " << getThreadId() << " (" <<
                     std::this_thread::get_id() << ") to [" << s << "].");
@@ -499,6 +504,12 @@ namespace Util
             LOG_INF("Thread " << getThreadId() << " (" <<
                     std::this_thread::get_id() <<
                     ") is now called [" << s << "].");
+#else
+        [[NSThread currentThread] setName:[NSString stringWithUTF8String:ThreadName]];
+        LOG_INF("Thread " << getThreadId() << " (" <<
+                std::this_thread::get_id() <<
+                ") is now called [" << s << "].");
+#endif
     }
 
     const char *getThreadName()
@@ -506,22 +517,36 @@ namespace Util
         // Main process and/or not set yet.
         if (ThreadName[0] == '\0')
         {
+#ifdef __linux
             if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(ThreadName), 0, 0, 0) != 0)
                 ThreadName[0] = '\0';
+#else
+            const char *const name = [[[NSThread currentThread] name] UTF8String];
+            strncpy(ThreadName, name, 31);
+            ThreadName[31] = '\0';
+#endif
         }
 
         // Avoid so many redundant system calls
         return ThreadName;
     }
 
+#ifdef __linux
     static __thread pid_t ThreadTid;
 
     pid_t getThreadId()
+#else
+    std::thread::id getThreadId()
+#endif
     {
         // Avoid so many redundant system calls
+#ifdef __linux
         if (!ThreadTid)
             ThreadTid = syscall(SYS_gettid);
         return ThreadTid;
+#else
+        return std::this_thread::get_id();
+#endif
     }
 
     void getVersionInfo(std::string& version, std::string& hash)
