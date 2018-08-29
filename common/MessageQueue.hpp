@@ -15,6 +15,7 @@
 #include <functional>
 #include <map>
 #include <mutex>
+#include <string>
 #include <vector>
 
 /// Thread-safe message queue (FIFO).
