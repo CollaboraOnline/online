@@ -23,6 +23,10 @@
 
 #include <memory.h>
 
+#ifndef __linux
+#include <thread>
+#endif
+
 #include <Poco/File.h>
 #include <Poco/Path.h>
 #include <Poco/Process.h>
@@ -138,7 +142,11 @@ namespace Util
 
     const char *getThreadName();
 
+#ifdef __linux
     pid_t getThreadId();
+#else
+    std::thread::id getThreadId();
+#endif
 
     /// Get version information
     void getVersionInfo(std::string& version, std::string& hash);
@@ -354,48 +362,110 @@ namespace Util
         case ELOOP: return "ELOOP";
         case ENOMSG: return "ENOMSG";
         case EIDRM: return "EIDRM";
+#ifdef ECHRNG
         case ECHRNG: return "ECHRNG";
+#endif
+#ifdef EL2NSYNC
         case EL2NSYNC: return "EL2NSYNC";
+#endif
+#ifdef EL3HLT
         case EL3HLT: return "EL3HLT";
+#endif
+#ifdef EL3RST
         case EL3RST: return "EL3RST";
+#endif
+#ifdef ELNRNG
         case ELNRNG: return "ELNRNG";
+#endif
+#ifdef EUNATCH
         case EUNATCH: return "EUNATCH";
+#endif
+#ifdef ENOCSI
         case ENOCSI: return "ENOCSI";
+#endif
+#ifdef EL2HLT
         case EL2HLT: return "EL2HLT";
+#endif
+#ifdef EBADE
         case EBADE: return "EBADE";
+#endif
+#ifdef EBADR
         case EBADR: return "EBADR";
+#endif
+#ifdef EXFULL
         case EXFULL: return "EXFULL";
+#endif
+#ifdef ENOANO
         case ENOANO: return "ENOANO";
+#endif
+#ifdef EBADRQC
         case EBADRQC: return "EBADRQC";
+#endif
+#ifdef EBADSLT
         case EBADSLT: return "EBADSLT";
+#endif
+#ifdef EBFONT
         case EBFONT: return "EBFONT";
+#endif
         case ENOSTR: return "ENOSTR";
         case ENODATA: return "ENODATA";
         case ETIME: return "ETIME";
         case ENOSR: return "ENOSR";
+#ifdef ENONET
         case ENONET: return "ENONET";
+#endif
+#ifdef ENOPKG
         case ENOPKG: return "ENOPKG";
+#endif
         case EREMOTE: return "EREMOTE";
         case ENOLINK: return "ENOLINK";
+#ifdef EADV
         case EADV: return "EADV";
+#endif
+#ifdef ESRMNT
         case ESRMNT: return "ESRMNT";
+#endif
+#ifdef ECOMM
         case ECOMM: return "ECOMM";
+#endif
         case EPROTO: return "EPROTO";
         case EMULTIHOP: return "EMULTIHOP";
+#ifdef EDOTDOT
         case EDOTDOT: return "EDOTDOT";
+#endif
         case EBADMSG: return "EBADMSG";
         case EOVERFLOW: return "EOVERFLOW";
+#ifdef ENOTUNIQ
         case ENOTUNIQ: return "ENOTUNIQ";
+#endif
+#ifdef EBADFD
         case EBADFD: return "EBADFD";
+#endif
+#ifdef EREMCHG
         case EREMCHG: return "EREMCHG";
+#endif
+#ifdef ELIBACC
         case ELIBACC: return "ELIBACC";
+#endif
+#ifdef ELIBBAD
         case ELIBBAD: return "ELIBBAD";
+#endif
+#ifdef ELIBSCN
         case ELIBSCN: return "ELIBSCN";
+#endif
+#ifdef ELIBMAX
         case ELIBMAX: return "ELIBMAX";
+#endif
+#ifdef ELIBEXEC
         case ELIBEXEC: return "ELIBEXEC";
+#endif
         case EILSEQ: return "EILSEQ";
+#ifdef ERESTART
         case ERESTART: return "ERESTART";
+#endif
+#ifdef ESTRPIPE
         case ESTRPIPE: return "ESTRPIPE";
+#endif
         case EUSERS: return "EUSERS";
         case ENOTSOCK: return "ENOTSOCK";
         case EDESTADDRREQ: return "EDESTADDRREQ";
@@ -426,23 +496,49 @@ namespace Util
         case EALREADY: return "EALREADY";
         case EINPROGRESS: return "EINPROGRESS";
         case ESTALE: return "ESTALE";
+#ifdef EUCLEAN
         case EUCLEAN: return "EUCLEAN";
+#endif
+#ifdef ENOTNAM
         case ENOTNAM: return "ENOTNAM";
+#endif
+#ifdef ENAVAIL
         case ENAVAIL: return "ENAVAIL";
+#endif
+#ifdef EISNAM
         case EISNAM: return "EISNAM";
+#endif
+#ifdef EREMOTEIO
         case EREMOTEIO: return "EREMOTEIO";
+#endif
         case EDQUOT: return "EDQUOT";
+#ifdef ENOMEDIUM
         case ENOMEDIUM: return "ENOMEDIUM";
+#endif
+#ifdef EMEDIUMTYPE
         case EMEDIUMTYPE: return "EMEDIUMTYPE";
+#endif
         case ECANCELED: return "ECANCELED";
+#ifdef ENOKEY
         case ENOKEY: return "ENOKEY";
+#endif
+#ifdef EKEYEXPIRED
         case EKEYEXPIRED: return "EKEYEXPIRED";
+#endif
+#ifdef EKEYREVOKED
         case EKEYREVOKED: return "EKEYREVOKED";
+#endif
+#ifdef EKEYREJECTED
         case EKEYREJECTED: return "EKEYREJECTED";
+#endif
         case EOWNERDEAD: return "EOWNERDEAD";
         case ENOTRECOVERABLE: return "ENOTRECOVERABLE";
+#ifdef ERFKILL
         case ERFKILL: return "ERFKILL";
+#endif
+#ifdef EHWPOISON
         case EHWPOISON: return "EHWPOISON";
+#endif
         default: return std::to_string(e);
         }
     }
