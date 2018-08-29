@@ -14,10 +14,8 @@
 #include <execinfo.h>
 #include <csignal>
 #include <sys/poll.h>
-#include <sys/prctl.h>
 #include <sys/stat.h>
 #include <sys/uio.h>
-#include <sys/vfs.h>
 #include <unistd.h>
 
 #include <atomic>
