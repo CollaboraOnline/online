@@ -33,10 +33,10 @@
 #include <thread>
 #include <atomic>
 
-#include "common/Common.hpp"
-#include "common/Log.hpp"
-#include "common/Util.hpp"
-#include "common/SigUtil.hpp"
+#include "Common.hpp"
+#include "Log.hpp"
+#include "Util.hpp"
+#include "SigUtil.hpp"
 
 namespace Poco
 {
@@ -262,8 +262,8 @@ public:
     {
         if (InhibitThreadChecks)
             return;
-        // 0 owner means detached and can be invoked by any thread.
-        const bool sameThread = (_owner == std::thread::id(0) || std::this_thread::get_id() == _owner);
+        // uninitialized owner means detached and can be invoked by any thread.
+        const bool sameThread = (_owner == std::thread::id() || std::this_thread::get_id() == _owner);
         if (!sameThread)
             LOG_ERR("#" << _fd << " Invoked from foreign thread. Expected: " <<
                     Log::to_string(_owner) << " but called from " <<
@@ -384,7 +384,7 @@ public:
 
             LOG_DBG("Removing socket #" << socket->getFD() << " from " << _name);
             socket->assertCorrectThread();
-            socket->setThreadOwner(std::thread::id(0));
+            socket->setThreadOwner(std::thread::id());
 
             _pollSockets.pop_back();
         }
@@ -416,8 +416,8 @@ public:
     {
         if (InhibitThreadChecks)
             return;
-        // 0 owner means detached and can be invoked by any thread.
-        const bool sameThread = (!isAlive() || _owner == std::thread::id(0) || std::this_thread::get_id() == _owner);
+        // uninitialized owner means detached and can be invoked by any thread.
+        const bool sameThread = (!isAlive() || _owner == std::thread::id() || std::this_thread::get_id() == _owner);
         if (!sameThread)
             LOG_ERR("Incorrect thread affinity for " << _name << ". Expected: " <<
                     Log::to_string(_owner) << " (" << Util::getThreadId() <<
@@ -564,7 +564,7 @@ public:
             std::lock_guard<std::mutex> lock(_mutex);
             LOG_DBG("Inserting socket #" << newSocket->getFD() << " into " << _name);
             // sockets in transit are un-owned.
-            newSocket->setThreadOwner(std::thread::id(0));
+            newSocket->setThreadOwner(std::thread::id());
             _newSockets.emplace_back(newSocket);
             wakeup();
         }
