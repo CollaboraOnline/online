@@ -1076,6 +1076,16 @@ void ClientSession::removeOutdatedTilesOnFly()
     }
 }
 
+Util::Rectangle ClientSession::getNormalizedVisibleArea() const
+{
+    Util::Rectangle normalizedVisArea;
+    normalizedVisArea._x1 = std::max(_clientVisibleArea._x1, 0);
+    normalizedVisArea._y1 = std::max(_clientVisibleArea._y1, 0);
+    normalizedVisArea._x2 = _clientVisibleArea._x2;
+    normalizedVisArea._y2 = _clientVisibleArea._y2;
+    return normalizedVisArea;
+}
+
 void ClientSession::onDisconnect()
 {
     LOG_INF(getName() << " Disconnected, current number of connections: " << LOOLWSD::NumConnections);
@@ -1169,12 +1179,8 @@ void ClientSession::handleTileInvalidation(const std::string& message,
         return;
     }
 
-    // Visible area can have negativ value as position, but we have tiles only in the positiv range 
-    Util::Rectangle normalizedVisArea;
-    normalizedVisArea._x1 = std::max(_clientVisibleArea._x1, 0);
-    normalizedVisArea._y1 = std::max(_clientVisibleArea._y1, 0);
-    normalizedVisArea._x2 = _clientVisibleArea._x2;
-    normalizedVisArea._y2 = _clientVisibleArea._y2;
+    // Visible area can have negativ value as position, but we have tiles only in the positive range
+    Util::Rectangle normalizedVisArea = getNormalizedVisibleArea();
 
     std::pair<int, Util::Rectangle> result = TileCache::parseInvalidateMsg(message);
     int part = result.first;
