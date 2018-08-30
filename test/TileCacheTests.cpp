@@ -27,6 +27,7 @@
 #include <countloolkits.hpp>
 #include <helpers.hpp>
 #include <test.hpp>
+#include <sstream>
 
 using namespace helpers;
 
@@ -78,6 +79,12 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     // temporarily disable
     //CPPUNIT_TEST(testTileInvalidatePartCalc);
     //CPPUNIT_TEST(testTileInvalidatePartImpress);
+    CPPUNIT_TEST(testTileRequestByInvalidation);
+    CPPUNIT_TEST(testTileRequestByZoom);
+    CPPUNIT_TEST(testTileWireIDHandling);
+    CPPUNIT_TEST(testTileProcessed);
+    CPPUNIT_TEST(testTileInvalidatedOutside);
+
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -100,6 +107,11 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testTileInvalidateCalc();
     void testTileInvalidatePartCalc();
     void testTileInvalidatePartImpress();
+    void testTileRequestByInvalidation();
+    void testTileRequestByZoom();
+    void testTileWireIDHandling();
+    void testTileProcessed();
+    void testTileInvalidatedOutside();
 
     void checkTiles(std::shared_ptr<LOOLWebSocket>& socket,
                     const std::string& type,
@@ -1121,6 +1133,214 @@ void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket, const 
             CPPUNIT_ASSERT_EQUAL(tileHeight, std::stoi(tokens[7].substr(std::string("tileHeight=").size())));
         }
     }
+}
+
+void TileCacheTests::testTileRequestByInvalidation()
+{
+    const char* testname = "tileRequestByInvalidation ";
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    // 1. use case: invalidation without having a valid visible area in wsd
+    // Type one character to trigger invalidation
+    sendChar(socket, 'x', skNone, testname);
+
+    // First wsd forwards the invalidation
+    assertResponseString(socket, "invalidatetiles:", testname);
+
+    // Since we did not set client visible area wsd won't send tile
+    std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+    CPPUNIT_ASSERT_MESSAGE("Not expected tile message arrived!", tile.empty());
+
+    // 2. use case: invalidation of one tile inside the client visible area
+    // Now set the client visible area
+    sendTextFrame(socket, "clientvisiblearea x=-4005 y=0 width=50490 height=72300");
+    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+
+    // Type one character to trigger invalidation
+    sendChar(socket, 'x', skNone, testname);
+
+    // First wsd forwards the invalidation
+    assertResponseString(socket, "invalidatetiles:", testname);
+
+    // Then sends the new tile which was invalidated inside the visible area
+    assertResponseString(socket, "tile:", testname);
+}
+
+void TileCacheTests::testTileRequestByZoom()
+{
+    // By zoom the client requests all the tile of the visible area
+    // Server should push all these tiles to the network, so tiles-on-fly should be bigger than this count
+
+    const char* testname = "testTileRequestByZoom ";
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    // Set the client visible area
+    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875");
+    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+
+    // Request all tile of the visible area (it happens by zoom)
+    sendTextFrame(socket, "tilecombine part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800 tileposy=0,0,0,0,0,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600,12800,12800,12800,12800,12800 tilewidth=3200 tileheight=3200");
+
+    // Check that we get all the tiles without we send back the tileprocessed message
+    for (int i = 0; i < 25; ++i)
+    {
+        std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+        CPPUNIT_ASSERT_MESSAGE("Did not get tile as expected!", !tile.empty());
+        std::cout << i << std::endl;
+    }
+}
+
+void TileCacheTests::testTileWireIDHandling()
+{
+    const char* testname = "testTileWireIDHandling ";
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    // Set the client visible area
+    sendTextFrame(socket, "clientvisiblearea x=-4005 y=0 width=50490 height=72300");
+    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+
+    // Type one character to trigger invalidation
+    sendChar(socket, 'x', skNone, testname);
+
+    // First wsd forwards the invalidation
+    assertResponseString(socket, "invalidatetiles:", testname);
+
+    // For the first input wsd will send all invalidated tiles
+    int arrivedTiles = 0;
+    bool gotTile = false;
+    do
+    {
+        std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+        gotTile = !tile.empty();
+        if(gotTile)
+            ++arrivedTiles;
+    } while(gotTile);
+
+    CPPUNIT_ASSERT_MESSAGE("We expect two tiles at least!", arrivedTiles > 1);
+
+    // Type an other character
+    sendChar(socket, 'x', skNone, testname);
+    assertResponseString(socket, "invalidatetiles:", testname);
+
+    // For the second input wsd will send less tiles, since some of them are indentical
+    int arrivedTiles2 = 0;
+    gotTile = false;
+    do
+    {
+        std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+        gotTile = !tile.empty();
+        if(gotTile)
+            ++arrivedTiles2;
+    } while(gotTile);
+
+    CPPUNIT_ASSERT_MESSAGE("We expect one tile at least!", arrivedTiles2 >= 1);
+    CPPUNIT_ASSERT_MESSAGE("We expect less tile for the second input (wireID)!", arrivedTiles > arrivedTiles2);
+}
+
+void TileCacheTests::testTileProcessed()
+{
+    // Test whether tileprocessed message removes the tiles from the internal tiles-on-fly list
+    const char* testname = "testTileProcessed ";
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    // Set the client visible area
+    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=10000 height=9000");
+    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+
+    // Request a lots of tiles (more than wsd can send once)
+    sendTextFrame(socket, "tilecombine part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800 tileposy=0,0,0,0,0,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600,12800,12800,12800,12800,12800 tilewidth=3200 tileheight=3200");
+
+    std::vector<std::string> tileIDs;
+    int arrivedTile = 0;
+    bool gotTile = false;
+    do
+    {
+        std::string tile = getResponseString(socket, "tile:", testname);
+        gotTile = !tile.empty();
+        if(gotTile)
+        {
+            ++arrivedTile;
+
+            // Store tileID, so we can send it back
+            Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            std::string tileID = tokens[1].substr(std::string("part=").size()) + ":" +
+                                 tokens[4].substr(std::string("tileposx=").size()) + ":" +
+                                 tokens[5].substr(std::string("tileposy=").size()) + ":" +
+                                 tokens[6].substr(std::string("tileWidth=").size()) + ":" +
+                                 tokens[7].substr(std::string("tileHeight=").size());
+            tileIDs.push_back(tileID);
+        }
+
+    } while(gotTile);
+
+    CPPUNIT_ASSERT_MESSAGE("We expect two tiles at least!", arrivedTile > 1);
+    CPPUNIT_ASSERT_MESSAGE("We expect that wsd can't send all the tiles!", arrivedTile < 25);
+
+    for(std::string& tileID : tileIDs)
+    {
+        sendTextFrame(socket, "tileprocessed tile=" + tileID);
+    }
+
+    // Now we can get the remaining tiles
+    int arrivedTile2 = 0;
+    gotTile = false;
+    do
+    {
+        std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+        gotTile = !tile.empty();
+        if(gotTile)
+            ++arrivedTile2;
+
+    } while(gotTile);
+
+    CPPUNIT_ASSERT_MESSAGE("We expect one tile at least!", arrivedTile2 > 1);
+}
+
+void TileCacheTests::testTileInvalidatedOutside()
+{
+    // Test whether wsd sends us the tiles which are hanging out the visible area
+    const char* testname = "testTileInvalidatedOutside ";
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    // Type one character to trigger invalidation and get the invalidation rectangle
+    sendChar(socket, 'x', skNone, testname);
+
+    // First wsd forwards the invalidation
+    std::string sInvalidate = assertResponseString(socket, "invalidatetiles:", testname);
+    Poco::StringTokenizer tokens(sInvalidate, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    int y = std::stoi(tokens[3].substr(std::string("y=").size()));
+    int height = std::stoi(tokens[5].substr(std::string("height=").size()));
+
+
+    // Set client visible area to make it not having intersection with the invalidate rectangle, but having shared tiles
+    std::ostringstream oss;
+    oss << "clientvisiblearea x=0 y=" << (y + height + 100) << " width=50490 height=72300";
+    sendTextFrame(socket, oss.str());
+    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+
+    // Type one character to trigger invalidation
+    sendChar(socket, 'x', skNone, testname);
+
+    // First wsd forwards the invalidation
+    assertResponseString(socket, "invalidatetiles:", testname);
+
+    // Then sends the new tile which was invalidated inside the visible area
+    assertResponseString(socket, "tile:", testname);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileCacheTests);
