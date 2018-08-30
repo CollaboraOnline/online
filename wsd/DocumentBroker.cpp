@@ -1368,13 +1368,15 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     std::unique_lock<std::mutex> lock(_mutex);
 
     // How many tiles we have on the visible area, set the upper limit accordingly
-    const float tilesFitOnWidth = static_cast<float>(session->getVisibleArea().getWidth()) /
-                                  static_cast<float>(session->getTileWidthInTwips());
-    const float tilesFitOnHeight = static_cast<float>(session->getVisibleArea().getHeight()) /
-                                   static_cast<float>(session->getTileHeightInTwips());
-    const float tilesInVisArea = tilesFitOnWidth * tilesFitOnHeight;
+    Util::Rectangle normalizedVisArea = session->getNormalizedVisibleArea();
 
-    const float tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea * 1.20f);
+    const int tilesFitOnWidth = std::ceil(normalizedVisArea._x2 / session->getTileWidthInTwips()) -
+                                std::ceil(normalizedVisArea._x1 / session->getTileWidthInTwips()) + 1;
+    const int tilesFitOnHeight = std::ceil(normalizedVisArea._y2 / session->getTileHeightInTwips()) -
+                                 std::ceil(normalizedVisArea._y1 / session->getTileHeightInTwips()) + 1;
+    const int tilesInVisArea = tilesFitOnWidth * tilesFitOnHeight;
+
+    const float tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea * 1.5f);
 
     // Update client's tilesBeingRendered list
     session->removeOutdatedTileSubscriptions();

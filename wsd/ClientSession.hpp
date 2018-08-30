@@ -130,6 +130,9 @@ public:
     void removeOutdatedTilesOnFly();
 
     Util::Rectangle getVisibleArea() const { return _clientVisibleArea; }
+    /// Visible area can have negative value as position, but we have tiles only in the positive range
+    Util::Rectangle getNormalizedVisibleArea() const;
+
     int getTileWidthInTwips() const { return _tileWidthTwips; }
     int getTileHeightInTwips() const { return _tileHeightTwips; }
 
