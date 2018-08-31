@@ -623,7 +623,7 @@ function createToolbar() {
 		{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
 		{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
 		{type: 'button',  id: 'copy',  img: 'copy', hint: _UNO('.uno:Copy'), uno: 'Copy', disabled: true},
-		{type: 'button',  id: 'delete',  img: 'delete', hint: _UNO('.uno:Delete'), uno: 'Delete', disabled: true},
+		{type: 'button',  id: 'reset',  img: 'delete', hint: _UNO('.uno:ResetAttributes', 'text'), uno: 'ResetAttributes'},
 		{type: 'break', mobile: false},
 		{type: 'menu-check', id: 'zoom', text: '70%',
 			items: [
