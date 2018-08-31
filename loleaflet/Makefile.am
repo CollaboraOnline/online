@@ -190,6 +190,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 	$(builddir)/dist/bundle.css $(builddir)/dist/bundle.js
 	@echo "Generating loleaflet.html..."
 	@m4 -E -DDEBUG=$(ENABLE_DEBUG) \
+		-DIOSAPP=$(ENABLE_IOSAPP) \
 		-DLOLEAFLET_CSS="$(subst $(SPACE),$(COMMA),$(LOLEAFLET_CSS_M4))" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(GLOBAL_JS) $(NODE_MODULES_JS) \
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js) \

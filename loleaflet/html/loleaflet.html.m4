@@ -23,14 +23,29 @@ define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(
   };
   window.addEventListener('message', PostMessageReadyListener, false);
 </script>
-ifelse(DEBUG,[true],foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="/loleaflet/%VERSION%/fileCSS" />
-]),[<link rel="stylesheet" href="/loleaflet/%VERSION%/bundle.css" />
-])dnl
+ifelse(IOSAPP,[true],
+  ifelse(DEBUG,[true],
+    foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="fileCSS" />
+  ]),
+    [<link rel="stylesheet" href="bundle.css" />
+  ]),
+  ifelse(DEBUG,[true],
+    foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="/loleaflet/%VERSION%/fileCSS" />
+  ]),
+    [<link rel="stylesheet" href="/loleaflet/%VERSION%/bundle.css" />
+  ])dnl
+)dnl
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
-<link rel="localizations" href="/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
-<link rel="localizations" href="/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json" />
-<link rel="localizations" href="/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
-<link rel="localizations" href="/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json" />
+ifelse(IOSAPP,[true],
+  [<link rel="localizations" href="l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>],
+  [<link rel="localizations" href="/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>]
+)dnl
 </head>
 
   <body style="user-select: none;">

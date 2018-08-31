@@ -52,6 +52,11 @@ AC_ARG_ENABLE([debug],
               AS_HELP_STRING([--enable-debug],
                              [Enable debugging, link with debugging version of Poco libraries]))
 
+AC_ARG_ENABLE([iosapp],
+              AS_HELP_STRING([--enable-iosapp],
+                             [Use in a tree where the only purpose is to build the HTML and CSS stuff
+                              to be copied to a Mac where the iOS app is being built.]))
+
 AC_ARG_ENABLE([seccomp],
               AS_HELP_STRING([--disable-seccomp],
                              [Disable use of linux/seccomp.h header when kernel on target system does not support it.
@@ -152,6 +157,13 @@ if test -n "$with_logfile" ; then
    LOOLWSD_LOGFILE="$with_logfile"
 fi
 AC_SUBST(LOOLWSD_LOGFILE)
+
+ENABLE_IOSAPP=
+if test "$enable_iosapp" = "yes"; then
+   ENABLE_IOSAPP=true
+fi
+AC_SUBST(ENABLE_IOSAPP)
+AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
 
 MAX_CONNECTIONS=20
 AS_IF([test -n "$with_max_connections" && test "$with_max_connections" -gt "0"],
