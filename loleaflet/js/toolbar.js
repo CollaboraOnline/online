@@ -105,6 +105,9 @@ function onClick(e, id, item, subItem) {
 			map.toggleCommandState(item.uno);
 		}
 	}
+	else if (id === 'print') {
+		map.print();
+	}
 	else if (id === 'save') {
 		map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
 	}
@@ -615,7 +618,7 @@ var fontsizesSelectValue;
 function createToolbar() {
 	var toolItems = [
 		{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
-		{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:?')},
+		{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text')},
 		{type: 'break', id: 'savebreak'},
 		{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
 		{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
