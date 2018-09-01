@@ -120,6 +120,9 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'zoomout' && map.getZoom() > map.getMinZoom()) {
 		map.zoomOut(1);
 	}
+	else if (item.scale) {
+		map.setZoom(map.getScaleZoom(item.scale, 10));
+	}
 	else if (id === 'zoomreset') {
 		map.setZoom(map.options.zoom);
 	}
@@ -625,12 +628,17 @@ function createToolbar() {
 		{type: 'button',  id: 'copy',  img: 'copy', hint: _UNO('.uno:Copy'), uno: 'Copy', disabled: true},
 		{type: 'button',  id: 'reset',  img: 'delete', hint: _UNO('.uno:ResetAttributes', 'text'), uno: 'ResetAttributes'},
 		{type: 'break', mobile: false},
-		{type: 'menu-check', id: 'zoom', text: '70%',
+		{type: 'menu-radio', id: 'zoom', text: '100%',
+			selected: 'id100',
 			items: [
-				{ id: 'id1', text: '30%'},
-				{ id: 'id2', text: '50%'},
-				{ id: 'id3', text: '70%'},
-				{ id: 'id4', text: '80%'}
+				{ id: 'id30', text: '30%', scale: 0.3},
+				{ id: 'id50', text: '50%', scale: 0.5},
+				{ id: 'id70', text: '70%', scale: 0.7},
+				{ id: 'id100', text: '100%', scale: 1.0},
+				{ id: 'id130', text: '130%', scale: 1.3},
+				{ id: 'id150', text: '150%', scale: 1.5},
+				{ id: 'id170', text: '170%', scale: 1.7},
+				{ id: 'id200', text: '200%', scale: 2.0}
 			]
 		},
 		{type: 'break'},
@@ -2264,8 +2272,9 @@ function setupToolbar(e) {
 
 	map.on('zoomend', function () {
 		var zoomRatio = map.getZoomScale(map.getZoom(), map.options.zoom);
-		var zoomPercent = Math.round(zoomRatio * 100);
-		$('#zoomlevel').html(zoomPercent + '%');
+		var zoomPercent = Math.round(zoomRatio * 100) + '%';
+		$('#zoomlevel').html(zoomPercent);
+		w2ui['toolbar-up'].set('zoom', {text: zoomPercent});
 	});
 
 	map.on('celladdress', function (e) {
