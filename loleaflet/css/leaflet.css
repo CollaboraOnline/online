@@ -600,6 +600,11 @@ a.leaflet-control-buttons:hover:first-child {
 	border: 1px solid #666;
 	}
 
+.sidebar-cursor-container {
+	position: absolute;
+	text-align: center;
+	}
+
 .leaflet-cursor-container {
 	position: absolute;
 	text-align: center;

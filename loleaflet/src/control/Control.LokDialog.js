@@ -687,7 +687,6 @@ L.Control.LokDialog = L.Control.extend({
 			that.focus(parentId);
 		};
 		img.src = imgData;
-		console.log('%c', img);
 	},
 
 	// Binary dialog msg recvd from core
