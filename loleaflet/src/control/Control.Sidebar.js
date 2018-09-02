@@ -71,8 +71,10 @@ L.Control.Sidebar = L.Control.extend({
 			var width = parseInt(e.size.split(',')[0]);
 			var height = parseInt(e.size.split(',')[1]);
 
-			var left = parseInt(e.position.split(',')[0]);
-			var top = parseInt(e.position.split(',')[1]);
+			if (e.position) {
+				var left = parseInt(e.position.split(',')[0]);
+				var top = parseInt(e.position.split(',')[1]);
+			}
 
 			if (e.winType === 'deck') {
 				this._launchSidebar(e.id, left, top, width, height, e.title);
@@ -147,16 +149,21 @@ L.Control.Sidebar = L.Control.extend({
 				var y = parseInt(rectangle[1]);
 				height = parseInt(rectangle[3]);
 
+				// Relative x to the sidebar.
+				x -= this._currentDeck.left;
+				// We have 25 pixel top margin.
+				y -= 25;
+
 				this._updateDialogCursor(e.id, x, y, height);
 			}
 		} else if (e.action === 'title_changed') {
-			if (e.title && this._dialogs[parseInt(e.id)]) {
-				this._dialogs[parseInt(e.id)].title = e.title;
+			if (e.title && this._currentDeck.cursor) {
+				this._currentDeck.cursor.title = e.title;
 				$('#' + strId).dialog('option', 'title', e.title);
 			}
 		} else if (e.action === 'cursor_visible') {
-			this._dialogs[e.id].cursorVisible = e.visible === 'true';
-			if (this._dialogs[e.id].cursorVisible)
+			this._currentDeck.cursor.cursorVisible = e.visible === 'true';
+			if (this._currentDeck.cursor.cursorVisible)
 				$('#' + strId + '-cursor').css({display: 'block'});
 			else
 				$('#' + strId + '-cursor').css({display: 'none'});
@@ -221,14 +228,16 @@ L.Control.Sidebar = L.Control.extend({
 			width: width,
 			height: height,
 			title: title,
+			cursor: null,
+			input: null,
 			child: null // One child, typically drop-down list
 		};
 
 		// don't make 'TAB' focus on this button; we want to cycle focus in the lok dialog with each TAB
 		// $('.lokdialog_container button.ui-dialog-titlebar-close').attr('tabindex', '-1').blur();
 
-		// this._createDialogCursor(strDlgId);
-		// var dlgInput = this._createDialogInput(strDlgId);
+		this._createDialogCursor(strId);
+		var dlgInput = this._createDialogInput(strId);
 
 		L.DomEvent.on(panelCanvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(panelCanvas, 'mousemove', function(e) {
@@ -245,28 +254,28 @@ L.Control.Sidebar = L.Control.extend({
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, id, e.offsetX, e.offsetY, 1, buttons, 0);
-			// dlgInput.focus();
+			dlgInput.focus();
 		}, this);
 
-		// L.DomEvent.on(dlgInput,
-		//               'keyup keypress keydown compositionstart compositionupdate compositionend textInput',
-		//               function(e) {
-		// 	              e.originalEvent = e; // _onKeyDown fn below requires real event in e.originalEvent
-		// 	              this._map['keyboard']._onKeyDown(e,
-		// 	                                         L.bind(this._postWindowKeyboardEvent,
-		// 	                                                this,
-		// 	                                                id),
-		// 	                                         L.bind(this._postWindowCompositionEvent,
-		// 	                                                this,
-		// 	                                                id),
-		// 	                                         dlgInput);
+		L.DomEvent.on(dlgInput,
+		              'keyup keypress keydown compositionstart compositionupdate compositionend textInput',
+		              function(e) {
+			              e.originalEvent = e; // _onKeyDown fn below requires real event in e.originalEvent
+			              this._map['keyboard']._onKeyDown(e,
+			                                         L.bind(this._postWindowKeyboardEvent,
+			                                                this,
+			                                                id),
+			                                         L.bind(this._postWindowCompositionEvent,
+			                                                this,
+			                                                id),
+			                                         dlgInput);
 
-		// 	              // keep map active while user is playing with panel
-		// 	              this._map.lastActiveTime = Date.now();
-		//               }, this);
-		// L.DomEvent.on(dlgInput, 'contextmenu', function() {
-		// 	return false;
-		// });
+			              // keep map active while user is playing with panel
+			              this._map.lastActiveTime = Date.now();
+		              }, this);
+		L.DomEvent.on(dlgInput, 'contextmenu', function() {
+			return false;
+		});
 
 		// Render window.
 		this._sendPaintWindow(id);
@@ -430,9 +439,65 @@ L.Control.Sidebar = L.Control.extend({
 		                              ' buttons=' + buttons + ' modifier=' + modifier);
 	},
 
+	_postWindowCompositionEvent: function(winid, type, text) {
+		this._map._docLayer._postCompositionEvent(winid, type, text);
+	},
+
 	_postWindowKeyboardEvent: function(winid, type, charcode, keycode) {
 		this._map._socket.sendMessage('windowkey id=' + winid + ' type=' + type +
 		                              ' char=' + charcode + ' key=' + keycode);
+	},
+
+	_updateDialogCursor: function(dlgId, x, y, height) {
+		var strDlgId = this._toStrId(dlgId);
+		var dialogCursor = L.DomUtil.get(strDlgId + '-cursor');
+		L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
+		L.DomUtil.setStyle(dialogCursor, 'display', this._currentDeck.cursor.cursorVisible ? 'block' : 'none');
+		// set the position of the cursor container element
+		L.DomUtil.setStyle(this._currentDeck.cursor, 'left', x + 'px');
+		L.DomUtil.setStyle(this._currentDeck.cursor, 'top', y + 'px');
+
+		// update the input as well
+		this._updateDialogInput(dlgId);
+	},
+
+	_createDialogCursor: function(dialogId) {
+		this._currentDeck.cursor = L.DomUtil.create('div', 'sidebar-cursor-container', L.DomUtil.get(dialogId));
+		var cursor = L.DomUtil.create('div', 'leaflet-cursor lokdialog-cursor', this._currentDeck.cursor);
+		cursor.id = dialogId + '-cursor';
+		L.DomUtil.addClass(cursor, 'blinking-cursor');
+	},
+
+	_createDialogInput: function(dialogId) {
+		var clipDlgContainer = L.DomUtil.create('div', 'clipboard-container', L.DomUtil.get(dialogId));
+		clipDlgContainer.id = dialogId + '-clipboard-container';
+		var dlgTextArea = L.DomUtil.create('input', 'clipboard', clipDlgContainer);
+		dlgTextArea.setAttribute('type', 'text');
+		dlgTextArea.setAttribute('autocorrect', 'off');
+		dlgTextArea.setAttribute('autocapitalize', 'off');
+		dlgTextArea.setAttribute('autocomplete', 'off');
+		dlgTextArea.setAttribute('spellcheck', 'false');
+		this._currentDeck.input = dlgTextArea;
+
+		return dlgTextArea;
+	},
+
+	_updateDialogInput: function(dlgId) {
+		if (!this._currentDeck.input)
+			return;
+
+		var strDlgId = this._toStrId(dlgId);
+		var left = parseInt(L.DomUtil.getStyle(this._currentDeck.cursor, 'left'));
+		var top = parseInt(L.DomUtil.getStyle(this._currentDeck.cursor, 'top'));
+		var dlgContainer = L.DomUtil.get(strDlgId + '-clipboard-container');
+		L.DomUtil.setPosition(dlgContainer, new L.Point(left, top));
+	},
+
+	focus: function(dlgId) {
+		if (!this._isOpen(dlgId) || !this._currentDeck.input)
+			return;
+
+		this._currentDeck.input.focus();
 	},
 
 	_isRectangleValid: function(rect) {
