@@ -61,6 +61,7 @@ $(foreach file,$(1),$(call file_target,\
 endef
 
 LOLEAFLET_CSS =\
+	$(builddir)/node_modules/select2/dist/css/select2.css \
 	$(srcdir)/css/w2ui-1.5.rc1.css \
 	$(srcdir)/css/leaflet.css \
 	$(srcdir)/css/selectionMarkers.css \
@@ -77,7 +78,6 @@ LOLEAFLET_CSS =\
 	$(builddir)/node_modules/vex-js/css/vex.css \
 	$(builddir)/node_modules/vex-js/css/vex-theme-plain.css \
 	$(builddir)/node_modules/vex-js/css/vex-theme-bottom-right-corner.css \
-	$(builddir)/node_modules/select2/dist/css/select2.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-core-css.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-simple/sm-simple.css \
 	$(srcdir)/css/menubar.css \

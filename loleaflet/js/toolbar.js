@@ -642,9 +642,42 @@ function createToolbar() {
 			]
 		},
 		{type: 'break'},
-		{type: 'html',   id: 'styles', html: '<select class="styles-select"></select>', mobile: false},
-		{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>', mobile: false},
-		{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>', mobile: false},
+		{type: 'html',   id: 'styles',
+			html: '<select class="styles-select"><option>Default Style</option></select>',
+			onRefresh: function (edata) {
+				if (!edata.item.html) {
+					edata.isCancelled = true;
+				} else {
+					$.extend(edata, { onComplete: function (e) {
+						$('.styles-select').select2();
+						e.item.html = undefined;
+					}});
+				}
+			}, mobile: false },
+		{type: 'html',   id: 'fonts',
+			html: '<select class="fonts-select"><option>Liberation Sans</option></select>',
+			onRefresh: function (edata) {
+				if (!edata.item.html) {
+					edata.isCancelled = true;
+				} else {
+					$.extend(edata, { onComplete: function (e) {
+						$('.fonts-select').select2();
+						e.item.html = undefined;
+					}});
+				}
+			}, mobile: false},
+		{type: 'html',   id: 'fontsizes',
+			html: '<select class="fontsizes-select"><option>14</option></select>',
+			onRefresh: function (edata) {
+				if (!edata.item.html) {
+					edata.isCancelled = true;
+				} else {
+					$.extend(edata, { onComplete: function (e) {
+						$('.fontsizes-select').select2({ dropdownAutoWidth: true, width: 'auto'});
+						e.item.html = undefined;
+					}});
+				}
+			}, mobile: false},
 		{type: 'break', mobile: false},
 		{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold', disabled: true},
 		{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic', disabled: true},
@@ -777,7 +810,6 @@ function initMobileToolbar(toolItems) {
 			{type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _('Cancel')},
 			{type: 'button', hidden: true, id: 'acceptformula',  img: 'accepttrackedchanges', hint: _('Accept')},
 			{type: 'html', id: 'formula', html: '<input id="formulaInput" type="text">'}
-
 		],
 		onClick: function (e) {
 			onClick(e, e.target);
@@ -855,7 +887,7 @@ function initMobileToolbar(toolItems) {
 
 			if (map.getDocType() === 'presentation') {
 				// Fill the style select box if not yet filled
-				if ($('.styles-select')[0] && $('.styles-select')[0].length === 0) {
+				if ($('.styles-select')[0] && $('.styles-select')[0].length === 1) {
 					var data = [''];
 					// Inserts a separator element
 					data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
@@ -1774,7 +1806,7 @@ function updateCommandValues() {
 	var data = [];
 	// 1) For .uno:StyleApply
 	// we need an empty option for the place holder to work
-	if ($('.styles-select option').length === 0) {
+	if ($('.styles-select option').length === 1) {
 		var styles = [];
 		var topStyles = [];
 		var commandValues = map.getToolbarCommandValues('.uno:StyleApply');
@@ -1842,7 +1874,7 @@ function updateCommandValues() {
 		$('.styles-select').on('select2:select', onStyleSelect);
 	}
 
-	if ($('.fonts-select option').length === 0) {
+	if ($('.fonts-select option').length === 1) {
 		// 2) For .uno:CharFontName
 		commandValues = map.getToolbarCommandValues('.uno:CharFontName');
 		if (typeof commandValues === 'undefined') {
@@ -1864,7 +1896,7 @@ function updateCommandValues() {
 		$('.fonts-select').val(fontsSelectValue).trigger('change');
 	}
 
-	if ($('.fontsizes-select option').length === 0) {
+	if ($('.fontsizes-select option').length === 1) {
 		$('.fontsizes-select').select2({
 			placeholder: ' ',
 			data: []
