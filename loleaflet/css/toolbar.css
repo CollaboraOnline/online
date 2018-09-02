@@ -54,6 +54,8 @@ w2ui-toolbar {
  * as a container
  */
 .select2-container {
+    margin-left: 3px;
+    margin-right: 3px;
     z-index: 11;
 }
 
