@@ -72,7 +72,7 @@ TileCache::TileCache(const std::string& docURL,
 
 TileCache::~TileCache()
 {
-    _owner = std::thread::id(0);
+    _owner = std::thread::id();
     LOG_INF("~TileCache dtor for uri [" << _docURL << "].");
 }
 
@@ -574,7 +574,7 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
 
 void TileCache::assertCorrectThread()
 {
-    const bool correctThread = _owner == std::thread::id(0) || std::this_thread::get_id() == _owner;
+    const bool correctThread = _owner == std::thread::id() || std::this_thread::get_id() == _owner;
     if (!correctThread)
         LOG_ERR("TileCache method invoked from foreign thread. Expected: " <<
                 Log::to_string(_owner) << " but called from " <<
