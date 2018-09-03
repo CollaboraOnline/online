@@ -1393,13 +1393,23 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     // How many tiles we have on the visible area, set the upper limit accordingly
     Util::Rectangle normalizedVisArea = session->getNormalizedVisibleArea();
 
-    const int tilesFitOnWidth = std::ceil(normalizedVisArea._x2 / session->getTileWidthInTwips()) -
-                                std::ceil(normalizedVisArea._x1 / session->getTileWidthInTwips()) + 1;
-    const int tilesFitOnHeight = std::ceil(normalizedVisArea._y2 / session->getTileHeightInTwips()) -
-                                 std::ceil(normalizedVisArea._y1 / session->getTileHeightInTwips()) + 1;
-    const int tilesInVisArea = tilesFitOnWidth * tilesFitOnHeight;
+    float tilesOnFlyUpperLimit = 0;
+    if (normalizedVisArea.hasSurface() && session->getTileWidthInTwips() != 0 && session->getTileHeightInTwips() != 0)
+    {
 
-    const float tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea * 1.5f);
+        const int tilesFitOnWidth = std::ceil(normalizedVisArea._x2 / session->getTileWidthInTwips()) -
+                                    std::ceil(normalizedVisArea._x1 / session->getTileWidthInTwips()) + 1;
+        const int tilesFitOnHeight = std::ceil(normalizedVisArea._y2 / session->getTileHeightInTwips()) -
+                                     std::ceil(normalizedVisArea._y1 / session->getTileHeightInTwips()) + 1;
+        const int tilesInVisArea = tilesFitOnWidth * tilesFitOnHeight;
+
+        tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea * 1.5f);
+    }
+    else
+    {
+        tilesOnFlyUpperLimit = 200; // Have a big number here to get all tiles requested by file openning
+    }
+
 
     // Update client's tilesBeingRendered list
     session->removeOutdatedTileSubscriptions();
