@@ -1192,7 +1192,6 @@ void TileCacheTests::testTileRequestByZoom()
     {
         std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
         CPPUNIT_ASSERT_MESSAGE("Did not get tile as expected!", !tile.empty());
-        std::cout << i << std::endl;
     }
 }
 
