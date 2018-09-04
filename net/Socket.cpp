@@ -24,13 +24,17 @@
 
 #include <SigUtil.hpp>
 #include "Socket.hpp"
+#ifdef __linux
 #include "ServerSocket.hpp"
 #include "SslSocket.hpp"
+#endif
 #include "WebSocketHandler.hpp"
 
 int SocketPoll::DefaultPollTimeoutMs = 5000;
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
+
+#ifdef __linux
 
 int Socket::createSocket(Socket::Type type)
 {
@@ -216,11 +220,14 @@ void SocketPoll::insertNewWebSocketSync(const Poco::URI &uri, const std::shared_
         LOG_ERR("Failed to lookup client websocket host '" << uri.getHost() << "' skipping");
 }
 
+#endif
+
+#ifdef __linux
+
 void ServerSocket::dumpState(std::ostream& os)
 {
     os << "\t" << getFD() << "\t<accept>\n";
 }
-
 
 void SocketDisposition::execute()
 {
@@ -237,6 +244,8 @@ void SocketDisposition::execute()
 
 const int WebSocketHandler::InitialPingDelayMs = 25;
 const int WebSocketHandler::PingFrequencyMs = 18 * 1000;
+
+#endif
 
 void WebSocketHandler::dumpState(std::ostream& os)
 {
@@ -271,6 +280,8 @@ void StreamSocket::send(Poco::Net::HTTPResponse& response)
 
     send(oss.str());
 }
+
+#ifdef __linux
 
 void SocketPoll::dumpState(std::ostream& os)
 {
@@ -332,6 +343,8 @@ bool ServerSocket::bind(Type type, int port)
 
     return rc == 0;
 }
+
+#endif
 
 bool StreamSocket::parseHeader(const char *clientName,
                                Poco::MemoryInputStream &message,
