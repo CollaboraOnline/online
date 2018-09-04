@@ -14,8 +14,10 @@
 #include <cassert>
 #include <string>
 
+#ifdef __linux
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
+#endif
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
 
@@ -64,6 +66,8 @@ public:
     /// Used to verify the validity of an access token.
     virtual bool verify(const std::string& token) = 0;
 };
+
+#ifdef __linux
 
 /// JWT Authorization.
 class JWTAuth : public AuthBase
@@ -128,6 +132,8 @@ private:
     const std::string _authVerifyUrl;
     const std::string _authorizationCode;
 };
+
+#endif
 
 #endif
 
