@@ -1785,9 +1785,9 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
-    const std::time_t t = std::chrono::system_clock::to_time_t(
+    const std::time_t t = std::chrono::system_clock::to_time_t(std::chrono::time_point_cast<std::chrono::seconds>(
         std::chrono::system_clock::now()
-        + (_lastSaveTime - std::chrono::steady_clock::now()));
+        + (_lastSaveTime - std::chrono::steady_clock::now())));
     os << "\n  last saved: " << std::ctime(&t);
     os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
       << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
