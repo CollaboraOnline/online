@@ -22,22 +22,25 @@
 #include <Poco/Exception.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
+
+#ifndef MOBILEAPP
+
+#include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/Context.h>
 #include <Poco/Net/DNS.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetworkInterface.h>
 #include <Poco/Net/SSLManager.h>
+
+#endif
+
 #include <Poco/StreamCopier.h>
 #include <Poco/Timestamp.h>
-
-// For residual Poco SSL usage.
-#include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/Net/Context.h>
-#include <Poco/Net/KeyConsoleHandler.h>
-#include <Poco/Net/SSLManager.h>
 
 #include "Auth.hpp"
 #include <Common.hpp>
@@ -127,6 +130,8 @@ void StorageBase::initialize()
 #endif
 }
 
+#ifndef MOBILEAPP
+
 bool isLocalhost(const std::string& targetHost)
 {
     std::string targetAddress;
@@ -165,6 +170,8 @@ bool isLocalhost(const std::string& targetHost)
     return false;
 }
 
+#endif
+
 std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std::string& jailRoot, const std::string& jailPath)
 {
     // FIXME: By the time this gets called we have already sent to the client three
@@ -172,6 +179,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     // here much earlier. Also, using exceptions is lame and makes understanding the code harder,
     // but that is just my personal preference.
 
+#ifndef MOBILEAPP
     std::unique_ptr<StorageBase> storage;
 
     if (UnitWSD::get().createStorage(uri, jailRoot, jailPath, storage))
@@ -182,6 +190,10 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             return storage;
         }
     }
+#else
+    if (false)
+        ;
+#endif
     else if (uri.isRelative() || uri.getScheme() == "file")
     {
         LOG_INF("Public URI [" << uri.toString() << "] is a file.");
@@ -215,6 +227,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
 
         LOG_ERR("Local Storage is disabled by default. Enable in the config file or on the command-line to enable.");
     }
+#ifndef MOBILEAPP
     else if (WopiEnabled)
     {
         LOG_INF("Public URI [" << uri.toString() << "] considered WOPI.");
@@ -226,7 +239,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
         LOG_ERR("No acceptable WOPI hosts found matching the target host [" << targetHost << "] in config.");
         throw UnauthorizedRequestException("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
     }
-
+#endif
     throw BadRequestException("No Storage configured or invalid URI.");
 }
 
@@ -330,6 +343,8 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
 namespace
 {
 
+#ifndef MOBILEAPP
+
 inline
 Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
 {
@@ -340,6 +355,8 @@ Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
                                             Poco::Net::SSLManager::instance().defaultClientContext())
         : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
 }
+
+#endif
 
 void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
 {
@@ -379,6 +396,8 @@ Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time, const std::st
 }
 
 } // anonymous namespace
+
+#ifndef MOBILEAPP
 
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth)
 {
@@ -748,5 +767,7 @@ StorageBase::SaveResult WebDAVStorage::saveLocalFileToStorage(const Authorizatio
     // TODO: implement webdav PUT.
     return StorageBase::SaveResult(StorageBase::SaveResult::OK);
 }
+
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

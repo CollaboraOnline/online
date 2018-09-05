@@ -9,6 +9,8 @@
 #ifndef INCLUDED_UNIT_HPP
 #define INCLUDED_UNIT_HPP
 
+#ifndef MOBILEAPP
+
 #include <atomic>
 #include <cassert>
 #include <memory>
@@ -288,6 +290,8 @@ public:
         return nullptr;
     }
 };
+
+#endif
 
 #endif
 

@@ -49,6 +49,26 @@
 #include <sstream>
 #include <thread>
 
+#ifndef MOBILEAPP
+
+#include <Poco/Net/Context.h>
+#include <Poco/Net/HTMLForm.h>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/IPAddress.h>
+#include <Poco/Net/MessageHeader.h>
+#include <Poco/Net/NameValueCollection.h>
+#include <Poco/Net/Net.h>
+#include <Poco/Net/NetException.h>
+#include <Poco/Net/PartHandler.h>
+#include <Poco/Net/SocketAddress.h>
+
+#include <ServerSocket.hpp>
+
+using Poco::Net::HTMLForm;
+using Poco::Net::PartHandler;
+
+#endif
+
 #include <Poco/DOM/AutoPtr.h>
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/DOMWriter.h>
@@ -62,16 +82,6 @@
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
 #include <Poco/MemoryStream.h>
-#include <Poco/Net/Context.h>
-#include <Poco/Net/HTMLForm.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/IPAddress.h>
-#include <Poco/Net/MessageHeader.h>
-#include <Poco/Net/NameValueCollection.h>
-#include <Poco/Net/Net.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/Net/PartHandler.h>
-#include <Poco/Net/SocketAddress.h>
 #include <Poco/Path.h>
 #include <Poco/Pipe.h>
 #include <Poco/Process.h>
@@ -106,7 +116,6 @@
 #endif
 #include <Log.hpp>
 #include <Protocol.hpp>
-#include <ServerSocket.hpp>
 #include <Session.hpp>
 #if ENABLE_SSL
 #  include <SslSocket.hpp>
@@ -130,12 +139,10 @@ using Poco::DirectoryIterator;
 using Poco::Environment;
 using Poco::Exception;
 using Poco::File;
-using Poco::Net::HTMLForm;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
 using Poco::Net::MessageHeader;
 using Poco::Net::NameValueCollection;
-using Poco::Net::PartHandler;
 using Poco::Path;
 using Poco::Process;
 using Poco::StreamCopier;
@@ -191,6 +198,28 @@ extern "C" { void dump_state(void); /* easy for gdb */ }
 #if ENABLE_DEBUG
 static int careerSpanMs = 0;
 #endif
+
+#ifdef IOS
+#include "ios.h"
+#endif
+
+bool LOOLWSD::NoCapsForKit = false;
+bool LOOLWSD::TileCachePersistent = true;
+std::atomic<unsigned> LOOLWSD::NumConnections;
+std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
+std::set<std::string> LOOLWSD::EditFileExtensions;
+
+#ifdef MOBILEAPP
+
+// Some dummy versions of static ember functions
+
+void LOOLWSD::dumpIncomingTrace(const std::string& id, const std::string& sessionId, const std::string& data)
+{
+}
+
+#else
+
+// Most of this file is probably not used in a mobile app. Let's see.
 
 namespace
 {
@@ -582,13 +611,11 @@ std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
 std::atomic<int> LOOLWSD::ForKitProcId(-1);
 #endif
 bool LOOLWSD::NoSeccomp = false;
-bool LOOLWSD::NoCapsForKit = false;
 bool LOOLWSD::AdminEnabled = true;
 #ifdef FUZZER
 bool LOOLWSD::DummyLOK = false;
 std::string LOOLWSD::FuzzFileName;
 #endif
-std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::string LOOLWSD::SysTemplate;
 std::string LOOLWSD::LoTemplate;
 std::string LOOLWSD::ChildRoot;
@@ -601,7 +628,6 @@ std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
 std::string LOOLWSD::LogLevel = "trace";
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
-std::set<std::string> LOOLWSD::EditFileExtensions;
 unsigned LOOLWSD::MaxConnections;
 unsigned LOOLWSD::MaxDocuments;
 std::string LOOLWSD::OverrideWatermark;
@@ -610,8 +636,6 @@ std::set<const Poco::Util::AbstractConfiguration*> LOOLWSD::PluginConfigurations
 static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
-std::atomic<unsigned> LOOLWSD::NumConnections;
-bool LOOLWSD::TileCachePersistent = true;
 std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
 
 /// This thread polls basic web serving, and handling of
@@ -3047,5 +3071,7 @@ void dump_state()
 }
 
 POCO_SERVER_MAIN(LOOLWSD)
+
+#endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

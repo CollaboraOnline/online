@@ -66,10 +66,11 @@ ClientSession::~ClientSession()
 
 void ClientSession::handleIncomingMessage(SocketDisposition &disposition)
 {
+#ifndef MOBILEAPP
     if (UnitWSD::get().filterHandleRequest(
             UnitWSD::TestRequest::Client, disposition, *this))
         return;
-
+#endif
     Session::handleIncomingMessage(disposition);
 }
 
@@ -94,6 +95,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         updateLastActivityTime();
         docBroker->updateLastActivityTime();
     }
+#ifndef MOBILEAPP
     if (tokens[0] == "loolclient")
     {
         if (tokens.size() < 1)
@@ -123,7 +125,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         return true;
     }
-
+#endif
     if (tokens[0] == "load")
     {
         if (_docURL != "")
@@ -668,7 +670,9 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         return false;
     }
 
+#ifndef MOBILEAPP
     LOOLWSD::dumpOutgoingTrace(docBroker->getJailId(), getId(), firstLine);
+#endif
 
     const auto& tokens = payload->tokens();
     if (tokens[0] == "unocommandresult:")

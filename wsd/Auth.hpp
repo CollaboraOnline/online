@@ -14,7 +14,7 @@
 #include <cassert>
 #include <string>
 
-#ifdef __linux
+#ifndef MOBILEAPP
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
 #endif
@@ -67,7 +67,7 @@ public:
     virtual bool verify(const std::string& token) = 0;
 };
 
-#ifdef __linux
+#ifndef MOBILEAPP
 
 /// JWT Authorization.
 class JWTAuth : public AuthBase

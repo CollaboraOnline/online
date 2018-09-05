@@ -24,7 +24,7 @@
 
 #include <SigUtil.hpp>
 #include "Socket.hpp"
-#ifdef __linux
+#ifndef MOBILEAPP
 #include "ServerSocket.hpp"
 #include "SslSocket.hpp"
 #endif
@@ -34,7 +34,7 @@ int SocketPoll::DefaultPollTimeoutMs = 5000;
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
-#ifdef __linux
+#ifndef MOBILEAPP
 
 int Socket::createSocket(Socket::Type type)
 {
@@ -56,6 +56,8 @@ namespace {
     }
 }
 
+#endif
+
 SocketPoll::SocketPoll(const std::string& threadName)
     : _name(threadName),
       _stop(false),
@@ -63,6 +65,7 @@ SocketPoll::SocketPoll(const std::string& threadName)
       _threadFinished(false),
       _owner(std::this_thread::get_id())
 {
+#ifndef MOBILEAPP
     // Create the wakeup fd.
     if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)
     {
@@ -71,10 +74,12 @@ SocketPoll::SocketPoll(const std::string& threadName)
 
     std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
     getWakeupsArray().push_back(_wakeup[1]);
+#endif
 }
 
 SocketPoll::~SocketPoll()
 {
+#ifndef MOBILEAPP
     joinThread();
 
     {
@@ -91,6 +96,7 @@ SocketPoll::~SocketPoll()
     ::close(_wakeup[1]);
     _wakeup[0] = -1;
     _wakeup[1] = -1;
+#endif
 }
 
 void SocketPoll::startThread()
@@ -110,6 +116,8 @@ void SocketPoll::startThread()
     }
 }
 
+#ifndef MOBILEAPP
+
 void SocketPoll::joinThread()
 {
     addCallback([this](){ removeSockets(); });
@@ -126,14 +134,19 @@ void SocketPoll::joinThread()
     }
 }
 
+#endif
+
 void SocketPoll::wakeupWorld()
 {
+#ifndef MOBILEAPP
     for (const auto& fd : getWakeupsArray())
         wakeup(fd);
+#endif
 }
 
 void SocketPoll::insertNewWebSocketSync(const Poco::URI &uri, const std::shared_ptr<SocketHandlerInterface>& websocketHandler)
 {
+#ifndef MOBILEAPP
     LOG_INF("Connecting to " << uri.getHost() << " : " << uri.getPort() << " : " << uri.getPath());
 
     // FIXME: put this in a ClientSocket class ?
@@ -218,11 +231,10 @@ void SocketPoll::insertNewWebSocketSync(const Poco::URI &uri, const std::shared_
     }
     else
         LOG_ERR("Failed to lookup client websocket host '" << uri.getHost() << "' skipping");
+#endif
 }
 
-#endif
-
-#ifdef __linux
+#ifndef MOBILEAPP
 
 void ServerSocket::dumpState(std::ostream& os)
 {
@@ -242,10 +254,10 @@ void SocketDisposition::execute()
     _socketMove = nullptr;
 }
 
+#endif
+
 const int WebSocketHandler::InitialPingDelayMs = 25;
 const int WebSocketHandler::PingFrequencyMs = 18 * 1000;
-
-#endif
 
 void WebSocketHandler::dumpState(std::ostream& os)
 {
@@ -281,10 +293,9 @@ void StreamSocket::send(Poco::Net::HTTPResponse& response)
     send(oss.str());
 }
 
-#ifdef __linux
-
 void SocketPoll::dumpState(std::ostream& os)
 {
+#ifndef MOBILEAPP
     // FIXME: NOT thread-safe! _pollSockets is modified from the polling thread!
     os << " Poll [" << _pollSockets.size() << "] - wakeup r: "
        << _wakeup[0] << " w: " << _wakeup[1] << "\n";
@@ -293,7 +304,10 @@ void SocketPoll::dumpState(std::ostream& os)
     os << "\tfd\tevents\trsize\twsize\n";
     for (auto &i : _pollSockets)
         i->dumpState(os);
+#endif
 }
+
+#ifndef MOBILEAPP
 
 /// Returns true on success only.
 bool ServerSocket::bind(Type type, int port)

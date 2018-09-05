@@ -15,7 +15,7 @@
 #include <sys/stat.h>
 #ifdef __linux
 #include <sys/vfs.h>
-#else
+#elif defined IOS
 #import <Foundation/Foundation.h>
 #endif
 
@@ -238,9 +238,11 @@ namespace FileUtil
     {
         assert(!path.empty());
 
+#ifndef MOBILEAPP
         bool hookResult;
         if (UnitBase::get().filterCheckDiskSpace(path, hookResult))
             return hookResult;
+#endif
 
         // we should be able to run just OK with 5GB
         constexpr int64_t ENOUGH_SPACE = int64_t(5)*1024*1024*1024;
@@ -260,7 +262,7 @@ namespace FileUtil
 
         if (static_cast<double>(sfs.f_bavail) / sfs.f_blocks <= 0.05)
             return false;
-#else
+#elif defined IOS
         NSDictionary *atDict = [[NSFileManager defaultManager] attributesOfFileSystemForPath:@"/" error:NULL];
         long long freeSpace = [[atDict objectForKey:NSFileSystemFreeSize] longLongValue];
         long long totalSpace = [[atDict objectForKey:NSFileSystemSize] longLongValue];

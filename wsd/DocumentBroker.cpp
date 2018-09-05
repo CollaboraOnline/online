@@ -194,6 +194,8 @@ void DocumentBroker::pollThread()
 
     _threadStart = std::chrono::steady_clock::now();
 
+#ifndef MOBILEAPP
+
     // Request a kit process for this doc.
     do
     {
@@ -234,6 +236,7 @@ void DocumentBroker::pollThread()
         LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
         return;
     }
+#endif
 
     _childProcess->setDocumentBroker(shared_from_this());
     LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
@@ -242,18 +245,21 @@ void DocumentBroker::pollThread()
     static const size_t IdleDocTimeoutSecs = LOOLWSD::getConfigValue<int>(
                                                       "per_document.idle_timeout_secs", 3600);
 
+#ifndef MOBILEAPP
     // Used to accumulate B/W deltas.
     uint64_t adminSent = 0;
     uint64_t adminRecv = 0;
     auto lastBWUpdateTime = std::chrono::steady_clock::now();
+#endif
     auto last30SecCheckTime = std::chrono::steady_clock::now();
 
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
     {
-        _poll->poll(SocketPoll::DefaultPollTimeoutMs);
-
         const auto now = std::chrono::steady_clock::now();
+
+#ifndef MOBILEAPP
+        _poll->poll(SocketPoll::DefaultPollTimeoutMs);
 
         if (std::chrono::duration_cast<std::chrono::milliseconds>
                     (now - lastBWUpdateTime).count() >= 5 * 1000)
@@ -270,6 +276,7 @@ void DocumentBroker::pollThread()
             adminSent = sent;
             adminRecv = recv;
         }
+#endif
 
         if (isSaving() &&
             std::chrono::duration_cast<std::chrono::milliseconds>
@@ -352,8 +359,10 @@ void DocumentBroker::pollThread()
     _poll->stop();
     _poll->removeSockets();
 
+#ifndef MOBILEAPP
     // Async cleanup.
     LOOLWSD::doHousekeeping();
+#endif
 
     // Remove all tiles related to this document from the cache if configured so.
     if (_tileCache && !LOOLWSD::TileCachePersistent)
@@ -375,13 +384,17 @@ DocumentBroker::~DocumentBroker()
 {
     assertCorrectThread();
 
+#ifndef MOBILEAPP
     Admin::instance().rmDoc(_docKey);
+#endif
 
     LOG_INF("~DocumentBroker [" << _docKey <<
             "] destroyed with " << _sessions.size() << " sessions left.");
 
+#ifndef MOBILEAPP
     // Do this early - to avoid operating on _childProcess from two threads.
     _poll->joinThread();
+#endif
 
     if (!_sessions.empty())
     {
@@ -395,7 +408,9 @@ DocumentBroker::~DocumentBroker()
 
 void DocumentBroker::joinThread()
 {
+#ifndef MOBILEAPP
     _poll->joinThread();
+#endif
 }
 
 void DocumentBroker::stop(const std::string& reason)
@@ -414,11 +429,13 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
     LOG_INF("Loading [" << _docKey << "] for session [" << sessionId << "] and jail [" << jailId << "].");
 
+#ifndef MOBILEAPP
     {
         bool result;
         if (UnitWSD::get().filterLoad(sessionId, jailId, result))
             return result;
     }
+#endif
 
     if (_markToDestroy)
     {
@@ -463,6 +480,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     std::string userExtraInfo;
     std::string watermarkText;
     std::chrono::duration<double> getInfoCallDuration(0);
+
+ #ifndef MOBILEAPP
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
@@ -532,6 +551,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         session->setWopiFileInfo(wopifileinfo);
     }
     else
+#endif
     {
         LocalStorage* localStorage = dynamic_cast<LocalStorage*>(_storage.get());
         if (localStorage != nullptr)
@@ -601,6 +621,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     {
         std::string localPath = _storage->loadStorageFileToLocal(session->getAuthorization());
 
+#ifndef MOBILEAPP
         // Check if we have a prefilter "plugin" for this document format
         for (const auto& plugin : LOOLWSD::PluginConfigurations)
         {
@@ -652,6 +673,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                 // This plugin is not a proper prefilter one
             }
         }
+#endif
 
         std::ifstream istr(localPath, std::ios::binary);
         Poco::SHA1Engine sha1;
@@ -674,6 +696,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         _tileCache->setThreadOwner(std::this_thread::get_id());
     }
 
+#ifndef MOBILEAPP
     LOOLWSD::dumpNewSessionTrace(getJailId(), sessionId, _uriOrig, _storage->getRootFilePath());
 
     // Since document has been loaded, send the stats if its WOPI
@@ -687,7 +710,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         LOG_TRC("Sending to Client [" << msg << "].");
         session->sendTextFrame(msg);
     }
-
+#endif
     return true;
 }
 
@@ -973,7 +996,11 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         oss << "}";
 
         assert(_storage);
-        _storage->setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
+        _storage->setIsAutosave(isAutosave
+#ifndef MOBILEAPP
+                                || UnitWSD::get().isAutosave()
+#endif
+                                );
 
         const std::string saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);
@@ -1044,8 +1071,10 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
     const std::string aMessage = "session " + id + ' ' + _docKey + ' ' + _docId;
     _childProcess->sendTextFrame(aMessage);
 
+#ifndef MOBILEAPP
     // Tell the admin console about this new doc
     Admin::instance().addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(), session->getUserId());
+#endif
 
     // Add and attach the session.
     _sessions.emplace(session->getId(), session);
@@ -1098,12 +1127,15 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
     assertCorrectThread();
     try
     {
+#ifndef MOBILEAPP
         Admin::instance().rmDoc(_docKey, id);
-
+#endif
         auto it = _sessions.find(id);
         if (it != _sessions.end())
         {
+#ifndef MOBILEAPP
             LOOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
+#endif
 
             const bool readonly = (it->second ? it->second->isReadOnly() : false);
 
@@ -1158,8 +1190,10 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 {
     assertCorrectThread();
 
+#ifndef MOBILEAPP
     if (UnitWSD::get().filterAlertAllusers(msg))
         return;
+#endif
 
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
 
@@ -1177,7 +1211,9 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     const auto& msg = message->abbr();
     LOG_TRC("DocumentBroker handling child message: [" << msg << "].");
 
+#ifndef MOBILEAPP
     LOOLWSD::dumpOutgoingTrace(getJailId(), "0", msg);
+#endif
 
     if (LOOLProtocol::getFirstToken(message->forwardToken(), '-') == "client")
     {
@@ -1204,6 +1240,7 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
             LOG_CHECK_RET(kind != "", false);
             Util::alertAllUsers(cmd, kind);
         }
+#ifndef MOBILEAPP
         else if (command == "procmemstats:")
         {
             int dirty;
@@ -1212,6 +1249,7 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
                 Admin::instance().updateMemoryDirty(_docKey, dirty);
             }
         }
+#endif
         else
         {
             LOG_ERR("Unexpected message: [" << msg << "].");
@@ -1555,7 +1593,9 @@ void DocumentBroker::setModified(const bool value)
     if (_isModified != value)
     {
         _isModified = value;
+#ifndef MOBILEAPP
         Admin::instance().modificationAlert(_docKey, getPid(), value);
+#endif
     }
 
     _storage->setUserModified(value);
@@ -1742,7 +1782,9 @@ void DocumentBroker::broadcastMessage(const std::string& message)
 void DocumentBroker::updateLastActivityTime()
 {
     _lastActivityTime = std::chrono::steady_clock::now();
+#ifndef MOBILEAPP
     Admin::instance().updateLastActivityTime(_docKey);
+#endif
 }
 
 void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)

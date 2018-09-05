@@ -383,9 +383,11 @@ public:
     /// 0 for closed/invalid socket, and -1 for other errors.
     int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush = true) const
     {
+#ifndef MOBILEAPP
         int unitReturn = -1;
         if (UnitBase::get().filterSendMessage(data, len, code, flush, unitReturn))
             return unitReturn;
+#endif
 
         //TODO: Support fragmented messages.
 

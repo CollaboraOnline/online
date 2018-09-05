@@ -70,7 +70,7 @@ namespace Util
 
     bool windowingAvailable();
 
-#if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS)
+#if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS) && !defined(MOBILEAPP)
 
     /// Send a message to all clients.
     void alertAllUsers(const std::string& msg);

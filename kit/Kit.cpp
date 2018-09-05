@@ -14,11 +14,13 @@
 #include <config.h>
 
 #include <dlfcn.h>
+#ifdef __linux
 #include <ftw.h>
 #include <sys/capability.h>
+#include <sys/sysmacros.h>
+#endif
 #include <unistd.h>
 #include <utime.h>
-#include <sys/sysmacros.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 
@@ -99,13 +101,16 @@ using namespace LOOLProtocol;
 // We only host a single document in our lifetime.
 class Document;
 static std::shared_ptr<Document> document;
-static LokHookFunction2* initFunction = nullptr;
 
 #if ENABLE_DEBUG
 #  define ADD_DEBUG_RENDERID(s) ((s)+ " renderid=" + Util::UniqueId())
 #else
 #  define ADD_DEBUG_RENDERID(s) (s)
 #endif
+
+#ifndef MOBILEAPP
+
+static LokHookFunction2* initFunction = nullptr;
 
 namespace
 {
@@ -359,6 +364,8 @@ namespace
     }
 #endif
 }
+
+#endif
 
 /// A quick & dirty cache of the last few PNGs
 /// and their hashes to avoid re-compression
@@ -2108,7 +2115,10 @@ void documentViewCallback(const int type, const char* payload, void* data)
     Document::ViewCallback(type, payload, data);
 }
 
+#ifndef MOBILEAPP
+
 #ifndef BUILDING_TESTS
+
 void lokit_main(const std::string& childRoot,
                 const std::string& jailId,
                 const std::string& sysTemplate,
@@ -2480,5 +2490,7 @@ void alertAllUsers(const std::string& cmd, const std::string& kind)
 
 }
 #endif
+
+#endif // MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

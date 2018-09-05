@@ -150,10 +150,12 @@ std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
     const std::string fileName = _cacheDir + "/" + cacheFileName(tile);
 
     std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
+
+#ifndef MOBILEAPP
     UnitWSD::get().lookupTile(tile.getPart(), tile.getWidth(), tile.getHeight(),
                               tile.getTilePosX(), tile.getTilePosY(),
                               tile.getTileWidth(), tile.getTileHeight(), result);
-
+#endif
     if (result && result->is_open())
     {
         LOG_TRC("Found cache tile: " << fileName);

@@ -429,6 +429,7 @@ public:
     /// Poll the sockets for available data to read or buffer to write.
     void poll(int timeoutMaxMs)
     {
+#ifndef MOBILEAPP
         assertCorrectThread();
 
         std::chrono::steady_clock::time_point now =
@@ -527,6 +528,7 @@ public:
 
             disposition.execute();
         }
+#endif
     }
 
     /// Write to a wakeup descriptor

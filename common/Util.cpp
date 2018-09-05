@@ -18,7 +18,7 @@
 #include <sys/prctl.h>
 #include <sys/syscall.h>
 #include <sys/vfs.h>
-#else
+#elif defined IOS
 #import <Foundation/Foundation.h>
 #endif
 #include <sys/stat.h>
@@ -504,7 +504,7 @@ namespace Util
             LOG_INF("Thread " << getThreadId() << " (" <<
                     std::this_thread::get_id() <<
                     ") is now called [" << s << "].");
-#else
+#elif defined IOS
         [[NSThread currentThread] setName:[NSString stringWithUTF8String:ThreadName]];
         LOG_INF("Thread " << getThreadId() << " (" <<
                 std::this_thread::get_id() <<
@@ -520,7 +520,7 @@ namespace Util
 #ifdef __linux
             if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(ThreadName), 0, 0, 0) != 0)
                 ThreadName[0] = '\0';
-#else
+#elif defined IOS
             const char *const name = [[[NSThread currentThread] name] UTF8String];
             strncpy(ThreadName, name, 31);
             ThreadName[31] = '\0';

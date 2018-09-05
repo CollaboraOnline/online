@@ -187,6 +187,7 @@ void Session::handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &
 {
     try
     {
+#ifndef MOBILEAPP
         std::unique_ptr< std::vector<char> > replace;
         if (UnitBase::get().filterSessionInput(this, &data[0], data.size(), replace))
         {
@@ -194,7 +195,7 @@ void Session::handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &
                 _handleInput(replace->data(), replace->size());
             return;
         }
-
+#endif
         if (!data.empty())
             _handleInput(&data[0], data.size());
     }

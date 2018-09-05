@@ -12,8 +12,6 @@
 #ifdef __linux
 #include <sys/prctl.h>
 #include <sys/syscall.h>
-#else
-#import <Foundation/Foundation.h>
 #endif
 #include <unistd.h>
 
