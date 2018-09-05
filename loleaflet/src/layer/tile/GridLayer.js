@@ -334,6 +334,7 @@ L.GridLayer = L.Layer.extend({
 		    tileZoomChanged = this._tileZoom !== tileZoom;
 
 		if (!noUpdate && (hard || tileZoomChanged)) {
+			this._resetClientVisArea();
 
 			if (this._abortLoading) {
 				this._abortLoading();
@@ -357,6 +358,11 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		this._setZoomTransforms(center, zoom);
+	},
+
+	_resetClientVisArea: function ()  {
+		this._clientZoom = '';
+		this._clientVisibleArea = '';
 	},
 
 	_updateTileTwips: function () {
@@ -542,9 +548,9 @@ L.GridLayer = L.Layer.extend({
 			}
 		}
 
-		this._sendClientVisibleArea();
+		this._sendClientVisibleArea(true);
 
-		this._sendClientZoom();
+		this._sendClientZoom(true);
 
 		if (queue.length !== 0) {
 			if (newView) {
@@ -692,7 +698,7 @@ L.GridLayer = L.Layer.extend({
 		}
 	},
 
-	_sendClientVisibleArea: function () {
+	_sendClientVisibleArea: function (forceUpdate) {
 		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
 		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
 		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
@@ -700,10 +706,11 @@ L.GridLayer = L.Layer.extend({
 		var newClientVisibleArea = 'clientvisiblearea x=' + Math.round(visibleTopLeft.x) + ' y=' + Math.round(visibleTopLeft.y) +
 			' width=' + Math.round(size.x) + ' height=' + Math.round(size.y);
 
-		if (this._clientVisibleArea !== newClientVisibleArea) {
+		if (this._clientVisibleArea !== newClientVisibleArea || forceUpdate) {
 			// Visible area is dirty, update it on the server
-			this._clientVisibleArea = newClientVisibleArea
-			this._map._socket.sendMessage(this._clientVisibleArea);
+			this._map._socket.sendMessage(newClientVisibleArea);
+			if (!this._map._fatal && this._map._active && this._map._socket.connected())
+				this._clientVisibleArea = newClientVisibleArea
 			if (this._debug) {
 				this._debugInfo.clearLayers();
 				for (var key in this._tiles) {
@@ -714,16 +721,19 @@ L.GridLayer = L.Layer.extend({
 		}
 	},
 
-	_sendClientZoom: function () {
+	_sendClientZoom: function (forceUpdate) {
+
 		var newClientZoom = 'tilepixelwidth=' + this._tileWidthPx + ' ' +
 			'tilepixelheight=' + this._tileHeightPx + ' ' +
 			'tiletwipwidth=' + this._tileWidthTwips + ' ' +
 			'tiletwipheight=' + this._tileHeightTwips;
 
-		if (this._clientZoom !== newClientZoom) {
+		if (this._clientZoom !== newClientZoom || forceUpdate) {
 			// the zoom level has changed
-			this._clientZoom = newClientZoom;
-			this._map._socket.sendMessage('clientzoom ' + this._clientZoom);
+			this._map._socket.sendMessage('clientzoom ' + newClientZoom);
+
+			if (!this._map._fatal && this._map._active && this._map._socket.connected())
+				this._clientZoom = newClientZoom;
 		}
 	},
 
