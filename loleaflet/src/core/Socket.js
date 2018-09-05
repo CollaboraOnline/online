@@ -516,6 +516,7 @@ L.Socket = L.Class.extend({
 
 			if (this._map._docLayer) {
 				this._map._docLayer.removeAllViews();
+				this._map._docLayer._resetClientVisArea();
 			}
 			this.close();
 
@@ -748,7 +749,7 @@ L.Socket = L.Class.extend({
 			else if (this._reconnecting) {
 				// we are reconnecting ...
 				this._reconnecting = false;
-				this._map._docLayer.viewReset();
+				this._map._docLayer._resetClientVisArea();
 				this._map._docLayer._onMessage('invalidatetiles: EMPTY', null);
 				this._map.fire('statusindicator', {statusType: 'reconnected'});
 				this._map.setPermission(this._map.options.permission);
@@ -792,6 +793,7 @@ L.Socket = L.Class.extend({
 
 		if (this._map._docLayer) {
 			this._map._docLayer.removeAllViews();
+			this._map._docLayer._resetClientVisArea();
 		}
 
 		if (isActive && this._reconnecting) {
