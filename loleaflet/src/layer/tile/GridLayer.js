@@ -25,8 +25,7 @@ L.GridLayer = L.Layer.extend({
 	initialize: function (options) {
 		L.setOptions(this, options);
 
-		this._clientZoom = '';
-		this._clientVisibleArea = '';
+		this._resetClientVisArea()
 	},
 
 	onAdd: function () {
@@ -360,6 +359,9 @@ L.GridLayer = L.Layer.extend({
 		this._setZoomTransforms(center, zoom);
 	},
 
+	// These variables indicates the clientvisiblearea sent to the server and stored by the server
+	// We need to reset them when we are reconnecting to the server or reloading a document
+	// because the server needs new data even if the client is unmodified.
 	_resetClientVisArea: function ()  {
 		this._clientZoom = '';
 		this._clientVisibleArea = '';
