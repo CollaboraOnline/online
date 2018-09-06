@@ -57,6 +57,7 @@ public:
     static std::string ChildRoot;
     static std::string ServerName;
     static std::string FileServerRoot;
+    static std::string ServiceRoot; ///< There are installations that need prefixing every page with some path.
     static std::string LOKitVersion;
     static std::string LogLevel;
     static std::atomic<unsigned> NumConnections;

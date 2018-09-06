@@ -35,9 +35,9 @@ ifelse(IOSAPP,[true],
     [<link rel="stylesheet" href="bundle.css" />
   ]),
   ifelse(DEBUG,[true],
-    foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="/loleaflet/%VERSION%/fileCSS" />
+    foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="%SERVICE_ROOT%/loleaflet/%VERSION%/fileCSS" />
   ]),
-    [<link rel="stylesheet" href="/loleaflet/%VERSION%/bundle.css" />
+    [<link rel="stylesheet" href="%SERVICE_ROOT%/loleaflet/%VERSION%/bundle.css" />
   ])dnl
 )dnl
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
@@ -46,10 +46,10 @@ ifelse(IOSAPP,[true],
    <link rel="localizations" href="l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>],
-  [<link rel="localizations" href="/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
-   <link rel="localizations" href="/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json"/>
-   <link rel="localizations" href="/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
-   <link rel="localizations" href="/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>]
+  [<link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>]
 )dnl
 </head>
 
@@ -151,9 +151,9 @@ ifelse(IOSAPP,[true],
   [    <script src="bundle.js"></script>
   ]),
   ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
-  [    <script src="/loleaflet/%VERSION%/fileJS"></script>
+  [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/fileJS"></script>
   ]),
-  [    <script src="/loleaflet/%VERSION%/bundle.js"></script>
+  [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/bundle.js"></script>
   ])
 )dnl
     <!--%BRANDING_JS%--> <!-- logo onclick handler -->
