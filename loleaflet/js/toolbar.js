@@ -248,6 +248,10 @@ function onClick(e, id, item, subItem) {
 		}
 		L.toggleFullScreen();
 	}
+	else if (id === 'close') {
+		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
+		map.remove();
+	}
 	else {
 		map.handleSigningClickEvent(id, item); // this handles a bunch of signing bar click events
 	}
