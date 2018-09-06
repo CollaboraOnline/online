@@ -614,6 +614,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
+    Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), LOOLWSD::ServiceRoot);
 
     static const std::string linkCSS("<link rel=\"stylesheet\" href=\"/loleaflet/" LOOLWSD_VERSION_HASH "/%s.css\">");
     static const std::string scriptJS("<script src=\"/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");

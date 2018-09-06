@@ -553,6 +553,7 @@ inline std::string getLaunchURI()
     std::ostringstream oss;
 
     oss << getLaunchBase("");
+    oss << LOOLWSD::ServiceRoot;
     oss << LOOLWSD_TEST_LOLEAFLET_UI;
     oss << "?file_path=file://";
     oss << Poco::Path(aAbsTopSrcDir).absolute().toString();
@@ -597,6 +598,7 @@ std::string LOOLWSD::LoTemplate;
 std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
+std::string LOOLWSD::ServiceRoot;
 std::string LOOLWSD::LOKitVersion;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
@@ -695,6 +697,7 @@ void LOOLWSD::initialize(Application& self)
             { "loleaflet_html", "loleaflet.html" },
             { "loleaflet_logging", "false" },
             { "net.proto", "all" },
+            { "net.service_root", "" },
             { "num_prespawn_children", "1" },
             { "per_document.autosave_duration_secs", "300" },
             { "per_document.idle_timeout_secs", "3600" },
@@ -869,6 +872,11 @@ void LOOLWSD::initialize(Application& self)
         else
             LOG_WRN("Invalid protocol: " << proto);
     }
+
+    // Prefix for the loolwsd pages; should not end with a '/'
+    ServiceRoot = getPathFromConfig("net.service_root");
+    while (ServiceRoot.length() > 0 && ServiceRoot[ServiceRoot.length() - 1] == '/')
+        ServiceRoot.pop_back();
 
 #if ENABLE_SSL
     LOOLWSD::SSLEnabled.set(getConfigValue<bool>(conf, "ssl.enable", true));
@@ -1802,6 +1810,13 @@ private:
 
         try
         {
+            // Check and remove the ServiceRoot from the request.getURI()
+            if (!Util::startsWith(request.getURI(), LOOLWSD::ServiceRoot))
+                throw BadRequestException("The request does not start with prefix: " + LOOLWSD::ServiceRoot);
+
+            std::string requestURIString(request.getURI().substr(LOOLWSD::ServiceRoot.length()));
+            request.setURI(requestURIString);
+
             // Routing
             Poco::URI requestUri(request.getURI());
             std::vector<std::string> reqPathSegs;
@@ -2432,6 +2447,7 @@ private:
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
         const std::string uriValue = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://")
                                    + std::string("%SERVER_HOST%")
+                                   + LOOLWSD::ServiceRoot
                                    + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
 
         InputSource inputSrc(discoveryPath);

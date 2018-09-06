@@ -68,6 +68,7 @@
 
     <net desc="Network settings">
       <proto type="string" default="all" desc="Protocol to use IPv4, IPv6 or all for both">all</proto>
+      <service_root type="path" default="" desc="Prefix all the pages, websockets, etc. with this path."></service_root>
     </net>
 
     <ssl desc="SSL settings">
