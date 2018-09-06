@@ -518,11 +518,15 @@ L.Control.Menubar = L.Control.extend({
 
 		// Add document specific menu
 		var docType = this._map.getDocType();
+		var $docLogo = $('#document-logo');
 		if (docType === 'text') {
+			$docLogo.addClass('writer-icon-img');
 			this._initializeMenu(this.options.text);
 		} else if (docType === 'spreadsheet') {
+			$docLogo.addClass('calc-icon-img');
 			this._initializeMenu(this.options.spreadsheet);
 		} else if (docType === 'presentation' || docType === 'drawing') {
+			$docLogo.addClass('impress-icon-img');
 			this._initializeMenu(this.options.presentation);
 		}
 
