@@ -81,7 +81,7 @@ ifelse(MOBILEAPP,[true],
 
     <div class="header-wrapper">
       <div id="document-header">
-	<div class="document-logo"></div>
+	<div id="document-logo"></div>
 	<div id="document-titlebar">
 	  <div id="logo" class="logo"></div>
           <div class="document-title">

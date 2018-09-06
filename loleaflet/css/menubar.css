@@ -20,7 +20,7 @@
     position: relative;
 }
 
-.document-logo {
+#document-logo {
 	position: absolute;
 	width: 50px;
 	height: 69px;
@@ -280,4 +280,25 @@
 
 .lo-menu-item-checked:hover::before {
     color: #fff;
+}
+
+.writer-icon-img {
+	background-image: url('images/x-office-document.svg');
+	background-size: 50px 50px;
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
+
+.calc-icon-img {
+	background-image: url('images/x-office-spreadsheet.svg');
+	background-size: 50px 50px;
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
+
+.impress-icon-img {
+	background-image: url('images/x-office-presentation.svg');
+	background-size: 50px 50px;
+	background-repeat: no-repeat;
+	background-position: bottom;
 }
