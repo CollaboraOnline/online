@@ -19,10 +19,10 @@
   window.addEventListener('message', PostMessageReadyListener, false);
 </script>
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
-<link rel="localizations" href="/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
-<link rel="localizations" href="/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json" />
-<link rel="localizations" href="/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
-<link rel="localizations" href="/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json" />
+<link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
+<link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json" />
+<link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
+<link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json" />
   <body style="user-select: none;">
     <!--The "controls" div holds map controls such as the Zoom button and
         it's separated from the map in order to have the controls on the top
@@ -104,7 +104,7 @@
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
     </script>
     <!--%BRANDING_JS%--> <!-- logo onclick handler -->
-    <script src="/loleaflet/%VERSION%/bundle.js"></script>
-    <script src="/loleaflet/%VERSION%/toolbar/w2ui-1.5.rc1.min.js"></script>
-    <script src="/loleaflet/%VERSION%/toolbar/toolbar.js"></script>
+    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/bundle.js"></script>
+    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/toolbar/w2ui-1.5.rc1.min.js"></script>
+    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/toolbar/toolbar.js"></script>
 </body></html>
