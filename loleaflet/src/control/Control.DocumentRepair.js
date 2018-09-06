@@ -2,7 +2,7 @@
 /*
  * L.Control.DocumentRepair.
  */
-/* global $ _ _UNO */
+/* global _ _UNO */
 L.Control.DocumentRepair = L.Control.extend({
 	options: {
 		position: 'topright'
@@ -76,10 +76,11 @@ L.Control.DocumentRepair = L.Control.extend({
 
 		// Show relative date by default, absolute one as tooltip.
 		td = L.DomUtil.create('td', '', row);
-		var relativeDateTime = $.timeago(dateTime.replace(/,.*/, 'Z'));
+		var d = new Date(dateTime.replace(/,.*/, 'Z'));
+		var dateOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
 		var span = document.createElement('span');
 		span.title = dateTime;
-		span.appendChild(document.createTextNode(relativeDateTime));
+		span.appendChild(document.createTextNode(d.toLocaleDateString(String.locale, dateOptions)));
 		td.appendChild(span);
 
 		L.DomEvent.on(row, 'click', this._onRowClick, this);
