@@ -56,17 +56,17 @@ L.Socket = L.Class.extend({
 		if (map.options.permission) {
 			map.options.docParams['permission'] = map.options.permission;
 		}
-		var wopiSrc = '';
-		if (map.options.wopiSrc != '') {
-			wopiSrc = '?WOPISrc=' + map.options.wopiSrc + '&compat=/ws';
-		}
-
 		if (this.socket) {
 			this.close();
 		}
 		if (window.ThisIsTheiOSApp) {
 			this.socket = new FakeWebSocket();
 		} else {
+			var wopiSrc = '';
+			if (map.options.wopiSrc != '') {
+				wopiSrc = '?WOPISrc=' + map.options.wopiSrc + '&compat=/ws';
+			}
+
 			try {
 				var websocketURI = map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc;
 				this.socket = new WebSocket(websocketURI);
