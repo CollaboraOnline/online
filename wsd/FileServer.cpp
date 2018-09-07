@@ -252,7 +252,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 
     Poco::Net::HTTPCookie cookie("jwt", jwtToken);
     // bundlify appears to add an extra /dist -> dist/dist/admin
-    cookie.setPath("/loleaflet/dist/");
+    cookie.setPath(LOOLWSD::ServiceRoot + "/loleaflet/dist/");
     cookie.setSecure(LOOLWSD::isSSLEnabled() ||
                      LOOLWSD::isSSLTermination());
     response.addCookie(cookie);
