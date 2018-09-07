@@ -32,7 +32,7 @@ L.Socket = L.Class.extend({
 			wopiSrc = '?WOPISrc=' + map.options.wopiSrc + '&compat=/ws';
 		}
 
-		var websocketURI = map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc;
+		var websocketURI = map.options.server + map.options.serviceRoot + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc;
 		try {
 			if (this.socket) {
 				this.close();

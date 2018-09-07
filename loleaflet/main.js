@@ -104,6 +104,7 @@ var notWopiButIframe = getParameterByName('NotWOPIButIframe') != '';
 var map = L.map('map', {
 	server: host,
 	doc: docURL,
+	serviceRoot: serviceRoot,
 	docParams: docParams,
 	permission: permission,
 	timestamp: timestamp,
