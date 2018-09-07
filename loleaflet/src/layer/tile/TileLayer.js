@@ -546,7 +546,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (map.options.wopiSrc != '') {
 			wopiSrc = '?WOPISrc=' + map.options.wopiSrc;
 		}
-		var url = this._map.options.webserver + '/' + this._map.options.urlPrefix + '/' +
+		var url = this._map.options.webserver + this._map.options.serviceRoot + '/' + this._map.options.urlPrefix + '/' +
 		    encodeURIComponent(this._map.options.doc) + '/' + command.jail + '/' + command.dir + '/' + command.name + wopiSrc;
 
 		this._map.hideBusy();

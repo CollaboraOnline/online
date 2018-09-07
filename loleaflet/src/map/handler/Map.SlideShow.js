@@ -24,7 +24,7 @@ L.Map.SlideShow = L.Handler.extend({
 
 	_onFullScreen: function () {
 		this._slideShow = L.DomUtil.create('iframe', 'leaflet-slideshow', this._map._container);
-		this._slideShow.src = this._map.options.webserver + '/loleaflet/dist/loading.html';
+		this._slideShow.src = this._map.options.webserver + this._map.options.serviceRoot + '/loleaflet/dist/loading.html';
 		if (this._slideShow.requestFullscreen) {
 			this._slideShow.requestFullscreen();
 		}
