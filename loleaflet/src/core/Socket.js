@@ -68,7 +68,7 @@ L.Socket = L.Class.extend({
 			}
 
 			try {
-				var websocketURI = map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc;
+				var websocketURI = map.options.server + map.options.serviceRoot + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc;
 				this.socket = new WebSocket(websocketURI);
 			} catch (e) {
 				// On IE 11 there is a limitation on the number of WebSockets open to a single domain (6 by default and can go to 128).

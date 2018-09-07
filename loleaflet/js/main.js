@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 /* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader vex host */
-/* global idleTimeoutSecs outOfFocusTimeoutSecs setupToolbar*/
+/* global serviceRoot idleTimeoutSecs outOfFocusTimeoutSecs setupToolbar*/
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {
 
@@ -52,6 +52,7 @@ var notWopiButIframe = getParameterByName('NotWOPIButIframe') != '';
 var map = L.map('map', {
 	server: host,
 	doc: docURL,
+	serviceRoot: serviceRoot,
 	docParams: docParams,
 	permission: permission,
 	timestamp: timestamp,

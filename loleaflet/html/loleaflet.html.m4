@@ -123,6 +123,7 @@ ifelse(IOSAPP,[true],
     <script>
 ifelse(IOSAPP,[true],
      [window.host = '';
+      window.serviceRoot = '';
       window.accessToken = '';
       window.accessTokenTTL = '';
       window.accessHeader = '';
@@ -130,6 +131,7 @@ ifelse(IOSAPP,[true],
       window.outOfFocusTimeoutSecs = 1000000;
       window.idleTimeoutSecs = 1000000;],
      [window.host = '%HOST%';
+      window.serviceRoot = '%SERVICE_ROOT%';
       window.accessToken = '%ACCESS_TOKEN%';
       window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
       window.accessHeader = '%ACCESS_HEADER%';

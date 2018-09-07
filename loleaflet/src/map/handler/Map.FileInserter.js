@@ -21,7 +21,7 @@ L.Map.FileInserter = L.Handler.extend({
 		if (map.options.wopiSrc != '') {
 			wopiSrc = '?WOPISrc=' + map.options.wopiSrc;
 		}
-		this._url = map.options.webserver + '/' + map.options.urlPrefix +
+		this._url = map.options.webserver + map.options.serviceRoot + '/' + map.options.urlPrefix +
 			'/' + encodeURIComponent(map.options.doc) + '/insertfile' + wopiSrc;
 	},
 

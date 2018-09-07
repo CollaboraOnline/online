@@ -815,6 +815,8 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
 
     Poco::replaceInPlace(adminFile, std::string("<!--%BRANDING_JS%-->"), brandJS);
     Poco::replaceInPlace(adminFile, std::string("<!--%FOOTER%-->"), brandFooter);
+    Poco::replaceInPlace(adminFile, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
+    Poco::replaceInPlace(adminFile, std::string("%SERVICE_ROOT%"), LOOLWSD::ServiceRoot);
 
     // Ask UAs to block if they detect any XSS attempt
     response.add("X-XSS-Protection", "1; mode=block");
