@@ -616,11 +616,11 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), LOOLWSD::ServiceRoot);
 
-    static const std::string linkCSS("<link rel=\"stylesheet\" href=\"/loleaflet/" LOOLWSD_VERSION_HASH "/%s.css\">");
-    static const std::string scriptJS("<script src=\"/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
+    static const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.css\">");
+    static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
 
-    std::string brandCSS(Poco::format(linkCSS, std::string(BRANDING)));
-    std::string brandJS(Poco::format(scriptJS, std::string(BRANDING)));
+    std::string brandCSS(Poco::format(linkCSS, LOOLWSD::ServiceRoot, std::string(BRANDING)));
+    std::string brandJS(Poco::format(scriptJS, LOOLWSD::ServiceRoot, std::string(BRANDING)));
 
     const auto& config = Application::instance().config();
 #if ENABLE_SUPPORT_KEY
@@ -628,8 +628,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     SupportKey key(keyString);
     if (!key.verify() || key.validDaysRemaining() <= 0)
     {
-        brandCSS = Poco::format(linkCSS, std::string(BRANDING_UNSUPPORTED));
-        brandJS = Poco::format(scriptJS, std::string(BRANDING_UNSUPPORTED));
+        brandCSS = Poco::format(linkCSS, LOOLWSD::ServiceRoot, std::string(BRANDING_UNSUPPORTED));
+        brandJS = Poco::format(scriptJS, LOOLWSD::ServiceRoot, std::string(BRANDING_UNSUPPORTED));
     }
 #endif
 
@@ -789,13 +789,13 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
     if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
-    static const std::string scriptJS("<script src=\"/loleaflet/dist/%s.js\"></script>");
+    static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
     static const std::string footerPage("<div class=\"footer navbar-fixed-bottom text-info text-center\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</div>");
 
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string adminFile = *getUncompressedFile(relPath);
-    std::string brandJS(Poco::format(scriptJS, std::string(BRANDING)));
+    std::string brandJS(Poco::format(scriptJS, LOOLWSD::ServiceRoot, std::string(BRANDING)));
     std::string brandFooter;
 
 #if ENABLE_SUPPORT_KEY

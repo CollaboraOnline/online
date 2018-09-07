@@ -573,6 +573,7 @@ inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
     std::ostringstream oss;
 
     oss << getLaunchBase(user + ":" + passwd + "@");
+    oss << LOOLWSD::ServiceRoot;
     oss << LOOLWSD_TEST_ADMIN_CONSOLE;
 
     return oss.str();
