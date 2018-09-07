@@ -25,10 +25,10 @@ var revHistoryEnabled = getParameterByName('revisionhistory');
 var alwaysActive = getParameterByName('alwaysactive');
 // Loleaflet Debug mode
 var debugMode = getParameterByName('debug');
-if (wopiSrc === '' && filePath === '') {
+if (wopiSrc === '' && filePath === '' && !window.ThisIsTheiOSApp) {
 	vex.dialog.alert(errorMessages.wrongwopisrc);
 }
-if (host === '') {
+if (host === '' && !window.ThisIsTheiOSApp) {
 	vex.dialog.alert(errorMessages.emptyhosturl);
 }
 

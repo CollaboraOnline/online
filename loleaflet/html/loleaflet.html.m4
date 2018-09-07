@@ -1,3 +1,4 @@
+dnl -*- Mode: HTML -*-x
 changequote([,])dnl
 dnl# foreachq(x, `item_1, item_2, ..., item_n', stmt)
 dnl# quoted list, alternate improved version
@@ -17,6 +18,10 @@ define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(
   var PostMessageReadyListener = function(e) {
     var msg = JSON.parse(e.data);
     if (msg.MessageId === 'Host_PostmessageReady') {
+      if (window.ThisIsTheiOSApp) {
+        // Just for debugging to see that we got it
+        window.webkit.messageHandlers.lool.postMessage('got Host_PostmessageReady!');
+      }
       window.WOPIPostmessageReady = true;
       window.removeEventListener('message', PostMessageReadyListener, false);
     }
@@ -116,18 +121,40 @@ ifelse(IOSAPP,[true],
     </div>
 
     <script>
-      window.host = '%HOST%';
+ifelse(IOSAPP,[true],
+     [window.host = '';
+      window.accessToken = '';
+      window.accessTokenTTL = '';
+      window.accessHeader = '';
+      window.loleafletLogging = 'true';
+      window.outOfFocusTimeoutSecs = 1000000;
+      window.idleTimeoutSecs = 1000000;],
+     [window.host = '%HOST%';
       window.accessToken = '%ACCESS_TOKEN%';
       window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
       window.accessHeader = '%ACCESS_HEADER%';
       window.loleafletLogging = '%LOLEAFLET_LOGGING%';
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
-      window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
+      window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;])
     </script>
-ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
-[    <script src="/loleaflet/%VERSION%/fileJS"></script>
-]),
-[    <script src="/loleaflet/%VERSION%/bundle.js"></script>
-])dnl
+  <script>
+ifelse(IOSAPP,[true],
+  [window.ThisIsTheiOSApp = true;],
+  [window.ThisIsTheiOSApp = false;]
+)
+  </script>
+
+ifelse(IOSAPP,[true],
+  ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
+  [    <script src="fileJS"></script>
+  ]),
+  [    <script src="bundle.js"></script>
+  ]),
+  ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
+  [    <script src="/loleaflet/%VERSION%/fileJS"></script>
+  ]),
+  [    <script src="/loleaflet/%VERSION%/bundle.js"></script>
+  ])
+)dnl
     <!--%BRANDING_JS%--> <!-- logo onclick handler -->
 </body></html>

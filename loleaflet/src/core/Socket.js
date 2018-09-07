@@ -4,6 +4,35 @@
  */
 
 /* global _ vex $ errorMessages Uint8Array brandProductName brandProductFAQURL */
+
+window.fakeWebSocketCounter = 0;
+function FakeWebSocket() {
+	this.binaryType = 'arraybuffer';
+	this.bufferedAmount = 0;
+	this.extensions = '';
+	this.protocol = '';
+	this.readyState = 0;
+	this.id = window.fakeWebSocketCounter++;
+	console.log('>>>>>> Created FakeWebSocket#' + this.id);
+	this.onclose = function() {
+	};
+	this.onerror = function() {
+	};
+	this.onmessage = function() {
+	};
+	this.onopen = function() {
+	};
+}
+
+FakeWebSocket.prototype.close = function() {
+	console.log('>>>>>> Closing FakeWebSocket#' + this.id);
+}
+
+FakeWebSocket.prototype.send = function(data) {
+	console.log('>>>>>> Sending data on FakeWebSocket#' + this.id + ': "' + data + '"');
+	window.webkit.messageHandlers.lool.postMessage(data, '*');
+}
+
 L.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
 	ReconnectCount: 0,
@@ -32,22 +61,26 @@ L.Socket = L.Class.extend({
 			wopiSrc = '?WOPISrc=' + map.options.wopiSrc + '&compat=/ws';
 		}
 
-		var websocketURI = map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc;
-		try {
-			if (this.socket) {
-				this.close();
-			}
-			this.socket = new WebSocket(websocketURI);
-		} catch (e) {
-			// On IE 11 there is a limitation on the number of WebSockets open to a single domain (6 by default and can go to 128).
-			// Detect this and hint the user.
-			var msgHint = '';
-			var isIE11 = !!window.MSInputMethodContext && !!document.documentMode; // https://stackoverflow.com/questions/21825157/internet-explorer-11-detection
-			if (isIE11)
-				msgHint = _('IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections');
+		if (this.socket) {
+			this.close();
+		}
+		if (window.ThisIsTheiOSApp) {
+			this.socket = new FakeWebSocket();
+		} else {
+			try {
+				var websocketURI = map.options.server + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc;
+				this.socket = new WebSocket(websocketURI);
+			} catch (e) {
+				// On IE 11 there is a limitation on the number of WebSockets open to a single domain (6 by default and can go to 128).
+				// Detect this and hint the user.
+				var msgHint = '';
+				var isIE11 = !!window.MSInputMethodContext && !!document.documentMode; // https://stackoverflow.com/questions/21825157/internet-explorer-11-detection
+				if (isIE11)
+					msgHint = _('IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections');
 
-			this._map.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ').replace('LibreOffice Online', (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online')) + e + msgHint, cmd: 'socket', kind: 'failed', id: 3});
-			return;
+				this._map.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ').replace('LibreOffice Online', (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online')) + e + msgHint, cmd: 'socket', kind: 'failed', id: 3});
+				return;
+			}
 		}
 
 		this.socket.onerror = L.bind(this._onSocketError, this);
