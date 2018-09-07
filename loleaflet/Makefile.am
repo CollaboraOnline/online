@@ -7,7 +7,14 @@
 DRAW_VERSION=0.2.4
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
+
+# It would be nice to have l10n also in the iOS app, but have to
+# skip for now as that l10n-for-node code seems to always want to use
+# HTTP to load the message catalog .json files.
+
+if !ENABLE_IOSAPP
 L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(builddir)/dist/l10n/%.json,$(L10N_PO))
+endif
 
 JQUERY_UI_IMAGE_PATH = node_modules/jquery-ui/themes/ui-lightness/images
 JQUERY_UI_IMAGES = $(wildcard $(JQUERY_UI_IMAGE_PATH)/*.png)
@@ -80,11 +87,15 @@ NODE_MODULES_JS =\
 	node_modules/timeago/jquery.timeago.js \
 	node_modules/autolinker/dist/Autolinker.js \
 	node_modules/json-js/json2.js \
-	node_modules/l10n-for-node/l10n.js \
 	node_modules/select2/dist/js/select2.js \
 	node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js \
 	node_modules/vex-js/js/vex.js \
 	node_modules/vex-js/js/vex.dialog.js
+
+if !ENABLE_IOSAPP
+NODE_MODULES_JS +=\
+	node_modules/l10n-for-node/l10n.js
+endif
 
 NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
 NODE_MODULES_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(NODE_MODULES_JS))
