@@ -8,7 +8,36 @@
 }
 
 #main-menu.readonly {
-    top: 0;
+    top: 30px;
+}
+
+.header-wrapper {
+    background: #efefef; /* Fill up white areas with grey */
+    min-height: 70px; /* Map starts from 70px onwards in case of writer, calc */
+}
+
+#document-header {
+    position: relative;
+}
+
+.document-logo {
+	position: absolute;
+	width: 50px;
+	height: 69px;
+}
+
+.document-title {
+	display: table-cell;
+	height: 39px;
+	vertical-align: bottom;
+}
+
+#document-titlebar {
+	display: table;
+	table-layout: fixed;
+	border-spacing: 15px 0px;
+	margin-left: 50px;
+	max-height: 39px;
 }
 
 .main-nav {
