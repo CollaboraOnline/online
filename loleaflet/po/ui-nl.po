@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-31 14:03+0200\n"
+"POT-Creation-Date: 2018-09-08 11:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Revision: 3411259\n"
+"X-Pootle-Revision: 3485981\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-ui-nl.po\n"
 
 #: admin/admin.strings.js:5
@@ -300,223 +300,223 @@ msgstr "1 gebruiker"
 msgid "0 users"
 msgstr "0 gebruikers"
 
-#: js/toolbar.js:189
+#: js/toolbar.js:179
 msgid "Are you sure you want to delete this page?"
 msgstr "Weet u zeker dat u deze pagina wilt verwijderen?"
 
-#: js/toolbar.js:399
+#: js/toolbar.js:398
 msgid "Textwrap"
 msgstr "Tekstomloop"
 
-#: js/toolbar.js:400
+#: js/toolbar.js:399
 msgid "No wrap"
 msgstr "Geen omloop"
 
-#: js/toolbar.js:401
+#: js/toolbar.js:400
 msgid "Page wrap"
 msgstr "Paginaomloop"
 
-#: js/toolbar.js:402
+#: js/toolbar.js:401
 msgid "Wrap anchor only"
 msgstr "Omloop alleen anker"
 
-#: js/toolbar.js:403
+#: js/toolbar.js:402
 msgid "Ideal wrap"
 msgstr "Optimale omloop"
 
-#: js/toolbar.js:404
+#: js/toolbar.js:403
 msgid "Left wrap"
 msgstr "Omloop links"
 
-#: js/toolbar.js:405
+#: js/toolbar.js:404
 msgid "Right wrap"
 msgstr "Omloop rechts"
 
-#: js/toolbar.js:406
+#: js/toolbar.js:405
 msgid "Wrap through"
 msgstr "Doorloop"
 
-#: js/toolbar.js:412
+#: js/toolbar.js:411
 msgid "Document repair"
 msgstr "Documentreparatie"
 
-#: js/toolbar.js:452
+#: js/toolbar.js:451
 msgid "Insert table"
 msgstr "Tabel invoegen"
 
-#: js/toolbar.js:454
+#: js/toolbar.js:453
 msgid "Insert shapes"
 msgstr "Vormen invoegen"
 
-#: js/toolbar.js:498 js/toolbar.js:961
+#: js/toolbar.js:497 js/toolbar.js:960
 msgid "Sum"
 msgstr "Som"
 
-#: js/toolbar.js:499
+#: js/toolbar.js:498
 msgid "Function"
 msgstr "Functie"
 
-#: js/toolbar.js:500 src/layer/marker/Annotation.js:163
+#: js/toolbar.js:499 src/layer/marker/Annotation.js:163
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: js/toolbar.js:501
+#: js/toolbar.js:500
 msgid "Accept"
 msgstr "Accepteren"
 
-#: js/toolbar.js:517
+#: js/toolbar.js:516
 msgid "First sheet"
 msgstr "Eerste werkblad"
 
-#: js/toolbar.js:518
+#: js/toolbar.js:517
 msgid "Previous sheet"
 msgstr "Vorig werkblad"
 
-#: js/toolbar.js:519
+#: js/toolbar.js:518
 msgid "Next sheet"
 msgstr "Volgend werkblad"
 
-#: js/toolbar.js:520
+#: js/toolbar.js:519
 msgid "Last sheet"
 msgstr "Laatste werkblad"
 
-#: js/toolbar.js:521
+#: js/toolbar.js:520
 msgid "Insert sheet"
 msgstr "Blad invoegen"
 
-#: js/toolbar.js:531 src/control/Control.Menubar.js:292
+#: js/toolbar.js:530 src/control/Control.Menubar.js:292
 msgid "Fullscreen presentation"
 msgstr "Presentatie volledig scherm"
 
-#: js/toolbar.js:548
+#: js/toolbar.js:547
 msgid "Search:"
 msgstr "Zoeken:"
 
-#: js/toolbar.js:555
+#: js/toolbar.js:554
 msgid "Cancel the search"
 msgstr "Zoekopdracht annuleren"
 
-#: js/toolbar.js:560
+#: js/toolbar.js:559
 msgid "No users"
 msgstr "Geen gebruikers"
 
-#: js/toolbar.js:564
+#: js/toolbar.js:563
 msgid "Always follow the editor"
 msgstr "Volg altijd de editor"
 
-#: js/toolbar.js:567
+#: js/toolbar.js:566
 msgid "Current"
 msgstr "Huidig"
 
-#: js/toolbar.js:574 src/control/Control.Menubar.js:60
+#: js/toolbar.js:573 src/control/Control.Menubar.js:60
 #: src/control/Control.Menubar.js:257
 msgid "Reset zoom"
 msgstr "Zoom herstellen"
 
-#: js/toolbar.js:606
+#: js/toolbar.js:605
 msgid "%user has joined"
 msgstr "%user heeft zich vervoegd"
 
-#: js/toolbar.js:772 js/toolbar.js:1319
+#: js/toolbar.js:771 js/toolbar.js:1318
 msgid "Size"
 msgstr "Grootte"
 
-#: js/toolbar.js:939
+#: js/toolbar.js:938
 msgid "Number of Sheets"
 msgstr "Aantal bladen"
 
-#: js/toolbar.js:942
+#: js/toolbar.js:941
 msgid "Selected range of cells"
 msgstr "Geselecteerd cellenbereik"
 
-#: js/toolbar.js:945 js/toolbar.js:982
+#: js/toolbar.js:944 js/toolbar.js:981
 msgid "Entering text mode"
 msgstr "Tekstmodus activeren"
 
-#: js/toolbar.js:948 js/toolbar.js:988 js/toolbar.js:1010
+#: js/toolbar.js:947 js/toolbar.js:987 js/toolbar.js:1009
 msgid "Text Language"
 msgstr "Teksttaal"
 
-#: js/toolbar.js:951 js/toolbar.js:985
+#: js/toolbar.js:950 js/toolbar.js:984
 msgid "Selection Mode"
 msgstr "Selectie modus"
 
-#: js/toolbar.js:954
+#: js/toolbar.js:953
 msgid "Choice of functions"
 msgstr "Lijst met functies"
 
-#: js/toolbar.js:956
+#: js/toolbar.js:955
 msgid "Average"
 msgstr "Gemiddelde"
 
-#: js/toolbar.js:957
+#: js/toolbar.js:956
 msgid "CountA"
 msgstr "AantalA"
 
-#: js/toolbar.js:958
+#: js/toolbar.js:957
 msgid "Count"
 msgstr "Aantal"
 
-#: js/toolbar.js:959
+#: js/toolbar.js:958
 msgid "Maximum"
 msgstr "Maximum"
 
-#: js/toolbar.js:960
+#: js/toolbar.js:959
 msgid "Minimum"
 msgstr "Minimum"
 
-#: js/toolbar.js:962
+#: js/toolbar.js:961
 msgid "Selection count"
 msgstr "Selectie tellen"
 
-#: js/toolbar.js:963
+#: js/toolbar.js:962
 msgid "None"
 msgstr "Geen"
 
-#: js/toolbar.js:976
+#: js/toolbar.js:975
 msgid "Number of Pages"
 msgstr "Aantal pagina's"
 
-#: js/toolbar.js:979
+#: js/toolbar.js:978
 msgid "Word Counter"
 msgstr "Aantal woorden"
 
-#: js/toolbar.js:1007
+#: js/toolbar.js:1006
 msgid "Number of Slides"
 msgstr "Aantal dia's"
 
-#: js/toolbar.js:1153
+#: js/toolbar.js:1152
 msgid "Document saved"
 msgstr "Document opgeslagen"
 
-#: js/toolbar.js:1289
+#: js/toolbar.js:1288
 msgid "Style"
 msgstr "Opmaakprofiel"
 
-#: js/toolbar.js:1311
+#: js/toolbar.js:1310
 msgid "Font"
 msgstr "Lettertype"
 
-#: js/toolbar.js:1344
+#: js/toolbar.js:1343
 msgid "Previous slide"
 msgstr "Vorige dia"
 
-#: js/toolbar.js:1345
+#: js/toolbar.js:1344
 msgid "Next slide"
 msgstr "Volgende dia"
 
-#: js/toolbar.js:1407
+#: js/toolbar.js:1406
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Ongedaan maken/Opnieuw conflicteert met meerdere gebruikers. Gebruik "
 "document herstellen om dit op te lossen."
 
-#: js/toolbar.js:1617 src/control/Control.DocumentRepair.js:93
+#: js/toolbar.js:1616 src/control/Control.DocumentRepair.js:94
 msgid "You"
 msgstr "U"
 
-#: js/toolbar.js:1623
+#: js/toolbar.js:1622
 msgid "Readonly"
 msgstr "alleen-lezen"
 
@@ -645,12 +645,12 @@ msgid "ODF text document (.odt)"
 msgstr "ODF tekst bestand (.odt)"
 
 #: src/control/Control.Menubar.js:25
-msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgid "Word 2003 Document (.doc)"
+msgstr "Word 2003-document (.doc)"
 
 #: src/control/Control.Menubar.js:26
-msgid "Microsoft Word (.docx)"
-msgstr ""
+msgid "Word Document (.docx)"
+msgstr "Word-document (.docx)"
 
 #: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
@@ -695,24 +695,24 @@ msgid "ODF presentation (.odp)"
 msgstr "ODF presentatie (.odp)"
 
 #: src/control/Control.Menubar.js:235
-msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr ""
+msgid "PowerPoint 2003 Presentation (.ppt)"
+msgstr "PowerPoint 2003-presentatie (.ppt)"
 
 #: src/control/Control.Menubar.js:236
-msgid "Microsoft Powerpoint (.pptx)"
-msgstr ""
+msgid "PowerPoint Presentation (.pptx)"
+msgstr "PowerPoint-presentatie (.pptx)"
 
 #: src/control/Control.Menubar.js:314
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF werkblad (.ods)"
 
 #: src/control/Control.Menubar.js:315
-msgid "Microsoft Excel 2003 (.xls)"
-msgstr ""
+msgid "Excel 2003 Spreadsheet (.xls)"
+msgstr "Excel 2003-spreadsheet (.xls)"
 
 #: src/control/Control.Menubar.js:316
-msgid "Microsoft Excel (.xlsx)"
-msgstr ""
+msgid "Excel Spreadsheet (.xlsx)"
+msgstr "Excel-spreadsheet (.xlsx)"
 
 #: src/control/Control.Menubar.js:460
 msgid "Reset to Default Language"
@@ -750,48 +750,57 @@ msgstr "Voer een nieuwe bladnaam in."
 msgid "Downloading..."
 msgstr "Bezig met ophalen..."
 
-#: src/control/Toolbar.js:98 src/map/Map.js:1043
+#: src/control/Toolbar.js:98 src/map/Map.js:1004
 msgid "Saving..."
 msgstr "Opslaan..."
 
-#: src/control/Toolbar.js:239
+#: src/control/Toolbar.js:243
 msgid "This version of %productName is powered by"
 msgstr "Deze versie van %productName werk op basis van"
 
-#: src/core/Socket.js:42
+#: src/core/Socket.js:47
+msgid ""
+"IE11 has reached its maximum number of connections. Please see this document "
+"to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
+"versions/windows/internet-explorer/ie-developer/general-info/"
+"ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr ""
+"IE11 heeft zijn maximum aantal verbindingen bereikt. Gelieve dit document te "
+"raadplegen om deze limiet te verhogen, indien nodig: "
+"https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer"
+"/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
+"connections"
+
+#: src/core/Socket.js:49
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Oops, er is een probleem bij het verbinden met LibreOffice Online : "
 
-#: src/core/Socket.js:42
-msgid "Cannot create websocket, please restart your browser."
-msgstr "Kan geen websocket-verbinding maken, start uw browser opnieuw."
-
-#: src/core/Socket.js:228
+#: src/core/Socket.js:233
 msgid "Unsupported server version."
 msgstr "Niet-ondersteunde serverversie"
 
-#: src/core/Socket.js:279
+#: src/core/Socket.js:284
 msgid "Session terminated by document owner"
 msgstr "Sessie beëindigd door document-eigenaar"
 
-#: src/core/Socket.js:283
+#: src/core/Socket.js:288
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Niet actief document - klik om het bewerken te hervatten"
 
-#: src/core/Socket.js:290
+#: src/core/Socket.js:295
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server wordt afgesloten voor onderhoud (automatische-opslag)"
 
-#: src/core/Socket.js:294
+#: src/core/Socket.js:299
 msgid "Oops, there is a problem connecting the document"
 msgstr "Oeps, er is een probleem met de toegang tot het document"
 
-#: src/core/Socket.js:298
+#: src/core/Socket.js:303
 msgid "Server is recycling and will be available shortly"
 msgstr ""
 "De server wordt opnieuw opgestart en zal binnenkort weer beschikbaar zijn."
 
-#: src/core/Socket.js:329
+#: src/core/Socket.js:334
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -799,7 +808,7 @@ msgstr ""
 "Het document is in de opslag gewijzigd. Het document opnieuw laden. Uw "
 "versie is beschikbaar als revisie."
 
-#: src/core/Socket.js:335
+#: src/core/Socket.js:340
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -807,7 +816,7 @@ msgstr ""
 "Oudere revisie herstellen. Niet-opgeslagen wijzigingen zijn beschikbaar in "
 "de versiegeschiedenis"
 
-#: src/core/Socket.js:453
+#: src/core/Socket.js:458
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -815,39 +824,39 @@ msgstr ""
 "Document is gewijzigd tijdens opslag. Wat zou wilt u doen met uw niet-"
 "opgeslagen wijzigingen?"
 
-#: src/core/Socket.js:458
+#: src/core/Socket.js:463
 msgid "Discard"
 msgstr "Verwerpen"
 
-#: src/core/Socket.js:463
+#: src/core/Socket.js:468
 msgid "Overwrite"
 msgstr "Overschrijven"
 
-#: src/core/Socket.js:468
+#: src/core/Socket.js:473
 msgid "Save to new file"
 msgstr "Als nieuw bestand opslaan"
 
-#: src/core/Socket.js:535
+#: src/core/Socket.js:540
 msgid "Document requires password to view."
 msgstr "Er is een wachtwoord nodig om dit document te bekijken."
 
-#: src/core/Socket.js:538
+#: src/core/Socket.js:543
 msgid "Document requires password to modify."
 msgstr "Er is een wachtwoord nodig om dit document te bewerken."
 
-#: src/core/Socket.js:540
+#: src/core/Socket.js:545
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Klik Cancel om het in alleen-lezen modus te openen."
 
-#: src/core/Socket.js:544
+#: src/core/Socket.js:549
 msgid "Wrong password provided. Please try again."
 msgstr "Verkeer wachtwoord ingevoerd. Probeer aub opnieuw."
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:662
 msgid "Connecting..."
 msgstr "Bezig met verbinden..."
 
-#: src/core/Socket.js:806
+#: src/core/Socket.js:811
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -879,36 +888,18 @@ msgstr "Wijzigen"
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: src/map/Map.js:142
+#: src/map/Map.js:143
 msgid "Initializing..."
 msgstr "Initialiseren…"
 
-#: src/map/Map.js:907
+#: src/map/Map.js:868
 msgid "Inactive document - please click to resume editing"
 msgstr "Niet actief document - klik om het bewerken te hervatten"
 
-#: src/map/Map.js:1046
+#: src/map/Map.js:1007
 msgid "Loading..."
 msgstr "Laden…"
 
 #: src/map/handler/Map.FileInserter.js:60
 msgid "Uploading..."
 msgstr "Bezig met laden…"
-
-#~ msgid "Word 2003 Document (.doc)"
-#~ msgstr "Word 2003-document (.doc)"
-
-#~ msgid "Word Document (.docx)"
-#~ msgstr "Word-document (.docx)"
-
-#~ msgid "PowerPoint 2003 Presentation (.ppt)"
-#~ msgstr "PowerPoint 2003-presentatie (.ppt)"
-
-#~ msgid "PowerPoint Presentation (.pptx)"
-#~ msgstr "PowerPoint-presentatie (.pptx)"
-
-#~ msgid "Excel 2003 Spreadsheet (.xls)"
-#~ msgstr "Excel 2003-spreadsheet (.xls)"
-
-#~ msgid "Excel Spreadsheet (.xlsx)"
-#~ msgstr "Excel-spreadsheet (.xlsx)"

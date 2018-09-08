@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-31 14:03+0200\n"
+"POT-Creation-Date: 2018-09-08 11:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Revision: 3342254\n"
+"X-Pootle-Revision: 3487964\n"
 "X-Pootle-Path: /cy/libo_online/loleaflet-ui-cy.po\n"
 
 #: admin/admin.strings.js:5
@@ -291,223 +291,223 @@ msgstr "1 defnyddiwr"
 msgid "0 users"
 msgstr "0 defnyddwyr"
 
-#: js/toolbar.js:189
+#: js/toolbar.js:179
 msgid "Are you sure you want to delete this page?"
 msgstr "Ydych chi'n siŵr eich bod eisiau dileu'r dudalen hon?"
 
-#: js/toolbar.js:399
+#: js/toolbar.js:398
 msgid "Textwrap"
 msgstr "Amlapio Testun"
 
-#: js/toolbar.js:400
+#: js/toolbar.js:399
 msgid "No wrap"
 msgstr "Dim amlapio"
 
-#: js/toolbar.js:401
+#: js/toolbar.js:400
 msgid "Page wrap"
 msgstr "Amlapio tudalen"
 
-#: js/toolbar.js:402
+#: js/toolbar.js:401
 msgid "Wrap anchor only"
 msgstr "Amlapio angor yn unig"
 
-#: js/toolbar.js:403
+#: js/toolbar.js:402
 msgid "Ideal wrap"
 msgstr "Amlapio delfrydol"
 
-#: js/toolbar.js:404
+#: js/toolbar.js:403
 msgid "Left wrap"
 msgstr "Amlapio i'r chwith"
 
-#: js/toolbar.js:405
+#: js/toolbar.js:404
 msgid "Right wrap"
 msgstr "Amlapio i'r dde"
 
-#: js/toolbar.js:406
+#: js/toolbar.js:405
 msgid "Wrap through"
 msgstr "Amlapio parhaus"
 
-#: js/toolbar.js:412
+#: js/toolbar.js:411
 msgid "Document repair"
 msgstr "Trwsio dogfennau"
 
-#: js/toolbar.js:452
+#: js/toolbar.js:451
 msgid "Insert table"
 msgstr "Mewnosod tudalen"
 
-#: js/toolbar.js:454
+#: js/toolbar.js:453
 msgid "Insert shapes"
 msgstr "Mewnosod siapiau"
 
-#: js/toolbar.js:498 js/toolbar.js:961
+#: js/toolbar.js:497 js/toolbar.js:960
 msgid "Sum"
 msgstr "Swm"
 
-#: js/toolbar.js:499
+#: js/toolbar.js:498
 msgid "Function"
 msgstr "Swyddogaeth"
 
-#: js/toolbar.js:500 src/layer/marker/Annotation.js:163
+#: js/toolbar.js:499 src/layer/marker/Annotation.js:163
 msgid "Cancel"
 msgstr "Diddymu"
 
-#: js/toolbar.js:501
+#: js/toolbar.js:500
 msgid "Accept"
 msgstr "Derbyn"
 
-#: js/toolbar.js:517
+#: js/toolbar.js:516
 msgid "First sheet"
 msgstr "Daflen gyntaf"
 
-#: js/toolbar.js:518
+#: js/toolbar.js:517
 msgid "Previous sheet"
 msgstr "Dalen flaenorol"
 
-#: js/toolbar.js:519
+#: js/toolbar.js:518
 msgid "Next sheet"
 msgstr "Dalen nesaf"
 
-#: js/toolbar.js:520
+#: js/toolbar.js:519
 msgid "Last sheet"
 msgstr "Dalen olaf"
 
-#: js/toolbar.js:521
+#: js/toolbar.js:520
 msgid "Insert sheet"
 msgstr "Mewnosod dalen"
 
-#: js/toolbar.js:531 src/control/Control.Menubar.js:292
+#: js/toolbar.js:530 src/control/Control.Menubar.js:292
 msgid "Fullscreen presentation"
 msgstr "Cyflwyniad sgrin lawn"
 
-#: js/toolbar.js:548
+#: js/toolbar.js:547
 msgid "Search:"
 msgstr "Chwilio:"
 
-#: js/toolbar.js:555
+#: js/toolbar.js:554
 msgid "Cancel the search"
 msgstr "Diddymu'r chwilio"
 
-#: js/toolbar.js:560
+#: js/toolbar.js:559
 msgid "No users"
 msgstr "Dim defnyddwyr"
 
-#: js/toolbar.js:564
+#: js/toolbar.js:563
 msgid "Always follow the editor"
 msgstr "Dilyn y golygydd bob tro"
 
-#: js/toolbar.js:567
+#: js/toolbar.js:566
 msgid "Current"
 msgstr "Cyfredol"
 
-#: js/toolbar.js:574 src/control/Control.Menubar.js:60
+#: js/toolbar.js:573 src/control/Control.Menubar.js:60
 #: src/control/Control.Menubar.js:257
 msgid "Reset zoom"
 msgstr "Ailosod chwyddo"
 
-#: js/toolbar.js:606
+#: js/toolbar.js:605
 msgid "%user has joined"
 msgstr "Mae %user wedi ymuno"
 
-#: js/toolbar.js:772 js/toolbar.js:1319
+#: js/toolbar.js:771 js/toolbar.js:1318
 msgid "Size"
 msgstr "Maint"
 
-#: js/toolbar.js:939
+#: js/toolbar.js:938
 msgid "Number of Sheets"
 msgstr "Nifer y Dalenni"
 
-#: js/toolbar.js:942
+#: js/toolbar.js:941
 msgid "Selected range of cells"
 msgstr "Ystod y celloedd wedi eu dewis"
 
-#: js/toolbar.js:945 js/toolbar.js:982
+#: js/toolbar.js:944 js/toolbar.js:981
 msgid "Entering text mode"
 msgstr "Mynd i'r modd testun"
 
-#: js/toolbar.js:948 js/toolbar.js:988 js/toolbar.js:1010
+#: js/toolbar.js:947 js/toolbar.js:987 js/toolbar.js:1009
 msgid "Text Language"
 msgstr "Iaith Testun"
 
-#: js/toolbar.js:951 js/toolbar.js:985
+#: js/toolbar.js:950 js/toolbar.js:984
 msgid "Selection Mode"
 msgstr "Y Modd Dewis"
 
-#: js/toolbar.js:954
+#: js/toolbar.js:953
 msgid "Choice of functions"
 msgstr "Y dewis o swyddogaethau"
 
-#: js/toolbar.js:956
+#: js/toolbar.js:955
 msgid "Average"
 msgstr "Cyfartaledd"
 
-#: js/toolbar.js:957
+#: js/toolbar.js:956
 msgid "CountA"
 msgstr "CyfrifA"
 
-#: js/toolbar.js:958
+#: js/toolbar.js:957
 msgid "Count"
 msgstr "Cyfrif"
 
-#: js/toolbar.js:959
+#: js/toolbar.js:958
 msgid "Maximum"
 msgstr "Uchafswm"
 
-#: js/toolbar.js:960
+#: js/toolbar.js:959
 msgid "Minimum"
 msgstr "Lleiafswm"
 
-#: js/toolbar.js:962
+#: js/toolbar.js:961
 msgid "Selection count"
 msgstr "Cyfrif y dewis"
 
-#: js/toolbar.js:963
+#: js/toolbar.js:962
 msgid "None"
 msgstr "Dim"
 
-#: js/toolbar.js:976
+#: js/toolbar.js:975
 msgid "Number of Pages"
 msgstr "Nifer o Dudalennau"
 
-#: js/toolbar.js:979
+#: js/toolbar.js:978
 msgid "Word Counter"
 msgstr "Cyfrifydd Geiriau"
 
-#: js/toolbar.js:1007
+#: js/toolbar.js:1006
 msgid "Number of Slides"
 msgstr "Nifer y Sleidiau"
 
-#: js/toolbar.js:1153
+#: js/toolbar.js:1152
 msgid "Document saved"
 msgstr "Dogfen wedi ei chadw"
 
-#: js/toolbar.js:1289
+#: js/toolbar.js:1288
 msgid "Style"
 msgstr "Arddull"
 
-#: js/toolbar.js:1311
+#: js/toolbar.js:1310
 msgid "Font"
 msgstr "Ffont"
 
-#: js/toolbar.js:1344
+#: js/toolbar.js:1343
 msgid "Previous slide"
 msgstr "Sleid flaenorol"
 
-#: js/toolbar.js:1345
+#: js/toolbar.js:1344
 msgid "Next slide"
 msgstr "Sleid nesaf"
 
-#: js/toolbar.js:1407
+#: js/toolbar.js:1406
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Gwrthdaro Dadwneud/Ail-wneud oherwydd defnyddwyr luosog. Defnyddiwch "
 "trwsio'r ddogfen i'w ddatrys"
 
-#: js/toolbar.js:1617 src/control/Control.DocumentRepair.js:93
+#: js/toolbar.js:1616 src/control/Control.DocumentRepair.js:94
 msgid "You"
 msgstr "Chi"
 
-#: js/toolbar.js:1623
+#: js/toolbar.js:1622
 msgid "Readonly"
 msgstr "Darllen y unig"
 
@@ -635,12 +635,12 @@ msgid "ODF text document (.odt)"
 msgstr "Dogfen testun ODF (.odt)"
 
 #: src/control/Control.Menubar.js:25
-msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgid "Word 2003 Document (.doc)"
+msgstr "Dogfen Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:26
-msgid "Microsoft Word (.docx)"
-msgstr ""
+msgid "Word Document (.docx)"
+msgstr "Dogfen Word (.docx)"
 
 #: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
@@ -685,24 +685,24 @@ msgid "ODF presentation (.odp)"
 msgstr "Cyflwyno ODF (.odp)"
 
 #: src/control/Control.Menubar.js:235
-msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr ""
+msgid "PowerPoint 2003 Presentation (.ppt)"
+msgstr "Cyflwyniad PowerPoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:236
-msgid "Microsoft Powerpoint (.pptx)"
-msgstr ""
+msgid "PowerPoint Presentation (.pptx)"
+msgstr "Cyflwyniad PowerPoint (.pptx)"
 
 #: src/control/Control.Menubar.js:314
 msgid "ODF spreadsheet (.ods)"
 msgstr "Taenlen ODF (.ods)"
 
 #: src/control/Control.Menubar.js:315
-msgid "Microsoft Excel 2003 (.xls)"
-msgstr ""
+msgid "Excel 2003 Spreadsheet (.xls)"
+msgstr "Taenlen Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:316
-msgid "Microsoft Excel (.xlsx)"
-msgstr ""
+msgid "Excel Spreadsheet (.xlsx)"
+msgstr "Taenlen Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:460
 msgid "Reset to Default Language"
@@ -740,47 +740,55 @@ msgstr "Rhoi enw newydd i'r dalen"
 msgid "Downloading..."
 msgstr "Wrthi'n Llwytho i Lawr..."
 
-#: src/control/Toolbar.js:98 src/map/Map.js:1043
+#: src/control/Toolbar.js:98 src/map/Map.js:1004
 msgid "Saving..."
 msgstr "Yn cadw..."
 
-#: src/control/Toolbar.js:239
+#: src/control/Toolbar.js:243
 msgid "This version of %productName is powered by"
 msgstr "Mae'r fersiwn yma o %productName yn cael ei yrru gan"
 
-#: src/core/Socket.js:42
+#: src/core/Socket.js:47
+msgid ""
+"IE11 has reached its maximum number of connections. Please see this document "
+"to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
+"versions/windows/internet-explorer/ie-developer/general-info/"
+"ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr ""
+"Mae E11 wedi cyrraedd ei uchafswm cysylltiad. Darllenwch y ddogfen hon i "
+"gynyddu'r terfyn os oes angen: https://docs.microsoft.com/en-us/previous-"
+"versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85"
+")#websocket-maximum-server-connections"
+
+#: src/core/Socket.js:49
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Wps, mae anhawster cysylltu â LibreOffice Ar-lein : "
 
-#: src/core/Socket.js:42
-msgid "Cannot create websocket, please restart your browser."
-msgstr "Methu creu websocket, ailgychwynnwch eich porwr."
-
-#: src/core/Socket.js:228
+#: src/core/Socket.js:233
 msgid "Unsupported server version."
 msgstr "Fersiwn gweinydd heb gymorth."
 
-#: src/core/Socket.js:279
+#: src/core/Socket.js:284
 msgid "Session terminated by document owner"
 msgstr "Terfynodd perchennog y ddogfen y sesiwn"
 
-#: src/core/Socket.js:283
+#: src/core/Socket.js:288
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Dogfen anweithredol - cliciwch i ail-lwytho ac ailgychwyn golygu"
 
-#: src/core/Socket.js:290
+#: src/core/Socket.js:295
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Mae'r gweinydd yn cau ar gyfer cynnal a chadw (awto gadw)"
 
-#: src/core/Socket.js:294
+#: src/core/Socket.js:299
 msgid "Oops, there is a problem connecting the document"
 msgstr "Wps, mae yna anhawster cysylltu a'r ddogfen"
 
-#: src/core/Socket.js:298
+#: src/core/Socket.js:303
 msgid "Server is recycling and will be available shortly"
 msgstr "Mae'r gweinydd yn ailgylchu a bydd ar gael cyn bo hir"
 
-#: src/core/Socket.js:329
+#: src/core/Socket.js:334
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -788,7 +796,7 @@ msgstr ""
 "Mae'r ddogfen wedi newid yn y storfa. Llwytho dogfen newydd. Mae eich "
 "fersiwn ar gael fel adolygiad."
 
-#: src/core/Socket.js:335
+#: src/core/Socket.js:340
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -796,7 +804,7 @@ msgstr ""
 "Yn adfer yr hen fersiwn. Bydd unrhyw newidiadau wedi eu cadw ar gael yn "
 "hanes y fersiynau."
 
-#: src/core/Socket.js:453
+#: src/core/Socket.js:458
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -804,39 +812,39 @@ msgstr ""
 "Mae dogfen wedi ei newid yn y storfa. Beth hoffech chi ei wneud gyda'r "
 "newidiadau sydd heb eu cadw?"
 
-#: src/core/Socket.js:458
+#: src/core/Socket.js:463
 msgid "Discard"
 msgstr "Gwaredu"
 
-#: src/core/Socket.js:463
+#: src/core/Socket.js:468
 msgid "Overwrite"
 msgstr "Trosysgrifennu"
 
-#: src/core/Socket.js:468
+#: src/core/Socket.js:473
 msgid "Save to new file"
 msgstr "Cadw i ffeil newydd"
 
-#: src/core/Socket.js:535
+#: src/core/Socket.js:540
 msgid "Document requires password to view."
 msgstr "Mae angen cyfrinair i weld y ddogfen."
 
-#: src/core/Socket.js:538
+#: src/core/Socket.js:543
 msgid "Document requires password to modify."
 msgstr "Mae angen cyfrinair i newid y ddogfen."
 
-#: src/core/Socket.js:540
+#: src/core/Socket.js:545
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Cliciwch Diddymu i agor yn y modd gweld yn unig."
 
-#: src/core/Socket.js:544
+#: src/core/Socket.js:549
 msgid "Wrong password provided. Please try again."
 msgstr "Wedi darparu cyfrinair anghywir. Ceisiwch eto."
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:662
 msgid "Connecting..."
 msgstr "Cysylltu..."
 
-#: src/core/Socket.js:806
+#: src/core/Socket.js:811
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -867,36 +875,18 @@ msgstr "Newid"
 msgid "Remove"
 msgstr "Tynnu"
 
-#: src/map/Map.js:142
+#: src/map/Map.js:143
 msgid "Initializing..."
 msgstr "Cychwyn..."
 
-#: src/map/Map.js:907
+#: src/map/Map.js:868
 msgid "Inactive document - please click to resume editing"
 msgstr "Dogfen anweithredol - cliciwch i ailgychwyn golygu"
 
-#: src/map/Map.js:1046
+#: src/map/Map.js:1007
 msgid "Loading..."
 msgstr "Yn llwytho..."
 
 #: src/map/handler/Map.FileInserter.js:60
 msgid "Uploading..."
 msgstr "Yn llwytho..."
-
-#~ msgid "Word 2003 Document (.doc)"
-#~ msgstr "Dogfen Word 2003 (.doc)"
-
-#~ msgid "Word Document (.docx)"
-#~ msgstr "Dogfen Word (.docx)"
-
-#~ msgid "PowerPoint 2003 Presentation (.ppt)"
-#~ msgstr "Cyflwyniad PowerPoint 2003 (.ppt)"
-
-#~ msgid "PowerPoint Presentation (.pptx)"
-#~ msgstr "Cyflwyniad PowerPoint (.pptx)"
-
-#~ msgid "Excel 2003 Spreadsheet (.xls)"
-#~ msgstr "Taenlen Excel 2003 (.xls)"
-
-#~ msgid "Excel Spreadsheet (.xlsx)"
-#~ msgstr "Taenlen Excel (.xlsx)"

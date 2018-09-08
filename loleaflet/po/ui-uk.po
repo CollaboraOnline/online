@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-31 14:03+0200\n"
+"POT-Creation-Date: 2018-09-08 11:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Revision: 3341527\n"
+"X-Pootle-Revision: 3464585\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
 
 #: admin/admin.strings.js:5
@@ -291,224 +291,224 @@ msgstr "1 користувач"
 msgid "0 users"
 msgstr "0 користувачів"
 
-#: js/toolbar.js:189
+#: js/toolbar.js:179
 msgid "Are you sure you want to delete this page?"
 msgstr "Ви дійсно бажаєте видалити цю сторінку?"
 
-#: js/toolbar.js:399
+#: js/toolbar.js:398
 msgid "Textwrap"
 msgstr "Обтікання тексту"
 
-#: js/toolbar.js:400
+#: js/toolbar.js:399
 msgid "No wrap"
 msgstr "Без обтікання"
 
-#: js/toolbar.js:401
+#: js/toolbar.js:400
 msgid "Page wrap"
 msgstr "Обтікання сторінки"
 
-#: js/toolbar.js:402
+#: js/toolbar.js:401
 msgid "Wrap anchor only"
 msgstr "Обтікати тільки якір"
 
-#: js/toolbar.js:403
+#: js/toolbar.js:402
 msgid "Ideal wrap"
 msgstr "Ідеальне обтікання"
 
-#: js/toolbar.js:404
+#: js/toolbar.js:403
 msgid "Left wrap"
 msgstr "Обтікання зліва"
 
-#: js/toolbar.js:405
+#: js/toolbar.js:404
 msgid "Right wrap"
 msgstr "Обтікання справа"
 
-#: js/toolbar.js:406
+#: js/toolbar.js:405
 msgid "Wrap through"
 msgstr "Наскрізне обтікання"
 
-#: js/toolbar.js:412
+#: js/toolbar.js:411
 msgid "Document repair"
 msgstr "Виправлення документу"
 
-#: js/toolbar.js:452
+#: js/toolbar.js:451
 msgid "Insert table"
 msgstr "Вставити таблицю"
 
-#: js/toolbar.js:454
+#: js/toolbar.js:453
 #, fuzzy
 msgid "Insert shapes"
 msgstr "Вставити аркуш"
 
-#: js/toolbar.js:498 js/toolbar.js:961
+#: js/toolbar.js:497 js/toolbar.js:960
 msgid "Sum"
 msgstr "Сума"
 
-#: js/toolbar.js:499
+#: js/toolbar.js:498
 msgid "Function"
 msgstr "Функція"
 
-#: js/toolbar.js:500 src/layer/marker/Annotation.js:163
+#: js/toolbar.js:499 src/layer/marker/Annotation.js:163
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: js/toolbar.js:501
+#: js/toolbar.js:500
 msgid "Accept"
 msgstr "Прийняти"
 
-#: js/toolbar.js:517
+#: js/toolbar.js:516
 msgid "First sheet"
 msgstr "Перший аркуш"
 
-#: js/toolbar.js:518
+#: js/toolbar.js:517
 msgid "Previous sheet"
 msgstr "Попередній аркуш"
 
-#: js/toolbar.js:519
+#: js/toolbar.js:518
 msgid "Next sheet"
 msgstr "Наступний аркуш"
 
-#: js/toolbar.js:520
+#: js/toolbar.js:519
 msgid "Last sheet"
 msgstr "Останній аркуш"
 
-#: js/toolbar.js:521
+#: js/toolbar.js:520
 msgid "Insert sheet"
 msgstr "Вставити аркуш"
 
-#: js/toolbar.js:531 src/control/Control.Menubar.js:292
+#: js/toolbar.js:530 src/control/Control.Menubar.js:292
 msgid "Fullscreen presentation"
 msgstr "Повноекранна презентація"
 
-#: js/toolbar.js:548
+#: js/toolbar.js:547
 msgid "Search:"
 msgstr "Пошук:"
 
-#: js/toolbar.js:555
+#: js/toolbar.js:554
 msgid "Cancel the search"
 msgstr "Скасувати пошук"
 
-#: js/toolbar.js:560
+#: js/toolbar.js:559
 msgid "No users"
 msgstr "Немає користувачів"
 
-#: js/toolbar.js:564
+#: js/toolbar.js:563
 msgid "Always follow the editor"
 msgstr "Завжди стежити за редактором"
 
-#: js/toolbar.js:567
+#: js/toolbar.js:566
 msgid "Current"
 msgstr "Поточний"
 
-#: js/toolbar.js:574 src/control/Control.Menubar.js:60
+#: js/toolbar.js:573 src/control/Control.Menubar.js:60
 #: src/control/Control.Menubar.js:257
 msgid "Reset zoom"
 msgstr "Відновити масштаб"
 
-#: js/toolbar.js:606
+#: js/toolbar.js:605
 msgid "%user has joined"
 msgstr "%user приєднався"
 
-#: js/toolbar.js:772 js/toolbar.js:1319
+#: js/toolbar.js:771 js/toolbar.js:1318
 msgid "Size"
 msgstr "Розмір"
 
-#: js/toolbar.js:939
+#: js/toolbar.js:938
 msgid "Number of Sheets"
 msgstr "Число аркушів"
 
-#: js/toolbar.js:942
+#: js/toolbar.js:941
 msgid "Selected range of cells"
 msgstr "Обраний діапазон комірок"
 
-#: js/toolbar.js:945 js/toolbar.js:982
+#: js/toolbar.js:944 js/toolbar.js:981
 msgid "Entering text mode"
 msgstr "Режим введення тексту"
 
-#: js/toolbar.js:948 js/toolbar.js:988 js/toolbar.js:1010
+#: js/toolbar.js:947 js/toolbar.js:987 js/toolbar.js:1009
 msgid "Text Language"
 msgstr "Мова тексту"
 
-#: js/toolbar.js:951 js/toolbar.js:985
+#: js/toolbar.js:950 js/toolbar.js:984
 msgid "Selection Mode"
 msgstr "Режим вибору"
 
-#: js/toolbar.js:954
+#: js/toolbar.js:953
 msgid "Choice of functions"
 msgstr "Вибір функцій"
 
-#: js/toolbar.js:956
+#: js/toolbar.js:955
 msgid "Average"
 msgstr "Середнє"
 
-#: js/toolbar.js:957
+#: js/toolbar.js:956
 msgid "CountA"
 msgstr "CountA"
 
-#: js/toolbar.js:958
+#: js/toolbar.js:957
 msgid "Count"
 msgstr "Кількість"
 
-#: js/toolbar.js:959
+#: js/toolbar.js:958
 msgid "Maximum"
 msgstr "Максимум"
 
-#: js/toolbar.js:960
+#: js/toolbar.js:959
 msgid "Minimum"
 msgstr "Мінімум"
 
-#: js/toolbar.js:962
+#: js/toolbar.js:961
 msgid "Selection count"
 msgstr "Кількість виділень"
 
-#: js/toolbar.js:963
+#: js/toolbar.js:962
 msgid "None"
 msgstr "Нічого"
 
-#: js/toolbar.js:976
+#: js/toolbar.js:975
 msgid "Number of Pages"
 msgstr "Число сторінок"
 
-#: js/toolbar.js:979
+#: js/toolbar.js:978
 msgid "Word Counter"
 msgstr "Лічильник слів"
 
-#: js/toolbar.js:1007
+#: js/toolbar.js:1006
 msgid "Number of Slides"
 msgstr "Число слайдів"
 
-#: js/toolbar.js:1153
+#: js/toolbar.js:1152
 msgid "Document saved"
 msgstr "Документ збережено"
 
-#: js/toolbar.js:1289
+#: js/toolbar.js:1288
 msgid "Style"
 msgstr "Стиль"
 
-#: js/toolbar.js:1311
+#: js/toolbar.js:1310
 msgid "Font"
 msgstr "Шрифт"
 
-#: js/toolbar.js:1344
+#: js/toolbar.js:1343
 msgid "Previous slide"
 msgstr "Попередній слайд"
 
-#: js/toolbar.js:1345
+#: js/toolbar.js:1344
 msgid "Next slide"
 msgstr "Наступний слайд"
 
-#: js/toolbar.js:1407
+#: js/toolbar.js:1406
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Конфлікт Повернути/Повторити для декількох користувачів. Будь ласка, "
 "використовуйте команду виправити документ для його вирішення"
 
-#: js/toolbar.js:1617 src/control/Control.DocumentRepair.js:93
+#: js/toolbar.js:1616 src/control/Control.DocumentRepair.js:94
 msgid "You"
 msgstr "Ви"
 
-#: js/toolbar.js:1623
+#: js/toolbar.js:1622
 msgid "Readonly"
 msgstr "Лише читання"
 
@@ -636,11 +636,11 @@ msgid "ODF text document (.odt)"
 msgstr "ODF текстовий документ (.odt)"
 
 #: src/control/Control.Menubar.js:25
-msgid "Microsoft Word 2003 (.doc)"
+msgid "Word 2003 Document (.doc)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:26
-msgid "Microsoft Word (.docx)"
+msgid "Word Document (.docx)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:27
@@ -686,11 +686,11 @@ msgid "ODF presentation (.odp)"
 msgstr "ODF презентація (.odp)"
 
 #: src/control/Control.Menubar.js:235
-msgid "Microsoft Powerpoint 2003 (.ppt)"
+msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:236
-msgid "Microsoft Powerpoint (.pptx)"
+msgid "PowerPoint Presentation (.pptx)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:314
@@ -698,11 +698,11 @@ msgid "ODF spreadsheet (.ods)"
 msgstr "ODF ел.таблиця (.ods)"
 
 #: src/control/Control.Menubar.js:315
-msgid "Microsoft Excel 2003 (.xls)"
+msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:316
-msgid "Microsoft Excel (.xlsx)"
+msgid "Excel Spreadsheet (.xlsx)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:460
@@ -741,48 +741,52 @@ msgstr "Введіть нову назву аркуша"
 msgid "Downloading..."
 msgstr "Звантажується..."
 
-#: src/control/Toolbar.js:98 src/map/Map.js:1043
+#: src/control/Toolbar.js:98 src/map/Map.js:1004
 msgid "Saving..."
 msgstr "Збереження..."
 
-#: src/control/Toolbar.js:239
+#: src/control/Toolbar.js:243
 msgid "This version of %productName is powered by"
 msgstr "Ця версія %productName працює на"
 
-#: src/core/Socket.js:42
+#: src/core/Socket.js:47
+msgid ""
+"IE11 has reached its maximum number of connections. Please see this document "
+"to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
+"versions/windows/internet-explorer/ie-developer/general-info/"
+"ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr ""
+
+#: src/core/Socket.js:49
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Халепа при під'єднання до LibreOffice Online : "
 
-#: src/core/Socket.js:42
-msgid "Cannot create websocket, please restart your browser."
-msgstr ""
-
-#: src/core/Socket.js:228
+#: src/core/Socket.js:233
 msgid "Unsupported server version."
 msgstr "Непідтримувана версія сервера."
 
-#: src/core/Socket.js:279
+#: src/core/Socket.js:284
 msgid "Session terminated by document owner"
 msgstr "Сесія припинена власником документу"
 
-#: src/core/Socket.js:283
+#: src/core/Socket.js:288
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Неактивний документ - клацніть для перезавантаження і відновлення редагування"
 
-#: src/core/Socket.js:290
+#: src/core/Socket.js:295
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Сервер вимикається на технічне обслуговування (автозбереження)"
 
-#: src/core/Socket.js:294
+#: src/core/Socket.js:299
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ой, виникла проблема під час з’єднання з документом"
 
-#: src/core/Socket.js:298
+#: src/core/Socket.js:303
 msgid "Server is recycling and will be available shortly"
 msgstr "Сервер перезапускається і буде доступним найближчим часом"
 
-#: src/core/Socket.js:329
+#: src/core/Socket.js:334
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -790,7 +794,7 @@ msgstr ""
 "Документ змінено у сховищі. Завантажую новий документ. Ваш варіант буде "
 "доступний як версія."
 
-#: src/core/Socket.js:335
+#: src/core/Socket.js:340
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -798,45 +802,45 @@ msgstr ""
 "Відновлення старішої версії. Незбережені зміни будуть доступн в історії "
 "версій"
 
-#: src/core/Socket.js:453
+#: src/core/Socket.js:458
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 
-#: src/core/Socket.js:458
+#: src/core/Socket.js:463
 msgid "Discard"
 msgstr ""
 
-#: src/core/Socket.js:463
+#: src/core/Socket.js:468
 msgid "Overwrite"
 msgstr ""
 
-#: src/core/Socket.js:468
+#: src/core/Socket.js:473
 msgid "Save to new file"
 msgstr ""
 
-#: src/core/Socket.js:535
+#: src/core/Socket.js:540
 msgid "Document requires password to view."
 msgstr "Документ вимагає пароль для перегляду."
 
-#: src/core/Socket.js:538
+#: src/core/Socket.js:543
 msgid "Document requires password to modify."
 msgstr "Документ вимагає пароль для редагування."
 
-#: src/core/Socket.js:540
+#: src/core/Socket.js:545
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Натисніть Скасувати для відкриття у режимі перегляду."
 
-#: src/core/Socket.js:544
+#: src/core/Socket.js:549
 msgid "Wrong password provided. Please try again."
 msgstr "Надано неправильний пароль. Спробуйте знову."
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:662
 msgid "Connecting..."
 msgstr "З'єднання..."
 
-#: src/core/Socket.js:806
+#: src/core/Socket.js:811
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -868,15 +872,15 @@ msgstr "Змінити"
 msgid "Remove"
 msgstr "Видалити"
 
-#: src/map/Map.js:142
+#: src/map/Map.js:143
 msgid "Initializing..."
 msgstr "Започаткування…"
 
-#: src/map/Map.js:907
+#: src/map/Map.js:868
 msgid "Inactive document - please click to resume editing"
 msgstr "Неактивний документ - клацніть для відновлення редагування"
 
-#: src/map/Map.js:1046
+#: src/map/Map.js:1007
 msgid "Loading..."
 msgstr "Завантаження…"
 

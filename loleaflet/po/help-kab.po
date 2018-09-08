@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-31 14:03+0200\n"
+"POT-Creation-Date: 2018-09-08 11:55+0200\n"
 "PO-Revision-Date: 2016-10-04 12:59+0000\n"
 "Last-Translator: Muḥend Velqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -709,7 +709,7 @@ msgstr ""
 msgid "Shift + Ctrl + Del"
 msgstr ""
 
-#: html/loleaflet-help.html+div.div.table.tr.td.p:112-64
+#: html/loleaflet-help.html+div.div.table.tr.td.p:112-86
 msgid ""
 "If no whole cell is selected, the text from the cursor to the end of the "
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
@@ -955,116 +955,3 @@ msgstr ""
 #: html/loleaflet-help.html+div.div.table.tr.td:213-18
 msgid "Select all in slide / drawing page"
 msgstr ""
-
-#~ msgid "LOLeaflet Help"
-#~ msgstr "Amnir n tallalt LO"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:124"
-#~ msgid "Ctrl + A"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:159"
-#~ msgid "Ctrl + B"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:160"
-#~ msgid "Ctrl + I"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:161"
-#~ msgid "Ctrl + U"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:163"
-#~ msgid "Ctrl + M"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:166"
-#~ msgid "Ctrl + D"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:167"
-#~ msgid "Ctrl + A"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:168"
-#~ msgid "Ctrl + E"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:169"
-#~ msgid "Ctrl + L"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:170"
-#~ msgid "Ctrl + R"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:171"
-#~ msgid "Ctrl + J"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:172"
-#~ msgid "Ctrl + 3"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:184"
-#~ msgid "Ctrl + B"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:185"
-#~ msgid "Ctrl + I"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:186"
-#~ msgid "Ctrl + U"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:190"
-#~ msgid "Ctrl + A"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:194"
-#~ msgid "Ctrl + E"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:195"
-#~ msgid "Ctrl + L"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:196"
-#~ msgid "Ctrl + R"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:197"
-#~ msgid "Ctrl + J"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:203"
-#~ msgid "Ctrl + A"
-#~ msgstr "Ctrl + Z"
-
-#, fuzzy
-#~ msgctxt "dist/loleaflet-help.html html.body.div.table.tr.td:235"
-#~ msgid "Ctrl + A"
-#~ msgstr "Ctrl + Z"

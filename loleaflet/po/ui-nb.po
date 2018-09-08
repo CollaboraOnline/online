@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-31 14:03+0200\n"
+"POT-Creation-Date: 2018-09-08 11:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Revision: 3341447\n"
+"X-Pootle-Revision: 3472389\n"
 "X-Pootle-Path: /nb/libo_online/loleaflet-ui-nb.po\n"
 
 #: admin/admin.strings.js:5
@@ -185,10 +185,14 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
+"Dette er en versjon av {productname} som ikke blir støttet. For å unngå "
+"inntrykket av at dette er brukbart til bruk i virksomheter, vil denne "
+"meldingen vises når mer enn {docs} dokument eller flere enn {connections} "
+"koblinger er brukt samtidig."
 
 #: src/errormessages.js:16
 msgid "More information and support"
-msgstr ""
+msgstr "Mer informasjon og support"
 
 #: src/errormessages.js:17
 msgid ""
@@ -217,7 +221,7 @@ msgstr ""
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "Feil eller manglende WOPISrc-parameter, kontakt IKT-teamet."
 
 #: src/errormessages.js:21
 msgid ""
@@ -287,223 +291,223 @@ msgstr "1 bruker"
 msgid "0 users"
 msgstr "Ingen brukere."
 
-#: js/toolbar.js:189
+#: js/toolbar.js:179
 msgid "Are you sure you want to delete this page?"
 msgstr "Er du sikker på at du vil slette denne siden?"
 
-#: js/toolbar.js:399
+#: js/toolbar.js:398
 msgid "Textwrap"
 msgstr "Tektbryting"
 
-#: js/toolbar.js:400
+#: js/toolbar.js:399
 msgid "No wrap"
 msgstr "Ingen tekstbryting"
 
-#: js/toolbar.js:401
+#: js/toolbar.js:400
 msgid "Page wrap"
 msgstr "Sidebryting"
 
-#: js/toolbar.js:402
+#: js/toolbar.js:401
 msgid "Wrap anchor only"
 msgstr "Bryt kun forankring"
 
-#: js/toolbar.js:403
+#: js/toolbar.js:402
 msgid "Ideal wrap"
 msgstr "Optimal bryting"
 
-#: js/toolbar.js:404
+#: js/toolbar.js:403
 msgid "Left wrap"
 msgstr "Tekstbryting til venstre"
 
-#: js/toolbar.js:405
+#: js/toolbar.js:404
 msgid "Right wrap"
 msgstr "Tekstbryting til høyre"
 
-#: js/toolbar.js:406
+#: js/toolbar.js:405
 msgid "Wrap through"
 msgstr "Bryt gjennom"
 
-#: js/toolbar.js:412
+#: js/toolbar.js:411
 msgid "Document repair"
 msgstr "Dokument gjenoppretting"
 
-#: js/toolbar.js:452
+#: js/toolbar.js:451
 msgid "Insert table"
 msgstr "Sett inn tabell"
 
-#: js/toolbar.js:454
+#: js/toolbar.js:453
 msgid "Insert shapes"
-msgstr ""
+msgstr "Sett inn former"
 
-#: js/toolbar.js:498 js/toolbar.js:961
+#: js/toolbar.js:497 js/toolbar.js:960
 msgid "Sum"
 msgstr "Sum"
 
-#: js/toolbar.js:499
+#: js/toolbar.js:498
 msgid "Function"
 msgstr "Funksjon"
 
-#: js/toolbar.js:500 src/layer/marker/Annotation.js:163
+#: js/toolbar.js:499 src/layer/marker/Annotation.js:163
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: js/toolbar.js:501
+#: js/toolbar.js:500
 msgid "Accept"
 msgstr "Godta"
 
-#: js/toolbar.js:517
+#: js/toolbar.js:516
 msgid "First sheet"
 msgstr "Første ark"
 
-#: js/toolbar.js:518
+#: js/toolbar.js:517
 msgid "Previous sheet"
 msgstr "Forrige ark"
 
-#: js/toolbar.js:519
+#: js/toolbar.js:518
 msgid "Next sheet"
 msgstr "Neste ark"
 
-#: js/toolbar.js:520
+#: js/toolbar.js:519
 msgid "Last sheet"
 msgstr "Siste ark"
 
-#: js/toolbar.js:521
+#: js/toolbar.js:520
 msgid "Insert sheet"
-msgstr ""
+msgstr "Sett inn ark"
 
-#: js/toolbar.js:531 src/control/Control.Menubar.js:292
+#: js/toolbar.js:530 src/control/Control.Menubar.js:292
 msgid "Fullscreen presentation"
 msgstr "Fullskjermsvisning"
 
-#: js/toolbar.js:548
+#: js/toolbar.js:547
 msgid "Search:"
 msgstr "Søk:"
 
-#: js/toolbar.js:555
+#: js/toolbar.js:554
 msgid "Cancel the search"
 msgstr "Avbryt søket"
 
-#: js/toolbar.js:560
+#: js/toolbar.js:559
 msgid "No users"
 msgstr "Ingen brukere."
 
-#: js/toolbar.js:564
+#: js/toolbar.js:563
 msgid "Always follow the editor"
 msgstr "Følg alltid redaktøren"
 
-#: js/toolbar.js:567
+#: js/toolbar.js:566
 msgid "Current"
 msgstr "Gjeldende"
 
-#: js/toolbar.js:574 src/control/Control.Menubar.js:60
+#: js/toolbar.js:573 src/control/Control.Menubar.js:60
 #: src/control/Control.Menubar.js:257
 msgid "Reset zoom"
 msgstr "Tilbakestill forstørring/forminsking"
 
-#: js/toolbar.js:606
+#: js/toolbar.js:605
 msgid "%user has joined"
 msgstr "%user har logget på"
 
-#: js/toolbar.js:772 js/toolbar.js:1319
+#: js/toolbar.js:771 js/toolbar.js:1318
 msgid "Size"
 msgstr "Størrelse"
 
-#: js/toolbar.js:939
+#: js/toolbar.js:938
 msgid "Number of Sheets"
 msgstr "Antall ark"
 
-#: js/toolbar.js:942
+#: js/toolbar.js:941
 msgid "Selected range of cells"
 msgstr "Markert celleområde"
 
-#: js/toolbar.js:945 js/toolbar.js:982
+#: js/toolbar.js:944 js/toolbar.js:981
 msgid "Entering text mode"
 msgstr "Åpner tekstmodus."
 
-#: js/toolbar.js:948 js/toolbar.js:988 js/toolbar.js:1010
+#: js/toolbar.js:947 js/toolbar.js:987 js/toolbar.js:1009
 msgid "Text Language"
 msgstr "Språk"
 
-#: js/toolbar.js:951 js/toolbar.js:985
+#: js/toolbar.js:950 js/toolbar.js:984
 msgid "Selection Mode"
 msgstr "Merkingsmodus"
 
-#: js/toolbar.js:954
+#: js/toolbar.js:953
 msgid "Choice of functions"
 msgstr "Funksjonsvalg"
 
-#: js/toolbar.js:956
+#: js/toolbar.js:955
 msgid "Average"
 msgstr "Gjennomsnitt"
 
-#: js/toolbar.js:957
+#: js/toolbar.js:956
 msgid "CountA"
 msgstr "AntallA"
 
-#: js/toolbar.js:958
+#: js/toolbar.js:957
 msgid "Count"
 msgstr "Tell "
 
-#: js/toolbar.js:959
+#: js/toolbar.js:958
 msgid "Maximum"
 msgstr "Maksimum"
 
-#: js/toolbar.js:960
+#: js/toolbar.js:959
 msgid "Minimum"
 msgstr "Minimum"
 
-#: js/toolbar.js:962
+#: js/toolbar.js:961
 msgid "Selection count"
 msgstr "Utvalgs teller"
 
-#: js/toolbar.js:963
+#: js/toolbar.js:962
 msgid "None"
 msgstr "Ingen"
 
-#: js/toolbar.js:976
+#: js/toolbar.js:975
 msgid "Number of Pages"
 msgstr "Antall sider"
 
-#: js/toolbar.js:979
+#: js/toolbar.js:978
 msgid "Word Counter"
 msgstr "Ordteller"
 
-#: js/toolbar.js:1007
+#: js/toolbar.js:1006
 msgid "Number of Slides"
 msgstr "Antall presentasjonssider"
 
-#: js/toolbar.js:1153
+#: js/toolbar.js:1152
 msgid "Document saved"
 msgstr "Dokumentet  lagret"
 
-#: js/toolbar.js:1289
+#: js/toolbar.js:1288
 msgid "Style"
 msgstr "Stil"
 
-#: js/toolbar.js:1311
+#: js/toolbar.js:1310
 msgid "Font"
 msgstr "Skrift:"
 
-#: js/toolbar.js:1344
+#: js/toolbar.js:1343
 msgid "Previous slide"
 msgstr "Forrige lysbilde"
 
-#: js/toolbar.js:1345
+#: js/toolbar.js:1344
 msgid "Next slide"
 msgstr "Neste lysbilde"
 
-#: js/toolbar.js:1407
+#: js/toolbar.js:1406
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Konflikt Angre/Gjør om med flere brukere. Vennligst bruk reparer dokument "
 "for å løse konflikten."
 
-#: js/toolbar.js:1617 src/control/Control.DocumentRepair.js:93
+#: js/toolbar.js:1616 src/control/Control.DocumentRepair.js:94
 msgid "You"
 msgstr "Du"
 
-#: js/toolbar.js:1623
+#: js/toolbar.js:1622
 msgid "Readonly"
 msgstr "Kun lesing"
 
@@ -561,7 +565,7 @@ msgstr " s"
 
 #: src/control/Control.AlertDialog.js:28
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr ""
+msgstr "Serveren fikk en %0 feil under kjøring av %1 kommandoen."
 
 #: src/control/Control.AlertDialog.js:41
 msgid "Download PDF export?"
@@ -631,16 +635,16 @@ msgid "ODF text document (.odt)"
 msgstr "ODF-tekstdokument (.odt)"
 
 #: src/control/Control.Menubar.js:25
-msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgid "Word 2003 Document (.doc)"
+msgstr "Word 2003 Document (.doc)"
 
 #: src/control/Control.Menubar.js:26
-msgid "Microsoft Word (.docx)"
-msgstr ""
+msgid "Word Document (.docx)"
+msgstr "Word Document (.docx)"
 
 #: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Rik tekst (.rtf)"
 
 #: src/control/Control.Menubar.js:34 src/control/Control.Menubar.js:243
 #: src/control/Control.Menubar.js:323
@@ -649,7 +653,7 @@ msgstr "Reparer"
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #: src/control/Control.Menubar.js:130
 msgid "Text orientation"
@@ -681,24 +685,24 @@ msgid "ODF presentation (.odp)"
 msgstr "ODF-presentasjon (.odp)"
 
 #: src/control/Control.Menubar.js:235
-msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr ""
+msgid "PowerPoint 2003 Presentation (.ppt)"
+msgstr "PowerPoint 2003 Presentasjon (.ppt)"
 
 #: src/control/Control.Menubar.js:236
-msgid "Microsoft Powerpoint (.pptx)"
-msgstr ""
+msgid "PowerPoint Presentation (.pptx)"
+msgstr "PowerPoint-presentasjon"
 
 #: src/control/Control.Menubar.js:314
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF-regneark (.ods)"
 
 #: src/control/Control.Menubar.js:315
-msgid "Microsoft Excel 2003 (.xls)"
-msgstr ""
+msgid "Excel 2003 Spreadsheet (.xls)"
+msgstr "Excel 2003-rekneark (.xls)"
 
 #: src/control/Control.Menubar.js:316
-msgid "Microsoft Excel (.xlsx)"
-msgstr ""
+msgid "Excel Spreadsheet (.xlsx)"
+msgstr "Excel-regneark (.xlsx)"
 
 #: src/control/Control.Menubar.js:460
 msgid "Reset to Default Language"
@@ -736,48 +740,56 @@ msgstr "Angi nytt navn på arket"
 msgid "Downloading..."
 msgstr "Laster ned …"
 
-#: src/control/Toolbar.js:98 src/map/Map.js:1043
+#: src/control/Toolbar.js:98 src/map/Map.js:1004
 msgid "Saving..."
 msgstr "Lagrer..."
 
-#: src/control/Toolbar.js:239
+#: src/control/Toolbar.js:243
 msgid "This version of %productName is powered by"
 msgstr "Denne versjonen av %productName kjøres på"
 
-#: src/core/Socket.js:42
+#: src/core/Socket.js:47
+msgid ""
+"IE11 has reached its maximum number of connections. Please see this document "
+"to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
+"versions/windows/internet-explorer/ie-developer/general-info/"
+"ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr ""
+"IE11 har nådd sitt maksimale antall tilkoblinger. For å øke denne grensen, "
+"vennligst les dette dokumentet: https://docs.microsoft.com/en-us/previous-"
+"versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85"
+")#websocket-maximum-server-connections"
+
+#: src/core/Socket.js:49
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr ""
 "Uff. Det har oppstått et problem med tilkoblingen til LibreOffice Online:  "
 
-#: src/core/Socket.js:42
-msgid "Cannot create websocket, please restart your browser."
-msgstr ""
-
-#: src/core/Socket.js:228
+#: src/core/Socket.js:233
 msgid "Unsupported server version."
 msgstr "Denne serverversjonen støttes ikke"
 
-#: src/core/Socket.js:279
+#: src/core/Socket.js:284
 msgid "Session terminated by document owner"
 msgstr "Sesjonen er avsluttet av dokumenteier."
 
-#: src/core/Socket.js:283
+#: src/core/Socket.js:288
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Inaktivt dokument, vennligst klikk for å fortsette redigering"
 
-#: src/core/Socket.js:290
+#: src/core/Socket.js:295
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Tjeneren tas ned for vedlikehold (autolagring)"
 
-#: src/core/Socket.js:294
+#: src/core/Socket.js:299
 msgid "Oops, there is a problem connecting the document"
 msgstr "Oops, problem med å koble til dokumentet"
 
-#: src/core/Socket.js:298
+#: src/core/Socket.js:303
 msgid "Server is recycling and will be available shortly"
 msgstr "Tjeneren starter opp og vil snart være tilgjengelig"
 
-#: src/core/Socket.js:329
+#: src/core/Socket.js:334
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -785,51 +797,55 @@ msgstr ""
 "Dokumentet har blitt endret på tjeneren. Laster det nye dokumentet. Din "
 "versjon er tilgjengelig som en revisjon."
 
-#: src/core/Socket.js:335
+#: src/core/Socket.js:340
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
+"Gjenoppretter en eldre versjon. Alle endringer som ikke er lagret er "
+"tilgjengelige i versjonsloggen"
 
-#: src/core/Socket.js:453
+#: src/core/Socket.js:458
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
-
-#: src/core/Socket.js:458
-msgid "Discard"
-msgstr ""
+"Dokumentet i lageret er endret. Hva vil du gjøre med endringene som ikke er "
+"lagret?"
 
 #: src/core/Socket.js:463
-msgid "Overwrite"
-msgstr ""
+msgid "Discard"
+msgstr "Forkast"
 
 #: src/core/Socket.js:468
-msgid "Save to new file"
-msgstr ""
+msgid "Overwrite"
+msgstr "Overskriv"
 
-#: src/core/Socket.js:535
+#: src/core/Socket.js:473
+msgid "Save to new file"
+msgstr "Lagre til ny fil"
+
+#: src/core/Socket.js:540
 msgid "Document requires password to view."
 msgstr "Passord kreves for å se dokumentet."
 
-#: src/core/Socket.js:538
+#: src/core/Socket.js:543
 msgid "Document requires password to modify."
 msgstr "Passord kreves for å endre dokumentet."
 
-#: src/core/Socket.js:540
+#: src/core/Socket.js:545
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Trykk avbryt for å åpne som skrivebeskyttet."
 
-#: src/core/Socket.js:544
+#: src/core/Socket.js:549
 msgid "Wrong password provided. Please try again."
 msgstr "Feil passord. Prøv igjen:"
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:662
 msgid "Connecting..."
 msgstr "Kobler til …"
 
-#: src/core/Socket.js:806
+#: src/core/Socket.js:811
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -860,15 +876,15 @@ msgstr "Endre"
 msgid "Remove"
 msgstr "Slett"
 
-#: src/map/Map.js:142
+#: src/map/Map.js:143
 msgid "Initializing..."
 msgstr "Klargjør …"
 
-#: src/map/Map.js:907
+#: src/map/Map.js:868
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktivt dkument, vennligs klikk for å fortsette redigering"
 
-#: src/map/Map.js:1046
+#: src/map/Map.js:1007
 msgid "Loading..."
 msgstr "Laster …"
 

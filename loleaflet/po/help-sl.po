@@ -1,10 +1,8 @@
-# #-#-#-#-#  LibreOffice 5.1 Compendium (sl) #-#-#-#-#
-# Martin Srebotnjak <miles@filmsi.net>, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 14:45+0200\n"
+"POT-Creation-Date: 2018-09-08 11:55+0200\n"
 "PO-Revision-Date: 2016-11-09 00:07+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
@@ -710,7 +708,7 @@ msgstr ""
 msgid "Shift + Ctrl + Del"
 msgstr "Dvigalka + krmilka + brisalka"
 
-#: html/loleaflet-help.html+div.div.table.tr.td.p:112-64
+#: html/loleaflet-help.html+div.div.table.tr.td.p:112-86
 msgid ""
 "If no whole cell is selected, the text from the cursor to the end of the "
 "current sentence is deleted. If the cursor is at the end of a cell, and no "

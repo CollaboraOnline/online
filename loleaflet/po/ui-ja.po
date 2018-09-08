@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-31 14:03+0200\n"
+"POT-Creation-Date: 2018-09-08 11:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Revision: 3341392\n"
+"X-Pootle-Revision: 3464453\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-ui-ja.po\n"
 
 #: admin/admin.strings.js:5
@@ -125,15 +125,16 @@ msgstr "保存"
 
 #: admin/admin.strings.js:31
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "メモリー統計のキャッシュサイズ"
 
 #: admin/admin.strings.js:32
 msgid "Time interval of memory statistics (in ms)"
 msgstr ""
 
 #: admin/admin.strings.js:33
+#, fuzzy
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "メモリー統計のキャッシュサイズ"
 
 #: admin/admin.strings.js:34
 msgid "Time interval of CPU statistics (in ms)"
@@ -182,10 +183,12 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
+"このバージョンの{productname}はサポートされていないバージョンです。企業でのデプロイメントに適しているという印象を誤って与えることを避けるため"
+"、{docs}以上のドキュメントや{connections}以上のコネクションが同時に使用されている場合にこのメッセージが表示されます。"
 
 #: src/errormessages.js:16
 msgid "More information and support"
-msgstr ""
+msgstr "詳しいサポート情報"
 
 #: src/errormessages.js:17
 msgid ""
@@ -207,7 +210,7 @@ msgstr "認証されていないWOPIホストです。後ほど再度試して�
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "WOPISrcパラメータが間違っているか若しくは不足しています。サポートに連絡してください。"
 
 #: src/errormessages.js:21
 msgid ""
@@ -268,221 +271,222 @@ msgstr "1 ユーザー"
 msgid "0 users"
 msgstr "0 ユーザー"
 
-#: js/toolbar.js:189
+#: js/toolbar.js:179
 msgid "Are you sure you want to delete this page?"
 msgstr "このページを本当に削除してよろしいですか？"
 
-#: js/toolbar.js:399
+#: js/toolbar.js:398
 msgid "Textwrap"
 msgstr "テキストの折り返し"
 
-#: js/toolbar.js:400
+#: js/toolbar.js:399
 msgid "No wrap"
 msgstr "上下折り返し"
 
-#: js/toolbar.js:401
+#: js/toolbar.js:400
 msgid "Page wrap"
 msgstr "両側折り返し"
 
-#: js/toolbar.js:402
+#: js/toolbar.js:401
 msgid "Wrap anchor only"
 msgstr "アンカーだけを折り返し"
 
-#: js/toolbar.js:403
+#: js/toolbar.js:402
 msgid "Ideal wrap"
 msgstr ""
 
-#: js/toolbar.js:404
+#: js/toolbar.js:403
 msgid "Left wrap"
 msgstr "左の折り返し"
 
-#: js/toolbar.js:405
+#: js/toolbar.js:404
 msgid "Right wrap"
 msgstr "右の折り返し"
 
-#: js/toolbar.js:406
+#: js/toolbar.js:405
 msgid "Wrap through"
 msgstr "折り返しなし"
 
-#: js/toolbar.js:412
+#: js/toolbar.js:411
 msgid "Document repair"
 msgstr "ドキュメントの修復"
 
-#: js/toolbar.js:452
+#: js/toolbar.js:451
 msgid "Insert table"
 msgstr "表の挿入"
 
-#: js/toolbar.js:454
+#: js/toolbar.js:453
+#, fuzzy
 msgid "Insert shapes"
-msgstr ""
+msgstr "シートの挿入"
 
-#: js/toolbar.js:498 js/toolbar.js:961
+#: js/toolbar.js:497 js/toolbar.js:960
 msgid "Sum"
 msgstr "合計"
 
-#: js/toolbar.js:499
+#: js/toolbar.js:498
 msgid "Function"
 msgstr "関数"
 
-#: js/toolbar.js:500 src/layer/marker/Annotation.js:163
+#: js/toolbar.js:499 src/layer/marker/Annotation.js:163
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: js/toolbar.js:501
+#: js/toolbar.js:500
 msgid "Accept"
 msgstr "承認"
 
-#: js/toolbar.js:517
+#: js/toolbar.js:516
 msgid "First sheet"
 msgstr "最初のシート"
 
-#: js/toolbar.js:518
+#: js/toolbar.js:517
 msgid "Previous sheet"
 msgstr "前のシート"
 
-#: js/toolbar.js:519
+#: js/toolbar.js:518
 msgid "Next sheet"
 msgstr "次のシート"
 
-#: js/toolbar.js:520
+#: js/toolbar.js:519
 msgid "Last sheet"
 msgstr "最後のシート"
 
-#: js/toolbar.js:521
+#: js/toolbar.js:520
 msgid "Insert sheet"
-msgstr ""
+msgstr "シートの挿入"
 
-#: js/toolbar.js:531 src/control/Control.Menubar.js:292
+#: js/toolbar.js:530 src/control/Control.Menubar.js:292
 msgid "Fullscreen presentation"
 msgstr "全画面プレゼンテーション"
 
-#: js/toolbar.js:548
+#: js/toolbar.js:547
 msgid "Search:"
 msgstr "検索:"
 
-#: js/toolbar.js:555
+#: js/toolbar.js:554
 msgid "Cancel the search"
 msgstr "検索のキャンセル"
 
-#: js/toolbar.js:560
+#: js/toolbar.js:559
 msgid "No users"
 msgstr "ユーザーなし"
 
-#: js/toolbar.js:564
+#: js/toolbar.js:563
 msgid "Always follow the editor"
 msgstr "常に編集者に従う"
 
-#: js/toolbar.js:567
+#: js/toolbar.js:566
 msgid "Current"
 msgstr ""
 
-#: js/toolbar.js:574 src/control/Control.Menubar.js:60
+#: js/toolbar.js:573 src/control/Control.Menubar.js:60
 #: src/control/Control.Menubar.js:257
 msgid "Reset zoom"
 msgstr "表示倍率をリセット"
 
-#: js/toolbar.js:606
+#: js/toolbar.js:605
 msgid "%user has joined"
 msgstr "%user が加わりました"
 
-#: js/toolbar.js:772 js/toolbar.js:1319
+#: js/toolbar.js:771 js/toolbar.js:1318
 msgid "Size"
 msgstr "サイズ"
 
-#: js/toolbar.js:939
+#: js/toolbar.js:938
 msgid "Number of Sheets"
 msgstr "シートの数"
 
-#: js/toolbar.js:942
+#: js/toolbar.js:941
 msgid "Selected range of cells"
-msgstr ""
+msgstr "セルの選択範囲"
 
-#: js/toolbar.js:945 js/toolbar.js:982
+#: js/toolbar.js:944 js/toolbar.js:981
 msgid "Entering text mode"
 msgstr "テキストモードに入る"
 
-#: js/toolbar.js:948 js/toolbar.js:988 js/toolbar.js:1010
+#: js/toolbar.js:947 js/toolbar.js:987 js/toolbar.js:1009
 msgid "Text Language"
 msgstr "文章の言語"
 
-#: js/toolbar.js:951 js/toolbar.js:985
+#: js/toolbar.js:950 js/toolbar.js:984
 msgid "Selection Mode"
 msgstr "選択モード"
 
-#: js/toolbar.js:954
+#: js/toolbar.js:953
 msgid "Choice of functions"
 msgstr "関数の選択"
 
-#: js/toolbar.js:956
+#: js/toolbar.js:955
 msgid "Average"
 msgstr "平均"
 
-#: js/toolbar.js:957
+#: js/toolbar.js:956
 msgid "CountA"
 msgstr "COUNTA"
 
-#: js/toolbar.js:958
+#: js/toolbar.js:957
 msgid "Count"
 msgstr "数"
 
-#: js/toolbar.js:959
+#: js/toolbar.js:958
 msgid "Maximum"
 msgstr "最大"
 
-#: js/toolbar.js:960
+#: js/toolbar.js:959
 msgid "Minimum"
 msgstr "最小"
 
-#: js/toolbar.js:962
+#: js/toolbar.js:961
 msgid "Selection count"
 msgstr "選択した個数"
 
-#: js/toolbar.js:963
+#: js/toolbar.js:962
 msgid "None"
 msgstr "なし"
 
-#: js/toolbar.js:976
+#: js/toolbar.js:975
 msgid "Number of Pages"
 msgstr "ページ数"
 
-#: js/toolbar.js:979
+#: js/toolbar.js:978
 msgid "Word Counter"
 msgstr "単語を数える"
 
-#: js/toolbar.js:1007
+#: js/toolbar.js:1006
 msgid "Number of Slides"
 msgstr "スライド数"
 
-#: js/toolbar.js:1153
+#: js/toolbar.js:1152
 msgid "Document saved"
 msgstr "ドキュメントを保存しました"
 
-#: js/toolbar.js:1289
+#: js/toolbar.js:1288
 msgid "Style"
 msgstr "スタイル"
 
-#: js/toolbar.js:1311
+#: js/toolbar.js:1310
 msgid "Font"
 msgstr "フォント"
 
-#: js/toolbar.js:1344
+#: js/toolbar.js:1343
 msgid "Previous slide"
 msgstr "前のスライド"
 
-#: js/toolbar.js:1345
+#: js/toolbar.js:1344
 msgid "Next slide"
 msgstr "次のスライド"
 
-#: js/toolbar.js:1407
+#: js/toolbar.js:1406
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "複数のユーザーによる元に戻す・やり直しの処理が衝突しました。解決するにはドキュメントの修復を利用してください。"
 
-#: js/toolbar.js:1617 src/control/Control.DocumentRepair.js:93
+#: js/toolbar.js:1616 src/control/Control.DocumentRepair.js:94
 msgid "You"
 msgstr "あなた"
 
-#: js/toolbar.js:1623
+#: js/toolbar.js:1622
 msgid "Readonly"
 msgstr "読み取り専用"
 
@@ -540,7 +544,7 @@ msgstr " 秒"
 
 #: src/control/Control.AlertDialog.js:28
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr ""
+msgstr "サーバーでの %1 コマンドの解析中に %0 エラーが発生しました。"
 
 #: src/control/Control.AlertDialog.js:41
 msgid "Download PDF export?"
@@ -588,7 +592,7 @@ msgstr "タイムスタンプ"
 
 #: src/control/Control.DocumentRepair.js:55
 msgid "Jump to state"
-msgstr ""
+msgstr "選択された状態に戻る"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:311
@@ -610,11 +614,11 @@ msgid "ODF text document (.odt)"
 msgstr "ODF 文書ドキュメント (.odt)"
 
 #: src/control/Control.Menubar.js:25
-msgid "Microsoft Word 2003 (.doc)"
+msgid "Word 2003 Document (.doc)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:26
-msgid "Microsoft Word (.docx)"
+msgid "Word Document (.docx)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:27
@@ -628,7 +632,7 @@ msgstr "修復"
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"
-msgstr ""
+msgstr "全て"
 
 #: src/control/Control.Menubar.js:130
 msgid "Text orientation"
@@ -660,11 +664,11 @@ msgid "ODF presentation (.odp)"
 msgstr "ODFプレゼンテーション(.odp)"
 
 #: src/control/Control.Menubar.js:235
-msgid "Microsoft Powerpoint 2003 (.ppt)"
+msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:236
-msgid "Microsoft Powerpoint (.pptx)"
+msgid "PowerPoint Presentation (.pptx)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:314
@@ -672,11 +676,11 @@ msgid "ODF spreadsheet (.ods)"
 msgstr "ODF表計算(.ods)"
 
 #: src/control/Control.Menubar.js:315
-msgid "Microsoft Excel 2003 (.xls)"
+msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:316
-msgid "Microsoft Excel (.xlsx)"
+msgid "Excel Spreadsheet (.xlsx)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:460
@@ -715,97 +719,101 @@ msgstr "新しいシート名を入力してください。"
 msgid "Downloading..."
 msgstr "ダウンロード中..."
 
-#: src/control/Toolbar.js:98 src/map/Map.js:1043
+#: src/control/Toolbar.js:98 src/map/Map.js:1004
 msgid "Saving..."
 msgstr "保存中..."
 
-#: src/control/Toolbar.js:239
+#: src/control/Toolbar.js:243
 msgid "This version of %productName is powered by"
 msgstr "このバージョンの %productName は以下で動作しています"
 
-#: src/core/Socket.js:42
+#: src/core/Socket.js:47
+msgid ""
+"IE11 has reached its maximum number of connections. Please see this document "
+"to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
+"versions/windows/internet-explorer/ie-developer/general-info/"
+"ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr ""
+
+#: src/core/Socket.js:49
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "おっと、LibreOffice Onlineへの接続で問題が発生しました : "
 
-#: src/core/Socket.js:42
-msgid "Cannot create websocket, please restart your browser."
-msgstr ""
-
-#: src/core/Socket.js:228
+#: src/core/Socket.js:233
 msgid "Unsupported server version."
 msgstr "サポートされていないサーバーバージョンです。"
 
-#: src/core/Socket.js:279
+#: src/core/Socket.js:284
 msgid "Session terminated by document owner"
 msgstr "ドキュメントの所有者によりセッションが切断されました。"
 
-#: src/core/Socket.js:283
+#: src/core/Socket.js:288
 msgid "Idle document - please click to reload and resume editing"
 msgstr "アイドルのドキュメント - リロードをクリックして編集を継続してください"
 
-#: src/core/Socket.js:290
+#: src/core/Socket.js:295
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "サーバーはメンテナンスのため終了します（自動セーブ）"
 
-#: src/core/Socket.js:294
+#: src/core/Socket.js:299
 msgid "Oops, there is a problem connecting the document"
 msgstr "おっと、ドキュメントへの接続に問題が発生しました"
 
-#: src/core/Socket.js:298
+#: src/core/Socket.js:303
 msgid "Server is recycling and will be available shortly"
 msgstr "サーバーは再利用中でもうじき利用可能になります"
 
-#: src/core/Socket.js:329
+#: src/core/Socket.js:334
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr "ストレージでドキュメントが変更されました。新しいドキュメントを読み込んでいます。今のバージョンはリビジョンとして参照できます。"
 
-#: src/core/Socket.js:335
+#: src/core/Socket.js:340
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
-msgstr ""
+msgstr "以前のリビジョンを復元しています。 保存されていない変更はバージョン履歴で利用可能になります。"
 
-#: src/core/Socket.js:453
+#: src/core/Socket.js:458
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 
-#: src/core/Socket.js:458
+#: src/core/Socket.js:463
 msgid "Discard"
 msgstr ""
 
-#: src/core/Socket.js:463
-msgid "Overwrite"
-msgstr ""
-
 #: src/core/Socket.js:468
-msgid "Save to new file"
-msgstr ""
+msgid "Overwrite"
+msgstr "上書き"
 
-#: src/core/Socket.js:535
+#: src/core/Socket.js:473
+msgid "Save to new file"
+msgstr "新しいファイルへ保存"
+
+#: src/core/Socket.js:540
 msgid "Document requires password to view."
 msgstr "ドキュメントを参照するにはパスワードが必要です。"
 
-#: src/core/Socket.js:538
+#: src/core/Socket.js:543
 msgid "Document requires password to modify."
 msgstr "ドキュメントを変更するにはパスワードが必要です。"
 
-#: src/core/Socket.js:540
+#: src/core/Socket.js:545
 msgid "Hit Cancel to open in view-only mode."
 msgstr "キャンセルを押下すると表示モードで開きます。"
 
-#: src/core/Socket.js:544
+#: src/core/Socket.js:549
 msgid "Wrong password provided. Please try again."
 msgstr "パスワードが間違っています、再度挑戦してください。"
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:662
 msgid "Connecting..."
 msgstr "接続中..."
 
-#: src/core/Socket.js:806
+#: src/core/Socket.js:811
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -835,15 +843,15 @@ msgstr "変更"
 msgid "Remove"
 msgstr "削除"
 
-#: src/map/Map.js:142
+#: src/map/Map.js:143
 msgid "Initializing..."
 msgstr "初期化しています..."
 
-#: src/map/Map.js:907
+#: src/map/Map.js:868
 msgid "Inactive document - please click to resume editing"
 msgstr "休止中のドキュメント - 編集を継続するにはクリックしてください"
 
-#: src/map/Map.js:1046
+#: src/map/Map.js:1007
 msgid "Loading..."
 msgstr "読み込み中..."
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-31 14:03+0200\n"
+"POT-Creation-Date: 2018-09-08 11:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.4\n"
-"X-Pootle-Revision: 3219387\n"
+"X-Pootle-Revision: 3469018\n"
 "X-Pootle-Path: /ab/libo_online/loleaflet-help-ab.po\n"
 
 #: html/loleaflet-help.html+div.h1:25-5
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Аклвишақәа реицхархәашьа"
 
 #: html/loleaflet-help.html+div.div.h2:27-9
 msgid "General Keyboard Shortcuts"
-msgstr ""
+msgstr "Ирзеиԥшу аклвишақәа реицхархәашьа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:29-18
 msgid "Undo"
@@ -64,7 +64,7 @@ msgstr "Ctrl + P"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:34-18
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "Аклвишақәа реицхархәашьа азы ацхыраара"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:34-80
 msgid "Ctrl + Shift + ?"
@@ -171,7 +171,7 @@ msgstr "Абзац аформат"
 #: html/loleaflet-help.html+div.div.table.tr.td:146-18
 #: html/loleaflet-help.html+div.div.table.tr.td:172-18
 msgid "Align Center"
-msgstr ""
+msgstr "Еиҟаратәтәуп ацентр ала"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:51-57
 #: html/loleaflet-help.html+div.div.table.tr.td:146-57
@@ -183,7 +183,7 @@ msgstr "Ctrl + E"
 #: html/loleaflet-help.html+div.div.table.tr.td:147-18
 #: html/loleaflet-help.html+div.div.table.tr.td:173-18
 msgid "Align Left"
-msgstr ""
+msgstr "Еиҟаратәтәуп армарахь ала"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:52-55
 #: html/loleaflet-help.html+div.div.table.tr.td:147-55
@@ -195,7 +195,7 @@ msgstr "Ctrl + L"
 #: html/loleaflet-help.html+div.div.table.tr.td:148-18
 #: html/loleaflet-help.html+div.div.table.tr.td:174-18
 msgid "Align Right"
-msgstr ""
+msgstr "Еиҟаратәтәуп арӷьарахь ала"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:53-56
 #: html/loleaflet-help.html+div.div.table.tr.td:148-56
@@ -217,7 +217,7 @@ msgstr "Ctrl + J"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:55-18
 msgid "Apply Default paragraph style"
-msgstr ""
+msgstr "Ихархәатәуп абзац абазатә стиль"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:55-74
 msgid "Ctrl + 0"
@@ -287,7 +287,7 @@ msgstr "Ctrl + A"
 #: html/loleaflet-help.html+div.div.table.tr.td:65-18
 #: html/loleaflet-help.html+div.div.table.tr.td:182-18
 msgid "Move cursor to the left"
-msgstr ""
+msgstr "Ииагатәуп акурсор армарахь"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:65-68
 #: html/loleaflet-help.html+div.div.table.tr.td:182-68
@@ -297,7 +297,7 @@ msgstr "Ахыц армарахь"
 #: html/loleaflet-help.html+div.div.table.tr.td:66-18
 #: html/loleaflet-help.html+div.div.table.tr.td:183-18
 msgid "Move cursor with selection to the left"
-msgstr ""
+msgstr "Ииагатәуп акурсор армарахь алкаара ацны"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:66-83
 #: html/loleaflet-help.html+div.div.table.tr.td:183-83
@@ -317,7 +317,7 @@ msgstr "Ctrl + Ахыц армарахь"
 #: html/loleaflet-help.html+div.div.table.tr.td:68-18
 #: html/loleaflet-help.html+div.div.table.tr.td:185-18
 msgid "Select to the left word by word"
-msgstr ""
+msgstr "Иалкаалатәуп армарахь жәа-жәала"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:68-76
 #: html/loleaflet-help.html+div.div.table.tr.td:185-76
@@ -327,7 +327,7 @@ msgstr "Ctrl + Shift +Ахыц армарахь "
 #: html/loleaflet-help.html+div.div.table.tr.td:69-18
 #: html/loleaflet-help.html+div.div.table.tr.td:186-18
 msgid "Move cursor to the right"
-msgstr ""
+msgstr "Ииагатәуп акурсор арӷьарахь"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:69-69
 #: html/loleaflet-help.html+div.div.table.tr.td:186-69
@@ -337,7 +337,7 @@ msgstr "Ахыц арӷьарахь"
 #: html/loleaflet-help.html+div.div.table.tr.td:70-18
 #: html/loleaflet-help.html+div.div.table.tr.td:187-18
 msgid "Move cursor with selection to the right"
-msgstr ""
+msgstr "Ииагатәуп акурсор арӷьарахь алкаара ацны"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:70-84
 #: html/loleaflet-help.html+div.div.table.tr.td:187-84
@@ -347,7 +347,7 @@ msgstr "Shift + Ахыц арӷьарахь"
 #: html/loleaflet-help.html+div.div.table.tr.td:71-18
 #: html/loleaflet-help.html+div.div.table.tr.td:188-18
 msgid "Go to start of the next word"
-msgstr ""
+msgstr "Ииастәуп анаҩстәи ажәа алагамҭахь"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:71-73
 #: html/loleaflet-help.html+div.div.table.tr.td:188-73
@@ -357,7 +357,7 @@ msgstr "Ctrl + Ахыц арӷьарахь"
 #: html/loleaflet-help.html+div.div.table.tr.td:72-18
 #: html/loleaflet-help.html+div.div.table.tr.td:189-18
 msgid "Select to the right word by word"
-msgstr ""
+msgstr "Иалкаалатәуп арӷьарахь жәа-жәала"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:72-77
 #: html/loleaflet-help.html+div.div.table.tr.td:189-77
@@ -367,7 +367,7 @@ msgstr "Ctrl + Shift +Ахыц арӷьарахь "
 #: html/loleaflet-help.html+div.div.table.tr.td:73-18
 #: html/loleaflet-help.html+div.div.table.tr.td:190-18
 msgid "Move cursor up one line"
-msgstr ""
+msgstr "Ииагатәуп акурсор цәаҳәак ала хыхь"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:73-68
 #: html/loleaflet-help.html+div.div.table.tr.td:190-68
@@ -377,7 +377,7 @@ msgstr "Ахыц аҩада"
 #: html/loleaflet-help.html+div.div.table.tr.td:74-18
 #: html/loleaflet-help.html+div.div.table.tr.td:191-18
 msgid "Select lines in upwards direction"
-msgstr ""
+msgstr "Иалкаалатәуп цәаҳәа-цәаҳәала хыхь"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:74-78
 #: html/loleaflet-help.html+div.div.table.tr.td:191-78
@@ -387,7 +387,7 @@ msgstr "Shift + Ахыц аҩада"
 #: html/loleaflet-help.html+div.div.table.tr.td:75-18
 #: html/loleaflet-help.html+div.div.table.tr.td:192-18
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr ""
+msgstr "Ииагатәуп акурсор аԥхьатәи абзац алагамҭахь"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:75-95
 #: html/loleaflet-help.html+div.div.table.tr.td:192-95
@@ -397,7 +397,7 @@ msgstr "Ctrl + Ахыц аҩада"
 #: html/loleaflet-help.html+div.div.table.tr.td:76-18
 #: html/loleaflet-help.html+div.div.table.tr.td:193-18
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "Иалкаатәуп абзац алагамҭанӡа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:76-77
 #: html/loleaflet-help.html+div.div.table.tr.td:193-77
@@ -407,7 +407,7 @@ msgstr "Ctrl + Shift + Ахыц аҩада"
 #: html/loleaflet-help.html+div.div.table.tr.td:77-18
 #: html/loleaflet-help.html+div.div.table.tr.td:194-18
 msgid "Move cursor down one line"
-msgstr ""
+msgstr "Ииагатәуп акурсор цәаҳәак ала ҵаҟа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:77-70
 #: html/loleaflet-help.html+div.div.table.tr.td:194-70
@@ -417,7 +417,7 @@ msgstr "Ахыц алада"
 #: html/loleaflet-help.html+div.div.table.tr.td:78-18
 #: html/loleaflet-help.html+div.div.table.tr.td:195-18
 msgid "Select lines in downwards direction"
-msgstr ""
+msgstr "Иалкаалатәуп цәаҳәа-цәаҳәала ҵаҟа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:78-80
 #: html/loleaflet-help.html+div.div.table.tr.td:195-80
@@ -427,7 +427,7 @@ msgstr "Shift + Ахыц алада"
 #: html/loleaflet-help.html+div.div.table.tr.td:79-18
 #: html/loleaflet-help.html+div.div.table.tr.td:196-18
 msgid "Move cursor to beginning of the next paragraph"
-msgstr ""
+msgstr "Ииагатәуп акурсор анаҩстәи абзац алагамҭахь"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:79-91
 #: html/loleaflet-help.html+div.div.table.tr.td:196-91
@@ -437,7 +437,7 @@ msgstr "Shift + Ахыц алада"
 #: html/loleaflet-help.html+div.div.table.tr.td:80-18
 #: html/loleaflet-help.html+div.div.table.tr.td:197-18
 msgid "Select to end of paragraph"
-msgstr ""
+msgstr "Иалкаатәуп абзац анҵәамҭанӡа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:80-71
 #: html/loleaflet-help.html+div.div.table.tr.td:197-71
@@ -457,7 +457,7 @@ msgstr "Home"
 #: html/loleaflet-help.html+div.div.table.tr.td:82-18
 #: html/loleaflet-help.html+div.div.table.tr.td:199-18
 msgid "Go and select to the beginning of a line"
-msgstr ""
+msgstr "Ииастәуп ацәаҳәа алагамҭахь алкаара ацны"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:82-85
 #: html/loleaflet-help.html+div.div.table.tr.td:199-85
@@ -477,7 +477,7 @@ msgstr "Ctrl + Home"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:84-18
 msgid "Go and select text to start of document"
-msgstr ""
+msgstr "Ииастәуп адокумент алагамҭахь алкаара ацны"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:84-84
 #: html/loleaflet-help.html+div.div.table.tr.td:201-83
@@ -497,7 +497,7 @@ msgstr "End"
 #: html/loleaflet-help.html+div.div.table.tr.td:86-18
 #: html/loleaflet-help.html+div.div.table.tr.td:203-18
 msgid "Go and select to the end of a line"
-msgstr ""
+msgstr "Ииастәуп ацәаҳәа анҵәамҭахь алкаара ацны"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:86-79
 #: html/loleaflet-help.html+div.div.table.tr.td:203-79
@@ -517,7 +517,7 @@ msgstr "Ctrl + End"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:88-18
 msgid "Go and select text to end of document"
-msgstr ""
+msgstr "Ииастәуп адокумент анҵәамҭахь алкаара ацны"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:88-82
 #: html/loleaflet-help.html+div.div.table.tr.td:205-81
@@ -574,7 +574,7 @@ msgstr "Shift + PageDown"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:95-18
 msgid "Delete to beginning of word"
-msgstr ""
+msgstr "Ианыхтәуп ажәа алагамҭанӡа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:95-72
 msgid "Ctrl + Backspace"
@@ -582,7 +582,7 @@ msgstr "Ctrl + Backspace"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:96-18
 msgid "Delete to end of word"
-msgstr ""
+msgstr "Ианыхтәуп ажәа анҵәамҭанӡа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:96-66
 msgid "Ctrl + Del"
@@ -590,7 +590,7 @@ msgstr "Ctrl + Del"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:97-18
 msgid "Delete to beginning of sentence"
-msgstr ""
+msgstr "Ианыхтәуп аҳәоу алагамҭанӡа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:97-76
 msgid "Ctrl + Shift + Backspace"
@@ -598,7 +598,7 @@ msgstr "Ctrl + Shift + Backspace"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:98-18
 msgid "Delete to end of sentence"
-msgstr ""
+msgstr "Ианыхтәуп аҳәоу анҵәамҭанӡа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:98-70
 msgid "Ctrl + Shift + Del"
@@ -606,7 +606,7 @@ msgstr "Ctrl + Shift + Del"
 
 #: html/loleaflet-help.html+div.div.h2:100-9
 msgid "Shortcut Keys for Tables"
-msgstr ""
+msgstr "Атаблицақәа рзы аклавишақәа реицхархәашьа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:102-54
 msgid ""
@@ -640,7 +640,7 @@ msgstr ""
 
 #: html/loleaflet-help.html+div.div.table.tr.td:106-18
 msgid "Alt + Arrow Keys"
-msgstr ""
+msgstr "Alt + ахыцқәа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:106-62
 msgid ""
@@ -649,7 +649,7 @@ msgstr ""
 
 #: html/loleaflet-help.html+div.div.table.tr.td:107-18
 msgid "Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Alt + Shift + ахыцқәа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:107-70
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -657,7 +657,7 @@ msgstr ""
 
 #: html/loleaflet-help.html+div.div.table.tr.td:108-18
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr ""
+msgstr "Alt + Ctrl + ахыцқәа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:108-69
 #: html/loleaflet-help.html+div.div.table.tr.td:109-77
@@ -666,7 +666,7 @@ msgstr ""
 
 #: html/loleaflet-help.html+div.div.table.tr.td:109-18
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + ахыцқәа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:110-18
 msgid "Alt + Insert"
@@ -692,7 +692,7 @@ msgstr ""
 msgid "Shift + Ctrl + Del"
 msgstr "Shift + Ctrl + Del"
 
-#: html/loleaflet-help.html+div.div.table.tr.td.p:112-64
+#: html/loleaflet-help.html+div.div.table.tr.td.p:112-86
 msgid ""
 "If no whole cell is selected, the text from the cursor to the end of the "
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
@@ -715,11 +715,11 @@ msgstr ""
 
 #: html/loleaflet-help.html+div.div.h2:117-9
 msgid "Word processor functions"
-msgstr ""
+msgstr "Атеқсттә процессор афункциақәа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:119-18
 msgid "Insert footnote"
-msgstr ""
+msgstr "Иҭаргылатәуп албаага"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:119-60
 msgid "Ctrl + Alt + F"
@@ -727,7 +727,7 @@ msgstr "Ctrl + Alt + F"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:120-18
 msgid "Insert endnote"
-msgstr ""
+msgstr "Иҭаргылатәуп анҵәамҭатә лбаага"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:120-59
 msgid "Ctrl + Alt + D"
@@ -736,7 +736,7 @@ msgstr "Ctrl + Alt + D"
 #: html/loleaflet-help.html+div.div.table.tr.td:121-18
 #: html/loleaflet-help.html+div.div.table.tr.td:142-18
 msgid "Insert comment"
-msgstr ""
+msgstr "Иҭаргылатәуп акомментари"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:121-59
 #: html/loleaflet-help.html+div.div.table.tr.td:142-59
@@ -769,7 +769,7 @@ msgstr "Ctrl + Shift + Space"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:127-18
 msgid "Insert line break"
-msgstr ""
+msgstr "Ацәаҳәа аимҟьара"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:127-62
 msgid "Shift + Enter"
@@ -822,11 +822,11 @@ msgstr "Ctrl + F1"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:144-18
 msgid "Fill Down"
-msgstr ""
+msgstr "Ихарҭәаатәуп ҵаҟа"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:150-18
 msgid "Set Optimal Column Width"
-msgstr ""
+msgstr "Иоптималу, аиҵагыла аҭбаара"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:151-18
 msgid "Two decimal places, thousands separator"
@@ -900,15 +900,15 @@ msgstr ""
 
 #: html/loleaflet-help.html+div.div.table.tr.td:201-18
 msgid "Go and select text to start of textbox"
-msgstr ""
+msgstr "Ииастәуп аҭакыра алагамҭахь алкаара ацны"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:205-18
 msgid "Go and select text to end of textbox"
-msgstr ""
+msgstr "Ииастәуп аҭакыра анҵәамҭахь алкаара ацны"
 
 #: html/loleaflet-help.html+div.div.h2:207-9
 msgid "Slide / draw page keyboard shortcuts"
-msgstr ""
+msgstr "Аклавишақәа реицхархәашьа аслаидқәа/асахьақәа рдаҟьақәа рзы"
 
 #: html/loleaflet-help.html+div.div.table.tr.td:209-18
 msgid ""
@@ -934,4 +934,4 @@ msgstr ""
 
 #: html/loleaflet-help.html+div.div.table.tr.td:213-18
 msgid "Select all in slide / drawing page"
-msgstr ""
+msgstr "Иалхтәуп зегьы аслаид/адаҟьа аҟны"
