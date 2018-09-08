@@ -256,29 +256,6 @@ button.leaflet-control-search-next
     border-style: solid;
 }
 
-.w2ui-icon.basicshapes_rectangle { background: url('images/lc_basicshapes.rectangle.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_round-rectangle { background: url('images/lc_basicshapes.round-rectangle.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_quadrat { background: url('images/lc_basicshapes.quadrat.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_round-quadrat { background: url('images/lc_basicshapes.round-quadrat.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_circle { background: url('images/lc_basicshapes.circle.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_ellipse { background: url('images/lc_basicshapes.ellipse.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_circle-pie { background: url('images/lc_basicshapes.circle-pie.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_isosceles-triangle { background: url('images/lc_basicshapes.isosceles-triangle.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_right-triangle { background: url('images/lc_basicshapes.right-triangle.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_trapezoid { background: url('images/lc_basicshapes.trapezoid.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_diamond { background: url('images/lc_basicshapes.diamond.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_parallelogram { background: url('images/lc_basicshapes.parallelogram.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_pentagon { background: url('images/lc_basicshapes.pentagon.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_hexagon { background: url('images/lc_basicshapes.hexagon.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_octagon { background: url('images/lc_basicshapes.octagon.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_cross { background: url('images/lc_basicshapes.cross.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_ring { background: url('images/lc_basicshapes.ring.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_block-arc { background: url('images/lc_basicshapes.block-arc.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_can { background: url('images/lc_basicshapes.can.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_cube { background: url('images/lc_basicshapes.cube.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_paper { background: url('images/lc_basicshapes.paper.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_frame { background: url('images/lc_basicshapes.frame.svg') no-repeat center !important; }
-
 .w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
 .w2ui-icon.alignblock{ background: url('images/lc_alignblock.svg') no-repeat center !important; }
 .w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
@@ -391,33 +368,6 @@ button.leaflet-control-search-next
 .inserttable-grid .col.bright {
     border: 0px;
     background: rgba(66, 151, 215, 1);
-}
-
-/* Insert shape grid - based on inserttable grid */
-.insertshape-grid {
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.5);
-    position: relative;
-    padding: 2px;
-    display: block;
-    overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
-}
-
-.insertshape-grid .row {
-    height: 30px;
-}
-
-.insertshape-grid .col {
-    height: 100%;
-    float: left;
-    padding: 2px;
-    width: 30px;
-    border: 1px solid transparent;
-    background: rgba(255, 255, 255, 1);
-}
-
-.insertshape-grid .col:hover {
-    border: 1px solid #ccc;
 }
 
 tr.useritem:hover {
