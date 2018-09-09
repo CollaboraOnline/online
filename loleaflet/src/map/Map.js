@@ -350,12 +350,41 @@ L.Map = L.Evented.extend({
 		return this.panTo(newCenter, options);
 	},
 
-	invalidateSize: function () {
+	invalidateSize: function (options) {
 		if (!this._loaded) { return this; }
+
+		options = L.extend({
+			animate: false,
+			pan: false
+		}, options === true ? {animate: true} : options);
 
 		var oldSize = this.getSize();
 		this._sizeChanged = true;
-		var newSize = this.getSize();
+
+		var newSize = this.getSize(),
+		    oldCenter = oldSize.divideBy(2).round(),
+		    newCenter = newSize.divideBy(2).round(),
+		    offset = oldCenter.subtract(newCenter);
+
+		if (!offset.x && !offset.y) { return this; }
+
+		if (options.animate && options.pan) {
+			this.panBy(offset);
+
+		} else {
+			if (options.pan) {
+				this._rawPanBy(offset);
+			}
+
+			this.fire('move');
+
+			if (options.debounceMoveend) {
+				clearTimeout(this._sizeTimer);
+				this._sizeTimer = setTimeout(L.bind(this.fire, this, 'moveend'), 200);
+			} else {
+				this.fire('moveend');
+			}
+		}
 
 		return this.fire('resize', {
 			oldSize: oldSize,
@@ -799,7 +828,7 @@ L.Map = L.Evented.extend({
 	_onResize: function () {
 		L.Util.cancelAnimFrame(this._resizeRequest);
 		this._resizeRequest = L.Util.requestAnimFrame(
-		        function () { this.invalidateSize(); }, this, false, this._container);
+			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
 	},
 
 	_activate: function () {
