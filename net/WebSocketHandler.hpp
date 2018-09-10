@@ -44,8 +44,8 @@ protected:
         static const unsigned char Mask = 0x80;
     };
 
-    static const int InitialPingDelayMs;
-    static const int PingFrequencyMs;
+    static const int InitialPingDelayMs = 25;
+    static const int PingFrequencyMs = 18 * 1000;
 
 public:
     /// Perform upgrade ourselves, or select a client web socket.
