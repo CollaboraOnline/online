@@ -188,7 +188,17 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 		var part = $('#slide-sorter .mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
-			this._map.setPart(parseInt(part));
+			var partId = parseInt(part);
+
+			if (e.ctrlKey) {
+				this._map.selectPart(partId, 2, false); // Toggle selection on ctrl+click.
+			} else if (e.altKey) {
+				console.log('alt');
+			} else if (e.shiftKey) {
+				console.log('shift');
+			} else {
+				this._map.setPart(partId);
+			}
 		}
 	},
 

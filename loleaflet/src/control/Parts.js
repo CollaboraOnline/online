@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * Document parts switching handler
+ * Document parts switching and selecting handler
  */
 L.Map.include({
 	setPart: function (part, external, calledFromSetPartHandler) {
@@ -51,6 +51,29 @@ L.Map.include({
 		docLayer._drawSearchResults();
 		if (!this._searchRequested) {
 			this.focus();
+		}
+	},
+
+	// part is the part index/id
+	// how is 0 to deselect, 1 to select, and 2 to toggle selection
+	selectPart: function (part, how, external) {
+		var docLayer = this._docLayer;
+		if (typeof (part) === 'number' && part >= 0 && part < docLayer._parts) {
+			var selectedPart = part;
+		}
+		else {
+			return;
+		}
+		this.fire('updateparts', {
+			selectedPart: docLayer._selectedPart,
+			parts: docLayer._parts,
+			docType: docLayer._docType
+		});
+
+		// If this wasn't triggered from the server,
+		// then notify the server of the change.
+		if (!external) {
+			this._socket.sendMessage('selectclientpart part=' + selectedPart + ' how=' + how);
 		}
 	},
 
