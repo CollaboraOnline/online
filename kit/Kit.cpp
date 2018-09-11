@@ -2062,6 +2062,7 @@ protected:
 
             if (!document)
             {
+                // Creating the Document object starts a thread running Document::run().
                 document = std::make_shared<Document>(_loKit, _jailId, docKey, docId, url, _queue, _socketPoll, shared_from_this());
             }
 
