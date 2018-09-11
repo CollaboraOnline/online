@@ -2346,7 +2346,6 @@ void lokit_main(const std::string& childRoot,
         else
             LOG_SYS("Failed to get RLIMIT_NOFILE.");
 
-        assert(loKit);
         LOG_INF("Process is ready.");
 
         static const std::string pid = std::to_string(Process::id());
