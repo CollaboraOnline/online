@@ -133,6 +133,7 @@ public:
         if (len == 0)
             return false; // avoid logging.
 
+#ifndef MOBILEAPP
         if (len < 2) // partial read
         {
             LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
@@ -200,10 +201,19 @@ public:
                 *wsData++ = data[i] ^ mask[i % 4];
         } else
             _wsPayload.insert(_wsPayload.end(), data, data + payloadLen);
+#else
+        unsigned char * const p = reinterpret_cast<unsigned char*>(&socket->_inBuffer[0]);
+        _wsPayload.insert(_wsPayload.end(), p, p + len);
+        const size_t headerLen = 0;
+        const size_t payloadLen = len;
+        const bool hasMask = false;
+#endif
 
         assert(_wsPayload.size() >= payloadLen);
 
         socket->_inBuffer.erase(socket->_inBuffer.begin(), socket->_inBuffer.begin() + headerLen + payloadLen);
+
+#ifndef MOBILEAPP
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
         LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << static_cast<unsigned>(code) <<
@@ -253,6 +263,12 @@ public:
             break;
         }
 
+#else
+        handleMessage(true, WSOpCode::Binary, _wsPayload);
+
+#endif
+
+#ifndef MOBILEAPP
         if (doClose)
         {
             if (!_shuttingDown)
@@ -280,6 +296,7 @@ public:
             // TCP Close.
             socket->closeConnection();
         }
+#endif
 
         _wsPayload.clear();
 

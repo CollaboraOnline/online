@@ -68,8 +68,10 @@
 #include <Util.hpp>
 #include "Delta.hpp"
 
+#ifndef MOBILEAPP
 #include <common/SigUtil.hpp>
 #include <common/Seccomp.hpp>
+#endif
 
 #ifdef FUZZER
 #include <kit/DummyLibreOfficeKit.hpp>
@@ -101,6 +103,10 @@ using namespace LOOLProtocol;
 // We only host a single document in our lifetime.
 class Document;
 static std::shared_ptr<Document> document;
+
+#ifdef MOBILEAPP
+static JS2OnlineBridge *theBridge;
+#endif
 
 #if ENABLE_DEBUG
 #  define ADD_DEBUG_RENDERID(s) ((s)+ " renderid=" + Util::UniqueId())
@@ -814,7 +820,9 @@ public:
             return false;
         }
 
-        _socketPoll.addCallback([=] { _websocketHandler->sendMessage(message->data(), message->size(), code); });
+        _socketPoll.addCallback([=]{
+                _websocketHandler->sendMessage(message->data(), message->size(), code);
+            });
         return true;
     }
 
@@ -1137,11 +1145,17 @@ public:
 
     bool sendTextFrame(const std::string& message)
     {
+#ifndef MOBILEAPP
         return sendFrame(message.data(), message.size());
+#else
+        theBridge->sendToJS(message.data(), message.size());
+        return true;
+#endif
     }
 
     bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) override
     {
+#ifndef MOBILEAPP
         try
         {
             std::shared_ptr<std::vector<char>> message = std::make_shared<std::vector<char>>();
@@ -1155,8 +1169,11 @@ public:
             LOG_ERR("Document::sendFrame: Exception: " << exc.displayText() <<
                     (exc.nested() ? "( " + exc.nested()->displayText() + ")" : ""));
         }
-
         return false;
+#else
+        theBridge->sendToJS(buffer, length);
+        return true;
+#endif
     }
 
     static void GlobalCallback(const int type, const char* p, void* data)
@@ -1806,12 +1823,12 @@ private:
         Util::setThreadName("lokit_" + _docId);
 
         LOG_DBG("Thread started.");
-
+#ifndef MOBILEAPP
         // Update memory stats and editor every 5 seconds.
         const int memStatsPeriodMs = 5000;
         auto lastMemStatsTime = std::chrono::steady_clock::now();
         sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
-
+#endif
         try
         {
             while (!_stop && !TerminationFlag)
@@ -1819,6 +1836,7 @@ private:
                 const TileQueue::Payload input = _tileQueue->get(POLL_TIMEOUT_MS * 2);
                 if (input.empty())
                 {
+#ifndef MOBILEAPP
                     auto duration = (std::chrono::steady_clock::now() - lastMemStatsTime);
                     std::chrono::milliseconds::rep durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
                     if (durationMs > memStatsPeriodMs)
@@ -1826,6 +1844,7 @@ private:
                         sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
                         lastMemStatsTime = std::chrono::steady_clock::now();
                     }
+#endif
                     continue;
                 }
 
@@ -2035,6 +2054,12 @@ protected:
     {
         std::string message(data.data(), data.size());
 
+        handleMessage(message);
+    }
+
+    void handleMessage(const std::string& message) override
+    {
+
 #if 0 // FIXME might be needed for unit tests #ifndef KIT_IN_PROCESS
         if (UnitKit::get().filterKitMessage(ws, message))
         {
@@ -2092,11 +2117,13 @@ protected:
         }
         else if (tokens.size() == 3 && tokens[0] == "setconfig")
         {
+#ifndef MOBILEAPP
             // Currently onlly rlimit entries are supported.
             if (!Rlimit::handleSetrlimitCommand(tokens))
             {
                 LOG_ERR("Unknown setconfig command: " << message);
             }
+#endif
         }
         else
         {
@@ -2116,11 +2143,11 @@ void documentViewCallback(const int type, const char* payload, void* data)
     Document::ViewCallback(type, payload, data);
 }
 
-#ifndef MOBILEAPP
-
 #ifndef BUILDING_TESTS
 
-void lokit_main(const std::string& childRoot,
+void lokit_main(
+#ifndef MOBILEAPP
+                const std::string& childRoot,
                 const std::string& jailId,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
@@ -2128,8 +2155,15 @@ void lokit_main(const std::string& childRoot,
                 bool noCapabilities,
                 bool noSeccomp,
                 bool queryVersion,
-                bool displayVersion)
+                bool displayVersion
+#else
+                const std::string& documentUri,
+                JS2OnlineBridge& bridge
+#endif
+                )
 {
+#ifndef MOBILEAPP
+
 #ifndef FUZZER
     SigUtil::setFatalSignals();
     SigUtil::setTerminationSignals();
@@ -2174,8 +2208,12 @@ void lokit_main(const std::string& childRoot,
     std::shared_ptr<lok::Office> loKit;
     Path jailPath;
     bool bRunInsideJail = !noCapabilities;
+
+#endif // MOBILEAPP
+
     try
     {
+#ifndef MOBILEAPP
         jailPath = Path::forDirectory(childRoot + "/" + jailId);
         LOG_INF("Jail path: " << jailPath.toString());
         File(jailPath).createDirectories();
@@ -2366,7 +2404,37 @@ void lokit_main(const std::string& childRoot,
             free(versionInfo);
         }
 
+#else // MOBILEAPP
+
+        LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
+
+        std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(kit);
+        if (!loKit)
+        {
+            LOG_FTL("LibreOfficeKit initialization failed. Exiting.");
+            std::_Exit(Application::EXIT_SOFTWARE);
+        }
+
+        // Dummies
+        Poco::URI uri;
+        const std::string jailId;
+        const std::string pid;
+
+#endif // MOBILEAPP
+
         SocketPoll mainKit("kit");
+
+#ifdef MOBILEAPP
+        // Ugly, but not ay uglier than the singleton 'document' variable.
+        theBridge = &bridge;
+        theBridge->registerSocket(mainKit);
+        std::thread([&] {
+                theBridge->sendToOnline("session 0001 foo 0001");
+                // No jailing in the mobile app, just use the same URI for the "jail" parameter to
+                // the "load" command, too.
+                theBridge->sendToOnline("child-0001 load url=" + documentUri + " jail=" + documentUri);
+            }).detach();
+#endif
 
         mainKit.insertNewWebSocketSync(uri, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId, mainKit));
         LOG_INF("New kit client websocket inserted.");
@@ -2396,13 +2464,19 @@ void lokit_main(const std::string& childRoot,
         LOG_ERR("Exception: " << exc.what());
     }
 
+#ifndef MOBILEAPP
+
     // Trap the signal handler, if invoked,
     // to prevent exiting.
     LOG_INF("Process finished.");
     std::unique_lock<std::mutex> lock(SigHandlerTrap);
     std::_Exit(Application::EXIT_OK);
+
+#endif
 }
 #endif
+
+#ifndef MOBILEAPP
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
 bool globalPreinit(const std::string &loTemplate)

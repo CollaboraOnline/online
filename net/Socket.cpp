@@ -74,6 +74,8 @@ SocketPoll::SocketPoll(const std::string& threadName)
 
     std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
     getWakeupsArray().push_back(_wakeup[1]);
+#else
+    _bufferEmpty = true;
 #endif
 }
 
@@ -132,6 +134,21 @@ void SocketPoll::joinThread()
             _threadStarted = false;
         }
     }
+}
+
+#endif
+
+#ifdef MOBILEAPP
+
+void SocketPoll::feed(const std::string& payload)
+{
+    std::unique_lock<std::mutex> lock(_bufferMutex);
+    if (!_bufferEmpty)
+        _bufferCV.wait(lock, [&]{return _bufferEmpty;});
+    _buffer = payload;
+    _bufferEmpty = false;
+    lock.unlock();
+    _bufferCV.notify_one();
 }
 
 #endif
@@ -231,6 +248,8 @@ void SocketPoll::insertNewWebSocketSync(const Poco::URI &uri, const std::shared_
     }
     else
         LOG_ERR("Failed to lookup client websocket host '" << uri.getHost() << "' skipping");
+#else
+    _socketHandler = websocketHandler;
 #endif
 }
 

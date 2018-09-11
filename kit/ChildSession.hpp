@@ -159,16 +159,24 @@ public:
 
     bool sendTextFrame(const char* buffer, int length) override
     {
+#ifndef MOBILEAPP
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
         const std::unique_lock<std::mutex> lock = getLock();
         return _docManager.sendFrame(msg.data(), msg.size(), WSOpCode::Text);
+#else
+        return _docManager.sendFrame(buffer, length, WSOpCode::Text);
+#endif
     }
 
     bool sendBinaryFrame(const char* buffer, int length) override
     {
+#ifndef MOBILEAPP
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
         const std::unique_lock<std::mutex> lock = getLock();
         return _docManager.sendFrame(msg.data(), msg.size(), WSOpCode::Binary);
+#else
+        return _docManager.sendFrame(buffer, length, WSOpCode::Text);
+#endif
     }
 
     using Session::sendTextFrame;

@@ -53,6 +53,7 @@ namespace Util
     /// Create randomized temporary directory
     std::string createRandomTmpDir();
 
+#ifndef MOBILEAPP
     /// Get number of threads in this process or -1 on error
     int getProcessThreadCount();
 
@@ -60,6 +61,7 @@ namespace Util
     /// to send data to the child.
     int spawnProcess(const std::string &cmd, const std::vector<std::string> &args,
                      int *stdInput = nullptr);
+#endif
 
     /// Hex to unsigned char
     bool dataFromHexString(const std::string& hexString, std::vector<unsigned char>& data);
@@ -114,6 +116,7 @@ namespace Util
 #endif
     }
 
+#ifndef MOBILEAPP
     /// Print given number of bytes in human-understandable form (KB,MB, etc.)
     std::string getHumanizedBytes(unsigned long nBytes);
 
@@ -133,6 +136,7 @@ namespace Util
     size_t getCpuUsage(const Poco::Process::PID pid);
 
     size_t getStatFromPid(const Poco::Process::PID pid, int ind);
+#endif
 
     std::string replace(std::string s, const std::string& a, const std::string& b);
 

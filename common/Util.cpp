@@ -145,6 +145,7 @@ namespace Util
         return newTmp;
     }
 
+#ifndef MOBILEAPP
     int getProcessThreadCount()
     {
         DIR *fdDir = opendir("/proc/self/task");
@@ -247,6 +248,7 @@ namespace Util
         }
         return pid;
     }
+#endif
 
     bool dataFromHexString(const std::string& hexString, std::vector<unsigned char>& data)
     {
@@ -304,6 +306,7 @@ namespace Util
         return nullptr;
     }
 
+#ifndef MOBILEAPP
     std::string getHumanizedBytes(unsigned long nBytes)
     {
         constexpr unsigned factor = 1024;
@@ -461,6 +464,7 @@ namespace Util
         }
         return 0;
     }
+#endif
 
     std::string replace(std::string result, const std::string& a, const std::string& b)
     {

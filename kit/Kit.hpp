@@ -14,7 +14,45 @@
 
 #include <common/Util.hpp>
 
-void lokit_main(const std::string& childRoot,
+#ifdef MOBILEAPP
+
+#include "Socket.hpp"
+
+class JS2OnlineBridge
+{
+public:
+    void registerSocket(SocketPoll& socketPoll)
+    {
+        _SocketPoll = &socketPoll;
+    }
+
+    void registerJSSender(void (*function)(const char *, int, void *), void *data)
+    {
+        _JSCallbackFunction = function;
+        _JSCallbackData = data;
+    }
+
+    void sendToOnline(const std::string& payload)
+    {
+        _SocketPoll->feed(payload);
+    }
+
+    void sendToJS(const char *data, int length)
+    {
+        _JSCallbackFunction(data, length, _JSCallbackData);
+    }
+
+private:
+    SocketPoll *_SocketPoll;
+    void (*_JSCallbackFunction)(const char *, int, void *);
+    void *_JSCallbackData;
+};
+
+#endif
+
+void lokit_main(
+#ifndef MOBILEAPP
+                const std::string& childRoot,
                 const std::string& jailId,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
@@ -22,7 +60,12 @@ void lokit_main(const std::string& childRoot,
                 bool noCapabilities,
                 bool noSeccomp,
                 bool queryVersionInfo,
-                bool displayVersion);
+                bool displayVersion
+#else
+                const std::string& documentUri,
+                JS2OnlineBridge& bridge
+#endif
+                );
 
 bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().

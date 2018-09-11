@@ -213,6 +213,14 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         assert(false && "Tile traffic should go through the DocumentBroker-LoKit WS.");
     }
+#ifdef MOBILEAPP
+    else if (tokens[0] == "requestloksession" ||
+             tokens[0] == "canceltiles")
+    {
+        // Just ignore these.
+        // FIXME: We probably should do something for "canceltiles" at least?
+    }
+#endif
     else
     {
         // All other commands are such that they always require a LibreOfficeKitDocument session,

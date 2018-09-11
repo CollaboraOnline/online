@@ -31,7 +31,6 @@
 #include <mutex>
 #include <sstream>
 #include <thread>
-#include <atomic>
 
 #include "Common.hpp"
 #include "Log.hpp"
@@ -341,6 +340,10 @@ public:
 
     /// Append pretty printed internal state to a line
     virtual void dumpState(std::ostream& os) { os << "\n"; }
+
+    virtual void handleMessage(const std::string& /*message*/)
+    {
+    }
 };
 
 /// Handles non-blocking socket event polling.
@@ -528,9 +531,18 @@ public:
 
             disposition.execute();
         }
+#else
+        std::unique_lock<std::mutex> lock(_bufferMutex);
+        if (_bufferEmpty)
+            _bufferCV.wait(lock, [&]{return !_bufferEmpty;});
+        _socketHandler->handleMessage(_buffer);
+        _bufferEmpty = true;
+        lock.unlock();
+        _bufferCV.notify_one();
 #endif
     }
 
+#ifndef MOBILEAPP
     /// Write to a wakeup descriptor
     static void wakeup (int fd)
     {
@@ -543,15 +555,18 @@ public:
         if (rc == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
             LOG_SYS("wakeup socket #" << fd << " is closed at wakeup?");
     }
+#endif
 
     /// Wakeup the main polling loop in another thread
     void wakeup()
     {
+#ifndef MOBILEAPP
         if (!isAlive())
             LOG_WRN("Waking up dead poll thread [" << _name << "], started: " <<
                     _threadStarted << ", finished: " << _threadFinished);
 
         wakeup(_wakeup[1]);
+#endif
     }
 
     /// Global wakeup - signal safe: wakeup all socket polls.
@@ -618,7 +633,15 @@ public:
     /// Stop and join the polling thread before returning (if active)
     void joinThread();
 
+#ifdef MOBILEAPP
+    // In the mobile app(s), a SocketPoll doesn't actually "poll" any "sockets" but simply acts as a
+    // conduit for sending messages that correspond to what we would receive as WebSocket messages
+    // in the server online from the app code into the shared online code.
+    void feed(const std::string& payload);
+#endif
+
 private:
+#ifndef MOBILEAPP
     /// Initialize the poll fds array with the right events
     void setupPollFds(std::chrono::steady_clock::time_point now,
                       int &timeoutMaxMs)
@@ -648,6 +671,7 @@ private:
         _pollFds[size].events = POLLIN;
         _pollFds[size].revents = 0;
     }
+#endif
 
     /// The polling thread entry.
     /// Used to set the thread name and mark the thread as stopped when done.
@@ -681,8 +705,10 @@ private:
     /// Debug name used for logging.
     const std::string _name;
 
+#ifndef MOBILEAPP
     /// main-loop wakeup pipe
     int _wakeup[2];
+#endif
     /// The sockets we're controlling
     std::vector<std::shared_ptr<Socket>> _pollSockets;
     /// Protects _newSockets
@@ -700,6 +726,14 @@ protected:
     std::atomic<bool> _threadStarted;
     std::atomic<bool> _threadFinished;
     std::thread::id _owner;
+
+#ifdef MOBILEAPP
+    std::mutex _bufferMutex;
+    std::condition_variable _bufferCV;
+    bool _bufferEmpty;
+    std::string _buffer;
+    std::shared_ptr<SocketHandlerInterface> _socketHandler;
+#endif
 };
 
 /// A plain, non-blocking, data streaming socket.
