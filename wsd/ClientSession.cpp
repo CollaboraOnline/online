@@ -401,6 +401,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "selectgraphic" &&
              tokens[0] != "selecttext" &&
              tokens[0] != "setclientpart" &&
+             tokens[0] != "selectclientpart" &&
              tokens[0] != "setpage" &&
              tokens[0] != "status" &&
              tokens[0] != "tile" &&
@@ -554,6 +555,25 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             {
                 _clientSelectedPart = temp;
                 resetWireIdMap();
+                return forwardToChild(std::string(buffer, length), docBroker);
+            }
+        }
+    }
+    else if (tokens[0] == "selectclientpart")
+    {
+        if(!_isTextDocument)
+        {
+            int part;
+            int how;
+            if (tokens.size() != 3 ||
+                !getTokenInteger(tokens[1], "part", part) ||
+                !getTokenInteger(tokens[2], "how", how))
+            {
+                sendTextFrame("error: cmd=selectclientpart kind=syntax");
+                return false;
+            }
+            else
+            {
                 return forwardToChild(std::string(buffer, length), docBroker);
             }
         }

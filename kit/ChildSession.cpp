@@ -228,6 +228,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         return setClientPart(buffer, length, tokens);
     }
+    else if (tokens[0] == "selectclientpart")
+    {
+        return selectClientPart(buffer, length, tokens);
+    }
     else if (tokens[0] == "setpage")
     {
         return setPage(buffer, length, tokens);
@@ -1929,6 +1933,32 @@ bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, const s
     if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT && part != getLOKitDocument()->getPart())
     {
         getLOKitDocument()->setPart(part);
+    }
+
+    return true;
+}
+
+bool ChildSession::selectClientPart(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+{
+    int nPart;
+    int nSelect;
+    if (tokens.size() < 3 ||
+        !getTokenInteger(tokens[1], "part", nPart) ||
+        !getTokenInteger(tokens[2], "how", nSelect))
+    {
+        sendTextFrame("error: cmd=selectclientpart kind=invalid");
+        return false;
+    }
+
+    getLOKitDocument()->setView(_viewId);
+
+    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT && nPart != getLOKitDocument()->getPart())
+    {
+        getLOKitDocument()->selectPart(nPart, nSelect);
+    }
+    else
+    {
+        LOG_WRN("ChildSession::selectClientPart[" << getName() << "]: error selecting part on text documents.");
     }
 
     return true;

@@ -140,6 +140,15 @@ setclientpart part=<partNumber>
 
     Informs the server that the client changed to part <partNumber>.
 
+selectclientpart part=<partNumber>
+
+    Informs the server that the client changed the selection state of <partNumber>.
+
+setpage page=<pageNumber>
+
+    Valid only for text documents.
+    Informs the server that the client changed to page <pageNumber>.
+
 status
 
 styles
