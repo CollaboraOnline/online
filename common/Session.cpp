@@ -215,6 +215,7 @@ void Session::handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &
                 _handleInput(replace->data(), replace->size());
             return;
         }
+
         if (!data.empty())
             _handleInput(&data[0], data.size());
     }

@@ -607,7 +607,6 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         }
     }
 
-
 #if ENABLE_SUPPORT_KEY
     if (!LOOLWSD::OverrideWatermark.empty())
         watermarkText = LOOLWSD::OverrideWatermark;
@@ -1393,7 +1392,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 
     LOG_TRC("TileCombined request for " << tileCombined.serialize());
 
-    // Check which newly requested tiles need rendering.
+    // Check which newly requested tiles needs rendering.
     std::vector<TileDesc> tilesNeedsRendering;
     for (auto& tile : tileCombined.getTiles())
     {

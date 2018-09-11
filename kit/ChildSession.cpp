@@ -1895,7 +1895,6 @@ bool ChildSession::moveSelectedClientParts(const char* /*buffer*/, int /*length*
     return true; // Non-fatal to fail.
 }
 
-
 bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int page;
@@ -2008,28 +2007,30 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
     }
 }
 
-void ChildSession::updateSpeed() {
-
+void ChildSession::updateSpeed()
+{
     std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
 
-    while(_cursorInvalidatedEvent.size() != 0 &&
-        std::chrono::duration_cast<std::chrono::milliseconds>(now - _cursorInvalidatedEvent.front()).count() > _eventStorageIntervalMs)
+    while (_cursorInvalidatedEvent.size() != 0 &&
+           std::chrono::duration_cast<std::chrono::milliseconds>(now - _cursorInvalidatedEvent.front()).count() > _eventStorageIntervalMs)
     {
         _cursorInvalidatedEvent.pop();
     }
+
     _cursorInvalidatedEvent.push(now);
     _docManager.updateEditorSpeeds(_viewId, _cursorInvalidatedEvent.size());
 }
 
-int ChildSession::getSpeed() {
-
+int ChildSession::getSpeed()
+{
     std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
 
-    while(_cursorInvalidatedEvent.size() > 0 &&
-        std::chrono::duration_cast<std::chrono::milliseconds>(now - _cursorInvalidatedEvent.front()).count() > _eventStorageIntervalMs)
+    while (_cursorInvalidatedEvent.size() > 0 &&
+           std::chrono::duration_cast<std::chrono::milliseconds>(now - _cursorInvalidatedEvent.front()).count() > _eventStorageIntervalMs)
     {
         _cursorInvalidatedEvent.pop();
     }
+
     return _cursorInvalidatedEvent.size();
 }
 

@@ -813,9 +813,7 @@ public:
             return false;
         }
 
-        _socketPoll.addCallback([=]{
-                _websocketHandler->sendMessage(message->data(), message->size(), code);
-            });
+        _socketPoll.addCallback([=] { _websocketHandler->sendMessage(message->data(), message->size(), code); });
         return true;
     }
 
@@ -1007,6 +1005,7 @@ public:
         LOG_DBG("paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
                 renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
                 " rendered in " << (elapsed/1000.) << " ms (" << area / elapsed << " MP/s).");
+
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
         std::vector<char> output;
@@ -2062,6 +2061,7 @@ protected:
         if (UnitKit::get().filterKitMessage(this, message))
             return;
 #endif
+
         std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
         Log::StreamLogger logger = Log::debug();
         if (logger.enabled())

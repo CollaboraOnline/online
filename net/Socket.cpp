@@ -365,7 +365,6 @@ void SocketPoll::insertNewFakeSocket(
         }
     }
 }
-
 #endif
 
 void ServerSocket::dumpState(std::ostream& os)

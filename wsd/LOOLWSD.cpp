@@ -501,7 +501,6 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(
         // Let the caller retry after a while.
         return nullptr;
     }
-
     // With valgrind we need extended time to spawn kits.
     const size_t timeoutMs = CHILD_TIMEOUT_MS / 2;
     LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
@@ -906,6 +905,7 @@ void LOOLWSD::initialize(Application& self)
 #endif
         }
     }
+
 
     // Log at trace level until we complete the initialization.
     Log::initialize("wsd", "trace", withColor, logToFile, logProperties);
@@ -2374,18 +2374,18 @@ private:
                 Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
                 const std::string docKey = DocumentBroker::getDocKey(uriPublic);
 
-                    // This lock could become a bottleneck.
-                    // In that case, we can use a pool and index by publicPath.
-                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+                // This lock could become a bottleneck.
+                // In that case, we can use a pool and index by publicPath.
+                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
-                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey);
+                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey);
 
-                    cleanupDocBrokers();
+                cleanupDocBrokers();
 
-                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    DocBrokers.emplace(docKey, docBroker);
-                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                DocBrokers.emplace(docKey, docBroker);
+                LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
 
                 // Load the document.
                 // TODO: Move to DocumentBroker.
@@ -2434,7 +2434,7 @@ private:
                             std::vector<char> saveasRequest(saveas.begin(), saveas.end());
                             clientSession->handleMessage(true, WSOpCode::Text, saveasRequest);
                         });
-                        });
+                    });
 
                     sent = true;
                 }
@@ -3060,7 +3060,6 @@ private:
             socket = getServerSocket(port, WebServerPoll, factory);
         }
 #endif
-
         if (!socket)
         {
             LOG_FTL("Failed to listen on Server port(s) (" <<
@@ -3128,11 +3127,13 @@ int LOOLWSD::innerMain()
         LOG_FTL("Missing --systemplate option");
         throw MissingOptionException("systemplate");
     }
+
     if (LoTemplate.empty())
     {
         LOG_FTL("Missing --lotemplate option");
         throw MissingOptionException("lotemplate");
     }
+
     if (ChildRoot.empty())
     {
         LOG_FTL("Missing --childroot option");
@@ -3319,6 +3320,7 @@ int LOOLWSD::innerMain()
 
     return Application::EXIT_OK;
 }
+
 
 void LOOLWSD::cleanup()
 {

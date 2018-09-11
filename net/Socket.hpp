@@ -767,7 +767,7 @@ private:
     int _wakeup[2];
     /// The sockets we're controlling
     std::vector<std::shared_ptr<Socket>> _pollSockets;
-    /// Protects _newSockets and _newCallbacks
+    /// Protects _newSockets
     std::mutex _mutex;
     std::vector<std::shared_ptr<Socket>> _newSockets;
     std::vector<CallbackFn> _newCallbacks;
