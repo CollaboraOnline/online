@@ -424,6 +424,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 
         Poco::Net::HTTPResponse response;
         std::istream& rs = psession->receiveResponse(response);
+
         callDuration = (std::chrono::steady_clock::now() - startTime);
 
         Log::StreamLogger logger = Log::trace();

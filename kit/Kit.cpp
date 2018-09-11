@@ -989,7 +989,7 @@ public:
             // session is being removed.
             for (auto it = _sessions.cbegin(); it != _sessions.cend(); )
             {
-               if (it->second->isCloseFrame())
+                if (it->second->isCloseFrame())
                 {
                     deadSessions.push_back(it->second);
                     it = _sessions.erase(it);
@@ -1234,6 +1234,7 @@ public:
                         pushRendered(renderedTiles, tiles[tileIndex], wireId, data->size());
                     });
             }
+
             LOG_TRC("Encoded tile #" << tileIndex << " at (" << positionX << "," << positionY << ") with oldWireId=" <<
                     tiles[tileIndex].getOldWireId() << ", hash=" << hash << " wireId: " << wireId << " in " << imgSize << " bytes.");
             tileIndex++;
