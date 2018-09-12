@@ -853,6 +853,7 @@ L.Map = L.Evented.extend({
 				if (this._docLayer) {
 					this._docLayer._onMessage('invalidatetiles: EMPTY', null);
 					this._docLayer._resetClientVisArea();
+					this._docLayer._update();
 				}
 
 				if (vex.dialogID > 0) {
