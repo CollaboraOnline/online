@@ -751,6 +751,7 @@ L.Socket = L.Class.extend({
 				this._reconnecting = false;
 				this._map._docLayer._resetClientVisArea();
 				this._map._docLayer._onMessage('invalidatetiles: EMPTY', null);
+				this._map._docLayer._update();
 				this._map.fire('statusindicator', {statusType: 'reconnected'});
 				this._map.setPermission(this._map.options.permission);
 			}
