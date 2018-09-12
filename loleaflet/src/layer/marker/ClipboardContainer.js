@@ -78,6 +78,10 @@ L.ClipboardContainer = L.Layer.extend({
 		return this._textArea;
 	},
 
+	showCursor: function () {
+		this._map.addLayer(this._map._docLayer._cursorMarker);
+	},
+
 	_setPos: function (pos) {
 		L.DomUtil.setPosition(this._container, pos);
 	}

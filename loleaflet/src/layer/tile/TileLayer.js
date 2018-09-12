@@ -1456,8 +1456,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
 		}
 
-		this._map.addLayer(this._cursorMarker);
-		return this._visibleCursor.getNorthWest();
+		this._map._clipboardContainer.showCursor();
 	},
 
 	// Update cursor layer (blinking cursor).
@@ -1492,7 +1491,6 @@ L.TileLayer = L.GridLayer.extend({
 	// the state of the document (if the falgs are set)
 	_updateCursorAndOverlay: function (update) {
 		if (this._map._permission === 'edit'
-		&& this._map._clipboardContainer.activeElement() === document.activeElement
 		&& this._isCursorVisible
 		&& this._isCursorOverlayVisible
 		&& !this._isEmptyRectangle(this._visibleCursor)) {
