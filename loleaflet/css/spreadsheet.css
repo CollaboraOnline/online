@@ -200,3 +200,22 @@
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	}
+
+@media (max-width: 767px) {
+	#spreadsheet-toolbar {
+		bottom: 0;
+	}
+
+	.spreadsheet-tabs-container {
+		bottom: 0;
+	}
+
+	#spreadsheet-row-column-frame {
+		top: 73px;
+		bottom: 36px;
+	}
+
+	#spreadsheet-row-column-frame.readonly {
+		top: 30px;
+	}
+}

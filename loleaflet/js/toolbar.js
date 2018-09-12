@@ -1511,14 +1511,16 @@ function onCommandStateChanged(e) {
 	}
 	else if (commandName === '.uno:StatusBarFunc') {
 		var item = statusbar.get('StateTableCellMenu');
-		item.selected = [];
-		// Check 'None' even when state is 0
-		if (state === '0') {
-			state = 1;
-		}
-		for (var it = 0; it < item.items.length; it++) {
-			if (item.items[it].id & state) {
-				item.selected.push(item.items[it].id);
+		if (item) {
+			item.selected = [];
+			// Check 'None' even when state is 0
+			if (state === '0') {
+				state = 1;
+			}
+			for (var it = 0; it < item.items.length; it++) {
+				if (item.items[it].id & state) {
+					item.selected.push(item.items[it].id);
+				}
 			}
 		}
 	}
