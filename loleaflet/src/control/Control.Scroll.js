@@ -17,15 +17,14 @@ L.Control.Scroll = L.Control.extend({
 		this._prevDocWidth = 0;
 		this._prevDocHeight = 0;
 
-		if (!L.Browser.mobile) {
-			map.on('scrollto', this._onScrollTo, this);
-			map.on('scrollby', this._onScrollBy, this);
-			map.on('scrollvelocity', this._onScrollVelocity, this);
-			map.on('handleautoscroll', this._onHandleAutoScroll, this);
-			map.on('docsize', this._onUpdateSize, this);
-			map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
-			map.on('updaterowcolumnheaders', this._onUpdateRowColumnHeaders, this);
+		map.on('scrollto', this._onScrollTo, this);
+		map.on('scrollby', this._onScrollBy, this);
+		map.on('scrollvelocity', this._onScrollVelocity, this);
+		map.on('handleautoscroll', this._onHandleAutoScroll, this);
+		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
+		map.on('updaterowcolumnheaders', this._onUpdateRowColumnHeaders, this);
 
+		if (!L.Browser.mobile) {
 			var control = this;
 			var autoHideTimeout = null;
 			$('.scroll-container').mCustomScrollbar({
