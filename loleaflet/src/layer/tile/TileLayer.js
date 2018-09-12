@@ -472,7 +472,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	toggleTileDebugMode: function() {
+	toggleTileDebugModeImpl: function() {
 		this._debug = !this._debug;
 		if (!this._debug) {
 			map.removeLayer(this._debugInfo);
@@ -486,7 +486,6 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			this._debugInit();
 		}
-		this._onMessage('invalidatetiles: EMPTY', null);
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
