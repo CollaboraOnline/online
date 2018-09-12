@@ -856,69 +856,78 @@ function createToolbar() {
 	});
 
 	toolbar = $('#toolbar-down');
-	toolbar.w2toolbar({
-		name: 'toolbar-down',
-		tooltip: 'top',
-		items: [
-			{type: 'html',  id: 'search',
-			 html: '<div style="padding: 3px 10px;" class="loleaflet-font">' +
-			 ' ' + _('Search:') +
-			 '    <input size="10" id="search-input"' +
-			 'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
-			 '</div>'
-			},
-			{type: 'button',  id: 'searchprev', img: 'prev', hint: _UNO('.uno:UpSearch'), disabled: true},
-			{type: 'button',  id: 'searchnext', img: 'next', hint: _UNO('.uno:DownSearch'), disabled: true},
-			{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
-			{type: 'html',  id: 'left'},
-			{type: 'html',  id: 'right'},
-			{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>', mobile:false},
-			{type: 'break', id: 'modifiedstatuslabelbreak', mobile:false},
-			{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
-				'<hr><table class="loleaflet-font" id="editor-btn">' +
-				'<tr>' +
-				'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
-				'<td>' + _('Always follow the editor') + '</td>' +
-				'</tr>' +
-				'</table>' +
-				'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
-				'</div>'
-			},
-			{type: 'break', id: 'userlistbreak'},
-			{type: 'button',  id: 'prev', img: 'prev', hint: _UNO('.uno:PageUp', 'text')},
-			{type: 'button',  id: 'next', img: 'next', hint: _UNO('.uno:PageDown', 'text')},
-			{type: 'break', id: 'prevnextbreak'},
-			{type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _('Reset zoom')},
-			{type: 'button',  id: 'zoomout', img: 'zoomout', hint: _UNO('.uno:ZoomMinus')},
-			{type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>', mobile: false},
-			{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _UNO('.uno:ZoomPlus')}
-		],
-		onClick: function (e) {
-			hideTooltip(this, e.target);
-			if (e.item.id === 'userlist') {
-				setTimeout(function() {
-					var cBox = $('#follow-checkbox')[0];
-					var docLayer = map._docLayer;
-					var editorId = docLayer._editorId;
+	if ($('#main-menu').css('display') !== 'none') {
+		toolbar.w2toolbar({
+			name: 'toolbar-down',
+			tooltip: 'top',
+			items: [
+				{type: 'html',  id: 'search',
+				 html: '<div style="padding: 3px 10px;" class="loleaflet-font">' +
+				 ' ' + _('Search:') +
+				 '    <input size="10" id="search-input"' +
+				 'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
+				 '</div>'
+				},
+				{type: 'button',  id: 'searchprev', img: 'prev', hint: _UNO('.uno:UpSearch'), disabled: true},
+				{type: 'button',  id: 'searchnext', img: 'next', hint: _UNO('.uno:DownSearch'), disabled: true},
+				{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
+				{type: 'html',  id: 'left'},
+				{type: 'html',  id: 'right'},
+				{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>', mobile:false},
+				{type: 'break', id: 'modifiedstatuslabelbreak', mobile:false},
+				{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
+					'<hr><table class="loleaflet-font" id="editor-btn">' +
+					'<tr>' +
+					'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
+					'<td>' + _('Always follow the editor') + '</td>' +
+					'</tr>' +
+					'</table>' +
+					'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
+					'</div>'
+				},
+				{type: 'break', id: 'userlistbreak'},
+				{type: 'button',  id: 'prev', img: 'prev', hint: _UNO('.uno:PageUp', 'text')},
+				{type: 'button',  id: 'next', img: 'next', hint: _UNO('.uno:PageDown', 'text')},
+				{type: 'break', id: 'prevnextbreak'},
+				{type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _('Reset zoom')},
+				{type: 'button',  id: 'zoomout', img: 'zoomout', hint: _UNO('.uno:ZoomMinus')},
+				{type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>', mobile: false},
+				{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _UNO('.uno:ZoomPlus')}
+			],
+			onClick: function (e) {
+				hideTooltip(this, e.target);
+				if (e.item.id === 'userlist') {
+					setTimeout(function() {
+						var cBox = $('#follow-checkbox')[0];
+						var docLayer = map._docLayer;
+						var editorId = docLayer._editorId;
 
-					if (cBox)
-						cBox.checked = docLayer._followEditor;
+						if (cBox)
+							cBox.checked = docLayer._followEditor;
 
-					if (docLayer.editorId !== -1 && map._viewInfo[editorId])
-						$('#current-editor').text(map._viewInfo[editorId].username);
-					else
-						$('#currently-msg').hide();
-				}, 100);
-				return;
+						if (docLayer.editorId !== -1 && map._viewInfo[editorId])
+							$('#current-editor').text(map._viewInfo[editorId].username);
+						else
+							$('#currently-msg').hide();
+					}, 100);
+					return;
+				}
+				onClick(e, e.target, e.item, e.subItem);
+			},
+			onRefresh: function() {
+				$('#tb_toolbar-down_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
+				$('#search-input').off('input', onSearch).on('input', onSearch);
+				$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
 			}
-			onClick(e, e.target, e.item, e.subItem);
-		},
-		onRefresh: function() {
-			$('#tb_toolbar-down_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
-			$('#search-input').off('input', onSearch).on('input', onSearch);
-			$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
-		}
-	});
+		});
+	}
+	else {
+		toolbar.w2toolbar({
+			name: 'toolbar-down',
+			tooltip: 'top',
+			items: []
+		});
+	}
 	toolbar.bind('touchstart', function() {
 		w2ui['toolbar-down'].touchStarted = true;
 	});
@@ -1233,6 +1242,10 @@ function onWopiProps(e) {
 }
 
 function onDocLayerInit() {
+	if ($('#main-menu').css('display') === 'none') {
+		return;
+	}
+
 	var toolbarUp = w2ui['toolbar-up'];
 	var statusbar = w2ui['toolbar-down'];
 	var docType = map.getDocType();

@@ -98,6 +98,7 @@ body {
     }
     #document-container {
 	top: 40px;
+	bottom: 0;
     }
     #spreadsheet-row-column-frame {
 	top: 73px !important;
