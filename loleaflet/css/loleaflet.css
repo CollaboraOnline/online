@@ -86,12 +86,12 @@ body {
     #presentation-controls-wrapper {
 	display: none;
     }
-
     #document-container.parts-preview-document {
 	left: 0px !important;
     }
     #document-container.spreadsheet-document {
 	top: 93px !important;
+	bottom: 36px !important;
     }
     #document-container.spreadsheet-document.readonly {
 	top: 50px !important;
