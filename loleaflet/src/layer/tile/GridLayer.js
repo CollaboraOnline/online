@@ -700,6 +700,16 @@ L.GridLayer = L.Layer.extend({
 		}
 	},
 
+	_requestNewTiles: function () {
+		this._onMessage('invalidatetiles: EMPTY', null);
+		this._update();
+	},
+
+	toggleTileDebugMode: function() {
+		this.toggleTileDebugModeImpl();
+		this._requestNewTiles();
+	},
+
 	_sendClientVisibleArea: function (forceUpdate) {
 		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
 		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());

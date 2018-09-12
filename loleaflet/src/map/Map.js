@@ -851,9 +851,8 @@ L.Map = L.Evented.extend({
 				this._socket.sendMessage('useractive');
 				this._active = true;
 				if (this._docLayer) {
-					this._docLayer._onMessage('invalidatetiles: EMPTY', null);
 					this._docLayer._resetClientVisArea();
-					this._docLayer._update();
+					this._docLayer._requestNewTiles();
 				}
 
 				if (vex.dialogID > 0) {
