@@ -32,9 +32,8 @@ enum class LokEventTargetEnum
     Window
 };
 
-/// An abstract interface that defines the
-/// DocumentManager interface and functionality.
-class IDocumentManager
+// An abstract interface.
+class DocumentManagerInterface
 {
 public:
     /// Reqest loading a document, or a new view, if one exists.
@@ -142,7 +141,7 @@ public:
     //         used by downloadas to construct jailed path.
     ChildSession(const std::string& id,
                  const std::string& jailId,
-                 IDocumentManager& docManager);
+                 DocumentManagerInterface& docManager);
     virtual ~ChildSession();
 
     bool getStatus(const char* buffer, int length);
@@ -221,7 +220,7 @@ private:
 
 private:
     const std::string _jailId;
-    IDocumentManager& _docManager;
+    DocumentManagerInterface& _docManager;
 
     std::queue<std::chrono::steady_clock::time_point> _cursorInvalidatedEvent;
     const unsigned _eventStorageIntervalMs = 15*1000;

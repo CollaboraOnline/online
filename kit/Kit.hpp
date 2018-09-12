@@ -71,13 +71,13 @@ bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
 void documentViewCallback(const int type, const char* p, void* data);
 
-class IDocumentManager;
+class DocumentManagerInterface;
 
 /// Descriptor class used to link a LOK
 /// callback to a specific view.
 struct CallbackDescriptor
 {
-    IDocumentManager* const Doc;
+    DocumentManagerInterface* const Doc;
     const int ViewId;
 };
 

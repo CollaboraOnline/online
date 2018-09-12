@@ -323,8 +323,8 @@ void WhiteBoxTests::testRegexListMatcher_Init()
     CPPUNIT_ASSERT(matcher.match("192.168.."));
 }
 
-/// A stub IDocumentManager implementation for unit test purposes.
-class DummyDocument : public IDocumentManager
+/// A stub DocumentManagerInterface implementation for unit test purposes.
+class DummyDocument : public DocumentManagerInterface
 {
     std::shared_ptr<TileQueue> _tileQueue;
     std::mutex _mutex;
