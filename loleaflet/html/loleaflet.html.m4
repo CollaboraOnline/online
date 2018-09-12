@@ -20,7 +20,7 @@ define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(
     if (msg.MessageId === 'Host_PostmessageReady') {
       if (window.ThisIsTheiOSApp) {
         // Just for debugging to see that we got it
-        window.webkit.messageHandlers.lool.postMessage('got Host_PostmessageReady!');
+        window.webkit.messageHandlers.debug.postMessage('got Host_PostmessageReady!');
       }
       window.WOPIPostmessageReady = true;
       window.removeEventListener('message', PostMessageReadyListener, false);

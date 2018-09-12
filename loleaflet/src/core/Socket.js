@@ -11,8 +11,9 @@ function FakeWebSocket() {
 	this.bufferedAmount = 0;
 	this.extensions = '';
 	this.protocol = '';
-	this.readyState = 0;
+	this.readyState = 1;
 	this.id = window.fakeWebSocketCounter++;
+	this.sendCounter = 0;
 	console.log('>>>>>> Created FakeWebSocket#' + this.id);
 	this.onclose = function() {
 	};
@@ -29,7 +30,8 @@ FakeWebSocket.prototype.close = function() {
 }
 
 FakeWebSocket.prototype.send = function(data) {
-	console.log('>>>>>> Sending data on FakeWebSocket#' + this.id + ': "' + data + '"');
+	console.log('>>>>>> Sending data on FakeWebSocket#' + this.id + ' (' + this.sendCounter + '): "' + data + '"');
+	this.sendCounter++;
 	window.webkit.messageHandlers.lool.postMessage(data, '*');
 }
 
@@ -61,6 +63,7 @@ L.Socket = L.Class.extend({
 		}
 		if (window.ThisIsTheiOSApp) {
 			this.socket = new FakeWebSocket();
+			window.TheFakeWebSocket = this.socket;
 		} else {
 			var wopiSrc = '';
 			if (map.options.wopiSrc != '') {
