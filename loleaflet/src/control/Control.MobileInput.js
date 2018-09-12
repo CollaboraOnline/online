@@ -17,7 +17,7 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	onGotFocus: function () {
-		this._map._docLayer._updateCursorPos();
+		this._map.addLayer(this._map._docLayer._cursorMarker);
 	},
 
 	onLostFocus: function () {
@@ -55,6 +55,12 @@ L.Control.MobileInput = L.Control.extend({
 
 	activeElement: function () {
 		return this._textArea;
+	},
+
+	showCursor: function () {
+		if (this._textArea === document.activeElement) {
+			this.onGotFocus();
+		}
 	},
 
 	_initLayout: function () {
