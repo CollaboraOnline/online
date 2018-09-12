@@ -581,6 +581,8 @@ button.leaflet-control-search-next
 .w2ui-icon.repair{ background: url('images/lc_backward.svg') no-repeat center !important; }
 .w2ui-icon.specialcharacter{ background: url('images/lc_insertsymbol.svg') no-repeat center !important; }
 .w2ui-icon.insertobjectchart{ background: url('images/lc_drawchart.svg') no-repeat center !important; }
+.w2ui-icon.users{ background: url('images/contacts-dark.svg') no-repeat center !important; }
+.w2ui-icon.callout{ background: url('images/lc_calloutshapes-black.svg') no-repeat center !important; }
 
 .inserttable-pop {
     z-index: 1000;
