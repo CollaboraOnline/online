@@ -849,6 +849,7 @@ L.Map = L.Evented.extend({
 					this._docLayer._onMessage('invalidatetiles: EMPTY', null);
 					this._docLayer._clientVisibleArea = '';
 					this._docLayer._clientZoom = '';
+					this._docLayer._update();
 				}
 
 				if (vex.dialogID > 0) {
