@@ -40,19 +40,26 @@ L.Control.Sidebar = L.Control.extend({
 		}
 	},
 
+	_isParent: function(id) {
+		return this._currentDeck != null && this._currentDeck.id === id;
+	},
+
 	_isOpen: function(id) {
-		return this._currentPanel != null && $('#' + this._toStrId(id)).length > 0;
+		return this._isParent(id) && $('#' + this._toStrId(id)).length > 0;
+	},
+
+	_isChild: function(id) {
+		return this._currentDeck != null && this._currentDeck.child != null && this._currentDeck.child.id === id;
 	},
 
 	_isChildOpen: function(id) {
-		return this._currentPanel != null && $('#' + this._toStrId(id) + '-floating').length > 0;
+		return this._isChild(id) && $('#' + this._currentDeck.strId + '-floating').length > 0;
 	},
 
-	// If returns non-null, then id is that of a child and we have a parent (with the returned id).
+	// If returns non-null, then id is that of a panels and we have a parent (with the returned id).
 	_getParentId: function(id) {
-		id = parseInt(id);
-		if (this._currentPanel != null && this._currentPanel.childid === id)
-			return this._currentPanel.id;
+		if (this._isChild(parseInt(id)))
+			return this._currentDeck.id;
 		return null;
 	},
 
@@ -67,22 +74,28 @@ L.Control.Sidebar = L.Control.extend({
 			var left = parseInt(e.position.split(',')[0]);
 			var top = parseInt(e.position.split(',')[1]);
 
-			if (e.winType === 'panel') {
+			if (e.winType === 'deck') {
 				this._launchSidebar(e.id, left, top, width, height, e.title);
 			} else if (e.winType === 'child') {
-				if (!this._isOpen(e.parentId))
+				var parentId = parseInt(e.parentId);
+				if (!this._isOpen(parentId))
 					return;
 
-				var parentId = parseInt(e.parentId);
-				left -= this._currentPanel.left;
-				top -= this._currentPanel.top;
+				left -= this._currentDeck.left;
+				top -= this._currentDeck.top;
 
 				this._removeChild(parentId);
-				this._currentPanel.childid = e.id;
-				this._currentPanel.childwidth = width;
-				this._currentPanel.childheight = height;
-				this._currentPanel.childx = left;
-				this._currentPanel.childy = top;
+				this._currentDeck.child = {
+					open: true,
+					id: e.id,
+					strId: strId,
+					left: left,
+					top: top,
+					width: width,
+					height: height,
+					parentId: parentId
+				};
+
 				this._createChild(e.id, parentId, top, left);
 				this._sendPaintWindow(e.id, 0, 0, width, height);
 			}
@@ -93,21 +106,22 @@ L.Control.Sidebar = L.Control.extend({
 		}
 
 		// The following act on an existing window.
-		if (!this._isOpen(e.id) && !this._getParentId(e.id))
+		if (!this._isOpen(e.id) && !this._isChildOpen(e.id))
 			return;
 
 		if (e.action === 'invalidate') {
 			var rectangle = e.rectangle;
-			if (!rectangle || !this._isRectangleValid(rectangle))
+			var fullRepaint = true;
+			if (!rectangle || !this._isRectangleValid(rectangle) || fullRepaint)
 			{
-				if (this._getParentId(e.id))
-					rectangle = '0,0,' + this._currentPanel.childwidth + ',' + this._currentPanel.childheight;
+				if (this._isChild(e.id))
+					rectangle = '0,0,' + this._currentDeck.child.width + ',' + this._currentDeck.child.height;
 				else
-					rectangle = '0,0,' + this._currentPanel.width + ',' + this._currentPanel.height;
+					rectangle = '0,0,' + this._currentDeck.width + ',' + this._currentDeck.height;
 
 				this._sendPaintWindowStr(e.id, rectangle);
 			}
-			else if (this._getParentId(e.id))
+			else if (this._isChild(e.id))
 			{
 				// Child windows are given relative coordinates.
 				this._sendPaintWindowStr(e.id, rectangle);
@@ -116,8 +130,8 @@ L.Control.Sidebar = L.Control.extend({
 			{
 				// Convert from absolute screen coordinates to relative.
 				rectangle = rectangle.split(',');
-				rectangle[0] = parseInt(rectangle[0]) - this._currentPanel.left;
-				rectangle[1] = parseInt(rectangle[1]) - this._currentPanel.top;
+				rectangle[0] = parseInt(rectangle[0]) - this._currentDeck.left;
+				rectangle[1] = parseInt(rectangle[1]) - this._currentDeck.top;
 				this._sendPaintWindow(e.id, rectangle[0], rectangle[1], rectangle[2], rectangle[3]);
 			}
 		} else if (e.action === 'size_changed') {
@@ -166,8 +180,8 @@ L.Control.Sidebar = L.Control.extend({
 		// First, remove existing.
 		// FIXME: we don't really have to destroy and launch the sidebar again but do it for
 		// now because the size sent to us previously in 'created' cb is not correct
-		if (this._currentPanel)
-			$('#' + this._currentPanel.strId).remove();
+		if (this._currentDeck)
+			$('#' + this._currentDeck.strId).remove();
 
 		var strId = this._toStrId(id);
 
@@ -198,7 +212,7 @@ L.Control.Sidebar = L.Control.extend({
 		// Don't show the sidebar until we get the contents.
 		$(panelContainer).parent().hide();
 
-		this._currentPanel = {
+		this._currentDeck = {
 			open: true,
 			id: id,
 			strId: strId,
@@ -206,7 +220,8 @@ L.Control.Sidebar = L.Control.extend({
 			top: top,
 			width: width,
 			height: height,
-			title: title
+			title: title,
+			child: null // One child, typically drop-down list
 		};
 
 		// don't make 'TAB' focus on this button; we want to cycle focus in the lok dialog with each TAB
@@ -218,7 +233,7 @@ L.Control.Sidebar = L.Control.extend({
 		L.DomEvent.on(panelCanvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(panelCanvas, 'mousemove', function(e) {
 			this._map.lastActiveTime = Date.now();
-			if (!this._currentPanel.title) // For context menu
+			if (!this._currentDeck.title) // For context menu
 				this._postWindowMouseEvent('move', id, e.offsetX, e.offsetY, 1, 0, 0);
 		}, this);
 		L.DomEvent.on(panelCanvas, 'mousedown mouseup', function(e) {
@@ -301,9 +316,9 @@ L.Control.Sidebar = L.Control.extend({
 
 	_sendPaintWindow: function(id, x, y, width, height) {
 		if (!width)
-			this.width = this._currentPanel.width;
+			width = this._currentDeck.width;
 		if (!height)
-			height = this._currentPanel.height;
+			height = this._currentDeck.height;
 		if (!x)
 			x = 0;
 		if (!y)
@@ -326,15 +341,18 @@ L.Control.Sidebar = L.Control.extend({
 
 	/// Rendered image sent from Core.
 	_paintPanel: function (parentId, rectangle, imgData) {
-		if (!this._isOpen(parentId))
-			return;
+		// if (!this._isOpen(parentId))
+		// 	return;
 
 		var strId = this._toStrId(parentId);
 		var canvas = document.getElementById(strId + '-canvas');
+		if (!canvas)
+			return; // no window to paint to
+
 		var ctx = canvas.getContext('2d');
 
 		// The actual image of the window may be larger/smaller than the dimension we get on size_changed.
-		var width = this._currentPanel.width;
+		var width = this._currentDeck.width;
 
 		var docContainer = this._map.options.documentContainer;
 		var img = new Image();
@@ -394,7 +412,7 @@ L.Control.Sidebar = L.Control.extend({
 		if (notifyBackend)
 			this._sendCloseWindow(id);
 		$('#' + this._toStrId(id)).remove();
-		var sidebar = L.DomUtil.get(this._currentPanel.strId);
+		var sidebar = L.DomUtil.get(this._currentDeck.strId);
 		if (sidebar)
 			sidebar.style.width = '0px';
 		var docContainer = this._map.options.documentContainer;
@@ -403,7 +421,7 @@ L.Control.Sidebar = L.Control.extend({
 		if (spreadsheetRowColumnFrame)
 			spreadsheetRowColumnFrame.style.right = '0px';
 		this._map.focus();
-		this._currentPanel = null;
+		this._currentDeck = null;
 	},
 
 	_postWindowMouseEvent: function(type, winid, x, y, count, buttons, modifier) {
